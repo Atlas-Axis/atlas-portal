@@ -1,0 +1,13 @@
+{
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true,
+  "editor.linkedEditing": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "chat.agent.maxRequests": 50,
+  "chat.mcp.enabled": true,
+  "chat.promptFiles": true,
+  "github.copilot.chat.agent.runTasks": true,
+  "github.copilot.chat.setupTests.enabled": true,
+  "github.copilot.chat.startDebugging.enabled": true
+}
