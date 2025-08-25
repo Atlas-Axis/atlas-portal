@@ -103,10 +103,6 @@ class NotionProxy {
     return {
       totalClients: this.clients.length,
       totalApiCalls: this.totalApiCalls,
-      clientStats: this.clients.map((client, index) => ({
-        index,
-        activeRequests: client.activeRequests,
-      })),
     };
   }
 }

@@ -91,7 +91,7 @@ export class NotionRateLimiter {
           }),
         ]);
 
-        this.log('info', `API call successful on attempt ${attempt}`);
+        this.log('info', `API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''}`);
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
@@ -131,6 +131,7 @@ export class NotionRateLimiter {
     }
   }
 
+  // Wait for the next available slot in the rate limit window, when we already exceeded the per-second limit
   private async waitIfNeeded(): Promise<void> {
     const now = Date.now();
 
