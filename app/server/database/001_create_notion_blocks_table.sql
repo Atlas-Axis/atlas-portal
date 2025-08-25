@@ -68,3 +68,11 @@ CHECK (date_valid_to IS NULL OR date_valid_to > date_valid_from);
 -- Ensure sort_order is non-negative
 ALTER TABLE notion_blocks ADD CONSTRAINT check_sort_order_positive
 CHECK (sort_order >= 0);
+
+-- Ensure edit page fields are consistent with belongs_to_edit_page flag
+ALTER TABLE notion_blocks ADD CONSTRAINT check_edit_page_fields_consistency
+CHECK (
+  (belongs_to_edit_page = true AND edit_page_original_notion_block_id IS NOT NULL AND edit_page_original_notion_page_id IS NOT NULL)
+  OR
+  (belongs_to_edit_page = false AND edit_page_original_notion_block_id IS NULL AND edit_page_original_notion_page_id IS NULL)
+);
