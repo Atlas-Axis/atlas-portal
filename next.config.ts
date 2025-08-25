@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
         {
           key: 'Content-Security-Policy',
           value:
-            "frame-ancestors 'self' https://notion.so https://*.notion.so https://notion.site https://*.notion.site;",
+            "frame-ancestors 'self' https://www.notion.so https://notion.so https://*.notion.so https://notion.site https://*.notion.site;",
         },
         { key: 'X-Content-Type-Options', value: 'nosniff' },
         { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },

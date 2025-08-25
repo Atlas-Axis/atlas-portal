@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",
