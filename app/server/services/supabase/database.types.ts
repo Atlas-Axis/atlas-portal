@@ -85,7 +85,6 @@ export type Database = {
           created_at: string | null;
           id: string;
           is_sync_locked: boolean | null;
-          last_sync_attempt_at: string | null;
           last_sync_completed_at: string | null;
           last_sync_started_at: string | null;
           notion_page_id: string;
@@ -100,7 +99,6 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           is_sync_locked?: boolean | null;
-          last_sync_attempt_at?: string | null;
           last_sync_completed_at?: string | null;
           last_sync_started_at?: string | null;
           notion_page_id: string;
@@ -115,7 +113,6 @@ export type Database = {
           created_at?: string | null;
           id?: string;
           is_sync_locked?: boolean | null;
-          last_sync_attempt_at?: string | null;
           last_sync_completed_at?: string | null;
           last_sync_started_at?: string | null;
           notion_page_id?: string;

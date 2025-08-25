@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS notion_sync_status (
   sync_status TEXT NOT NULL DEFAULT 'pending', -- Current sync status: pending, in_progress, completed, failed, cancelled
   last_sync_started_at TIMESTAMPTZ, -- When the most recent sync attempt started
   last_sync_completed_at TIMESTAMPTZ, -- When the most recent successful sync completed
-  last_sync_attempt_at TIMESTAMPTZ, -- When the most recent sync attempt occurred (success or failure)
   sync_error_message TEXT, -- Error message from the last failed sync attempt
   blocks_synced_count INTEGER DEFAULT 0, -- Number of blocks successfully synced
   is_sync_locked BOOLEAN DEFAULT FALSE, -- Prevents concurrent syncs of the same page
@@ -18,7 +17,6 @@ CREATE TABLE IF NOT EXISTS notion_sync_status (
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_notion_sync_status_page_id ON notion_sync_status(notion_page_id);
 CREATE INDEX IF NOT EXISTS idx_notion_sync_status_sync_status ON notion_sync_status(sync_status);
-CREATE INDEX IF NOT EXISTS idx_notion_sync_status_last_sync_attempt ON notion_sync_status(last_sync_attempt_at);
 CREATE INDEX IF NOT EXISTS idx_notion_sync_status_sync_locked ON notion_sync_status(is_sync_locked, sync_lock_expires_at) WHERE is_sync_locked = TRUE;
 
 -- Trigger to automatically update updated_at column on row update
@@ -37,12 +35,4 @@ CHECK (
   (is_sync_locked = FALSE)
   OR
   (is_sync_locked = TRUE AND sync_lock_expires_at > NOW())
-);
-
--- Ensure consistent sync timestamps
-ALTER TABLE notion_sync_status ADD CONSTRAINT check_sync_timestamp_order
-CHECK (
-  (last_sync_started_at IS NULL OR last_sync_attempt_at IS NULL OR last_sync_started_at <= last_sync_attempt_at)
-  AND
-  (last_sync_completed_at IS NULL OR last_sync_attempt_at IS NULL OR last_sync_completed_at <= last_sync_attempt_at)
 );
