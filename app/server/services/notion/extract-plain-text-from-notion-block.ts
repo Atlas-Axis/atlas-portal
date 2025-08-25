@@ -1,6 +1,6 @@
-import { NotionApiBlock, NotionBlockContent, RichText } from './notion-types';
+import { NotionBlockContent, NotionBlockListItem, RichText } from './notion-types';
 
-export function extractPlainText(block: NotionApiBlock): string {
+export function extractPlainText(block: NotionBlockListItem): string {
   const blockType = block.type;
   if (!block[blockType]) return '';
 
@@ -12,6 +12,7 @@ export function extractPlainText(block: NotionApiBlock): string {
   }
 
   // Handle other block types
+  // Docs: https://developers.notion.com/reference/block
   switch (blockType) {
     case 'child_page':
       return content.title || '';
