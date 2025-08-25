@@ -1,9 +1,5 @@
-'use client';
-
-import { use } from 'react';
-
-export default function Home({ params }: { params: Promise<{ 'notion-page-id': string }> }) {
-  const { 'notion-page-id': notionPageId } = use(params);
+export default async function Home({ params }: { params: Promise<{ 'notion-page-id': string }> }) {
+  const { 'notion-page-id': notionPageId } = await params;
 
   return (
     <div>
