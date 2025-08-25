@@ -79,6 +79,54 @@ export type Database = {
           },
         ];
       };
+      notion_sync_status: {
+        Row: {
+          blocks_synced_count: number | null;
+          created_at: string | null;
+          id: string;
+          is_sync_locked: boolean | null;
+          last_sync_attempt_at: string | null;
+          last_sync_completed_at: string | null;
+          last_sync_started_at: string | null;
+          notion_page_id: string;
+          sync_error_message: string | null;
+          sync_lock_acquired_at: string | null;
+          sync_lock_expires_at: string | null;
+          sync_status: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          blocks_synced_count?: number | null;
+          created_at?: string | null;
+          id?: string;
+          is_sync_locked?: boolean | null;
+          last_sync_attempt_at?: string | null;
+          last_sync_completed_at?: string | null;
+          last_sync_started_at?: string | null;
+          notion_page_id: string;
+          sync_error_message?: string | null;
+          sync_lock_acquired_at?: string | null;
+          sync_lock_expires_at?: string | null;
+          sync_status?: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          blocks_synced_count?: number | null;
+          created_at?: string | null;
+          id?: string;
+          is_sync_locked?: boolean | null;
+          last_sync_attempt_at?: string | null;
+          last_sync_completed_at?: string | null;
+          last_sync_started_at?: string | null;
+          notion_page_id?: string;
+          sync_error_message?: string | null;
+          sync_lock_acquired_at?: string | null;
+          sync_lock_expires_at?: string | null;
+          sync_status?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
