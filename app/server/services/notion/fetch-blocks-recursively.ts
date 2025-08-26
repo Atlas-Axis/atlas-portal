@@ -12,50 +12,6 @@ export interface EditPageProps {
 }
 
 /**
- * Maps a Notion API block to a NotionBlock database object.
- */
-function mapNotionApiBlockToNotionBlock(
-  block: BlockObjectResponse,
-  parentNotionBlockId: string | null,
-  rootNotionBlockId: string,
-  sortOrder: number,
-  editPage?: EditPageProps | null,
-): NotionBlock {
-  return {
-    // Primary keys and identifiers
-    notion_block_id: block.id,
-    parent_notion_block_id: parentNotionBlockId,
-    root_notion_block_id: rootNotionBlockId,
-
-    // Notion block metadata
-    block_type: block.type,
-    has_children: block.has_children,
-    archived: block.archived,
-    in_trash: block.in_trash,
-    last_edited_by_user_id: block.last_edited_by?.id || null,
-
-    // Content fields
-    plain_text_content: extractPlainText(block),
-    json_content: (block as Record<string, unknown>)[block.type] as JSONType,
-
-    // Ordering
-    sort_order: sortOrder,
-
-    // Atlas document fields
-    canonical_document_title: '?', // TODO
-
-    // Timestamps
-    created_at: new Date(block.created_time).toISOString(),
-    updated_at: new Date(block.last_edited_time).toISOString(),
-
-    // Edit Page related fields
-    belongs_to_edit_page: editPage?.belongsToEditPage || false,
-    edit_page_original_notion_block_id: editPage?.editPageOriginalNotionBlockId || null,
-    edit_page_original_notion_page_id: editPage?.editPageOriginalNotionPageId || null,
-  };
-}
-
-/**
  * Recursively fetch all Notion blocks under a given block ID.
  */
 export async function fetchBlocksRecursively({
@@ -120,7 +76,7 @@ export async function fetchBlocksRecursively({
       // Database mapping
       const notionBlock = mapNotionApiBlockToNotionBlock(
         block as BlockObjectResponse,
-        parentNotionBlockId,
+        notionBlockId, // The parent of these children is the current block we're processing
         rootNotionBlockId,
         sortOrder++,
         editPage,
@@ -137,7 +93,7 @@ export async function fetchBlocksRecursively({
       .map((block) =>
         fetchBlocksRecursively({
           notionBlockId: block.notion_block_id,
-          parentNotionBlockId: notionBlockId,
+          parentNotionBlockId: notionBlockId, // Use the current block's ID as parent for its children
           rootNotionBlockId: rootNotionBlockId,
           editPage,
         }),
@@ -153,4 +109,48 @@ export async function fetchBlocksRecursively({
   } while (cursor);
 
   return blocks;
+}
+
+/**
+ * Maps a Notion API block to a NotionBlock database object.
+ */
+function mapNotionApiBlockToNotionBlock(
+  block: BlockObjectResponse,
+  parentNotionBlockId: string | null,
+  rootNotionBlockId: string,
+  sortOrder: number,
+  editPage?: EditPageProps | null,
+): NotionBlock {
+  return {
+    // Primary keys and identifiers
+    notion_block_id: block.id,
+    parent_notion_block_id: parentNotionBlockId,
+    root_notion_block_id: rootNotionBlockId,
+
+    // Notion block metadata
+    block_type: block.type,
+    has_children: block.has_children,
+    archived: block.archived,
+    in_trash: block.in_trash,
+    last_edited_by_user_id: block.last_edited_by?.id || null,
+
+    // Content fields
+    plain_text_content: extractPlainText(block),
+    json_content: (block as Record<string, unknown>)[block.type] as JSONType,
+
+    // Ordering
+    sort_order: sortOrder,
+
+    // Atlas document fields
+    canonical_document_title: '?', // TODO
+
+    // Timestamps
+    created_at: new Date(block.created_time).toISOString(),
+    updated_at: new Date(block.last_edited_time).toISOString(),
+
+    // Edit Page related fields
+    belongs_to_edit_page: editPage?.belongsToEditPage || false,
+    edit_page_original_notion_block_id: editPage?.editPageOriginalNotionBlockId || null,
+    edit_page_original_notion_page_id: editPage?.editPageOriginalNotionPageId || null,
+  };
 }
