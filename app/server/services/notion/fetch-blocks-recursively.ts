@@ -69,9 +69,39 @@ export async function fetchBlocksRecursively({
   rootNotionBlockId: string;
   editPage?: EditPageProps | null;
 }): Promise<NotionBlock[]> {
+  // On first iteration (when parentNotionBlockId is null), verify that notionBlockId matches rootNotionBlockId
+  if (parentNotionBlockId === null && notionBlockId !== rootNotionBlockId) {
+    throw new Error(
+      `First iteration mismatch: notionBlockId "${notionBlockId}" must match rootNotionBlockId "${rootNotionBlockId}" when parentNotionBlockId is null`,
+    );
+  }
+
   const blocks: NotionBlock[] = [];
   let cursor: string | undefined;
   let sortOrder = 0;
+
+  // On first iteration, fetch the root block itself
+  if (parentNotionBlockId === null) {
+    try {
+      const rootBlockResponse = await notion().blocks.retrieve({
+        block_id: rootNotionBlockId,
+      });
+
+      if ('type' in rootBlockResponse) {
+        const rootBlock = mapNotionApiBlockToNotionBlock(
+          rootBlockResponse as BlockObjectResponse,
+          null, // Root block has no parent
+          rootNotionBlockId,
+          0,
+          editPage,
+        );
+
+        blocks.push(rootBlock);
+      }
+    } catch (error) {
+      throw new Error(`Failed to fetch root block "${rootNotionBlockId}": ${error}`);
+    }
+  }
 
   // Fetch all children blocks for the current block ID, paginated
   do {
