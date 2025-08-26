@@ -54,15 +54,6 @@ export const notionFullPageSyncTask = task({
     }
   },
   // Automatically clean up the sync status in Supabase when the task fails or is cancelled
-  onSuccess: async () => {
-    await endSyncStatus({
-      notionPageId: NOTION_PAGE_ID,
-      syncStatus: 'completed',
-      syncErrorMessage: null,
-      blocksSyncedCount: null,
-    });
-  },
-  // If the task fails, update the sync status in Supabase
   onFailure: async (error) => {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     await endSyncStatus({

@@ -41,6 +41,13 @@ export async function importFromNotionToSupabase({ taskRunId }: { taskRunId: str
     const duration = endTime - startTime;
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
+    await endSyncStatus({
+      notionPageId: NOTION_PAGE_ID,
+      syncStatus: 'completed',
+      syncErrorMessage: null,
+      blocksSyncedCount: blocks.length,
+    });
+
     return blocks;
   } catch (error) {
     const endTime = performance.now();
