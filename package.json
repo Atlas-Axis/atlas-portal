@@ -16,6 +16,7 @@
     "@heroui/react": "^2.8.2",
     "@notionhq/client": "^4.0.2",
     "@supabase/supabase-js": "^2.56.0",
+    "@trigger.dev/sdk": "^4.0.1",
     "framer-motion": "^12.23.12",
     "next": "15.5.0",
     "react": "19.1.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4",
+    "@trigger.dev/build": "^4.0.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
