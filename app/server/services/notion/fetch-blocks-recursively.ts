@@ -1,4 +1,5 @@
 // import { v7 as uuidv7 } from 'uuid';
+import { BlockObjectResponse } from '@notionhq/client';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { extractPlainText } from '@/app/server/services/notion/extract-plain-text-from-notion-block';
 import { notion } from '@/app/server/services/notion/notion-client';
@@ -8,6 +9,50 @@ export interface EditPageProps {
   belongsToEditPage: boolean;
   editPageOriginalNotionBlockId: string;
   editPageOriginalNotionPageId: string;
+}
+
+/**
+ * Maps a Notion API block to a NotionBlock database object.
+ */
+function mapNotionApiBlockToNotionBlock(
+  block: BlockObjectResponse,
+  parentNotionBlockId: string | null,
+  rootNotionBlockId: string,
+  sortOrder: number,
+  editPage?: EditPageProps | null,
+): NotionBlock {
+  return {
+    // Primary keys and identifiers
+    notion_block_id: block.id,
+    parent_notion_block_id: parentNotionBlockId,
+    root_notion_block_id: rootNotionBlockId,
+
+    // Notion block metadata
+    block_type: block.type,
+    has_children: block.has_children,
+    archived: block.archived,
+    in_trash: block.in_trash,
+    last_edited_by_user_id: block.last_edited_by?.id || null,
+
+    // Content fields
+    plain_text_content: extractPlainText(block),
+    json_content: (block as Record<string, unknown>)[block.type] as JSONType,
+
+    // Ordering
+    sort_order: sortOrder,
+
+    // Atlas document fields
+    canonical_document_title: '?', // TODO
+
+    // Timestamps
+    created_at: new Date(block.created_time).toISOString(),
+    updated_at: new Date(block.last_edited_time).toISOString(),
+
+    // Edit Page related fields
+    belongs_to_edit_page: editPage?.belongsToEditPage || false,
+    edit_page_original_notion_block_id: editPage?.editPageOriginalNotionBlockId || null,
+    edit_page_original_notion_page_id: editPage?.editPageOriginalNotionPageId || null,
+  };
 }
 
 /**
@@ -43,44 +88,13 @@ export async function fetchBlocksRecursively({
       if (!('type' in block)) continue;
 
       // Database mapping
-      const notionBlock: NotionBlock = {
-        // Primary keys and identifiers
-        // id: uuidv7(),
-        notion_block_id: block.id,
-        parent_notion_block_id: parentNotionBlockId,
-        root_notion_block_id: rootNotionBlockId,
-
-        // Notion block metadata
-        block_type: block.type,
-        has_children: block.has_children,
-        archived: block.archived,
-        in_trash: block.in_trash,
-        last_edited_by_user_id: block.last_edited_by?.id || null,
-
-        // Content fields
-        plain_text_content: extractPlainText(block),
-        json_content: (block as Record<string, unknown>)[block.type] as JSONType,
-
-        // Ordering
-        sort_order: sortOrder++,
-
-        // Atlas document fields
-        canonical_document_title: '?', // TODO
-        // canonical_document_title: canonicalDocumentTitle,
-
-        // Timestamps
-        created_at: new Date(block.created_time).toISOString(),
-        updated_at: new Date(block.last_edited_time).toISOString(),
-
-        // Versioning
-        // date_valid_from: new Date(block.created_time),
-        // date_valid_to: block.last_edited_time ? new Date(block.last_edited_time) : null,
-
-        // Edit Page related fields
-        belongs_to_edit_page: editPage?.belongsToEditPage || false,
-        edit_page_original_notion_block_id: editPage?.editPageOriginalNotionBlockId || null,
-        edit_page_original_notion_page_id: editPage?.editPageOriginalNotionPageId || null,
-      };
+      const notionBlock = mapNotionApiBlockToNotionBlock(
+        block as BlockObjectResponse,
+        parentNotionBlockId,
+        rootNotionBlockId,
+        sortOrder++,
+        editPage,
+      );
 
       currentBatch.push(notionBlock);
     }
