@@ -7,20 +7,20 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   parent_notion_block_id UUID, -- Parent block ID (null for root blocks)
   root_notion_block_id UUID NOT NULL, -- The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
   block_type TEXT NOT NULL, -- Block type (paragraph, heading_1, etc.)
-  has_children BOOLEAN DEFAULT FALSE,
-  archived BOOLEAN DEFAULT FALSE,
-  in_trash BOOLEAN DEFAULT FALSE,
+  has_children BOOLEAN NOT NULL DEFAULT FALSE,
+  archived BOOLEAN NOT NULL DEFAULT FALSE,
+  in_trash BOOLEAN NOT NULL DEFAULT FALSE,
   plain_text_content TEXT, -- Extracted plain text for easy searching
   json_content JSONB, -- Full block content from Notion API
   sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
   canonical_document_title TEXT, -- Title of the Atlas document this block belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
-  created_at TIMESTAMPTZ DEFAULT NOW(), -- When this database row was created
-  updated_at TIMESTAMPTZ DEFAULT NOW(), -- When this database row was last updated
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this block
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
   -- Edit Page related fields
-  belongs_to_edit_page BOOLEAN DEFAULT TRUE, -- Indicates if the block belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
+  belongs_to_edit_page BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the block belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
   edit_page_original_notion_block_id UUID, -- ID of the original Notion block that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
 

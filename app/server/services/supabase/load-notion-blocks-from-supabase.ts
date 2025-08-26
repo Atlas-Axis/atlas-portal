@@ -1,7 +1,8 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { NotionBlock } from '../../database/notion-block';
 
 export async function loadNotionBlocksFromSupabase(rootNotionBlockId: string) {
-  const allBlocks = [];
+  const allBlocks: NotionBlock[] = [];
   let page = 0;
   const pageSize = 1000;
 

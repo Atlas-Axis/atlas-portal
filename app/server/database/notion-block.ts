@@ -1,4 +1,4 @@
-import { JSONType } from '../services/supabase/types';
+import { Json } from '@/app/server/services/supabase/database.types';
 
 // Represents a Notion block in the database
 export interface NotionBlock {
@@ -17,7 +17,7 @@ export interface NotionBlock {
 
   // Content fields
   plain_text_content?: string | null; // Extracted plain text for easy searching
-  json_content?: JSONType | null; // JSONB - Full block content from Notion API
+  json_content: Json; // JSONB - Full block content from Notion API
 
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)

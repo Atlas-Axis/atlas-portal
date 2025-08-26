@@ -3,7 +3,7 @@ import { BlockObjectResponse } from '@notionhq/client';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { extractPlainText } from '@/app/server/services/notion/extract-plain-text-from-notion-block';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { JSONType } from '../supabase/types';
+import { Json } from '@/app/server/services/supabase/database.types';
 
 export interface EditPageProps {
   belongsToEditPage: boolean;
@@ -136,7 +136,7 @@ function mapNotionApiBlockToNotionBlock(
 
     // Content fields
     plain_text_content: extractPlainText(block),
-    json_content: (block as Record<string, unknown>)[block.type] as JSONType,
+    json_content: (block as Record<string, unknown>)[block.type] as Json,
 
     // Ordering
     sort_order: sortOrder,

@@ -10,15 +10,15 @@ export type Database = {
     Tables: {
       notion_blocks: {
         Row: {
-          archived: boolean | null;
-          belongs_to_edit_page: boolean | null;
+          archived: boolean;
+          belongs_to_edit_page: boolean;
           block_type: string;
           canonical_document_title: string | null;
-          created_at: string | null;
+          created_at: string;
           edit_page_original_notion_block_id: string | null;
           edit_page_original_notion_page_id: string | null;
-          has_children: boolean | null;
-          in_trash: boolean | null;
+          has_children: boolean;
+          in_trash: boolean;
           json_content: Json | null;
           last_edited_by_user_id: string | null;
           notion_block_id: string;
@@ -26,18 +26,18 @@ export type Database = {
           plain_text_content: string | null;
           root_notion_block_id: string;
           sort_order: number;
-          updated_at: string | null;
+          updated_at: string;
         };
         Insert: {
-          archived?: boolean | null;
-          belongs_to_edit_page?: boolean | null;
+          archived?: boolean;
+          belongs_to_edit_page?: boolean;
           block_type: string;
           canonical_document_title?: string | null;
-          created_at?: string | null;
+          created_at?: string;
           edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
-          has_children?: boolean | null;
-          in_trash?: boolean | null;
+          has_children?: boolean;
+          in_trash?: boolean;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_block_id: string;
@@ -45,18 +45,18 @@ export type Database = {
           plain_text_content?: string | null;
           root_notion_block_id: string;
           sort_order: number;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Update: {
-          archived?: boolean | null;
-          belongs_to_edit_page?: boolean | null;
+          archived?: boolean;
+          belongs_to_edit_page?: boolean;
           block_type?: string;
           canonical_document_title?: string | null;
-          created_at?: string | null;
+          created_at?: string;
           edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
-          has_children?: boolean | null;
-          in_trash?: boolean | null;
+          has_children?: boolean;
+          in_trash?: boolean;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_block_id?: string;
@@ -64,7 +64,7 @@ export type Database = {
           plain_text_content?: string | null;
           root_notion_block_id?: string;
           sort_order?: number;
-          updated_at?: string | null;
+          updated_at?: string;
         };
         Relationships: [
           {
