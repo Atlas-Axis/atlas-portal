@@ -1,4 +1,7 @@
-// TODO: Store a flat Map<string, NotionBlock> of all Notion blocks in Diff view for quick lookups and lightweight tree construction
+export type Tree = {
+  root: TreeNode;
+  nodeMap: TreeNodeMap;
+};
 
 export type TreeNode = {
   id: string;
@@ -12,7 +15,7 @@ export type TreeNode = {
 
 export type TreeNodeMap = Map<string, TreeNode>;
 
-export function buildTree(nodes: TreeNode[]): { root: TreeNode; nodeMap: TreeNodeMap } {
+export function buildTree(nodes: TreeNode[]): Tree {
   const nodeMap = new Map<string, TreeNode>();
   const roots: TreeNode[] = [];
   let orphanedNodeCount = 0;
