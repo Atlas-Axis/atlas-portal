@@ -2,8 +2,8 @@
 
 -- Create the notion_blocks table to store synchronized blocks from Notion
 CREATE TABLE IF NOT EXISTS notion_blocks (
-  id UUID PRIMARY KEY, -- Internal primary ID
-  notion_block_id UUID NOT NULL, -- Notion block ID
+  -- id UUID PRIMARY KEY, -- Internal primary ID
+  notion_block_id UUID NOT NULL PRIMARY KEY, -- Notion block ID
   parent_notion_block_id UUID, -- Parent block ID (null for root blocks)
   root_notion_block_id UUID NOT NULL, -- The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
   block_type TEXT NOT NULL, -- Block type (paragraph, heading_1, etc.)
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
 
   -- Cascade-delete child blocks when the parent block is deleted
-  CONSTRAINT fk_parent_block FOREIGN KEY (parent_notion_block_id) REFERENCES notion_blocks(id) ON DELETE CASCADE
+  CONSTRAINT fk_parent_block FOREIGN KEY (parent_notion_block_id) REFERENCES notion_blocks(notion_block_id) ON DELETE CASCADE  
 );
 
 -- Create indexes for better query performance

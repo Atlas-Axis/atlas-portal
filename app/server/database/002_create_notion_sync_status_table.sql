@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS notion_sync_status (
   last_sync_started_at TIMESTAMPTZ, -- When the most recent sync attempt started
   last_sync_completed_at TIMESTAMPTZ, -- When the most recent successful sync completed
   sync_error_message TEXT, -- Error message from the last failed sync attempt
-  blocks_synced_count INTEGER DEFAULT 0, -- Number of blocks successfully synced
+  blocks_synced_count INTEGER DEFAULT NULL, -- Number of blocks successfully synced
   is_sync_locked BOOLEAN DEFAULT FALSE, -- Prevents concurrent syncs of the same page
   sync_lock_acquired_at TIMESTAMPTZ, -- When the sync lock was acquired
   sync_lock_expires_at TIMESTAMPTZ, -- When the sync lock expires (for cleanup of stale locks)

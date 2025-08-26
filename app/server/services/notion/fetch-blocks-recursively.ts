@@ -1,7 +1,8 @@
-import { v7 as uuidv7 } from 'uuid';
+// import { v7 as uuidv7 } from 'uuid';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { extractPlainText } from '@/app/server/services/notion/extract-plain-text-from-notion-block';
 import { notion } from '@/app/server/services/notion/notion-client';
+import { JSONType } from '../supabase/types';
 
 export interface EditPageProps {
   belongsToEditPage: boolean;
@@ -44,7 +45,7 @@ export async function fetchBlocksRecursively({
       // Database mapping
       const notionBlock: NotionBlock = {
         // Primary keys and identifiers
-        id: uuidv7(),
+        // id: uuidv7(),
         notion_block_id: block.id,
         parent_notion_block_id: parentNotionBlockId,
         root_notion_block_id: rootNotionBlockId,
@@ -58,7 +59,7 @@ export async function fetchBlocksRecursively({
 
         // Content fields
         plain_text_content: extractPlainText(block),
-        json_content: (block as Record<string, unknown>)[block.type] as Record<string, unknown>,
+        json_content: (block as Record<string, unknown>)[block.type] as JSONType,
 
         // Ordering
         sort_order: sortOrder++,
@@ -68,8 +69,8 @@ export async function fetchBlocksRecursively({
         // canonical_document_title: canonicalDocumentTitle,
 
         // Timestamps
-        created_at: new Date(block.created_time),
-        updated_at: new Date(block.last_edited_time),
+        created_at: new Date(block.created_time).toISOString(),
+        updated_at: new Date(block.last_edited_time).toISOString(),
 
         // Versioning
         // date_valid_from: new Date(block.created_time),

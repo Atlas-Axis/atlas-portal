@@ -1,7 +1,9 @@
+import { JSONType } from '../services/supabase/types';
+
 // Represents a Notion block in the database
 export interface NotionBlock {
   // Primary keys and identifiers
-  id: string; // UUID - Internal primary ID
+  // id: string; // UUID - Internal primary ID
   notion_block_id: string; // UUID - Notion block ID
   parent_notion_block_id?: string | null; // UUID - Parent block ID (null for root blocks)
   root_notion_block_id: string; // UUID - The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
@@ -15,7 +17,7 @@ export interface NotionBlock {
 
   // Content fields
   plain_text_content?: string | null; // Extracted plain text for easy searching
-  json_content?: Record<string, unknown> | null; // JSONB - Full block content from Notion API
+  json_content?: JSONType | null; // JSONB - Full block content from Notion API
 
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)
@@ -24,12 +26,12 @@ export interface NotionBlock {
   canonical_document_title?: string | null; // Title of the Atlas document this block belongs to
 
   // Timestamps
-  created_at: Date; // When this database row was created
-  updated_at: Date; // When this database row was last updated
+  created_at: string; // When this database row was created
+  updated_at: string; // When this database row was last updated
 
   // Versioning fields
-  //   date_valid_from: Date; // Used for versioning
-  //   date_valid_to?: Date | null; // Used for versioning. NULL means "current" version
+  //   date_valid_from: string; // Used for versioning
+  //   date_valid_to?: string | null; // Used for versioning. NULL means "current" version
 
   // Edit Page related fields
   belongs_to_edit_page: boolean; // Indicates if the block belongs to an Edit Page
