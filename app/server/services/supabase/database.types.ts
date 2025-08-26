@@ -18,7 +18,6 @@ export type Database = {
           edit_page_original_notion_block_id: string | null;
           edit_page_original_notion_page_id: string | null;
           has_children: boolean | null;
-          id: string;
           in_trash: boolean | null;
           json_content: Json | null;
           last_edited_by_user_id: string | null;
@@ -38,7 +37,6 @@ export type Database = {
           edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
           has_children?: boolean | null;
-          id: string;
           in_trash?: boolean | null;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
@@ -58,7 +56,6 @@ export type Database = {
           edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
           has_children?: boolean | null;
-          id?: string;
           in_trash?: boolean | null;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
@@ -75,7 +72,7 @@ export type Database = {
             columns: ['parent_notion_block_id'];
             isOneToOne: false;
             referencedRelation: 'notion_blocks';
-            referencedColumns: ['id'];
+            referencedColumns: ['notion_block_id'];
           },
         ];
       };
