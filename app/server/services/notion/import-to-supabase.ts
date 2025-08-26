@@ -3,6 +3,7 @@ import { fetchBlocksRecursively } from '@/app/server/services/notion/fetch-block
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NOTION_PAGE_ID } from './_demo-data';
 import { endSyncStatus, startSyncStatus } from './reset-sync-status';
+import { verifySyncLock } from './verify-sync-lock';
 
 /**
  * Sync all blocks from Notion page to Supabase
@@ -10,6 +11,9 @@ import { endSyncStatus, startSyncStatus } from './reset-sync-status';
 export async function importFromNotionToSupabase({ taskRunId }: { taskRunId: string }) {
   const startTime = performance.now();
   console.log(`➡️ Importing blocks from Notion to Supabase...`);
+
+  // Verify that the sync is not already in progress
+  await verifySyncLock(NOTION_PAGE_ID);
 
   try {
     // Update sync status in database
