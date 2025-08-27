@@ -13,19 +13,17 @@ export default async function Page() {
   }
 
   const rootBlockLinks = rootBlocks.map((block) => (
-    <Link
-      key={block.notion_block_id}
-      href={`/visualize/${block.notion_block_id}`}
-      className="font-semibold text-indigo-500 hover:underline"
-    >
-      👉 {block.plain_text_content}
-    </Link>
+    <li key={block.notion_block_id}>
+      <Link href={`/visualize/${block.notion_block_id}`} className="font-semibold text-indigo-500 hover:underline">
+        👉 {block.plain_text_content}
+      </Link>
+    </li>
   ));
 
   return (
     <div>
       <h2 className="mb-4 text-lg font-semibold">Notion Pages in Supabase</h2>
-      {rootBlockLinks}
+      <ul>{rootBlockLinks}</ul>
     </div>
   );
 }
