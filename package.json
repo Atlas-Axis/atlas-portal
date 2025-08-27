@@ -17,6 +17,7 @@
     "@notionhq/client": "^4.0.2",
     "@supabase/supabase-js": "^2.56.0",
     "@trigger.dev/sdk": "^4.0.1",
+    "diff": "^8.0.2",
     "framer-motion": "^12.23.12",
     "next": "15.5.0",
     "react": "19.1.0",
