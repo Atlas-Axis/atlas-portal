@@ -2,7 +2,7 @@ import { metadata, task } from '@trigger.dev/sdk/v3';
 import { importFromNotionToSupabase as importNotionToSupabase } from '@/app/server/services/notion/import-to-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { NOTION_PAGE_ID } from '../notion/_demo-data';
-import { endSyncStatus, startSyncStatus } from '../notion/reset-sync-status';
+import { endSyncStatus } from '../notion/reset-sync-status';
 import { verifySyncLock } from '../notion/verify-sync-lock';
 
 const metadataKey = 'notion_api_calls';
