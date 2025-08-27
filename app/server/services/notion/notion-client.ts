@@ -1,14 +1,20 @@
 import { Client as NotionClient } from '@notionhq/client';
 import { NotionRateLimiter } from '@/app/server/services/notion/rate-limiter';
 
-// Check for multiple secrets first, fallback to single secret for backward compatibility
-const notionSecrets =
-  process.env.NOTION_SECRETS?.split(',')
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0) || (process.env.NOTION_SECRET ? [process.env.NOTION_SECRET] : []);
+// Read Notion API keys from environment variables
+// For read operations, use the NOTION_SECRETS_READ variable (plural, as multiple keys allowed with comma separation)
+// For write operations, use the NOTION_SECRET_WRITE variable
+const notionSecretsForReading = process.env.NOTION_SECRETS_READ?.split(',')
+  .map((s) => s.trim())
+  .filter((s) => s.length > 0);
 
-if (notionSecrets.length === 0) {
-  throw new Error('Missing NOTION_SECRETS or NOTION_SECRET in environment variables');
+const notionSecretForWriting = process.env.NOTION_SECRET_WRITE;
+
+if (!notionSecretsForReading || notionSecretsForReading.length === 0) {
+  throw new Error('Missing NOTION_SECRETS_READ or NOTION_SECRET in environment variables');
+}
+if (!notionSecretForWriting) {
+  throw new Error('Missing NOTION_SECRET_WRITE in environment variables');
 }
 
 interface NotionClientWithRateLimiter {
@@ -107,15 +113,27 @@ class NotionProxy {
   }
 }
 
-// Singleton instance
-let notionProxyInstance: NotionProxy | null = null;
+// Singleton instances
+let notionProxyReadInstance: NotionProxy | null = null;
+let notionProxyWriteInstance: NotionProxy | null = null;
 
 /**
  * Get the singleton NotionProxy instance with lazy initialization
+ * @param mode - 'read' or 'write' mode to determine which Notion API key to use (read-only API access vs write API access)
  */
-export function notion(): NotionProxy {
-  if (!notionProxyInstance) {
-    notionProxyInstance = new NotionProxy(notionSecrets);
+export function notion(mode: 'read' | 'write' = 'read'): NotionProxy {
+  if (mode === 'read') {
+    if (!notionProxyReadInstance) {
+      notionProxyReadInstance = new NotionProxy(notionSecretsForReading);
+    }
+    return notionProxyReadInstance;
+  } else {
+    if (!notionProxyWriteInstance) {
+      if (!notionSecretForWriting) {
+        throw new Error('NOTION_SECRET_WRITE is undefined');
+      }
+      notionProxyWriteInstance = new NotionProxy([notionSecretForWriting]);
+    }
+    return notionProxyWriteInstance;
   }
-  return notionProxyInstance;
 }
