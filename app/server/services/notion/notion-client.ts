@@ -38,6 +38,19 @@ class NotionProxy {
       rateLimiter: new NotionRateLimiter(),
       activeRequests: 0,
     }));
+
+    // Return a Proxy that automatically intercepts property access
+    return new Proxy(this, {
+      get: (target, prop, receiver) => {
+        // If the property exists on the NotionProxy instance itself, return it
+        if (prop in target) {
+          return Reflect.get(target, prop, receiver);
+        }
+
+        // Otherwise, create a proxy for the Notion client property
+        return target.createNotionPropertyProxy(prop as keyof NotionClient);
+      },
+    }) as unknown as NotionProxy & NotionClient;
   }
 
   /**
@@ -65,41 +78,42 @@ class NotionProxy {
   }
 
   /**
-   * Proxy for notion.blocks.children.list
+   * Creates a proxy for any Notion client property (blocks, pages, databases, etc.)
    */
-  get blocks() {
-    return {
-      children: {
-        list: (params: Parameters<NotionClient['blocks']['children']['list']>[0]) =>
-          this.executeApiCall((client) => client.blocks.children.list(params)),
+  private createNotionPropertyProxy(prop: keyof NotionClient): unknown {
+    return new Proxy(
+      {},
+      {
+        get: (_, nestedProp) => {
+          return this.createNestedProxy([prop, nestedProp]);
+        },
       },
-      retrieve: (params: Parameters<NotionClient['blocks']['retrieve']>[0]) =>
-        this.executeApiCall((client) => client.blocks.retrieve(params)),
-    };
+    );
   }
 
   /**
-   * Proxy for notion.pages
+   * Creates a nested proxy that can handle arbitrarily deep property access
    */
-  get pages() {
-    return {
-      retrieve: (params: Parameters<NotionClient['pages']['retrieve']>[0]) =>
-        this.executeApiCall((client) => client.pages.retrieve(params)),
-      update: (params: Parameters<NotionClient['pages']['update']>[0]) =>
-        this.executeApiCall((client) => client.pages.update(params)),
+  private createNestedProxy(path: (string | symbol)[]): unknown {
+    // Use arrow function to preserve 'this' context
+    const proxyFunction = (...args: unknown[]) => {
+      // If called as a function, execute the API call
+      return this.executeApiCall((client: NotionClient) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let current: any = client;
+        for (const prop of path) {
+          current = current[prop];
+        }
+        return current(...args);
+      });
     };
-  }
 
-  /**
-   * Proxy for notion.databases
-   */
-  get databases() {
-    return {
-      query: (params: Parameters<NotionClient['databases']['query']>[0]) =>
-        this.executeApiCall((client) => client.databases.query(params)),
-      retrieve: (params: Parameters<NotionClient['databases']['retrieve']>[0]) =>
-        this.executeApiCall((client) => client.databases.retrieve(params)),
-    };
+    return new Proxy(proxyFunction, {
+      get: (_, nestedProp) => {
+        // If accessed as a property, extend the path and return another proxy
+        return this.createNestedProxy([...path, nestedProp]);
+      },
+    });
   }
 
   /**
@@ -121,12 +135,15 @@ let notionProxyWriteInstance: NotionProxy | null = null;
  * Get the singleton NotionProxy instance with lazy initialization
  * @param mode - 'read' or 'write' mode to determine which Notion API key to use (read-only API access vs write API access)
  */
-export function notion(mode: 'read' | 'write' = 'read'): NotionProxy {
+export function notion(mode: 'read' | 'write' = 'read'): NotionProxy & NotionClient {
   if (mode === 'read') {
     if (!notionProxyReadInstance) {
+      if (!notionSecretsForReading) {
+        throw new Error('NOTION_SECRETS_READ is undefined');
+      }
       notionProxyReadInstance = new NotionProxy(notionSecretsForReading);
     }
-    return notionProxyReadInstance;
+    return notionProxyReadInstance as NotionProxy & NotionClient;
   } else {
     if (!notionProxyWriteInstance) {
       if (!notionSecretForWriting) {
@@ -134,6 +151,6 @@ export function notion(mode: 'read' | 'write' = 'read'): NotionProxy {
       }
       notionProxyWriteInstance = new NotionProxy([notionSecretForWriting]);
     }
-    return notionProxyWriteInstance;
+    return notionProxyWriteInstance as NotionProxy & NotionClient;
   }
 }
