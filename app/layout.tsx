@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} p-3 antialiased`}>
+      <body className={`${inter.variable} antialiased`}>
         <HeroUIProvider>{children}</HeroUIProvider>
       </body>
     </html>
