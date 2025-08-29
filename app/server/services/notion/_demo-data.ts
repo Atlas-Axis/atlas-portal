@@ -1,1 +1,2 @@
-export const NOTION_PAGE_ID = '25ef758464c5802d9ef9d02d190a151c';
+export const NOTION_PAGE_ID = '25ef758464c5808db8bbdb67351fa26f';
+export const NOTION_DATABASE_ID = '25ef758464c580319597e2a98756bbc8';
