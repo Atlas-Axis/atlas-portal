@@ -1,5 +1,5 @@
 // import { v7 as uuidv7 } from 'uuid';
-import { BlockObjectResponse } from '@notionhq/client';
+import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { extractPlainText } from '@/app/server/services/notion/extract-plain-text-from-notion-block';
 import { notion } from '@/app/server/services/notion/notion-client';
@@ -18,11 +18,13 @@ export async function fetchBlocksRecursively({
   notionBlockId,
   parentNotionBlockId = null,
   rootNotionBlockId, // The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
-  editPage = null,
+  notionBlockType = '',
+  editPage = null, // TODO: document what this means
 }: {
   notionBlockId: string;
   parentNotionBlockId?: string | null;
   rootNotionBlockId: string;
+  notionBlockType: string; // TODO: Specify accepted values in type definition
   editPage?: EditPageProps | null;
 }): Promise<NotionBlock[]> {
   // On first iteration (when parentNotionBlockId is null), verify that notionBlockId matches rootNotionBlockId
@@ -39,12 +41,13 @@ export async function fetchBlocksRecursively({
   // On first iteration, fetch the root block itself
   if (parentNotionBlockId === null) {
     try {
+      // TODO: If the root block is a Page, `notion().blocks.retrieve` may not work
       const rootBlockResponse = await notion().blocks.retrieve({
         block_id: rootNotionBlockId,
       });
 
       if ('type' in rootBlockResponse) {
-        const rootBlock = mapNotionApiBlockToNotionBlock(
+        const rootBlock = mapNotionApiBlockToDatabaseObject(
           rootBlockResponse as BlockObjectResponse,
           null, // Root block has no parent
           rootNotionBlockId,
@@ -53,14 +56,17 @@ export async function fetchBlocksRecursively({
         );
 
         blocks.push(rootBlock);
-      }
+      } else console.warn(`Root block response missing 'type' field:`, rootBlockResponse);
     } catch (error) {
       throw new Error(`Failed to fetch root block "${rootNotionBlockId}": ${error}`);
     }
   }
 
+  checkUnhandledBlockType(notionBlockType);
+
   // Fetch all children blocks for the current block ID, paginated
   do {
+    // TODO: Paginate
     const response = await notion().blocks.children.list({
       block_id: notionBlockId,
       start_cursor: cursor,
@@ -71,10 +77,13 @@ export async function fetchBlocksRecursively({
 
     // Map the response results to NotionBlock database objects
     for (const block of response.results) {
-      if (!('type' in block)) continue;
+      if (!('type' in block)) {
+        console.warn('Skipping block without type field:', block);
+        continue;
+      }
 
       // Database mapping
-      const notionBlock = mapNotionApiBlockToNotionBlock(
+      const notionBlock = mapNotionApiBlockToDatabaseObject(
         block as BlockObjectResponse,
         notionBlockId, // The parent of these children is the current block we're processing
         rootNotionBlockId,
@@ -95,6 +104,7 @@ export async function fetchBlocksRecursively({
           notionBlockId: block.notion_block_id,
           parentNotionBlockId: notionBlockId, // Use the current block's ID as parent for its children
           rootNotionBlockId: rootNotionBlockId,
+          notionBlockType: block.block_type,
           editPage,
         }),
       );
@@ -114,12 +124,12 @@ export async function fetchBlocksRecursively({
 /**
  * Maps a Notion API block to a NotionBlock database object.
  */
-function mapNotionApiBlockToNotionBlock(
+function mapNotionApiBlockToDatabaseObject(
   block: BlockObjectResponse,
   parentNotionBlockId: string | null,
   rootNotionBlockId: string,
   sortOrder: number,
-  editPage?: EditPageProps | null,
+  editPageProps?: EditPageProps | null,
 ): NotionBlock {
   return {
     // Primary keys and identifiers
@@ -149,8 +159,28 @@ function mapNotionApiBlockToNotionBlock(
     updated_at: new Date(block.last_edited_time).toISOString(),
 
     // Edit Page related fields
-    belongs_to_edit_page: editPage?.belongsToEditPage || false,
-    edit_page_original_notion_block_id: editPage?.editPageOriginalNotionBlockId || null,
-    edit_page_original_notion_page_id: editPage?.editPageOriginalNotionPageId || null,
+    belongs_to_edit_page: editPageProps?.belongsToEditPage || false,
+    edit_page_original_notion_block_id: editPageProps?.editPageOriginalNotionBlockId || null,
+    edit_page_original_notion_page_id: editPageProps?.editPageOriginalNotionPageId || null,
   };
+}
+
+function checkUnhandledBlockType(notionBlockType: string) {
+  if (
+    [
+      'child_page',
+      'child_database',
+      'equation',
+      'image',
+      'link_preview',
+      'embed',
+      'video',
+      'synced_block',
+      'unsupported',
+      'pdf',
+      'file',
+    ].includes(notionBlockType)
+  ) {
+    console.warn(`Unhandled block type "${notionBlockType}".`);
+  }
 }
