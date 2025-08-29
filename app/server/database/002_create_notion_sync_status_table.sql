@@ -1,7 +1,7 @@
 -- Create the notion_sync_status table to track synchronization progress for Notion pages
 CREATE TABLE IF NOT EXISTS notion_sync_status (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(), -- Internal primary ID
-  notion_page_id UUID NOT NULL UNIQUE, -- The Notion page ID being synchronized
+  notion_page_id UUID NOT NULL UNIQUE, -- The Notion page or database ID being synchronized
   sync_status TEXT NOT NULL DEFAULT 'pending', -- Current sync status: pending, in_progress, completed, failed, cancelled
   last_sync_started_at TIMESTAMPTZ, -- When the most recent sync attempt started
   last_sync_completed_at TIMESTAMPTZ, -- When the most recent successful sync completed

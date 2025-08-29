@@ -1,5 +1,3 @@
--- Current limitation: Edit Pages can only be created from Notion pages, not subtrees
-
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- id UUID PRIMARY KEY, -- Internal primary ID
@@ -10,8 +8,10 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,
---   plain_text_content TEXT, -- Extracted plain text for easy searching
---   json_content JSONB, -- Full page content from Notion API
+  plain_text_content TEXT, -- Extracted plain text content
+  json_content JSONB, -- Rich Text content from Notion API
+  plain_text_name TEXT, -- Extracted plain text page title
+  json_name JSONB, -- Rich Text page title from Notion API
   sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
   canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created

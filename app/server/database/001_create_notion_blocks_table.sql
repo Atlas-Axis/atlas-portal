@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,
-  plain_text_content TEXT, -- Extracted plain text for easy searching
+  plain_text_content TEXT, -- Extracted plain text
   json_content JSONB, -- Full block content from Notion API
   sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
   canonical_document_title TEXT, -- Title of the Atlas document this block belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
