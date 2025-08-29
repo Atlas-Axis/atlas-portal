@@ -18,7 +18,10 @@ export async function loadNotionBlocksFromSupabase(rootNotionBlockId: string) {
       .range(page * pageSize, (page + 1) * pageSize - 1);
 
     // Check for errors
-    if (error) throw new Error(`Failed to load blocks (page ${page}): ${error.message}`);
+    if (error) {
+      console.error({ error });
+      throw new Error(`Failed to load blocks (page ${page}): ${error.message}`, { cause: error });
+    }
     if (!data || data.length === 0) break;
 
     // Add the loaded blocks to the allBlocks array
