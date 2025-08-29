@@ -1,5 +1,5 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
-import { importFromNotionToSupabase as importNotionToSupabase } from '@/app/server/services/notion/import-to-supabase';
+import { importBlocksFromNotionToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { NOTION_PAGE_ID } from '../notion/_demo-data';
 import { endSyncStatus } from '../notion/reset-sync-status';
@@ -37,7 +37,8 @@ export const notionFullPageSyncTask = task({
 
     try {
       // Start the sync process
-      const result = await importNotionToSupabase({
+      const result = await importBlocksFromNotionToSupabase({
+        notionPageId: NOTION_PAGE_ID,
         taskRunId,
       });
 

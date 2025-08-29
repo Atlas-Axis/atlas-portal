@@ -1,10 +1,11 @@
 'use server';
 
-import { importFromNotionToSupabase } from '@/app/server/services/notion/import-to-supabase';
+import { NOTION_PAGE_ID } from '@/app/server/services/notion/_demo-data';
+import { importBlocksFromNotionToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
 
 export async function importNotionPageAction() {
   try {
-    await importFromNotionToSupabase({ taskRunId: '' });
+    await importBlocksFromNotionToSupabase({ notionPageId: NOTION_PAGE_ID, taskRunId: '' });
 
     return {
       success: true,

@@ -26,7 +26,7 @@ interface NotionClientWithRateLimiter {
 /**
  * Notion proxy that manages multiple API clients with rate limiting and load balancing
  */
-class NotionProxy {
+export class NotionProxy {
   private clients: NotionClientWithRateLimiter[] = [];
   private totalApiCalls = 0;
 
