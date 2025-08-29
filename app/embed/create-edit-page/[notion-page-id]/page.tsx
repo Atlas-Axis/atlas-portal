@@ -1,9 +1,10 @@
 import { Alert } from '@heroui/alert';
 import { APIResponseError, PageObjectResponse } from '@notionhq/client';
 import { notion } from '@/app/server/services/notion/notion-client';
+import ActionButton from './action-button';
 
 export async function loadPage(notionPageId: string) {
-  const response = (await notion().pages.retrieve({
+  const response = (await notion('read').pages.retrieve({
     page_id: notionPageId,
   })) as PageObjectResponse;
 
@@ -38,9 +39,9 @@ export default async function Page({ params }: { params: Promise<{ 'notion-page-
   // await createPage();
 
   return (
-    <div>
-      <h1 className="mb-3 text-2xl font-bold">Edit Page Diff</h1>
-      <h2>{getPageTitle(page)}</h2>
+    <div className="flex flex-col items-center">
+      <h1 className="mb-3 text-2xl font-bold">{getPageTitle(page)}</h1>
+      <ActionButton />
     </div>
   );
 }
