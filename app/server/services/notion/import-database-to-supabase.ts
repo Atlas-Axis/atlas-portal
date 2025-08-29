@@ -1,6 +1,8 @@
 import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { DatabaseSubItemTree, fetchDatabaseTree } from './fetch-database-sub-items';
 import { endSyncStatus, startSyncStatus } from './reset-sync-status';
 import { verifySyncLock } from './verify-sync-lock';
@@ -118,19 +120,24 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
     const subPageIds = pageIdToSubPageIds.get(pageId) || [];
 
     // Extract page title - similar to how blocks extract plain text
-    const pageTitle = extractPageTitle(notionPage);
+    const pageTitle = extractPageTitle(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].name);
+    const content = extractContent(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].content);
 
     const page: NotionDatabasePage = {
       notion_page_id: pageId,
       parent_notion_page_id: parentId,
       root_notion_database_id: notionDatabaseId,
+      plain_text_name: pageTitle.plainText,
+      json_name: pageTitle.richText,
+      plain_text_content: content.plainText,
+      json_content: content.richText,
       page_type: 'page', // All pages in a database are database pages // TODO: verify
       has_children: subPageIds.length > 0,
       archived: notionPage.archived,
       in_trash: notionPage.in_trash,
       last_edited_by_user_id: notionPage.last_edited_by?.id || null,
       sort_order: getNextSortOrder(parentId),
-      canonical_document_title: pageTitle,
+      canonical_document_title: pageTitle.plainText,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
       belongs_to_edit_page: false, // Default to false, can be updated later for edit pages
@@ -144,15 +151,48 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
   return pages;
 }
 
-/**
- * Extract page title from Notion page object
- */
-function extractPageTitle(page: PageObjectResponse): string | null {
-  // Check for title property in page properties
-  for (const [, property] of Object.entries(page.properties)) {
-    if (property.type === 'title' && property.title.length > 0) {
-      return property.title.map((text) => text.plain_text).join('');
+function extractPageTitle(
+  page: PageObjectResponse,
+  titlePropertyName: string,
+): {
+  plainText: string | null;
+  richText: Json[] | null;
+} {
+  for (const [propertyName, property] of Object.entries(page.properties)) {
+    if (propertyName === titlePropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
+      return {
+        plainText: property['rich_text'][0]?.plain_text || null,
+        richText: property['rich_text'],
+      };
     }
+    if (propertyName === titlePropertyName && !('rich_text' in property && property['rich_text'].length > 0))
+      console.warn(`Property "${propertyName}" is not a rich_text property or is empty.`);
   }
-  return null;
+  return {
+    plainText: null,
+    richText: null,
+  };
+}
+
+function extractContent(
+  page: PageObjectResponse,
+  contentPropertyName: string,
+): {
+  plainText: string | null;
+  richText: Json[] | null;
+} {
+  for (const [propertyName, property] of Object.entries(page.properties)) {
+    if (propertyName === contentPropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
+      return {
+        plainText: property['rich_text'][0]?.plain_text || null,
+        richText: property['rich_text'],
+      };
+    }
+    if (propertyName === contentPropertyName && !('rich_text' in property && property['rich_text'].length > 0))
+      console.warn(`Property "${propertyName}" is not a rich_text property or is empty.`);
+  }
+  return {
+    plainText: null,
+    richText: null,
+  };
 }

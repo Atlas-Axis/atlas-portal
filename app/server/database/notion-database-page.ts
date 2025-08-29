@@ -1,3 +1,5 @@
+import { Json } from '@/app/server/services/supabase/database.types';
+
 // Represents a Notion page in the database
 export interface NotionDatabasePage {
   // Primary keys and identifiers
@@ -11,6 +13,12 @@ export interface NotionDatabasePage {
   archived: boolean;
   in_trash: boolean;
   last_edited_by_user_id?: string | null; // ID of the Notion user who last edited this page
+
+  // Content fields
+  plain_text_name?: string | null; // Extracted plain text page title
+  json_name: Json; // JSONB - Full block content from Notion API
+  plain_text_content?: string | null; // Extracted plain text for easy searching
+  json_content: Json; // JSONB - Full block content from Notion API
 
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)
