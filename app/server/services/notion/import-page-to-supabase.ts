@@ -50,7 +50,7 @@ export async function importBlocksFromNotionToSupabase({
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
     await endSyncStatus({
-      notionPageId: notionPageId,
+      notionPageId,
       syncStatus: 'completed',
       syncErrorMessage: null,
       blocksSyncedCount: blocks.length,
@@ -63,7 +63,7 @@ export async function importBlocksFromNotionToSupabase({
     console.error(`❌ Import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`, error);
 
     await endSyncStatus({
-      notionPageId: notionPageId,
+      notionPageId,
       syncStatus: 'failed',
       syncErrorMessage: JSON.stringify(error),
       blocksSyncedCount: null,
