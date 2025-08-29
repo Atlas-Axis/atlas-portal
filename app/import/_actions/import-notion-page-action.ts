@@ -15,8 +15,7 @@ export async function importNotionPageAction() {
     console.error('Failed to import Notion page:', error);
     return {
       success: false,
-      message: 'Failed to import Notion page',
-      error: error instanceof Error ? error.message : 'Unknown error',
+      message: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 }
