@@ -76,6 +76,68 @@ export type Database = {
           },
         ];
       };
+      notion_database_pages: {
+        Row: {
+          archived: boolean;
+          belongs_to_edit_page: boolean;
+          canonical_document_title: string | null;
+          created_at: string;
+          edit_page_original_notion_page_id: string | null;
+          edit_page_original_root_notion_page_id: string | null;
+          has_children: boolean;
+          in_trash: boolean;
+          last_edited_by_user_id: string | null;
+          notion_page_id: string;
+          page_type: string;
+          parent_notion_page_id: string | null;
+          root_notion_database_id: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          archived?: boolean;
+          belongs_to_edit_page?: boolean;
+          canonical_document_title?: string | null;
+          created_at?: string;
+          edit_page_original_notion_page_id?: string | null;
+          edit_page_original_root_notion_page_id?: string | null;
+          has_children?: boolean;
+          in_trash?: boolean;
+          last_edited_by_user_id?: string | null;
+          notion_page_id: string;
+          page_type: string;
+          parent_notion_page_id?: string | null;
+          root_notion_database_id: string;
+          sort_order: number;
+          updated_at?: string;
+        };
+        Update: {
+          archived?: boolean;
+          belongs_to_edit_page?: boolean;
+          canonical_document_title?: string | null;
+          created_at?: string;
+          edit_page_original_notion_page_id?: string | null;
+          edit_page_original_root_notion_page_id?: string | null;
+          has_children?: boolean;
+          in_trash?: boolean;
+          last_edited_by_user_id?: string | null;
+          notion_page_id?: string;
+          page_type?: string;
+          parent_notion_page_id?: string | null;
+          root_notion_database_id?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'fk_parent_page';
+            columns: ['parent_notion_page_id'];
+            isOneToOne: false;
+            referencedRelation: 'notion_database_pages';
+            referencedColumns: ['notion_page_id'];
+          },
+        ];
+      };
       notion_sync_status: {
         Row: {
           blocks_synced_count: number | null;
