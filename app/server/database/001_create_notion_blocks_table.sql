@@ -1,5 +1,3 @@
--- Current limitation: Edit Pages can only be created from Notion pages, not subtrees
-
 -- Create the notion_blocks table to store synchronized blocks from Notion
 CREATE TABLE IF NOT EXISTS notion_blocks (
   -- id UUID PRIMARY KEY, -- Internal primary ID
