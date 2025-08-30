@@ -1,29 +1,64 @@
 import Link from 'next/link';
+import { Divider, Spacer } from '@heroui/react';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export default async function Page() {
-  // Load root Notion block ids from Supabase and convert them to links to subpages
-  const { data: rootBlocks, error } = await supabase
+  // Load root Notion blocks from Supabase and convert them to links to subpages
+  const { data: rootBlocks, error: rootBlocksError } = await supabase
     .from('notion_blocks')
     .select('notion_block_id, plain_text_content')
     .is('parent_notion_block_id', null);
 
-  if (error) {
-    return <p className="text-red-500">Failed to load Notion pages: {error.message || String(error)}</p>;
+  // Load root Notion databases from Supabase
+  const { data: rootDatabasePages, error: rootDatabasesError } = await supabase
+    .from('notion_database_pages')
+    .select('root_notion_database_id')
+    .is('parent_notion_page_id', null);
+  const databaseIds = [...new Set((rootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
+
+  if (rootBlocksError) {
+    return (
+      <p className="text-red-500">Failed to load Notion pages: {rootBlocksError.message || String(rootBlocksError)}</p>
+    );
+  }
+  if (rootDatabasesError) {
+    return (
+      <p className="text-red-500">
+        Failed to load Notion databases: {rootDatabasesError.message || String(rootDatabasesError)}
+      </p>
+    );
   }
 
   const rootBlockLinks = rootBlocks.map((block) => (
     <li key={block.notion_block_id}>
-      <Link href={`/visualize/${block.notion_block_id}`} className="font-semibold text-indigo-500 hover:underline">
+      <Link
+        href={`/visualize/blocks/${block.notion_block_id}`}
+        className="font-semibold text-indigo-500 hover:underline"
+      >
         👉 {block.plain_text_content}
       </Link>
     </li>
   ));
 
+  const rootDatabasePageLinks = databaseIds.map((db) => (
+    <li key={db}>
+      <Link href={`/visualize/database/${db}`} className="font-semibold text-indigo-500 hover:underline">
+        👉 {db}
+      </Link>
+    </li>
+  ));
+
   return (
-    <div>
+    <div className="p-6">
       <h2 className="mb-4 text-lg font-semibold">Notion Pages in Supabase</h2>
       <ul>{rootBlockLinks}</ul>
+
+      <Spacer y={9} />
+      <Divider />
+      <Spacer y={9} />
+
+      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase</h2>
+      <ul>{rootDatabasePageLinks}</ul>
     </div>
   );
 }

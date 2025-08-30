@@ -17,8 +17,10 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this page
+
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
+
   -- Edit Page related fields
   belongs_to_edit_page BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the page belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
