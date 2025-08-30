@@ -122,6 +122,10 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
     // Extract page title - similar to how blocks extract plain text
     const pageTitle = extractPageTitle(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].name);
     const content = extractContent(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].content);
+    const documentIdString = extractDocumentIdString(
+      notionPage,
+      NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].docNo,
+    );
 
     const page: NotionDatabasePage = {
       notion_page_id: pageId,
@@ -137,7 +141,7 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
       in_trash: notionPage.in_trash,
       last_edited_by_user_id: notionPage.last_edited_by?.id || null,
       sort_order: getNextSortOrder(parentId),
-      canonical_document_title: pageTitle.plainText,
+      canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
       belongs_to_edit_page: false, // Default to false, can be updated later for edit pages
@@ -195,4 +199,13 @@ function extractContent(
     plainText: null,
     richText: null,
   };
+}
+
+function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: string): string | null {
+  const docNoProperty = page.properties[docNoPropertyName];
+  if (docNoProperty && 'title' in docNoProperty && docNoProperty['title'].length > 0) {
+    return docNoProperty['title'][0]?.plain_text || null;
+  }
+  console.warn(`Property "${docNoPropertyName}" is not a title property or is empty.`);
+  return null;
 }
