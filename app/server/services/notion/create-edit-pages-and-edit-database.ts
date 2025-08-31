@@ -67,7 +67,24 @@ export async function createNotionEditPagesAndDatabase({
     // Step 2: Build tree structure and extract subtree
     console.log('Step 2: Building tree structure and extracting subtree...');
     const treeNodes = convertSupabaseDatabasePagesToTreeNodes(allPages);
-    const tree = buildTree(treeNodes);
+
+    // Add a dummy root node to connect all top-level pages, solving the multiple roots issue. This node will be omitted later anyway
+    const dummyRootId = '__DUMMY_ROOT__';
+    const dummyRootNode: TreeNode = {
+      id: dummyRootId,
+      parentId: null,
+      blockType: 'dummy_root',
+      sortOrder: 0,
+      rootNotionBlockId: originalNotionDatabaseId,
+    };
+
+    // Make all current root nodes (parentId === null) children of the dummy root
+    const treeNodesWithDummyRoot = treeNodes.map((node) =>
+      node.parentId === null ? { ...node, parentId: dummyRootId } : node,
+    );
+    treeNodesWithDummyRoot.unshift(dummyRootNode);
+
+    const tree = buildTree(treeNodesWithDummyRoot);
     const pageIdMap = new Map(allPages.map((page) => [page.notion_page_id, page]));
 
     // Extract subtree starting from rootNotionPageId using efficient tree traversal
