@@ -111,10 +111,14 @@ export async function createNotionEditPagesAndDatabase({
     console.log('Step 4: Creating new Notion database...');
     const newDatabaseTitle = `${originalDatabaseTitle} - Edit Copy`;
 
-    // Use provided whitelist or default to common properties
-    const defaultWhitelist = ['Name', 'Content', 'Doc No (or Temp Name)', 'Sub-item'];
-    const effectiveWhitelist = propertyWhitelist || defaultWhitelist; // TODO: Make sure this always includes Sub-items
+    // Use provided whitelist or default to common properties (excluding Sub-item which is handled separately)
+    const defaultWhitelist = ['Name', 'Content', 'Doc No (or Temp Name)'];
+    const baseWhitelist = propertyWhitelist || defaultWhitelist;
+
+    // Remove Sub-item from whitelist if present, as it's handled separately as a relation property
+    const effectiveWhitelist = baseWhitelist.filter((prop) => prop !== 'Sub-item');
     console.log(`Using property whitelist: ${effectiveWhitelist.join(', ')}`);
+    console.log(`Sub-item property will be added separately as a self-referential dual relation`);
 
     const newDatabase = await createDatabase(originalDatabase, newDatabaseTitle, effectiveWhitelist, parent);
     newDatabaseId = newDatabase.id;
@@ -123,7 +127,7 @@ export async function createNotionEditPagesAndDatabase({
 
     // Step 5: Create database pages in Notion
     console.log('Step 5: Creating database pages...');
-    const pageIdMapping = await createDatabasePages(newDatabaseId, subtreePages, rootNotionPageId);
+    const pageIdMapping = await createDatabasePages(newDatabase.id, subtreePages, rootNotionPageId);
 
     console.log(`Created ${pageIdMapping.size} pages in new database`);
 
@@ -253,7 +257,43 @@ async function createDatabase(
   };
 
   const newDatabase = await notion('write').databases.create(createParams);
-  return newDatabase as DatabaseObjectResponse;
+
+  // Add Sub-item relation property after database creation (required for self-referential relations)
+  // Create a new Sub-item dual relation property that will auto-create a mirrored "Parent" property
+  const subItemPropName = 'Sub-item';
+  console.log(`Adding Sub-item dual relation property to reference new database: ${newDatabase.id}`);
+
+  try {
+    await notion('write').databases.update({
+      database_id: newDatabase.id,
+      properties: {
+        [subItemPropName]: {
+          type: 'relation',
+          relation: {
+            database_id: newDatabase.id,
+            type: 'dual_property',
+            dual_property: {
+              synced_property_name: 'Parent item',
+            },
+          },
+        } as unknown as CreateDatabaseParameters['properties'][string], // Type assertion needed due to outdated Notion API types
+      },
+    });
+    console.log('Sub-item relation property added successfully with Parent item as mirrored property');
+  } catch (error) {
+    console.error('Failed to add Sub-item relation property:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
+    throw error;
+  }
+
+  // Retrieve the updated database to see what properties were actually created
+  const updatedDatabase = (await notion('read').databases.retrieve({
+    database_id: newDatabase.id,
+  })) as DatabaseObjectResponse;
+
+  console.log(`Database properties after dual relation setup:`, Object.keys(updatedDatabase.properties));
+
+  return updatedDatabase;
 }
 
 /**
@@ -265,6 +305,21 @@ async function createDatabasePages(
   subtreePages: NotionDatabasePage[],
   rootPageId: string,
 ): Promise<Map<string, string>> {
+  // Since we explicitly created the dual relation with "Parent item" as the mirrored property name,
+  // we can now use "Parent item" directly instead of trying to detect it
+  const parentPropertyName = 'Parent item';
+  console.log(`Using parent property name: ${parentPropertyName} (explicitly created via dual relation)`);
+
+  // Debug: Get the current database schema to see what relation properties exist
+  const currentDatabase = (await notion('read').databases.retrieve({
+    database_id: newDatabaseId,
+  })) as DatabaseObjectResponse;
+
+  const relationProperties = Object.entries(currentDatabase.properties).filter(([, prop]) => prop.type === 'relation');
+  console.log(
+    `Available relation properties:`,
+    relationProperties.map(([name]) => name),
+  );
   // new page ID -> original page ID
   const newToOriginalPageIdMapping = new Map<string, string>();
   const originalToNewPageIdMapping = new Map<string, string>(); // original page ID -> new page ID
@@ -293,16 +348,13 @@ async function createDatabasePages(
     }
 
     // Create the page
-    const newPageId = await createSinglePage(newDatabaseId, originalPage);
+    const newPageId = await createSinglePage(newDatabaseId, originalPage, newParentId, parentPropertyName);
 
     newToOriginalPageIdMapping.set(newPageId, originalPageId);
     originalToNewPageIdMapping.set(originalPageId, newPageId);
     processedPagesIds.add(originalPageId);
 
-    // Update parent's Sub-item property if there's a parent
-    if (newParentId) {
-      await updateParentSubItems(newParentId, newPageId);
-    }
+    // Note: No need to manually update parent's Sub-item property - the dual relation handles this automatically
 
     // Now create all children of this page
     const children = subtreePages.filter((p) => p.parent_notion_page_id === originalPageId);
@@ -329,7 +381,12 @@ async function createDatabasePages(
 /**
  * Create a single page in the new database
  */
-async function createSinglePage(databaseId: string, originalPage: NotionDatabasePage): Promise<string> {
+async function createSinglePage(
+  databaseId: string,
+  originalPage: NotionDatabasePage,
+  parentPageId?: string | null,
+  parentPropertyName?: string,
+): Promise<string> {
   const propertyNames = NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'];
 
   // Build properties object
@@ -374,7 +431,18 @@ async function createSinglePage(databaseId: string, originalPage: NotionDatabase
     };
   }
 
-  // Note: Sub-item relationships will be set separately by updating parent pages
+  // Set the Parent property if this page has a parent
+  // This will automatically update the parent's Sub-item property due to the dual relation
+  if (parentPageId && parentPropertyName) {
+    console.log(
+      `Setting ${parentPropertyName} relation for page ${originalPage.plain_text_name} to parent ${parentPageId}`,
+    );
+    properties[parentPropertyName] = {
+      relation: [{ id: parentPageId }],
+    };
+  } else if (parentPageId && !parentPropertyName) {
+    console.warn(`Parent page ID provided but no parent property name found - skipping parent relation setup`);
+  }
 
   const createParams: CreatePageParameters = {
     parent: {
@@ -386,39 +454,4 @@ async function createSinglePage(databaseId: string, originalPage: NotionDatabase
 
   const newPage = await notion('write').pages.create(createParams);
   return newPage.id;
-}
-
-/**
- * Update a parent page's Sub-item property to include a new child
- */
-async function updateParentSubItems(parentPageId: string, childPageId: string): Promise<void> {
-  const propertyNames = NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs']; // TODO: Make this dynamic
-
-  // Get current sub-items from the parent page
-  const parentPage = await notion('read').pages.retrieve({ page_id: parentPageId });
-  if (!('properties' in parentPage)) {
-    throw new Error(`Parent page ${parentPageId} is not a database page`);
-  }
-
-  const subItemProperty = parentPage.properties[propertyNames.subItem];
-  const existingSubItems: string[] = [];
-
-  if (subItemProperty && 'relation' in subItemProperty && subItemProperty.relation) {
-    existingSubItems.push(...subItemProperty.relation.map((rel) => rel.id));
-  }
-
-  // Add the new child if not already present
-  if (!existingSubItems.includes(childPageId)) {
-    existingSubItems.push(childPageId);
-
-    // Update the parent page with the new sub-items list
-    await notion('write').pages.update({
-      page_id: parentPageId,
-      properties: {
-        [propertyNames.subItem]: {
-          relation: existingSubItems.map((id) => ({ id })),
-        },
-      },
-    });
-  }
 }
