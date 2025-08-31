@@ -82,8 +82,8 @@ export type Database = {
           belongs_to_edit_page: boolean;
           canonical_document_title: string | null;
           created_at: string;
+          edit_page_original_notion_database_id: string | null;
           edit_page_original_notion_page_id: string | null;
-          edit_page_original_root_notion_page_id: string | null;
           has_children: boolean;
           in_trash: boolean;
           json_content: Json | null;
@@ -103,8 +103,8 @@ export type Database = {
           belongs_to_edit_page?: boolean;
           canonical_document_title?: string | null;
           created_at?: string;
+          edit_page_original_notion_database_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
-          edit_page_original_root_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
@@ -124,8 +124,8 @@ export type Database = {
           belongs_to_edit_page?: boolean;
           canonical_document_title?: string | null;
           created_at?: string;
+          edit_page_original_notion_database_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
-          edit_page_original_root_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;

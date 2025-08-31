@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- Edit Page related fields
   belongs_to_edit_page BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the page belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
-  edit_page_original_root_notion_page_id UUID, -- ID of the original root Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
+  edit_page_original_notion_database_id UUID, -- ID of the original root Notion database that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
 
   -- Cascade-delete child pages when the parent page is deleted
   CONSTRAINT fk_parent_page FOREIGN KEY (parent_notion_page_id) REFERENCES notion_database_pages(notion_page_id) ON DELETE CASCADE  
@@ -76,7 +76,7 @@ CHECK (sort_order >= 0);
 -- Ensure edit page fields are consistent with belongs_to_edit_page flag
 ALTER TABLE notion_database_pages ADD CONSTRAINT check_edit_page_fields_consistency
 CHECK (
-  (belongs_to_edit_page = true AND edit_page_original_notion_page_id IS NOT NULL AND edit_page_original_root_notion_page_id IS NOT NULL)
+  (belongs_to_edit_page = true AND edit_page_original_notion_page_id IS NOT NULL AND edit_page_original_notion_database_id IS NOT NULL)
   OR
-  (belongs_to_edit_page = false AND edit_page_original_notion_page_id IS NULL AND edit_page_original_root_notion_page_id IS NULL)
+  (belongs_to_edit_page = false AND edit_page_original_notion_page_id IS NULL AND edit_page_original_notion_database_id IS NULL)
 );

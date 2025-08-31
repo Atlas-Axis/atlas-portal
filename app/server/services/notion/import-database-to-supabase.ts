@@ -146,7 +146,7 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
       updated_at: notionPage.last_edited_time,
       belongs_to_edit_page: false, // Default to false, can be updated later for edit pages
       edit_page_original_notion_page_id: null,
-      edit_page_original_root_notion_page_id: null,
+      edit_page_original_notion_database_id: null,
     };
 
     pages.push(page);

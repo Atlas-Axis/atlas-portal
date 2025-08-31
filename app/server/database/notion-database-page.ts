@@ -33,5 +33,5 @@ export interface NotionDatabasePage {
   // Edit Page related fields
   belongs_to_edit_page: boolean; // Indicates if the page belongs to an Edit Page
   edit_page_original_notion_page_id?: string | null; // ID of the original Notion page that this editable copy has been duplicated from
-  edit_page_original_root_notion_page_id?: string | null; // ID of the original root Notion page that this editable copy has been duplicated from
+  edit_page_original_notion_database_id?: string | null; // ID of the original root Notion database that this editable copy has been duplicated from
 }
