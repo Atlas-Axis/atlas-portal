@@ -3,7 +3,7 @@ import { Card, CardBody, CardHeader } from '@heroui/card';
 import { Divider } from '@heroui/divider';
 import {
   NOTION_DATABASE_ID,
-  NOTION_EDIT_PAGES_DATABASE_ID,
+  NOTION_EDIT_PAGES_CONTAINING_PAGE_ID,
   NOTION_PAGE_ID,
 } from '@/app/server/services/notion/_demo-data';
 import { createNotionEditPagesAndDatabase } from '@/app/server/services/notion/create-edit-pages-and-edit-database';
@@ -20,8 +20,8 @@ async function testCreateEditDatabase() {
       taskRunId: `test-${Date.now()}`,
       propertyWhitelist: ['Name', 'Content', 'Doc No (or Temp Name)'], // TODO: Adjust
       parent: {
-        type: 'database_id',
-        database_id: NOTION_EDIT_PAGES_DATABASE_ID,
+        type: 'page_id',
+        page_id: NOTION_EDIT_PAGES_CONTAINING_PAGE_ID,
       },
     });
 
