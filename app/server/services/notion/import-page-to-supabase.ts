@@ -31,7 +31,7 @@ export async function importBlocksFromNotionToSupabase({
       notionBlockType: '',
     });
 
-    console.log({ blocks: blocks.map((block) => ({ ...block, json_content: JSON.stringify(block.json_content) })) });
+    // console.log({ blocks: blocks.map((block) => ({ ...block, json_content: JSON.stringify(block.json_content) })) });
 
     console.log(`Fetched ${blocks.length} blocks from Notion page ${notionPageId}`);
 

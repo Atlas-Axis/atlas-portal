@@ -33,7 +33,7 @@ export async function fetchDatabaseTree(
   const allPages = await fetchAllDatabasePages(databaseId);
 
   console.log(`Fetched ${allPages.length} pages from database ${databaseId}`);
-  console.log({ allPages: allPages.map((page) => ({ ...page, properties: JSON.stringify(page.properties) })) });
+  // console.log({ allPages: allPages.map((page) => ({ ...page, properties: JSON.stringify(page.properties) })) });
 
   // 2) Build id->page map and read inline relation snippets (up to 25) cheaply
   const pagesById = new Map<string, PageObjectResponse>();

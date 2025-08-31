@@ -113,7 +113,7 @@ export async function createNotionEditPagesAndDatabase({
 
     // Use provided whitelist or default to common properties
     const defaultWhitelist = ['Name', 'Content', 'Doc No (or Temp Name)', 'Sub-item'];
-    const effectiveWhitelist = propertyWhitelist || defaultWhitelist;
+    const effectiveWhitelist = propertyWhitelist || defaultWhitelist; // TODO: Make sure this always includes Sub-items
     console.log(`Using property whitelist: ${effectiveWhitelist.join(', ')}`);
 
     const newDatabase = await createDatabase(originalDatabase, newDatabaseTitle, effectiveWhitelist, parent);
