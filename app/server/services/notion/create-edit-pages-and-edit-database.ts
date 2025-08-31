@@ -92,6 +92,11 @@ export async function createNotionEditPagesAndDatabase({
     const subtreePages = subtreePageIds.map((pageId: string) => pageIdMap.get(pageId)!).filter(Boolean);
 
     console.log(`Extracted subtree with ${subtreePages.length} pages`);
+    console.log(`Subtree page IDs: ${subtreePageIds.join(', ')}`);
+    console.log(
+      `Subtree pages found:`,
+      subtreePages.map((p) => `${p.notion_page_id} (${p.plain_text_name})`),
+    );
 
     // Step 3: Retrieve original database schema
     console.log('Step 3: Retrieving original database schema...');
@@ -279,6 +284,8 @@ async function createDatabasePages(
       throw new Error(`Page ${originalPageId} not found in subtree`);
     }
 
+    console.log(`Creating page: ${originalPageId} (${originalPage.plain_text_name})`);
+
     // Create parent first if it exists and is in our subtree
     let newParentId: string | null = null;
     if (originalPage.parent_notion_page_id && pagesByOriginalId.has(originalPage.parent_notion_page_id)) {
@@ -297,11 +304,24 @@ async function createDatabasePages(
       await updateParentSubItems(newParentId, newPageId);
     }
 
+    // Now create all children of this page
+    const children = subtreePages.filter((p) => p.parent_notion_page_id === originalPageId);
+    for (const child of children) {
+      if (!processedPagesIds.has(child.notion_page_id)) {
+        await createPageRecursively(child.notion_page_id);
+      }
+    }
+
     return newPageId;
   }
 
-  // Start with the root page
+  // Start with the root page - this will recursively create all descendants
+  console.log(`Starting page creation with root page: ${rootPageId}`);
   await createPageRecursively(rootPageId);
+
+  console.log(`Processed ${processedPagesIds.size} pages total`);
+  console.log(`Processed page IDs:`, Array.from(processedPagesIds));
+  console.log(`Expected to process ${subtreePages.length} pages`);
 
   return newToOriginalPageIdMapping;
 }
