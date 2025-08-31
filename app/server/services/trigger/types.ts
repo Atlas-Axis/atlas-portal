@@ -1,0 +1,15 @@
+export type TaskRunStatus =
+  | 'WAITING_FOR_DEPLOY'
+  | 'QUEUED'
+  | 'EXECUTING'
+  | 'REATTEMPTING'
+  | 'FROZEN'
+  | 'COMPLETED'
+  | 'CANCELED'
+  | 'FAILED'
+  | 'CRASHED'
+  | 'INTERRUPTED'
+  | 'SYSTEM_FAILURE'
+  | 'DELAYED'
+  | 'EXPIRED'
+  | 'TIMED_OUT';
