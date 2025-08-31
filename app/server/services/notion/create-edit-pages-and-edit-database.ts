@@ -6,10 +6,10 @@ import type {
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/diff/convert-supabase-database-pages-to-tree-nodes';
 import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { importDatabasePagesFromNotionToSupabase } from './import-database-to-supabase';
-import { notion } from './notion-client';
 
 export interface CreateEditDatabaseResult {
   newDatabaseId: string;

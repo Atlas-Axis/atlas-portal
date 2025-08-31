@@ -164,7 +164,7 @@ export class NotionRateLimiter {
     this.processingLock = true;
     this.processing = true;
 
-    this.log('info', `Starting queue processing with ${this.queue.length} tasks`);
+    // this.log('info', `Starting queue processing with ${this.queue.length} tasks`);
 
     try {
       while (this.queue.length > 0) {
@@ -180,7 +180,7 @@ export class NotionRateLimiter {
         }
       }
 
-      this.log('info', 'Queue processing completed successfully');
+      // this.log('info', 'Queue processing completed successfully');
     } catch (error) {
       this.log('error', 'Critical error during queue processing', { error });
     } finally {
