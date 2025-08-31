@@ -1,59 +1,191 @@
-# Project overview
+# Project Overview
 
-This Next.js application synchronizes Notion pages with a Supabase database, and tracks changes using tree diffing algorithms.
+This Next.js application enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents (laws) organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing changes to Supabase, and visualizing differences using tree diffing algorithms.
 
-# Core Architecture & Tech Stack
+## Core Workflow
+
+1. **Import**: Sync original Notion databases/pages to Supabase
+2. **Edit**: Create temporary duplicate Notion pages for editing
+3. **Track**: Sync edited pages back to Supabase (stored separately)
+4. **Diff**: Compare original vs edited content using tree algorithms
+5. **Review**: Display human-readable diffs of proposed changes
+
+# Tech Stack
 
 ## Framework & Runtime
 
-- Next.js 15 with App Router, server side rendering
+- Next.js 15 with App Router, server-side rendering
 - TypeScript with strict type-safety
 - Node.js (v20.19)
 
-## Styling & UI Components
+## UI & Styling
 
-- HeroUI (formerly called NextUI) - UI component library for React
+- HeroUI (NextUI) - React component library
 - Tailwind CSS
-- Lucide React (Icon library)
-- tailwind-merge (cn helper) - Conditional CSS class name utilities
+- Lucide React icons
+- tailwind-merge (cn helper) for conditional classes
 
-## Database & ORM
+## Database & Storage
 
-- Supabase (PostgreSQL database with client-side interactions and image storage)
-- PostgreSQL - Primary database with schemas: public
+- Supabase (PostgreSQL database)
+- PostgreSQL with public schema
 
-## Authentication & Authorization
+## Background Jobs
 
-- No authentication or authorization mechanisms are implemented.
-
-## Infrastructure & Deployment
-
-- Vercel (Hosting and deployment platform)
-- Sentry (Error tracking)
-- GitHub Actions (CI/CD pipeline)
-
-## Additional Services and Tools
-
-- Trigger.dev (Background tasks and workflow automation)
-- Zod (TypeScript-first schema validation library) - Used for form validation and data validation
+- Trigger.dev - For background sync tasks
+- Manual triggers via UI buttons (future: automated)
 
 ## Development Tools
 
-- ESLint (Code linting)
-- Prettier (Code formatting)
+- ESLint, Prettier
 - Husky (Git hooks)
-- Vitest (Testing framework)
+- Vitest (Testing)
 
-# Project Structure
+# Database Schema
 
-## App Directory Structure (`/app`)
+## Core Tables (Detailed)
 
-- **Server-Side Code**: The `/app/server` folder contains server-side logic, e.g. Notion API, and Supabase related code
-  - **Notion API**: The `/app/server/services/notion` folder contains code related to the Notion API integration.
-  - **Supabase**: The `/app/server/services/supabase` folder contains code related to the Supabase integration.
-  - **Trigger**: The `/app/server/services/trigger` folder contains code related to the Trigger.dev integration.
-  - **Atlas**: The `/app/server/services/atlas` folder contains custom business code, internal logic, and utilities.
-  - **Database**: The `/app/server/database` folder contains database-related code, including schema definitions and type definitions.
-- **Pages**: The `/app`, folder contains the main application pages
-  - **Notion-Embeddable UI Widgets**: The `/app/embed` folder contains UI components that can be embedded in Notion pages as iframes.
-  - **Import**: The `/app/import/page.tsx` file exports the import page component.
+### `notion_blocks`
+
+Stores Notion page content as hierarchical blocks. This is the primary table for storing page content.
+
+**Key Fields:**
+
+- `notion_block_id` (UUID, PRIMARY KEY) - Notion's unique block identifier
+- `parent_notion_block_id` (UUID) - Parent block ID, NULL for root blocks. Has CASCADE DELETE constraint
+- `root_notion_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
+- `block_type` (TEXT, NOT NULL) - Block type: paragraph, heading_1, heading_2, heading_3, bulleted_list_item, numbered_list_item, etc.
+- `has_children` (BOOLEAN) - Whether the block contains nested blocks
+- `archived` (BOOLEAN) - Notion archive status
+- `in_trash` (BOOLEAN) - Notion trash status
+- `plain_text_content` (TEXT) - Extracted plain text for searching/display
+- `json_content` (JSONB) - Full rich content from Notion API (formatting, links, etc.)
+- `sort_order` (INTEGER, NOT NULL) - Position within parent (0-indexed) for maintaining order
+- `canonical_document_title` (TEXT) - Atlas document identifier (e.g., "A.2.3.21")
+- `created_at` (TIMESTAMPTZ) - Database row creation time
+- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
+- `last_edited_by_user_id` (TEXT) - Notion user ID who last edited
+
+**Edit Page Fields:**
+
+- `belongs_to_edit_page` (BOOLEAN, DEFAULT TRUE) - Whether this is an edit copy
+- `edit_page_original_notion_block_id` (UUID) - Links to original block being edited
+- `edit_page_original_notion_page_id` (UUID) - Links to original page being edited
+
+**Cascade deletes:**
+
+- Foreign key: parent_notion_block_id CASCADE DELETE
+
+### `notion_database_pages`
+
+Stores Notion database pages and their hierarchical relationships. Structure mirrors notion_blocks.
+
+**Key Fields:**
+
+- `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
+- `parent_notion_page_id` (UUID) - Parent page ID, NULL for root database pages
+- `root_notion_database_id` (UUID, NOT NULL) - The root database this page belongs to
+- `page_type` (TEXT, NOT NULL) - Page type - we may delete this in the future
+- `has_children` (BOOLEAN) - Whether page has sub-items in the database
+- `archived` (BOOLEAN) - Notion archive status
+- `in_trash` (BOOLEAN) - Notion trash status
+- `plain_text_content` (TEXT) - Page content as plain text
+- `json_content` (JSONB) - Rich content from Notion API
+- `plain_text_name` (TEXT) - Page title as plain text
+- `json_name` (JSONB) - Rich text page title from Notion API
+- `sort_order` (INTEGER, NOT NULL) - Position of sub item within parent (0-indexed)
+- `canonical_document_title` (TEXT) - Atlas document identifier
+- `created_at`, `updated_at`, `last_edited_by_user_id` - Same as in notion_blocks table
+
+**Edit Page Fields:**
+
+- `belongs_to_edit_page` (BOOLEAN, DEFAULT TRUE)
+- `edit_page_original_notion_page_id` (UUID) - Original page being edited
+- `edit_page_original_root_notion_database_id` (UUID) - Original root database ID (Edit Pages belong to a duplicated database which is only a subset of the original)
+
+**Cascade deletes:**
+
+- Foreign key: parent_notion_page_id CASCADE DELETE
+
+### `notion_sync_status`
+
+Manages synchronization state and prevents concurrent syncs of the same content.
+
+**Key Fields:**
+
+- `id` (UUID, PRIMARY KEY, DEFAULT gen_random_uuid()) - Internal ID
+- `notion_page_id` (UUID, NOT NULL, UNIQUE) - Page/database being synced
+- `sync_status` (TEXT, NOT NULL) - Status: 'pending', 'in_progress', 'completed', 'failed', 'cancelled'
+- `last_sync_started_at` (TIMESTAMPTZ) - When sync began
+- `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded
+- `sync_error_message` (TEXT) - Error details if failed
+- `blocks_synced_count` (INTEGER) - Progress tracking
+- `is_sync_locked` (BOOLEAN) - Prevents concurrent syncs
+- `sync_lock_acquired_at` (TIMESTAMPTZ) - Lock timestamp
+- `sync_lock_expires_at` (TIMESTAMPTZ) - Auto-unlock time for stale locks
+- `created_at`, `updated_at` - Standard timestamps
+
+# Key Services
+
+## Notion Integration (`/app/server/services/notion`)
+
+- `notion-client.ts` - Notion API client with rate limiting
+- `import-page-to-supabase.ts` - Syncs Notion pages to Supabase
+- `import-database-to-supabase.ts` - Syncs Notion databases to Supabase
+- `fetch-blocks-recursively.ts` - Retrieves nested blocks from the Notion API
+- `create-edit-page.ts` - Creates temporary edit pages in Notion
+- Rate limiting respects official Notion API limits, but supports higher throughput via supporting more than one API key
+
+## Tree Diffing (`/app/server/services/diff`)
+
+- `diff-trees.ts` - Compares original vs edited trees
+- `tree.ts` - Tree data structures and builders
+- Detects: added, deleted, edited, moved nodes
+- Handles hierarchical content changes
+
+## Atlas Business Logic (`/app/server/services/atlas`)
+
+- `generate-atlas-json.ts` - Will generate JSON representation of Atlas hierarchy
+- `generate-proposal.ts` - Will generate human-readable diffs
+- Canonical document titles (e.g., "A.2.3.21") represent hierarchical position
+
+## Trigger.dev Tasks (`/app/server/services/trigger`)
+
+- `notion-sync-task.ts` - Background sync with retry logic
+- Tracks Notion API call counts via metadata
+
+# UI Components
+
+## Embed Pages (`/app/embed`)
+
+- Embeddable as iframes within Notion pages
+- `create-edit-page/[notion-page-id]` - UI for creating edit pages
+- `diff` - Displays content differences
+- Compatible with web browsers, not iOS/iPad Notion app
+
+## Main Pages
+
+- `/import` - Manual sync triggers for pages/databases, used for development
+- `/visualize` - Tree visualization of content structure, used for development
+
+# Important Patterns
+
+## Edit Page Workflow
+
+1. Original blocks/pages have `belongs_to_edit_page = false`
+2. Edit page blocks/pages have `belongs_to_edit_page = true`
+3. Edit blocks reference original via `edit_page_original_notion_block_id`/`edit_page_original_notion_database_id`
+4. Enables efficient querying and comparison
+
+## Sync Locking
+
+- Prevents concurrent syncs of same content
+- Lock expiration for cleanup
+- Verified before each sync operation
+
+## Future Features
+
+- Two-way Notion sync (not just import)
+- Automated Edit Page creation
+- Human-readable edit proposal generation (show diffs, aggregated from multiple edit pages)
+- Automated background sync triggers
