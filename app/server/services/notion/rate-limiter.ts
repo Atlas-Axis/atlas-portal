@@ -1,5 +1,7 @@
 import { delay } from '@/app/server/utils/utils';
 
+const MAX_RETRIES = 1;
+
 /**
  * Rate limiter for Notion API requests using sliding window, and exponential backoff
  * with proper concurrency control, timeout handling, and comprehensive logging
@@ -70,7 +72,7 @@ export class NotionRateLimiter {
     });
   }
 
-  private async executeWithRetry<T>(apiCall: () => Promise<T>, maxRetries = 3): Promise<T> {
+  private async executeWithRetry<T>(apiCall: () => Promise<T>, maxRetries = MAX_RETRIES): Promise<T> {
     let lastError: unknown = null;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
