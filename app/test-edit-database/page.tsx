@@ -35,7 +35,7 @@ async function testCreateEditDatabase() {
 export default function TestEditDatabasePage() {
   return (
     <div className="mx-auto max-w-4xl p-6">
-      <Card>
+      <Card className="p-6">
         <CardHeader>
           <h1 className="text-2xl font-bold">Test Edit Database Creation</h1>
         </CardHeader>
