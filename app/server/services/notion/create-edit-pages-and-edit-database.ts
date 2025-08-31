@@ -1,0 +1,387 @@
+import type {
+  CreateDatabaseParameters,
+  CreatePageParameters,
+  DatabaseObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/diff/convert-supabase-database-pages-to-tree-nodes';
+import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
+import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
+import { importDatabasePagesFromNotionToSupabase } from './import-database-to-supabase';
+import { notion } from './notion-client';
+
+export interface CreateEditDatabaseResult {
+  newDatabaseId: string;
+  pageIdMapping: Map<string, string>; // new page ID -> original page ID
+  pagesCreatedCount: number;
+  originalDatabaseTitle: string;
+  newDatabaseTitle: string;
+}
+
+/**
+ * Creates a new Notion database containing a subset of pages from an existing database,
+ * based on data stored in Supabase. The subset includes a specified root page and all its descendants.
+ */
+export async function createNotionEditPagesAndDatabase({
+  originalNotionDatabaseId,
+  rootNotionPageId,
+  taskRunId,
+  propertyWhitelist,
+  parent,
+}: {
+  originalNotionDatabaseId: string;
+  rootNotionPageId: string;
+  taskRunId: string;
+  propertyWhitelist?: string[];
+  parent: CreateDatabaseParameters['parent'];
+}): Promise<CreateEditDatabaseResult> {
+  const startTime = performance.now();
+  console.log(`➡️ Creating edit database from Notion database ${originalNotionDatabaseId}...`);
+  console.log(`Root page ID: ${rootNotionPageId}`);
+  console.log(`Trigger.dev task run ID: ${taskRunId}`);
+
+  let newDatabaseId: string | null = null;
+
+  try {
+    // Step 1: Load and validate data from Supabase
+    console.log('Step 1: Loading pages from Supabase...');
+    const allPages = await loadNotionDatabasePagesFromSupabase(originalNotionDatabaseId);
+
+    // Validate that all pages are original pages (not edit copies)
+    const editPages = allPages.filter((page) => page.belongs_to_edit_page);
+    if (editPages.length > 0) {
+      throw new Error(
+        `Found ${editPages.length} edit pages in the source database. Only original pages are supported.`,
+      );
+    }
+
+    // Validate that rootNotionPageId exists
+    const rootPage = allPages.find((page) => page.notion_page_id === rootNotionPageId);
+    if (!rootPage) {
+      throw new Error(`Root page ${rootNotionPageId} not found in database ${originalNotionDatabaseId}`);
+    }
+
+    console.log(`Loaded ${allPages.length} pages from Supabase`);
+
+    // Step 2: Build tree structure and extract subtree
+    console.log('Step 2: Building tree structure and extracting subtree...');
+    const treeNodes = convertSupabaseDatabasePagesToTreeNodes(allPages);
+    const tree = buildTree(treeNodes);
+    const pageIdMap = new Map(allPages.map((page) => [page.notion_page_id, page]));
+
+    // Extract subtree starting from rootNotionPageId using efficient tree traversal
+    const subtreePageIds = extractSubtreeFromTree(tree, rootNotionPageId);
+    const subtreePages = subtreePageIds.map((pageId: string) => pageIdMap.get(pageId)!).filter(Boolean);
+
+    console.log(`Extracted subtree with ${subtreePages.length} pages`);
+
+    // Step 3: Retrieve original database schema
+    console.log('Step 3: Retrieving original database schema...');
+    const originalDatabase = (await notion('read').databases.retrieve({
+      database_id: originalNotionDatabaseId,
+    })) as DatabaseObjectResponse;
+
+    const originalDatabaseTitle = extractDatabaseTitle(originalDatabase);
+    console.log(`Original database title: "${originalDatabaseTitle}"`);
+
+    // Step 4: Create new Notion database
+    console.log('Step 4: Creating new Notion database...');
+    const newDatabaseTitle = `${originalDatabaseTitle} - Edit Copy`;
+
+    // Use provided whitelist or default to common properties
+    const defaultWhitelist = ['Name', 'Content', 'Doc No (or Temp Name)', 'Sub-item'];
+    const effectiveWhitelist = propertyWhitelist || defaultWhitelist;
+    console.log(`Using property whitelist: ${effectiveWhitelist.join(', ')}`);
+
+    const newDatabase = await createDatabase(originalDatabase, newDatabaseTitle, effectiveWhitelist, parent);
+    newDatabaseId = newDatabase.id;
+
+    console.log(`Created new database: ${newDatabaseId}`);
+
+    // Step 5: Create database pages in Notion
+    console.log('Step 5: Creating database pages...');
+    const pageIdMapping = await createDatabasePages(newDatabaseId, subtreePages, rootNotionPageId);
+
+    console.log(`Created ${pageIdMapping.size} pages in new database`);
+
+    // Step 6: Import new database back to Supabase
+    console.log('Step 6: Importing new database to Supabase...');
+    await importDatabasePagesFromNotionToSupabase({
+      notionDatabaseId: newDatabaseId,
+      taskRunId,
+      editPageProps: {
+        isEditDatabase: true,
+        originalDatabaseId: originalNotionDatabaseId,
+        pageIdMapping,
+      },
+    });
+
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    console.log(
+      `✅ Edit database creation completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`,
+    );
+
+    return {
+      newDatabaseId,
+      pageIdMapping,
+      pagesCreatedCount: pageIdMapping.size,
+      originalDatabaseTitle,
+      newDatabaseTitle,
+    };
+  } catch (error) {
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    console.error(
+      `❌ Edit database creation failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`,
+      error,
+    );
+
+    // Attempt cleanup if database was created
+    if (newDatabaseId) {
+      try {
+        console.log(`Attempting to clean up database ${newDatabaseId}...`);
+        // Note: Notion API doesn't support deleting databases, so we can't clean up automatically // TODO: Verify this and find a fix
+        console.warn(`Cannot automatically delete database ${newDatabaseId}. Manual cleanup required.`);
+      } catch (cleanupError) {
+        console.error('Cleanup failed:', cleanupError);
+      }
+    }
+
+    throw error;
+  }
+}
+
+/**
+ * Extract all page IDs in the subtree starting from rootPageId using efficient tree traversal
+ * This is O(k) where k is the subtree size, much more efficient than the linear O(n) approach
+ */
+function extractSubtreeFromTree(
+  tree: { root: TreeNode; nodeMap: Map<string, TreeNode> },
+  rootPageId: string,
+): string[] {
+  const result: string[] = [];
+
+  // Find the root node in the tree
+  const rootNode = tree.nodeMap.get(rootPageId);
+  if (!rootNode) {
+    throw new Error(`Root page ${rootPageId} not found in tree`);
+  }
+
+  // Perform depth-first traversal from the root node
+  function traverse(node: TreeNode) {
+    result.push(node.id);
+
+    // Visit children in sort order (they're already sorted by buildTree)
+    if (node.children) {
+      for (const child of node.children) {
+        traverse(child);
+      }
+    }
+  }
+
+  traverse(rootNode);
+  return result;
+}
+
+/**
+ * Extract database title from database object
+ */
+function extractDatabaseTitle(database: DatabaseObjectResponse): string {
+  // TODO: This logic may not be correct
+  if (database.title && database.title.length > 0) {
+    return database.title.map((t) => t.plain_text).join('');
+  }
+  return 'Untitled Database - Edit Copy';
+}
+
+/**
+ * Create a new database with properties from a whitelist
+ */
+async function createDatabase(
+  originalDatabase: DatabaseObjectResponse,
+  newTitle: string,
+  propertyWhitelist: string[],
+  parent: CreateDatabaseParameters['parent'],
+): Promise<DatabaseObjectResponse> {
+  // Clone only whitelisted properties from the original database
+  const properties: CreateDatabaseParameters['properties'] = {};
+
+  // Clone the property configuration from the original database
+  for (const [propName, propConfig] of Object.entries(originalDatabase.properties)) {
+    if (propertyWhitelist.includes(propName)) {
+      // Clone the property configuration, removing the id field
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...propConfigWithoutId } = propConfig;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      properties[propName] = propConfigWithoutId as any; // Type assertion needed due to Notion API complexity
+    }
+  }
+
+  const createParams: CreateDatabaseParameters = {
+    parent,
+    title: [
+      {
+        type: 'text', // TODO: Support rich text later?
+        text: { content: newTitle },
+      },
+    ],
+    properties,
+  };
+
+  const newDatabase = await notion('write').databases.create(createParams);
+  return newDatabase as DatabaseObjectResponse;
+}
+
+/**
+ * Create pages in the new database, maintaining parent-child relationships.
+ * Returns a mapping of new page IDs to original page IDs.
+ */
+async function createDatabasePages(
+  newDatabaseId: string,
+  subtreePages: NotionDatabasePage[],
+  rootPageId: string,
+): Promise<Map<string, string>> {
+  // new page ID -> original page ID
+  const newToOriginalPageIdMapping = new Map<string, string>();
+  const originalToNewPageIdMapping = new Map<string, string>(); // original page ID -> new page ID
+  const pagesByOriginalId = new Map(subtreePages.map((page) => [page.notion_page_id, page]));
+
+  // Process pages in dependency order (parents before children)
+  const processedPagesIds = new Set<string>();
+
+  // Create pages recursively. Returns the new page ID.
+  async function createPageRecursively(originalPageId: string): Promise<string> {
+    if (processedPagesIds.has(originalPageId)) {
+      return originalToNewPageIdMapping.get(originalPageId)!;
+    }
+
+    const originalPage = pagesByOriginalId.get(originalPageId);
+    if (!originalPage) {
+      throw new Error(`Page ${originalPageId} not found in subtree`);
+    }
+
+    // Create parent first if it exists and is in our subtree
+    let newParentId: string | null = null;
+    if (originalPage.parent_notion_page_id && pagesByOriginalId.has(originalPage.parent_notion_page_id)) {
+      newParentId = await createPageRecursively(originalPage.parent_notion_page_id);
+    }
+
+    // Create the page
+    const newPageId = await createSinglePage(newDatabaseId, originalPage);
+
+    newToOriginalPageIdMapping.set(newPageId, originalPageId);
+    originalToNewPageIdMapping.set(originalPageId, newPageId);
+    processedPagesIds.add(originalPageId);
+
+    // Update parent's Sub-item property if there's a parent
+    if (newParentId) {
+      await updateParentSubItems(newParentId, newPageId);
+    }
+
+    return newPageId;
+  }
+
+  // Start with the root page
+  await createPageRecursively(rootPageId);
+
+  return newToOriginalPageIdMapping;
+}
+
+/**
+ * Create a single page in the new database
+ */
+async function createSinglePage(databaseId: string, originalPage: NotionDatabasePage): Promise<string> {
+  const propertyNames = NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'];
+
+  // Build properties object
+  const properties: CreatePageParameters['properties'] = {};
+
+  // Set the title (Doc No field) - this is a title type property
+  if (originalPage.canonical_document_title) {
+    properties[propertyNames.docNo] = {
+      // TODO: Verify this
+      title: [
+        {
+          type: 'text',
+          text: { content: originalPage.canonical_document_title },
+        },
+      ],
+    };
+  }
+
+  // Set the name field - use plain text for simplicity
+  if (originalPage.plain_text_name) {
+    // TODO: Make dynamic and convert to rich text
+    properties[propertyNames.name] = {
+      rich_text: [
+        {
+          type: 'text',
+          text: { content: originalPage.plain_text_name },
+        },
+      ],
+    };
+  }
+
+  // Set the content field - use plain text for simplicity
+  // TODO: Convert to rich text
+  if (originalPage.plain_text_content) {
+    properties[propertyNames.content] = {
+      rich_text: [
+        {
+          type: 'text',
+          text: { content: originalPage.plain_text_content },
+        },
+      ],
+    };
+  }
+
+  // Note: Sub-item relationships will be set separately by updating parent pages
+
+  const createParams: CreatePageParameters = {
+    parent: {
+      type: 'database_id',
+      database_id: databaseId,
+    },
+    properties,
+  };
+
+  const newPage = await notion('write').pages.create(createParams);
+  return newPage.id;
+}
+
+/**
+ * Update a parent page's Sub-item property to include a new child
+ */
+async function updateParentSubItems(parentPageId: string, childPageId: string): Promise<void> {
+  const propertyNames = NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs']; // TODO: Make this dynamic
+
+  // Get current sub-items from the parent page
+  const parentPage = await notion('read').pages.retrieve({ page_id: parentPageId });
+  if (!('properties' in parentPage)) {
+    throw new Error(`Parent page ${parentPageId} is not a database page`);
+  }
+
+  const subItemProperty = parentPage.properties[propertyNames.subItem];
+  const existingSubItems: string[] = [];
+
+  if (subItemProperty && 'relation' in subItemProperty && subItemProperty.relation) {
+    existingSubItems.push(...subItemProperty.relation.map((rel) => rel.id));
+  }
+
+  // Add the new child if not already present
+  if (!existingSubItems.includes(childPageId)) {
+    existingSubItems.push(childPageId);
+
+    // Update the parent page with the new sub-items list
+    await notion('write').pages.update({
+      page_id: parentPageId,
+      properties: {
+        [propertyNames.subItem]: {
+          relation: existingSubItems.map((id) => ({ id })),
+        },
+      },
+    });
+  }
+}

@@ -13,9 +13,15 @@ import { verifySyncLock } from './verify-sync-lock';
 export async function importDatabasePagesFromNotionToSupabase({
   notionDatabaseId,
   taskRunId,
+  editPageProps,
 }: {
   notionDatabaseId: string;
   taskRunId: string;
+  editPageProps?: {
+    isEditDatabase: true;
+    originalDatabaseId?: string;
+    pageIdMapping?: Map<string, string>; // new page ID -> original page ID
+  };
 }) {
   const startTime = performance.now();
   console.log(`➡️ Importing pages from Notion database to Supabase...`);
@@ -32,7 +38,7 @@ export async function importDatabasePagesFromNotionToSupabase({
     const databaseTree = await fetchDatabaseTree(notionDatabaseId);
 
     // Convert the tree structure to individual NotionDatabasePage records
-    const pages = convertTreeToPageRecords(databaseTree, notionDatabaseId);
+    const pages = convertTreeToPageRecords(databaseTree, notionDatabaseId, editPageProps);
 
     console.log(`Fetched ${pages.length} pages from Notion database ${notionDatabaseId}`);
 
@@ -100,7 +106,15 @@ async function insertPagesInBatches(pages: NotionDatabasePage[], batchSize: numb
 /**
  * Convert the tree structure from fetchDatabaseTree to individual NotionDatabasePage records
  */
-function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatabaseId: string): NotionDatabasePage[] {
+function convertTreeToPageRecords(
+  databaseTree: DatabaseSubItemTree,
+  notionDatabaseId: string,
+  editPageProps?: {
+    isEditDatabase: true;
+    originalDatabaseId?: string;
+    pageIdMapping?: Map<string, string>; // new page ID -> original page ID
+  },
+): NotionDatabasePage[] {
   const pages: NotionDatabasePage[] = [];
   const { pagesById, pageIdToParentId, pageIdToSubPageIds } = databaseTree;
 
@@ -144,9 +158,14 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
       canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
-      belongs_to_edit_page: false, // Default to false, can be updated later for edit pages
-      edit_page_original_notion_page_id: null,
-      edit_page_original_notion_database_id: null,
+      belongs_to_edit_page: editPageProps?.isEditDatabase || false,
+      edit_page_original_notion_page_id:
+        editPageProps?.isEditDatabase && editPageProps?.pageIdMapping
+          ? editPageProps.pageIdMapping.get(pageId) || null
+          : null,
+      edit_page_original_notion_database_id: editPageProps?.isEditDatabase
+        ? editPageProps?.originalDatabaseId || null
+        : null,
     };
 
     pages.push(page);
