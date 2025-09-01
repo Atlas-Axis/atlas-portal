@@ -37,7 +37,7 @@ export default function TestEditDatabasePage() {
     <div className="mx-auto max-w-4xl p-6">
       <Card className="p-6">
         <CardHeader>
-          <h1 className="text-2xl font-bold">Test Edit Database Creation</h1>
+          <h1 className="text-2xl font-bold">Create &quot;Edit Database&quot; and &quot;Edit Pages&quot; in Notion</h1>
         </CardHeader>
         <Divider />
         <CardBody className="space-y-4">
@@ -69,7 +69,7 @@ export default function TestEditDatabasePage() {
 
           <form action={testCreateEditDatabase}>
             <Button type="submit" color="primary" size="lg" className="w-full">
-              Test Create Edit Database
+              Create Edit Database and Pages
             </Button>
           </form>
 

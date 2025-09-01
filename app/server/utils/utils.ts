@@ -21,3 +21,19 @@ export const uuidToHyphens = (uuid: string): string => {
 
   return [uuid.slice(0, 8), uuid.slice(8, 12), uuid.slice(12, 16), uuid.slice(16, 20), uuid.slice(20, 32)].join('-');
 };
+
+/**
+ * Formats a Date object as a human-readable UTC timestamp
+ * @param date - Date object to format (defaults to current time)
+ * @returns Formatted string in "YYYY-MM-DD HH:MM:SS UTC" format
+ */
+export const formatUtcTimestamp = (date: Date = new Date()): string => {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hours = String(date.getUTCHours()).padStart(2, '0');
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+};

@@ -8,8 +8,10 @@ import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/d
 import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
+import { formatUtcTimestamp } from '@/app/server/utils/utils';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { importDatabasePagesFromNotionToSupabase } from './import-database-to-supabase';
+import { TextRichTextItemRequest } from './types';
 
 export interface CreateEditDatabaseResult {
   newDatabaseId: string;
@@ -109,7 +111,9 @@ export async function createNotionEditPagesAndDatabase({
 
     // Step 4: Create new Notion database
     console.log('Step 4: Creating new Notion database...');
-    const newDatabaseTitle = `${originalDatabaseTitle} - Edit Copy`;
+    const rootPageName = rootPage.plain_text_name || 'Untitled Page';
+    const newDatabaseTitle = `${rootPageName} - Editable Copy`;
+    console.log(`New database title (based on root page): "${newDatabaseTitle}"`);
 
     // Use provided whitelist or default to common properties (excluding Sub-item which is handled separately)
     const defaultWhitelist = ['Name', 'Content', 'Doc No (or Temp Name)'];
@@ -142,6 +146,17 @@ export async function createNotionEditPagesAndDatabase({
         pageIdMapping,
       },
     });
+
+    // Step 7: Update the database description to indicate sync is complete
+    console.log('Step 7: Updating database description to indicate sync completion...');
+    const syncCompletionTime = formatUtcTimestamp();
+    const completionDescription: TextRichTextItemRequest[] = [
+      {
+        type: 'text',
+        text: { content: `Created at: ${syncCompletionTime}` },
+      },
+    ];
+    await updateDatabaseDescription(newDatabaseId, completionDescription);
 
     const endTime = performance.now();
     const duration = endTime - startTime;
@@ -219,7 +234,7 @@ function extractDatabaseTitle(database: DatabaseObjectResponse): string {
   if (database.title && database.title.length > 0) {
     return database.title.map((t) => t.plain_text).join('');
   }
-  return 'Untitled Database - Edit Copy';
+  return '<Untitled>';
 }
 
 /**
@@ -245,12 +260,32 @@ async function createDatabase(
     }
   }
 
+  console.log('Setting initial database description to indicate sync in progress...');
+  const syncStartTime = formatUtcTimestamp();
   const createParams: CreateDatabaseParameters = {
     parent,
     title: [
       {
-        type: 'text', // TODO: Support rich text later?
+        type: 'text',
         text: { content: newTitle },
+      },
+    ],
+    description: [
+      {
+        type: 'text',
+        text: { content: 'SYNCING' },
+        annotations: {
+          bold: true,
+          italic: false,
+          strikethrough: false,
+          underline: false,
+          code: false,
+          color: 'orange_background',
+        },
+      },
+      {
+        type: 'text',
+        text: { content: ` Syncing with Supabase... (${syncStartTime})` },
       },
     ],
     properties,
@@ -405,9 +440,14 @@ async function createSinglePage(
     };
   }
 
-  // Set the name field - use plain text for simplicity
-  if (originalPage.plain_text_name) {
-    // TODO: Make dynamic and convert to rich text
+  // Set the name field - use full rich text from JSON
+  if (originalPage.json_name && Array.isArray(originalPage.json_name)) {
+    properties[propertyNames.name] = {
+      rich_text: originalPage.json_name as TextRichTextItemRequest[],
+    };
+  } else if (originalPage.plain_text_name) {
+    // Fallback to plain text if json_name is not available
+    console.warn(`Using plain text name for page ${originalPage.plain_text_name}`);
     properties[propertyNames.name] = {
       rich_text: [
         {
@@ -418,9 +458,14 @@ async function createSinglePage(
     };
   }
 
-  // Set the content field - use plain text for simplicity
-  // TODO: Convert to rich text
-  if (originalPage.plain_text_content) {
+  // Set the content field - use full rich text from JSON
+  if (originalPage.json_content && Array.isArray(originalPage.json_content)) {
+    properties[propertyNames.content] = {
+      rich_text: originalPage.json_content as TextRichTextItemRequest[],
+    };
+  } else if (originalPage.plain_text_content) {
+    // Fallback to plain text if json_content is not available
+    console.warn(`Using plain text content for page ${originalPage.plain_text_name}`);
     properties[propertyNames.content] = {
       rich_text: [
         {
@@ -454,4 +499,34 @@ async function createSinglePage(
 
   const newPage = await notion('write').pages.create(createParams);
   return newPage.id;
+}
+
+/**
+ * Update the description of a database
+ */
+async function updateDatabaseDescription(
+  databaseId: string,
+  content: string | TextRichTextItemRequest[],
+): Promise<void> {
+  let description: TextRichTextItemRequest[];
+
+  if (typeof content === 'string') {
+    // Handle plain text content
+    description = content
+      ? [
+          {
+            type: 'text',
+            text: { content },
+          },
+        ]
+      : [];
+  } else {
+    // Handle rich text content (array)
+    description = content;
+  }
+
+  await notion('write').databases.update({
+    database_id: databaseId,
+    description,
+  });
 }
