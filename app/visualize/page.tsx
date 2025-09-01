@@ -9,12 +9,21 @@ export default async function Page() {
     .select('notion_block_id, plain_text_content')
     .is('parent_notion_block_id', null);
 
-  // Load root Notion databases from Supabase
-  const { data: rootDatabasePages, error: rootDatabasesError } = await supabase
+  // Load original root Notion databases from Supabase
+  const { data: originalRootDatabasePages, error: rootDatabasesError } = await supabase
     .from('notion_database_pages')
     .select('root_notion_database_id')
-    .is('parent_notion_page_id', null);
-  const databaseIds = [...new Set((rootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
+    .is('parent_notion_page_id', null)
+    .eq('belongs_to_edit_page', false);
+  const databaseIds = [...new Set((originalRootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
+
+  // Load duplicated root Notion databases from Supabase
+  const { data: duplicatedRootDatabasePages, error: duplicatedRootDatabasesError } = await supabase
+    .from('notion_database_pages')
+    .select('root_notion_database_id')
+    .is('parent_notion_page_id', null)
+    .eq('belongs_to_edit_page', true);
+  const duplicatedDatabaseIds = [...new Set((duplicatedRootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
 
   if (rootBlocksError) {
     return (
@@ -48,6 +57,14 @@ export default async function Page() {
     </li>
   ));
 
+  const duplicatedDatabaseLinks = duplicatedDatabaseIds.map((db) => (
+    <li key={db}>
+      <Link href={`/visualize/database/${db}`} className="font-semibold text-indigo-500 hover:underline">
+        👉 {db}
+      </Link>
+    </li>
+  ));
+
   return (
     <div className="p-6">
       <h2 className="mb-4 text-lg font-semibold">Notion Pages in Supabase</h2>
@@ -57,8 +74,15 @@ export default async function Page() {
       <Divider />
       <Spacer y={9} />
 
-      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase</h2>
+      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Original)</h2>
       <ul>{rootDatabasePageLinks}</ul>
+
+      <Spacer y={9} />
+      <Divider />
+      <Spacer y={9} />
+
+      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Duplicated)</h2>
+      <ul>{duplicatedDatabaseLinks}</ul>
     </div>
   );
 }
