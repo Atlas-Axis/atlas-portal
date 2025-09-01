@@ -22,6 +22,11 @@ export const uuidToHyphens = (uuid: string): string => {
   return [uuid.slice(0, 8), uuid.slice(8, 12), uuid.slice(12, 16), uuid.slice(16, 20), uuid.slice(20, 32)].join('-');
 };
 
+export const isValidUUID = (uuid: string): boolean => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+};
+
 /**
  * Formats a Date object as a human-readable UTC timestamp
  * @param date - Date object to format (defaults to current time)
