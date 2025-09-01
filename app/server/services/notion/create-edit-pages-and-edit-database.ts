@@ -198,7 +198,7 @@ export async function createNotionEditPagesAndDatabase({
  * Extract all page IDs in the subtree starting from rootPageId using efficient tree traversal
  * This is O(k) where k is the subtree size, much more efficient than the linear O(n) approach
  */
-export function extractSubtreeFromTree(
+function extractSubtreeFromTree(
   tree: { root: TreeNode; nodeMap: Map<string, TreeNode> },
   rootPageId: string,
 ): string[] {
