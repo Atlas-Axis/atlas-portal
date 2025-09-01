@@ -1,6 +1,7 @@
 import { Alert } from '@heroui/alert';
 import { APIResponseError, PageObjectResponse } from '@notionhq/client';
 import { notion } from '@/app/server/services/notion/notion-client';
+import { uuidToHyphens } from '@/app/shared/utils/utils';
 import ActionButton from './action-button';
 
 export async function loadPage(notionPageId: string) {
@@ -36,12 +37,10 @@ export default async function Page({ params }: { params: Promise<{ 'notion-page-
     return <Alert color="danger" description={errorMessage} />;
   }
 
-  // await createPage();
-
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-3 text-2xl font-bold">{getPageTitle(page)}</h1>
-      <ActionButton />
+      <h1 className="mb-6 text-lg font-bold">{getPageTitle(page)}</h1>
+      <ActionButton notionPageId={uuidToHyphens(notionPageId)} />
     </div>
   );
 }

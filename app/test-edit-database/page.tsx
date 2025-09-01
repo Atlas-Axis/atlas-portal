@@ -18,7 +18,7 @@ async function testCreateEditDatabase() {
       originalNotionDatabaseId: NOTION_DATABASE_ID,
       rootNotionPageId: NOTION_PAGE_ID, // Make sure this page exists in the database
       taskRunId: `test-${Date.now()}`,
-      propertyWhitelist: ['Name', 'Content', 'Doc No (or Temp Name)', 'Sub-item'], // Include Sub-item for parent-child relationships // TODO: Make adjust if needed
+      propertyWhitelist: ['Name', 'Content', 'Doc No (or Temp Name)'], // TODO: Make dynamic
       parent: {
         type: 'page_id',
         page_id: NOTION_EDIT_PAGES_CONTAINING_PAGE_ID,
