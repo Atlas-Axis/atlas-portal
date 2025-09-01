@@ -1,7 +1,7 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 
-export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabasePageId: string) {
+export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabaseId: string) {
   const allPages: NotionDatabasePage[] = [];
   let page = 0;
   const pageSize = 1000;
@@ -11,7 +11,7 @@ export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabasePage
     const { data, error } = await supabase
       .from('notion_database_pages')
       .select('*')
-      .eq('root_notion_database_id', rootNotionDatabasePageId)
+      .eq('root_notion_database_id', rootNotionDatabaseId)
       .eq('archived', false)
       .order('canonical_document_title, sort_order')
       // .order('sort_order') // Sort by sort_order
