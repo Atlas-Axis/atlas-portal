@@ -184,7 +184,7 @@ function extractPageTitle(
   for (const [propertyName, property] of Object.entries(page.properties)) {
     if (propertyName === titlePropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
       return {
-        plainText: property['rich_text'][0]?.plain_text || null,
+        plainText: property['rich_text'].map((text) => text.plain_text).join('') || null,
         richText: property['rich_text'],
       };
     }
@@ -207,7 +207,7 @@ function extractContent(
   for (const [propertyName, property] of Object.entries(page.properties)) {
     if (propertyName === contentPropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
       return {
-        plainText: property['rich_text'][0]?.plain_text || null,
+        plainText: property['rich_text'].map((text) => text.plain_text).join('') || null,
         richText: property['rich_text'],
       };
     }
@@ -223,7 +223,7 @@ function extractContent(
 function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: string): string | null {
   const docNoProperty = page.properties[docNoPropertyName];
   if (docNoProperty && 'title' in docNoProperty && docNoProperty['title'].length > 0) {
-    return docNoProperty['title'][0]?.plain_text || null;
+    return docNoProperty['title'].map((text) => text.plain_text).join('') || null;
   }
   console.warn(`Property "${docNoPropertyName}" is not a title property or is empty.`);
   return null;
