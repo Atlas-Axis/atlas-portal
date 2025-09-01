@@ -204,6 +204,11 @@ export function extractSubtreeFromTree(
 ): string[] {
   const result: string[] = [];
 
+  // If the tree's root id is the same as the rootPageId, throw an error
+  if (tree.root.id === rootPageId) {
+    throw new Error(`Root page ${rootPageId} cannot be part of its own subtree`);
+  }
+
   // Find the root node in the tree
   const rootNode = tree.nodeMap.get(rootPageId);
   if (!rootNode) {

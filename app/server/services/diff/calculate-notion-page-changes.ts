@@ -58,7 +58,7 @@ export async function calculateNotionPageHierarchyChanges({
   const originalTree = buildTree(originalTreeNodesWithDummyRoot);
   const originalPageIdMap = new Map(originalPages.map((page) => [page.notion_page_id, page]));
 
-  const duplicatedTree = buildTree(duplicatedTreeNodesWithDummyRoot);
+  const duplicateTree = buildTree(duplicatedTreeNodesWithDummyRoot);
   const duplicatedPageIdMap = new Map(duplicatedPages.map((page) => [page.notion_page_id, page]));
 
   // Step 6: Extract subtrees starting from originalRootNotionPageId and duplicatedRootNotionPageId using efficient tree traversal
@@ -68,7 +68,7 @@ export async function calculateNotionPageHierarchyChanges({
     .map((pageId: string) => originalPageIdMap.get(pageId)!)
     .filter(Boolean);
 
-  const duplicatedSubtreePageIds = extractSubtreeFromTree(duplicatedTree, duplicatedRootNotionPageId);
+  const duplicatedSubtreePageIds = extractSubtreeFromTree(duplicateTree, duplicatedRootNotionPageId);
   const duplicatedSubtreePages = duplicatedSubtreePageIds
     .map((pageId: string) => duplicatedPageIdMap.get(pageId)!)
     .filter(Boolean);
@@ -88,7 +88,7 @@ export async function calculateNotionPageHierarchyChanges({
   );
 
   const { nodeMap: originalNodeMap, root: originalRoot } = originalTree;
-  const { nodeMap: duplicateNodeMap, root: duplicateRoot } = duplicatedTree;
+  const { nodeMap: duplicateNodeMap, root: duplicateRoot } = duplicateTree;
 
   // Step 7: Load text content for all nodes from Supabase into a single map
   console.log('Step 7: Loading text content for all subtree pages from Supabase...');
