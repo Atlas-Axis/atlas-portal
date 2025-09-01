@@ -1,4 +1,4 @@
-import { delay } from '@/app/server/utils/utils';
+import { delay } from '@/app/shared/utils/utils';
 
 const MAX_RETRIES = 1;
 

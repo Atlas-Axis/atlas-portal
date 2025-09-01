@@ -8,12 +8,12 @@ import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/d
 import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
-import { formatUtcTimestamp } from '@/app/server/utils/utils';
+import { formatUtcTimestamp } from '@/app/shared/utils/utils';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { importDatabasePagesFromNotionToSupabase } from './import-database-to-supabase';
 import { TextRichTextItemRequest } from './types';
 
-export interface CreateEditDatabaseResult {
+export interface CreateEditPagesAndDatabaseResult {
   newDatabaseId: string;
   pageIdMapping: Map<string, string>; // new page ID -> original page ID
   pagesCreatedCount: number;
@@ -37,7 +37,7 @@ export async function createNotionEditPagesAndDatabase({
   taskRunId: string;
   propertyWhitelist?: string[];
   parent: CreateDatabaseParameters['parent'];
-}): Promise<CreateEditDatabaseResult> {
+}): Promise<CreateEditPagesAndDatabaseResult> {
   const startTime = performance.now();
   console.log(`➡️ Creating edit database from Notion database ${originalNotionDatabaseId}...`);
   console.log(`Root page ID: ${rootNotionPageId}`);

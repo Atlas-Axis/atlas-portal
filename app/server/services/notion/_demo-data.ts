@@ -1,4 +1,4 @@
-import { uuidToHyphens } from '../../utils/utils';
+import { uuidToHyphens } from '../../../shared/utils/utils';
 
 export const NOTION_PAGE_ID = uuidToHyphens('25ef758464c5808db8bbdb67351fa26f');
 export const NOTION_DATABASE_ID = uuidToHyphens('25ef758464c580319597e2a98756bbc8');
