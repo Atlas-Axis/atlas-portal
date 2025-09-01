@@ -1,6 +1,5 @@
 'use client';
 
-import { Divider } from '@heroui/react';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Tree, TreeNode } from '@/app/server/services/diff/tree';
 
@@ -13,15 +12,14 @@ function renderTreeNode(
   const content = page?.plain_text_content || ``;
 
   return (
-    <li key={node.id} className="mb-1 ml-3">
-      <h3 className="mb-3 text-lg font-semibold">{pageIdMap.get(node.id)?.canonical_document_title}</h3>
+    <li key={node.id} className="my-3 ml-3 border-t-1 border-gray-300 pt-3">
+      <h3 className="text-lg font-semibold">{pageIdMap.get(node.id)?.canonical_document_title}</h3>
       <div className="font-medium">{content}</div>
       {node.children && node.children.length > 0 && (
         <ul className="mt-1 ml-4 border-l border-gray-200 pl-4">
           {node.children.map((child) => renderTreeNode(child, pageIdMap, depth + 1))}
         </ul>
       )}
-      <Divider className="my-2" />
     </li>
   );
 }
