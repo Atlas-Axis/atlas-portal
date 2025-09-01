@@ -30,7 +30,7 @@ function withRootNode(treeNodes: TreeNode[]) {
     parentId: null,
     blockType: 'root',
     sortOrder: 0,
-    rootNotionBlockId: treeNodes[0].rootNotionBlockId,
+    rootNotionPageId: treeNodes[0].rootNotionPageId,
   };
   treeNodes.push(rootNode);
 

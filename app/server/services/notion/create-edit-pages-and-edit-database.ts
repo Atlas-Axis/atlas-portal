@@ -77,7 +77,7 @@ export async function createNotionEditPagesAndDatabase({
       parentId: null,
       blockType: 'dummy_root',
       sortOrder: 0,
-      rootNotionBlockId: originalNotionDatabaseId,
+      rootNotionPageId: originalNotionDatabaseId,
     };
 
     // Make all current root nodes (parentId === null) children of the dummy root

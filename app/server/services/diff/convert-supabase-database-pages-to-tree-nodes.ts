@@ -8,6 +8,6 @@ export function convertSupabaseDatabasePagesToTreeNodes(pages: NotionDatabasePag
     parentId: page.parent_notion_page_id || null,
     blockType: page.page_type,
     sortOrder: page.sort_order,
-    rootNotionBlockId: page.root_notion_database_id,
+    rootNotionPageId: page.root_notion_database_id,
   }));
 }
