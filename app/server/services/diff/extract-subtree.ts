@@ -5,6 +5,12 @@ import { Tree, TreeNode, buildTree } from './tree';
  * This creates a new tree containing only the subtree nodes, with the specified root as the new root
  */
 export function extractSubtreeAsTree(tree: Tree, rootPageId: string): Tree {
+  // If the tree's root id is the same as the rootPageId, return the entire tree
+  if (tree.root.id === rootPageId) {
+    console.log(`Root page ${rootPageId} is the same as tree root - returning entire tree`);
+    return tree;
+  }
+
   // Find the root node in the tree
   const rootNode = tree.nodeMap.get(rootPageId);
   if (!rootNode) {
@@ -61,9 +67,19 @@ export function extractSubtreeAsTree(tree: Tree, rootPageId: string): Tree {
 export function extractSubtreePageIds(tree: Tree, rootPageId: string): string[] {
   const result: string[] = [];
 
-  // If the tree's root id is the same as the rootPageId, throw an error
+  // If the tree's root id is the same as the rootPageId, return all nodes in the tree
   if (tree.root.id === rootPageId) {
-    throw new Error(`Root page ${rootPageId} cannot be part of its own subtree`);
+    console.log(`Root page ${rootPageId} is the same as tree root - returning entire tree`);
+    function traverseEntireTree(node: TreeNode) {
+      result.push(node.id);
+      if (node.children) {
+        for (const child of node.children) {
+          traverseEntireTree(child);
+        }
+      }
+    }
+    traverseEntireTree(tree.root);
+    return result;
   }
 
   // Find the root node in the tree
