@@ -9,7 +9,9 @@ import { TreeChange, diffTrees } from './diff-trees';
 import { extractSubtreeAsTree, extractSubtreePageIds } from './extract-subtree';
 import { rewriteTreeNodeIds } from './rewrite-tree-node-ids';
 
-const DEBUG_LOGGING = Boolean(process.env.DEBUG_LOGGING);
+const DEBUG_LOGGING = Boolean(
+  process.env.DEBUG_LOGGING && process.env.DEBUG_LOGGING !== '0' && process.env.DEBUG_LOGGING !== 'false',
+);
 
 export async function calculateNotionPageHierarchyChanges({
   originalRootNotionPageId,

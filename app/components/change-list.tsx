@@ -138,8 +138,8 @@ function ChangeItem({ change }: ChangeItemProps) {
       {/* Additional context for moved items */}
       {type === 'moved' && (
         <div className="mt-2 ml-6 rounded bg-purple-50 px-3 py-2 text-sm text-gray-600">
-          <strong>Move details:</strong>
-          {change.changes.oldParentId !== change.changes.newParentId && ` Moved to ${change.changes.newParentId}`}
+          <strong>Moved to:</strong>
+          {change.changes.oldParentId !== change.changes.newParentId && ` ${change.changes.newCanonicalDocumentTitle}`}
         </div>
       )}
 

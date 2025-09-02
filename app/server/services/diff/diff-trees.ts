@@ -15,7 +15,14 @@ export type TreeChange =
       node: TreeNode;
       parentId: string | null;
       content: string | null;
-      changes: { newParentId: string | null; oldParentId: string | null; newPosition: number; oldPosition: number };
+      changes: {
+        newParentId: string | null;
+        oldParentId: string | null;
+        newPosition: number;
+        oldPosition: number;
+        oldCanonicalDocumentTitle: string;
+        newCanonicalDocumentTitle: string;
+      };
       canonicalDocumentTitle: string;
     };
 
@@ -102,6 +109,8 @@ export function diffTrees({
               newPosition: duplicateNode.sortOrder,
               oldParentId: originalNode.parentId,
               oldPosition: originalNode.sortOrder,
+              oldCanonicalDocumentTitle: originalNode.canonicalDocumentTitle || '',
+              newCanonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
             },
             canonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
           });
