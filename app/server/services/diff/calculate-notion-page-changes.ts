@@ -83,7 +83,6 @@ export async function calculateNotionPageHierarchyChanges({
 
   // Extract subtrees as proper Tree objects, not just page IDs
   const originalSubtree = extractSubtreeAsTree(originalTree, originalRootNotionPageId);
-  // const duplicatedSubtree = extractSubtreeAsTree(duplicateTree, duplicatedRootNotionPageId);
 
   // Get page IDs from subtrees for content loading
   const originalSubtreePageIds = extractSubtreePageIds(originalTree, originalRootNotionPageId);
@@ -154,13 +153,25 @@ export async function calculateNotionPageHierarchyChanges({
     originalContentMap.set(id, content || null);
   }
 
-  // Add duplicate content using rewritten (original) IDs
+  // Add duplicate content using rewritten (original) IDs for existing pages
   for (const [duplicateId, originalId] of pageIdMappingDuplicatedToOriginal.entries()) {
     const duplicateContent = nodeIdToContentMap.get(duplicateId);
     if (duplicateContent !== undefined) {
       duplicateContentMap.set(originalId, duplicateContent);
       console.log(`Mapped duplicate content: ${duplicateId} -> ${originalId}`);
     }
+  }
+
+  // Add content for newly created duplicate nodes that don't have original counterparts
+  for (const [duplicateId, content] of Object.entries(duplicatedSubtreeContent)) {
+    // Skip if this duplicate page has an original (already handled above)
+    if (pageIdMappingDuplicatedToOriginal.has(duplicateId)) {
+      continue;
+    }
+
+    // This is a newly created node - use its own ID as the key in duplicateContentMap
+    duplicateContentMap.set(duplicateId, content || null);
+    console.log(`Added content for new duplicate node: ${duplicateId}`);
   }
 
   // TODO: Delete logs
