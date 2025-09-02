@@ -1,6 +1,6 @@
 /**
  * Example usage and test cases for the Markdown formatter
- * Run this with: npx tsx app/server/markdown/example.ts
+ * Export examples that can be used in other functions
  */
 import {
   bold,
@@ -16,19 +16,15 @@ import {
 } from './index';
 
 // Example 1: Simple document with headings and paragraphs
-const example1 = document(
+export const basicDocumentExample = document(
   heading(1, 'My Document'),
   paragraph('This is a simple paragraph with some text.'),
   heading(2, 'Getting Started'),
   paragraph("Here's how to get started with this project."),
 );
 
-console.log('=== Example 1: Basic Document ===');
-console.log(example1);
-console.log('\n');
-
 // Example 2: Lists
-const example2 = document(
+export const listsExample = document(
   heading(2, 'Lists Example'),
   paragraph("Here's an unordered list:"),
   unorderedList(['First item', 'Second item', 'Third item']),
@@ -36,12 +32,8 @@ const example2 = document(
   orderedList(['Step one', 'Step two', 'Step three']),
 );
 
-console.log('=== Example 2: Lists ===');
-console.log(example2);
-console.log('\n');
-
 // Example 3: Formatting and links
-const example3 = document(
+export const formattingExample = document(
   heading(2, 'Formatting Example'),
   richParagraph([
     'This paragraph has ',
@@ -54,12 +46,8 @@ const example3 = document(
   ]),
 );
 
-console.log('=== Example 3: Rich Formatting ===');
-console.log(example3);
-console.log('\n');
-
 // Example 4: Code blocks
-const example4 = document(
+export const codeBlockExample = document(
   heading(2, 'Code Example'),
   paragraph("Here's a TypeScript code block:"),
   codeBlock(
@@ -72,12 +60,8 @@ console.log(hello("World"));`,
   ),
 );
 
-console.log('=== Example 4: Code Block ===');
-console.log(example4);
-console.log('\n');
-
 // Example 5: Complex document
-const complexExample = document(
+export const complexDocumentExample = document(
   heading(1, 'API Documentation'),
   paragraph('Welcome to our API documentation.'),
 
@@ -127,5 +111,33 @@ const complexExample = document(
   ]),
 );
 
-console.log('=== Example 5: Complex Document ===');
-console.log(complexExample);
+// Helper function to get all examples
+export const getAllMarkdownExamples = () => ({
+  basicDocument: basicDocumentExample,
+  lists: listsExample,
+  formatting: formattingExample,
+  codeBlock: codeBlockExample,
+  complexDocument: complexDocumentExample,
+});
+
+// Helper function to console log all examples (for testing)
+export const printAllMarkdownExamples = () => {
+  console.log('=== Example 1: Basic Document ===');
+  console.log(basicDocumentExample);
+  console.log('\n');
+
+  console.log('=== Example 2: Lists ===');
+  console.log(listsExample);
+  console.log('\n');
+
+  console.log('=== Example 3: Rich Formatting ===');
+  console.log(formattingExample);
+  console.log('\n');
+
+  console.log('=== Example 4: Code Block ===');
+  console.log(codeBlockExample);
+  console.log('\n');
+
+  console.log('=== Example 5: Complex Document ===');
+  console.log(complexDocumentExample);
+};
