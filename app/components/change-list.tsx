@@ -1,4 +1,4 @@
-import { TreeChange } from '@/app/server/services/diff/diff-trees';
+import { TreeChange } from '@/app/server/diff/diff-trees';
 import { InlineTextDiff } from './inline-text-diff';
 
 interface ChangeListProps {

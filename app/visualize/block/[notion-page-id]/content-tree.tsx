@@ -1,7 +1,7 @@
 'use client';
 
 import { NotionBlock } from '@/app/server/database/notion-block';
-import { Tree, TreeNode } from '@/app/server/services/diff/tree';
+import { Tree, TreeNode } from '@/app/server/diff/tree';
 
 function renderTreeNode(node: TreeNode, blockIdMap: Map<string, NotionBlock>, depth: number = 0): React.ReactElement {
   const block = blockIdMap.get(node.id);

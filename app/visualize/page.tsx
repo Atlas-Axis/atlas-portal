@@ -38,6 +38,14 @@ export default async function Page() {
     );
   }
 
+  if (duplicatedRootDatabasesError) {
+    return (
+      <p className="text-red-500">
+        Failed to load Notion databases: {duplicatedRootDatabasesError.message || String(duplicatedRootDatabasesError)}
+      </p>
+    );
+  }
+
   const rootBlockLinks = rootBlocks.map((block) => (
     <li key={block.notion_block_id}>
       <Link

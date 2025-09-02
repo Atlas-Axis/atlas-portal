@@ -1,6 +1,6 @@
 import { NotionBlock } from '@/app/server/database/notion-block';
-import { convertSupabaseBlocksToTreeNodes } from '@/app/server/services/diff/convert-supabase-blocks-to-tree-nodes';
-import { Tree, TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { convertSupabaseBlocksToTreeNodes } from '@/app/server/diff/convert-supabase-blocks-to-tree-nodes';
+import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionBlocksFromSupabase } from '@/app/server/services/supabase/load-notion-blocks-from-supabase';
 import ContentTree from '@/app/visualize/block/[notion-page-id]/content-tree';
 

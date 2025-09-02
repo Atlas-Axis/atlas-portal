@@ -1,6 +1,6 @@
 'use server';
 
-import { calculateNotionPageHierarchyChanges } from '@/app/server/services/diff/calculate-notion-page-changes';
+import { calculateNotionPageHierarchyChanges } from '@/app/server/diff/calculate-notion-page-changes';
 
 export async function loadChangeSetAction({
   originalRootNotionPageId,

@@ -1,6 +1,6 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/diff/convert-supabase-database-pages-to-tree-nodes';
-import { Tree, TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
+import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import ContentTree from '@/app/visualize/database/[notion-database-id]/content-tree';
 

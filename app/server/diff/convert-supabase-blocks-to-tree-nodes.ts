@@ -1,4 +1,4 @@
-import { NotionBlock } from '../../database/notion-block';
+import { NotionBlock } from '../database/notion-block';
 import { TreeNode } from './tree';
 
 // Convert Supabase NotionBlock type to TreeNode type

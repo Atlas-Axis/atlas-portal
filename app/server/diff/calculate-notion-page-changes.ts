@@ -1,9 +1,9 @@
-import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/diff/convert-supabase-database-pages-to-tree-nodes';
-import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
+import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/get-notion-database-id-from-notion-page';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
-import { loadTextContentForNotionPageIds } from '../supabase/load-text-content-for-notion-page-ids';
+import { loadTextContentForNotionPageIds } from '../services/supabase/load-text-content-for-notion-page-ids';
 import { logTree } from './console-log-tree';
 import { TreeChange, diffTrees } from './diff-trees';
 import { extractSubtreeAsTree, extractSubtreePageIds } from './extract-subtree';

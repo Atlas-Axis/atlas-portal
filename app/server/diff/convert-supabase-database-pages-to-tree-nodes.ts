@@ -1,4 +1,4 @@
-import { NotionDatabasePage } from '../../database/notion-database-page';
+import { NotionDatabasePage } from '../database/notion-database-page';
 import { TreeNode } from './tree';
 
 // Convert Supabase NotionDatabasePage type to TreeNode type

@@ -4,8 +4,8 @@ import type {
   DatabaseObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/diff/convert-supabase-database-pages-to-tree-nodes';
-import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
+import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { formatUtcTimestamp } from '@/app/shared/utils/utils';

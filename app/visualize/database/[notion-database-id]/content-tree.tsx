@@ -1,7 +1,7 @@
 'use client';
 
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { Tree, TreeNode } from '@/app/server/services/diff/tree';
+import { Tree, TreeNode } from '@/app/server/diff/tree';
 
 function renderTreeNode(
   node: TreeNode,
