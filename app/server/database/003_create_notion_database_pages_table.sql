@@ -76,7 +76,7 @@ CHECK (sort_order >= 0);
 -- Ensure edit page fields are consistent with belongs_to_edit_page flag
 ALTER TABLE notion_database_pages ADD CONSTRAINT check_edit_page_fields_consistency
 CHECK (
-  (belongs_to_edit_page = true AND edit_page_original_notion_page_id IS NOT NULL AND edit_page_original_notion_database_id IS NOT NULL)
+  (belongs_to_edit_page = true AND edit_page_original_notion_database_id IS NOT NULL)
   OR
   (belongs_to_edit_page = false AND edit_page_original_notion_page_id IS NULL AND edit_page_original_notion_database_id IS NULL)
 );
