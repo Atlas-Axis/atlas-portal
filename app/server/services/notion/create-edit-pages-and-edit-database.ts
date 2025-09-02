@@ -90,7 +90,7 @@ export async function createNotionEditPagesAndDatabase({
     const pageIdMap = new Map(allPages.map((page) => [page.notion_page_id, page]));
 
     // Extract subtree starting from rootNotionPageId using efficient tree traversal
-    const subtreePageIds = extractSubtreeFromTree(tree, rootNotionPageId);
+    const subtreePageIds = extractSubtreePageIdsFromTree(tree, rootNotionPageId);
     const subtreePages = subtreePageIds.map((pageId: string) => pageIdMap.get(pageId)!).filter(Boolean);
 
     console.log(`Extracted subtree with ${subtreePages.length} pages`);
@@ -197,8 +197,10 @@ export async function createNotionEditPagesAndDatabase({
 /**
  * Extract all page IDs in the subtree starting from rootPageId using efficient tree traversal
  * This is O(k) where k is the subtree size, much more efficient than the linear O(n) approach
+ *
+ * TODO: Delete this function and use extractSubtreePageIds instead
  */
-function extractSubtreeFromTree(
+function extractSubtreePageIdsFromTree(
   tree: { root: TreeNode; nodeMap: Map<string, TreeNode> },
   rootPageId: string,
 ): string[] {

@@ -2,10 +2,12 @@ import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/services/d
 import { TreeNode, buildTree } from '@/app/server/services/diff/tree';
 import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/get-notion-database-id-from-notion-page';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
+import { isValidUUID } from '@/app/shared/utils/utils';
 import { loadTextContentForNotionPageIds } from '../supabase/load-text-content-for-notion-page-ids';
 import { logTree } from './console-log-tree';
 import { TreeChange, diffTrees } from './diff-trees';
 import { extractSubtreeAsTree, extractSubtreePageIds } from './extract-subtree';
+import { rewriteTreeNodeIds } from './rewrite-tree-node-ids';
 
 const DEBUG_LOGGING = Boolean(process.env.DEBUG_LOGGING);
 
@@ -17,6 +19,15 @@ export async function calculateNotionPageHierarchyChanges({
   duplicatedRootNotionPageId: string;
 }): Promise<TreeChange[]> {
   const startTime = Date.now();
+
+  console.log(`Starting calculation of Notion page hierarchy changes...`);
+  console.log(`Original root Notion page ID: ${originalRootNotionPageId}`);
+  console.log(`Duplicated root Notion page ID: ${duplicatedRootNotionPageId}`);
+
+  // Validate proper UUID formats using isValidUUID
+  if (!isValidUUID(originalRootNotionPageId) || !isValidUUID(duplicatedRootNotionPageId)) {
+    throw new Error('Invalid UUID format');
+  }
 
   // Step 1: Load Notion database IDs from Supabase
   console.log('Step 1: Loading Notion database IDs from Supabase...');
@@ -42,26 +53,28 @@ export async function calculateNotionPageHierarchyChanges({
   // Step 4: Add a dummy root node for both trees to connect all top-level pages, solving the multiple roots issue. These 2 nodes will be omitted later anyway
   console.log('Step 4: Adding root nodes to both trees...');
   const originalDummyRoot = createDummyRootNode(originalNotionDatabaseId);
-  const duplicatedDummyRoot = createDummyRootNode(duplicatedNotionDatabaseId);
+  // const duplicatedDummyRoot = createDummyRootNode(duplicatedNotionDatabaseId);
 
   // Make all current root nodes (parentId === null) children of the dummy root
   const originalTreeNodesWithDummyRoot = originalTreeNodes.map((node) =>
     node.parentId === null ? { ...node, parentId: originalDummyRoot.id } : node,
   );
-  const duplicatedTreeNodesWithDummyRoot = duplicatedTreeNodes.map((node) =>
-    node.parentId === null ? { ...node, parentId: duplicatedDummyRoot.id } : node,
-  );
+  // const duplicatedTreeNodesWithDummyRoot = duplicatedTreeNodes.map((node) =>
+  //   node.parentId === null ? { ...node, parentId: duplicatedDummyRoot.id } : node,
+  // );
   // Prepend dummy root nodes to both trees
   originalTreeNodesWithDummyRoot.unshift(originalDummyRoot);
-  duplicatedTreeNodesWithDummyRoot.unshift(duplicatedDummyRoot);
+  // duplicatedTreeNodesWithDummyRoot.unshift(duplicatedDummyRoot);
 
   // Step 5: Build trees and maps
   const originalTree = buildTree(originalTreeNodesWithDummyRoot);
   const originalPageIdMap = new Map(originalPages.map((page) => [page.notion_page_id, page]));
 
-  const duplicateTree = buildTree(duplicatedTreeNodesWithDummyRoot);
+  const duplicateTree = buildTree(duplicatedTreeNodes);
+  // const duplicateTree = buildTree(duplicatedTreeNodesWithDummyRoot);
   const duplicatedPageIdMap = new Map(duplicatedPages.map((page) => [page.notion_page_id, page]));
 
+  console.log(`Original tree vs Duplicate tree`);
   logTree(originalTree);
   logTree(duplicateTree);
 
@@ -70,7 +83,7 @@ export async function calculateNotionPageHierarchyChanges({
 
   // Extract subtrees as proper Tree objects, not just page IDs
   const originalSubtree = extractSubtreeAsTree(originalTree, originalRootNotionPageId);
-  const duplicatedSubtree = extractSubtreeAsTree(duplicateTree, duplicatedRootNotionPageId);
+  // const duplicatedSubtree = extractSubtreeAsTree(duplicateTree, duplicatedRootNotionPageId);
 
   // Get page IDs from subtrees for content loading
   const originalSubtreePageIds = extractSubtreePageIds(originalTree, originalRootNotionPageId);
@@ -89,19 +102,15 @@ export async function calculateNotionPageHierarchyChanges({
   console.log(`Original subtree page IDs: ${originalSubtreePageIds.join(', ')}`);
   console.log(
     `Subtree pages found:`,
-    originalSubtreePages.map((p) => `${p.notion_page_id} (${p.plain_text_name})`),
+    originalSubtreePages.map((p) => `${p.notion_page_id} (${p.canonical_document_title})`),
   );
 
   console.log(`Extracted duplicated subtree with ${duplicatedSubtreePages.length} pages`);
   console.log(`Duplicated subtree page IDs: ${duplicatedSubtreePageIds.join(', ')}`);
   console.log(
     `Subtree pages found:`,
-    duplicatedSubtreePages.map((p) => `${p.notion_page_id} (${p.plain_text_name})`),
+    duplicatedSubtreePages.map((p) => `${p.notion_page_id} (${p.canonical_document_title})`),
   );
-
-  // Use the subtree node maps instead of full tree node maps
-  const { nodeMap: originalNodeMap, root: originalRoot } = originalSubtree;
-  const { nodeMap: duplicateNodeMap, root: duplicateRoot } = duplicatedSubtree;
 
   // Step 7: Load text content for all nodes from Supabase into a single map
   console.log('Step 7: Loading text content for all subtree pages from Supabase...');
@@ -124,17 +133,62 @@ export async function calculateNotionPageHierarchyChanges({
   }, new Map<string, string>());
 
   console.log(`Created mapping with ${pageIdMappingDuplicatedToOriginal.size} entries:`);
-  console.log('Sample mapping entries:', Array.from(pageIdMappingDuplicatedToOriginal.entries()).slice(0, 3));
+  console.log(
+    'ID mapping:',
+    Array.from(pageIdMappingDuplicatedToOriginal.entries())
+      .map(([dupId, origId]) => `  ${dupId} => ${origId}`)
+      .join('\n'),
+  );
 
-  // Step 9: Calculate the differences
+  // Step 9: Rewrite duplicate tree node IDs to match original IDs
+  console.log('Step 9: Rewriting duplicate tree node IDs to match original IDs...');
+  const duplicatedSubtreeWithRewrittenIds = rewriteTreeNodeIds(duplicateTree, pageIdMappingDuplicatedToOriginal);
+
+  // Step 10: Create separate content maps for original and duplicate content
+  console.log('Step 10: Creating separate content maps for original and duplicate content...');
+  const originalContentMap = new Map<string, string | null>();
+  const duplicateContentMap = new Map<string, string | null>();
+
+  // Add original content using original IDs
+  for (const [id, content] of Object.entries(originalSubtreeContent)) {
+    originalContentMap.set(id, content || null);
+  }
+
+  // Add duplicate content using rewritten (original) IDs
+  for (const [duplicateId, originalId] of pageIdMappingDuplicatedToOriginal.entries()) {
+    const duplicateContent = nodeIdToContentMap.get(duplicateId);
+    if (duplicateContent !== undefined) {
+      duplicateContentMap.set(originalId, duplicateContent);
+      console.log(`Mapped duplicate content: ${duplicateId} -> ${originalId}`);
+    }
+  }
+
+  // TODO: Delete logs
+  console.log('Content comparison preview:');
+  for (const [id] of originalContentMap) {
+    const originalContent = originalContentMap.get(id);
+    const duplicateContent = duplicateContentMap.get(id);
+    console.log(`  Node ${id}:`);
+    console.log(
+      `    Original: "${originalContent?.substring(0, 100)}${originalContent && originalContent.length > 100 ? '...' : ''}"`,
+    );
+    console.log(
+      `    Duplicate: "${duplicateContent?.substring(0, 100)}${duplicateContent && duplicateContent.length > 100 ? '...' : ''}"`,
+    );
+    console.log(`    Same content: ${originalContent === duplicateContent}`);
+  }
+
+  logTree(originalSubtree);
+  logTree(duplicatedSubtreeWithRewrittenIds);
+
+  // Step 11: Calculate the differences using trees with matching IDs
   const changes = diffTrees({
-    originalNodeMap,
-    duplicateNodeMap,
-    originalRoot,
-    duplicateRoot,
-    nodeIdToContentMap,
-    pageIdMappingDuplicatedToOriginal,
-    skipRootNodes: true, // Skip dummy root nodes from comparison
+    originalNodeMap: originalSubtree.nodeMap,
+    duplicateNodeMap: duplicatedSubtreeWithRewrittenIds.nodeMap,
+    originalRoot: originalSubtree.root,
+    duplicateRoot: duplicatedSubtreeWithRewrittenIds.root,
+    originalContentMap,
+    duplicateContentMap,
   });
 
   if (DEBUG_LOGGING) {

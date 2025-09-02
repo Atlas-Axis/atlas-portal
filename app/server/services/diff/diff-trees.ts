@@ -23,13 +23,15 @@ export function diffTrees({
   duplicateNodeMap,
   originalRoot,
   duplicateRoot,
-  nodeIdToContentMap,
+  originalContentMap,
+  duplicateContentMap,
 }: {
   originalNodeMap: TreeNodeMap;
   duplicateNodeMap: TreeNodeMap;
   originalRoot: TreeNode;
   duplicateRoot: TreeNode;
-  nodeIdToContentMap: Map<string, string | null>;
+  originalContentMap: Map<string, string | null>;
+  duplicateContentMap: Map<string, string | null>;
 }): TreeChange[] {
   const changes: TreeChange[] = [];
   const processedNodes = new Set<string>();
@@ -61,7 +63,7 @@ export function diffTrees({
         type: 'added',
         node: duplicateNode,
         parentId: duplicateNode.parentId,
-        content: nodeIdToContentMap.get(duplicateNode.id) || null,
+        content: duplicateContentMap.get(duplicateNode.id) || null,
       });
       // Mark all descendants as processed since they're part of the added subtree
       markDescendantsAsProcessed(duplicateNode);
@@ -72,7 +74,7 @@ export function diffTrees({
         type: 'deleted',
         node: originalNode,
         parentId: originalNode.parentId,
-        content: nodeIdToContentMap.get(originalNode.id) || null,
+        content: originalContentMap.get(originalNode.id) || null,
       });
       // Mark all descendants as processed since they're part of the deleted subtree
       markDescendantsAsProcessed(originalNode);
@@ -90,7 +92,7 @@ export function diffTrees({
             type: 'moved',
             node: duplicateNode,
             parentId: duplicateNode.parentId,
-            content: nodeIdToContentMap.get(duplicateNode.id) || null,
+            content: duplicateContentMap.get(duplicateNode.id) || null,
             changes: {
               newParentId: duplicateNode.parentId,
               newPosition: duplicateNode.sortOrder,
@@ -108,14 +110,14 @@ export function diffTrees({
       }
 
       // Check for edits (only if not moved)
-      if (nodeIdToContentMap.get(originalNode.id) !== nodeIdToContentMap.get(duplicateNode.id)) {
+      if (originalContentMap.get(originalNode.id) !== duplicateContentMap.get(duplicateNode.id)) {
         changes.push({
           type: 'edited',
           node: duplicateNode,
           parentId: duplicateNode.parentId,
           changes: {
-            newContent: nodeIdToContentMap.get(duplicateNode.id) || null,
-            oldContent: nodeIdToContentMap.get(originalNode.id) || null,
+            newContent: duplicateContentMap.get(duplicateNode.id) || null,
+            oldContent: originalContentMap.get(originalNode.id) || null,
           },
         });
       }
