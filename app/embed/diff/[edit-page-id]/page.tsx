@@ -1,4 +1,4 @@
-import { InlineTextDiff } from '@/app/components/inline-text-diff';
+import { ChangeList } from '@/app/components/change-list';
 import { calculateNotionPageHierarchyChanges } from '@/app/server/services/diff/calculate-notion-page-changes';
 import { getOriginalNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
@@ -19,15 +19,15 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   });
 
   return (
-    <div>
-      <h1 className="mb-3 text-2xl font-bold">Changes</h1>
-      <pre>{JSON.stringify(changes, null, 2)}</pre>
-      {/* <div>
-        <InlineTextDiff
-          newContent={`Lorem ipsum dolor sit amet, consectetur adipiscing elit.`}
-          oldContent={`Lorem ipsum sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`}
-        />
-      </div> */}
+    <div className="mx-auto max-w-4xl p-6">
+      <h1 className="mb-6 text-2xl font-bold text-gray-900">Changes</h1>
+      <ChangeList changes={changes} />
+
+      {/* Debug view - remove in production */}
+      <details className="mt-8 rounded bg-gray-100 p-4">
+        <summary className="mb-2 cursor-pointer text-sm font-medium text-gray-600">Debug: Raw Changes Data</summary>
+        <pre className="overflow-auto text-xs text-gray-600">{JSON.stringify(changes, null, 2)}</pre>
+      </details>
     </div>
   );
 }
