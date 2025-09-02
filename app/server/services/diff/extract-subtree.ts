@@ -28,6 +28,7 @@ export function extractSubtreeAsTree(tree: Tree, rootPageId: string): Tree {
       blockType: node.blockType,
       sortOrder: node.sortOrder,
       rootNotionPageId: node.rootNotionPageId,
+      canonicalDocumentTitle: node.canonicalDocumentTitle,
       // Don't copy children - they'll be set by buildTree
     };
 

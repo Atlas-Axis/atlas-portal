@@ -8,7 +8,8 @@ export type TreeNode = {
   parentId: string | null;
   blockType: string;
   sortOrder: number;
-  rootNotionPageId: string; // TODO: Rename. Block is misleading. This is usually a page
+  rootNotionPageId: string;
+  canonicalDocumentTitle: string;
   // Tree structure
   children?: TreeNode[];
 };

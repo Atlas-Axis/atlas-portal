@@ -1,6 +1,6 @@
 import type { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { NOTION_DATABASE_PROPERTY_NAMES, SUB_ITEM_PROPERTY_NAME } from './database-property-names';
+import { SUB_ITEM_PROPERTY_NAME } from './database-property-names';
 
 export interface DatabaseSubItemTreeNode {
   id: string;

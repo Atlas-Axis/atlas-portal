@@ -227,5 +227,6 @@ function createDummyRootNode(rootId: string): TreeNode {
     blockType: 'dummy_root',
     sortOrder: 0,
     rootNotionPageId: rootId,
+    canonicalDocumentTitle: '',
   };
 }

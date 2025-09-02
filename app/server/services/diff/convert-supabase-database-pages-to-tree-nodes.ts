@@ -9,5 +9,6 @@ export function convertSupabaseDatabasePagesToTreeNodes(pages: NotionDatabasePag
     blockType: page.page_type,
     sortOrder: page.sort_order,
     rootNotionPageId: page.root_notion_database_id,
+    canonicalDocumentTitle: page.canonical_document_title || '',
   }));
 }

@@ -31,6 +31,7 @@ function withRootNode(treeNodes: TreeNode[]) {
     blockType: 'root',
     sortOrder: 0,
     rootNotionPageId: treeNodes[0].rootNotionPageId,
+    canonicalDocumentTitle: '',
   };
   treeNodes.push(rootNode);
 
