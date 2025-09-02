@@ -1,6 +1,6 @@
 import type { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
+import { NOTION_DATABASE_PROPERTY_NAMES, SUB_ITEM_PROPERTY_NAME } from './database-property-names';
 
 export interface DatabaseSubItemTreeNode {
   id: string;
@@ -25,7 +25,7 @@ export async function fetchDatabaseTree(
   options: FetchTreeOptions = {},
 ): Promise<DatabaseSubItemTree> {
   const {
-    subItemsPropertyName = NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].subItem,
+    subItemsPropertyName = SUB_ITEM_PROPERTY_NAME,
     parentPropertyName = 'Parent', // TODO: Check if this is reliable and correct; Sub items may not have a parent relationship. Verify!
   } = options;
 

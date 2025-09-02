@@ -1,4 +1,10 @@
 /**
+ * Docs for Sub-items in Notion databases
+ * - https://www.notion.com/help/tasks-and-dependencies
+ */
+export const SUB_ITEM_PROPERTY_NAME = 'Sub-item';
+
+/**
  * Docs for Notion database properties
  * - https://developers.notion.com/reference/property-object
  */
@@ -8,7 +14,6 @@ export const NOTION_DATABASE_PROPERTY_NAMES = {
     content: 'Content',
     docNo: 'Doc No (or Temp Name)',
     createEditPage: 'Create Edit Page',
-    subItem: 'Sub-item',
   },
   'Agent Scope': {
     name: 'Document Name',
