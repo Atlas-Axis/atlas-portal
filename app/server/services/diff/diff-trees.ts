@@ -1,13 +1,14 @@
 import { TreeNode, TreeNodeMap } from './tree';
 
 export type TreeChange =
-  | { type: 'added'; node: TreeNode; parentId: string | null; content: string | null }
-  | { type: 'deleted'; node: TreeNode; parentId: string | null; content: string | null }
+  | { type: 'added'; node: TreeNode; parentId: string | null; content: string | null; canonicalDocumentTitle: string }
+  | { type: 'deleted'; node: TreeNode; parentId: string | null; content: string | null; canonicalDocumentTitle: string }
   | {
       type: 'edited';
       node: TreeNode;
       parentId: string | null;
       changes: { newContent: string | null; oldContent: string | null };
+      canonicalDocumentTitle: string;
     }
   | {
       type: 'moved';
@@ -15,6 +16,7 @@ export type TreeChange =
       parentId: string | null;
       content: string | null;
       changes: { newParentId: string | null; oldParentId: string | null; newPosition: number; oldPosition: number };
+      canonicalDocumentTitle: string;
     };
 
 // TODO: Make sure to pre-sort blocks by position in the Supabase query for better performance during diffing
@@ -64,6 +66,7 @@ export function diffTrees({
         node: duplicateNode,
         parentId: duplicateNode.parentId,
         content: duplicateContentMap.get(duplicateNode.id) || null,
+        canonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
       });
       // Mark all descendants as processed since they're part of the added subtree
       markDescendantsAsProcessed(duplicateNode);
@@ -75,6 +78,7 @@ export function diffTrees({
         node: originalNode,
         parentId: originalNode.parentId,
         content: originalContentMap.get(originalNode.id) || null,
+        canonicalDocumentTitle: originalNode.canonicalDocumentTitle || '',
       });
       // Mark all descendants as processed since they're part of the deleted subtree
       markDescendantsAsProcessed(originalNode);
@@ -99,6 +103,7 @@ export function diffTrees({
               oldParentId: originalNode.parentId,
               oldPosition: originalNode.sortOrder,
             },
+            canonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
           });
           // Mark all descendants as processed since they're part of the moved subtree
           markDescendantsAsProcessed(duplicateNode);
@@ -119,6 +124,7 @@ export function diffTrees({
             newContent: duplicateContentMap.get(duplicateNode.id) || null,
             oldContent: originalContentMap.get(originalNode.id) || null,
           },
+          canonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
         });
       }
     }
