@@ -23,17 +23,17 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   const htmlOutput = renderMarkdown(result.proposalMarkdown);
 
   return (
-    <div className="mx-auto max-w-4xl p-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Changes</h1>
-      <ChangeList changes={result.changes} />
-
-      <div className="my-9">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">Rendered Output</h2>
+    <div className="mx-auto max-w-4xl space-y-9 p-6">
+      <div>
+        <h2 className="mb-6 text-2xl font-bold text-gray-900">Markdown Output</h2>
         <div
           className="prose h-full max-w-none overflow-auto rounded-lg border bg-white p-4"
           dangerouslySetInnerHTML={{ __html: htmlOutput }}
         />
       </div>
+
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">Changes</h2>
+      <ChangeList changes={result.changes} />
 
       {/* Debug view - remove in production */}
       <details className="mt-8 rounded bg-gray-100 p-4">
