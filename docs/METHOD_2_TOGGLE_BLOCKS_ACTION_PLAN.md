@@ -120,7 +120,7 @@ interface CreateEditPageResult {
    - ✅ Success/error handling
    - ✅ Real-time status updates
 
-3. **API route created**: `app/api/test-edit-page/route.ts`
+3. **Server action created**: `app/test-edit-page/_actions/create-edit-page-action.ts`
    - ✅ Server action to call the main function
    - ✅ Error handling and response formatting
    - ✅ Input validation
@@ -171,6 +171,14 @@ The **Method #2: Toggle Blocks Implementation** is now **FULLY IMPLEMENTED** wit
 - **Test UI** fully functional
 
 ### 🔧 TECHNICAL IMPLEMENTATION DETAILS
+
+#### Server Action Architecture
+
+- **Server-side execution**: Direct function calls without HTTP roundtrips
+- **Type safety**: Full TypeScript support between client and server code
+- **Progressive enhancement**: Works without JavaScript enabled
+- **Better error handling**: Structured error responses with detailed information
+- **Performance benefits**: Eliminates network overhead for internal operations
 
 #### Database Integration
 
@@ -232,9 +240,9 @@ The implementation is now **production-ready** and can be used to:
 ### Current File Structure
 
 ```
-app/server/services/notion/create-toggle-page.ts  # Main function
-app/test-edit-page/page.tsx                     # Test UI
-app/test-edit-page/api/test-edit-page/route.ts                 # API route
+app/server/services/notion/create-toggle-page.ts           # Main function
+app/test-edit-page/page.tsx                               # Test UI
+app/test-edit-page/_actions/create-edit-page-action.ts    # Server action
 ```
 
 ### Key Technical Details
@@ -339,7 +347,7 @@ import { TextRichTextItemRequest } from './types';
 ### Testing Strategy
 
 1. **Use demo data from `_demo-data.ts`**
-2. **Test via `/test-toggle-page` UI**
+2. **Test via `/test-edit-page` UI with server action**
 3. **Verify created structure in Notion**
 4. **Check Supabase records for proper mapping**
 5. **Test change detection by running diff algorithms**
@@ -347,7 +355,8 @@ import { TextRichTextItemRequest } from './types';
 ### Current Testing Status
 
 #### ✅ **Completed Tests**
-- **API endpoint functionality**: Endpoint responds correctly with proper error handling
+
+- **Server action functionality**: Server action responds correctly with proper error handling
 - **Input validation**: UUID format validation working correctly
 - **Error handling**: Detailed error messages for invalid inputs
 - **Build process**: TypeScript compilation successful with no errors
@@ -356,6 +365,7 @@ import { TextRichTextItemRequest } from './types';
 - **Canonical document title validation**: Regex pattern updated and working
 
 #### 🔄 **Pending Tests**
+
 - **Real data integration**: Test with actual Notion database IDs and page IDs
 - **Toggle block creation**: Verify toggle blocks are created correctly in Notion
 - **Database storage**: Confirm blocks are stored in Supabase with proper mapping
@@ -363,9 +373,10 @@ import { TextRichTextItemRequest } from './types';
 - **Performance testing**: Test with large hierarchies and content volumes
 
 #### 🧪 **Testing Environment**
+
 - **Development server**: Running successfully at localhost:3000
-- **Test UI**: Accessible at `/test-toggle-page`
-- **API endpoint**: Available at `/test-toggle-page/api/test-toggle-page`
+- **Test UI**: Accessible at `/test-edit-page`
+- **Server action**: Available via form submission in test UI
 - **Database**: Supabase integration configured and working
 - **Notion API**: Rate limiting and authentication configured
 
