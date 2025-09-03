@@ -24,7 +24,7 @@ export default function TestTogglePage() {
     setResult(null);
 
     try {
-      const response = await fetch('/test-toggle-page/api/test-toggle-page', {
+      const response = await fetch('/test-edit-page/api/test-edit-page', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

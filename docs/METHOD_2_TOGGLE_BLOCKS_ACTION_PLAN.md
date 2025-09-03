@@ -114,13 +114,13 @@ interface CreateEditPageResult {
    - ✅ Sort order validation
    - ✅ Canonical document title validation
 
-2. **Test page created**: `app/test-toggle-page/page.tsx`
+2. **Test page created**: `app/test-edit-page/page.tsx`
    - ✅ UI for testing the functionality
    - ✅ Form to trigger Edit Page creation
    - ✅ Success/error handling
    - ✅ Real-time status updates
 
-3. **API route created**: `app/api/test-toggle-page/route.ts`
+3. **API route created**: `app/api/test-edit-page/route.ts`
    - ✅ Server action to call the main function
    - ✅ Error handling and response formatting
    - ✅ Input validation
@@ -233,8 +233,8 @@ The implementation is now **production-ready** and can be used to:
 
 ```
 app/server/services/notion/create-toggle-page.ts  # Main function
-app/test-toggle-page/page.tsx                     # Test UI
-app/test-toggle-page/api/test-toggle-page/route.ts                 # API route
+app/test-edit-page/page.tsx                     # Test UI
+app/test-edit-page/api/test-edit-page/route.ts                 # API route
 ```
 
 ### Key Technical Details
@@ -339,7 +339,7 @@ import { TextRichTextItemRequest } from './types';
 ### Testing Strategy
 
 1. Use demo data from `_demo-data.ts`
-2. Test via `/test-toggle-page` UI
+2. Test via `/test-edit-page` UI
 3. Verify created structure in Notion
 4. Check Supabase records for proper mapping
 5. Test change detection by running diff algorithms
