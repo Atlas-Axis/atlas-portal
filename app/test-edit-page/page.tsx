@@ -7,6 +7,7 @@ import {
   NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID,
   NOTION_PAGE_ID,
 } from '@/app/server/services/notion/_demo-data';
+import { createEditPageAction } from './_actions/create-edit-page-action';
 
 export default function TestTogglePage() {
   const [loading, setLoading] = useState(false);
@@ -24,27 +25,20 @@ export default function TestTogglePage() {
     setResult(null);
 
     try {
-      const response = await fetch('/test-edit-page/api/test-edit-page', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const result = await createEditPageAction({
+        originalNotionDatabaseId: NOTION_DATABASE_ID,
+        rootNotionPageId: NOTION_PAGE_ID,
+        parent: {
+          type: 'database_id',
+          database_id: NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID,
         },
-        body: JSON.stringify({
-          originalNotionDatabaseId: NOTION_DATABASE_ID,
-          rootNotionPageId: NOTION_PAGE_ID,
-          parent: {
-            type: 'database_id',
-            database_id: NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID,
-          },
-        }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+      if (!result.success) {
+        throw new Error(result.error || 'Unknown error occurred');
       }
 
-      const data = await response.json();
-      setResult(data);
+      setResult(result.data!);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
