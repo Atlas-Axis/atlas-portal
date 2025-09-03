@@ -1,0 +1,16 @@
+/* Markdown-specific styling */
+
+/* Remove automatic backticks from inline code in Tailwind Typography */
+.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)):before,
+.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)):after {
+  content: '' !important;
+}
+
+/* Apply styles to inline code blocks */
+.prose :where(code):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  background: rgba(122, 98, 98, 0.1);
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  color: rgb(220, 38, 38);
+  font-weight: 500;
+}
