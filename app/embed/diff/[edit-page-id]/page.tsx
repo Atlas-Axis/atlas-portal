@@ -24,6 +24,9 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
 
   return (
     <div className="mx-auto max-w-4xl space-y-9 p-6">
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">Changes</h2>
+      <ChangeList changes={result.changes} />
+
       <div>
         <h2 className="mb-6 text-2xl font-bold text-gray-900">Markdown Output</h2>
         <div
@@ -31,9 +34,6 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
           dangerouslySetInnerHTML={{ __html: htmlOutput }}
         />
       </div>
-
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">Changes</h2>
-      <ChangeList changes={result.changes} />
 
       {/* Debug view - remove in production */}
       <details className="mt-8 rounded bg-gray-100 p-4">
