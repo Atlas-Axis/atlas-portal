@@ -2,6 +2,7 @@
  * Main Atlas proposal generator
  * Converts TreeChange[] to formatted Atlas proposal markdown
  */
+import { diffWords } from 'diff';
 import { TreeChange } from '../../diff/diff-trees';
 import { TreeNode } from '../../diff/tree';
 import { calculateRelativePosition, formatChangeEntry, formatDocumentReference } from './proposal-formatter';
@@ -183,8 +184,8 @@ function processReplacement(
 
   const documentRef = formatDocumentReference(change.canonicalDocumentTitle);
 
-  // Use new content from the edit
-  const content = change.changes.newContent;
+  // Generate inline diff showing changes
+  const content = generateInlineDiffText(change.changes.oldContent || '', change.changes.newContent || '');
 
   // Include subtree if requested
   const children = options.includeSubtree ? getSubtreeChanges(change.node, context, options, 1) : undefined;
@@ -195,6 +196,36 @@ function processReplacement(
     content: content || undefined,
     children,
   };
+}
+
+/**
+ * Generate inline diff text with markdown formatting for added/removed content
+ */
+function generateInlineDiffText(oldContent: string, newContent: string): string {
+  const diff = diffWords(oldContent, newContent);
+
+  const parts: string[] = [];
+
+  diff.forEach((part, index) => {
+    if (part.added) {
+      // Added text with bold/underline formatting for emphasis
+      parts.push(`__${part.value}__`);
+    } else if (part.removed) {
+      // Red text with strikethrough for deletions (using markdown strikethrough)
+      parts.push(`~${part.value}~`);
+
+      // Add a space after removed text if the next part is added text
+      const nextPart = diff[index + 1];
+      if (nextPart && nextPart.added) {
+        parts.push(' ');
+      }
+    } else {
+      // Unchanged text
+      parts.push(part.value);
+    }
+  });
+
+  return parts.join('');
 }
 
 /**
