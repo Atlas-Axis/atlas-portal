@@ -127,8 +127,36 @@ export async function createNotionPageWithToggleBlocks({
 
     // Log the hierarchy structure for debugging
     console.log('Subtree hierarchy:');
+
+    // Build a map to track the depth of each page
+    const pageDepthMap = new Map<string, number>();
+
+    // Calculate depth for each page by traversing up the parent chain
+    function calculatePageDepth(pageId: string): number {
+      if (pageDepthMap.has(pageId)) {
+        return pageDepthMap.get(pageId)!;
+      }
+
+      const page = subtreePages.find((p) => p.notion_page_id === pageId);
+      if (!page || !page.parent_notion_page_id) {
+        const depth = 0;
+        pageDepthMap.set(pageId, depth);
+        return depth;
+      }
+
+      // Recursively calculate parent depth and add 1
+      const parentDepth = calculatePageDepth(page.parent_notion_page_id);
+      const depth = parentDepth + 1;
+      pageDepthMap.set(pageId, depth);
+      return depth;
+    }
+
+    // Calculate depths for all pages
+    subtreePages.forEach((page) => calculatePageDepth(page.notion_page_id));
+
     subtreePages.forEach((page) => {
-      const indent = '  '.repeat(page.parent_notion_page_id ? 1 : 0);
+      const depth = pageDepthMap.get(page.notion_page_id) || 0;
+      const indent = '  '.repeat(depth);
       const title = page.canonical_document_title || page.plain_text_name || 'Untitled';
       console.log(`${indent}${title} (${page.notion_page_id})`);
 
@@ -153,7 +181,7 @@ export async function createNotionPageWithToggleBlocks({
     // Step 4: Create new Notion page
     console.log('Step 4: Creating new Notion page...');
     const rootPageTitle = rootPage.canonical_document_title || rootPage.plain_text_name || 'Untitled Page';
-    const newPageTitle = `${rootPageTitle} - Toggle View`;
+    const newPageTitle = `${rootPageTitle} - Editable`;
     console.log(`New page title: "${newPageTitle}"`);
 
     // Validate that we have pages to create toggles for
@@ -367,13 +395,34 @@ async function createToggleBlocksHierarchy(
   });
 
   // Process pages level by level
-  // Start with the root page and create toggle blocks for all its descendants
-  // The root page itself is not a toggle block - it's the page containing the toggles
+  // Create toggle blocks for ALL pages in the subtree, including the root page
+  // The root page should also be a toggle block with its content and children
 
-  // Process children recursively, starting from the root page
-  async function processChildren(parentPageId: string, parentBlockId: string) {
+  // Process children recursively, including the root page itself
+  async function processChildren(parentPageId: string, parentBlockId: string, includeRootPage: boolean = false) {
     const children = pagesByParent.get(parentPageId) || [];
 
+    // If this is the root page and we should include it, create a toggle block for it first
+    if (includeRootPage && parentPageId === rootPageId) {
+      const rootPage = subtreePages.find((p) => p.notion_page_id === rootPageId);
+      if (rootPage) {
+        try {
+          const rootToggleId = await createSingleToggleBlock(parentBlockId, rootPage);
+          databasePageToBlockMapping.set(rootPage.notion_page_id, rootToggleId);
+          blocksCreated++;
+          console.log(`Created root toggle block for page ${rootPageId}`);
+
+          // Process children of the root page using the root toggle block as parent
+          await processChildren(rootPageId, rootToggleId, false);
+        } catch (error) {
+          console.error(`Failed to create root toggle block for page ${rootPageId}:`, error);
+          // Continue with children even if root toggle creation fails
+        }
+      }
+      return;
+    }
+
+    // Process all children of the current page
     for (const childPage of children) {
       try {
         const childToggleId = await createSingleToggleBlock(parentBlockId, childPage);
@@ -381,7 +430,7 @@ async function createToggleBlocksHierarchy(
         blocksCreated++;
 
         // Process grandchildren
-        await processChildren(childPage.notion_page_id, childToggleId);
+        await processChildren(childPage.notion_page_id, childToggleId, false);
       } catch (error) {
         console.error(`Failed to create toggle block for page ${childPage.notion_page_id}:`, error);
         // Continue with other children even if one fails
@@ -389,8 +438,8 @@ async function createToggleBlocksHierarchy(
     }
   }
 
-  // Start processing from the root page, using the page ID as the parent for the first level of toggles
-  await processChildren(rootPageId, pageId);
+  // Start processing from the root page, including the root page itself as a toggle block
+  await processChildren(rootPageId, pageId, true);
 
   console.log(`Created ${blocksCreated} toggle blocks with ${databasePageToBlockMapping.size} mappings`);
 
@@ -489,6 +538,9 @@ async function createSingleToggleBlock(parentId: string, databasePage: NotionDat
         {
           type: 'text' as const,
           text: { content: toggleTitle },
+          annotations: {
+            bold: true,
+          },
         },
       ],
     },
