@@ -207,21 +207,36 @@ function generateInlineDiffText(oldContent: string, newContent: string): string 
   const parts: string[] = [];
 
   diff.forEach((part, index) => {
+    // If the first character was a space, and this is added/removed text, add a trailing space, because we will remove it
+    if (part.value.trim().startsWith(' ') && (part.added || part.removed)) {
+      parts.push(' ');
+    }
+
     if (part.added) {
       // Added text with bold/underline formatting for emphasis
-      parts.push(`__${part.value}__`);
+      parts.push(`**${part.value.trim()}**`);
     } else if (part.removed) {
       // Red text with strikethrough for deletions (using markdown strikethrough)
-      parts.push(`~${part.value}~`);
+      parts.push(`~~${part.value.trim()}~~`);
 
       // Add a space after removed text if the next part is added text
       const nextPart = diff[index + 1];
       if (nextPart && nextPart.added) {
+        console.log('Adding space after removed text before added text', {
+          removed: part.value,
+          added: nextPart.value,
+        });
         parts.push(' ');
       }
     } else {
       // Unchanged text
       parts.push(part.value);
+    }
+
+    // If the last character was a space, and this is added/removed text, add a trailing space, because we removed it
+    // We trimmed the added/removed text, otherwise Notion won't understand the formatting operators
+    if (part.value.trim().endsWith(' ') && (part.added || part.removed)) {
+      parts.push(' ');
     }
   });
 
