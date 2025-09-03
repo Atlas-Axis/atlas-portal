@@ -25,7 +25,7 @@ export class NotionRateLimiter {
     if (!this.enableLogging) return;
 
     const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] [NotionRateLimiter] [${level.toUpperCase()}] ${message}`;
+    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
 
     if (data) {
       console[level](logMessage, data);
@@ -50,7 +50,7 @@ export class NotionRateLimiter {
           resolve(result);
         } catch (error) {
           clearTimeout(queueTimeout);
-          this.log('error', 'API call failed after retries', { error });
+          this.log('error', 'Notion API call failed after retries', { error });
           reject(error);
         }
       });
@@ -128,7 +128,7 @@ export class NotionRateLimiter {
       throw new Error(errorMessage);
     } else {
       // Re-throw the original error for non-429 errors
-      this.log('error', 'API call failed with non-retryable error', { error: lastError });
+      this.log('error', 'Notion API call failed with non-retryable error', { error: lastError });
       throw lastError;
     }
   }

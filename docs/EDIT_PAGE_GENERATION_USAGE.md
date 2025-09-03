@@ -105,7 +105,7 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 
 ### 3. Page Creation
 
-- Creates a new Notion page with title format: `{RootPageTitle} - Toggle View`
+- Creates a new Notion page with title format: `{RootPageTitle} - Editable`
 - Places the page under the specified parent
 
 ### 4. Toggle Block Creation
@@ -130,7 +130,7 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 ### Notion Page Structure
 
 ```
-📄 {RootPageTitle} - Toggle View
+📄 {RootPageTitle} - Editable
 ├── 📁 A.1 - Main Document
 │   ├── Rich text content...
 │   └── 📁 A.1.1 - Child Document
