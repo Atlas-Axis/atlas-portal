@@ -1,4 +1,4 @@
-# Create "Edit Database" Functionality
+# Create "Edit Database" Functionality (Method #1)
 
 This document describes the new functionality for creating "edit databases" from existing Notion databases stored in Supabase.
 
