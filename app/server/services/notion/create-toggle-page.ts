@@ -132,13 +132,13 @@ export async function createNotionPageWithToggleBlocks({
       const title = page.canonical_document_title || page.plain_text_name || 'Untitled';
       console.log(`${indent}${title} (${page.notion_page_id})`);
 
-              // Validate canonical document title format
-        // Expected format: A.1.2.3 - Document Title (e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate")
-        if (page.canonical_document_title && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.canonical_document_title)) {
-          console.warn(
-            `Warning: Page ${page.notion_page_id} has non-standard canonical document title: "${page.canonical_document_title}"`,
-          );
-        }
+      // Validate canonical document title format
+      // Expected format: A.1.2.3 - Document Title (e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate")
+      if (page.canonical_document_title && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.canonical_document_title)) {
+        console.warn(
+          `Warning: Page ${page.notion_page_id} has non-standard canonical document title: "${page.canonical_document_title}"`,
+        );
+      }
     });
 
     // Step 3: Retrieve original database schema for title
@@ -216,9 +216,9 @@ export async function createNotionPageWithToggleBlocks({
     }
 
     // Validate that all pages in the subtree have valid canonical document titles
-    // Expected format: A.1.2.3 - Document Title (e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate")
+    // Expected format: e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate", "Grove"
     const pagesWithInvalidCanonicalTitle = subtreePages.filter(
-      (page) => page.canonical_document_title && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.canonical_document_title),
+      (page) => page.canonical_document_title && !/^..+$/.test(page.canonical_document_title),
     );
     if (pagesWithInvalidCanonicalTitle.length > 0) {
       console.warn(
@@ -597,45 +597,51 @@ async function importToggleBlocksFromNotionToSupabase({
       }
     });
 
-        // Log mapping statistics for debugging
+    // Log mapping statistics for debugging
     const editPageBlocks = blocksWithEditProperties.filter((block) => block.belongs_to_edit_page);
     const nonEditPageBlocks = blocksWithEditProperties.filter((block) => !block.belongs_to_edit_page);
-    console.log(`Block categorization: ${editPageBlocks.length} edit page blocks, ${nonEditPageBlocks.length} non-edit page blocks`);
-    
+    console.log(
+      `Block categorization: ${editPageBlocks.length} edit page blocks, ${nonEditPageBlocks.length} non-edit page blocks`,
+    );
+
     // Check that all toggle blocks are properly mapped
     const toggleBlocks = blocksWithEditProperties.filter((block) => block.block_type === 'toggle');
     const mappedToggleBlocks = toggleBlocks.filter((block) => block.edit_page_original_notion_page_id);
     const unmappedToggleBlocks = toggleBlocks.filter((block) => !block.edit_page_original_notion_page_id);
-    
+
     console.log(`Toggle block mapping: ${mappedToggleBlocks.length} mapped, ${unmappedToggleBlocks.length} unmapped`);
-    
+
     if (unmappedToggleBlocks.length > 0) {
-      console.warn(`Warning: ${unmappedToggleBlocks.length} toggle blocks are not mapped to database pages:`, 
-        unmappedToggleBlocks.map((b) => ({ id: b.notion_block_id, type: b.block_type }))
+      console.warn(
+        `Warning: ${unmappedToggleBlocks.length} toggle blocks are not mapped to database pages:`,
+        unmappedToggleBlocks.map((b) => ({ id: b.notion_block_id, type: b.block_type })),
       );
-      
+
       // This is a critical error - all toggle blocks must be mapped
-      throw new Error(`Found ${unmappedToggleBlocks.length} unmapped toggle blocks. All toggle blocks must have valid mappings to database pages.`);
-    }
-    
-    // Log details about non-edit page blocks
-    if (nonEditPageBlocks.length > 0) {
-      console.log(`Non-edit page blocks (expected):`, 
-        nonEditPageBlocks.map((b) => ({ id: b.notion_block_id, type: b.block_type }))
+      throw new Error(
+        `Found ${unmappedToggleBlocks.length} unmapped toggle blocks. All toggle blocks must have valid mappings to database pages.`,
       );
     }
 
-            // Validate that we have the expected number of toggle blocks
+    // Log details about non-edit page blocks
+    if (nonEditPageBlocks.length > 0) {
+      console.log(
+        `Non-edit page blocks (expected):`,
+        nonEditPageBlocks.map((b) => ({ id: b.notion_block_id, type: b.block_type })),
+      );
+    }
+
+    // Validate that we have the expected number of toggle blocks
     const totalToggleBlocks = blocksWithEditProperties.filter((block) => block.block_type === 'toggle');
     const expectedToggleBlocks = databasePageToBlockMapping.size;
-    
+
     if (totalToggleBlocks.length !== expectedToggleBlocks) {
       console.warn(`Warning: Expected ${expectedToggleBlocks} toggle blocks but found ${totalToggleBlocks.length}`);
     }
-    
+
     // Validate database constraints before insertion
     // TODO: Delete this once we are sure it works
-    const invalidBlocks = blocksWithEditProperties.filter(block => {
+    const invalidBlocks = blocksWithEditProperties.filter((block) => {
       if (block.belongs_to_edit_page) {
         // If belongs_to_edit_page = true, edit_page_original_notion_page_id must NOT be null
         return !block.edit_page_original_notion_page_id;
@@ -644,22 +650,25 @@ async function importToggleBlocksFromNotionToSupabase({
         return block.edit_page_original_notion_page_id !== null || block.edit_page_original_notion_block_id !== null;
       }
     });
-    
+
     if (invalidBlocks.length > 0) {
-      console.error('Database constraint validation failed:', 
-        invalidBlocks.map(b => ({ 
-          id: b.notion_block_id, 
-          type: b.block_type, 
+      console.error(
+        'Database constraint validation failed:',
+        invalidBlocks.map((b) => ({
+          id: b.notion_block_id,
+          type: b.block_type,
           belongs_to_edit_page: b.belongs_to_edit_page,
           edit_page_original_notion_page_id: b.edit_page_original_notion_page_id,
-          edit_page_original_notion_block_id: b.edit_page_original_notion_block_id
-        }))
+          edit_page_original_notion_block_id: b.edit_page_original_notion_block_id,
+        })),
       );
-      throw new Error(`Found ${invalidBlocks.length} blocks that would violate database constraints. Cannot proceed with insertion.`);
+      throw new Error(
+        `Found ${invalidBlocks.length} blocks that would violate database constraints. Cannot proceed with insertion.`,
+      );
     }
-    
+
     console.log('Database constraint validation passed - all blocks are properly configured');
-    
+
     // Save blocks to Supabase database in batches
     await insertBlocksInBatches(blocksWithEditProperties);
 
