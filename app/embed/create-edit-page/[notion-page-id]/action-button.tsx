@@ -5,22 +5,22 @@ import { useState } from 'react';
 import { Alert, Button } from '@heroui/react';
 import { ExternalLink } from 'lucide-react';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
-import type { CreateEditPagesAndDatabaseActionResult } from './_actions/create-edit-pages-and-database-action';
-import { createEditPagesAndDatabaseAction } from './_actions/create-edit-pages-and-database-action';
+import type { CreateEditPageResult } from './_actions/create-edit-page-action';
+import { createEditPageAction } from './_actions/create-edit-page-action';
 
 export default function ActionButton({ notionPageId }: { notionPageId: string }) {
   const [loading, setLoading] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [message, setMessage] = useState('');
-  const [result, setResult] = useState<CreateEditPagesAndDatabaseActionResult | null>(null);
+  const [result, setResult] = useState<CreateEditPageResult | null>(null);
 
   const handleButtonClick = async () => {
     setLoading(true);
     setMessage('');
     try {
-      const result: CreateEditPagesAndDatabaseActionResult = await createEditPagesAndDatabaseAction(notionPageId);
+      const result: CreateEditPageResult = await createEditPageAction(notionPageId);
       setIsSuccessful(result.success);
-      setMessage(result.message);
+      setMessage(result.success ? 'Edit page created successfully!' : result.error || 'An error occurred');
       setResult(result);
     } catch (error) {
       setIsSuccessful(false);
@@ -39,13 +39,13 @@ export default function ActionButton({ notionPageId }: { notionPageId: string })
         </Button>
       )}
 
-      {isSuccessful && result?.result && (
-        // Show a big Link button which navigates to the new database
+      {isSuccessful && result?.data && (
+        // Show a big Link button which navigates to the new page
         <Button
           as={Link}
           color="success"
           size="lg"
-          href={`https://www.notion.so/${uuidToNoHyphens(result.result.newDatabaseId)}`}
+          href={`https://www.notion.so/${uuidToNoHyphens(result.data.newNotionPageId)}`}
           startContent={<ExternalLink />}
           className="text-white"
         >
