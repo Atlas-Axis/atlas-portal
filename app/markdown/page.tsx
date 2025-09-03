@@ -30,8 +30,6 @@ You can write inline code like \`const x = 42\` or create tables:
 export default function MarkdownPage() {
   const htmlOutput = renderMarkdown(markdownInput);
 
-  console.log(htmlOutput);
-
   return (
     <div className="typography container mx-auto min-h-screen max-w-6xl p-8">
       <h1 className="mb-8 text-center text-3xl font-bold">Markdown Renderer Demo</h1>
