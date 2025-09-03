@@ -35,11 +35,19 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
         />
       </div>
 
-      {/* Debug view - remove in production */}
-      <details className="mt-8 rounded bg-gray-100 p-4">
-        <summary className="mb-2 cursor-pointer text-sm font-medium text-gray-600">Debug: Raw Changes Data</summary>
-        <pre className="overflow-auto text-xs text-gray-600">{JSON.stringify(result, null, 2)}</pre>
-      </details>
+      <div>
+        {/* Debug view for Markdown source - remove in production */}
+        <details className="rounded bg-gray-100 p-4">
+          <summary className="mb-2 cursor-pointer text-sm font-medium text-gray-600">Debug: Markdown Source</summary>
+          <pre className="overflow-auto text-xs whitespace-pre-wrap text-gray-600">{result.proposalMarkdown}</pre>
+        </details>
+
+        {/* Debug view - remove in production */}
+        <details className="rounded bg-gray-100 p-4">
+          <summary className="mb-2 cursor-pointer text-sm font-medium text-gray-600">Debug: Raw Changes Data</summary>
+          <pre className="overflow-auto text-xs text-gray-600">{JSON.stringify(result, null, 2)}</pre>
+        </details>
+      </div>
     </div>
   );
 }
