@@ -189,3 +189,21 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - Automated Edit Page creation
 - Human-readable edit proposal generation (show diffs, aggregated from multiple edit pages)
 - Automated background sync triggers
+
+# Additional Documentation
+
+## Core Documentation Files
+
+- **[README.md](../README.md)** - Project overview and getting started guide (coming soon)
+- **[docs/CREATE_EDIT_DATABASE.md](../docs/CREATE_EDIT_DATABASE.md)** - Documentation for creating edit databases and duplicate Notion pages functionality
+- **[docs/NOTION_EMBEDS.md](../docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
+
+## Markdown Generation System
+
+- **[docs/MARKDOWN_GENERATOR.md](../docs/MARKDOWN_GENERATOR.md)** - Complete documentation for the TypeScript-based programmatic markdown generation system
+- **[docs/MARKDOWN_GENERATOR_QUICK_REFERENCE.md](../docs/MARKDOWN_GENERATOR_QUICK_REFERENCE.md)** - Quick reference guide with common patterns and syntax examples for markdown generation
+- **[docs/MARKDOWN_GENERATOR_EXAMPLES.md](../docs/MARKDOWN_GENERATOR_EXAMPLES.md)** - Practical examples and templates for AI agents to generate markdown content (Atlas Edit Proposals, etc.)
+
+## Atlas Services
+
+- **[app/server/services/atlas/README.md](../app/server/services/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
