@@ -3,6 +3,7 @@ import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/get-notion-database-id-from-notion-page';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
+import { convertTreeChangesToAtlasProposal } from '../services/atlas/generate-proposal';
 import { loadTextContentForNotionPageIds } from '../services/supabase/load-text-content-for-notion-page-ids';
 import { logTree } from './console-log-tree';
 import { TreeChange, diffTrees } from './diff-trees';
@@ -19,7 +20,10 @@ export async function calculateNotionPageHierarchyChanges({
 }: {
   originalRootNotionPageId: string;
   duplicatedRootNotionPageId: string;
-}): Promise<TreeChange[]> {
+}): Promise<{
+  changes: TreeChange[];
+  proposalMarkdown: string;
+}> {
   const startTime = Date.now();
 
   console.log(`Starting calculation of Notion page hierarchy changes...`);
@@ -215,11 +219,44 @@ export async function calculateNotionPageHierarchyChanges({
     });
   }
 
+  // Step 12: Generate Markdown edit proposal
+  console.log('Step 12: Generating Atlas edit proposal...');
+
+  const proposalMarkdown = convertTreeChangesToAtlasProposal(
+    changes,
+    {
+      originalNodeMap: originalSubtree.nodeMap,
+      duplicateNodeMap: duplicatedSubtreeWithRewrittenIds.nodeMap,
+      originalRoot: originalSubtree.root,
+      duplicateRoot: duplicatedSubtreeWithRewrittenIds.root,
+      originalContentMap,
+      duplicateContentMap,
+    },
+    {
+      includeSubtree: true,
+      maxSubtreeDepth: 3, // Reasonable depth limit for proposals
+      groupingStrategy: 'none', // No logical grouping for now
+    },
+  );
+
+  console.log('='.repeat(80));
+  console.log('📋 ATLAS EDIT PROPOSAL');
+  console.log('='.repeat(80));
+  console.log('');
+  console.log(proposalMarkdown);
+  console.log('');
+  console.log('='.repeat(80));
+  console.log(`✅ Generated proposal with ${changes.length} changes`);
+  console.log('='.repeat(80));
+
   const endTime = Date.now();
   const executionTimeSeconds = (endTime - startTime) / 1000;
   console.log(`calculateNotionPageChanges execution time: ${executionTimeSeconds.toFixed(2)} seconds`);
 
-  return changes;
+  return {
+    changes,
+    proposalMarkdown,
+  };
 }
 
 function createDummyRootNode(rootId: string): TreeNode {
