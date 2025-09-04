@@ -691,36 +691,6 @@ async function importToggleBlocksFromNotionToSupabase({
       console.warn(`Warning: Expected ${expectedToggleBlocks} toggle blocks but found ${totalToggleBlocks.length}`);
     }
 
-    // Validate database constraints before insertion
-    // TODO: Delete this once we are sure it works
-    const invalidBlocks = blocksWithEditProperties.filter((block) => {
-      if (block.belongs_to_edit_page) {
-        // If belongs_to_edit_page = true, edit_page_original_notion_page_id must NOT be null
-        return !block.edit_page_original_notion_page_id;
-      } else {
-        // If belongs_to_edit_page = false, both edit page fields must be null
-        return block.edit_page_original_notion_page_id !== null || block.edit_page_original_notion_block_id !== null;
-      }
-    });
-
-    if (invalidBlocks.length > 0) {
-      console.error(
-        'Database constraint validation failed:',
-        invalidBlocks.map((b) => ({
-          id: b.notion_block_id,
-          type: b.block_type,
-          belongs_to_edit_page: b.belongs_to_edit_page,
-          edit_page_original_notion_page_id: b.edit_page_original_notion_page_id,
-          edit_page_original_notion_block_id: b.edit_page_original_notion_block_id,
-        })),
-      );
-      throw new Error(
-        `Found ${invalidBlocks.length} blocks that would violate database constraints. Cannot proceed with insertion.`,
-      );
-    }
-
-    console.log('Database constraint validation passed - all blocks are properly configured');
-
     // Save blocks to Supabase database in batches
     await insertBlocksInBatches(blocksWithEditProperties);
 

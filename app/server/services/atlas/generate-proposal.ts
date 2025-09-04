@@ -137,8 +137,10 @@ function processAddition(
   // Get content
   const content = change.content;
 
-  // Include subtree if requested
-  const children = options.includeSubtree ? getSubtreeChanges(change.node, context, options, 1) : undefined;
+  // Include subtree if requested (for additions we source from duplicate side)
+  const children = options.includeSubtree
+    ? getSubtreeChanges(change.node, context, options, 1, 'duplicate')
+    : undefined;
 
   return {
     type: 'add',
@@ -162,12 +164,18 @@ function processDeletion(
 
   const documentRef = formatDocumentReference(change.canonicalDocumentTitle);
 
-  // Include subtree if requested
-  const children = options.includeSubtree ? getSubtreeChanges(change.node, context, options, 1) : undefined;
+  // Fetch top-level content from original side
+  const content = context.originalContentMap.get(change.node.id) || undefined;
+
+  // Include subtree if requested (for deletions we source from original side)
+  const children = options.includeSubtree
+    ? getSubtreeChanges(change.node, context, options, 1, 'original')
+    : undefined;
 
   return {
     type: 'delete',
     documentRef,
+    content,
     children,
   };
 }
@@ -187,8 +195,10 @@ function processReplacement(
   // Generate inline diff showing changes
   const content = generateInlineDiffText(change.changes.oldContent || '', change.changes.newContent || '');
 
-  // Include subtree if requested
-  const children = options.includeSubtree ? getSubtreeChanges(change.node, context, options, 1) : undefined;
+  // Include subtree if requested (for replacements, show structure from duplicate side)
+  const children = options.includeSubtree
+    ? getSubtreeChanges(change.node, context, options, 1, 'duplicate')
+    : undefined;
 
   return {
     type: 'replace',
@@ -266,8 +276,10 @@ function processMove(change: TreeChange, context: ProposalContext, options: Proc
     }
   }
 
-  // Include subtree if requested
-  const children = options.includeSubtree ? getSubtreeChanges(change.node, context, options, 1) : undefined;
+  // Include subtree if requested (structure from duplicate side)
+  const children = options.includeSubtree
+    ? getSubtreeChanges(change.node, context, options, 1, 'duplicate')
+    : undefined;
 
   return {
     type: 'move',
@@ -286,6 +298,7 @@ function getSubtreeChanges(
   context: ProposalContext,
   options: ProcessedOptions,
   currentDepth: number,
+  contentSide: 'original' | 'duplicate',
 ): FormattedChange[] | undefined {
   // Check depth limit
   if (options.maxSubtreeDepth !== undefined && currentDepth > options.maxSubtreeDepth) {
@@ -298,16 +311,17 @@ function getSubtreeChanges(
   const subtreeChanges: FormattedChange[] = [];
 
   children.forEach((child) => {
-    if (!child.canonicalDocumentTitle) return;
-
-    const documentRef = formatDocumentReference(child.canonicalDocumentTitle);
-    const content = context.duplicateContentMap.get(child.id);
+    const canonical = child.canonicalDocumentTitle || '[Untitled Document]';
+    const documentRef = formatDocumentReference(canonical);
+    const content = contentSide === 'original'
+      ? context.originalContentMap.get(child.id)
+      : context.duplicateContentMap.get(child.id);
 
     // Recursively get children if within depth limit
-    const grandchildren = getSubtreeChanges(child, context, options, currentDepth + 1);
+    const grandchildren = getSubtreeChanges(child, context, options, currentDepth + 1, contentSide);
 
     subtreeChanges.push({
-      type: 'add', // Subtree items are treated as additions to show structure
+      type: 'add', // Represent structure uniformly in subtree listing
       documentRef,
       content: content || undefined,
       children: grandchildren,
@@ -333,11 +347,46 @@ function generateProposalMarkdown(changes: FormattedChange[], options: Processed
   // TODO: Implement logical grouping based on options.groupingStrategy
   // For now, just process all changes in order
 
+  // Helpers to render nested subtree as bullets under the main bullet format
+  function renderSubtree(children: FormattedChange[] | undefined, indent: string): string[] {
+    if (!children || children.length === 0) return [];
+    const out: string[] = [];
+    children.forEach((child) => {
+      // Title line
+      out.push(`${indent}- **${child.documentRef.canonicalTitle}**`);
+      // Content line (truly blank allowed) - use 4 spaces for paragraph under bullet
+      out.push(`${indent}    ${child.content ? child.content : ''}`);
+      // Recurse deeper with increased indent
+      out.push(...renderSubtree(child.children, indent + '  '));
+    });
+    return out;
+  }
+
   changes.forEach((change) => {
     const entry = formatChangeEntry(change);
     lines.push(entry);
 
-    // Add spacing between entries for readability
+    // Append nested subtree for ADDED and DELETED only, preserving bullet formatting
+    if (change.type === 'add') {
+      // formatChangeEntry already includes the top-level doc as an indented bullet (4 spaces)
+      // Render only the children beneath it with 8-space indent
+      const subtree = renderSubtree(change.children, '        ');
+      if (subtree.length > 0) {
+        lines.push(...subtree);
+      }
+    } else if (change.type === 'delete') {
+      // For deletions, add a new indented bullet for the top-level doc, then its subtree
+      const topTitle = `    - **${change.documentRef.canonicalTitle}**`;
+      const topContent = `      ${change.content ? change.content : ''}`;
+      lines.push(topTitle);
+      lines.push(topContent);
+      const subtree = renderSubtree(change.children, '        ');
+      if (subtree.length > 0) {
+        lines.push(...subtree);
+      }
+    }
+
+    // spacing between entries
     lines.push('');
   });
 

@@ -4,6 +4,7 @@ import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabas
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
 import { convertTreeChangesToAtlasProposal } from '../services/atlas/generate-proposal';
+import { ProposalContext } from '../services/atlas/proposal-types';
 import { loadTextContentForNotionPageIds } from '../services/supabase/load-text-content-for-notion-page-ids';
 import { logTree } from './console-log-tree';
 import { TreeChange, diffTrees } from './diff-trees';
@@ -23,6 +24,7 @@ export async function calculateNotionPageHierarchyChanges({
 }): Promise<{
   changes: TreeChange[];
   proposalMarkdown: string;
+  context: ProposalContext;
 }> {
   const startTime = Date.now();
 
@@ -222,20 +224,22 @@ export async function calculateNotionPageHierarchyChanges({
   // Step 12: Generate Markdown edit proposal
   console.log('Step 12: Generating Atlas edit proposal...');
 
+  const context: ProposalContext = {
+    originalNodeMap: originalSubtree.nodeMap,
+    duplicateNodeMap: duplicatedSubtreeWithRewrittenIds.nodeMap,
+    originalRoot: originalSubtree.root,
+    duplicateRoot: duplicatedSubtreeWithRewrittenIds.root,
+    originalContentMap,
+    duplicateContentMap,
+  };
+
   const proposalMarkdown = convertTreeChangesToAtlasProposal(
     changes,
-    {
-      originalNodeMap: originalSubtree.nodeMap,
-      duplicateNodeMap: duplicatedSubtreeWithRewrittenIds.nodeMap,
-      originalRoot: originalSubtree.root,
-      duplicateRoot: duplicatedSubtreeWithRewrittenIds.root,
-      originalContentMap,
-      duplicateContentMap,
-    },
+    context,
     {
       includeSubtree: true,
-      maxSubtreeDepth: 3, // Reasonable depth limit for proposals
-      groupingStrategy: 'none', // No logical grouping for now
+      maxSubtreeDepth: undefined, // No depth limit per requirements
+      groupingStrategy: 'none',
     },
   );
 
@@ -256,6 +260,7 @@ export async function calculateNotionPageHierarchyChanges({
   return {
     changes,
     proposalMarkdown,
+    context,
   };
 }
 

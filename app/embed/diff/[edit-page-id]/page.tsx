@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   return (
     <div className="mx-auto max-w-4xl space-y-9 p-6">
       <h2 className="mb-6 text-2xl font-bold text-gray-900">Changes</h2>
-      <ChangeList changes={result.changes} />
+      <ChangeList changes={result.changes} context={result.context} />
 
       <div>
         <h2 className="mb-6 text-2xl font-bold text-gray-900">Markdown Output</h2>

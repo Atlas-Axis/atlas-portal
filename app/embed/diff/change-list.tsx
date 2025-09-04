@@ -1,11 +1,14 @@
 import { TreeChange } from '@/app/server/diff/diff-trees';
+import { ProposalContext } from '@/app/server/services/atlas/proposal-types';
+import { NestedSubpageList } from '@/app/embed/diff/nested-subpages';
 import { InlineTextDiff } from './inline-text-diff';
 
 interface ChangeListProps {
   changes: TreeChange[];
+  context: ProposalContext;
 }
 
-export function ChangeList({ changes }: ChangeListProps) {
+export function ChangeList({ changes, context }: ChangeListProps) {
   if (changes.length === 0) {
     return (
       <div className="py-8 text-center">
@@ -22,7 +25,7 @@ export function ChangeList({ changes }: ChangeListProps) {
       </div>
 
       {changes.map((change, index) => (
-        <ChangeItem key={index} change={change} />
+        <ChangeItem key={index} change={change} context={context} />
       ))}
     </div>
   );
@@ -30,9 +33,10 @@ export function ChangeList({ changes }: ChangeListProps) {
 
 interface ChangeItemProps {
   change: TreeChange;
+  context: ProposalContext;
 }
 
-function ChangeItem({ change }: ChangeItemProps) {
+function ChangeItem({ change, context }: ChangeItemProps) {
   const { type, canonicalDocumentTitle } = change;
 
   // Format the action based on type
@@ -54,7 +58,27 @@ function ChangeItem({ change }: ChangeItemProps) {
   const renderContent = () => {
     switch (type) {
       case 'added':
+        return (
+          <div className="mt-3 rounded-lg border-l-4 border-gray-300 bg-gray-50 p-4">
+            {/* Top-level content (can be truly blank) */}
+            <div className="font-mono text-sm whitespace-pre-wrap text-gray-700">{change.content || ''}</div>
+            {/* Nested subtree from duplicate side */}
+            <div className="mt-3">
+              <NestedSubpageList rootNode={change.node} context={context} side="duplicate" />
+            </div>
+          </div>
+        );
       case 'deleted':
+        return (
+          <div className="mt-3 rounded-lg border-l-4 border-gray-300 bg-gray-50 p-4">
+            {/* Top-level content from original side (can be truly blank) */}
+            <div className="font-mono text-sm whitespace-pre-wrap text-gray-700">{change.content || ''}</div>
+            {/* Nested subtree from original side */}
+            <div className="mt-3">
+              <NestedSubpageList rootNode={change.node} context={context} side="original" />
+            </div>
+          </div>
+        );
       case 'moved':
         return change.content ? (
           <div className="mt-3 rounded-lg border-l-4 border-gray-300 bg-gray-50 p-4">
