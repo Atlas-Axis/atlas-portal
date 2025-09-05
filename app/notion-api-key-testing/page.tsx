@@ -46,6 +46,13 @@ export default function NotionApiKeyTestingPage() {
     return uuid;
   };
 
+  const isValidNotionApiKey = (key: string): boolean => {
+    if (!key) return false;
+    // Notion API keys start with 'ntn_' followed by 48-52 characters
+    const notionApiKeyPattern = /^ntn_[a-zA-Z0-9]{45,55}$/;
+    return notionApiKeyPattern.test(key);
+  };
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
@@ -124,6 +131,7 @@ export default function NotionApiKeyTestingPage() {
     }
   };
 
+  const isValidApiKeyInput = apiKey && isValidNotionApiKey(apiKey);
   const isValidPageInput = pageId && isValidUUID(normalizeUuid(pageId));
   const isValidDatabaseInput = databaseId && isValidUUID(normalizeUuid(databaseId));
 
@@ -144,15 +152,21 @@ export default function NotionApiKeyTestingPage() {
 
             <Input
               label="Notion API Key"
-              placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+              placeholder="ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
               value={apiKey}
               onValueChange={setApiKey}
               type={isPasswordVisible ? 'text' : 'password'}
-              description="Enter your Notion integration API key"
+              description="Enter your Notion integration API key (starts with 'ntn_')"
               className="w-full"
+              color={apiKey && !isValidApiKeyInput ? 'danger' : 'default'}
+              errorMessage={
+                apiKey && !isValidApiKeyInput
+                  ? 'Invalid API key format. Must start with "ntn_" followed by 48-52 characters'
+                  : ''
+              }
               endContent={
                 <div className="flex items-center gap-2">
-                  <div className="text-default-400 pointer-events-none text-xs">
+                  <div className="text-default-400 pointer-events-none hidden text-xs sm:block">
                     {apiKey.length > 20 ? `${apiKey.slice(0, 8)}............${apiKey.slice(-5)}` : apiKey}
                   </div>
                   <Button onPress={togglePasswordVisibility} variant="light">
@@ -199,7 +213,7 @@ export default function NotionApiKeyTestingPage() {
                 color="primary"
                 onPress={handleGetPage}
                 isLoading={loadingStates.getPage}
-                isDisabled={!apiKey || !isValidPageInput}
+                isDisabled={!isValidApiKeyInput || !isValidPageInput}
                 className="w-full"
               >
                 {loadingStates.getPage ? 'Testing...' : 'Get Notion Page'}
@@ -209,7 +223,7 @@ export default function NotionApiKeyTestingPage() {
                 color="primary"
                 onPress={handleGetDatabase}
                 isLoading={loadingStates.getDatabase}
-                isDisabled={!apiKey || !isValidDatabaseInput}
+                isDisabled={!isValidApiKeyInput || !isValidDatabaseInput}
                 className="w-full"
               >
                 {loadingStates.getDatabase ? 'Testing...' : 'Get Notion Database'}
@@ -219,7 +233,7 @@ export default function NotionApiKeyTestingPage() {
                 color="primary"
                 onPress={handleCreatePage}
                 isLoading={loadingStates.createPage}
-                isDisabled={!apiKey || !isValidPageInput}
+                isDisabled={!isValidApiKeyInput || !isValidPageInput}
                 className="w-full"
               >
                 {loadingStates.createPage ? 'Testing...' : 'Create Notion Page'}
