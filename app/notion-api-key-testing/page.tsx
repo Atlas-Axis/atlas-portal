@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Alert, Button, Card, CardBody, CardHeader, Divider, Input } from '@heroui/react';
+import { Eye, EyeOff } from 'lucide-react';
 import { NOTION_DATABASE_ID, NOTION_PAGE_ID } from '@/app/server/services/notion/_demo-data';
 import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
 import { testNotionApiAction } from './_actions/test-notion-api-action';
@@ -16,6 +17,7 @@ export default function NotionApiKeyTestingPage() {
   const [apiKey, setApiKey] = useState('');
   const [pageId, setPageId] = useState(NOTION_PAGE_ID);
   const [databaseId, setDatabaseId] = useState(NOTION_DATABASE_ID);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loadingStates, setLoadingStates] = useState({
     getPage: false,
     getDatabase: false,
@@ -35,13 +37,8 @@ export default function NotionApiKeyTestingPage() {
     setResults((prev) => ({ ...prev, [operation]: result }));
   };
 
-  const normalizeUuid = (uuid: string): string => {
-    if (!uuid) return '';
-    const cleanUuid = uuid.replace(/-/g, '');
-    if (cleanUuid.length === 32) {
-      return uuidToHyphens(cleanUuid);
-    }
-    return uuid;
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
   };
 
   const formatJsonData = (data: Record<string, unknown> | null | undefined): string => {
@@ -55,7 +52,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('getPage', true);
 
     try {
-      const normalizedPageId = normalizeUuid(pageId);
+      const normalizedPageId = uuidToHyphens(pageId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'getPage',
@@ -78,7 +75,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('getDatabase', true);
 
     try {
-      const normalizedDatabaseId = normalizeUuid(databaseId);
+      const normalizedDatabaseId = uuidToHyphens(databaseId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'getDatabase',
@@ -101,7 +98,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('createPage', true);
 
     try {
-      const normalizedPageId = normalizeUuid(pageId);
+      const normalizedPageId = uuidToHyphens(pageId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'createPage',
@@ -118,8 +115,8 @@ export default function NotionApiKeyTestingPage() {
     }
   };
 
-  const isValidPageInput = pageId && isValidUUID(normalizeUuid(pageId));
-  const isValidDatabaseInput = databaseId && isValidUUID(normalizeUuid(databaseId));
+  const isValidPageInput = pageId && isValidUUID(uuidToHyphens(pageId));
+  const isValidDatabaseInput = databaseId && isValidUUID(uuidToHyphens(databaseId));
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
@@ -141,9 +138,23 @@ export default function NotionApiKeyTestingPage() {
               placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
               value={apiKey}
               onValueChange={setApiKey}
-              type="password"
+              type={isPasswordVisible ? 'text' : 'password'}
               description="Enter your Notion integration API key"
               className="w-full"
+              endContent={
+                <div className="flex items-center gap-2">
+                  <div className="text-default-400 pointer-events-none text-xs">
+                    {apiKey.length > 20 ? `${apiKey.slice(0, 8)}............${apiKey.slice(-5)}` : apiKey}
+                  </div>
+                  <Button onPress={togglePasswordVisibility} variant="light">
+                    {isPasswordVisible ? (
+                      <EyeOff className="text-default-400 pointer-events-none h-6 w-6" />
+                    ) : (
+                      <Eye className="text-default-400 pointer-events-none h-6 w-6" />
+                    )}
+                  </Button>
+                </div>
+              }
             />
 
             <Input
