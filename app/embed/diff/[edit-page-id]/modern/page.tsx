@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   return (
     <div className="mx-auto max-w-4xl space-y-9 p-6">
       <h1 className="mb-6 text-2xl font-bold text-gray-900">Changes</h1>
-      <ChangeList changes={result.changes} />
+      <ChangeList changes={result.changes} context={result.context} />
 
       {/* Debug view - remove in production or when embedded in Notion */}
       <details className="rounded bg-gray-100 p-4">
