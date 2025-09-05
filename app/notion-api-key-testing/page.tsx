@@ -37,6 +37,15 @@ export default function NotionApiKeyTestingPage() {
     setResults((prev) => ({ ...prev, [operation]: result }));
   };
 
+  const normalizeUuid = (uuid: string): string => {
+    if (!uuid) return '';
+    const cleanUuid = uuid.replace(/-/g, '');
+    if (cleanUuid.length === 32) {
+      return uuidToHyphens(cleanUuid);
+    }
+    return uuid;
+  };
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
@@ -52,7 +61,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('getPage', true);
 
     try {
-      const normalizedPageId = uuidToHyphens(pageId);
+      const normalizedPageId = normalizeUuid(pageId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'getPage',
@@ -75,7 +84,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('getDatabase', true);
 
     try {
-      const normalizedDatabaseId = uuidToHyphens(databaseId);
+      const normalizedDatabaseId = normalizeUuid(databaseId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'getDatabase',
@@ -98,7 +107,7 @@ export default function NotionApiKeyTestingPage() {
     setLoading('createPage', true);
 
     try {
-      const normalizedPageId = uuidToHyphens(pageId);
+      const normalizedPageId = normalizeUuid(pageId);
       const result = await testNotionApiAction({
         apiKey,
         operation: 'createPage',
@@ -115,8 +124,8 @@ export default function NotionApiKeyTestingPage() {
     }
   };
 
-  const isValidPageInput = pageId && isValidUUID(uuidToHyphens(pageId));
-  const isValidDatabaseInput = databaseId && isValidUUID(uuidToHyphens(databaseId));
+  const isValidPageInput = pageId && isValidUUID(normalizeUuid(pageId));
+  const isValidDatabaseInput = databaseId && isValidUUID(normalizeUuid(databaseId));
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
