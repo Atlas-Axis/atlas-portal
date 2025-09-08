@@ -1,20 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@heroui/react';
+import { Button, Input } from '@heroui/react';
+import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
 import { importNotionDatabaseAction } from './_actions/import-notion-database-action';
 import { importNotionPageAction } from './_actions/import-notion-page-action';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string>('');
+  const [notionPageId, setNotionPageId] = useState<string>('');
+  const [notionDatabaseId, setNotionDatabaseId] = useState<string>('');
+
+  const normalizeUuid = (uuid: string): string => {
+    if (!uuid) return '';
+    const cleanUuid = uuid.replace(/-/g, '');
+    if (cleanUuid.length === 32) {
+      return uuidToHyphens(cleanUuid);
+    }
+    return uuid;
+  };
 
   const handleImportPage = async () => {
     setIsLoading(true);
     setMessage('');
 
     try {
-      const result = await importNotionPageAction();
+      const normalizedPageId = normalizeUuid(notionPageId);
+      const result = await importNotionPageAction(normalizedPageId);
 
       if (result.success) {
         setMessage(result.message);
@@ -34,7 +47,8 @@ export default function Home() {
     setMessage('');
 
     try {
-      const result = await importNotionDatabaseAction();
+      const normalizedDatabaseId = normalizeUuid(notionDatabaseId);
+      const result = await importNotionDatabaseAction(normalizedDatabaseId);
 
       if (result.success) {
         setMessage(result.message);
@@ -49,22 +63,63 @@ export default function Home() {
     }
   };
 
+  const isValidPageInput = Boolean(notionPageId) && isValidUUID(normalizeUuid(notionPageId));
+  const isValidDatabaseInput = Boolean(notionDatabaseId) && isValidUUID(normalizeUuid(notionDatabaseId));
+
   return (
-    <div>
-      <h1 className="mb-3 text-2xl font-bold">Import Notion Page</h1>
-      <div className="flex gap-3">
-        <Button variant="solid" color="primary" onPress={handleImportPage} isLoading={isLoading} disabled={isLoading}>
-          {isLoading ? 'Importing...' : 'Import Page'}
-        </Button>
-        <Button
-          variant="solid"
-          color="primary"
-          onPress={handleImportDatabase}
-          isLoading={isLoading}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Importing...' : 'Import Database'}
-        </Button>
+    <div className="p-6">
+      <h1 className="mb-6 text-2xl font-bold">Import Notion Content</h1>
+
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
+        <div className="border-default-400 rounded-lg border-2 p-4">
+          <h2 className="mb-3 text-lg font-semibold">Import Notion Page</h2>
+          <div className="mb-3">
+            <Input
+              label="Notion Page ID"
+              placeholder="25ef7584-64c5-80f6-a11a-eab7080d03b1 or 25ef758464c580f6a11aeab7080d03b1"
+              value={notionPageId}
+              onValueChange={setNotionPageId}
+              description="Page ID with or without hyphens - will be normalized automatically"
+              className="w-full"
+              color={notionPageId && !isValidPageInput ? 'danger' : 'default'}
+              errorMessage={notionPageId && !isValidPageInput ? 'Invalid UUID format' : ''}
+            />
+          </div>
+          <Button
+            variant="solid"
+            color="primary"
+            onPress={handleImportPage}
+            isLoading={isLoading}
+            isDisabled={isLoading || !isValidPageInput}
+          >
+            {isLoading ? 'Importing...' : 'Import Page'}
+          </Button>
+        </div>
+
+        <div className="border-default-400 rounded-lg border-2 p-4">
+          <h2 className="mb-3 text-lg font-semibold">Import Notion Database</h2>
+          <div className="mb-3">
+            <Input
+              label="Notion Database ID"
+              placeholder="25ef7584-64c5-8031-9597-e2a98756bbc8 or 25ef758464c580319597e2a98756bbc8"
+              value={notionDatabaseId}
+              onValueChange={setNotionDatabaseId}
+              description="Database ID with or without hyphens - will be normalized automatically"
+              className="w-full"
+              color={notionDatabaseId && !isValidDatabaseInput ? 'danger' : 'default'}
+              errorMessage={notionDatabaseId && !isValidDatabaseInput ? 'Invalid UUID format' : ''}
+            />
+          </div>
+          <Button
+            variant="solid"
+            color="primary"
+            onPress={handleImportDatabase}
+            isLoading={isLoading}
+            isDisabled={isLoading || !isValidDatabaseInput}
+          >
+            {isLoading ? 'Importing...' : 'Import Database'}
+          </Button>
+        </div>
       </div>
       {message && (
         <div
