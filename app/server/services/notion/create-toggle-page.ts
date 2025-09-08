@@ -12,7 +12,6 @@ import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { fetchBlocksRecursively } from './fetch-blocks-recursively';
-import { endSyncStatus, startSyncStatus } from './reset-sync-status';
 import { TextRichTextItemRequest } from './types';
 import { verifySyncLock } from './verify-sync-lock';
 
@@ -596,9 +595,6 @@ async function importToggleBlocksFromNotionToSupabase({
   await verifySyncLock(notionPageId);
 
   try {
-    // Update sync status in database
-    await startSyncStatus(notionPageId);
-
     // Create a reverse mapping: toggle block ID -> original page ID
     const blockToPageMapping = new Map<string, string>();
     for (const [pageId, blockId] of databasePageToBlockMapping.entries()) {
@@ -701,13 +697,6 @@ async function importToggleBlocksFromNotionToSupabase({
     console.log(
       `✅ Toggle block import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`,
     );
-
-    await endSyncStatus({
-      notionPageId,
-      syncStatus: 'completed',
-      syncErrorMessage: null,
-      blocksSyncedCount: blocksWithEditProperties.length,
-    });
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;
@@ -715,13 +704,6 @@ async function importToggleBlocksFromNotionToSupabase({
       `❌ Toggle block import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`,
       error,
     );
-
-    await endSyncStatus({
-      notionPageId,
-      syncStatus: 'failed',
-      syncErrorMessage: JSON.stringify(error),
-      blocksSyncedCount: null,
-    });
 
     throw error;
   }
