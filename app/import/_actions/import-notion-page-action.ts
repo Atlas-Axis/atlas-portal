@@ -1,12 +1,11 @@
 'use server';
 
-import { NOTION_PAGE_ID } from '@/app/server/services/notion/_demo-data';
 import { importBlocksFromNotionToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
-export async function importNotionPageAction() {
+export async function importNotionPageAction(notionPageId: string) {
   // Validate that notionPageId is a valid UUID
-  if (!isValidUUID(NOTION_PAGE_ID)) {
+  if (!isValidUUID(notionPageId)) {
     return {
       success: false,
       message: 'Invalid UUID format',
@@ -14,7 +13,7 @@ export async function importNotionPageAction() {
   }
 
   try {
-    await importBlocksFromNotionToSupabase({ notionPageId: NOTION_PAGE_ID, taskRunId: '' });
+    await importBlocksFromNotionToSupabase({ notionPageId, taskRunId: '' });
 
     return {
       success: true,
