@@ -35,7 +35,13 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
           <Frown className="mb-4 h-16 w-16 text-red-600" />
 
           <h1 className="mb-4 text-2xl font-bold text-red-600">An error occurred</h1>
-          {/* <code className="mb-2 text-sm text-red-600">{error.message}</code> */}
+
+          {error.message && (
+            <pre className="mb-4 max-w-full overflow-auto rounded bg-gray-100 p-3 text-sm text-red-600">
+              {error.message}
+            </pre>
+          )}
+
           <p className="mb-4">
             We apologize for the inconvenience. We logged the error details and will investigate the issue.
           </p>
