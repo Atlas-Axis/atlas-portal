@@ -12,10 +12,10 @@ export default defineConfig({
     enabledInDev: true,
     default: {
       maxAttempts: 3,
-      minTimeoutInMs: 1_000,
-      maxTimeoutInMs: 10_000,
-      factor: 2,
-      randomize: true,
+      minTimeoutInMs: 1_000, // The minimum time to wait before retrying
+      maxTimeoutInMs: 10_000, // The maximum time to wait before retrying
+      factor: 2, // The exponential factor to use for backoff. Each subsequent retry will be calculated as `previousTimeout * factor`
+      randomize: true, // Prevent the thundering herd problem where all retries happen at the same time.
     },
   },
   dirs: ['app/server/services/trigger'],
