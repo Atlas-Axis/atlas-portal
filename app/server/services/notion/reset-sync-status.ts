@@ -2,12 +2,12 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelled';
 
-export async function startSyncStatus(notionPageId: string) {
+export async function acquireSyncLock(notionDatabaseId: string) {
   return supabase
     .from('notion_sync_status')
     .upsert(
       {
-        notion_database_id: notionPageId,
+        notion_database_id: notionDatabaseId,
         sync_status: 'in_progress',
         last_sync_started_at: new Date().toISOString(),
         last_sync_completed_at: null,
@@ -17,18 +17,18 @@ export async function startSyncStatus(notionPageId: string) {
         sync_lock_acquired_at: new Date().toISOString(),
         sync_lock_expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
       },
-      { onConflict: 'notion_page_id' },
+      { onConflict: 'notion_database_id' },
     )
     .throwOnError();
 }
 
-export async function endSyncStatus({
-  notionPageId,
+export async function releaseSyncLock({
+  notionDatabaseId,
   syncStatus,
   syncErrorMessage = null,
   blocksSyncedCount = null,
 }: {
-  notionPageId: string;
+  notionDatabaseId: string;
   syncStatus: SyncStatus;
   syncErrorMessage: string | null;
   blocksSyncedCount: number | null;
@@ -37,7 +37,7 @@ export async function endSyncStatus({
     .from('notion_sync_status')
     .upsert(
       {
-        notion_database_id: notionPageId,
+        notion_database_id: notionDatabaseId,
         sync_status: syncStatus,
         last_sync_completed_at: new Date().toISOString(),
         sync_error_message: syncErrorMessage,
@@ -46,7 +46,7 @@ export async function endSyncStatus({
         sync_lock_acquired_at: null,
         sync_lock_expires_at: null,
       },
-      { onConflict: 'notion_page_id' },
+      { onConflict: 'notion_database_id' },
     )
     .throwOnError();
 }

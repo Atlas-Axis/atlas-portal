@@ -1,7 +1,7 @@
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { fetchBlocksRecursively } from '@/app/server/services/notion/fetch-blocks-recursively';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { endSyncStatus, startSyncStatus } from './reset-sync-status';
+import { acquireSyncLock, releaseSyncLock } from './reset-sync-status';
 import { verifySyncLock } from './verify-sync-lock';
 
 /**
@@ -22,7 +22,7 @@ export async function importBlocksFromNotionToSupabase({
 
   try {
     // Update sync status in database
-    await startSyncStatus(notionPageId);
+    await acquireSyncLock(notionPageId);
 
     // Fetch all blocks from the Notion page recursively
     const blocks = await fetchBlocksRecursively({
@@ -49,8 +49,8 @@ export async function importBlocksFromNotionToSupabase({
     const duration = endTime - startTime;
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
-    await endSyncStatus({
-      notionPageId,
+    await releaseSyncLock({
+      notionDatabaseId: notionPageId,
       syncStatus: 'completed',
       syncErrorMessage: null,
       blocksSyncedCount: blocks.length,
@@ -62,8 +62,8 @@ export async function importBlocksFromNotionToSupabase({
     const duration = endTime - startTime;
     console.error(`❌ Import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`, error);
 
-    await endSyncStatus({
-      notionPageId,
+    await releaseSyncLock({
+      notionDatabaseId: notionPageId,
       syncStatus: 'failed',
       syncErrorMessage: JSON.stringify(error),
       blocksSyncedCount: null,

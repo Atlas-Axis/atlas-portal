@@ -4,7 +4,7 @@ import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { DatabaseSubItemTree, fetchDatabaseTree } from './fetch-database-sub-items';
-import { endSyncStatus, startSyncStatus } from './reset-sync-status';
+import { acquireSyncLock, releaseSyncLock } from './reset-sync-status';
 import { verifySyncLock } from './verify-sync-lock';
 
 /**
@@ -32,7 +32,7 @@ export async function importDatabasePagesFromNotionToSupabase({
 
   try {
     // Update sync status in database
-    await startSyncStatus(notionDatabaseId);
+    await acquireSyncLock(notionDatabaseId);
 
     // Fetch all pages from the Notion database with their tree structure
     const databaseTree = await fetchDatabaseTree(notionDatabaseId);
@@ -60,8 +60,8 @@ export async function importDatabasePagesFromNotionToSupabase({
     const duration = endTime - startTime;
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
-    await endSyncStatus({
-      notionPageId: notionDatabaseId,
+    await releaseSyncLock({
+      notionDatabaseId,
       syncStatus: 'completed',
       syncErrorMessage: null,
       blocksSyncedCount: pages.length,
@@ -73,8 +73,8 @@ export async function importDatabasePagesFromNotionToSupabase({
     const duration = endTime - startTime;
     console.error(`❌ Import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`, error);
 
-    await endSyncStatus({
-      notionPageId: notionDatabaseId,
+    await releaseSyncLock({
+      notionDatabaseId,
       syncStatus: 'failed',
       syncErrorMessage: JSON.stringify(error),
       blocksSyncedCount: null,
