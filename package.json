@@ -10,7 +10,7 @@
     "ngrok": "ngrok http 3000",
     "trigger:dev": "npx trigger.dev@latest dev",
     "trigger:deploy": "npx trigger.dev@latest deploy",
-    "supabase:gen-types": "npx supabase gen types typescript --project-id \"qnrnwzixkbldiqcaprnl\" --schema public > app/server/services/supabase/database.types.ts && npx prettier --write app/server/services/supabase/database.types.ts && git add app/server/services/supabase/database.types.ts"
+    "supabase:gen-types": "npx supabase gen types typescript --project-id \"kvxffffzfsnosaqmofut\" --schema public > app/server/services/supabase/database.types.ts && npx prettier --write app/server/services/supabase/database.types.ts && git add app/server/services/supabase/database.types.ts"
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",
