@@ -191,7 +191,7 @@ Embeddable as iframes within Notion pages:
 - Node.js (v20.19 or higher)
 - Supabase API keys
 - Notion API key(s)
-- Vercel CLI (logged in)
+- Vercel CLI (logged in, project linked)
 
 ### Installation
 

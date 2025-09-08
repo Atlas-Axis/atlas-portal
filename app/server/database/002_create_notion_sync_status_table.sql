@@ -36,3 +36,6 @@ CHECK (
   OR
   (is_sync_locked = TRUE AND sync_lock_expires_at > NOW())
 );
+
+-- Enable Row Level Security
+ALTER TABLE notion_sync_status ENABLE ROW LEVEL SECURITY;

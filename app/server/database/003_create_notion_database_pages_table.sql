@@ -80,3 +80,6 @@ CHECK (
   OR
   (belongs_to_edit_page = false AND edit_page_original_notion_page_id IS NULL AND edit_page_original_notion_database_id IS NULL)
 );
+
+-- Enable Row Level Security
+ALTER TABLE notion_database_pages ENABLE ROW LEVEL SECURITY;
