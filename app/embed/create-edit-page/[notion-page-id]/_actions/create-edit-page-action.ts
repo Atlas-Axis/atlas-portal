@@ -1,8 +1,9 @@
 'use server';
 
-import { NOTION_DATABASE_ID, NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID } from '@/app/server/services/notion/_demo-data';
+import { NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID } from '@/app/server/services/notion/_demo-data';
 // import type { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
 import { createNotionPageWithToggleBlocks } from '@/app/server/services/notion/create-toggle-page';
+import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/get-notion-database-id-from-notion-page';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 export interface CreateEditPageResult {
@@ -33,9 +34,18 @@ export async function createEditPageAction(rootNotionPageId: string): Promise<Cr
 
     const startTime = performance.now();
 
+    // Fetch the database ID for the given page ID
+    const notionDatabaseId = await getNotionDatabaseIdFromNotionPage(rootNotionPageId);
+    if (!notionDatabaseId) {
+      return {
+        success: false,
+        error: `No database ID found for page ${rootNotionPageId}`,
+      };
+    }
+
     // Call the main function
     const result = await createNotionPageWithToggleBlocks({
-      originalNotionDatabaseId: NOTION_DATABASE_ID, // TODO: Don't require this. Look it up from the rootNotionPageId.
+      originalNotionDatabaseId: notionDatabaseId,
       rootNotionPageId,
       taskRunId: '', // Will be filled by Trigger.dev
       parent: {

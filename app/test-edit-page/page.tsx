@@ -5,7 +5,7 @@ import { Button } from '@heroui/react';
 import {
   NOTION_DATABASE_ID,
   NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID,
-  NOTION_PAGE_ID,
+  ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION,
 } from '@/app/server/services/notion/_demo-data';
 import { createEditPageAction } from './_actions/create-edit-page-action';
 
@@ -27,7 +27,7 @@ export default function TestTogglePage() {
     try {
       const result = await createEditPageAction({
         originalNotionDatabaseId: NOTION_DATABASE_ID,
-        rootNotionPageId: NOTION_PAGE_ID,
+        rootNotionPageId: ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION,
         parent: {
           type: 'database_id',
           database_id: NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID,
@@ -58,7 +58,7 @@ export default function TestTogglePage() {
               <strong>Original Database ID:</strong> {NOTION_DATABASE_ID}
             </li>
             <li>
-              <strong>Root Page ID:</strong> {NOTION_PAGE_ID}
+              <strong>Root Page ID:</strong> {ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION}
             </li>
             <li>
               <strong>Parent Page ID:</strong> {NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID}

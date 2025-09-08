@@ -1,7 +1,7 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { importBlocksFromNotionToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { NOTION_PAGE_ID } from '../notion/_demo-data';
+import { isValidUUID } from '@/app/shared/utils/utils';
 import { endSyncStatus } from '../notion/reset-sync-status';
 import { verifySyncLock } from '../notion/verify-sync-lock';
 
@@ -19,9 +19,21 @@ export const notionFullPageSyncTask = task({
     maxTimeoutInMs: 30_000,
     factor: 2,
   },
-  run: async (payload: object, { ctx }) => {
+  run: async (
+    {
+      notionPageId,
+    }: {
+      notionPageId: string;
+    },
+    { ctx },
+  ) => {
+    // Validate that notionPageId is a valid UUID
+    if (!isValidUUID(notionPageId)) {
+      throw new Error(`Invalid UUID format for notionPageId: ${notionPageId}`);
+    }
+
     // Verify that the sync is not already in progress
-    await verifySyncLock(NOTION_PAGE_ID);
+    await verifySyncLock(notionPageId);
 
     const taskRunId = ctx.run.id;
 
@@ -38,7 +50,7 @@ export const notionFullPageSyncTask = task({
     try {
       // Start the sync process
       const result = await importBlocksFromNotionToSupabase({
-        notionPageId: NOTION_PAGE_ID,
+        notionPageId,
         taskRunId,
       });
 
@@ -49,27 +61,25 @@ export const notionFullPageSyncTask = task({
       flushTriggerMetadata();
 
       return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      await endSyncStatus({
+        notionPageId,
+        syncStatus: 'failed',
+        syncErrorMessage: errorMessage,
+        blocksSyncedCount: null,
+      });
+      throw error;
     } finally {
       // Clear the interval to prevent it from running after task completion
       clearInterval(statsInterval);
     }
   },
   // Automatically clean up the sync status in Supabase when the task fails or is cancelled
-  onFailure: async (error) => {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    await endSyncStatus({
-      notionPageId: NOTION_PAGE_ID,
-      syncStatus: 'failed',
-      syncErrorMessage: errorMessage,
-      blocksSyncedCount: null,
-    });
+  onFailure: async () => {
+    // TODO: notionPageId is not available in this context, need to figure out how to pass it
   },
   onCancel: async () => {
-    await endSyncStatus({
-      notionPageId: NOTION_PAGE_ID,
-      syncStatus: 'cancelled',
-      syncErrorMessage: 'Cancelled',
-      blocksSyncedCount: null,
-    });
+    // TODO: notionPageId is not available in this context, need to figure out how to pass it
   },
 });

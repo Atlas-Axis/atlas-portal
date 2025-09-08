@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Alert, Button, Card, CardBody, CardHeader, Divider, Input } from '@heroui/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { NOTION_DATABASE_ID, NOTION_PAGE_ID } from '@/app/server/services/notion/_demo-data';
 import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
 import { testNotionApiAction } from './_actions/test-notion-api-action';
 
@@ -15,8 +14,8 @@ interface ApiTestResult {
 
 export default function NotionApiKeyTestingPage() {
   const [apiKey, setApiKey] = useState('');
-  const [pageId, setPageId] = useState(NOTION_PAGE_ID);
-  const [databaseId, setDatabaseId] = useState(NOTION_DATABASE_ID);
+  const [pageId, setPageId] = useState('');
+  const [databaseId, setDatabaseId] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loadingStates, setLoadingStates] = useState({
     getPage: false,

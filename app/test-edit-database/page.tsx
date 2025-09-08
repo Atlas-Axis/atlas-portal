@@ -4,9 +4,10 @@ import { Divider } from '@heroui/divider';
 import {
   NOTION_DATABASE_ID,
   NOTION_EDIT_PAGES_CONTAINING_PAGE_ID,
-  NOTION_PAGE_ID,
+  ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION,
 } from '@/app/server/services/notion/_demo-data';
 import { createNotionEditPagesAndDatabase } from '@/app/server/services/notion/create-edit-pages-and-edit-database';
+import Warning from './warning';
 
 async function testCreateEditDatabase() {
   'use server';
@@ -16,7 +17,7 @@ async function testCreateEditDatabase() {
 
     const result = await createNotionEditPagesAndDatabase({
       originalNotionDatabaseId: NOTION_DATABASE_ID,
-      rootNotionPageId: NOTION_PAGE_ID, // Make sure this page exists in the database
+      rootNotionPageId: ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION, // Make sure this page exists in the database
       taskRunId: `test-${Date.now()}`,
       propertyWhitelist: ['Name', 'Content', 'Doc No (or Temp Name)'], // TODO: Make dynamic
       parent: {
@@ -37,7 +38,12 @@ export default function TestEditDatabasePage() {
     <div className="mx-auto max-w-4xl p-6">
       <Card className="p-6">
         <CardHeader>
-          <h1 className="text-2xl font-bold">Create &quot;Edit Database&quot; and &quot;Edit Pages&quot; in Notion</h1>
+          <div className="w-full">
+            <Warning />
+            <h1 className="text-2xl font-bold">
+              Create &quot;Edit Database&quot; and &quot;Edit Pages&quot; in Notion
+            </h1>
+          </div>
         </CardHeader>
         <Divider />
         <CardBody className="space-y-4">
@@ -48,7 +54,7 @@ export default function TestEditDatabasePage() {
                 <strong>Original Database ID:</strong> {NOTION_DATABASE_ID}
               </p>
               <p>
-                <strong>Root Page ID:</strong> {NOTION_PAGE_ID}
+                <strong>Root Page ID:</strong> {ROOT_NOTION_PAGE_ID_FOR_EDIT_PAGE_GENERATION}
               </p>
             </div>
           </div>
