@@ -118,7 +118,7 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 **Key Fields:**
 
 - `id` (UUID, PRIMARY KEY, DEFAULT gen_random_uuid()) - Internal ID
-- `notion_page_id` (UUID, NOT NULL, UNIQUE) - Page/database being synced
+- `notion_database_id` (UUID, NOT NULL, UNIQUE) - Notion database being synced
 - `sync_status` (TEXT, NOT NULL) - Status: 'pending', 'in_progress', 'completed', 'failed', 'cancelled'
 - `last_sync_started_at` (TIMESTAMPTZ) - When sync began
 - `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded

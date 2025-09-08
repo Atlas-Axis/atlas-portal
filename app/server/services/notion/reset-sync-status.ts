@@ -7,7 +7,7 @@ export async function startSyncStatus(notionPageId: string) {
     .from('notion_sync_status')
     .upsert(
       {
-        notion_page_id: notionPageId,
+        notion_database_id: notionPageId,
         sync_status: 'in_progress',
         last_sync_started_at: new Date().toISOString(),
         last_sync_completed_at: null,
@@ -37,7 +37,7 @@ export async function endSyncStatus({
     .from('notion_sync_status')
     .upsert(
       {
-        notion_page_id: notionPageId,
+        notion_database_id: notionPageId,
         sync_status: syncStatus,
         last_sync_completed_at: new Date().toISOString(),
         sync_error_message: syncErrorMessage,

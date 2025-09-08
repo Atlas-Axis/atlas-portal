@@ -158,7 +158,7 @@ export type Database = {
           is_sync_locked: boolean | null;
           last_sync_completed_at: string | null;
           last_sync_started_at: string | null;
-          notion_page_id: string;
+          notion_database_id: string;
           sync_error_message: string | null;
           sync_lock_acquired_at: string | null;
           sync_lock_expires_at: string | null;
@@ -172,7 +172,7 @@ export type Database = {
           is_sync_locked?: boolean | null;
           last_sync_completed_at?: string | null;
           last_sync_started_at?: string | null;
-          notion_page_id: string;
+          notion_database_id: string;
           sync_error_message?: string | null;
           sync_lock_acquired_at?: string | null;
           sync_lock_expires_at?: string | null;
@@ -186,7 +186,7 @@ export type Database = {
           is_sync_locked?: boolean | null;
           last_sync_completed_at?: string | null;
           last_sync_started_at?: string | null;
-          notion_page_id?: string;
+          notion_database_id?: string;
           sync_error_message?: string | null;
           sync_lock_acquired_at?: string | null;
           sync_lock_expires_at?: string | null;

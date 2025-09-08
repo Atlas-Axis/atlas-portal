@@ -1,7 +1,7 @@
 -- Create the notion_sync_status table to track synchronization progress for Notion pages
 CREATE TABLE IF NOT EXISTS notion_sync_status (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(), -- Internal primary ID
-  notion_page_id UUID NOT NULL UNIQUE, -- The Notion page or database ID being synchronized
+  notion_database_id UUID NOT NULL UNIQUE, -- The Notion page or database ID being synchronized
   sync_status TEXT NOT NULL DEFAULT 'pending', -- Current sync status: pending, in_progress, completed, failed, cancelled
   last_sync_started_at TIMESTAMPTZ, -- When the most recent sync attempt started
   last_sync_completed_at TIMESTAMPTZ, -- When the most recent successful sync completed
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS notion_sync_status (
 );
 
 -- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_notion_sync_status_page_id ON notion_sync_status(notion_page_id);
+CREATE INDEX IF NOT EXISTS idx_notion_sync_status_database_id ON notion_sync_status(notion_database_id);
 CREATE INDEX IF NOT EXISTS idx_notion_sync_status_sync_status ON notion_sync_status(sync_status);
 CREATE INDEX IF NOT EXISTS idx_notion_sync_status_sync_locked ON notion_sync_status(is_sync_locked, sync_lock_expires_at) WHERE is_sync_locked = TRUE;
 
