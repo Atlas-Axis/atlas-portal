@@ -37,9 +37,9 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
           <h1 className="mb-4 text-2xl font-bold text-red-600">An error occurred</h1>
 
           {error.message && (
-            <pre className="mb-4 max-w-full overflow-auto rounded bg-gray-100 p-3 text-sm text-red-600">
+            <div className="mb-4 max-w-lg overflow-auto rounded bg-gray-100 p-3 text-sm text-red-600">
               {error.message}
-            </pre>
+            </div>
           )}
 
           <p className="mb-4">
