@@ -144,7 +144,6 @@ Embeddable as iframes within Notion pages:
 - `/visualize` - Tree visualization of content structure (development)
 - `/notion-api-key-testing` - Validate Notion API keys, retries, and rate limits (development)
 - `/markdown` - Preview generated markdown output (development)
-- `/test-edit-database` - Create and test edit databases (development)
 - `/test-edit-page` - Create and test edit pages (development)
 
 ## 🔄 Important Patterns
@@ -177,7 +176,6 @@ Embeddable as iframes within Notion pages:
 
 ### Core Documentation Files
 
-- **[docs/CREATE_EDIT_DATABASE.md](./docs/CREATE_EDIT_DATABASE.md)** - Documentation for creating edit databases and duplicate Notion pages functionality
 - **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
 
 ### Atlas Services

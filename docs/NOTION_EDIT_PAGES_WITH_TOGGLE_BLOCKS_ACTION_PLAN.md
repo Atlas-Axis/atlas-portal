@@ -1,4 +1,4 @@
-# Method #2: Toggle Blocks Implementation Action Plan
+# Notion Edit Pages With Toggle Blocks Implementation Action Plan
 
 ## Overview
 
@@ -8,10 +8,10 @@ This document outlines the complete action plan for implementing Method #2: crea
 
 ### The Problem
 
-We have hierarchical Atlas documents stored in the `notion_database_pages` Supabase table. We need two export methods:
+We have hierarchical Atlas documents stored in the `notion_database_pages` Supabase table. We used to have two export methods:
 
-1. **Method #1 (COMPLETED)**: `createNotionEditPagesAndDatabase` - Creates a new Notion database with separate pages for each document
-2. **Method #2 (IN PROGRESS)**: `createNotionPageWithToggleBlocks` - Creates a single Notion page with nested toggle blocks
+1. **Method #1 (DELETED)**: `createNotionEditPagesAndDatabase` - Creates a new Notion database with separate pages for each document. This code is now deleted
+2. **Method #2 (DONE)**: `createNotionPageWithToggleBlocks` - Creates a single Notion page with nested toggle blocks
 
 ### Requirements for Method #2
 
@@ -454,15 +454,12 @@ The **Method #2: Toggle Blocks Implementation** is now **100% complete** with al
 
 ### Existing Patterns to Follow
 
-- Study `createNotionEditPagesAndDatabase` for similar patterns
 - Use `fetchBlocksRecursively` for block fetching
 - Follow `importDatabasePagesFromNotionToSupabase` for Supabase integration
 
 ### Key Files to Reference
 
-- `app/server/services/notion/create-edit-pages-and-edit-database.ts` - Similar implementation
 - `app/server/services/notion/fetch-blocks-recursively.ts` - Block fetching patterns
 - `app/server/services/notion/import-database-to-supabase.ts` - Supabase integration
-- `docs/CREATE_EDIT_DATABASE.md` - Documentation for Method #1
 
 This action plan provides a complete roadmap for finishing the toggle blocks implementation. The most critical missing piece is the block storage and mapping logic that connects the created Notion blocks back to their source database pages for change detection.

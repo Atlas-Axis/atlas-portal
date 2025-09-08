@@ -199,7 +199,6 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 ## Core Documentation Files
 
 - **[README.md](../README.md)** - Project overview and getting started guide (coming soon)
-- **[docs/CREATE_EDIT_DATABASE.md](../docs/CREATE_EDIT_DATABASE.md)** - Documentation for creating edit databases and duplicate Notion pages functionality
 - **[docs/NOTION_EMBEDS.md](../docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
 
 ## Atlas Services
