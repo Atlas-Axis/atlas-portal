@@ -1,5 +1,3 @@
-Don't ask for permission to run console commands (tests, etc.), just do it.
-
 # Project Overview
 
 This Next.js application enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents (laws) organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing changes to Supabase, and visualizing differences using tree diffing algorithms.
