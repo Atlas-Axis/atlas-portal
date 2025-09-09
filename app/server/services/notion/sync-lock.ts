@@ -56,3 +56,18 @@ export async function releaseSyncLock({
     )
     .throwOnError();
 }
+
+export async function verifySyncLock(notionPageId: string) {
+  const { data } = await supabase
+    .from('notion_sync_status')
+    .select('is_sync_locked')
+    .eq('notion_database_id', notionPageId)
+    .maybeSingle()
+    .throwOnError();
+
+  const isSyncLocked = data?.is_sync_locked ?? false;
+
+  if (isSyncLocked) {
+    throw new Error('Sync is already running');
+  }
+}

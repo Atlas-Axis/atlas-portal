@@ -6,8 +6,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { TreeComparisonResult, compareDatabaseTrees } from './compare-database-trees';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './fetch-database-sub-items';
-import { acquireSyncLock, releaseSyncLock } from './sync-lock';
-import { verifySyncLock } from './verify-sync-lock';
+import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 
 /**
  * Sync all pages from Notion database to Supabase

@@ -2,8 +2,7 @@ import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { isValidUUID } from '@/app/shared/utils/utils';
 import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
-import { releaseSyncLock } from '../notion/sync-lock';
-import { verifySyncLock } from '../notion/verify-sync-lock';
+import { releaseSyncLock, verifySyncLock } from '../notion/sync-lock';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);

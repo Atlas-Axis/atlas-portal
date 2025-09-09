@@ -1,8 +1,7 @@
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { fetchBlocksRecursively } from '@/app/server/services/notion/fetch-blocks-recursively';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { acquireSyncLock, releaseSyncLock } from './sync-lock';
-import { verifySyncLock } from './verify-sync-lock';
+import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 
 /**
  * Sync all blocks from Notion page to Supabase
