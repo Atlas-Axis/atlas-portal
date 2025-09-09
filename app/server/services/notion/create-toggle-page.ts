@@ -1,8 +1,4 @@
-import type {
-  BlockObjectRequest,
-  CreatePageParameters,
-  DatabaseObjectResponse,
-} from '@notionhq/client/build/src/api-endpoints';
+import type { BlockObjectRequest, CreatePageParameters, DatabaseObjectResponse } from '@notionhq/client';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';

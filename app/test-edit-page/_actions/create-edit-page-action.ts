@@ -1,6 +1,6 @@
 'use server';
 
-import type { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
+import type { CreatePageParameters } from '@notionhq/client';
 import { createNotionPageWithToggleBlocks } from '@/app/server/services/notion/create-toggle-page';
 
 export interface CreateEditPageParams {

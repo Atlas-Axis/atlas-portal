@@ -3,6 +3,8 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelled';
 
 export async function acquireSyncLock(notionDatabaseId: string) {
+  console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
+
   return supabase
     .from('notion_sync_status')
     .upsert(
@@ -33,6 +35,10 @@ export async function releaseSyncLock({
   syncErrorMessage: string | null;
   blocksSyncedCount: number | null;
 }) {
+  console.log(`Releasing sync lock for database ${notionDatabaseId} with status ${syncStatus}`);
+  console.log(`Sync error message: ${syncErrorMessage}`);
+  console.log(`Blocks synced count: ${blocksSyncedCount}`);
+
   return supabase
     .from('notion_sync_status')
     .upsert(

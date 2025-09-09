@@ -1,4 +1,4 @@
-import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import type { PageObjectResponse } from '@notionhq/client';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/load-database-tree-from-supabase';
@@ -6,7 +6,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { TreeComparisonResult, compareDatabaseTrees } from './compare-database-trees';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
 import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './fetch-database-sub-items';
-import { acquireSyncLock, releaseSyncLock } from './reset-sync-status';
+import { acquireSyncLock, releaseSyncLock } from './sync-lock';
 import { verifySyncLock } from './verify-sync-lock';
 
 /**

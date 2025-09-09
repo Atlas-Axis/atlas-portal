@@ -1,4 +1,4 @@
-import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import type { PageObjectResponse } from '@notionhq/client';
 
 /**
  * Check if a Notion page needs to be synced based on its last_edited_time
