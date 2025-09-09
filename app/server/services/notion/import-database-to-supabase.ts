@@ -25,36 +25,53 @@ export async function importDatabasePagesFromNotionToSupabase({
   };
 }) {
   const startTime = performance.now();
-  console.log(`➡️ Importing pages from Notion database to Supabase...`);
-  console.log(`Task run ID: ${taskRunId}`);
+  console.log(`🚀 Starting database import from Notion to Supabase`);
+  console.log(`📊 Database ID: ${notionDatabaseId}`);
+  console.log(`🏃 Task run ID: ${taskRunId}`);
+  if (editPageProps?.isEditDatabase) {
+    console.log(`✏️ This is an edit database import`);
+    console.log(`📄 Original database ID: ${editPageProps.originalDatabaseId}`);
+    console.log(`🔗 Page mappings count: ${editPageProps.pageIdMapping?.size || 0}`);
+  }
 
   // Verify that the sync is not already in progress
+  console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
   await verifySyncLock(notionDatabaseId);
+  console.log(`✅ Sync lock verified - proceeding with import`);
 
   try {
     // Update sync status in database
+    console.log(`🔄 Acquiring sync lock for database ${notionDatabaseId}...`);
     await acquireSyncLock(notionDatabaseId);
+    console.log(`✅ Sync lock acquired successfully`);
 
     // Load existing tree from Supabase
+    console.log(`📥 Loading existing database tree from Supabase...`);
     const supabaseTree = await loadDatabaseTreeFromSupabase(notionDatabaseId);
+    console.log(`✅ Loaded existing tree: ${supabaseTree.pagesById.size} pages found in Supabase`);
 
     // Fetch all pages from the Notion database with their tree structure
+    console.log(`📡 Fetching database tree from Notion API...`);
     const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId);
+    console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
 
     // Convert the tree structure to individual NotionDatabasePage records
+    console.log(`🔄 Converting tree structure to page records...`);
     const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId, editPageProps);
-    console.log(`Fetched ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
+    console.log(`✅ Converted ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
 
     // Compare trees to determine what changes need to be made
+    console.log(`🔍 Comparing trees to determine what changes need to be made...`);
     const comparison = compareDatabaseTrees(notionTree, supabaseTree, allPagesFromNotion);
 
-    console.log(`Tree comparison results:`);
+    console.log(`📊 Tree comparison results:`);
     console.log(`  - New pages: ${comparison.pagesToInsert.length}`);
     console.log(`  - Updated pages: ${comparison.pagesToUpdate.length}`);
     console.log(`  - Deleted pages: ${comparison.pagesToDelete.length}`);
     console.log(`  - Unchanged pages: ${comparison.unchangedPages.length}`);
 
     // Apply changes in the correct order to maintain referential integrity
+    console.log(`🔄 Applying changes to Supabase database...`);
     await applyTreeChanges(comparison, notionDatabaseId);
 
     const endTime = performance.now();
@@ -64,12 +81,17 @@ export async function importDatabasePagesFromNotionToSupabase({
     const totalChanges =
       comparison.pagesToInsert.length + comparison.pagesToUpdate.length + comparison.pagesToDelete.length;
 
+    console.log(`📈 Final summary:`);
+    console.log(`  - Total changes made: ${totalChanges}`);
+    console.log(`  - Execution time: ${(duration / 1000).toFixed(2)}s`);
+
     await releaseSyncLock({
       notionDatabaseId,
       syncStatus: 'completed',
       syncErrorMessage: null,
       blocksSyncedCount: totalChanges,
     });
+    console.log(`🔓 Sync lock released successfully`);
 
     return {
       inserted: comparison.pagesToInsert,
@@ -100,7 +122,7 @@ export async function importDatabasePagesFromNotionToSupabase({
 async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabaseId: string): Promise<void> {
   // 1. First, delete pages that no longer exist in Notion
   if (comparison.pagesToDelete.length > 0) {
-    console.log(`Deleting ${comparison.pagesToDelete.length} pages that no longer exist in Notion`);
+    console.log(`🗑️ Deleting ${comparison.pagesToDelete.length} pages that no longer exist in Notion`);
     await supabase
       .from('notion_database_pages')
       .delete()
@@ -112,14 +134,14 @@ async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabase
 
   // 2. Insert new pages
   if (comparison.pagesToInsert.length > 0) {
-    console.log(`Inserting ${comparison.pagesToInsert.length} new pages`);
+    console.log(`➕ Inserting ${comparison.pagesToInsert.length} new pages`);
     await insertPagesInBatches(comparison.pagesToInsert, false);
     console.log(`✓ Inserted ${comparison.pagesToInsert.length} new pages`);
   }
 
   // 3. Update existing pages that have changed
   if (comparison.pagesToUpdate.length > 0) {
-    console.log(`Updating ${comparison.pagesToUpdate.length} changed pages`);
+    console.log(`🔄 Updating ${comparison.pagesToUpdate.length} changed pages`);
     await insertPagesInBatches(comparison.pagesToUpdate, true);
     console.log(`✓ Updated ${comparison.pagesToUpdate.length} pages`);
   }
@@ -149,7 +171,7 @@ async function insertPagesInBatches(
     const totalBatches = Math.ceil(totalPages / batchSize);
 
     console.log(
-      `${useUpsert ? 'Upserting' : 'Inserting'} batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`,
+      `  ${useUpsert ? '🔄 Upserting' : '📝 Inserting'} batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`,
     );
 
     if (useUpsert) {
@@ -164,7 +186,7 @@ async function insertPagesInBatches(
       await supabase.from('notion_database_pages').insert(batch).throwOnError();
     }
 
-    console.log(`✓ Batch ${batchNumber}/${totalBatches} inserted successfully`);
+    console.log(`  ✓ Batch ${batchNumber}/${totalBatches} completed successfully`);
   }
 }
 
@@ -183,6 +205,8 @@ function convertTreeToPageRecords(
   const pages: NotionDatabasePage[] = [];
   const { pagesById, pageIdToParentId, pageIdToSubPageIds } = databaseTree;
 
+  console.log(`  📋 Converting ${pagesById.size} pages from tree structure to database records...`);
+
   // Build sort order by processing children in their actual order
   const sortOrderMap = new Map<string, number>();
 
@@ -199,9 +223,11 @@ function convertTreeToPageRecords(
 
   // Start with root-level pages (those without parents)
   const rootPages = Array.from(pagesById.keys()).filter((pageId) => !pageIdToParentId.has(pageId));
+  console.log(`  🌳 Found ${rootPages.length} root-level pages`);
   assignSortOrders(null, rootPages);
 
   // Convert each page to NotionDatabasePage format
+  console.log(`  🔄 Converting pages to database format...`);
   for (const [pageId, notionPage] of pagesById.entries()) {
     const parentId = pageIdToParentId.get(pageId) || null;
     const subPageIds = pageIdToSubPageIds.get(pageId) || [];
@@ -244,6 +270,7 @@ function convertTreeToPageRecords(
     pages.push(page);
   }
 
+  console.log(`  ✅ Successfully converted ${pages.length} pages to database format`);
   return pages;
 }
 
