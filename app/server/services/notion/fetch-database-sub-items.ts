@@ -19,7 +19,6 @@ export type FetchTreeOptions = {
   parentPropertyName?: string; // optional inverse relation ("Parent"); speeds up parent detection if present
 };
 
-// TODO: Support edit page variants (similarly to `fetchBlocksRecursively`)
 export async function fetchDatabaseTree(
   databaseId: string,
   options: FetchTreeOptions = {},

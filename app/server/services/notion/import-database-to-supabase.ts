@@ -1,9 +1,11 @@
 import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
+import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/load-database-tree-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { TreeComparisonResult, compareDatabaseTrees } from './compare-database-trees';
 import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
-import { DatabaseSubItemTree, fetchDatabaseTree } from './fetch-database-sub-items';
+import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './fetch-database-sub-items';
 import { acquireSyncLock, releaseSyncLock } from './reset-sync-status';
 import { verifySyncLock } from './verify-sync-lock';
 
@@ -34,49 +36,58 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Update sync status in database
     await acquireSyncLock(notionDatabaseId);
 
+    // Load existing tree from Supabase
+    const supabaseTree = await loadDatabaseTreeFromSupabase(notionDatabaseId);
+
     // Fetch all pages from the Notion database with their tree structure
-    const databaseTree = await fetchDatabaseTree(notionDatabaseId);
+    const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId);
 
     // Convert the tree structure to individual NotionDatabasePage records
-    const pages = convertTreeToPageRecords(databaseTree, notionDatabaseId, editPageProps);
+    const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId, editPageProps);
+    console.log(`Fetched ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
 
-    console.log(`Fetched ${pages.length} pages from Notion database ${notionDatabaseId}`);
+    // Compare trees to determine what changes need to be made
+    const comparison = compareDatabaseTrees(notionTree, supabaseTree, allPagesFromNotion);
 
-    // Delete existing pages in Supabase that are not in the fetched pages. Descendants are cascade deleted automatically
-    await supabase
-      .from('notion_database_pages')
-      .delete()
-      .eq('root_notion_database_id', notionDatabaseId)
-      .throwOnError();
+    console.log(`Tree comparison results:`);
+    console.log(`  - New pages: ${comparison.pagesToInsert.length}`);
+    console.log(`  - Updated pages: ${comparison.pagesToUpdate.length}`);
+    console.log(`  - Deleted pages: ${comparison.pagesToDelete.length}`);
+    console.log(`  - Unchanged pages: ${comparison.unchangedPages.length}`);
 
-    console.log(`Deleted existing pages in Supabase for Notion database ${notionDatabaseId}`);
-
-    // Save pages to Supabase database in batches
-    await insertPagesInBatches(pages);
-
-    console.log(`Inserted ${pages.length} pages into Supabase for Notion database ${notionDatabaseId}`);
+    // Apply changes in the correct order to maintain referential integrity
+    await applyTreeChanges(comparison, notionDatabaseId);
 
     const endTime = performance.now();
     const duration = endTime - startTime;
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
+    const totalChanges =
+      comparison.pagesToInsert.length + comparison.pagesToUpdate.length + comparison.pagesToDelete.length;
+
     await releaseSyncLock({
       notionDatabaseId,
       syncStatus: 'completed',
       syncErrorMessage: null,
-      blocksSyncedCount: pages.length,
+      blocksSyncedCount: totalChanges,
     });
 
-    return pages;
+    return {
+      inserted: comparison.pagesToInsert,
+      updated: comparison.pagesToUpdate,
+      deleted: comparison.pagesToDelete,
+      unchanged: comparison.unchangedPages,
+    };
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.error(`❌ Import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`, error);
 
     await releaseSyncLock({
       notionDatabaseId,
       syncStatus: 'failed',
-      syncErrorMessage: JSON.stringify(error),
+      syncErrorMessage: errorMessage,
       blocksSyncedCount: null,
     });
 
@@ -85,9 +96,52 @@ export async function importDatabasePagesFromNotionToSupabase({
 }
 
 /**
+ * Apply tree changes in the correct order to maintain referential integrity
+ */
+async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabaseId: string): Promise<void> {
+  // 1. First, delete pages that no longer exist in Notion
+  if (comparison.pagesToDelete.length > 0) {
+    console.log(`Deleting ${comparison.pagesToDelete.length} pages that no longer exist in Notion`);
+    await supabase
+      .from('notion_database_pages')
+      .delete()
+      .eq('root_notion_database_id', notionDatabaseId)
+      .in('notion_page_id', comparison.pagesToDelete)
+      .throwOnError();
+    console.log(`✓ Deleted ${comparison.pagesToDelete.length} pages`);
+  }
+
+  // 2. Insert new pages
+  if (comparison.pagesToInsert.length > 0) {
+    console.log(`Inserting ${comparison.pagesToInsert.length} new pages`);
+    await insertPagesInBatches(comparison.pagesToInsert, false);
+    console.log(`✓ Inserted ${comparison.pagesToInsert.length} new pages`);
+  }
+
+  // 3. Update existing pages that have changed
+  if (comparison.pagesToUpdate.length > 0) {
+    console.log(`Updating ${comparison.pagesToUpdate.length} changed pages`);
+    await insertPagesInBatches(comparison.pagesToUpdate, true);
+    console.log(`✓ Updated ${comparison.pagesToUpdate.length} pages`);
+  }
+
+  if (
+    comparison.pagesToInsert.length === 0 &&
+    comparison.pagesToUpdate.length === 0 &&
+    comparison.pagesToDelete.length === 0
+  ) {
+    console.log(`✓ No changes needed - all pages are up to date`);
+  }
+}
+
+/**
  * Insert pages into Supabase in batches to handle large datasets efficiently
  */
-async function insertPagesInBatches(pages: NotionDatabasePage[], batchSize: number = 1000): Promise<void> {
+async function insertPagesInBatches(
+  pages: NotionDatabasePage[],
+  useUpsert: boolean = false,
+  batchSize: number = 1000,
+): Promise<void> {
   const totalPages = pages.length;
 
   for (let i = 0; i < totalPages; i += batchSize) {
@@ -95,9 +149,21 @@ async function insertPagesInBatches(pages: NotionDatabasePage[], batchSize: numb
     const batchNumber = Math.floor(i / batchSize) + 1;
     const totalBatches = Math.ceil(totalPages / batchSize);
 
-    console.log(`Inserting batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`);
+    console.log(
+      `${useUpsert ? 'Upserting' : 'Inserting'} batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`,
+    );
 
-    await supabase.from('notion_database_pages').insert(batch).throwOnError();
+    if (useUpsert) {
+      await supabase
+        .from('notion_database_pages')
+        .upsert(batch, {
+          onConflict: 'notion_page_id',
+          ignoreDuplicates: false,
+        })
+        .throwOnError();
+    } else {
+      await supabase.from('notion_database_pages').insert(batch).throwOnError();
+    }
 
     console.log(`✓ Batch ${batchNumber}/${totalBatches} inserted successfully`);
   }
@@ -118,15 +184,23 @@ function convertTreeToPageRecords(
   const pages: NotionDatabasePage[] = [];
   const { pagesById, pageIdToParentId, pageIdToSubPageIds } = databaseTree;
 
-  // Create a map to track sort order for each parent
-  const nextOrderNumberByParent = new Map<string | null, number>();
+  // Build sort order by processing children in their actual order
+  const sortOrderMap = new Map<string, number>();
 
-  // Function to get the next sort order for a given parent
-  const getNextSortOrder = (parentId: string | null): number => {
-    const currentOrder = nextOrderNumberByParent.get(parentId) || 0;
-    nextOrderNumberByParent.set(parentId, currentOrder + 1);
-    return currentOrder;
+  // Function to assign sort orders recursively
+  const assignSortOrders = (parentId: string | null, children: string[]) => {
+    children.forEach((childId, index) => {
+      sortOrderMap.set(childId, index);
+      const grandChildren = pageIdToSubPageIds.get(childId) || [];
+      if (grandChildren.length > 0) {
+        assignSortOrders(childId, grandChildren);
+      }
+    });
   };
+
+  // Start with root-level pages (those without parents)
+  const rootPages = Array.from(pagesById.keys()).filter((pageId) => !pageIdToParentId.has(pageId));
+  assignSortOrders(null, rootPages);
 
   // Convert each page to NotionDatabasePage format
   for (const [pageId, notionPage] of pagesById.entries()) {
@@ -154,7 +228,7 @@ function convertTreeToPageRecords(
       archived: notionPage.archived,
       in_trash: notionPage.in_trash,
       last_edited_by_user_id: notionPage.last_edited_by?.id || null,
-      sort_order: getNextSortOrder(parentId),
+      sort_order: sortOrderMap.get(pageId) || 0,
       canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
@@ -181,20 +255,26 @@ function extractPageTitle(
   plainText: string | null;
   richText: Json[] | null;
 } {
-  for (const [propertyName, property] of Object.entries(page.properties)) {
-    if (propertyName === titlePropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
+  try {
+    const property = page.properties[titlePropertyName];
+    if (!property) {
+      console.warn(`Property "${titlePropertyName}" not found in page ${page.id}`);
+      return { plainText: null, richText: null };
+    }
+
+    if ('rich_text' in property && Array.isArray(property.rich_text) && property.rich_text.length > 0) {
       return {
-        plainText: property['rich_text'].map((text) => text.plain_text).join('') || null,
-        richText: property['rich_text'],
+        plainText: property.rich_text.map((text) => text.plain_text).join('') || null,
+        richText: property.rich_text,
       };
     }
-    if (propertyName === titlePropertyName && !('rich_text' in property && property['rich_text'].length > 0))
-      console.warn(`Property "${propertyName}" is not a rich_text property or is empty.`);
+
+    console.warn(`Property "${titlePropertyName}" in page ${page.id} is not a rich_text property or is empty.`);
+    return { plainText: null, richText: null };
+  } catch (error) {
+    console.error(`Error extracting title from page ${page.id}:`, error);
+    return { plainText: null, richText: null };
   }
-  return {
-    plainText: null,
-    richText: null,
-  };
 }
 
 function extractContent(
@@ -204,27 +284,44 @@ function extractContent(
   plainText: string | null;
   richText: Json[] | null;
 } {
-  for (const [propertyName, property] of Object.entries(page.properties)) {
-    if (propertyName === contentPropertyName && 'rich_text' in property && property['rich_text'].length > 0) {
+  try {
+    const property = page.properties[contentPropertyName];
+    if (!property) {
+      console.warn(`Property "${contentPropertyName}" not found in page ${page.id}`);
+      return { plainText: null, richText: null };
+    }
+
+    if ('rich_text' in property && Array.isArray(property.rich_text) && property.rich_text.length > 0) {
       return {
-        plainText: property['rich_text'].map((text) => text.plain_text).join('') || null,
-        richText: property['rich_text'],
+        plainText: property.rich_text.map((text) => text.plain_text).join('') || null,
+        richText: property.rich_text,
       };
     }
-    if (propertyName === contentPropertyName && !('rich_text' in property && property['rich_text'].length > 0))
-      console.warn(`Property "${propertyName}" is not a rich_text property or is empty.`);
+
+    console.warn(`Property "${contentPropertyName}" in page ${page.id} is not a rich_text property or is empty.`);
+    return { plainText: null, richText: null };
+  } catch (error) {
+    console.error(`Error extracting content from page ${page.id}:`, error);
+    return { plainText: null, richText: null };
   }
-  return {
-    plainText: null,
-    richText: null,
-  };
 }
 
 function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: string): string | null {
-  const docNoProperty = page.properties[docNoPropertyName];
-  if (docNoProperty && 'title' in docNoProperty && docNoProperty['title'].length > 0) {
-    return docNoProperty['title'].map((text) => text.plain_text).join('') || null;
+  try {
+    const docNoProperty = page.properties[docNoPropertyName];
+    if (!docNoProperty) {
+      console.warn(`Property "${docNoPropertyName}" not found in page ${page.id}`);
+      return null;
+    }
+
+    if ('title' in docNoProperty && Array.isArray(docNoProperty.title) && docNoProperty.title.length > 0) {
+      return docNoProperty.title.map((text) => text.plain_text).join('') || null;
+    }
+
+    console.warn(`Property "${docNoPropertyName}" in page ${page.id} is not a title property or is empty.`);
+    return null;
+  } catch (error) {
+    console.error(`Error extracting document ID from page ${page.id}:`, error);
+    return null;
   }
-  console.warn(`Property "${docNoPropertyName}" is not a title property or is empty.`);
-  return null;
 }
