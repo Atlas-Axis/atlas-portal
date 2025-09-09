@@ -129,25 +129,45 @@ export async function fetchDatabaseTree(
 }
 
 async function fetchAllDatabasePages(databaseId: string): Promise<PageObjectResponse[]> {
+  console.log(`📡 Starting to fetch all pages from Notion database ${databaseId}...`);
   const results: PageObjectResponse[] = [];
   let cursor: string | undefined = undefined;
+  let pageCount = 0;
+  let batchNumber = 1;
 
   do {
+    console.log(`  🔄 Fetching batch ${batchNumber} from Notion API...`);
     const response: QueryDatabaseResponse = await notion().databases.query({
       database_id: databaseId,
       page_size: 100,
       start_cursor: cursor,
       // TODO: add filters/sorts to have a stable order
     });
+
+    const batchSize = response.results.length;
+    console.log(`  📄 Received ${batchSize} pages in batch ${batchNumber}`);
+
     // Only keep full PageObjectResponse rows (ignore partials just in case)
     for (const result of response.results) {
       if ('object' in result && result.object === 'page') {
         results.push(result as PageObjectResponse);
+        pageCount++;
       } else console.warn(`Ignoring partial result in database query:`, result);
     }
+
     cursor = response.next_cursor ?? undefined;
+    console.log(`  ✅ Batch ${batchNumber} processed - Total pages so far: ${pageCount}`);
+
+    if (cursor) {
+      console.log(`  ➡️ More pages available, continuing to next batch...`);
+    } else {
+      console.log(`  🏁 Reached end of database - no more pages to fetch`);
+    }
+
+    batchNumber++;
   } while (cursor);
 
+  console.log(`✅ Completed fetching all pages: ${results.length} total pages from database ${databaseId}`);
   return results;
 }
 
