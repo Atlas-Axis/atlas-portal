@@ -128,15 +128,7 @@ export type Database = {
           sort_order?: number;
           updated_at?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: 'fk_parent_page';
-            columns: ['parent_notion_page_id'];
-            isOneToOne: false;
-            referencedRelation: 'notion_database_pages';
-            referencedColumns: ['notion_page_id'];
-          },
-        ];
+        Relationships: [];
       };
       notion_sync_status: {
         Row: {
@@ -198,7 +190,10 @@ export type Database = {
         | 'Active Data Controller'
         | 'Spell SP Controller'
         | 'Placeholder'
-        | 'Category';
+        | 'Category'
+        | 'Action Tenet'
+        | 'Active Data'
+        | 'Annotation';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -326,6 +321,9 @@ export const Constants = {
         'Spell SP Controller',
         'Placeholder',
         'Category',
+        'Action Tenet',
+        'Active Data',
+        'Annotation',
       ],
     },
   },

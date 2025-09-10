@@ -6,7 +6,10 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Active Data Controller',
   'Spell SP Controller',
   'Placeholder',
-  'Category'
+  'Category',
+  'Action Tenet',
+  'Active Data',
+  'Annotation'
 );
 
 -- Create the notion_database_pages table to store synchronized pages from Notion
