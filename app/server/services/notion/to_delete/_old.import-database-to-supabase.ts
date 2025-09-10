@@ -11,6 +11,8 @@ import {
 } from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
 import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';
+import { extractPageTitle } from '../extract-page-title';
+import { insertPagesInBatches } from '../insert-pages-in-batches';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
 import {
   _delete_DatabaseSubItemTree,
@@ -18,7 +20,7 @@ import {
 } from './_old.fetch-database-sub-items';
 
 /**
- * Sync all pages from Notion database to Supabase
+ * Sync all pages from a Notion database to Supabase
  */
 export async function _delete_importDatabasePagesFromNotionToSupabase({
   atlasDatabaseName,
@@ -174,41 +176,6 @@ async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabase
 }
 
 /**
- * Insert pages into Supabase in batches to handle large datasets efficiently
- */
-async function insertPagesInBatches(
-  pages: NotionDatabasePage[],
-  useUpsert: boolean = false,
-  batchSize: number = 1000,
-): Promise<void> {
-  const totalPages = pages.length;
-
-  for (let i = 0; i < totalPages; i += batchSize) {
-    const batch = pages.slice(i, i + batchSize);
-    const batchNumber = Math.floor(i / batchSize) + 1;
-    const totalBatches = Math.ceil(totalPages / batchSize);
-
-    console.log(
-      `  ${useUpsert ? '🔄 Upserting' : '📝 Inserting'} batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`,
-    );
-
-    if (useUpsert) {
-      await supabase()
-        .from('notion_database_pages')
-        .upsert(batch, {
-          onConflict: 'notion_page_id',
-          ignoreDuplicates: false,
-        })
-        .throwOnError();
-    } else {
-      await supabase().from('notion_database_pages').insert(batch).throwOnError();
-    }
-
-    console.log(`  ✓ Batch ${batchNumber}/${totalBatches} completed successfully`);
-  }
-}
-
-/**
  * Convert the tree structure from fetchDatabaseTree to individual NotionDatabasePage records
  */
 function convertTreeToPageRecords(
@@ -283,44 +250,6 @@ function convertTreeToPageRecords(
 
   console.log(`  ✅ Successfully converted ${pages.length} pages to database format`);
   return pages;
-}
-
-function extractPageTitle(
-  page: PageObjectResponse,
-  titlePropertyName: string,
-): {
-  plainText: string | null;
-  richText: Json[] | null;
-} {
-  try {
-    const property = page.properties[titlePropertyName];
-    if (!property) {
-      console.warn(`Property "${titlePropertyName}" not found in page ${page.id}`);
-      return { plainText: null, richText: null };
-    }
-
-    if ('rich_text' in property && Array.isArray(property.rich_text) && property.rich_text.length > 0) {
-      return {
-        plainText: property.rich_text.map((text) => text.plain_text).join('') || null,
-        richText: property.rich_text,
-      };
-    }
-
-    if ('formula' in property && property.formula?.type === 'string' && property.formula.string) {
-      return {
-        plainText: property.formula.string,
-        richText: null, // Formula properties don't have rich text formatting
-      };
-    }
-
-    console.warn(
-      `Property "${titlePropertyName}" in page ${page.id} is not a rich_text or formula property or is empty.`,
-    );
-    return { plainText: null, richText: null };
-  } catch (error) {
-    console.error(`Error extracting title from page ${page.id}:`, error);
-    return { plainText: null, richText: null };
-  }
 }
 
 function extractContent(
