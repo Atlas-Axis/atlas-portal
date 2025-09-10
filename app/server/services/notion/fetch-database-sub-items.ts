@@ -1,6 +1,5 @@
 import type { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { SUB_ITEM_PROPERTY_NAME } from './database-property-names';
 
 export interface DatabaseSubItemTreeNode {
   id: string;
@@ -15,18 +14,12 @@ export interface DatabaseSubItemTree {
 }
 
 export type FetchTreeOptions = {
-  subItemsPropertyName?: string; // name or property_id of the "Sub-items" relation
-  parentPropertyName?: string; // optional inverse relation ("Parent"); speeds up parent detection if present
+  subItemsPropertyName: string; // name or property_id of the "Sub-items" relation
+  parentPropertyName: string; // optional inverse relation ("Parent"); speeds up parent detection if present
 };
 
-export async function fetchDatabaseTree(
-  databaseId: string,
-  options: FetchTreeOptions = {},
-): Promise<DatabaseSubItemTree> {
-  const {
-    subItemsPropertyName = SUB_ITEM_PROPERTY_NAME,
-    parentPropertyName = 'Parent', // TODO: Check if this is reliable and correct; Sub items may not have a parent relationship. Verify!
-  } = options;
+export async function fetchDatabaseTree(databaseId: string, options: FetchTreeOptions): Promise<DatabaseSubItemTree> {
+  const { subItemsPropertyName, parentPropertyName } = options;
 
   // 1) Pull ALL pages in the database
   const allPages = await fetchAllDatabasePages(databaseId);
@@ -145,7 +138,7 @@ async function fetchAllDatabasePages(databaseId: string): Promise<PageObjectResp
     });
 
     const batchSize = response.results.length;
-    console.log(`  📄 Received ${batchSize} pages in batch ${batchNumber}`);
+    console.log(`  📄 Received ${batchSize} Notion pages in batch ${batchNumber}`);
 
     // Only keep full PageObjectResponse rows (ignore partials just in case)
     for (const result of response.results) {
@@ -156,18 +149,20 @@ async function fetchAllDatabasePages(databaseId: string): Promise<PageObjectResp
     }
 
     cursor = response.next_cursor ?? undefined;
-    console.log(`  ✅ Batch ${batchNumber} processed - Total pages so far: ${pageCount}`);
+    console.log(`  ✅ Batch ${batchNumber} processed - Total Notion pages so far: ${pageCount}`);
 
     if (cursor) {
-      console.log(`  ➡️ More pages available, continuing to next batch...`);
+      console.log(`  ➡️ More Notion pages available, continuing to next batch...`);
     } else {
-      console.log(`  🏁 Reached end of database - no more pages to fetch`);
+      console.log(`  🏁 Reached end of database - no more Notion pages to fetch`);
     }
 
     batchNumber++;
   } while (cursor);
 
-  console.log(`✅ Completed fetching all pages: ${results.length} total pages from database ${databaseId}`);
+  console.log(
+    `✅ Completed fetching all Notion pages: ${results.length} total Notion pages from database ${databaseId}`,
+  );
   return results;
 }
 

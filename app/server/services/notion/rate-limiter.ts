@@ -93,11 +93,11 @@ export class NotionRateLimiter {
           }),
         ]);
 
-        this.log('info', `API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''}`);
+        this.log('info', `Notion API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''}`);
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
-        this.log('warn', `API call failed on attempt ${attempt}/${maxRetries}`, { error });
+        this.log('warn', `Notion API call failed on attempt ${attempt}/${maxRetries}`, { error });
 
         // Handle non-retryable errors
         const apiError = error as { status?: number; headers?: Record<string, string> };

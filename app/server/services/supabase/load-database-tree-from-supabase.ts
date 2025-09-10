@@ -25,7 +25,7 @@ export async function loadDatabaseTreeFromSupabase(rootNotionDatabaseId: string)
     // Check for errors
     if (error) {
       console.error({ error });
-      throw new Error(`Failed to load database tree (page ${page}): ${error.message}`, { cause: error });
+      throw new Error(`Failed to load database tree (Notion page ${page}): ${error.message}`, { cause: error });
     }
     if (!data || data.length === 0) break;
 
@@ -38,7 +38,7 @@ export async function loadDatabaseTreeFromSupabase(rootNotionDatabaseId: string)
     page++;
   }
 
-  console.log(`Loaded ${pages.length} pages from Supabase for database tree ${rootNotionDatabaseId}`);
+  console.log(`Loaded ${pages.length} Notion pages from Supabase for database tree ${rootNotionDatabaseId}`);
 
   // Build tree structure
   return buildSupabaseTree(pages);

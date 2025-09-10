@@ -14,25 +14,14 @@ import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 export async function importDatabasePagesFromNotionToSupabase({
   notionDatabaseId,
   taskRunId,
-  editPageProps,
 }: {
   notionDatabaseId: string;
   taskRunId: string;
-  editPageProps?: {
-    isEditDatabase: true;
-    originalDatabaseId?: string;
-    pageIdMapping?: Map<string, string>; // new page ID -> original page ID
-  };
 }) {
   const startTime = performance.now();
   console.log(`🚀 Starting database import from Notion to Supabase`);
   console.log(`📊 Database ID: ${notionDatabaseId}`);
   console.log(`🏃 Task run ID: ${taskRunId}`);
-  if (editPageProps?.isEditDatabase) {
-    console.log(`✏️ This is an edit database import`);
-    console.log(`📄 Original database ID: ${editPageProps.originalDatabaseId}`);
-    console.log(`🔗 Page mappings count: ${editPageProps.pageIdMapping?.size || 0}`);
-  }
 
   // Verify that the sync is not already in progress
   console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
@@ -52,12 +41,24 @@ export async function importDatabasePagesFromNotionToSupabase({
 
     // Fetch all pages from the Notion database with their tree structure
     console.log(`📡 Fetching database tree from Notion API...`);
-    const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId);
+    const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId, {
+      subItemsPropertyName: NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].subItem,
+      parentPropertyName: NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].parent,
+    });
     console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
+
+    // TODO: Remove this debug logging later
+    // TODO: Log parent-child relationships in a human-readable way
+    for (const [pageId, subItemIds] of notionTree.pageIdToSubPageIds.entries()) {
+      console.log(`  - Page ${pageId} has ${subItemIds.length} sub-items: [${subItemIds.join(', ')}]`);
+    }
+    for (const [pageId, parentId] of notionTree.pageIdToParentId.entries()) {
+      console.log(`  - Page ${pageId} has parent: ${parentId}`);
+    }
 
     // Convert the tree structure to individual NotionDatabasePage records
     console.log(`🔄 Converting tree structure to page records...`);
-    const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId, editPageProps);
+    const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId);
     console.log(`✅ Converted ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
 
     // Compare trees to determine what changes need to be made
@@ -193,15 +194,7 @@ async function insertPagesInBatches(
 /**
  * Convert the tree structure from fetchDatabaseTree to individual NotionDatabasePage records
  */
-function convertTreeToPageRecords(
-  databaseTree: DatabaseSubItemTree,
-  notionDatabaseId: string,
-  editPageProps?: {
-    isEditDatabase: true;
-    originalDatabaseId?: string;
-    pageIdMapping?: Map<string, string>; // new page ID -> original page ID
-  },
-): NotionDatabasePage[] {
+function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatabaseId: string): NotionDatabasePage[] {
   const pages: NotionDatabasePage[] = [];
   const { pagesById, pageIdToParentId, pageIdToSubPageIds } = databaseTree;
 
@@ -227,7 +220,7 @@ function convertTreeToPageRecords(
   assignSortOrders(null, rootPages);
 
   // Convert each page to NotionDatabasePage format
-  console.log(`  🔄 Converting pages to database format...`);
+  console.log(`  🔄 Converting Notion API pages to Supabase format...`);
   for (const [pageId, notionPage] of pagesById.entries()) {
     const parentId = pageIdToParentId.get(pageId) || null;
     const subPageIds = pageIdToSubPageIds.get(pageId) || [];
@@ -257,14 +250,9 @@ function convertTreeToPageRecords(
       canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
-      belongs_to_edit_page: editPageProps?.isEditDatabase || false,
-      edit_page_original_notion_page_id:
-        editPageProps?.isEditDatabase && editPageProps?.pageIdMapping
-          ? editPageProps.pageIdMapping.get(pageId) || null
-          : null,
-      edit_page_original_notion_database_id: editPageProps?.isEditDatabase
-        ? editPageProps?.originalDatabaseId || null
-        : null,
+      belongs_to_edit_page: false,
+      edit_page_original_notion_page_id: null,
+      edit_page_original_notion_database_id: null,
     };
 
     pages.push(page);
@@ -343,10 +331,6 @@ function extractContent(
 
 function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: string): string | null {
   try {
-
-    if ('formula' in docNoProperty && docNoProperty.formula?.type === 'string' && docNoProperty.formula.string) {
-      return docNoProperty.formula.string;
-    }
     const docNoProperty = page.properties[docNoPropertyName];
     if (!docNoProperty) {
       console.warn(`Property "${docNoPropertyName}" not found in page ${page.id}`);
@@ -355,6 +339,10 @@ function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: st
 
     if ('title' in docNoProperty && Array.isArray(docNoProperty.title) && docNoProperty.title.length > 0) {
       return docNoProperty.title.map((text) => text.plain_text).join('') || null;
+    }
+
+    if ('formula' in docNoProperty && docNoProperty.formula?.type === 'string' && docNoProperty.formula.string) {
+      return docNoProperty.formula.string;
     }
 
     console.warn(`Property "${docNoPropertyName}" in page ${page.id} is not a title property or is empty.`);
