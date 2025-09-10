@@ -1,6 +1,6 @@
 'use server';
 
-import { importBlocksFromNotionToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
+import { importNotionPageToSupabase } from '@/app/server/services/notion/import-page-to-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 export async function importNotionPageAction(notionPageId: string) {
@@ -13,7 +13,7 @@ export async function importNotionPageAction(notionPageId: string) {
   }
 
   try {
-    await importBlocksFromNotionToSupabase({ notionPageId, taskRunId: '' });
+    await importNotionPageToSupabase({ notionPageId });
 
     return {
       success: true,
