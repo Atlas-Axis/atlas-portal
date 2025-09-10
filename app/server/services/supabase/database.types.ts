@@ -79,6 +79,7 @@ export type Database = {
       notion_database_pages: {
         Row: {
           archived: boolean;
+          atlas_database_name: Database['public']['Enums']['atlas_database_names'];
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title: string | null;
           created_at: string;
@@ -96,6 +97,7 @@ export type Database = {
         };
         Insert: {
           archived?: boolean;
+          atlas_database_name: Database['public']['Enums']['atlas_database_names'];
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           created_at?: string;
@@ -113,6 +115,7 @@ export type Database = {
         };
         Update: {
           archived?: boolean;
+          atlas_database_name?: Database['public']['Enums']['atlas_database_names'];
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           created_at?: string;
@@ -183,6 +186,18 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
+      atlas_database_names:
+        | 'Scopes'
+        | 'Articles'
+        | 'Sections & Primary Docs'
+        | 'Annotations'
+        | 'Tenets'
+        | 'Scenarios'
+        | 'Scenario Variations'
+        | 'Active Data'
+        | 'Agent Scope Database'
+        | 'Needed Research'
+        | 'Original Context Data';
       atlas_document_type_enum:
         | 'Section'
         | 'Core'
@@ -313,6 +328,19 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      atlas_database_names: [
+        'Scopes',
+        'Articles',
+        'Sections & Primary Docs',
+        'Annotations',
+        'Tenets',
+        'Scenarios',
+        'Scenario Variations',
+        'Active Data',
+        'Agent Scope Database',
+        'Needed Research',
+        'Original Context Data',
+      ],
       atlas_document_type_enum: [
         'Section',
         'Core',

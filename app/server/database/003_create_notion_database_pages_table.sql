@@ -12,12 +12,27 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Annotation'
 );
 
+-- Create the enum type for atlas_database_names
+CREATE TYPE atlas_database_names AS ENUM (
+  'Scopes',
+  'Articles',
+  'Sections & Primary Docs',
+  'Annotations',
+  'Tenets',
+  'Scenarios',
+  'Scenario Variations',
+  'Active Data',
+  'Agent Scope Database',
+  'Needed Research',
+  'Original Context Data'
+);
+
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
-  -- id UUID PRIMARY KEY, -- Internal primary ID
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
   parent_notion_page_id UUID, -- Parent page ID (null for root pages)
   atlas_document_type atlas_document_type_enum,
+  atlas_database_name atlas_database_names NOT NULL,
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,
@@ -29,7 +44,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
-  last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this page
+  last_edited_by_user_id TEXT -- ID of the Notion user who last edited this page
 
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
