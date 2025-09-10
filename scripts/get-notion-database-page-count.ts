@@ -1,10 +1,6 @@
-import { loadEnvConfig } from '@next/env';
 import { parseArgs } from 'node:util';
 import { getDatabasePageCount } from '@/app/server/services/notion/get-database-page-count';
-
-const isDevelopment = process.env.NODE_ENV !== 'production';
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-console.log(`isDevelopment: ${isDevelopment}`);
+import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
 async function main() {
@@ -56,9 +52,7 @@ Arguments:
   }
 
   // Load environment variables
-  const projectDir = process.cwd();
-  console.log(`Loading environment variables from ${projectDir}/.env`);
-  loadEnvConfig(projectDir, isDevelopment, { info: () => {}, error: console.error });
+  loadEnv();
 
   try {
     const pageCount = await getDatabasePageCount(notionDatabaseId);
