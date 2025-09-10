@@ -12,9 +12,9 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   // If editPageId doesn't have hyphens, call uuidToHyphens on it
   const formattedEditPageId = editPageId.includes('-') ? editPageId : uuidToHyphens(editPageId);
 
-  const originalNotionPageId = await getOriginalNotionPageIdForEditPage(formattedEditPageId);
+  const originalNotionDatabaseId = await getOriginalNotionPageIdForEditPage(formattedEditPageId);
   const result = await calculateNotionPageHierarchyChanges({
-    originalRootNotionPageId: originalNotionPageId,
+    originalRootNotionPageId: originalNotionDatabaseId,
     duplicatedRootNotionPageId: formattedEditPageId,
   });
 
