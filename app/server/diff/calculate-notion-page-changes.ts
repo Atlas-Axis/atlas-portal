@@ -233,15 +233,11 @@ export async function calculateNotionPageHierarchyChanges({
     duplicateContentMap,
   };
 
-  const proposalMarkdown = convertTreeChangesToAtlasProposal(
-    changes,
-    context,
-    {
+  const proposalMarkdown = convertTreeChangesToAtlasProposal(changes, context, {
       includeSubtree: true,
       maxSubtreeDepth: undefined, // No depth limit per requirements
       groupingStrategy: 'none',
-    },
-  );
+  });
 
   console.log('='.repeat(80));
   console.log('📋 ATLAS EDIT PROPOSAL');
@@ -268,7 +264,7 @@ function createDummyRootNode(rootId: string): TreeNode {
   return {
     id: `__DUMMY_ROOT__${rootId}`,
     parentId: null,
-    blockType: 'dummy_root',
+    type: 'dummy_root',
     sortOrder: 0,
     rootNotionPageId: rootId,
     canonicalDocumentTitle: '',

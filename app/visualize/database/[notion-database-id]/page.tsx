@@ -28,7 +28,7 @@ function withRootNode(treeNodes: TreeNode[]) {
   const rootNode: TreeNode = {
     id: 'root',
     parentId: null,
-    blockType: 'root',
+    type: 'root',
     sortOrder: 0,
     rootNotionPageId: treeNodes[0].rootNotionPageId,
     canonicalDocumentTitle: '',

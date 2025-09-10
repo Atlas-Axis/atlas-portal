@@ -6,7 +6,7 @@ export type Tree = {
 export type TreeNode = {
   id: string;
   parentId: string | null;
-  blockType: string;
+  type: string;
   sortOrder: number;
   rootNotionPageId: string;
   canonicalDocumentTitle: string;

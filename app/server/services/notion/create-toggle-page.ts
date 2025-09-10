@@ -85,7 +85,7 @@ export async function createNotionPageWithToggleBlocks({
     const dummyRootNode: TreeNode = {
       id: dummyRootId,
       parentId: null,
-      blockType: 'dummy_root',
+      type: 'dummy_root',
       sortOrder: 0,
       rootNotionPageId: originalNotionDatabaseId,
       canonicalDocumentTitle: '',

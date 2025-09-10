@@ -27,7 +27,7 @@ export function rewriteTreeNodeIds(tree: Tree, idMapping: Map<string, string>): 
     const newNode: TreeNode = {
       id: newId || node.id, // Use mapped ID or keep original if no mapping exists
       parentId: newParentId,
-      blockType: node.blockType,
+      type: node.type,
       sortOrder: node.sortOrder,
       rootNotionPageId: node.rootNotionPageId,
       canonicalDocumentTitle: node.canonicalDocumentTitle,

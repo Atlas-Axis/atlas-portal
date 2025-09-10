@@ -14,7 +14,7 @@ export function createComprehensiveTest(): string {
   const parentNode: TreeNode = {
     id: 'parent-1',
     parentId: null,
-    blockType: 'page',
+    type: 'page',
     sortOrder: 0,
     rootNotionPageId: 'root-1',
     canonicalDocumentTitle: 'A.1.9.2.2.10 - Bounded External Access Modules',
@@ -24,7 +24,7 @@ export function createComprehensiveTest(): string {
   const siblingNode: TreeNode = {
     id: 'sibling-1',
     parentId: 'parent-1',
-    blockType: 'paragraph',
+    type: 'paragraph',
     sortOrder: 1,
     rootNotionPageId: 'root-1',
     canonicalDocumentTitle: 'A.1.9.2.2.10.2 - Stability Parameter Bounded External Access Module Exception',
@@ -34,7 +34,7 @@ export function createComprehensiveTest(): string {
   const newParentNode: TreeNode = {
     id: 'new-parent-1',
     parentId: null,
-    blockType: 'page',
+    type: 'page',
     sortOrder: 0,
     rootNotionPageId: 'root-1',
     canonicalDocumentTitle: 'A.3.3.2.1.2.2 - Smart Contract Risk Rating Calculation',
@@ -49,7 +49,7 @@ export function createComprehensiveTest(): string {
       node: {
         id: 'added-1',
         parentId: 'parent-1',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 2,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.1.9.2.2.10.3 - stUSDS Bounded External Access Module Exception',
@@ -67,7 +67,7 @@ export function createComprehensiveTest(): string {
       node: {
         id: 'edited-1',
         parentId: 'parent-2',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 0,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.4.4.1.2.2 - stUSDS Rate',
@@ -87,7 +87,7 @@ export function createComprehensiveTest(): string {
       node: {
         id: 'deleted-1',
         parentId: 'parent-3',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 0,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.3.3.2.1.2.2.5.1 - Base Risk',
@@ -104,7 +104,7 @@ export function createComprehensiveTest(): string {
       node: {
         id: 'moved-1',
         parentId: 'new-parent-1',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 1,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.3.3.2.1.2.2.5.2 - Audit Factor',

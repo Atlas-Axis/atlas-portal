@@ -59,7 +59,7 @@ export function createMockProposalExample(): string {
       node: {
         id: 'new-node-1',
         parentId: 'parent-1',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 1,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.1.9.2.2.10.3 - stUSDS Bounded External Access Module Exception',
@@ -75,7 +75,7 @@ export function createMockProposalExample(): string {
       node: {
         id: 'edited-node-1',
         parentId: 'parent-2',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 0,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.4.4.1.2.2 - stUSDS Rate',
@@ -93,7 +93,7 @@ export function createMockProposalExample(): string {
       node: {
         id: 'deleted-node-1',
         parentId: 'parent-3',
-        blockType: 'paragraph',
+        type: 'paragraph',
         sortOrder: 0,
         rootNotionPageId: 'root-1',
         canonicalDocumentTitle: 'A.3.3.2.1.2.2.5.1 - Base Risk',
@@ -111,7 +111,7 @@ export function createMockProposalExample(): string {
     originalRoot: {
       id: 'root',
       parentId: null,
-      blockType: 'page',
+      type: 'page',
       sortOrder: 0,
       rootNotionPageId: 'root',
       canonicalDocumentTitle: 'Root Document',
@@ -120,7 +120,7 @@ export function createMockProposalExample(): string {
     duplicateRoot: {
       id: 'root',
       parentId: null,
-      blockType: 'page',
+      type: 'page',
       sortOrder: 0,
       rootNotionPageId: 'root',
       canonicalDocumentTitle: 'Root Document',

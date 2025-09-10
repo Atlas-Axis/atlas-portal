@@ -25,7 +25,7 @@ export function extractSubtreeAsTree(tree: Tree, rootPageId: string): Tree {
     const nodeCopy: TreeNode = {
       id: node.id,
       parentId: node.parentId,
-      blockType: node.blockType,
+      type: node.type,
       sortOrder: node.sortOrder,
       rootNotionPageId: node.rootNotionPageId,
       canonicalDocumentTitle: node.canonicalDocumentTitle,
