@@ -2,7 +2,7 @@ import {
   SupabasePageForComparison,
   SupabaseTree,
   buildSupabaseTree,
-} from '@/app/server/services/notion/compare-database-trees';
+} from '@/app/server/services/notion/to_delete/_old.compare-database-trees';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 /**

@@ -10,10 +10,10 @@ import {
   AtlasDatabaseName,
 } from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
-import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';
 import { extractPageTitle } from '../extract-page-title';
 import { insertPagesInBatches } from '../insert-pages-in-batches';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
+import { TreeComparisonResult, compareDatabaseTrees } from './_old.compare-database-trees';
 import {
   _delete_DatabaseSubItemTree,
   _delete_fetchDatabaseTree as fetchDatabaseTreeFromNotion,
