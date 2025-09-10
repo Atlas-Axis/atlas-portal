@@ -44,14 +44,6 @@ export async function createNotionPageWithToggleBlocks({
     console.log('Step 1: Loading pages from Supabase...');
     const allPages = await loadNotionDatabasePagesFromSupabase(originalNotionDatabaseId);
 
-    // Validate that all pages are original pages (not edit copies)
-    const editPages = allPages.filter((page) => page.belongs_to_edit_page);
-    if (editPages.length > 0) {
-      throw new Error(
-        `Found ${editPages.length} edit pages in the source database. Only original pages are supported.`,
-      );
-    }
-
     // Validate that we have pages to work with
     if (allPages.length === 0) {
       throw new Error(`No pages found in database ${originalNotionDatabaseId}`);
@@ -87,7 +79,6 @@ export async function createNotionPageWithToggleBlocks({
       parentId: null,
       type: 'dummy_root',
       sortOrder: 0,
-      rootNotionPageId: originalNotionDatabaseId,
       canonicalDocumentTitle: '',
     };
 
