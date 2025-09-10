@@ -30,9 +30,6 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
 
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
-
-  -- Cascade-delete child pages when the parent page is deleted
-  CONSTRAINT fk_parent_page FOREIGN KEY (parent_notion_page_id) REFERENCES notion_database_pages(notion_page_id) ON DELETE CASCADE  
 );
 
 -- Create indexes for better query performance
