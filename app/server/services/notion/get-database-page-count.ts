@@ -8,17 +8,11 @@ export async function getDatabasePageCount(databaseId: string): Promise<number> 
   let batchNumber = 1;
 
   do {
-    // TODO: Remove this console log
-    console.log(`  🔄 Counting batch ${batchNumber} from Notion API...`);
     const response: QueryDatabaseResponse = await notion().databases.query({
       database_id: databaseId,
       page_size: 100,
       start_cursor: cursor,
     });
-
-    const batchSize = response.results.length;
-    // TODO: Remove this console log
-    console.log(`  📄 Counted ${batchSize} Notion pages in batch ${batchNumber}`);
 
     // Count only full PageObjectResponse rows (ignore partials just in case)
     for (const result of response.results) {
@@ -28,13 +22,9 @@ export async function getDatabasePageCount(databaseId: string): Promise<number> 
     }
 
     cursor = response.next_cursor ?? undefined;
-    // TODO: Remove this console log
-    console.log(`  ✅ Batch ${batchNumber} processed - Total page count so far: ${totalCount}`);
+    console.log(`  Batch ${batchNumber} processed - Total page count so far: ${totalCount}`);
 
-    if (cursor) {
-      // TODO: Remove this console log
-      console.log(`  ➡️ More Notion pages available, continuing to next batch...`);
-    } else {
+    if (!cursor) {
       console.log(`  🏁 Reached end of database - final count complete`);
     }
 
