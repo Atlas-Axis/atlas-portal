@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button, Input } from '@heroui/react';
 import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
+import { NOTION_ATLAS_SECTIONS_AND_PRIMARY_DOCS_DATABASE_ID } from '../server/services/notion/_demo-data';
 import { importNotionDatabaseAction } from './_actions/import-notion-database-action';
 import { importNotionPageAction } from './_actions/import-notion-page-action';
 
@@ -10,7 +11,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string>('');
   const [notionPageId, setNotionPageId] = useState<string>('');
-  const [notionDatabaseId, setNotionDatabaseId] = useState<string>('');
+  const [notionDatabaseId, setNotionDatabaseId] = useState<string>(NOTION_ATLAS_SECTIONS_AND_PRIMARY_DOCS_DATABASE_ID);
 
   const normalizeUuid = (uuid: string): string => {
     if (!uuid) return '';
