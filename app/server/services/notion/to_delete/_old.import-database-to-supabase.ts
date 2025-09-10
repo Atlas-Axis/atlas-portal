@@ -13,16 +13,16 @@ import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion }
  * Sync all pages from Notion database to Supabase
  */
 export async function importDatabasePagesFromNotionToSupabase({
-  notionDatabaseName,
+  atlasDatabaseName,
 }: {
-  notionDatabaseName: AtlasDatabaseName;
+  atlasDatabaseName: AtlasDatabaseName;
 }) {
   const startTime = performance.now();
   console.log(`🚀 Starting database import from Notion to Supabase`);
 
-  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[notionDatabaseName];
+  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
 
-  console.log(`📊 Database: ${notionDatabaseName}`);
+  console.log(`📊 Database: ${atlasDatabaseName}`);
 
   // Verify that the sync is not already in progress
   console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
@@ -43,8 +43,8 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Fetch all pages from the Notion database with their tree structure
     console.log(`📡 Fetching database tree from Notion API...`);
     const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId, {
-      subItemsPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[notionDatabaseName].subItem,
-      parentPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[notionDatabaseName].parent,
+      subItemsPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].subItem,
+      parentPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].parent,
     });
     console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
 

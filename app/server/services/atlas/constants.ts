@@ -42,6 +42,10 @@ export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
   [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: 'e9f9f2a29abe4d5991495a148c755b41',
 } as const;
 
+export const ATLAS_DATABASE_ID_MAP_REVERSED: Record<string, AtlasDatabaseName> = Object.fromEntries(
+  Object.entries(ATLAS_DATABASE_ID_MAP).map(([key, value]) => [value, key as AtlasDatabaseName]),
+);
+
 export type AtlasDatabaseID = (typeof ATLAS_DATABASE_ID_MAP)[AtlasDatabaseName];
 
 export const MASTER_STATUSES = {

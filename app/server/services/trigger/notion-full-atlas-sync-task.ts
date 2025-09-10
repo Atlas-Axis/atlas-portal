@@ -9,7 +9,7 @@ const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
 const flushTriggerMetadata = () => metadata.flush();
 
-export const notionDatabaseSyncTask = task({
+export const notionFullAtlasSyncTask = task({
   id: 'notion-database-sync',
   // Set an optional maxDuration to prevent tasks from running indefinitely
   maxDuration: 20 * 60, // Stop executing after 20 mins of compute
@@ -49,7 +49,7 @@ export const notionDatabaseSyncTask = task({
       // Start the sync process
       // TODO: Import other databases too
       const result = await importDatabasePagesFromNotionToSupabase({
-        notionDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+        atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
       });
 
       // Log final Notion API call stats before flushing metadata

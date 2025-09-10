@@ -1,7 +1,12 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NotionDatabasePage } from '../../database/notion-database-page';
+import { AtlasDatabaseName } from '../atlas/constants';
 
-export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabaseId: string) {
+export async function loadNotionDatabasePagesFromSupabase({
+  atlasDatabaseName,
+}: {
+  atlasDatabaseName: AtlasDatabaseName;
+}): Promise<NotionDatabasePage[]> {
   const allPages: NotionDatabasePage[] = [];
   let page = 0;
   const pageSize = 1000;
@@ -11,8 +16,9 @@ export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabaseId: 
     const { data, error } = await supabase()
       .from('notion_database_pages')
       .select('*')
-      .eq('root_notion_database_id', rootNotionDatabaseId)
       .eq('archived', false)
+      .eq('in_trash', false)
+      .eq('atlas_database_name', atlasDatabaseName)
       .order('canonical_document_title, sort_order')
       // .order('sort_order') // Sort by sort_order
       .range(page * pageSize, (page + 1) * pageSize - 1);

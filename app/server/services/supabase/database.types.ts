@@ -79,8 +79,8 @@ export type Database = {
       notion_database_pages: {
         Row: {
           archived: boolean;
-          atlas_database_name: Database['public']['Enums']['atlas_database_names'];
-          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title: string | null;
           created_at: string;
           has_children: boolean;
@@ -97,8 +97,8 @@ export type Database = {
         };
         Insert: {
           archived?: boolean;
-          atlas_database_name: Database['public']['Enums']['atlas_database_names'];
-          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           created_at?: string;
           has_children?: boolean;
@@ -115,8 +115,8 @@ export type Database = {
         };
         Update: {
           archived?: boolean;
-          atlas_database_name?: Database['public']['Enums']['atlas_database_names'];
-          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           created_at?: string;
           has_children?: boolean;
@@ -186,7 +186,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      atlas_database_names:
+      atlas_database_name_enum:
         | 'Scopes'
         | 'Articles'
         | 'Sections & Primary Docs'
@@ -328,7 +328,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      atlas_database_names: [
+      atlas_database_name_enum: [
         'Scopes',
         'Articles',
         'Sections & Primary Docs',

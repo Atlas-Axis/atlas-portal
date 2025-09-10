@@ -8,6 +8,7 @@ export interface NotionDatabasePage {
 
   // Notion page metadata
   atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
+  atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
   has_children: boolean;
   archived: boolean;
   in_trash: boolean;

@@ -12,8 +12,8 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Annotation'
 );
 
--- Create the enum type for atlas_database_names
-CREATE TYPE atlas_database_names AS ENUM (
+-- Create the enum type for atlas_database_name_enum
+CREATE TYPE atlas_database_name_enum AS ENUM (
   'Scopes',
   'Articles',
   'Sections & Primary Docs',
@@ -31,8 +31,8 @@ CREATE TYPE atlas_database_names AS ENUM (
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
   parent_notion_page_id UUID, -- Parent page ID (null for root pages)
-  atlas_document_type atlas_document_type_enum,
-  atlas_database_name atlas_database_names NOT NULL,
+  atlas_document_type atlas_document_type_enum NOT NULL,
+  atlas_database_name atlas_database_name_enum NOT NULL,
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,

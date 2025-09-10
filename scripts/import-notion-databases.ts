@@ -45,7 +45,8 @@ Options:
 
   try {
     await importDatabasePagesFromNotionToSupabase({
-      notionDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+      // TODO: Import other databases too
+      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
     });
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
