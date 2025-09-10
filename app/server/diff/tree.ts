@@ -8,7 +8,6 @@ export type TreeNode = {
   parentId: string | null;
   type: string;
   sortOrder: number;
-  rootNotionPageId: string;
   canonicalDocumentTitle: string;
   // Tree structure
   children?: TreeNode[];

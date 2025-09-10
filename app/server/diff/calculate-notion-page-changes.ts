@@ -234,9 +234,9 @@ export async function calculateNotionPageHierarchyChanges({
   };
 
   const proposalMarkdown = convertTreeChangesToAtlasProposal(changes, context, {
-      includeSubtree: true,
-      maxSubtreeDepth: undefined, // No depth limit per requirements
-      groupingStrategy: 'none',
+    includeSubtree: true,
+    maxSubtreeDepth: undefined, // No depth limit per requirements
+    groupingStrategy: 'none',
   });
 
   console.log('='.repeat(80));
@@ -266,7 +266,6 @@ function createDummyRootNode(rootId: string): TreeNode {
     parentId: null,
     type: 'dummy_root',
     sortOrder: 0,
-    rootNotionPageId: rootId,
     canonicalDocumentTitle: '',
   };
 }

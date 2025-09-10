@@ -29,7 +29,6 @@ export function rewriteTreeNodeIds(tree: Tree, idMapping: Map<string, string>): 
       parentId: newParentId,
       type: node.type,
       sortOrder: node.sortOrder,
-      rootNotionPageId: node.rootNotionPageId,
       canonicalDocumentTitle: node.canonicalDocumentTitle,
       // children will be set by buildTree
     };

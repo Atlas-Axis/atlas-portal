@@ -79,6 +79,7 @@ export type Database = {
       notion_database_pages: {
         Row: {
           archived: boolean;
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title: string | null;
           created_at: string;
           has_children: boolean;
@@ -87,16 +88,15 @@ export type Database = {
           json_name: Json | null;
           last_edited_by_user_id: string | null;
           notion_page_id: string;
-          page_type: string;
           parent_notion_page_id: string | null;
           plain_text_content: string | null;
           plain_text_name: string | null;
-          root_notion_database_id: string;
           sort_order: number;
           updated_at: string;
         };
         Insert: {
           archived?: boolean;
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           created_at?: string;
           has_children?: boolean;
@@ -105,16 +105,15 @@ export type Database = {
           json_name?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_page_id: string;
-          page_type: string;
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          root_notion_database_id: string;
           sort_order: number;
           updated_at?: string;
         };
         Update: {
           archived?: boolean;
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           created_at?: string;
           has_children?: boolean;
@@ -123,11 +122,9 @@ export type Database = {
           json_name?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_page_id?: string;
-          page_type?: string;
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          root_notion_database_id?: string;
           sort_order?: number;
           updated_at?: string;
         };
@@ -194,7 +191,14 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      atlas_document_type_enum:
+        | 'Section'
+        | 'Core'
+        | 'Type Specification'
+        | 'Active Data Controller'
+        | 'Spell SP Controller'
+        | 'Placeholder'
+        | 'Category';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -313,6 +317,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      atlas_document_type_enum: [
+        'Section',
+        'Core',
+        'Type Specification',
+        'Active Data Controller',
+        'Spell SP Controller',
+        'Placeholder',
+        'Category',
+      ],
+    },
   },
 } as const;
