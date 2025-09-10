@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   json_content JSONB, -- Rich Text content from Notion API
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
+  relationships JSONB, -- Stores relationships to other pages/blocks
   sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated

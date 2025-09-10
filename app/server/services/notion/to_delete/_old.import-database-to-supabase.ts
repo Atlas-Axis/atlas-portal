@@ -1,5 +1,5 @@
 import type { PageObjectResponse } from '@notionhq/client';
-import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { NotionDatabasePage, Relationships } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { _delete_loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
@@ -10,8 +10,8 @@ import {
   AtlasDatabaseName,
 } from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
+import { insertPagesInBatches } from '../../supabase/insert-pages-in-batches';
 import { extractPageTitle } from '../extract-page-title';
-import { insertPagesInBatches } from '../insert-pages-in-batches';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
 import { TreeComparisonResult, compareDatabaseTrees } from './_old.compare-database-trees';
 import {
@@ -233,6 +233,7 @@ function convertTreeToPageRecords(
       json_name: pageTitle.richText,
       plain_text_content: content.plainText,
       json_content: content.richText,
+      relationships: {} as Relationships, // Placeholder - populate with actual relationships if needed
       atlas_document_type: 'Core', // All pages in a database are database pages // TODO: verify
       atlas_database_name: ATLAS_DATABASE_ID_MAP_REVERSED[notionDatabaseId],
       has_children: subPageIds.length > 0,

@@ -195,7 +195,7 @@ function readRelatedPagesInline(
 }
 
 /**
- * Paginate a relation property fully via pages.properties.retrieve.
+ * Paginate a relation property fully via pages.properties.retrieve for relationships with more than 25 items.
  */
 async function fetchAllRelationIds(pageId: string, relationPropertyId: string): Promise<string[]> {
   const relationIds: string[] = [];
