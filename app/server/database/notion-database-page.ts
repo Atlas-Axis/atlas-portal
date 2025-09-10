@@ -29,9 +29,4 @@ export interface NotionDatabasePage {
   // Timestamps
   created_at: string; // When this database row was created
   updated_at: string; // When this database row was last updated
-
-  // Edit Page related fields
-  belongs_to_edit_page: boolean; // Indicates if the page belongs to an Edit Page
-  edit_page_original_notion_page_id?: string | null; // ID of the original Notion page that this editable copy has been duplicated from
-  edit_page_original_notion_database_id?: string | null; // ID of the original root Notion database that this editable copy has been duplicated from
 }

@@ -150,10 +150,10 @@ Embeddable as iframes within Notion pages:
 
 ### Edit Page Workflow
 
-1. Original blocks/pages have `belongs_to_edit_page = false`
-2. Edit page blocks/pages have `belongs_to_edit_page = true`
+1. Original blocks have `belongs_to_edit_page = false`
+2. Edit page blocks have `belongs_to_edit_page = true`
 3. Edit blocks reference original via `edit_page_original_notion_block_id`
-4. Edit pages reference original top level (root) page/database via `edit_page_original_notion_page_id`/`edit_page_original_notion_database_id`
+4. Edit pages reference original top level (root) page via `edit_page_original_notion_page_id`
 5. Enables efficient querying and comparison using tree comparison algorithms and tree shaking
 
 ### Sync Locking

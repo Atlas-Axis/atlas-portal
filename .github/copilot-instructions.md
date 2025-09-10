@@ -101,12 +101,6 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 - `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at`, `updated_at`, `last_edited_by_user_id` - Same as in notion_blocks table
 
-**Edit Page Fields:**
-
-- `belongs_to_edit_page` (BOOLEAN, DEFAULT TRUE)
-- `edit_page_original_notion_page_id` (UUID) - Original page being edited
-- `edit_page_original_root_notion_database_id` (UUID) - Original root database ID (Edit Pages belong to a duplicated database which is only a subset of the original)
-
 **Cascade deletes:**
 
 - Foreign key: parent_notion_page_id CASCADE DELETE
@@ -176,9 +170,9 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 
 ## Edit Page Workflow
 
-1. Original blocks/pages have `belongs_to_edit_page = false`
-2. Edit page blocks/pages have `belongs_to_edit_page = true`
-3. Edit blocks reference original via `edit_page_original_notion_block_id`/`edit_page_original_notion_database_id`
+1. Original blocks have `belongs_to_edit_page = false`
+2. Edit page blocks have `belongs_to_edit_page = true`
+3. Edit blocks reference original via `edit_page_original_notion_block_id`
 4. Enables efficient querying and comparison
 
 ## Sync Locking

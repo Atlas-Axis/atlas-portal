@@ -9,40 +9,21 @@ export default async function Page() {
     .select('notion_block_id, plain_text_content')
     .is('parent_notion_block_id', null);
 
-  // Load original root Notion databases from Supabase
-  const { data: originalRootDatabasePages, error: rootDatabasesError } = await supabase
+  // Load root Notion databases from Supabase
+  const { data: databasePages, error: databaseError } = await supabase
     .from('notion_database_pages')
     .select('root_notion_database_id')
-    .is('parent_notion_page_id', null)
-    .eq('belongs_to_edit_page', false);
-  const databaseIds = [...new Set((originalRootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
-
-  // Load duplicated root Notion databases from Supabase
-  const { data: duplicatedRootDatabasePages, error: duplicatedRootDatabasesError } = await supabase
-    .from('notion_database_pages')
-    .select('root_notion_database_id')
-    .is('parent_notion_page_id', null)
-    .eq('belongs_to_edit_page', true);
-  const duplicatedDatabaseIds = [...new Set((duplicatedRootDatabasePages ?? []).map((r) => r.root_notion_database_id))];
+    .is('parent_notion_page_id', null);
+  const databaseIds = [...new Set((databasePages ?? []).map((r) => r.root_notion_database_id))];
 
   if (rootBlocksError) {
     return (
       <p className="text-red-500">Failed to load Notion pages: {rootBlocksError.message || String(rootBlocksError)}</p>
     );
   }
-  if (rootDatabasesError) {
+  if (databaseError) {
     return (
-      <p className="text-red-500">
-        Failed to load Notion databases: {rootDatabasesError.message || String(rootDatabasesError)}
-      </p>
-    );
-  }
-
-  if (duplicatedRootDatabasesError) {
-    return (
-      <p className="text-red-500">
-        Failed to load Notion databases: {duplicatedRootDatabasesError.message || String(duplicatedRootDatabasesError)}
-      </p>
+      <p className="text-red-500">Failed to load Notion databases: {databaseError.message || String(databaseError)}</p>
     );
   }
 
@@ -65,14 +46,6 @@ export default async function Page() {
     </li>
   ));
 
-  const duplicatedDatabaseLinks = duplicatedDatabaseIds.map((db) => (
-    <li key={db}>
-      <Link href={`/visualize/database/${db}`} className="font-semibold text-indigo-500 hover:underline">
-        👉 {db}
-      </Link>
-    </li>
-  ));
-
   return (
     <div className="p-6">
       <h2 className="mb-4 text-lg font-semibold">Notion Pages in Supabase</h2>
@@ -84,13 +57,6 @@ export default async function Page() {
 
       <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Original)</h2>
       <ul>{rootDatabasePageLinks}</ul>
-
-      <Spacer y={9} />
-      <Divider />
-      <Spacer y={9} />
-
-      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Duplicated)</h2>
-      <ul>{duplicatedDatabaseLinks}</ul>
     </div>
   );
 }

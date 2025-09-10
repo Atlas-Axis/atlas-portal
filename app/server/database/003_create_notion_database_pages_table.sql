@@ -21,10 +21,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
 
-  -- Edit Page related fields
-  belongs_to_edit_page BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the page belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
-  edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
-  edit_page_original_notion_database_id UUID, -- ID of the original root Notion database that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
+
 
   -- Cascade-delete child pages when the parent page is deleted
   CONSTRAINT fk_parent_page FOREIGN KEY (parent_notion_page_id) REFERENCES notion_database_pages(notion_page_id) ON DELETE CASCADE  
@@ -37,7 +34,7 @@ CREATE INDEX IF NOT EXISTS idx_notion_database_pages_root_notion_page_id ON noti
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_page_type ON notion_database_pages(page_type); -- Index for page type
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_sort_order ON notion_database_pages(parent_notion_page_id, sort_order); -- Index for sort order within parent
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_temporal ON notion_database_pages(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid pages at a specific time)
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_belongs_to_edit_page ON notion_database_pages(belongs_to_edit_page);
+
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_page_edit_temporal ON notion_database_pages(root_notion_database_id, belongs_to_edit_page, date_valid_from, date_valid_to);
 
 -- Index for document-level queries
@@ -74,12 +71,7 @@ ALTER TABLE notion_database_pages ADD CONSTRAINT check_sort_order_positive
 CHECK (sort_order >= 0);
 
 -- Ensure edit page fields are consistent with belongs_to_edit_page flag
-ALTER TABLE notion_database_pages ADD CONSTRAINT check_edit_page_fields_consistency
-CHECK (
-  (belongs_to_edit_page = true AND edit_page_original_notion_database_id IS NOT NULL)
-  OR
-  (belongs_to_edit_page = false AND edit_page_original_notion_page_id IS NULL AND edit_page_original_notion_database_id IS NULL)
-);
+
 
 -- Enable Row Level Security
 ALTER TABLE notion_database_pages ENABLE ROW LEVEL SECURITY;

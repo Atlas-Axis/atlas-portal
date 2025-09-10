@@ -250,9 +250,6 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
       canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
-      belongs_to_edit_page: false,
-      edit_page_original_notion_page_id: null,
-      edit_page_original_notion_database_id: null,
     };
 
     pages.push(page);
