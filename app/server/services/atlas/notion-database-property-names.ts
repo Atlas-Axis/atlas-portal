@@ -15,34 +15,48 @@ export const SUB_ITEM_PROPERTY_NAME = 'Sub-item';
  * - Name: "Scope Improvement"
  * - Formal Doc ID: "A.3.1.1"
  */
-export const NOTION_DATABASE_PROPERTY_NAMES: Record<AtlasDatabaseName, Record<string, string>> = {
-  [ATLAS_DATABASES.SCOPES]: {},
-  [ATLAS_DATABASES.ARTICLES]: {},
+export const NOTION_DATABASE_PROPERTY_NAMES: Record<
+  AtlasDatabaseName,
+  {
+    properties: Record<string, string>;
+    relationships: Record<string, AtlasDatabaseName>;
+  }
+> = {
+  [ATLAS_DATABASES.SCOPES]: {
+    properties: {},
+    relationships: {},
+  },
+  [ATLAS_DATABASES.ARTICLES]: { properties: {}, relationships: {} },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
-    name: 'Name',
-    content: 'Content',
-    docNo: 'Doc No (or Temp Name)',
-    createEditPage: 'Create Edit Page',
-    subItem: 'Sub-item', // Subdocs ?
-    parent: 'Parent item',
-    sortOrder: 'No.',
-    type: 'Type', // Section, Core, Type Specification, Active Data Controller, Category, Placeholder, Spell SP Controller
-
-    // Atlas Relationships
-    // activeData: 'Active Data' // Relation
-    // annotations: 'Annotations' // Relation
+    properties: {
+      name: 'Name',
+      content: 'Content',
+      docNo: 'Doc No (or Temp Name)',
+      createEditPage: 'Create Edit Page',
+      subItem: 'Sub-item', // Subdocs ?
+      parent: 'Parent item',
+      sortOrder: 'No.',
+      type: 'Type', // Section, Core, Type Specification, Active Data Controller, Category, Placeholder, Spell SP Controller
+    },
+    relationships: {
+      // activeData: 'Active Data' // Relation
+      // annotations: 'Annotations' // Relation
+    },
   },
-  [ATLAS_DATABASES.ANNOTATIONS]: {},
-  [ATLAS_DATABASES.TENETS]: {},
-  [ATLAS_DATABASES.SCENARIOS]: {},
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {},
-  [ATLAS_DATABASES.ACTIVE_DATA]: {},
+  [ATLAS_DATABASES.ANNOTATIONS]: { properties: {}, relationships: {} },
+  [ATLAS_DATABASES.TENETS]: { properties: {}, relationships: {} },
+  [ATLAS_DATABASES.SCENARIOS]: { properties: {}, relationships: {} },
+  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: { properties: {}, relationships: {} },
+  [ATLAS_DATABASES.ACTIVE_DATA]: { properties: {}, relationships: {} },
   [ATLAS_DATABASES.AGENTS]: {
-    name: 'Document Name',
-    content: 'Content',
-    docNo: 'Formal Doc ID',
-    createEditPage: 'Create Edit Page',
+    properties: {
+      name: 'Document Name',
+      content: 'Content',
+      docNo: 'Formal Doc ID',
+      createEditPage: 'Create Edit Page',
+    },
+    relationships: {},
   },
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: {},
-  [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: {},
+  [ATLAS_DATABASES.NEEDED_RESEARCH]: { properties: {}, relationships: {} },
+  [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: { properties: {}, relationships: {} },
 } as const;
