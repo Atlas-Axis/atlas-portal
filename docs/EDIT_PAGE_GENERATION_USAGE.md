@@ -78,7 +78,6 @@ import { createNotionPageWithToggleBlocks } from '@/app/server/services/notion/c
 const result = await createNotionPageWithToggleBlocks({
   originalNotionDatabaseId: 'your-database-id',
   rootNotionPageId: 'your-root-page-id',
-  taskRunId: 'unique-task-id',
   parent: {
     type: 'page_id',
     page_id: 'parent-page-id',

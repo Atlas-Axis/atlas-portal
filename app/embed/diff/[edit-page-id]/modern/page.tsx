@@ -1,5 +1,5 @@
 import { ChangeList } from '@/app/embed/diff/change-list';
-import { calculateNotionPageHierarchyChanges } from '@/app/server/diff/calculate-notion-page-changes';
+import { calculateNotionPageHierarchyChanges } from '@/app/server/diff/to_delete/_old.calculate-notion-page-changes';
 import { getOriginalNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 
