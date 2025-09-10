@@ -1,10 +1,20 @@
+-- Create the enum type for atlas_document_type
+CREATE TYPE atlas_document_type_enum AS ENUM (
+  'Section',
+  'Core',
+  'Type Specification',
+  'Active Data Controller',
+  'Spell SP Controller',
+  'Placeholder',
+  'Category'
+);
+
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- id UUID PRIMARY KEY, -- Internal primary ID
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
   parent_notion_page_id UUID, -- Parent page ID (null for root pages)
-  root_notion_database_id UUID NOT NULL, -- The Notion page id this page belongs to, or the root/top-most page id of a subtree of pages
-  page_type TEXT NOT NULL, -- Page type (paragraph, heading_1, etc.)
+  atlas_document_type atlas_document_type_enum,
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,
@@ -21,8 +31,6 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
 
-
-
   -- Cascade-delete child pages when the parent page is deleted
   CONSTRAINT fk_parent_page FOREIGN KEY (parent_notion_page_id) REFERENCES notion_database_pages(notion_page_id) ON DELETE CASCADE  
 );
@@ -30,12 +38,9 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_notion_page_id ON notion_database_pages(notion_page_id); -- Index for Notion page ID
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_parent_notion_page_id ON notion_database_pages(parent_notion_page_id); -- Index for parent page ID
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_root_notion_page_id ON notion_database_pages(root_notion_database_id);
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_page_type ON notion_database_pages(page_type); -- Index for page type
+CREATE INDEX IF NOT EXISTS idx_notion_database_pages_atlas_document_type ON notion_database_pages(atlas_document_type); -- Index for atlas_document_type
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_sort_order ON notion_database_pages(parent_notion_page_id, sort_order); -- Index for sort order within parent
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_temporal ON notion_database_pages(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid pages at a specific time)
-
--- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_page_edit_temporal ON notion_database_pages(root_notion_database_id, belongs_to_edit_page, date_valid_from, date_valid_to);
 
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_canonical_title 
@@ -69,8 +74,6 @@ CREATE TRIGGER set_updated_at_pages
 -- Ensure sort_order is non-negative
 ALTER TABLE notion_database_pages ADD CONSTRAINT check_sort_order_positive
 CHECK (sort_order >= 0);
-
--- Ensure edit page fields are consistent with belongs_to_edit_page flag
 
 
 -- Enable Row Level Security

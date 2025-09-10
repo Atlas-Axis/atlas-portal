@@ -84,8 +84,7 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
 - `parent_notion_page_id` (UUID) - Parent page ID, NULL for root database pages
-- `root_notion_database_id` (UUID, NOT NULL) - The root database this page belongs to
-- `page_type` (TEXT, NOT NULL) - Page type - we may delete this in the future
+- `atlas_document_type` (ENUM, NULLABLE) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
 - `archived` (BOOLEAN) - Notion archive status
 - `in_trash` (BOOLEAN) - Notion trash status

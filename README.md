@@ -75,8 +75,7 @@ Stores Notion database pages and their hierarchical relationships.
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
 - `parent_notion_page_id` (UUID) - Parent page ID, NULL for root database pages
-- `root_notion_database_id` (UUID, NOT NULL) - The root database this page belongs to
-- `page_type` (TEXT, NOT NULL) - Page type
+- `atlas_document_type` (ENUM, NULLABLE) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
 - `plain_text_content` (TEXT) - Page content as plain text
 - `json_content` (JSONB) - Rich content from Notion API
