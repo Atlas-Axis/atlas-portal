@@ -3,7 +3,7 @@ import { notion } from '@/app/server/services/notion/notion-client';
 import { isValidUUID } from '@/app/shared/utils/utils';
 import { ATLAS_DATABASES } from '../atlas/constants';
 import { releaseSyncLock, verifySyncLock } from '../notion/sync-lock';
-import { importDatabasePagesFromNotionToSupabase } from '../notion/to_delete/_old.import-database-to-supabase';
+import { _delete_importDatabasePagesFromNotionToSupabase } from '../notion/to_delete/_old.import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -48,7 +48,7 @@ export const notionFullAtlasSyncTask = task({
     try {
       // Start the sync process
       // TODO: Import other databases too
-      const result = await importDatabasePagesFromNotionToSupabase({
+      const result = await _delete_importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
       });
 

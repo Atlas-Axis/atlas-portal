@@ -1,6 +1,6 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
-export async function getNotionDatabaseIdFromNotionPage(notionPageId: string): Promise<string | null> {
+export async function _delete_getNotionDatabaseIdFromNotionPage(notionPageId: string): Promise<string | null> {
   const { data, error } = await supabase()
     .from('notion_database_pages')
     .select('root_notion_database_id')
@@ -12,5 +12,7 @@ export async function getNotionDatabaseIdFromNotionPage(notionPageId: string): P
     throw new Error(`Failed to get database ID for page ${notionPageId}: ${error.message}`, { cause: error });
   }
 
-  return data?.root_notion_database_id || null;
+  return null;
+
+  // return data?.root_notion_database_id || null;
 }

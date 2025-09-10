@@ -2,8 +2,8 @@
 
 import { NOTION_EDIT_PAGES_CONTAINING_DATABASE_ID } from '@/app/server/services/notion/_demo-data';
 // import type { CreatePageParameters } from '@notionhq/client';
-import { createNotionPageWithToggleBlocks } from '@/app/server/services/notion/to_delete/_old.create-toggle-page';
-import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/to_delete/_old.get-notion-database-id-from-notion-page';
+import { _delete_createNotionPageWithToggleBlocks } from '@/app/server/services/notion/to_delete/_old.create-toggle-page';
+import { _delete_getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/to_delete/_old.get-notion-database-id-from-notion-page';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 export interface CreateEditPageResult {
@@ -35,7 +35,7 @@ export async function createEditPageAction(rootNotionPageId: string): Promise<Cr
     const startTime = performance.now();
 
     // Fetch the database ID for the given page ID
-    const notionDatabaseId = await getNotionDatabaseIdFromNotionPage(rootNotionPageId);
+    const notionDatabaseId = await _delete_getNotionDatabaseIdFromNotionPage(rootNotionPageId);
     if (!notionDatabaseId) {
       return {
         success: false,
@@ -44,7 +44,7 @@ export async function createEditPageAction(rootNotionPageId: string): Promise<Cr
     }
 
     // Call the main function
-    const result = await createNotionPageWithToggleBlocks({
+    const result = await _delete_createNotionPageWithToggleBlocks({
       originalNotionDatabaseId: notionDatabaseId,
       rootNotionPageId,
       parent: {

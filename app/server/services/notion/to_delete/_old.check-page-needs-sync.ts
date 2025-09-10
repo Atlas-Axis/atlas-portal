@@ -4,7 +4,7 @@ import type { PageObjectResponse } from '@notionhq/client';
  * Check if a Notion page needs to be synced based on its last_edited_time
  * compared to the existing page's updated_at timestamp in Supabase
  */
-export function checkPageNeedsSync(notionPage: PageObjectResponse, existingUpdatedAt: string | null): boolean {
+export function _delete_checkPageNeedsSync(notionPage: PageObjectResponse, existingUpdatedAt: string | null): boolean {
   // If no existing record, page needs to be synced
   if (!existingUpdatedAt) {
     return true;
@@ -31,6 +31,6 @@ export function filterPagesNeedingSync(
 ): PageObjectResponse[] {
   return notionPages.filter((page) => {
     const existingPage = existingPagesFromSupabaseByNotionId.get(page.id);
-    return checkPageNeedsSync(page, existingPage?.updated_at || null);
+    return _delete_checkPageNeedsSync(page, existingPage?.updated_at || null);
   });
 }

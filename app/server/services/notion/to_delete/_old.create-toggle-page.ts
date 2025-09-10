@@ -7,9 +7,10 @@ import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '../../atlas/constants';
 import { fetchBlocksRecursively } from '../fetch-blocks-recursively';
 import { verifySyncLock } from '../sync-lock';
-import { TextRichTextItemRequest } from './_old.types';
+import { _delete_TextRichTextItemRequest } from './_old.types';
 
 export interface CreateEditPageResult {
   newNotionPageId: string;
@@ -21,7 +22,7 @@ export interface CreateEditPageResult {
  * based on data stored in Supabase. Each database page becomes a toggle block with its
  * content and children nested within.
  */
-export async function createNotionPageWithToggleBlocks({
+export async function _delete_createNotionPageWithToggleBlocks({
   originalNotionDatabaseId,
   rootNotionPageId,
   parent,
@@ -36,10 +37,15 @@ export async function createNotionPageWithToggleBlocks({
 
   let newPageId: string | null = null;
 
+  const atlasDatabaseName = ATLAS_DATABASE_ID_MAP[originalNotionDatabaseId as AtlasDatabaseName];
+  if (!atlasDatabaseName) throw new Error(`Unknown database ID: ${originalNotionDatabaseId}`);
+
   try {
     // Step 1: Load and validate data from Supabase
     console.log('Step 1: Loading pages from Supabase...');
-    const allPages = await loadNotionDatabasePagesFromSupabase(originalNotionDatabaseId);
+    const allPages = await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: atlasDatabaseName as AtlasDatabaseName,
+    });
 
     // Validate that we have pages to work with
     if (allPages.length === 0) {
@@ -475,7 +481,7 @@ async function createSingleToggleBlock(parentId: string, databasePage: NotionDat
       children.push({
         type: 'paragraph',
         paragraph: {
-          rich_text: validRichTextItems as TextRichTextItemRequest[],
+          rich_text: validRichTextItems as _delete_TextRichTextItemRequest[],
         },
       });
     } else {

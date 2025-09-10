@@ -1,6 +1,6 @@
 import { parseArgs } from 'node:util';
 import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
-import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/to_delete/_old.import-database-to-supabase';
+import { _delete_importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/to_delete/_old.import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
@@ -44,7 +44,7 @@ Options:
   console.log(`Starting Notion database import...`);
 
   try {
-    await importDatabasePagesFromNotionToSupabase({
+    await _delete_importDatabasePagesFromNotionToSupabase({
       // TODO: Import other databases too
       atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
     });

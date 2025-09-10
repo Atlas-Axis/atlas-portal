@@ -1,5 +1,5 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { DatabaseSubItemTree } from './to_delete/_old.fetch-database-sub-items';
+import { _delete_DatabaseSubItemTree } from './to_delete/_old.fetch-database-sub-items';
 
 // Lightweight interface for tree comparison - only includes fields needed for comparison
 export interface SupabasePageForComparison {
@@ -26,7 +26,7 @@ export interface SupabaseTree {
  * Compare Notion tree with Supabase tree to determine what changes need to be made
  */
 export function compareDatabaseTrees(
-  notionTree: DatabaseSubItemTree,
+  notionTree: _delete_DatabaseSubItemTree,
   supabaseTree: SupabaseTree,
   notionPages: NotionDatabasePage[],
 ): TreeComparisonResult {
@@ -82,7 +82,7 @@ export function compareDatabaseTrees(
 function pageNeedsUpdate(
   notionPage: NotionDatabasePage,
   supabasePage: SupabasePageForComparison,
-  notionTree: DatabaseSubItemTree,
+  notionTree: _delete_DatabaseSubItemTree,
   supabaseTree: SupabaseTree,
 ): boolean {
   // 1. Check if content has changed (last_edited_time vs updated_at)

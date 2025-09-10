@@ -1,28 +1,31 @@
 import type { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
 
-export interface DatabaseSubItemTreeNode {
+export interface _delete_DatabaseSubItemTreeNode {
   id: string;
   subItems: string[];
 }
 
-export interface DatabaseSubItemTree {
+export interface _delete_DatabaseSubItemTree {
   pagesById: Map<string, PageObjectResponse>;
   pageIdToSubPageIds: Map<string, string[]>;
   pageIdToParentId: Map<string, string | null>;
   roots: string[]; // pages with no parent
 }
 
-export type FetchTreeOptions = {
+export type _delete_FetchTreeOptions = {
   subItemsPropertyName: string; // name or property_id of the "Sub-items" relation
   parentPropertyName: string; // optional inverse relation ("Parent"); speeds up parent detection if present
 };
 
-export async function fetchDatabaseTree(databaseId: string, options: FetchTreeOptions): Promise<DatabaseSubItemTree> {
+export async function _delete_fetchDatabaseTree(
+  databaseId: string,
+  options: _delete_FetchTreeOptions,
+): Promise<_delete_DatabaseSubItemTree> {
   const { subItemsPropertyName, parentPropertyName } = options;
 
   // 1) Pull ALL pages in the database
-  const allPages = await fetchAllDatabasePages(databaseId);
+  const allPages = await _delete_fetchAllDatabasePages(databaseId);
 
   console.log(`Fetched ${allPages.length} pages from database ${databaseId}`);
   // console.log({ allPages: allPages.map((page) => ({ ...page, properties: JSON.stringify(page.properties) })) });
@@ -121,7 +124,7 @@ export async function fetchDatabaseTree(databaseId: string, options: FetchTreeOp
   return { pagesById, pageIdToSubPageIds, pageIdToParentId, roots };
 }
 
-async function fetchAllDatabasePages(databaseId: string): Promise<PageObjectResponse[]> {
+async function _delete_fetchAllDatabasePages(databaseId: string): Promise<PageObjectResponse[]> {
   console.log(`📡 Starting to fetch all pages from Notion database ${databaseId}...`);
   const results: PageObjectResponse[] = [];
   let cursor: string | undefined = undefined;

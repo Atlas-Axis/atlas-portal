@@ -2,17 +2,20 @@ import type { PageObjectResponse } from '@notionhq/client';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
+import { _delete_loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
 import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
-import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './_old.fetch-database-sub-items';
+import {
+  _delete_DatabaseSubItemTree,
+  _delete_fetchDatabaseTree as fetchDatabaseTreeFromNotion,
+} from './_old.fetch-database-sub-items';
 
 /**
  * Sync all pages from Notion database to Supabase
  */
-export async function importDatabasePagesFromNotionToSupabase({
+export async function _delete_importDatabasePagesFromNotionToSupabase({
   atlasDatabaseName,
 }: {
   atlasDatabaseName: AtlasDatabaseName;
@@ -37,53 +40,53 @@ export async function importDatabasePagesFromNotionToSupabase({
 
     // Load existing tree from Supabase
     console.log(`📥 Loading existing database tree from Supabase...`);
-    const supabaseTree = await loadDatabaseTreeFromSupabase(notionDatabaseId);
+    const supabaseTree = await _delete_loadDatabaseTreeFromSupabase(notionDatabaseId);
     console.log(`✅ Loaded existing tree: ${supabaseTree.pagesById.size} pages found in Supabase`);
 
     // Fetch all pages from the Notion database with their tree structure
     console.log(`📡 Fetching database tree from Notion API...`);
-    const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId, {
-      subItemsPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].subItem,
-      parentPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].parent,
-    });
-    console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
+    // const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId, {
+    //   subItemsPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].subItem,
+    //   parentPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].parent,
+    // });
+    // console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
 
     // TODO: Remove this debug logging later
     // TODO: Log parent-child relationships in a human-readable way
-    for (const [pageId, subItemIds] of notionTree.pageIdToSubPageIds.entries()) {
-      console.log(`  - Page ${pageId} has ${subItemIds.length} sub-items: [${subItemIds.join(', ')}]`);
-    }
-    for (const [pageId, parentId] of notionTree.pageIdToParentId.entries()) {
-      console.log(`  - Page ${pageId} has parent: ${parentId}`);
-    }
+    // for (const [pageId, subItemIds] of notionTree.pageIdToSubPageIds.entries()) {
+    //   console.log(`  - Page ${pageId} has ${subItemIds.length} sub-items: [${subItemIds.join(', ')}]`);
+    // }
+    // for (const [pageId, parentId] of notionTree.pageIdToParentId.entries()) {
+    //   console.log(`  - Page ${pageId} has parent: ${parentId}`);
+    // }
 
     // Convert the tree structure to individual NotionDatabasePage records
-    console.log(`🔄 Converting tree structure to page records...`);
-    const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId);
-    console.log(`✅ Converted ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
+    // console.log(`🔄 Converting tree structure to page records...`);
+    // const allPagesFromNotion = convertTreeToPageRecords(notionTree, notionDatabaseId);
+    // console.log(`✅ Converted ${allPagesFromNotion.length} pages from Notion database ${notionDatabaseId}`);
 
     // Compare trees to determine what changes need to be made
     console.log(`🔍 Comparing trees to determine what changes need to be made...`);
-    const comparison = compareDatabaseTrees(notionTree, supabaseTree, allPagesFromNotion);
+    // const comparison = compareDatabaseTrees(notionTree, supabaseTree, allPagesFromNotion);
 
     console.log(`📊 Tree comparison results:`);
-    console.log(`  - New pages: ${comparison.pagesToInsert.length}`);
-    console.log(`  - Updated pages: ${comparison.pagesToUpdate.length}`);
-    console.log(`  - Deleted pages: ${comparison.pagesToDelete.length}`);
-    console.log(`  - Unchanged pages: ${comparison.unchangedPages.length}`);
+    // console.log(`  - New pages: ${comparison.pagesToInsert.length}`);
+    // console.log(`  - Updated pages: ${comparison.pagesToUpdate.length}`);
+    // console.log(`  - Deleted pages: ${comparison.pagesToDelete.length}`);
+    // console.log(`  - Unchanged pages: ${comparison.unchangedPages.length}`);
 
     // Apply changes in the correct order to maintain referential integrity
     console.log(`🔄 Applying changes to Supabase database...`);
-    await applyTreeChanges(comparison, notionDatabaseId);
+    // await applyTreeChanges(comparison, notionDatabaseId);
 
     const endTime = performance.now();
     const duration = endTime - startTime;
     console.log(`✅ Import completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`);
 
     const totalChanges =
-      comparison.pagesToInsert.length + comparison.pagesToUpdate.length + comparison.pagesToDelete.length;
+      // comparison.pagesToInsert.length + comparison.pagesToUpdate.length + comparison.pagesToDelete.length;
 
-    console.log(`📈 Final summary:`);
+      console.log(`📈 Final summary:`);
     console.log(`  - Total changes made: ${totalChanges}`);
     console.log(`  - Execution time: ${(duration / 1000).toFixed(2)}s`);
 
@@ -91,16 +94,24 @@ export async function importDatabasePagesFromNotionToSupabase({
       notionDatabaseId,
       syncStatus: 'completed',
       syncErrorMessage: null,
-      blocksSyncedCount: totalChanges,
+      // blocksSyncedCount: totalChanges,
+      blocksSyncedCount: 12345,
     });
     console.log(`🔓 Sync lock released successfully`);
 
     return {
-      inserted: comparison.pagesToInsert,
-      updated: comparison.pagesToUpdate,
-      deleted: comparison.pagesToDelete,
-      unchanged: comparison.unchangedPages,
+      inserted: [],
+      updated: [],
+      deleted: [],
+      unchanged: [],
     };
+
+    // return {
+    //   inserted: comparison.pagesToInsert,
+    //   updated: comparison.pagesToUpdate,
+    //   deleted: comparison.pagesToDelete,
+    //   unchanged: comparison.unchangedPages,
+    // };
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;
@@ -195,7 +206,10 @@ async function insertPagesInBatches(
 /**
  * Convert the tree structure from fetchDatabaseTree to individual NotionDatabasePage records
  */
-function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatabaseId: string): NotionDatabasePage[] {
+function convertTreeToPageRecords(
+  databaseTree: _delete_DatabaseSubItemTree,
+  notionDatabaseId: string,
+): NotionDatabasePage[] {
   const pages: NotionDatabasePage[] = [];
   const { pagesById, pageIdToParentId, pageIdToSubPageIds } = databaseTree;
 

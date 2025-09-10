@@ -1,4 +1,4 @@
-import { calculateNotionPageHierarchyChanges } from '@/app/server/diff/to_delete/_old.calculate-notion-page-changes';
+import { _delete_calculateNotionPageHierarchyChanges } from '@/app/server/diff/to_delete/_old.calculate-notion-page-changes';
 import { renderMarkdown } from '@/app/server/markdown/render';
 import { getOriginalNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: { 'edit-page-id': strin
   const formattedEditPageId = editPageId.includes('-') ? editPageId : uuidToHyphens(editPageId);
 
   const originalNotionDatabaseId = await getOriginalNotionPageIdForEditPage(formattedEditPageId);
-  const result = await calculateNotionPageHierarchyChanges({
+  const result = await _delete_calculateNotionPageHierarchyChanges({
     originalRootNotionPageId: originalNotionDatabaseId,
     duplicatedRootNotionPageId: formattedEditPageId,
   });

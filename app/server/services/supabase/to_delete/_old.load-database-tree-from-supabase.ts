@@ -9,7 +9,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
  * Load database tree structure from Supabase for comparison
  * Only loads the minimal fields needed for tree comparison to optimize performance
  */
-export async function loadDatabaseTreeFromSupabase(rootNotionDatabaseId: string): Promise<SupabaseTree> {
+export async function _delete_loadDatabaseTreeFromSupabase(rootNotionDatabaseId: string): Promise<SupabaseTree> {
   const pages: SupabasePageForComparison[] = [];
   let page = 0;
   const pageSize = 1000;
