@@ -3,7 +3,12 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { _delete_loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../../atlas/constants';
+import {
+  ATLAS_DATABASE_ID_MAP,
+  ATLAS_DATABASE_ID_MAP_REVERSED,
+  AtlasDatabaseID,
+  AtlasDatabaseName,
+} from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
 import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
@@ -243,15 +248,15 @@ function convertTreeToPageRecords(
     // Extract page title - similar to how blocks extract plain text
     const pageTitle = extractPageTitle(
       notionPage,
-      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].name,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].properties.atlasDocumentName,
     );
     const content = extractContent(
       notionPage,
-      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].content,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].properties.content,
     );
     const documentIdString = extractDocumentIdString(
       notionPage,
-      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].atlasFullDocumentTitle,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].properties.atlasFullDocumentTitle,
     );
 
     const page: NotionDatabasePage = {
@@ -261,7 +266,8 @@ function convertTreeToPageRecords(
       json_name: pageTitle.richText,
       plain_text_content: content.plainText,
       json_content: content.richText,
-      atlas_document_type: 'page', // All pages in a database are database pages // TODO: verify
+      atlas_document_type: 'Core', // All pages in a database are database pages // TODO: verify
+      atlas_database_name: ATLAS_DATABASE_ID_MAP_REVERSED[notionDatabaseId],
       has_children: subPageIds.length > 0,
       archived: notionPage.archived,
       in_trash: notionPage.in_trash,
