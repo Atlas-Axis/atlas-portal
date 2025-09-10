@@ -1,5 +1,5 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { _delete_DatabaseSubItemTree } from './to_delete/_old.fetch-database-sub-items';
+import { _delete_DatabaseSubItemTree } from './_old.fetch-database-sub-items';
 
 // Lightweight interface for tree comparison - only includes fields needed for comparison
 export interface SupabasePageForComparison {
