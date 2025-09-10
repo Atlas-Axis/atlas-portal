@@ -15,7 +15,7 @@ export const SUB_ITEM_PROPERTY_NAME = 'Sub-item';
  * - Name: "Scope Improvement"
  * - Formal Doc ID: "A.3.1.1"
  */
-export const NOTION_DATABASE_PROPERTY_NAMES: Record<
+export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   AtlasDatabaseName,
   {
     properties: Record<string, string>;
