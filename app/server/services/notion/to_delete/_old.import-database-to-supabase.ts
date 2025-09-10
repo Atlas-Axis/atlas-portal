@@ -1,8 +1,8 @@
 import type { PageObjectResponse } from '@notionhq/client';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
-import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/load-database-tree-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
 import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';

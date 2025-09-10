@@ -7,9 +7,9 @@ import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { fetchBlocksRecursively } from './fetch-blocks-recursively';
-import { verifySyncLock } from './sync-lock';
-import { TextRichTextItemRequest } from './to_delete/_old.types';
+import { fetchBlocksRecursively } from '../fetch-blocks-recursively';
+import { verifySyncLock } from '../sync-lock';
+import { TextRichTextItemRequest } from './_old.types';
 
 export interface CreateEditPageResult {
   newNotionPageId: string;

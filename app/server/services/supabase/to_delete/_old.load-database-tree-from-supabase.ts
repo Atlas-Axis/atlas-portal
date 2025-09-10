@@ -19,7 +19,7 @@ export async function loadDatabaseTreeFromSupabase(rootNotionDatabaseId: string)
     const { data, error } = await supabase()
       .from('notion_database_pages')
       .select('notion_page_id, parent_notion_page_id, sort_order, updated_at')
-      .eq('root_notion_database_id', rootNotionDatabaseId)
+      // .eq('root_notion_database_id', rootNotionDatabaseId)
       .range(page * pageSize, (page + 1) * pageSize - 1);
 
     // Check for errors

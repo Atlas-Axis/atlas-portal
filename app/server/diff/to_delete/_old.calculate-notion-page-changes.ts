@@ -3,13 +3,13 @@ import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/to_delete/_old.get-notion-database-id-from-notion-page';
 import { isValidUUID } from '@/app/shared/utils/utils';
-import { convertTreeChangesToAtlasProposal } from '../services/atlas/generate-proposal';
-import { ProposalContext } from '../services/atlas/proposal-types';
-import { loadTextContentForNotionPageIds } from '../services/supabase/load-text-content-for-notion-page-ids';
-import { logTree } from './console-log-tree';
-import { TreeChange, diffTrees } from './diff-trees';
-import { extractSubtreeAsTree, extractSubtreePageIds } from './extract-subtree';
-import { rewriteTreeNodeIds } from './rewrite-tree-node-ids';
+import { convertTreeChangesToAtlasProposal } from '../../services/atlas/generate-proposal';
+import { ProposalContext } from '../../services/atlas/proposal-types';
+import { loadTextContentForNotionPageIds } from '../../services/supabase/load-text-content-for-notion-page-ids';
+import { logTree } from '../console-log-tree';
+import { TreeChange, diffTrees } from '../diff-trees';
+import { extractSubtreeAsTree, extractSubtreePageIds } from '../extract-subtree';
+import { rewriteTreeNodeIds } from '../rewrite-tree-node-ids';
 
 function getDebugLogging() {
   return Boolean(
