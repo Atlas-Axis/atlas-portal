@@ -8,6 +8,8 @@ export const ATLAS_DATABASES = {
   SCENARIO_VARIATIONS: 'Scenario Variations',
   ACTIVE_DATA: 'Active Data',
   AGENTS: 'Agent Scope Database',
+  NEEDED_RESEARCH: 'Needed Research',
+  ORIGINAL_CONTEXT_DATA: 'Original Context Data',
 } as const;
 
 export const ATLAS_DATABASE_NAMES = [
@@ -20,6 +22,8 @@ export const ATLAS_DATABASE_NAMES = [
   ATLAS_DATABASES.SCENARIO_VARIATIONS,
   ATLAS_DATABASES.ACTIVE_DATA,
   ATLAS_DATABASES.AGENTS,
+  ATLAS_DATABASES.NEEDED_RESEARCH,
+  ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA,
 ] as const;
 
 export type AtlasDatabaseName = (typeof ATLAS_DATABASE_NAMES)[number];
@@ -34,6 +38,8 @@ export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'd0de59236e6d4a48a44533fa64d966ac',
   [ATLAS_DATABASES.ACTIVE_DATA]: '5b566dd732464927b8eee6e1b2ff99d9',
   [ATLAS_DATABASES.AGENTS]: '1bbf2ff08d73808d9ce3e2122857e262',
+  [ATLAS_DATABASES.NEEDED_RESEARCH]: 'effd5738033548a98ec1a7e99cbadd1d',
+  [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: 'e9f9f2a29abe4d5991495a148c755b41',
 } as const;
 
 export type AtlasDatabaseID = (typeof ATLAS_DATABASE_ID_MAP)[AtlasDatabaseName];
