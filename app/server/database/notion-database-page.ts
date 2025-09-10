@@ -1,14 +1,13 @@
-import { Json } from '@/app/server/services/supabase/database.types';
+import { Database, Json } from '@/app/server/services/supabase/database.types';
 
 // Represents a Notion page in the database
 export interface NotionDatabasePage {
   // Primary keys and identifiers
   notion_page_id: string; // UUID - Notion page ID
   parent_notion_page_id?: string | null; // UUID - Parent page ID (null for root pages)
-  root_notion_database_id: string; // UUID - The Notion database ID this page belongs to
 
   // Notion page metadata
-  page_type: string; // Page type
+  atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
   has_children: boolean;
   archived: boolean;
   in_trash: boolean;
