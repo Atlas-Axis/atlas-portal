@@ -1,6 +1,7 @@
 'use server';
 
-import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
+import { ATLAS_DATABASES, ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
+import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/to_delete/_old.import-database-to-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 export async function importNotionDatabaseAction(notionDatabaseId: string) {
@@ -12,8 +13,21 @@ export async function importNotionDatabaseAction(notionDatabaseId: string) {
     };
   }
 
+  // Find the database name from the ID by looking it up in the ATLAS_DATABASE_ID_MAP (need to reverse the map)
+  const notionDatabaseName: AtlasDatabaseName | undefined = Object.entries(ATLAS_DATABASE_ID_MAP).find(
+    ([, id]) => id === notionDatabaseId,
+  )?.[0] as AtlasDatabaseName;
+
+  // If the database name is not found or not in the known Atlas databases, return an error
+  if (!notionDatabaseName || !(notionDatabaseName in ATLAS_DATABASES)) {
+    return {
+      success: false,
+      message: 'Notion database ID does not correspond to a known Atlas database',
+    };
+  }
+
   try {
-    await importDatabasePagesFromNotionToSupabase({ notionDatabaseId, taskRunId: '' });
+    await importDatabasePagesFromNotionToSupabase({ notionDatabaseName });
 
     return {
       success: true,
