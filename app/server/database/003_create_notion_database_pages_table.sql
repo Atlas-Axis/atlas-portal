@@ -31,7 +31,9 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
   parent_notion_page_id UUID, -- Parent page ID (null for root pages)
+  canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   atlas_document_type atlas_document_type_enum NOT NULL,
+  atlas_document_number TEXT NOT NULL DEFAULT '',
   atlas_database_name atlas_database_name_enum NOT NULL,
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
@@ -41,7 +43,6 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
   sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
-  canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT -- ID of the Notion user who last edited this page

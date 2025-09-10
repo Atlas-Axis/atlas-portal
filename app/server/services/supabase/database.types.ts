@@ -80,6 +80,7 @@ export type Database = {
         Row: {
           archived: boolean;
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number: string;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title: string | null;
           created_at: string;
@@ -98,6 +99,7 @@ export type Database = {
         Insert: {
           archived?: boolean;
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number?: string;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           created_at?: string;
@@ -116,6 +118,7 @@ export type Database = {
         Update: {
           archived?: boolean;
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number?: string;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           created_at?: string;
