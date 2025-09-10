@@ -1,8 +1,9 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { isValidUUID } from '@/app/shared/utils/utils';
-import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
+import { ATLAS_DATABASES } from '../atlas/constants';
 import { releaseSyncLock, verifySyncLock } from '../notion/sync-lock';
+import { importDatabasePagesFromNotionToSupabase } from '../notion/to_delete/_old.import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -24,7 +25,7 @@ export const notionDatabaseSyncTask = task({
     }: {
       notionDatabaseId: string;
     },
-    { ctx },
+    // { ctx },
   ) => {
     // Validate that notionDatabaseId is a valid UUID
     if (!isValidUUID(notionDatabaseId)) {
@@ -33,8 +34,6 @@ export const notionDatabaseSyncTask = task({
 
     // Verify that the sync is not already in progress
     await verifySyncLock(notionDatabaseId);
-
-    const taskRunId = ctx.run.id;
 
     // Initialize API call count metadata
     setApiCallCountTriggerMetadata(0);
@@ -48,7 +47,10 @@ export const notionDatabaseSyncTask = task({
 
     try {
       // Start the sync process
-      const result = await importDatabasePagesFromNotionToSupabase({ notionDatabaseId, taskRunId });
+      // TODO: Import other databases too
+      const result = await importDatabasePagesFromNotionToSupabase({
+        notionDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+      });
 
       // Log final Notion API call stats before flushing metadata
       const finalStats = notion().getNotionProxyStats();

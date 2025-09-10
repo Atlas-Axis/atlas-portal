@@ -20,7 +20,7 @@ import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
  * @param property - A Notion page property object
  * @returns The extracted simple value (string or number) or null if not applicable
  */
-export function readSimpleValueFromProperty(
+export function readPlainTextValueFromNotionPageProperty(
   property: PageObjectResponse['properties']['string'],
 ): string | number | null {
   switch (property.type) {

@@ -1,7 +1,7 @@
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
 import { TreeNode, buildTree } from '@/app/server/diff/tree';
-import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/get-notion-database-id-from-notion-page';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
+import { getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/to_delete/_old.get-notion-database-id-from-notion-page';
 import { isValidUUID } from '@/app/shared/utils/utils';
 import { convertTreeChangesToAtlasProposal } from '../services/atlas/generate-proposal';
 import { ProposalContext } from '../services/atlas/proposal-types';

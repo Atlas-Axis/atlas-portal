@@ -72,13 +72,13 @@ export const MASTER_STATUS_ID_TO_NAME_MAP: Record<string, string> = {
   '3edf54e3-be0e-4bbb-b008-502cfc23394e': MASTER_STATUSES.PLACEHOLDER,
 };
 
-export const ALLOWED_PAGE_FIELD_TYPES = [
-  'title',
-  'rich_text',
-  'select',
-  'relation',
-  'number',
-  'url',
-  'files',
-  'formula',
-] as const;
+// export const ALLOWED_PAGE_FIELD_TYPES = [
+//   'title',
+//   'rich_text',
+//   'select',
+//   'relation',
+//   'number',
+//   'url',
+//   'files',
+//   'formula',
+// ] as const;

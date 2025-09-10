@@ -4,15 +4,9 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 
 /**
- * Sync all blocks from Notion page to Supabase
+ * Sync all blocks from a Notion page to Supabase
  */
-export async function importBlocksFromNotionToSupabase({
-  notionPageId,
-  taskRunId,
-}: {
-  notionPageId: string;
-  taskRunId: string;
-}) {
+export async function importNotionPageToSupabase({ notionPageId }: { notionPageId: string }): Promise<NotionBlock[]> {
   const startTime = performance.now();
   console.log(`➡️ Importing blocks from Notion to Supabase...`);
 

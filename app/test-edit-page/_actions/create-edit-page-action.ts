@@ -57,7 +57,6 @@ export async function createEditPageAction(params: CreateEditPageParams): Promis
     const result = await createNotionPageWithToggleBlocks({
       originalNotionDatabaseId,
       rootNotionPageId,
-      taskRunId: '', // Will be filled by Trigger.dev
       parent,
     });
 

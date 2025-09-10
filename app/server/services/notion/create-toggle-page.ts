@@ -9,7 +9,7 @@ import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supab
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { fetchBlocksRecursively } from './fetch-blocks-recursively';
 import { verifySyncLock } from './sync-lock';
-import { TextRichTextItemRequest } from './types';
+import { TextRichTextItemRequest } from './to_delete/_old.types';
 
 export interface CreateEditPageResult {
   newNotionPageId: string;
@@ -24,18 +24,15 @@ export interface CreateEditPageResult {
 export async function createNotionPageWithToggleBlocks({
   originalNotionDatabaseId,
   rootNotionPageId,
-  taskRunId,
   parent,
 }: {
   originalNotionDatabaseId: string;
   rootNotionPageId: string;
-  taskRunId: string;
   parent: CreatePageParameters['parent'];
 }): Promise<CreateEditPageResult> {
   const startTime = performance.now();
   console.log(`➡️ Creating toggle page from Notion database ${originalNotionDatabaseId}...`);
   console.log(`Root page ID: ${rootNotionPageId}`);
-  console.log(`Trigger.dev task run ID: ${taskRunId}`);
 
   let newPageId: string | null = null;
 
@@ -278,7 +275,6 @@ export async function createNotionPageWithToggleBlocks({
     console.log('Step 6: Importing new page and blocks to Supabase...');
     await importToggleBlocksFromNotionToSupabase({
       notionPageId: newPageId,
-      taskRunId,
       databasePageToBlockMapping,
     });
 
@@ -568,11 +564,9 @@ async function createSingleToggleBlock(parentId: string, databasePage: NotionDat
  */
 async function importToggleBlocksFromNotionToSupabase({
   notionPageId,
-  taskRunId: _taskRunId, // Unused parameter, prefixed with _
   databasePageToBlockMapping,
 }: {
   notionPageId: string;
-  taskRunId: string;
   databasePageToBlockMapping: Map<string, string>; // original page ID -> toggle block ID
 }): Promise<void> {
   const startTime = performance.now();

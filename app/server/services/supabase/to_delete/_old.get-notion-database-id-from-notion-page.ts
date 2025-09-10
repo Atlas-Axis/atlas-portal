@@ -1,7 +1,7 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export async function getNotionDatabaseIdFromNotionPage(notionPageId: string): Promise<string | null> {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from('notion_database_pages')
     .select('root_notion_database_id')
     .eq('notion_page_id', notionPageId)
