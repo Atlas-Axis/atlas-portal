@@ -4,13 +4,13 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export default async function Page() {
   // Load root Notion blocks from Supabase and convert them to links to subpages
-  const { data: rootBlocks, error: rootBlocksError } = await supabase
+  const { data: rootBlocks, error: rootBlocksError } = await supabase()
     .from('notion_blocks')
     .select('notion_block_id, plain_text_content')
     .is('parent_notion_block_id', null);
 
   // Load root Notion databases from Supabase
-  const { data: databasePages, error: databaseError } = await supabase
+  const { data: databasePages, error: databaseError } = await supabase()
     .from('notion_database_pages')
     .select('root_notion_database_id')
     .is('parent_notion_page_id', null);

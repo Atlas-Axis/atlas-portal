@@ -8,7 +8,7 @@ export async function loadNotionDatabasePagesFromSupabase(rootNotionDatabaseId: 
 
   // Load all pages from Supabase with pagination
   while (true) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase()
       .from('notion_database_pages')
       .select('*')
       .eq('root_notion_database_id', rootNotionDatabaseId)

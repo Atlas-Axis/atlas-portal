@@ -5,7 +5,7 @@ type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelle
 export async function acquireSyncLock(notionDatabaseId: string) {
   console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
 
-  return supabase
+  return supabase()
     .from('notion_sync_status')
     .upsert(
       {
@@ -39,7 +39,7 @@ export async function releaseSyncLock({
   console.log(`Sync error message: ${syncErrorMessage}`);
   console.log(`Blocks synced count: ${blocksSyncedCount}`);
 
-  return supabase
+  return supabase()
     .from('notion_sync_status')
     .upsert(
       {
@@ -58,7 +58,7 @@ export async function releaseSyncLock({
 }
 
 export async function verifySyncLock(notionPageId: string) {
-  const { data } = await supabase
+  const { data } = await supabase()
     .from('notion_sync_status')
     .select('is_sync_locked')
     .eq('notion_database_id', notionPageId)

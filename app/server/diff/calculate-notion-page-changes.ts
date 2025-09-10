@@ -11,9 +11,11 @@ import { TreeChange, diffTrees } from './diff-trees';
 import { extractSubtreeAsTree, extractSubtreePageIds } from './extract-subtree';
 import { rewriteTreeNodeIds } from './rewrite-tree-node-ids';
 
-const DEBUG_LOGGING = Boolean(
-  process.env.DEBUG_LOGGING && process.env.DEBUG_LOGGING !== '0' && process.env.DEBUG_LOGGING !== 'false',
-);
+function getDebugLogging() {
+  return Boolean(
+    process.env.DEBUG_LOGGING && process.env.DEBUG_LOGGING !== '0' && process.env.DEBUG_LOGGING !== 'false',
+  );
+}
 
 export async function calculateNotionPageHierarchyChanges({
   originalRootNotionPageId,
@@ -27,6 +29,8 @@ export async function calculateNotionPageHierarchyChanges({
   context: ProposalContext;
 }> {
   const startTime = Date.now();
+
+  const DEBUG_LOGGING = getDebugLogging();
 
   console.log(`Starting calculation of Notion page hierarchy changes...`);
   console.log(`Original root Notion page ID: ${originalRootNotionPageId}`);

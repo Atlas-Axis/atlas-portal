@@ -1,7 +1,7 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export async function getOriginalNotionPageIdForEditPage(editPageId: string): Promise<string> {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from('notion_database_pages')
     .select('edit_page_original_notion_page_id')
     .eq('notion_page_id', editPageId)

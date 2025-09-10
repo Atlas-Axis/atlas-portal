@@ -14,7 +14,7 @@ export async function loadExistingDatabasePagesFromSupabase(
 
   // Load all existing pages from Supabase with pagination
   while (true) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase()
       .from('notion_database_pages')
       .select('notion_page_id, updated_at')
       .eq('root_notion_database_id', rootNotionDatabaseId)

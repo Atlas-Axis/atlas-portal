@@ -124,7 +124,7 @@ async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabase
   // 1. First, delete pages that no longer exist in Notion
   if (comparison.pagesToDelete.length > 0) {
     console.log(`🗑️ Deleting ${comparison.pagesToDelete.length} pages that no longer exist in Notion`);
-    await supabase
+    await supabase()
       .from('notion_database_pages')
       .delete()
       .eq('root_notion_database_id', notionDatabaseId)
@@ -176,7 +176,7 @@ async function insertPagesInBatches(
     );
 
     if (useUpsert) {
-      await supabase
+      await supabase()
         .from('notion_database_pages')
         .upsert(batch, {
           onConflict: 'notion_page_id',
@@ -184,7 +184,7 @@ async function insertPagesInBatches(
         })
         .throwOnError();
     } else {
-      await supabase.from('notion_database_pages').insert(batch).throwOnError();
+      await supabase().from('notion_database_pages').insert(batch).throwOnError();
     }
 
     console.log(`  ✓ Batch ${batchNumber}/${totalBatches} completed successfully`);

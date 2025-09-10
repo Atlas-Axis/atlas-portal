@@ -35,7 +35,7 @@ export async function importBlocksFromNotionToSupabase({
     console.log(`Fetched ${blocks.length} blocks from Notion page ${notionPageId}`);
 
     // Delete existing blocks in Supabase that are not in the fetched blocks. Descendants are cascade deleted automatically
-    await supabase.from('notion_blocks').delete().eq('notion_block_id', notionPageId).throwOnError();
+    await supabase().from('notion_blocks').delete().eq('notion_block_id', notionPageId).throwOnError();
 
     console.log(`Deleted existing blocks in Supabase for Notion page ${notionPageId}`);
 
@@ -85,7 +85,7 @@ async function insertBlocksInBatches(blocks: NotionBlock[], batchSize: number = 
 
     console.log(`Inserting batch ${batchNumber}/${totalBatches} (${batch.length} blocks)...`);
 
-    await supabase.from('notion_blocks').insert(batch).throwOnError();
+    await supabase().from('notion_blocks').insert(batch).throwOnError();
 
     console.log(`✓ Batch ${batchNumber}/${totalBatches} inserted successfully`);
   }

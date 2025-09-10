@@ -8,7 +8,7 @@ export async function loadNotionBlocksFromSupabase(rootNotionBlockId: string) {
 
   // Load all blocks from Supabase with pagination
   while (true) {
-    const { data, error } = await supabase
+    const { data, error } = await supabase()
       .from('notion_blocks')
       .select('*')
       .eq('root_notion_block_id', rootNotionBlockId)

@@ -304,7 +304,7 @@ for (const block of createdBlocks) {
 
   if (sourceDatabasePageId) {
     // Update the block record with proper mapping
-    await supabase
+    await supabase()
       .from('notion_blocks')
       .update({
         edit_page_original_notion_page_id: sourceDatabasePageId,
