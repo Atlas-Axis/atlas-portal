@@ -1,4 +1,4 @@
-import { ATLAS_DATABASES, AtlasDatabaseName } from '../atlas/constants';
+import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
 
 /**
  * Docs for Sub-items in Notion databases
