@@ -3,25 +3,26 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/load-database-tree-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { TreeComparisonResult, compareDatabaseTrees } from './compare-database-trees';
-import { NOTION_DATABASE_PROPERTY_NAMES } from './database-property-names';
-import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './fetch-database-sub-items';
-import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../../atlas/constants';
+import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../../atlas/notion-database-properties-and-relationships';
+import { TreeComparisonResult, compareDatabaseTrees } from '../compare-database-trees';
+import { acquireSyncLock, releaseSyncLock, verifySyncLock } from '../sync-lock';
+import { DatabaseSubItemTree, fetchDatabaseTree as fetchDatabaseTreeFromNotion } from './_old.fetch-database-sub-items';
 
 /**
  * Sync all pages from Notion database to Supabase
  */
 export async function importDatabasePagesFromNotionToSupabase({
-  notionDatabaseId,
-  taskRunId,
+  notionDatabaseName,
 }: {
-  notionDatabaseId: string;
-  taskRunId: string;
+  notionDatabaseName: AtlasDatabaseName;
 }) {
   const startTime = performance.now();
   console.log(`🚀 Starting database import from Notion to Supabase`);
-  console.log(`📊 Database ID: ${notionDatabaseId}`);
-  console.log(`🏃 Task run ID: ${taskRunId}`);
+
+  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[notionDatabaseName];
+
+  console.log(`📊 Database: ${notionDatabaseName}`);
 
   // Verify that the sync is not already in progress
   console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
@@ -42,8 +43,8 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Fetch all pages from the Notion database with their tree structure
     console.log(`📡 Fetching database tree from Notion API...`);
     const notionTree = await fetchDatabaseTreeFromNotion(notionDatabaseId, {
-      subItemsPropertyName: NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].subItem,
-      parentPropertyName: NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].parent,
+      subItemsPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[notionDatabaseName].subItem,
+      parentPropertyName: NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[notionDatabaseName].parent,
     });
     console.log(`✅ Fetched Notion tree: ${notionTree.pagesById.size} pages found in Notion`);
 
@@ -127,7 +128,7 @@ async function applyTreeChanges(comparison: TreeComparisonResult, notionDatabase
     await supabase()
       .from('notion_database_pages')
       .delete()
-      .eq('root_notion_database_id', notionDatabaseId)
+      // .eq('root_notion_database_id', notionDatabaseId)
       .in('notion_page_id', comparison.pagesToDelete)
       .throwOnError();
     console.log(`✓ Deleted ${comparison.pagesToDelete.length} pages`);
@@ -226,22 +227,27 @@ function convertTreeToPageRecords(databaseTree: DatabaseSubItemTree, notionDatab
     const subPageIds = pageIdToSubPageIds.get(pageId) || [];
 
     // Extract page title - similar to how blocks extract plain text
-    const pageTitle = extractPageTitle(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].name);
-    const content = extractContent(notionPage, NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].content);
+    const pageTitle = extractPageTitle(
+      notionPage,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].name,
+    );
+    const content = extractContent(
+      notionPage,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].content,
+    );
     const documentIdString = extractDocumentIdString(
       notionPage,
-      NOTION_DATABASE_PROPERTY_NAMES['Sections & Primary Docs'].docNo,
+      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS['Sections & Primary Docs'].atlasFullDocumentTitle,
     );
 
     const page: NotionDatabasePage = {
       notion_page_id: pageId,
       parent_notion_page_id: parentId,
-      root_notion_database_id: notionDatabaseId,
       plain_text_name: pageTitle.plainText,
       json_name: pageTitle.richText,
       plain_text_content: content.plainText,
       json_content: content.richText,
-      page_type: 'page', // All pages in a database are database pages // TODO: verify
+      atlas_document_type: 'page', // All pages in a database are database pages // TODO: verify
       has_children: subPageIds.length > 0,
       archived: notionPage.archived,
       in_trash: notionPage.in_trash,
