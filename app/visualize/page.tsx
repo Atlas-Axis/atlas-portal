@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Divider, Spacer } from '@heroui/react';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { ATLAS_DATABASE_ID_MAP } from '../server/services/atlas/constants';
 
 export default async function Page() {
   // Load root Notion blocks from Supabase and convert them to links to subpages
@@ -9,21 +10,23 @@ export default async function Page() {
     .select('notion_block_id, plain_text_content')
     .is('parent_notion_block_id', null);
 
-  // Load root Notion databases from Supabase
-  const { data: databasePages, error: databaseError } = await supabase()
+  // Load Notion database names from Supabase
+  const { data: databaseNames, error: databaseNameError } = await supabase()
     .from('notion_database_pages')
-    .select('root_notion_database_id')
+    .select('atlas_database_name, notion_page_id.count()')
     .is('parent_notion_page_id', null);
-  const databaseIds = [...new Set((databasePages ?? []).map((r) => r.root_notion_database_id))];
+  // const databaseIds = [...new Set((databasePages ?? []).map((r) => r.root_notion_database_id))];
 
   if (rootBlocksError) {
     return (
       <p className="text-red-500">Failed to load Notion pages: {rootBlocksError.message || String(rootBlocksError)}</p>
     );
   }
-  if (databaseError) {
+  if (databaseNameError) {
     return (
-      <p className="text-red-500">Failed to load Notion databases: {databaseError.message || String(databaseError)}</p>
+      <p className="text-red-500">
+        Failed to load Notion databases: {databaseNameError.message || String(databaseNameError)}
+      </p>
     );
   }
 
@@ -38,10 +41,13 @@ export default async function Page() {
     </li>
   ));
 
-  const rootDatabasePageLinks = databaseIds.map((db) => (
-    <li key={db}>
-      <Link href={`/visualize/database/${db}`} className="font-semibold text-indigo-500 hover:underline">
-        👉 {db}
+  const rootDatabasePageLinks = databaseNames.map((db) => (
+    <li key={db.atlas_database_name}>
+      <Link
+        href={`/visualize/database/${ATLAS_DATABASE_ID_MAP[db.atlas_database_name]}`}
+        className="font-semibold text-indigo-500 hover:underline"
+      >
+        👉 {db.atlas_database_name} ({db.count})
       </Link>
     </li>
   ));
