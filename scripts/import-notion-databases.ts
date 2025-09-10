@@ -1,4 +1,6 @@
 import { parseArgs } from 'node:util';
+import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
+import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/to_delete/_old.import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
@@ -39,10 +41,12 @@ Options:
 
   loadEnv();
 
-  // TODO: Implement import logic here
+  console.log(`Starting Notion database import...`);
+
   try {
-    // await importNotionDatabases(notionDatabaseId);
-    console.log(`Import logic not yet implemented for Notion databases`);
+    await importDatabasePagesFromNotionToSupabase({
+      notionDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+    });
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
     console.log(`⏰ Processing time: ${durationSeconds} seconds`);
