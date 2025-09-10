@@ -295,7 +295,16 @@ function extractPageTitle(
       };
     }
 
-    console.warn(`Property "${titlePropertyName}" in page ${page.id} is not a rich_text property or is empty.`);
+    if ('formula' in property && property.formula?.type === 'string' && property.formula.string) {
+      return {
+        plainText: property.formula.string,
+        richText: null, // Formula properties don't have rich text formatting
+      };
+    }
+
+    console.warn(
+      `Property "${titlePropertyName}" in page ${page.id} is not a rich_text or formula property or is empty.`,
+    );
     return { plainText: null, richText: null };
   } catch (error) {
     console.error(`Error extracting title from page ${page.id}:`, error);
@@ -334,6 +343,10 @@ function extractContent(
 
 function extractDocumentIdString(page: PageObjectResponse, docNoPropertyName: string): string | null {
   try {
+
+    if ('formula' in docNoProperty && docNoProperty.formula?.type === 'string' && docNoProperty.formula.string) {
+      return docNoProperty.formula.string;
+    }
     const docNoProperty = page.properties[docNoPropertyName];
     if (!docNoProperty) {
       console.warn(`Property "${docNoPropertyName}" not found in page ${page.id}`);
