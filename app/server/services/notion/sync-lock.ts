@@ -5,7 +5,7 @@ type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelle
 export async function acquireSyncLock(notionDatabaseId: string) {
   console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
 
-  return supabase()
+  const result = supabase()
     .from('notion_sync_status')
     .upsert(
       {
@@ -22,6 +22,10 @@ export async function acquireSyncLock(notionDatabaseId: string) {
       { onConflict: 'notion_database_id' },
     )
     .throwOnError();
+
+  console.log(`Sync lock acquired successfully`);
+
+  return result;
 }
 
 export async function releaseSyncLock({

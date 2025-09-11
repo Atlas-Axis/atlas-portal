@@ -13,8 +13,10 @@ import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
  */
 export async function importDatabasePagesFromNotionToSupabase({
   atlasDatabaseName,
+  useLocalCache = false,
 }: {
   atlasDatabaseName: AtlasDatabaseName;
+  useLocalCache?: boolean;
 }) {
   const startTime = performance.now();
   let blocksSyncedCount = 0;
@@ -40,7 +42,10 @@ export async function importDatabasePagesFromNotionToSupabase({
 
     // Fetch all pages with relationships via Notion API
     console.log(`📡 Fetching all pages with relationships from Notion database "${atlasDatabaseName}"...`);
-    const notionPagesWithRelationships = await fetchNotionDatabasePagesWithRelationships({ atlasDatabaseName });
+    const notionPagesWithRelationships = await fetchNotionDatabasePagesWithRelationships({
+      atlasDatabaseName,
+      useLocalCache,
+    });
 
     console.log(`✅ Fetched ${notionPagesWithRelationships.length} pages with relationships from Notion database`);
 

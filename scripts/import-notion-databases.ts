@@ -6,7 +6,7 @@ import { loadEnv } from './utils/load-env';
 // #!/usr/bin/env node
 async function main() {
   const startTime = Date.now();
-  const { values } = parseArgs({
+  const { values: args } = parseArgs({
     args: process.argv.slice(2),
     options: {
       help: {
@@ -19,24 +19,31 @@ async function main() {
         short: 'v',
         description: 'Enable verbose output',
       },
+      'local-cache': {
+        type: 'boolean',
+        description: 'Enable local caching of Notion API responses to .notion-cache folder',
+      },
     },
     strict: true,
   });
 
-  if (values.help) {
+  if (args.help) {
     console.log(`Usage: npx tsx scripts/import-notion-databases [options]
 
 Options:
-  -h, --help     Show help message
-  -v, --verbose  Enable verbose output`);
+  -h, --help        Show help message
+  -v, --verbose     Enable verbose output
+      --local-cache Enable local caching of Notion API responses to .notion-cache folder`);
     process.exit(0);
   }
 
-  if (values.verbose) {
+  if (args.verbose) {
     console.log(`Verbose mode enabled`);
     process.env.DEBUG_LOGGING = 'true';
-  } else {
-    //
+  }
+
+  if (args['local-cache']) {
+    console.log(`Local cache enabled - will use/create .notion-cache folder`);
   }
 
   loadEnv();
@@ -47,6 +54,7 @@ Options:
     await importDatabasePagesFromNotionToSupabase({
       // TODO: Import other databases too
       atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+      useLocalCache: args['local-cache'] ?? false,
     });
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
@@ -62,6 +70,8 @@ Options:
  * npx tsx scripts/import-notion-databases
  * npx tsx scripts/import-notion-databases --help
  * npx tsx scripts/import-notion-databases --verbose
+ * npx tsx scripts/import-notion-databases --local-cache
+ * npx tsx scripts/import-notion-databases --verbose --local-cache
  */
 main().catch((err) => {
   console.error(err);

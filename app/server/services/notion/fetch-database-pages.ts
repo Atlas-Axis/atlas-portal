@@ -1,6 +1,7 @@
 import { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../atlas/notion-database-properties-and-relationships';
+import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
 
 // Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than 25.
@@ -13,13 +14,28 @@ export interface EnhancedPageObjectResponse extends PageObjectResponse {
  */
 export async function fetchNotionDatabasePagesWithRelationships({
   atlasDatabaseName,
+  useLocalCache = false,
 }: {
   atlasDatabaseName: AtlasDatabaseName;
+  useLocalCache?: boolean;
 }): Promise<EnhancedPageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   console.log(
     `📡 Starting to fetch all pages with relationships from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`,
   );
+
+  // Try to load from cache first if enabled
+  if (useLocalCache) {
+    console.log(`🔍 Checking for cached data for database "${atlasDatabaseName}"...`);
+    if (await hasCachedData(atlasDatabaseName)) {
+      const cachedPages = await loadCachedDatabasePages(atlasDatabaseName);
+      if (cachedPages) {
+        return cachedPages;
+      }
+    } else {
+      console.log(`📁 No cached data found for database "${atlasDatabaseName}", will fetch from Notion API`);
+    }
+  }
 
   // First, fetch all pages
   const pages = await fetchNotionDatabasePages({ atlasDatabaseName });
@@ -82,6 +98,11 @@ export async function fetchNotionDatabasePagesWithRelationships({
   console.log(
     `✅ Completed fetching all pages with relationships: ${enhancedPages.length} total pages from database "${atlasDatabaseName}"`,
   );
+
+  // Save to cache if enabled
+  if (useLocalCache) {
+    await saveCachedDatabasePages(atlasDatabaseName, enhancedPages);
+  }
 
   return enhancedPages;
 }
