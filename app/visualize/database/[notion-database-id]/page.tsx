@@ -19,12 +19,10 @@ export default async function Page({ params }: { params: Promise<{ 'notion-datab
   // const tree: Tree = buildTree(treeNodes);
   const tree: Tree = buildTree(withRootNode(treeNodes));
 
-  // console.log('Tree structure:', JSON.stringify(tree, null, 2));
-
   return (
     <div className="p-6">
       <pre className="mb-12 text-xs text-gray-500">{notionDatabaseId}</pre>
-      <ContentTree tree={tree} pageIdMap={pageIdMap} />
+      <ContentTree tree={tree} pageIdMap={pageIdMap} atlasDatabaseName={atlasDatabaseName} />
     </div>
   );
 }
