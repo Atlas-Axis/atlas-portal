@@ -67,3 +67,5 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
 export type MasterStatus = (typeof MASTER_STATUSES)[keyof typeof MASTER_STATUSES];
 
 export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
+
+export const IMPORT_DATABASES = [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS, ATLAS_DATABASES.AGENTS] as const;

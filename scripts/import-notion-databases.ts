@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util';
-import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
+import { IMPORT_DATABASES } from '@/app/server/services/atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
 
@@ -51,14 +51,20 @@ Options:
   console.log(`Starting Notion database import...`);
 
   try {
-    await importDatabasePagesFromNotionToSupabase({
-      // TODO: Import other databases too
-      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
-      useLocalCache: args['local-cache'] ?? false,
-    });
+    // Import all Atlas databases
+    for (const atlasDatabaseName of IMPORT_DATABASES) {
+      console.log(`\n📋 Importing database: ${atlasDatabaseName}`);
+      await importDatabasePagesFromNotionToSupabase({
+        atlasDatabaseName,
+        useLocalCache: args['local-cache'] ?? false,
+      });
+      console.log(`✅ Completed importing: ${atlasDatabaseName}`);
+    }
+
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
-    console.log(`⏰ Processing time: ${durationSeconds} seconds`);
+    console.log(`\n🎉 All databases imported successfully!`);
+    console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
   } catch (error) {
     console.error(`Error importing Notion databases:`, error);
     process.exit(1);
