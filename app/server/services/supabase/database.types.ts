@@ -93,7 +93,7 @@ export type Database = {
           parent_notion_page_id: string | null;
           plain_text_content: string | null;
           plain_text_name: string | null;
-          relationships: Json | null;
+          relationships: Json;
           sort_order: number;
           updated_at: string;
         };
@@ -113,7 +113,7 @@ export type Database = {
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          relationships?: Json | null;
+          relationships?: Json;
           sort_order: number;
           updated_at?: string;
         };
@@ -133,7 +133,7 @@ export type Database = {
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          relationships?: Json | null;
+          relationships?: Json;
           sort_order?: number;
           updated_at?: string;
         };
