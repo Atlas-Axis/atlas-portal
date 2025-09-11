@@ -21,24 +21,58 @@ import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
  * @returns The extracted simple value (string or number) or null if not applicable
  */
 export function readPlainTextValueFromNotionPageProperty(
-  property: PageObjectResponse['properties']['string'],
-): string | number | null {
+  property: PageObjectResponse['properties'][string],
+): string | number | boolean | null {
   switch (property.type) {
     case 'title':
-      return property.title.map((part) => part.plain_text).join('') || null;
+      return property.title.map((text) => text.plain_text).join('');
     case 'rich_text':
-      return property.rich_text.map((part) => part.plain_text).join('') || null;
-    case 'formula':
-      if (property.formula.type === 'string') return property.formula.string || null;
-      if (property.formula.type === 'number') return property.formula.number !== null ? property.formula.number : null;
-      if (property.formula.type === 'boolean') return property.formula.boolean ? 1 : 0;
-      return null;
-    case 'select':
-      return property.select ? property.select.name : null;
+      return property.rich_text.map((text) => text.plain_text).join('');
     case 'number':
-      return property.number !== null ? property.number : null;
+      return property.number;
+    case 'checkbox':
+      return property.checkbox;
     case 'url':
-      return property.url || null;
+      return property.url;
+    case 'email':
+      return property.email;
+    case 'phone_number':
+      return property.phone_number;
+    case 'date':
+      return property.date?.start || null;
+    case 'select':
+      return property.select?.name || null;
+    case 'formula':
+      if (property.formula.type === 'string') {
+        return property.formula.string;
+      } else if (property.formula.type === 'number') {
+        return property.formula.number;
+      } else if (property.formula.type === 'boolean') {
+        return property.formula.boolean;
+      } else if (property.formula.type === 'date') {
+        return property.formula.date?.start || null;
+      }
+      return null;
+    case 'rollup':
+      // Rollups can contain various types - for simplicity, return null
+      // You might want to handle specific rollup types based on your needs
+      return null;
+    case 'created_time':
+      return property.created_time;
+    case 'last_edited_time':
+      return property.last_edited_time;
+    case 'created_by':
+      return property.created_by.id;
+    case 'last_edited_by':
+      return property.last_edited_by.id;
+    case 'multi_select':
+      return property.multi_select.map((option) => option.name).join(', ');
+    case 'people':
+      return property.people.map((person) => person.id).join(', ');
+    case 'files':
+      return property.files.length > 0 ? `${property.files.length} file(s)` : null;
+    case 'relation':
+      return property.relation.map((rel) => rel.id).join(', ');
     default:
       console.warn(`Unsupported property type: ${property.type}`);
       return null;
