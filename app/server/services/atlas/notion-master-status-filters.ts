@@ -1,5 +1,5 @@
 import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints';
-import { MASTER_STATUS_ID_TO_NAME_MAP } from './constants';
+import { MASTER_STATUSES, MASTER_STATUS_ID_MAP } from './constants';
 
 export const NOTION_DATABASE_FILTERS: QueryDatabaseParameters['filter'] = {
   and: [
@@ -8,13 +8,13 @@ export const NOTION_DATABASE_FILTERS: QueryDatabaseParameters['filter'] = {
         {
           property: 'Master Status',
           relation: {
-            does_not_contain: MASTER_STATUS_ID_TO_NAME_MAP['Deferred'],
+            does_not_contain: MASTER_STATUS_ID_MAP[MASTER_STATUSES.DEFERRED],
           },
         },
         {
           property: 'Master Status',
           relation: {
-            does_not_contain: MASTER_STATUS_ID_TO_NAME_MAP['Archived'],
+            does_not_contain: MASTER_STATUS_ID_MAP[MASTER_STATUSES.ARCHIVED],
           },
         },
       ],
@@ -24,19 +24,19 @@ export const NOTION_DATABASE_FILTERS: QueryDatabaseParameters['filter'] = {
         {
           property: 'Master Status',
           relation: {
-            contains: MASTER_STATUS_ID_TO_NAME_MAP['Approved'],
+            contains: MASTER_STATUS_ID_MAP[MASTER_STATUSES.APPROVED],
           },
         },
         {
           property: 'Master Status',
           relation: {
-            contains: MASTER_STATUS_ID_TO_NAME_MAP['Provisional'],
+            contains: MASTER_STATUS_ID_MAP[MASTER_STATUSES.PROVISIONAL],
           },
         },
         {
           property: 'Master Status',
           relation: {
-            contains: MASTER_STATUS_ID_TO_NAME_MAP['Placeholder'],
+            contains: MASTER_STATUS_ID_MAP[MASTER_STATUSES.PLACEHOLDER],
           },
         },
         {

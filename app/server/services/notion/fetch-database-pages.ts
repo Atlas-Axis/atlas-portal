@@ -1,6 +1,7 @@
 import { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../atlas/notion-database-properties-and-relationships';
+import { NOTION_DATABASE_FILTERS } from '../atlas/notion-master-status-filters';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
 
@@ -126,7 +127,7 @@ export async function fetchNotionDatabasePages({
       database_id: notionDatabaseId,
       page_size: 100,
       start_cursor: cursor,
-      // TODO: add filters/sorts to have a stable order
+      filter: NOTION_DATABASE_FILTERS,
     });
 
     // const batchSize = response.results.length;
