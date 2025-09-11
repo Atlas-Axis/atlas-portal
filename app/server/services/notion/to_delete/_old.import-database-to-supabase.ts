@@ -234,8 +234,9 @@ function convertTreeToPageRecords(
       plain_text_content: content.plainText,
       json_content: content.richText,
       relationships: {} as Relationships, // Placeholder - populate with actual relationships if needed
-      atlas_document_type: 'Core', // All pages in a database are database pages // TODO: verify
+      atlas_document_type: 'Placeholder', // All pages in a database are database pages // TODO: verify
       atlas_database_name: ATLAS_DATABASE_ID_MAP_REVERSED[notionDatabaseId],
+      atlas_document_number: '',
       has_children: subPageIds.length > 0,
       archived: notionPage.archived,
       in_trash: notionPage.in_trash,

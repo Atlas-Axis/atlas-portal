@@ -6,14 +6,17 @@ import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
  */
 // export const SUB_ITEM_PROPERTY_NAME = 'Sub-item';
 
-interface NotionDatabasePropertyMapping {
+export interface NotionDatabasePropertyMapping {
   atlasFullDocumentTitle: string; // A property name representing the full title, including the document number and name, e.g. "A.3.1.1 - Scope Improvement"
   atlasDocumentNo: string; // A property name representing the formal document ID, e.g. "A.3.1.1"
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
   content: string; // A property name representing the main content or body of the document
   // TODO: optional?
   sortOrder: string; // A property name representing the manually set order of the document within its parent or section
+  type: string; // A property name representing the type of document, e.g. "Core", "Section"...
 }
+
+export type NotionDatabasePropertyKey = keyof NotionDatabasePropertyMapping;
 
 /**
  * Docs for Notion database properties
@@ -29,6 +32,8 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   {
     properties: NotionDatabasePropertyMapping;
     relationships: Record<string, AtlasDatabaseName>;
+    parentPropertyName?: string;
+    subItemsPropertyName?: string;
   }
 > = {
   [ATLAS_DATABASES.SCOPES]: {
@@ -38,6 +43,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -48,6 +54,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -57,15 +64,15 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentNo: 'Formal Doc ID',
       atlasDocumentName: 'Name',
       content: 'Content',
-      // createEditPage: 'Create Edit Page',
-      // subItem: 'Sub-item', // Subdocs ?
-      // parent: 'Parent item',
       sortOrder: 'No.',
+      type: 'Type',
     },
     relationships: {
       // activeData: 'Active Data' // Relation
       // annotations: 'Annotations' // Relation
     },
+    parentPropertyName: 'Parent Article ',
+    subItemsPropertyName: 'Subdocs',
   },
   [ATLAS_DATABASES.ANNOTATIONS]: {
     properties: {
@@ -74,6 +81,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -84,6 +92,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -94,6 +103,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -104,6 +114,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -114,6 +125,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -124,6 +136,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
       atlasDocumentNo: 'Formal Doc ID',
       sortOrder: '', // TODO
+      type: '', // TODO
       // createEditPage: 'Create Edit Page',
     },
     relationships: {},
@@ -135,6 +148,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
@@ -145,7 +159,24 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: '', // TODO
       content: '', // TODO
       sortOrder: '', // TODO
+      type: '', // TODO
     },
     relationships: {},
   },
 } as const;
+
+/**
+ * Utility to reverse a NotionDatabasePropertyMapping: returns an object mapping property values to their keys.
+ */
+export function reverseNotionDatabasePropertyMapping(
+  mapping: NotionDatabasePropertyMapping,
+): Record<string, keyof NotionDatabasePropertyMapping> {
+  const reversed: Record<string, keyof NotionDatabasePropertyMapping> = {};
+  for (const key in mapping) {
+    const value = mapping[key as keyof NotionDatabasePropertyMapping];
+    if (value) {
+      reversed[value] = key as keyof NotionDatabasePropertyMapping;
+    }
+  }
+  return reversed;
+}
