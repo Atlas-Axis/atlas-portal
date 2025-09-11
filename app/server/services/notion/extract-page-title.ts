@@ -15,14 +15,24 @@ export function extractPageTitle(
       return { plainText: null, richText: null };
     }
 
-    if ('rich_text' in property && Array.isArray(property.rich_text) && property.rich_text.length > 0) {
+    // Handle rich_text properties (most common for titles)
+    if ('rich_text' in property && Array.isArray(property.rich_text)) {
       return {
-        plainText: property.rich_text.map((text) => text.plain_text).join('') || null,
+        plainText: property.rich_text.map((text) => text.plain_text).join(''),
         richText: property.rich_text,
       };
     }
 
-    if ('formula' in property && property.formula?.type === 'string' && property.formula.string) {
+    // Handle title properties (used for some document titles)
+    if ('title' in property && Array.isArray(property.title)) {
+      return {
+        plainText: property.title.map((text) => text.plain_text).join(''),
+        richText: property.title, // Title properties also have rich text formatting
+      };
+    }
+
+    // Handle formula properties
+    if ('formula' in property && property.formula?.type === 'string') {
       return {
         plainText: property.formula.string,
         richText: null, // Formula properties don't have rich text formatting
@@ -30,7 +40,7 @@ export function extractPageTitle(
     }
 
     console.warn(
-      `Property "${titlePropertyName}" in page ${page.id} is not a rich_text or formula property or is empty.`,
+      `Property "${titlePropertyName}" in page ${page.id} is not a rich_text, title, or formula property or is empty.`,
     );
     return { plainText: null, richText: null };
   } catch (error) {
