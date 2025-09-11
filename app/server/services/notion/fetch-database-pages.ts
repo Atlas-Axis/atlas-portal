@@ -131,10 +131,10 @@ export async function fetchNotionDatabasePages({
     }
 
     // TODO: Delete
-    if (batchNumber >= 3) {
-      console.log(`  ⚠️ Stopping after 3 batches for testing purposes - remove this limit in production`);
-      break;
-    }
+    // if (batchNumber >= 3) {
+    //   console.log(`  ⚠️ Stopping after 3 batches for testing purposes - remove this limit in production`);
+    //   break;
+    // }
 
     batchNumber++;
   } while (cursor);
