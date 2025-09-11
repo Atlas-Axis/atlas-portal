@@ -13,9 +13,11 @@ export default async function Page() {
   // Load Notion database names from Supabase
   const { data: databaseNames, error: databaseNameError } = await supabase()
     .from('notion_database_pages')
-    .select('atlas_database_name, notion_page_id.count()')
-    .is('parent_notion_page_id', null);
+    .select('atlas_database_name, notion_page_id.count()');
+  // .is('parent_notion_page_id', null);
   // const databaseIds = [...new Set((databasePages ?? []).map((r) => r.root_notion_database_id))];
+
+  console.log('Database names:', databaseNames);
 
   if (rootBlocksError) {
     return (
