@@ -71,7 +71,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       // activeData: 'Active Data' // Relation
       // annotations: 'Annotations' // Relation
     },
-    parentPropertyName: 'Parent Article ',
+    parentPropertyName: 'Parent Doc', // Wrong!
     subItemsPropertyName: 'Subdocs',
   },
   [ATLAS_DATABASES.ANNOTATIONS]: {
