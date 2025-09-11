@@ -18,7 +18,9 @@ export type TreeNodeMap = Map<string, TreeNode>;
 export function buildTree(nodes: TreeNode[]): Tree {
   const nodeMap = new Map<string, TreeNode>();
   const roots: TreeNode[] = [];
-  let orphanedNodeCount = 0;
+  const orphanedNodes: TreeNode[] = [];
+
+  console.log(`🔧 BuildTree: Processing ${nodes.length} nodes`);
 
   // Use a Map for O(1) lookups instead of O(n) Array.find
   nodes.forEach((node) => {
@@ -36,16 +38,20 @@ export function buildTree(nodes: TreeNode[]): Tree {
         // If sortOrder is lower than the previous sibling's, log a warning
         verifySortOrder(parent, node);
       } else {
-        orphanedNodeCount++;
+        orphanedNodes.push(node);
       }
     } else {
       roots.push(node); // top-level node
     }
   });
 
+  // Log orphaned nodes if any
+  logOrphanedNodes(orphanedNodes);
+
   // Checks
-  verifyOrphanedNodeCount(orphanedNodeCount);
   verifyRootNodeCount(roots.length);
+
+  console.log(`🔧 BuildTree: Result has ${nodeMap.size} nodes in nodeMap, ${roots.length} root nodes`);
 
   return { root: roots[0], nodeMap };
 }
@@ -64,16 +70,28 @@ function verifySortOrder(parent: TreeNode, node: TreeNode) {
   }
 }
 
-function verifyOrphanedNodeCount(orphanedNodeCount: number) {
-  if (orphanedNodeCount > 0) {
-    console.warn(`Found ${orphanedNodeCount} orphaned nodes (parent references missing)`);
-  }
-}
-
 function verifyRootNodeCount(rootCount: number) {
   if (rootCount === 0) {
     throw new Error('No root node found');
   } else if (rootCount > 1) {
     throw new Error(`More than one root node found (${rootCount})`);
+  }
+}
+
+function logOrphanedNodes(orphanedNodes: TreeNode[]) {
+  const orphanedNodeCount = orphanedNodes.length;
+  if (orphanedNodeCount > 0) {
+    console.log(`⚠️  Found ${orphanedNodeCount} orphaned nodes (parent references missing)`);
+    if (orphanedNodeCount <= 10) {
+      console.log('Orphaned nodes:');
+      orphanedNodes.forEach((node) => {
+        console.log(`  - ${node.id} (parent: ${node.parentId}): "${node.canonicalDocumentTitle}"`);
+      });
+    } else {
+      console.log('First 5 orphaned nodes:');
+      orphanedNodes.slice(0, 5).forEach((node) => {
+        console.log(`  - ${node.id} (parent: ${node.parentId}): "${node.canonicalDocumentTitle}"`);
+      });
+    }
   }
 }
