@@ -27,7 +27,7 @@ export interface NotionDatabasePage {
   json_content: Json; // JSONB - Full block content from Notion API
 
   // Relationships
-  relationships: Json; // JSONB - Stores relationships to other pages/blocks
+  relationships: Relationships; // JSONB - Stores relationships to other pages/blocks
 
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)

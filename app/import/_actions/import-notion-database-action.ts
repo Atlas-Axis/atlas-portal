@@ -5,7 +5,7 @@ import {
   ATLAS_DATABASE_ID_MAP_REVERSED,
   AtlasDatabaseName,
 } from '@/app/server/services/atlas/constants';
-import { _delete_importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/to_delete/_old.import-database-to-supabase';
+import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 export async function importNotionDatabaseAction(notionDatabaseId: string) {
@@ -29,7 +29,7 @@ export async function importNotionDatabaseAction(notionDatabaseId: string) {
   }
 
   try {
-    await _delete_importDatabasePagesFromNotionToSupabase({ atlasDatabaseName });
+    await importDatabasePagesFromNotionToSupabase({ atlasDatabaseName });
 
     return {
       success: true,
