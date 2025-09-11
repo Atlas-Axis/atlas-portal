@@ -19,8 +19,7 @@ export async function loadNotionDatabasePagesFromSupabase({
       .eq('archived', false)
       .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)
-      .order('canonical_document_title, sort_order')
-      // .order('sort_order') // Sort by sort_order
+      .order('sort_order, canonical_document_title')
       .range(page * pageSize, (page + 1) * pageSize - 1);
 
     // Check for errors
