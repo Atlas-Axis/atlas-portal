@@ -1,7 +1,7 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { isValidUUID } from '@/app/shared/utils/utils';
-import { ATLAS_DATABASES } from '../atlas/constants';
+import { IMPORT_DATABASES } from '../atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 import { releaseSyncLock, verifySyncLock } from '../notion/sync-lock';
 
@@ -46,11 +46,16 @@ export const notionFullAtlasSyncTask = task({
     }, 5000);
 
     try {
-      // Start the sync process
-      // TODO: Import other databases too
-      const result = await importDatabasePagesFromNotionToSupabase({
-        atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
-      });
+      // Start the sync process - import all databases
+      const results = [];
+      for (const atlasDatabaseName of IMPORT_DATABASES) {
+        console.log(`📋 Starting sync for database: ${atlasDatabaseName}`);
+        const result = await importDatabasePagesFromNotionToSupabase({
+          atlasDatabaseName,
+        });
+        results.push({ atlasDatabaseName, result });
+        console.log(`✅ Completed sync for database: ${atlasDatabaseName}`);
+      }
 
       // Log final Notion API call stats before flushing metadata
       const finalStats = notion().getNotionProxyStats();
@@ -58,7 +63,10 @@ export const notionFullAtlasSyncTask = task({
       setApiCallCountTriggerMetadata(finalStats.totalApiCalls);
       flushTriggerMetadata();
 
-      return result;
+      return {
+        databases: results,
+        totalApiCalls: finalStats.totalApiCalls,
+      };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       await releaseSyncLock({

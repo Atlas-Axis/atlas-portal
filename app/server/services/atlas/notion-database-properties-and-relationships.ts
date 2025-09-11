@@ -60,7 +60,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
       sortOrder: 'No.',
       type: 'Doc Type',
-      // createEditPage: 'Create Edit Page',
     },
     relationships: {},
     parentPropertyName: 'Parent item',

@@ -98,7 +98,7 @@ export default function Home() {
         </div>
 
         <div className="border-default-400 rounded-lg border-2 p-4">
-          <h2 className="mb-3 text-lg font-semibold">Import Notion Database</h2>
+          <h2 className="mb-3 text-lg font-semibold">Import Notion Database (Sections & Primary Docs)</h2>
           <div className="mb-3">
             <Input
               label="Notion Database ID"
