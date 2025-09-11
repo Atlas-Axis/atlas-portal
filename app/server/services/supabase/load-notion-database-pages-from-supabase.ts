@@ -31,7 +31,7 @@ export async function loadNotionDatabasePagesFromSupabase({
     if (!data || data.length === 0) break;
 
     // Add the loaded pages to the allPages array
-    allPages.push(...data);
+    allPages.push(...(data as NotionDatabasePage[]));
 
     // If we got less than pageSize, we've reached the end
     if (data.length < pageSize) break;
