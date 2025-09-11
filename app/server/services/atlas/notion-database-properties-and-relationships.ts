@@ -71,7 +71,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       // activeData: 'Active Data' // Relation
       // annotations: 'Annotations' // Relation
     },
-    parentPropertyName: 'Parent Doc', // Wrong!
+    parentPropertyName: 'Parent Doc',
     subItemsPropertyName: 'Subdocs',
   },
   [ATLAS_DATABASES.ANNOTATIONS]: {
@@ -131,15 +131,17 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.AGENTS]: {
     properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentName: 'Document Name', // TODO
-      content: 'Content',
+      atlasFullDocumentTitle: 'Document Name',
       atlasDocumentNo: 'Formal Doc ID',
-      sortOrder: '', // TODO
-      type: '', // TODO
+      atlasDocumentName: 'Document Name',
+      content: 'Content',
+      sortOrder: 'No.',
+      type: 'Doc Type',
       // createEditPage: 'Create Edit Page',
     },
     relationships: {},
+    parentPropertyName: 'Parent item',
+    subItemsPropertyName: 'Sub-item',
   },
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
     properties: {
