@@ -1,6 +1,7 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
+import { withRootNode } from '@/app/server/diff/with-root-node';
 import { ATLAS_DATABASE_ID_MAP_REVERSED, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import ContentTree from '@/app/visualize/database/[notion-database-id]/content-tree';
@@ -18,31 +19,12 @@ export default async function Page({ params }: { params: Promise<{ 'notion-datab
   // const tree: Tree = buildTree(treeNodes);
   const tree: Tree = buildTree(withRootNode(treeNodes));
 
+  // console.log('Tree structure:', JSON.stringify(tree, null, 2));
+
   return (
     <div className="p-6">
       <pre className="mb-12 text-xs text-gray-500">{notionDatabaseId}</pre>
       <ContentTree tree={tree} pageIdMap={pageIdMap} />
     </div>
   );
-}
-
-function withRootNode(treeNodes: TreeNode[]) {
-  if (treeNodes.length === 0) return [];
-
-  const rootNode: TreeNode = {
-    id: 'root',
-    parentId: null,
-    type: 'root',
-    sortOrder: 0,
-    canonicalDocumentTitle: '',
-  };
-  treeNodes.push(rootNode);
-
-  // Set parentId of original root nodes to the new root node
-  const originalRootNodes = treeNodes.filter((node) => node.parentId === null && node.id !== rootNode.id);
-  for (const node of originalRootNodes) {
-    node.parentId = rootNode.id;
-  }
-
-  return treeNodes;
 }
