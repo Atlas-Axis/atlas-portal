@@ -67,22 +67,3 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
 export type MasterStatus = (typeof MASTER_STATUSES)[keyof typeof MASTER_STATUSES];
 
 export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
-
-export const MASTER_STATUS_ID_TO_NAME_MAP: Record<string, string> = {
-  '434486e6-0d5e-4541-9f00-40cb9bd67d1c': MASTER_STATUSES.ARCHIVED,
-  'f38bf53d-96bd-4345-a403-c6629ed202a1': MASTER_STATUSES.DEFERRED,
-  'fe75a64f-585b-4d08-af00-ef8667d9c307': MASTER_STATUSES.APPROVED,
-  '3dbb9d9c-fd63-462b-99f3-1ce879f16768': MASTER_STATUSES.PROVISIONAL,
-  '3edf54e3-be0e-4bbb-b008-502cfc23394e': MASTER_STATUSES.PLACEHOLDER,
-};
-
-// export const ALLOWED_PAGE_FIELD_TYPES = [
-//   'title',
-//   'rich_text',
-//   'select',
-//   'relation',
-//   'number',
-//   'url',
-//   'files',
-//   'formula',
-// ] as const;
