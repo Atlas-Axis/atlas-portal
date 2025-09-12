@@ -2,6 +2,8 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelled';
 
+const SYNC_LOCK_TIMEOUT_MINUTES = 30;
+
 export async function acquireSyncLock(notionDatabaseId: string) {
   console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
 
@@ -17,7 +19,7 @@ export async function acquireSyncLock(notionDatabaseId: string) {
         blocks_synced_count: 0,
         is_sync_locked: true,
         sync_lock_acquired_at: new Date().toISOString(),
-        sync_lock_expires_at: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
+        sync_lock_expires_at: new Date(Date.now() + SYNC_LOCK_TIMEOUT_MINUTES * 60 * 1000).toISOString(), // 30 minutes from now
       },
       { onConflict: 'notion_database_id' },
     )
