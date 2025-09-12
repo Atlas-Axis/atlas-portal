@@ -1,3 +1,5 @@
+import { Database } from '@/app/server/services/supabase/database.types';
+
 export const ATLAS_DATABASES = {
   SCOPES: 'Scopes',
   ARTICLES: 'Articles',
@@ -47,6 +49,8 @@ export const ATLAS_DATABASE_ID_MAP_REVERSED: Record<string, AtlasDatabaseName> =
 );
 
 export type AtlasDatabaseID = (typeof ATLAS_DATABASE_ID_MAP)[AtlasDatabaseName];
+
+export type AtlasDocumentType = Database['public']['Enums']['atlas_document_type_enum'];
 
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',

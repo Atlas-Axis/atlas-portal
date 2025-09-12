@@ -1,15 +1,9 @@
 'use client';
 
 import { Chip } from '@heroui/chip';
-import { Database } from '@/app/server/services/supabase/database.types';
+import { AtlasDocumentType } from '@/app/server/services/atlas/constants';
 
-type NodeType = Database['public']['Enums']['atlas_document_type_enum'];
-
-interface TypeChipProps {
-  type: string;
-}
-
-const typeColorMap: Record<NodeType, string> = {
+const typeColorMap: Record<AtlasDocumentType, string> = {
   Section: 'bg-blue-100 text-blue-800',
   Core: 'bg-red-100 text-red-800',
   'Type Specification': 'bg-purple-100 text-purple-800',
@@ -22,8 +16,12 @@ const typeColorMap: Record<NodeType, string> = {
   Annotation: 'bg-pink-100 text-pink-800',
 };
 
-export default function TypeChip({ type }: TypeChipProps) {
-  const colorClass = typeColorMap[type as NodeType] || 'bg-gray-100 text-gray-800';
+export default function TypeChip({ type }: { type: AtlasDocumentType }) {
+  const colorClass = typeColorMap[type] || 'bg-gray-100 text-gray-800';
 
-  return <Chip className={colorClass}>{type}</Chip>;
+  return (
+    <Chip className={colorClass} size="sm">
+      {type}
+    </Chip>
+  );
 }
