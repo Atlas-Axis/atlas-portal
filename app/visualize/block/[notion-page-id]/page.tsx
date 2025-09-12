@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { convertSupabaseBlocksToTreeNodes } from '@/app/server/diff/convert-supabase-blocks-to-tree-nodes';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
@@ -15,7 +16,9 @@ export default async function Page({ params }: { params: Promise<{ 'notion-page-
 
   return (
     <div>
-      <pre className="mb-12 text-xs text-gray-500">{notionPageId}</pre>
+      <Link href="/visualize" className="mb-4 inline-block text-indigo-500 hover:underline">
+        ← Back to overview
+      </Link>
       <ContentTree tree={tree} blockIdMap={blockIdMap} />
     </div>
   );

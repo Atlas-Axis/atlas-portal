@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
@@ -21,7 +22,9 @@ export default async function Page({ params }: { params: Promise<{ 'notion-datab
 
   return (
     <div className="p-6">
-      <pre className="mb-12 text-xs text-gray-500">{notionDatabaseId}</pre>
+      <Link href="/visualize" className="mb-4 inline-block text-indigo-500 hover:underline">
+        ← Back to overview
+      </Link>
       <ContentTree tree={tree} pageIdMap={pageIdMap} atlasDatabaseName={atlasDatabaseName} />
     </div>
   );

@@ -55,16 +55,16 @@ export default async function Page() {
   ));
 
   return (
-    <div className="p-6">
-      <h2 className="mb-4 text-lg font-semibold">Notion Pages in Supabase</h2>
-      <ul>{rootBlockLinks}</ul>
+    <div className="min-h-screen p-6">
+      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Original)</h2>
+      <ul>{rootDatabasePageLinks}</ul>
 
       <Spacer y={9} />
       <Divider />
       <Spacer y={9} />
 
-      <h2 className="mb-4 text-lg font-semibold">Notion Databases in Supabase (Original)</h2>
-      <ul>{rootDatabasePageLinks}</ul>
+      <h2 className="mb-4 text-lg font-semibold">&quot;Edit Pages&quot; in Supabase</h2>
+      <ul>{rootBlockLinks}</ul>
     </div>
   );
 }
