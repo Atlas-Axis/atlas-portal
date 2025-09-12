@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
 import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
@@ -11,12 +12,6 @@ import { logTree } from '../console-log-tree';
 import { TreeChange, diffTrees } from '../diff-trees';
 import { extractSubtreeAsTree, extractSubtreePageIds } from '../extract-subtree';
 import { rewriteTreeNodeIds } from '../rewrite-tree-node-ids';
-
-function getDebugLogging() {
-  return Boolean(
-    process.env.DEBUG_LOGGING && process.env.DEBUG_LOGGING !== '0' && process.env.DEBUG_LOGGING !== 'false',
-  );
-}
 
 export async function _delete_calculateNotionPageHierarchyChanges({
   originalRootNotionPageId,
@@ -32,7 +27,7 @@ export async function _delete_calculateNotionPageHierarchyChanges({
   // }> {
   const startTime = Date.now();
 
-  const DEBUG_LOGGING = getDebugLogging();
+  const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
   console.log(`Starting calculation of Notion page hierarchy changes...`);
   console.log(`Original root Notion page ID: ${originalRootNotionPageId}`);

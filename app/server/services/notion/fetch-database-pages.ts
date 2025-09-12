@@ -5,6 +5,8 @@ import { NOTION_DATABASE_FILTERS } from '../atlas/notion-master-status-filters';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
 
+const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+
 // Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than 25.
 export interface EnhancedPageObjectResponse extends PageObjectResponse {
   enhancedRelations: Map<string, string[]>; // propertyName -> array of related page IDs
@@ -114,7 +116,9 @@ export async function fetchNotionDatabasePages({
   atlasDatabaseName: AtlasDatabaseName;
 }): Promise<PageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
-  // console.log(`📡 Starting to fetch all pages from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`);
+  if (DEBUG_LOGGING) {
+    console.log(`📡 Starting to fetch all pages from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`);
+  }
 
   const results: PageObjectResponse[] = [];
   let cursor: string | undefined = undefined;
@@ -122,7 +126,9 @@ export async function fetchNotionDatabasePages({
   let batchNumber = 1;
 
   do {
-    // console.log(`  🔄 Fetching batch ${batchNumber} from Notion API...`);
+    if (DEBUG_LOGGING) {
+      console.log(`  🔄 Fetching batch ${batchNumber} from Notion API...`);
+    }
     const response: QueryDatabaseResponse = await notion().databases.query({
       database_id: notionDatabaseId,
       page_size: 100,
@@ -130,8 +136,10 @@ export async function fetchNotionDatabasePages({
       filter: NOTION_DATABASE_FILTERS,
     });
 
-    // const batchSize = response.results.length;
-    // console.log(`  📄 Received ${batchSize} Notion pages in batch ${batchNumber}`);
+    if (DEBUG_LOGGING) {
+      const batchSize = response.results.length;
+      console.log(`  📄 Received ${batchSize} Notion pages in batch ${batchNumber}`);
+    }
 
     // Only keep full PageObjectResponse rows (ignore partials just in case)
     for (const result of response.results) {
@@ -147,16 +155,14 @@ export async function fetchNotionDatabasePages({
     console.log(`  Batch ${batchNumber} processed - Total Notion pages so far: ${pageCount}`);
 
     if (cursor) {
-      // console.log(`  ➡️ More Notion pages available, continuing to next batch...`);
+      if (DEBUG_LOGGING) {
+        console.log(`  ➡️ More Notion pages available, continuing to next batch...`);
+      }
     } else {
-      // console.log(`  🏁 Reached end of database - no more Notion pages to fetch`);
+      if (DEBUG_LOGGING) {
+        console.log(`  🏁 Reached end of database - no more Notion pages to fetch`);
+      }
     }
-
-    // TODO: Delete
-    // if (batchNumber >= 3) {
-    //   console.log(`  ⚠️ Stopping after 3 batches for testing purposes - remove this limit in production`);
-    //   break;
-    // }
 
     batchNumber++;
   } while (cursor);

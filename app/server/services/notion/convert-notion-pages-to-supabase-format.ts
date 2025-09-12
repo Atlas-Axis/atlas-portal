@@ -6,6 +6,8 @@ import { extractPageTitle } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
+const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+
 /**
  * Convert Notion pages to database format for insertion/upsert
  */
@@ -31,7 +33,8 @@ export async function convertNotionPagesToDatabaseFormat({
     }
   }
 
-  //   console.log(`✅ Successfully converted ${databasePages.length} pages to database format`);
+  if (DEBUG_LOGGING) console.log(`Converted ${databasePages.length} pages to database format`);
+
   return databasePages;
 }
 
@@ -58,7 +61,6 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   // Extract document type
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
-  // console.log(`Document type for page ${notionPage.id}:`, documentType);
   if (!documentType) {
     console.warn(`⚠️ Document type is missing for page ${notionPage.id}. Setting to "Placeholder".`);
   }
@@ -69,6 +71,9 @@ async function convertSingleNotionPageToDatabaseFormat(
   // Extract relationships
   const relationships = extractRelationships(notionPage, databaseConfig.relationships);
   const hasRelationships = Object.values(relationships).some((rel) => rel.length > 0);
+
+  // TODO: Only log in verbose logging mode
+  // if (hasRelationships && DEBUG_LOGGING) {
   if (hasRelationships) {
     console.log(`🔥 Relationships for page ${notionPage.id}:`, relationships);
   }
@@ -198,10 +203,14 @@ function extractParentPageId(page: EnhancedPageObjectResponse, parentPropertyNam
   if (parentPropertyName) {
     const parentProperty = page.properties[parentPropertyName];
     if (parentProperty && parentProperty.type === 'relation' && parentProperty.relation.length > 0) {
-      // console.log(`Parent IDs for page ${page.id}:`, parentProperty.relation);
+      if (DEBUG_LOGGING) {
+        console.log(`Parent IDs for page ${page.id}:`, parentProperty.relation);
+      }
       return parentProperty.relation[0].id; // Assuming single parent
     }
-    console.log(`No parent IDs found for page ${page.id} using property "${parentPropertyName}"`);
+    if (DEBUG_LOGGING) {
+      console.log(`No parent IDs found for page ${page.id} using property "${parentPropertyName}"`);
+    }
   } else console.log(`No parent property name defined for page ${page.id}`);
 
   return null;
@@ -214,10 +223,14 @@ function determineHasChildren(page: EnhancedPageObjectResponse, subItemsProperty
   if (subItemsPropertyName) {
     const subItemsProperty = page.properties[subItemsPropertyName];
     if (subItemsProperty && subItemsProperty.type === 'relation' && subItemsProperty.relation.length > 0) {
-      // console.log(`Sub-item IDs for page ${page.id}:`, subItemsProperty.relation);
+      if (DEBUG_LOGGING) {
+        console.log(`Sub-item IDs for page ${page.id}:`, subItemsProperty.relation);
+      }
       return true; // Has children
     }
-    // console.log(`No sub-item IDs found for page ${page.id} using property "${subItemsPropertyName}"`);
+    if (DEBUG_LOGGING) {
+      console.log(`No sub-item IDs found for page ${page.id} using property "${subItemsPropertyName}"`);
+    }
   } else console.log(`No sub-items property name defined for page ${page.id}`);
 
   return false;
