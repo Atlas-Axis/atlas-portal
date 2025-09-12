@@ -57,7 +57,7 @@ async function convertSingleNotionPageToDatabaseFormat(
   const documentNumber = extractDocumentNumber(notionPage, databaseConfig.properties.atlasDocumentNo);
 
   // Extract document type
-  const documentType = extractDocumentType(notionPage, databaseConfig.properties.type);
+  const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
   // console.log(`Document type for page ${notionPage.id}:`, documentType);
   if (!documentType) {
     console.warn(`⚠️ Document type is missing for page ${notionPage.id}. Setting to "Placeholder".`);
@@ -214,7 +214,7 @@ function determineHasChildren(page: EnhancedPageObjectResponse, subItemsProperty
   if (subItemsPropertyName) {
     const subItemsProperty = page.properties[subItemsPropertyName];
     if (subItemsProperty && subItemsProperty.type === 'relation' && subItemsProperty.relation.length > 0) {
-      console.log(`Sub-item IDs for page ${page.id}:`, subItemsProperty.relation);
+      // console.log(`Sub-item IDs for page ${page.id}:`, subItemsProperty.relation);
       return true; // Has children
     }
     // console.log(`No sub-item IDs found for page ${page.id} using property "${subItemsPropertyName}"`);

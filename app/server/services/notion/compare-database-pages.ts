@@ -4,8 +4,8 @@ import { AtlasDatabaseName } from '../atlas/constants';
 import {
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   NotionDatabasePropertyKey,
-  NotionDatabasePropertyMapping,
-  reverseNotionDatabasePropertyMapping,
+  PROPERTY_MAPPING_NAMES,
+  REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
 } from '../atlas/notion-database-properties-and-relationships';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -49,7 +49,6 @@ export function compareDatabasePages({
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const trackedProperties = Object.values(databaseConfig.properties).filter((prop) => prop !== '');
   const trackedRelationships = Object.keys(databaseConfig.relationships);
-  const reversedNotionDatabasePropertyMapping = reverseNotionDatabasePropertyMapping(databaseConfig.properties);
 
   const changes: DatabasePageChanges = {
     newPages: [],
@@ -86,17 +85,12 @@ export function compareDatabasePages({
     // Check property changes
     for (const propertyName of trackedProperties) {
       const notionValue = extractNotionPropertyValue(notionPage, propertyName);
-      const supabaseValue = extractPropertyValueFromSupabase(
-        supabasePage,
-        propertyName,
-        atlasDatabaseName,
-        reversedNotionDatabasePropertyMapping,
-      );
+      const supabaseValue = extractPropertyValueFromSupabase(supabasePage, propertyName, atlasDatabaseName);
 
       if (!arePropertyValuesEqual(notionValue, supabaseValue)) {
         hasPropertyChanges = true;
         console.log(
-          `📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+          `📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${JSON.stringify(notionValue)}", Supabase: "${JSON.stringify(supabaseValue)}")`,
         );
       }
     }
@@ -155,8 +149,8 @@ function extractPropertyValueFromSupabase(
   page: NotionDatabasePage,
   notionPropertyName: string,
   atlasDatabaseName: AtlasDatabaseName,
-  reversedNotionDatabasePropertyMapping: Record<string, keyof NotionDatabasePropertyMapping>,
 ): string | number | null {
+  const reversedNotionDatabasePropertyMapping = REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[atlasDatabaseName];
   const mappedPropertyName = reversedNotionDatabasePropertyMapping[notionPropertyName];
   if (!mappedPropertyName) {
     console.warn(
@@ -165,16 +159,18 @@ function extractPropertyValueFromSupabase(
     return null;
   }
   // Use a type-safe switch to access the correct field
-  switch (mappedPropertyName) {
-    case 'atlasFullDocumentTitle':
+  switch (mappedPropertyName as NotionDatabasePropertyKey) {
+    case PROPERTY_MAPPING_NAMES.ATLAS_FULL_DOCUMENT_TITLE:
       return page.canonical_document_title ?? null;
-    case 'atlasDocumentNo':
+    case PROPERTY_MAPPING_NAMES.ATLAS_DOCUMENT_NO:
       return page.atlas_document_number ?? null;
-    case 'atlasDocumentName':
+    case PROPERTY_MAPPING_NAMES.ATLAS_DOCUMENT_NAME:
       return page.plain_text_name ?? null;
-    case 'content':
+    case PROPERTY_MAPPING_NAMES.ATLAS_DOCUMENT_TYPE:
+      return page.atlas_document_type ?? null;
+    case PROPERTY_MAPPING_NAMES.CONTENT:
       return page.plain_text_content ?? null;
-    case 'sortOrder':
+    case PROPERTY_MAPPING_NAMES.SORT_ORDER:
       return page.sort_order ?? null;
     default:
       console.warn(`Unknown property key: ${mappedPropertyName}. Notion property: ${notionPropertyName}`);
