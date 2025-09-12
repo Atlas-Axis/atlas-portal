@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
   relationships JSONB NOT NULL DEFAULT '{}', -- Stores relationships to other pages/blocks
-  sort_order INTEGER NOT NULL, -- Position within parent (for ordering; 0-indexed)
+  sort_order DECIMAL(5,2) NOT NULL, -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT -- ID of the Notion user who last edited this page

@@ -31,7 +31,6 @@ export async function importDatabasePagesFromNotionToSupabase({
 
   try {
     // Update sync status in database
-    console.log(`Acquiring sync lock for database ${notionDatabaseId}...`);
     await acquireSyncLock(notionDatabaseId);
 
     // Load existing database pages from Supabase
@@ -52,6 +51,7 @@ export async function importDatabasePagesFromNotionToSupabase({
     console.log(`🔄 Syncing changed pages to Supabase...`);
 
     if (existingPages.length > 0) {
+      // if (existingPages.length > 0) {
       const changes = compareDatabasePages({
         supabasePages: existingPages,
         notionPages: notionPagesWithRelationships,
