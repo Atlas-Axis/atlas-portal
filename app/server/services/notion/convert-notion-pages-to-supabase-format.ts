@@ -164,10 +164,10 @@ function extractSortOrder(page: PageObjectResponse, sortOrderPropertyName: strin
 
     const numValue = Number(value);
 
-    // Validate that it's a positive integer (no fractions, no negative numbers)
-    if (!Number.isInteger(numValue) || numValue < 0) {
+    // Validate that it's a valid positive number (integers and fractions allowed, no negative numbers)
+    if (isNaN(numValue) || !isFinite(numValue) || numValue < 0) {
       console.warn(
-        `Invalid sort order value "${value}" in page ${page.id}. Must be a positive integer. Using 0 instead.`,
+        `Invalid sort order value "${value}" in page ${page.id}. Must be a positive number. Using 0 instead.`,
       );
       return 0;
     }

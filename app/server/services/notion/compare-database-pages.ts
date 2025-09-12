@@ -84,8 +84,13 @@ export function compareDatabasePages({
 
     // Check property changes
     for (const propertyName of trackedProperties) {
-      const notionValue = extractNotionPropertyValue(notionPage, propertyName);
+      let notionValue = extractNotionPropertyValue(notionPage, propertyName);
       const supabaseValue = extractPropertyValueFromSupabase(supabasePage, propertyName, atlasDatabaseName);
+
+      // Special handling for sortOrder: convert to number from string
+      if (propertyName === databaseConfig.properties.sortOrder) {
+        notionValue = notionValue !== null ? Number(notionValue) : 0;
+      }
 
       if (!arePropertyValuesEqual(notionValue, supabaseValue)) {
         hasPropertyChanges = true;
@@ -171,6 +176,11 @@ function extractPropertyValueFromSupabase(
     case PROPERTY_MAPPING_NAMES.CONTENT:
       return page.plain_text_content ?? null;
     case PROPERTY_MAPPING_NAMES.SORT_ORDER:
+      // If sort order is not a valid number, log a warning. Both integers and fractions are allowed
+      if (page.sort_order !== null && isNaN(page.sort_order)) {
+        console.warn(`Non numeric sort order for page ${page.notion_page_id}: ${page.sort_order}`);
+      }
+
       return page.sort_order ?? null;
     default:
       console.warn(`Unknown property key: ${mappedPropertyName}. Notion property: ${notionPropertyName}`);

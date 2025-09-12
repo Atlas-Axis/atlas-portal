@@ -33,7 +33,6 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Update sync status in database
     console.log(`Acquiring sync lock for database ${notionDatabaseId}...`);
     await acquireSyncLock(notionDatabaseId);
-    console.log(`Sync lock acquired successfully`);
 
     // Load existing database pages from Supabase
     console.log(`📥 Loading existing database pages from Supabase to detect changes...`);
