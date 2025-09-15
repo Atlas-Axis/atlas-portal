@@ -1,12 +1,24 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { NotionDatabasePage, Relationships } from '../../database/notion-database-page';
+import { Tables } from '@/app/server/services/supabase/database.types';
+import { NotionDatabasePage } from '../../database/notion-database-page';
 import { AtlasDatabaseName } from '../atlas/constants';
-import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../atlas/notion-database-properties-and-relationships';
+import {
+  NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
+  SUPABASE_CHILD_DATABASE_NAME_MAP,
+} from '../atlas/notion-database-properties-and-relationships';
 import { extractPageTitle } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+
+// Local type for future relationship extraction usage
+type Relationships = Record<string, string[]>;
+type NotionDatabasePagesRow = Tables<'notion_database_pages'>;
+type ChildFieldName = {
+  [K in keyof NotionDatabasePagesRow]: K extends `child_${string}_ids` ? K : never;
+}[keyof NotionDatabasePagesRow];
+type ChildArrays = { [K in ChildFieldName]: string[] };
 
 /**
  * Convert Notion pages to database format for insertion/upsert
@@ -68,25 +80,25 @@ async function convertSingleNotionPageToDatabaseFormat(
   // Extract sort order
   const sortOrder = extractSortOrder(notionPage, databaseConfig.properties.sortOrder);
 
-  // Extract relationships
-  const relationships = extractRelationships(notionPage, databaseConfig.relationships);
-  const hasRelationships = Object.values(relationships).some((rel) => rel.length > 0);
+  // Extract relationships keyed by Notion property name (based on config)
+  const relationshipsByProperty = extractRelationships(notionPage, databaseConfig.relationships);
+  const hasRelationships = Object.values(relationshipsByProperty).some((rel) => rel.length > 0);
 
   // TODO: Only log in verbose logging mode
   // if (hasRelationships && DEBUG_LOGGING) {
   if (hasRelationships) {
-    console.log(`🔥 Relationships for page ${notionPage.id}:`, relationships);
+    console.log(`🔥 Relationships for page ${notionPage.id}:`, relationshipsByProperty);
   }
-
-  // Determine parent page ID (this would need to be implemented based on your hierarchy logic)
-  const parentNotionPageId = extractParentPageId(notionPage, databaseConfig.parentPropertyName);
 
   // Determine if page has children (this would need to be implemented based on your hierarchy logic)
   const hasChildren = determineHasChildren(notionPage, databaseConfig.subItemsPropertyName);
 
+  // Initialize all child-array relationship fields to [] and map from config into child arrays
+  let childArrays = initializeChildRelationshipArrays();
+  childArrays = mapRelationshipsToChildArrays(relationshipsByProperty, databaseConfig.relationships, childArrays);
+
   const databasePage: NotionDatabasePage = {
     notion_page_id: notionPage.id,
-    parent_notion_page_id: parentNotionPageId,
     canonical_document_title: canonicalDocumentTitle,
     atlas_document_type: (documentType as NotionDatabasePage['atlas_document_type']) || 'Placeholder',
     atlas_document_number: documentNumber,
@@ -98,7 +110,7 @@ async function convertSingleNotionPageToDatabaseFormat(
     json_content: content.richText,
     plain_text_name: pageTitle.plainText,
     json_name: pageTitle.richText,
-    relationships: relationships,
+    ...childArrays,
     sort_order: sortOrder,
     created_at: notionPage.created_time,
     updated_at: notionPage.last_edited_time,
@@ -106,6 +118,52 @@ async function convertSingleNotionPageToDatabaseFormat(
   };
 
   return databasePage;
+}
+
+function initializeChildRelationshipArrays(): ChildArrays {
+  return {
+    child_scope_ids: [],
+    child_article_ids: [],
+    child_section_and_primary_doc_ids: [],
+    child_annotation_ids: [],
+    child_tenet_ids: [],
+    child_scenario_ids: [],
+    child_scenario_variation_ids: [],
+    child_active_data_ids: [],
+    child_agent_scope_ids: [],
+    child_needed_research_ids: [],
+  };
+}
+
+/**
+ * Maps extracted relationship IDs into the appropriate child_*_ids arrays
+ */
+function mapRelationshipsToChildArrays(
+  relationshipsByProperty: Record<string, string[]>,
+  relationshipConfig: Record<AtlasDatabaseName, string>,
+  initial: ChildArrays,
+): ChildArrays {
+  const result: ChildArrays = { ...initial };
+
+  for (const [targetDb, relationPropertyName] of Object.entries(relationshipConfig)) {
+    const ids = relationshipsByProperty[relationPropertyName] || [];
+    const supabaseField = SUPABASE_CHILD_DATABASE_NAME_MAP[targetDb as AtlasDatabaseName] as
+      | keyof ChildArrays
+      | undefined;
+
+    if (!supabaseField || !(supabaseField in result)) {
+      // TODO: No child array exists for this target database in the current schema
+      if (ids.length > 0) {
+        console.warn(`No child array column for target database "${targetDb}". Skipping ${ids.length} IDs.`);
+      }
+      continue;
+    }
+
+    // Append any found IDs to the appropriate child array
+    result[supabaseField] = [...(result[supabaseField] || []), ...ids];
+  }
+
+  return result;
 }
 
 /**
@@ -194,26 +252,6 @@ function extractRelationships(
   }
 
   return relationships;
-}
-
-/**
- * Extract parent page ID from a Notion page
- */
-function extractParentPageId(page: EnhancedPageObjectResponse, parentPropertyName?: string): string | null {
-  if (parentPropertyName) {
-    const parentProperty = page.properties[parentPropertyName];
-    if (parentProperty && parentProperty.type === 'relation' && parentProperty.relation.length > 0) {
-      if (DEBUG_LOGGING) {
-        console.log(`Parent IDs for page ${page.id}:`, parentProperty.relation);
-      }
-      return parentProperty.relation[0].id; // Assuming single parent
-    }
-    if (DEBUG_LOGGING) {
-      console.log(`No parent IDs found for page ${page.id} using property "${parentPropertyName}"`);
-    }
-  } else console.log(`No parent property name defined for page ${page.id}`);
-
-  return null;
 }
 
 /**
