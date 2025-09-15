@@ -1,5 +1,7 @@
 -- Create the enum type for atlas_document_type
 CREATE TYPE atlas_document_type_enum AS ENUM (
+  'Scope',
+  'Article',
   'Section',
   'Core',
   'Type Specification',
@@ -9,7 +11,9 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Category',
   'Action Tenet',
   'Active Data',
-  'Annotation'
+  'Annotation',
+  'Scenario',
+  'Scenario Variation'
 );
 
 -- Create the enum type for atlas_database_name_enum

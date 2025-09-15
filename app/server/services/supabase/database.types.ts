@@ -238,7 +238,11 @@ export type Database = {
         | 'Category'
         | 'Action Tenet'
         | 'Active Data'
-        | 'Annotation';
+        | 'Annotation'
+        | 'Scope'
+        | 'Article'
+        | 'Scenario'
+        | 'Scenario Variation';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -382,6 +386,10 @@ export const Constants = {
         'Action Tenet',
         'Active Data',
         'Annotation',
+        'Scope',
+        'Article',
+        'Scenario',
+        'Scenario Variation',
       ],
     },
   },
