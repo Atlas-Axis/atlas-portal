@@ -1,3 +1,4 @@
+import { Tables } from '@/app/server/services/supabase/database.types';
 import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
 
 export interface NotionDatabasePropertyMapping {
@@ -6,8 +7,7 @@ export interface NotionDatabasePropertyMapping {
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
   atlasDocumentType: string; // A property name representing the type of document, e.g. "Core", "Section"...
   content: string; // A property name representing the main content or body of the document
-  // TODO: optional?
-  sortOrder: string; // A property name representing the manually set order of the document within its parent or section
+  sortOrder: string | null; // A property name representing the manually set order of the document within its parent or section
 }
 
 export type NotionDatabasePropertyKey = keyof NotionDatabasePropertyMapping;
@@ -34,12 +34,46 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   AtlasDatabaseName,
   {
     properties: NotionDatabasePropertyMapping;
-    relationships: Record<AtlasDatabaseName, string>;
-    parentPropertyName?: string;
-    subItemsPropertyName?: string;
+    childRelationships: Partial<Record<AtlasDatabaseName, string>>;
+    // parentPropertyName?: string;
+    // subItemsPropertyName?: string;
   }
 > = {
+  // ✅
+  [ATLAS_DATABASES.SCOPES]: {
+    // ✅
+    properties: {
+      atlasFullDocumentTitle: 'Name', // TODO: null?
+      atlasDocumentNo: 'Doc No',
+      atlasDocumentName: 'Name',
+      atlasDocumentType: 'Type',
+      content: 'Content',
+      sortOrder: null,
+    },
+    // ✅
+    childRelationships: {
+      [ATLAS_DATABASES.ARTICLES]: 'Articles',
+    },
+  },
+  // ✅
+  [ATLAS_DATABASES.ARTICLES]: {
+    // ✅
+    properties: {
+      atlasFullDocumentTitle: 'Doc No', // TODO: null?
+      atlasDocumentNo: 'Doc No',
+      atlasDocumentName: 'Name',
+      atlasDocumentType: 'Type',
+      content: 'Content',
+      sortOrder: null,
+    },
+    // ✅
+    childRelationships: {
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+    },
+  },
+  // ✅
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
+    // ✅
     properties: {
       atlasFullDocumentTitle: 'Doc No (or Temp Name)',
       atlasDocumentNo: 'Formal Doc ID',
@@ -48,22 +82,19 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
       sortOrder: 'No.',
     },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
+    // ✅
+    childRelationships: {
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Subdocs',
+      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
+      [ATLAS_DATABASES.TENETS]: 'Tenets',
+      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
     },
-    parentPropertyName: 'Parent Doc',
-    subItemsPropertyName: 'Subdocs',
+    // parentPropertyName: 'Parent Doc',
+    // subItemsPropertyName: 'Subdocs',
   },
+  // ✅
   [ATLAS_DATABASES.AGENTS]: {
+    // ✅
     properties: {
       atlasFullDocumentTitle: 'Document Name',
       atlasDocumentNo: 'Formal Doc ID',
@@ -72,130 +103,60 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
       sortOrder: 'No.',
     },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
+    // ✅
+    childRelationships: {
+      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
+      [ATLAS_DATABASES.TENETS]: 'Tenets',
+      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
+      [ATLAS_DATABASES.AGENTS]: 'Sub-item',
+      // [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
     },
-    parentPropertyName: 'Parent item',
-    subItemsPropertyName: 'Sub-item',
+    // parentPropertyName: 'Parent item',
+    // subItemsPropertyName: 'Sub-item',
   },
-  [ATLAS_DATABASES.ACTIVE_DATA]: {
-    properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentNo: '', // TODO
-      atlasDocumentName: '', // TODO
-      atlasDocumentType: '', // TODO
-      content: '', // TODO
-      sortOrder: '', // TODO
-    },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
-    },
-  },
-  [ATLAS_DATABASES.SCOPES]: {
-    properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentNo: '', // TODO
-      atlasDocumentName: '', // TODO
-      atlasDocumentType: '', // TODO
-      content: '', // TODO
-      sortOrder: '', // TODO
-    },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
-    },
-  },
-  [ATLAS_DATABASES.ARTICLES]: {
-    properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentNo: '', // TODO
-      atlasDocumentName: '', // TODO
-      atlasDocumentType: '', // TODO
-      content: '', // TODO
-      sortOrder: '', // TODO
-    },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
-    },
-  },
+  // ✅
   [ATLAS_DATABASES.ANNOTATIONS]: {
+    // ✅
     properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentNo: '', // TODO
-      atlasDocumentName: '', // TODO
-      atlasDocumentType: '', // TODO
-      content: '', // TODO
-      sortOrder: '', // TODO
+      atlasFullDocumentTitle: 'Name',
+      atlasDocumentNo: 'Doc No',
+      atlasDocumentName: 'Name',
+      atlasDocumentType: 'Type',
+      content: 'Content',
+      sortOrder: null, // TODO ?
     },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
+    // ✅
+    childRelationships: {},
+  },
+  // ✅
+  [ATLAS_DATABASES.TENETS]: {
+    // ✅
+    properties: {
+      atlasFullDocumentTitle: 'Doc No (or Temp Name)',
+      atlasDocumentNo: 'Doc No (or Temp Name)',
+      atlasDocumentName: 'Name',
+      atlasDocumentType: 'Type',
+      content: 'Content', // TODO
+      sortOrder: null,
+    },
+    // ✅
+    childRelationships: {
+      [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
     },
   },
-  [ATLAS_DATABASES.TENETS]: {
+  // ✅
+  [ATLAS_DATABASES.ACTIVE_DATA]: {
+    // ✅
     properties: {
-      atlasFullDocumentTitle: '', // TODO
-      atlasDocumentNo: '', // TODO
-      atlasDocumentName: '', // TODO
-      atlasDocumentType: '', // TODO
-      content: '', // TODO
-      sortOrder: '', // TODO
+      atlasFullDocumentTitle: 'Name', // TODO: null?
+      atlasDocumentNo: 'Doc No',
+      atlasDocumentName: 'Name',
+      atlasDocumentType: 'Type',
+      content: 'Content',
+      sortOrder: null, // TODO: ?
     },
-    relationships: {
-      [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
-    },
+    // ✅
+    childRelationships: {},
   },
   [ATLAS_DATABASES.SCENARIOS]: {
     properties: {
@@ -206,7 +167,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: '', // TODO
       sortOrder: '', // TODO
     },
-    relationships: {
+    childRelationships: {
       [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
       [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
@@ -228,7 +189,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: '', // TODO
       sortOrder: '', // TODO
     },
-    relationships: {
+    childRelationships: {
       [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
       [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
@@ -250,7 +211,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: '', // TODO
       sortOrder: '', // TODO
     },
-    relationships: {
+    childRelationships: {
       [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
       [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
@@ -306,3 +267,11 @@ export const SUPABASE_CHILD_DATABASE_NAME_MAP: Record<AtlasDatabaseName, string>
   [ATLAS_DATABASES.NEEDED_RESEARCH]: 'child_needed_research_ids',
   // [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: 'child_original_context_data_ids',
 } as const;
+
+type NotionDatabasePagesRow = Tables<'notion_database_pages'>;
+
+export type ChildListFieldName = {
+  [K in keyof NotionDatabasePagesRow]: K extends `child_${string}_ids` ? K : never;
+}[keyof NotionDatabasePagesRow];
+
+export type ChildLists = { [K in ChildListFieldName]: string[] };
