@@ -13,16 +13,35 @@ async function main() {
   loadEnv();
 
   try {
-    console.log('Creating math equation block...');
+    console.log('Creating paragraph with inline math equation...');
 
-    // Create a new equation block with the math equation
+    // Create a paragraph block with inline equation
     const response = await notion('write').blocks.children.append({
       block_id: NOTION_PAGE_ID,
       children: [
         {
-          type: 'equation',
-          equation: {
-            expression: MATH_EQUATION,
+          type: 'paragraph',
+          paragraph: {
+            rich_text: [
+              {
+                type: 'text',
+                text: {
+                  content: 'The risk factor is calculated using the formula: ',
+                },
+              },
+              {
+                type: 'equation',
+                equation: {
+                  expression: MATH_EQUATION,
+                },
+              },
+              {
+                type: 'text',
+                text: {
+                  content: ' for all applicable scenarios.',
+                },
+              },
+            ],
           },
         },
       ],
@@ -30,10 +49,10 @@ async function main() {
 
     const createdBlock = response.results[0];
     if (createdBlock && 'id' in createdBlock) {
-      console.log(`✅ Successfully created equation block with ID: ${createdBlock.id}`);
+      console.log(`✅ Successfully created paragraph with inline equation. Block ID: ${createdBlock.id}`);
       console.log(`📐 Equation content: ${MATH_EQUATION}`);
     } else {
-      console.error('❌ Failed to create equation block - no ID returned');
+      console.error('❌ Failed to create paragraph block - no ID returned');
     }
 
     const endTime = Date.now();
