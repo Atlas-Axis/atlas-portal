@@ -87,7 +87,6 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 **Key Fields:**
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `parent_notion_page_id` (UUID) - Parent page ID, NULL for root database pages
 - `atlas_document_type` (ENUM, NULLABLE) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
 - `archived` (BOOLEAN) - Notion archive status
@@ -100,9 +99,22 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 - `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at`, `updated_at`, `last_edited_by_user_id` - Same as in notion_blocks table
 
-**Cascade deletes:**
+Child relationship fields (JSONB arrays of UUID strings):
 
-- Foreign key: parent_notion_page_id CASCADE DELETE
+- `child_scope_ids`
+- `child_article_ids`
+- `child_section_and_primary_doc_ids`
+- `child_annotation_ids`
+- `child_tenet_ids`
+- `child_scenario_ids`
+- `child_scenario_variation_ids`
+- `child_active_data_ids`
+- `child_agent_scope_ids`
+- `child_needed_research_ids`
+
+Relationship modeling note:
+
+- Parent-child relationships are modeled via per-type child ID arrays, not a parent foreign key. Cleanup of stale child IDs is handled at the application/import layer.
 
 ### `notion_sync_status`
 

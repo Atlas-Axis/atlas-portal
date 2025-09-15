@@ -74,7 +74,6 @@ Stores Notion database pages and their hierarchical relationships.
 **Key Fields:**
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `parent_notion_page_id` (UUID) - Parent page ID, NULL for root database pages
 - `atlas_document_type` (ENUM, NULLABLE) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
 - `plain_text_content` (TEXT) - Page content as plain text
@@ -83,6 +82,19 @@ Stores Notion database pages and their hierarchical relationships.
 - `json_name` (JSONB) - Rich text page title from Notion API
 - `sort_order` (INTEGER, NOT NULL) - Position of sub item within parent (0-indexed)
 - `canonical_document_title` (TEXT) - Atlas document identifier
+
+Child relationship fields (JSONB arrays of UUID strings):
+
+- `child_scope_ids` – Children from 'Scopes'
+- `child_article_ids` – Children from 'Articles'
+- `child_section_and_primary_doc_ids` – Children from 'Sections & Primary Docs'
+- `child_annotation_ids` – Children from 'Annotations'
+- `child_tenet_ids` – Children from 'Tenets'
+- `child_scenario_ids` – Children from 'Scenarios'
+- `child_scenario_variation_ids` – Children from 'Scenario Variations'
+- `child_active_data_ids` – Children from 'Active Data'
+- `child_agent_scope_ids` – Children from 'Agent Scope Database'
+- `child_needed_research_ids` – Children from 'Needed Research'
 
 #### `notion_sync_status`
 
