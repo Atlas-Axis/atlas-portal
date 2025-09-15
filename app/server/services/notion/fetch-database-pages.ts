@@ -102,10 +102,8 @@ export async function fetchNotionDatabasePagesWithRelationships({
     `✅ Completed fetching all pages with relationships: ${enhancedPages.length} total pages from database "${atlasDatabaseName}"`,
   );
 
-  // Save to cache if enabled
-  if (useLocalCache) {
-    await saveCachedDatabasePages(atlasDatabaseName, enhancedPages);
-  }
+  // Save to file cache
+  await saveCachedDatabasePages(atlasDatabaseName, enhancedPages);
 
   return enhancedPages;
 }
