@@ -1,12 +1,9 @@
 import { Database, Json } from '@/app/server/services/supabase/database.types';
 
-export type Relationships = Record<string, string[]>;
-
 // Represents a Notion page in the database
 export interface NotionDatabasePage {
   // Primary keys and identifiers
   notion_page_id: string; // UUID - Notion page ID
-  parent_notion_page_id?: string | null; // UUID - Parent page ID (null for root pages)
 
   // Atlas document fields
   canonical_document_title?: string | null; // Title of the Atlas document this page belongs to
@@ -26,8 +23,17 @@ export interface NotionDatabasePage {
   plain_text_content?: string | null; // Extracted plain text for easy searching
   json_content: Json; // JSONB - Full block content from Notion API
 
-  // Relationships
-  relationships: Relationships; // JSONB - Stores relationships to other pages/blocks
+  // Child relationships grouped by Atlas database type
+  child_scope_ids: Json; // JSON array of UUID strings
+  child_article_ids: Json; // JSON array of UUID strings
+  child_section_and_primary_doc_ids: Json; // JSON array of UUID strings
+  child_annotation_ids: Json; // JSON array of UUID strings
+  child_tenet_ids: Json; // JSON array of UUID strings
+  child_scenario_ids: Json; // JSON array of UUID strings
+  child_scenario_variation_ids: Json; // JSON array of UUID strings
+  child_active_data_ids: Json; // JSON array of UUID strings
+  child_agent_scope_ids: Json; // JSON array of UUID strings
+  child_needed_research_ids: Json; // JSON array of UUID strings
 
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)

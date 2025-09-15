@@ -30,7 +30,6 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
-  parent_notion_page_id UUID, -- Parent page ID (null for root pages)
   canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   atlas_document_type atlas_document_type_enum NOT NULL,
   atlas_document_number TEXT NOT NULL DEFAULT '',
@@ -42,7 +41,17 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   json_content JSONB, -- Rich Text content from Notion API
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
-  relationships JSONB NOT NULL DEFAULT '{}', -- Stores relationships to other pages/blocks
+  -- Child relationships grouped by Atlas database type. Each stores an array of UUID strings.
+  child_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scopes database
+  child_article_ids JSONB NOT NULL DEFAULT '[]', -- Children from Articles database
+  child_section_and_primary_doc_ids JSONB NOT NULL DEFAULT '[]', -- Children from Sections & Primary Docs database
+  child_annotation_ids JSONB NOT NULL DEFAULT '[]', -- Children from Annotations database
+  child_tenet_ids JSONB NOT NULL DEFAULT '[]', -- Children from Tenets database
+  child_scenario_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scenarios database
+  child_scenario_variation_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scenario Variations database
+  child_active_data_ids JSONB NOT NULL DEFAULT '[]', -- Children from Active Data database
+  child_agent_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Agent Scope Database
+  child_needed_research_ids JSONB NOT NULL DEFAULT '[]', -- Children from Needed Research database
   sort_order DECIMAL(5,2) NOT NULL, -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
@@ -54,10 +63,11 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
 
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_notion_page_id ON notion_database_pages(notion_page_id); -- Index for Notion page ID
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_parent_notion_page_id ON notion_database_pages(parent_notion_page_id); -- Index for parent page ID
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_atlas_document_type ON notion_database_pages(atlas_document_type); -- Index for atlas_document_type
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_sort_order ON notion_database_pages(parent_notion_page_id, sort_order); -- Index for sort order within parent
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_temporal ON notion_database_pages(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid pages at a specific time)
+
+-- NOTE: parent_notion_page_id and relationships columns were removed in favor of per-type child arrays.
+-- Importers should populate child_*_ids arrays; cleanup of stale references is handled at the application/import layer.
 
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_canonical_title 
