@@ -1,6 +1,6 @@
 import { delay } from '@/app/shared/utils/utils';
 
-const MAX_RETRIES = 1;
+const MAX_RETRIES = 2;
 
 /**
  * Rate limiter for Notion API requests using sliding window, and exponential backoff
@@ -13,8 +13,8 @@ export class NotionRateLimiter {
   private requestTimestamps: number[] = [];
   private readonly windowSizeMs = 1000; // 1 second
   private readonly maxRequestsPerWindow = 3; // 3 requests per 1 second max
-  private readonly apiTimeoutMs = 30_000; // 30 second timeout for API calls
-  private readonly queueTimeoutMs = 60_000; // 1 minute timeout for queue processing
+  private readonly apiTimeoutMs = 90_000; // 90 second timeout for API calls
+  private readonly queueTimeoutMs = 180_000; // 180 second timeout for queued item processing
   private readonly enableLogging: boolean;
 
   constructor(enableLogging = true) {
@@ -37,7 +37,7 @@ export class NotionRateLimiter {
   // Add an API request to the queue by passing a function that returns a Promise
   async add<T>(apiCall: () => Promise<T>): Promise<T> {
     return new Promise((resolve, reject) => {
-      // Create a timeout for the entire queue operation
+      // Create a timeout for the entire queued operation
       const queueTimeout = setTimeout(() => {
         this.log('error', 'Queue operation timed out', { timeoutMs: this.queueTimeoutMs });
         reject(new Error(`Queue operation timed out after ${this.queueTimeoutMs}ms`));
@@ -76,6 +76,9 @@ export class NotionRateLimiter {
     let lastError: unknown = null;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      // Capture start time for duration calculation
+      const startTime = Date.now();
+
       try {
         // Check if we need to wait before making the request
         await this.waitIfNeeded();
@@ -93,11 +96,16 @@ export class NotionRateLimiter {
           }),
         ]);
 
-        this.log('info', `Notion API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''}`);
+        const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
+        this.log(
+          'info',
+          `Notion API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''} (${durationSeconds}s)`,
+        );
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
-        this.log('warn', `Notion API call failed on attempt ${attempt}/${maxRetries}`, { error });
+        const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
+        this.log('warn', `Notion API call failed on attempt ${attempt}/${maxRetries} (${durationSeconds}s)`, { error });
 
         // Handle non-retryable errors
         const apiError = error as { status?: number; headers?: Record<string, string> };
