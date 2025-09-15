@@ -30,7 +30,8 @@ export async function _delete_loadDatabaseTreeFromSupabase(rootNotionDatabaseId:
     if (!data || data.length === 0) break;
 
     // Add the loaded pages to the array
-    pages.push(...data);
+    // TODO: Re enable
+    // pages.push(...data);
 
     // If we got less than pageSize, we've reached the end
     if (data.length < pageSize) break;

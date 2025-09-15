@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Divider, Spacer } from '@heroui/react';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { ATLAS_DATABASE_ID_MAP } from '../server/services/atlas/constants';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '../server/services/atlas/constants';
 
 export default async function Page() {
   // Load root Notion blocks from Supabase and convert them to links to subpages
@@ -46,7 +46,7 @@ export default async function Page() {
   const rootDatabasePageLinks = databaseNames.map((db) => (
     <li key={db.atlas_database_name}>
       <Link
-        href={`/visualize/database/${ATLAS_DATABASE_ID_MAP[db.atlas_database_name]}`}
+        href={`/visualize/database/${ATLAS_DATABASE_ID_MAP[db.atlas_database_name as AtlasDatabaseName]}`}
         className="font-semibold text-indigo-500 hover:underline"
       >
         👉 {db.atlas_database_name} ({db.count})

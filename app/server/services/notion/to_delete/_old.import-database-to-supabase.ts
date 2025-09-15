@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PageObjectResponse } from '@notionhq/client';
-import { NotionDatabasePage, Relationships } from '@/app/server/database/notion-database-page';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { _delete_loadDatabaseTreeFromSupabase } from '@/app/server/services/supabase/to_delete/_old.load-database-tree-from-supabase';
@@ -209,7 +210,7 @@ function convertTreeToPageRecords(
   // Convert each page to NotionDatabasePage format
   console.log(`  🔄 Converting Notion API pages to Supabase format...`);
   for (const [pageId, notionPage] of pagesById.entries()) {
-    const parentId = pageIdToParentId.get(pageId) || null;
+    // const parentId = pageIdToParentId.get(pageId) || null;
     const subPageIds = pageIdToSubPageIds.get(pageId) || [];
 
     // Extract page title - similar to how blocks extract plain text
@@ -228,12 +229,12 @@ function convertTreeToPageRecords(
 
     const page: NotionDatabasePage = {
       notion_page_id: pageId,
-      parent_notion_page_id: parentId,
+      //   parent_notion_page_id: parentId,
       plain_text_name: pageTitle.plainText,
       json_name: pageTitle.richText,
       plain_text_content: content.plainText,
       json_content: content.richText,
-      relationships: {} as Relationships, // Placeholder - populate with actual relationships if needed
+      //   relationships: {} as Relationships, // Placeholder - populate with actual relationships if needed
       atlas_document_type: 'Placeholder', // All pages in a database are database pages // TODO: verify
       atlas_database_name: ATLAS_DATABASE_ID_MAP_REVERSED[notionDatabaseId],
       atlas_document_number: '',
@@ -245,6 +246,17 @@ function convertTreeToPageRecords(
       canonical_document_title: documentIdString,
       created_at: notionPage.created_time,
       updated_at: notionPage.last_edited_time,
+      // TODO
+      child_scope_ids: null,
+      child_article_ids: null,
+      child_section_and_primary_doc_ids: null,
+      child_annotation_ids: null,
+      child_tenet_ids: null,
+      child_scenario_ids: null,
+      child_scenario_variation_ids: null,
+      child_active_data_ids: null,
+      child_agent_scope_ids: null,
+      child_needed_research_ids: null,
     };
 
     pages.push(page);

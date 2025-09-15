@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { BlockObjectRequest, CreatePageParameters, DatabaseObjectResponse } from '@notionhq/client';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
@@ -126,18 +127,21 @@ export async function _delete_createNotionPageWithToggleBlocks({
         return pageDepthMap.get(pageId)!;
       }
 
-      const page = subtreePages.find((p) => p.notion_page_id === pageId);
-      if (!page || !page.parent_notion_page_id) {
-        const depth = 0;
-        pageDepthMap.set(pageId, depth);
-        return depth;
-      }
+      //   const page = subtreePages.find((p) => p.notion_page_id === pageId);
+      //   if (!page || !page.parent_notion_page_id) {
+      //     const depth = 0;
+      //     pageDepthMap.set(pageId, depth);
+      //     return depth;
+      //   }
 
       // Recursively calculate parent depth and add 1
-      const parentDepth = calculatePageDepth(page.parent_notion_page_id);
-      const depth = parentDepth + 1;
-      pageDepthMap.set(pageId, depth);
-      return depth;
+      //   const parentDepth = calculatePageDepth(page.parent_notion_page_id);
+      //   const depth = parentDepth + 1;
+      //   pageDepthMap.set(pageId, depth);
+      //   return depth;
+
+      // TODO: Remove this line
+      return 0;
     }
 
     // Calculate depths for all pages
@@ -222,15 +226,15 @@ export async function _delete_createNotionPageWithToggleBlocks({
     }
 
     // Validate that all pages in the subtree have valid parent references
-    const pagesWithInvalidParent = subtreePages.filter(
-      (page) => page.parent_notion_page_id && !subtreePageIds.includes(page.parent_notion_page_id),
-    );
-    if (pagesWithInvalidParent.length > 0) {
-      console.warn(
-        `Warning: ${pagesWithInvalidParent.length} pages in subtree have invalid parent references:`,
-        pagesWithInvalidParent.map((p) => ({ id: p.notion_page_id, parent: p.parent_notion_page_id })),
-      );
-    }
+    // const pagesWithInvalidParent = subtreePages.filter(
+    //   (page) => page.parent_notion_page_id && !subtreePageIds.includes(page.parent_notion_page_id),
+    // );
+    // if (pagesWithInvalidParent.length > 0) {
+    //   console.warn(
+    //     `Warning: ${pagesWithInvalidParent.length} pages in subtree have invalid parent references:`,
+    //     pagesWithInvalidParent.map((p) => ({ id: p.notion_page_id, parent: p.parent_notion_page_id })),
+    //   );
+    // }
 
     // Validate that all pages in the subtree have valid canonical document titles
     // Expected format: e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate", "Grove"
@@ -267,35 +271,41 @@ export async function _delete_createNotionPageWithToggleBlocks({
 
     // Step 5: Create toggle blocks hierarchically
     console.log('Step 5: Creating toggle blocks...');
-    const { blocksCreated, databasePageToBlockMapping } = await createToggleBlocksHierarchy(
-      newPageId,
-      subtreePages,
-      rootNotionPageId,
-      pageIdMap,
-    );
+    // const { blocksCreated, databasePageToBlockMapping } = await createToggleBlocksHierarchy(
+    //   newPageId,
+    //   subtreePages,
+    //   rootNotionPageId,
+    //   pageIdMap,
+    // );
 
-    console.log(`Created ${blocksCreated} toggle blocks`);
-    console.log(`Database page to block mapping:`, databasePageToBlockMapping.size, 'mappings');
+    // console.log(`Created ${blocksCreated} toggle blocks`);
+    // console.log(`Database page to block mapping:`, databasePageToBlockMapping.size, 'mappings');
 
-    // Step 6: Import new page and blocks to Supabase with edit page properties
-    console.log('Step 6: Importing new page and blocks to Supabase...');
-    await importToggleBlocksFromNotionToSupabase({
-      notionPageId: newPageId,
-      databasePageToBlockMapping,
-    });
+    // // Step 6: Import new page and blocks to Supabase with edit page properties
+    // console.log('Step 6: Importing new page and blocks to Supabase...');
+    // await importToggleBlocksFromNotionToSupabase({
+    //   notionPageId: newPageId,
+    //   databasePageToBlockMapping,
+    // });
 
-    console.log(`Imported and mapped ${databasePageToBlockMapping.size} toggle blocks`);
+    // console.log(`Imported and mapped ${databasePageToBlockMapping.size} toggle blocks`);
 
-    const endTime = performance.now();
-    const duration = endTime - startTime;
-    console.log(
-      `✅ Toggle page creation completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`,
-    );
+    // const endTime = performance.now();
+    // const duration = endTime - startTime;
+    // console.log(
+    //   `✅ Toggle page creation completed successfully in ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s)`,
+    // );
 
+    // TODO: Remove this line and uncomment above when re-enabling
     return {
-      newNotionPageId: newPageId,
-      blocksCreatedCount: blocksCreated,
+      newNotionPageId: '',
+      blocksCreatedCount: 0,
     };
+
+    // return {
+    //   newNotionPageId: newPageId,
+    //   blocksCreatedCount: blocksCreated,
+    // };
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;
@@ -337,102 +347,102 @@ function extractDatabaseTitle(database: DatabaseObjectResponse): string {
 /**
  * Creates toggle blocks hierarchically, processing level by level for reliability
  */
-async function createToggleBlocksHierarchy(
-  pageId: string,
-  subtreePages: NotionDatabasePage[],
-  rootPageId: string,
-  _pageIdMap: Map<string, NotionDatabasePage>, // Unused parameter, prefixed with _
-): Promise<{ blocksCreated: number; databasePageToBlockMapping: Map<string, string> }> {
-  const databasePageToBlockMapping = new Map<string, string>(); // original page ID -> toggle block ID
-  let blocksCreated = 0;
+// async function createToggleBlocksHierarchy(
+//   pageId: string,
+//   subtreePages: NotionDatabasePage[],
+//   rootPageId: string,
+//   _pageIdMap: Map<string, NotionDatabasePage>, // Unused parameter, prefixed with _
+// ): Promise<{ blocksCreated: number; databasePageToBlockMapping: Map<string, string> }> {
+//   const databasePageToBlockMapping = new Map<string, string>(); // original page ID -> toggle block ID
+//   let blocksCreated = 0;
 
-  // Build tree structure for processing
-  const pagesByParent = new Map<string | null, NotionDatabasePage[]>();
-  subtreePages.forEach((page) => {
-    const parentId = page.parent_notion_page_id || null;
-    if (!pagesByParent.has(parentId)) {
-      pagesByParent.set(parentId, []);
-    }
-    pagesByParent.get(parentId)!.push(page);
-  });
+//   // Build tree structure for processing
+//   const pagesByParent = new Map<string | null, NotionDatabasePage[]>();
+//   subtreePages.forEach((page) => {
+//     const parentId = page.parent_notion_page_id || null;
+//     if (!pagesByParent.has(parentId)) {
+//       pagesByParent.set(parentId, []);
+//     }
+//     pagesByParent.get(parentId)!.push(page);
+//   });
 
-  // Validate parent references
-  const allPageIds = new Set(subtreePages.map((p) => p.notion_page_id));
-  const invalidParentRefs = subtreePages.filter(
-    (p) => p.parent_notion_page_id && !allPageIds.has(p.parent_notion_page_id),
-  );
+//   // Validate parent references
+//   const allPageIds = new Set(subtreePages.map((p) => p.notion_page_id));
+//   const invalidParentRefs = subtreePages.filter(
+//     (p) => p.parent_notion_page_id && !allPageIds.has(p.parent_notion_page_id),
+//   );
 
-  if (invalidParentRefs.length > 0) {
-    console.warn(
-      `Warning: ${invalidParentRefs.length} pages have invalid parent references:`,
-      invalidParentRefs.map((p) => ({ id: p.notion_page_id, parent: p.parent_notion_page_id })),
-    );
-  }
+//   if (invalidParentRefs.length > 0) {
+//     console.warn(
+//       `Warning: ${invalidParentRefs.length} pages have invalid parent references:`,
+//       invalidParentRefs.map((p) => ({ id: p.notion_page_id, parent: p.parent_notion_page_id })),
+//     );
+//   }
 
-  // Sort pages at each level by sort_order
-  pagesByParent.forEach((pages) => {
-    pages.sort((a, b) => a.sort_order - b.sort_order);
+//   // Sort pages at each level by sort_order
+//   pagesByParent.forEach((pages) => {
+//     pages.sort((a, b) => a.sort_order - b.sort_order);
 
-    // Validate sort order consistency
-    const uniqueSortOrders = new Set(pages.map((p) => p.sort_order));
-    if (uniqueSortOrders.size !== pages.length) {
-      console.warn(
-        `Warning: Duplicate sort orders found in pages with parent ${pages[0]?.parent_notion_page_id || 'null'}`,
-      );
-    }
-  });
+//     // Validate sort order consistency
+//     const uniqueSortOrders = new Set(pages.map((p) => p.sort_order));
+//     if (uniqueSortOrders.size !== pages.length) {
+//       console.warn(
+//         `Warning: Duplicate sort orders found in pages with parent ${pages[0]?.parent_notion_page_id || 'null'}`,
+//       );
+//     }
+//   });
 
-  // Process pages level by level
-  // Create toggle blocks for ALL pages in the subtree, including the root page
-  // The root page should also be a toggle block with its content and children
+// Process pages level by level
+// Create toggle blocks for ALL pages in the subtree, including the root page
+// The root page should also be a toggle block with its content and children
 
-  // Process children recursively, including the root page itself
-  async function processChildren(parentPageId: string, parentBlockId: string, includeRootPage: boolean = false) {
-    const children = pagesByParent.get(parentPageId) || [];
+// Process children recursively, including the root page itself
+//   async function processChildren(parentPageId: string, parentBlockId: string, includeRootPage: boolean = false) {
+//     const children = pagesByParent.get(parentPageId) || [];
 
-    // If this is the root page and we should include it, create a toggle block for it first
-    if (includeRootPage && parentPageId === rootPageId) {
-      const rootPage = subtreePages.find((p) => p.notion_page_id === rootPageId);
-      if (rootPage) {
-        try {
-          const rootToggleId = await createSingleToggleBlock(parentBlockId, rootPage);
-          databasePageToBlockMapping.set(rootPage.notion_page_id, rootToggleId);
-          blocksCreated++;
-          console.log(`Created root toggle block for page ${rootPageId}`);
+//     // If this is the root page and we should include it, create a toggle block for it first
+//     if (includeRootPage && parentPageId === rootPageId) {
+//       const rootPage = subtreePages.find((p) => p.notion_page_id === rootPageId);
+//       if (rootPage) {
+//         try {
+//           const rootToggleId = await createSingleToggleBlock(parentBlockId, rootPage);
+//           databasePageToBlockMapping.set(rootPage.notion_page_id, rootToggleId);
+//           blocksCreated++;
+//           console.log(`Created root toggle block for page ${rootPageId}`);
 
-          // Process children of the root page using the root toggle block as parent
-          await processChildren(rootPageId, rootToggleId, false);
-        } catch (error) {
-          console.error(`Failed to create root toggle block for page ${rootPageId}:`, error);
-          // Continue with children even if root toggle creation fails
-        }
-      }
-      return;
-    }
+//           // Process children of the root page using the root toggle block as parent
+//           await processChildren(rootPageId, rootToggleId, false);
+//         } catch (error) {
+//           console.error(`Failed to create root toggle block for page ${rootPageId}:`, error);
+//           // Continue with children even if root toggle creation fails
+//         }
+//       }
+//       return;
+//     }
 
-    // Process all children of the current page
-    for (const childPage of children) {
-      try {
-        const childToggleId = await createSingleToggleBlock(parentBlockId, childPage);
-        databasePageToBlockMapping.set(childPage.notion_page_id, childToggleId);
-        blocksCreated++;
+//     // Process all children of the current page
+//     for (const childPage of children) {
+//       try {
+//         const childToggleId = await createSingleToggleBlock(parentBlockId, childPage);
+//         databasePageToBlockMapping.set(childPage.notion_page_id, childToggleId);
+//         blocksCreated++;
 
-        // Process grandchildren
-        await processChildren(childPage.notion_page_id, childToggleId, false);
-      } catch (error) {
-        console.error(`Failed to create toggle block for page ${childPage.notion_page_id}:`, error);
-        // Continue with other children even if one fails
-      }
-    }
-  }
+//         // Process grandchildren
+//         await processChildren(childPage.notion_page_id, childToggleId, false);
+//       } catch (error) {
+//         console.error(`Failed to create toggle block for page ${childPage.notion_page_id}:`, error);
+//         // Continue with other children even if one fails
+//       }
+//     }
+//   }
 
-  // Start processing from the root page, including the root page itself as a toggle block
-  await processChildren(rootPageId, pageId, true);
+//   // Start processing from the root page, including the root page itself as a toggle block
+//   await processChildren(rootPageId, pageId, true);
 
-  console.log(`Created ${blocksCreated} toggle blocks with ${databasePageToBlockMapping.size} mappings`);
+//   console.log(`Created ${blocksCreated} toggle blocks with ${databasePageToBlockMapping.size} mappings`);
 
-  return { blocksCreated, databasePageToBlockMapping };
-}
+//   return { blocksCreated, databasePageToBlockMapping };
+// }
 
 /**
  * Creates a single toggle block for a database page
