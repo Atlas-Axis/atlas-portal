@@ -1,4 +1,9 @@
+import { notion } from '@/app/server/services/notion/notion-client';
+import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { loadEnv } from './utils/load-env';
+
+const NOTION_PAGE_ID = uuidToHyphens('26ff2ff08d73803196d4df2ffa67e699');
+const MATH_EQUATION = String.raw`Rfactor = \frac{2u_m - 1}{2u_m \left( u_{opt}(\alpha + 1) - 1 + \frac{\beta u_{opt}}{slope1} \right)}`;
 
 // #!/usr/bin/env node
 async function main() {
@@ -8,7 +13,28 @@ async function main() {
   loadEnv();
 
   try {
-    // TODO: Add your script logic here
+    console.log('Creating math equation block...');
+
+    // Create a new equation block with the math equation
+    const response = await notion('write').blocks.children.append({
+      block_id: NOTION_PAGE_ID,
+      children: [
+        {
+          type: 'equation',
+          equation: {
+            expression: MATH_EQUATION,
+          },
+        },
+      ],
+    });
+
+    const createdBlock = response.results[0];
+    if (createdBlock && 'id' in createdBlock) {
+      console.log(`✅ Successfully created equation block with ID: ${createdBlock.id}`);
+      console.log(`📐 Equation content: ${MATH_EQUATION}`);
+    } else {
+      console.error('❌ Failed to create equation block - no ID returned');
+    }
 
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
