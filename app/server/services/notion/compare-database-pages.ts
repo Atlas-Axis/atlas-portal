@@ -1,11 +1,12 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { NotionDatabasePage, Relationships } from '../../database/notion-database-page';
+import { NotionDatabasePage } from '../../database/notion-database-page';
 import { AtlasDatabaseName } from '../atlas/constants';
 import {
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   NotionDatabasePropertyKey,
   PROPERTY_MAPPING_NAMES,
   REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
+  SUPABASE_CHILD_DATABASE_NAME_MAP,
 } from '../atlas/notion-database-properties-and-relationships';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -48,7 +49,6 @@ export function compareDatabasePages({
   // Get the property and relationship mappings for this database
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const trackedProperties = Object.values(databaseConfig.properties).filter((prop) => prop !== '');
-  const trackedRelationships = Object.keys(databaseConfig.relationships);
 
   const changes: DatabasePageChanges = {
     newPages: [],
@@ -100,12 +100,10 @@ export function compareDatabasePages({
       }
     }
 
-    const supabaseRelationships: Relationships = supabasePage.relationships;
-
-    // Check relationship changes
-    for (const relationshipName of trackedRelationships) {
+    // Check relationship changes using new child array structure
+    for (const [targetDb, relationshipName] of Object.entries(databaseConfig.relationships)) {
       const notionRelations = notionPage.enhancedRelations.get(relationshipName) || [];
-      const supabaseRelations = supabaseRelationships[relationshipName] || [];
+      const supabaseRelations = getSupabaseChildArray(supabasePage, targetDb as AtlasDatabaseName);
 
       if (!areRelationshipValuesEqual(notionRelations, supabaseRelations)) {
         hasRelationshipChanges = true;
@@ -211,4 +209,18 @@ function areRelationshipValuesEqual(relations1: string[], relations2: string[]):
   const sorted2 = [...relations2].sort();
 
   return sorted1.every((id, index) => id === sorted2[index]);
+}
+
+/**
+ * Gets the appropriate child array from Supabase page based on target database
+ */
+function getSupabaseChildArray(page: NotionDatabasePage, targetDb: AtlasDatabaseName): string[] {
+  const supabaseFieldName = SUPABASE_CHILD_DATABASE_NAME_MAP[targetDb];
+  if (!supabaseFieldName) {
+    console.warn(`No child array field found for target Atlas database: ${targetDb}`);
+    return [];
+  }
+
+  const childArray = page[supabaseFieldName as keyof NotionDatabasePage];
+  return Array.isArray(childArray) ? childArray as string[] : [];
 }
