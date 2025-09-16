@@ -65,7 +65,7 @@ Options:
     }
 
     // Revalidate /atlas page to reflect the newly imported data
-    revalidatePage('/atlas');
+    await revalidatePage('/atlas');
 
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
