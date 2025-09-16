@@ -38,13 +38,14 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   atlas_document_type atlas_document_type_enum NOT NULL,
   atlas_document_number TEXT NOT NULL DEFAULT '',
   atlas_database_name atlas_database_name_enum NOT NULL,
-  has_children BOOLEAN NOT NULL DEFAULT FALSE,
+  has_children BOOLEAN NOT NULL DEFAULT FALSE, -- TODO: Remove
   archived BOOLEAN NOT NULL DEFAULT FALSE,
   in_trash BOOLEAN NOT NULL DEFAULT FALSE,
   plain_text_content TEXT, -- Extracted plain text content
   json_content JSONB, -- Rich Text content from Notion API
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
+  parent_notion_page_id UUID, -- Parent Notion page ID (if any)
   -- Child relationships grouped by Atlas database type. Each stores an array of UUID strings.
   child_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scopes database
   child_article_ids JSONB NOT NULL DEFAULT '[]', -- Children from Articles database
@@ -69,9 +70,6 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_notion_page_id ON notion_database_pages(notion_page_id); -- Index for Notion page ID
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_atlas_document_type ON notion_database_pages(atlas_document_type); -- Index for atlas_document_type
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_temporal ON notion_database_pages(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid pages at a specific time)
-
--- NOTE: parent_notion_page_id and relationships columns were removed in favor of per-type child arrays.
--- Importers should populate child_*_ids arrays; cleanup of stale references is handled at the application/import layer.
 
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_canonical_title 
