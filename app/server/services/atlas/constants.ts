@@ -84,3 +84,7 @@ export const IMPORT_DATABASES = [
   // ATLAS_DATABASES.SCENARIO_VARIATIONS,
   // ATLAS_DATABASES.NEEDED_RESEARCH,
 ] as const;
+
+// The specific Section & Primary Doc page ID under which root Agent documents will be nested
+// This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
+export const AGENT_PARENT_SECTION_ID = '1b4f2ff0-8d73-8082-862b-dcd586862638';

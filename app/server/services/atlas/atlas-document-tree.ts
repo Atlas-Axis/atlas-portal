@@ -13,23 +13,20 @@ export function getAtlasPageIdMap(
   return pageIdMap;
 }
 
-// Atlas document hierarchy: Scopes and Agents
+// Atlas document hierarchy: Scopes are roots
 export function getAtlasRootPages(
   atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>,
 ): NotionDatabasePage[] | undefined {
-  // Only Agents and Scopes documents are roots, and they must not have a parent
+  // Only Scopes documents are roots, and they must not have a parent
   const scopePages = (atlasPagesPerDatabase[ATLAS_DATABASES.SCOPES] || []).filter(
     (page) => page.parent_notion_page_id === null,
   );
-  const agentPages = (atlasPagesPerDatabase[ATLAS_DATABASES.AGENTS] || []).filter(
-    (page) => page.parent_notion_page_id === null,
-  );
 
-  if (scopePages.length > 0 || agentPages.length > 0) {
-    return [...scopePages, ...agentPages];
+  if (scopePages.length > 0) {
+    return scopePages;
   }
 
-  throw new Error('No root pages found in Atlas databases (Scopes | Agents)');
+  throw new Error('No root pages found in Atlas databases (Scopes)');
 }
 
 export function getAtlasDocumentChildPages(
