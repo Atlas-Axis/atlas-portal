@@ -33,7 +33,7 @@ export async function importNotionDatabaseAction(notionDatabaseId: string) {
     await importDatabasePagesFromNotionToSupabase({ atlasDatabaseName });
 
     // Revalidate /atlas page to reflect the newly imported data
-    revalidatePage('/atlas');
+    await revalidatePage('/atlas');
 
     return {
       success: true,

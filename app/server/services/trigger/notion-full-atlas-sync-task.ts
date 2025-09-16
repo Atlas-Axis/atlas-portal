@@ -48,7 +48,7 @@ export const notionFullAtlasSyncTask = task({
       flushTriggerMetadata();
 
       // Revalidate /atlas page to reflect the newly imported data
-      revalidatePage('/atlas');
+      await revalidatePage('/atlas');
 
       return {
         databases: results,
