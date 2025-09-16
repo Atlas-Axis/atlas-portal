@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePage } from '@/app/server/revalidate-page';
 import {
   ATLAS_DATABASES,
   ATLAS_DATABASE_ID_MAP_REVERSED,
@@ -30,6 +31,9 @@ export async function importNotionDatabaseAction(notionDatabaseId: string) {
 
   try {
     await importDatabasePagesFromNotionToSupabase({ atlasDatabaseName });
+
+    // Revalidate /atlas page to reflect the newly imported data
+    revalidatePage('/atlas');
 
     return {
       success: true,

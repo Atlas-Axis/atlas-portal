@@ -1,5 +1,6 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
+import { revalidatePage } from '../../revalidate-page';
 import { IMPORT_DATABASES } from '../atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
@@ -45,6 +46,9 @@ export const notionFullAtlasSyncTask = task({
       console.log(`➡️ Total Notion API calls: ${finalStats.totalApiCalls}`);
       setApiCallCountTriggerMetadata(finalStats.totalApiCalls);
       flushTriggerMetadata();
+
+      // Revalidate /atlas page to reflect the newly imported data
+      revalidatePage('/atlas');
 
       return {
         databases: results,

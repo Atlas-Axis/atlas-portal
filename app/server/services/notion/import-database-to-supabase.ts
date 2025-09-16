@@ -1,4 +1,3 @@
-import { revalidatePath } from 'next/cache';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../atlas/constants';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
@@ -145,8 +144,5 @@ export async function importDatabasePagesFromNotionToSupabase({
     });
 
     throw error;
-  } finally {
-    // Revalidate /atlas
-    revalidatePath('/atlas');
   }
 }

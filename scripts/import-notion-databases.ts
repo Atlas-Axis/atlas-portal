@@ -1,4 +1,5 @@
 import { parseArgs } from 'node:util';
+import { revalidatePage } from '@/app/server/revalidate-page';
 import { IMPORT_DATABASES } from '@/app/server/services/atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
@@ -62,6 +63,9 @@ Options:
       console.log(`✅ Completed importing: ${atlasDatabaseName}`);
       console.log(`----------------------------------------`);
     }
+
+    // Revalidate /atlas page to reflect the newly imported data
+    revalidatePage('/atlas');
 
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
