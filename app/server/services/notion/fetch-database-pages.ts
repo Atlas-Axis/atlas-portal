@@ -23,6 +23,17 @@ export async function fetchNotionDatabasePagesWithRelationships({
   useLocalCache?: boolean;
 }): Promise<EnhancedPageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
+  const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
+  const notionPagePropertyNames = Object.values(databaseConfig.childRelationships);
+
+  // Add parent property name if it exists
+  if (databaseConfig.parentPropertyName) {
+    notionPagePropertyNames.push(databaseConfig.parentPropertyName);
+  }
+
+  console.log(`🔍 Database config for "${atlasDatabaseName}":`, databaseConfig);
+  console.log(`🔍 Notion property names to check for relationships:`, notionPagePropertyNames);
+
   console.log(
     `📡 Starting to fetch all pages with relationships from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`,
   );
@@ -53,20 +64,18 @@ export async function fetchNotionDatabasePagesWithRelationships({
   for (const page of pages) {
     const enhancedRelations = new Map<string, string[]>();
 
-    for (const propertyName of Object.keys(
-      NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName].relationships,
-    )) {
+    for (const notionPagePropertyName of notionPagePropertyNames) {
       const { relationshipPropertyId, relatedPageIds, isPossiblyTruncated } = readRelatedPagesInline(
         page,
-        propertyName,
+        notionPagePropertyName,
       );
 
-      enhancedRelations.set(propertyName, relatedPageIds);
+      enhancedRelations.set(notionPagePropertyName, relatedPageIds);
 
       if (isPossiblyTruncated && relationshipPropertyId) {
         needFullPropFetch.push({
           pageId: page.id,
-          propertyName,
+          propertyName: notionPagePropertyName,
           propertyId: relationshipPropertyId,
         });
       }
@@ -178,22 +187,26 @@ function readRelatedPagesInline(
   page: PageObjectResponse,
   propertyName: string,
 ): { relationshipPropertyId?: string; relatedPageIds: string[]; isPossiblyTruncated: boolean } {
-  const properties = page.properties ?? {};
-  const relationshipProperty = properties[propertyName];
+  const notionPageProperties = page.properties ?? {};
+  const notionRelationshipProperty = notionPageProperties[propertyName];
 
-  if (!relationshipProperty || relationshipProperty.type !== 'relation') {
+  if (!notionRelationshipProperty || notionRelationshipProperty.type !== 'relation') {
     console.warn(`No valid relation property found for "${propertyName}"`);
     return { relatedPageIds: [], isPossiblyTruncated: false };
   }
 
-  const relationIds = Array.isArray(relationshipProperty.relation)
-    ? relationshipProperty.relation.map((relation) => relation.id)
+  const relationIds = Array.isArray(notionRelationshipProperty.relation)
+    ? notionRelationshipProperty.relation.map((relation) => relation.id)
     : [];
 
   // Heuristic: Notion includes max 25 inline. If exactly 25, there might be more.
   const isPossiblyTruncated = relationIds.length === 25;
 
-  return { relationshipPropertyId: relationshipProperty.id, relatedPageIds: relationIds, isPossiblyTruncated };
+  return {
+    relationshipPropertyId: notionRelationshipProperty.id,
+    relatedPageIds: relationIds,
+    isPossiblyTruncated,
+  };
 }
 
 /**
@@ -204,11 +217,12 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
   let cursor: string | undefined = undefined;
 
   do {
+    console.log(`    🔄 Fetching more relations for page ${pageId}...`);
     const response = await notion().pages.properties.retrieve({
       page_id: pageId,
       property_id: relationPropertyId,
       start_cursor: cursor,
-      page_size: 100,
+      page_size: 50,
     });
 
     if (response.object === 'list' && Array.isArray(response.results)) {
