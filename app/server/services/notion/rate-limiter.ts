@@ -1,6 +1,6 @@
 import { delay } from '@/app/shared/utils/utils';
 
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
 
 /**
  * Rate limiter for Notion API requests using sliding window, and exponential backoff
@@ -74,8 +74,9 @@ export class NotionRateLimiter {
 
   private async executeWithRetry<T>(apiCall: () => Promise<T>, maxRetries = MAX_RETRIES): Promise<T> {
     let lastError: unknown = null;
+    let realRetryCount = 0; // Count only actual API errors, not rate limiting
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    while (true) {
       // Capture start time for duration calculation
       const startTime = Date.now();
 
@@ -97,48 +98,53 @@ export class NotionRateLimiter {
         ]);
 
         const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
-        this.log(
-          'info',
-          `Notion API call successful ${attempt > 1 ? 'on attempt ' + attempt : ''} (${durationSeconds}s)`,
-        );
+        const retryInfo = realRetryCount > 0 ? ` on retry ${realRetryCount}` : '';
+        this.log('info', `Notion API call successful${retryInfo} (${durationSeconds}s)`);
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
         const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
-        this.log('warn', `Notion API call failed on attempt ${attempt}/${maxRetries} (${durationSeconds}s)`, { error });
 
-        // Handle non-retryable errors
         const apiError = error as { status?: number; headers?: Record<string, string> };
 
-        // Handle rate limiting (HTTP 429)
-        if (apiError?.status === 429 && attempt < maxRetries) {
+        // Handle rate limiting (HTTP 429) - doesn't count as a retry
+        if (apiError?.status === 429) {
           const retryAfter = apiError?.headers?.['retry-after'];
           // Calculate delay based on Retry-After header or exponential backoff
-          const baseDelayMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : Math.pow(2, attempt) * 1000;
+          const baseDelayMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : Math.pow(2, realRetryCount + 1) * 1000;
           // Add jitter (±25% randomness) to prevent thundering herd effect
           const jitter = baseDelayMs * 0.25 * Math.random();
           const delayMs = Math.max(100, Math.round(baseDelayMs + jitter)); // Minimum 100ms delay
-          this.log('warn', `Rate limited, retrying after ${delayMs}ms (attempt ${attempt}/${maxRetries})`);
+          this.log(
+            'warn',
+            `Rate limited (429), retrying after ${delayMs}ms (${durationSeconds}s) - not counted as retry`,
+          );
           await delay(delayMs);
           continue;
         }
 
-        // If it's not a retryable error or we've exhausted retries, break out of the loop
-        break;
+        // This is a real API error - count it as a retry
+        realRetryCount++;
+        this.log('error', `Notion API call failed on retry ${realRetryCount}/${maxRetries} (${durationSeconds}s)`, {
+          error,
+        });
+
+        // If we've exhausted all retries for real API errors, break out
+        if (realRetryCount >= maxRetries) {
+          break;
+        }
+
+        // Wait before retrying (exponential backoff for real errors)
+        const delayMs = Math.pow(2, realRetryCount) * 1000;
+        this.log('warn', `API error, retrying after ${delayMs}ms (retry ${realRetryCount}/${maxRetries})`);
+        await delay(delayMs);
       }
     }
 
     // If we get here, all retries were exhausted
-    const apiError = lastError as { status?: number };
-    if (apiError?.status === 429) {
-      const errorMessage = `Max retries (${maxRetries}) exceeded for API request`;
-      this.log('error', errorMessage);
-      throw new Error(errorMessage);
-    } else {
-      // Re-throw the original error for non-429 errors
-      this.log('error', 'Notion API call failed with non-retryable error', { error: lastError });
-      throw lastError;
-    }
+    const errorMessage = `Max retries (${maxRetries}) exceeded for API request`;
+    this.log('error', errorMessage, { lastError });
+    throw new Error(errorMessage);
   }
 
   // Wait for the next available slot in the rate limit window, when we already exceeded the per-second limit
