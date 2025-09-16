@@ -23,6 +23,9 @@ export interface NotionDatabasePage {
   plain_text_content?: string | null; // Extracted plain text for easy searching
   json_content: Json; // JSONB - Full block content from Notion API
 
+  // Parent page in the same database (if any)
+  parent_notion_page_id: string | null; // UUID - Notion page ID of the parent page
+
   // Child relationships grouped by Atlas database type
   child_scope_ids: Json; // JSON array of UUID strings
   child_article_ids: Json; // JSON array of UUID strings
