@@ -100,8 +100,28 @@ export function compareDatabasePages({
       }
     }
 
-    // Check relationship changes using new child array structure
-    for (const [targetDb, relationshipName] of Object.entries(databaseConfig.relationships)) {
+    // Check parent ID change
+    if (databaseConfig.parentPropertyName) {
+      const notionParentId = notionPage.enhancedRelations.get(databaseConfig.parentPropertyName)?.[0];
+      const supabaseParentId = supabasePage.parent_notion_page_id;
+
+      if (
+        !areRelationshipValuesEqual(notionParentId ? [notionParentId] : [], supabaseParentId ? [supabaseParentId] : [])
+      ) {
+        hasRelationshipChanges = true;
+        console.log(
+          `🔗 Parent relationship change detected in page ${notionPage.id}: ${databaseConfig.parentPropertyName} (Notion: [${notionParentId}], Supabase: [${supabaseParentId}])`,
+        );
+      }
+    }
+
+    // Check child relationship changes using child page IDs
+    for (const [targetDb, relationshipName] of Object.entries(databaseConfig.childRelationships)) {
+      // Skip if no relationship property name is defined
+      if (!relationshipName) {
+        continue;
+      }
+
       const notionRelations = notionPage.enhancedRelations.get(relationshipName) || [];
       const supabaseRelations = getSupabaseChildArray(supabasePage, targetDb as AtlasDatabaseName);
 
@@ -179,7 +199,8 @@ function extractPropertyValueFromSupabase(
         console.warn(`Non numeric sort order for page ${page.notion_page_id}: ${page.sort_order}`);
       }
 
-      return page.sort_order ?? null;
+      // return page.sort_order ?? null;
+      return page.sort_order ?? 1; // TODO: Make this field nullable in the database schema
     default:
       console.warn(`Unknown property key: ${mappedPropertyName}. Notion property: ${notionPropertyName}`);
       return null;
@@ -222,5 +243,5 @@ function getSupabaseChildArray(page: NotionDatabasePage, targetDb: AtlasDatabase
   }
 
   const childArray = page[supabaseFieldName as keyof NotionDatabasePage];
-  return Array.isArray(childArray) ? childArray as string[] : [];
+  return Array.isArray(childArray) ? (childArray as string[]) : [];
 }
