@@ -100,6 +100,7 @@ export type Database = {
           json_name: Json | null;
           last_edited_by_user_id: string | null;
           notion_page_id: string;
+          parent_notion_page_id: string | null;
           plain_text_content: string | null;
           plain_text_name: string | null;
           sort_order: number;
@@ -128,6 +129,7 @@ export type Database = {
           json_name?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_page_id: string;
+          parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
           sort_order: number;
@@ -156,6 +158,7 @@ export type Database = {
           json_name?: Json | null;
           last_edited_by_user_id?: string | null;
           notion_page_id?: string;
+          parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
           sort_order?: number;
