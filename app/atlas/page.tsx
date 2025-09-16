@@ -6,7 +6,7 @@ export default async function Page() {
   const atlasPagesPerDatabase = await loadAtlasFromSupabase();
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen p-6">
       <ContentTree atlasPagesPerDatabase={atlasPagesPerDatabase} />
     </div>
   );

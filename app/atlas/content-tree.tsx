@@ -91,6 +91,7 @@ export default function ContentTree({
   // Map over all Atlas databases and create a combined map of page ID to NotionDatabasePage
   const pageIdMap = getAtlasPageIdMap(atlasPagesPerDatabase);
   const rootPages = getAtlasRootPages(atlasPagesPerDatabase);
+  const rootPageIds = rootPages ? Array.from(rootPages.values()).map((page) => page.notion_page_id) : [];
 
   console.log(`🗺️ Rendering Atlas content tree with ${pageIdMap.size} total pages`);
   console.log(`🌳 Found ${rootPages ? rootPages.length : 0} root pages in Atlas databases`);
@@ -107,7 +108,7 @@ export default function ContentTree({
   return (
     <div className="mt-4">
       <h3 className="mb-6 text-3xl font-semibold">Atlas</h3>
-      <Accordion disableAnimation={true}>
+      <Accordion disableAnimation={true} selectionMode="multiple" defaultExpandedKeys={rootPageIds}>
         {Array.from(rootPages.values()).map((page) => (
           <AccordionItem
             key={page.notion_page_id}

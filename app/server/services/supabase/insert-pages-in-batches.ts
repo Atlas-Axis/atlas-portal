@@ -3,6 +3,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 /**
  * Insert Notion pages into Supabase in batches to handle large datasets efficiently
+ * TODO: Support temporal table - use upsert to invalidate old rows instead of direct upsert (inserts new row, marks old as invalid). Insertions should always be new rows.
  */
 export async function insertPagesInBatches(
   pages: NotionDatabasePage[],
@@ -16,6 +17,7 @@ export async function insertPagesInBatches(
     const batchNumber = Math.floor(i / batchSize) + 1;
     const totalBatches = Math.ceil(totalPages / batchSize);
 
+    // TODO: Log all page IDs
     console.log(
       `  ${useUpsert ? '🔄 Upserting' : '📝 Inserting'} batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`,
     );
