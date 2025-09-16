@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util';
-import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/to_delete/convert-supabase-database-pages-to-tree-nodes-old';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { visualizeTree, visualizeTreeWithAscii } from '@/app/server/diff/visualize-tree';
 import { withRootNode } from '@/app/server/diff/with-root-node';

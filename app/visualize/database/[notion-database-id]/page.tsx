@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/convert-supabase-database-pages-to-tree-nodes';
+import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/to_delete/convert-supabase-database-pages-to-tree-nodes-old';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { withRootNode } from '@/app/server/diff/with-root-node';
 import { ATLAS_DATABASE_ID_MAP_REVERSED, AtlasDatabaseName } from '@/app/server/services/atlas/constants';

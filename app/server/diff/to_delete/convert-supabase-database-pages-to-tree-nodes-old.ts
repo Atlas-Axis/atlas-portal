@@ -1,5 +1,5 @@
-import { NotionDatabasePage } from '../database/notion-database-page';
-import { TreeNode } from './tree';
+import { NotionDatabasePage } from '../../database/notion-database-page';
+import { TreeNode } from '../tree';
 
 // Convert Supabase NotionDatabasePage type to TreeNode type
 // TODO: Update all tree functions to support the new flexible child ID list mapping, instead of the old parent_notion_page_id field
@@ -23,6 +23,11 @@ export function convertSupabaseDatabasePagesToTreeNodes(pages: NotionDatabasePag
 
     for (const arr of childArrays) {
       for (const childId of arr) {
+        if (childToParent.has(childId)) {
+          console.warn(
+            `⚠️  Child ${childId} already has parent ${childToParent.get(childId)}, but parent ${parent.notion_page_id} also claims it as a child. This may indicate duplicate relationships.`,
+          );
+        }
         childToParent.set(childId, parent.notion_page_id);
       }
     }
