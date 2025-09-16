@@ -7,7 +7,7 @@ export interface NotionDatabasePropertyMapping {
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
   atlasDocumentType: string; // A property name representing the type of document, e.g. "Core", "Section"...
   content: string; // A property name representing the main content or body of the document
-  sortOrder: string | null; // A property name representing the manually set order of the document within its parent or section
+  sortOrder?: string; // A property name representing the manually set order of the document within its parent or section
 }
 
 export type NotionDatabasePropertyKey = keyof NotionDatabasePropertyMapping;
@@ -35,7 +35,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   {
     properties: NotionDatabasePropertyMapping;
     childRelationships: Partial<Record<AtlasDatabaseName, string>>;
-    // parentPropertyName?: string;
+    parentPropertyName?: string;
     // subItemsPropertyName?: string;
   }
 > = {
@@ -48,7 +48,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      sortOrder: null,
+      // sortOrder: null,
     },
     // ✅
     childRelationships: {
@@ -64,7 +64,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      sortOrder: null,
+      // sortOrder: null,
     },
     // ✅
     childRelationships: {
@@ -89,7 +89,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
     },
-    // parentPropertyName: 'Parent Doc',
+    parentPropertyName: 'Parent Doc',
     // subItemsPropertyName: 'Subdocs',
   },
   // ✅
@@ -111,7 +111,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.AGENTS]: 'Sub-item',
       // [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
     },
-    // parentPropertyName: 'Parent item',
+    parentPropertyName: 'Parent item',
     // subItemsPropertyName: 'Sub-item',
   },
   // ✅
@@ -123,7 +123,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      sortOrder: null, // TODO ?
+      // sortOrder: null, // TODO ?
     },
     // ✅
     childRelationships: {},
@@ -137,7 +137,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content', // TODO
-      sortOrder: null,
+      // sortOrder: null,
     },
     // ✅
     childRelationships: {
@@ -153,11 +153,12 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      sortOrder: null, // TODO: ?
+      // sortOrder: null, // TODO: ?
     },
     // ✅
     childRelationships: {},
   },
+  // ❓
   [ATLAS_DATABASES.SCENARIOS]: {
     properties: {
       atlasFullDocumentTitle: '', // TODO
@@ -180,6 +181,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
     },
   },
+  // ❓
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
     properties: {
       atlasFullDocumentTitle: '', // TODO
@@ -202,6 +204,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
     },
   },
+  // ❓
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
     properties: {
       atlasFullDocumentTitle: '', // TODO
