@@ -1,7 +1,7 @@
 import { loadAtlasFromSupabase } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import ContentTree from './content-tree';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   // Load Atlas pages from Supabase, grouped by Atlas database
