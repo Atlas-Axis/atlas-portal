@@ -78,10 +78,12 @@ export async function importDatabasePagesFromNotionToSupabase({
 
         // Convert Notion pages to database format
         const pagesToProcess = [...pagesToInsert, ...pagesToUpsert];
-        const notionPagesToProcess = notionPagesWithRelationships.filter((page) => pagesToProcess.includes(page.id));
+        const notionPagesToInsertOrUpsert = notionPagesWithRelationships.filter((page) =>
+          pagesToProcess.includes(page.id),
+        );
 
         const pagesInDatabaseFormat = await convertNotionPagesToDatabaseFormat({
-          notionPages: notionPagesToProcess,
+          notionPages: notionPagesToInsertOrUpsert,
           atlasDatabaseName,
         });
 

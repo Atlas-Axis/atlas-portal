@@ -38,6 +38,6 @@ export async function loadNotionDatabasePagesFromSupabase({
     page++;
   }
 
-  console.log(`Loaded ${allPages.length} pages from Supabase`);
+  console.log(`Loaded ${allPages.length} "${atlasDatabaseName}" pages from Supabase`);
   return allPages;
 }
