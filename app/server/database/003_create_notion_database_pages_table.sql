@@ -28,7 +28,8 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
   'Active Data',
   'Agent Scope Database',
   'Needed Research',
-  'Original Context Data'
+  'Original Context Data' -- TODO: Remove
+  -- 'Type Specifications' -- TODO: Add
 );
 
 -- Create the notion_database_pages table to store synchronized pages from Notion
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   child_active_data_ids JSONB NOT NULL DEFAULT '[]', -- Children from Active Data database
   child_agent_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Agent Scope Database
   child_needed_research_ids JSONB NOT NULL DEFAULT '[]', -- Children from Needed Research database
+  -- child_type_specification_ids JSONB NOT NULL DEFAULT '[]', -- Children from Type Specifications database -- TODO: Add
   sort_order DECIMAL(5,2) NOT NULL, -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated

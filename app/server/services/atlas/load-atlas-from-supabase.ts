@@ -12,14 +12,13 @@ export async function loadAtlasFromSupabase() {
     [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
     }),
-    [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.AGENTS }),
+    // [ATLAS_DATABASES.TYPE_SPECIFICATIONS]: await loadNotionDatabasePagesFromSupabase({
+    //   atlasDatabaseName: ATLAS_DATABASES.TYPE_SPECIFICATIONS,
+    // }),
     [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
     }),
     [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.TENETS }),
-    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
-    }),
     // [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
     //   atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
     // }),
@@ -29,6 +28,10 @@ export async function loadAtlasFromSupabase() {
     // [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
     //   atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
     // }),
+    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
+    }),
+    [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.AGENTS }),
   };
 
   return atlasPagesPerDatabase;

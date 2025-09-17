@@ -268,7 +268,6 @@ export const SUPABASE_CHILD_DATABASE_NAME_MAP: Record<AtlasDatabaseName, string>
   [ATLAS_DATABASES.ACTIVE_DATA]: 'child_active_data_ids',
   [ATLAS_DATABASES.AGENTS]: 'child_agent_scope_ids',
   [ATLAS_DATABASES.NEEDED_RESEARCH]: 'child_needed_research_ids',
-  // [ATLAS_DATABASES.ORIGINAL_CONTEXT_DATA]: 'child_original_context_data_ids',
 } as const;
 
 type NotionDatabasePagesRow = Tables<'notion_database_pages'>;
