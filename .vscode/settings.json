@@ -5,9 +5,9 @@
   "editor.linkedEditing": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "chat.agent.maxRequests": 50,
-  "chat.mcp.enabled": true,
   "chat.promptFiles": true,
   "github.copilot.chat.agent.runTasks": true,
   "github.copilot.chat.setupTests.enabled": true,
-  "github.copilot.chat.startDebugging.enabled": true
+  "github.copilot.chat.startDebugging.enabled": true,
+  "chat.mcp.access": "all"
 }
