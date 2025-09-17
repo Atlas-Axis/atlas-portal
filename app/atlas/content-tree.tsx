@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { ExternalLink } from 'lucide-react';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import {
   getAtlasDocumentChildPages,
@@ -38,14 +37,14 @@ function renderTreeNode(
       )}
 
       <div className={`text-xs font-medium text-gray-800 ${isRootNode ? 'mb-2' : ''}`}>{content}</div>
-      <div className={`text-xs text-gray-300 ${isRootNode ? 'mb-4' : ''}`}>
-        {`Node ID: ${uuidToNoHyphens(page.notion_page_id)}`}
+      <div className={`mt-1 text-xs text-gray-300 ${isRootNode ? 'mb-4' : ''}`}>
         <a
           href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}
           target="_blank"
           rel="noopener noreferrer"
+          className="text-xs font-normal hover:text-gray-700 hover:underline"
         >
-          <ExternalLink className="ml-2 inline h-3 w-3" />
+          {`Notion ID: ${uuidToNoHyphens(page.notion_page_id)}`}
         </a>
       </div>
 
@@ -56,7 +55,7 @@ function renderTreeNode(
       )}
 
       {supportingDocumentPages.length > 0 && (
-        <div className="mt-2 ml-8">
+        <div className="mt-4 ml-8">
           <span className="rounded-md bg-slate-700 p-1 text-sm font-semibold text-slate-100">
             Supporting Documents:
           </span>
