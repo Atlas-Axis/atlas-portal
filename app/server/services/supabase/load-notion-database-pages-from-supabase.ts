@@ -6,6 +6,7 @@ import { AtlasDatabaseName } from '../atlas/constants';
 // null means use default sorting criteria
 const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, string | null>> = {
   'Sections & Primary Docs': 'sort_order, canonical_document_title',
+  'Agent Scope Database': 'atlas_document_number',
 };
 
 // Default sorting criteria
