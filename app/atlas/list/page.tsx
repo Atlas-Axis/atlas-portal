@@ -60,10 +60,14 @@ function PageListItem({ page }: PageListItemProps) {
       <div className="min-w-0 flex-1">
         <div className="space-x-2">
           <div className="flex items-center">
-            <h3 className="inline-block rounded-md bg-slate-50 p-2">{page.atlas_document_number || 'Unknown'}</h3>
+            {page.atlas_document_number && (
+              <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">
+                {page.atlas_document_number}
+              </h3>
+            )}
             <div>
               <span
-                className={`ml-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[page.atlas_document_type]}`}
+                className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[page.atlas_document_type]}`}
               >
                 {page.atlas_document_type || 'Unknown Type'}
               </span>
