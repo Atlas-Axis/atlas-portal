@@ -58,7 +58,7 @@ function PageListItem({ page }: PageListItemProps) {
   return (
     <div className="flex items-start space-x-3 p-3">
       <div className="min-w-0 flex-1">
-        <div className="space-x-2">
+        <div className="space-y-2">
           <div className="flex items-center">
             {page.atlas_document_number && (
               <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">
