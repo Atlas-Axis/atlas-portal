@@ -2,6 +2,19 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 import { AtlasDatabaseName } from '../atlas/constants';
 
+// Map of Atlas database names to their custom sort criteria
+// null means use default sorting criteria
+const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, string | null>> = {
+  'Sections & Primary Docs': 'sort_order, canonical_document_title',
+};
+
+// Default sorting criteria
+const DEFAULT_SORT_CRITERIA = 'sort_order, atlas_document_number, canonical_document_title';
+
+function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): string {
+  return ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES[atlasDatabaseName] ?? DEFAULT_SORT_CRITERIA;
+}
+
 export async function loadNotionDatabasePagesFromSupabase({
   atlasDatabaseName,
 }: {
@@ -11,6 +24,9 @@ export async function loadNotionDatabasePagesFromSupabase({
   let page = 0;
   const pageSize = 1000;
 
+  // Get custom sort criteria based on database name
+  const sortCriteria = getSortCriteria(atlasDatabaseName);
+
   // Load all pages from Supabase with pagination
   while (true) {
     const { data, error } = await supabase()
@@ -19,7 +35,7 @@ export async function loadNotionDatabasePagesFromSupabase({
       .eq('archived', false)
       .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)
-      .order('sort_order, atlas_document_number, canonical_document_title')
+      .order(sortCriteria)
       .range(page * pageSize, (page + 1) * pageSize - 1);
 
     // Check for errors
