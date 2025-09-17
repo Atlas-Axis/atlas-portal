@@ -105,6 +105,9 @@ export default function ContentTree({
   return (
     <div className={styles.containerMain}>
       <h3 className={styles.headerTitle}>Atlas</h3>
+
+      <div className="my-6 text-slate-300">Click on a scope to expand/collapse its contents.</div>
+
       <Accordion disableAnimation={true} selectionMode="multiple">
         {Array.from(rootPages.values()).map((page) => (
           <AccordionItem
