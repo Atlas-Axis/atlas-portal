@@ -1,0 +1,95 @@
+/* Content Tree Component Styles. Tailwind classes are replaced with CSS for list items, they made the build output big and resulted in a build error */
+
+.nodeTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.typeChipSpacing {
+  margin-left: 0.5rem;
+}
+
+.nodeContent {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(31 41 55);
+}
+
+.nodeContentRoot {
+  margin-bottom: 0.5rem;
+}
+
+.notionLink {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: rgb(209 213 219);
+}
+
+.notionLinkRoot {
+  margin-bottom: 1rem;
+}
+
+.notionLinkAnchor {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.notionLinkAnchor:hover {
+  color: rgb(55 65 81);
+  text-decoration: underline;
+}
+
+.immutableDocsList {
+  margin-top: 0.25rem;
+  margin-left: 1rem;
+  border-left: 1px solid rgb(229 231 235);
+  padding-left: 1rem;
+}
+
+.supportingDocsContainer {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
+.supportingDocsLabel {
+  border-radius: 0.375rem;
+  background-color: rgb(51 65 85);
+  padding: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(241 245 249);
+}
+
+.supportingDocsList {
+  border-left: 1px solid rgb(229 231 235);
+}
+
+.rootTitle {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.listItem {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-left: 0.75rem;
+  border-top: 1px solid rgb(243 244 246);
+  padding-top: 0.75rem;
+}
+
+.containerMain {
+  margin-top: 1rem;
+}
+
+.headerTitle {
+  margin-bottom: 1.5rem;
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+.accordionTitle {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -10,6 +10,7 @@ import {
   logAtlasOrphanedNodes,
 } from '@/app/server/services/atlas/atlas-document-tree';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
+import styles from './content-tree.module.css';
 import TypeChip from './type-chip';
 
 function renderTreeNode(
@@ -28,38 +29,36 @@ function renderTreeNode(
   const nodeContent = (
     <>
       {!isRootNode && (
-        <h3 className="text-base font-semibold">
+        <h3 className={styles.nodeTitle}>
           {page.canonical_document_title}
-          <span className="ml-2">
+          <span className={styles.typeChipSpacing}>
             <TypeChip type={page.atlas_document_type} />
           </span>
         </h3>
       )}
 
-      <div className={`text-xs font-medium text-gray-800 ${isRootNode ? 'mb-2' : ''}`}>{content}</div>
-      <div className={`mt-1 text-xs text-gray-300 ${isRootNode ? 'mb-4' : ''}`}>
+      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
+      <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
         <a
           href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs font-normal hover:text-gray-700 hover:underline"
+          className={styles.notionLinkAnchor}
         >
           {`Notion ID: ${uuidToNoHyphens(page.notion_page_id)}`}
         </a>
       </div>
 
       {immutableAndPrimaryDocumentPages.length > 0 && (
-        <ul className="mt-1 ml-4 border-l border-gray-200 pl-4">
+        <ul className={styles.immutableDocsList}>
           {immutableAndPrimaryDocumentPages.map((child) => renderTreeNode(child, pageIdMap, depth + 1, false))}
         </ul>
       )}
 
       {supportingDocumentPages.length > 0 && (
-        <div className="mt-4 ml-8">
-          <span className="rounded-md bg-slate-700 p-1 text-sm font-semibold text-slate-100">
-            Supporting Documents:
-          </span>
-          <ul className="border-l border-gray-200">
+        <div className={styles.supportingDocsContainer}>
+          <span className={styles.supportingDocsLabel}>Supporting Documents:</span>
+          <ul className={styles.supportingDocsList}>
             {supportingDocumentPages.map((child) => renderTreeNode(child, pageIdMap, depth + 1, false))}
           </ul>
         </div>
@@ -69,14 +68,14 @@ function renderTreeNode(
 
   if (isRootNode) {
     return (
-      <h3 className="text-base font-semibold" key={page.notion_page_id}>
+      <h3 className={styles.rootTitle} key={page.notion_page_id}>
         {nodeContent}
       </h3>
     );
   }
 
   return (
-    <li key={page.notion_page_id} className="my-3 ml-3 border-t-1 border-gray-100 pt-3">
+    <li key={page.notion_page_id} className={styles.listItem}>
       {nodeContent}
     </li>
   );
@@ -104,15 +103,15 @@ export default function ContentTree({
   }
 
   return (
-    <div className="mt-4">
-      <h3 className="mb-6 text-3xl font-semibold">Atlas</h3>
+    <div className={styles.containerMain}>
+      <h3 className={styles.headerTitle}>Atlas</h3>
       <Accordion disableAnimation={true} selectionMode="multiple">
         {Array.from(rootPages.values()).map((page) => (
           <AccordionItem
             key={page.notion_page_id}
             aria-label={page.canonical_document_title || `Document ${page.notion_page_id}`}
             title={
-              <div className="flex cursor-pointer items-center gap-2">
+              <div className={styles.accordionTitle}>
                 <span>{page.canonical_document_title}</span>
                 <TypeChip type={page.atlas_document_type} />
               </div>
