@@ -73,7 +73,7 @@ function PageListItem({ page }: PageListItemProps) {
               </span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold">{page.plain_text_name || '<Untitled>'}</h3>
+          <h3 className="text-lg font-semibold">{page.canonical_document_title || '<Untitled>'}</h3>
         </div>
 
         {hasContent && <p className="mt-1 line-clamp-2 text-sm text-gray-600">{page.plain_text_content}</p>}

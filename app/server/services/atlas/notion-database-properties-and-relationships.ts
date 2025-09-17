@@ -59,7 +59,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   [ATLAS_DATABASES.ARTICLES]: {
     // ✅
     properties: {
-      atlasFullDocumentTitle: 'Doc No', // TODO: null?
+      atlasFullDocumentTitle: 'Name', // TODO: null?
       atlasDocumentNo: 'Doc No',
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
