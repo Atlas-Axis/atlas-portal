@@ -27,13 +27,13 @@ export default function AtlasListClient({ atlasPagesPerDatabase }: AtlasListClie
               key={databaseName}
               aria-label={`${databaseName} database`}
               title={
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="cursor-pointer text-2xl font-bold text-gray-900">
                   {databaseName}
                   <span className="ml-6 text-sm text-gray-300">{pages.length} documents</span>
                 </h2>
               }
               className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm sm:p-12"
-              classNames={{ trigger: 'py-0 pb-3 border-b border-gray-200' }}
+              classNames={{ trigger: 'py-0 pb-3 border-b border-gray-200', heading: 'cursor-pointer' }}
             >
               <div className="pt-6">
                 {pages.length > 0 ? (

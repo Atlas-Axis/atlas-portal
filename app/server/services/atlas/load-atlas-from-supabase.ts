@@ -19,12 +19,12 @@ export async function loadAtlasFromSupabase() {
       atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
     }),
     [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.TENETS }),
-    // [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
-    //   atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
-    // }),
-    // [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
-    //   atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
-    // }),
+    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
+    }),
+    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
+    }),
     // [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
     //   atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
     // }),
