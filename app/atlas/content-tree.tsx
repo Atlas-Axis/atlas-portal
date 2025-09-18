@@ -108,17 +108,24 @@ export default function ContentTree({
 
       <div className="my-6 text-slate-300">Click on a scope to expand/collapse its contents.</div>
 
-      <Accordion disableAnimation={true} selectionMode="multiple">
+      <Accordion
+        disableAnimation={true}
+        selectionMode="multiple"
+        variant="splitted"
+        className="space-y-6"
+        defaultExpandedKeys={[rootPages[0].notion_page_id]}
+      >
         {Array.from(rootPages.values()).map((page) => (
           <AccordionItem
             key={page.notion_page_id}
             aria-label={page.canonical_document_title || `Document ${page.notion_page_id}`}
             title={
-              <div className={styles.accordionTitle}>
+              <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
                 <span>{page.canonical_document_title}</span>
                 <TypeChip type={page.atlas_document_type} />
               </div>
             }
+            classNames={{ heading: 'bg-slate-100 rounded-md p-3 text-indigo-900', base: 'px-0 shadow-none' }}
           >
             {renderTreeNode(page, pageIdMap, 0, true)}
           </AccordionItem>
