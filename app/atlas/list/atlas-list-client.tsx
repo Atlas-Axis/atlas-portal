@@ -20,6 +20,7 @@ export default function AtlasListClient({ atlasPagesPerDatabase }: AtlasListClie
           className="space-y-6"
           selectionMode="multiple"
           defaultExpandedKeys={databaseNames}
+          disableAnimation={true}
         >
           {Object.entries(atlasPagesPerDatabase).map(([databaseName, pages]) => (
             <AccordionItem
