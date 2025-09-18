@@ -12,9 +12,6 @@ export async function loadAtlasFromSupabase() {
     [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
     }),
-    // [ATLAS_DATABASES.TYPE_SPECIFICATIONS]: await loadNotionDatabasePagesFromSupabase({
-    //   atlasDatabaseName: ATLAS_DATABASES.TYPE_SPECIFICATIONS,
-    // }),
     [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
     }),
