@@ -25,9 +25,9 @@ export async function loadAtlasFromSupabase() {
     [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
     }),
-    // [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
-    //   atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
-    // }),
+    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
+    }),
     [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
       atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
     }),

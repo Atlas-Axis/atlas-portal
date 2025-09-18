@@ -245,7 +245,8 @@ export type Database = {
         | 'Scope'
         | 'Article'
         | 'Scenario'
-        | 'Scenario Variation';
+        | 'Scenario Variation'
+        | 'Needed Research';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -393,6 +394,7 @@ export const Constants = {
         'Article',
         'Scenario',
         'Scenario Variation',
+        'Needed Research',
       ],
     },
   },
