@@ -15,4 +15,5 @@ export const typeColorMap: Record<AtlasDocumentType, string> = {
   Annotation: 'bg-pink-100 text-pink-800',
   Scenario: 'bg-cyan-100 text-cyan-800',
   'Scenario Variation': 'bg-lime-100 text-lime-800',
+  'Needed Research': 'bg-amber-100 text-amber-800',
 };
