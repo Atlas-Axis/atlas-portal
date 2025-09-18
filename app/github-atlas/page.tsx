@@ -32,16 +32,49 @@ async function AtlasContent() {
         {/* Inject the extracted styles */}
         {styles && <div dangerouslySetInnerHTML={{ __html: styles }} />}
         {/* Render the body content */}
-        <div dangerouslySetInnerHTML={{ __html: bodyContent }} className="atlas-content w-full" />
+        <div dangerouslySetInnerHTML={{ __html: bodyContent }} style={{ width: '100%' }} />
       </>
     );
   } catch (error) {
     console.error('Error fetching Atlas content:', error);
     return (
-      <div className="flex min-h-[400px] flex-col items-center justify-center p-8 text-center">
-        <h2 className="mb-2 text-xl font-semibold text-red-600">Failed to Load Atlas Content</h2>
-        <p className="mb-4 text-gray-600">Unable to fetch the latest Atlas content from GitHub.</p>
-        <p className="text-sm text-gray-500">{error instanceof Error ? error.message : 'Unknown error occurred'}</p>
+      <div
+        style={{
+          display: 'flex',
+          minHeight: '400px',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '2rem',
+          textAlign: 'center',
+        }}
+      >
+        <h2
+          style={{
+            marginBottom: '0.5rem',
+            fontSize: '1.25rem',
+            fontWeight: '600',
+            color: '#dc2626',
+          }}
+        >
+          Failed to Load Atlas Content
+        </h2>
+        <p
+          style={{
+            marginBottom: '1rem',
+            color: '#4b5563',
+          }}
+        >
+          Unable to fetch the latest Atlas content from GitHub.
+        </p>
+        <p
+          style={{
+            fontSize: '0.875rem',
+            color: '#6b7280',
+          }}
+        >
+          {error instanceof Error ? error.message : 'Unknown error occurred'}
+        </p>
       </div>
     );
   }
@@ -49,23 +82,60 @@ async function AtlasContent() {
 
 function LoadingFallback() {
   return (
-    <div className="flex min-h-[400px] flex-col items-center justify-center p-8 text-center">
-      <div className="mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
-      <h2 className="mb-2 text-lg font-medium text-gray-700">Loading Atlas Content</h2>
-      <p className="text-gray-500">Fetching the latest version from GitHub...</p>
+    <div
+      style={{
+        display: 'flex',
+        minHeight: '400px',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem',
+        textAlign: 'center',
+      }}
+    >
+      <div
+        style={{
+          marginBottom: '1rem',
+          height: '2rem',
+          width: '2rem',
+          border: '2px solid transparent',
+          borderTop: '2px solid #2563eb',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+        }}
+      ></div>
+      <h2
+        style={{
+          marginBottom: '0.5rem',
+          fontSize: '1.125rem',
+          fontWeight: '500',
+          color: '#374151',
+        }}
+      >
+        Loading Atlas Content
+      </h2>
+      <p style={{ color: '#6b7280' }}>Fetching the latest version from GitHub...</p>
     </div>
   );
 }
 
 export default function GitHubAtlasPage() {
   return (
-    <div className="ua-scope min-h-screen">
-      <div className="container mx-auto">
-        <Suspense fallback={<LoadingFallback />}>
-          <AtlasContent />
-        </Suspense>
+    <>
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+      <div className="ua-scope">
+        <div>
+          <Suspense fallback={<LoadingFallback />}>
+            <AtlasContent />
+          </Suspense>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
