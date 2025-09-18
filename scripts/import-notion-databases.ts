@@ -71,6 +71,9 @@ Options:
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
     console.log(`\n🎉 All databases imported successfully!`);
     console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
+
+    // The command hangs after completion, so we explicitly exit. TODO: Investigate why and fix.
+    process.exit(0);
   } catch (error) {
     console.error(`Error importing Notion databases:`, error);
     process.exit(1);
