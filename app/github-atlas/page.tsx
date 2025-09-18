@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
 import './styles.css';
 
-// Cache for 1 minute
-const CACHE_MINUTES = 1;
+// Cache for 10 seconds
+const CACHE_SECONDS = 10;
 
 async function AtlasContent() {
   try {
     const response = await fetch(
       'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html',
       {
-        next: { revalidate: CACHE_MINUTES * 60 },
+        next: { revalidate: CACHE_SECONDS },
       },
     );
 
