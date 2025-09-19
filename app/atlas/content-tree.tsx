@@ -15,17 +15,33 @@ import styles from './content-tree.module.css';
 import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
 
-function renderTreeNode(
-  page: NotionDatabasePage,
-  pageIdMap: Map<string, NotionDatabasePage>,
-  depth: number = 0,
-  isRootNode: boolean = false,
-): React.ReactElement {
+interface RenderTreeNodeProps {
+  page: NotionDatabasePage;
+  pageIdMap: Map<string, NotionDatabasePage>;
+  parentTrackingMap: Map<string, string>;
+  depth?: number;
+  isRootNode?: boolean;
+  parentPageId?: string;
+}
+
+function renderTreeNode({
+  page,
+  pageIdMap,
+  parentTrackingMap,
+  depth = 0,
+  isRootNode = false,
+  parentPageId,
+}: RenderTreeNodeProps): React.ReactElement {
   const content = page?.plain_text_content || ``;
   const { immutableAndPrimaryDocumentPages, supportingDocumentPages } = getAtlasDocumentChildPages(page, pageIdMap);
 
   if (depth > 50) {
     throw new Error('Maximum tree depth exceeded, possible circular reference');
+  }
+
+  // Track parent relationships and detect duplicates
+  if (!isRootNode && parentPageId) {
+    logIfDuplicatedDocument(page, parentPageId, parentTrackingMap, pageIdMap);
   }
 
   const nodeContent = (
@@ -41,7 +57,7 @@ function renderTreeNode(
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
 
-      <PageExtraData page={page} />
+      <PageExtraData page={page} className={styles.nodeContent} />
 
       <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
         <a
@@ -56,7 +72,16 @@ function renderTreeNode(
 
       {immutableAndPrimaryDocumentPages.length > 0 && (
         <ul className={styles.immutableDocsList}>
-          {immutableAndPrimaryDocumentPages.map((child) => renderTreeNode(child, pageIdMap, depth + 1, false))}
+          {immutableAndPrimaryDocumentPages.map((child) =>
+            renderTreeNode({
+              page: child,
+              pageIdMap,
+              parentTrackingMap,
+              depth: depth + 1,
+              isRootNode: false,
+              parentPageId: page.notion_page_id,
+            }),
+          )}
         </ul>
       )}
 
@@ -64,7 +89,16 @@ function renderTreeNode(
         <div className={styles.supportingDocsContainer}>
           <span className={styles.supportingDocsLabel}>Supporting Documents:</span>
           <ul className={styles.supportingDocsList}>
-            {supportingDocumentPages.map((child) => renderTreeNode(child, pageIdMap, depth + 1, false))}
+            {supportingDocumentPages.map((child) =>
+              renderTreeNode({
+                page: child,
+                pageIdMap,
+                parentTrackingMap,
+                depth: depth + 1,
+                isRootNode: false,
+                parentPageId: page.notion_page_id,
+              }),
+            )}
           </ul>
         </div>
       )}
@@ -94,6 +128,9 @@ export default function ContentTree({
   // Map over all Atlas databases and create a combined map of page ID to NotionDatabasePage
   const pageIdMap = getAtlasPageIdMap(atlasPagesPerDatabase);
   const rootPages = getAtlasRootPages(atlasPagesPerDatabase);
+
+  // Create a map to track which parent each page is rendered under
+  const parentTrackingMap = new Map<string, string>();
 
   // State to control which accordion items are expanded
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
@@ -171,10 +208,47 @@ export default function ContentTree({
             }
             classNames={{ heading: 'bg-slate-100 rounded-md p-3 text-indigo-900', base: 'px-0 shadow-none' }}
           >
-            {renderTreeNode(page, pageIdMap, 0, true)}
+            {renderTreeNode({
+              page,
+              pageIdMap,
+              parentTrackingMap,
+              depth: 0,
+              isRootNode: true,
+            })}
           </AccordionItem>
         ))}
       </Accordion>
     </div>
   );
+}
+
+// Helper function to log if a document is duplicated under different parents
+function logIfDuplicatedDocument(
+  page: NotionDatabasePage,
+  parentPageId: string,
+  parentTrackingMap: Map<string, string>,
+  pageIdMap: Map<string, NotionDatabasePage>,
+): void {
+  const currentPageId = page.notion_page_id;
+  const existingParentId = parentTrackingMap.get(currentPageId);
+
+  if (existingParentId && existingParentId !== parentPageId) {
+    const existingParentPage = pageIdMap.get(existingParentId);
+    const currentParentPage = pageIdMap.get(parentPageId);
+
+    console.warn(`‼️ This Atlas document has already been rendered under a different parent:`, {
+      pageId: currentPageId,
+      canonicalTitle: page.canonical_document_title,
+      existingParent: {
+        id: existingParentId,
+        title: existingParentPage?.canonical_document_title || 'Unknown',
+      },
+      newParent: {
+        id: parentPageId,
+        title: currentParentPage?.canonical_document_title || 'Unknown',
+      },
+    });
+  } else {
+    parentTrackingMap.set(currentPageId, parentPageId);
+  }
 }
