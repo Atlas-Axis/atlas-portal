@@ -29,6 +29,9 @@ export function getAtlasRootPages(
   throw new Error('No root pages found in Atlas databases (Scopes)');
 }
 
+/**
+ * Given a NotionDatabasePage, returns its child pages categorized into "immutable and primary documents" and "supporting documents" based on the Atlas document hierarchy.
+ */
 export function getAtlasDocumentChildPages(
   page: NotionDatabasePage,
   pageIdMap: Map<string, NotionDatabasePage>,
