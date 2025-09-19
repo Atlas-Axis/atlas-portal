@@ -9,7 +9,7 @@
  *   npx tsx scripts/atlas-github-html-analytics.ts
  *
  * WHAT IT DOES:
- * - Parses the Sky Atlas HTML file located at '../app/server/services/atlas/Sky Atlas.html'
+ * - Fetches the Sky Atlas HTML file from GitHub repository
  * - Analyzes 11 sections: scopes, articles, sections, type-specifications, annotations,
  *   tenets, scenarios, scenario-variations, needed-research, active-data, agent-scope
  * - Counts documents in each section by parsing HTML table structures
@@ -25,13 +25,10 @@
  * REQUIREMENTS:
  * - Node.js with tsx support
  * - jsdom dependency (automatically installed)
- * - Sky Atlas HTML file must exist in the expected location
- *
- * TODO: Load the HTML file from GitHub directly
+ * - Internet connection to fetch HTML from GitHub
  */
-import { readFileSync } from 'fs';
 import { JSDOM } from 'jsdom';
-import { join } from 'path';
+import { ATLAS_GITHUB_REPO_URL } from '@/app/server/services/atlas/constants';
 
 interface SectionAnalytics {
   sectionId: string;
@@ -54,11 +51,16 @@ interface OverallAnalytics {
   sectionBreakdown: SectionAnalytics[];
 }
 
-function analyzeSkAtlas(): OverallAnalytics {
-  const htmlPath = join(__dirname, '../app/server/services/atlas/Sky Atlas.html');
-
+async function analyzeSkAtlas(): Promise<OverallAnalytics> {
   try {
-    const htmlContent = readFileSync(htmlPath, 'utf-8');
+    console.log(`Fetching Sky Atlas HTML from: ${ATLAS_GITHUB_REPO_URL}`);
+    const response = await fetch(ATLAS_GITHUB_REPO_URL);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch HTML: ${response.status} ${response.statusText}`);
+    }
+
+    const htmlContent = await response.text();
     const dom = new JSDOM(htmlContent);
     const document = dom.window.document;
 
@@ -226,14 +228,16 @@ function printAnalytics(analytics: OverallAnalytics): void {
 
 // Main execution
 if (require.main === module) {
-  try {
-    console.log('Analyzing Sky Atlas HTML file...\n');
-    const analytics = analyzeSkAtlas();
-    printAnalytics(analytics);
-  } catch (error) {
-    console.error('Failed to analyze Sky Atlas:', error);
-    process.exit(1);
-  }
+  (async () => {
+    try {
+      console.log('Analyzing Sky Atlas HTML file...\n');
+      const analytics = await analyzeSkAtlas();
+      printAnalytics(analytics);
+    } catch (error) {
+      console.error('Failed to analyze Sky Atlas:', error);
+      process.exit(1);
+    }
+  })();
 }
 
 export { analyzeSkAtlas, printAnalytics };
