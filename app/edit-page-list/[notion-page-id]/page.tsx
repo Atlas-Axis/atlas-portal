@@ -1,9 +1,9 @@
 import Link from 'next/link';
+import ContentTree from '@/app/edit-page-list/[notion-page-id]/content-tree';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { convertSupabaseBlocksToTreeNodes } from '@/app/server/diff/convert-supabase-blocks-to-tree-nodes';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionBlocksFromSupabase } from '@/app/server/services/supabase/load-notion-blocks-from-supabase';
-import ContentTree from '@/app/visualize/block/[notion-page-id]/content-tree';
 
 export default async function Page({ params }: { params: Promise<{ 'notion-page-id': string }> }) {
   const { 'notion-page-id': notionPageId } = await params;
