@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { Button, ButtonGroup } from '@heroui/react';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import {
   getAtlasDocumentChildPages,
@@ -90,6 +91,12 @@ export default function ContentTree({
   const pageIdMap = getAtlasPageIdMap(atlasPagesPerDatabase);
   const rootPages = getAtlasRootPages(atlasPagesPerDatabase);
 
+  // State to control which accordion items are expanded
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
+    const firstPageId = rootPages?.[0]?.notion_page_id;
+    return new Set(firstPageId ? [firstPageId] : []);
+  });
+
   console.log(`🗺️ Rendering Atlas content tree with ${pageIdMap.size} total pages`);
   console.log(`🌳 Found ${rootPages ? rootPages.length : 0} root pages in Atlas databases`);
 
@@ -98,13 +105,39 @@ export default function ContentTree({
     logAtlasOrphanedNodes(atlasPagesPerDatabase);
   }, [atlasPagesPerDatabase]);
 
+  // Function to expand all accordions
+  const expandAll = () => {
+    if (rootPages) {
+      const allKeys = rootPages.map((page) => page.notion_page_id);
+      setExpandedKeys(new Set(allKeys));
+    }
+  };
+
+  // Function to collapse all accordions
+  const collapseAll = () => {
+    setExpandedKeys(new Set());
+  };
+
   if (!rootPages) {
     return <div>No root pages found in Atlas databases (Scopes | Agents)</div>;
   }
 
   return (
     <div className={styles.containerMain}>
-      <h3 className={styles.headerTitle}>Atlas</h3>
+      <div className="flex items-center gap-6">
+        <h3 className={styles.headerTitle}>Atlas</h3>
+        {/* Expand/Collapse All Buttons */}
+        <div>
+          <ButtonGroup>
+            <Button onPress={expandAll} variant="flat" size="sm">
+              Expand All
+            </Button>
+            <Button onPress={collapseAll} variant="flat" size="sm">
+              Collapse All
+            </Button>
+          </ButtonGroup>
+        </div>
+      </div>
 
       <div className="my-6 text-slate-300">Click on a scope to expand/collapse its contents.</div>
 
@@ -113,7 +146,14 @@ export default function ContentTree({
         selectionMode="multiple"
         variant="splitted"
         className="space-y-6"
-        defaultExpandedKeys={[rootPages[0].notion_page_id]}
+        selectedKeys={expandedKeys}
+        onSelectionChange={(keys) => {
+          if (typeof keys === 'string') {
+            setExpandedKeys(new Set([keys]));
+          } else {
+            setExpandedKeys(new Set(Array.from(keys).map((key) => String(key))));
+          }
+        }}
       >
         {Array.from(rootPages.values()).map((page) => (
           <AccordionItem
