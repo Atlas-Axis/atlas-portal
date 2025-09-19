@@ -1,6 +1,7 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '../../database/notion-database-page';
-import { AtlasDatabaseName, TYPE_SPECIFICATION_PARENT_SECTION_ID } from '../atlas/constants';
+import { AtlasDatabaseName } from '../atlas/constants';
+import { isTypeSpecificationAtlasDocument } from '../atlas/detect-type-specification-atlas-document';
 import {
   ChildLists,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
@@ -78,7 +79,7 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   // Extract extra fields for "Type Specification" documents
   let extraFields: Json | null = null;
-  if (documentType === 'Type Specification' || notionPage.id === TYPE_SPECIFICATION_PARENT_SECTION_ID) {
+  if (isTypeSpecificationAtlasDocument(atlasDatabaseName, notionPage.id)) {
     extraFields = extractTypeSpecificationExtraFields(notionPage) as unknown as Json;
   }
 
