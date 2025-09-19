@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { ATLAS_GITHUB_REPO_URL } from '../server/services/atlas/constants';
 import './styles.css';
 
 // Cache for 10 seconds
@@ -6,12 +7,9 @@ const CACHE_SECONDS = 10;
 
 async function AtlasContent() {
   try {
-    const response = await fetch(
-      'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html',
-      {
-        next: { revalidate: CACHE_SECONDS },
-      },
-    );
+    const response = await fetch(ATLAS_GITHUB_REPO_URL, {
+      next: { revalidate: CACHE_SECONDS },
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch Atlas HTML: ${response.status} ${response.statusText}`);

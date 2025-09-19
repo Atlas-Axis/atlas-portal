@@ -85,3 +85,6 @@ export const IMPORT_DATABASES = [
 // The specific Section & Primary Doc page ID under which root Agent documents will be nested
 // This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
 export const AGENT_PARENT_SECTION_ID = '1b4f2ff0-8d73-8082-862b-dcd586862638';
+
+export const ATLAS_GITHUB_REPO_URL =
+  'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html';
