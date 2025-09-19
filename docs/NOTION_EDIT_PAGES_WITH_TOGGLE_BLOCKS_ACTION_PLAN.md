@@ -290,7 +290,6 @@ const createdBlocks = await fetchBlocksRecursively({
   rootNotionBlockId: newPageId,
   notionBlockType: 'page',
   editPage: {
-    belongsToEditPage: true,
     editPageOriginalNotionBlockId: '', // Not applicable for this use case
     editPageOriginalNotionPageId: '', // Will be set per block during mapping
   },

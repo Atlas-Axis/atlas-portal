@@ -605,7 +605,6 @@ async function importToggleBlocksFromNotionToSupabase({
       rootNotionBlockId: notionPageId,
       notionBlockType: 'page',
       editPage: {
-        belongsToEditPage: true,
         editPageOriginalNotionBlockId: '', // Not applicable for toggle blocks
         editPageOriginalNotionPageId: '', // Will be set per block during mapping
       },
