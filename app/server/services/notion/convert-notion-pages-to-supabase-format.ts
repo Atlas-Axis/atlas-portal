@@ -144,7 +144,7 @@ async function convertSingleNotionPageToDatabaseFormat(
     parent_notion_page_id: parentNotionId,
     ...childArrays,
     extra_fields: extraFields ?? {},
-    sort_order: sortOrder || 1, // TODO: Make this field nullable in the database schema
+    sort_order: sortOrder || 0, // TODO: Make this field nullable in the database schema
     created_at: notionPage.created_time,
     updated_at: notionPage.last_edited_time,
     last_edited_by_user_id: notionPage.last_edited_by?.id || null,
