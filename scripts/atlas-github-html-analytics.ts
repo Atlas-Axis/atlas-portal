@@ -211,18 +211,6 @@ function printAnalytics(analytics: OverallAnalytics): void {
   }
   console.log();
 
-  // Largest sections
-  console.log('🏆 TOP 5 LARGEST SECTIONS');
-  console.log('-'.repeat(40));
-  const top5 = sortedSections.slice(0, 5).filter((s) => s.documentCount > 0);
-  for (let i = 0; i < top5.length; i++) {
-    const section = top5[i];
-    const rank = i + 1;
-    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `${rank}.`;
-    console.log(`${medal} ${section.sectionName}: ${section.documentCount.toLocaleString()} documents`);
-  }
-  console.log();
-
   console.log('='.repeat(80));
 }
 
