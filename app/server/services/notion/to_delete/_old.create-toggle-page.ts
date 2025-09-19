@@ -629,7 +629,6 @@ async function importToggleBlocksFromNotionToSupabase({
           ...block,
           belongs_to_edit_page: true,
           edit_page_original_notion_page_id: originalPageId || null,
-          edit_page_original_notion_block_id: null, // Not applicable for toggle blocks
         };
       } else {
         // For non-toggle blocks (page, paragraphs, etc.), they are not edit page content
@@ -637,7 +636,6 @@ async function importToggleBlocksFromNotionToSupabase({
           ...block,
           belongs_to_edit_page: false,
           edit_page_original_notion_page_id: null,
-          edit_page_original_notion_block_id: null,
         };
       }
     });

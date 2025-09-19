@@ -17,13 +17,15 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this block
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
+
   -- Edit Page related fields
-  edit_page_original_notion_block_id UUID, -- ID of the original Notion block that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
 
   -- Cascade-delete child blocks when the parent block is deleted
   CONSTRAINT fk_parent_block FOREIGN KEY (parent_notion_block_id) REFERENCES notion_blocks(notion_block_id) ON DELETE CASCADE  
 );
+
+-- TODO: When the user presses the "Sync Changes" button on the UI, we need to first update `parent_notion_block_id` fields, and only then delete database rows for blocks that have been removed in Notion. This ensures we don't violate foreign key constraints during the sync process and don't trigger a cascade delete of child blocks that are still present but with updated parent IDs.
 
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_block_id ON notion_blocks(notion_block_id); -- Index for Notion block ID

@@ -82,7 +82,6 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 
 **Edit Page Fields:**
 
-- `edit_page_original_notion_block_id` (UUID) - Links to original block being edited
 - `edit_page_original_notion_page_id` (UUID) - Links to original page being edited
 
 **Cascade deletes:**

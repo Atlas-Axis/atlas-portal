@@ -14,7 +14,6 @@ export type Database = {
           block_type: string;
           canonical_document_title: string | null;
           created_at: string;
-          edit_page_original_notion_block_id: string | null;
           edit_page_original_notion_page_id: string | null;
           has_children: boolean;
           in_trash: boolean;
@@ -32,7 +31,6 @@ export type Database = {
           block_type: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
@@ -50,7 +48,6 @@ export type Database = {
           block_type?: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          edit_page_original_notion_block_id?: string | null;
           edit_page_original_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
