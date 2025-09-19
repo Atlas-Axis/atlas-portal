@@ -236,3 +236,20 @@ export type ChildListFieldName = {
 }[keyof NotionDatabasePagesRow];
 
 export type ChildLists = { [K in ChildListFieldName]: string[] };
+
+// "Type Specification" documents have some extra fields
+export interface TypeSpecificationExtraFields {
+  type_specification_doc_identifier_rules: string | null;
+  type_specification_additional_logic: string | null;
+  type_specification_type_category: string | null;
+  type_specification_type_name: string | null;
+  type_specification_type_overview: string | null;
+}
+
+export const TYPE_SPECIFICATION_PROPERTY_MAPPING: Record<keyof TypeSpecificationExtraFields, string> = {
+  type_specification_doc_identifier_rules: 'Doc Identifier Rules',
+  type_specification_additional_logic: 'Additional Logic',
+  type_specification_type_category: 'Type Category',
+  type_specification_type_name: 'Type Name',
+  type_specification_type_overview: 'Type Overview',
+} as const;
