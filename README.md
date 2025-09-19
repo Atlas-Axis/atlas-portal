@@ -53,7 +53,7 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 
 - `notion_block_id` (UUID, PRIMARY KEY) - Notion's unique block identifier
 - `parent_notion_block_id` (UUID) - Parent block ID, NULL for root blocks
-- `root_notion_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
+- `root_notion_toggle_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
 - `block_type` (TEXT, NOT NULL) - Block type: paragraph, heading_1, heading_2, etc.
 - `has_children` (BOOLEAN) - Whether the block contains nested blocks
 - `plain_text_content` (TEXT) - Extracted plain text for searching/display

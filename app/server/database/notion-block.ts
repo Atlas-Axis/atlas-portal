@@ -6,7 +6,7 @@ export interface NotionBlock {
   // id: string; // UUID - Internal primary ID
   notion_block_id: string; // UUID - Notion block ID
   parent_notion_block_id?: string | null; // UUID - Parent block ID (null for root blocks)
-  root_notion_block_id: string; // UUID - The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
+  root_notion_toggle_block_id: string; // UUID - The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
 
   // Notion block metadata
   block_type: string; // Block type (paragraph, heading_1, etc.)

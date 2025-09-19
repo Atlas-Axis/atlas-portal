@@ -614,7 +614,7 @@ async function importToggleBlocksFromNotionToSupabase({
     console.log(`Fetched ${blocks.length} blocks from Notion page ${notionPageId}`);
 
     // Delete existing blocks in Supabase that belong to this page. Descendants are cascade deleted automatically
-    await supabase().from('notion_blocks').delete().eq('root_notion_block_id', notionPageId).throwOnError();
+    await supabase().from('notion_blocks').delete().eq('root_notion_toggle_block_id', notionPageId).throwOnError();
 
     console.log(`Deleted existing blocks in Supabase for Notion page ${notionPageId}`);
 

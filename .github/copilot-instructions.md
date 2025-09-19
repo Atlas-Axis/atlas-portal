@@ -1,12 +1,13 @@
 # GitHub Copilot Instructions
 
 > **📋 Core Project Documentation**
-> 
+>
 > This file is part of the **Core Project Documentation** consisting of 3 synchronized files that provide high-level project overviews:
+>
 > - **[README.md](../README.md)** - Human-readable project documentation
 > - **[.cursorrules](../.cursorrules)** - AI agent documentation for Cursor IDE
 > - **[.github/copilot-instructions.md](./copilot-instructions.md)** - AI agent documentation for GitHub Copilot (this file)
-> 
+>
 > ⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
 
 Don't ask for permission to run console commands (tests, etc.), just run them.
@@ -66,7 +67,7 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 
 - `notion_block_id` (UUID, PRIMARY KEY) - Notion's unique block identifier
 - `parent_notion_block_id` (UUID) - Parent block ID, NULL for root blocks. Has CASCADE DELETE constraint
-- `root_notion_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
+- `root_notion_toggle_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
 - `block_type` (TEXT, NOT NULL) - Block type: paragraph, heading_1, heading_2, heading_3, bulleted_list_item, numbered_list_item, etc.
 - `has_children` (BOOLEAN) - Whether the block contains nested blocks
 - `archived` (BOOLEAN) - Notion archive status

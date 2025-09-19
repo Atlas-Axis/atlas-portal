@@ -23,7 +23,7 @@ export type Database = {
           notion_block_id: string;
           parent_notion_block_id: string | null;
           plain_text_content: string | null;
-          root_notion_block_id: string;
+          root_notion_toggle_block_id: string;
           sort_order: number;
           updated_at: string;
         };
@@ -41,7 +41,7 @@ export type Database = {
           notion_block_id: string;
           parent_notion_block_id?: string | null;
           plain_text_content?: string | null;
-          root_notion_block_id: string;
+          root_notion_toggle_block_id: string;
           sort_order: number;
           updated_at?: string;
         };
@@ -59,7 +59,7 @@ export type Database = {
           notion_block_id?: string;
           parent_notion_block_id?: string | null;
           plain_text_content?: string | null;
-          root_notion_block_id?: string;
+          root_notion_toggle_block_id?: string;
           sort_order?: number;
           updated_at?: string;
         };

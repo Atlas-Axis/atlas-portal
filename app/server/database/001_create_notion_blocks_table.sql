@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   -- id UUID PRIMARY KEY, -- Internal primary ID
   notion_block_id UUID NOT NULL PRIMARY KEY, -- Notion block ID
   parent_notion_block_id UUID, -- Parent block ID (null for root blocks)
-  root_notion_block_id UUID NOT NULL, -- The Notion page id this block belongs to, or the root/top-most block id of a subtree of blocks
+  root_notion_toggle_block_id UUID NOT NULL, -- The ID of the top level block of this `notion_blocks` subtree. This is a Notion toggle block inside an Edit Page (there may be more than toggle blocks inside an Edit Page, this represents one of them)
   block_type TEXT NOT NULL, -- Block type (paragraph, heading_1, etc.)
   has_children BOOLEAN NOT NULL DEFAULT FALSE,
   archived BOOLEAN NOT NULL DEFAULT FALSE,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_block_id ON notion_blocks(notion_block_id); -- Index for Notion block ID
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_parent_notion_block_id ON notion_blocks(parent_notion_block_id); -- Index for parent block ID
-CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_page_id ON notion_blocks(root_notion_block_id);
+CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_page_id ON notion_blocks(root_notion_toggle_block_id);
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_block_type ON notion_blocks(block_type); -- Index for block type
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_sort_order ON notion_blocks(parent_notion_block_id, sort_order); -- Index for sort order within parent
 -- CREATE INDEX IF NOT EXISTS idx_notion_blocks_temporal ON notion_blocks(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid blocks at a specific time)

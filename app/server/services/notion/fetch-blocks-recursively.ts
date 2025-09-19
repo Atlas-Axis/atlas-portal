@@ -134,7 +134,7 @@ function mapNotionApiBlockToDatabaseObject(
     // Primary keys and identifiers
     notion_block_id: block.id,
     parent_notion_block_id: parentNotionBlockId,
-    root_notion_block_id: rootNotionBlockId,
+    root_notion_toggle_block_id: rootNotionBlockId,
 
     // Notion block metadata
     block_type: block.type,

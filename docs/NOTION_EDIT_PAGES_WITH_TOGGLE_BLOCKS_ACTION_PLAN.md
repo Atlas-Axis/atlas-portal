@@ -252,7 +252,7 @@ The `notion_blocks` table has these relevant fields:
 
 - `notion_block_id` (PRIMARY KEY) - Notion's block ID
 - `parent_notion_block_id` - Parent block for hierarchy
-- `root_notion_block_id` - The Notion page ID containing this block
+- `root_notion_toggle_block_id` - The Notion page ID containing this block
 - `block_type` - Should be 'toggle' for toggle blocks, 'paragraph' for content
 - `belongs_to_edit_page` - Should be `true`
 - `edit_page_original_notion_page_id` - **CRITICAL**: Maps to source database page ID

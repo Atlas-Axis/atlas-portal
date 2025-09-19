@@ -11,7 +11,7 @@ export async function loadNotionBlocksFromSupabase(rootNotionBlockId: string) {
     const { data, error } = await supabase()
       .from('notion_blocks')
       .select('*')
-      .eq('root_notion_block_id', rootNotionBlockId)
+      .eq('root_notion_toggle_block_id', rootNotionBlockId)
       .eq('archived', false)
       .order('sort_order') // Sort by sort_order
       //   .order('sort_order, id') // Sort by sort_order and ID
