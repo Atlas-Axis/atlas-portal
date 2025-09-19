@@ -63,7 +63,6 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 
 **Edit Page Fields:**
 
-- `belongs_to_edit_page` (BOOLEAN, DEFAULT TRUE) - Whether this is an edit copy
 - `edit_page_original_notion_block_id` (UUID) - Links to original block being edited
 - `edit_page_original_notion_page_id` (UUID) - Links to original page being edited
 
@@ -74,14 +73,22 @@ Stores Notion database pages and their hierarchical relationships.
 **Key Fields:**
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `atlas_document_type` (ENUM, NULLABLE) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category'.
+- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Placeholder', 'Category', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
+- `atlas_document_number` (TEXT, NOT NULL, DEFAULT '') - Document number of the Atlas document this page belongs to
+- `atlas_database_name` (ENUM, NOT NULL) - Database name. Enum values: 'Scopes', 'Articles', 'Sections & Primary Docs', 'Annotations', 'Tenets', 'Scenarios', 'Scenario Variations', 'Active Data', 'Agent Scope Database', 'Needed Research', 'Original Context Data'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
+- `archived` (BOOLEAN) - Notion archive status
+- `in_trash` (BOOLEAN) - Notion trash status
 - `plain_text_content` (TEXT) - Page content as plain text
 - `json_content` (JSONB) - Rich content from Notion API
 - `plain_text_name` (TEXT) - Page title as plain text
 - `json_name` (JSONB) - Rich text page title from Notion API
-- `sort_order` (INTEGER, NOT NULL) - Position of sub item within parent (0-indexed)
+- `parent_notion_page_id` (UUID) - Parent Notion page ID (if any)
+- `sort_order` (DECIMAL(5,2), NOT NULL) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
 - `canonical_document_title` (TEXT) - Atlas document identifier
+- `created_at` (TIMESTAMPTZ) - Database row creation time
+- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
+- `last_edited_by_user_id` (TEXT) - Notion user ID who last edited
 
 Child relationship fields (JSONB arrays of UUID strings):
 
@@ -108,7 +115,12 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - `last_sync_started_at` (TIMESTAMPTZ) - When sync began
 - `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded
 - `sync_error_message` (TEXT) - Error details if failed
+- `blocks_synced_count` (INTEGER) - Number of blocks successfully synced
 - `is_sync_locked` (BOOLEAN) - Prevents concurrent syncs
+- `sync_lock_acquired_at` (TIMESTAMPTZ) - When the sync lock was acquired
+- `sync_lock_expires_at` (TIMESTAMPTZ) - When the sync lock expires (for cleanup of stale locks)
+- `created_at` (TIMESTAMPTZ) - Database row creation time
+- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
 
 ## 🔧 Key Services
 
@@ -149,23 +161,16 @@ Embeddable as iframes within Notion pages:
 - `diff` - Displays content differences
 - Compatible with web browsers, Mac OS Notion app, not iOS/iPad Notion app
 
-### Internal Pages For Testing
+### Atlas & Internal Pages
 
-- `/import` - Manual sync triggers for pages/databases (development)
-- `/visualize` - Tree visualization of content structure (development)
+- `/atlas` - Hierarchy view of Atlas documents stored in Supabase. Similar to Atlas Explorer (https://sky-atlas.powerhouse.io)
+- `/atlas/list` - List view of Atlas documents stored in Supabase, grouped by Atlas database name. Similar to the GitHub version of the Atlas
+- `/edit-page-list` - List Notion "Edit Pages"
 - `/notion-api-key-testing` - Validate Notion API keys, retries, and rate limits (development)
 - `/markdown` - Preview generated markdown output (development)
 - `/test-edit-page` - Create and test edit pages (development)
 
 ## 🔄 Important Patterns
-
-### Edit Page Workflow
-
-1. Original blocks have `belongs_to_edit_page = false`
-2. Edit page blocks have `belongs_to_edit_page = true`
-3. Edit blocks reference original via `edit_page_original_notion_block_id`
-4. Edit pages reference original top level (root) page via `edit_page_original_notion_page_id`
-5. Enables efficient querying and comparison using tree comparison algorithms and tree shaking
 
 ### Sync Locking
 
