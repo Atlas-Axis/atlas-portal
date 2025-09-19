@@ -1,12 +1,12 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '../../database/notion-database-page';
-import { AtlasDatabaseName } from '../atlas/constants';
+import { AtlasDatabaseName, TYPE_SPECIFICATION_PARENT_SECTION_ID } from '../atlas/constants';
 import {
   ChildLists,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
 } from '../atlas/notion-database-properties-and-relationships';
-import { extractPageTitle } from './extract-page-title';
+import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
@@ -54,14 +54,15 @@ async function convertSingleNotionPageToDatabaseFormat(
   databaseConfig: (typeof NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS)[AtlasDatabaseName],
 ): Promise<NotionDatabasePage> {
   // Extract page title
-  const pageTitle = extractPageTitle(notionPage, databaseConfig.properties.atlasDocumentName);
+  const pageTitle = extractRichTextPlainText(notionPage, databaseConfig.properties.atlasDocumentName);
 
   // Extract content
-  const content = extractPageTitle(notionPage, databaseConfig.properties.content);
+  const content = extractRichTextPlainText(notionPage, databaseConfig.properties.content);
 
   // Extract canonical document title
-  const canonicalDocumentTitleResult = extractPageTitle(notionPage, databaseConfig.properties.atlasFullDocumentTitle);
-  const canonicalDocumentTitle = canonicalDocumentTitleResult.plainText;
+  const canonicalDocumentTitle = readPlainTextValueFromNotionPageProperty(
+    notionPage.properties[databaseConfig.properties.atlasFullDocumentTitle],
+  );
 
   // Extract document number
   const documentNumber = extractDocumentNumber(notionPage, databaseConfig.properties.atlasDocumentNo);
@@ -70,6 +71,11 @@ async function convertSingleNotionPageToDatabaseFormat(
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
   if (!documentType) {
     console.warn(`⚠️ Document type is missing for page ${notionPage.id}. Setting to "Placeholder".`);
+  }
+
+  // If the document is a "Type Specification", store extra fields only applicable to Type Specifications
+  if (documentType === 'Type Specification' || notionPage.id === TYPE_SPECIFICATION_PARENT_SECTION_ID) {
+    // TODO: Implement an extraction function for these fields. Use the `TypeSpecificationExtraFields` interface. This will be stored as JSON in a field called `extra_fields` in the `NotionDatabasePage` table.
   }
 
   // Extract sort order
@@ -119,7 +125,7 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   const databasePage: NotionDatabasePage = {
     notion_page_id: notionPage.id,
-    canonical_document_title: canonicalDocumentTitle,
+    canonical_document_title: canonicalDocumentTitle ? String(canonicalDocumentTitle) : null,
     atlas_document_type: (documentType as NotionDatabasePage['atlas_document_type']) || 'Placeholder',
     atlas_document_number: documentNumber,
     atlas_database_name: atlasDatabaseName,

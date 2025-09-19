@@ -1,7 +1,7 @@
 import { PageObjectResponse } from '@notionhq/client';
 import { Json } from '@/app/server/services/supabase/database.types';
 
-export function extractPageTitle(
+export function extractRichTextPlainText(
   page: PageObjectResponse,
   titlePropertyName: string,
 ): {
