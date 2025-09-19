@@ -11,7 +11,6 @@ export type Database = {
       notion_blocks: {
         Row: {
           archived: boolean;
-          belongs_to_edit_page: boolean;
           block_type: string;
           canonical_document_title: string | null;
           created_at: string;
@@ -30,7 +29,6 @@ export type Database = {
         };
         Insert: {
           archived?: boolean;
-          belongs_to_edit_page?: boolean;
           block_type: string;
           canonical_document_title?: string | null;
           created_at?: string;
@@ -49,7 +47,6 @@ export type Database = {
         };
         Update: {
           archived?: boolean;
-          belongs_to_edit_page?: boolean;
           block_type?: string;
           canonical_document_title?: string | null;
           created_at?: string;

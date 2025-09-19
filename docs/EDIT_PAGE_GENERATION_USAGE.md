@@ -119,7 +119,6 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 
 - Fetches all created blocks from Notion
 - Stores blocks in `notion_blocks` table with:
-  - `belongs_to_edit_page = true`
   - `edit_page_original_notion_page_id` = source database page ID
   - Proper parent-child relationships
   - Sort order preservation

@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
   -- Edit Page related fields
-  belongs_to_edit_page BOOLEAN NOT NULL DEFAULT TRUE, -- Indicates if the block belongs to an Edit Page, which is a temporary Notion page, duplicated from the original, for proposed edits
   edit_page_original_notion_block_id UUID, -- ID of the original Notion block that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
   edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
 
@@ -33,8 +32,6 @@ CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_page_id ON notion_blocks(roo
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_block_type ON notion_blocks(block_type); -- Index for block type
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_sort_order ON notion_blocks(parent_notion_block_id, sort_order); -- Index for sort order within parent
 -- CREATE INDEX IF NOT EXISTS idx_notion_blocks_temporal ON notion_blocks(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid blocks at a specific time)
-CREATE INDEX IF NOT EXISTS idx_notion_blocks_belongs_to_edit_page ON notion_blocks(belongs_to_edit_page);
--- CREATE INDEX IF NOT EXISTS idx_notion_blocks_page_edit_temporal ON notion_blocks(root_notion_block_id, belongs_to_edit_page, date_valid_from, date_valid_to);
 
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_canonical_title 
@@ -68,14 +65,6 @@ CREATE TRIGGER set_updated_at
 -- Ensure sort_order is non-negative
 ALTER TABLE notion_blocks ADD CONSTRAINT check_sort_order_positive
 CHECK (sort_order >= 0);
-
--- Ensure edit page fields are consistent with belongs_to_edit_page flag
-ALTER TABLE notion_blocks ADD CONSTRAINT check_edit_page_fields_consistency
-CHECK (
-  (belongs_to_edit_page = true AND edit_page_original_notion_page_id IS NOT NULL)
-  OR
-  (belongs_to_edit_page = false AND edit_page_original_notion_block_id IS NULL AND edit_page_original_notion_page_id IS NULL)
-);
 
 -- Enable Row Level Security
 ALTER TABLE notion_blocks ENABLE ROW LEVEL SECURITY;

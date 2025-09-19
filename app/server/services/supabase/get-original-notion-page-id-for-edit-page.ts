@@ -5,7 +5,6 @@ export async function getOriginalRootNotionPageIdForEditPage(editPageId: string)
     .from('notion_blocks')
     .select('edit_page_original_notion_page_id')
     .eq('notion_page_id', editPageId)
-    .eq('belongs_to_edit_page', true)
     .single();
 
   if (error) {

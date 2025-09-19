@@ -34,7 +34,6 @@ export interface NotionBlock {
   //   date_valid_to?: string | null; // Used for versioning. NULL means "current" version
 
   // Edit Page related fields
-  belongs_to_edit_page: boolean; // Indicates if the block belongs to an Edit Page
   edit_page_original_notion_block_id?: string | null; // ID of the original Notion block that this editable copy has been duplicated from
   edit_page_original_notion_page_id?: string | null; // ID of the original Notion page that this editable copy has been duplicated from
 }
