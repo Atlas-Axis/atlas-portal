@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
 
   -- Edit Page related fields
-  edit_page_original_notion_page_id UUID, -- ID of the original Notion page that this editable copy has been duplicated from; Used for efficient querying without needing a mapping table
+  mapped_notion_page_id UUID, -- ID of the original Notion page that this editable text block has been duplicated from
 
   -- Cascade-delete child blocks when the parent block is deleted
   CONSTRAINT fk_parent_block FOREIGN KEY (parent_notion_block_id) REFERENCES notion_blocks(notion_block_id) ON DELETE CASCADE  

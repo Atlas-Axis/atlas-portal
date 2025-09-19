@@ -4,7 +4,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 export async function getOriginalRootNotionPageIdForEditPage(editPageId: string): Promise<string> {
   const { data, error } = await supabase()
     .from('notion_blocks')
-    .select('edit_page_original_notion_page_id')
+    .select('mapped_notion_page_id')
     .eq('notion_page_id', editPageId)
     .single();
 
@@ -15,9 +15,9 @@ export async function getOriginalRootNotionPageIdForEditPage(editPageId: string)
     });
   }
 
-  if (!data || !data.edit_page_original_notion_page_id) {
+  if (!data || !data.mapped_notion_page_id) {
     throw new Error(`No original Notion page ID found for edit page ${editPageId}`);
   }
 
-  return data.edit_page_original_notion_page_id;
+  return data.mapped_notion_page_id;
 }

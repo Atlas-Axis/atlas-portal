@@ -138,8 +138,8 @@ export async function _delete_calculateNotionPageHierarchyChanges({
 
   // Step 8: Map duplicate pages' Notion page IDs to original page IDs
   // const pageIdMappingDuplicatedToOriginal = duplicatedPages.reduce((map, page) => {
-  //   if (page.edit_page_original_notion_page_id) {
-  //     map.set(page.notion_page_id, page.edit_page_original_notion_page_id);
+  //   if (page.mapped_notion_page_id) {
+  //     map.set(page.notion_page_id, page.mapped_notion_page_id);
   //   }
   //   return map;
   // }, new Map<string, string>());

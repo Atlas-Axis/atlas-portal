@@ -628,14 +628,14 @@ async function importToggleBlocksFromNotionToSupabase({
         return {
           ...block,
           belongs_to_edit_page: true,
-          edit_page_original_notion_page_id: originalPageId || null,
+          mapped_notion_page_id: originalPageId || null,
         };
       } else {
         // For non-toggle blocks (page, paragraphs, etc.), they are not edit page content
         return {
           ...block,
           belongs_to_edit_page: false,
-          edit_page_original_notion_page_id: null,
+          mapped_notion_page_id: null,
         };
       }
     });
@@ -649,8 +649,8 @@ async function importToggleBlocksFromNotionToSupabase({
 
     // Check that all toggle blocks are properly mapped
     const toggleBlocks = blocksWithEditProperties.filter((block) => block.block_type === 'toggle');
-    const mappedToggleBlocks = toggleBlocks.filter((block) => block.edit_page_original_notion_page_id);
-    const unmappedToggleBlocks = toggleBlocks.filter((block) => !block.edit_page_original_notion_page_id);
+    const mappedToggleBlocks = toggleBlocks.filter((block) => block.mapped_notion_page_id);
+    const unmappedToggleBlocks = toggleBlocks.filter((block) => !block.mapped_notion_page_id);
 
     console.log(`Toggle block mapping: ${mappedToggleBlocks.length} mapped, ${unmappedToggleBlocks.length} unmapped`);
 

@@ -158,7 +158,7 @@ function mapNotionApiBlockToDatabaseObject(
     updated_at: new Date(block.last_edited_time).toISOString(),
 
     // Edit Page related fields
-    edit_page_original_notion_page_id: editPageProps?.editPageOriginalNotionPageId || null,
+    mapped_notion_page_id: editPageProps?.editPageOriginalNotionPageId || null,
   };
 }
 

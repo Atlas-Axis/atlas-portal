@@ -45,7 +45,7 @@ We have hierarchical Atlas documents stored in the `notion_database_pages` Supab
 
 **Q**: Should we add a new field to `notion_blocks` to map back to source database pages?
 
-**A**: No, use existing `edit_page_original_notion_page_id` field to reference the source `notion_database_pages` entry.
+**A**: No, use existing `mapped_notion_page_id` field to reference the source `notion_database_pages` entry.
 
 #### 3. Function Interface
 
@@ -182,7 +182,7 @@ The **Method #2: Toggle Blocks Implementation** is now **FULLY IMPLEMENTED** wit
 #### Database Integration
 
 - **Block storage**: All created toggle blocks are properly stored in `notion_blocks` table
-- **Mapping system**: `edit_page_original_notion_page_id` correctly links blocks to source database pages
+- **Mapping system**: `mapped_notion_page_id` correctly links blocks to source database pages
 - **Edit page properties**: All blocks have `belongs_to_edit_page = true`
 - **Cascade deletes**: Proper cleanup of existing blocks before import
 
@@ -255,7 +255,7 @@ The `notion_blocks` table has these relevant fields:
 - `root_notion_toggle_block_id` - The Notion page ID containing this block
 - `block_type` - Should be 'toggle' for toggle blocks, 'paragraph' for content
 - `belongs_to_edit_page` - Should be `true`
-- `edit_page_original_notion_page_id` - **CRITICAL**: Maps to source database page ID
+- `mapped_notion_page_id` - **CRITICAL**: Maps to source database page ID
 - `canonical_document_title` - Atlas document identifier
 - `sort_order` - Position within parent (0-indexed)
 
@@ -307,7 +307,7 @@ for (const block of createdBlocks) {
     await supabase()
       .from('notion_blocks')
       .update({
-        edit_page_original_notion_page_id: sourceDatabasePageId,
+        mapped_notion_page_id: sourceDatabasePageId,
       })
       .eq('notion_block_id', block.notion_block_id);
   }
@@ -411,7 +411,7 @@ import { TextRichTextItemRequest } from './types';
    - ✅ **CRITICAL**: All blocks stored in Supabase with correct mapping
 
 2. **Technical Requirements**
-   - ✅ **CRITICAL**: `edit_page_original_notion_page_id` correctly maps blocks to source pages
+   - ✅ **CRITICAL**: `mapped_notion_page_id` correctly maps blocks to source pages
    - ✅ `belongs_to_edit_page` properly set for all blocks (toggle blocks = true, others = false)
    - ✅ Sort order preserved from original database pages
    - ✅ Error handling for partial failures

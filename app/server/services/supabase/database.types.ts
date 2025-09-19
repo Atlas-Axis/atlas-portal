@@ -14,7 +14,7 @@ export type Database = {
           block_type: string;
           canonical_document_title: string | null;
           created_at: string;
-          edit_page_original_notion_page_id: string | null;
+          mapped_notion_page_id: string | null;
           has_children: boolean;
           in_trash: boolean;
           json_content: Json | null;
@@ -31,7 +31,7 @@ export type Database = {
           block_type: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          edit_page_original_notion_page_id?: string | null;
+          mapped_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
@@ -48,7 +48,7 @@ export type Database = {
           block_type?: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          edit_page_original_notion_page_id?: string | null;
+          mapped_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;

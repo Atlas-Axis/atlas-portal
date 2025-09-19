@@ -119,7 +119,7 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 
 - Fetches all created blocks from Notion
 - Stores blocks in `notion_blocks` table with:
-  - `edit_page_original_notion_page_id` = source database page ID
+  - `mapped_notion_page_id` = source database page ID
   - Proper parent-child relationships
   - Sort order preservation
 
@@ -143,7 +143,7 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 Each toggle block is stored in `notion_blocks` with:
 
 - **Block Type**: `toggle` for toggle blocks, `paragraph` for content
-- **Mapping**: Links back to source database page via `edit_page_original_notion_page_id`
+- **Mapping**: Links back to source database page via `mapped_notion_page_id`
 - **Hierarchy**: Maintains parent-child relationships via `parent_notion_block_id`
 - **Order**: Preserves sort order from original database pages
 
