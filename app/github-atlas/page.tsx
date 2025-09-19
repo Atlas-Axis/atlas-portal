@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ATLAS_GITHUB_REPO_URL } from '../server/services/atlas/constants';
+import { ATLAS_GITHUB_HTML_URL } from '../server/services/atlas/constants';
 import './styles.css';
 
 // Cache for 10 seconds
@@ -7,7 +7,7 @@ const CACHE_SECONDS = 10;
 
 async function AtlasContent() {
   try {
-    const response = await fetch(ATLAS_GITHUB_REPO_URL, {
+    const response = await fetch(ATLAS_GITHUB_HTML_URL, {
       next: { revalidate: CACHE_SECONDS },
     });
 

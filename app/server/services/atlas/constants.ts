@@ -86,5 +86,10 @@ export const IMPORT_DATABASES = [
 // This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
 export const AGENT_PARENT_SECTION_ID = '1b4f2ff0-8d73-8082-862b-dcd586862638';
 
-export const ATLAS_GITHUB_REPO_URL =
+// The specific Section & Primary Doc page ID under which root Type Specification documents will be nested
+// This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
+// Note: This relationship is used only on the `/atlas` page (hierarchy view), but not on the `/atlas/list` page (list view)
+export const TYPE_SPECIFICATION_PARENT_SECTION_ID = '7a3e93e3-31f3-46ff-98b4-7fc714b89c92';
+
+export const ATLAS_GITHUB_HTML_URL =
   'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html';

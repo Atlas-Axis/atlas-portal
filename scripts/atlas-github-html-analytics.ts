@@ -28,7 +28,7 @@
  * - Internet connection to fetch HTML from GitHub
  */
 import { JSDOM } from 'jsdom';
-import { ATLAS_GITHUB_REPO_URL } from '@/app/server/services/atlas/constants';
+import { ATLAS_GITHUB_HTML_URL } from '@/app/server/services/atlas/constants';
 
 interface SectionAnalytics {
   sectionId: string;
@@ -53,8 +53,8 @@ interface OverallAnalytics {
 
 async function analyzeSkAtlas(): Promise<OverallAnalytics> {
   try {
-    console.log(`Fetching Sky Atlas HTML from: ${ATLAS_GITHUB_REPO_URL}`);
-    const response = await fetch(ATLAS_GITHUB_REPO_URL);
+    console.log(`Fetching Sky Atlas HTML from: ${ATLAS_GITHUB_HTML_URL}`);
+    const response = await fetch(ATLAS_GITHUB_HTML_URL);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch HTML: ${response.status} ${response.statusText}`);
