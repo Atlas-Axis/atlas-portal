@@ -121,6 +121,10 @@ Child relationship fields (JSONB arrays of UUID strings):
 - `child_agent_scope_ids`
 - `child_needed_research_ids`
 
+**Additional Fields:**
+
+- `extra_fields` (JSONB) - Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to Type Specification Atlas documents
+
 Relationship modeling note:
 
 - Parent-child relationships are modeled via per-type child ID arrays, not a parent foreign key. Cleanup of stale child IDs is handled at the application/import layer.

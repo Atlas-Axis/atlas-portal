@@ -102,6 +102,10 @@ Child relationship fields (JSONB arrays of UUID strings):
 - `child_agent_scope_ids` – Children from 'Agent Scope Database'
 - `child_needed_research_ids` – Children from 'Needed Research'
 
+**Additional Fields:**
+
+- `extra_fields` (JSONB) – Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to Type Specification Atlas documents
+
 ## 📋 Atlas Database Names & Document Types
 
 ### Atlas Database Names

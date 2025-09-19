@@ -14,11 +14,11 @@ export type Database = {
           block_type: string;
           canonical_document_title: string | null;
           created_at: string;
-          mapped_notion_page_id: string | null;
           has_children: boolean;
           in_trash: boolean;
           json_content: Json | null;
           last_edited_by_user_id: string | null;
+          mapped_notion_page_id: string | null;
           notion_block_id: string;
           parent_notion_block_id: string | null;
           plain_text_content: string | null;
@@ -31,11 +31,11 @@ export type Database = {
           block_type: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          mapped_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
+          mapped_notion_page_id?: string | null;
           notion_block_id: string;
           parent_notion_block_id?: string | null;
           plain_text_content?: string | null;
@@ -48,11 +48,11 @@ export type Database = {
           block_type?: string;
           canonical_document_title?: string | null;
           created_at?: string;
-          mapped_notion_page_id?: string | null;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
           last_edited_by_user_id?: string | null;
+          mapped_notion_page_id?: string | null;
           notion_block_id?: string;
           parent_notion_block_id?: string | null;
           plain_text_content?: string | null;
@@ -88,6 +88,7 @@ export type Database = {
           child_section_and_primary_doc_ids: Json;
           child_tenet_ids: Json;
           created_at: string;
+          extra_fields: Json;
           has_children: boolean;
           in_trash: boolean;
           json_content: Json | null;
@@ -117,6 +118,7 @@ export type Database = {
           child_section_and_primary_doc_ids?: Json;
           child_tenet_ids?: Json;
           created_at?: string;
+          extra_fields?: Json;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
@@ -146,6 +148,7 @@ export type Database = {
           child_section_and_primary_doc_ids?: Json;
           child_tenet_ids?: Json;
           created_at?: string;
+          extra_fields?: Json;
           has_children?: boolean;
           in_trash?: boolean;
           json_content?: Json | null;
