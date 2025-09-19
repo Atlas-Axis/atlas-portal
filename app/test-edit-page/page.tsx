@@ -9,6 +9,9 @@ import {
 } from '@/app/server/services/notion/_demo-data';
 import { createEditPageAction } from './_actions/create-edit-page-action';
 
+/**
+ * TODO: Delete this page and use a console command instead
+ */
 export default function TestTogglePage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
