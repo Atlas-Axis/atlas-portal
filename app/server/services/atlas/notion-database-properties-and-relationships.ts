@@ -246,6 +246,7 @@ export interface TypeSpecificationExtraFields {
   type_specification_type_overview: string | null;
 }
 
+// Mapping of Supabase fields to their Notion property names. These fields exist only on "Type Specification" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
 export const TYPE_SPECIFICATION_PROPERTY_MAPPING: Record<keyof TypeSpecificationExtraFields, string> = {
   type_specification_doc_identifier_rules: 'Doc Identifier Rules',
   type_specification_additional_logic: 'Additional Logic',

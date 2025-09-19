@@ -1,12 +1,14 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionDatabasePage } from '../../database/notion-database-page';
-import { AtlasDatabaseName } from '../atlas/constants';
+import { ATLAS_DATABASES, AtlasDatabaseName } from '../atlas/constants';
 import {
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   NotionDatabasePropertyKey,
   PROPERTY_MAPPING_NAMES,
   REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+  TypeSpecificationExtraFields,
 } from '../atlas/notion-database-properties-and-relationships';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -17,6 +19,40 @@ export interface DatabasePageChanges {
   changedProperties: string[]; // Page IDs with changed properties
   changedRelationships: string[]; // Page IDs with changed relationships
   unchangedPages: string[]; // Page IDs with no changes
+}
+
+/**
+ * Compares extra fields for "Type Specification" type Atlas documents in Sections & Primary Docs database.
+ * These fields are stored in the `extra_fields` JSONB column in Supabase.
+ */
+function compareTypeSpecificationExtraFields(
+  notionPage: EnhancedPageObjectResponse,
+  supabasePage: NotionDatabasePage,
+): boolean {
+  // Extract extra fields from Notion page
+  const notionExtraFields: Partial<TypeSpecificationExtraFields> = {};
+  for (const [supabaseField, notionPropertyName] of Object.entries(TYPE_SPECIFICATION_PROPERTY_MAPPING)) {
+    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof TypeSpecificationExtraFields] = notionValue ? String(notionValue) : null;
+  }
+
+  // Extract extra fields from Supabase page
+  const supabaseExtraFields = (supabasePage.extra_fields as unknown as TypeSpecificationExtraFields) || {};
+
+  // Compare each field
+  for (const field of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING) as Array<keyof TypeSpecificationExtraFields>) {
+    const notionValue = notionExtraFields[field] || null;
+    const supabaseValue = supabaseExtraFields[field] || null;
+
+    if (notionValue !== supabaseValue) {
+      console.log(
+        `📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+      );
+      return true; // Has changes
+    }
+  }
+
+  return false; // No changes
 }
 
 /**
@@ -97,6 +133,13 @@ export function compareDatabasePages({
         console.log(
           `📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${JSON.stringify(notionValue)}", Supabase: "${JSON.stringify(supabaseValue)}")`,
         );
+      }
+    }
+
+    // Check extra fields for Type Specification documents in Sections & Primary Docs
+    if (atlasDatabaseName === ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS) {
+      if (compareTypeSpecificationExtraFields(notionPage, supabasePage)) {
+        hasPropertyChanges = true;
       }
     }
 

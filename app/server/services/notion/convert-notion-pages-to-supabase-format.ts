@@ -5,7 +5,10 @@ import {
   ChildLists,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+  TypeSpecificationExtraFields,
 } from '../atlas/notion-database-properties-and-relationships';
+import { Json } from '../supabase/database.types';
 import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -73,9 +76,10 @@ async function convertSingleNotionPageToDatabaseFormat(
     console.warn(`⚠️ Document type is missing for page ${notionPage.id}. Setting to "Placeholder".`);
   }
 
-  // If the document is a "Type Specification", store extra fields only applicable to Type Specifications
+  // Extract extra fields for "Type Specification" documents
+  let extraFields: Json | null = null;
   if (documentType === 'Type Specification' || notionPage.id === TYPE_SPECIFICATION_PARENT_SECTION_ID) {
-    // TODO: Implement an extraction function for these fields. Use the `TypeSpecificationExtraFields` interface. This will be stored as JSON in a field called `extra_fields` in the `NotionDatabasePage` table.
+    extraFields = extractTypeSpecificationExtraFields(notionPage) as unknown as Json;
   }
 
   // Extract sort order
@@ -139,6 +143,7 @@ async function convertSingleNotionPageToDatabaseFormat(
     json_name: pageTitle.richText,
     parent_notion_page_id: parentNotionId,
     ...childArrays,
+    extra_fields: extraFields ?? {},
     sort_order: sortOrder || 1, // TODO: Make this field nullable in the database schema
     created_at: notionPage.created_time,
     updated_at: notionPage.last_edited_time,
@@ -285,6 +290,37 @@ function extractRelationships(
   }
 
   return relationships;
+}
+
+/**
+ * Extract Type Specification extra fields from a Notion page
+ */
+function extractTypeSpecificationExtraFields(page: PageObjectResponse): TypeSpecificationExtraFields {
+  const extraFields: TypeSpecificationExtraFields = {
+    type_specification_doc_identifier_rules: null,
+    type_specification_additional_logic: null,
+    type_specification_type_category: null,
+    type_specification_type_name: null,
+    type_specification_type_overview: null,
+  };
+
+  // Extract each field using the property mapping
+  for (const [supabaseFieldName, notionPropertyName] of Object.entries(TYPE_SPECIFICATION_PROPERTY_MAPPING)) {
+    try {
+      const property = page.properties[notionPropertyName];
+      if (property) {
+        const value = readPlainTextValueFromNotionPageProperty(property);
+        if (value) {
+          const fieldKey = supabaseFieldName as keyof TypeSpecificationExtraFields;
+          extraFields[fieldKey] = String(value);
+        }
+      }
+    } catch (error) {
+      console.error(`Error extracting Type Specification field "${supabaseFieldName}" from page ${page.id}:`, error);
+    }
+  }
+
+  return extraFields;
 }
 
 /**

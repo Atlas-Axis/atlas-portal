@@ -38,6 +38,9 @@ export interface NotionDatabasePage {
   child_agent_scope_ids: Json; // JSON array of UUID strings
   child_needed_research_ids: Json; // JSON array of UUID strings
 
+  // Additional fields for specific document types (Type Specification documents)
+  extra_fields: Json; // JSONB - Additional fields stored as JSON key-value pairs
+
   // Ordering
   sort_order: number; // Position within parent (for ordering; 0-indexed)
 

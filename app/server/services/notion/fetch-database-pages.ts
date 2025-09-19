@@ -24,15 +24,15 @@ export async function fetchNotionDatabasePagesWithRelationships({
 }): Promise<EnhancedPageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
-  const notionPagePropertyNames = Object.values(databaseConfig.childRelationships);
+  const notionPageRelationshipPropertyNames = Object.values(databaseConfig.childRelationships);
 
   // Add parent property name if it exists
   if (databaseConfig.parentPropertyName) {
-    notionPagePropertyNames.push(databaseConfig.parentPropertyName);
+    notionPageRelationshipPropertyNames.push(databaseConfig.parentPropertyName);
   }
 
   console.log(`🔍 Database config for "${atlasDatabaseName}":`, databaseConfig);
-  console.log(`🔍 Notion property names to check for relationships:`, notionPagePropertyNames);
+  console.log(`🔍 Notion property names to check for relationships:`, notionPageRelationshipPropertyNames);
 
   console.log(
     `📡 Starting to fetch all pages with relationships from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`,
@@ -64,7 +64,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
   for (const page of pages) {
     const enhancedRelations = new Map<string, string[]>();
 
-    for (const notionPagePropertyName of notionPagePropertyNames) {
+    for (const notionPagePropertyName of notionPageRelationshipPropertyNames) {
       const { relationshipPropertyId, relatedPageIds, isPossiblyTruncated } = readRelatedPagesInline(
         page,
         notionPagePropertyName,
@@ -191,7 +191,7 @@ function readRelatedPagesInline(
   const notionRelationshipProperty = notionPageProperties[propertyName];
 
   if (!notionRelationshipProperty || notionRelationshipProperty.type !== 'relation') {
-    console.warn(`No valid relation property found for "${propertyName}"`);
+    console.warn(`No valid relation property found for "${propertyName}"`, notionRelationshipProperty);
     return { relatedPageIds: [], isPossiblyTruncated: false };
   }
 

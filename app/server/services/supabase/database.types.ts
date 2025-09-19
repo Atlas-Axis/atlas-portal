@@ -8,6 +8,69 @@ export type Database = {
   };
   public: {
     Tables: {
+      duplicate___notion_database_pages: {
+        Row: {
+          archived: boolean;
+          atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number: string;
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
+          canonical_document_title: string | null;
+          created_at: string;
+          has_children: boolean;
+          in_trash: boolean;
+          json_content: Json | null;
+          json_name: Json | null;
+          last_edited_by_user_id: string | null;
+          notion_page_id: string;
+          parent_notion_page_id: string | null;
+          plain_text_content: string | null;
+          plain_text_name: string | null;
+          relationships: Json;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          archived?: boolean;
+          atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number?: string;
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
+          canonical_document_title?: string | null;
+          created_at?: string;
+          has_children?: boolean;
+          in_trash?: boolean;
+          json_content?: Json | null;
+          json_name?: Json | null;
+          last_edited_by_user_id?: string | null;
+          notion_page_id: string;
+          parent_notion_page_id?: string | null;
+          plain_text_content?: string | null;
+          plain_text_name?: string | null;
+          relationships?: Json;
+          sort_order: number;
+          updated_at?: string;
+        };
+        Update: {
+          archived?: boolean;
+          atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
+          atlas_document_number?: string;
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'];
+          canonical_document_title?: string | null;
+          created_at?: string;
+          has_children?: boolean;
+          in_trash?: boolean;
+          json_content?: Json | null;
+          json_name?: Json | null;
+          last_edited_by_user_id?: string | null;
+          notion_page_id?: string;
+          parent_notion_page_id?: string | null;
+          plain_text_content?: string | null;
+          plain_text_name?: string | null;
+          relationships?: Json;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       notion_blocks: {
         Row: {
           archived: boolean;
