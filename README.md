@@ -103,6 +103,43 @@ Child relationship fields (JSONB arrays of UUID strings):
 - `child_agent_scope_ids` – Children from 'Agent Scope Database'
 - `child_needed_research_ids` – Children from 'Needed Research'
 
+## 📋 Atlas Database Names & Document Types
+
+### Atlas Database Names
+
+The system works with 10 Notion databases that contain Atlas documents:
+
+- **Scopes** - Top-level scope documents
+- **Articles** - Article documents that contain sections
+- **Sections & Primary Docs** - Core section and primary documents
+- **Annotations** - Annotation documents
+- **Tenets** - Tenet documents that contain scenarios
+- **Scenarios** - Scenario documents that contain variations
+- **Scenario Variations** - Individual scenario variations
+- **Active Data** - Active data documents
+- **Agent Scope Database** - Agent-specific scope documents
+- **Needed Research** - Research items that need investigation
+
+### Atlas Document Types
+
+Each document in the Atlas has a specific type from the following enum:
+
+- **Section** - Hierarchical section documents
+- **Core** - Core legal documents
+- **Type Specification** - Technical specification documents
+- **Active Data Controller** - Documents controlling active data
+- **Spell SP Controller** - Documents controlling spell SP
+- **Placeholder** - Placeholder documents
+- **Category** - Categorization documents
+- **Action Tenet** - Action-oriented tenet documents
+- **Active Data** - Active data items
+- **Annotation** - Annotation items
+- **Scope** - Scope items
+- **Article** - Article items
+- **Scenario** - Scenario items
+- **Scenario Variation** - Individual scenario variations
+- **Needed Research** - Research items
+
 #### `notion_sync_status`
 
 Manages synchronization state and prevents concurrent syncs of the same content.
@@ -145,6 +182,14 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - `generate-atlas-json.ts` - Generates JSON representation of Atlas hierarchy
 - `generate-proposal.ts` - Generates human-readable diffs
 - Canonical document titles (e.g., "A.2.3.21 Some Document") represent hierarchical position
+
+### Notion Database Property Mapping (`/app/server/services/atlas`)
+
+- `notion-database-properties-and-relationships.ts` - Maps Notion database page properties to Supabase fields
+- Defines property mappings for each Atlas database (e.g., 'Name' → `atlasDocumentName`)
+- Defines child relationship mappings (e.g., 'Articles' → `child_article_ids`)
+- Used in `convert-notion-pages-to-supabase-format.ts`, `fetch-database-pages.ts`, and `compare-database-pages.ts`
+- Enables consistent data transformation between Notion API responses and Supabase storage format
 
 ### Trigger.dev Tasks (`/app/server/services/trigger`)
 
