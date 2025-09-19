@@ -36,7 +36,7 @@ export async function loadAtlasFromSupabase() {
 
 // Load Atlas pages from Supabase, with additional nesting logic applied
 // This is needed for the Agents database, where root-level Agent documents need to be nested under a specific Agent section to match the Atlas Explorer UI
-export async function loadAtlasFromSupabaseWithNesting() {
+export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection() {
   // Load the base Atlas data
   const atlasPagesPerDatabase = await loadAtlasFromSupabase();
 
