@@ -227,7 +227,8 @@ export type Database = {
         | 'Active Data'
         | 'Agent Scope Database'
         | 'Needed Research'
-        | 'Original Context Data';
+        | 'Original Context Data'
+        | 'Type Specification';
       atlas_document_type_enum:
         | 'Section'
         | 'Core'
@@ -375,6 +376,7 @@ export const Constants = {
         'Agent Scope Database',
         'Needed Research',
         'Original Context Data',
+        'Type Specification',
       ],
       atlas_document_type_enum: [
         'Section',

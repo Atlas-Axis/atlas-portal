@@ -29,7 +29,7 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
   'Agent Scope Database',
   'Needed Research',
   'Original Context Data' -- TODO: Remove
-  -- 'Type Specifications' -- TODO: Add
+  'Type Specification'
 );
 
 -- Create the notion_database_pages table to store synchronized pages from Notion
