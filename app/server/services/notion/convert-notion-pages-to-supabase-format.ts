@@ -79,7 +79,7 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   // Extract extra fields for "Type Specification" documents
   let extraFields: Json | null = null;
-  if (isTypeSpecificationAtlasDocument(atlasDatabaseName, notionPage.id)) {
+  if (documentType && isTypeSpecificationAtlasDocument(atlasDatabaseName, documentType, notionPage.id)) {
     extraFields = extractTypeSpecificationExtraFields(notionPage) as unknown as Json;
   }
 
