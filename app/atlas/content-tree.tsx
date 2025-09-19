@@ -12,6 +12,7 @@ import {
 } from '@/app/server/services/atlas/atlas-document-tree';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import styles from './content-tree.module.css';
+import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
 
 function renderTreeNode(
@@ -39,6 +40,9 @@ function renderTreeNode(
       )}
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
+
+      <PageExtraData page={page} />
+
       <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
         <a
           href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}

@@ -1,4 +1,5 @@
-import { Database, Json } from '@/app/server/services/supabase/database.types';
+import { Json } from '@/app/server/services/supabase/database.types';
+import { AtlasDatabaseName, AtlasDocumentType } from '../services/atlas/constants';
 
 // Represents a Notion page in the database
 export interface NotionDatabasePage {
@@ -7,9 +8,9 @@ export interface NotionDatabasePage {
 
   // Atlas document fields
   canonical_document_title?: string | null; // Title of the Atlas document this page belongs to
-  atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
+  atlas_document_type: AtlasDocumentType;
   atlas_document_number: string; // Document number of the Atlas document this page belongs to
-  atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+  atlas_database_name: AtlasDatabaseName;
 
   // Notion page metadata
   has_children: boolean;

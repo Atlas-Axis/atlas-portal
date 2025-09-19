@@ -1,5 +1,12 @@
 import { Database } from '@/app/server/services/supabase/database.types';
 
+export type AtlasDatabaseName = Exclude<
+  Database['public']['Enums']['atlas_database_name_enum'],
+  'Type Specification' | 'Original Context Data'
+>;
+
+export type AtlasDocumentType = Database['public']['Enums']['atlas_document_type_enum'];
+
 export const ATLAS_DATABASES = {
   SCOPES: 'Scopes',
   ARTICLES: 'Articles',
@@ -13,7 +20,7 @@ export const ATLAS_DATABASES = {
   AGENTS: 'Agent Scope Database',
 } as const;
 
-export const ATLAS_DATABASE_NAMES = [
+export const ATLAS_DATABASE_NAMES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCOPES,
   ATLAS_DATABASES.ARTICLES,
   ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
@@ -26,7 +33,7 @@ export const ATLAS_DATABASE_NAMES = [
   ATLAS_DATABASES.AGENTS,
 ] as const;
 
-export type AtlasDatabaseName = (typeof ATLAS_DATABASE_NAMES)[number];
+// export type AtlasDatabaseName = (typeof ATLAS_DATABASE_NAMES)[number];
 
 export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
   [ATLAS_DATABASES.SCOPES]: 'ebdb403a44bd4d169ec8f9330e955247',
@@ -46,8 +53,6 @@ export const ATLAS_DATABASE_ID_MAP_REVERSED: Record<string, AtlasDatabaseName> =
 );
 
 export type AtlasDatabaseID = (typeof ATLAS_DATABASE_ID_MAP)[AtlasDatabaseName];
-
-export type AtlasDocumentType = Database['public']['Enums']['atlas_document_type_enum'];
 
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',
