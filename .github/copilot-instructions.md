@@ -1,5 +1,14 @@
 # GitHub Copilot Instructions
 
+> **📋 Core Project Documentation**
+> 
+> This file is part of the **Core Project Documentation** consisting of 3 synchronized files that provide high-level project overviews:
+> - **[README.md](../README.md)** - Human-readable project documentation
+> - **[.cursorrules](../.cursorrules)** - AI agent documentation for Cursor IDE
+> - **[.github/copilot-instructions.md](./copilot-instructions.md)** - AI agent documentation for GitHub Copilot (this file)
+> 
+> ⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
+
 Don't ask for permission to run console commands (tests, etc.), just run them.
 
 # Project Overview

@@ -1,3 +1,14 @@
+# Core Project Documentation
+
+> **📋 Important Note for AI Agents**
+> 
+> This file is part of the **Core Project Documentation** consisting of 3 synchronized files:
+> - **[README.md](../README.md)** - Human-readable project documentation  
+> - **[.cursorrules](./.cursorrules)** - AI agent documentation for Cursor IDE (this file)
+> - **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - AI agent documentation for GitHub Copilot
+> 
+> ⚠️ **Critical**: When updating high-level project information, **always update all 3 files** to maintain synchronization across human and AI documentation.
+
 # Project Overview
 
 This Next.js application enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents (laws) organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing changes to Supabase, and visualizing differences using tree diffing algorithms.

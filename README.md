@@ -235,7 +235,17 @@ Embeddable as iframes within Notion pages:
 
 ## 📚 Documentation
 
-### Core Documentation Files
+### 📋 Core Project Documentation Files
+
+This project maintains **3 synchronized documentation files** that provide high-level project overviews:
+
+- **[README.md](./README.md)** - Human-readable project documentation (this file)
+- **[.cursorrules](./.cursorrules)** - AI agent documentation for Cursor IDE
+- **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - AI agent documentation for GitHub Copilot
+
+⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
+
+### Docs for Embeddable Notion Pages
 
 - **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
 
