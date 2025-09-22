@@ -59,3 +59,55 @@ export async function loadNotionDatabasePagesFromSupabase({
   console.log(`Loaded ${allPages.length} "${atlasDatabaseName}" pages from Supabase`);
   return allPages;
 }
+
+/**
+ * Usage:
+ *   const rows = await loadNotionDatabasePagesAtTimeFromSupabase({
+ *    atlasDatabaseName: 'Articles',
+ *    validAt: '2025-01-01T00:00:00Z', // or new Date()
+ *   });
+ */
+export async function loadNotionDatabasePagesAtTimeFromSupabase({
+  atlasDatabaseName,
+  validAt,
+}: {
+  atlasDatabaseName: AtlasDatabaseName;
+  validAt: string | Date;
+}): Promise<NotionDatabasePage[]> {
+  const allPages: NotionDatabasePage[] = [];
+  let page = 0;
+  const pageSize = 1000;
+
+  const sortCriteria = getSortCriteria(atlasDatabaseName);
+
+  const validAtIso = (validAt instanceof Date ? validAt : new Date(validAt)).toISOString();
+
+  while (true) {
+    const { data, error } = await supabase()
+      .from('notion_database_pages')
+      .select('*')
+      .lte('date_valid_from', validAtIso)
+      .or(`date_valid_to.is.null,date_valid_to.gt.${validAtIso}`)
+      .eq('archived', false)
+      .eq('in_trash', false)
+      .eq('atlas_database_name', atlasDatabaseName)
+      .order(sortCriteria)
+      .range(page * pageSize, (page + 1) * pageSize - 1);
+
+    if (error) {
+      console.error({ error });
+      throw new Error(`Failed to load pages at time (page ${page}): ${error.message}`, { cause: error });
+    }
+    if (!data || data.length === 0) break;
+
+    allPages.push(...(data as NotionDatabasePage[]));
+
+    if (data.length < pageSize) break;
+    page++;
+  }
+
+  console.log(
+    `Loaded ${allPages.length} "${atlasDatabaseName}" pages from Supabase at ${validAtIso} (valid at time query)`,
+  );
+  return allPages;
+}

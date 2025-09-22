@@ -263,7 +263,8 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- =========================
--- Helper view (optional): current rows only
+-- View: Rows valid currently
+-- Note: This view is not used in the codebase
 -- =========================
 CREATE OR REPLACE VIEW notion_database_pages_current AS
 SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL;

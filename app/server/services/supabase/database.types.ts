@@ -151,6 +151,8 @@ export type Database = {
           child_section_and_primary_doc_ids: Json;
           child_tenet_ids: Json;
           created_at: string;
+          date_valid_from: string;
+          date_valid_to: string | null;
           extra_fields: Json;
           has_children: boolean;
           in_trash: boolean;
@@ -181,6 +183,8 @@ export type Database = {
           child_section_and_primary_doc_ids?: Json;
           child_tenet_ids?: Json;
           created_at?: string;
+          date_valid_from?: string;
+          date_valid_to?: string | null;
           extra_fields?: Json;
           has_children?: boolean;
           in_trash?: boolean;
@@ -211,6 +215,8 @@ export type Database = {
           child_section_and_primary_doc_ids?: Json;
           child_tenet_ids?: Json;
           created_at?: string;
+          date_valid_from?: string;
+          date_valid_to?: string | null;
           extra_fields?: Json;
           has_children?: boolean;
           in_trash?: boolean;
@@ -273,20 +279,114 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      notion_database_pages_current: {
+        Row: {
+          archived: boolean | null;
+          atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'] | null;
+          atlas_document_number: string | null;
+          atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          canonical_document_title: string | null;
+          child_active_data_ids: Json | null;
+          child_agent_scope_ids: Json | null;
+          child_annotation_ids: Json | null;
+          child_article_ids: Json | null;
+          child_needed_research_ids: Json | null;
+          child_scenario_ids: Json | null;
+          child_scenario_variation_ids: Json | null;
+          child_scope_ids: Json | null;
+          child_section_and_primary_doc_ids: Json | null;
+          child_tenet_ids: Json | null;
+          created_at: string | null;
+          date_valid_from: string | null;
+          date_valid_to: string | null;
+          extra_fields: Json | null;
+          has_children: boolean | null;
+          in_trash: boolean | null;
+          json_content: Json | null;
+          json_name: Json | null;
+          last_edited_by_user_id: string | null;
+          notion_page_id: string | null;
+          parent_notion_page_id: string | null;
+          plain_text_content: string | null;
+          plain_text_name: string | null;
+          sort_order: number | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          archived?: boolean | null;
+          atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'] | null;
+          atlas_document_number?: string | null;
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          canonical_document_title?: string | null;
+          child_active_data_ids?: Json | null;
+          child_agent_scope_ids?: Json | null;
+          child_annotation_ids?: Json | null;
+          child_article_ids?: Json | null;
+          child_needed_research_ids?: Json | null;
+          child_scenario_ids?: Json | null;
+          child_scenario_variation_ids?: Json | null;
+          child_scope_ids?: Json | null;
+          child_section_and_primary_doc_ids?: Json | null;
+          child_tenet_ids?: Json | null;
+          created_at?: string | null;
+          date_valid_from?: string | null;
+          date_valid_to?: string | null;
+          extra_fields?: Json | null;
+          has_children?: boolean | null;
+          in_trash?: boolean | null;
+          json_content?: Json | null;
+          json_name?: Json | null;
+          last_edited_by_user_id?: string | null;
+          notion_page_id?: string | null;
+          parent_notion_page_id?: string | null;
+          plain_text_content?: string | null;
+          plain_text_name?: string | null;
+          sort_order?: number | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          archived?: boolean | null;
+          atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'] | null;
+          atlas_document_number?: string | null;
+          atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
+          canonical_document_title?: string | null;
+          child_active_data_ids?: Json | null;
+          child_agent_scope_ids?: Json | null;
+          child_annotation_ids?: Json | null;
+          child_article_ids?: Json | null;
+          child_needed_research_ids?: Json | null;
+          child_scenario_ids?: Json | null;
+          child_scenario_variation_ids?: Json | null;
+          child_scope_ids?: Json | null;
+          child_section_and_primary_doc_ids?: Json | null;
+          child_tenet_ids?: Json | null;
+          created_at?: string | null;
+          date_valid_from?: string | null;
+          date_valid_to?: string | null;
+          extra_fields?: Json | null;
+          has_children?: boolean | null;
+          in_trash?: boolean | null;
+          json_content?: Json | null;
+          json_name?: Json | null;
+          last_edited_by_user_id?: string | null;
+          notion_page_id?: string | null;
+          parent_notion_page_id?: string | null;
+          plain_text_content?: string | null;
+          plain_text_name?: string | null;
+          sort_order?: number | null;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
       versioned_delete_notion_database_pages: {
-        Args: {
-          p_ids: string[];
-        };
+        Args: { p_ids: string[] };
         Returns: number;
       };
       versioned_upsert_notion_database_pages: {
-        Args: {
-          p_rows: Json[];
-        };
-        Returns: unknown;
+        Args: { p_rows: Json };
+        Returns: undefined;
       };
     };
     Enums: {
