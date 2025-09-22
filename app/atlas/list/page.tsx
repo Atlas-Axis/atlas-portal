@@ -1,5 +1,5 @@
 import { loadAtlasFromSupabase } from '@/app/server/services/atlas/load-atlas-from-supabase';
-import AtlasListClient from './atlas-list-client';
+import AtlasListClient from './atlas-list';
 
 console.log('/atlas/list is being prerendered');
 
