@@ -2,6 +2,8 @@ import { loadAtlasFromSupabasePastVersion } from '@/app/server/services/atlas/lo
 
 // import AtlasListClient from './atlas-list-client';
 
+console.log('/atlas/changelog is being prerendered');
+
 export default async function AtlasListPage() {
   // Load Atlas pages from Supabase, grouped by Atlas database
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

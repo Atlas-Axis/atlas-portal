@@ -3,6 +3,8 @@ import ContentTree from './content-tree';
 
 export const dynamic = 'force-static';
 
+console.log('/atlas is being prerendered');
+
 export default async function Page() {
   // Load Atlas pages from Supabase, grouped by Atlas database
   const atlasPagesPerDatabase = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
