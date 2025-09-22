@@ -74,6 +74,13 @@ CREATE INDEX IF NOT EXISTS idx_notion_database_pages_notion_page_id ON notion_da
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_atlas_document_type ON notion_database_pages(atlas_document_type); -- Index for atlas_document_type
 -- CREATE INDEX IF NOT EXISTS idx_notion_database_pages_temporal ON notion_database_pages(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid pages at a specific time)
 
+-- Temporal indexes to speed history/current lookups
+CREATE INDEX IF NOT EXISTS idx_ndp_date_valid_from
+ON notion_database_pages(date_valid_from);
+
+CREATE INDEX IF NOT EXISTS idx_ndp_date_valid_to
+ON notion_database_pages(date_valid_to);
+
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_database_pages_canonical_title 
 ON notion_database_pages(canonical_document_title) 
