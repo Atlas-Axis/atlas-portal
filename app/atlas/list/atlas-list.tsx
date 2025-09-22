@@ -2,13 +2,17 @@
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { typeColorMap } from '@/app/server/services/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
+import s from './atlas-list.module.css';
 
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>;
 }
 
+// Optimization: This page renders ~6000 PageListItem rows. We use a CSS module with
+// compact, purpose-specific classes instead of Tailwind utilities inside those rows
+// to minimize repeated class name markup and reduce prerendered HTML size for Vercel builds.
+// We ran into build errors when the size of the prerendered HTML exceeded the Vercel limit (19 MB)
 export default function AtlasListClient({ atlasPagesPerDatabase }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
 
@@ -62,30 +66,59 @@ function PageListItem({ page }: PageListItemProps) {
   // TODO: Create a reusable function in the atlas folder for calculating display title based on database type
   const hasContent = page.plain_text_content && page.plain_text_content.trim().length > 0;
 
+  const typeClass = (() => {
+    switch (page.atlas_document_type) {
+      case 'Scope':
+        return s.typeScope;
+      case 'Article':
+        return s.typeArticle;
+      case 'Section':
+        return s.typeSection;
+      case 'Core':
+        return s.typeCore;
+      case 'Type Specification':
+        return s.typeTypeSpecification;
+      case 'Active Data Controller':
+        return s.typeActiveDataController;
+      case 'Spell SP Controller':
+        return s.typeSpellSPController;
+      case 'Placeholder':
+        return s.typePlaceholder;
+      case 'Category':
+        return s.typeCategory;
+      case 'Action Tenet':
+        return s.typeActionTenet;
+      case 'Active Data':
+        return s.typeActiveData;
+      case 'Annotation':
+        return s.typeAnnotation;
+      case 'Scenario':
+        return s.typeScenario;
+      case 'Scenario Variation':
+        return s.typeScenarioVariation;
+      case 'Needed Research':
+        return s.typeNeededResearch;
+      default:
+        return '';
+    }
+  })();
+
   return (
-    <div className="flex items-start space-x-3 py-3">
-      <div className="min-w-0 flex-1">
-        <div className="space-y-2">
-          <div className="flex items-center">
-            {page.atlas_document_number && (
-              <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">
-                {page.atlas_document_number}
-              </h3>
-            )}
+    <div className={s.item}>
+      <div className={s.content}>
+        <div>
+          <div className={s.header}>
+            {page.atlas_document_number && <h3 className={s.number}>{page.atlas_document_number}</h3>}
             <div>
-              <span
-                className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[page.atlas_document_type]}`}
-              >
-                {page.atlas_document_type || 'Unknown Type'}
-              </span>
+              <span className={`${s.type} ${typeClass}`}>{page.atlas_document_type || 'Unknown Type'}</span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold">{page.canonical_document_title || '<Untitled>'}</h3>
+          <h3 className={s.title}>{page.canonical_document_title || '<Untitled>'}</h3>
         </div>
 
-        {hasContent && <p className="mt-1 line-clamp-2 text-sm text-gray-600">{page.plain_text_content}</p>}
+        {hasContent && <p className={s.desc}>{page.plain_text_content}</p>}
 
-        <div className="mt-2 flex flex-col items-start text-xs text-gray-300">
+        <div className={s.meta}>
           {page.sort_order && <span>Order: {page.sort_order}</span>}
           <span>
             Notion ID:{' '}
@@ -93,7 +126,7 @@ function PageListItem({ page }: PageListItemProps) {
               href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-700 hover:underline"
+              className={s.link}
             >
               {uuidToNoHyphens(page.notion_page_id)}
             </a>
