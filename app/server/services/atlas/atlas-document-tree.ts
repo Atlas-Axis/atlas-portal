@@ -36,6 +36,8 @@ export function getAtlasDocumentChildPages(
   page: NotionDatabasePage,
   pageIdMap: Map<string, NotionDatabasePage>,
 ): { immutableAndPrimaryDocumentPages: NotionDatabasePage[]; supportingDocumentPages: NotionDatabasePage[] } {
+  const parentAtlasDatabaseName = page.atlas_database_name;
+
   const immutableAndPrimaryDocumentIds = [
     ...(page.child_scope_ids as string[]),
     ...(page.child_article_ids as string[]),
@@ -54,11 +56,43 @@ export function getAtlasDocumentChildPages(
 
   const immutableAndPrimaryDocumentPages: NotionDatabasePage[] = immutableAndPrimaryDocumentIds
     .map((id) => pageIdMap.get(id))
-    .filter((child): child is NotionDatabasePage => child !== undefined);
+    .filter((child): child is NotionDatabasePage => child !== undefined)
+    .filter((child) => {
+      // Filter out non-root documents for when a child is not in the same database as the parent (e.g. Articles' child_section_and_primary_doc_ids include ALL Sections and Primary Docs, but we only want root ones here)
+      // This is caused by weird Notion relationship mappings in some cases, where the parent document defines all its descendants' IDs in the relationship list, not just its direct children
+      if (child.atlas_database_name !== parentAtlasDatabaseName) {
+        const isRootInItsOwnDatabase = !child.parent_notion_page_id;
+        if (!isRootInItsOwnDatabase) {
+          console.log(
+            'Skipping non-root child document to avoid duplicated entries showing up on the wrong level:',
+            child.notion_page_id,
+            child.plain_text_name,
+          );
+        }
+        return isRootInItsOwnDatabase;
+      }
+      return true;
+    });
 
   const supportingDocumentPages: NotionDatabasePage[] = supportingDocumentIds
     .map((id) => pageIdMap.get(id))
-    .filter((child): child is NotionDatabasePage => child !== undefined);
+    .filter((child): child is NotionDatabasePage => child !== undefined)
+    .filter((child) => {
+      // Filter out non-root documents for when a child is not in the same database as the parent (e.g. Articles' child_section_and_primary_doc_ids include ALL Sections and Primary Docs, but we only want root ones here)
+      // This is caused by weird Notion relationship mappings in some cases, where the parent document defines all its descendants' IDs in the relationship list, not just its direct children
+      if (child.atlas_database_name !== parentAtlasDatabaseName) {
+        const isRootInItsOwnDatabase = !child.parent_notion_page_id;
+        if (!isRootInItsOwnDatabase) {
+          console.log(
+            'Skipping non-root child document to avoid duplicated entries showing up on the wrong level:',
+            child.notion_page_id,
+            child.plain_text_name,
+          );
+        }
+        return isRootInItsOwnDatabase;
+      }
+      return true;
+    });
 
   return { immutableAndPrimaryDocumentPages, supportingDocumentPages };
 }
