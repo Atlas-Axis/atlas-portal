@@ -7,13 +7,13 @@ import { notion } from './notion-client';
 
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
-// Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than 25.
+// Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than in the initial fetch.
 export interface EnhancedPageObjectResponse extends PageObjectResponse {
   enhancedRelations: Map<string, string[]>; // propertyName -> array of related page IDs
 }
 
 /**
- * Fetches all pages in a Notion database. Fetches relationships for each page, even if there are more than 25.
+ * Fetches all pages in a Notion database. Fetches relationships for each page, even if there are more than in the initial fetch.
  */
 export async function fetchNotionDatabasePagesWithRelationships({
   atlasDatabaseName,
@@ -60,7 +60,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
   const enhancedPagesById = new Map<string, EnhancedPageObjectResponse>(); // For efficient lookups
   const needFullPropFetch: { pageId: string; propertyName: string; propertyId: string }[] = [];
 
-  // First pass: read inline relationships and identify which need full fetching (have 25+ relations)
+  // First pass: read inline relationships and identify which need full fetching
   for (const page of pages) {
     const enhancedRelations = new Map<string, string[]>();
 
@@ -91,10 +91,10 @@ export async function fetchNotionDatabasePagesWithRelationships({
   }
 
   if (needFullPropFetch.length > 0) {
-    console.log(`📊 ${needFullPropFetch.length} properties need full relationship fetching (had 25+ relations)`);
+    console.log(`📊 ${needFullPropFetch.length} properties need full relationship fetching`);
   }
 
-  // Second pass: fetch full relationships for properties that were truncated (had 25+ relations)
+  // Second pass: fetch full relationships for properties that were truncated
   for (const { pageId, propertyName, propertyId } of needFullPropFetch) {
     const fullRelationIds = await fetchAllRelationIds(pageId, propertyId);
 
@@ -181,7 +181,7 @@ export async function fetchNotionDatabasePages({
 }
 
 /**
- * Read inline relation values (up to 25) and detect if there's likely more.
+ * Read inline relation values and detect if there's likely more.
  */
 function readRelatedPagesInline(
   page: PageObjectResponse,
@@ -199,8 +199,11 @@ function readRelatedPagesInline(
     ? notionRelationshipProperty.relation.map((relation) => relation.id)
     : [];
 
-  // Heuristic: Notion includes max 25 inline. If exactly 25, there might be more.
-  const isPossiblyTruncated = relationIds.length === 25;
+  // Note: `has_more` is not officially documented in the Notion SDK types, but it appears in the API responses.
+  const hasMore = (notionRelationshipProperty as unknown & { has_more?: boolean }).has_more;
+
+  // Heuristic: Notion includes `has_more: true` if there are more relations
+  const isPossiblyTruncated = hasMore === true;
 
   return {
     relationshipPropertyId: notionRelationshipProperty.id,
@@ -210,7 +213,7 @@ function readRelatedPagesInline(
 }
 
 /**
- * Paginate a relation property fully via pages.properties.retrieve for relationships with more than 25 items.
+ * Paginate a relation property fully via pages.properties.retrieve for relationships with more items.
  */
 async function fetchAllRelationIds(pageId: string, relationPropertyId: string): Promise<string[]> {
   const relationIds: string[] = [];
