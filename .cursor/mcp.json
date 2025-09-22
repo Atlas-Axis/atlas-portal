@@ -3,6 +3,10 @@
     "trigger": {
       "command": "npx",
       "args": ["trigger.dev@latest", "mcp", "--dev-only"]
+    },
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase", "--read-only", "--project-ref=kvxffffzfsnosaqmofut"]
     }
   }
 }
