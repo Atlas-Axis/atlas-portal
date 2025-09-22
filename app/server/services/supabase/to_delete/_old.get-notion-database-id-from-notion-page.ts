@@ -1,6 +1,7 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export async function _delete_getNotionDatabaseIdFromNotionPage(notionPageId: string): Promise<string | null> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, error } = await supabase()
     .from('notion_database_pages')
     .select('root_notion_database_id')

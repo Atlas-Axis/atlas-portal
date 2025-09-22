@@ -4,7 +4,7 @@ import { renderMarkdown } from '@/app/server/markdown/render';
 import { getOriginalRootNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 
-export default async function Page({ params }: { params: { 'edit-page-id': string } }) {
+export default async function Page({ params }: { params: Promise<{ 'edit-page-id': string }> }) {
   const { 'edit-page-id': editPageId } = await params;
 
   // If editPageId is missing, show an error message
