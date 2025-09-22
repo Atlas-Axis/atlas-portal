@@ -1,4 +1,7 @@
-import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
+import {
+  loadNotionDatabasePagesAtTimeFromSupabase,
+  loadNotionDatabasePagesFromSupabase,
+} from '../supabase/load-notion-database-pages-from-supabase';
 import { ATLAS_DATABASES } from './constants';
 import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
 
@@ -29,6 +32,54 @@ export async function loadAtlasFromSupabase() {
       atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
     }),
     [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.AGENTS }),
+  };
+
+  return atlasPagesPerDatabase;
+}
+
+// Load Atlas pages from Supabase, as of a specific past date/time
+export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
+  const atlasPagesPerDatabase = {
+    [ATLAS_DATABASES.SCOPES]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCOPES,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.ARTICLES]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ARTICLES,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.TENETS,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
+      validAt: atDateTime,
+    }),
+    [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesAtTimeFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.AGENTS,
+      validAt: atDateTime,
+    }),
   };
 
   return atlasPagesPerDatabase;
