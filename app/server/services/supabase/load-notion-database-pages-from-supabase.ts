@@ -2,17 +2,17 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 import { AtlasDatabaseName } from '../atlas/constants';
 
-// Map of Atlas database names to their custom sort criteria
+// Map of Atlas database names to their custom sort criteria (as an ordered list)
 // null means use default sorting criteria
-const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, string | null>> = {
-  'Sections & Primary Docs': 'sort_order, canonical_document_title',
-  'Agent Scope Database': 'atlas_document_number',
+const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, string[] | null>> = {
+  'Sections & Primary Docs': ['sort_order', 'canonical_document_title'],
+  'Agent Scope Database': ['atlas_document_number'],
 };
 
-// Default sorting criteria
-const DEFAULT_SORT_CRITERIA = 'sort_order, atlas_document_number, canonical_document_title';
+// Default sorting criteria (as an ordered list)
+const DEFAULT_SORT_CRITERIA: string[] = ['sort_order', 'atlas_document_number', 'canonical_document_title'];
 
-function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): string {
+function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): string[] {
   return ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES[atlasDatabaseName] ?? DEFAULT_SORT_CRITERIA;
 }
 
@@ -30,15 +30,21 @@ export async function loadNotionDatabasePagesFromSupabase({
 
   // Load all pages from Supabase with pagination
   while (true) {
-    const { data, error } = await supabase()
+    let query = supabase()
       .from('notion_database_pages')
       .select('*')
       .is('date_valid_to', null)
       .eq('archived', false)
       .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)
-      .order(sortCriteria)
       .range(page * pageSize, (page + 1) * pageSize - 1);
+
+    // Apply ordering as chained .order calls
+    for (const col of sortCriteria) {
+      query = query.order(col as keyof NotionDatabasePage);
+    }
+
+    const { data, error } = await query;
 
     // Check for errors
     if (error) {
@@ -83,7 +89,7 @@ export async function loadNotionDatabasePagesAtTimeFromSupabase({
   const validAtIso = (validAt instanceof Date ? validAt : new Date(validAt)).toISOString();
 
   while (true) {
-    const { data, error } = await supabase()
+    let query = supabase()
       .from('notion_database_pages')
       .select('*')
       .lte('date_valid_from', validAtIso)
@@ -91,8 +97,13 @@ export async function loadNotionDatabasePagesAtTimeFromSupabase({
       .eq('archived', false)
       .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)
-      .order(sortCriteria)
       .range(page * pageSize, (page + 1) * pageSize - 1);
+
+    for (const col of sortCriteria) {
+      query = query.order(col as keyof NotionDatabasePage);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error({ error });
