@@ -37,6 +37,38 @@ export async function loadAtlasFromSupabase() {
   return atlasPagesPerDatabase;
 }
 
+// Load Atlas pages from Supabase, excluding Agents for ISR optimization
+export async function loadAtlasFromSupabaseWithoutAgents() {
+  const atlasPagesPerDatabase = {
+    [ATLAS_DATABASES.SCOPES]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.SCOPES }),
+    [ATLAS_DATABASES.ARTICLES]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ARTICLES,
+    }),
+    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+    }),
+    [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
+    }),
+    [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.TENETS }),
+    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
+    }),
+    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
+    }),
+    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
+    }),
+    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
+      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
+    }),
+    [ATLAS_DATABASES.AGENTS]: [], // Empty placeholder for Agents
+  };
+
+  return atlasPagesPerDatabase;
+}
+
 // Load Atlas pages from Supabase, as of a specific past date/time
 export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
   const atlasPagesPerDatabase = {

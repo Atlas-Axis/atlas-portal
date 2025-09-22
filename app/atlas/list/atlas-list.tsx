@@ -9,7 +9,7 @@ interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>;
 }
 
-export default function AtlasListClient({ atlasPagesPerDatabase }: AtlasListClientProps) {
+export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
 
   return (
