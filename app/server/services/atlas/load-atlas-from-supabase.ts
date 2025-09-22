@@ -1,120 +1,57 @@
+import { NotionDatabasePage } from '../../database/notion-database-page';
 import {
   loadNotionDatabasePagesAtTimeFromSupabase,
   loadNotionDatabasePagesFromSupabase,
 } from '../supabase/load-notion-database-pages-from-supabase';
-import { ATLAS_DATABASES } from './constants';
+import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES, AtlasDatabaseName } from './constants';
 import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
 
-export async function loadAtlasFromSupabase() {
-  // Load Atlas pages from Supabase
-  const atlasPagesPerDatabase = {
-    [ATLAS_DATABASES.SCOPES]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.SCOPES }),
-    [ATLAS_DATABASES.ARTICLES]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ARTICLES,
-    }),
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
-    }),
-    [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
-    }),
-    [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.TENETS }),
-    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
-    }),
-    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
-    }),
-    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
-    }),
-    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
-    }),
-    [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.AGENTS }),
-  };
+type LoadAtlasOptions = {
+  excludeAgents?: boolean;
+  validAt?: string;
+};
+
+/**
+ * Generic helper function to load Atlas pages from Supabase with various options
+ */
+async function loadAtlasPages(options: LoadAtlasOptions = {}) {
+  const { excludeAgents = false, validAt } = options;
+
+  const atlasPagesPerDatabase: Record<AtlasDatabaseName, NotionDatabasePage[]> = {} as Record<
+    AtlasDatabaseName,
+    NotionDatabasePage[]
+  >;
+
+  for (const databaseName of ATLAS_DATABASE_NAMES) {
+    if (excludeAgents && databaseName === ATLAS_DATABASES.AGENTS) {
+      atlasPagesPerDatabase[databaseName] = [];
+    } else if (validAt) {
+      atlasPagesPerDatabase[databaseName] = await loadNotionDatabasePagesAtTimeFromSupabase({
+        atlasDatabaseName: databaseName,
+        validAt,
+      });
+    } else {
+      atlasPagesPerDatabase[databaseName] = await loadNotionDatabasePagesFromSupabase({
+        atlasDatabaseName: databaseName,
+      });
+    }
+  }
 
   return atlasPagesPerDatabase;
+}
+
+export async function loadAtlasFromSupabase() {
+  return loadAtlasPages();
 }
 
 // Load Atlas pages from Supabase, excluding Agents for ISR optimization
 export async function loadAtlasFromSupabaseWithoutAgents() {
-  const atlasPagesPerDatabase = {
-    [ATLAS_DATABASES.SCOPES]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.SCOPES }),
-    [ATLAS_DATABASES.ARTICLES]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ARTICLES,
-    }),
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
-    }),
-    [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
-    }),
-    [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName: ATLAS_DATABASES.TENETS }),
-    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
-    }),
-    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
-    }),
-    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
-    }),
-    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
-    }),
-    [ATLAS_DATABASES.AGENTS]: [], // Empty placeholder for Agents
-  };
-
-  return atlasPagesPerDatabase;
+  return loadAtlasPages({ excludeAgents: true });
 }
 
 // Load Atlas pages from Supabase, as of a specific past date/time
 export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
-  const atlasPagesPerDatabase = {
-    [ATLAS_DATABASES.SCOPES]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCOPES,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.ARTICLES]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ARTICLES,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.ANNOTATIONS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ANNOTATIONS,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.TENETS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.TENETS,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.SCENARIOS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIOS,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.SCENARIO_VARIATIONS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.SCENARIO_VARIATIONS,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.NEEDED_RESEARCH]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.NEEDED_RESEARCH,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.ACTIVE_DATA]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.ACTIVE_DATA,
-      validAt: atDateTime,
-    }),
-    [ATLAS_DATABASES.AGENTS]: await loadNotionDatabasePagesAtTimeFromSupabase({
-      atlasDatabaseName: ATLAS_DATABASES.AGENTS,
-      validAt: atDateTime,
-    }),
-  };
-
-  return atlasPagesPerDatabase;
+  return loadAtlasPages({ validAt: atDateTime });
 }
 
 // Load Atlas pages from Supabase, with additional nesting logic applied
@@ -127,8 +64,8 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection() {
   const sectionsAndPrimaryDocsPages = atlasPagesPerDatabase[ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS];
 
   const rootAgentDocumentIds = agentPages
-    .filter((page) => page.parent_notion_page_id === null)
-    .map((page) => page.notion_page_id);
+    .filter((page: NotionDatabasePage) => page.parent_notion_page_id === null)
+    .map((page: NotionDatabasePage) => page.notion_page_id);
 
   // Nest root Agent documents under a specific Agent section - the relationship is not set in Notion, so we do it here. This is how the Atlas Explorer UI does it.
   const updatedSectionsAndPrimaryDocsPages = await nestRootAgentDocumentsUnderAgentSection({
