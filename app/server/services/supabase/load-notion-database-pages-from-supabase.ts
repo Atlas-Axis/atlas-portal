@@ -4,15 +4,21 @@ import { AtlasDatabaseName } from '../atlas/constants';
 
 // Map of Atlas database names to their custom sort criteria (as an ordered list)
 // null means use default sorting criteria
-const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, string[] | null>> = {
-  'Sections & Primary Docs': ['sort_order', 'canonical_document_title'],
-  'Agent Scope Database': ['atlas_document_number'],
-};
+const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, (keyof NotionDatabasePage)[] | null>> =
+  {
+    'Sections & Primary Docs': ['sort_order', 'canonical_document_title'],
+    'Agent Scope Database': ['atlas_document_number_sortable'], // Use computed column for natural sorting
+  };
 
 // Default sorting criteria (as an ordered list)
-const DEFAULT_SORT_CRITERIA: string[] = ['sort_order', 'atlas_document_number', 'canonical_document_title'];
+// Use atlas_document_number_sortable for proper natural sorting (A.1.2 before A.1.11)
+const DEFAULT_SORT_CRITERIA: (keyof NotionDatabasePage)[] = [
+  'sort_order',
+  'atlas_document_number_sortable',
+  'canonical_document_title',
+];
 
-function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): string[] {
+function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): (keyof NotionDatabasePage)[] {
   return ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES[atlasDatabaseName] ?? DEFAULT_SORT_CRITERIA;
 }
 

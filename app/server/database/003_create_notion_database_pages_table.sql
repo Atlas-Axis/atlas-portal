@@ -32,6 +32,28 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
   'Type Specification'
 );
 
+-- Natural sorting computed column for atlas_document_number
+-- Converts "A.1.11" to "A.000001.000011" for proper natural sorting
+-- Function to convert atlas_document_number to a sortable format
+CREATE OR REPLACE FUNCTION atlas_document_number_to_sortable(doc_number TEXT)
+RETURNS TEXT AS $$
+BEGIN
+  IF doc_number IS NULL OR doc_number = '' THEN
+    RETURN '';
+  END IF;
+  
+  -- Replace each numeric part with zero-padded version (6 digits)
+  -- Use (\d+) capture group and \1 replacement for PostgreSQL compatibility
+  RETURN regexp_replace(
+    doc_number,
+    '(\d+)',
+    lpad('\1', 6, '0'),
+    'g'
+  );
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
@@ -61,6 +83,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- child_type_specification_ids JSONB NOT NULL DEFAULT '[]', -- Children from Type Specifications database -- TODO: Add
   extra_fields JSONB NOT NULL DEFAULT '{}', -- Additional fields stored as JSON key-value pairs
   sort_order DECIMAL(5,2) NOT NULL, -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
+  atlas_document_number_sortable TEXT GENERATED ALWAYS AS (atlas_document_number_to_sortable(atlas_document_number)) STORED, -- Computed column for natural sorting (e.g. A.1.11 -> A.000001.000011) to fix lexicographic sorting issues
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this page
@@ -90,6 +113,18 @@ WHERE canonical_document_title IS NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_notion_page_id_current
 ON notion_database_pages(notion_page_id)
 WHERE date_valid_to IS NULL;
+
+-- Create optimized index for natural sorting
+CREATE INDEX IF NOT EXISTS idx_atlas_pages_natural_sort 
+ON notion_database_pages (
+  atlas_database_name, 
+  atlas_document_number_sortable, 
+  sort_order, 
+  canonical_document_title
+)
+WHERE date_valid_to IS NULL 
+  AND archived = false 
+  AND in_trash = false;
 
 -- Function to update the updated_at column on row update
 CREATE OR REPLACE FUNCTION update_updated_at_column_pages()
