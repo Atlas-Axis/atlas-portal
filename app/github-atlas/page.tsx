@@ -2,14 +2,9 @@ import { Suspense } from 'react';
 import { ATLAS_GITHUB_HTML_URL } from '../server/services/atlas/constants';
 import './styles.css';
 
-// Cache for 10 seconds
-const CACHE_SECONDS = 10;
-
 async function AtlasContent() {
   try {
-    const response = await fetch(ATLAS_GITHUB_HTML_URL, {
-      next: { revalidate: CACHE_SECONDS },
-    });
+    const response = await fetch(ATLAS_GITHUB_HTML_URL);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch Atlas HTML: ${response.status} ${response.statusText}`);
