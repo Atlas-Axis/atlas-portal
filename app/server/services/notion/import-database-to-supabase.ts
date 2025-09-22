@@ -93,7 +93,7 @@ export async function importDatabasePagesFromNotionToSupabase({
             pagesToInsert.includes(page.notion_page_id),
           );
           console.log(`📝 Inserting ${newPages.length} new pages...`);
-          await insertPagesInBatches(newPages, false);
+          await insertPagesInBatches(newPages);
           console.log(`✅ Successfully inserted ${newPages.length} new pages`);
         }
 
@@ -103,7 +103,7 @@ export async function importDatabasePagesFromNotionToSupabase({
             pagesToUpsert.includes(page.notion_page_id),
           );
           console.log(`🔄 Upserting ${changedPages.length} changed pages...`);
-          await insertPagesInBatches(changedPages, true);
+          await insertPagesInBatches(changedPages);
           console.log(`✅ Successfully upserted ${changedPages.length} changed pages`);
         }
       } else {
@@ -118,7 +118,7 @@ export async function importDatabasePagesFromNotionToSupabase({
         notionPages: notionPagesWithRelationships,
         atlasDatabaseName,
       });
-      await insertPagesInBatches(databasePages, false);
+      await insertPagesInBatches(databasePages);
       console.log(`✅ Successfully inserted all ${databasePages.length} pages`);
 
       blocksSyncedCount = databasePages.length;

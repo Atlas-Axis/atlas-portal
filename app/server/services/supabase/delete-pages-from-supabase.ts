@@ -1,3 +1,4 @@
+import { Database } from './database.types';
 import { supabase } from './supabase-client';
 
 /**
@@ -22,13 +23,16 @@ export async function deletePagesFromSupabase(notionPageIds: string[]): Promise<
       `Deleting batch ${Math.floor(i / pageSize) + 1}/${Math.ceil(notionPageIds.length / pageSize)} (${batch.length} pages)...`,
     );
 
-    const { error } = await supabase().from('notion_database_pages').delete().in('notion_page_id', batch);
+    // Soft-delete via RPC (invalidate current versions)
+    await supabase()
+      .rpc('versioned_delete_notion_database_pages', {
+        p_ids: batch as Database['public']['Functions']['versioned_delete_notion_database_pages']['Args']['p_ids'],
+      })
+      .throwOnError();
 
-    if (error) {
-      throw new Error(
-        `Failed to delete pages batch ${Math.floor(i / pageSize) + 1} from Supabase: ${error.message || 'Unknown error'}`,
-      );
-    }
+    // Log all page IDs that were deleted as a list
+    const deletedPageIds = batch;
+    console.log(`  ✓ Deleted page IDs: ${deletedPageIds.join(', ')}`);
 
     deletedCount += batch.length;
   }

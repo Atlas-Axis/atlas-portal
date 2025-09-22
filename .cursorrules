@@ -10,6 +10,12 @@
 >
 > ⚠️ **Critical**: When updating high-level project information, **always update all 3 files** to maintain synchronization across human and AI documentation.
 
+# Cursor AI Agent Instructions
+
+- If my prompt is ambiguous, please ask me clarifying questions to resolve any confusion. This will help prevent generating incorrect code, even if it means I'll need to put in extra effort to answer your questions.
+- Don't ask for permission to run console commands (tests, etc.), just run them.
+- When you ask me questions, assign numbers to each question so that I can answer them more easily
+
 # Project Overview
 
 This Next.js application enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents (laws) organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing changes to Supabase, and visualizing differences using tree diffing algorithms.
@@ -246,6 +252,32 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - Prevents concurrent syncs of same content
 - Lock expiration for cleanup
 - Verified before each sync operation
+
+## Temporal Tables (versioned rows)
+
+- `notion_database_pages` uses `date_valid_from`/`date_valid_to` (UTC) for row validity.
+- Current rows have `date_valid_to IS NULL` with a partial unique index ensuring one current row per `notion_page_id`.
+- Filtered index optimizes current-state reads by `atlas_database_name`.
+
+Examples:
+
+- Load current rows by database:
+
+```sql
+SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL AND atlas_database_name = 'Articles';
+```
+
+- Versioned upsert (invalidate current, insert new):
+
+```ts
+await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload }).throwOnError();
+```
+
+- Soft-delete (invalidate):
+
+```ts
+await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
+```
 
 ## Future Features
 

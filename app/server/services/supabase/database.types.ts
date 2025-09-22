@@ -276,7 +276,18 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      versioned_delete_notion_database_pages: {
+        Args: {
+          p_ids: string[];
+        };
+        Returns: number;
+      };
+      versioned_upsert_notion_database_pages: {
+        Args: {
+          p_rows: Json[];
+        };
+        Returns: unknown;
+      };
     };
     Enums: {
       atlas_database_name_enum:

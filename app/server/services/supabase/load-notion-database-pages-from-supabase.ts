@@ -33,6 +33,7 @@ export async function loadNotionDatabasePagesFromSupabase({
     const { data, error } = await supabase()
       .from('notion_database_pages')
       .select('*')
+      .is('date_valid_to', null)
       .eq('archived', false)
       .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)

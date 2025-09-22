@@ -2,7 +2,8 @@ import { NotionDatabasePage } from '../../database/notion-database-page';
 import { AGENT_PARENT_SECTION_ID } from './constants';
 
 // This function nests root Agent documents under the designated Agent section by updating its child_agent_scope_ids.
-// The Notion relationships do not define this, but this is how the Atlas Explorer UI does it.
+// The Notion relationships do not define this, but this is how the Atlas Explorer UI shows the hierarchy, agent documents are nested under a specific parent section.
+// TODO: Remove original root Agent documents from the top level of the tree to avoid orphaned node warnings, if needed.
 export async function nestRootAgentDocumentsUnderAgentSection({
   sectionsAndPrimaryDocsPages,
   rootAgentDocumentIds,

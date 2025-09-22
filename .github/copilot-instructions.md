@@ -10,7 +10,11 @@
 >
 > ⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
 
-Don't ask for permission to run console commands (tests, etc.), just run them.
+# Copilot AI Agent Instructions
+
+- If my prompt is ambiguous, please ask me clarifying questions to resolve any confusion. This will help prevent generating incorrect code, even if it means I'll need to put in extra effort to answer your questions.
+- Don't ask for permission to run console commands (tests, etc.), just run them.
+- When you ask me questions, assign numbers to each question so that I can answer them more easily
 
 # Project Overview
 
@@ -248,6 +252,32 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - Prevents concurrent syncs of same content
 - Lock expiration for cleanup
 - Verified before each sync operation
+
+## Temporal Tables (versioned rows)
+
+- The `notion_database_pages` table is temporal: `date_valid_from`/`date_valid_to` (UTC) define row validity.
+- The current row has `date_valid_to IS NULL` and is enforced unique per `notion_page_id`.
+- We index `atlas_database_name` filtered by `date_valid_to IS NULL` for fast current reads.
+
+Usage examples:
+
+- Load current rows by database:
+
+```sql
+SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL AND atlas_database_name = 'Scopes';
+```
+
+- Versioned upsert via Supabase RPC:
+
+```ts
+await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload }).throwOnError();
+```
+
+- Soft-delete via Supabase RPC:
+
+```ts
+await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
+```
 
 ## Future Features
 

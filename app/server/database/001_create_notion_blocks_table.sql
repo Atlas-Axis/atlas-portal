@@ -33,7 +33,6 @@ CREATE INDEX IF NOT EXISTS idx_notion_blocks_parent_notion_block_id ON notion_bl
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_notion_page_id ON notion_blocks(root_notion_toggle_block_id);
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_block_type ON notion_blocks(block_type); -- Index for block type
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_sort_order ON notion_blocks(parent_notion_block_id, sort_order); -- Index for sort order within parent
--- CREATE INDEX IF NOT EXISTS idx_notion_blocks_temporal ON notion_blocks(date_valid_from, date_valid_to) WHERE date_valid_to IS NULL OR date_valid_to > NOW(); -- Index for temporal queries (valid blocks at a specific time)
 
 -- Index for document-level queries
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_canonical_title 
@@ -60,9 +59,6 @@ CREATE TRIGGER set_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
--- Ensure valid temporal range (valid_to must be greater than valid_from)
--- ALTER TABLE notion_blocks ADD CONSTRAINT check_valid_temporal_range
--- CHECK (date_valid_to IS NULL OR date_valid_to > date_valid_from);
 
 -- Ensure sort_order is non-negative
 ALTER TABLE notion_blocks ADD CONSTRAINT check_sort_order_positive

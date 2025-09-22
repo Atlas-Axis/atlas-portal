@@ -48,4 +48,7 @@ export interface NotionDatabasePage {
   // Timestamps
   created_at: string; // When this database row was created
   updated_at: string; // When this database row was last updated
+  // Temporal validity (UTC)
+  date_valid_from?: string | null;
+  date_valid_to?: string | null;
 }

@@ -226,6 +226,54 @@ Embeddable as iframes within Notion pages:
 - Locks expire after 30 minutes - automatic cleanup in error state
 - Verified before each sync operation
 
+### Temporal Tables (versioned rows)
+
+- Rows in `notion_database_pages` are versioned using `date_valid_from` (UTC) and `date_valid_to` (UTC).
+- The current version has `date_valid_to IS NULL`. A partial unique index enforces one current row per `notion_page_id`.
+- Optimized index for current reads: `atlas_database_name` filtered by `date_valid_to IS NULL`.
+
+Common queries:
+
+- Select current rows by database:
+
+```sql
+SELECT *
+FROM notion_database_pages
+WHERE date_valid_to IS NULL
+  AND atlas_database_name = 'Sections & Primary Docs';
+```
+
+- Insert new version(s) atomically (invalidate current, insert new):
+
+```sql
+SELECT versioned_upsert_notion_database_pages(
+  '[{"notion_page_id":"00000000-0000-0000-0000-000000000001","atlas_database_name":"Sections & Primary Docs","atlas_document_type":"Section","atlas_document_number":"A.1","has_children":false,"archived":false,"in_trash":false,"json_name":{},"json_content":{},"child_scope_ids":[],"child_article_ids":[],"child_section_and_primary_doc_ids":[],"child_annotation_ids":[],"child_tenet_ids":[],"child_scenario_ids":[],"child_scenario_variation_ids":[],"child_active_data_ids":[],"child_agent_scope_ids":[],"child_needed_research_ids":[],"extra_fields":{},"sort_order":0}]'::jsonb
+);
+```
+
+- Soft-delete (invalidate current):
+
+```sql
+SELECT versioned_delete_notion_database_pages(ARRAY['00000000-0000-0000-0000-000000000001']::uuid[]);
+```
+
+Supabase usage:
+
+```ts
+// Insert or upsert versioned rows
+await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload }).throwOnError();
+
+// Soft-delete (invalidate)
+await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
+
+// Load current
+const { data } = await supabase()
+  .from('notion_database_pages')
+  .select('*')
+  .is('date_valid_to', null)
+  .eq('atlas_database_name', 'Sections & Primary Docs');
+```
+
 ## 🚧 Future Features
 
 - Two-way Notion sync (not just import)
