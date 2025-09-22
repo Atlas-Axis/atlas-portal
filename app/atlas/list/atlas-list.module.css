@@ -12,124 +12,132 @@
   We still use Tailwind elsewhere; this module is a targeted optimization for build size.
   We ran into build errors when the size of the prerendered HTML exceeded the Vercel limit (19 MB).
 */
-.item {
-  display: flex;
-  align-items: flex-start;
-  padding: 12px 0;
-}
-.content {
+/* Use semantic descendants to avoid extra class names */
+.item > div {
   min-width: 0;
   flex: 1;
 }
-.header {
+.item > div {
+  width: 100%;
+}
+.item header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--spacing) * 2);
 }
-.number {
-  margin-right: 8px;
+.item header small {
+  margin-right: calc(var(--spacing) * 2);
   display: inline-block;
-  border-radius: 6px;
-  background: #f8fafc;
-  padding: 2px 6px;
-  font-size: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-slate-50);
+  padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
   font-weight: 600;
 }
-.type {
+.item header span {
   display: inline-block;
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 12px;
+  border-radius: var(--radius-md);
+  padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+  font-size: var(--text-xs);
   font-weight: 600;
 }
-.typeScope {
-  background: #99f6e4;
-  color: #115e59;
+
+/* Title */
+.item h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
 }
-.typeArticle {
-  background: #ffedd5;
-  color: #9a3412;
-}
-.typeSection {
-  background: #f3e8ff;
-  color: #6b21a8;
-}
-.typeCore {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-.typeTypeSpecification {
-  background: #ffe4e6;
-  color: #9f1239;
-}
-.typeActiveDataController {
-  background: #dcfce7;
-  color: #166534;
-}
-.typeSpellSPController {
-  background: #fee2e2;
-  color: #991b1b;
-}
-.typePlaceholder {
-  background: #f3f4f6;
-  color: #1f2937;
-}
-.typeCategory {
-  background: #fef9c3;
-  color: #854d0e;
-}
-.typeActionTenet {
-  background: #dbeafe;
-  color: #1e40af;
-}
-.typeActiveData {
-  background: #fae8ff;
-  color: #701a75;
-}
-.typeAnnotation {
-  background: #ffe4e6;
-  color: #9d174d;
-}
-.typeScenario {
-  background: #dbeafe;
-  color: #1e40af;
-}
-.typeScenarioVariation {
-  background: #ecfccb;
-  color: #3f6212;
-}
-.typeNeededResearch {
-  background: #fef3c7;
-  color: #92400e;
-}
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 4px;
-}
-.desc {
-  margin-top: 4px;
-  line-height: 1.4;
-  color: #4b5563;
+
+/* Description (two-line clamp) */
+.item p {
+  font-size: var(--text-sm);
+  margin-top: calc(var(--spacing) * 1);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  color: var(--color-gray-600);
   display: -webkit-box;
   line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.meta {
+
+/* Meta */
+.item footer {
   margin-top: 6px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   color: #d1d5db;
-  font-size: 12px;
+  font-size: var(--text-xs);
 }
-.link {
+.item footer a {
   text-decoration: none;
   color: inherit;
 }
-.link:hover {
+.item footer a:hover {
   color: #374151;
   text-decoration: underline;
+}
+
+/* Type color mapping via data attribute */
+.item [data-type='Scope'] {
+  background: #99f6e4;
+  color: #115e59;
+}
+.item [data-type='Article'] {
+  background: #ffedd5;
+  color: #9a3412;
+}
+.item [data-type='Section'] {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+.item [data-type='Core'] {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+.item [data-type='Type Specification'] {
+  background: #ffe4e6;
+  color: #9f1239;
+}
+.item [data-type='Active Data Controller'] {
+  background: #dcfce7;
+  color: #166534;
+}
+.item [data-type='Spell SP Controller'] {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.item [data-type='Placeholder'] {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+.item [data-type='Category'] {
+  background: #fef9c3;
+  color: #854d0e;
+}
+.item [data-type='Action Tenet'] {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.item [data-type='Active Data'] {
+  background: #fae8ff;
+  color: #701a75;
+}
+.item [data-type='Annotation'] {
+  background: #ffe4e6;
+  color: #9d174d;
+}
+.item [data-type='Scenario'] {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.item [data-type='Scenario Variation'] {
+  background: #ecfccb;
+  color: #3f6212;
+}
+.item [data-type='Needed Research'] {
+  background: #fef3c7;
+  color: #92400e;
 }

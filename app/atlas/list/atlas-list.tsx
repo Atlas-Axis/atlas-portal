@@ -63,76 +63,36 @@ interface PageListItemProps {
 }
 
 function PageListItem({ page }: PageListItemProps) {
-  // TODO: Create a reusable function in the atlas folder for calculating display title based on database type
+  // TODO: Create a reusable function in the atlas folder for calculating display title based on database name
   const hasContent = page.plain_text_content && page.plain_text_content.trim().length > 0;
 
-  const typeClass = (() => {
-    switch (page.atlas_document_type) {
-      case 'Scope':
-        return s.typeScope;
-      case 'Article':
-        return s.typeArticle;
-      case 'Section':
-        return s.typeSection;
-      case 'Core':
-        return s.typeCore;
-      case 'Type Specification':
-        return s.typeTypeSpecification;
-      case 'Active Data Controller':
-        return s.typeActiveDataController;
-      case 'Spell SP Controller':
-        return s.typeSpellSPController;
-      case 'Placeholder':
-        return s.typePlaceholder;
-      case 'Category':
-        return s.typeCategory;
-      case 'Action Tenet':
-        return s.typeActionTenet;
-      case 'Active Data':
-        return s.typeActiveData;
-      case 'Annotation':
-        return s.typeAnnotation;
-      case 'Scenario':
-        return s.typeScenario;
-      case 'Scenario Variation':
-        return s.typeScenarioVariation;
-      case 'Needed Research':
-        return s.typeNeededResearch;
-      default:
-        return '';
-    }
-  })();
-
   return (
-    <div className={s.item}>
-      <div className={s.content}>
-        <div>
-          <div className={s.header}>
-            {page.atlas_document_number && <h3 className={s.number}>{page.atlas_document_number}</h3>}
-            <div>
-              <span className={`${s.type} ${typeClass}`}>{page.atlas_document_type || 'Unknown Type'}</span>
-            </div>
-          </div>
-          <h3 className={s.title}>{page.canonical_document_title || '<Untitled>'}</h3>
-        </div>
+    <article className={s.item}>
+      <div>
+        <header>
+          {page.atlas_document_number && <small>{page.atlas_document_number}</small>}
+          <span data-type={page.atlas_document_type || 'Unknown Type'}>
+            {page.atlas_document_type || 'Unknown Type'}
+          </span>
+        </header>
+        <h3>{page.canonical_document_title || '<Untitled>'}</h3>
 
-        {hasContent && <p className={s.desc}>{page.plain_text_content}</p>}
+        {hasContent && <p>{page.plain_text_content}</p>}
 
-        <div className={s.meta}>
-          {page.sort_order && <span>Order: {page.sort_order}</span>}
-          <span>
-            Notion ID:{' '}
+        <footer>
+          {page.sort_order && <small>Order: {page.sort_order}</small>}
+          <small>
+            Notion ID:
             <a
               href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={s.link}
             >
               {uuidToNoHyphens(page.notion_page_id)}
             </a>
-          </span>
-        </div>
+          </small>
+        </footer>
       </div>
-    </div>
+    </article>
   );
 }
