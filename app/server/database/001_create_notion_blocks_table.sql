@@ -15,8 +15,6 @@ CREATE TABLE IF NOT EXISTS notion_blocks (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this block
-  -- date_valid_from TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- Used for versioning
-  -- date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version
 
   -- Edit Page related fields
   mapped_notion_page_id UUID, -- ID of the original Notion page that this editable text block has been duplicated from
@@ -38,11 +36,6 @@ CREATE INDEX IF NOT EXISTS idx_notion_blocks_sort_order ON notion_blocks(parent_
 CREATE INDEX IF NOT EXISTS idx_notion_blocks_canonical_title 
 ON notion_blocks(canonical_document_title) 
 WHERE canonical_document_title IS NOT NULL;
-
--- Ensure only one active version of a block exists at a time
--- CREATE UNIQUE INDEX IF NOT EXISTS uniq_notion_block_id_current
--- ON notion_blocks(notion_block_id)
--- WHERE date_valid_to IS NULL;
 
 -- Function to update the updated_at column on row update
 CREATE OR REPLACE FUNCTION update_updated_at_column()
