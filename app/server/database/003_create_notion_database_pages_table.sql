@@ -37,19 +37,41 @@ CREATE TYPE atlas_database_name_enum AS ENUM (
 -- Function to convert atlas_document_number to a sortable format
 CREATE OR REPLACE FUNCTION atlas_document_number_to_sortable(doc_number TEXT)
 RETURNS TEXT AS $$
+DECLARE
+  parts TEXT[];
+  result TEXT := '';
+  part TEXT;
+  padded_part TEXT;
 BEGIN
   IF doc_number IS NULL OR doc_number = '' THEN
     RETURN '';
   END IF;
   
-  -- Replace each numeric part with zero-padded version (6 digits)
-  -- Use (\d+) capture group and \1 replacement for PostgreSQL compatibility
-  RETURN regexp_replace(
-    doc_number,
-    '(\d+)',
-    lpad('\1', 6, '0'),
-    'g'
-  );
+  -- Split by dots and process each part separately
+  -- This approach avoids regex backreference issues and is more portable
+  parts := string_to_array(doc_number, '.');
+  
+  FOR i IN 1..array_length(parts, 1) LOOP
+    part := parts[i];
+    
+    -- Check if this part contains only digits
+    IF part ~ '^\d+$' THEN
+      -- Pad numeric parts to 6 digits
+      padded_part := lpad(part, 6, '0');
+    ELSE
+      -- Keep non-numeric parts as-is
+      padded_part := part;
+    END IF;
+    
+    -- Build result string
+    IF i = 1 THEN
+      result := padded_part;
+    ELSE
+      result := result || '.' || padded_part;
+    END IF;
+  END LOOP;
+  
+  RETURN result;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
