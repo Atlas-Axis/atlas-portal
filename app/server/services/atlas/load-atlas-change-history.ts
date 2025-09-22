@@ -2,6 +2,8 @@ import { PostgrestError } from '@supabase/supabase-js';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 
+const LIMIT = 10;
+
 export type AtlasPageChangeType = 'new' | 'deleted' | 'changed';
 
 export type AtlasPageChange = {
@@ -18,7 +20,7 @@ export type AtlasPageChange = {
   };
 };
 
-export async function loadAtlasChangeHistory(): Promise<AtlasPageChange[]> {
+export async function loadAtlasChangeHistory(params?: { since?: Date | string }): Promise<AtlasPageChange[]> {
   type RpcRow = {
     notion_page_id: string;
     event_time: string;
@@ -30,14 +32,25 @@ export async function loadAtlasChangeHistory(): Promise<AtlasPageChange[]> {
   const client = supabase() as unknown as {
     rpc<T>(fn: string, args?: Record<string, unknown>): Promise<{ data: T | null; error: PostgrestError | null }>;
   };
-  const { data, error } = await client.rpc<RpcRow[]>('public_get_atlas_page_changes', { p_limit: 100 });
+  const { data, error } = await client.rpc<RpcRow[]>('public_get_atlas_page_changes', { p_limit: LIMIT });
 
   if (error) {
     console.error({ error });
     throw new Error(`Failed to load Atlas change history: ${error.message}`, { cause: error });
   }
 
-  const rows = (data ?? []) as RpcRow[];
+  let rows = (data ?? []) as RpcRow[];
+
+  // Optional in-memory filter by event_time
+  if (params?.since) {
+    const sinceTs = new Date(params.since).getTime();
+    if (!Number.isNaN(sinceTs)) {
+      rows = rows.filter((r) => {
+        const eventTs = new Date(r.event_time).getTime();
+        return !Number.isNaN(eventTs) && eventTs >= sinceTs;
+      });
+    }
+  }
 
   function computeChanges(oldPage: NotionDatabasePage | null, newPage: NotionDatabasePage | null) {
     const properties: Record<string, { oldValue: string; newValue: string }> = {};
