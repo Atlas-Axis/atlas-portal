@@ -1,12 +1,13 @@
-
-import { NotionDatabasePage } from "../../database/notion-database-page";
-import { supabase } from "@/app/server/services/supabase/supabase-client";
+import { PostgrestError } from '@supabase/supabase-js';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { NotionDatabasePage } from '../../database/notion-database-page';
 
 export type AtlasPageChangeType = 'new' | 'deleted' | 'changed';
 
 export type AtlasPageChange = {
   type: AtlasPageChangeType;
-  page: NotionDatabasePage;
+  oldPage: NotionDatabasePage | null;
+  newPage: NotionDatabasePage | null;
   changes: {
     properties: {
       [key: string]: {
@@ -18,81 +19,145 @@ export type AtlasPageChange = {
 };
 
 export async function loadAtlasChangeHistory(): Promise<AtlasPageChange[]> {
-  // 1) Fetch latest historical versions (represent edits or deletions)
-  const { data, error } = await supabase()
-    .from('notion_database_pages')
-    .select('*')
-    .not('date_valid_to', 'is', null)
-    .order('date_valid_to', { ascending: false })
-    .limit(100);
+  type RpcRow = {
+    notion_page_id: string;
+    event_time: string;
+    event_type: AtlasPageChangeType;
+    old_row: NotionDatabasePage | null;
+    new_row: NotionDatabasePage | null;
+  };
+
+  const client = supabase() as unknown as {
+    rpc<T>(fn: string, args?: Record<string, unknown>): Promise<{ data: T | null; error: PostgrestError | null }>;
+  };
+  const { data, error } = await client.rpc<RpcRow[]>('public_get_atlas_page_changes', { p_limit: 100 });
 
   if (error) {
     console.error({ error });
     throw new Error(`Failed to load Atlas change history: ${error.message}`, { cause: error });
   }
 
-  const rows = (data ?? []) as NotionDatabasePage[];
+  const rows = (data ?? []) as RpcRow[];
 
-  // 2) Fetch latest creations: current rows where date_valid_to IS NULL, ordered by recent date_valid_from
-  const { data: recentCreations, error: recentCreationsError } = await supabase()
-    .from('notion_database_pages')
-    .select('*')
-    .is('date_valid_to', null)
-    .order('date_valid_from', { ascending: false })
-    .limit(100);
+  function computeChanges(oldPage: NotionDatabasePage | null, newPage: NotionDatabasePage | null) {
+    const properties: Record<string, { oldValue: string; newValue: string }> = {};
+    if (!oldPage || !newPage) return { properties };
 
-  if (recentCreationsError) {
-    console.error({ recentCreationsError });
-    throw new Error(`Failed to load recent creations for change history: ${recentCreationsError.message}`, {
-      cause: recentCreationsError,
-    });
+    // Helpers
+    const isPlainObject = (v: unknown): v is Record<string, unknown> =>
+      typeof v === 'object' && v !== null && !Array.isArray(v);
+
+    const stringifyStable = (v: unknown): string => {
+      if (Array.isArray(v)) {
+        const asStrings = v.map((x) => String(x));
+        asStrings.sort();
+        return JSON.stringify(asStrings);
+      }
+      if (isPlainObject(v)) {
+        const keys = Object.keys(v).sort();
+        const obj: Record<string, unknown> = {};
+        for (const k of keys) obj[k] = (v as Record<string, unknown>)[k];
+        return JSON.stringify(obj);
+      }
+      return v == null ? '' : String(v);
+    };
+
+    const shallowDifferentObjects = (a: unknown, b: unknown): boolean => {
+      if (!isPlainObject(a) || !isPlainObject(b)) return a !== b;
+      const aKeys = Object.keys(a).sort();
+      const bKeys = Object.keys(b).sort();
+      if (aKeys.length !== bKeys.length) return true;
+      for (let i = 0; i < aKeys.length; i++) if (aKeys[i] !== bKeys[i]) return true;
+      for (const k of aKeys) {
+        const av = (a as Record<string, unknown>)[k];
+        const bv = (b as Record<string, unknown>)[k];
+        if (stringifyStable(av) !== stringifyStable(bv)) return true;
+      }
+      return false;
+    };
+
+    const fieldsToCompare: Array<keyof NotionDatabasePage> = [
+      'plain_text_name',
+      'plain_text_content',
+      'atlas_document_number',
+      'canonical_document_title',
+      'parent_notion_page_id',
+      'sort_order',
+      'archived',
+      'in_trash',
+      'has_children',
+      'atlas_document_type',
+      'atlas_database_name',
+    ];
+
+    for (const field of fieldsToCompare) {
+      const beforeVal = oldPage[field];
+      const afterVal = newPage[field];
+      if (beforeVal !== afterVal) {
+        properties[String(field)] = {
+          oldValue: beforeVal == null ? '' : String(beforeVal),
+          newValue: afterVal == null ? '' : String(afterVal),
+        };
+      }
+    }
+
+    // Shallow compare extra_fields
+    const extraBefore = oldPage.extra_fields;
+    const extraAfter = newPage.extra_fields;
+    if (shallowDifferentObjects(extraBefore, extraAfter)) {
+      properties['extra_fields'] = {
+        oldValue: stringifyStable(extraBefore),
+        newValue: stringifyStable(extraAfter),
+      };
+    }
+
+    // Compare child relationship arrays (as sets of strings)
+    const childFields: Array<keyof NotionDatabasePage> = [
+      'child_scope_ids',
+      'child_article_ids',
+      'child_section_and_primary_doc_ids',
+      'child_annotation_ids',
+      'child_tenet_ids',
+      'child_scenario_ids',
+      'child_scenario_variation_ids',
+      'child_active_data_ids',
+      'child_agent_scope_ids',
+      'child_needed_research_ids',
+    ];
+
+    const toSortedStringArray = (v: unknown): string[] => {
+      if (!Array.isArray(v)) return [];
+      const mapped = v.map((x) => String(x));
+      mapped.sort();
+      return mapped;
+    };
+
+    for (const field of childFields) {
+      const beforeArr = toSortedStringArray(oldPage[field] as unknown);
+      const afterArr = toSortedStringArray(newPage[field] as unknown);
+      if (beforeArr.length !== afterArr.length || beforeArr.some((v, i) => v !== afterArr[i])) {
+        properties[String(field)] = {
+          oldValue: JSON.stringify(beforeArr),
+          newValue: JSON.stringify(afterArr),
+        };
+      }
+    }
+
+    return { properties };
   }
 
-  // Determine which of the historical pages currently exist (date_valid_to IS NULL)
-  const notionPageIds = Array.from(new Set(rows.map(r => r.notion_page_id)));
-  const { data: currentRows, error: currentError } = await supabase()
-    .from('notion_database_pages')
-    .select('notion_page_id')
-    .is('date_valid_to', null)
-    .in('notion_page_id', notionPageIds);
-
-  if (currentError) {
-    console.error({ currentError });
-    throw new Error(`Failed to check current pages for change history: ${currentError.message}`, { cause: currentError });
-  }
-
-  const currentlyExisting = new Set((currentRows ?? []).map(r => r.notion_page_id as string));
-
-  const historicalChanges: AtlasPageChange[] = rows.map((page) => ({
-    // If the page has a current version, this historical row represents a change; otherwise, it's a deletion
-    type: currentlyExisting.has(page.notion_page_id) ? 'changed' : 'deleted',
-    page,
-    changes: { properties: {} },
-  }));
-
-  const creations: AtlasPageChange[] = (recentCreations ?? []).map((page) => ({
-    type: 'new',
-    page: page as NotionDatabasePage,
-    changes: { properties: {} },
-  }));
-
-  // Combine both, sort by their event timestamp (date_valid_to for historical, date_valid_from for creations)
-  type WithTs = AtlasPageChange & { __ts: number };
-  const toTs = (
-    p: Pick<NotionDatabasePage, 'date_valid_to' | 'date_valid_from'>,
-    key: 'date_valid_to' | 'date_valid_from',
-  ): number => {
-    const value = p[key];
-    return value ? new Date(value).getTime() : 0;
-  };
-
-  const combined: WithTs[] = [
-    ...historicalChanges.map((c) => ({ ...c, __ts: toTs(c.page, 'date_valid_to') })),
-    ...creations.map((c) => ({ ...c, __ts: toTs(c.page, 'date_valid_from') })),
-  ];
-
-  combined.sort((a, b) => b.__ts - a.__ts);
-
-  // Return top 100 (strip internal timestamp)
-  return combined.slice(0, 100).map((c) => ({ type: c.type, page: c.page, changes: c.changes }));
+  return rows.map((row) => {
+    return {
+      type: row.event_type,
+      oldPage: (row.old_row as NotionDatabasePage | null) ?? null,
+      newPage: (row.new_row as NotionDatabasePage | null) ?? null,
+      changes:
+        row.event_type === 'changed'
+          ? computeChanges(
+              (row.old_row as NotionDatabasePage | null) ?? null,
+              (row.new_row as NotionDatabasePage | null) ?? null,
+            )
+          : { properties: {} },
+    };
+  });
 }
