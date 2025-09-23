@@ -5,7 +5,7 @@ import { isTypeSpecificationAtlasDocument } from '../server/services/atlas/detec
 import { TypeSpecificationExtraFields } from '../server/services/atlas/notion-database-properties-and-relationships';
 
 export default function PageExtraData({ page, className }: { page: NotionDatabasePage; className?: string }) {
-  if (isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type, page.notion_page_id)) {
+  if (isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type)) {
     const extraFields = getTypeSpecificationExtraFields(page);
     return (
       <div className={`${className} my-2 leading-relaxed`}>
@@ -32,7 +32,7 @@ export default function PageExtraData({ page, className }: { page: NotionDatabas
 function getTypeSpecificationExtraFields(page: NotionDatabasePage): TypeSpecificationExtraFields {
   // Extract `extra_fields` from Supabase page
   const supabaseExtraFields = (page.extra_fields as unknown as TypeSpecificationExtraFields) || {};
-  if (!isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type, page.notion_page_id)) {
+  if (!isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type)) {
     throw new Error('Not a Type Specification Atlas document');
   }
 
