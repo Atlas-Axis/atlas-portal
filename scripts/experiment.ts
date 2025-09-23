@@ -1,4 +1,5 @@
-import { ATLAS_DATABASE_ID_MAP } from '@/app/server/services/atlas/constants';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
+import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/services/atlas/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 
@@ -17,22 +18,47 @@ async function loadDatabaseEntriesWithEmptyMasterStatus() {
  * @param notionDatabaseId - The ID of the Notion database to query.
  */
 async function fetchEntriesWithEmptyMasterStatus(notionDatabaseId: string) {
+  // Find the atlas database name for this ID
+  const atlasDatabaseName = Object.entries(ATLAS_DATABASE_ID_MAP).find(
+    ([, id]) => id.replace(/[-]/g, '') === notionDatabaseId.replace(/[-]/g, ''),
+  )?.[0] as AtlasDatabaseName | undefined;
+
+  // Build filter conditions - use any type for flexibility with Notion API
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filterConditions: any[] = [
+    {
+      property: 'Master Status',
+      relation: {
+        is_empty: true,
+      },
+    },
+  ];
+
+  // Add Type filter only if the database has a Type property and it's named "Type"
+  if (atlasDatabaseName) {
+    const properties = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName]?.properties;
+    const typePropertyName = properties?.atlasDocumentType;
+
+    if (typePropertyName === 'Type') {
+      filterConditions.push({
+        property: 'Type',
+        select: {
+          does_not_equal: 'Category',
+        },
+      });
+    }
+  }
+
   const response = await notion().databases.query({
     database_id: notionDatabaseId,
     page_size: 100,
     filter: {
-      and: [
-        {
-          property: 'Master Status',
-          relation: {
-            is_empty: true,
-          },
-        },
-      ],
+      and: filterConditions,
     },
   });
 
-  console.log(`Fetched ${response.results.length} entries with empty Master Status.`);
+  const prefix = response.results.length === 0 ? '' : '👉👉👉';
+  console.log(`${prefix} Fetched ${response.results.length} entries with empty Master Status.`);
   for (const page of response.results) {
     console.log(`- Page ID: ${page.id}`);
   }
