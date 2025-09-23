@@ -55,12 +55,10 @@ Options:
     // Import all Atlas databases
     for (const atlasDatabaseName of IMPORT_DATABASES) {
       console.log(`----------------------------------------`);
-      console.log(`\n📋 Importing database: ${atlasDatabaseName}`);
       await importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName,
         useLocalCache: args['local-cache'] ?? false,
       });
-      console.log(`✅ Completed importing: ${atlasDatabaseName}`);
       console.log(`----------------------------------------`);
     }
 

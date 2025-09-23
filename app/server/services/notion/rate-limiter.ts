@@ -24,8 +24,8 @@ export class NotionRateLimiter {
   private log(level: 'info' | 'warn' | 'error', message: string, data?: unknown) {
     if (!this.enableLogging) return;
 
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
+    const timestamp = new Date().toUTCString().slice(17, 25); // HH:MM:SS format in UTC
+    const logMessage = `[${timestamp} UTC] ${message}`;
 
     if (data) {
       console[level](logMessage, data);

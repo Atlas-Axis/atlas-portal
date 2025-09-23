@@ -24,6 +24,7 @@ export async function importDatabasePagesFromNotionToSupabase({
 
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   console.log(`📊 Database: ${atlasDatabaseName}`);
+  console.log(`Sync started at: ${new Date().toUTCString()}`);
 
   // Verify that the sync is not already in progress
   console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
@@ -50,17 +51,30 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Process and sync the pages to Supabase
     console.log(`🔄 Syncing changed pages to Supabase...`);
 
+    // Not first time import - compare and update only changed pages
     if (existingPages.length > 0) {
-      // if (existingPages.length > 0) {
       const changes = compareDatabasePages({
         supabasePages: existingPages,
         notionPages: notionPagesWithRelationships,
         atlasDatabaseName,
       });
 
-      console.log(
-        `📊 Detected changes: ${changes.newPages.length} new, ${changes.deletedPages.length} deleted, ${changes.changedProperties.length} with property changes, ${changes.changedRelationships.length} with relationship changes`,
-      );
+      // Only log if there are any changes
+      const hasChanges =
+        changes.newPages.length > 0 ||
+        changes.deletedPages.length > 0 ||
+        changes.changedProperties.length > 0 ||
+        changes.changedRelationships.length > 0;
+
+      if (hasChanges) {
+        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
+        console.log(
+          `‼️‼️ Detected changes: ${changes.newPages.length} new, ${changes.deletedPages.length} deleted, ${changes.changedProperties.length} with property changes, ${changes.changedRelationships.length} with relationship changes`,
+        );
+        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
+      } else {
+        console.log(`✅ No changes detected - all pages are up to date`);
+      }
 
       // Process deletions
       if (changes.deletedPages.length > 0) {
@@ -106,8 +120,6 @@ export async function importDatabasePagesFromNotionToSupabase({
           await insertPagesInBatches(changedPages);
           console.log(`✅ Successfully upserted ${changedPages.length} changed pages`);
         }
-      } else {
-        console.log(`✅ No changes detected - all pages are up to date`);
       }
 
       blocksSyncedCount = changes.deletedPages.length + pagesToInsert.length + pagesToUpsert.length;
@@ -130,6 +142,8 @@ export async function importDatabasePagesFromNotionToSupabase({
       syncErrorMessage: null,
       blocksSyncedCount,
     });
+
+    console.log(`✅ Completed importing: ${atlasDatabaseName}`);
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;

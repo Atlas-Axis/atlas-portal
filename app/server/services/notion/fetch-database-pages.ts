@@ -31,8 +31,10 @@ export async function fetchNotionDatabasePagesWithRelationships({
     notionPageRelationshipPropertyNames.push(databaseConfig.parentPropertyName);
   }
 
-  console.log(`🔍 Database config for "${atlasDatabaseName}":`, databaseConfig);
-  console.log(`🔍 Notion property names to check for relationships:`, notionPageRelationshipPropertyNames);
+  if (DEBUG_LOGGING) {
+    console.log(`Database config for "${atlasDatabaseName}":`, databaseConfig);
+    console.log(`Notion property names to check for relationships:`, notionPageRelationshipPropertyNames);
+  }
 
   console.log(
     `📡 Starting to fetch all pages with relationships from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`,
