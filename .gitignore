@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Notion API local cache
 .notion-cache/
+
+# Custom local debug data
+.debug-data
