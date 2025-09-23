@@ -14,18 +14,12 @@
  *   tenets, scenarios, scenario-variations, needed-research, active-data, agent-scope
  * - Counts documents in each section by parsing HTML table structures
  * - Provides visual analytics including distribution charts and rankings
- * - Shows sample documents from each section
  *
  * OUTPUT:
  * - Overall summary (total sections, documents, content status)
- * - Detailed section breakdown with document counts and samples
+ * - Detailed section breakdown with document counts
  * - Document distribution chart with percentages
  * - Top 5 largest sections ranking
- *
- * REQUIREMENTS:
- * - Node.js with tsx support
- * - jsdom dependency (automatically installed)
- * - Internet connection to fetch HTML from GitHub
  */
 import { JSDOM } from 'jsdom';
 import { ATLAS_GITHUB_HTML_URL } from '@/app/server/services/atlas/constants';
@@ -36,11 +30,7 @@ interface SectionAnalytics {
   documentCount: number;
   hasContent: boolean;
   tableHeaders: string[];
-  sampleDocuments: Array<{
-    docNo: string;
-    name: string;
-    type: string;
-  }>;
+  typeCounts: Record<string, number>;
 }
 
 interface OverallAnalytics {
@@ -115,15 +105,20 @@ async function analyzeSkAtlas(): Promise<OverallAnalytics> {
 
       const documentCount = documentRows.length;
 
-      // Get sample documents (first 3)
-      const sampleDocuments = documentRows.slice(0, 3).map((row: Element) => {
+      // Determine column indexes
+      const typeColIndex = Math.max(
+        headers.findIndex((h) => h.toLowerCase() === 'type'),
+        2,
+      );
+
+      // Build type counts across all rows
+      const typeCounts: Record<string, number> = {};
+      for (const row of documentRows) {
         const cells = Array.from(row.querySelectorAll('td'));
-        return {
-          docNo: (cells[0] as Element)?.textContent?.trim() || '',
-          name: (cells[1] as Element)?.textContent?.trim() || '',
-          type: (cells[2] as Element)?.textContent?.trim() || '',
-        };
-      });
+        const rawType = (cells[typeColIndex] as Element)?.textContent?.trim() || 'Unknown';
+        const normalizedType = rawType.length > 0 ? rawType : 'Unknown';
+        typeCounts[normalizedType] = (typeCounts[normalizedType] ?? 0) + 1;
+      }
 
       const hasContent = documentCount > 0;
       if (hasContent) {
@@ -140,7 +135,7 @@ async function analyzeSkAtlas(): Promise<OverallAnalytics> {
         documentCount,
         hasContent,
         tableHeaders: headers,
-        sampleDocuments,
+        typeCounts,
       });
     }
 
@@ -180,18 +175,11 @@ function printAnalytics(analytics: OverallAnalytics): void {
   const sortedSections = [...analytics.sectionBreakdown].sort((a, b) => b.documentCount - a.documentCount);
 
   for (const section of sortedSections) {
-    const statusIcon = section.hasContent ? '✅' : '❌';
+    const statusIcon = section.hasContent ? '' : '❌';
     console.log(`${statusIcon} ${section.sectionName}`);
     console.log(`    ID: #${section.sectionId}`);
-    console.log(`    Documents: ${section.documentCount.toLocaleString()}`);
     console.log(`    Headers: [${section.tableHeaders.join(', ')}]`);
 
-    if (section.sampleDocuments.length > 0) {
-      console.log(`    Sample Documents:`);
-      for (const doc of section.sampleDocuments) {
-        console.log(`      • ${doc.docNo} - ${doc.name} (${doc.type})`);
-      }
-    }
     console.log();
   }
 
@@ -207,6 +195,15 @@ function printAnalytics(analytics: OverallAnalytics): void {
       console.log(
         `${section.sectionName.padEnd(25)} ${bar} ${section.documentCount.toString().padStart(6)} (${percentage}%)`,
       );
+
+      // Nested type breakdown (only when multiple types exist in the section)
+      const entries = Object.entries(section.typeCounts).sort((a, b) => b[1] - a[1]);
+      if (entries.length > 1) {
+        for (const [type, count] of entries) {
+          const pct = ((count / section.documentCount) * 100).toFixed(1);
+          console.log(`  • ${type}: ${count.toLocaleString()} (${pct}%)`);
+        }
+      }
     }
   }
   console.log();
