@@ -6,7 +6,7 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Core',
   'Type Specification',
   'Active Data Controller',
-  'Spell SP Controller',
+  'Spell SP Controller', -- Deprecated - TODO: remove
   'Placeholder',
   'Category',
   'Action Tenet',
@@ -329,7 +329,10 @@ $$ LANGUAGE plpgsql;
 -- =========================
 -- View: Rows valid currently
 -- Note: This view is not used in the codebase
+-- Note: RLS is automatically inherited from the underlying notion_database_pages table
 -- =========================
-CREATE OR REPLACE VIEW notion_database_pages_current AS
+CREATE OR REPLACE VIEW notion_database_pages_current
+WITH (security_invoker = on)
+AS
 SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL;
 
