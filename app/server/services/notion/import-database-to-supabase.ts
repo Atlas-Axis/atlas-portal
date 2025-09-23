@@ -18,12 +18,14 @@ export async function importDatabasePagesFromNotionToSupabase({
   atlasDatabaseName: AtlasDatabaseName;
   useLocalCache?: boolean;
 }) {
+  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   const startTime = performance.now();
   let blocksSyncedCount = 0;
-  console.log(`🚀 Starting database import from Notion to Supabase`);
 
-  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
-  console.log(`📊 Database: ${atlasDatabaseName}`);
+  console.log(`--------------------------------------------------------------------------------`);
+  console.log(`📊 Database: 👉👉👉👉👉👉👉👉👉👉 ${atlasDatabaseName} 👈👈👈👈👈👈👈👈👈👈`);
+  console.log(`--------------------------------------------------------------------------------`);
+  console.log(`🚀 Starting database import from Notion to Supabase`);
   console.log(`Sync started at: ${new Date().toUTCString()}`);
 
   // Verify that the sync is not already in progress
@@ -67,11 +69,11 @@ export async function importDatabasePagesFromNotionToSupabase({
         changes.changedRelationships.length > 0;
 
       if (hasChanges) {
-        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
+        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
         console.log(
-          `‼️‼️ Detected changes: ${changes.newPages.length} new, ${changes.deletedPages.length} deleted, ${changes.changedProperties.length} with property changes, ${changes.changedRelationships.length} with relationship changes`,
+          `‼️‼️‼️‼️ Detected changes: ${changes.newPages.length} new, ${changes.deletedPages.length} deleted, ${changes.changedProperties.length} with property changes, ${changes.changedRelationships.length} with relationship changes`,
         );
-        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
+        console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥`);
       } else {
         console.log(`✅ No changes detected - all pages are up to date`);
       }

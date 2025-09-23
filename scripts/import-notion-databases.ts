@@ -54,12 +54,12 @@ Options:
   try {
     // Import all Atlas databases
     for (const atlasDatabaseName of IMPORT_DATABASES) {
-      console.log(`----------------------------------------`);
+      console.log('\n\n');
       await importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName,
         useLocalCache: args['local-cache'] ?? false,
       });
-      console.log(`----------------------------------------`);
+      console.log('\n\n');
     }
 
     // Revalidate /atlas page to reflect the newly imported data

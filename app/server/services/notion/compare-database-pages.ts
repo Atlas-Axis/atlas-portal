@@ -46,7 +46,7 @@ function compareTypeSpecificationExtraFields(
 
     if (notionValue !== supabaseValue) {
       console.log(
-        `📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
       );
       return true; // Has changes
     }
@@ -133,7 +133,7 @@ export function compareDatabasePages({
       if (!arePropertyValuesEqual(notionValue, supabaseValue)) {
         hasPropertyChanges = true;
         console.log(
-          `📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${JSON.stringify(notionValue)}", Supabase: "${JSON.stringify(supabaseValue)}")`,
+          `‼️‼️‼️‼️📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${JSON.stringify(notionValue)}", Supabase: "${JSON.stringify(supabaseValue)}")`,
         );
       }
     }
@@ -155,7 +155,7 @@ export function compareDatabasePages({
       ) {
         hasRelationshipChanges = true;
         console.log(
-          `🔗 Parent relationship change detected in page ${notionPage.id}: ${databaseConfig.parentPropertyName} (Notion: [${notionParentId}], Supabase: [${supabaseParentId}])`,
+          `‼️‼️‼️‼️🔗 Parent relationship change detected in page ${notionPage.id}: ${databaseConfig.parentPropertyName} (Notion: [${notionParentId}], Supabase: [${supabaseParentId}])`,
         );
       }
     }
@@ -173,7 +173,7 @@ export function compareDatabasePages({
       if (!areRelationshipValuesEqual(notionRelations, supabaseRelations)) {
         hasRelationshipChanges = true;
         console.log(
-          `🔗 Relationship change detected in page ${notionPage.id}: ${relationshipName} (Notion: [${notionRelations.join(', ')}], Supabase: [${supabaseRelations.join(', ')}])`,
+          `‼️‼️🔗 Relationship change detected in page ${notionPage.id}: ${relationshipName} (Notion: [${notionRelations.join(', ')}], Supabase: [${supabaseRelations.join(', ')}])`,
         );
       }
     }

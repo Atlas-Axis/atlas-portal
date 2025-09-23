@@ -222,7 +222,7 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
   let cursor: string | undefined = undefined;
 
   do {
-    console.log(`    🔄 Fetching more relations for page ${pageId}...`);
+    console.log(`    Fetching more relations for page ${pageId}...`);
     const response = await notion().pages.properties.retrieve({
       page_id: pageId,
       property_id: relationPropertyId,
