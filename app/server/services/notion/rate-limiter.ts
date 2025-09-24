@@ -25,7 +25,8 @@ export class NotionRateLimiter {
     if (!this.enableLogging) return;
 
     const timestamp = new Date().toUTCString().slice(17, 25); // HH:MM:SS format in UTC
-    const logMessage = `[${timestamp} UTC] ${message}`;
+    const prefix = level === 'info' ? '' : `[${timestamp} UTC]`;
+    const logMessage = `${prefix} ${message}`;
 
     if (data) {
       console[level](logMessage, data);
@@ -99,7 +100,7 @@ export class NotionRateLimiter {
 
         const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
         const retryInfo = realRetryCount > 0 ? ` on retry ${realRetryCount}` : '';
-        this.log('info', `Notion API call successful${retryInfo} (${durationSeconds}s)`);
+        this.log('info', `Notion API call${retryInfo} (${durationSeconds}s)`);
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
