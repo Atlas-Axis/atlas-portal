@@ -26,17 +26,21 @@ import { JSDOM } from 'jsdom';
 import path from 'path';
 import { ATLAS_GITHUB_HTML_URL } from '@/app/server/services/atlas/constants';
 import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/services/atlas/constants';
+import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
+import { fixDocumentNumberPrefix } from './utils';
 
+// Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
-// Assume script is run from repository root (parent of "scripts")
+// Resolve paths (assumes running from repository root)
 const REPO_ROOT = process.cwd();
 const LOCAL_HTML_PATH = path.join(REPO_ROOT, '.debug-data', 'github.html');
 const REPO_HTML_PATH = path.join(REPO_ROOT, 'app', 'server', 'services', 'atlas', 'Sky Atlas.html');
-const OUTPUT_DIR = path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated');
-const OUTPUT_FILE = path.join(OUTPUT_DIR, 'atlas-github.json');
+const OUTPUT_DIR = path.join(REPO_ROOT, ATLAS_JSON_OUTPUT_DIR);
+const OUTPUT_FILE = path.join(OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB);
 
+// Configuration for mapping HTML section DOM ids to human-readable category labels
 type SectionConfig = {
   id: string;
   label: GitHubAtlasDocumentType; // Category label matching GitHubAtlasDocumentType
@@ -57,24 +61,18 @@ const SECTION_CONFIGS: SectionConfig[] = [
   { id: 'agent-scope', label: 'Agent Scope Database' },
 ];
 
-/**
- * Extracts trimmed textContent from an element (safe for null/undefined).
- */
+// Extract trimmed text content from a DOM element (safe for null/undefined)
 function toText(el: Element | null | undefined): string {
   if (!el) return '';
   return (el.textContent ?? '').trim();
 }
 
-/**
- * Normalizes a table header for simple matching.
- */
+// Normalize a table header for simpler matching (lowercase, single spaces)
 function normalizeHeader(header: string): string {
   return header.toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
-/**
- * Detects the column indexes for Doc No, Name, Type, and Content with sensible fallbacks.
- */
+// Detect column indexes for Doc No, Name, Type, and Content with sensible fallbacks
 function detectColumnIndexes(headers: string[]): { docNo: number; name: number; type: number; content: number } {
   const normalized = headers.map(normalizeHeader);
 
@@ -101,10 +99,8 @@ function detectColumnIndexes(headers: string[]): { docNo: number; name: number; 
   return { docNo: fallbackDocNo, name: fallbackName, type: fallbackType, content: fallbackContent };
 }
 
-/**
- * Parses a single section by ID and returns its rows as AtlasDocumentJson[]
- */
-function parseSection(document: Document, sectionId: string): AtlasDocumentJson[] {
+// Parse a single HTML section table into AtlasDocumentJson[] for a given category
+function parseSection(document: Document, sectionId: string, category: GitHubAtlasDocumentType): AtlasDocumentJson[] {
   const sectionDiv = document.getElementById(sectionId);
   if (!sectionDiv) return [];
 
@@ -133,6 +129,7 @@ function parseSection(document: Document, sectionId: string): AtlasDocumentJson[
       const dfn = cells[0]?.querySelector('dfn');
       docNumber = toText(dfn as Element);
     }
+    docNumber = fixDocumentNumberPrefix(docNumber, category);
     const name = toText(cells[indexes.name] as Element);
     const typeText = toText(cells[indexes.type] as Element);
     const content = toText(cells[indexes.content] as Element);
@@ -144,8 +141,8 @@ function parseSection(document: Document, sectionId: string): AtlasDocumentJson[
 
     rows.push({
       type,
-      name,
       docNumber,
+      name,
       content,
       uuid: null,
     });
@@ -154,21 +151,20 @@ function parseSection(document: Document, sectionId: string): AtlasDocumentJson[
   return rows;
 }
 
-/**
- * Parses all configured sections from the provided HTML.
- */
+// Parse all configured sections and return AtlasCategoryJson[] (categorized documents)
 function parseAll(html: string): AtlasCategoryJson[] {
   const dom = new JSDOM(html);
   const document = dom.window.document;
   const categories: AtlasCategoryJson[] = [];
   for (const { id, label } of SECTION_CONFIGS) {
-    const rows = parseSection(document, id);
+    const rows = parseSection(document, id, label);
     if (DEBUG_LOGGING) console.log(`#${id}: ${rows.length} rows`);
     categories.push({ type: label, documents: rows });
   }
   return categories;
 }
 
+// Entry point function: generate categorized JSON from GitHub HTML
 export async function generateAtlasGithubJson(): Promise<AtlasCategoryJson[]> {
   // Try sources in order: local debug, repo HTML, GitHub
   const sources: { name: string; loader: () => Promise<string> }[] = [
@@ -204,17 +200,18 @@ export async function generateAtlasGithubJson(): Promise<AtlasCategoryJson[]> {
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(allRows, null, 2), 'utf8');
-  if (DEBUG_LOGGING) console.log(`Wrote ${allRows.length} documents to ${OUTPUT_FILE}`);
+  if (DEBUG_LOGGING) console.log(`Wrote ${allRows.length} documents (${allRows.length} categories) to ${OUTPUT_FILE}`);
   return allRows;
 }
 
-// Main execution
+// CLI execution wrapper
 if (require.main === module) {
   (async () => {
     try {
       console.log('Generating atlas-github.json from Sky Atlas HTML...');
-      const rows = await generateAtlasGithubJson();
-      console.log(`Done. Wrote ${rows.length} documents to ${OUTPUT_FILE}`);
+      const categories = await generateAtlasGithubJson();
+      const totalRowCount = categories.reduce((acc, category) => acc + category.documents.length, 0);
+      console.log(`Done. Wrote ${totalRowCount} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
     } catch (error) {
       console.error('Failed to generate atlas-github.json:', error);
       process.exit(1);
