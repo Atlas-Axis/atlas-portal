@@ -159,14 +159,18 @@ export function generateSectionNumber(
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
   if (!parentNumber) return '';
 
-  // Find all section siblings under the same parent
+  // Find all section siblings under the same parent (supports internal nesting)
+  // For sections, we need to find all sections that have the same parent document
   const sectionSiblings = Object.values(hierarchy)
-    .filter(
-      (item) =>
-        item.page.atlas_database_name === 'Sections & Primary Docs' &&
-        item.page.atlas_document_type === 'Section' &&
-        item.parent === page.parent_notion_page_id,
-    )
+    .filter((item) => {
+      if (item.page.atlas_database_name !== 'Sections & Primary Docs' || item.page.atlas_document_type !== 'Section') {
+        return false;
+      }
+
+      // Check if this section has the same parent as the current section
+      // This supports internal nesting where sections can be children of other sections
+      return item.parent === page.parent_notion_page_id;
+    })
     .sort((a, b) => (a.page.sort_order || 0) - (b.page.sort_order || 0));
 
   const sectionIndex = sectionSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
@@ -186,14 +190,18 @@ export function generateCoreNumber(
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
   if (!parentNumber) return '';
 
-  // Find all core siblings under the same parent
+  // Find all core siblings under the same parent (supports internal nesting)
+  // Core documents can be nested under sections or other core documents
   const coreSiblings = Object.values(hierarchy)
-    .filter(
-      (item) =>
-        item.page.atlas_database_name === 'Sections & Primary Docs' &&
-        item.page.atlas_document_type === 'Core' &&
-        item.parent === page.parent_notion_page_id,
-    )
+    .filter((item) => {
+      if (item.page.atlas_database_name !== 'Sections & Primary Docs' || item.page.atlas_document_type !== 'Core') {
+        return false;
+      }
+
+      // Check if this core document has the same parent as the current core document
+      // This supports internal nesting where core documents can be children of other core documents
+      return item.parent === page.parent_notion_page_id;
+    })
     .sort((a, b) => (a.page.sort_order || 0) - (b.page.sort_order || 0));
 
   const coreIndex = coreSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
@@ -213,14 +221,21 @@ export function generateActiveDataControllerNumber(
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
   if (!parentNumber) return '';
 
-  // Find all active data controller siblings under the same parent
+  // Find all active data controller siblings under the same parent (supports internal nesting)
+  // Active Data Controllers can be nested under sections or other controllers
   const controllerSiblings = Object.values(hierarchy)
-    .filter(
-      (item) =>
-        item.page.atlas_database_name === 'Sections & Primary Docs' &&
-        item.page.atlas_document_type === 'Active Data Controller' &&
-        item.parent === page.parent_notion_page_id,
-    )
+    .filter((item) => {
+      if (
+        item.page.atlas_database_name !== 'Sections & Primary Docs' ||
+        item.page.atlas_document_type !== 'Active Data Controller'
+      ) {
+        return false;
+      }
+
+      // Check if this controller has the same parent as the current controller
+      // This supports internal nesting where controllers can be children of other controllers
+      return item.parent === page.parent_notion_page_id;
+    })
     .sort((a, b) => (a.page.sort_order || 0) - (b.page.sort_order || 0));
 
   const controllerIndex = controllerSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
@@ -240,14 +255,21 @@ export function generateTypeSpecificationNumber(
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
   if (!parentNumber) return '';
 
-  // Find all type specification siblings under the same parent
+  // Find all type specification siblings under the same parent (supports internal nesting)
+  // Type Specifications can be nested under sections or other specifications
   const specSiblings = Object.values(hierarchy)
-    .filter(
-      (item) =>
-        item.page.atlas_database_name === 'Sections & Primary Docs' &&
-        item.page.atlas_document_type === 'Type Specification' &&
-        item.parent === page.parent_notion_page_id,
-    )
+    .filter((item) => {
+      if (
+        item.page.atlas_database_name !== 'Sections & Primary Docs' ||
+        item.page.atlas_document_type !== 'Type Specification'
+      ) {
+        return false;
+      }
+
+      // Check if this specification has the same parent as the current specification
+      // This supports internal nesting where specifications can be children of other specifications
+      return item.parent === page.parent_notion_page_id;
+    })
     .sort((a, b) => (a.page.sort_order || 0) - (b.page.sort_order || 0));
 
   const specIndex = specSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
@@ -396,11 +418,18 @@ export function generateAgentNumber(
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
   if (!parentNumber) return '';
 
-  // Find all agent siblings under the same parent
+  // Find all agent siblings under the same parent (supports internal nesting)
+  // Agent documents can be nested under sections or other agent documents
   const agentSiblings = Object.values(hierarchy)
-    .filter(
-      (item) => item.page.atlas_database_name === 'Agent Scope Database' && item.parent === page.parent_notion_page_id,
-    )
+    .filter((item) => {
+      if (item.page.atlas_database_name !== 'Agent Scope Database') {
+        return false;
+      }
+
+      // Check if this agent document has the same parent as the current agent document
+      // This supports internal nesting where agent documents can be children of other agent documents
+      return item.parent === page.parent_notion_page_id;
+    })
     .sort((a, b) => (a.page.sort_order || 0) - (b.page.sort_order || 0));
 
   const agentIndex = agentSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
