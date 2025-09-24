@@ -24,6 +24,8 @@
 import { JSDOM } from 'jsdom';
 import { ATLAS_GITHUB_HTML_URL } from '@/app/server/services/atlas/constants';
 
+const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+
 interface SectionAnalytics {
   sectionId: string;
   sectionName: string;
@@ -167,20 +169,22 @@ function printAnalytics(analytics: OverallAnalytics): void {
   console.log(`Sections without Content: ${analytics.sectionsWithoutContent}`);
   console.log();
 
-  // Section breakdown
-  console.log('📋 SECTION BREAKDOWN');
-  console.log('-'.repeat(40));
-
   // Sort by document count (descending)
   const sortedSections = [...analytics.sectionBreakdown].sort((a, b) => b.documentCount - a.documentCount);
 
-  for (const section of sortedSections) {
-    const statusIcon = section.hasContent ? '' : '❌';
-    console.log(`${statusIcon} ${section.sectionName}`);
-    console.log(`    ID: #${section.sectionId}`);
-    console.log(`    Headers: [${section.tableHeaders.join(', ')}]`);
+  // Section breakdown
+  if (DEBUG_LOGGING) {
+    console.log('📋 SECTION BREAKDOWN');
+    console.log('-'.repeat(40));
 
-    console.log();
+    for (const section of sortedSections) {
+      const statusIcon = section.hasContent ? '' : '❌';
+      console.log(`${statusIcon} ${section.sectionName}`);
+      console.log(`    ID: #${section.sectionId}`);
+      console.log(`    Headers: [${section.tableHeaders.join(', ')}]`);
+
+      console.log();
+    }
   }
 
   // Document distribution
