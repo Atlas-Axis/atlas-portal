@@ -101,6 +101,7 @@ export async function loadAtlasChangeHistory(params?: { since?: Date | string })
       'has_children',
       'atlas_document_type',
       'atlas_database_name',
+      'last_edited_by_user_id',
     ];
 
     for (const field of fieldsToCompare) {
