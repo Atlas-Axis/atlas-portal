@@ -20,8 +20,8 @@
  * - Writes output to .debug-data/atlas-json-generated/supabase-github.json
  *
  * OUTPUT:
- * - scripts/atlas-json/.output/supabase-github.json (Array<AtlasDocumentJson>)
- *   { type, name, content, uuid }
+ * - .debug-data/atlas-json-generated/atlas-supabase.json (Array<AtlasCategoryJson>)
+ *   Each category contains documents with { type, generatedDocNumber, originalDocNumber, name, content, uuid }
  */
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
@@ -33,6 +33,7 @@ import {
 } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { loadEnv } from '../utils/load-env';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE } from './constants';
+import { generateDocumentNumbers } from './document-numbering';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
 
@@ -45,7 +46,7 @@ const OUTPUT_DIR = path.join(REPO_ROOT, ATLAS_JSON_OUTPUT_DIR);
 const OUTPUT_FILE = path.join(OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE);
 
 // Convert a Supabase page row to our AtlasDocumentJson shape
-function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
+function mapPageToJson(row: NotionDatabasePage, generatedDocNumber: string): AtlasDocumentJson {
   const type = row.atlas_document_type;
   const name = row.plain_text_name ?? '';
   const content = row.plain_text_content ?? '';
@@ -55,7 +56,7 @@ function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
     const match = row.canonical_document_title.match(/^[^\s-]+/);
     if (match) originalDocNumber = match[0];
   }
-  return { type, generatedDocNumber: '', originalDocNumber, name, content, uuid: row.notion_page_id };
+  return { type, generatedDocNumber, originalDocNumber, name, content, uuid: row.notion_page_id };
 }
 
 // Entry point function: generate categorized JSON from Supabase Atlas pages
@@ -67,6 +68,11 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
     ? await loadAtlasFromSupabasePastVersion(validAt)
     : await loadAtlasFromSupabase();
 
+  // Generate document numbers based on Atlas Document Numbering Rules
+  if (DEBUG_LOGGING) console.log('Generating document numbers based on Atlas Document Numbering Rules...');
+  const generatedNumbers = generateDocumentNumbers(atlasPagesPerDatabase);
+  if (DEBUG_LOGGING) console.log(`Generated ${generatedNumbers.size} document numbers`);
+
   const categories: AtlasCategoryJson[] = [];
 
   for (const [dbName, pages] of Object.entries(atlasPagesPerDatabase) as [AtlasDatabaseName, NotionDatabasePage[]][]) {
@@ -75,17 +81,27 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
       // TODO: Implement this
       continue;
     }
-    const mapped = pages.map(mapPageToJson);
+
+    // Map pages to JSON format with generated document numbers
+    const mapped = pages.map((page) => {
+      const generatedDocNumber = generatedNumbers.get(page.notion_page_id) || '';
+      return mapPageToJson(page, generatedDocNumber);
+    });
+
     if (DEBUG_LOGGING) console.log(`${dbName}: ${mapped.length} rows`);
+
+    // Apply document number prefix fixes and sort
     const fixed = mapped.map((doc) => ({
       ...doc,
       docNumber: fixDocumentNumberPrefix(doc.originalDocNumber, dbName),
     }));
+
     // Keep consistent ordering by natural doc number comparison
     const sortStart = Date.now();
     fixed.sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
     const sortMs = Date.now() - sortStart;
     if (DEBUG_LOGGING) console.log(`Sorted ${fixed.length} documents for "${dbName}" in ${sortMs}ms`);
+
     categories.push({ type: dbName, documents: fixed });
   }
 
