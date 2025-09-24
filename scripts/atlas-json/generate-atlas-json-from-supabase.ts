@@ -32,15 +32,19 @@ import {
   loadAtlasFromSupabasePastVersion,
 } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { loadEnv } from '../utils/load-env';
+import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
+import { fixDocumentNumberPrefix } from './utils';
 
+// Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
-// Assume script is run from repository root (parent of "scripts")
+// Resolve output path (assumes running from repository root)
 const REPO_ROOT = process.cwd();
-const OUTPUT_DIR = path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated');
-const OUTPUT_FILE = path.join(OUTPUT_DIR, 'supabase-github.json');
+const OUTPUT_DIR = path.join(REPO_ROOT, ATLAS_JSON_OUTPUT_DIR);
+const OUTPUT_FILE = path.join(OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE);
 
+// Convert a Supabase page row to our AtlasDocumentJson shape
 function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
   const type = row.atlas_document_type;
   const name = row.plain_text_name ?? '';
@@ -51,9 +55,10 @@ function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
     const match = row.canonical_document_title.match(/^[^\s-]+/);
     if (match) docNumber = match[0];
   }
-  return { type, name, docNumber, content, uuid: row.notion_page_id };
+  return { type, docNumber, name, content, uuid: row.notion_page_id };
 }
 
+// Entry point function: generate categorized JSON from Supabase Atlas pages
 export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> {
   // Ensure env vars are loaded for Supabase client
   loadEnv();
@@ -72,7 +77,11 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
     }
     const mapped = pages.map(mapPageToJson);
     if (DEBUG_LOGGING) console.log(`${dbName}: ${mapped.length} rows`);
-    categories.push({ type: dbName, documents: mapped });
+    const fixed = mapped.map((doc) => ({
+      ...doc,
+      docNumber: fixDocumentNumberPrefix(doc.docNumber, dbName),
+    }));
+    categories.push({ type: dbName, documents: fixed });
   }
 
   await mkdir(OUTPUT_DIR, { recursive: true });
@@ -81,13 +90,14 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
   return categories;
 }
 
-// Main execution
+// CLI execution wrapper
 if (require.main === module) {
   (async () => {
     try {
       console.log('Generating supabase-github.json from Supabase...');
-      const rows = await generateAtlasSupabaseJson();
-      console.log(`Done. Wrote ${rows.length} documents to ${OUTPUT_FILE}`);
+      const categories = await generateAtlasSupabaseJson();
+      const totalRowCount = categories.reduce((acc, category) => acc + category.documents.length, 0);
+      console.log(`Done. Wrote ${totalRowCount} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
     } catch (error) {
       console.error('Failed to generate supabase-github.json:', error);
       process.exit(1);
@@ -95,6 +105,7 @@ if (require.main === module) {
   })();
 }
 
+// Parse --validAt flag (supports --validAt=... or --validAt ...)
 function parseValidAtArg(argv: string[]): string | null {
   // Support both --validAt=... and --validAt ... forms
   const withEquals = argv.find((a) => a.startsWith('--validAt='));
@@ -113,6 +124,7 @@ function parseValidAtArg(argv: string[]): string | null {
   return null;
 }
 
+// Validate ISO 8601 UTC date (YYYY-MM-DDTHH:mm:ssZ), throw on invalid
 function validateIsoDateOrThrow(value?: string): string | null {
   if (!value) return null;
   // Basic ISO 8601 instant validation: YYYY-MM-DDTHH:mm:ssZ
