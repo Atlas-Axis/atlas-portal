@@ -16,8 +16,8 @@
  * WHAT IT DOES:
  * - Loads Atlas pages for all databases defined in AtlasDatabaseName
  *   (note: 'Type Specifications' are excluded upstream and will be empty)
- * - Maps each page to { type, name, content, uuid }
- * - Writes output to scripts/atlas-json/.output/supabase-github.json
+ * - Maps each page to AtlasCategoryJson objects, categorizing them into an array of AtlasDocumentJson objects
+ * - Writes output to .debug-data/atlas-json-generated/supabase-github.json
  *
  * OUTPUT:
  * - scripts/atlas-json/.output/supabase-github.json (Array<AtlasDocumentJson>)
@@ -26,29 +26,35 @@
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
 import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/services/atlas/constants';
+import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
 import {
   loadAtlasFromSupabase,
   loadAtlasFromSupabasePastVersion,
 } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { loadEnv } from '../utils/load-env';
-import { AtlasDocumentJson } from './types';
+import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 // Assume script is run from repository root (parent of "scripts")
 const REPO_ROOT = process.cwd();
-const OUTPUT_DIR = path.join(REPO_ROOT, 'scripts', 'atlas-json', '.output');
+const OUTPUT_DIR = path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'supabase-github.json');
 
 function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
   const type = row.atlas_document_type;
   const name = row.plain_text_name ?? '';
   const content = row.plain_text_content ?? '';
-  return { type, name, content, uuid: row.notion_page_id };
+  let docNumber = row.atlas_document_number ?? '';
+  if (!docNumber && row.canonical_document_title) {
+    // Attempt to derive from canonical title prefix before first space or dash
+    const match = row.canonical_document_title.match(/^[^\s-]+/);
+    if (match) docNumber = match[0];
+  }
+  return { type, name, docNumber, content, uuid: row.notion_page_id };
 }
 
-export async function generateAtlasSupabaseJson(): Promise<AtlasDocumentJson[]> {
+export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> {
   // Ensure env vars are loaded for Supabase client
   loadEnv();
   const validAt = parseValidAtArg(process.argv);
@@ -56,18 +62,23 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasDocumentJson[]> 
     ? await loadAtlasFromSupabasePastVersion(validAt)
     : await loadAtlasFromSupabase();
 
-  let results: AtlasDocumentJson[] = [];
+  const categories: AtlasCategoryJson[] = [];
 
   for (const [dbName, pages] of Object.entries(atlasPagesPerDatabase) as [AtlasDatabaseName, NotionDatabasePage[]][]) {
+    if ((ATLAS_DATABASES as Record<string, string>)[dbName] === 'Type Specifications') {
+      // Skip special case for now
+      // TODO: Implement this
+      continue;
+    }
     const mapped = pages.map(mapPageToJson);
     if (DEBUG_LOGGING) console.log(`${dbName}: ${mapped.length} rows`);
-    results = results.concat(mapped);
+    categories.push({ type: dbName, documents: mapped });
   }
 
   await mkdir(OUTPUT_DIR, { recursive: true });
-  await writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2), 'utf8');
-  if (DEBUG_LOGGING) console.log(`Wrote ${results.length} documents to ${OUTPUT_FILE}`);
-  return results;
+  await writeFile(OUTPUT_FILE, JSON.stringify(categories, null, 2), 'utf8');
+  if (DEBUG_LOGGING) console.log(`Wrote ${categories.length} categories to ${OUTPUT_FILE}`);
+  return categories;
 }
 
 // Main execution
