@@ -109,7 +109,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      // sortOrder: null, // TODO ?
     },
     childRelationships: {},
   },
@@ -120,7 +119,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content', // TODO
-      // sortOrder: null,
     },
     childRelationships: {
       [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
@@ -133,7 +131,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      // sortOrder: null, // TODO: ?
     },
     childRelationships: {},
   },
@@ -144,7 +141,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Description',
-      // sortOrder: '', // TODO
     },
     childRelationships: {
       [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
@@ -157,7 +153,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Description',
-      // sortOrder: '', // TODO
     },
     childRelationships: {},
   },
@@ -170,21 +165,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      // sortOrder: '', // TODO
     },
     // ❓
-    childRelationships: {
-      // [ATLAS_DATABASES.SCOPES]: 'REL_SCOPES',
-      // [ATLAS_DATABASES.ARTICLES]: 'REL_ARTICLES',
-      // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'REL_SECTIONS_AND_PRIMARY_DOCS',
-      // [ATLAS_DATABASES.ANNOTATIONS]: 'REL_ANNOTATIONS',
-      // [ATLAS_DATABASES.TENETS]: 'REL_TENETS',
-      // [ATLAS_DATABASES.SCENARIOS]: 'REL_SCENARIOS',
-      // [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'REL_SCENARIO_VARIATIONS',
-      // [ATLAS_DATABASES.ACTIVE_DATA]: 'REL_ACTIVE_DATA',
-      // [ATLAS_DATABASES.AGENTS]: 'REL_AGENT_SCOPE_DATABASE',
-      // [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
-    },
+    childRelationships: {},
   },
 } as const;
 
