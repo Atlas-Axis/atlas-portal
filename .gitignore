@@ -48,3 +48,12 @@ next-env.d.ts
 
 # Custom local debug data
 .debug-data
+
+# IDEs and editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.idea/
