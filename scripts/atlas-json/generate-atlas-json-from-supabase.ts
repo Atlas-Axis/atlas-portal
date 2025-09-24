@@ -34,7 +34,7 @@ import {
 import { loadEnv } from '../utils/load-env';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
-import { fixDocumentNumberPrefix } from './utils';
+import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
@@ -81,6 +81,11 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
       ...doc,
       docNumber: fixDocumentNumberPrefix(doc.docNumber, dbName),
     }));
+    // Keep consistent ordering by natural doc number comparison
+    const sortStart = Date.now();
+    fixed.sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+    const sortMs = Date.now() - sortStart;
+    if (DEBUG_LOGGING) console.log(`Sorted ${fixed.length} documents for "${dbName}" in ${sortMs}ms`);
     categories.push({ type: dbName, documents: fixed });
   }
 

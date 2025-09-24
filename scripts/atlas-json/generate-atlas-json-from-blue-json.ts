@@ -28,7 +28,7 @@ import {
 } from '@/app/server/services/atlas/constants';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_BLUE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
-import { fixDocumentNumberPrefix } from './utils';
+import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
@@ -203,14 +203,6 @@ function flattenBlueTree(nodes: unknown[]): { items: FlattenedDoc[]; inactive: I
   return { items: results, inactive };
 }
 
-function toSortableDocNumber(docNumber: string): string {
-  if (!docNumber) return '';
-  return docNumber
-    .split('.')
-    .map((part) => (/^\d+$/.test(part) ? part.padStart(6, '0') : part))
-    .join('.');
-}
-
 function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
   const map = new Map<string, AtlasDocumentJson[]>();
   for (const { doc, prefix } of items) {
@@ -231,14 +223,17 @@ function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
         ...doc,
         docNumber: fixDocumentNumberPrefix(doc.docNumber, type as GitHubAtlasDocumentType | AtlasDatabaseName),
       }))
-      .sort((a, b) => {
-        const as = toSortableDocNumber(a.docNumber);
-        const bs = toSortableDocNumber(b.docNumber);
-        if (as < bs) return -1;
-        if (as > bs) return 1;
-        return 0;
-      }),
+      .sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber)),
   }));
+
+  if (DEBUG_LOGGING) {
+    for (const c of categories) {
+      const start = Date.now();
+      [...c.documents].sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+      const ms = Date.now() - start;
+      console.log(`Sorted ${c.documents.length} documents for "${c.type}" in ~${ms}ms`);
+    }
+  }
 
   return categories;
 }

@@ -29,6 +29,7 @@ import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/service
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 import { fixDocumentNumberPrefix } from './utils';
+import { compareDocNumbers } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
@@ -159,6 +160,11 @@ function parseAll(html: string): AtlasCategoryJson[] {
   for (const { id, label } of SECTION_CONFIGS) {
     const rows = parseSection(document, id, label);
     if (DEBUG_LOGGING) console.log(`#${id}: ${rows.length} rows`);
+    // Sort within category using natural doc number ordering
+    const sortStart = Date.now();
+    rows.sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+    const sortMs = Date.now() - sortStart;
+    if (DEBUG_LOGGING) console.log(`Sorted ${rows.length} documents for "${label}" in ${sortMs}ms`);
     categories.push({ type: label, documents: rows });
   }
   return categories;
