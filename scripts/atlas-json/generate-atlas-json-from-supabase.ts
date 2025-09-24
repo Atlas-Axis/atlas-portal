@@ -93,12 +93,12 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
     // Apply document number prefix fixes and sort
     const fixed = mapped.map((doc) => ({
       ...doc,
-      docNumber: fixDocumentNumberPrefix(doc.originalDocNumber, dbName),
+      originalDocNumber: fixDocumentNumberPrefix(doc.originalDocNumber, dbName),
     }));
 
     // Keep consistent ordering by natural doc number comparison
     const sortStart = Date.now();
-    fixed.sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+    fixed.sort((a, b) => compareDocNumbers(a.originalDocNumber, b.originalDocNumber));
     const sortMs = Date.now() - sortStart;
     if (DEBUG_LOGGING) console.log(`Sorted ${fixed.length} documents for "${dbName}" in ${sortMs}ms`);
 
