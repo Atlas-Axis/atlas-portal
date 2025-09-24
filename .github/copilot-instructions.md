@@ -6,7 +6,7 @@
 >
 > - **[README.md](../README.md)** - Human-readable project documentation
 > - **[.cursorrules](../.cursorrules)** - AI agent documentation for Cursor IDE
-> - **[.github/copilot-instructions.md](./copilot-instructions.md)** - AI agent documentation for GitHub Copilot (this file)
+> - **This file** - AI agent documentation for GitHub Copilot
 >
 > ⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
 
@@ -189,6 +189,34 @@ Each document in the Atlas has a specific type from the following enum:
 - **Scenario** - Scenario items
 - **Scenario Variation** - Individual scenario variations
 - **Needed Research** - Research items
+
+## Atlas Document Hierarchy
+
+The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents:
+
+```
+Scopes
+├── Articles
+│   ├── Sections & Primary Docs
+│   │   ├── Annotations
+│   │   └── Tenets
+│   │       ├── Scenarios
+│   │       └── Scenario Variations
+├── Agent Scope Database
+│   ├── Annotations
+│   ├── Tenets
+│   │   ├── Scenarios
+│   │   └── Scenario Variations
+│   └── Active Data
+└── Needed Research
+```
+
+**Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:
+
+- **Sections & Primary Docs** - Can have multiple levels of internal nesting
+- **Agent Scope Database** - Can have multiple levels of internal nesting
+
+This hierarchical structure is implemented in the `ATLAS_DATABASES` constant and managed through the `notion-database-properties-and-relationships.ts` mapping system.
 
 # Key Services
 
