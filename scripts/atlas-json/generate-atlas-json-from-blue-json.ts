@@ -104,12 +104,12 @@ function makeDocumentFromNode(node: BlueNode): { doc: AtlasDocumentJson; prefix:
 
   const name = extractField(node, presentPrefix, 'name');
   const content = extractField(node, presentPrefix, 'content');
-  let docNumber = extractField(node, presentPrefix, 'doc_no');
+  let originalDocNumber = extractField(node, presentPrefix, 'doc_no');
   // Fallback: try to locate any *_doc_no key if presentPrefix field is empty
-  if (!docNumber) {
+  if (!originalDocNumber) {
     for (const [k, v] of Object.entries(node)) {
       if (k.endsWith('_doc_no') && typeof v === 'string' && v.length > 0) {
-        docNumber = v;
+        originalDocNumber = v;
         break;
       }
     }
@@ -120,7 +120,8 @@ function makeDocumentFromNode(node: BlueNode): { doc: AtlasDocumentJson; prefix:
     doc: {
       type: atlasType,
       name,
-      docNumber,
+      generatedDocNumber: '',
+      originalDocNumber,
       content,
       uuid,
     },
@@ -221,7 +222,7 @@ function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
     documents: documents
       .map((doc) => ({
         ...doc,
-        docNumber: fixDocumentNumberPrefix(doc.docNumber, type as GitHubAtlasDocumentType | AtlasDatabaseName),
+        docNumber: fixDocumentNumberPrefix(doc.originalDocNumber, type as GitHubAtlasDocumentType | AtlasDatabaseName),
       }))
       .sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber)),
   }));

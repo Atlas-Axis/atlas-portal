@@ -2,7 +2,8 @@ import { AtlasDatabaseName, AtlasDocumentType, GitHubAtlasDocumentType } from '@
 
 export interface AtlasDocumentJson {
   type: AtlasDocumentType;
-  docNumber: string;
+  generatedDocNumber: string;
+  originalDocNumber: string;
   name: string;
   content: string;
   uuid: string | null;

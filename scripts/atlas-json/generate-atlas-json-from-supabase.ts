@@ -49,13 +49,13 @@ function mapPageToJson(row: NotionDatabasePage): AtlasDocumentJson {
   const type = row.atlas_document_type;
   const name = row.plain_text_name ?? '';
   const content = row.plain_text_content ?? '';
-  let docNumber = row.atlas_document_number ?? '';
-  if (!docNumber && row.canonical_document_title) {
+  let originalDocNumber = row.atlas_document_number ?? '';
+  if (!originalDocNumber && row.canonical_document_title) {
     // Attempt to derive from canonical title prefix before first space or dash
     const match = row.canonical_document_title.match(/^[^\s-]+/);
-    if (match) docNumber = match[0];
+    if (match) originalDocNumber = match[0];
   }
-  return { type, docNumber, name, content, uuid: row.notion_page_id };
+  return { type, generatedDocNumber: '', originalDocNumber, name, content, uuid: row.notion_page_id };
 }
 
 // Entry point function: generate categorized JSON from Supabase Atlas pages
@@ -79,7 +79,7 @@ export async function generateAtlasSupabaseJson(): Promise<AtlasCategoryJson[]> 
     if (DEBUG_LOGGING) console.log(`${dbName}: ${mapped.length} rows`);
     const fixed = mapped.map((doc) => ({
       ...doc,
-      docNumber: fixDocumentNumberPrefix(doc.docNumber, dbName),
+      docNumber: fixDocumentNumberPrefix(doc.originalDocNumber, dbName),
     }));
     // Keep consistent ordering by natural doc number comparison
     const sortStart = Date.now();

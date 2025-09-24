@@ -142,7 +142,8 @@ function parseSection(document: Document, sectionId: string, category: GitHubAtl
 
     rows.push({
       type,
-      docNumber,
+      generatedDocNumber: '',
+      originalDocNumber: docNumber,
       name,
       content,
       uuid: null,
@@ -162,7 +163,7 @@ function parseAll(html: string): AtlasCategoryJson[] {
     if (DEBUG_LOGGING) console.log(`#${id}: ${rows.length} rows`);
     // Sort within category using natural doc number ordering
     const sortStart = Date.now();
-    rows.sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+    rows.sort((a, b) => compareDocNumbers(a.originalDocNumber, b.originalDocNumber));
     const sortMs = Date.now() - sortStart;
     if (DEBUG_LOGGING) console.log(`Sorted ${rows.length} documents for "${label}" in ${sortMs}ms`);
     categories.push({ type: label, documents: rows });
