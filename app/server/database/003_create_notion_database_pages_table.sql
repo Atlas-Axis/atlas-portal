@@ -334,5 +334,5 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE VIEW notion_database_pages_current
 WITH (security_invoker = on)
 AS
-SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL;
+SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL AND in_trash = FALSE AND archived = FALSE;
 
