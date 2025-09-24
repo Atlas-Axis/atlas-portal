@@ -106,6 +106,25 @@ Child relationship fields (JSONB arrays of UUID strings):
 
 - `extra_fields` (JSONB) – Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to Type Specification Atlas documents
 
+#### `notion_sync_status`
+
+Manages synchronization state and prevents concurrent syncs of the same content.
+
+**Key Fields:**
+
+- `id` (UUID, PRIMARY KEY) - Internal ID
+- `notion_database_id` (UUID, NOT NULL, UNIQUE) - Notion database being synced
+- `sync_status` (TEXT, NOT NULL) - Status: 'pending', 'in_progress', 'completed', 'failed', 'cancelled'
+- `last_sync_started_at` (TIMESTAMPTZ) - When sync began
+- `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded
+- `sync_error_message` (TEXT) - Error details if failed
+- `blocks_synced_count` (INTEGER) - Number of blocks successfully synced
+- `is_sync_locked` (BOOLEAN) - Prevents concurrent syncs
+- `sync_lock_acquired_at` (TIMESTAMPTZ) - When the sync lock was acquired
+- `sync_lock_expires_at` (TIMESTAMPTZ) - When the sync lock expires (for cleanup of stale locks)
+- `created_at` (TIMESTAMPTZ) - Database row creation time
+- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
+
 ## 📋 Atlas Database Names & Document Types
 
 ### Atlas Database Names
@@ -142,25 +161,6 @@ Each document in the Atlas has a specific type from the following enum:
 - **Scenario** - Scenario items
 - **Scenario Variation** - Individual scenario variations
 - **Needed Research** - Research items
-
-#### `notion_sync_status`
-
-Manages synchronization state and prevents concurrent syncs of the same content.
-
-**Key Fields:**
-
-- `id` (UUID, PRIMARY KEY) - Internal ID
-- `notion_database_id` (UUID, NOT NULL, UNIQUE) - Notion database being synced
-- `sync_status` (TEXT, NOT NULL) - Status: 'pending', 'in_progress', 'completed', 'failed', 'cancelled'
-- `last_sync_started_at` (TIMESTAMPTZ) - When sync began
-- `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded
-- `sync_error_message` (TEXT) - Error details if failed
-- `blocks_synced_count` (INTEGER) - Number of blocks successfully synced
-- `is_sync_locked` (BOOLEAN) - Prevents concurrent syncs
-- `sync_lock_acquired_at` (TIMESTAMPTZ) - When the sync lock was acquired
-- `sync_lock_expires_at` (TIMESTAMPTZ) - When the sync lock expires (for cleanup of stale locks)
-- `created_at` (TIMESTAMPTZ) - Database row creation time
-- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
 
 ## 🔧 Key Services
 
@@ -378,6 +378,15 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --validAt 2025-01-15T12:00:00Z
       ```
 
+- **scripts/atlas-json/generate-atlas-json-from-blue-json.ts**: Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+      ```
+    - ```bash
+      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+      ```
+
 - **scripts/experiment.ts**: Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
   - Example:
     - ```bash
@@ -414,4 +423,6 @@ All commands are intended to be run from the repository root using tsx.
 Non-executable helper modules (imported by scripts):
 
 - `scripts/atlas-json/types.ts` — shared types for JSON generation scripts
+- `scripts/atlas-json/constants.ts` — output file paths and configuration constants
+- `scripts/atlas-json/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
