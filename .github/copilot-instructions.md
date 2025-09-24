@@ -296,3 +296,81 @@ await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).t
 ## Atlas Services
 
 - **[app/server/services/atlas/README.md](../app/server/services/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
+
+## Command line scripts
+
+All commands are intended to be run from the repository root using tsx.
+
+- **scripts/atlas-changelog.ts** — Prints a human-readable change log of Atlas documents since a time window.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-changelog
+      ```
+    - ```bash
+      npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
+      ```
+
+- **scripts/atlas-github-html-analytics.ts** — Analyzes the GitHub-exported Sky Atlas HTML and prints section/document analytics.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-github-html-analytics.ts
+      ```
+    - ```bash
+      DEBUG_LOGGING=1 npx tsx scripts/atlas-github-html-analytics.ts
+      ```
+
+- **scripts/atlas-json/generate-atlas-json-from-github.ts** — Parses the Sky Atlas HTML into a machine-friendly JSON array and writes `.output/atlas-github.json`.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
+      ```
+    - ```bash
+      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
+      ```
+
+- **scripts/atlas-json/generate-atlas-json-from-supabase.ts** — Exports current or past Atlas data from Supabase into `.output/supabase-github.json`.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts
+      ```
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --validAt 2025-01-15T12:00:00Z
+      ```
+
+- **scripts/experiment.ts** — Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
+  - Example:
+    - ```bash
+      npx tsx scripts/experiment.ts
+      ```
+
+- **scripts/get-notion-database-page-count.ts** — Prints the total number of pages in a given Notion database ID.
+  - Examples:
+    - ```bash
+      npx tsx scripts/get-notion-database-page-count.ts 00000000-0000-0000-0000-000000000000
+      ```
+    - ```bash
+      npx tsx scripts/get-notion-database-page-count.ts --verbose 00000000-0000-0000-0000-000000000000
+      ```
+
+- **scripts/import-notion-databases.ts** — Imports all configured Notion databases into Supabase, with optional local Notion API caching.
+  - Examples:
+    - ```bash
+      npx tsx scripts/import-notion-databases.ts
+      ```
+    - ```bash
+      npx tsx scripts/import-notion-databases.ts --verbose --local-cache
+      ```
+
+- **scripts/visualize-hierarchy.ts** — Loads Atlas pages from Supabase, builds the tree, and prints an ASCII or structured visualization.
+  - Examples:
+    - ```bash
+      npx tsx scripts/visualize-hierarchy.ts
+      ```
+    - ```bash
+      npx tsx scripts/visualize-hierarchy.ts --ascii
+      ```
+
+Helper modules (imported by scripts):
+
+- `scripts/atlas-json/types.ts` — shared types for JSON generation scripts
+- `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
