@@ -218,6 +218,44 @@ Scopes
 
 This hierarchical structure is implemented in the `ATLAS_DATABASES` constant and managed through the `notion-database-properties-and-relationships.ts` mapping system.
 
+## Atlas Database to Atlas Document Type Mapping
+
+Each Atlas database contains specific types of documents. Here's the mapping of database names to their possible document types:
+
+- **Scopes**
+  - Scope
+
+- **Articles**
+  - Article
+
+- **Sections & Primary Docs**
+  - Section
+  - Core
+  - Type Specification
+  - Active Data Controller
+
+- **Annotations**
+  - Annotation
+
+- **Tenets**
+  - Action Tenet
+
+- **Scenarios**
+  - Scenario
+
+- **Scenario Variations**
+  - Scenario Variation
+
+- **Active Data**
+  - Active Data
+
+- **Agent Scope Database**
+  - Core
+  - Active Data Controller
+
+- **Needed Research**
+  - Needed Research
+
 # Key Services
 
 ## Notion Integration (`/app/server/services/notion`)
