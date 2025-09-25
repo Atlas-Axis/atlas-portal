@@ -83,7 +83,7 @@ Stores Notion database pages and their hierarchical relationships.
 - `plain_text_name` (TEXT) - Page title as plain text
 - `json_name` (JSONB) - Rich text page title from Notion API
 - `parent_notion_page_id` (UUID) - Parent Notion page ID (if any) - This field is deprecated, don't use it
-- `sort_order` (DECIMAL(5,2), NOT NULL) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
+- `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
 - `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at` (TIMESTAMPTZ) - Database row creation time
 - `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
