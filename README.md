@@ -184,6 +184,8 @@ Agent Scope Database
 "Needed Research" documents may be nested under any other document type
 ```
 
+See Atlas Document Numbering rules: **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
+
 **Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:
 
 - **Sections & Primary Docs** - Can have multiple levels of internal nesting
