@@ -46,52 +46,58 @@ function readJsonFile(filePath: string): JsonValue {
 
 const UUID_REGEX = /\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b/;
 
-function collectUuids(value: JsonValue, result: Set<string>): void {
-  if (value === null) return;
+type UuidDataCollectors = {
+  set: Set<string>;
+  counts: Map<string, number>;
+  typesByUuid: Map<string, Set<string>>;
+};
 
-  if (typeof value === 'string') {
-    if (UUID_REGEX.test(value)) {
-      result.add(value.toLowerCase());
-    }
-    return;
-  }
-
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      collectUuids(item, result);
-    }
-    return;
-  }
-
-  if (typeof value === 'object') {
-    for (const key of Object.keys(value)) {
-      collectUuids((value as Record<string, JsonValue>)[key], result);
-    }
-    return;
+function addUuid(uuid: string, docType: string | undefined, collectors: UuidDataCollectors): void {
+  const normalized = uuid.toLowerCase();
+  collectors.set.add(normalized);
+  collectors.counts.set(normalized, (collectors.counts.get(normalized) ?? 0) + 1);
+  if (docType && docType.length > 0) {
+    const set = collectors.typesByUuid.get(normalized) ?? new Set<string>();
+    set.add(docType);
+    collectors.typesByUuid.set(normalized, set);
   }
 }
 
-function collectUuidCounts(value: JsonValue, counts: Map<string, number>): void {
+function deriveDocTypeFromKey(key: string): string | undefined {
+  if (!key) return undefined;
+  if (key.endsWith('_uuid')) {
+    const base = key.slice(0, -'_uuid'.length);
+    return base || undefined;
+  }
+  return undefined;
+}
+
+function traverseAndCollect(value: JsonValue, collectors: UuidDataCollectors): void {
   if (value === null) return;
 
   if (typeof value === 'string') {
     if (UUID_REGEX.test(value)) {
-      const key = value.toLowerCase();
-      counts.set(key, (counts.get(key) ?? 0) + 1);
+      addUuid(value, undefined, collectors);
     }
     return;
   }
 
   if (Array.isArray(value)) {
     for (const item of value) {
-      collectUuidCounts(item, counts);
+      traverseAndCollect(item, collectors);
     }
     return;
   }
 
   if (typeof value === 'object') {
-    for (const key of Object.keys(value)) {
-      collectUuidCounts((value as Record<string, JsonValue>)[key], counts);
+    const obj = value as Record<string, JsonValue>;
+    for (const key of Object.keys(obj)) {
+      const v = obj[key];
+      if (typeof v === 'string' && UUID_REGEX.test(v)) {
+        addUuid(v, deriveDocTypeFromKey(key), collectors);
+      } else {
+        traverseAndCollect(v, collectors);
+      }
     }
     return;
   }
@@ -106,24 +112,34 @@ function difference(a: Set<string>, b: Set<string>): string[] {
   return diff;
 }
 
-function formatSection(title: string, ids: string[]): string {
+function formatSection(title: string, ids: string[], typesByUuid: Map<string, Set<string>>): string {
   const lines: string[] = [];
   lines.push(title);
   lines.push(`Count: ${ids.length}`);
   if (ids.length > 0) {
-    for (const id of ids) lines.push(id);
+    for (const id of ids) {
+      const types = Array.from(typesByUuid.get(id) ?? []);
+      const suffix = types.length > 0 ? ` [${types.join(', ')}]` : '';
+      lines.push(`${id}${suffix}`);
+    }
   }
   return lines.join('\n');
 }
 
-function formatDuplicateSection(title: string, counts: Map<string, number>): string {
+function formatDuplicateSection(
+  title: string,
+  counts: Map<string, number>,
+  typesByUuid: Map<string, Set<string>>,
+): string {
   const entries = Array.from(counts.entries()).filter(([, n]) => n > 1);
   entries.sort((a, b) => a[0].localeCompare(b[0]));
   const lines: string[] = [];
   lines.push(title);
   lines.push(`Count: ${entries.length}`);
   for (const [id, n] of entries) {
-    lines.push(`${id} (${n} times)`);
+    const types = Array.from(typesByUuid.get(id) ?? []);
+    const suffix = types.length > 0 ? ` [${types.join(', ')}]` : '';
+    lines.push(`${id} (${n} times)${suffix}`);
   }
   return lines.join('\n');
 }
@@ -135,35 +151,46 @@ function main(): void {
   const firstJson = readJsonFile(firstPath);
   const secondJson = readJsonFile(secondPath);
 
-  const firstUuids = new Set<string>();
-  const secondUuids = new Set<string>();
-  const firstCounts = new Map<string, number>();
-  const secondCounts = new Map<string, number>();
+  const firstCollectors: UuidDataCollectors = {
+    set: new Set<string>(),
+    counts: new Map<string, number>(),
+    typesByUuid: new Map<string, Set<string>>(),
+  };
+  const secondCollectors: UuidDataCollectors = {
+    set: new Set<string>(),
+    counts: new Map<string, number>(),
+    typesByUuid: new Map<string, Set<string>>(),
+  };
 
-  collectUuids(firstJson, firstUuids);
-  collectUuids(secondJson, secondUuids);
-  collectUuidCounts(firstJson, firstCounts);
-  collectUuidCounts(secondJson, secondCounts);
+  traverseAndCollect(firstJson, firstCollectors);
+  traverseAndCollect(secondJson, secondCollectors);
 
-  const onlyInSecond = difference(secondUuids, firstUuids);
-  const onlyInFirst = difference(firstUuids, secondUuids);
+  const onlyInSecond = difference(secondCollectors.set, firstCollectors.set);
+  const onlyInFirst = difference(firstCollectors.set, secondCollectors.set);
 
   const outputSections = [
     formatSection(
       `IDs present in second JSON but missing from first (${path.basename(SECOND_JSON_RELATIVE_PATH)} vs ${path.basename(FIRST_JSON_RELATIVE_PATH)})`,
       onlyInSecond,
+      secondCollectors.typesByUuid,
     ),
     '',
     formatSection(
       `IDs present in first JSON but missing from second (${path.basename(FIRST_JSON_RELATIVE_PATH)} vs ${path.basename(SECOND_JSON_RELATIVE_PATH)})`,
       onlyInFirst,
+      firstCollectors.typesByUuid,
     ),
     '',
-    formatDuplicateSection(`Duplicate IDs within first JSON (${path.basename(FIRST_JSON_RELATIVE_PATH)})`, firstCounts),
+    formatDuplicateSection(
+      `Duplicate IDs within first JSON (${path.basename(FIRST_JSON_RELATIVE_PATH)})`,
+      firstCollectors.counts,
+      firstCollectors.typesByUuid,
+    ),
     '',
     formatDuplicateSection(
       `Duplicate IDs within second JSON (${path.basename(SECOND_JSON_RELATIVE_PATH)})`,
-      secondCounts,
+      secondCollectors.counts,
+      secondCollectors.typesByUuid,
     ),
   ];
 
