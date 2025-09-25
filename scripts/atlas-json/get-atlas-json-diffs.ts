@@ -3,7 +3,7 @@ Purpose: Compare Atlas JSON exports and report UUID diffs and duplicates, groupe
 
 Inputs:
 - --file1 PATH (default: .debug-data/atlas-json-generated/atlas-blue.json)
-- --file2 PATH (default: .debug-data/atlas-json-generated/atlas-supabase.json)
+- --file2 PATH (default: .debug-data/atlas-json-generated/atlas-supabase-without-agents.json)
 - --include-inactives (optional): include documents where inactive === 1 (default: excluded)
 
 What it does:
@@ -18,7 +18,7 @@ What it does:
 
 Usage (from repo root):
   npx tsx scripts/atlas-json/get-atlas-json-diffs.ts
-  npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
+  npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase-without-agents.json
 
 Notes:
 - UUIDs are normalized to lowercase before comparison
@@ -31,7 +31,7 @@ import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 type JsonValue = unknown;
 
 const DEFAULT_FILE1 = '.debug-data/atlas-json-generated/atlas-blue.json';
-const DEFAULT_FILE2 = '.debug-data/atlas-json-generated/atlas-supabase.json';
+const DEFAULT_FILE2 = '.debug-data/atlas-json-generated/atlas-supabase-without-agents.json';
 
 function parseArgs(argv: string[]) {
   const args: Record<string, string | boolean> = {};
