@@ -140,7 +140,7 @@ export function generateScopeNumber(page: NotionDatabasePage, hierarchy: Documen
 
   const scopeIndex = scopeSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
   if (scopeIndex === -1) return '';
-  return `A.${scopeIndex + 1}`;
+  return `A.${scopeIndex}`;
 }
 
 /**
@@ -200,7 +200,7 @@ export function generateSectionNumber(
 
   const sectionIndex = sectionSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
   if (sectionIndex === -1) return '';
-  return `${parentNumber}.${sectionIndex + 1}`;
+  return `${parentNumber}.${sectionIndex}`;
 }
 
 /**
