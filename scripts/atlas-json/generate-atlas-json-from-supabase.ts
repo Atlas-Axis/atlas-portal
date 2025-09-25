@@ -23,7 +23,7 @@
  * - Loads Atlas pages for all databases defined in AtlasDatabaseName
  *   (note: 'Type Specifications' are excluded upstream and will be empty)
  * - Maps each page to AtlasCategoryJson objects, categorizing them into an array of AtlasDocumentJson objects
- * - Writes output to .debug-data/atlas-json-generated/supabase-github.json
+ * - Writes output to .debug-data/atlas-json-generated/atlas-supabase.json, or atlas-supabase-without-agents.json if --skip-agent-scope is used
  *
  * OUTPUT:
  * - .debug-data/atlas-json-generated/atlas-supabase.json (Array<AtlasCategoryJson>)
@@ -92,20 +92,27 @@ function collectDescendantUuids(
   allPagesMap: Map<string, NotionDatabasePage>,
 ): Set<string> {
   const descendants = new Set<string>();
+  const visited = new Set<string>(); // Prevent infinite loops
   const stack = [...rootPages];
 
   while (stack.length > 0) {
     const currentPage = stack.pop();
     if (!currentPage) continue;
 
+    const pageId = currentPage.notion_page_id;
+
+    // Skip if already visited to prevent infinite loops
+    if (visited.has(pageId)) continue;
+    visited.add(pageId);
+
     // Add current page to descendants
-    descendants.add(currentPage.notion_page_id);
+    descendants.add(pageId);
 
     // Get all child IDs and add them to the stack for processing
     const childIds = getAllChildIds(currentPage);
     for (const childId of childIds) {
       const childPage = allPagesMap.get(childId);
-      if (childPage && !descendants.has(childId)) {
+      if (childPage && !visited.has(childId)) {
         stack.push(childPage);
       }
     }
@@ -179,11 +186,13 @@ function filterAgentScopeOnlyDescendants(
     totalFilteredDocuments += filteredPages.length;
   }
 
-  // Log the number of documents omitted
+  // Log the number of documents omitted (only when filtering is actually applied)
   const omittedCount = totalOriginalDocuments - totalFilteredDocuments;
-  console.log(
-    `Agent Scope filtering: omitted ${omittedCount} documents (${totalFilteredDocuments} remaining from ${totalOriginalDocuments} total)`,
-  );
+  if (omittedCount > 0) {
+    console.log(
+      `Agent Scope filtering: omitted ${omittedCount} documents (${totalFilteredDocuments} remaining from ${totalOriginalDocuments} total)`,
+    );
+  }
 
   return filteredAtlasPagesPerDatabase;
 }
@@ -209,6 +218,12 @@ export async function generateAtlasSupabaseJson(skipAgentScope = false): Promise
   const validAt = parseValidAtArg(process.argv);
   let atlasPagesPerDatabase = validAt ? await loadAtlasFromSupabasePastVersion(validAt) : await loadAtlasFromSupabase();
 
+  // Validate that we have some data to work with
+  const totalPages = Object.values(atlasPagesPerDatabase).reduce((sum, pages) => sum + pages.length, 0);
+  if (totalPages === 0) {
+    console.warn('Warning: No Atlas pages found in Supabase. Output will be empty.');
+  }
+
   // Filter out Agent Scope only descendants if requested
   atlasPagesPerDatabase = filterAgentScopeOnlyDescendants(atlasPagesPerDatabase, skipAgentScope);
 
@@ -220,9 +235,10 @@ export async function generateAtlasSupabaseJson(skipAgentScope = false): Promise
   const categories: AtlasCategoryJson[] = [];
 
   for (const [dbName, pages] of Object.entries(atlasPagesPerDatabase) as [AtlasDatabaseName, NotionDatabasePage[]][]) {
-    if ((ATLAS_DATABASES as Record<string, string>)[dbName] === 'Type Specifications') {
-      // Skip special case for now
-      // TODO: Implement this
+    // Skip empty databases
+    if (!pages || pages.length === 0) {
+      if (DEBUG_LOGGING) console.log(`${dbName}: 0 rows (skipped)`);
+      categories.push({ type: dbName, documents: [] });
       continue;
     }
 
@@ -260,15 +276,15 @@ if (require.main === module) {
   (async () => {
     try {
       if (SKIP_AGENT_SCOPE) {
-        console.log('Generating supabase-github.json from Supabase (skipping Agent Scope only descendants)...');
+        console.log('Generating atlas-supabase.json from Supabase (skipping Agent Scope only descendants)...');
       } else {
-        console.log('Generating supabase-github.json from Supabase...');
+        console.log('Generating atlas-supabase.json from Supabase...');
       }
       const categories = await generateAtlasSupabaseJson(SKIP_AGENT_SCOPE);
       const totalRowCount = categories.reduce((acc, category) => acc + category.documents.length, 0);
       console.log(`Done. Wrote ${totalRowCount} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
     } catch (error) {
-      console.error('Failed to generate supabase-github.json:', error);
+      console.error('Failed to generate atlas-supabase.json:', error);
       process.exit(1);
     }
   })();
