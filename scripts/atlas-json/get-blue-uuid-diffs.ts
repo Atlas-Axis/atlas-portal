@@ -3,7 +3,7 @@ Purpose: Compare UUID presence between two Blue JSON outputs and report diffs an
 
 Inputs (fixed paths, no CLI args):
 - .debug-data/atlas-json-generated/blue-from-supabase-without-dates.json
-- .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json
+- .debug-data/atlas-json-generated/blue-without-dates.json
 
 What it does:
 - Recursively scans both JSON files for UUIDs anywhere in the structure
@@ -24,7 +24,7 @@ import path from 'node:path';
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 const FIRST_JSON_RELATIVE_PATH = '.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json';
-const SECOND_JSON_RELATIVE_PATH = '.debug-data/atlas-json-generated/blue-without-inactive-without-dates.json';
+const SECOND_JSON_RELATIVE_PATH = '.debug-data/atlas-json-generated/blue-without-dates.json';
 
 function resolveFromRepoRoot(relativePath: string): string {
   return path.resolve(process.cwd(), relativePath);
@@ -103,6 +103,44 @@ function traverseAndCollect(value: JsonValue, collectors: UuidDataCollectors): v
   }
 }
 
+type InactiveEntry = {
+  summary: string; // e.g. "uuid [type], uuid2 [type2]" or "<no uuid>"
+};
+
+function extractDocIdentifiersFromObject(obj: Record<string, JsonValue>): string[] {
+  const pairs: string[] = [];
+  for (const key of Object.keys(obj)) {
+    const v = obj[key];
+    if (typeof v === 'string' && UUID_REGEX.test(v)) {
+      const type = deriveDocTypeFromKey(key);
+      const suffix = type ? ` [${type}]` : '';
+      pairs.push(`${v.toLowerCase()}${suffix}`);
+    }
+  }
+  return pairs;
+}
+
+function collectInactiveObjects(value: JsonValue, into: InactiveEntry[]): void {
+  if (value === null) return;
+  if (Array.isArray(value)) {
+    for (const item of value) collectInactiveObjects(item, into);
+    return;
+  }
+  if (typeof value === 'object') {
+    const obj = value as Record<string, JsonValue>;
+    const inactiveVal = obj['inactive'];
+    const isInactive = inactiveVal === 1 || inactiveVal === '1';
+    if (isInactive) {
+      const ids = extractDocIdentifiersFromObject(obj);
+      into.push({ summary: ids.length > 0 ? ids.join(', ') : '<no uuid>' });
+    }
+    for (const key of Object.keys(obj)) {
+      collectInactiveObjects(obj[key], into);
+    }
+    return;
+  }
+}
+
 function difference(a: Set<string>, b: Set<string>): string[] {
   const diff: string[] = [];
   for (const id of a) {
@@ -117,10 +155,15 @@ function formatSection(title: string, ids: string[], typesByUuid: Map<string, Se
   lines.push(title);
   lines.push(`Count: ${ids.length}`);
   if (ids.length > 0) {
-    for (const id of ids) {
+    const max = 20;
+    const display = ids.slice(0, max);
+    for (const id of display) {
       const types = Array.from(typesByUuid.get(id) ?? []);
       const suffix = types.length > 0 ? ` [${types.join(', ')}]` : '';
       lines.push(`${id}${suffix}`);
+    }
+    if (ids.length > max) {
+      lines.push(`...and ${ids.length - max} more`);
     }
   }
   return lines.join('\n');
@@ -136,10 +179,28 @@ function formatDuplicateSection(
   const lines: string[] = [];
   lines.push(title);
   lines.push(`Count: ${entries.length}`);
-  for (const [id, n] of entries) {
+  const max = 20;
+  const display = entries.slice(0, max);
+  for (const [id, n] of display) {
     const types = Array.from(typesByUuid.get(id) ?? []);
     const suffix = types.length > 0 ? ` [${types.join(', ')}]` : '';
     lines.push(`${id} (${n} times)${suffix}`);
+  }
+  if (entries.length > max) {
+    lines.push(`...and ${entries.length - max} more`);
+  }
+  return lines.join('\n');
+}
+
+function formatInactiveSection(title: string, entries: InactiveEntry[]): string {
+  const lines: string[] = [];
+  lines.push(title);
+  lines.push(`Count: ${entries.length}`);
+  const max = 20;
+  const display = entries.slice(0, max);
+  for (const e of display) lines.push(e.summary);
+  if (entries.length > max) {
+    lines.push(`...and ${entries.length - max} more`);
   }
   return lines.join('\n');
 }
@@ -165,33 +226,37 @@ function main(): void {
   traverseAndCollect(firstJson, firstCollectors);
   traverseAndCollect(secondJson, secondCollectors);
 
+  const firstInactive: InactiveEntry[] = [];
+  const secondInactive: InactiveEntry[] = [];
+  collectInactiveObjects(firstJson, firstInactive);
+  collectInactiveObjects(secondJson, secondInactive);
+
   const onlyInSecond = difference(secondCollectors.set, firstCollectors.set);
   const onlyInFirst = difference(firstCollectors.set, secondCollectors.set);
 
+  const firstName = path.basename(FIRST_JSON_RELATIVE_PATH);
+  const secondName = path.basename(SECOND_JSON_RELATIVE_PATH);
+
   const outputSections = [
     formatSection(
-      `IDs present in second JSON but missing from first (${path.basename(SECOND_JSON_RELATIVE_PATH)} vs ${path.basename(FIRST_JSON_RELATIVE_PATH)})`,
+      `IDs present in ${secondName} but missing from ${firstName}`,
       onlyInSecond,
       secondCollectors.typesByUuid,
     ),
     '',
     formatSection(
-      `IDs present in first JSON but missing from second (${path.basename(FIRST_JSON_RELATIVE_PATH)} vs ${path.basename(SECOND_JSON_RELATIVE_PATH)})`,
+      `IDs present in ${firstName} but missing from ${secondName}`,
       onlyInFirst,
       firstCollectors.typesByUuid,
     ),
     '',
-    formatDuplicateSection(
-      `Duplicate IDs within first JSON (${path.basename(FIRST_JSON_RELATIVE_PATH)})`,
-      firstCollectors.counts,
-      firstCollectors.typesByUuid,
-    ),
+    formatDuplicateSection(`Duplicate IDs within ${firstName}`, firstCollectors.counts, firstCollectors.typesByUuid),
     '',
-    formatDuplicateSection(
-      `Duplicate IDs within second JSON (${path.basename(SECOND_JSON_RELATIVE_PATH)})`,
-      secondCollectors.counts,
-      secondCollectors.typesByUuid,
-    ),
+    formatDuplicateSection(`Duplicate IDs within ${secondName}`, secondCollectors.counts, secondCollectors.typesByUuid),
+    '',
+    formatInactiveSection(`Objects with inactive: 1 in ${firstName}`, firstInactive),
+    '',
+    formatInactiveSection(`Objects with inactive: 1 in ${secondName}`, secondInactive),
   ];
 
   console.log(outputSections.join('\n'));
