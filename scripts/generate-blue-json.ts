@@ -260,10 +260,43 @@ function buildSectionNode(section: NotionDatabasePage, generated: Map<string, st
   const childIds = idsFromJsonb(section.child_section_and_primary_doc_ids);
   const children = childIds.map((id) => lookups.sectionsAndPrimaryDocs[id]).filter(Boolean) as NotionDatabasePage[];
   const cores = children.filter((c) => c.atlas_document_type === 'Core');
+  const controllers = children.filter((c) => c.atlas_document_type === 'Active Data Controller');
   const section_primary_docs = sortByGenerated(
-    cores.map((c) => ({ id: c.notion_page_id, fallbackDoc: c.atlas_document_number })),
+    [...cores, ...controllers].map((c) => ({ id: c.notion_page_id, fallbackDoc: c.atlas_document_number })),
     generated,
-  ).map(({ id }) => buildCoreNode(lookups.sectionsAndPrimaryDocs[id], generated, lookups));
+  ).map(({ id }) => {
+    const child = lookups.sectionsAndPrimaryDocs[id];
+    if (child.atlas_document_type === 'Core') {
+      return buildCoreNode(child, generated, lookups);
+    }
+    return {
+      active_data_controller_name: child.plain_text_name ?? '',
+      active_data_controller_content: child.plain_text_content ?? '',
+      active_data_controller_last_modified: child.updated_at,
+      active_data_controller_uuid: child.notion_page_id,
+      inactive: child.archived || child.in_trash ? 1 : 0,
+      active_data_controller_doc_no: getGeneratedNumber(child.notion_page_id, generated, child.atlas_document_number),
+    };
+  });
+
+  const sectionAnnotationIds = idsFromJsonb(section.child_annotation_ids);
+  const sectionAnnotations = sectionAnnotationIds
+    .map((id) => lookups.annotations[id])
+    .filter(Boolean) as NotionDatabasePage[];
+  const section_annotations = sortByGenerated(
+    sectionAnnotations.map((a) => ({ id: a.notion_page_id, fallbackDoc: a.atlas_document_number })),
+    generated,
+  ).map(({ id }) => {
+    const a = lookups.annotations[id];
+    return {
+      annotation_name: a.plain_text_name ?? '',
+      annotation_content: a.plain_text_content ?? '',
+      annotation_last_modified: a.updated_at,
+      annotation_uuid: a.notion_page_id,
+      inactive: a.archived || a.in_trash ? 1 : 0,
+      annotation_doc_no: getGeneratedNumber(a.notion_page_id, generated, a.atlas_document_number),
+    };
+  });
 
   return {
     section_name: section.plain_text_name ?? '',
@@ -273,6 +306,7 @@ function buildSectionNode(section: NotionDatabasePage, generated: Map<string, st
     inactive: section.archived || section.in_trash ? 1 : 0,
     section_doc_no: getGeneratedNumber(section.notion_page_id, generated, section.atlas_document_number),
     section_primary_docs,
+    ...(section_annotations.length > 0 ? { section_annotations } : {}),
   };
 }
 
