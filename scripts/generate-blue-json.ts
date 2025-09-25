@@ -7,10 +7,41 @@
  * - Mirrors .debug-data/blue.json shape and field names
  * - Populates *_doc_no using generated numbers from ATLAS_DOCUMENT_NUMBERING_RULES
  *
+ * NOTES & IMPORTANT DESIGN CHOICES
+ * - Exclusions:
+ *   - Entire `Agent Scope Database` is excluded from generation.
+ *   - Inactive documents are included by default here; use the filter scripts to remove them (see USAGE below).
+ * - Hierarchy source of truth:
+ *   - We NEVER use `parent_notion_page_id` to build the tree. Only per-type child_* arrays are used.
+ *   - Top-level roots are Scopes that do not appear as a child in any other Scope's `child_scope_ids`.
+ * - Primary docs under Sections:
+ *   - `section_primary_docs` contains Core and Active Data Controller nodes. Core nodes can nest Core and Type Specification children.
+ * - Type Specification handling:
+ *   - Type Specifications appear under a Core's `core_children` when linked via `child_section_and_primary_doc_ids`.
+ *   - Type Specification nodes include their own annotations, tenets, and needed research from their child_* arrays.
+ * - Active Data Controller handling:
+ *   - Controllers appear as entries in `section_primary_docs`. When encountered as children of a Core, we emit them as leaf controller nodes with empty arrays to mirror Blue JSON's contract.
+ *   - We do not currently expand `active_data_controller_active_data` from the `Active Data` DB; it is emitted as an empty array.
+ * - Annotations at Section level:
+ *   - `section_annotations` is only emitted when non-empty to match reference Blue JSON behavior.
+ * - Sorting & numbering:
+ *   - Siblings are ordered by `sort_order` when available; ties or missing values are broken by rules-based document numbers.
+ *   - Document numbers are generated across all loaded pages first, then used for *_doc_no fields and tie-breaking.
+ * - Dates:
+ *   - This script outputs the *_last_modified fields as stored. To reduce diff noise, run the date strip script noted below.
+ * - Limitations / gotchas:
+ *   - If a page is missing from child_* arrays in Supabase, it will not appear in the hierarchy even if it has a parent_notion_page_id.
+ *   - Empty arrays are emitted for some fields (e.g., `core_annotations`, `core_children`) to match the Blue JSON contract; some arrays (e.g., `section_annotations`) are omitted when empty.
+ *
  * USAGE:
  *   npx tsx scripts/generate-blue-json.ts
  *
  *   After running, run:
+ *   # Option A: Use generic filter + date strip
+ *   npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+ *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+ *
+ *   # Option B: Use legacy blue filter + date strip
  *   npx tsx scripts/filter-blue-json-inactive-docs.ts
  *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
  *
@@ -107,7 +138,7 @@ type CoreNode = {
   core_uuid: string;
   inactive: number;
   core_doc_no: string;
-  core_children: (CoreNode | TypeSpecificationNode)[];
+  core_children: (CoreNode | TypeSpecificationNode | ActiveDataControllerNode)[];
   core_annotations: {
     annotation_name: string;
     annotation_content: string;
@@ -127,6 +158,19 @@ type CoreNode = {
   }[];
 };
 
+type ActiveDataControllerNode = {
+  active_data_controller_name: string;
+  active_data_controller_content: string;
+  active_data_controller_last_modified: string;
+  active_data_controller_uuid: string;
+  inactive: number;
+  active_data_controller_doc_no: string;
+  active_data_controller_active_data: unknown[];
+  active_data_controller_annotations: unknown[];
+  active_data_controller_tenets: unknown[];
+  active_data_controller_needed_research: unknown[];
+};
+
 type TypeSpecificationNode = {
   type_specification_name: string;
   type_specification_content: string;
@@ -139,6 +183,24 @@ type TypeSpecificationNode = {
   type_specification_type_category?: string | null;
   type_specification_type_name?: string | null;
   type_specification_type_overview?: string | null;
+  type_specification_components?: string | null;
+  type_specification_annotations: {
+    annotation_name: string;
+    annotation_content: string;
+    annotation_last_modified: string;
+    annotation_uuid: string;
+    inactive: number;
+    annotation_doc_no: string;
+  }[];
+  type_specification_tenets: ReturnType<typeof buildTenetNode>[];
+  type_specification_needed_research: {
+    needed_research_name: string;
+    needed_research_content: string;
+    needed_research_last_modified: string;
+    needed_research_uuid: string;
+    inactive: number;
+    needed_research_doc_no: string;
+  }[];
 };
 
 function getExtraStringField(obj: unknown, key: string): string | null {
@@ -152,7 +214,65 @@ function getExtraStringField(obj: unknown, key: string): string | null {
 function buildTypeSpecificationNode(
   typeSpec: NotionDatabasePage,
   generated: Map<string, string>,
+  lookups: Lookups,
 ): TypeSpecificationNode {
+  // Related children via child arrays on the Type Specification itself
+  const annotationIds = idsFromJsonb(typeSpec.child_annotation_ids);
+  const annotations = annotationIds.map((id) => lookups.annotations[id]).filter(Boolean) as NotionDatabasePage[];
+  const tenetIds = idsFromJsonb(typeSpec.child_tenet_ids);
+  const tenets = tenetIds.map((id) => lookups.tenets[id]).filter(Boolean) as NotionDatabasePage[];
+  const neededResearchIds = idsFromJsonb(typeSpec.child_needed_research_ids);
+  const neededResearch = neededResearchIds
+    .map((id) => lookups.neededResearch[id])
+    .filter(Boolean) as NotionDatabasePage[];
+
+  const type_specification_annotations = sortByOrderThenGenerated(
+    annotations.map((a) => ({
+      id: a.notion_page_id,
+      fallbackDoc: a.atlas_document_number,
+      sortOrder: a.sort_order ?? null,
+    })),
+    generated,
+  ).map(({ id }) => {
+    const a = lookups.annotations[id];
+    return {
+      annotation_name: a.plain_text_name ?? '',
+      annotation_content: a.plain_text_content ?? '',
+      annotation_last_modified: a.updated_at,
+      annotation_uuid: a.notion_page_id,
+      inactive: a.archived || a.in_trash ? 1 : 0,
+      annotation_doc_no: getGeneratedNumber(a.notion_page_id, generated, a.atlas_document_number),
+    };
+  });
+
+  const type_specification_tenets = sortByOrderThenGenerated(
+    tenets.map((t) => ({
+      id: t.notion_page_id,
+      fallbackDoc: t.atlas_document_number,
+      sortOrder: t.sort_order ?? null,
+    })),
+    generated,
+  ).map(({ id }) => buildTenetNode(lookups.tenets[id], generated, lookups));
+
+  const type_specification_needed_research = sortByOrderThenGenerated(
+    neededResearch.map((n) => ({
+      id: n.notion_page_id,
+      fallbackDoc: n.atlas_document_number,
+      sortOrder: n.sort_order ?? null,
+    })),
+    generated,
+  ).map(({ id }) => {
+    const n = lookups.neededResearch[id];
+    return {
+      needed_research_name: n.plain_text_name ?? '',
+      needed_research_content: n.plain_text_content ?? '',
+      needed_research_last_modified: n.updated_at,
+      needed_research_uuid: n.notion_page_id,
+      inactive: n.archived || n.in_trash ? 1 : 0,
+      needed_research_doc_no: getGeneratedNumber(n.notion_page_id, generated, n.atlas_document_number),
+    };
+  });
+
   return {
     type_specification_name: typeSpec.plain_text_name ?? '',
     type_specification_content: typeSpec.plain_text_content ?? '',
@@ -165,6 +285,10 @@ function buildTypeSpecificationNode(
     type_specification_type_category: getExtraStringField(typeSpec.extra_fields, 'type_category'),
     type_specification_type_name: getExtraStringField(typeSpec.extra_fields, 'type_name'),
     type_specification_type_overview: getExtraStringField(typeSpec.extra_fields, 'type_overview'),
+    type_specification_components: getExtraStringField(typeSpec.extra_fields, 'components'),
+    type_specification_annotations,
+    type_specification_tenets,
+    type_specification_needed_research,
   };
 }
 
@@ -190,7 +314,7 @@ function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>,
     .filter(Boolean) as NotionDatabasePage[];
 
   // Build child nodes
-  const core_children: (CoreNode | TypeSpecificationNode)[] = sortByOrderThenGenerated(
+  const core_children: (CoreNode | TypeSpecificationNode | ActiveDataControllerNode)[] = sortByOrderThenGenerated(
     [...coreChildren, ...typeSpecChildren].map((c) => ({
       id: c.notion_page_id,
       fallbackDoc: c.atlas_document_number,
@@ -203,7 +327,23 @@ function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>,
       return buildCoreNode(child, generated, lookups);
     }
     // Type Specification
-    return buildTypeSpecificationNode(child, generated);
+    if (child.atlas_document_type === 'Type Specification') {
+      return buildTypeSpecificationNode(child, generated, lookups);
+    }
+    // Active Data Controller node with empty arrays to mirror Blue JSON contract
+    const controller: ActiveDataControllerNode = {
+      active_data_controller_name: child.plain_text_name ?? '',
+      active_data_controller_content: child.plain_text_content ?? '',
+      active_data_controller_last_modified: child.updated_at,
+      active_data_controller_uuid: child.notion_page_id,
+      inactive: child.archived || child.in_trash ? 1 : 0,
+      active_data_controller_doc_no: getGeneratedNumber(child.notion_page_id, generated, child.atlas_document_number),
+      active_data_controller_active_data: [],
+      active_data_controller_annotations: [],
+      active_data_controller_tenets: [],
+      active_data_controller_needed_research: [],
+    };
+    return controller;
   });
 
   const core_annotations = sortByOrderThenGenerated(
