@@ -405,6 +405,9 @@ All commands are intended to be run from the repository root using tsx.
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --validAt 2025-01-15T12:00:00Z
       ```
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
+      ```
 
 - **scripts/atlas-json/generate-atlas-json-from-blue-json.ts** — Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
   - Examples:
@@ -479,6 +482,12 @@ All commands are intended to be run from the repository root using tsx.
   - Examples:
     - ```bash
       npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+      ```
+
+- **scripts/atlas-json/get-atlas-json-diffs.ts** — Compares two Atlas JSON exports grouped by category, reporting missing UUIDs in both directions and duplicates. Skips `inactive: 1` docs unless `--include-inactives`.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
       ```
 
 Helper modules (imported by scripts):

@@ -439,21 +439,21 @@ All commands are intended to be run from the repository root using tsx.
       ```
 
 - **scripts/atlas-json/generate-atlas-json-from-supabase.ts**: Exports current or past Atlas data from Supabase into `.output/supabase-github.json`.
-  - Example:
+  - Examples:
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts
       ```
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --validAt 2025-01-15T12:00:00Z
       ```
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
+      ```
 
 - **scripts/atlas-json/generate-atlas-json-from-blue-json.ts**: Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
-  - Examples:
+  - Example:
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
-      ```
-    - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts --keep-inactives
       ```
     - ```bash
       DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
@@ -471,7 +471,7 @@ All commands are intended to be run from the repository root using tsx.
 - **scripts/atlas-json/strip-blue-json-last-modified.ts**: Replaces all `*_last_modified` fields with empty strings to stabilize diffs.
   - Outputs:
     - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
-    - `.debug-data/atlas-json-generated/blue-without-inactive-without-dates.json`
+    - `.debug-data/atlas-json-generated/blue-without-dates.json`
   - Example:
     - ```bash
       npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
@@ -520,6 +520,12 @@ All commands are intended to be run from the repository root using tsx.
   - Example:
     - ```bash
       npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+      ```
+
+- **scripts/atlas-json/get-atlas-json-diffs.ts**: Compares two Atlas JSON exports grouped by category, reporting missing IDs in both directions and duplicates per file. Skips `inactive: 1` docs unless `--include-inactives`.
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
       ```
 
 Non-executable helper modules (imported by scripts):
