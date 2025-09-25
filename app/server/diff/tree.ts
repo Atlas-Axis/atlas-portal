@@ -63,7 +63,9 @@ function verifySortOrder(parent: TreeNode, node: TreeNode) {
   const count = children.length;
   if (count > 1) {
     const prevSibling = children[count - 2];
-    if (prevSibling && node.sortOrder < prevSibling.sortOrder) {
+    const nodeSortOrder = node.sortOrder ?? 0;
+    const prevSiblingSortOrder = prevSibling?.sortOrder ?? 0;
+    if (prevSibling && nodeSortOrder < prevSiblingSortOrder) {
       console.warn(
         `Child node ${node.id} has a lower sortOrder than the previous sibling. Make sure to pre-sort the nodes by sortOrder in the Supabase query.`,
       );
