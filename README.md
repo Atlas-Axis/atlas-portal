@@ -513,6 +513,12 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/visualize-hierarchy.ts --ascii
       ```
 
+- **scripts/atlas-json/filter-inactive-generic.ts**: Generic inactive filter for any Blue-style JSON; removes all `inactive: 1` nodes recursively and writes filtered output.
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+      ```
+
 Non-executable helper modules (imported by scripts):
 
 - `scripts/atlas-json/types.ts` — shared types for JSON generation scripts
