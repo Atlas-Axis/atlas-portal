@@ -41,9 +41,8 @@
  *   npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
  *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
  *
- *   # Option B: Use legacy blue filter + date strip
- *   npx tsx scripts/filter-blue-json-inactive-docs.ts
- *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+ *   # Option B: Use legacy blue filter + date strip (deprecated)
+ *   # Replaced by scripts/atlas-json/filter-inactive-generic.ts
  *
  * WHAT IT DOES:
  * - Loads Atlas documents from Supabase
