@@ -1,4 +1,21 @@
 #!/usr/bin/env npx tsx
+/**
+ * Filter Blue JSON to remove all inactive documents (and their subtrees).
+ *
+ * What it does:
+ * - Loads .debug-data/blue.json (top-level array)
+ * - Recursively removes any object with `inactive: 1` across scopes, articles, sections, cores, tenets, scenarios, variations, annotations, needed research
+ * - Writes the filtered result to:
+ *   .debug-data/atlas-json-generated/blue-without-inactive.json
+ *
+ * Usage:
+ *   npx tsx scripts/filter-blue-json-inactive-docs.ts
+ *
+ * Notes:
+ * - This is a structural filter only; it does not modify last-modified fields
+ * - For stripping *_last_modified fields, run:
+ *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+ */
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 
@@ -130,7 +147,7 @@ function filterScope(node: AnyObject): AnyObject | null {
 async function main() {
   const repoRoot = process.cwd();
   const inputPath = path.join(repoRoot, '.debug-data', 'blue.json');
-  const outputPath = path.join(repoRoot, '.debug-data', 'blue-without-inactive.json');
+  const outputPath = path.join(repoRoot, '.debug-data', 'atlas-json-generated', 'blue-without-inactive.json');
 
   const raw = await readFile(inputPath, 'utf8');
   const parsed = JSON.parse(raw);

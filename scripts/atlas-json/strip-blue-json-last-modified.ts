@@ -6,7 +6,7 @@
  * - Recursively finds keys ending with "_last_modified" and replaces their values with an empty string
  * - Processes both:
  *   - .debug-data/atlas-json-generated/blue-from-supabase.json → .debug-data/atlas-json-generated/blue-from-supabase-without-dates.json
- *   - .debug-data/blue-without-inactive.json → .debug-data/blue-without-inactive-without-dates.json
+ *   - .debug-data/atlas-json-generated/blue-without-inactive.json → .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json
  *
  * Usage:
  *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
@@ -29,8 +29,8 @@ const INPUTS = [
     output: path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated', 'blue-from-supabase-without-dates.json'),
   },
   {
-    input: path.join(REPO_ROOT, '.debug-data', 'blue-without-inactive.json'),
-    output: path.join(REPO_ROOT, '.debug-data', 'blue-without-inactive-without-dates.json'),
+    input: path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated', 'blue-without-inactive.json'),
+    output: path.join(REPO_ROOT, '.debug-data', 'atlas-json-generated', 'blue-without-inactive-without-dates.json'),
   },
 ];
 
