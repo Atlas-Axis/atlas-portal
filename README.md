@@ -82,7 +82,7 @@ Stores Notion database pages and their hierarchical relationships.
 - `json_content` (JSONB) - Rich content from Notion API
 - `plain_text_name` (TEXT) - Page title as plain text
 - `json_name` (JSONB) - Rich text page title from Notion API
-- `parent_notion_page_id` (UUID) - Parent Notion page ID (if any)
+- `parent_notion_page_id` (UUID) - Parent Notion page ID (if any) - This field is deprecated, don't use it
 - `sort_order` (DECIMAL(5,2), NOT NULL) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
 - `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at` (TIMESTAMPTZ) - Database row creation time
@@ -164,7 +164,7 @@ Each document in the Atlas has a specific type from the following enum:
 
 ## Atlas Document Hierarchy
 
-The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents:
+The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents. "Scopes" and "Sections & Primary Docs" are the two root Atlas databases.
 
 ```
 Scopes
@@ -172,15 +172,16 @@ Scopes
 │   ├── Sections & Primary Docs
 │   │   ├── Annotations
 │   │   └── Tenets
-│   │       ├── Scenarios
-│   │       └── Scenario Variations
-├── Agent Scope Database
-│   ├── Annotations
-│   ├── Tenets
-│   │   ├── Scenarios
-│   │   └── Scenario Variations
-│   └── Active Data
-└── Needed Research
+│   │       └── Scenarios
+│   │           └── Scenario Variations
+Agent Scope Database
+├── Annotations
+├── Tenets
+│   └── Scenarios
+│       └── Scenario Variations
+└── Active Data
+
+"Needed Research" documents may be nested under any other document type
 ```
 
 **Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:
@@ -492,3 +493,5 @@ Non-executable helper modules (imported by scripts):
 - `scripts/atlas-json/constants.ts` — output file paths and configuration constants
 - `scripts/atlas-json/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
+
+**Important relationship note:** Do not use or rely on `parent_notion_page_id` to build the Atlas tree. It is not a reliable way to construct hierarchy. Instead, construct the tree by traversing the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) beginning from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy).
