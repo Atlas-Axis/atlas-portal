@@ -415,6 +415,15 @@ All commands are intended to be run from the repository root using tsx.
       DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
       ```
 
+- **scripts/generate-blue-json.ts** — Generates a Blue-style hierarchical JSON from Supabase (child\_\* relationships only; excludes Agent Scope Database) and writes `.debug-data/atlas-json-generated/blue-from-supabase.json`.
+  - Examples:
+    - ```bash
+      npx tsx scripts/generate-blue-json.ts
+      ```
+    - ```bash
+      DEBUG_LOGGING=1 npx tsx scripts/generate-blue-json.ts
+      ```
+
 - **scripts/experiment.ts** — Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
   - Example:
     - ```bash
