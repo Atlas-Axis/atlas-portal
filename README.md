@@ -448,9 +448,12 @@ All commands are intended to be run from the repository root using tsx.
       ```
 
 - **scripts/atlas-json/generate-atlas-json-from-blue-json.ts**: Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
-  - Example:
+  - Examples:
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+      ```
+    - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts --keep-inactives
       ```
     - ```bash
       DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts

@@ -412,6 +412,9 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
       ```
     - ```bash
+      npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts --keep-inactives
+      ```
+    - ```bash
       DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
       ```
 
@@ -427,7 +430,7 @@ All commands are intended to be run from the repository root using tsx.
 - **scripts/atlas-json/strip-blue-json-last-modified.ts** — Recursively replaces any `*_last_modified` fields with empty strings to reduce diff noise.
   - Outputs:
     - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
-    - `.debug-data/atlas-json-generated/blue-without-inactive-without-dates.json`
+    - `.debug-data/atlas-json-generated/blue-without-dates.json`
   - Examples:
     - ```bash
       npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
