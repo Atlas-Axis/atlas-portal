@@ -68,7 +68,13 @@ Options:
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
     console.log(`\n🎉 All databases imported successfully!`);
-    console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
+    // Show in minutes if over 120 seconds
+    if (Number(durationSeconds) > 120) {
+      const durationMinutes = (Number(durationSeconds) / 60).toFixed(2);
+      console.log(`⏰ Total processing time: ${durationMinutes} minutes`);
+    } else {
+      console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
+    }
 
     // The command hangs after completion, so we explicitly exit. TODO: Investigate why and fix.
     process.exit(0);
