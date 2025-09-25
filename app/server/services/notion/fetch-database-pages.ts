@@ -220,9 +220,15 @@ function readRelatedPagesInline(
 async function fetchAllRelationIds(pageId: string, relationPropertyId: string): Promise<string[]> {
   const relationIds: string[] = [];
   let cursor: string | undefined = undefined;
+  let isFirstIteration = true;
 
   do {
-    console.log(`    Fetching more relations for page ${pageId}...`);
+    if (isFirstIteration) {
+      console.log(`    Fetching more relations for page ${pageId}...`);
+      isFirstIteration = false;
+    } else {
+      console.log(`    Fetching more relations...`);
+    }
     const response = await notion().pages.properties.retrieve({
       page_id: pageId,
       property_id: relationPropertyId,
