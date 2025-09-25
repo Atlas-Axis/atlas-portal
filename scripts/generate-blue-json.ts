@@ -76,7 +76,7 @@ type CoreNode = {
   core_uuid: string;
   inactive: number;
   core_doc_no: string;
-  core_children: CoreNode[];
+  core_children: (CoreNode | TypeSpecificationNode)[];
   core_annotations: {
     annotation_name: string;
     annotation_content: string;
@@ -94,6 +94,20 @@ type CoreNode = {
     inactive: number;
     needed_research_doc_no: string;
   }[];
+};
+
+type TypeSpecificationNode = {
+  type_specification_name: string;
+  type_specification_content: string;
+  type_specification_last_modified: string;
+  type_specification_uuid: string;
+  inactive: number;
+  type_specification_doc_no: string;
+  type_specification_doc_identifier_rules?: string | null;
+  type_specification_additional_logic?: string | null;
+  type_specification_type_category?: string | null;
+  type_specification_type_name?: string | null;
+  type_specification_type_overview?: string | null;
 };
 
 function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>, lookups: Lookups): CoreNode {
