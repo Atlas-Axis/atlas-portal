@@ -106,9 +106,9 @@ export function diffTrees({
             content: duplicateContentMap.get(duplicateNode.id) || null,
             changes: {
               newParentId: duplicateNode.parentId,
-              newPosition: duplicateNode.sortOrder,
+              newPosition: duplicateNode.sortOrder ?? 0,
               oldParentId: originalNode.parentId,
-              oldPosition: originalNode.sortOrder,
+              oldPosition: originalNode.sortOrder ?? 0,
               oldCanonicalDocumentTitle: originalNode.canonicalDocumentTitle || '',
               newCanonicalDocumentTitle: duplicateNode.canonicalDocumentTitle || '',
             },
@@ -149,7 +149,12 @@ export function diffTrees({
 
     // Add original children
     originalChildren.forEach((child) => {
-      childrenMap.set(child.id, { id: child.id, sortOrder: child.sortOrder, inOriginal: true, inDuplicate: false });
+      childrenMap.set(child.id, {
+        id: child.id,
+        sortOrder: child.sortOrder ?? 0,
+        inOriginal: true,
+        inDuplicate: false,
+      });
     });
 
     // Add/update duplicate children
@@ -158,9 +163,14 @@ export function diffTrees({
       if (existing) {
         existing.inDuplicate = true;
         // Use the newer position (from duplicate) if it exists
-        existing.sortOrder = child.sortOrder;
+        existing.sortOrder = child.sortOrder ?? 0;
       } else {
-        childrenMap.set(child.id, { id: child.id, sortOrder: child.sortOrder, inOriginal: false, inDuplicate: true });
+        childrenMap.set(child.id, {
+          id: child.id,
+          sortOrder: child.sortOrder ?? 0,
+          inOriginal: false,
+          inDuplicate: true,
+        });
       }
     });
 
