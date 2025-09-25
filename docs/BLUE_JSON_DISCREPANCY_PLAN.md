@@ -32,6 +32,13 @@ The goal is to achieve structural and content parity while strictly following At
 
 ### Step 1: Compare Structure and Paths
 
+If you need to exclude inactive entries from a Blue-style JSON before comparing, you can run the generic filter script first:
+
+```bash
+npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+```
+
 Use jq to list scalar paths and diff:
 
 ```bash
@@ -142,3 +149,4 @@ If a type exists in Supabase but not in output, fix the attachment point based o
 - Follow the “Atlas Document Hierarchy” described in Core Project Documentation.
 - Use `originalDocNumber` as a tie-breaker when `sort_order` is equal/missing.
 - Keep code and documentation changes synchronized across all Core Project Documentation files when applicable.
+- To filter any Blue-style JSON by `inactive: 1` (including nested children), prefer the generic filter: `scripts/atlas-json/filter-inactive-generic.ts`.
