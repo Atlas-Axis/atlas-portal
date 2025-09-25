@@ -1,3 +1,5 @@
+There are some issues in `generate-blue-json.ts`, we need to figure out the reason why it doesn't generate the exact same JSON as the original reference JSON file, and fix issues, when possible.
+
 ## Blue JSON Parity: Debug and Fix Plan
 
 This document guides AI agents through comparing and reconciling differences between:
@@ -7,7 +9,7 @@ This document guides AI agents through comparing and reconciling differences bet
 
 The goal is to achieve structural and content parity while strictly following Atlas rules and the Blue JSON contract.
 
-### Ground Rules
+### Ground Rules used by the existing scripts, especially `scripts/generate-blue-json.ts`
 
 - Build hierarchy using child\_\* relationship arrays only (`child_scope_ids`, `child_article_ids`, `child_section_and_primary_doc_ids`, `child_annotation_ids`, `child_tenet_ids`, `child_scenario_ids`, `child_scenario_variation_ids`, `child_active_data_ids`, `child_agent_scope_ids`, `child_needed_research_ids`). Never use `parent_notion_page_id`.
 - Start at `Scopes` only as the top level documents. Exclude the entire `Agent Scope Database` tree.
@@ -32,13 +34,6 @@ The goal is to achieve structural and content parity while strictly following At
 
 ### Step 1: Compare Structure and Paths
 
-If you need to exclude inactive entries from a Blue-style JSON before comparing, you can run the generic filter script first:
-
-```bash
-npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
-npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
-```
-
 Use jq to list scalar paths and diff:
 
 ```bash
@@ -49,8 +44,6 @@ comm -3 /tmp/paths_supabase.txt /tmp/paths_blue.txt | sed -e 's/^/DIFF: /'
 
 Interpretation:
 
-- Missing `section_annotations` → add at Section level if Supabase has `child_annotation_ids` on the section.
-- Missing Active Data Controller entries under `section_primary_docs` → include controller nodes alongside Core nodes.
 - Any unexpected arrays/keys → normalize to match Blue JSON contract.
 
 ### Step 2: Compare Counts by Level
@@ -118,11 +111,7 @@ If differences exist:
 
 ### Step 5: Field Presence and Naming
 
-Normalize field presence to mirror Blue JSON exactly:
-
-- Always emit arrays for core_children, core_annotations, core_tenets, core_needed_research, tenet_scenarios, scenario_variations (empty arrays when no items), unless Blue JSON omits empty arrays for specific fields (then mirror that behavior).
-- Ensure date fields are in the correct keys (e.g., `*_last_modified`).
-- Do not emit `inactive_datetime` since we don’t include inactive items.
+Normalize field presence to mirror Blue JSON exactly
 
 ### Step 6: Database/Type Coverage
 
@@ -139,7 +128,7 @@ If a type exists in Supabase but not in output, fix the attachment point based o
 1. Make one fix at a time in `scripts/generate-blue-json.ts`.
 2. Re-run:
    ```bash
-   npx tsx scripts/generate-blue-json.ts
+   npx tsx scripts/generate-blue-json && npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json && npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
    ```
 3. Re-run jq path and count diffs to track progress.
 
@@ -149,4 +138,3 @@ If a type exists in Supabase but not in output, fix the attachment point based o
 - Follow the “Atlas Document Hierarchy” described in Core Project Documentation.
 - Use `originalDocNumber` as a tie-breaker when `sort_order` is equal/missing.
 - Keep code and documentation changes synchronized across all Core Project Documentation files when applicable.
-- To filter any Blue-style JSON by `inactive: 1` (including nested children), prefer the generic filter: `scripts/atlas-json/filter-inactive-generic.ts`.
