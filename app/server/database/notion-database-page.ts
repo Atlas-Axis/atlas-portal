@@ -44,7 +44,7 @@ export interface NotionDatabasePage {
   extra_fields: Json; // JSONB - Additional fields stored as JSON key-value pairs
 
   // Ordering
-  sort_order: number; // Position within parent (for ordering; 0-indexed)
+  sort_order: number | null; // Position within parent (for ordering; 0-indexed)
 
   // Timestamps
   created_at: string; // When this database row was created

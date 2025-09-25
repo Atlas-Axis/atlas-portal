@@ -215,6 +215,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
     }
 
     // Validate that all pages in the subtree have valid sort orders
+    // TODO: Support null
     const pagesWithoutSortOrder = subtreePages.filter(
       (page) => typeof page.sort_order !== 'number' || page.sort_order < 0,
     );

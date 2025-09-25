@@ -244,8 +244,7 @@ function extractPropertyValueFromSupabase(
         console.warn(`Non numeric sort order for page ${page.notion_page_id}: ${page.sort_order}`);
       }
 
-      // return page.sort_order ?? null;
-      return page.sort_order ?? 1; // TODO: Make this field nullable in the database schema
+      return page.sort_order;
     default:
       console.warn(`Unknown property key: ${mappedPropertyName}. Notion property: ${notionPropertyName}`);
       return null;

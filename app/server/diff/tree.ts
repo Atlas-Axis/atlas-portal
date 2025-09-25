@@ -7,8 +7,9 @@ export type TreeNode = {
   id: string;
   parentId: string | null;
   type: string;
-  sortOrder: number;
+  sortOrder: number | null;
   canonicalDocumentTitle: string;
+  // TODO: add docNo field
   // Tree structure
   children?: TreeNode[];
 };
