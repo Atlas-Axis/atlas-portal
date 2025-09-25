@@ -60,16 +60,43 @@ function getGeneratedNumber(id: string, generated: Map<string, string>, fallback
   return generated.get(id) || fallback || '';
 }
 
-function sortByGenerated<T extends { id: string; fallbackDoc?: string }>(
+// Deprecated: prefer sortByOrderThenGenerated which uses sort_order then doc number tie-breaker
+// function sortByGenerated<T extends { id: string; fallbackDoc?: string }>(
+//   items: T[],
+//   generated: Map<string, string>,
+// ): T[] {
+//   return [...items].sort((a, b) =>
+//     compareDocNumbers(
+//       getGeneratedNumber(a.id, generated, a.fallbackDoc),
+//       getGeneratedNumber(b.id, generated, b.fallbackDoc),
+//     ),
+//   );
+// }
+
+function sortByOrderThenGenerated<T extends { id: string; fallbackDoc?: string; sortOrder?: number | null }>(
   items: T[],
   generated: Map<string, string>,
 ): T[] {
-  return [...items].sort((a, b) =>
-    compareDocNumbers(
+  const withOrder = [...items];
+  return withOrder.sort((a, b) => {
+    const ao = a.sortOrder;
+    const bo = b.sortOrder;
+    const aMissing = ao == null;
+    const bMissing = bo == null;
+    if (!aMissing && !bMissing) {
+      if (ao! < bo!) return -1;
+      if (ao! > bo!) return 1;
+    } else if (!aMissing && bMissing) {
+      return -1; // present comes before missing
+    } else if (aMissing && !bMissing) {
+      return 1;
+    }
+    // tie-breaker by generated/original doc number
+    return compareDocNumbers(
       getGeneratedNumber(a.id, generated, a.fallbackDoc),
       getGeneratedNumber(b.id, generated, b.fallbackDoc),
-    ),
-  );
+    );
+  });
 }
 
 // Core (Primary Doc)
@@ -114,12 +141,41 @@ type TypeSpecificationNode = {
   type_specification_type_overview?: string | null;
 };
 
+function getExtraStringField(obj: unknown, key: string): string | null {
+  if (!obj || typeof obj !== 'object') return null;
+  const anyObj = obj as Record<string, unknown>;
+  const value = anyObj[key];
+  if (typeof value === 'string') return value;
+  return value == null ? null : String(value);
+}
+
+function buildTypeSpecificationNode(
+  typeSpec: NotionDatabasePage,
+  generated: Map<string, string>,
+): TypeSpecificationNode {
+  return {
+    type_specification_name: typeSpec.plain_text_name ?? '',
+    type_specification_content: typeSpec.plain_text_content ?? '',
+    type_specification_last_modified: typeSpec.updated_at,
+    type_specification_uuid: typeSpec.notion_page_id,
+    inactive: typeSpec.archived || typeSpec.in_trash ? 1 : 0,
+    type_specification_doc_no: getGeneratedNumber(typeSpec.notion_page_id, generated, typeSpec.atlas_document_number),
+    type_specification_doc_identifier_rules: getExtraStringField(typeSpec.extra_fields, 'doc_identifier_rules'),
+    type_specification_additional_logic: getExtraStringField(typeSpec.extra_fields, 'additional_logic'),
+    type_specification_type_category: getExtraStringField(typeSpec.extra_fields, 'type_category'),
+    type_specification_type_name: getExtraStringField(typeSpec.extra_fields, 'type_name'),
+    type_specification_type_overview: getExtraStringField(typeSpec.extra_fields, 'type_overview'),
+  };
+}
+
 function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>, lookups: Lookups): CoreNode {
   // Related children via child arrays
   const childIds = idsFromJsonb(core.child_section_and_primary_doc_ids);
-  const coreChildren = childIds
+  const childPages = childIds
     .map((id) => lookups.sectionsAndPrimaryDocs[id])
-    .filter((p): p is NotionDatabasePage => Boolean(p) && p.atlas_document_type === 'Core');
+    .filter((p): p is NotionDatabasePage => Boolean(p));
+  const coreChildren = childPages.filter((p) => p.atlas_document_type === 'Core');
+  const typeSpecChildren = childPages.filter((p) => p.atlas_document_type === 'Type Specification');
 
   // Annotations, Tenets, Needed Research
   const annotationIds = idsFromJsonb(core.child_annotation_ids);
@@ -134,13 +190,28 @@ function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>,
     .filter(Boolean) as NotionDatabasePage[];
 
   // Build child nodes
-  const core_children: CoreNode[] = sortByGenerated(
-    coreChildren.map((c) => ({ id: c.notion_page_id, fallbackDoc: c.atlas_document_number })),
+  const core_children: (CoreNode | TypeSpecificationNode)[] = sortByOrderThenGenerated(
+    [...coreChildren, ...typeSpecChildren].map((c) => ({
+      id: c.notion_page_id,
+      fallbackDoc: c.atlas_document_number,
+      sortOrder: c.sort_order ?? null,
+    })),
     generated,
-  ).map(({ id }) => buildCoreNode(lookups.sectionsAndPrimaryDocs[id], generated, lookups));
+  ).map(({ id }) => {
+    const child = lookups.sectionsAndPrimaryDocs[id];
+    if (child.atlas_document_type === 'Core') {
+      return buildCoreNode(child, generated, lookups);
+    }
+    // Type Specification
+    return buildTypeSpecificationNode(child, generated);
+  });
 
-  const core_annotations = sortByGenerated(
-    annotations.map((a) => ({ id: a.notion_page_id, fallbackDoc: a.atlas_document_number })),
+  const core_annotations = sortByOrderThenGenerated(
+    annotations.map((a) => ({
+      id: a.notion_page_id,
+      fallbackDoc: a.atlas_document_number,
+      sortOrder: a.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => {
     const a = lookups.annotations[id];
@@ -154,13 +225,21 @@ function buildCoreNode(core: NotionDatabasePage, generated: Map<string, string>,
     };
   });
 
-  const core_tenets = sortByGenerated(
-    tenets.map((t) => ({ id: t.notion_page_id, fallbackDoc: t.atlas_document_number })),
+  const core_tenets = sortByOrderThenGenerated(
+    tenets.map((t) => ({
+      id: t.notion_page_id,
+      fallbackDoc: t.atlas_document_number,
+      sortOrder: t.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => buildTenetNode(lookups.tenets[id], generated, lookups));
 
-  const core_needed_research = sortByGenerated(
-    neededResearch.map((n) => ({ id: n.notion_page_id, fallbackDoc: n.atlas_document_number })),
+  const core_needed_research = sortByOrderThenGenerated(
+    neededResearch.map((n) => ({
+      id: n.notion_page_id,
+      fallbackDoc: n.atlas_document_number,
+      sortOrder: n.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => {
     const n = lookups.neededResearch[id];
@@ -220,8 +299,12 @@ function buildTenetNode(tenet: NotionDatabasePage, generated: Map<string, string
   const scenarioIds = idsFromJsonb(tenet.child_scenario_ids);
   const scenarios = scenarioIds.map((id) => lookups.scenarios[id]).filter(Boolean) as NotionDatabasePage[];
 
-  const tenet_scenarios = sortByGenerated(
-    scenarios.map((s) => ({ id: s.notion_page_id, fallbackDoc: s.atlas_document_number })),
+  const tenet_scenarios = sortByOrderThenGenerated(
+    scenarios.map((s) => ({
+      id: s.notion_page_id,
+      fallbackDoc: s.atlas_document_number,
+      sortOrder: s.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => buildScenarioNode(lookups.scenarios[id], generated, lookups));
 
@@ -246,8 +329,12 @@ function buildScenarioNode(
   const variationIds = idsFromJsonb(scenario.child_scenario_variation_ids);
   const variations = variationIds.map((id) => lookups.scenarioVariations[id]).filter(Boolean) as NotionDatabasePage[];
 
-  const scenario_variations = sortByGenerated(
-    variations.map((v) => ({ id: v.notion_page_id, fallbackDoc: v.atlas_document_number })),
+  const scenario_variations = sortByOrderThenGenerated(
+    variations.map((v) => ({
+      id: v.notion_page_id,
+      fallbackDoc: v.atlas_document_number,
+      sortOrder: v.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => {
     const v = lookups.scenarioVariations[id];
@@ -279,8 +366,12 @@ function buildSectionNode(section: NotionDatabasePage, generated: Map<string, st
   const children = childIds.map((id) => lookups.sectionsAndPrimaryDocs[id]).filter(Boolean) as NotionDatabasePage[];
   const cores = children.filter((c) => c.atlas_document_type === 'Core');
   const controllers = children.filter((c) => c.atlas_document_type === 'Active Data Controller');
-  const section_primary_docs = sortByGenerated(
-    [...cores, ...controllers].map((c) => ({ id: c.notion_page_id, fallbackDoc: c.atlas_document_number })),
+  const section_primary_docs = sortByOrderThenGenerated(
+    [...cores, ...controllers].map((c) => ({
+      id: c.notion_page_id,
+      fallbackDoc: c.atlas_document_number,
+      sortOrder: c.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => {
     const child = lookups.sectionsAndPrimaryDocs[id];
@@ -301,8 +392,12 @@ function buildSectionNode(section: NotionDatabasePage, generated: Map<string, st
   const sectionAnnotations = sectionAnnotationIds
     .map((id) => lookups.annotations[id])
     .filter(Boolean) as NotionDatabasePage[];
-  const section_annotations = sortByGenerated(
-    sectionAnnotations.map((a) => ({ id: a.notion_page_id, fallbackDoc: a.atlas_document_number })),
+  const section_annotations = sortByOrderThenGenerated(
+    sectionAnnotations.map((a) => ({
+      id: a.notion_page_id,
+      fallbackDoc: a.atlas_document_number,
+      sortOrder: a.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => {
     const a = lookups.annotations[id];
@@ -333,8 +428,12 @@ function buildArticleNode(article: NotionDatabasePage, generated: Map<string, st
   const sectionIds = idsFromJsonb(article.child_section_and_primary_doc_ids);
   const children = sectionIds.map((id) => lookups.sectionsAndPrimaryDocs[id]).filter(Boolean) as NotionDatabasePage[];
   const sections = children.filter((c) => c.atlas_document_type === 'Section');
-  const article_sections = sortByGenerated(
-    sections.map((s) => ({ id: s.notion_page_id, fallbackDoc: s.atlas_document_number })),
+  const article_sections = sortByOrderThenGenerated(
+    sections.map((s) => ({
+      id: s.notion_page_id,
+      fallbackDoc: s.atlas_document_number,
+      sortOrder: s.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => buildSectionNode(lookups.sectionsAndPrimaryDocs[id], generated, lookups));
 
@@ -353,8 +452,12 @@ function buildArticleNode(article: NotionDatabasePage, generated: Map<string, st
 function buildScopeNode(scope: NotionDatabasePage, generated: Map<string, string>, lookups: Lookups) {
   const articleIds = idsFromJsonb(scope.child_article_ids);
   const articles = articleIds.map((id) => lookups.articles[id]).filter(Boolean) as NotionDatabasePage[];
-  const scope_articles = sortByGenerated(
-    articles.map((a) => ({ id: a.notion_page_id, fallbackDoc: a.atlas_document_number })),
+  const scope_articles = sortByOrderThenGenerated(
+    articles.map((a) => ({
+      id: a.notion_page_id,
+      fallbackDoc: a.atlas_document_number,
+      sortOrder: a.sort_order ?? null,
+    })),
     generated,
   ).map(({ id }) => buildArticleNode(lookups.articles[id], generated, lookups));
 
@@ -430,8 +533,12 @@ export async function generateBlueJsonFromSupabase(): Promise<unknown[]> {
   }
   const rootScopes = scopeList.filter((s) => !scopeHasParent.has(s.notion_page_id));
 
-  const result = sortByGenerated(
-    rootScopes.map((s) => ({ id: s.notion_page_id, fallbackDoc: s.atlas_document_number })),
+  const result = sortByOrderThenGenerated(
+    rootScopes.map((s) => ({
+      id: s.notion_page_id,
+      fallbackDoc: s.atlas_document_number,
+      sortOrder: s.sort_order ?? null,
+    })),
     generatedNumbers,
   ).map(({ id }) => buildScopeNode(lookups.scopes[id], generatedNumbers, lookups));
 
