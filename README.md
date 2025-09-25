@@ -438,7 +438,7 @@ All commands are intended to be run from the repository root using tsx.
       DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
       ```
 
-- **scripts/atlas-json/generate-atlas-json-from-supabase.ts**: Exports current or past Atlas data from Supabase into `.output/supabase-github.json`.
+- **scripts/atlas-json/generate-atlas-json-from-supabase.ts**: Exports current or past Atlas data from Supabase into `atlas-supabase.json` (or `atlas-supabase-without-agents.json` when using `--skip-agent-scope`).
   - Examples:
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts
