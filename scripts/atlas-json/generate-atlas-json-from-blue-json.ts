@@ -15,7 +15,7 @@
  *
  * WHAT IT DOES:
  * - Loads .debug-data/blue.json (hierarchical)
- * - Flattens to documents with fields: { type, name, docNumber, content, uuid }
+ * - Flattens to documents with fields: { type, generatedDocNumber, originalDocNumber, name, content, uuid }
  * - Groups documents into AtlasCategoryJson[] by category
  * - Writes output to .debug-data/atlas-json-generated/atlas-blue.json
  *
@@ -60,6 +60,7 @@ const TYPE_PREFIX_TO_ATLAS_TYPE: Record<string, AtlasDocumentType> = {
   scenario: 'Scenario',
   scenario_variation: 'Scenario Variation',
   active_data: 'Active Data',
+  active_data_controller: 'Active Data Controller',
   agent_scope: 'Scope',
 };
 
@@ -127,9 +128,9 @@ function makeDocumentFromNode(node: BlueNode): { doc: AtlasDocumentJson; prefix:
   return {
     doc: {
       type: atlasType,
-      name,
       generatedDocNumber: '',
       originalDocNumber,
+      name,
       content,
       uuid,
     },
@@ -234,15 +235,18 @@ function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
     documents: documents
       .map((doc) => ({
         ...doc,
-        docNumber: fixDocumentNumberPrefix(doc.originalDocNumber, type as GitHubAtlasDocumentType | AtlasDatabaseName),
+        generatedDocNumber: fixDocumentNumberPrefix(
+          doc.originalDocNumber,
+          type as GitHubAtlasDocumentType | AtlasDatabaseName,
+        ),
       }))
-      .sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber)),
+      .sort((a, b) => compareDocNumbers(a.generatedDocNumber, b.generatedDocNumber)),
   }));
 
   if (DEBUG_LOGGING) {
     for (const c of categories) {
       const start = Date.now();
-      [...c.documents].sort((a, b) => compareDocNumbers(a.docNumber, b.docNumber));
+      [...c.documents].sort((a, b) => compareDocNumbers(a.generatedDocNumber, b.generatedDocNumber));
       const ms = Date.now() - start;
       console.log(`Sorted ${c.documents.length} documents for "${c.type}" in ~${ms}ms`);
     }
