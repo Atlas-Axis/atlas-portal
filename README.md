@@ -471,6 +471,15 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/filter-blue-json-inactive-docs.ts
       ```
 
+- **scripts/atlas-json/strip-blue-json-last-modified.ts**: Replaces all `*_last_modified` fields with empty strings to stabilize diffs.
+  - Outputs:
+    - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
+    - `.debug-data/blue-without-inactive-without-dates.json`
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+      ```
+
 - **scripts/experiment.ts**: Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
   - Example:
     - ```bash
