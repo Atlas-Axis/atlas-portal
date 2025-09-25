@@ -2,8 +2,8 @@
 
 This document guides AI agents through comparing and reconciling differences between:
 
-- Generated Blue-style JSON: `.debug-data/atlas-json-generated/blue-from-supabase.json`
-- Original reference JSON: `.debug-data/blue-without-inactive.json`
+- Generated Blue-style JSON: `.debug-data/atlas-json-generated/blue-without-inactive-without-dates.json`
+- Original reference JSON: `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
 
 The goal is to achieve structural and content parity while strictly following Atlas rules and the Blue JSON contract.
 
@@ -35,8 +35,8 @@ The goal is to achieve structural and content parity while strictly following At
 Use jq to list scalar paths and diff:
 
 ```bash
-jq -r 'paths(scalars) | join(".")' .debug-data/atlas-json-generated/blue-from-supabase.json | sort | uniq > /tmp/paths_supabase.txt
-jq -r 'paths(scalars) | join(".")' .debug-data/blue-without-inactive.json | sort | uniq > /tmp/paths_blue.txt
+jq -r 'paths(scalars) | join(".")' .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json | sort | uniq > /tmp/paths_supabase.txt
+jq -r 'paths(scalars) | join(".")' .debug-data/blue-from-supabase-without-dates.json | sort | uniq > /tmp/paths_blue.txt
 comm -3 /tmp/paths_supabase.txt /tmp/paths_blue.txt | sed -e 's/^/DIFF: /'
 ```
 
@@ -52,12 +52,12 @@ Use jq to count nodes at each level in both files:
 
 ```bash
 # Scopes
-jq '. | length' .debug-data/atlas-json-generated/blue-from-supabase.json
-jq '. | length' .debug-data/blue-without-inactive.json
+jq '. | length' .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json
+jq '. | length' .debug-data/blue-from-supabase-without-dates.json
 
 # Articles
-jq '[.[].scope_articles | length] | add' .debug-data/atlas-json-generated/blue-from-supabase.json
-jq '[.[].scope_articles | length] | add' .debug-data/blue-without-inactive.json
+jq '[.[].scope_articles | length] | add' .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json
+jq '[.[].scope_articles | length] | add' .debug-data/blue-from-supabase-without-dates.json
 
 # Repeat similarly for sections, cores, annotations, tenets, scenarios, scenario_variations, needed_research
 ```
@@ -97,8 +97,8 @@ Extract and compare doc numbers:
 
 ```bash
 # Scopes
-jq -r '.[].scope_doc_no' .debug-data/atlas-json-generated/blue-from-supabase.json | sort -V > /tmp/num_scopes_supabase.txt
-jq -r '.[].scope_doc_no' .debug-data/blue-without-inactive.json | sort -V > /tmp/num_scopes_blue.txt
+jq -r '.[].scope_doc_no' .debug-data/atlas-json-generated/blue-without-inactive-without-dates.json | sort -V > /tmp/num_scopes_supabase.txt
+jq -r '.[].scope_doc_no' .debug-data/blue-from-supabase-without-dates.json | sort -V > /tmp/num_scopes_blue.txt
 comm -3 /tmp/num_scopes_supabase.txt /tmp/num_scopes_blue.txt | sed -e 's/^/NUM DIFF: /'
 ```
 
