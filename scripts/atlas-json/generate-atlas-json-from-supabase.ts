@@ -26,7 +26,8 @@
  * - Writes output to .debug-data/atlas-json-generated/atlas-supabase.json, or atlas-supabase-without-agents.json if --skip-agent-scope is used
  *
  * OUTPUT:
- * - .debug-data/atlas-json-generated/atlas-supabase.json (Array<AtlasCategoryJson>)
+ * - .debug-data/atlas-json-generated/atlas-supabase.json (default, includes all documents)
+ * - .debug-data/atlas-json-generated/atlas-supabase-without-agents.json (when --skip-agent-scope is used)
  *   Each category contains documents with { type, generatedDocNumber, originalDocNumber, name, content, uuid }
  */
 import { mkdir, writeFile } from 'fs/promises';
@@ -38,7 +39,11 @@ import {
   loadAtlasFromSupabasePastVersion,
 } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { loadEnv } from '../utils/load-env';
-import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE } from './constants';
+import {
+  ATLAS_JSON_OUTPUT_DIR,
+  ATLAS_JSON_OUTPUT_FILE_SUPABASE,
+  ATLAS_JSON_OUTPUT_FILE_SUPABASE_WITHOUT_AGENTS,
+} from './constants';
 import { generateDocumentNumbers } from './document-numbering';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
@@ -53,7 +58,12 @@ const SKIP_AGENT_SCOPE = args.includes('--skip-agent-scope');
 // Resolve output path (assumes running from repository root)
 const REPO_ROOT = process.cwd();
 const OUTPUT_DIR = path.join(REPO_ROOT, ATLAS_JSON_OUTPUT_DIR);
-const OUTPUT_FILE = path.join(OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_SUPABASE);
+
+// Choose output file based on whether agent scope filtering is enabled
+function getOutputFile(skipAgentScope: boolean): string {
+  const filename = skipAgentScope ? ATLAS_JSON_OUTPUT_FILE_SUPABASE_WITHOUT_AGENTS : ATLAS_JSON_OUTPUT_FILE_SUPABASE;
+  return path.join(OUTPUT_DIR, filename);
+}
 
 // Helper function to get all child IDs from a page's child relationship arrays
 function getAllChildIds(page: NotionDatabasePage): string[] {
@@ -212,7 +222,9 @@ function mapPageToJson(row: NotionDatabasePage, generatedDocNumber: string): Atl
 }
 
 // Entry point function: generate categorized JSON from Supabase Atlas pages
-export async function generateAtlasSupabaseJson(skipAgentScope = false): Promise<AtlasCategoryJson[]> {
+export async function generateAtlasSupabaseJson(
+  skipAgentScope = false,
+): Promise<{ categories: AtlasCategoryJson[]; outputFile: string }> {
   // Ensure env vars are loaded for Supabase client
   loadEnv();
   const validAt = parseValidAtArg(process.argv);
@@ -265,26 +277,31 @@ export async function generateAtlasSupabaseJson(skipAgentScope = false): Promise
     categories.push({ type: dbName, documents: fixed });
   }
 
+  const outputFile = getOutputFile(skipAgentScope);
   await mkdir(OUTPUT_DIR, { recursive: true });
-  await writeFile(OUTPUT_FILE, JSON.stringify(categories, null, 2), 'utf8');
-  if (DEBUG_LOGGING) console.log(`Wrote ${categories.length} categories to ${OUTPUT_FILE}`);
-  return categories;
+  await writeFile(outputFile, JSON.stringify(categories, null, 2), 'utf8');
+  if (DEBUG_LOGGING) console.log(`Wrote ${categories.length} categories to ${outputFile}`);
+  return { categories, outputFile };
 }
 
 // CLI execution wrapper
 if (require.main === module) {
   (async () => {
     try {
+      const outputFileName = SKIP_AGENT_SCOPE ? 'atlas-supabase-without-agents.json' : 'atlas-supabase.json';
       if (SKIP_AGENT_SCOPE) {
-        console.log('Generating atlas-supabase.json from Supabase (skipping Agent Scope only descendants)...');
+        console.log(`Generating ${outputFileName} from Supabase (skipping Agent Scope only descendants)...`);
       } else {
-        console.log('Generating atlas-supabase.json from Supabase...');
+        console.log(`Generating ${outputFileName} from Supabase...`);
       }
-      const categories = await generateAtlasSupabaseJson(SKIP_AGENT_SCOPE);
-      const totalRowCount = categories.reduce((acc, category) => acc + category.documents.length, 0);
-      console.log(`Done. Wrote ${totalRowCount} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
+      const result = await generateAtlasSupabaseJson(SKIP_AGENT_SCOPE);
+      const totalRowCount = result.categories.reduce((acc, category) => acc + category.documents.length, 0);
+      console.log(
+        `Done. Wrote ${totalRowCount} documents (${result.categories.length} categories) to ${result.outputFile}`,
+      );
     } catch (error) {
-      console.error('Failed to generate atlas-supabase.json:', error);
+      const outputFileName = SKIP_AGENT_SCOPE ? 'atlas-supabase-without-agents.json' : 'atlas-supabase.json';
+      console.error(`Failed to generate ${outputFileName}:`, error);
       process.exit(1);
     }
   })();
