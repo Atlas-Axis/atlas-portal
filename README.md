@@ -465,12 +465,6 @@ All commands are intended to be run from the repository root using tsx.
       DEBUG_LOGGING=1 npx tsx scripts/generate-blue-json.ts
       ```
 
-- **scripts/filter-blue-json-inactive-docs.ts**: Creates a filtered Blue JSON that excludes all `inactive: 1` documents (and their subdocuments) and writes `.debug-data/atlas-json-generated/blue-without-inactive.json`.
-  - Example:
-    - ```bash
-      npx tsx scripts/filter-blue-json-inactive-docs.ts
-      ```
-
 - **scripts/atlas-json/strip-blue-json-last-modified.ts**: Replaces all `*_last_modified` fields with empty strings to stabilize diffs.
   - Outputs:
     - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
