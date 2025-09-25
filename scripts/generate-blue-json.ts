@@ -10,6 +10,10 @@
  * USAGE:
  *   npx tsx scripts/generate-blue-json.ts
  *
+ *   After running, run:
+ *   npx tsx scripts/filter-blue-json-inactive-docs.ts
+ *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+ *
  * WHAT IT DOES:
  * - Loads Atlas documents from Supabase
  * - Generates hierarchical JSON with Scopes → Articles → Sections → Primary Docs (Cores)
