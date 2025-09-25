@@ -474,6 +474,12 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
       ```
 
+- **scripts/atlas-json/get-blue-uuid-diffs.ts**: Compares UUID sets between the two generated Blue JSONs and reports missing IDs (both directions) and duplicates within each file.
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-json/get-blue-uuid-diffs.ts
+      ```
+
 - **scripts/experiment.ts**: Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
   - Example:
     - ```bash
