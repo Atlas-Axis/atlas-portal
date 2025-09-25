@@ -8,6 +8,10 @@
  *
  * USAGE:
  *   npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+ *   npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts --keep-inactives
+ *
+ * FLAGS:
+ *   --keep-inactives    Include inactive nodes in the output (default: skip them)
  *
  * WHAT IT DOES:
  * - Loads .debug-data/blue.json (hierarchical)
@@ -32,6 +36,10 @@ import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const KEEP_INACTIVES = args.includes('--keep-inactives');
 
 // Resolve input/output paths (assumes running from repository root)
 const REPO_ROOT = process.cwd();
@@ -165,7 +173,7 @@ function extractAnyNameDocNo(node: BlueNode): InactiveDoc {
   return { docNumber, name };
 }
 
-function flattenBlueTree(nodes: unknown[]): { items: FlattenedDoc[]; inactive: InactiveDoc[] } {
+function flattenBlueTree(nodes: unknown[], keepInactives = false): { items: FlattenedDoc[]; inactive: InactiveDoc[] } {
   const results: FlattenedDoc[] = [];
   const inactive: InactiveDoc[] = [];
   const stack: unknown[] = [...nodes];
@@ -178,14 +186,18 @@ function flattenBlueTree(nodes: unknown[]): { items: FlattenedDoc[]; inactive: I
     // Track inactive nodes
     if (typeof (obj as { inactive?: number }).inactive === 'number' && (obj as { inactive: number }).inactive === 1) {
       inactive.push(extractAnyNameDocNo(obj));
-      // Still traverse children to ensure we account for structure, but do not include as a document
-      const childArrays = collectChildArrays(obj);
-      for (const child of childArrays) {
-        if (child && typeof child === 'object') {
-          stack.push(child);
+
+      // If keeping inactives, process as normal document, otherwise skip
+      if (!keepInactives) {
+        // Still traverse children to ensure we account for structure, but do not include as a document
+        const childArrays = collectChildArrays(obj);
+        for (const child of childArrays) {
+          if (child && typeof child === 'object') {
+            stack.push(child);
+          }
         }
+        continue;
       }
-      continue;
     }
 
     const result = makeDocumentFromNode(obj);
@@ -239,14 +251,14 @@ function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
   return categories;
 }
 
-export async function generateAtlasBlueJson(): Promise<AtlasCategoryJson[]> {
+export async function generateAtlasBlueJson(keepInactives = false): Promise<AtlasCategoryJson[]> {
   const raw = await readFile(INPUT_FILE, 'utf8');
   const json = JSON.parse(raw) as unknown;
   if (!Array.isArray(json)) {
     throw new Error('Expected top-level array in .debug-data/blue.json');
   }
 
-  const { items: flattened, inactive } = flattenBlueTree(json);
+  const { items: flattened, inactive } = flattenBlueTree(json, keepInactives);
   if (DEBUG_LOGGING) console.log(`Flattened ${flattened.length} documents from blue.json`);
 
   const categories = categorizeDocuments(flattened);
@@ -256,7 +268,11 @@ export async function generateAtlasBlueJson(): Promise<AtlasCategoryJson[]> {
   const total = categories.reduce((acc, c) => acc + c.documents.length, 0);
   if (DEBUG_LOGGING) console.log(`Wrote ${total} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
   // Report inactive nodes
-  console.log(`Inactive nodes skipped: ${inactive.length}`);
+  if (keepInactives) {
+    console.log(`Inactive nodes included: ${inactive.length}`);
+  } else {
+    console.log(`Inactive nodes skipped: ${inactive.length}`);
+  }
   if (DEBUG_LOGGING && inactive.length > 0) {
     for (const { docNumber, name } of inactive) {
       console.log(`  - ${docNumber || '?'} ${name || ''}`.trim());
@@ -269,8 +285,12 @@ export async function generateAtlasBlueJson(): Promise<AtlasCategoryJson[]> {
 if (require.main === module) {
   (async () => {
     try {
-      console.log('Generating atlas-blue.json from Blue JSON...');
-      const categories = await generateAtlasBlueJson();
+      if (KEEP_INACTIVES) {
+        console.log('Generating atlas-blue.json from Blue JSON (including inactive nodes)...');
+      } else {
+        console.log('Generating atlas-blue.json from Blue JSON...');
+      }
+      const categories = await generateAtlasBlueJson(KEEP_INACTIVES);
       const totalRowCount = categories.reduce((acc, c) => acc + c.documents.length, 0);
       console.log(`Done. Wrote ${totalRowCount} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
     } catch (error) {
