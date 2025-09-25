@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 /**
- * Generic Blue JSON inactive filter.
+ * Blue JSON inactive filter.
  *
  * What it does:
  * - Reads a Blue-style hierarchical JSON file (top-level array of Scopes)
@@ -20,7 +20,7 @@
  *   generated Blue JSON from Supabase
  *
  * Usage:
- *   npx tsx scripts/atlas-json/filter-inactive-generic.ts <input.json> <output.json>
+ *   npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts <input.json> <output.json>
  */
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
@@ -137,7 +137,7 @@ function filterScope(node: AnyObject): AnyObject | null {
 async function main() {
   const [, , inputArg, outputArg] = process.argv;
   if (!inputArg || !outputArg) {
-    console.error('Usage: npx tsx scripts/atlas-json/filter-inactive-generic.ts <input.json> <output.json>');
+    console.error('Usage: npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts <input.json> <output.json>');
     process.exit(1);
   }
   const inputPath = path.resolve(process.cwd(), inputArg);

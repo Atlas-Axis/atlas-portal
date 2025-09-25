@@ -38,7 +38,7 @@
  *
  *   After running, run:
  *   # Option A: Use generic filter + date strip
- *   npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+ *   npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
  *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
  *
  *   # Option B: Use legacy blue filter + date strip (deprecated)

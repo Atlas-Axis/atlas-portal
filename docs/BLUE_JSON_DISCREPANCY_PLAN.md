@@ -35,7 +35,7 @@ The goal is to achieve structural and content parity while strictly following At
 If you need to exclude inactive entries from a Blue-style JSON before comparing, you can run the generic filter script first:
 
 ```bash
-npx tsx scripts/atlas-json/filter-inactive-generic.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
 npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
 ```
 
