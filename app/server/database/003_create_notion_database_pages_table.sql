@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   child_needed_research_ids JSONB NOT NULL DEFAULT '[]', -- Children from Needed Research database
   -- child_type_specification_ids JSONB NOT NULL DEFAULT '[]', -- Children from Type Specifications database -- TODO: Add
   extra_fields JSONB NOT NULL DEFAULT '{}', -- Additional fields stored as JSON key-value pairs
-  sort_order DECIMAL(5,2) NOT NULL, -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
+  sort_order DECIMAL(5,2), -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
   atlas_document_number_sortable TEXT GENERATED ALWAYS AS (atlas_document_number_to_sortable(atlas_document_number)) STORED, -- Computed column for natural sorting (e.g. A.1.11 -> A.000001.000011) to fix lexicographic sorting issues
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated

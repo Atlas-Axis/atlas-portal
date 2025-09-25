@@ -138,6 +138,7 @@ export type Database = {
           archived: boolean;
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
           atlas_document_number: string;
+          atlas_document_number_sortable: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title: string | null;
           child_active_data_ids: Json;
@@ -163,13 +164,14 @@ export type Database = {
           parent_notion_page_id: string | null;
           plain_text_content: string | null;
           plain_text_name: string | null;
-          sort_order: number;
+          sort_order: number | null;
           updated_at: string;
         };
         Insert: {
           archived?: boolean;
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
           atlas_document_number?: string;
+          atlas_document_number_sortable?: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           child_active_data_ids?: Json;
@@ -195,13 +197,14 @@ export type Database = {
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          sort_order: number;
+          sort_order?: number | null;
           updated_at?: string;
         };
         Update: {
           archived?: boolean;
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
           atlas_document_number?: string;
+          atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'];
           canonical_document_title?: string | null;
           child_active_data_ids?: Json;
@@ -227,7 +230,7 @@ export type Database = {
           parent_notion_page_id?: string | null;
           plain_text_content?: string | null;
           plain_text_name?: string | null;
-          sort_order?: number;
+          sort_order?: number | null;
           updated_at?: string;
         };
         Relationships: [];
@@ -284,6 +287,7 @@ export type Database = {
           archived: boolean | null;
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'] | null;
           atlas_document_number: string | null;
+          atlas_document_number_sortable: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title: string | null;
           child_active_data_ids: Json | null;
@@ -316,6 +320,7 @@ export type Database = {
           archived?: boolean | null;
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'] | null;
           atlas_document_number?: string | null;
+          atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           child_active_data_ids?: Json | null;
@@ -348,6 +353,7 @@ export type Database = {
           archived?: boolean | null;
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'] | null;
           atlas_document_number?: string | null;
+          atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
           canonical_document_title?: string | null;
           child_active_data_ids?: Json | null;
@@ -380,6 +386,20 @@ export type Database = {
       };
     };
     Functions: {
+      atlas_document_number_to_sortable: {
+        Args: { doc_number: string };
+        Returns: string;
+      };
+      public_get_atlas_page_changes: {
+        Args: { p_limit?: number };
+        Returns: {
+          event_time: string;
+          event_type: string;
+          new_row: Json;
+          notion_page_id: string;
+          old_row: Json;
+        }[];
+      };
       versioned_delete_notion_database_pages: {
         Args: { p_ids: string[] };
         Returns: number;
