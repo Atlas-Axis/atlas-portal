@@ -100,6 +100,7 @@ export function compareDatabasePages({
   for (const notionPage of notionPages) {
     if (!supabasePagesById.has(notionPage.id)) {
       changes.newPages.push(notionPage.id);
+      console.log(`‼️‼️‼️‼️🆕 New page detected: ${notionPage.id}`);
     }
   }
 
@@ -107,6 +108,7 @@ export function compareDatabasePages({
   for (const supabasePage of supabasePages) {
     if (!notionPagesById.has(supabasePage.notion_page_id)) {
       changes.deletedPages.push(supabasePage.notion_page_id);
+      console.log(`‼️‼️‼️‼️🗑️ Deleted page detected: ${supabasePage.notion_page_id}`);
     }
   }
 
