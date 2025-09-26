@@ -76,6 +76,12 @@ npm test                 # watch mode
 npm run test:run         # single run (CI-friendly)
 npm run test:coverage    # coverage report (text, html, lcov)
 npm run test:ui          # Vitest UI
+# Run a single test file (CI-style single run)
+npm run test:run -- app/shared/utils/__tests__/utils.test.ts
+# Run a single test file in watch mode
+npm test -- app/atlas/__tests__/type-chip.test.tsx
+# Run a single test by name/pattern
+npm run test:run -- app/atlas/__tests__/type-chip.test.tsx -t "renders the provided type text"
 ```
 
 AI agent notes for generating tests:
