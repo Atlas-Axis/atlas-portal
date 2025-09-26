@@ -320,7 +320,7 @@ When validating document numbers:
 
 This numbering system ensures that every Atlas document has a unique, hierarchical identifier that reflects its position and relationships within the Atlas structure.
 
-## Atlas Document Hierarchy
+## Atlas Database Hierarchy
 
 The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents:
 
@@ -347,6 +347,37 @@ Scopes
 - **Agent Scope Database** - Can have multiple levels of internal nesting
 
 This hierarchical structure is implemented in the `ATLAS_DATABASES` constant and managed through the `notion-database-properties-and-relationships.ts` mapping system.
+
+## Atlas Document Hierarchy
+
+The Atlas document numbering system follows a hierarchical structure where each document's number inherits from its parent document with additional segments appended. The numbering reflects the document's position in the Atlas hierarchy and its relationship to sibling documents.
+
+```
+Scope Documents (A.0, A.1, A.2, ...)
+├── Article Documents (A.1.1, A.1.2, A.2.1, ...)
+│   └── Section Documents (A.1.1.1, A.1.1.2, A.1.2.1, ...)
+│       ├── Primary Documents:
+│       │   ├── Core Documents (A.1.1.1.1, A.1.1.1.2, ...)
+│       │   │   └── Nested Core Documents (A.1.1.1.1.1, A.1.1.1.1.2, ...)
+│       │   ├── Active Data Controller (A.1.1.2.1, A.1.1.2.2, ...)
+│       │   │   └── Active Data (.0.6.1, .0.6.2, ...)
+│       │   └── Type Specification (A.1.1.3.1, A.1.1.3.2, ...)
+│       └── Supporting Documents:
+│           ├── Annotations (.0.3.1, .0.3.2, ...)
+│           └── Tenets (.0.4.1, .0.4.2, ...)
+│               └── Scenarios (.1.1, .1.2, ...)
+│                   └── Scenario Variations (.var1, .var2, ...)
+
+Global Documents:
+└── Needed Research (NR-1, NR-2, NR-3, ...)
+```
+
+**Key Numbering Patterns:**
+
+- **Sequential Inheritance**: Most documents inherit their parent's full number and append their own segment
+- **Supporting Documents**: Use special directory numbers (0.3 for Annotations, 0.4 for Tenets, 0.6 for Active Data)
+- **Global Numbering**: Needed Research documents use independent global numbering (NR-X)
+- **Mixed Type Numbering**: When multiple document types exist under the same parent, they use sequential numbering across all types
 
 ## Atlas Database to Atlas Document Type Mapping
 
