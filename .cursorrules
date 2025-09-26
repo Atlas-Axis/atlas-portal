@@ -155,6 +155,17 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 
 # Atlas
 
+## Introduction to Atlas
+
+The Atlas is a large, hierarchical corpus of interlinked legal documents stored across several Notion databases (the "Master Atlas DBs"). Each entry has a document type and resides in the database that corresponds to that type. General rule: each document type has its own database. Exception #1: The database named `Sections & Primary Docs` contains four document types: `Section`, `Core`, `Type Specification`, and `Active Data Controller`. Exception #2: The database named `Agent Scope Database` contains two document types: `Core`, `Active Data Controller`.
+
+### Document Type Categories
+
+- **Immutable Documents**: Scopes, Articles, Sections
+- **Primary Documents**: Core, Active Data Controller
+- **Supporting Documents**: Active Data, Annotation, Needed Research, Action Tenet, Scenario, Scenario Variation
+  - Supporting Documents must have a Target Document (an Immutable or Primary Document they attach to). For example, `Active Data` targets an `Active Data Controller`. The Target Document can also be referred to as the parent document.
+
 ## Atlas Databases & Document Types
 
 ### Atlas Database Names
