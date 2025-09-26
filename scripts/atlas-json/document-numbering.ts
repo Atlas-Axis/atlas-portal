@@ -13,7 +13,7 @@ export interface DocumentHierarchy {
   [notionPageId: string]: {
     page: NotionDatabasePage;
     children: string[];
-    parent?: string;
+    parentId?: string;
   };
 }
 
@@ -53,7 +53,9 @@ export function buildDocumentHierarchy(pages: NotionDatabasePage[]): DocumentHie
         for (const childId of childArray) {
           if (typeof childId === 'string' && hierarchy[childId]) {
             hierarchy[page.notion_page_id].children.push(childId);
-            hierarchy[childId].parent = page.notion_page_id;
+            hierarchy[childId].parentId = page.notion_page_id;
+          } else {
+            console.warn(`Invalid child ID: ${childId}`);
           }
         }
       }
@@ -91,12 +93,12 @@ function sortSiblings<T extends { page: NotionDatabasePage }>(items: T[]): T[] {
 export function getParentDocumentNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
   // Find which document has this page as a child using child_* relationships only
   for (const [parentId, parentItem] of Object.entries(hierarchy)) {
     if (parentItem.children.includes(page.notion_page_id)) {
-      const parentNumber = generatedNumbers.get(parentId);
+      const parentNumber = generatedDocNumbers.get(parentId);
       if (parentNumber) return parentNumber;
     }
   }
@@ -117,12 +119,12 @@ function findParentIds(pageId: string, hierarchy: DocumentHierarchy): string[] {
 function selectPrimaryParentId(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string | undefined {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
-  const parentIds = findParentIds(page.notion_page_id, hierarchy).filter((id) => generatedNumbers.has(id));
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
+  const parentIds = findParentIds(page.notion_page_id, hierarchy).filter((id) => generatedDocNumbers.has(id));
   if (parentNumber) {
-    const match = parentIds.find((id) => generatedNumbers.get(id) === parentNumber);
+    const match = parentIds.find((id) => generatedDocNumbers.get(id) === parentNumber);
     if (match) return match;
   }
   return parentIds[0];
@@ -135,7 +137,7 @@ function selectPrimaryParentId(
 export function generateScopeNumber(page: NotionDatabasePage, hierarchy: DocumentHierarchy): string {
   // Find all scope siblings and sort by sort_order
   const scopeSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => item.page.atlas_database_name === 'Scopes' && !item.parent),
+    Object.values(hierarchy).filter((item) => item.page.atlas_database_name === 'Scopes' && !item.parentId),
   );
 
   const scopeIndex = scopeSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
@@ -150,13 +152,13 @@ export function generateScopeNumber(page: NotionDatabasePage, hierarchy: Documen
 export function generateArticleNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find parent scope via child_* relationships only
-  const parentScopeId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentScopeId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentScopeId) return '';
   const parentScope = hierarchy[parentScopeId];
   if (!parentScope || parentScope.page.atlas_database_name !== 'Scopes') return '';
@@ -180,13 +182,13 @@ export function generateArticleNumber(
 export function generateSectionNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all section siblings under the same parent using child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const sectionSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
@@ -200,7 +202,7 @@ export function generateSectionNumber(
 
   const sectionIndex = sectionSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
   if (sectionIndex === -1) return '';
-  return `${parentNumber}.${sectionIndex}`;
+  return `${parentNumber}.${sectionIndex + 1}`;
 }
 
 /**
@@ -210,13 +212,13 @@ export function generateSectionNumber(
 export function generateCoreNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all core siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const coreSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
@@ -240,13 +242,13 @@ export function generateCoreNumber(
 export function generateActiveDataControllerNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all controller siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const controllerSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
@@ -273,13 +275,13 @@ export function generateActiveDataControllerNumber(
 export function generateTypeSpecificationNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all type specification siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const specSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
@@ -306,15 +308,15 @@ export function generateTypeSpecificationNumber(
 export function generateAnnotationNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
   // Annotations target specific documents - we need to find the target
   // For now, we'll use the parent document as the target
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all annotation siblings targeting the same document
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const annotationSiblings = sortSiblings(
     Object.values(hierarchy).filter(
@@ -336,13 +338,13 @@ export function generateAnnotationNumber(
 export function generateTenetNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all tenet siblings targeting the same document
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const tenetSiblings = sortSiblings(
     Object.values(hierarchy).filter(
@@ -363,13 +365,13 @@ export function generateTenetNumber(
 export function generateScenarioNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all scenario siblings under the same parent
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const scenarioSiblings = sortSiblings(
     Object.values(hierarchy).filter(
@@ -391,13 +393,13 @@ export function generateScenarioNumber(
 export function generateScenarioVariationNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all scenario variation siblings under the same parent
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const variationSiblings = sortSiblings(
     Object.values(hierarchy).filter(
@@ -419,13 +421,13 @@ export function generateScenarioVariationNumber(
 export function generateActiveDataNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all active data siblings under the same parent
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const activeDataSiblings = sortSiblings(
     Object.values(hierarchy).filter(
@@ -462,14 +464,14 @@ export function generateNeededResearchNumber(page: NotionDatabasePage, hierarchy
 export function generateAgentNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
-  generatedNumbers: Map<string, string>,
+  generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedNumbers);
+  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
   // Find all agent siblings under the same parent (supports internal nesting)
   // Agent documents can be nested under sections or other agent documents
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedNumbers);
+  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const agentSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
@@ -491,7 +493,7 @@ export function generateAgentNumber(
 export function generateDocumentNumbers(
   pagesByDatabase: Record<AtlasDatabaseName, NotionDatabasePage[]>,
 ): Map<string, string> {
-  const generatedNumbers = new Map<string, string>();
+  const generatedDocNumbers = new Map<string, string>();
 
   // Collect all pages from all databases into a single array
   const allPages: NotionDatabasePage[] = [];
@@ -531,8 +533,8 @@ export function generateDocumentNumbers(
       if (!item) return;
 
       // Process parent first
-      if (item.parent && !processedPages.has(item.parent)) {
-        processPage(item.parent);
+      if (item.parentId && !processedPages.has(item.parentId)) {
+        processPage(item.parentId);
       }
 
       const page = item.page;
@@ -544,41 +546,41 @@ export function generateDocumentNumbers(
           docNumber = generateScopeNumber(page, globalHierarchy);
           break;
         case 'Articles':
-          docNumber = generateArticleNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateArticleNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Sections & Primary Docs':
           switch (page.atlas_document_type) {
             case 'Section':
-              docNumber = generateSectionNumber(page, globalHierarchy, generatedNumbers);
+              docNumber = generateSectionNumber(page, globalHierarchy, generatedDocNumbers);
               break;
             case 'Core':
-              docNumber = generateCoreNumber(page, globalHierarchy, generatedNumbers);
+              docNumber = generateCoreNumber(page, globalHierarchy, generatedDocNumbers);
               break;
             case 'Active Data Controller':
-              docNumber = generateActiveDataControllerNumber(page, globalHierarchy, generatedNumbers);
+              docNumber = generateActiveDataControllerNumber(page, globalHierarchy, generatedDocNumbers);
               break;
             case 'Type Specification':
-              docNumber = generateTypeSpecificationNumber(page, globalHierarchy, generatedNumbers);
+              docNumber = generateTypeSpecificationNumber(page, globalHierarchy, generatedDocNumbers);
               break;
           }
           break;
         case 'Annotations':
-          docNumber = generateAnnotationNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateAnnotationNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Tenets':
-          docNumber = generateTenetNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateTenetNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Scenarios':
-          docNumber = generateScenarioNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateScenarioNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Scenario Variations':
-          docNumber = generateScenarioVariationNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateScenarioVariationNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Active Data':
-          docNumber = generateActiveDataNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateActiveDataNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Agent Scope Database':
-          docNumber = generateAgentNumber(page, globalHierarchy, generatedNumbers);
+          docNumber = generateAgentNumber(page, globalHierarchy, generatedDocNumbers);
           break;
         case 'Needed Research':
           docNumber = generateNeededResearchNumber(page, globalHierarchy);
@@ -586,7 +588,7 @@ export function generateDocumentNumbers(
       }
 
       if (docNumber) {
-        generatedNumbers.set(pageId, docNumber);
+        generatedDocNumbers.set(pageId, docNumber);
       }
 
       processedPages.add(pageId);
@@ -598,5 +600,5 @@ export function generateDocumentNumbers(
     }
   }
 
-  return generatedNumbers;
+  return generatedDocNumbers;
 }
