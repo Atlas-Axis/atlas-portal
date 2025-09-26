@@ -98,12 +98,13 @@ function addUuid(
   }
 }
 
-function isAtlasDocumentJson(value: unknown): value is AtlasDocumentJson & { inactive?: number | string } {
+function isAtlasDocumentJson(value: unknown): value is AtlasDocumentJson {
   if (!value || typeof value !== 'object') return false;
   const v = value as Record<string, unknown>;
   const typeOk = typeof v.type === 'string';
   const uuidOk = typeof v.uuid === 'string' || v.uuid === null || v.uuid === undefined;
-  return typeOk && uuidOk;
+  const inactiveOk = typeof v.inactive === 'boolean';
+  return typeOk && uuidOk && inactiveOk;
 }
 
 function isAtlasCategoryJson(value: unknown): value is AtlasCategoryJson {
@@ -125,10 +126,10 @@ function collectFromAtlasJson(data: JsonValue, includeInactives: boolean): Categ
   if (!Array.isArray(data)) return result;
   for (const cat of data) {
     if (!isAtlasCategoryJson(cat)) continue;
-    const docs: unknown[] = Array.isArray(cat.documents) ? cat.documents : [];
+    const docs: AtlasDocumentJson[] = Array.isArray(cat.documents) ? cat.documents : [];
     for (const d of docs) {
       if (!isAtlasDocumentJson(d)) continue;
-      if (!includeInactives && (d.inactive === 1 || d.inactive === '1')) continue;
+      if (!includeInactives && !!d.inactive) continue;
       const uuid = d.uuid;
       if (typeof uuid === 'string' && UUID_REGEX.test(uuid)) {
         const docType: string | undefined = typeof d.type === 'string' ? d.type : undefined;
