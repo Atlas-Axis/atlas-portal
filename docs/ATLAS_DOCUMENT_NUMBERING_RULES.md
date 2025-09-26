@@ -9,7 +9,7 @@ Atlas document numbers follow a hierarchical numbering system where each documen
 ## Core Principles
 
 1. **Hierarchical Inheritance**: Document numbers inherit from their parent document's number
-2. **Sequential Numbering**: Sibling documents are numbered sequentially starting from 1
+2. **Sequential Numbering**: Sibling documents are numbered sequentially starting from 1 (except Scope and Needed Research documents)
 3. **Dot Separation**: Number segments are separated by dots (`.`)
 4. **Special Directories**: Some document types use special directory numbers (0, 3, 4, 6) for organizational purposes
 5. **Global Numbering**: Some document types (Needed Research) use global numbering independent of hierarchy
@@ -73,7 +73,7 @@ Atlas document numbers follow a hierarchical numbering system where each documen
 - Core documents inherit their parent section's number
 - Core numbers start from 1 and increment sequentially
 - Supports arbitrary levels of nesting
-- Parent: Section document (or another Core document for nested cores)
+- Parent: Section document (or another Core document for nested Core documents)
 
 **Examples**:
 
