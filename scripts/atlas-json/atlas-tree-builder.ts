@@ -196,6 +196,97 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
 }
 
 /**
+ * Finds a page by ID across all databases.
+ *
+ * @param pageId - The page ID to find
+ * @param lookupMaps - Lookup maps containing all pages
+ * @returns The NotionDatabasePage if found, undefined otherwise
+ */
+function findPageById(pageId: string, lookupMaps: AtlasLookupMaps): NotionDatabasePage | undefined {
+  // Efficient O(1) lookup using original NotionDatabasePage objects
+  return lookupMaps.originalPageMap.get(pageId);
+}
+
+/**
+ * Filters child arrays to include only direct children, removing nested descendants.
+ *
+ * For child_section_and_primary_doc_ids and child_agent_scope_ids arrays, Core documents
+ * can have internal hierarchy where one Core document is a child of another Core document.
+ * This function filters out Core documents that have ancestors in the same descendantIds array
+ * OR ancestors that are the parentPageId (when filtering a specific page's children).
+ * Supports deep nesting (e.g. 2-8+ levels).
+ *
+ * @param descendantIds - Array of descendant document IDs (not just direct children)
+ * @param lookupMaps - Lookup maps to find document details
+ * @param parentPageId - ID of the page whose children are being filtered (optional)
+ * @returns Filtered array containing only direct children
+ */
+function filterDirectChildren(descendantIds: string[], lookupMaps: AtlasLookupMaps, parentPageId?: string): string[] {
+  if (!Array.isArray(descendantIds)) {
+    return [];
+  }
+
+  // Convert to Set for O(1) lookup performance
+  const descendantIdsSet = new Set(descendantIds);
+
+  return descendantIds.filter((childId) => {
+    const descendantPage = findPageById(childId, lookupMaps);
+    if (!descendantPage) {
+      // Keep missing children for error reporting
+      return true;
+    }
+
+    // If parent_notion_page_id is null/empty, it's a direct child
+    if (!descendantPage.parent_notion_page_id) {
+      return true;
+    }
+
+    // Walk up the ancestry chain to check for any ancestor in the descendantIds array
+    // OR if the parent is the parentPageId (for Core documents filtering their own children)
+    // If we find an ancestor in either set, this document is not a direct child
+    let currentParentId: string | null = descendantPage.parent_notion_page_id;
+    const visitedIds = new Set<string>(); // Prevent infinite loops
+    const maxDepth = 20; // Safety limit for deeply nested structures
+    let depth = 0;
+
+    while (currentParentId && depth < maxDepth) {
+      // Circular reference protection
+      if (visitedIds.has(currentParentId)) {
+        console.warn(
+          `Circular reference detected in ancestry check for ${childId}, parent chain: ${Array.from(visitedIds).join(' -> ')}`,
+        );
+        break;
+      }
+      visitedIds.add(currentParentId);
+
+      // If any ancestor is in the descendantIds array, this is not a direct child
+      if (descendantIdsSet.has(currentParentId)) {
+        return false;
+      }
+
+      // If the parent is the parentPageId being filtered, this IS a direct child
+      if (parentPageId && currentParentId === parentPageId) {
+        return true;
+      }
+
+      // Move up to the next ancestor
+      const parentPage = findPageById(currentParentId, lookupMaps);
+      if (!parentPage) {
+        // Parent not found - treat as direct child (parent outside this array)
+        break;
+      }
+
+      currentParentId = parentPage.parent_notion_page_id;
+      depth++;
+    }
+
+    // If we've walked the entire ancestry chain without finding an ancestor
+    // in the descendantIds array, this is a direct child
+    return true;
+  });
+}
+
+/**
  * Recursively builds a tree node and all its descendants.
  *
  * This function performs depth-first traversal to build the complete tree structure,
@@ -244,65 +335,65 @@ function buildTreeNode(
     console.log(`🌲 Building tree for root: ${page.plain_text_name} (${page.notion_page_id})`);
   }
 
-  // Group children by type and build child trees
-  const childArrays: { array: string[]; type: AtlasTreeNodeRelationship }[] = [
-    { array: page.child_scope_ids, type: 'scopes' },
-    { array: page.child_article_ids, type: 'articles' },
-    { array: page.child_section_and_primary_doc_ids, type: 'sectionsAndPrimaryDocs' },
-    { array: page.child_annotation_ids, type: 'annotations' },
-    { array: page.child_tenet_ids, type: 'tenets' },
-    { array: page.child_scenario_ids, type: 'scenarios' },
-    { array: page.child_scenario_variation_ids, type: 'scenarioVariations' },
-    { array: page.child_active_data_ids, type: 'activeData' },
-    { array: page.child_agent_scope_ids, type: 'agentScopeDocs' },
-    { array: page.child_needed_research_ids, type: 'neededResearch' },
-  ];
+  try {
+    // Group children by type and build child trees
+    // Filter child arrays that may contain nested descendants instead of just direct children
+    const filteredSectionAndPrimaryDocIds = filterDirectChildren(
+      page.child_section_and_primary_doc_ids,
+      lookupMaps,
+      page.notion_page_id,
+    );
+    const filteredAgentScopeIds = filterDirectChildren(page.child_agent_scope_ids, lookupMaps, page.notion_page_id);
 
-  for (const { array, type } of childArrays) {
-    if (Array.isArray(array)) {
-      const childNodes: AtlasTreeNode[] = [];
+    const childArrays: { array: string[]; type: AtlasTreeNodeRelationship }[] = [
+      { array: page.child_scope_ids, type: 'scopes' },
+      { array: page.child_article_ids, type: 'articles' },
+      { array: filteredSectionAndPrimaryDocIds, type: 'sectionsAndPrimaryDocs' },
+      { array: page.child_annotation_ids, type: 'annotations' },
+      { array: page.child_tenet_ids, type: 'tenets' },
+      { array: page.child_scenario_ids, type: 'scenarios' },
+      { array: page.child_scenario_variation_ids, type: 'scenarioVariations' },
+      { array: page.child_active_data_ids, type: 'activeData' },
+      { array: filteredAgentScopeIds, type: 'agentScopeDocs' },
+      { array: page.child_needed_research_ids, type: 'neededResearch' },
+    ];
+    for (const { array, type } of childArrays) {
+      if (Array.isArray(array)) {
+        const childNodes: AtlasTreeNode[] = [];
 
-      for (const childId of array) {
-        if (typeof childId === 'string') {
-          const childPage = findPageById(childId, lookupMaps);
-          if (childPage) {
-            try {
-              const childTreeNode = buildTreeNode(childPage, lookupMaps, depth + 1, maxDepth, verbose);
-              childNodes.push(childTreeNode);
-            } catch (error) {
-              if (error instanceof Error && error.message.includes('circular reference')) {
-                console.error(`Circular reference in ${type} child:`, childId);
+        for (const childId of array) {
+          if (typeof childId === 'string') {
+            const childPage = findPageById(childId, lookupMaps);
+            if (childPage) {
+              try {
+                const childTreeNode = buildTreeNode(childPage, lookupMaps, depth + 1, maxDepth, verbose);
+                childNodes.push(childTreeNode);
+              } catch (error) {
+                if (error instanceof Error && error.message.includes('circular reference')) {
+                  console.error(`Circular reference in ${type} child:`, childId);
+                  throw error;
+                }
                 throw error;
               }
-              throw error;
+            } else {
+              console.error(`Missing child document referenced in ${type}:`, childId);
             }
           } else {
-            console.error(`Missing child document referenced in ${type}:`, childId);
+            console.error(`Invalid child ID format in ${page.notion_page_id}:`, childId);
           }
-        } else {
-          console.error(`Invalid child ID format in ${page.notion_page_id}:`, childId);
         }
+
+        // Sort children by sort_order and document type priority
+        const sortedChildren = sortChildren(childNodes);
+        treeNode[type] = sortedChildren;
       }
-
-      // Sort children by sort_order and document type priority
-      const sortedChildren = sortChildren(childNodes);
-      treeNode[type] = sortedChildren;
     }
+
+    return treeNode;
+  } finally {
+    // IMPORTANT: Remove from processedIds when backtracking to allow legitimate multiple references
+    processedIds.delete(page.notion_page_id);
   }
-
-  return treeNode;
-}
-
-/**
- * Finds a page by ID across all databases.
- *
- * @param pageId - The page ID to find
- * @param lookupMaps - Lookup maps containing all pages
- * @returns The NotionDatabasePage if found, undefined otherwise
- */
-function findPageById(pageId: string, lookupMaps: AtlasLookupMaps): NotionDatabasePage | undefined {
-  // Efficient O(1) lookup using original NotionDatabasePage objects
-  return lookupMaps.originalPageMap.get(pageId);
 }
 
 /**
