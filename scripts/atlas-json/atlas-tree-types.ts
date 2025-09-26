@@ -109,6 +109,8 @@ export interface TreeConstructionError {
 export interface AtlasLookupMaps {
   /** Map from page ID to AtlasTreeNode for O(1) node access */
   nodeMapByPageId: Map<string, AtlasTreeNode>;
+  /** Map from page ID to original NotionDatabasePage for efficient O(1) lookups */
+  originalPageMap: Map<string, NotionDatabasePage>;
   /** Map from child page ID to parent page ID for efficient parent lookup */
   parentIdMap: Map<string, string>;
   /** Map from page ID to all its child page IDs for efficient child lookup */

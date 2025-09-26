@@ -120,6 +120,7 @@ export function buildAtlasTree(
  */
 function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>): AtlasLookupMaps {
   const nodeMap = new Map<string, AtlasTreeNode>();
+  const originalPageMap = new Map<string, NotionDatabasePage>();
   const parentMap = new Map<string, string>();
   const childrenMap = new Map<string, string[]>();
   const processedIds = new Set<string>();
@@ -150,6 +151,7 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
     };
 
     nodeMap.set(page.notion_page_id, treeNode);
+    originalPageMap.set(page.notion_page_id, page);
 
     // Build parent-child relationships from child_* arrays
     const childArrays = [
@@ -184,7 +186,13 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
     childrenMap.set(page.notion_page_id, childIds);
   }
 
-  return { nodeMapByPageId: nodeMap, parentIdMap: parentMap, childrenIdsMap: childrenMap, processedIds };
+  return {
+    nodeMapByPageId: nodeMap,
+    originalPageMap,
+    parentIdMap: parentMap,
+    childrenIdsMap: childrenMap,
+    processedIds,
+  };
 }
 
 /**
@@ -293,43 +301,8 @@ function buildTreeNode(
  * @returns The NotionDatabasePage if found, undefined otherwise
  */
 function findPageById(pageId: string, lookupMaps: AtlasLookupMaps): NotionDatabasePage | undefined {
-  const treeNode = lookupMaps.nodeMapByPageId.get(pageId);
-  if (treeNode) {
-    // Convert AtlasTreeNode back to NotionDatabasePage format
-    const {
-      scopes,
-      articles,
-      sectionsAndPrimaryDocs,
-      annotations,
-      tenets,
-      scenarios,
-      scenarioVariations,
-      activeData,
-      agentScopeDocs,
-      neededResearch,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      generatedDocID,
-      ...pageData
-    } = treeNode;
-
-    // Reconstruct the child_*_ids arrays from embedded child nodes
-    const notionPage: NotionDatabasePage = {
-      ...pageData,
-      child_scope_ids: scopes.map((child) => child.notion_page_id),
-      child_article_ids: articles.map((child) => child.notion_page_id),
-      child_section_and_primary_doc_ids: sectionsAndPrimaryDocs.map((child) => child.notion_page_id),
-      child_annotation_ids: annotations.map((child) => child.notion_page_id),
-      child_tenet_ids: tenets.map((child) => child.notion_page_id),
-      child_scenario_ids: scenarios.map((child) => child.notion_page_id),
-      child_scenario_variation_ids: scenarioVariations.map((child) => child.notion_page_id),
-      child_active_data_ids: activeData.map((child) => child.notion_page_id),
-      child_agent_scope_ids: agentScopeDocs.map((child) => child.notion_page_id),
-      child_needed_research_ids: neededResearch.map((child) => child.notion_page_id),
-    } as NotionDatabasePage;
-
-    return notionPage;
-  }
-  return undefined;
+  // Efficient O(1) lookup using original NotionDatabasePage objects
+  return lookupMaps.originalPageMap.get(pageId);
 }
 
 /**
@@ -399,7 +372,7 @@ function findOrphanedNodes(
   lookupMaps: AtlasLookupMaps,
   scopeTrees: AtlasTreeNode[],
 ): NotionDatabasePage[] {
-  const { nodeMapByPageId: nodeMap } = lookupMaps;
+  const { nodeMapByPageId: nodeMap, originalPageMap } = lookupMaps;
 
   // Collect all page IDs that are connected to root trees
   const connectedIds = new Set<string>();
@@ -435,24 +408,13 @@ function findOrphanedNodes(
 
   // Find orphaned nodes
   const orphanedNodes: NotionDatabasePage[] = [];
-  for (const [pageId, treeNode] of nodeMap.entries()) {
+  for (const [pageId] of nodeMap.entries()) {
     if (!connectedIds.has(pageId)) {
-      // Convert AtlasTreeNode back to NotionDatabasePage
-      const {
-        scopes,
-        articles,
-        sectionsAndPrimaryDocs,
-        annotations,
-        tenets,
-        scenarios,
-        scenarioVariations,
-        activeData,
-        agentScopeDocs,
-        neededResearch,
-        generatedDocID,
-        ...pageData
-      } = treeNode;
-      orphanedNodes.push(pageData as NotionDatabasePage);
+      // Use original NotionDatabasePage from efficient lookup
+      const originalPage = originalPageMap.get(pageId);
+      if (originalPage) {
+        orphanedNodes.push(originalPage);
+      }
     }
   }
 
