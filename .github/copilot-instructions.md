@@ -64,6 +64,18 @@ This Next.js application enables change tracking for Atlas documents stored in N
 - Vitest is configured with `jsdom`, globals, automatic JSX, and v8 coverage.
 - Setup file `vitest.setup.ts` registers `@testing-library/jest-dom/vitest`.
 - Tests can use the `@/*` path alias.
+- Example tests:
+  - Unit: `app/shared/utils/__tests__/utils.test.ts`
+  - Component: `app/atlas/__tests__/type-chip.test.tsx`
+
+Scripts:
+
+```bash
+npm test                 # watch mode
+npm run test:run         # single run (CI-friendly)
+npm run test:coverage    # coverage report (text, html, lcov)
+npm run test:ui          # Vitest UI
+```
 
 AI agent notes for generating tests:
 
