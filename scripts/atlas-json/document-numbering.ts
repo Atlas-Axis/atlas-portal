@@ -111,15 +111,49 @@ export function logDocumentHierarchy(hierarchy: DocumentHierarchy, generatedNumb
 function sortSiblings<T extends { page: NotionDatabasePage }>(items: T[]): T[] {
   const copy = [...items];
   copy.sort((a, b) => {
-    const ao = a.page.sort_order;
-    const bo = b.page.sort_order;
-    const aHas = ao != null;
-    const bHas = bo != null;
-    if (aHas && bHas && ao! !== bo!) {
-      return ao! - bo!;
+    const aOrder = a.page.sort_order;
+    const bOrder = b.page.sort_order;
+    const aHasOrder = aOrder != null;
+    const bHasOrder = bOrder != null;
+    if (aHasOrder && bHasOrder && aOrder! !== bOrder!) {
+      return aOrder! - bOrder!;
     }
-    if (aHas && !bHas) return -1;
-    if (!aHas && bHas) return 1;
+    if (aHasOrder && !bHasOrder) return -1;
+    if (!aHasOrder && bHasOrder) return 1;
+
+    // When sort_order is null for both, use document type priority as secondary sort
+    const aType = a.page.atlas_document_type;
+    const bType = b.page.atlas_document_type;
+
+    // Define document type priority for consistent ordering
+    // Includes all document types to ensure consistent ordering across all databases
+    const typePriority: Record<string, number> = {
+      Core: 1,
+      'Active Data Controller': 2,
+      'Type Specification': 3,
+      Section: 4,
+      Article: 5,
+      Scope: 6,
+      Annotation: 7,
+      'Action Tenet': 8,
+      Scenario: 9,
+      'Scenario Variation': 10,
+      'Active Data': 11,
+      'Needed Research': 12,
+    };
+
+    const aPriority = typePriority[aType] || 999;
+    const bPriority = typePriority[bType] || 999;
+
+    if (aType !== bType) {
+      console.log('Mixed sibling types:', aType, bType);
+    }
+
+    if (aPriority !== bPriority) {
+      return aPriority - bPriority;
+    }
+
+    // Final fallback: use atlas_document_number
     const an = a.page.atlas_document_number || '';
     const bn = b.page.atlas_document_number || '';
     return compareDocNumbers(an, bn);
@@ -225,121 +259,87 @@ export function generateSectionNumber(
   hierarchy: DocumentHierarchy,
   generatedDocNumbers: Map<string, string>,
 ): string {
+  return generateSequentialSiblingNumber(page, hierarchy, generatedDocNumbers);
+}
+
+/**
+ * Generates document number using general sequential numbering for all sibling documents
+ * under the same parent, regardless of document type or database.
+ * This ensures all siblings are numbered sequentially (1, 2, 3, 4, etc.) based on their
+ * sort_order and document type priority.
+ * Pattern: [Parent Number].[Sequential Number]
+ */
+function generateSequentialSiblingNumber(
+  page: NotionDatabasePage,
+  hierarchy: DocumentHierarchy,
+  generatedDocNumbers: Map<string, string>,
+): string {
   const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
   if (!parentNumber) return '';
 
-  // Find all section siblings under the same parent using child_* only
+  // Find all sibling documents under the same parent, regardless of type or database
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
-  const sectionSiblings = sortSiblings(
+
+  const allSiblings = sortSiblings(
     Object.values(hierarchy).filter((item) => {
-      if (item.page.atlas_database_name !== 'Sections & Primary Docs' || item.page.atlas_document_type !== 'Section') {
-        return false;
-      }
       // Same parent via child_* relationships
       return hierarchy[parentId].children.includes(item.page.notion_page_id);
     }),
   );
 
-  const sectionIndex = sectionSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
-  if (sectionIndex === -1) return '';
-  return `${parentNumber}.${sectionIndex + 1}`;
+  const siblingIndex = allSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  if (siblingIndex === -1) return '';
+  return `${parentNumber}.${siblingIndex + 1}`;
+}
+
+/**
+ * Generates document number for all Primary Documents (Core, Active Data Controller, Type Specification)
+ * using sequential numbering across all types under the same parent section.
+ * Pattern: [Parent Section Number].[Sequential Number]
+ */
+function generatePrimaryDocumentNumber(
+  page: NotionDatabasePage,
+  hierarchy: DocumentHierarchy,
+  generatedDocNumbers: Map<string, string>,
+): string {
+  return generateSequentialSiblingNumber(page, hierarchy, generatedDocNumbers);
 }
 
 /**
  * Generates document number for Core documents
- * Pattern: [Parent Section Number].[Core Number]
+ * Pattern: [Parent Section Number].[Sequential Number]
  */
 export function generateCoreNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
   generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
-  if (!parentNumber) return '';
-
-  // Find all core siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
-  if (!parentId) return '';
-  const coreSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => {
-      if (item.page.atlas_database_name !== 'Sections & Primary Docs' || item.page.atlas_document_type !== 'Core') {
-        return false;
-      }
-      // Same parent via child_* relationships
-      return hierarchy[parentId].children.includes(item.page.notion_page_id);
-    }),
-  );
-
-  const coreIndex = coreSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
-  if (coreIndex === -1) return '';
-  return `${parentNumber}.${coreIndex + 1}`;
+  return generatePrimaryDocumentNumber(page, hierarchy, generatedDocNumbers);
 }
 
 /**
  * Generates document number for Active Data Controller documents
- * Pattern: [Parent Section Number].[Active Data Controller Number]
+ * Pattern: [Parent Section Number].[Sequential Number]
  */
 export function generateActiveDataControllerNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
   generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
-  if (!parentNumber) return '';
-
-  // Find all controller siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
-  if (!parentId) return '';
-  const controllerSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => {
-      if (
-        item.page.atlas_database_name !== 'Sections & Primary Docs' ||
-        item.page.atlas_document_type !== 'Active Data Controller'
-      ) {
-        return false;
-      }
-      // Same parent via child_* relationships
-      return hierarchy[parentId].children.includes(item.page.notion_page_id);
-    }),
-  );
-
-  const controllerIndex = controllerSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
-  if (controllerIndex === -1) return '';
-  return `${parentNumber}.${controllerIndex + 1}`;
+  return generatePrimaryDocumentNumber(page, hierarchy, generatedDocNumbers);
 }
 
 /**
  * Generates document number for Type Specification documents
- * Pattern: [Parent Section Number].[Type Specification Number]
+ * Pattern: [Parent Section Number].[Sequential Number]
  */
 export function generateTypeSpecificationNumber(
   page: NotionDatabasePage,
   hierarchy: DocumentHierarchy,
   generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
-  if (!parentNumber) return '';
-
-  // Find all type specification siblings under the same parent via child_* only
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
-  if (!parentId) return '';
-  const specSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => {
-      if (
-        item.page.atlas_database_name !== 'Sections & Primary Docs' ||
-        item.page.atlas_document_type !== 'Type Specification'
-      ) {
-        return false;
-      }
-      // Same parent via child_* relationships
-      return hierarchy[parentId].children.includes(item.page.notion_page_id);
-    }),
-  );
-
-  const specIndex = specSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
-  if (specIndex === -1) return '';
-  return `${parentNumber}.${specIndex + 1}`;
+  return generatePrimaryDocumentNumber(page, hierarchy, generatedDocNumbers);
 }
 
 /**
@@ -507,25 +507,7 @@ export function generateAgentNumber(
   hierarchy: DocumentHierarchy,
   generatedDocNumbers: Map<string, string>,
 ): string {
-  const parentNumber = getParentDocumentNumber(page, hierarchy, generatedDocNumbers);
-  if (!parentNumber) return '';
-
-  // Find all agent siblings under the same parent (supports internal nesting)
-  // Agent documents can be nested under sections or other agent documents
-  const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
-  if (!parentId) return '';
-  const agentSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => {
-      if (item.page.atlas_database_name !== 'Agent Scope Database') {
-        return false;
-      }
-      return hierarchy[parentId].children.includes(item.page.notion_page_id);
-    }),
-  );
-
-  const agentIndex = agentSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
-  if (agentIndex === -1) return '';
-  return `${parentNumber}.${agentIndex + 1}`;
+  return generateSequentialSiblingNumber(page, hierarchy, generatedDocNumbers);
 }
 
 /**
