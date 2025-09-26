@@ -59,27 +59,32 @@ export function preOrderTraversal(
     visitedIds.add(node.notion_page_id);
     visited.push(node);
 
-    const shouldContinue = callback(node, depth, parent);
-    if (!shouldContinue) {
-      return;
-    }
+    try {
+      const shouldContinue = callback(node, depth, parent);
+      if (!shouldContinue) {
+        return;
+      }
 
-    // Visit all children in order
-    const allChildren = [
-      ...node.scopes,
-      ...node.articles,
-      ...node.sectionsAndPrimaryDocs,
-      ...node.annotations,
-      ...node.tenets,
-      ...node.scenarios,
-      ...node.scenarioVariations,
-      ...node.activeData,
-      ...node.agentScopeDocs,
-      ...node.neededResearch,
-    ];
+      // Visit all children in order
+      const allChildren = [
+        ...node.scopes,
+        ...node.articles,
+        ...node.sectionsAndPrimaryDocs,
+        ...node.annotations,
+        ...node.tenets,
+        ...node.scenarios,
+        ...node.scenarioVariations,
+        ...node.activeData,
+        ...node.agentScopeDocs,
+        ...node.neededResearch,
+      ];
 
-    for (const child of allChildren) {
-      traverse(child, depth + 1, node);
+      for (const child of allChildren) {
+        traverse(child, depth + 1, node);
+      }
+    } finally {
+      // IMPORTANT: Remove from visitedIds when backtracking to allow legitimate multiple references
+      visitedIds.delete(node.notion_page_id);
     }
   }
 
@@ -130,27 +135,32 @@ export function postOrderTraversal(
 
     visitedIds.add(node.notion_page_id);
 
-    // Visit all children first
-    const allChildren = [
-      ...node.scopes,
-      ...node.articles,
-      ...node.sectionsAndPrimaryDocs,
-      ...node.annotations,
-      ...node.tenets,
-      ...node.scenarios,
-      ...node.scenarioVariations,
-      ...node.activeData,
-      ...node.agentScopeDocs,
-      ...node.neededResearch,
-    ];
+    try {
+      // Visit all children first
+      const allChildren = [
+        ...node.scopes,
+        ...node.articles,
+        ...node.sectionsAndPrimaryDocs,
+        ...node.annotations,
+        ...node.tenets,
+        ...node.scenarios,
+        ...node.scenarioVariations,
+        ...node.activeData,
+        ...node.agentScopeDocs,
+        ...node.neededResearch,
+      ];
 
-    for (const child of allChildren) {
-      traverse(child, depth + 1, node);
+      for (const child of allChildren) {
+        traverse(child, depth + 1, node);
+      }
+
+      // Visit current node after children
+      visited.push(node);
+      callback(node, depth, parent);
+    } finally {
+      // IMPORTANT: Remove from visitedIds when backtracking to allow legitimate multiple references
+      visitedIds.delete(node.notion_page_id);
     }
-
-    // Visit current node after children
-    visited.push(node);
-    callback(node, depth, parent);
   }
 
   traverse(root, 0);
