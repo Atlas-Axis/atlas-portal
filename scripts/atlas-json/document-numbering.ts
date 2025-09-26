@@ -67,6 +67,47 @@ export function buildDocumentHierarchy(pages: NotionDatabasePage[]): DocumentHie
   return hierarchy;
 }
 
+/**
+ * Logs a visualization of the document hierarchy using generated numbers and types.
+ * The output groups by root nodes and prints a tree with numbers and types.
+ */
+export function logDocumentHierarchy(hierarchy: DocumentHierarchy, generatedNumbers: Map<string, string>): void {
+  // Build reverse index from parentId to children for quick traversal
+  const childrenByParent = new Map<string | undefined, string[]>();
+  for (const [id, item] of Object.entries(hierarchy)) {
+    const parentId = item.parentId;
+    const arr = childrenByParent.get(parentId) || [];
+    arr.push(id);
+    childrenByParent.set(parentId, arr);
+  }
+
+  function sortByDocNumber(ids: string[]): string[] {
+    return [...ids].sort((a, b) => {
+      const an = generatedNumbers.get(a) || '';
+      const bn = generatedNumbers.get(b) || '';
+      return compareDocNumbers(an, bn);
+    });
+  }
+
+  function printNode(id: string, indent: string) {
+    const page = hierarchy[id]?.page;
+    const num = generatedNumbers.get(id) || '';
+    const type = page?.atlas_document_type || 'Unknown';
+    console.log(`${indent}- ${num} [${type}] (${id})`);
+
+    const children = childrenByParent.get(id) || [];
+    for (const childId of sortByDocNumber(children)) {
+      printNode(childId, indent + '  ');
+    }
+  }
+
+  // Find roots (items without parentId)
+  const rootIds = childrenByParent.get(undefined) || [];
+  for (const rootId of sortByDocNumber(rootIds)) {
+    printNode(rootId, '');
+  }
+}
+
 function sortSiblings<T extends { page: NotionDatabasePage }>(items: T[]): T[] {
   const copy = [...items];
   copy.sort((a, b) => {
@@ -488,10 +529,11 @@ export function generateAgentNumber(
 }
 
 /**
- * Main function to generate document numbers for all pages
+ * Main function to generate document numbers for all pages.
+ * Returns a map of page ID to document number.
  */
 export function generateDocumentNumbers(
-  pagesByDatabase: Record<AtlasDatabaseName, NotionDatabasePage[]>,
+  pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
 ): Map<string, string> {
   const generatedDocNumbers = new Map<string, string>();
 
