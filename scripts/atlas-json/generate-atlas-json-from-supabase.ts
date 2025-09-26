@@ -218,7 +218,15 @@ function mapPageToJson(row: NotionDatabasePage, generatedDocNumber: string): Atl
     const match = row.canonical_document_title.match(/^[^\s-]+/);
     if (match) originalDocNumber = match[0];
   }
-  return { type, generatedDocNumber, originalDocNumber, name, content, uuid: row.notion_page_id };
+  return {
+    type,
+    generatedDocNumber,
+    originalDocNumber,
+    name,
+    content,
+    uuid: row.notion_page_id,
+    inactive: false,
+  };
 }
 
 // Entry point function: generate categorized JSON from Supabase Atlas pages

@@ -147,6 +147,7 @@ function parseSection(document: Document, sectionId: string, category: GitHubAtl
       name,
       content,
       uuid: null,
+      inactive: false,
     });
   }
 

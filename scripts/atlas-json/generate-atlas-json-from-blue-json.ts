@@ -95,7 +95,11 @@ function inferAtlasTypeFromKeys(node: BlueNode): AtlasDocumentType | null {
   return null;
 }
 
-function extractField(node: BlueNode, prefix: string, field: 'name' | 'content' | 'doc_no' | 'uuid'): string {
+function extractField(
+  node: BlueNode,
+  prefix: string,
+  field: 'name' | 'content' | 'doc_no' | 'uuid' | 'inactive',
+): string {
   const key = `${prefix}_${field}`;
   const value = node[key] as string | undefined;
   return (value ?? '').toString();
@@ -124,6 +128,7 @@ function makeDocumentFromNode(node: BlueNode): { doc: AtlasDocumentJson; prefix:
     }
   }
   const uuid = extractField(node, presentPrefix, 'uuid') || null;
+  const inactive = extractField(node, presentPrefix, 'inactive') === '1' || false;
 
   return {
     doc: {
@@ -133,6 +138,7 @@ function makeDocumentFromNode(node: BlueNode): { doc: AtlasDocumentJson; prefix:
       name,
       content,
       uuid,
+      inactive,
     },
     prefix: presentPrefix,
   };

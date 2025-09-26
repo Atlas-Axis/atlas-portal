@@ -7,6 +7,7 @@ export interface AtlasDocumentJson {
   name: string;
   content: string;
   uuid: string | null;
+  inactive: boolean;
 }
 
 export interface AtlasCategoryJson {
