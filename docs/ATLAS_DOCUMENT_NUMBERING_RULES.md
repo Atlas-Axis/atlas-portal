@@ -14,7 +14,14 @@ Atlas document numbers follow a hierarchical numbering system where each documen
 4. **Special Directories**: Some document types use special directory numbers (0, 3, 4, 6) for organizational purposes
 5. **Global Numbering**: Some document types (Needed Research) use global numbering independent of hierarchy
 
-## Document Numbering Rules by Type
+## Document Type Categories
+
+- **Immutable Documents**: Scopes, Articles, Sections
+- **Primary Documents**: Core, Active Data Controller
+- **Supporting Documents**: Active Data, Annotation, Needed Research, Action Tenet, Scenario, Scenario Variation
+  - Supporting Documents must always have a Target Document, which is an Immutable or Primary Document they attach to (for example, `Active Data` attaches to an `Active Data Controller`). The Target Document can also be referred to as the parent document.
+
+## Document Numbering Rules by Document Type
 
 ### 1. Scope Documents
 
