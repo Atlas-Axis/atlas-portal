@@ -29,16 +29,16 @@ export interface NotionDatabasePage {
   parent_notion_page_id: string | null; // UUID - Notion page ID of the parent page
 
   // Child relationships grouped by Atlas database type
-  child_scope_ids: Json; // JSON array of UUID strings
-  child_article_ids: Json; // JSON array of UUID strings
-  child_section_and_primary_doc_ids: Json; // JSON array of UUID strings
-  child_annotation_ids: Json; // JSON array of UUID strings
-  child_tenet_ids: Json; // JSON array of UUID strings
-  child_scenario_ids: Json; // JSON array of UUID strings
-  child_scenario_variation_ids: Json; // JSON array of UUID strings
-  child_active_data_ids: Json; // JSON array of UUID strings
-  child_agent_scope_ids: Json; // JSON array of UUID strings
-  child_needed_research_ids: Json; // JSON array of UUID strings
+  child_scope_ids: string[]; // JSON array of UUID strings
+  child_article_ids: string[]; // JSON array of UUID strings
+  child_section_and_primary_doc_ids: string[]; // JSON array of UUID strings
+  child_annotation_ids: string[]; // JSON array of UUID strings
+  child_tenet_ids: string[]; // JSON array of UUID strings
+  child_scenario_ids: string[]; // JSON array of UUID strings
+  child_scenario_variation_ids: string[]; // JSON array of UUID strings
+  child_active_data_ids: string[]; // JSON array of UUID strings
+  child_agent_scope_ids: string[]; // JSON array of UUID strings
+  child_needed_research_ids: string[]; // JSON array of UUID strings
 
   // Additional fields for specific document types (Type Specification documents)
   extra_fields: Json; // JSONB - Additional fields stored as JSON key-value pairs
@@ -53,3 +53,6 @@ export interface NotionDatabasePage {
   date_valid_from?: string | null;
   date_valid_to?: string | null;
 }
+
+// A key of NotionDatabasePage which starts with "child_"
+export type NotionDatabasePageRelationshipProperty = Extract<keyof NotionDatabasePage, `child_${string}_ids`>;
