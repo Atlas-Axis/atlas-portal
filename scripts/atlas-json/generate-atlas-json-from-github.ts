@@ -6,6 +6,8 @@
  * list of AtlasDocumentJson rows. It mirrors the HTML table parsing approach in
  * atlas-github-html-analytics.ts but outputs a machine-friendly JSON file.
  *
+ * @see {@link ../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md} for comprehensive rules and logic for generating document numbers for Atlas documents based on their hierarchy and position within the Atlas structure.
+ *
  * USAGE:
  *   npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
  *
