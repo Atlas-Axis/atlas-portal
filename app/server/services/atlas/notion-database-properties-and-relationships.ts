@@ -50,6 +50,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.ARTICLES]: 'Articles',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },
   [ATLAS_DATABASES.ARTICLES]: {
@@ -63,6 +64,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
@@ -79,6 +81,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
     parentPropertyName: 'Parent Doc',
     // subItemsPropertyName: 'Subdocs',
@@ -97,7 +100,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
       [ATLAS_DATABASES.AGENTS]: 'Sub-item',
-      // [ATLAS_DATABASES.NEEDED_RESEARCH]: 'REL_NEEDED_RESEARCH',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
     parentPropertyName: 'Parent item',
     // subItemsPropertyName: 'Sub-item',
@@ -110,7 +113,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentType: 'Type',
       content: 'Content',
     },
-    childRelationships: {},
+    childRelationships: {
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+    },
   },
   [ATLAS_DATABASES.TENETS]: {
     properties: {
@@ -122,6 +127,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },
   [ATLAS_DATABASES.ACTIVE_DATA]: {
@@ -132,7 +138,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentType: 'Type',
       content: 'Content',
     },
-    childRelationships: {},
+    childRelationships: {
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+    },
   },
   [ATLAS_DATABASES.SCENARIOS]: {
     properties: {
@@ -144,6 +152,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
@@ -154,11 +163,11 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentType: 'Type',
       content: 'Description',
     },
-    childRelationships: {},
+    childRelationships: {
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+    },
   },
-  // ❓
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
-    // ✅
     properties: {
       atlasFullDocumentTitle: 'Name',
       atlasDocumentNo: 'Doc No',
@@ -166,7 +175,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentType: 'Type',
       content: 'Content',
     },
-    // ❓
     childRelationships: {},
   },
 } as const;
