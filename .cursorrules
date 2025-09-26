@@ -153,7 +153,9 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - `sync_lock_expires_at` (TIMESTAMPTZ) - Auto-unlock time for stale locks
 - `created_at`, `updated_at` - Standard timestamps
 
-## Atlas Database Names & Document Types
+# Atlas
+
+## Atlas Databases & Document Types
 
 ### Atlas Database Names
 
@@ -190,9 +192,9 @@ Each document in the Atlas has a specific type from the following enum:
 - **Scenario Variation** - Individual scenario variations
 - **Needed Research** - Research items
 
-## Atlas Document Hierarchy
+### Atlas Document Hierarchy
 
-The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents. "Scopes" and "Scopes" are the two root Atlas databases:
+The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents. "Scopes" and "Agent Scope Database" are the two root Atlas databases:
 
 ```
 Scopes
