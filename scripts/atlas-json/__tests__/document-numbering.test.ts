@@ -367,8 +367,6 @@ describe('Atlas Document Numbering', () => {
     if (DEBUG_LOGGING) {
       const all = [scope, art, sec, adc, ad1];
       const hierarchy = buildDocumentHierarchy(all);
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { logDocumentHierarchy } = require('../document-numbering');
       logDocumentHierarchy(hierarchy, numbers);
     }
     expect(numbers.get('adc')).toBe('A.0.1.1.1');
