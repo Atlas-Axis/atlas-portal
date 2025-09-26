@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run",
+    "test:run": "DEBUG_LOGGING=1 vitest run",
     "test:coverage": "vitest run --coverage",
     "ngrok": "ngrok http 3000",
     "trigger:dev": "npx trigger.dev@latest dev",
