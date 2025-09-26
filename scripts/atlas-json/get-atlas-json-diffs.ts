@@ -126,7 +126,7 @@ function collectFromAtlasJson(data: JsonValue, includeInactives: boolean): Categ
   if (!Array.isArray(data)) return result;
   for (const cat of data) {
     if (!isAtlasCategoryJson(cat)) continue;
-    const docs: AtlasDocumentJson[] = Array.isArray(cat.documents) ? cat.documents : [];
+    const docs: unknown[] = Array.isArray(cat.documents) ? cat.documents : [];
     for (const d of docs) {
       if (!isAtlasDocumentJson(d)) continue;
       if (!includeInactives && !!d.inactive) continue;
