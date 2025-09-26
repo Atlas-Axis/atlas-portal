@@ -579,3 +579,29 @@ Helper modules (imported by scripts):
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
 
 Important: Do not use or rely on `parent_notion_page_id` to build the Atlas tree structure. Build hierarchy using the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) starting from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy).
+
+## Critical Edge Cases: Child Relationship Arrays
+
+**CRITICAL: Core Document Filtering Logic**
+
+The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays present complex filtering challenges for nested Core documents:
+
+1. **The Child Array Problem**: When a Section contains nested Core documents (Core → Core → Core), ALL nested Core document IDs appear in the parent Section's `child_section_and_primary_doc_ids` array, not just direct children.
+
+2. **Filtering Challenge**: The `filterDirectChildren` function must distinguish between:
+   - **Direct children** (Core documents that should be immediate children of the Section)
+   - **Nested descendants** (Core documents that are descendants of other Core documents)
+
+3. **The Solution**: Use `parent_notion_page_id` as additional context:
+   - If `parent_notion_page_id` is NULL → Direct child of the filtering parent
+   - If `parent_notion_page_id` matches another Core document → Nested descendant, should be filtered out
+   - **Exception**: When a Core document filters its own descendants, it must accept descendants where `parent_notion_page_id` matches its own ID
+
+4. **Implementation Requirements**:
+   - Pass `parentPageId` parameter to `filterDirectChildren`
+   - Check ancestry chain: `page.parent_notion_page_id === null || page.parent_notion_page_id === parentPageId`
+   - Protects against circular references in ancestry checking
+
+5. **Real-World Impact**: Without proper filtering, tree building creates incorrect hierarchy where nested Core documents appear as siblings instead of proper parent-descendant relationships.
+
+**Agent Scope Database Special Case**: The `child_agent_scope_ids` array in Agent Scope Database follows the same pattern and requires identical filtering logic for nested Core and Active Data Controller documents.
