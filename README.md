@@ -41,6 +41,41 @@ A Next.js application that enables change tracking for Atlas documents stored in
 - **Husky** (Git hooks)
 - **Vitest** (Testing)
 
+## 🧪 Testing (Vitest)
+
+This project uses Vitest with jsdom and React Testing Library.
+
+- Config: `vitest.config.ts` (jsdom env, globals, coverage via v8, automatic JSX)
+- Setup: `vitest.setup.ts` (registers `@testing-library/jest-dom/vitest`)
+- Path alias: `@/*` works in tests (matches project tsconfig)
+- Example tests:
+  - Unit: `app/shared/utils/__tests__/utils.test.ts`
+  - Component: `app/atlas/__tests__/type-chip.test.tsx`
+
+Scripts:
+
+```bash
+npm test                 # watch mode
+npm run test:run         # single run (CI-friendly)
+npm run test:coverage    # coverage report (text, html, lcov)
+npm run test:ui          # Vitest UI
+```
+
+Tips:
+
+- Automatic JSX is enabled; you do not need to `import React` in tests.
+- Default environment is `jsdom`. For Node-only tests add at the top of a file:
+  `// @vitest-environment node`
+- Prefer Testing Library patterns: `render`, `screen`, and user interactions from `@testing-library/user-event`.
+- To mock Next.js modules (e.g., navigation), you can use:
+  ```ts
+  vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+  ```
+- To mock global fetch:
+  ```ts
+  vi.stubGlobal('fetch', vi.fn());
+  ```
+
 ## 🗄️ Database Schema
 
 ### Core Tables

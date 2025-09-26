@@ -59,6 +59,25 @@ This Next.js application enables change tracking for Atlas documents stored in N
 - Husky (Git hooks)
 - Vitest (Testing)
 
+## Testing Guidance (Vitest)
+
+- The project uses Vitest with `jsdom` and React Testing Library.
+- Config: `vitest.config.ts` enables globals, automatic JSX via esbuild, and coverage via v8.
+- Setup: `vitest.setup.ts` registers `@testing-library/jest-dom/vitest`.
+- Path alias `@/*` is available in tests.
+
+AI agent notes for generating tests:
+
+- Prefer RTL patterns (`render`, `screen`); avoid testing implementation details.
+- Use automatic JSX; do not add `import React` unless necessary.
+- Default env is `jsdom`. For Node-only tests, add `// @vitest-environment node` to the top of the file.
+- Mock Next.js routing when needed:
+  ```ts
+  vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
+  ```
+- Mock `fetch` or other globals with `vi.stubGlobal`.
+- Keep tests colocated under `__tests__` or alongside files using `*.test.ts(x)` naming.
+
 # Database Schema
 
 ## Core Tables (Detailed)
