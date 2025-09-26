@@ -218,7 +218,7 @@ Each document in the Atlas has a specific type from the following enum:
 
 ## Atlas Document Hierarchy
 
-The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between different types of documents. "Scopes" and "Agent Scope Database" are the two root Atlas databases.
+The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between documents in different Atlas databases. "Scopes" and "Agent Scope Database" are the two root Atlas databases.
 
 ```
 Scopes
