@@ -44,7 +44,7 @@ export function buildAtlasTree(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
   options: TreeConstructionOptions = {},
 ): AtlasTreeResult {
-  const { assignDocumentNumbers = true, verbose = true, maxDepth = 50 } = options;
+  const { assignDocumentNumbers = true, verbose = true, maxDepth = 50, reportMissingChildNodes = false } = options;
 
   if (verbose) {
     console.log('🌳 Building Atlas tree structure...');
@@ -71,7 +71,7 @@ export function buildAtlasTree(
 
   for (const rootScope of rootScopes) {
     try {
-      const treeNode = buildTreeNode(rootScope, lookupMaps, 0, maxDepth, verbose);
+      const treeNode = buildTreeNode(rootScope, lookupMaps, 0, maxDepth, verbose, reportMissingChildNodes);
       scopeTrees.push(treeNode);
     } catch (error) {
       if (error instanceof Error && error.message.includes('circular reference')) {
@@ -306,6 +306,7 @@ function buildTreeNode(
   depth: number,
   maxDepth: number,
   verbose: boolean,
+  reportMissingChildNodes: boolean = false,
 ): AtlasTreeNode {
   // TODO: Remove unused vars
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -366,7 +367,14 @@ function buildTreeNode(
             const childPage = findPageById(childId, lookupMaps);
             if (childPage) {
               try {
-                const childTreeNode = buildTreeNode(childPage, lookupMaps, depth + 1, maxDepth, verbose);
+                const childTreeNode = buildTreeNode(
+                  childPage,
+                  lookupMaps,
+                  depth + 1,
+                  maxDepth,
+                  verbose,
+                  reportMissingChildNodes,
+                );
                 childNodes.push(childTreeNode);
               } catch (error) {
                 if (error instanceof Error && error.message.includes('circular reference')) {
@@ -376,7 +384,9 @@ function buildTreeNode(
                 throw error;
               }
             } else {
-              console.error(`Missing child document referenced in ${type}:`, childId);
+              if (reportMissingChildNodes) {
+                console.error(`Missing child document referenced in ${type}:`, childId);
+              }
             }
           } else {
             console.error(`Invalid child ID format in ${page.notion_page_id}:`, childId);
