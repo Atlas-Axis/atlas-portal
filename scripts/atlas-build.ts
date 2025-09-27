@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { buildAtlasTreeWithValidation } from './atlas-json/atlas-tree-system';
+import type { TreeConstructionOptions } from './atlas-json/atlas-tree-types';
 import { loadEnv } from './utils/load-env';
 
 async function main() {
@@ -13,18 +14,23 @@ async function main() {
     // Load Atlas data
     const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
+    // Configure options
+    const options: TreeConstructionOptions = {
+      reportMissingChildNodes: false,
+      reportOrphanedNodes: false,
+    };
+
     // Build tree structure with document numbering and validation
-    const result = await buildAtlasTreeWithValidation(atlasData, {
-      assignDocumentNumbers: true,
-      verbose: true,
-      validateIntegrity: true,
-      reportMissingChildNodes: false, // Set to true to show missing_child errors
-      reportOrphanedNodes: false, // Set to true to show orphaned_node errors in detail
-    });
+    const result = await buildAtlasTreeWithValidation(atlasData, options);
 
     // Access the results
     console.log(`Built ${result.scopeTrees.length} scope trees`);
-    console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
+
+    // Only show orphaned nodes count if reporting is enabled
+    if (options.reportOrphanedNodes) {
+      console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
+    }
+
     console.log(`Generated ${result.documentNumbers.size} document numbers`);
 
     // Check for validation errors
