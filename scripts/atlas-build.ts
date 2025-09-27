@@ -1,4 +1,4 @@
-// #!/usr/bin/env node
+#!/usr/bin/env node
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { buildAtlasTreeWithValidation } from './atlas-json/atlas-tree-system';
 import { loadEnv } from './utils/load-env';
@@ -19,6 +19,7 @@ async function main() {
       verbose: true,
       validateIntegrity: true,
       reportMissingChildNodes: false, // Set to true to show missing_child errors
+      reportOrphanedNodes: false, // Set to true to show orphaned_node errors in detail
     });
 
     // Access the results
@@ -29,7 +30,17 @@ async function main() {
     // Check for validation errors
     if (result.validationSummary.criticalErrors > 0 || result.validationSummary.warnings > 0) {
       const missingChildCount = result.validationSummary.errorTypes.missing_child || 0;
-      const silencedMessage = missingChildCount > 0 ? ` (${missingChildCount} missing_child errors silenced)` : '';
+      const orphanedNodeCount = result.validationSummary.errorTypes.orphaned_node || 0;
+
+      const silencedMessages: string[] = [];
+      if (missingChildCount > 0) {
+        silencedMessages.push(`${missingChildCount} missing_child errors silenced`);
+      }
+      if (orphanedNodeCount > 0) {
+        silencedMessages.push(`${orphanedNodeCount} orphaned_node errors silenced`);
+      }
+
+      const silencedMessage = silencedMessages.length > 0 ? ` (${silencedMessages.join(', ')})` : '';
       console.log(`Validation summary${silencedMessage}:`, result.validationSummary);
     }
   } catch (error) {

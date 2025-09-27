@@ -81,10 +81,19 @@ export async function buildAtlasTreeWithValidation(
   if (validateIntegrity) {
     const validationErrors = validateTreeIntegrity(result.scopeTrees, result.orphanedNodes, pagesByDatabase);
 
-    validationSummary = createValidationSummary(validationErrors, treeOptions.reportMissingChildNodes);
+    validationSummary = createValidationSummary(
+      validationErrors,
+      treeOptions.reportMissingChildNodes,
+      treeOptions.reportOrphanedNodes,
+    );
 
     if (validationErrors.length > 0) {
-      logValidationErrors(validationErrors, treeOptions.verbose, treeOptions.reportMissingChildNodes);
+      logValidationErrors(
+        validationErrors,
+        treeOptions.verbose,
+        treeOptions.reportMissingChildNodes,
+        treeOptions.reportOrphanedNodes,
+      );
     }
   }
 

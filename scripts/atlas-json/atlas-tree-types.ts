@@ -131,4 +131,6 @@ export interface TreeConstructionOptions {
   maxDepth?: number;
   /** Whether to report missing child nodes as errors (false by default since they're often filtered by NOTION_DATABASE_FILTERS) */
   reportMissingChildNodes?: boolean;
+  /** Whether to report orphaned nodes in detail (false by default, only shows count in summary) */
+  reportOrphanedNodes?: boolean;
 }

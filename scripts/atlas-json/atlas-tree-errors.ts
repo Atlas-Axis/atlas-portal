@@ -422,29 +422,60 @@ function validateTreeNode(node: AtlasTreeNode): TreeConstructionError[] {
  * @param errors - Array of validation errors to log
  * @param verbose - Whether to include detailed context information
  * @param reportMissingChildNodes - Whether to report missing_child errors (false by default since they're often expected due to NOTION_DATABASE_FILTERS)
+ * @param reportOrphanedNodes - Whether to report orphaned_node errors in detail (false by default, only shows count in summary)
  */
 export function logValidationErrors(
   errors: TreeConstructionError[],
   verbose: boolean = false,
   reportMissingChildNodes: boolean = false,
+  reportOrphanedNodes: boolean = false,
 ): void {
-  // Filter out missing_child errors if reportMissingChildNodes is false
-  const filteredErrors = reportMissingChildNodes ? errors : errors.filter((error) => error.type !== 'missing_child');
+  // Filter out missing_child and orphaned_node errors based on flags
+  let filteredErrors = reportMissingChildNodes ? errors : errors.filter((error) => error.type !== 'missing_child');
+  filteredErrors = reportOrphanedNodes
+    ? filteredErrors
+    : filteredErrors.filter((error) => error.type !== 'orphaned_node');
 
   if (filteredErrors.length === 0) {
-    if (!reportMissingChildNodes && errors.some((error) => error.type === 'missing_child')) {
-      const missingChildCount = errors.filter((error) => error.type === 'missing_child').length;
-      console.log(
-        `✅ No validation errors found (${missingChildCount} missing_child errors silenced - use reportMissingChildNodes: true to show them)`,
-      );
+    const missingChildCount = !reportMissingChildNodes
+      ? errors.filter((error) => error.type === 'missing_child').length
+      : 0;
+    const orphanedNodeCount = !reportOrphanedNodes
+      ? errors.filter((error) => error.type === 'orphaned_node').length
+      : 0;
+
+    const silencedMessages: string[] = [];
+    if (missingChildCount > 0) {
+      silencedMessages.push(`${missingChildCount} missing_child errors silenced`);
+    }
+    if (orphanedNodeCount > 0) {
+      silencedMessages.push(`${orphanedNodeCount} orphaned_node errors silenced`);
+    }
+
+    if (silencedMessages.length > 0) {
+      console.log(`✅ No validation errors found (${silencedMessages.join(', ')})`);
     } else {
       console.log('✅ No validation errors found');
     }
     return;
   }
 
-  const silencedCount = errors.length - filteredErrors.length;
-  const silencedMessage = silencedCount > 0 ? ` (${silencedCount} missing_child errors silenced)` : '';
+  const missingChildSilenced = !reportMissingChildNodes
+    ? errors.filter((error) => error.type === 'missing_child').length
+    : 0;
+  const orphanedNodeSilenced = !reportOrphanedNodes
+    ? errors.filter((error) => error.type === 'orphaned_node').length
+    : 0;
+
+  const silencedMessages: string[] = [];
+  if (missingChildSilenced > 0) {
+    silencedMessages.push(`${missingChildSilenced} missing_child errors silenced`);
+  }
+  if (orphanedNodeSilenced > 0) {
+    silencedMessages.push(`${orphanedNodeSilenced} orphaned_node errors silenced`);
+  }
+
+  const silencedMessage = silencedMessages.length > 0 ? ` (${silencedMessages.join(', ')})` : '';
   console.error(`❌ Found ${filteredErrors.length} validation errors${silencedMessage}:`);
 
   for (const error of filteredErrors) {
@@ -462,11 +493,13 @@ export function logValidationErrors(
  *
  * @param errors - Array of validation errors
  * @param reportMissingChildNodes - Whether to count missing_child errors as critical (false by default since they're often expected due to NOTION_DATABASE_FILTERS)
+ * @param reportOrphanedNodes - Whether to count orphaned_node errors as critical (false by default, only shows count in summary)
  * @returns Summary report object
  */
 export function createValidationSummary(
   errors: TreeConstructionError[],
   reportMissingChildNodes: boolean = false,
+  reportOrphanedNodes: boolean = false,
 ): {
   totalErrors: number;
   errorTypes: Record<string, number>;
@@ -480,7 +513,11 @@ export function createValidationSummary(
   for (const error of errors) {
     errorTypes[error.type] = (errorTypes[error.type] || 0) + 1;
 
-    if (error.type === 'circular_reference' || (error.type === 'missing_child' && reportMissingChildNodes)) {
+    if (
+      error.type === 'circular_reference' ||
+      (error.type === 'missing_child' && reportMissingChildNodes) ||
+      (error.type === 'orphaned_node' && reportOrphanedNodes)
+    ) {
       criticalErrors++;
     } else {
       warnings++;
