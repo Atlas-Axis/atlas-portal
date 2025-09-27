@@ -421,16 +421,33 @@ function validateTreeNode(node: AtlasTreeNode): TreeConstructionError[] {
  *
  * @param errors - Array of validation errors to log
  * @param verbose - Whether to include detailed context information
+ * @param reportMissingChildNodes - Whether to report missing_child errors (false by default since they're often expected due to NOTION_DATABASE_FILTERS)
  */
-export function logValidationErrors(errors: TreeConstructionError[], verbose: boolean = false): void {
-  if (errors.length === 0) {
-    console.log('✅ No validation errors found');
+export function logValidationErrors(
+  errors: TreeConstructionError[],
+  verbose: boolean = false,
+  reportMissingChildNodes: boolean = false,
+): void {
+  // Filter out missing_child errors if reportMissingChildNodes is false
+  const filteredErrors = reportMissingChildNodes ? errors : errors.filter((error) => error.type !== 'missing_child');
+
+  if (filteredErrors.length === 0) {
+    if (!reportMissingChildNodes && errors.some((error) => error.type === 'missing_child')) {
+      const missingChildCount = errors.filter((error) => error.type === 'missing_child').length;
+      console.log(
+        `✅ No validation errors found (${missingChildCount} missing_child errors silenced - use reportMissingChildNodes: true to show them)`,
+      );
+    } else {
+      console.log('✅ No validation errors found');
+    }
     return;
   }
 
-  console.error(`❌ Found ${errors.length} validation errors:`);
+  const silencedCount = errors.length - filteredErrors.length;
+  const silencedMessage = silencedCount > 0 ? ` (${silencedCount} missing_child errors silenced)` : '';
+  console.error(`❌ Found ${filteredErrors.length} validation errors${silencedMessage}:`);
 
-  for (const error of errors) {
+  for (const error of filteredErrors) {
     console.error(`\n🔍 ${error.type.toUpperCase()}: ${error.message}`);
     console.error(`   Page ID: ${error.pageId}`);
 
@@ -444,9 +461,13 @@ export function logValidationErrors(errors: TreeConstructionError[], verbose: bo
  * Creates a summary report of validation results.
  *
  * @param errors - Array of validation errors
+ * @param reportMissingChildNodes - Whether to count missing_child errors as critical (false by default since they're often expected due to NOTION_DATABASE_FILTERS)
  * @returns Summary report object
  */
-export function createValidationSummary(errors: TreeConstructionError[]): {
+export function createValidationSummary(
+  errors: TreeConstructionError[],
+  reportMissingChildNodes: boolean = false,
+): {
   totalErrors: number;
   errorTypes: Record<string, number>;
   criticalErrors: number;
@@ -459,7 +480,7 @@ export function createValidationSummary(errors: TreeConstructionError[]): {
   for (const error of errors) {
     errorTypes[error.type] = (errorTypes[error.type] || 0) + 1;
 
-    if (error.type === 'circular_reference' || error.type === 'missing_child') {
+    if (error.type === 'circular_reference' || (error.type === 'missing_child' && reportMissingChildNodes)) {
       criticalErrors++;
     } else {
       warnings++;

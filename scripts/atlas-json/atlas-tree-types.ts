@@ -129,4 +129,6 @@ export interface TreeConstructionOptions {
   verbose?: boolean;
   /** Maximum tree depth to prevent infinite recursion */
   maxDepth?: number;
+  /** Whether to report missing child nodes as errors (false by default since they're often filtered by NOTION_DATABASE_FILTERS) */
+  reportMissingChildNodes?: boolean;
 }

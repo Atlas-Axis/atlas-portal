@@ -18,6 +18,7 @@ async function main() {
       assignDocumentNumbers: true,
       verbose: true,
       validateIntegrity: true,
+      reportMissingChildNodes: false, // Set to true to show missing_child errors
     });
 
     // Access the results
@@ -26,8 +27,10 @@ async function main() {
     console.log(`Generated ${result.documentNumbers.size} document numbers`);
 
     // Check for validation errors
-    if (result.validationSummary.criticalErrors > 0) {
-      console.error('Critical errors found:', result.validationSummary);
+    if (result.validationSummary.criticalErrors > 0 || result.validationSummary.warnings > 0) {
+      const missingChildCount = result.validationSummary.errorTypes.missing_child || 0;
+      const silencedMessage = missingChildCount > 0 ? ` (${missingChildCount} missing_child errors silenced)` : '';
+      console.log(`Validation summary${silencedMessage}:`, result.validationSummary);
     }
   } catch (error) {
     console.error('Error:', error);
