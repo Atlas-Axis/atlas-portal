@@ -37,6 +37,7 @@ export interface AtlasTreeNode {
   // Tree-specific fields
   /** Generated document number assigned during tree traversal */
   generatedDocID?: string;
+  generatedDocName?: string; // TODO: Mimic `makeDocTitle` from PH (see my Raycast notes for logic... Create helper function based on Atlas db name)
 
   // Embedded child relationships (replacing ID arrays with actual nodes)
   /** Child Scope documents */
