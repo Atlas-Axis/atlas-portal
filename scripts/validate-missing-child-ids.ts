@@ -47,13 +47,13 @@ async function main() {
     console.error('Missing child IDs:', ids);
     console.error('Example errors:', missingChildrenErrors.slice(0, 5));
 
-    // Log all the IDs into `missing_child_ids.log`
+    // Log all the IDs into `.debug-data/missing_child_ids.log`
     const fs = await import('fs/promises');
-    await fs.writeFile('missing_child_ids.log', ids.join('\n'), 'utf-8');
-    console.log('Wrote missing child IDs to missing_child_ids.log');
+    await fs.writeFile('.debug-data/missing_child_ids.log', ids.join('\n'), 'utf-8');
+    console.log('Wrote missing child IDs to .debug-data/missing_child_ids.log');
 
     //
-    const logFilePath = resolve(process.cwd(), 'missing_child_ids.log');
+    const logFilePath = resolve(process.cwd(), '.debug-data/missing_child_ids.log');
 
     console.log(`Reading missing child IDs from: ${logFilePath}`);
     console.log('---\n');
@@ -219,7 +219,7 @@ async function main() {
     }
 
     // Write results to JSON file
-    const outputPath = resolve(process.cwd(), 'missing_child_ids_by_master_status.json');
+    const outputPath = resolve(process.cwd(), '.debug-data/missing_child_ids_by_master_status.json');
     const outputData = {
       metadata: {
         generatedAt: new Date().toISOString(),
@@ -236,7 +236,7 @@ async function main() {
     process.exit(0);
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-      console.error('Error: missing_child_ids.log file not found.');
+      console.error('Error: .debug-data/missing_child_ids.log file not found.');
       console.error('Run "npx tsx scripts/atlas-build.ts" first to generate the file.');
       process.exit(1);
     } else {
@@ -252,14 +252,14 @@ async function main() {
  * npx tsx scripts/validate-missing-child-ids.ts --test   # Process only first 10 IDs for testing
  * npx tsx scripts/validate-missing-child-ids.ts -t      # Short form for test mode
  *
- * This script loads missing_child_ids.log, parses the lines into an array of strings,
+ * This script loads .debug-data/missing_child_ids.log, parses the lines into an array of strings,
  * and analyzes their Master Status properties via the Notion API. It stores and displays
  * the page IDs for each status type (Deferred, Archived, Approved, Provisional, Placeholder)
  * or multiple statuses, providing detailed lists for further investigation.
  *
  * Outputs:
  * - Console: Summary of results with page counts and IDs, enhanced details for special categories
- * - missing_child_ids_by_master_status.json: Detailed JSON file with metadata and page IDs by status
+ * - .debug-data/missing_child_ids_by_master_status.json: Detailed JSON file with metadata and page IDs by status
  *   - Regular statuses: arrays of page ID strings
  *   - _MULTIPLE_STATUSES_: array of objects with pageId and statuses array
  *   - _OTHER_: array of objects with pageId, error messages, and unknown status IDs

@@ -6,16 +6,18 @@ import { AtlasDatabaseName } from '../atlas/constants';
 // null means use default sorting criteria
 const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, (keyof NotionDatabasePage)[] | null>> =
   {
-    'Sections & Primary Docs': ['sort_order', 'canonical_document_title'],
-    'Agent Scope Database': ['atlas_document_number_sortable'], // Use computed column for natural sorting
+    'Sections & Primary Docs': ['sort_order', 'canonical_document_title', 'notion_page_id'],
+    'Agent Scope Database': ['atlas_document_number_sortable', 'notion_page_id'], // Use computed column for natural sorting
   };
 
 // Default sorting criteria (as an ordered list)
 // Use atlas_document_number_sortable for proper natural sorting (A.1.2 before A.1.11)
+// Always include notion_page_id as final tie-breaker for deterministic pagination
 const DEFAULT_SORT_CRITERIA: (keyof NotionDatabasePage)[] = [
   'sort_order',
   'atlas_document_number_sortable',
   'canonical_document_title',
+  'notion_page_id',
 ];
 
 function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): (keyof NotionDatabasePage)[] {
