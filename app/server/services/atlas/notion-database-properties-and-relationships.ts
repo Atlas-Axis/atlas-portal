@@ -63,12 +63,13 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     childRelationships: {
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs', // TODO: MAJOR ISSUE! This references not only the direct children but ALL nested children!
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+      // TODO: Tenets + Scenarios + Annotations? - Atlas PH importer does relationship mapping to these too
     },
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
     properties: {
       atlasFullDocumentTitle: 'Doc No (or Temp Name)',
-      atlasDocumentNo: 'Formal Doc ID',
+      atlasDocumentNo: 'Doc No (or Temp Name)', // Previously 'Formal Doc ID' - but that doesn't match the PH importer mapping
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
@@ -87,7 +88,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   [ATLAS_DATABASES.AGENTS]: {
     properties: {
       atlasFullDocumentTitle: 'Document Name',
-      atlasDocumentNo: 'Formal Doc ID', // TODO: PH importer uses 'Document Name' - although it may be wrong
+      atlasDocumentNo: 'Document Name', // Previously 'Formal Doc ID' - but PH importer maps this to 'Document Name'
       atlasDocumentName: 'Document Name',
       atlasDocumentType: 'Doc Type',
       content: 'Content',
