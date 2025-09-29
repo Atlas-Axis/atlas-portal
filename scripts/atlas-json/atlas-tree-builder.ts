@@ -423,27 +423,27 @@ function sortChildren(children: AtlasTreeNode[]): AtlasTreeNode[] {
     const aHasOrder = aOrder != null;
     const bHasOrder = bOrder != null;
 
+    // If both have sort_order and they differ, sort by that
     if (aHasOrder && bHasOrder && aOrder! !== bOrder!) {
       return aOrder! - bOrder!;
     }
+    // If only one has sort_order, it comes first
     if (aHasOrder && !bHasOrder) return -1;
     if (!aHasOrder && bHasOrder) return 1;
 
-    // Then sort by document type priority
-    // TODO: Verify this logic is correct
+    // Then sort by Atlas database priority
+    // Example where this is wrong: A.1.5 - A1... Active Data Controller and Core documents are on the same level under this Section
     const typePriority: Record<string, number> = {
-      Core: 1,
-      'Active Data Controller': 2,
-      'Type Specification': 3,
-      Section: 4,
-      Article: 5,
-      Scope: 6,
-      Annotation: 7,
-      'Action Tenet': 8,
-      Scenario: 9,
-      'Scenario Variation': 10,
-      'Active Data': 11,
-      'Needed Research': 12,
+      [ATLAS_DATABASES.SCOPES]: 1,
+      [ATLAS_DATABASES.AGENTS]: 1,
+      [ATLAS_DATABASES.ARTICLES]: 2,
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 3,
+      [ATLAS_DATABASES.ANNOTATIONS]: 4,
+      [ATLAS_DATABASES.TENETS]: 5,
+      [ATLAS_DATABASES.ACTIVE_DATA]: 6,
+      [ATLAS_DATABASES.SCENARIOS]: 7,
+      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 8,
+      [ATLAS_DATABASES.NEEDED_RESEARCH]: 9,
     };
 
     const aPriority = typePriority[a.atlas_document_type] || 999;
