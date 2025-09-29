@@ -5,7 +5,11 @@ import { isTypeSpecificationAtlasDocument } from '../atlas/detect-type-specifica
 import {
   ChildLists,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
+  ScenarioExtraFields,
+  ScenarioVariationExtraFields,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
   TypeSpecificationExtraFields,
 } from '../atlas/notion-database-properties-and-relationships';
@@ -81,6 +85,14 @@ async function convertSingleNotionPageToDatabaseFormat(
   let extraFields: Json | null = null;
   if (documentType && isTypeSpecificationAtlasDocument(atlasDatabaseName, documentType)) {
     extraFields = extractTypeSpecificationExtraFields(notionPage) as unknown as Json;
+  }
+  // Extract extra fields for "Scenario" documents
+  else if (documentType === 'Scenario') {
+    extraFields = extractScenarioExtraFields(notionPage) as unknown as Json;
+  }
+  // Extract extra fields for "Scenario Variation" documents
+  else if (documentType === 'Scenario Variation') {
+    extraFields = extractScenarioVariationExtraFields(notionPage) as unknown as Json;
   }
 
   // Extract sort order
@@ -318,6 +330,62 @@ function extractTypeSpecificationExtraFields(page: PageObjectResponse): TypeSpec
       }
     } catch (error) {
       console.error(`Error extracting Type Specification field "${supabaseFieldName}" from page ${page.id}:`, error);
+    }
+  }
+
+  return extraFields;
+}
+
+/**
+ * Extract Scenario extra fields from a Notion page
+ */
+function extractScenarioExtraFields(page: PageObjectResponse): ScenarioExtraFields {
+  const extraFields: ScenarioExtraFields = {
+    scenario_additional_guidance: null,
+    scenario_finding: null,
+  };
+
+  // Extract each field using the property mapping
+  for (const [supabaseFieldName, notionPropertyName] of Object.entries(SCENARIO_PROPERTY_MAPPING)) {
+    try {
+      const property = page.properties[notionPropertyName];
+      if (property) {
+        const value = readPlainTextValueFromNotionPageProperty(property);
+        if (value) {
+          const fieldKey = supabaseFieldName as keyof ScenarioExtraFields;
+          extraFields[fieldKey] = String(value);
+        }
+      }
+    } catch (error) {
+      console.error(`Error extracting Scenario field "${supabaseFieldName}" from page ${page.id}:`, error);
+    }
+  }
+
+  return extraFields;
+}
+
+/**
+ * Extract Scenario Variation extra fields from a Notion page
+ */
+function extractScenarioVariationExtraFields(page: PageObjectResponse): ScenarioVariationExtraFields {
+  const extraFields: ScenarioVariationExtraFields = {
+    scenario_variation_additional_guidance: null,
+    scenario_variation_finding: null,
+  };
+
+  // Extract each field using the property mapping
+  for (const [supabaseFieldName, notionPropertyName] of Object.entries(SCENARIO_VARIATION_PROPERTY_MAPPING)) {
+    try {
+      const property = page.properties[notionPropertyName];
+      if (property) {
+        const value = readPlainTextValueFromNotionPageProperty(property);
+        if (value) {
+          const fieldKey = supabaseFieldName as keyof ScenarioVariationExtraFields;
+          extraFields[fieldKey] = String(value);
+        }
+      }
+    } catch (error) {
+      console.error(`Error extracting Scenario Variation field "${supabaseFieldName}" from page ${page.id}:`, error);
     }
   }
 
