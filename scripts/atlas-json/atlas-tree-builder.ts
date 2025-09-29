@@ -339,7 +339,7 @@ function buildTreeNode(
   }
 
   if (verbose && depth === 0) {
-    console.log(`🌲 Building tree for root: ${page.plain_text_name} (${page.notion_page_id})`);
+    console.log(`Building tree for root: ${page.plain_text_name} (${page.notion_page_id})`);
   }
 
   try {
@@ -400,7 +400,7 @@ function buildTreeNode(
         }
 
         // Sort children by sort_order and document type priority
-        const sortedChildren = sortChildren(childNodes);
+        const sortedChildren = sortAtlasDocuments<AtlasTreeNode>(childNodes);
         treeNode[type] = sortedChildren;
       }
     }
@@ -418,11 +418,17 @@ function buildTreeNode(
  * This function implements the same sorting logic as the original document numbering system,
  * ensuring consistent ordering across the tree structure.
  *
- * @param children - Array of child tree nodes to sort
+ * @param documents - Array of child tree nodes to sort
  * @returns Sorted array of child tree nodes
  */
-function sortChildren(children: AtlasTreeNode[]): AtlasTreeNode[] {
-  return [...children].sort((a, b) => {
+function sortAtlasDocuments<
+  T extends {
+    sort_order: number | null;
+    atlas_document_type: string;
+    atlas_document_number: string;
+  },
+>(documents: T[]): T[] {
+  return [...documents].sort((a, b) => {
     // First sort by sort_order
     const aOrder = a.sort_order;
     const bOrder = b.sort_order;
