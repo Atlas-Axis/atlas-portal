@@ -104,7 +104,7 @@ comm -3 /tmp/num_scopes_supabase.txt /tmp/num_scopes_blue.txt | sed -e 's/^/NUM 
 
 If differences exist:
 
-- Trace a handful by logging parent chain and sibling set used by `generateDocumentNumbers`.
+- Trace a handful by logging parent chain and sibling set used by `generateDocumentNumbers`. (Note: this document numbering code is now deleted, use the new version!)
 - Ensure parents are discovered via child\_\* arrays only (never by `parent_notion_page_id`).
 - Ensure sibling ordering uses `sort_order` and breaks ties with `originalDocNumber`.
 - Re-run generation and re-compare.

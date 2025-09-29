@@ -202,14 +202,14 @@ The new system is optimized for handling ~6000 Atlas documents with deep nesting
 The new system is designed to be a drop-in replacement for the old sequential system:
 
 ```typescript
-// Old system
+// Old system - Deleted
 import { generateDocumentNumbers } from './document-numbering';
 const docNumbers = generateDocumentNumbers(pagesByDatabase);
 
 // New system
 import { buildAtlasTreeWithValidation } from './atlas-tree-system';
 const result = await buildAtlasTreeWithValidation(pagesByDatabase, { assignDocumentNumbers: true });
-const docNumbers = result.documentNumbers;
+const docNumbers = result.documentNumbers; // Note: All the pages inside `result` have their `generatedDocNumber` fields populated, recursively
 ```
 
 ## Testing
