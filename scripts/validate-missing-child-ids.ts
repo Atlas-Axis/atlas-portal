@@ -6,7 +6,6 @@ import { MASTER_STATUS_ID_MAP, MasterStatus } from '@/app/server/services/atlas/
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { detectMissingChildren } from './atlas-json/atlas-tree-errors';
-import { TreeConstructionOptions, buildAtlasTreeWithValidation } from './atlas-json/atlas-tree-system';
 import { loadEnv } from './utils/load-env';
 
 async function main() {
@@ -80,15 +79,15 @@ async function main() {
       }
     }
 
-    const counters: { [key: MasterStatus | string]: number } = {
-      Deferred: 0,
-      Archived: 0,
-      Approved: 0,
-      Provisional: 0,
-      Placeholder: 0,
-      _MULTIPLE_STATUSES_: 0,
-      _NONE_: 0,
-      _OTHER_: 0,
+    const pageIdsByStatus: { [key: MasterStatus | string]: string[] } = {
+      Deferred: [],
+      Archived: [],
+      Approved: [],
+      Provisional: [],
+      Placeholder: [],
+      _MULTIPLE_STATUSES_: [],
+      _NONE_: [],
+      _OTHER_: [],
     };
 
     // Create reverse mapping from Master Status ID to status name
@@ -119,32 +118,32 @@ async function main() {
             const relationIds = masterStatusProperty.relation.map((rel: { id: string }) => rel.id);
 
             if (relationIds.length === 0) {
-              counters._NONE_++;
+              pageIdsByStatus._NONE_.push(id);
             } else if (relationIds.length > 1) {
-              // Multiple statuses - increment only the multiple counter
-              counters._MULTIPLE_STATUSES_++;
+              // Multiple statuses - add to multiple statuses array
+              pageIdsByStatus._MULTIPLE_STATUSES_.push(id);
             } else {
-              // Single status - map ID to status name and increment counter
+              // Single status - map ID to status name and add to appropriate array
               const statusId = relationIds[0];
               const statusName = masterStatusIdToName[statusId];
 
               if (statusName) {
-                counters[statusName]++;
+                pageIdsByStatus[statusName].push(id);
               } else {
-                counters._OTHER_++;
+                pageIdsByStatus._OTHER_.push(id);
                 console.log(`  Unknown Master Status ID: ${statusId}`);
               }
             }
           } else {
-            counters._NONE_++;
+            pageIdsByStatus._NONE_.push(id);
           }
         } else {
           console.log(`  Page ${id} is not a page object`);
-          counters._OTHER_++;
+          pageIdsByStatus._OTHER_.push(id);
         }
       } catch (error) {
         console.log(`  Error retrieving page ${id}: ${error}`);
-        counters._OTHER_++;
+        pageIdsByStatus._OTHER_.push(id);
       }
     }
 
@@ -155,9 +154,11 @@ async function main() {
       console.log('🧪 Test mode was enabled - only processed first 10 items');
     }
     console.log('');
-    for (const [status, count] of Object.entries(counters)) {
-      if (count > 0) {
-        console.log(`${status}: ${count}`);
+    for (const [status, pageIds] of Object.entries(pageIdsByStatus)) {
+      if (pageIds.length > 0) {
+        console.log(`${status}: ${pageIds.length} pages`);
+        console.log(`  Page IDs: ${pageIds.join(', ')}`);
+        console.log('');
       }
     }
 
@@ -181,9 +182,9 @@ async function main() {
  * npx tsx scripts/validate-missing-child-ids.ts -t      # Short form for test mode
  *
  * This script loads missing_child_ids.log, parses the lines into an array of strings,
- * and analyzes their Master Status properties via the Notion API. It counts how many
- * pages have each status type (Deferred, Archived, Approved, Provisional, Placeholder)
- * or multiple statuses.
+ * and analyzes their Master Status properties via the Notion API. It stores and displays
+ * the page IDs for each status type (Deferred, Archived, Approved, Provisional, Placeholder)
+ * or multiple statuses, providing detailed lists for further investigation.
  */
 main().catch((err) => {
   console.error(err);
