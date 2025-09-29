@@ -6,6 +6,10 @@ import { buildAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
 
 /**
+ * See Atlas document number generation rules in `docs/ATLAS_DOCUMENT_NUMBERING_RULES.md`
+ */
+
+/**
  * Test helper to create a base NotionDatabasePage with default values
  */
 function makeBasePage(overrides: Partial<NotionDatabasePage>): NotionDatabasePage {
@@ -250,7 +254,7 @@ describe('Atlas Tree Builder', () => {
       // Should not throw, but should log error
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { reportMissingChildNodes: true });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].articles).toHaveLength(0);
