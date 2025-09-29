@@ -220,6 +220,29 @@ Atlas document numbers follow a hierarchical numbering system where each documen
 - `NR-5` - Fifth needed research item
 - `NR-10` - Tenth needed research item
 
+### 13. Category Documents (Organizational Containers)
+
+**Pattern**: No document numbers assigned (Categories are invisible to the numbering system)
+
+**Rules**:
+
+- Categories are organizational containers that exist purely for UI grouping purposes in Notion
+- Categories do not receive document numbers and are treated as if they don't exist during numbering
+- Category children are numbered as if they were direct children of the Category's parent document
+- Categories maintain their position in the tree structure for future UI implementation
+- Categories only exist in the `Sections & Primary Docs` database
+- When numbering siblings, Category children are inserted at the exact position where the Category appears in the parent's child array
+- Category children maintain their relative order from the Category's own child array
+
+**Examples**:
+
+If a Section contains: `[Core-A, Category-1, Core-B]` where `Category-1` contains `[Core-C, Core-D]`, the numbering treats it as: `[Core-A, Core-C, Core-D, Core-B]` resulting in:
+
+- Core-A: `A.1.1.1`
+- Core-C: `A.1.1.2` (first child of Category-1)
+- Core-D: `A.1.1.3` (second child of Category-1)
+- Core-B: `A.1.1.4`
+
 ## Special Directory Numbers
 
 The numbering system uses special directory numbers for organizational purposes:
@@ -394,6 +417,7 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
   - Core
   - Type Specification
   - Active Data Controller
+  - Category
 
 - **Annotations**
   - Annotation

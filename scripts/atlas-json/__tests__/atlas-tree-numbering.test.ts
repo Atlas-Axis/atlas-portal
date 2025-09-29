@@ -1060,4 +1060,263 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('core-4')).toBe('A.0.1.1.1.1.1');
     });
   });
+
+  describe('Category Document Handling', () => {
+    test('should skip Category documents during numbering and flatten their children', () => {
+      pagesByDatabase = {
+        Scopes: [
+          makeBasePage({
+            notion_page_id: 'scope-1',
+            atlas_document_type: 'Scope',
+            atlas_database_name: 'Scopes',
+            plain_text_name: 'Test Scope',
+            atlas_document_number: 'A.0',
+            sort_order: 0,
+            child_article_ids: ['article-1'],
+          }),
+        ],
+        Articles: [
+          makeBasePage({
+            notion_page_id: 'article-1',
+            atlas_document_type: 'Article',
+            atlas_database_name: 'Articles',
+            plain_text_name: 'Test Article',
+            atlas_document_number: 'A.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['section-1'],
+          }),
+        ],
+        'Sections & Primary Docs': [
+          makeBasePage({
+            notion_page_id: 'section-1',
+            atlas_document_type: 'Section',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Test Section',
+            atlas_document_number: 'A.1.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['core-1', 'category-1', 'core-3'],
+          }),
+          // Non-Category documents
+          makeBasePage({
+            notion_page_id: 'core-1',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'First Core',
+            atlas_document_number: '',
+            sort_order: 1,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-3',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Third Core',
+            atlas_document_number: '',
+            sort_order: 3,
+          }),
+          // Category document with its own children
+          makeBasePage({
+            notion_page_id: 'category-1',
+            atlas_document_type: 'Category',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Test Category',
+            atlas_document_number: '',
+            sort_order: 2,
+            child_section_and_primary_doc_ids: ['core-2a', 'core-2b'],
+          }),
+          // Category's children
+          makeBasePage({
+            notion_page_id: 'core-2a',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Second Core A',
+            atlas_document_number: '',
+            sort_order: 1,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-2b',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Second Core B',
+            atlas_document_number: '',
+            sort_order: 2,
+          }),
+        ],
+      };
+
+      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+
+      // Category should not have a document number
+      expect(docNumbers.has('category-1')).toBe(false);
+
+      // Non-Category documents should be numbered sequentially, with Category children flattened in place
+      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1'); // First document
+      expect(docNumbers.get('core-2a')).toBe('A.0.1.1.2'); // First child of Category (flattened)
+      expect(docNumbers.get('core-2b')).toBe('A.0.1.1.3'); // Second child of Category (flattened)
+      expect(docNumbers.get('core-3')).toBe('A.0.1.1.4'); // Document after Category
+    });
+
+    test('should handle nested Categories correctly', () => {
+      pagesByDatabase = {
+        Scopes: [
+          makeBasePage({
+            notion_page_id: 'scope-1',
+            atlas_document_type: 'Scope',
+            atlas_database_name: 'Scopes',
+            plain_text_name: 'Test Scope',
+            atlas_document_number: 'A.0',
+            sort_order: 0,
+            child_article_ids: ['article-1'],
+          }),
+        ],
+        Articles: [
+          makeBasePage({
+            notion_page_id: 'article-1',
+            atlas_document_type: 'Article',
+            atlas_database_name: 'Articles',
+            plain_text_name: 'Test Article',
+            atlas_document_number: 'A.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['section-1'],
+          }),
+        ],
+        'Sections & Primary Docs': [
+          makeBasePage({
+            notion_page_id: 'section-1',
+            atlas_document_type: 'Section',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Test Section',
+            atlas_document_number: 'A.1.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['category-1'],
+          }),
+          // Outer Category
+          makeBasePage({
+            notion_page_id: 'category-1',
+            atlas_document_type: 'Category',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Outer Category',
+            atlas_document_number: '',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['core-1', 'category-2', 'core-3'],
+          }),
+          // Inner Category
+          makeBasePage({
+            notion_page_id: 'category-2',
+            atlas_document_type: 'Category',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Inner Category',
+            atlas_document_number: '',
+            sort_order: 2,
+            child_section_and_primary_doc_ids: ['core-2a', 'core-2b'],
+          }),
+          // Actual documents
+          makeBasePage({
+            notion_page_id: 'core-1',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'First Core',
+            atlas_document_number: '',
+            sort_order: 1,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-2a',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Second Core A',
+            atlas_document_number: '',
+            sort_order: 1,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-2b',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Second Core B',
+            atlas_document_number: '',
+            sort_order: 2,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-3',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Third Core',
+            atlas_document_number: '',
+            sort_order: 3,
+          }),
+        ],
+      };
+
+      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+
+      // Categories should not have document numbers
+      expect(docNumbers.has('category-1')).toBe(false);
+      expect(docNumbers.has('category-2')).toBe(false);
+
+      // All actual documents should be numbered sequentially in flattened order
+      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1'); // First in outer category
+      expect(docNumbers.get('core-2a')).toBe('A.0.1.1.2'); // First in inner category (nested flatten)
+      expect(docNumbers.get('core-2b')).toBe('A.0.1.1.3'); // Second in inner category (nested flatten)
+      expect(docNumbers.get('core-3')).toBe('A.0.1.1.4'); // After inner category in outer category
+    });
+
+    test('should handle Categories only in Sections & Primary Docs database', () => {
+      // Categories should only exist in Sections & Primary Docs, not in other databases
+      pagesByDatabase = {
+        Scopes: [
+          makeBasePage({
+            notion_page_id: 'scope-1',
+            atlas_document_type: 'Scope',
+            atlas_database_name: 'Scopes',
+            plain_text_name: 'Test Scope',
+            atlas_document_number: 'A.0',
+            sort_order: 0,
+            child_article_ids: ['article-1'],
+          }),
+        ],
+        Articles: [
+          makeBasePage({
+            notion_page_id: 'article-1',
+            atlas_document_type: 'Article',
+            atlas_database_name: 'Articles',
+            plain_text_name: 'Test Article',
+            atlas_document_number: 'A.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['section-1'],
+          }),
+        ],
+        'Sections & Primary Docs': [
+          makeBasePage({
+            notion_page_id: 'section-1',
+            atlas_document_type: 'Section',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Test Section',
+            atlas_document_number: 'A.1.1.1',
+            sort_order: 1,
+            child_section_and_primary_doc_ids: ['core-1', 'core-2'],
+          }),
+          makeBasePage({
+            notion_page_id: 'core-1',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'First Core',
+            atlas_document_number: '',
+            sort_order: 1,
+          }),
+          makeBasePage({
+            notion_page_id: 'core-2',
+            atlas_document_type: 'Core',
+            atlas_database_name: 'Sections & Primary Docs',
+            plain_text_name: 'Second Core',
+            atlas_document_number: '',
+            sort_order: 2,
+          }),
+        ],
+      };
+
+      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+
+      // Regular numbering should work without Categories
+      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
+      expect(docNumbers.get('core-2')).toBe('A.0.1.1.2');
+    });
+  });
 });
