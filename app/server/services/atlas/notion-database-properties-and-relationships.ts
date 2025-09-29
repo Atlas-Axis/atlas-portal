@@ -87,7 +87,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   [ATLAS_DATABASES.AGENTS]: {
     properties: {
       atlasFullDocumentTitle: 'Document Name',
-      atlasDocumentNo: 'Formal Doc ID',
+      atlasDocumentNo: 'Formal Doc ID', // TODO: PH importer uses 'Document Name' - although it may be wrong
       atlasDocumentName: 'Document Name',
       atlasDocumentType: 'Doc Type',
       content: 'Content',
