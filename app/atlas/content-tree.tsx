@@ -18,6 +18,28 @@ interface RenderTreeNodeProps {
   parentPageId?: string;
 }
 
+function renderTreeNodeHeader(node: AtlasTreeNode) {
+  const documentType = node?.atlas_document_type;
+  const isCategory = documentType === 'Category';
+
+  if (isCategory) {
+    return (
+      <h3 className={`inline-block rounded-lg bg-stone-200 px-4 py-2 text-lg font-bold text-stone-900`}>
+        {node.generatedDocName}
+      </h3>
+    );
+  }
+
+  return (
+    <h3 className={styles.nodeTitle}>
+      {node.generatedDocID} - {node.generatedDocName}
+      <span className={styles.typeChipSpacing}>
+        <TypeChip type={node.atlas_document_type} />
+      </span>
+    </h3>
+  );
+}
+
 function renderTreeNode({
   node,
   parentTrackingMap,
@@ -55,14 +77,7 @@ function renderTreeNode({
 
   const nodeContent = (
     <>
-      {!isRootNode && (
-        <h3 className={styles.nodeTitle}>
-          {node.generatedDocID} - {node.generatedDocName}
-          <span className={styles.typeChipSpacing}>
-            <TypeChip type={node.atlas_document_type} />
-          </span>
-        </h3>
-      )}
+      {!isRootNode && renderTreeNodeHeader(node)}
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
 
