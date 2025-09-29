@@ -109,7 +109,7 @@ Gets the total number of nodes in the tree.
 
 ### Document Numbering
 
-#### `assignDocumentNumbersToTrees(scopeTrees)`
+#### `assignDocumentNumbersToTreesRecursively(scopeTrees)`
 
 Assigns document numbers to all nodes in the tree structures.
 

@@ -31,13 +31,13 @@ import { AtlasTreeNode } from './atlas-tree-types';
  * @example
  * ```typescript
  * const result = buildAtlasTree(atlasData, { assignDocumentNumbers: false });
- * const docNumbers = assignDocumentNumbersToTrees(result.scopeTrees);
+ * const docNumbers = getDocumentTitle(result.scopeTrees);
  *
  * // Access document numbers
  * console.log(docNumbers.get('some-page-id')); // "A.1.2.3"
  * ```
  */
-export function assignDocumentNumbersToTrees(scopeTrees: AtlasTreeNode[]): Map<string, string> {
+export function assignDocumentNumbersToTreesRecursively(scopeTrees: AtlasTreeNode[]): Map<string, string> {
   const docNumbers = new Map<string, string>();
 
   // Global counter for Needed Research documents

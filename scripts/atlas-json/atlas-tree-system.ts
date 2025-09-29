@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { buildAtlasTree, assignDocumentNumbersToTrees } from './atlas-tree-system';
+ * import { buildAtlasTree, getDocumentTitle } from './atlas-tree-system';
  * import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
  *
  * // Load Atlas data
@@ -353,7 +353,7 @@ export function isValidDocumentNumber(docNumber: string): boolean {
 
 // Re-export all the core functions for convenience
 export { buildAtlasTree } from './atlas-tree-builder';
-export { assignDocumentNumbersToTrees } from './atlas-tree-numbering';
+export { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 export {
   preOrderTraversal,
   postOrderTraversal,

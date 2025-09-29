@@ -1,7 +1,7 @@
 import { NotionDatabasePage } from '../../app/server/database/notion-database-page';
 import { ATLAS_DATABASES, AtlasDatabaseName } from '../../app/server/services/atlas/constants';
 import { getDocumentTitle, sortAtlasDocuments } from './atlas-tree-helpers';
-import { assignDocumentNumbersToTrees } from './atlas-tree-numbering';
+import { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 import {
   AtlasLookupMaps,
   AtlasTreeNode,
@@ -54,7 +54,10 @@ export function buildAtlasTree(
   // Step 1: Create lookup maps for efficient O(1) access
   const lookupMaps = createLookupMaps(pagesByDatabase);
 
-  // Step 2: Find root Scope documents
+  // Step 2: Generate document names for all nodes
+  generateNormalizedDocumentNames(lookupMaps);
+
+  // Step 3: Find root Scope documents
   const scopePages = pagesByDatabase[ATLAS_DATABASES.SCOPES] || [];
   const unsortedRootScopes = scopePages.filter((page) => page.parent_notion_page_id === null);
 
@@ -71,7 +74,7 @@ export function buildAtlasTree(
     console.log(`📊 Found ${rootScopes.length} root Scope documents`);
   }
 
-  // Step 3: Build tree structures for each root scope
+  // Step 4: Build tree structures for each root scope
   const scopeTrees: AtlasTreeNode[] = [];
   const errors: TreeConstructionError[] = [];
 
@@ -93,17 +96,12 @@ export function buildAtlasTree(
     }
   }
 
-  // Step 4: Find orphaned nodes (nodes not connected to any root tree)
+  // Step 5: Find orphaned nodes (nodes not connected to any root tree)
   const orphanedNodes = findOrphanedNodes(pagesByDatabase, lookupMaps, scopeTrees);
 
-  // Step 5: Assign document numbers if requested
+  // Step 6: Assign document numbers if requested
   if (assignDocumentNumbers) {
-    assignDocumentNumbersToTrees(scopeTrees);
-  }
-
-  // Step 6: Generate `generatedDocName` using `getDocumentTitle`
-  for (const treeNode of scopeTrees) {
-    treeNode.generatedDocName = getDocumentTitle(treeNode);
+    assignDocumentNumbersToTreesRecursively(scopeTrees);
   }
 
   if (verbose) {
@@ -115,6 +113,20 @@ export function buildAtlasTree(
     orphanedNodes,
     errors,
   };
+}
+
+/**
+ * Generates document names for all nodes in the lookup maps.
+ *
+ * This function iterates through all tree nodes and sets their `generatedDocName`
+ * property using the `getDocumentTitle` function.
+ *
+ * Example: "A.1.6 - Facilitators - Budgets" → "Budgets"
+ */
+function generateNormalizedDocumentNames(lookupMaps: AtlasLookupMaps): void {
+  for (const treeNode of lookupMaps.nodeMapByPageId.values()) {
+    treeNode.generatedDocName = getDocumentTitle(treeNode);
+  }
 }
 
 /**
