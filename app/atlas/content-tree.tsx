@@ -57,7 +57,7 @@ function renderTreeNode({
     <>
       {!isRootNode && (
         <h3 className={styles.nodeTitle}>
-          {node.canonical_document_title}
+          {node.generatedDocID} - {node.generatedDocName}
           <span className={styles.typeChipSpacing}>
             <TypeChip type={node.atlas_document_type} />
           </span>
