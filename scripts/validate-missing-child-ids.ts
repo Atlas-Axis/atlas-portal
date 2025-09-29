@@ -86,8 +86,8 @@ async function main() {
       [key in MasterStatus]: string[];
     } & {
       _MULTIPLE_STATUSES_: { pageId: string; statuses: string[] }[];
-      _NONE_: string[];
-      _OTHER_: { pageId: string; error?: string; unknownStatusIds?: string[] }[];
+      _NONE_: { pageId: string; docType?: string }[];
+      _OTHER_: { pageId: string; error?: string; unknownStatusIds?: string[]; docType?: string }[];
     } = {
       Deferred: [],
       Archived: [],
@@ -103,6 +103,23 @@ async function main() {
     const masterStatusIdToName: { [id: string]: MasterStatus } = {};
     for (const [statusName, statusId] of Object.entries(MASTER_STATUS_ID_MAP)) {
       masterStatusIdToName[statusId] = statusName as MasterStatus;
+    }
+
+    // Helper function to extract document type from page properties
+    function extractDocumentType(pageResponse: PageObjectResponse): string | undefined {
+      // Try 'Doc Type' property first
+      const docTypeProperty = pageResponse.properties['Doc Type'];
+      if (docTypeProperty && docTypeProperty.type === 'select' && docTypeProperty.select) {
+        return docTypeProperty.select.name;
+      }
+
+      // Try 'Type' property as fallback
+      const typeProperty = pageResponse.properties['Type'];
+      if (typeProperty && typeProperty.type === 'select' && typeProperty.select) {
+        return typeProperty.select.name;
+      }
+
+      return undefined;
     }
 
     console.log('\nAnalyzing Master Status for missing child IDs...');
@@ -121,13 +138,14 @@ async function main() {
         const page = await notion().pages.retrieve({ page_id: id });
         if (page.object === 'page' && 'properties' in page) {
           const pageResponse = page as PageObjectResponse;
+          const docType = extractDocumentType(pageResponse);
           const masterStatusProperty = pageResponse.properties['Master Status'];
 
           if (masterStatusProperty && masterStatusProperty.type === 'relation') {
             const relationIds = masterStatusProperty.relation.map((rel: { id: string }) => rel.id);
 
             if (relationIds.length === 0) {
-              pageIdsByStatus._NONE_.push(id);
+              pageIdsByStatus._NONE_.push({ pageId: id, docType });
             } else if (relationIds.length > 1) {
               // Multiple statuses - store page ID with all status names
               const statusNames = relationIds
@@ -155,12 +173,13 @@ async function main() {
                 pageIdsByStatus._OTHER_.push({
                   pageId: id,
                   unknownStatusIds: [statusId],
+                  docType,
                 });
                 console.log(`  Unknown Master Status ID: ${statusId}`);
               }
             }
           } else {
-            pageIdsByStatus._NONE_.push(id);
+            pageIdsByStatus._NONE_.push({ pageId: id, docType });
           }
         } else {
           console.log(`  Page ${id} is not a page object`);
@@ -174,6 +193,7 @@ async function main() {
         pageIdsByStatus._OTHER_.push({
           pageId: id,
           error: String(error),
+          // docType is unavailable due to error retrieving page
         });
       }
     }
@@ -195,11 +215,24 @@ async function main() {
             console.log(`     Statuses: ${item.statuses.join(', ')}`);
           });
           console.log('');
+        } else if (status === '_NONE_') {
+          const noneData = data as { pageId: string; docType?: string }[];
+          console.log(`${status}: ${noneData.length} pages`);
+          noneData.forEach((item, index) => {
+            console.log(`  ${index + 1}. Page ID: ${item.pageId}`);
+            if (item.docType) {
+              console.log(`     Document Type: ${item.docType}`);
+            }
+          });
+          console.log('');
         } else if (status === '_OTHER_') {
-          const otherData = data as { pageId: string; error?: string; unknownStatusIds?: string[] }[];
+          const otherData = data as { pageId: string; error?: string; unknownStatusIds?: string[]; docType?: string }[];
           console.log(`${status}: ${otherData.length} pages`);
           otherData.forEach((item, index) => {
             console.log(`  ${index + 1}. Page ID: ${item.pageId}`);
+            if (item.docType) {
+              console.log(`     Document Type: ${item.docType}`);
+            }
             if (item.error) {
               console.log(`     Error: ${item.error}`);
             }

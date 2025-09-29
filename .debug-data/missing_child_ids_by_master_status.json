@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generatedAt": "2025-09-29T12:27:57.502Z",
+    "generatedAt": "2025-09-29T13:11:01.536Z",
     "totalMissingChildIds": 1070,
     "processedIds": 1070,
     "testMode": false
@@ -1389,157 +1389,216 @@
       }
     ],
     "_NONE_": [
-      "eca65f7e-7836-4c47-a6ca-c9960399ac36",
-      "1c50fddc-0c50-4f99-aa60-4edd8f6d9164",
-      "76473671-18e3-4104-8956-d2aed4934392",
-      "4c698938-1a11-4486-a568-e54fc6b0ce0c",
-      "9a987b88-d47e-4dbd-a9b3-e9af2ae900a3",
-      "fe3128ad-f36e-4951-9f36-a32f7e87955e",
-      "40368da6-9873-4e00-a078-5756bb1b0970",
-      "fa58ab1e-afb7-454d-ba31-f39ec3b73309",
-      "e9bd08fa-2ceb-4a2a-bdf3-80542b16b447",
-      "45d7921f-da6b-4274-8fea-c4a788da3de6",
-      "073c6e93-2839-41ff-a01c-a39396143691",
-      "a05444be-240e-48af-a3dc-cb183fc58d9a"
+      {
+        "pageId": "eca65f7e-7836-4c47-a6ca-c9960399ac36",
+        "docType": "Category"
+      },
+      {
+        "pageId": "1c50fddc-0c50-4f99-aa60-4edd8f6d9164",
+        "docType": "Category"
+      },
+      {
+        "pageId": "76473671-18e3-4104-8956-d2aed4934392",
+        "docType": "Category"
+      },
+      {
+        "pageId": "4c698938-1a11-4486-a568-e54fc6b0ce0c",
+        "docType": "Category"
+      },
+      {
+        "pageId": "9a987b88-d47e-4dbd-a9b3-e9af2ae900a3",
+        "docType": "Category"
+      },
+      {
+        "pageId": "fe3128ad-f36e-4951-9f36-a32f7e87955e",
+        "docType": "Category"
+      },
+      {
+        "pageId": "40368da6-9873-4e00-a078-5756bb1b0970",
+        "docType": "Category"
+      },
+      {
+        "pageId": "fa58ab1e-afb7-454d-ba31-f39ec3b73309",
+        "docType": "Category"
+      },
+      {
+        "pageId": "e9bd08fa-2ceb-4a2a-bdf3-80542b16b447",
+        "docType": "Category"
+      },
+      {
+        "pageId": "45d7921f-da6b-4274-8fea-c4a788da3de6",
+        "docType": "Category"
+      },
+      {
+        "pageId": "073c6e93-2839-41ff-a01c-a39396143691",
+        "docType": "Category"
+      },
+      {
+        "pageId": "a05444be-240e-48af-a3dc-cb183fc58d9a",
+        "docType": "Category"
+      }
     ],
     "_OTHER_": [
       {
         "pageId": "b81e05d9-4826-4ddf-bd29-66a6d57b10aa",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "91805992-b7d4-475d-8600-1ea391c86614",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "6fe1d88e-691d-4d8e-bd65-2ca88aff057b",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "32666275-57c9-4e15-9e48-1e53045425a0",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "76f11896-2ce7-4cea-a30c-23201681dd88",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "0131c58b-23dd-4708-ba86-bb7817555695",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "dee13a78-0e1d-4003-ab9e-de91e3b4b438",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "947d0824-c3cb-4e48-9622-c5785fa25930",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "53402b24-fb02-4b0c-adb3-6f8b7cbfcc3a",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "101904c2-0a28-4c5b-ba98-69a32a8f6e8b",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "d972cd74-3923-474b-958f-54db3bccb2d3",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "7c855878-a560-40b5-a50c-9e9edb0d9e9b",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "b2724c3a-3a54-4039-8727-4eca6f7f4f20",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "bd45b4ec-bc85-4e3f-b188-1d5d041be1bc",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "2fe52e4d-36f3-4306-886b-11a8d7d6c808",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "b2963e02-e5bf-4755-b8bb-ee7ea517be0a",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "6bf8dfba-7af7-4f61-97aa-b737700066ce",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "b1ebd9b7-546a-44da-9dac-486e63bb0e96",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "dbd6dc63-cc09-4b49-8202-08ebd92d0202",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "a9ea8f73-6121-4f8c-ba95-c09b882694e4",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "59fe6111-8bb9-4040-9a14-2f31477b0c6b",
         "unknownStatusIds": [
           "7e33f5fd-238c-4dd2-8483-f2141a42ca88"
-        ]
+        ],
+        "docType": "Category"
       },
       {
         "pageId": "152f2ff0-8d73-8070-8b7e-db737a1413e4",
         "unknownStatusIds": [
           "104f2ff0-8d73-8089-ae73-ef08a536c006"
-        ]
+        ],
+        "docType": "Core"
       },
       {
         "pageId": "6e1ed73c-58f2-4159-a4c0-20fd36fe7791",
         "unknownStatusIds": [
           "38304868-76dc-4ace-9808-59611296500c"
-        ]
+        ],
+        "docType": "Needed Research"
       }
     ]
   }
