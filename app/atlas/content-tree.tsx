@@ -219,7 +219,9 @@ export default function ContentTree({ atlas }: { atlas: AtlasTreeResult }) {
             aria-label={scopeTree.canonical_document_title || `Document ${scopeTree.notion_page_id}`}
             title={
               <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
-                <span>{scopeTree.canonical_document_title}</span>
+                <span>
+                  {scopeTree.generatedDocID} - {scopeTree.generatedDocName}
+                </span>
                 <TypeChip type={scopeTree.atlas_document_type} />
               </div>
             }
