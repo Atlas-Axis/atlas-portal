@@ -481,6 +481,8 @@ export function logValidationErrors(
   for (const error of filteredErrors) {
     console.error(`\n🔍 ${error.type.toUpperCase()}: ${error.message}`);
     console.error(`   Page ID: ${error.pageId}`);
+    // Link to Notion page if possible: https://www.notion.so/<page-id-without-dashes>
+    console.error(`   https://www.notion.so/${error.pageId.replace(/-/g, '')}`);
 
     if (verbose && error.context) {
       console.error(`   Context:`, error.context);
