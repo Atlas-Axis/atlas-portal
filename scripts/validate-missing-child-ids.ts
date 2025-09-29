@@ -8,6 +8,9 @@ import { notion } from '@/app/server/services/notion/notion-client';
 import { detectMissingChildren } from './atlas-json/atlas-tree-errors';
 import { loadEnv } from './utils/load-env';
 
+/**
+ * Main function to validate missing child IDs from Supabase by checking their Master Status in Notion
+ */
 async function main() {
   // Load environment variables
   loadEnv();
@@ -162,6 +165,21 @@ async function main() {
       }
     }
 
+    // Write results to JSON file
+    const outputPath = resolve(process.cwd(), 'missing_child_ids_by_master_status.json');
+    const outputData = {
+      metadata: {
+        generatedAt: new Date().toISOString(),
+        totalMissingChildIds: missingChildIds.length,
+        processedIds: itemsToProcess,
+        testMode: testMode,
+      },
+      pageIdsByStatus,
+    };
+
+    await (await import('fs/promises')).writeFile(outputPath, JSON.stringify(outputData, null, 2), 'utf-8');
+    console.log(`\n📄 Results written to: ${outputPath}`);
+
     process.exit(1);
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
@@ -185,6 +203,10 @@ async function main() {
  * and analyzes their Master Status properties via the Notion API. It stores and displays
  * the page IDs for each status type (Deferred, Archived, Approved, Provisional, Placeholder)
  * or multiple statuses, providing detailed lists for further investigation.
+ *
+ * Outputs:
+ * - Console: Summary of results with page counts and IDs
+ * - missing_child_ids_by_master_status.json: Detailed JSON file with metadata and page IDs by status
  */
 main().catch((err) => {
   console.error(err);
