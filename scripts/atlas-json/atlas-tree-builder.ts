@@ -1,5 +1,6 @@
 import { NotionDatabasePage } from '../../app/server/database/notion-database-page';
 import { ATLAS_DATABASES, AtlasDatabaseName } from '../../app/server/services/atlas/constants';
+import { getDocumentTitle } from './atlas-tree-helpers';
 import { assignDocumentNumbersToTrees } from './atlas-tree-numbering';
 import {
   AtlasLookupMaps,
@@ -93,6 +94,11 @@ export function buildAtlasTree(
   // Step 5: Assign document numbers if requested
   if (assignDocumentNumbers) {
     assignDocumentNumbersToTrees(scopeTrees);
+  }
+
+  // Step 6: Generate `generatedDocName` using `getDocumentTitle`
+  for (const treeNode of scopeTrees) {
+    treeNode.generatedDocName = getDocumentTitle(treeNode);
   }
 
   if (verbose) {
