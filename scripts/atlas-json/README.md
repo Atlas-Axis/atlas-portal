@@ -115,6 +115,12 @@ Assigns document numbers to all nodes in the tree structures.
 
 **Returns:** Map of page ID to generated document number
 
+### Document Name Formatting
+
+#### `getDocumentTitle(treeNode)`
+
+Rewrites Notion document titles for 'Sections & Primary Docs' and 'Agent Scope Database' documents by only keeping the last part of the title after the last `-` separator
+
 ### Error Handling
 
 #### `validateTreeIntegrity(scopeTrees, orphanedNodes, pagesByDatabase)`
