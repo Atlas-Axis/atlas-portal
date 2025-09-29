@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "generatedAt": "2025-09-29T11:10:00.019Z",
-    "totalMissingChildIds": 1076,
-    "processedIds": 1076,
+    "generatedAt": "2025-09-29T12:27:57.502Z",
+    "totalMissingChildIds": 1070,
+    "processedIds": 1070,
     "testMode": false
   },
   "pageIdsByStatus": {
@@ -990,18 +990,9 @@
       "1c1f2ff0-8d73-8147-bd6b-da93497bf453",
       "1c1f2ff0-8d73-819f-94aa-e2f4323d1cef"
     ],
-    "Approved": [
-      "1b3f2ff0-8d73-8058-a715-efb37089f852",
-      "1b3f2ff0-8d73-804e-89b4-f574b8af4b7d",
-      "1b3f2ff0-8d73-80d9-a856-fe169494c796",
-      "1b3f2ff0-8d73-80d9-a856-fe169494c796",
-      "1b3f2ff0-8d73-804e-89b4-f574b8af4b7d",
-      "1b3f2ff0-8d73-8058-a715-efb37089f852"
-    ],
+    "Approved": [],
     "Provisional": [],
     "Placeholder": [],
-    "InProgress": [],
-    "Review": [],
     "_MULTIPLE_STATUSES_": [
       {
         "pageId": "8af65651-8b62-46ed-a1d2-6952e1c41c5d",
