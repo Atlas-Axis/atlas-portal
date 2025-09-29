@@ -69,9 +69,7 @@ export async function buildAtlasTreeWithValidation(
     documentNumbers: Map<string, string>;
   }
 > {
-  const { validateIntegrity = true, ...treeOptions } = options;
-
-  console.log('🌳 Building Atlas tree structure...');
+  const { validateIntegrity = true, reportMissingChildNodes = false, ...treeOptions } = options;
 
   // Build the tree structure
   const result = buildAtlasTree(pagesByDatabase, treeOptions);
@@ -83,7 +81,7 @@ export async function buildAtlasTreeWithValidation(
 
     validationSummary = createValidationSummary(
       validationErrors,
-      treeOptions.reportMissingChildNodes,
+      reportMissingChildNodes,
       treeOptions.reportOrphanedNodes,
     );
 
@@ -91,7 +89,7 @@ export async function buildAtlasTreeWithValidation(
       logValidationErrors(
         validationErrors,
         treeOptions.verbose,
-        treeOptions.reportMissingChildNodes,
+        reportMissingChildNodes,
         treeOptions.reportOrphanedNodes,
       );
     }
