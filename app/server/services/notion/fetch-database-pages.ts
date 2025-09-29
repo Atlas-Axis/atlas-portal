@@ -22,7 +22,6 @@ export async function fetchNotionDatabasePagesWithRelationships({
   atlasDatabaseName: AtlasDatabaseName;
   useLocalCache?: boolean;
 }): Promise<EnhancedPageObjectResponse[]> {
-  const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const notionPageRelationshipPropertyNames = Object.values(databaseConfig.childRelationships);
 
@@ -35,10 +34,6 @@ export async function fetchNotionDatabasePagesWithRelationships({
     console.log(`Database config for "${atlasDatabaseName}":`, databaseConfig);
     console.log(`Notion property names to check for relationships:`, notionPageRelationshipPropertyNames);
   }
-
-  console.log(
-    `📡 Starting to fetch all pages with relationships from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`,
-  );
 
   // Try to load from cache first if enabled
   if (useLocalCache) {
@@ -55,7 +50,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
 
   // First, fetch all pages
   const pages = await fetchNotionDatabasePages({ atlasDatabaseName });
-  console.log(`📄 Fetched ${pages.length} pages, now loading relationships...`);
+  console.log(`Fetched ${pages.length} pages, now loading relationships...`);
 
   // Process each page to load relationships
   const enhancedPages: EnhancedPageObjectResponse[] = [];

@@ -94,13 +94,13 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   -- Child relationships grouped by Atlas database type. Each stores an array of UUID strings.
   child_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scopes database
   child_article_ids JSONB NOT NULL DEFAULT '[]', -- Children from Articles database
-  child_section_and_primary_doc_ids JSONB NOT NULL DEFAULT '[]', -- Children from Sections & Primary Docs database
+  child_section_and_primary_doc_ids JSONB NOT NULL DEFAULT '[]', -- Descendants from Sections & Primary Docs database (not just direct children!)
   child_annotation_ids JSONB NOT NULL DEFAULT '[]', -- Children from Annotations database
   child_tenet_ids JSONB NOT NULL DEFAULT '[]', -- Children from Tenets database
   child_scenario_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scenarios database
   child_scenario_variation_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scenario Variations database
   child_active_data_ids JSONB NOT NULL DEFAULT '[]', -- Children from Active Data database
-  child_agent_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Agent Scope Database
+  child_agent_scope_ids JSONB NOT NULL DEFAULT '[]', -- Descendants from Agent Scope Database (not just direct children!)
   child_needed_research_ids JSONB NOT NULL DEFAULT '[]', -- Children from Needed Research database
   -- child_type_specification_ids JSONB NOT NULL DEFAULT '[]', -- Children from Type Specifications database -- TODO: Add
   extra_fields JSONB NOT NULL DEFAULT '{}', -- Additional fields stored as JSON key-value pairs

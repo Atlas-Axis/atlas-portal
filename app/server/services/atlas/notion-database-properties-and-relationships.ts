@@ -46,7 +46,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      // sortOrder: null,
     },
     childRelationships: {
       [ATLAS_DATABASES.ARTICLES]: 'Articles',
@@ -60,10 +59,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
       content: 'Content',
-      // sortOrder: null,
     },
     childRelationships: {
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs', // TODO: MAJOR ISSUE! This references not only the direct children but ALL nested children!
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },

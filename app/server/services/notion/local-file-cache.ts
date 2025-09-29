@@ -83,7 +83,7 @@ export async function saveCachedDatabasePages(
     }));
 
     await fs.writeFile(cacheFile, JSON.stringify(serializable, null, 2));
-    console.log(`💾 Saved ${pages.length} pages to cache for database "${atlasDatabaseName}"`);
+    console.log(`Saved ${pages.length} pages to cache for database "${atlasDatabaseName}"`);
   } catch (error) {
     console.warn(`⚠️ Failed to save cached data for "${atlasDatabaseName}":`, error);
   }

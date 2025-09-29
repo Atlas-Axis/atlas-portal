@@ -29,7 +29,7 @@ export async function importDatabasePagesFromNotionToSupabase({
   console.log(`Sync started at: ${new Date().toUTCString()}`);
 
   // Verify that the sync is not already in progress
-  console.log(`🔒 Verifying sync lock for database ${notionDatabaseId}...`);
+  console.log(`Verifying sync lock for database ${notionDatabaseId}...`);
   await verifySyncLock(notionDatabaseId);
 
   try {
@@ -37,9 +37,9 @@ export async function importDatabasePagesFromNotionToSupabase({
     await acquireSyncLock(notionDatabaseId);
 
     // Load existing database pages from Supabase
-    console.log(`📥 Loading existing database pages from Supabase to detect changes...`);
+    console.log(`Loading existing database pages from Supabase to detect changes...`);
     const existingPages = await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName });
-    console.log(`✅ Loaded ${existingPages.length} existing pages from Supabase`);
+    console.log(`Loaded ${existingPages.length} existing pages from Supabase`);
 
     // Fetch all pages with relationships via Notion API
     console.log(`📡 Fetching all pages with relationships from Notion database "${atlasDatabaseName}"...`);
@@ -48,10 +48,10 @@ export async function importDatabasePagesFromNotionToSupabase({
       useLocalCache,
     });
 
-    console.log(`✅ Fetched ${notionPagesWithRelationships.length} pages with relationships from Notion database`);
+    console.log(`Fetched ${notionPagesWithRelationships.length} pages with relationships from Notion database`);
 
     // Process and sync the pages to Supabase
-    console.log(`🔄 Syncing changed pages to Supabase...`);
+    console.log(`Syncing changed pages to Supabase...`);
 
     // Not first time import - compare and update only changed pages
     if (existingPages.length > 0) {
