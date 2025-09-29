@@ -24,7 +24,7 @@ function renderTreeNodeHeader(node: AtlasTreeNode) {
 
   if (isCategory) {
     return (
-      <h3 className={`inline-block rounded-lg bg-stone-200 px-4 py-2 text-lg font-bold text-stone-900`}>
+      <h3 className={`inline-flex items-center rounded-lg bg-stone-200 px-4 py-3 text-base font-bold text-stone-900`}>
         {node.generatedDocName}
       </h3>
     );
