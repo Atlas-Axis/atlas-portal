@@ -12,9 +12,13 @@ type LoadAtlasOptions = {
 };
 
 /**
+ * Agent Scope Database documents that are at the root level (no parent_notion_page_id) need to be nested under a specific Agent section
+ */
+
+/**
  * Generic helper function to load Atlas pages from Supabase with various options
  */
-async function loadAtlasPages(options: LoadAtlasOptions = {}) {
+async function loadNotionDatabasePages(options: LoadAtlasOptions = {}) {
   const { excludeAgents = false, validAt } = options;
 
   const atlasPagesPerDatabase: Record<AtlasDatabaseName, NotionDatabasePage[]> = {} as Record<
@@ -40,25 +44,20 @@ async function loadAtlasPages(options: LoadAtlasOptions = {}) {
   return atlasPagesPerDatabase;
 }
 
-export async function loadAtlasFromSupabase() {
-  return loadAtlasPages();
-}
-
-// Load Atlas pages from Supabase, excluding Agents for ISR optimization
-export async function loadAtlasFromSupabaseWithoutAgents() {
-  return loadAtlasPages({ excludeAgents: true });
+export async function loadAtlasFromSupabaseWithoutNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
+  return loadNotionDatabasePages(options);
 }
 
 // Load Atlas pages from Supabase, as of a specific past date/time
 export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
-  return loadAtlasPages({ validAt: atDateTime });
+  return loadNotionDatabasePages({ validAt: atDateTime });
 }
 
 // Load Atlas pages from Supabase, with additional nesting logic applied
 // This is needed for the Agents database, where root-level Agent documents need to be nested under a specific Agent section to match the Atlas Explorer UI
-export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection() {
+export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
   // Load the base Atlas data
-  const atlasPagesPerDatabase = await loadAtlasFromSupabase();
+  const atlasPagesPerDatabase = await loadNotionDatabasePages(options);
 
   const agentPages = atlasPagesPerDatabase[ATLAS_DATABASES.AGENTS];
   const sectionsAndPrimaryDocsPages = atlasPagesPerDatabase[ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS];
@@ -67,7 +66,7 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection() {
     .filter((page: NotionDatabasePage) => page.parent_notion_page_id === null)
     .map((page: NotionDatabasePage) => page.notion_page_id);
 
-  // Nest root Agent documents under a specific Agent section - the relationship is not set in Notion, so we do it here. This is how the Atlas Explorer UI does it.
+  // Nest root Agent documents under a specific Agent section below Agent Scope - the relationship is not set in Notion, so we do it here. This is how the Atlas Explorer UI does it.
   const updatedSectionsAndPrimaryDocsPages = await nestRootAgentDocumentsUnderAgentSection({
     sectionsAndPrimaryDocsPages,
     rootAgentDocumentIds,
@@ -76,6 +75,7 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection() {
   // Return the updated data with nesting applied
   return {
     ...atlasPagesPerDatabase,
+    [ATLAS_DATABASES.AGENTS]: [] as NotionDatabasePage[], // Clear out root-level Agents to avoid orphaned node warnings
     [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: updatedSectionsAndPrimaryDocsPages,
   };
 }
