@@ -47,7 +47,9 @@ next-env.d.ts
 .notion-cache/
 
 # Custom local debug data
-.debug-data
+# .debug-data
+.debug-data/Atlas Explorer cached data 9.29
+.debug-data/PH Notion importer 9.29
 
 # IDEs and editors
 .vscode/*
