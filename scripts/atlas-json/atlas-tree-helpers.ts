@@ -11,6 +11,8 @@ export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): stri
     // Return the plain text name as-is for these databases
     case 'Scopes':
     case 'Articles':
+    case 'Tenets': // ?
+    case 'Needed Research': // ?
     case 'Annotations':
     case 'Scenarios':
     case 'Active Data':
