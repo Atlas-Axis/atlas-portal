@@ -58,11 +58,11 @@
 
 .supportingDocsLabel {
   border-radius: 0.375rem;
-  background-color: rgb(51 65 85);
-  padding: 0.25rem;
+  background-color: rgb(228, 230, 234);
+  padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: rgb(241 245 249);
+  color: rgb(34, 47, 65);
 }
 
 .supportingDocsList {
