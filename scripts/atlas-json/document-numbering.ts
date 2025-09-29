@@ -164,10 +164,12 @@ function selectPrimaryParentId(
 export function generateScopeNumber(page: NotionDatabasePage, hierarchy: DocumentHierarchy): string {
   // Find all scope siblings and sort by sort_order
   const scopeSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => item.page.atlas_database_name === 'Scopes' && !item.parentId),
+    Object.values(hierarchy)
+      .filter((item) => item.page.atlas_database_name === 'Scopes' && !item.parentId)
+      .map((item) => item.page),
   );
 
-  const scopeIndex = scopeSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const scopeIndex = scopeSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (scopeIndex === -1) return '';
   return `A.${scopeIndex}`;
 }
@@ -192,12 +194,15 @@ export function generateArticleNumber(
 
   // Find all articles that are children of the same parent scope
   const articleSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) => item.page.atlas_database_name === 'Articles' && parentScope.children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Articles' && parentScope.children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const articleIndex = articleSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const articleIndex = articleSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (articleIndex === -1) return '';
   return `${parentNumber}.${articleIndex + 1}`;
 }
@@ -234,13 +239,15 @@ function generateSequentialSiblingNumber(
   if (!parentId) return '';
 
   const allSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => {
-      // Same parent via child_* relationships
-      return hierarchy[parentId].children.includes(item.page.notion_page_id);
-    }),
+    Object.values(hierarchy)
+      .filter((item) => {
+        // Same parent via child_* relationships
+        return hierarchy[parentId].children.includes(item.page.notion_page_id);
+      })
+      .map((item) => item.page),
   );
 
-  const siblingIndex = allSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const siblingIndex = allSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (siblingIndex === -1) return '';
   return `${parentNumber}.${siblingIndex + 1}`;
 }
@@ -312,14 +319,16 @@ export function generateAnnotationNumber(
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const annotationSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) =>
-        item.page.atlas_database_name === 'Annotations' &&
-        hierarchy[parentId].children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Annotations' &&
+          hierarchy[parentId].children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const annotationIndex = annotationSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const annotationIndex = annotationSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (annotationIndex === -1) return '';
   return `${parentNumber}.0.3.${annotationIndex + 1}`;
 }
@@ -340,13 +349,15 @@ export function generateTenetNumber(
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const tenetSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) =>
-        item.page.atlas_database_name === 'Tenets' && hierarchy[parentId].children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Tenets' && hierarchy[parentId].children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const tenetIndex = tenetSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const tenetIndex = tenetSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (tenetIndex === -1) return '';
   return `${parentNumber}.0.4.${tenetIndex + 1}`;
 }
@@ -367,14 +378,16 @@ export function generateScenarioNumber(
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const scenarioSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) =>
-        item.page.atlas_database_name === 'Scenarios' &&
-        hierarchy[parentId].children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Scenarios' &&
+          hierarchy[parentId].children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const scenarioIndex = scenarioSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const scenarioIndex = scenarioSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (scenarioIndex === -1) return '';
   return `${parentNumber}.1.${scenarioIndex + 1}`;
 }
@@ -395,14 +408,16 @@ export function generateScenarioVariationNumber(
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const variationSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) =>
-        item.page.atlas_database_name === 'Scenario Variations' &&
-        hierarchy[parentId].children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Scenario Variations' &&
+          hierarchy[parentId].children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const variationIndex = variationSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const variationIndex = variationSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (variationIndex === -1) return '';
   return `${parentNumber}.var${variationIndex + 1}`;
 }
@@ -423,14 +438,16 @@ export function generateActiveDataNumber(
   const parentId = selectPrimaryParentId(page, hierarchy, generatedDocNumbers);
   if (!parentId) return '';
   const activeDataSiblings = sortSiblings(
-    Object.values(hierarchy).filter(
-      (item) =>
-        item.page.atlas_database_name === 'Active Data' &&
-        hierarchy[parentId].children.includes(item.page.notion_page_id),
-    ),
+    Object.values(hierarchy)
+      .filter(
+        (item) =>
+          item.page.atlas_database_name === 'Active Data' &&
+          hierarchy[parentId].children.includes(item.page.notion_page_id),
+      )
+      .map((item) => item.page),
   );
 
-  const activeDataIndex = activeDataSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const activeDataIndex = activeDataSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (activeDataIndex === -1) return '';
   return `${parentNumber}.0.6.${activeDataIndex + 1}`;
 }
@@ -442,10 +459,12 @@ export function generateActiveDataNumber(
 export function generateNeededResearchNumber(page: NotionDatabasePage, hierarchy: DocumentHierarchy): string {
   // Needed Research uses global numbering
   const neededResearchSiblings = sortSiblings(
-    Object.values(hierarchy).filter((item) => item.page.atlas_database_name === 'Needed Research'),
+    Object.values(hierarchy)
+      .filter((item) => item.page.atlas_database_name === 'Needed Research')
+      .map((item) => item.page),
   );
 
-  const researchIndex = neededResearchSiblings.findIndex((item) => item.page.notion_page_id === page.notion_page_id);
+  const researchIndex = neededResearchSiblings.findIndex((item) => item.notion_page_id === page.notion_page_id);
   if (researchIndex === -1) return '';
   return `NR-${researchIndex + 1}`;
 }

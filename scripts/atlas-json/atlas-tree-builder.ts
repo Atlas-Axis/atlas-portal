@@ -10,7 +10,6 @@ import {
   TreeConstructionError,
   TreeConstructionOptions,
 } from './atlas-tree-types';
-import { compareDocNumbers } from './utils';
 
 /**
  * Builds the Atlas document tree structure from Supabase data.
