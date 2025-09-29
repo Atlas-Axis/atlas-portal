@@ -1,5 +1,6 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { AtlasDatabaseName } from '@/app/server/services/atlas/constants';
+import { sortAtlasDocuments } from './atlas-tree-helpers';
 import { compareDocNumbers } from './utils';
 
 /**
@@ -108,57 +109,8 @@ export function logDocumentHierarchy(hierarchy: DocumentHierarchy, generatedNumb
   }
 }
 
-function sortSiblings<T extends { page: NotionDatabasePage }>(items: T[]): T[] {
-  const copy = [...items];
-  copy.sort((a, b) => {
-    const aOrder = a.page.sort_order;
-    const bOrder = b.page.sort_order;
-    const aHasOrder = aOrder != null;
-    const bHasOrder = bOrder != null;
-    if (aHasOrder && bHasOrder && aOrder! !== bOrder!) {
-      return aOrder! - bOrder!;
-    }
-    if (aHasOrder && !bHasOrder) return -1;
-    if (!aHasOrder && bHasOrder) return 1;
-
-    // When sort_order is null for both, use document type priority as secondary sort
-    const aType = a.page.atlas_document_type;
-    const bType = b.page.atlas_document_type;
-
-    // Define document type priority for consistent ordering
-    // Includes all document types to ensure consistent ordering across all databases
-    const typePriority: Record<string, number> = {
-      Core: 1,
-      'Active Data Controller': 2,
-      'Type Specification': 3,
-      Section: 4,
-      Article: 5,
-      Scope: 6,
-      Annotation: 7,
-      'Action Tenet': 8,
-      Scenario: 9,
-      'Scenario Variation': 10,
-      'Active Data': 11,
-      'Needed Research': 12,
-    };
-
-    const aPriority = typePriority[aType] || 999;
-    const bPriority = typePriority[bType] || 999;
-
-    if (aType !== bType) {
-      console.log('Mixed sibling types:', aType, bType);
-    }
-
-    if (aPriority !== bPriority) {
-      return aPriority - bPriority;
-    }
-
-    // Final fallback: use atlas_document_number
-    const an = a.page.atlas_document_number || '';
-    const bn = b.page.atlas_document_number || '';
-    return compareDocNumbers(an, bn);
-  });
-  return copy;
+function sortSiblings(items: NotionDatabasePage[]): NotionDatabasePage[] {
+  return sortAtlasDocuments<NotionDatabasePage>(items);
 }
 
 /**
