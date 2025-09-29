@@ -14,7 +14,7 @@ export default async function Page() {
   const atlas = buildAtlasTree(atlasPagesPerDatabase, {
     assignDocumentNumbers: true,
     reportMissingChildNodes: false,
-    reportOrphanedNodes: false,
+    reportOrphanedNodes: true,
   });
 
   return (

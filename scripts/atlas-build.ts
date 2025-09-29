@@ -17,7 +17,7 @@ async function main() {
     // Configure options
     const options: TreeConstructionOptions = {
       reportMissingChildNodes: false,
-      reportOrphanedNodes: false,
+      reportOrphanedNodes: true,
     };
 
     // Build tree structure with document numbering and validation
