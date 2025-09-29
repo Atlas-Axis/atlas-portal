@@ -2,6 +2,7 @@ import { Tables } from '@/app/server/services/supabase/database.types';
 import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
 
 export interface NotionDatabasePropertyMapping {
+  // TODO: Delete atlasFullDocumentTitle - in Atlas Explorer, there are only two fields: Document No and Document Name
   atlasFullDocumentTitle: string; // A property name representing the full title, including the document number and name, e.g. "A.3.1.1 - Scope Improvement"
   atlasDocumentNo: string; // A property name representing the formal document ID, e.g. "A.3.1.1"
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
@@ -81,6 +82,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+      // Extra in PH importer: "Files & media"
     },
     parentPropertyName: 'Parent Doc',
     // subItemsPropertyName: 'Subdocs',
@@ -244,3 +246,27 @@ export const TYPE_SPECIFICATION_PROPERTY_MAPPING: Record<keyof TypeSpecification
   type_specification_type_name: 'Type Name',
   type_specification_type_overview: 'Type Overview',
 } as const;
+
+// "Scenario" documents have some extra fields
+export interface ScenarioExtraFields {
+  scenario_finding: string | null;
+  scenario_additional_guidance: string | null;
+}
+
+// "Scenario Variation" documents have some extra fields
+export interface ScenarioVariationExtraFields {
+  scenario_variation_finding: string | null;
+  scenario_variation_additional_guidance: string | null;
+}
+
+// Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
+export const SCENARIO_PROPERTY_MAPPING: Record<string, string> = {
+  scenario_finding: 'Finding',
+  scenario_additional_guidance: 'Additional Guidance',
+};
+
+// Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario Variation" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
+export const SCENARIO_VARIATION_PROPERTY_MAPPING: Record<string, string> = {
+  scenario_variation_finding: 'Finding',
+  scenario_variation_additional_guidance: 'Additional Guidance',
+};

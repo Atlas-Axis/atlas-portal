@@ -79,6 +79,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
+  -- TODO: Delete canonical_document_title - in Atlas Explorer, there are only two fields: Document No and Document Name
   canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   atlas_document_type atlas_document_type_enum NOT NULL,
   atlas_document_number TEXT NOT NULL DEFAULT '',

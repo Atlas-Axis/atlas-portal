@@ -74,6 +74,6 @@ export async function verifySyncLock(notionPageId: string) {
   const isSyncLocked = data?.is_sync_locked ?? false;
 
   if (isSyncLocked) {
-    throw new Error('Sync is already running');
+    throw new Error('🚫 Sync is already running');
   }
 }
