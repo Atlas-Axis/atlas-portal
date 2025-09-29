@@ -82,7 +82,13 @@ async function main() {
       }
     }
 
-    const pageIdsByStatus: { [key: MasterStatus | string]: string[] } = {
+    const pageIdsByStatus: {
+      [key in MasterStatus]: string[];
+    } & {
+      _MULTIPLE_STATUSES_: { pageId: string; statuses: string[] }[];
+      _NONE_: string[];
+      _OTHER_: { pageId: string; error?: string; unknownStatusIds?: string[] }[];
+    } = {
       Deferred: [],
       Archived: [],
       Approved: [],
@@ -123,8 +129,21 @@ async function main() {
             if (relationIds.length === 0) {
               pageIdsByStatus._NONE_.push(id);
             } else if (relationIds.length > 1) {
-              // Multiple statuses - add to multiple statuses array
-              pageIdsByStatus._MULTIPLE_STATUSES_.push(id);
+              // Multiple statuses - store page ID with all status names
+              const statusNames = relationIds
+                .map((relId) => masterStatusIdToName[relId])
+                .filter((name) => name !== undefined);
+              const unknownIds = relationIds.filter((relId) => !masterStatusIdToName[relId]);
+
+              const allStatuses = [...statusNames];
+              if (unknownIds.length > 0) {
+                allStatuses.push(...unknownIds.map((id) => `Unknown:${id}`));
+              }
+
+              pageIdsByStatus._MULTIPLE_STATUSES_.push({
+                pageId: id,
+                statuses: allStatuses,
+              });
             } else {
               // Single status - map ID to status name and add to appropriate array
               const statusId = relationIds[0];
@@ -133,7 +152,10 @@ async function main() {
               if (statusName) {
                 pageIdsByStatus[statusName].push(id);
               } else {
-                pageIdsByStatus._OTHER_.push(id);
+                pageIdsByStatus._OTHER_.push({
+                  pageId: id,
+                  unknownStatusIds: [statusId],
+                });
                 console.log(`  Unknown Master Status ID: ${statusId}`);
               }
             }
@@ -142,11 +164,17 @@ async function main() {
           }
         } else {
           console.log(`  Page ${id} is not a page object`);
-          pageIdsByStatus._OTHER_.push(id);
+          pageIdsByStatus._OTHER_.push({
+            pageId: id,
+            error: 'Not a page object',
+          });
         }
       } catch (error) {
         console.log(`  Error retrieving page ${id}: ${error}`);
-        pageIdsByStatus._OTHER_.push(id);
+        pageIdsByStatus._OTHER_.push({
+          pageId: id,
+          error: String(error),
+        });
       }
     }
 
@@ -157,11 +185,36 @@ async function main() {
       console.log('🧪 Test mode was enabled - only processed first 10 items');
     }
     console.log('');
-    for (const [status, pageIds] of Object.entries(pageIdsByStatus)) {
-      if (pageIds.length > 0) {
-        console.log(`${status}: ${pageIds.length} pages`);
-        console.log(`  Page IDs: ${pageIds.join(', ')}`);
-        console.log('');
+    for (const [status, data] of Object.entries(pageIdsByStatus)) {
+      if (Array.isArray(data) && data.length > 0) {
+        if (status === '_MULTIPLE_STATUSES_') {
+          const multipleStatusData = data as { pageId: string; statuses: string[] }[];
+          console.log(`${status}: ${multipleStatusData.length} pages`);
+          multipleStatusData.forEach((item, index) => {
+            console.log(`  ${index + 1}. Page ID: ${item.pageId}`);
+            console.log(`     Statuses: ${item.statuses.join(', ')}`);
+          });
+          console.log('');
+        } else if (status === '_OTHER_') {
+          const otherData = data as { pageId: string; error?: string; unknownStatusIds?: string[] }[];
+          console.log(`${status}: ${otherData.length} pages`);
+          otherData.forEach((item, index) => {
+            console.log(`  ${index + 1}. Page ID: ${item.pageId}`);
+            if (item.error) {
+              console.log(`     Error: ${item.error}`);
+            }
+            if (item.unknownStatusIds) {
+              console.log(`     Unknown Status IDs: ${item.unknownStatusIds.join(', ')}`);
+            }
+          });
+          console.log('');
+        } else {
+          // Regular status categories (arrays of strings)
+          const stringData = data as string[];
+          console.log(`${status}: ${stringData.length} pages`);
+          console.log(`  Page IDs: ${stringData.join(', ')}`);
+          console.log('');
+        }
       }
     }
 
@@ -180,7 +233,7 @@ async function main() {
     await (await import('fs/promises')).writeFile(outputPath, JSON.stringify(outputData, null, 2), 'utf-8');
     console.log(`\n📄 Results written to: ${outputPath}`);
 
-    process.exit(1);
+    process.exit(0);
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       console.error('Error: missing_child_ids.log file not found.');
@@ -205,8 +258,11 @@ async function main() {
  * or multiple statuses, providing detailed lists for further investigation.
  *
  * Outputs:
- * - Console: Summary of results with page counts and IDs
+ * - Console: Summary of results with page counts and IDs, enhanced details for special categories
  * - missing_child_ids_by_master_status.json: Detailed JSON file with metadata and page IDs by status
+ *   - Regular statuses: arrays of page ID strings
+ *   - _MULTIPLE_STATUSES_: array of objects with pageId and statuses array
+ *   - _OTHER_: array of objects with pageId, error messages, and unknown status IDs
  */
 main().catch((err) => {
   console.error(err);
