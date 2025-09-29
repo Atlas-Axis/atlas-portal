@@ -12,6 +12,7 @@ interface RichTextObject {
   plain_text: string;
 }
 
+// TODO: Unify with `readPlainTextValueFromNotionPageProperty` in read-simple-value-from-property.ts
 export function extractPlainText(block: BlockObjectResponse): string {
   const blockType = block.type;
 

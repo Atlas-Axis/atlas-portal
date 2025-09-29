@@ -121,7 +121,7 @@ export async function fetchNotionDatabasePages({
 }): Promise<PageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   if (DEBUG_LOGGING) {
-    console.log(`📡 Starting to fetch all pages from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`);
+    console.log(`Starting to fetch all pages from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`);
   }
 
   const results: PageObjectResponse[] = [];
@@ -172,7 +172,7 @@ export async function fetchNotionDatabasePages({
   } while (cursor);
 
   console.log(
-    `✅ Completed fetching all Notion pages: ${results.length} total Notion pages from database "${atlasDatabaseName}"`,
+    `Completed fetching all Notion pages: ${results.length} total Notion pages from database "${atlasDatabaseName}"`,
   );
   return results;
 }

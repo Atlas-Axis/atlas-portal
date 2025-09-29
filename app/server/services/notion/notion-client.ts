@@ -33,7 +33,7 @@ export class NotionProxy {
   private totalApiCalls = 0;
 
   constructor(secrets: string[]) {
-    console.log(`🔧 Initializing Notion proxy with ${secrets.length} API client(s)`);
+    console.log(`Initializing Notion proxy with ${secrets.length} API client(s)`);
 
     this.clients = secrets.map((secret) => ({
       client: new NotionClient({ auth: secret }),

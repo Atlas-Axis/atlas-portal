@@ -68,7 +68,7 @@ export function compareDatabasePages({
   notionPages: EnhancedPageObjectResponse[];
   atlasDatabaseName: AtlasDatabaseName;
 }): DatabasePageChanges {
-  console.log(`🔍 Comparing ${supabasePages.length} Supabase pages with ${notionPages.length} Notion pages`);
+  console.log(`Comparing ${supabasePages.length} Supabase pages with ${notionPages.length} Notion pages`);
 
   // Create maps for efficient lookup
   const supabasePagesById = new Map<string, NotionDatabasePage>();

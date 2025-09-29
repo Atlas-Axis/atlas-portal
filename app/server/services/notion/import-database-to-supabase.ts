@@ -42,7 +42,7 @@ export async function importDatabasePagesFromNotionToSupabase({
     console.log(`Loaded ${existingPages.length} existing pages from Supabase`);
 
     // Fetch all pages with relationships via Notion API
-    console.log(`📡 Fetching all pages with relationships from Notion database "${atlasDatabaseName}"...`);
+    console.log(`Fetching all pages with relationships from Notion database "${atlasDatabaseName}"...`);
     const notionPagesWithRelationships = await fetchNotionDatabasePagesWithRelationships({
       atlasDatabaseName,
       useLocalCache,
