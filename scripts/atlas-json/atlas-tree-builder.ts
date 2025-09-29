@@ -10,6 +10,7 @@ import {
   TreeConstructionError,
   TreeConstructionOptions,
 } from './atlas-tree-types';
+import { compareDocNumbers } from './utils';
 
 /**
  * Builds the Atlas document tree structure from Supabase data.
@@ -55,11 +56,16 @@ export function buildAtlasTree(
 
   // Step 2: Find root Scope documents
   const scopePages = pagesByDatabase[ATLAS_DATABASES.SCOPES] || [];
-  const rootScopes = scopePages.filter((page) => page.parent_notion_page_id === null);
+  const unsortedRootScopes = scopePages.filter((page) => page.parent_notion_page_id === null);
 
-  if (rootScopes.length === 0) {
+  if (unsortedRootScopes.length === 0) {
     throw new Error('No root Scope documents found. Atlas tree requires at least one root Scope.');
   }
+
+  // Sort root Scope documents by their document numbers
+  const rootScopes = [...unsortedRootScopes].sort((a, b) =>
+    compareDocNumbers(a.atlas_document_number || '', b.atlas_document_number || ''),
+  );
 
   if (verbose) {
     console.log(`📊 Found ${rootScopes.length} root Scope documents`);
