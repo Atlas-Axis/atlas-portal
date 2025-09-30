@@ -75,7 +75,6 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options
   // Return the updated data with nesting applied
   return {
     ...atlasPagesPerDatabase,
-    [ATLAS_DATABASES.AGENTS]: [] as NotionDatabasePage[], // Clear out root-level Agents to avoid orphaned node warnings
     [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: updatedSectionsAndPrimaryDocsPages,
   };
 }
