@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
 import { z } from 'zod';
-import { makeAtlasDataHtmlDocument } from '../components/make-atlas-data-html-string';
+// import { makeAtlasDataHtmlDocument } from '../components/make-atlas-data-html-string';
 import { agentArtifactsSectionId, masterStatusesIdMap } from '../constants';
 import type {
   RawViewNode,
@@ -164,14 +165,14 @@ export function getIds(relations: any[]): string[] {
  * @param {ViewNodeMap} viewNodeMap - Map of view nodes
  * @returns {Promise<Record<string, string>>} Map of node IDs to HTML strings
  */
-export async function makeHtmlDocumentViewNodeMap(viewNodeMap: ViewNodeMap) {
-  const htmlStringViewNodeMap: Record<string, string> = {};
-  for (const slugSuffix in viewNodeMap) {
-    const viewNode = viewNodeMap[slugSuffix]!;
-    htmlStringViewNodeMap[slugSuffix] = await makeAtlasDataHtmlDocument([viewNode]);
-  }
-  return htmlStringViewNodeMap;
-}
+// export async function makeHtmlDocumentViewNodeMap(viewNodeMap: ViewNodeMap) {
+//   const htmlStringViewNodeMap: Record<string, string> = {};
+//   for (const slugSuffix in viewNodeMap) {
+//     const viewNode = viewNodeMap[slugSuffix]!;
+//     htmlStringViewNodeMap[slugSuffix] = await makeAtlasDataHtmlDocument([viewNode]);
+//   }
+//   return htmlStringViewNodeMap;
+// }
 
 /**
  * Processes a raw view node map into a processed view node map
