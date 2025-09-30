@@ -6,6 +6,28 @@ import {
 import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES, AtlasDatabaseName } from './constants';
 import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
 
+/**
+ * Sorts Atlas documents to ensure documents with defined sort_order values come first,
+ * followed by documents with null/undefined sort_order values.
+ * Maintains the original relative order within each group.
+ */
+export function sortAtlasDocumentsBySortOrder(pages: NotionDatabasePage[]): NotionDatabasePage[] {
+  // Separate documents into two groups: those with defined sort_order and those without
+  const withSortOrder: NotionDatabasePage[] = [];
+  const withoutSortOrder: NotionDatabasePage[] = [];
+
+  for (const page of pages) {
+    if (page.sort_order !== null && page.sort_order !== undefined) {
+      withSortOrder.push(page);
+    } else {
+      withoutSortOrder.push(page);
+    }
+  }
+
+  // Return documents with defined sort_order first, then those without
+  return [...withSortOrder, ...withoutSortOrder];
+}
+
 type LoadAtlasOptions = {
   excludeAgents?: boolean;
   validAt?: string;
@@ -17,6 +39,7 @@ type LoadAtlasOptions = {
 
 /**
  * Generic helper function to load Atlas pages from Supabase with various options
+ * Automatically sorts documents in each database to ensure those with defined sort_order come first
  */
 async function loadNotionDatabasePages(options: LoadAtlasOptions = {}) {
   const { excludeAgents = false, validAt } = options;
@@ -27,18 +50,23 @@ async function loadNotionDatabasePages(options: LoadAtlasOptions = {}) {
   >;
 
   for (const databaseName of ATLAS_DATABASE_NAMES) {
+    let pages: NotionDatabasePage[];
+
     if (excludeAgents && databaseName === ATLAS_DATABASES.AGENTS) {
-      atlasPagesPerDatabase[databaseName] = [];
+      pages = [];
     } else if (validAt) {
-      atlasPagesPerDatabase[databaseName] = await loadNotionDatabasePagesAtTimeFromSupabase({
+      pages = await loadNotionDatabasePagesAtTimeFromSupabase({
         atlasDatabaseName: databaseName,
         validAt,
       });
     } else {
-      atlasPagesPerDatabase[databaseName] = await loadNotionDatabasePagesFromSupabase({
+      pages = await loadNotionDatabasePagesFromSupabase({
         atlasDatabaseName: databaseName,
       });
     }
+
+    // Sort documents to ensure those with defined sort_order come first
+    atlasPagesPerDatabase[databaseName] = sortAtlasDocumentsBySortOrder(pages);
   }
 
   return atlasPagesPerDatabase;
@@ -56,7 +84,7 @@ export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
 // Load Atlas pages from Supabase, with additional nesting logic applied
 // This is needed for the Agents database, where root-level Agent documents need to be nested under a specific Agent section to match the Atlas Explorer UI
 export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
-  // Load the base Atlas data
+  // Load the base Atlas data (already sorted by loadNotionDatabasePages)
   const atlasPagesPerDatabase = await loadNotionDatabasePages(options);
 
   const agentPages = atlasPagesPerDatabase[ATLAS_DATABASES.AGENTS];
@@ -72,9 +100,9 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options
     rootAgentDocumentIds,
   });
 
-  // Return the updated data with nesting applied
+  // Return the updated data with nesting applied, re-sorting only the modified SECTIONS_AND_PRIMARY_DOCS
   return {
     ...atlasPagesPerDatabase,
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: updatedSectionsAndPrimaryDocsPages,
+    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: sortAtlasDocumentsBySortOrder(updatedSectionsAndPrimaryDocsPages),
   };
 }
