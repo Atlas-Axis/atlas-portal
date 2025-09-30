@@ -56,6 +56,8 @@ function convertNode(node: AtlasTreeNode, options: ConvertOptions): Standardized
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
 
+    // TODO: content
+
     scopes: [],
     articles: [],
     sectionsAndPrimaryDocs: [],
@@ -183,8 +185,8 @@ async function main() {
   const raw = fs.readFileSync(inputFile, 'utf8');
   const scopeTrees: AtlasTreeNode[] = JSON.parse(raw);
 
-  const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((n) =>
-    convertNode(n, { omitAgents, prunedCounter }),
+  const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((node) =>
+    convertNode(node, { omitAgents, prunedCounter }),
   );
 
   fs.mkdirSync(outputDir, { recursive: true });
