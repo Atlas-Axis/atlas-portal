@@ -1,4 +1,4 @@
-import { loadAtlasFromSupabasePastVersion } from '@/app/server/services/atlas/load-atlas-from-supabase';
+import { loadAtlasFromSupabasePastVersion } from '@/app/server/atlas/load-atlas-from-supabase';
 
 // import AtlasListClient from './atlas-list-client';
 

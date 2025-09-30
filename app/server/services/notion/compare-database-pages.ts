@@ -1,6 +1,5 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { NotionDatabasePage } from '../../database/notion-database-page';
-import { ATLAS_DATABASES, AtlasDatabaseName } from '../atlas/constants';
+import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   NotionDatabasePropertyKey,
@@ -12,7 +11,8 @@ import {
   ScenarioVariationExtraFields,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
   TypeSpecificationExtraFields,
-} from '../atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 

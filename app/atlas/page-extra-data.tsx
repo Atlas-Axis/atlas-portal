@@ -1,8 +1,8 @@
 'use client';
 
+import { isTypeSpecificationAtlasDocument } from '@/app/server/atlas/detect-type-specification-atlas-document';
+import { TypeSpecificationExtraFields } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { isTypeSpecificationAtlasDocument } from '../server/services/atlas/detect-type-specification-atlas-document';
-import { TypeSpecificationExtraFields } from '../server/services/atlas/notion-database-properties-and-relationships';
 
 export default function PageExtraData({ page, className }: { page: NotionDatabasePage; className?: string }) {
   if (isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type)) {

@@ -1,5 +1,5 @@
-import { NotionDatabasePage } from '../../database/notion-database-page';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../atlas/constants';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
 import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';

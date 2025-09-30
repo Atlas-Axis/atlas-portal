@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
 import AgentsSection from './agents-section';
 import AtlasList from './atlas-list';
 

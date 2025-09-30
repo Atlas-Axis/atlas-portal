@@ -52,10 +52,10 @@
 // import { mkdir, writeFile } from 'fs/promises';
 // import path from 'path';
 // import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-// import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
-// import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
+// import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
+// import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 // import { generateDocumentNumbers } from './atlas-json/document-numbering';
-// import { compareDocNumbers } from './atlas-json/utils';
+// import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 // import { loadEnv } from './utils/load-env';
 
 // const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));

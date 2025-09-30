@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util';
-import { loadAtlasChangeHistory } from '@/app/server/services/atlas/load-atlas-change-history';
+import { loadAtlasChangeHistory } from '@/app/server/atlas/load-atlas-change-history';
 import { loadEnv } from './utils/load-env';
 
 type Args = {

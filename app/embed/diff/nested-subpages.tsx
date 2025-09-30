@@ -1,4 +1,4 @@
-import { ProposalContext } from '@/app/server/services/atlas/proposal-types';
+import { ProposalContext } from '@/app/server/atlas/proposal-types';
 import { TreeNode } from '@/app/server/diff/tree';
 
 export function NestedSubpageList({
@@ -49,5 +49,3 @@ function NestedSubpageItem({
     </li>
   );
 }
-
-

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { BlockObjectRequest, CreatePageParameters, DatabaseObjectResponse } from '@notionhq/client';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { extractSubtreePageIds } from '@/app/server/diff/extract-subtree';
@@ -8,7 +9,6 @@ import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '../../atlas/constants';
 import { fetchBlocksRecursively } from '../fetch-blocks-recursively';
 import { verifySyncLock } from '../sync-lock';
 import { _delete_TextRichTextItemRequest } from './_old.types';

@@ -1,5 +1,5 @@
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { Json } from '@/app/server/services/supabase/database.types';
-import { AtlasDatabaseName, AtlasDocumentType } from '../services/atlas/constants';
 
 // Represents a Notion page in the database
 export interface NotionDatabasePage {

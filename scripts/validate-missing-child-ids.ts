@@ -2,10 +2,10 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
-import { MASTER_STATUS_ID_MAP, MasterStatus } from '@/app/server/services/atlas/constants';
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
+import { detectMissingChildren } from '@/app/server/atlas/atlas-tree-errors';
+import { MASTER_STATUS_ID_MAP, MasterStatus } from '@/app/server/atlas/constants';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { detectMissingChildren } from './atlas-json/atlas-tree-errors';
 import { loadEnv } from './utils/load-env';
 
 /**

@@ -14,7 +14,7 @@
  * WHAT IT DOES:
  * - Loads the Atlas HTML from the first available source:
  *   1) .debug-data/github.html (local debug copy)
- *   2) app/server/services/atlas/Sky Atlas.html (repo copy)
+ *   2) app/server/atlas/Sky Atlas.html (repo copy)
  *   3) Remote GitHub raw URL (fallback)
  * - Parses each section's table rows into categorized AtlasCategoryJson objects, each containing an array of AtlasDocumentJson objects
  * - Writes output to .debug-data/atlas-json-generated/atlas-github.json
@@ -26,12 +26,12 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { JSDOM } from 'jsdom';
 import path from 'path';
-import { ATLAS_GITHUB_HTML_URL } from '@/app/server/services/atlas/constants';
-import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/services/atlas/constants';
+import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
+import { ATLAS_GITHUB_HTML_URL } from '@/app/server/atlas/constants';
+import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/constants';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
 import { fixDocumentNumberPrefix } from './utils';
-import { compareDocNumbers } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));

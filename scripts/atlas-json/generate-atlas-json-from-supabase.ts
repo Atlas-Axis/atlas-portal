@@ -33,11 +33,11 @@
 // import { mkdir, writeFile } from 'fs/promises';
 // import path from 'path';
 // import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-// import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
+// import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
 // import {
 //   loadAtlasFromSupabasePastVersion,
 //   loadAtlasFromSupabaseWithNestingAgentsUnderSection,
-// } from '@/app/server/services/atlas/load-atlas-from-supabase';
+// } from '@/app/server/atlas/load-atlas-from-supabase';
 // import { loadEnv } from '../utils/load-env';
 // import {
 //   ATLAS_JSON_OUTPUT_DIR,

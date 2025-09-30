@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { convertTreeChangesToAtlasProposal } from '@/app/server/atlas/generate-proposal';
+import { ProposalContext } from '@/app/server/atlas/proposal-types';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/to_delete/convert-supabase-database-pages-to-tree-nodes-old';
 import { TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { _delete_getNotionDatabaseIdFromNotionPage } from '@/app/server/services/supabase/to_delete/_old.get-notion-database-id-from-notion-page';
 import { isValidUUID } from '@/app/shared/utils/utils';
-import { NotionDatabasePage } from '../../database/notion-database-page';
-import { convertTreeChangesToAtlasProposal } from '../../services/atlas/generate-proposal';
-import { ProposalContext } from '../../services/atlas/proposal-types';
 import { loadTextContentForNotionPageIds } from '../../services/supabase/load-text-content-for-notion-page-ids';
 import { logTree } from '../console-log-tree';
 import { TreeChange, diffTrees } from '../diff-trees';

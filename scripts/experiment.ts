@@ -1,5 +1,5 @@
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/services/atlas/constants';
-import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/services/atlas/notion-database-properties-and-relationships';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 

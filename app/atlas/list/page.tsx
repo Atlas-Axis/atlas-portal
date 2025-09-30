@@ -1,4 +1,4 @@
-import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
+import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import AtlasListPrerendered from './atlas-list-prerendered';
 
 export const dynamic = 'force-static';

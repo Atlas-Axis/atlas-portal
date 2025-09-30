@@ -1,9 +1,9 @@
 import { parseArgs } from 'node:util';
+import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/to_delete/convert-supabase-database-pages-to-tree-nodes-old';
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { visualizeTree, visualizeTreeWithAscii } from '@/app/server/diff/visualize-tree';
 import { withRootNode } from '@/app/server/diff/with-root-node';
-import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 import { loadEnv } from './utils/load-env';
 

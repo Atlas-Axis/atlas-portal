@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { ATLAS_DATABASES } from '@/app/server/services/atlas/constants';
+import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { loadNotionDatabasePagesFromSupabase } from '@/app/server/services/supabase/load-notion-database-pages-from-supabase';
 
 // Cache for 2 minutes

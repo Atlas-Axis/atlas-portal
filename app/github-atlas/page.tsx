@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ATLAS_GITHUB_HTML_URL } from '../server/services/atlas/constants';
+import { ATLAS_GITHUB_HTML_URL } from '@/app/server/atlas/constants';
 import './styles.css';
 
 async function AtlasContent() {

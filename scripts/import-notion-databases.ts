@@ -1,6 +1,6 @@
 import { parseArgs } from 'node:util';
+import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
-import { IMPORT_DATABASES } from '@/app/server/services/atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
 

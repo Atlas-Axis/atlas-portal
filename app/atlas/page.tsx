@@ -1,5 +1,5 @@
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
-import { buildAtlasTree } from '@/scripts/atlas-json/atlas-tree-system';
+import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import ContentTree from './content-tree';
 
 export const dynamic = 'force-static';

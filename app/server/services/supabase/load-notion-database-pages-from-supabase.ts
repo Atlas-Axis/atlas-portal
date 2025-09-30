@@ -1,6 +1,6 @@
+import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { NotionDatabasePage } from '../../database/notion-database-page';
-import { AtlasDatabaseName } from '../atlas/constants';
 
 // Map of Atlas database names to their custom sort criteria (as an ordered list)
 // null means use default sorting criteria

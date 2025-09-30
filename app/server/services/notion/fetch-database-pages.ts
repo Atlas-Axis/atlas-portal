@@ -1,7 +1,7 @@
 import { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '../atlas/constants';
-import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '../atlas/notion-database-properties-and-relationships';
-import { NOTION_DATABASE_FILTERS } from '../atlas/notion-master-status-filters';
+import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { NOTION_DATABASE_FILTERS } from '@/app/server/atlas/notion-master-status-filters';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
 

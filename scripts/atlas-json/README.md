@@ -30,7 +30,7 @@ The new system provides:
 ## Quick Start
 
 ```typescript
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { buildAtlasTreeWithValidation } from './atlas-tree-system';
 
 // Load Atlas data

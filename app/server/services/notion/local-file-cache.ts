@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { AtlasDatabaseName } from '../atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 
 const CACHE_DIR = '.notion-cache';

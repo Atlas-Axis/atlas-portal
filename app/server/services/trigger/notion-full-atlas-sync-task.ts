@@ -1,7 +1,7 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
+import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
-import { IMPORT_DATABASES } from '../atlas/constants';
 import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';

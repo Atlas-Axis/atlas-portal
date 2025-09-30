@@ -334,13 +334,13 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 - Detects: added, deleted, edited, moved nodes
 - Handles hierarchical content changes
 
-### Atlas Business Logic (`/app/server/services/atlas`)
+### Atlas Business Logic (`/app/server/atlas`)
 
 - `generate-atlas-json.ts` - Generates JSON representation of Atlas hierarchy
 - `generate-proposal.ts` - Generates human-readable diffs
 - Canonical document titles (e.g., "A.2.3.21 Some Document") represent hierarchical position
 
-### Notion Database Property Mapping (`/app/server/services/atlas`)
+### Notion Database Property Mapping (`/app/server/atlas`)
 
 - `notion-database-properties-and-relationships.ts` - Maps Notion database page properties to Supabase fields
 - Defines property mappings for each Atlas database (e.g., 'Name' → `atlasDocumentName`)
@@ -456,7 +456,7 @@ This project maintains **3 synchronized documentation files** that provide high-
 
 ### Atlas Services
 
-- **[app/server/services/atlas/README.md](./app/server/services/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
+- **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
 
 ## 🚀 Getting Started
 

@@ -24,15 +24,16 @@
  */
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import path from 'path';
+import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 import {
   ATLAS_DATABASES,
   AtlasDatabaseName,
   AtlasDocumentType,
   GitHubAtlasDocumentType,
-} from '@/app/server/services/atlas/constants';
+} from '@/app/server/atlas/constants';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_BLUE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
-import { compareDocNumbers, fixDocumentNumberPrefix } from './utils';
+import { fixDocumentNumberPrefix } from './utils';
 
 // Toggle verbose logs with DEBUG_LOGGING=1
 const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));

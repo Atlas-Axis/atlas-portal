@@ -1,8 +1,8 @@
 'use client';
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { typeColorMap } from '@/app/server/services/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 
 interface AtlasListClientProps {

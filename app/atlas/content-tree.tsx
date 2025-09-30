@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
+import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
+import { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
-import type { AtlasTreeNode, AtlasTreeResult } from '@/scripts/atlas-json/atlas-tree-types';
-import { AtlasDocumentType } from '../server/services/atlas/constants';
-import { typeColorMap } from '../server/services/atlas/type-color-map';
 import styles from './content-tree.module.css';
 import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
