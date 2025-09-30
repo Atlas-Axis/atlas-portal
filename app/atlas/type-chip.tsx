@@ -5,8 +5,13 @@ import { typeColorMap } from '../server/services/atlas/type-color-map';
 
 export default function TypeChip({ type }: { type: AtlasDocumentType }) {
   const colorClass = typeColorMap[type] || 'bg-gray-100 text-gray-800';
+  let color: string = type;
+
+  if (type === 'Action Tenet') {
+    color = 'Tenet';
+  }
 
   return (
-    <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${colorClass}`}>{type}</span>
+    <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${colorClass}`}>{color}</span>
   );
 }
