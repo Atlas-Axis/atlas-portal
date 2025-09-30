@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/atlas/load-atlas-from-supabase';
-import { buildAtlasTreeWithValidation } from './atlas-json/atlas-tree-system';
-import type { TreeConstructionOptions } from './atlas-json/atlas-tree-types';
+import fs from 'fs';
+import path from 'path';
+import { buildAtlasTreeWithValidation } from '@/app/server/atlas/atlas-tree-system';
+import type { TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-types';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadEnv } from './utils/load-env';
 
 async function main() {
@@ -22,6 +24,7 @@ async function main() {
 
     // Build tree structure with document numbering and validation
     const result = await buildAtlasTreeWithValidation(atlasData, options);
+    const scopeTrees = result.scopeTrees;
 
     // Access the results
     console.log(`Built ${result.scopeTrees.length} scope trees`);
@@ -49,6 +52,18 @@ async function main() {
       const silencedMessage = silencedMessages.length > 0 ? ` (${silencedMessages.join(', ')})` : '';
       console.log(`Validation summary${silencedMessage}:`, result.validationSummary);
     }
+
+    // Write scopeTrees to JSON file
+    const outputDir = '.debug-data/atlas-json-generated';
+    const outputFile = path.join(outputDir, 'atlas-supabase-scope-trees.json');
+
+    // Create directory if it doesn't exist
+    fs.mkdirSync(outputDir, { recursive: true });
+
+    // Write formatted JSON
+    fs.writeFileSync(outputFile, JSON.stringify(scopeTrees, null, 2), 'utf8');
+
+    console.log(`Wrote scope trees to ${outputFile}`);
   } catch (error) {
     console.error('Error:', error);
     process.exit(1);
