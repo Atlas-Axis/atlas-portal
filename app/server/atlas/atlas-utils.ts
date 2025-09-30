@@ -12,20 +12,27 @@
 //   compareDocNumbers('A.1.2', 'B.1.2')   =>  0   (prefix ignored; equal numbers)
 //   compareDocNumbers('', 'A.1')          =>  1   (empty sorts last)
 export function compareDocNumbers(a: string, b: string): number {
+  // Trim whitespace
   const normalize = (s: string): string => (s || '').trim();
+  // Remove leading letter prefixes like "A."
   const stripPrefix = (s: string): string => s.replace(/^[A-Za-z]+\./, '');
 
   const aa = stripPrefix(normalize(a));
   const bb = stripPrefix(normalize(b));
 
+  // If both are empty or invalid, they are equal
   if (!aa && !bb) return 0;
+  // Empty or invalid values sort last
   if (!aa) return 1;
+  // If only the second is empty or invalid, it sorts last
   if (!bb) return -1;
 
+  // Split by dots and compare each segment
   const ap = aa.split('.');
   const bp = bb.split('.');
   const maxLen = Math.max(ap.length, bp.length);
 
+  // Compare each segment
   for (let i = 0; i < maxLen; i++) {
     const av = ap[i];
     const bv = bp[i];
@@ -34,9 +41,11 @@ export function compareDocNumbers(a: string, b: string): number {
     if (av === undefined) return -1; // shorter comes first
     if (bv === undefined) return 1;
 
+    // Try to compare as numbers if both segments are numeric
     const an = /^\d+$/.test(av) ? parseInt(av, 10) : NaN;
     const bn = /^\d+$/.test(bv) ? parseInt(bv, 10) : NaN;
 
+    // If both are valid numbers, compare numerically
     if (!Number.isNaN(an) && !Number.isNaN(bn)) {
       if (an < bn) return -1;
       if (an > bn) return 1;

@@ -3,16 +3,17 @@ import {
   loadNotionDatabasePagesAtTimeFromSupabase,
   loadNotionDatabasePagesFromSupabase,
 } from '../services/supabase/load-notion-database-pages-from-supabase';
+import { getAllButLastTitlePart } from './atlas-tree-helpers';
 import { compareDocNumbers } from './atlas-utils';
 import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES, AtlasDatabaseName } from './constants';
 import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
 
 /**
- * Sorts Atlas documents to ensure documents with defined sort_order values come first,
- * followed by documents with null/undefined sort_order values.
+ * Sorts Atlas documents to ensure documents with null/undefined sort_order values come first,
+ * followed by documents with defined sort_order values.
  * Maintains the original relative order within each group.
  */
-function sortAtlasDocumentsBySortOrder(pages: NotionDatabasePage[]): NotionDatabasePage[] {
+function sortAtlasDocumentsBySortOrderExistence(pages: NotionDatabasePage[]): NotionDatabasePage[] {
   // Separate documents into two groups: those with defined sort_order and those without
   const withSortOrder: NotionDatabasePage[] = [];
   const withoutSortOrder: NotionDatabasePage[] = [];
@@ -25,12 +26,14 @@ function sortAtlasDocumentsBySortOrder(pages: NotionDatabasePage[]): NotionDatab
     }
   }
 
-  // Return documents with defined sort_order first, then those without
-  return [...withSortOrder, ...withoutSortOrder];
+  // Return documents with empty sort_order first, then those with a defined sort_order
+  return [...withoutSortOrder, ...withSortOrder];
 }
 
 function sortAtlasDocumentsByDocumentNumber<T extends { atlas_document_number: string }>(documents: T[]): T[] {
-  return [...documents].sort((a, b) => compareDocNumbers(a.atlas_document_number, b.atlas_document_number));
+  return [...documents].sort((a, b) =>
+    compareDocNumbers(getAllButLastTitlePart(a.atlas_document_number), getAllButLastTitlePart(b.atlas_document_number)),
+  );
 }
 
 type LoadAtlasOptions = {
@@ -73,10 +76,13 @@ async function loadNotionDatabasePages(options: LoadAtlasOptions = {}) {
     atlasPagesPerDatabase[databaseName] = pages;
 
     // Sort documents to ensure those with defined sort_order come first
-    // atlasPagesPerDatabase[databaseName] = sortAtlasDocumentsBySortOrder(pages);
+    // atlasPagesPerDatabase[databaseName] = sortAtlasDocumentsBySortOrderExistence(pages);
 
     // Sort documents by document number within each database. When document number is missing, those documents will appear last in the order.
-    // atlasPagesPerDatabase[databaseName] = sortAtlasDocumentsByDocumentNumber(pages);
+    // atlasPagesPerDatabase[databaseName] = sortAtlasDocumentsBySortOrderExistence(
+    // sortAtlasDocumentsByDocumentNumber(pages),
+    // pages,
+    // );
   }
 
   return atlasPagesPerDatabase;
@@ -113,7 +119,9 @@ export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options
   // Return the updated data with nesting applied, re-sorting only the modified SECTIONS_AND_PRIMARY_DOCS
   return {
     ...atlasPagesPerDatabase,
-    // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: sortAtlasDocumentsBySortOrder(updatedSectionsAndPrimaryDocsPages),
+    // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: sortAtlasDocumentsBySortOrderExistence(updatedSectionsAndPrimaryDocsPages),
+    // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: sortAtlasDocumentsByDocumentNumber(updatedSectionsAndPrimaryDocsPages),
+    // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: sortAtlasDocumentsBySortOrderExistence(
     [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: updatedSectionsAndPrimaryDocsPages,
   };
 }

@@ -41,6 +41,14 @@ export function getFirstTitlePart(s: string) {
   return s.split(' - ').at(0);
 }
 
+// Returns all the parts except the last part of a title, split by " - ", or if not found, returns the full string
+// TODO: Delete - unused
+export function getAllButLastTitlePart(s: string) {
+  const parts = s.split(' - ');
+  if (parts.length <= 1) return s;
+  return parts.slice(0, -1).join(' - ');
+}
+
 /**
  * Sorts child nodes by sort_order and document type priority.
  *
