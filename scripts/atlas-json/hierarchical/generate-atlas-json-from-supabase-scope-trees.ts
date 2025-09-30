@@ -31,8 +31,8 @@
  *
  * How to run
  * ```bash
- * npx tsx scripts/atlas-json/generate-atlas-json-from-supabase-scope-trees.ts
- * npx tsx scripts/atlas-json/generate-atlas-json-from-supabase-scope-trees.ts --omit-agents
+ * npx tsx scripts/atlas-json/hierarchical/generate-atlas-json-from-supabase-scope-trees.ts
+ * npx tsx scripts/atlas-json/hierarchical/generate-atlas-json-from-supabase-scope-trees.ts --omit-agents
  * ```
  * Ensure the input file exists (generate it first via `npx tsx scripts/atlas-build.ts`).
  */
