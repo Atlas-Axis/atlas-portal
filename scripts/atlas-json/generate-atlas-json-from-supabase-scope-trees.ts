@@ -32,6 +32,7 @@
  * How to run
  * ```bash
  * npx tsx scripts/atlas-json/generate-atlas-json-from-supabase-scope-trees.ts
+ * npx tsx scripts/atlas-json/generate-atlas-json-from-supabase-scope-trees.ts --omit-agents
  * ```
  * Ensure the input file exists (generate it first via `npx tsx scripts/atlas-build.ts`).
  */
@@ -39,6 +40,12 @@ import fs from 'fs';
 import path from 'path';
 import type { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AtlasDocumentType } from '@/app/server/atlas/constants';
+
+/** UUIDs of agent root documents whose subtrees can be omitted via --omit-agents */
+const AGENT_ROOT_UUIDS = new Set<string>([
+  '1b4f2ff0-8d73-8082-862b-dcd586862638',
+  '1b4f2ff0-8d73-802f-a054-fece4d8731a4',
+]);
 
 /**
  * A simplified, standardized representation of an Atlas document used for downstream processing.
@@ -68,24 +75,49 @@ type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
 /**
  * Convert an `AtlasTreeNode` to a `StandardizedAtlasDocument`, recursively mapping children.
  */
-function convertNode(node: AtlasTreeNode): StandardizedAtlasDocument {
+type ConvertOptions = {
+  omitAgents: boolean;
+  prunedCounter: { count: number };
+};
+
+function convertNode(node: AtlasTreeNode, options: ConvertOptions): StandardizedAtlasDocument {
   const standardized: StandardizedAtlasDocument = {
     type: node.atlas_document_type,
     docNo: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
 
-    scopes: node.scopes.map(convertNode),
-    articles: node.articles.map(convertNode),
-    sectionsAndPrimaryDocs: node.sectionsAndPrimaryDocs.map(convertNode),
-    annotations: node.annotations.map(convertNode),
-    tenets: node.tenets.map(convertNode),
-    scenarios: node.scenarios.map(convertNode),
-    scenarioVariations: node.scenarioVariations.map(convertNode),
-    activeData: node.activeData.map(convertNode),
-    agentScopeDocs: node.agentScopeDocs.map(convertNode),
-    neededResearch: node.neededResearch.map(convertNode),
+    scopes: [],
+    articles: [],
+    sectionsAndPrimaryDocs: [],
+    annotations: [],
+    tenets: [],
+    scenarios: [],
+    scenarioVariations: [],
+    activeData: [],
+    agentScopeDocs: [],
+    neededResearch: [],
   };
+
+  // If omitting agent subtrees and this node matches one of the agent roots,
+  // prune all its children (keep the node itself with empty children arrays).
+  const isAgentRoot = standardized.uuid != null && AGENT_ROOT_UUIDS.has(standardized.uuid);
+  if (options.omitAgents && isAgentRoot) {
+    options.prunedCounter.count += 1;
+    return standardized;
+  }
+
+  // Otherwise, recurse normally
+  standardized.scopes = node.scopes.map((n) => convertNode(n, options));
+  standardized.articles = node.articles.map((n) => convertNode(n, options));
+  standardized.sectionsAndPrimaryDocs = node.sectionsAndPrimaryDocs.map((n) => convertNode(n, options));
+  standardized.annotations = node.annotations.map((n) => convertNode(n, options));
+  standardized.tenets = node.tenets.map((n) => convertNode(n, options));
+  standardized.scenarios = node.scenarios.map((n) => convertNode(n, options));
+  standardized.scenarioVariations = node.scenarioVariations.map((n) => convertNode(n, options));
+  standardized.activeData = node.activeData.map((n) => convertNode(n, options));
+  standardized.agentScopeDocs = node.agentScopeDocs.map((n) => convertNode(n, options));
+  standardized.neededResearch = node.neededResearch.map((n) => convertNode(n, options));
 
   return standardized;
 }
@@ -161,10 +193,18 @@ function countMissingFields(nodes: StandardizedAtlasDocument[]): { uuid: number;
  * - Reads input JSON, standardizes, writes output JSON, prints summary stats.
  */
 async function main() {
+  const omitAgents = process.argv.includes('--omit-agents');
+  const prunedCounter = { count: 0 };
+
   const inputDir = '.debug-data/atlas-raw-sources';
   const inputFile = path.join(inputDir, 'atlas-supabase-scope-trees.json');
   const outputDir = '.debug-data/standardized-atlas';
-  const outputFile = path.join(outputDir, 'atlas-supabase-scope-trees-standardized.json');
+  const outputFile = path.join(
+    outputDir,
+    omitAgents
+      ? 'atlas-supabase-scope-trees-standardized-without-agents.json'
+      : 'atlas-supabase-scope-trees-standardized.json',
+  );
 
   if (!fs.existsSync(inputFile)) {
     console.error(`Input file not found: ${inputFile}`);
@@ -174,7 +214,9 @@ async function main() {
   const raw = fs.readFileSync(inputFile, 'utf8');
   const scopeTrees: AtlasTreeNode[] = JSON.parse(raw);
 
-  const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map(convertNode);
+  const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((n) =>
+    convertNode(n, { omitAgents, prunedCounter }),
+  );
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(outputFile, JSON.stringify(standardizedTrees, null, 2), 'utf8');
@@ -182,6 +224,9 @@ async function main() {
   const totalDocs = countDocuments(standardizedTrees);
   console.log(`Standardized ${standardizedTrees.length} root scope trees`);
   console.log(`Total documents (including all descendants): ${totalDocs}`);
+  if (omitAgents) {
+    console.log(`Omitted agent subtrees from ${prunedCounter.count} root node(s)`);
+  }
   const missing = countMissingFields(standardizedTrees);
   if (missing.uuid > 0) console.log(`Missing/empty uuid fields: ${missing.uuid}`);
   if (missing.type > 0) console.log(`Missing/empty type fields: ${missing.type}`);
