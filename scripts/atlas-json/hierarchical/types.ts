@@ -10,10 +10,12 @@ export const AGENT_ROOT_UUIDS = new Set<string>([
  * A simplified, standardized representation of an Atlas document used for downstream processing.
  */
 export interface StandardizedAtlasDocument {
-  type: AtlasDocumentType;
+  type: AtlasDocumentType | string; // Allow string for unknown/custom types
   docNo: string;
   name: string;
   uuid: string | null;
+
+  // TODO: content
 
   // Children (recursive)
   scopes: StandardizedAtlasDocument[];
