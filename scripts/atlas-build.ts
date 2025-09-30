@@ -54,7 +54,7 @@ async function main() {
     }
 
     // Write scopeTrees to JSON file
-    const outputDir = '.debug-data/atlas-json-generated';
+    const outputDir = '.debug-data/atlas-raw-sources';
     const outputFile = path.join(outputDir, 'atlas-supabase-scope-trees.json');
 
     // Create directory if it doesn't exist
