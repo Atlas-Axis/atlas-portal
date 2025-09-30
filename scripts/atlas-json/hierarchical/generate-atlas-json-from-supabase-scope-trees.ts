@@ -39,38 +39,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
-import { AtlasDocumentType } from '@/app/server/atlas/constants';
-
-/** UUIDs of agent root documents whose subtrees can be omitted via --omit-agents */
-const AGENT_ROOT_UUIDS = new Set<string>([
-  '1b4f2ff0-8d73-8082-862b-dcd586862638',
-  '1b4f2ff0-8d73-802f-a054-fece4d8731a4',
-]);
-
-/**
- * A simplified, standardized representation of an Atlas document used for downstream processing.
- */
-interface StandardizedAtlasDocument {
-  type: AtlasDocumentType;
-  docNo: string;
-  name: string;
-  uuid: string | null;
-
-  // Children (recursive)
-  scopes: StandardizedAtlasDocument[];
-  articles: StandardizedAtlasDocument[];
-  sectionsAndPrimaryDocs: StandardizedAtlasDocument[];
-  annotations: StandardizedAtlasDocument[];
-  tenets: StandardizedAtlasDocument[];
-  scenarios: StandardizedAtlasDocument[];
-  scenarioVariations: StandardizedAtlasDocument[];
-  activeData: StandardizedAtlasDocument[];
-  agentScopeDocs: StandardizedAtlasDocument[];
-  neededResearch: StandardizedAtlasDocument[];
-}
-
-/** Root array of standardized Scope trees. */
-type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
+import { AGENT_ROOT_UUIDS, StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from './types';
 
 /**
  * Convert an `AtlasTreeNode` to a `StandardizedAtlasDocument`, recursively mapping children.
