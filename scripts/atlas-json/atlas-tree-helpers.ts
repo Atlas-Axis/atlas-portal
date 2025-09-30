@@ -11,6 +11,7 @@ export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): stri
     // Return the plain text name as-is for these databases
     case 'Scopes':
     case 'Articles':
+    case 'Agent Scope Database':
     case 'Tenets': // ?
     case 'Needed Research': // ?
     case 'Annotations':
@@ -21,7 +22,6 @@ export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): stri
 
     // Example: atlas_document_number = "A.1.6 - Facilitators - Budgets" → "Budgets"
     case 'Sections & Primary Docs':
-    case 'Agent Scope Database':
       return getLastTitlePart(node.atlas_document_number ?? '') ?? '';
 
     default:
