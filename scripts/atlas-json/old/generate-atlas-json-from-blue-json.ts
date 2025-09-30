@@ -7,8 +7,9 @@
  * writes a machine-friendly categorized JSON file.
  *
  * USAGE:
- *   npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
- *   npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts --keep-inactives
+ * @example
+ *   npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts
+ *   npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts --keep-inactives
  *
  * FLAGS:
  *   --keep-inactives    Include inactive nodes in the output (default: skip them)

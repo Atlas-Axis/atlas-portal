@@ -12,7 +12,7 @@ What it does:
 - Prints any duplicate UUIDs found within each individual JSON, with counts
 
 Usage (from repo root):
-  npx tsx scripts/atlas-json/get-blue-uuid-diffs.ts
+  npx tsx scripts/atlas-json/old/get-blue-uuid-diffs.ts
 
 Notes:
 - UUIDs are matched via regex and normalized to lowercase before comparison

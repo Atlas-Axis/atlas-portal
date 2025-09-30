@@ -514,13 +514,13 @@ All commands are intended to be run from the repository root using tsx.
       DEBUG_LOGGING=1 npx tsx scripts/atlas-github-html-analytics.ts
       ```
 
-- **scripts/atlas-json/generate-atlas-json-from-github.ts**: Parses the Sky Atlas HTML into a machine-friendly JSON array and writes `.output/atlas-github.json`.
+- **scripts/atlas-json/old/generate-atlas-json-from-github.ts**: Parses the Sky Atlas HTML into a machine-friendly JSON array and writes `.output/atlas-github.json`.
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
+      npx tsx scripts/atlas-json/old/generate-atlas-json-from-github.ts
       ```
     - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-github.ts
+      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/old/generate-atlas-json-from-github.ts
       ```
 
 - **scripts/atlas-json/generate-atlas-json-from-supabase.ts**: Exports current or past Atlas data from Supabase into `atlas-supabase.json` (or `atlas-supabase-without-agents.json` when using `--skip-agent-scope`).
@@ -535,13 +535,13 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
       ```
 
-- **scripts/atlas-json/generate-atlas-json-from-blue-json.ts**: Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
+- **scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts**: Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+      npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts
       ```
     - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/generate-atlas-json-from-blue-json.ts
+      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts
       ```
 
 - **scripts/generate-blue-json.ts**: Generates a Blue-style hierarchical JSON from Supabase (excludes Agent Scope Database) and writes `.debug-data/atlas-json-generated/blue-from-supabase.json`.
@@ -553,19 +553,19 @@ All commands are intended to be run from the repository root using tsx.
       DEBUG_LOGGING=1 npx tsx scripts/generate-blue-json.ts
       ```
 
-- **scripts/atlas-json/strip-blue-json-last-modified.ts**: Replaces all `*_last_modified` fields with empty strings to stabilize diffs.
+- **scripts/atlas-json/old/strip-blue-json-last-modified.ts**: Replaces all `*_last_modified` fields with empty strings to stabilize diffs.
   - Outputs:
     - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
     - `.debug-data/atlas-json-generated/blue-without-dates.json`
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+      npx tsx scripts/atlas-json/old/strip-blue-json-last-modified.ts
       ```
 
-- **scripts/atlas-json/get-blue-uuid-diffs.ts**: Compares UUID sets between the two generated Blue JSONs and reports missing IDs (both directions) and duplicates within each file.
+- **scripts/atlas-json/old/get-blue-uuid-diffs.ts**: Compares UUID sets between the two generated Blue JSONs and reports missing IDs (both directions) and duplicates within each file.
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/get-blue-uuid-diffs.ts
+      npx tsx scripts/atlas-json/old/get-blue-uuid-diffs.ts
       ```
 
 - **scripts/experiment.ts**: Finds Notion database entries with empty "Master Status" (skips "Category" where applicable).
@@ -601,22 +601,22 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/visualize-hierarchy.ts --ascii
       ```
 
-- **scripts/atlas-json/filter-blue-json-inactive-docs.ts**: Generic inactive filter for any Blue-style Blue JSON; removes all `inactive: 1` nodes recursively and writes filtered output.
+- **scripts/atlas-json/old/filter-blue-json-inactive-docs.ts**: Generic inactive filter for any Blue-style Blue JSON; removes all `inactive: 1` nodes recursively and writes filtered output.
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
+      npx tsx scripts/atlas-json/old/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
       ```
 
-- **scripts/atlas-json/get-atlas-json-diffs.ts**: Compares two Atlas JSON exports grouped by category, reporting missing IDs in both directions and duplicates per file. Skips `inactive: 1` docs unless `--include-inactives`.
+- **scripts/atlas-json/old/get-atlas-json-diffs.ts**: Compares two Atlas JSON exports grouped by category, reporting missing IDs in both directions and duplicates per file. Skips `inactive: 1` docs unless `--include-inactives`.
   - Example:
     - ```bash
-      npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
+      npx tsx scripts/atlas-json/old/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
       ```
 
 Non-executable helper modules (imported by scripts):
 
-- `scripts/atlas-json/types.ts` — shared types for JSON generation scripts
-- `scripts/atlas-json/constants.ts` — output file paths and configuration constants
+- `scripts/atlas-json/old/types.ts` — shared types for JSON generation scripts
+- `scripts/atlas-json/old/constants.ts` — output file paths and configuration constants
 - `scripts/atlas-json/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
 

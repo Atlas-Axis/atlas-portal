@@ -17,8 +17,8 @@ What it does:
 - Long lists are truncated to 30 items with a trailing line like "...and N more"
 
 Usage (from repo root):
-  npx tsx scripts/atlas-json/get-atlas-json-diffs.ts
-  npx tsx scripts/atlas-json/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase-without-agents.json
+  npx tsx scripts/atlas-json/old/get-atlas-json-diffs.ts
+  npx tsx scripts/atlas-json/old/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase-without-agents.json
 
 Notes:
 - UUIDs are normalized to lowercase before comparison
@@ -201,7 +201,7 @@ function main(): void {
   if (args.help) {
     const usage = [
       'Usage:',
-      '  npx tsx scripts/atlas-json/get-atlas-json-diffs.ts [--file1 PATH] [--file2 PATH] [--include-inactives]',
+      '  npx tsx scripts/atlas-json/old/get-atlas-json-diffs.ts [--file1 PATH] [--file2 PATH] [--include-inactives]',
       '',
       'Defaults:',
       `  --file1 ${DEFAULT_FILE1}`,

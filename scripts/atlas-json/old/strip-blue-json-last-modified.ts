@@ -9,7 +9,8 @@
  *   - .debug-data/atlas-json-generated/blue-without-inactive.json → .debug-data/atlas-json-generated/blue-without-dates.json
  *
  * Usage:
- *   npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+ * @example
+ *   npx tsx scripts/atlas-json/old/strip-blue-json-last-modified.ts
  *
  * Notes:
  * - Intended to reduce noise when comparing Blue JSONs produced by different runs

@@ -7,12 +7,12 @@
  * using content and originalDocNumber when name matching is ambiguous.
  *
  * USAGE:
- *   npx tsx scripts/atlas-json/diff-atlas-jsons.ts [--verbose] [--github-file <path>] [--supabase-file <path>]
+ *   npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts [--verbose] [--github-file <path>] [--supabase-file <path>]
  *
  * EXAMPLES:
- *   npx tsx scripts/atlas-json/diff-atlas-jsons.ts
- *   npx tsx scripts/atlas-json/diff-atlas-jsons.ts --verbose
- *   npx tsx scripts/atlas-json/diff-atlas-jsons.ts --github-file custom-github.json --supabase-file custom-supabase.json
+ *   npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts
+ *   npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts --verbose
+ *   npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts --github-file custom-github.json --supabase-file custom-supabase.json
  *
  * WHAT IT DOES:
  * - Loads two Atlas JSON files (default: atlas-github.json and atlas-supabase.json)
@@ -70,7 +70,7 @@ It matches documents by name within the same category, with fallback matching
 using content and originalDocNumber when name matching is ambiguous.
 
 USAGE:
-  npx tsx scripts/atlas-json/diff-atlas-jsons.ts [OPTIONS]
+  npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts [OPTIONS]
 
 OPTIONS:
   --verbose                    Show matched documents details
@@ -79,9 +79,9 @@ OPTIONS:
   --help, -h                   Show this help message
 
 EXAMPLES:
-  npx tsx scripts/atlas-json/diff-atlas-jsons.ts
-  npx tsx scripts/atlas-json/diff-atlas-jsons.ts --verbose
-  npx tsx scripts/atlas-json/diff-atlas-jsons.ts --github-file custom-github.json --supabase-file custom-supabase.json
+  npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts
+  npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts --verbose
+  npx tsx scripts/atlas-json/old/diff-atlas-jsons.ts --github-file custom-github.json --supabase-file custom-supabase.json
 
 WHAT IT DOES:
   - Loads two Atlas JSON files (default: atlas-github.json and atlas-supabase.json)

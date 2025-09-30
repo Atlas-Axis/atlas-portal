@@ -128,7 +128,7 @@ If a type exists in Supabase but not in output, fix the attachment point based o
 1. Make one fix at a time in `scripts/generate-blue-json.ts`.
 2. Re-run:
    ```bash
-   npx tsx scripts/generate-blue-json && npx tsx scripts/atlas-json/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json && npx tsx scripts/atlas-json/strip-blue-json-last-modified.ts
+   npx tsx scripts/generate-blue-json && npx tsx scripts/atlas-json/old/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json && npx tsx scripts/atlas-json/old/strip-blue-json-last-modified.ts
    ```
 3. Re-run jq path and count diffs to track progress.
 
