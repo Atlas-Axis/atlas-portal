@@ -6,6 +6,8 @@ import { Button, ButtonGroup } from '@heroui/react';
 import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import type { AtlasTreeNode, AtlasTreeResult } from '@/scripts/atlas-json/atlas-tree-types';
+import { AtlasDocumentType } from '../server/services/atlas/constants';
+import { typeColorMap } from '../server/services/atlas/type-color-map';
 import styles from './content-tree.module.css';
 import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
@@ -22,9 +24,10 @@ function renderTreeNodeHeader(node: AtlasTreeNode) {
   const documentType = node?.atlas_document_type;
   const isCategory = documentType === 'Category';
 
+  // Special rendering for Category nodes - These are just headers, not Atlas documents
   if (isCategory) {
     return (
-      <h3 className={`inline-flex items-center rounded-lg bg-purple-600 px-3 py-2 text-base font-bold text-white`}>
+      <h3 className={`inline-flex items-center rounded-lg bg-stone-100 px-3 py-2 text-base font-bold text-stone-800`}>
         {node.generatedDocName}
       </h3>
     );
@@ -37,6 +40,90 @@ function renderTreeNodeHeader(node: AtlasTreeNode) {
         <TypeChip type={node.atlas_document_type} />
       </span>
     </h3>
+  );
+}
+
+function renderSupportingDocumentListInSameType({
+  label,
+  documentType,
+  documents,
+  node,
+  parentTrackingMap,
+  depth,
+}: {
+  label: string;
+  documentType: AtlasDocumentType;
+  documents: AtlasTreeNode[];
+  node: AtlasTreeNode;
+  parentTrackingMap: Map<string, string>;
+  depth: number;
+}) {
+  const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
+
+  return (
+    <div className="mt-2 ml-0">
+      <span className={`${colorStyles} rounded px-2 py-1 text-sm`}>{label}</span>
+      <ul className={styles.supportingDocsList}>
+        {documents.map((child) =>
+          renderTreeNode({
+            node: child,
+            parentTrackingMap,
+            depth: depth + 1,
+            isRootNode: false,
+            parentPageId: node.notion_page_id,
+          }),
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function renderSupportingDocuments({
+  node,
+  parentTrackingMap,
+  depth,
+}: {
+  node: AtlasTreeNode;
+  parentTrackingMap: Map<string, string>;
+  depth: number;
+}) {
+  const supportingDocumentPages = [
+    ...node.annotations,
+    ...node.tenets,
+    ...node.scenarios,
+    ...node.scenarioVariations,
+    ...node.activeData,
+    ...node.neededResearch,
+  ];
+
+  if (supportingDocumentPages.length === 0) {
+    return null;
+  }
+
+  const supportingDocumentLabels: { label: string; documentType: AtlasDocumentType; documents: AtlasTreeNode[] }[] = [
+    { label: 'Annotations', documentType: 'Annotation' as const, documents: node.annotations },
+    { label: 'Tenets', documentType: 'Action Tenet' as const, documents: node.tenets },
+    { label: 'Scenarios', documentType: 'Scenario' as const, documents: node.scenarios },
+    { label: 'Scenario Variations', documentType: 'Scenario Variation' as const, documents: node.scenarioVariations },
+    { label: 'Active Data', documentType: 'Active Data' as const, documents: node.activeData },
+    { label: 'Needed Research', documentType: 'Needed Research' as const, documents: node.neededResearch },
+  ].filter((entry) => entry.documents.length > 0); // Only include if there are documents
+
+  return (
+    <div className={styles.supportingDocsContainer}>
+      <span className={styles.supportingDocsLabel}>Supporting Documents</span>
+
+      {supportingDocumentLabels.map(({ label, documentType, documents }) =>
+        renderSupportingDocumentListInSameType({
+          label,
+          documentType,
+          documents,
+          node,
+          parentTrackingMap,
+          depth,
+        }),
+      )}
+    </div>
   );
 }
 
@@ -55,15 +142,6 @@ function renderTreeNode({
     ...node.articles,
     ...node.sectionsAndPrimaryDocs,
     ...node.agentScopeDocs,
-  ];
-
-  const supportingDocumentPages = [
-    ...node.annotations,
-    ...node.tenets,
-    ...node.scenarios,
-    ...node.scenarioVariations,
-    ...node.activeData,
-    ...node.neededResearch,
   ];
 
   if (depth > 50) {
@@ -108,22 +186,7 @@ function renderTreeNode({
         </ul>
       )}
 
-      {supportingDocumentPages.length > 0 && (
-        <div className={styles.supportingDocsContainer}>
-          <span className={styles.supportingDocsLabel}>Supporting Documents:</span>
-          <ul className={styles.supportingDocsList}>
-            {supportingDocumentPages.map((child) =>
-              renderTreeNode({
-                node: child,
-                parentTrackingMap,
-                depth: depth + 1,
-                isRootNode: false,
-                parentPageId: node.notion_page_id,
-              }),
-            )}
-          </ul>
-        </div>
-      )}
+      {renderSupportingDocuments({ node, parentTrackingMap, depth })}
     </>
   );
 
@@ -240,7 +303,11 @@ export default function ContentTree({ atlas }: { atlas: AtlasTreeResult }) {
                 <TypeChip type={scopeTree.atlas_document_type} />
               </div>
             }
-            classNames={{ heading: 'bg-slate-100 rounded-md p-3 text-indigo-900', base: 'px-0 shadow-none' }}
+            classNames={{
+              heading: 'bg-slate-100 rounded-md p-3 text-indigo-900 cursor-pointer',
+              base: 'px-0 shadow-none',
+              trigger: 'cursor-pointer',
+            }}
           >
             {renderTreeNode({
               node: scopeTree,
