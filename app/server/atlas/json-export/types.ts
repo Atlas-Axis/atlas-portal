@@ -26,7 +26,8 @@ export type StandardizedAtlasDocument =
   | TenetDocument
   | ScenarioDocument
   | ScenarioVariationDocument
-  | NeededResearchDocument;
+  | NeededResearchDocument
+  | PlaceholderDocument;
 
 /** Root array of standardized Scope trees. */
 export type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
@@ -109,6 +110,7 @@ export interface SectionDocument extends BaseAtlasDocument {
   coreDocuments?: CoreDocument[];
   activeDataControllers?: ActiveDataControllerDocument[];
   typeSpecifications?: TypeSpecificationDocument[];
+  placeholders?: PlaceholderDocument[];
   supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
 }
 
@@ -121,6 +123,7 @@ export interface CoreDocument extends BaseAtlasDocument {
   coreDocuments?: CoreDocument[];
   activeDataControllers?: ActiveDataControllerDocument[];
   typeSpecifications?: TypeSpecificationDocument[];
+  placeholders?: PlaceholderDocument[];
   supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
 }
 
@@ -160,6 +163,10 @@ export interface ScenarioVariationDocument extends BaseAtlasDocument {
 }
 
 export interface NeededResearchDocument extends BaseAtlasDocument {
+  // TODO: Extra fields
+}
+
+export interface PlaceholderDocument extends BaseAtlasDocument {
   // TODO: Extra fields
 }
 
