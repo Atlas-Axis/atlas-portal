@@ -128,8 +128,18 @@ function mapSupportingDocsForActiveDataController(
 }
 
 // Main entry: convert an `AtlasTreeNode` into a `StandardizedAtlasDocument`
-export function atlasNodeToStandardized(node: AtlasTreeNode): StandardizedAtlasDocument {
+export function atlasNodeToStandardized(
+  node: AtlasTreeNode,
+  options?: { omitAgents: boolean },
+): StandardizedAtlasDocument {
   const base = toBase(node);
+
+  // If omitting Agent Scope subtrees (for BLUE JSON compatibility) and this node matches one of the agent roots,
+  // prune all its children (keep the node itself with empty children arrays).
+  const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_UUIDS.has(node.notion_page_id);
+  if (options?.omitAgents && isAgentRoot) {
+    return { ...base } as StandardizedAtlasDocument;
+  }
 
   switch (node.atlas_document_type) {
     case 'Scope': {
