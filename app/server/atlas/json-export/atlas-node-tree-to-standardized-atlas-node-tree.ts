@@ -44,6 +44,29 @@ import {
   type TypeSpecificationDocument,
 } from './types';
 
+// Validation helper to check allowed child types per Atlas hierarchy rules
+function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType[]): void {
+  const allChildren = [
+    ...node.scopes,
+    ...node.articles,
+    ...node.sectionsAndPrimaryDocs,
+    ...node.annotations,
+    ...node.tenets,
+    ...node.scenarios,
+    ...node.scenarioVariations,
+    ...node.activeData,
+    ...node.agentScopeDocs,
+    ...node.neededResearch,
+  ];
+
+  const invalidChildren = allChildren.filter((child) => !allowedTypes.includes(child.atlas_document_type));
+  if (invalidChildren.length > 0) {
+    console.warn(
+      `⚠️  ${node.atlas_document_type} "${node.plain_text_name}" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
+    );
+  }
+}
+
 // Convert simple fields
 function toBase(node: AtlasTreeNode): BaseAtlasDocument {
   return {
@@ -149,6 +172,7 @@ export function atlasNodeToStandardized(
   switch (node.atlas_document_type) {
     case 'Scope': {
       // Scope → has `articles`
+      validateChildTypes(node, ['Article']);
       const doc: ScopeDocument = { ...base, articles: [] };
       if (node.articles.length > 0) {
         doc.articles = node.articles.map((c) => atlasNodeToStandardized(c) as ArticleDocument);
@@ -157,34 +181,48 @@ export function atlasNodeToStandardized(
     }
 
     case 'Article': {
-      // Article → split `sectionsAndPrimaryDocs` + supporting docs
+      // Article → only sections and categories (per Atlas hierarchy rules)
+      validateChildTypes(node, ['Section', 'Category']);
+      // validateChildTypes(node, ['Section', 'Category', 'Annotation', 'Action Tenet', 'Needed Research']);
       const doc: ArticleDocument = { ...base };
-      const split = mapSectionsAndPrimaryDocs(node);
-      if (split.sections.length > 0) doc.sections = split.sections;
-      if (split.categories.length > 0) doc.categories = split.categories;
-      // Note: Placeholder documents are not typically children of Articles
+      const splitDb = mapSectionsAndPrimaryDocs(node);
+      if (splitDb.sections.length > 0) doc.sections = splitDb.sections;
+      if (splitDb.categories.length > 0) doc.categories = splitDb.categories;
+
       const supportingDocs = mapSupportingDocsForArticle(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
       return doc;
     }
 
     case 'Category': {
-      // Category → omits `docNo`, has `sections`
+      // Category → omits `docNo`, has only `sections` (per Atlas hierarchy rules)
+      validateChildTypes(node, ['Section']);
+      // validateChildTypes(node, ['Section', 'Core', 'Active Data Controller', 'Type Specification', 'Placeholder', 'Annotation', 'Action Tenet', 'Needed Research']);
       const baseCategory: Omit<BaseAtlasDocument, 'docNo'> = {
         type: base.type,
         name: base.name,
         uuid: base.uuid,
         content: base.content,
       };
-      const doc: CategoryDocument = { ...baseCategory, sections: [] };
-      const split = mapSectionsAndPrimaryDocs(node);
-      if (split.sections.length > 0) doc.sections = split.sections;
-      // Note: Placeholder documents are not typically children of Categories
+      const doc: CategoryDocument = { ...baseCategory };
+      const splitDb = mapSectionsAndPrimaryDocs(node);
+      if (splitDb.sections.length > 0) doc.sections = splitDb.sections;
+
       return doc;
     }
 
     case 'Section': {
       // Section → mixed children split + supporting docs
+      validateChildTypes(node, [
+        'Section',
+        'Core',
+        'Active Data Controller',
+        'Type Specification',
+        'Placeholder',
+        'Annotation',
+        'Action Tenet',
+        'Needed Research',
+      ]);
       const doc: SectionDocument = { ...base };
       const splitDb = mapSectionsAndPrimaryDocs(node);
       const splitAgent = mapAgentScopeDocs(node);
@@ -202,6 +240,15 @@ export function atlasNodeToStandardized(
 
     case 'Core': {
       // Core → mixed children split + supporting docs
+      validateChildTypes(node, [
+        'Core',
+        'Active Data Controller',
+        'Type Specification',
+        'Placeholder',
+        'Annotation',
+        'Action Tenet',
+        'Needed Research',
+      ]);
       const doc: CoreDocument = { ...base };
       const splitDb = mapSectionsAndPrimaryDocs(node);
       const splitAgent = mapAgentScopeDocs(node);
@@ -219,6 +266,7 @@ export function atlasNodeToStandardized(
 
     case 'Active Data Controller': {
       // Active Data Controller → supporting docs include `activeData`
+      validateChildTypes(node, ['Active Data', 'Annotation', 'Action Tenet', 'Needed Research']);
       const doc: ActiveDataControllerDocument = { ...base };
       const supportingDocs = mapSupportingDocsForActiveDataController(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
@@ -227,6 +275,7 @@ export function atlasNodeToStandardized(
 
     case 'Type Specification': {
       // Type Specification → supporting docs only
+      validateChildTypes(node, ['Annotation', 'Action Tenet', 'Needed Research']);
       const doc: TypeSpecificationDocument = { ...base };
       const supportingDocs = mapSupportingDocsForSectionCoreSpec(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
@@ -235,6 +284,7 @@ export function atlasNodeToStandardized(
 
     case 'Action Tenet': {
       // Tenet → has `scenarios`
+      validateChildTypes(node, ['Scenario']);
       const doc: TenetDocument = { ...base };
       if (node.scenarios.length > 0) {
         doc.scenarios = node.scenarios.map((c) => atlasNodeToStandardized(c) as ScenarioDocument);
@@ -244,6 +294,7 @@ export function atlasNodeToStandardized(
 
     case 'Scenario': {
       // Scenario → has `scenarioVariations`
+      validateChildTypes(node, ['Scenario Variation']);
       const doc: ScenarioDocument = { ...base, scenarioVariations: [] };
       if (node.scenarioVariations.length > 0) {
         doc.scenarioVariations = mapAllAs<ScenarioVariationDocument>(node.scenarioVariations);
@@ -257,6 +308,7 @@ export function atlasNodeToStandardized(
     case 'Needed Research':
     case 'Placeholder':
       // Leaf docs → base only
+      validateChildTypes(node, []);
       return { ...base } as StandardizedAtlasDocument;
 
     default:
