@@ -2,7 +2,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export async function loadTextContentForNotionPageIds(notionPageIds: string[]): Promise<Record<string, string>> {
   const { data, error } = await supabase()
-    .from('notion_database_pages')
+    .from('notion_database_pages') // TODO: notion_database_pages_current
     .select('notion_page_id, plain_text_content')
     .in('notion_page_id', notionPageIds);
 

@@ -39,7 +39,7 @@ export async function loadNotionDatabasePagesFromSupabase({
   // Load all pages from Supabase with pagination
   while (true) {
     let query = supabase()
-      .from('notion_database_pages')
+      .from('notion_database_pages_current')
       .select('*')
       .is('date_valid_to', null)
       .eq('archived', false)

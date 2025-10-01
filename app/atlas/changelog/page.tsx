@@ -14,4 +14,4 @@ export default async function AtlasListPage() {
   // return <AtlasListClient atlasPagesPerDatabase={atlasPagesPerDatabase} />;
 }
 
-// TODO: Load a list of rows from `notion_database_pages`, descending by `date_valid_to` timestamps from Supabase, limited to 100 rows, and render the data as a change log
+// TODO: Load a list of rows from `notion_database_pages_current`, descending by `date_valid_to` timestamps from Supabase, limited to 100 rows, and render the data as a change log
