@@ -26,6 +26,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { TDocType } from './powerhouse-types/types';
 import type { ViewNode } from './powerhouse-types/types/view-nodes';
 import { makeViewNodeAtlasId, makeViewNodeTitleText } from './powerhouse-types/utils';
 import {
@@ -49,7 +50,7 @@ import {
 type PowerhouseTreeNode = ViewNode;
 
 // Map Powerhouse `type` (lowerCamelCase) to our AtlasDocumentType (Title Case)
-const powerhouseTypeToAtlas: Record<string, AtlasDocumentType> = {
+const powerhouseTypeToAtlas: Record<Exclude<TDocType, 'originalContextData'>, AtlasDocumentType> = {
   scope: 'Scope',
   article: 'Article',
   section: 'Section',
@@ -58,7 +59,7 @@ const powerhouseTypeToAtlas: Record<string, AtlasDocumentType> = {
   activeDataController: 'Active Data Controller',
   typeSpecification: 'Type Specification',
   annotation: 'Annotation',
-  actionTenet: 'Action Tenet',
+  tenet: 'Action Tenet',
   scenario: 'Scenario',
   scenarioVariation: 'Scenario Variation',
   activeData: 'Active Data',
