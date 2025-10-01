@@ -103,7 +103,7 @@ export interface ArticleDocument extends BaseAtlasDocument {
 
 // ✅
 export interface CategoryDocument extends Omit<BaseAtlasDocument, 'docNo'> {
-  sections: SectionDocument[];
+  sections?: SectionDocument[];
 }
 
 export interface SectionDocument extends BaseAtlasDocument {
