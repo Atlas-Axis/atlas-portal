@@ -102,8 +102,8 @@ export function buildAtlasTree(
   // Step 5b: Convert orphaned nodes to AtlasTreeNode format
   const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
     try {
-      // Build tree node for orphaned page (without deep traversal to avoid performance issues)
-      return buildTreeNode(orphanedPage, lookupMaps, 0, 1, false, false);
+      // Build tree node for orphaned page (with reasonable depth limit to avoid performance issues)
+      return buildTreeNode(orphanedPage, lookupMaps, 0, 10, false, false);
     } catch (conversionError) {
       // If conversion fails, create a minimal AtlasTreeNode
       if (verbose) {
@@ -141,6 +141,7 @@ export function buildAtlasTree(
     orphanedNodes,
     orphanedNodesAsTreeNodes,
     errors,
+    duplicatedNodes: lookupMaps.duplicatedNodes,
   };
 }
 
@@ -244,6 +245,8 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
     parentIdMap: parentMap,
     childrenIdsMap: childrenMap,
     processedIds,
+    nodeAppearanceCount: new Map<string, number>(),
+    duplicatedNodes: [],
   };
 }
 
@@ -359,10 +362,21 @@ function buildTreeNode(
   maxDepth: number,
   verbose: boolean,
   reportMissingChildNodes: boolean = false,
+  parentPageId?: string,
 ): AtlasTreeNode {
-  // TODO: Remove unused vars
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { nodeMapByPageId: nodeMap, parentIdMap: parentMap, childrenIdsMap: childrenMap, processedIds } = lookupMaps;
+  const { nodeMapByPageId: nodeMap, processedIds, nodeAppearanceCount, duplicatedNodes } = lookupMaps;
+
+  // Track node appearances
+  const currentCount = nodeAppearanceCount.get(page.notion_page_id) || 0;
+  nodeAppearanceCount.set(page.notion_page_id, currentCount + 1);
+
+  // If this is the second or later appearance, track it as a duplication
+  if (currentCount > 0 && parentPageId) {
+    const treeNode = nodeMap.get(page.notion_page_id);
+    if (treeNode) {
+      duplicatedNodes.push({ parentId: parentPageId, node: treeNode });
+    }
+  }
 
   // Check for circular reference
   // TODO: There are some exceptions: Needed Research can appear in multiple places
@@ -426,6 +440,7 @@ function buildTreeNode(
                   maxDepth,
                   verbose,
                   reportMissingChildNodes,
+                  page.notion_page_id,
                 );
                 childNodes.push(childTreeNode);
               } catch (error) {
