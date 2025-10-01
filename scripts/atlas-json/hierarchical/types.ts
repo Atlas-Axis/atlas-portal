@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { AtlasDocumentType } from '@/app/server/atlas/constants';
 
-/** UUIDs of agent root documents whose subtrees can be omitted via --omit-agents */
-export const AGENT_ROOT_UUIDS = new Set<string>([
-  '1b4f2ff0-8d73-8082-862b-dcd586862638',
-  '1b4f2ff0-8d73-802f-a054-fece4d8731a4',
-]);
-
 /**
  * A simplified, standardized representation of an Atlas document used for downstream processing.
  */

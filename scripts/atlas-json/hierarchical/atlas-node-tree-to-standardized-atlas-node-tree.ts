@@ -24,9 +24,8 @@
  * ```
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
-import type { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUIDS, type AtlasDocumentType } from '@/app/server/atlas/constants';
 import {
-  AGENT_ROOT_UUIDS,
   type ActiveDataControllerDocument,
   type ActiveDataDocument,
   type AnnotationDocument,
@@ -136,7 +135,7 @@ export function atlasNodeToStandardized(
 
   // If omitting Agent Scope subtrees (for BLUE JSON compatibility) and this node matches one of the agent roots,
   // prune all its children (keep the node itself with empty children arrays).
-  const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_UUIDS.has(node.notion_page_id);
+  const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_SECTION_UUIDS.has(node.notion_page_id);
   if (options?.omitAgents && isAgentRoot) {
     return { ...base } as StandardizedAtlasDocument;
   }
