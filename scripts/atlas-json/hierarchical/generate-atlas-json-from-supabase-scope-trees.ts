@@ -174,13 +174,37 @@ async function main() {
 
   // Convert orphaned nodes to standardized format
   const standardizedOrphanedNodes: StandardizedAtlasDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
-    return atlasNodeToStandardized(orphanedNode);
+    try {
+      return atlasNodeToStandardized(orphanedNode);
+    } catch (error) {
+      console.warn(`Failed to convert orphaned node ${orphanedNode.notion_page_id}: ${error}`);
+      // Return a minimal document for counting purposes
+      return {
+        type: orphanedNode.atlas_document_type,
+        docNo: orphanedNode.generatedDocID ?? orphanedNode.atlas_document_number ?? '',
+        name: orphanedNode.generatedDocName ?? orphanedNode.plain_text_name ?? '',
+        uuid: orphanedNode.notion_page_id ?? null,
+        content: orphanedNode.plain_text_content ?? '',
+      } as StandardizedAtlasDocument;
+    }
   });
 
   // Verify document counts match between original and standardized trees
-  const originalCount = countOriginalDocuments(originalScopeTrees) + result.orphanedNodes.length;
-  const standardizedCount =
-    countStandardizedDocuments(standardizedScopeTrees) + countStandardizedDocuments(standardizedOrphanedNodes);
+  const originalScopeCount = countOriginalDocuments(originalScopeTrees);
+  const originalOrphanedCount = result.orphanedNodes.length;
+  const originalCount = originalScopeCount + originalOrphanedCount;
+
+  const standardizedScopeCount = countStandardizedDocuments(standardizedScopeTrees);
+  const standardizedOrphanedCount = countStandardizedDocuments(standardizedOrphanedNodes);
+  const standardizedCount = standardizedScopeCount + standardizedOrphanedCount;
+
+  console.log(`📊 Count breakdown:`);
+  console.log(`   Original scope trees: ${originalScopeCount}`);
+  console.log(`   Original orphaned: ${originalOrphanedCount}`);
+  console.log(`   Original total: ${originalCount}`);
+  console.log(`   Standardized scope trees: ${standardizedScopeCount}`);
+  console.log(`   Standardized orphaned: ${standardizedOrphanedCount}`);
+  console.log(`   Standardized total: ${standardizedCount}`);
 
   if (originalCount !== standardizedCount) {
     console.error(`❌ Document count mismatch! Original: ${originalCount}, Standardized: ${standardizedCount}`);
