@@ -106,8 +106,6 @@ export const IMPORT_DATABASES = [
 // The specific Section & Primary Doc page ID under which root Agent documents will be nested
 // TODO: In the future, there may be two agent ancestor sections, one for Prime Agents and one for Executor Agents. Currently, we only have one (Prime Agents).
 // This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
-// TODO: Replace usages of AGENT_PARENT_SECTION_ID with AGENT_ROOT_SECTION_UUIDS
-export const AGENT_PARENT_SECTION_ID = '1b4f2ff0-8d73-8082-862b-dcd586862638';
 // UUIDs of agent root documents whose subtrees can be omitted via --omit-agents
 export const AGENT_ROOT_SECTION_UUIDS = new Set<string>([
   '1b4f2ff0-8d73-8082-862b-dcd586862638',

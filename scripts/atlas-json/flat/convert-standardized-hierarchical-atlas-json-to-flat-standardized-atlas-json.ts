@@ -20,7 +20,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { AGENT_PARENT_SECTION_ID, ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUIDS, ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { type StandardizedAtlasScopeTrees, childCollectionNames } from '../hierarchical/types';
 
 /** Safe object helpers **/
@@ -95,7 +95,7 @@ function traverseAndCollectFlat(
   const uuid = node['uuid'] ?? null;
 
   // Determine whether current node is (or remains) under the Agent Parent Section
-  const isAgentParentHere = typeof node['uuid'] === 'string' && node['uuid'] === AGENT_PARENT_SECTION_ID;
+  const isAgentParentHere = typeof node['uuid'] === 'string' && AGENT_ROOT_SECTION_UUIDS.has(node['uuid']);
   const isUnderAgentParentSection = ancestorUnderAgentParent || isAgentParentHere;
 
   const databaseName = mapTypeToDatabaseName(type, isUnderAgentParentSection);
