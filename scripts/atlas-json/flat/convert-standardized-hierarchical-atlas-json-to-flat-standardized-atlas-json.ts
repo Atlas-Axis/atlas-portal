@@ -18,11 +18,10 @@
  * npx tsx scripts/atlas-json/flat/convert-standardized-hierarchical-atlas-json-to-flat-standardized-atlas-json.ts <inputFileName.json> <outputFileName.json>
  * ```
  */
-
 import fs from 'fs';
 import path from 'path';
-import { childCollectionNames, type StandardizedAtlasScopeTrees } from '../hierarchical/types';
-import { ATLAS_DATABASES, AGENT_PARENT_SECTION_ID } from '@/app/server/atlas/constants';
+import { AGENT_PARENT_SECTION_ID, ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { type StandardizedAtlasScopeTrees, childCollectionNames } from '../hierarchical/types';
 
 /** Safe object helpers **/
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -83,7 +82,11 @@ type FlatDoc = {
  * This traversal mirrors the defensive approach: iterate over known child arrays directly on the node
  * and inside `supportingDocuments`.
  */
-function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>, ancestorUnderAgentParent: boolean): void {
+function traverseAndCollectFlat(
+  node: unknown,
+  grouped: Map<string, FlatDoc[]>,
+  ancestorUnderAgentParent: boolean,
+): void {
   if (!isObject(node)) return;
 
   const type = node['type'];
