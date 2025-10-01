@@ -41,9 +41,6 @@ export async function loadNotionDatabasePagesFromSupabase({
     let query = supabase()
       .from('notion_database_pages_current')
       .select('*')
-      .is('date_valid_to', null)
-      .eq('archived', false)
-      .eq('in_trash', false)
       .eq('atlas_database_name', atlasDatabaseName)
       .range(page * pageSize, (page + 1) * pageSize - 1);
 
