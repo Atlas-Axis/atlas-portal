@@ -18,10 +18,9 @@
  * npx tsx scripts/atlas-json/hierarchical/diff-uuids-of-standardized-hierarchical-atlas-jsons.ts <fileA> <fileB> --limit 100
  * ```
  */
-
 import fs from 'fs';
 import path from 'path';
-import { childCollectionNames, type StandardizedAtlasScopeTrees } from './types';
+import { type StandardizedAtlasScopeTrees, childCollectionNames } from './types';
 
 const MAX_DISPLAY = 20;
 
@@ -29,12 +28,7 @@ const MAX_DISPLAY = 20;
  * Names of child collections that may live inside `supportingDocuments`.
  * These are a subset of `childCollectionNames` but grouped under `supportingDocuments`.
  */
-const supportingChildCollectionNames = new Set([
-  'annotations',
-  'tenets',
-  'neededResearch',
-  'activeData',
-]);
+const supportingChildCollectionNames = new Set(['annotations', 'tenets', 'neededResearch', 'activeData']);
 
 /** Safe object helpers **/
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -166,7 +160,6 @@ function setDifference(a: Set<string>, b: Set<string>): string[] {
   return result;
 }
 
-
 function printList(label: string, items: string[], maxPreview: number): void {
   console.log(`\n${label} (count=${items.length})`);
   const limit = Math.min(items.length, maxPreview, MAX_DISPLAY);
@@ -197,7 +190,8 @@ async function main() {
   // Flags
   const limitFlagIndex = argv.findIndex((a) => a === '--limit');
   const defaultPreviewLimit = 200;
-  const previewLimit = limitFlagIndex >= 0 ? Math.max(0, Number(argv[limitFlagIndex + 1] ?? defaultPreviewLimit)) : defaultPreviewLimit;
+  const previewLimit =
+    limitFlagIndex >= 0 ? Math.max(0, Number(argv[limitFlagIndex + 1] ?? defaultPreviewLimit)) : defaultPreviewLimit;
 
   const defaultFileA = '.debug-data/standardized-atlas/atlas-powerhouse-standardized.json';
   const defaultFileB = '.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json';
@@ -212,15 +206,15 @@ async function main() {
   console.log(`- ${labelA}: ${path.resolve(fileA)}`);
   console.log(`- ${labelB}: ${path.resolve(fileB)}`);
 
-  const [treesA, treesB] = [
-    readJsonFile<unknown>(fileA),
-    readJsonFile<unknown>(fileB),
-  ];
+  const [treesA, treesB] = [readJsonFile<unknown>(fileA), readJsonFile<unknown>(fileB)];
 
   assertIsArray(treesA, `${labelA} root`);
   assertIsArray(treesB, `${labelB} root`);
 
-  const [statsA, statsB] = [collectFromTrees(treesA as StandardizedAtlasScopeTrees), collectFromTrees(treesB as StandardizedAtlasScopeTrees)];
+  const [statsA, statsB] = [
+    collectFromTrees(treesA as StandardizedAtlasScopeTrees),
+    collectFromTrees(treesB as StandardizedAtlasScopeTrees),
+  ];
 
   const uuidsA = new Set(mapKeysToSortedArray(statsA.uuidFrequencies));
   const uuidsB = new Set(mapKeysToSortedArray(statsB.uuidFrequencies));
