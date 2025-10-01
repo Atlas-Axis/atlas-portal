@@ -80,6 +80,7 @@ function toBase(node: PowerhouseTreeNode): BaseAtlasDocument {
     docNo: makeViewNodeAtlasId(node),
     name: makeViewNodeTitleText(node),
     uuid: node.id,
+    content: '', // TODO
   };
 }
 
@@ -154,7 +155,12 @@ function convertNode(node: PowerhouseTreeNode): StandardizedAtlasDocument {
     }
     case 'Category': {
       // Category → no docNo; has sections
-      const baseCategory: Omit<BaseAtlasDocument, 'docNo'> = { type: base.type, name: base.name, uuid: base.uuid };
+      const baseCategory: Omit<BaseAtlasDocument, 'docNo'> = {
+        type: base.type,
+        name: base.name,
+        uuid: base.uuid,
+        content: '',
+      };
       const doc: CategoryDocument = { ...baseCategory, sections: [] };
       doc.sections = mapChildren<SectionDocument>(node, 'Section');
       return doc;

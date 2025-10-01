@@ -50,6 +50,7 @@ function toBase(node: AtlasTreeNode): BaseAtlasDocument {
     docNo: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
+    content: node.plain_text_content ?? '',
   };
 }
 
@@ -167,6 +168,7 @@ export function atlasNodeToStandardized(
         type: base.type,
         name: base.name,
         uuid: base.uuid,
+        content: base.content,
       };
       const doc: CategoryDocument = { ...baseCategory, sections: [] };
       const split = mapSectionsAndPrimaryDocs(node);

@@ -10,7 +10,7 @@ export interface BaseAtlasDocument {
   name: string;
   uuid: string | null;
 
-  // TODO: content
+  content: string;
 }
 
 export type StandardizedAtlasDocument =
