@@ -7,6 +7,8 @@ import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/ser
 // Cache for 2 minutes
 export const revalidate = 120;
 
+// This route is used on the `/atlas` page to load the agents data after the initial ISR page is loaded.
+// This is used to prevent a build error caused by 19 MB limit on the prerendered HTML, so some data loading is deferred to the client.
 export async function GET() {
   try {
     // Load all Atlas pages from Supabase
