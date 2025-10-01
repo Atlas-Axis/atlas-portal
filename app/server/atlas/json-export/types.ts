@@ -99,11 +99,17 @@ export interface ArticleDocument extends BaseAtlasDocument {
   sections?: SectionDocument[];
   categories?: CategoryDocument[];
   supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
+  // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
+  coreDocuments?: CoreDocument[];
+  placeholders?: PlaceholderDocument[];
 }
 
 // ✅
 export interface CategoryDocument extends Omit<BaseAtlasDocument, 'docNo'> {
   sections?: SectionDocument[];
+  // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
+  categories?: CategoryDocument[];
+  placeholders?: PlaceholderDocument[];
 }
 
 export interface SectionDocument extends BaseAtlasDocument {

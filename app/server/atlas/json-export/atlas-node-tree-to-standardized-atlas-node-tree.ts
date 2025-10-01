@@ -62,7 +62,7 @@ function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType
   const invalidChildren = allChildren.filter((child) => !allowedTypes.includes(child.atlas_document_type));
   if (invalidChildren.length > 0) {
     console.warn(
-      `⚠️  ${node.atlas_document_type} "${node.plain_text_name}" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
+      `‼️  ${node.atlas_document_type} "${node.plain_text_name}" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
     );
   }
 }
@@ -182,12 +182,20 @@ export function atlasNodeToStandardized(
 
     case 'Article': {
       // Article → only sections and categories (per Atlas hierarchy rules)
-      validateChildTypes(node, ['Section', 'Category']);
+      validateChildTypes(node, ['Section', 'Category', 'Core', 'Placeholder']);
       // validateChildTypes(node, ['Section', 'Category', 'Annotation', 'Action Tenet', 'Needed Research']);
       const doc: ArticleDocument = { ...base };
       const splitDb = mapSectionsAndPrimaryDocs(node);
+      const splitAgent = mapAgentScopeDocs(node);
       if (splitDb.sections.length > 0) doc.sections = splitDb.sections;
       if (splitDb.categories.length > 0) doc.categories = splitDb.categories;
+      const coreDocs = [...splitDb.coreDocuments, ...splitAgent.coreDocuments];
+      // const activeDataControllers = [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers];
+      const placeholders = [...splitDb.placeholders, ...splitAgent.placeholders];
+      if (coreDocs.length > 0) doc.coreDocuments = coreDocs;
+      // if (activeDataControllers.length > 0) doc.activeDataControllers = activeDataControllers;
+      // if (splitDb.typeSpecifications.length > 0) doc.typeSpecifications = splitDb.typeSpecifications;
+      if (placeholders.length > 0) doc.placeholders = placeholders;
 
       const supportingDocs = mapSupportingDocsForArticle(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
@@ -196,7 +204,7 @@ export function atlasNodeToStandardized(
 
     case 'Category': {
       // Category → omits `docNo`, has only `sections` (per Atlas hierarchy rules)
-      validateChildTypes(node, ['Section']);
+      validateChildTypes(node, ['Section', 'Category', 'Placeholder']);
       // validateChildTypes(node, ['Section', 'Core', 'Active Data Controller', 'Type Specification', 'Placeholder', 'Annotation', 'Action Tenet', 'Needed Research']);
       const baseCategory: Omit<BaseAtlasDocument, 'docNo'> = {
         type: base.type,
@@ -204,9 +212,20 @@ export function atlasNodeToStandardized(
         uuid: base.uuid,
         content: base.content,
       };
-      const doc: CategoryDocument = { ...baseCategory };
+      const doc: CategoryDocument = { ...baseCategory, sections: [] };
       const splitDb = mapSectionsAndPrimaryDocs(node);
+      const splitAgent = mapAgentScopeDocs(node);
       if (splitDb.sections.length > 0) doc.sections = splitDb.sections;
+      if (splitDb.categories.length > 0) doc.categories = splitDb.categories;
+      // const coreDocs = [...splitDb.coreDocuments, ...splitAgent.coreDocuments];
+      // const activeDataControllers = [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers];
+      const placeholders = [...splitDb.placeholders, ...splitAgent.placeholders];
+      // if (coreDocs.length > 0) doc.coreDocuments = coreDocs;
+      // if (activeDataControllers.length > 0) doc.activeDataControllers = activeDataControllers;
+      // if (splitDb.typeSpecifications.length > 0) doc.typeSpecifications = splitDb.typeSpecifications;
+      if (placeholders.length > 0) doc.placeholders = placeholders;
+      // const supportingDocs = mapSupportingDocsForSectionCoreSpec(node);
+      // if (supportingDocs) doc.supportingDocuments = supportingDocs;
 
       return doc;
     }
