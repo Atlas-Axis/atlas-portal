@@ -74,7 +74,7 @@ const ATLAS_TYPE_TO_CATEGORY: Record<AtlasDocumentType, GitHubAtlasDocumentType 
   'Type Specification': 'Type Specifications',
   'Active Data Controller': ATLAS_DATABASES.ACTIVE_DATA,
   // 'Spell SP Controller': ATLAS_DATABASES.ACTIVE_DATA,
-  // Placeholder: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+  Placeholder: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
   Category: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
   'Action Tenet': ATLAS_DATABASES.TENETS,
   'Active Data': ATLAS_DATABASES.ACTIVE_DATA,
