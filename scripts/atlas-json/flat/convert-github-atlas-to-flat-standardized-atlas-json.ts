@@ -29,6 +29,7 @@ export type FlatDoc = {
 };
 
 // HTML section id → GitHub category label (as used in generate-atlas-json-from-github.ts)
+// Each section corresponds to a table in the HTML that lists documents for that category
 type SectionConfig = {
   id: string;
   label:
@@ -60,6 +61,7 @@ const SECTION_CONFIGS: SectionConfig[] = [
 ];
 
 // Map GitHub category label → Atlas database name for standardized grouping
+// Note: "Type Specifications" are folded into "Sections & Primary Docs" in our standardized view
 const CATEGORY_TO_DATABASE: Record<SectionConfig['label'], string> = {
   Scopes: ATLAS_DATABASES.SCOPES,
   Articles: ATLAS_DATABASES.ARTICLES,
@@ -75,15 +77,18 @@ const CATEGORY_TO_DATABASE: Record<SectionConfig['label'], string> = {
 };
 
 // Utilities copied/adapted from generate-atlas-json-from-github.ts
+// Extract trimmed text from an element safely (works with null/undefined)
 function toText(el: Element | null | undefined): string {
   if (!el) return '';
   return (el.textContent ?? '').trim();
 }
 
+// Normalize header text for robust matching (lowercase, single spaces)
 function normalizeHeader(header: string): string {
   return header.toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
+// Identify the column indexes for doc no, name, type, and content (with fallbacks)
 function detectColumnIndexes(headers: string[]): { docNo: number; name: number; type: number; content: number } {
   const normalized = headers.map(normalizeHeader);
 
@@ -101,6 +106,7 @@ function detectColumnIndexes(headers: string[]): { docNo: number; name: number; 
   const typeIdx = normalized.findIndex((h) => h === 'type');
   const contentIdx = normalized.findIndex((h) => h === 'content' || h === 'description');
 
+  // Fallbacks align with common table structure: Doc No | Name | Type | Content
   const fallbackDocNo = docNoIdx >= 0 ? docNoIdx : 0;
   const fallbackName = nameIdx >= 0 ? nameIdx : 1;
   const fallbackType = typeIdx >= 0 ? typeIdx : Math.max(2, headers.length - 2);
@@ -109,6 +115,7 @@ function detectColumnIndexes(headers: string[]): { docNo: number; name: number; 
   return { docNo: fallbackDocNo, name: fallbackName, type: fallbackType, content: fallbackContent };
 }
 
+// Parse one category table into FlatDoc rows
 function parseSection(document: Document, sectionId: string): FlatDoc[] {
   const sectionDiv = document.getElementById(sectionId);
   if (!sectionDiv) return [];
@@ -129,14 +136,18 @@ function parseSection(document: Document, sectionId: string): FlatDoc[] {
     const cells = Array.from(row.querySelectorAll('td'));
     if (cells.length === 0) continue;
 
+    // Doc number is typically in the first column; fall back to <dfn> if needed
     let docNo = toText(cells[indexes.docNo] as Element).replace(/\s+/g, ' ');
     if (!docNo) {
       const dfn = cells[0]?.querySelector('dfn');
       docNo = toText(dfn as Element);
     }
+
+    // Name and Type columns
     const name = toText(cells[indexes.name] as Element);
     const typeText = toText(cells[indexes.type] as Element);
 
+    // Skip obviously empty rows
     if (!name && !typeText) continue;
 
     rows.push({ type: typeText || '', docNo, name, uuid: null });
@@ -145,20 +156,24 @@ function parseSection(document: Document, sectionId: string): FlatDoc[] {
 }
 
 async function main() {
+  // Input/Output paths are fixed for this converter
   const repoRoot = process.cwd();
   const inputPath = path.join(repoRoot, '.debug-data', 'atlas-raw-sources', 'github.html');
   const outputDir = path.join(repoRoot, '.debug-data', 'standardized-atlas', 'flat');
   const outputPath = path.join(outputDir, 'atlas-github-standardized-flat.json');
 
+  // Ensure source exists
   if (!fs.existsSync(inputPath)) {
     console.error(`Input HTML not found: ${inputPath}`);
     process.exit(1);
   }
 
+  // Load and parse HTML
   const html = fs.readFileSync(inputPath, 'utf8');
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
+  // Group parsed rows by standardized Atlas database name
   const grouped = new Map<string, FlatDoc[]>();
 
   for (const { id, label } of SECTION_CONFIGS) {
@@ -168,12 +183,14 @@ async function main() {
     grouped.get(dbName)!.push(...list);
   }
 
+  // Serialize and write output
   const groupedObject = Object.fromEntries(grouped);
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(groupedObject, null, 2), 'utf8');
   console.log(`Wrote flat grouped JSON to: ${outputPath}`);
 
+  // Summary logging
   const totalDocs = Object.values(groupedObject).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0);
   const dbNames = Object.keys(groupedObject).sort();
   console.log(`Total documents flattened: ${totalDocs}`);
