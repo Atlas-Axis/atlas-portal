@@ -34,6 +34,7 @@ import {
   type CategoryDocument,
   type CoreDocument,
   type NeededResearchDocument,
+  type PlaceholderDocument,
   type ScenarioDocument,
   type ScenarioVariationDocument,
   type ScopeDocument,
@@ -73,6 +74,7 @@ function mapSectionsAndPrimaryDocs(node: AtlasTreeNode): {
   coreDocuments: CoreDocument[];
   activeDataControllers: ActiveDataControllerDocument[];
   typeSpecifications: TypeSpecificationDocument[];
+  placeholders: PlaceholderDocument[];
 } {
   return {
     sections: filterMapByType<SectionDocument>(node.sectionsAndPrimaryDocs, 'Section'),
@@ -83,17 +85,20 @@ function mapSectionsAndPrimaryDocs(node: AtlasTreeNode): {
       'Active Data Controller',
     ),
     typeSpecifications: filterMapByType<TypeSpecificationDocument>(node.sectionsAndPrimaryDocs, 'Type Specification'),
+    placeholders: filterMapByType<PlaceholderDocument>(node.sectionsAndPrimaryDocs, 'Placeholder'),
   };
 }
 
-// Split `agentScopeDocs` (mixed Core + Active Data Controller) into atlas-document-type-grouped arrays
+// Split `agentScopeDocs` (mixed Core + Active Data Controller + Placeholder) into atlas-document-type-grouped arrays
 function mapAgentScopeDocs(node: AtlasTreeNode): {
   coreDocuments: CoreDocument[];
   activeDataControllers: ActiveDataControllerDocument[];
+  placeholders: PlaceholderDocument[];
 } {
   return {
     coreDocuments: filterMapByType<CoreDocument>(node.agentScopeDocs, 'Core'),
     activeDataControllers: filterMapByType<ActiveDataControllerDocument>(node.agentScopeDocs, 'Active Data Controller'),
+    placeholders: filterMapByType<PlaceholderDocument>(node.agentScopeDocs, 'Placeholder'),
   };
 }
 
@@ -157,6 +162,7 @@ export function atlasNodeToStandardized(
       const split = mapSectionsAndPrimaryDocs(node);
       if (split.sections.length > 0) doc.sections = split.sections;
       if (split.categories.length > 0) doc.categories = split.categories;
+      // Note: Placeholder documents are not typically children of Articles
       const supportingDocs = mapSupportingDocsForArticle(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
       return doc;
@@ -173,6 +179,7 @@ export function atlasNodeToStandardized(
       const doc: CategoryDocument = { ...baseCategory, sections: [] };
       const split = mapSectionsAndPrimaryDocs(node);
       if (split.sections.length > 0) doc.sections = split.sections;
+      // Note: Placeholder documents are not typically children of Categories
       return doc;
     }
 
@@ -183,9 +190,11 @@ export function atlasNodeToStandardized(
       const splitAgent = mapAgentScopeDocs(node);
       const coreDocs = [...splitDb.coreDocuments, ...splitAgent.coreDocuments];
       const activeDataControllers = [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers];
+      const placeholders = [...splitDb.placeholders, ...splitAgent.placeholders];
       if (coreDocs.length > 0) doc.coreDocuments = coreDocs;
       if (activeDataControllers.length > 0) doc.activeDataControllers = activeDataControllers;
       if (splitDb.typeSpecifications.length > 0) doc.typeSpecifications = splitDb.typeSpecifications;
+      if (placeholders.length > 0) doc.placeholders = placeholders;
       const supportingDocs = mapSupportingDocsForSectionCoreSpec(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
       return doc;
@@ -198,9 +207,11 @@ export function atlasNodeToStandardized(
       const splitAgent = mapAgentScopeDocs(node);
       const coreDocs = [...splitDb.coreDocuments, ...splitAgent.coreDocuments];
       const activeDataControllers = [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers];
+      const placeholders = [...splitDb.placeholders, ...splitAgent.placeholders];
       if (coreDocs.length > 0) doc.coreDocuments = coreDocs;
       if (activeDataControllers.length > 0) doc.activeDataControllers = activeDataControllers;
       if (splitDb.typeSpecifications.length > 0) doc.typeSpecifications = splitDb.typeSpecifications;
+      if (placeholders.length > 0) doc.placeholders = placeholders;
       const supportingDocs = mapSupportingDocsForSectionCoreSpec(node);
       if (supportingDocs) doc.supportingDocuments = supportingDocs;
       return doc;
@@ -244,10 +255,12 @@ export function atlasNodeToStandardized(
     case 'Active Data':
     case 'Scenario Variation':
     case 'Needed Research':
+    case 'Placeholder':
       // Leaf docs → base only
       return { ...base } as StandardizedAtlasDocument;
 
     default:
+      console.error(`Unknown document type: ${node.atlas_document_type}`);
       return { ...base } as StandardizedAtlasDocument;
   }
 }
