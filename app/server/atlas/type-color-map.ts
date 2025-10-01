@@ -16,4 +16,5 @@ export const typeColorMap: Record<AtlasDocumentType, string> = {
   Scenario: 'bg-blue-50 text-blue-800',
   'Scenario Variation': 'bg-lime-50 text-lime-800',
   'Needed Research': 'bg-amber-50 text-amber-800',
+  Placeholder: 'bg-gray-50 text-gray-800',
 };
