@@ -254,6 +254,7 @@ The Atlas document numbering system follows a hierarchical structure where each 
 ```
 Scope Documents (A.0, A.1, A.2, ...)
 ├── Article Documents (A.1.1, A.1.2, A.2.1, ...)
+TODO: Add note about optional Category above Section
 │   └── Section Documents (A.1.1.1, A.1.1.2, A.1.2.1, ...)
 │       ├── Primary Documents:
 │       │   ├── Core Documents (A.1.1.1.1, A.1.1.1.2, ...)
@@ -261,7 +262,7 @@ Scope Documents (A.0, A.1, A.2, ...)
 │       │   ├── Active Data Controller (A.1.1.2.1, A.1.1.2.2, ...)
 │       │   │   └── Active Data (.0.6.1, .0.6.2, ...)
 │       │   └── Type Specification (A.1.1.3.1, A.1.1.3.2, ...)
-│       └── Supporting Documents:
+│       └── Supporting Documents: TODO: Fix in all 3 Core Project Docs - Supporting Documents can be nested under any Primary Document
 │           ├── Annotations (.0.3.1, .0.3.2, ...)
 │           └── Tenets (.0.4.1, .0.4.2, ...)
 │               └── Scenarios (.1.1, .1.2, ...)
@@ -293,6 +294,7 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
   - Core
   - Type Specification
   - Active Data Controller
+  - Category
 
 - **Annotations**
   - Annotation

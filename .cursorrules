@@ -317,6 +317,7 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
   - Core
   - Type Specification
   - Active Data Controller
+  - Category
 
 - **Annotations**
   - Annotation
