@@ -155,6 +155,18 @@ async function main() {
   const originalScopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 
+  // Log orphaned nodes with detailed information
+  if (result.orphanedNodes.length > 0) {
+    console.warn(`⚠️  Found ${result.orphanedNodes.length} orphaned nodes:`);
+    for (const orphanedNode of result.orphanedNodes) {
+      console.warn(
+        `   - ${orphanedNode.atlas_document_type}: "${orphanedNode.plain_text_name}" (UUID: ${orphanedNode.notion_page_id})`,
+      );
+    }
+  } else {
+    console.log('✅ No orphaned nodes found');
+  }
+
   // Convert Scope trees to standardized JSON format
   const standardizedScopeTrees: StandardizedAtlasScopeTrees = originalScopeTrees.map((scopeNode) =>
     atlasNodeToStandardized(scopeNode),
