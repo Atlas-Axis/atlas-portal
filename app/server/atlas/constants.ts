@@ -5,9 +5,23 @@ export type AtlasDatabaseName = Exclude<
   'Type Specification' | 'Original Context Data'
 >;
 
-export type AtlasDocumentType = Database['public']['Enums']['atlas_document_type_enum'];
+export type AtlasDocumentType = Exclude<
+  Database['public']['Enums']['atlas_document_type_enum'],
+  'Spell SP Controller' | 'Placeholder'
+>;
 
-export type GitHubAtlasDocumentType = 'Scopes' | 'Articles' | 'Sections & Primary Docs' | 'Type Specifications' | 'Annotations' | 'Tenets' | 'Scenarios' | 'Scenario Variations' | 'Needed Research' | 'Active Data' | 'Agent Scope Database';
+export type GitHubAtlasDocumentType =
+  | 'Scopes'
+  | 'Articles'
+  | 'Sections & Primary Docs'
+  | 'Type Specifications'
+  | 'Annotations'
+  | 'Tenets'
+  | 'Scenarios'
+  | 'Scenario Variations'
+  | 'Needed Research'
+  | 'Active Data'
+  | 'Agent Scope Database';
 
 export const ATLAS_DATABASES = {
   SCOPES: 'Scopes',

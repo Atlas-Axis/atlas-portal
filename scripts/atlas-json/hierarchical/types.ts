@@ -11,7 +11,7 @@ export const AGENT_ROOT_UUIDS = new Set<string>([
  * A simplified, standardized representation of an Atlas document used for downstream processing.
  */
 export interface BaseAtlasDocument {
-  type: AtlasDocumentType | string; // Allow string for unknown/custom types
+  type: AtlasDocumentType; // Allow string for unknown/custom types
   docNo: string;
   name: string;
   uuid: string | null;

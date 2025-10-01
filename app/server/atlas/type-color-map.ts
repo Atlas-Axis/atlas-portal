@@ -7,8 +7,8 @@ export const typeColorMap: Record<AtlasDocumentType, string> = {
   Core: 'bg-indigo-50 text-indigo-800',
   'Type Specification': 'bg-rose-50 text-rose-800',
   'Active Data Controller': 'bg-green-50 text-green-800',
-  'Spell SP Controller': 'bg-red-50 text-red-800', // Deprecated - TODO: remove
-  Placeholder: 'bg-gray-50 text-gray-800',
+  // 'Spell SP Controller': 'bg-red-50 text-red-800', // Deprecated - TODO: remove
+  // Placeholder: 'bg-gray-50 text-gray-800',
   Category: 'bg-yellow-50 text-yellow-800',
   'Action Tenet': 'bg-blue-50 text-blue-800',
   'Active Data': 'bg-fuchsia-50 text-fuchsia-800',
