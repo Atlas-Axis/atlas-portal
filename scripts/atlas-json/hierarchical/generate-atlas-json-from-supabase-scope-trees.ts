@@ -218,6 +218,8 @@ async function main() {
   console.log(`Standardized ${standardizedScopeTrees.length} root scope trees`);
   console.log(`Excluded ${standardizedOrphanedNodes.length} orphaned nodes`);
   console.log(`Wrote standardized JSON to ${outputFile}`);
+
+  process.exit(0);
 }
 
 main().catch((err) => {
