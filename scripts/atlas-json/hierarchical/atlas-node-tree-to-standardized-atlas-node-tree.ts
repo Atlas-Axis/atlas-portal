@@ -25,22 +25,23 @@
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import type { AtlasDocumentType } from '@/app/server/atlas/constants';
-import type {
-  ActiveDataControllerDocument,
-  ActiveDataDocument,
-  AnnotationDocument,
-  ArticleDocument,
-  BaseAtlasDocument,
-  CategoryDocument,
-  CoreDocument,
-  NeededResearchDocument,
-  ScenarioDocument,
-  ScenarioVariationDocument,
-  ScopeDocument,
-  SectionDocument,
-  StandardizedAtlasDocument,
-  TenetDocument,
-  TypeSpecificationDocument,
+import {
+  AGENT_ROOT_UUIDS,
+  type ActiveDataControllerDocument,
+  type ActiveDataDocument,
+  type AnnotationDocument,
+  type ArticleDocument,
+  type BaseAtlasDocument,
+  type CategoryDocument,
+  type CoreDocument,
+  type NeededResearchDocument,
+  type ScenarioDocument,
+  type ScenarioVariationDocument,
+  type ScopeDocument,
+  type SectionDocument,
+  type StandardizedAtlasDocument,
+  type TenetDocument,
+  type TypeSpecificationDocument,
 } from './types';
 
 // Convert simple fields
