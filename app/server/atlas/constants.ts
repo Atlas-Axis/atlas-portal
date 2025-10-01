@@ -104,8 +104,11 @@ export const IMPORT_DATABASES = [
 ] as const;
 
 // The specific Section & Primary Doc page ID under which root Agent documents will be nested
+// TODO: In the future, there may be two agent ancestor sections, one for Prime Agents and one for Executor Agents. Currently, we only have one (Prime Agents).
 // This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
 export const AGENT_PARENT_SECTION_ID = '1b4f2ff0-8d73-8082-862b-dcd586862638';
+// This is the specific Article page ID under which agent parent section(s) is/are nested; This is not the direct parent of the agent documents, but their common grandparent that they all inherit from.
+export const AGENT_ANCESTOR_ARTICLE_ID = '1b4f2ff08d73805aaf66de296b4aed33';
 
 export const ATLAS_GITHUB_HTML_URL =
   'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html';
