@@ -1204,4 +1204,153 @@ describe('Document Numbering', () => {
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[1].generatedDocID).toBe('A.1');
   });
+
+  describe('duplicated nodes tracking', () => {
+    it('should track nodes that appear in multiple parent contexts', () => {
+      const scope = makeBasePage({
+        notion_page_id: 'scope-1',
+        atlas_document_type: 'Scope',
+        atlas_database_name: 'Scopes',
+        atlas_document_number: 'A.1',
+        plain_text_name: 'Test Scope',
+        child_article_ids: ['article-1'],
+      });
+
+      const article = makeBasePage({
+        notion_page_id: 'article-1',
+        atlas_document_type: 'Article',
+        atlas_database_name: 'Articles',
+        atlas_document_number: 'A.1.1',
+        plain_text_name: 'Test Article',
+        child_section_and_primary_doc_ids: ['section-1', 'section-2'],
+      });
+
+      const section1 = makeBasePage({
+        notion_page_id: 'section-1',
+        atlas_document_type: 'Section',
+        atlas_database_name: 'Sections & Primary Docs',
+        atlas_document_number: 'A.1.1.1',
+        plain_text_name: 'Section 1',
+        child_needed_research_ids: ['research-1'], // research-1 appears here
+      });
+
+      const section2 = makeBasePage({
+        notion_page_id: 'section-2',
+        atlas_document_type: 'Section',
+        atlas_database_name: 'Sections & Primary Docs',
+        atlas_document_number: 'A.1.1.2',
+        plain_text_name: 'Section 2',
+        child_needed_research_ids: ['research-1'], // research-1 appears here too (duplication!)
+      });
+
+      // This research document appears under both section-1 and section-2
+      const research1 = makeBasePage({
+        notion_page_id: 'research-1',
+        atlas_document_type: 'Needed Research',
+        atlas_database_name: 'Needed Research',
+        atlas_document_number: 'NR-1',
+        plain_text_name: 'Shared Research Item',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [article],
+        'Sections & Primary Docs': [section1, section2],
+        'Needed Research': [research1],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+      };
+
+      const result = buildAtlasTree(pagesByDatabase, { verbose: false });
+
+      // Should detect the duplication
+      expect(result.duplicatedNodes).toHaveLength(1);
+      expect(result.duplicatedNodes[0].node.notion_page_id).toBe('research-1');
+      expect(result.duplicatedNodes[0].node.plain_text_name).toBe('Shared Research Item');
+      expect(result.duplicatedNodes[0].parentId).toBe('section-2'); // Second occurrence
+
+      // The research item should appear in both sections in the tree structure
+      const scope1 = result.scopeTrees[0];
+      const article1 = scope1.articles[0];
+      const section1Node = article1.sectionsAndPrimaryDocs.find((s) => s.notion_page_id === 'section-1');
+      const section2Node = article1.sectionsAndPrimaryDocs.find((s) => s.notion_page_id === 'section-2');
+
+      expect(section1Node?.neededResearch).toHaveLength(1);
+      expect(section1Node?.neededResearch[0].notion_page_id).toBe('research-1');
+      expect(section2Node?.neededResearch).toHaveLength(1);
+      expect(section2Node?.neededResearch[0].notion_page_id).toBe('research-1');
+    });
+
+    it('should track multiple duplications of the same node', () => {
+      const scope = makeBasePage({
+        notion_page_id: 'scope-1',
+        atlas_document_type: 'Scope',
+        atlas_database_name: 'Scopes',
+        atlas_document_number: 'A.1',
+        child_article_ids: ['article-1'],
+      });
+
+      const article = makeBasePage({
+        notion_page_id: 'article-1',
+        atlas_document_type: 'Article',
+        atlas_database_name: 'Articles',
+        atlas_document_number: 'A.1.1',
+        child_section_and_primary_doc_ids: ['section-1', 'section-2', 'section-3'],
+      });
+
+      const section1 = makeBasePage({
+        notion_page_id: 'section-1',
+        atlas_document_type: 'Section',
+        atlas_database_name: 'Sections & Primary Docs',
+        child_needed_research_ids: ['research-1'],
+      });
+
+      const section2 = makeBasePage({
+        notion_page_id: 'section-2',
+        atlas_document_type: 'Section',
+        atlas_database_name: 'Sections & Primary Docs',
+        child_needed_research_ids: ['research-1'], // First duplication
+      });
+
+      const section3 = makeBasePage({
+        notion_page_id: 'section-3',
+        atlas_document_type: 'Section',
+        atlas_database_name: 'Sections & Primary Docs',
+        child_needed_research_ids: ['research-1'], // Second duplication
+      });
+
+      const research1 = makeBasePage({
+        notion_page_id: 'research-1',
+        atlas_document_type: 'Needed Research',
+        atlas_database_name: 'Needed Research',
+        plain_text_name: 'Triple Shared Research',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [article],
+        'Sections & Primary Docs': [section1, section2, section3],
+        'Needed Research': [research1],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+      };
+
+      const result = buildAtlasTree(pagesByDatabase, { verbose: false });
+
+      // Should detect two duplications (second and third appearances)
+      expect(result.duplicatedNodes).toHaveLength(2);
+      expect(result.duplicatedNodes[0].node.notion_page_id).toBe('research-1');
+      expect(result.duplicatedNodes[0].parentId).toBe('section-2');
+      expect(result.duplicatedNodes[1].node.notion_page_id).toBe('research-1');
+      expect(result.duplicatedNodes[1].parentId).toBe('section-3');
+    });
+  });
 });
