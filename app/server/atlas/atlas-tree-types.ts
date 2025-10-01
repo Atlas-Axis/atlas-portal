@@ -39,7 +39,7 @@ export interface AtlasTreeNode {
   generatedDocID?: string;
   generatedDocName?: string; // TODO: Mimic `makeDocTitle` from PH (see my Raycast notes for logic... Create helper function based on Atlas db name)
 
-  // Embedded child relationships (replacing ID arrays with actual nodes)
+  // Embedded child database relationships (replacing ID arrays with actual nodes)
   /** Child Scope documents */
   scopes: AtlasTreeNode[];
   /** Child Article documents */
@@ -62,6 +62,7 @@ export interface AtlasTreeNode {
   neededResearch: AtlasTreeNode[];
 }
 
+// These are based on the Atlas database name, not the document type
 export type AtlasTreeNodeRelationship = keyof Pick<
   AtlasTreeNode,
   | 'scopes'
@@ -75,6 +76,19 @@ export type AtlasTreeNodeRelationship = keyof Pick<
   | 'agentScopeDocs'
   | 'neededResearch'
 >;
+
+export const atlasTreeNodeRelationshipNames: AtlasTreeNodeRelationship[] = [
+  'scopes',
+  'articles',
+  'sectionsAndPrimaryDocs',
+  'annotations',
+  'tenets',
+  'scenarios',
+  'scenarioVariations',
+  'activeData',
+  'agentScopeDocs',
+  'neededResearch',
+];
 
 /**
  * Result of building the Atlas tree structure.
