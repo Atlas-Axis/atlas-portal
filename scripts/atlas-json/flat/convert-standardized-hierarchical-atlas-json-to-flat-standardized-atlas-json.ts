@@ -141,10 +141,44 @@ function assertIsArray(value: unknown, label: string): asserts value is unknown[
   }
 }
 
+/**
+ * When enabled, recursively traverses standardized scope trees and sets every node's
+ * `uuid` field to null. Keeps implementation isolated for easy removal.
+ */
+function omitUuidsInNode(node: unknown): void {
+  if (!isObject(node)) return;
+
+  if (Object.prototype.hasOwnProperty.call(node, 'uuid')) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (node as any)['uuid'] = null;
+  }
+
+  // Children on node
+  for (const collectionName of childCollectionNames) {
+    const children = getArrayProp(node, collectionName);
+    if (children) {
+      for (const child of children) omitUuidsInNode(child);
+    }
+  }
+
+  // Children under supportingDocuments
+  const supporting = (node as Record<string, unknown>)['supportingDocuments'];
+  if (isObject(supporting)) {
+    for (const key of Object.keys(supporting)) {
+      const children = getArrayProp(supporting, key);
+      if (children) {
+        for (const child of children) omitUuidsInNode(child);
+      }
+    }
+  }
+}
+
 async function main() {
   const argv = process.argv.slice(2);
-  const inArg = argv[0];
-  const outArg = argv[1];
+  const omitUuids = argv.includes('--omit-uuids');
+  const positional = argv.filter((a) => !a.startsWith('--'));
+  const inArg = positional[0];
+  const outArg = positional[1];
 
   const inputDir = '.debug-data/standardized-atlas';
   const outputDir = '.debug-data/standardized-atlas/flat';
@@ -158,6 +192,10 @@ async function main() {
   console.log(`Reading: ${path.resolve(inputPath)}`);
   const trees = readJsonFile<unknown>(inputPath);
   assertIsArray(trees, 'StandardizedAtlasScopeTrees');
+
+  if (omitUuids) {
+    for (const root of trees) omitUuidsInNode(root);
+  }
 
   const grouped = new Map<string, FlatDoc[]>();
   for (const root of trees as StandardizedAtlasScopeTrees) {
