@@ -21,6 +21,8 @@
 import fs from 'fs';
 import path from 'path';
 import { AGENT_ROOT_SECTION_UUIDS, ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { loadEnv } from '../../utils/load-env';
 import { type StandardizedAtlasScopeTrees, childCollectionNames } from '../hierarchical/types';
 
 /** Safe object helpers **/
@@ -173,7 +175,46 @@ function omitUuidsInNode(node: unknown): void {
   }
 }
 
+/**
+ * Load a map of notion_page_id → canonical_document_title from Supabase (current, non-archived rows).
+ * Used to rewrite FlatDoc.name based on a document's uuid.
+ */
+async function loadCanonicalTitleMap(): Promise<Map<string, string>> {
+  const map = new Map<string, string>();
+
+  let page = 0;
+  const pageSize = 1000;
+
+  while (true) {
+    const { data, error } = await supabase()
+      .from('notion_database_pages_current')
+      .select('notion_page_id,canonical_document_title,archived,in_trash,date_valid_to')
+      .is('date_valid_to', null)
+      .eq('archived', false)
+      .eq('in_trash', false)
+      .order('notion_page_id')
+      .range(page * pageSize, (page + 1) * pageSize - 1);
+
+    if (error) throw new Error(`Failed to load canonical titles: ${error.message}`);
+    if (!data || data.length === 0) break;
+
+    for (const row of data as Array<{ notion_page_id: string; canonical_document_title: string | null }>) {
+      if (row.notion_page_id && row.canonical_document_title) {
+        map.set(row.notion_page_id, row.canonical_document_title);
+      }
+    }
+
+    if (data.length < pageSize) break;
+    page++;
+  }
+
+  return map;
+}
+
 async function main() {
+  // Ensure environment variables (SUPABASE_URL, SUPABASE_API_KEY, etc.) are loaded for script execution
+  loadEnv();
+
   const argv = process.argv.slice(2);
   const omitUuids = argv.includes('--omit-uuids');
   const positional = argv.filter((a) => !a.startsWith('--'));
@@ -200,6 +241,20 @@ async function main() {
   const grouped = new Map<string, FlatDoc[]>();
   for (const root of trees as StandardizedAtlasScopeTrees) {
     traverseAndCollectFlat(root, grouped, false);
+  }
+
+  // Load map once and rewrite names based on uuid → canonical_document_title
+  try {
+    const canonicalTitleMap = await loadCanonicalTitleMap();
+    for (const [, list] of grouped) {
+      for (const item of list) {
+        if (item.uuid && canonicalTitleMap.has(item.uuid)) {
+          item.name = canonicalTitleMap.get(item.uuid)!;
+        }
+      }
+    }
+  } catch (e) {
+    console.warn(`Warning: Failed to load canonical title map from Supabase. Proceeding without rewrite.`, e);
   }
 
   const groupedObject = Object.fromEntries(grouped);
