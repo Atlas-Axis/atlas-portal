@@ -134,6 +134,11 @@ export function atlasNodeToStandardized(
 ): StandardizedAtlasDocument {
   const base = toBase(node);
 
+  // Debug logging for missing document types
+  if (!node.atlas_document_type) {
+    console.warn(`Node ${node.notion_page_id} has no document type`);
+  }
+
   // If omitting Agent Scope subtrees (for BLUE JSON compatibility) and this node matches one of the agent roots,
   // prune all its children (keep the node itself with empty children arrays).
   const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_SECTION_UUIDS.has(node.notion_page_id);
@@ -244,6 +249,7 @@ export function atlasNodeToStandardized(
     case 'Active Data':
     case 'Scenario Variation':
     case 'Needed Research':
+    case 'Placeholder':
       // Leaf docs → base only
       return { ...base } as StandardizedAtlasDocument;
 
