@@ -26,9 +26,6 @@
 import fs from 'fs';
 import path from 'path';
 import type { AtlasDocumentType } from '@/app/server/atlas/constants';
-import { TDocType } from './powerhouse-types/types';
-import type { ViewNode } from './powerhouse-types/types/view-nodes';
-import { makeViewNodeAtlasId, makeViewNodeTitleText } from './powerhouse-types/utils';
 import {
   type ActiveDataControllerDocument,
   type ActiveDataDocument,
@@ -40,12 +37,16 @@ import {
   type NeededResearchDocument,
   type ScenarioDocument,
   type ScenarioVariationDocument,
+  type ScopeDocument,
   type SectionDocument,
   type StandardizedAtlasDocument,
   type StandardizedAtlasScopeTrees,
   type TenetDocument,
   type TypeSpecificationDocument,
-} from './types';
+} from '@/app/server/atlas/json-export/types';
+import { TDocType } from './powerhouse-types/types';
+import type { ViewNode } from './powerhouse-types/types/view-nodes';
+import { makeViewNodeAtlasId, makeViewNodeTitleText } from './powerhouse-types/utils';
 
 type PowerhouseTreeNode = ViewNode;
 
@@ -138,7 +139,7 @@ function convertNode(node: PowerhouseTreeNode): StandardizedAtlasDocument {
   switch (type) {
     case 'Scope': {
       // Scope → has articles
-      const doc: import('./types').ScopeDocument = { ...base, articles: [] };
+      const doc: ScopeDocument = { ...base, articles: [] };
       doc.articles = mapChildren<ArticleDocument>(node, 'Article');
       return doc;
     }

@@ -39,8 +39,8 @@
 import fs from 'fs';
 import path from 'path';
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
-import atlasNodeToStandardized from './atlas-node-tree-to-standardized-atlas-node-tree';
-import { StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from './types';
+import atlasNodeToStandardized from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
+import { StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from '@/app/server/atlas/json-export/types';
 
 /**
  * Convert an `AtlasTreeNode` to a `StandardizedAtlasDocument`, recursively mapping children.

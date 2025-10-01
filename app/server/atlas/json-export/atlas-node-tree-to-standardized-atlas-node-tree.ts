@@ -19,7 +19,7 @@
  *
  * Usage
  * ```ts
- * import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
+ * import { atlasNodeToStandardized } from './atlas-node-tree-to-standardized-atlas-node-tree';
  * const standardized: StandardizedAtlasDocument = atlasNodeToStandardized(rootNode);
  * ```
  */
@@ -41,7 +41,7 @@ import {
   type StandardizedAtlasDocument,
   type TenetDocument,
   type TypeSpecificationDocument,
-} from '@/app/server/atlas/json-export/types';
+} from './types';
 
 // Convert simple fields
 function toBase(node: AtlasTreeNode): BaseAtlasDocument {
