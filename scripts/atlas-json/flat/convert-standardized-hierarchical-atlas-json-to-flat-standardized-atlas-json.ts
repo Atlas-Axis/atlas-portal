@@ -22,6 +22,7 @@
 import fs from 'fs';
 import path from 'path';
 import { childCollectionNames, type StandardizedAtlasScopeTrees } from '../hierarchical/types';
+import { ATLAS_DATABASES, AGENT_PARENT_SECTION_ID } from '@/app/server/atlas/constants';
 
 /** Safe object helpers **/
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -39,27 +40,33 @@ function getArrayProp(obj: Record<string, unknown>, key: string): unknown[] | nu
  */
 const TYPE_TO_DATABASE: Record<string, string> = {
   // Root / immutable
-  Scope: 'Scopes',
-  Article: 'Articles',
-  Section: 'Sections & Primary Docs',
-  Category: 'Sections & Primary Docs',
+  Scope: ATLAS_DATABASES.SCOPES,
+  Article: ATLAS_DATABASES.ARTICLES,
+  Section: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+  Category: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
 
-  // Primary
-  Core: 'Sections & Primary Docs',
-  'Active Data Controller': 'Sections & Primary Docs',
-  'Type Specification': 'Sections & Primary Docs',
+  // Primary (default target; may be overridden dynamically for agents)
+  Core: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+  'Active Data Controller': ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+  'Type Specification': ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
 
   // Supporting
-  Annotation: 'Annotations',
-  'Action Tenet': 'Tenets',
-  Scenario: 'Scenarios',
-  'Scenario Variation': 'Scenario Variations',
-  'Active Data': 'Active Data',
-  'Needed Research': 'Needed Research',
+  Annotation: ATLAS_DATABASES.ANNOTATIONS,
+  'Action Tenet': ATLAS_DATABASES.TENETS,
+  Scenario: ATLAS_DATABASES.SCENARIOS,
+  'Scenario Variation': ATLAS_DATABASES.SCENARIO_VARIATIONS,
+  'Active Data': ATLAS_DATABASES.ACTIVE_DATA,
+  'Needed Research': ATLAS_DATABASES.NEEDED_RESEARCH,
 };
 
-function mapTypeToDatabaseName(type: unknown): string {
-  if (typeof type === 'string' && TYPE_TO_DATABASE[type]) return TYPE_TO_DATABASE[type];
+function mapTypeToDatabaseName(type: unknown, isUnderAgentParentSection: boolean): string {
+  if (typeof type === 'string') {
+    if ((type === 'Core' || type === 'Active Data Controller') && isUnderAgentParentSection) {
+      return ATLAS_DATABASES.AGENTS;
+    }
+    return TYPE_TO_DATABASE[type] ?? 'Unknown';
+  }
+  console.warn(`Unknown type: ${type}`);
   return 'Unknown';
 }
 
@@ -76,7 +83,7 @@ type FlatDoc = {
  * This traversal mirrors the defensive approach: iterate over known child arrays directly on the node
  * and inside `supportingDocuments`.
  */
-function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>): void {
+function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>, ancestorUnderAgentParent: boolean): void {
   if (!isObject(node)) return;
 
   const type = node['type'];
@@ -84,7 +91,11 @@ function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>):
   const name = node['name'];
   const uuid = node['uuid'] ?? null;
 
-  const databaseName = mapTypeToDatabaseName(type);
+  // Determine whether current node is (or remains) under the Agent Parent Section
+  const isAgentParentHere = typeof node['uuid'] === 'string' && node['uuid'] === AGENT_PARENT_SECTION_ID;
+  const isUnderAgentParentSection = ancestorUnderAgentParent || isAgentParentHere;
+
+  const databaseName = mapTypeToDatabaseName(type, isUnderAgentParentSection);
   const entry: FlatDoc = {
     type: typeof type === 'string' ? type : String(type ?? ''),
     docNo: typeof docNo === 'string' ? docNo : String(docNo ?? ''),
@@ -98,7 +109,7 @@ function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>):
   for (const collectionName of childCollectionNames) {
     const children = getArrayProp(node, collectionName);
     if (children) {
-      for (const child of children) traverseAndCollectFlat(child, grouped);
+      for (const child of children) traverseAndCollectFlat(child, grouped, isUnderAgentParentSection);
     }
   }
 
@@ -108,7 +119,7 @@ function traverseAndCollectFlat(node: unknown, grouped: Map<string, FlatDoc[]>):
     for (const key of Object.keys(supporting)) {
       const children = getArrayProp(supporting, key);
       if (children) {
-        for (const child of children) traverseAndCollectFlat(child, grouped);
+        for (const child of children) traverseAndCollectFlat(child, grouped, isUnderAgentParentSection);
       }
     }
   }
@@ -147,7 +158,7 @@ async function main() {
 
   const grouped = new Map<string, FlatDoc[]>();
   for (const root of trees as StandardizedAtlasScopeTrees) {
-    traverseAndCollectFlat(root, grouped);
+    traverseAndCollectFlat(root, grouped, false);
   }
 
   const groupedObject = Object.fromEntries(grouped);
