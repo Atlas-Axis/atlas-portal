@@ -30,70 +30,105 @@ import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server
 import { loadEnv } from '@/scripts/utils/load-env';
 
 /**
- * Recursively count all documents in an AtlasTreeNode tree structure.
+ * Recursively count all unique documents in an AtlasTreeNode tree structure.
+ * Uses a Set to track unique UUIDs to avoid counting duplicates.
  */
 function countOriginalDocuments(nodes: AtlasTreeNode[]): number {
-  let count = 0;
-  for (const node of nodes) {
-    count += 1; // Count this node
-    // Recursively count all child collections
-    count += countOriginalDocuments(node.scopes);
-    count += countOriginalDocuments(node.articles);
-    count += countOriginalDocuments(node.sectionsAndPrimaryDocs);
-    count += countOriginalDocuments(node.annotations);
-    count += countOriginalDocuments(node.tenets);
-    count += countOriginalDocuments(node.scenarios);
-    count += countOriginalDocuments(node.scenarioVariations);
-    count += countOriginalDocuments(node.activeData);
-    count += countOriginalDocuments(node.agentScopeDocs);
-    count += countOriginalDocuments(node.neededResearch);
+  const uniqueUuids = new Set<string>();
+
+  function traverse(node: AtlasTreeNode) {
+    if (node.notion_page_id) {
+      uniqueUuids.add(node.notion_page_id);
+    }
+
+    // Recursively traverse all child collections
+    traverseChildren(node.scopes);
+    traverseChildren(node.articles);
+    traverseChildren(node.sectionsAndPrimaryDocs);
+    traverseChildren(node.annotations);
+    traverseChildren(node.tenets);
+    traverseChildren(node.scenarios);
+    traverseChildren(node.scenarioVariations);
+    traverseChildren(node.activeData);
+    traverseChildren(node.agentScopeDocs);
+    traverseChildren(node.neededResearch);
   }
-  return count;
+
+  function traverseChildren(children: AtlasTreeNode[]) {
+    for (const child of children) {
+      traverse(child);
+    }
+  }
+
+  for (const node of nodes) {
+    traverse(node);
+  }
+
+  return uniqueUuids.size;
 }
 
 /**
- * Recursively count all documents in a StandardizedAtlasDocument tree structure.
+ * Recursively count all unique documents in a StandardizedAtlasDocument tree structure.
+ * Uses a Set to track unique UUIDs to avoid counting duplicates.
  */
 function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
-  let count = 0;
-  for (const doc of docs) {
-    count += 1; // Count this document
+  const uniqueUuids = new Set<string>();
 
-    // Recursively count all child collections based on document type
+  function traverse(doc: StandardizedAtlasDocument) {
+    if (doc.uuid) {
+      uniqueUuids.add(doc.uuid);
+    }
+
+    // Recursively traverse all child collections based on document type
     if ('articles' in doc && doc.articles) {
-      count += countStandardizedDocuments(doc.articles);
+      traverseChildren(doc.articles);
     }
     if ('sections' in doc && doc.sections) {
-      count += countStandardizedDocuments(doc.sections);
+      traverseChildren(doc.sections);
     }
     if ('categories' in doc && doc.categories) {
-      count += countStandardizedDocuments(doc.categories);
+      traverseChildren(doc.categories);
     }
     if ('coreDocuments' in doc && doc.coreDocuments) {
-      count += countStandardizedDocuments(doc.coreDocuments);
+      traverseChildren(doc.coreDocuments);
     }
     if ('activeDataControllers' in doc && doc.activeDataControllers) {
-      count += countStandardizedDocuments(doc.activeDataControllers);
+      traverseChildren(doc.activeDataControllers);
     }
     if ('typeSpecifications' in doc && doc.typeSpecifications) {
-      count += countStandardizedDocuments(doc.typeSpecifications);
+      traverseChildren(doc.typeSpecifications);
+    }
+    if ('placeholders' in doc && doc.placeholders) {
+      traverseChildren(doc.placeholders);
     }
     if ('scenarios' in doc && doc.scenarios) {
-      count += countStandardizedDocuments(doc.scenarios);
+      traverseChildren(doc.scenarios);
     }
     if ('scenarioVariations' in doc && doc.scenarioVariations) {
-      count += countStandardizedDocuments(doc.scenarioVariations);
+      traverseChildren(doc.scenarioVariations);
     }
     if ('supportingDocuments' in doc && doc.supportingDocuments) {
       const supporting = doc.supportingDocuments;
-      if (supporting.annotations) count += countStandardizedDocuments(supporting.annotations);
-      if (supporting.tenets) count += countStandardizedDocuments(supporting.tenets);
-      if (supporting.neededResearch) count += countStandardizedDocuments(supporting.neededResearch);
-      if ('activeData' in supporting && supporting.activeData)
-        count += countStandardizedDocuments(supporting.activeData);
+      if (supporting.annotations) traverseChildren(supporting.annotations);
+      if (supporting.tenets) traverseChildren(supporting.tenets);
+      if (supporting.neededResearch) traverseChildren(supporting.neededResearch);
+      if ('activeData' in supporting && supporting.activeData) {
+        traverseChildren(supporting.activeData);
+      }
     }
   }
-  return count;
+
+  function traverseChildren(children: StandardizedAtlasDocument[]) {
+    for (const child of children) {
+      traverse(child);
+    }
+  }
+
+  for (const doc of docs) {
+    traverse(doc);
+  }
+
+  return uniqueUuids.size;
 }
 
 /**
@@ -102,7 +137,7 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
  */
 async function main() {
   const outputDir = '.debug-data/standardized-atlas';
-  const outputFile = path.join('atlas-supabase-scope-trees-standardized.json');
+  const outputFile = path.join(outputDir, 'atlas-supabase-scope-trees-standardized.json');
 
   loadEnv();
 
@@ -125,9 +160,15 @@ async function main() {
     atlasNodeToStandardized(scopeNode),
   );
 
+  // Convert orphaned nodes to standardized format
+  const standardizedOrphanedNodes: StandardizedAtlasDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
+    return atlasNodeToStandardized(orphanedNode);
+  });
+
   // Verify document counts match between original and standardized trees
-  const originalCount = countOriginalDocuments(originalScopeTrees);
-  const standardizedCount = countStandardizedDocuments(standardizedScopeTrees);
+  const originalCount = countOriginalDocuments(originalScopeTrees) + result.orphanedNodes.length;
+  const standardizedCount =
+    countStandardizedDocuments(standardizedScopeTrees) + countStandardizedDocuments(standardizedOrphanedNodes);
 
   if (originalCount !== standardizedCount) {
     console.error(`❌ Document count mismatch! Original: ${originalCount}, Standardized: ${standardizedCount}`);
@@ -139,6 +180,7 @@ async function main() {
   fs.writeFileSync(outputFile, JSON.stringify(standardizedScopeTrees, null, 2), 'utf8');
 
   console.log(`Standardized ${standardizedScopeTrees.length} root scope trees`);
+  console.log(`Excluded ${standardizedOrphanedNodes.length} orphaned nodes`);
   console.log(`Wrote standardized JSON to ${outputFile}`);
 }
 
