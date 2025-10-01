@@ -1,208 +1,260 @@
-# Atlas Proposal Generator
+# Atlas Tree-Based Document Numbering System
 
-This module converts `TreeChange[]` arrays from the diff algorithm into formatted Atlas proposal markdown following the "Process For Preparing Proposals For Atlas Edits" formatting rules.
+This directory contains the new tree-based document numbering system for Atlas documents, which replaces the previous sequential approach with a more efficient and robust tree traversal system.
+
+## Overview
+
+The new system provides:
+
+- **Efficient Tree Construction**: Uses lookup maps for O(1) access to nodes and relationships
+- **Robust Error Handling**: Detects circular references, orphaned nodes, and missing references
+- **Tree Traversal**: Multiple traversal algorithms (pre-order, post-order, level-order)
+- **Document Numbering**: Hierarchical numbering using tree traversal instead of sequential processing
+- **Comprehensive Validation**: Built-in validation for tree integrity and document number uniqueness
+
+## Key Files
+
+### Core System
+
+- **`atlas-tree-types.ts`** - Type definitions for tree nodes and interfaces
+- **`atlas-tree-builder.ts`** - Main tree construction logic with efficient lookup maps
+- **`atlas-tree-traversal.ts`** - Tree traversal utilities and algorithms
+- **`atlas-tree-numbering.ts`** - Document numbering using tree traversal
+- **`atlas-tree-errors.ts`** - Comprehensive error handling and validation
+- **`atlas-tree-system.ts`** - High-level API and convenience functions
+
+### Testing
+
+- **`__tests__/atlas-tree-builder.test.ts`** - Comprehensive test suite
 
 ## Quick Start
 
 ```typescript
-import { convertTreeChangesToAtlasProposal } from '@/app/server/atlas';
-import { diffTrees } from '@/app/server/diff/diff-trees';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { buildAtlasTreeWithValidation } from './atlas-tree-system';
 
-// After running your diff
-const changes = diffTrees({
-  originalNodeMap,
-  duplicateNodeMap,
-  originalRoot,
-  duplicateRoot,
-  originalContentMap,
-  duplicateContentMap,
+// Load Atlas data
+const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+
+// Build tree structure with document numbering and validation
+const result = await buildAtlasTreeWithValidation(atlasData, {
+  assignDocumentNumbers: true,
+  verbose: true,
+  validateIntegrity: true,
 });
 
-// Generate proposal markdown
-const proposalMarkdown = convertTreeChangesToAtlasProposal(
-  changes,
-  {
-    originalNodeMap,
-    duplicateNodeMap,
-    originalRoot,
-    duplicateRoot,
-    originalContentMap,
-    duplicateContentMap,
-  },
-  {
-    includeSubtree: true,
-    maxSubtreeDepth: 3,
-    groupingStrategy: 'none',
-  },
-);
+// Access the results
+console.log(`Built ${result.scopeTrees.length} scope trees`);
+console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
+console.log(`Generated ${result.documentNumbers.size} document numbers`);
 
-console.log(proposalMarkdown);
+// Check for validation errors
+if (result.validationSummary.criticalErrors > 0) {
+  console.error('Critical errors found:', result.validationSummary);
+}
 ```
-
-## Features
-
-### ✅ Implemented (MVP)
-
-- **Change Type Handling**: Converts all 4 change types (`added`, `deleted`, `edited`, `moved`)
-- **Document References**: Formats as "Portal / GitHub" format with placeholder logic for future differentiation
-- **Basic Positioning**: Calculates "directly after/before" relative positioning
-- **Content Formatting**: Includes document content with proper indentation
-- **Subtree Support**: Configurable inclusion of unchanged children (configurable depth)
-- **Proper Markdown**: Generates clean, readable proposal markdown
-
-### 🚧 Placeholder (For Future Implementation)
-
-- **Document Type Detection**: `(Core)`, `(Alignment Artifact)`, etc. annotations
-- **Logical Grouping**: Grouping changes by categories or hierarchy
-- **Advanced Positioning**: More sophisticated sibling relationship detection
 
 ## API Reference
 
-### Main Function
+### Main Functions
 
-```typescript
-function convertTreeChangesToAtlasProposal(
-  changes: TreeChange[],
-  context: ProposalContext,
-  options?: ProposalOptions,
-): string;
-```
+#### `buildAtlasTreeWithValidation(pagesByDatabase, options)`
+
+High-level function that builds the tree structure with comprehensive validation and error handling.
 
 **Parameters:**
 
-- `changes`: Array of changes from `diffTrees()`
-- `context`: All tree data needed for context (same data passed to `diffTrees()`)
-- `options`: Configuration options (all optional)
+- `pagesByDatabase`: Pages organized by database name from `loadAtlasFromSupabaseWithNestingAgentsUnderSection()`
+- `options`: Configuration options (see below)
 
-**Returns:** Formatted proposal markdown string
+**Returns:**
 
-### Options
+- `scopeTrees`: Array of root scope trees
+- `orphanedNodes`: Array of orphaned documents
+- `errors`: Array of construction errors
+- `validationSummary`: Summary of validation results
+- `documentNumbers`: Map of page ID to document number
+
+#### `buildAtlasTree(pagesByDatabase, options)`
+
+Core function that builds the tree structure.
+
+**Options:**
+
+- `assignDocumentNumbers?: boolean` - Whether to assign document numbers during construction
+- `verbose?: boolean` - Whether to log detailed construction information
+- `maxDepth?: number` - Maximum tree depth to prevent infinite recursion (default: 50)
+
+### Tree Traversal
+
+#### `preOrderTraversal(root, callback, maxDepth)`
+
+Performs pre-order traversal (parent before children).
+
+#### `postOrderTraversal(root, callback, maxDepth)`
+
+Performs post-order traversal (children before parent).
+
+#### `levelOrderTraversal(root, callback, maxDepth)`
+
+Performs level-order traversal (breadth-first).
+
+#### `findNodeByDocumentID(root, generatedDocID)`
+
+Finds a node by its generated document ID.
+
+#### `getNodeCount(root)`
+
+Gets the total number of nodes in the tree.
+
+### Document Numbering
+
+#### `assignDocumentNumbersToTreesRecursively(scopeTrees)`
+
+Assigns document numbers to all nodes in the tree structures.
+
+**Returns:** Map of page ID to generated document number
+
+### Document Name Formatting
+
+#### `getDocumentTitle(treeNode)`
+
+Rewrites Notion document titles for 'Sections & Primary Docs' and 'Agent Scope Database' documents by only keeping the last part of the title after the last `-` separator
+
+### Error Handling
+
+#### `validateTreeIntegrity(scopeTrees, orphanedNodes, pagesByDatabase)`
+
+Validates the integrity of the tree structure.
+
+#### `detectCircularReferences(pagesByDatabase)`
+
+Detects circular references in the document hierarchy.
+
+#### `findOrphanedNodes(pagesByDatabase, rootScopeIds)`
+
+Finds orphaned nodes not connected to any root tree.
+
+## Document Numbering Rules
+
+The system follows the Atlas Document Numbering Rules. For comprehensive documentation of all numbering rules and patterns, see **[ATLAS_DOCUMENT_NUMBERING_RULES.md](../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
+
+Quick reference:
+
+- **Scopes**: `A.0`, `A.1`, `A.2`, ...
+- **Articles**: `A.0.1`, `A.0.2`, ... (under scope A.0)
+- **Sections**: `A.0.1.1`, `A.0.1.2`, ... (under article A.0.1)
+- **Annotations**: `A.0.1.0.3.1`, `A.0.1.0.3.2`, ... (targeting section A.0.1)
+- **Tenets**: `A.0.1.0.4.1`, `A.0.1.0.4.2`, ... (targeting section A.0.1)
+- **Scenarios**: `A.0.1.0.4.1.1`, `A.0.1.0.4.1.2`, ... (under tenet A.0.1.0.4.1)
+- **Scenario Variations**: `A.0.1.0.4.1.1.var1`, `A.0.1.0.4.1.1.var2`, ... (under scenario A.0.1.0.4.1.1)
+- **Active Data**: `A.0.1.0.6.1`, `A.0.1.0.6.2`, ... (targeting Active Data Controller A.0.1)
+- **Needed Research**: `NR-1`, `NR-2`, ... (global numbering)
+
+## Error Handling
+
+The system provides comprehensive error handling for:
+
+### Circular References
+
+Detects when documents reference themselves directly or through a chain of relationships.
 
 ```typescript
-interface ProposalOptions {
-  includeSubtree?: boolean; // Include unchanged children (default: true)
-  maxSubtreeDepth?: number; // Limit subtree depth (default: undefined = no limit)
-  groupingStrategy?: 'none' | 'hierarchy' | 'type'; // Grouping strategy (default: 'none')
+const errors = detectCircularReferences(pagesByDatabase);
+if (errors.length > 0) {
+  console.error('Circular references detected:', errors);
 }
 ```
 
-### Context
+### Orphaned Nodes
+
+Finds documents that exist in the database but are not connected to any root tree.
 
 ```typescript
-interface ProposalContext {
-  originalNodeMap: TreeNodeMap;
-  duplicateNodeMap: TreeNodeMap;
-  originalRoot: TreeNode;
-  duplicateRoot: TreeNode;
-  originalContentMap: Map<string, string | null>;
-  duplicateContentMap: Map<string, string | null>;
+const orphanedNodes = findOrphanedNodes(pagesByDatabase, rootScopeIds);
+if (orphanedNodes.length > 0) {
+  console.warn(`Found ${orphanedNodes.length} orphaned nodes`);
 }
 ```
 
-## Output Examples
+### Missing Child References
 
-### Addition
-
-```markdown
-- **Add** a new subdocument of `A.1.9.2.2.10 - Bounded External Access Modules (Portal)` / `A.1.9.2.2.10 - Bounded External Access Modules (Github)`. This document should be located directly after `A.1.9.2.2.10.2 - Stability Parameter Bounded External Access Module Exception (Portal)` / `A.1.9.2.2.10.2 - Stability Parameter Bounded External Access Module Exception (Github)` to read as follows:
-  - **A.1.9.2.2.10.3 - stUSDS Bounded External Access Module Exception** - The stUSDS Bounded External Access Module (stUSDS BEAM) manages the parameters...
-```
-
-### Replacement
-
-```markdown
-- **Replace** `A.4.4.1.2.2 - stUSDS Rate (Portal)` / `A.4.4.1.2.2 - stUSDS Rate (Github)` and all of its subdocuments to read as follows:
-  - **A.4.4.1.2.2 - stUSDS Rate** - The variable yield earned by stUSDS holders is calculated using the formula
-```
-
-### Deletion
-
-```markdown
-- **Delete** `A.3.3.2.1.2.2.5.1 - Base Risk (Portal)` / `A.3.3.2.1.2.2.5.1 - Base Risk (Github)`.
-```
-
-### Move
-
-```markdown
-- **Move** `A.3.3.2.1.2.2.5.2 - Audit Factor (Portal)` / `A.3.3.2.1.2.2.5.2 - Audit Factor (Github)` and its subdocuments to be subdocuments of `A.3.3.2.1.2.2 - Smart Contract Risk Rating Calculation (Portal)` / `A.3.3.2.1.2.2 - Smart Contract Risk Rating Calculation (Github)`. These documents should be located directly after `A.3.3.2.1.2.2.4 - Lindy Adjustment Factor (Portal)` / `A.3.3.2.1.2.2.4 - Lindy Adjustment Factor (Github)` and its subdocuments.
-```
-
-## Integration with Existing Codebase
-
-### In `calculate-notion-page-changes.ts`
-
-Add this after your existing `diffTrees` call:
+Detects when child IDs referenced in relationship arrays don't exist in the database.
 
 ```typescript
-// Existing code
-const changes = diffTrees({
-  originalNodeMap,
-  duplicateNodeMap,
-  originalRoot,
-  duplicateRoot,
-  originalContentMap,
-  duplicateContentMap,
-});
+const missingErrors = detectMissingChildren(pagesByDatabase);
+if (missingErrors.length > 0) {
+  console.error('Missing child references:', missingErrors);
+}
+```
 
-// New: Generate proposal
-import { convertTreeChangesToAtlasProposal } from '@/app/server/atlas';
+## Performance Characteristics
 
-const proposalMarkdown = convertTreeChangesToAtlasProposal(changes, {
-  originalNodeMap,
-  duplicateNodeMap,
-  originalRoot,
-  duplicateRoot,
-  originalContentMap,
-  duplicateContentMap,
-}, {
-  includeSubtree: true,
-  maxSubtreeDepth: 3, // Reasonable depth limit
-});
+The new system is optimized for handling ~6000 Atlas documents with deep nesting:
 
-// You can now return or store proposalMarkdown
-return {
-  changes,
-  proposalMarkdown,
-  // ... other data
-};
+- **Tree Construction**: O(n) where n is the number of documents
+- **Lookup Operations**: O(1) using efficient lookup maps
+- **Tree Traversal**: O(n) for complete tree traversal
+- **Document Numbering**: O(n) using tree traversal instead of sequential processing
+
+## Migration from Old System
+
+The new system is designed to be a drop-in replacement for the old sequential system:
+
+```typescript
+// Old system - Deleted
+import { generateDocumentNumbers } from './document-numbering';
+const docNumbers = generateDocumentNumbers(pagesByDatabase);
+
+// New system
+import { buildAtlasTreeWithValidation } from './atlas-tree-system';
+const result = await buildAtlasTreeWithValidation(pagesByDatabase, { assignDocumentNumbers: true });
+const docNumbers = result.documentNumbers; // Note: All the pages inside `result` have their `generatedDocNumber` fields populated, recursively
 ```
 
 ## Testing
 
-Run the examples:
+Run the test suite to verify the system works correctly:
 
 ```bash
-# Basic example
-npx tsx -e "
-import { createMockProposalExample } from './app/server/atlas/example-usage';
-console.log(createMockProposalExample());
-"
-
-# Comprehensive example
-npx tsx -e "
-import { createComprehensiveTest } from './app/server/atlas/comprehensive-test';
-console.log(createComprehensiveTest());
-"
+npm test -- scripts/atlas-json/__tests__/atlas-tree-builder.test.ts
 ```
+
+The test suite covers:
+
+- Tree construction with various document types
+- Circular reference detection
+- Orphaned node detection
+- Document numbering accuracy
+- Tree traversal algorithms
+- Error handling scenarios
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays
+2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships
+3. **Missing Child References**: Verify that all child IDs in relationship arrays exist in the database
+4. **Invalid Document Numbers**: Check that document numbers follow the correct patterns
+
+### Debug Mode
+
+Enable verbose logging to see detailed construction information:
+
+```typescript
+const result = buildAtlasTreeWithValidation(atlasData, { verbose: true });
+```
+
+This will log:
+
+- Tree construction progress
+- Error details
+- Validation results
+- Performance metrics
 
 ## Future Enhancements
 
-1. **Document Type Detection**: Analyze content/blockType to add `(Core)`, `(Alignment Artifact)` annotations
-2. **Logical Grouping**: Group related changes by hierarchy or semantic relationships
-3. **Advanced Positioning**: Better sibling relationship detection and positioning rules
-4. **Portal/GitHub Differentiation**: When the titles diverge, implement proper mapping logic
-5. **Content Analysis**: Smart content summarization for very long proposals
-6. **Validation**: Verify proposal syntax against Atlas guidelines
+Planned improvements include:
 
-## File Structure
-
-```
-/app/server/atlas/
-├── generate-proposal.ts       # Main conversion logic
-├── proposal-formatter.ts      # Formatting utilities
-├── proposal-types.ts         # Type definitions
-├── example-usage.ts          # Integration examples
-├── comprehensive-test.ts     # Full feature test
-├── index.ts                  # Exports
-└── README.md                 # This file
-```
+- Integration with `/atlas` page
