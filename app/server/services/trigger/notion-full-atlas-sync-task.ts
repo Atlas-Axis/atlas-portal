@@ -2,6 +2,7 @@ import { metadata, task } from '@trigger.dev/sdk/v3';
 import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
+import { displayImportSummary } from '../notion/display-import-summary';
 import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
@@ -37,7 +38,7 @@ export const notionFullAtlasSyncTask = task({
         const result = await importDatabasePagesFromNotionToSupabase({
           atlasDatabaseName,
         });
-        results.push({ atlasDatabaseName, result });
+        results.push(result);
         console.log(`✅ Completed sync for database: ${atlasDatabaseName}`);
       }
 
@@ -47,12 +48,25 @@ export const notionFullAtlasSyncTask = task({
       setApiCallCountTriggerMetadata(finalStats.totalApiCalls);
       flushTriggerMetadata();
 
+      // Display change summary
+      displayImportSummary(results, { showSeparator: false, title: 'SYNC SUMMARY' });
+
       // Revalidate /atlas page to reflect the newly imported data
       await revalidatePage('/atlas');
+
+      const changedDatabases = results.filter((result) => result.hasChanges);
 
       return {
         databases: results,
         totalApiCalls: finalStats.totalApiCalls,
+        changesSummary: {
+          totalDatabases: results.length,
+          databasesWithChanges: changedDatabases.length,
+          changedDatabases: changedDatabases.map((r) => ({
+            name: r.atlasDatabaseName,
+            summary: r.summary,
+          })),
+        },
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
