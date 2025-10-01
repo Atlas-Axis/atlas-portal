@@ -1,6 +1,7 @@
 import { parseArgs } from 'node:util';
 import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
+import { displayImportSummary } from '@/app/server/services/notion/display-import-summary';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { loadEnv } from './utils/load-env';
 
@@ -52,13 +53,15 @@ Options:
   console.log(`Starting Notion database import...`);
 
   try {
-    // Import all Atlas databases
+    // Import all Atlas databases and collect results
+    const results = [];
     for (const atlasDatabaseName of IMPORT_DATABASES) {
       console.log('\n\n');
-      await importDatabasePagesFromNotionToSupabase({
+      const result = await importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName,
         useLocalCache: args['local-cache'] ?? false,
       });
+      results.push(result);
       console.log('\n\n');
     }
 
@@ -67,7 +70,11 @@ Options:
 
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
-    console.log(`\n🎉 All databases imported successfully!`);
+
+    // Display summary of all changes
+    displayImportSummary(results);
+
+    console.log(`🎉 All databases imported successfully!`);
     // Show in minutes if over 120 seconds
     if (Number(durationSeconds) > 120) {
       const durationMinutes = (Number(durationSeconds) / 60).toFixed(2);

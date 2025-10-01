@@ -3,7 +3,7 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
 import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
-import { compareDatabasePages } from './compare-database-pages';
+import { DatabasePageChanges, compareDatabasePages } from './compare-database-pages';
 import { convertNotionPagesToDatabaseFormat } from './convert-notion-pages-to-supabase-format';
 import { fetchNotionDatabasePagesWithRelationships } from './fetch-database-pages';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
@@ -53,9 +53,12 @@ export async function importDatabasePagesFromNotionToSupabase({
     // Process and sync the pages to Supabase
     console.log(`Syncing changed pages to Supabase...`);
 
+    // Store changes for later use in return value
+    let changes: DatabasePageChanges | null = null;
+
     // Not first time import - compare and update only changed pages
     if (existingPages.length > 0) {
-      const changes = compareDatabasePages({
+      changes = compareDatabasePages({
         supabasePages: existingPages,
         notionPages: notionPagesWithRelationships,
         atlasDatabaseName,
@@ -146,6 +149,38 @@ export async function importDatabasePagesFromNotionToSupabase({
     });
 
     console.log(`✅ Completed importing: ${atlasDatabaseName}`);
+
+    // Return summary of changes
+    if (changes) {
+      return {
+        atlasDatabaseName,
+        hasChanges:
+          changes.newPages.length > 0 ||
+          changes.deletedPages.length > 0 ||
+          changes.changedProperties.length > 0 ||
+          changes.changedRelationships.length > 0,
+        summary: {
+          newPages: changes.newPages.length,
+          deletedPages: changes.deletedPages.length,
+          changedProperties: changes.changedProperties.length,
+          changedRelationships: changes.changedRelationships.length,
+          totalProcessed: blocksSyncedCount,
+        },
+      };
+    } else {
+      // First time import
+      return {
+        atlasDatabaseName,
+        hasChanges: true,
+        summary: {
+          newPages: blocksSyncedCount,
+          deletedPages: 0,
+          changedProperties: 0,
+          changedRelationships: 0,
+          totalProcessed: blocksSyncedCount,
+        },
+      };
+    }
   } catch (error) {
     const endTime = performance.now();
     const duration = endTime - startTime;
