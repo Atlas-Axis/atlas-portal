@@ -99,6 +99,34 @@ export function buildAtlasTree(
   // Step 5: Find orphaned nodes (nodes not connected to any root tree)
   const orphanedNodes = findOrphanedNodes(pagesByDatabase, lookupMaps, scopeTrees);
 
+  // Step 5b: Convert orphaned nodes to AtlasTreeNode format
+  const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
+    try {
+      // Build tree node for orphaned page (without deep traversal to avoid performance issues)
+      return buildTreeNode(orphanedPage, lookupMaps, 0, 1, false, false);
+    } catch (conversionError) {
+      // If conversion fails, create a minimal AtlasTreeNode
+      if (verbose) {
+        console.warn(`Failed to convert orphaned node ${orphanedPage.notion_page_id}: ${conversionError}`);
+      }
+      return {
+        ...orphanedPage,
+        generatedDocID: undefined,
+        generatedDocName: undefined,
+        scopes: [],
+        articles: [],
+        sectionsAndPrimaryDocs: [],
+        annotations: [],
+        tenets: [],
+        scenarios: [],
+        scenarioVariations: [],
+        activeData: [],
+        agentScopeDocs: [],
+        neededResearch: [],
+      };
+    }
+  });
+
   // Step 6: Assign document numbers if requested
   if (assignDocumentNumbers) {
     assignDocumentNumbersToTreesRecursively(scopeTrees);
@@ -111,6 +139,7 @@ export function buildAtlasTree(
   return {
     scopeTrees,
     orphanedNodes,
+    orphanedNodesAsTreeNodes,
     errors,
   };
 }

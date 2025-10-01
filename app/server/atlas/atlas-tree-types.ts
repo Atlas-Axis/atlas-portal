@@ -98,7 +98,9 @@ export interface AtlasTreeResult {
   /** Array of root Scope trees, one for each top-level Scope document */
   scopeTrees: AtlasTreeNode[];
   /** Documents that exist in the database but are not connected to any root tree */
-  orphanedNodes: NotionDatabasePage[];
+  orphanedNodes: NotionDatabasePage[]; // TODO: Delete
+  /** Orphaned nodes converted to AtlasTreeNode format for consistency */
+  orphanedNodesAsTreeNodes: AtlasTreeNode[];
   /** Any errors encountered during tree construction */
   errors: TreeConstructionError[];
 }
