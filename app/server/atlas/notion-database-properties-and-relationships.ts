@@ -63,6 +63,10 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs', // TODO: MAJOR ISSUE! This references not only the direct children but ALL nested children!
+      // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
+      // [ATLAS_DATABASES.TENETS]: 'Tenets',
+      // [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
       // TODO: Tenets + Scenarios + Annotations? - Atlas PH importer does relationship mapping to these too
     },
@@ -115,11 +119,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
     },
     childRelationships: {
-      // Add Sections & Primary Docs, Annotations, Tenets, Active Data
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
-      [ATLAS_DATABASES.TENETS]: 'Tenets',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },

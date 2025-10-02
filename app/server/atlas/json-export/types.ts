@@ -66,6 +66,7 @@ export const childCollectionNames: ChildCollectionName[] = [
   'neededResearch',
 ];
 
+// This is not used - TODO: Delete?
 export const allowedChildCollectionNamesPerDocumentType: Record<
   Exclude<AtlasDocumentType, 'Spell SP Controller' | 'Placeholder'>,
   ChildCollectionName[]
