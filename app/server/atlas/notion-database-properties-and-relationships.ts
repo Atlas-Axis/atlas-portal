@@ -115,6 +115,11 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: 'Content',
     },
     childRelationships: {
+      // Add Sections & Primary Docs, Annotations, Tenets, Active Data
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
+      [ATLAS_DATABASES.TENETS]: 'Tenets',
+      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
   },

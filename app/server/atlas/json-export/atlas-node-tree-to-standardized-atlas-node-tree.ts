@@ -181,9 +181,16 @@ export function atlasNodeToStandardized(
     }
 
     case 'Article': {
-      // Article → only sections and categories (per Atlas hierarchy rules)
-      validateChildTypes(node, ['Section', 'Category', 'Core', 'Placeholder']);
-      // validateChildTypes(node, ['Section', 'Category', 'Annotation', 'Action Tenet', 'Needed Research']);
+      // Article → only sections and categories (per Atlas hierarchy rules) - But in practice can have mixed children
+      validateChildTypes(node, [
+        'Section',
+        'Category',
+        'Core',
+        'Placeholder',
+        'Annotation',
+        'Action Tenet',
+        'Needed Research',
+      ]);
       const doc: ArticleDocument = { ...base };
       const splitDb = mapSectionsAndPrimaryDocs(node);
       const splitAgent = mapAgentScopeDocs(node);
