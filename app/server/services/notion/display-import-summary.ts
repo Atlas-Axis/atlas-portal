@@ -10,7 +10,6 @@ export interface ImportResult {
     deletedPages: number;
     changedProperties: number;
     changedRelationships: number;
-    totalProcessed: number;
   };
 }
 
@@ -51,7 +50,6 @@ export function displayImportSummary(
       if (summary.deletedPages > 0) console.log(`  🗑️ Deleted pages: ${summary.deletedPages}`);
       if (summary.changedProperties > 0) console.log(`  📝 Property changes: ${summary.changedProperties}`);
       if (summary.changedRelationships > 0) console.log(`  🔗 Relationship changes: ${summary.changedRelationships}`);
-      console.log(`  📊 Total processed: ${summary.totalProcessed}`);
       console.log(``);
     }
   }

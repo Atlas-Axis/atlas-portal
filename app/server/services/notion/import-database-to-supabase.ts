@@ -164,7 +164,6 @@ export async function importDatabasePagesFromNotionToSupabase({
           deletedPages: changes.deletedPages.length,
           changedProperties: changes.changedProperties.length,
           changedRelationships: changes.changedRelationships.length,
-          totalProcessed: blocksSyncedCount,
         },
       };
     } else {
@@ -177,7 +176,6 @@ export async function importDatabasePagesFromNotionToSupabase({
           deletedPages: 0,
           changedProperties: 0,
           changedRelationships: 0,
-          totalProcessed: blocksSyncedCount,
         },
       };
     }
