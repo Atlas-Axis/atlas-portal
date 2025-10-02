@@ -12,7 +12,7 @@ const flushTriggerMetadata = () => metadata.flush();
 export const notionFullAtlasSyncTask = task({
   id: 'notion-database-sync',
   // Set an optional maxDuration to prevent tasks from running indefinitely
-  maxDuration: 20 * 60, // Stop executing after 20 mins of compute
+  maxDuration: 60 * 60, // Stop executing after 60 mins of compute
   retry: {
     maxAttempts: 2,
     minTimeoutInMs: 1_000,
