@@ -1,6 +1,7 @@
 import { delay } from '@/app/shared/utils/utils';
 
 const MAX_RETRIES = 3;
+const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 /**
  * Rate limiter for Notion API requests using sliding window, and exponential backoff
@@ -100,7 +101,10 @@ export class NotionRateLimiter {
 
         const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
         const retryInfo = realRetryCount > 0 ? ` on retry ${realRetryCount}` : '';
-        this.log('info', `Notion API call${retryInfo} (${durationSeconds}s)`);
+        // Only log successful requests when DEBUG_LOGGING is enabled or if there were retries
+        if (DEBUG_LOGGING || realRetryCount > 0) {
+          this.log('info', `Notion API call succeeded${retryInfo} (${durationSeconds}s)`);
+        }
         return apiResult;
       } catch (error: unknown) {
         lastError = error;
