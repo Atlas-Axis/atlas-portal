@@ -188,7 +188,7 @@ export function atlasNodeToStandardized(
         'Core',
         'Placeholder',
         'Annotation',
-        'Action Tenet',
+        // 'Action Tenet',
         'Needed Research',
       ]);
       const doc: ArticleDocument = { ...base };
