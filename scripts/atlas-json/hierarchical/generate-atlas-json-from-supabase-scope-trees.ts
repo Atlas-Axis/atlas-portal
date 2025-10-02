@@ -167,6 +167,45 @@ async function main() {
     console.log('✅ No orphaned nodes found');
   }
 
+  // Log duplicated nodes with detailed information
+  if (result.duplicatedNodes.length > 0) {
+    console.warn(`⚠️  Found ${result.duplicatedNodes.length} duplicated nodes:`);
+
+    // Group duplicated nodes by the duplicated node ID for better readability
+    const duplicatesByNodeId = new Map<string, { parentId: string; node: AtlasTreeNode }[]>();
+    for (const duplicate of result.duplicatedNodes) {
+      const nodeId = duplicate.node.notion_page_id;
+      if (!duplicatesByNodeId.has(nodeId)) {
+        duplicatesByNodeId.set(nodeId, []);
+      }
+      duplicatesByNodeId.get(nodeId)!.push(duplicate);
+    }
+
+    // Convert to array and limit display to first 20 entries
+    const duplicateEntries = Array.from(duplicatesByNodeId.entries());
+    const maxDisplay = 20;
+    const entriesToShow = duplicateEntries.slice(0, maxDisplay);
+    const remainingCount = duplicateEntries.length - maxDisplay;
+
+    for (const [nodeId, duplicates] of entriesToShow) {
+      const node = duplicates[0].node;
+      console.warn(`   📄 ${node.atlas_document_type}: "${node.plain_text_name}" (UUID: ${nodeId})`);
+      console.warn(`      Document Number: ${node.atlas_document_number || 'N/A'}`);
+      console.warn(`      Generated Doc ID: ${node.generatedDocID || 'N/A'}`);
+      console.warn(`      Appears under ${duplicates.length} different parents:`);
+
+      for (const duplicate of duplicates) {
+        console.warn(`        - Parent UUID: ${duplicate.parentId}`);
+      }
+    }
+
+    if (remainingCount > 0) {
+      console.warn(`   ...and ${remainingCount} more duplicated nodes`);
+    }
+  } else {
+    console.log('✅ No duplicated nodes found');
+  }
+
   // Convert Scope trees to standardized JSON format
   const standardizedScopeTrees: StandardizedAtlasScopeTrees = originalScopeTrees.map((scopeNode) =>
     atlasNodeToStandardized(scopeNode),
@@ -201,6 +240,7 @@ async function main() {
   console.log(`📊 Count breakdown:`);
   console.log(`   Original scope trees: ${originalScopeCount}`);
   console.log(`   Original orphaned: ${originalOrphanedCount}`);
+  console.log(`   Duplicated nodes: ${result.duplicatedNodes.length}`);
   console.log(`   Original total: ${originalCount}`);
   console.log(`   Standardized scope trees: ${standardizedScopeCount}`);
   console.log(`   Standardized orphaned: ${standardizedOrphanedCount}`);
