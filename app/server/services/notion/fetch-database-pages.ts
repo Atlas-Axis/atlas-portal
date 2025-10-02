@@ -229,7 +229,7 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
       page_id: pageId,
       property_id: relationPropertyId,
       start_cursor: cursor,
-      page_size: 50,
+      page_size: 30,
     });
     const endTime = Date.now();
     const durationSeconds = Math.ceil((endTime - startTime) / 1000);
