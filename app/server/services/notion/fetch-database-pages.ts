@@ -219,17 +219,21 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
 
   do {
     if (isFirstIteration) {
-      console.log(`    Fetching more relations for page ${pageId}...`);
+      console.log(`    Fetching relations for page ${pageId}...`);
       isFirstIteration = false;
     } else {
       console.log(`    Fetching more relations...`);
     }
+    const startTime = Date.now();
     const response = await notion().pages.properties.retrieve({
       page_id: pageId,
       property_id: relationPropertyId,
       start_cursor: cursor,
       page_size: 50,
     });
+    const endTime = Date.now();
+    const durationSeconds = Math.ceil((endTime - startTime) / 1000);
+    console.log(`        ${durationSeconds}s`);
 
     if (response.object === 'list' && Array.isArray(response.results)) {
       for (const item of response.results) {
