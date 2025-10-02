@@ -132,6 +132,9 @@ export function buildAtlasTree(
     assignDocumentNumbersToTreesRecursively(scopeTrees);
   }
 
+  // Step 7: Generate duplicated nodes from parent tracking
+  const duplicatedNodes = generateDuplicatedNodeList(lookupMaps);
+
   if (verbose) {
     console.log(`✅ Built ${scopeTrees.length} scope trees with ${orphanedNodes.length} orphaned nodes`);
   }
@@ -141,7 +144,7 @@ export function buildAtlasTree(
     orphanedNodes,
     orphanedNodesAsTreeNodes,
     errors,
-    duplicatedNodes: lookupMaps.duplicatedNodes,
+    duplicatedNodes,
   };
 }
 
@@ -245,8 +248,7 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
     parentIdMap: parentMap,
     childrenIdsMap: childrenMap,
     processedIds,
-    nodeAppearanceCount: new Map<string, number>(),
-    duplicatedNodes: [],
+    nodeToParentsMap: new Map<string, Set<string>>(),
   };
 }
 
@@ -364,18 +366,14 @@ function buildTreeNode(
   reportMissingChildNodes: boolean = false,
   parentPageId?: string,
 ): AtlasTreeNode {
-  const { nodeMapByPageId: nodeMap, processedIds, nodeAppearanceCount, duplicatedNodes } = lookupMaps;
+  const { nodeMapByPageId: nodeMap, processedIds, nodeToParentsMap } = lookupMaps;
 
-  // Track node appearances
-  const currentCount = nodeAppearanceCount.get(page.notion_page_id) || 0;
-  nodeAppearanceCount.set(page.notion_page_id, currentCount + 1);
-
-  // If this is the second or later appearance, track it as a duplication
-  if (currentCount > 0 && parentPageId) {
-    const treeNode = nodeMap.get(page.notion_page_id);
-    if (treeNode) {
-      duplicatedNodes.push({ parentId: parentPageId, node: treeNode });
+  // Track parent-child relationship for duplicate detection
+  if (parentPageId) {
+    if (!nodeToParentsMap.has(page.notion_page_id)) {
+      nodeToParentsMap.set(page.notion_page_id, new Set());
     }
+    nodeToParentsMap.get(page.notion_page_id)!.add(parentPageId);
   }
 
   // Check for circular reference
@@ -533,4 +531,33 @@ function findOrphanedNodes(
   }
 
   return orphanedNodes;
+}
+
+/**
+ * Generates duplicated nodes list from the parent tracking map.
+ * Filters for nodes that appear under multiple parents and returns them with all their parent relationships.
+ *
+ * @param lookupMaps - Lookup maps containing parent tracking information
+ * @returns Array of duplicated nodes with their parent relationships
+ */
+function generateDuplicatedNodeList(lookupMaps: AtlasLookupMaps): { parentId: string; node: AtlasTreeNode }[] {
+  const { nodeToParentsMap, nodeMapByPageId } = lookupMaps;
+  const duplicatedNodes: { parentId: string; node: AtlasTreeNode }[] = [];
+
+  // Find nodes that appear under multiple parents
+  for (const [nodeId, parentIds] of nodeToParentsMap.entries()) {
+    if (parentIds.size > 1) {
+      const treeNode = nodeMapByPageId.get(nodeId);
+      if (treeNode) {
+        // Add an entry for each parent relationship
+        for (const parentId of parentIds) {
+          duplicatedNodes.push({ parentId, node: treeNode });
+        }
+      } else {
+        console.error(`Tree node not found for duplicate tracking: ${nodeId}`);
+      }
+    }
+  }
+
+  return duplicatedNodes;
 }

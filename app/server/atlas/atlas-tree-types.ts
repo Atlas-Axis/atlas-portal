@@ -136,10 +136,8 @@ export interface AtlasLookupMaps {
   childrenIdsMap: Map<string, string[]>;
   /** Set of all page IDs that have been processed to detect circular references */
   processedIds: Set<string>; // TODO: Some exceptions are allowed: Needed Research
-  /** Map tracking how many times each node appears in different parent contexts */
-  nodeAppearanceCount: Map<string, number>;
-  /** List of duplicated nodes with their parent relationships */
-  duplicatedNodes: { parentId: string; node: AtlasTreeNode }[];
+  /** Map tracking all parent IDs for each node during tree traversal (for duplicate detection) */
+  nodeToParentsMap: Map<string, Set<string>>;
 }
 
 /**
