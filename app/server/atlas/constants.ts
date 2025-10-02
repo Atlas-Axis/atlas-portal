@@ -104,6 +104,7 @@ export const IMPORT_DATABASES = [
 // TODO: In the future, there may be two agent ancestor sections, one for Prime Agents and one for Executor Agents. Currently, we only have one (Prime Agents).
 // This relationship is not defined in Notion, so we define it here to mirror how the Atlas Explorer UI does it
 // UUIDs of agent root documents whose subtrees can be omitted via --omit-agents
+export const AGENT_ROOT_SECTION_UUID_FOR_NESTING = '1b4f2ff0-8d73-8082-862b-dcd586862638';
 export const AGENT_ROOT_SECTION_UUIDS = new Set<string>([
   '1b4f2ff0-8d73-8082-862b-dcd586862638',
   '1b4f2ff0-8d73-802f-a054-fece4d8731a4',
