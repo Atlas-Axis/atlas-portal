@@ -156,4 +156,6 @@ export interface TreeConstructionOptions {
   reportMissingChildNodes?: boolean;
   /** Whether to report orphaned nodes in detail (false by default, only shows count in summary) */
   reportOrphanedNodes?: boolean;
+  /** Whether to report duplicated nodes (false by default) */
+  reportDuplicatedNodes?: boolean;
 }
