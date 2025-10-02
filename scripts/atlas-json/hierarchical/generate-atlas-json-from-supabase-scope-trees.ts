@@ -33,7 +33,7 @@ import { loadEnv } from '@/scripts/utils/load-env';
  * Recursively count all unique documents in an AtlasTreeNode tree structure.
  * Uses a Set to track unique UUIDs to avoid counting duplicates.
  */
-function countOriginalDocuments(nodes: AtlasTreeNode[]): number {
+function countUniqueDocuments(nodes: AtlasTreeNode[]): number {
   const uniqueUuids = new Set<string>();
 
   function traverse(node: AtlasTreeNode) {
@@ -70,6 +70,9 @@ function countOriginalDocuments(nodes: AtlasTreeNode[]): number {
 /**
  * Recursively count all unique documents in a StandardizedAtlasDocument tree structure.
  * Uses a Set to track unique UUIDs to avoid counting duplicates.
+ * This function correctly handles the case where the same document appears multiple times
+ * in the tree due to duplicated nodes (e.g., Needed Research documents that can appear
+ * under multiple parents).
  */
 function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
   const uniqueUuids = new Set<string>();
@@ -229,27 +232,27 @@ async function main() {
   });
 
   // Verify document counts match between original and standardized trees
-  const originalScopeCount = countOriginalDocuments(originalScopeTrees);
+  const uniqueDocumentCount = countUniqueDocuments(originalScopeTrees);
   const originalOrphanedCount = result.orphanedNodes.length;
-  const originalCount = originalScopeCount + originalOrphanedCount;
+  const uniqueCount = uniqueDocumentCount + originalOrphanedCount;
 
-  const standardizedScopeCount = countStandardizedDocuments(standardizedScopeTrees);
+  const standardizedDocumentCount = countStandardizedDocuments(standardizedScopeTrees);
   const standardizedOrphanedCount = countStandardizedDocuments(standardizedOrphanedNodes);
-  const standardizedCount = standardizedScopeCount + standardizedOrphanedCount;
+  const standardizedCount = standardizedDocumentCount + standardizedOrphanedCount;
 
   console.log(`📊 Count breakdown:`);
-  console.log(`   Original scope trees: ${originalScopeCount}`);
+  console.log(`   Unique documents: ${uniqueDocumentCount}`);
   console.log(`   Original orphaned: ${originalOrphanedCount}`);
   console.log(`   Duplicated nodes: ${result.duplicatedNodes.length}`);
-  console.log(`   Original total: ${originalCount}`);
-  console.log(`   Standardized scope trees: ${standardizedScopeCount}`);
+  console.log(`   Unique documents: ${uniqueCount}`);
+  console.log(`   Standardized documents: ${standardizedDocumentCount}`);
   console.log(`   Standardized orphaned: ${standardizedOrphanedCount}`);
   console.log(`   Standardized total: ${standardizedCount}`);
 
-  if (originalCount !== standardizedCount) {
-    console.error(`❌ Document count mismatch! Original: ${originalCount}, Standardized: ${standardizedCount}`);
+  if (uniqueCount !== standardizedCount) {
+    console.error(`❌ Document count mismatch! Original: ${uniqueCount}, Standardized: ${standardizedCount}`);
   } else {
-    console.log(`✅ Document counts match: ${originalCount} documents in both trees`);
+    console.log(`✅ Document counts match: ${uniqueCount} documents in both trees`);
   }
 
   fs.mkdirSync(outputDir, { recursive: true });
