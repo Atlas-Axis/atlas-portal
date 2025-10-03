@@ -149,21 +149,6 @@ WHERE date_valid_to IS NULL
   AND archived = false 
   AND in_trash = false;
 
--- Function to update the updated_at column on row update
-CREATE OR REPLACE FUNCTION update_updated_at_column_pages()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Trigger to automatically update updated_at column on row update
-CREATE TRIGGER set_updated_at_pages
-  BEFORE UPDATE ON notion_database_pages
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column_pages();
-
 -- Ensure valid temporal range (valid_to must be greater than valid_from)
 ALTER TABLE notion_database_pages ADD CONSTRAINT check_valid_temporal_range
 CHECK (date_valid_to IS NULL OR date_valid_to > date_valid_from);
