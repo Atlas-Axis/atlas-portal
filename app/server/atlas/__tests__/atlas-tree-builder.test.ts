@@ -1193,11 +1193,15 @@ describe('Document Numbering', () => {
 
       const result = buildAtlasTree(pagesByDatabase, { verbose: false });
 
-      // Should detect the duplication
-      expect(result.duplicatedNodes).toHaveLength(1);
+      // Should detect the duplication - tracks ALL parent relationships (2 parents = 2 entries)
+      expect(result.duplicatedNodes).toHaveLength(2);
       expect(result.duplicatedNodes[0].node.notion_page_id).toBe('research-1');
       expect(result.duplicatedNodes[0].node.plain_text_name).toBe('Shared Research Item');
-      expect(result.duplicatedNodes[0].parentId).toBe('section-2'); // Second occurrence
+      expect(result.duplicatedNodes[1].node.notion_page_id).toBe('research-1');
+      expect(result.duplicatedNodes[1].node.plain_text_name).toBe('Shared Research Item');
+      // Verify both parent relationships are tracked
+      const parentIds = result.duplicatedNodes.map((d) => d.parentId).sort();
+      expect(parentIds).toEqual(['section-1', 'section-2']);
 
       // The research item should appear in both sections in the tree structure
       const scope1 = result.scopeTrees[0];
@@ -1265,12 +1269,14 @@ describe('Document Numbering', () => {
 
       const result = buildAtlasTree(pagesByDatabase, { verbose: false });
 
-      // Should detect two duplications (second and third appearances)
-      expect(result.duplicatedNodes).toHaveLength(2);
+      // Should detect all duplications - tracks ALL parent relationships (3 parents = 3 entries)
+      expect(result.duplicatedNodes).toHaveLength(3);
       expect(result.duplicatedNodes[0].node.notion_page_id).toBe('research-1');
-      expect(result.duplicatedNodes[0].parentId).toBe('section-2');
       expect(result.duplicatedNodes[1].node.notion_page_id).toBe('research-1');
-      expect(result.duplicatedNodes[1].parentId).toBe('section-3');
+      expect(result.duplicatedNodes[2].node.notion_page_id).toBe('research-1');
+      // Verify all three parent relationships are tracked
+      const parentIds = result.duplicatedNodes.map((d) => d.parentId).sort();
+      expect(parentIds).toEqual(['section-1', 'section-2', 'section-3']);
     });
   });
 });
