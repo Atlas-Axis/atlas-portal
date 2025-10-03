@@ -39,12 +39,6 @@ export const NOTION_DATABASE_FILTERS: QueryDatabaseParameters['filter'] = {
             contains: MASTER_STATUS_ID_MAP[MASTER_STATUSES.PLACEHOLDER],
           },
         },
-        {
-          property: 'Master Status',
-          relation: {
-            is_empty: true,
-          },
-        },
       ],
     },
   ],
