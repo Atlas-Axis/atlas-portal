@@ -6,8 +6,12 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 // null means use default sorting criteria
 const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, (keyof NotionDatabasePage)[] | null>> =
   {
-    'Sections & Primary Docs': ['sort_order', 'canonical_document_title', 'notion_page_id'],
-    'Agent Scope Database': ['atlas_document_number_sortable', 'notion_page_id'], // Use computed column for natural sorting
+    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: ['sort_order', 'canonical_document_title', 'notion_page_id'],
+    [ATLAS_DATABASES.AGENTS]: ['atlas_document_number_sortable', 'notion_page_id'],
+
+    // New
+    // [ATLAS_DATABASES.SCOPES]: ['atlas_document_number_sortable', 'notion_page_id'], // Use computed column for natural sorting
+    // [ATLAS_DATABASES.AGENTS]: ['sort_order', 'atlas_document_number_sortable', 'notion_page_id'], // Use computed column for natural sorting
   };
 
 // Default sorting criteria (as an ordered list)

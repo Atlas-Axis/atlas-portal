@@ -73,7 +73,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No (or Temp Name)',
+      atlasFullDocumentTitle: 'Doc No (or Temp Name)', // Note: This is the same as `Name` with a prefix like `A.1.2 - `
       atlasDocumentNo: 'Doc No (or Temp Name)', // Previously 'Formal Doc ID' - but that doesn't match the PH importer mapping
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
