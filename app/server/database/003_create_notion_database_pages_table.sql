@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   sort_order DECIMAL(5,2), -- Position within parent (for ordering; 0-indexed, allows fractions like 1.5)
   atlas_document_number_sortable TEXT GENERATED ALWAYS AS (atlas_document_number_to_sortable(atlas_document_number)) STORED, -- Computed column for natural sorting (e.g. A.1.11 -> A.000001.000011) to fix lexicographic sorting issues
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was created
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), -- When this database row was last updated
+  updated_at TIMESTAMPTZ DEFAULT NULL, -- When this database row was last updated
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this page
 
   date_valid_from TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'utc'), -- Used for versioning (temporal table)

@@ -165,7 +165,7 @@ export type Database = {
           plain_text_content: string | null;
           plain_text_name: string | null;
           sort_order: number | null;
-          updated_at: string;
+          updated_at: string | null;
         };
         Insert: {
           archived?: boolean;
@@ -198,7 +198,7 @@ export type Database = {
           plain_text_content?: string | null;
           plain_text_name?: string | null;
           sort_order?: number | null;
-          updated_at?: string;
+          updated_at?: string | null;
         };
         Update: {
           archived?: boolean;
@@ -231,7 +231,7 @@ export type Database = {
           plain_text_content?: string | null;
           plain_text_name?: string | null;
           sort_order?: number | null;
-          updated_at?: string;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
