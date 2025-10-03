@@ -43,7 +43,6 @@ export async function convertNotionPagesToDatabaseFormat({
       databasePages.push(page);
     } catch (error) {
       console.error(`❌ Failed to convert page ${notionPage.id}:`, error);
-      throw error;
     }
   }
 
@@ -78,6 +77,7 @@ async function convertSingleNotionPageToDatabaseFormat(
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
   if (!documentType) {
     console.error(`⚠️ Document type is missing for page ${notionPage.id}.`);
+    console.error(`🔗 Notion page URL: https://www.notion.so/${notionPage.id}`);
     throw new Error(`Document type is missing for page ${notionPage.id} (${pageTitle.plainText})`);
   }
 

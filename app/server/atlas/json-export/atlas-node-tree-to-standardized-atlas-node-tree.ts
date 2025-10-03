@@ -60,7 +60,7 @@ function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType
   const invalidChildren = allChildren.filter((child) => !allowedTypes.includes(child.atlas_document_type));
   if (invalidChildren.length > 0) {
     console.warn(
-      `‼️  ${node.atlas_document_type} "${node.plain_text_name}" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
+      `‼️  ${node.atlas_document_type} "${node.plain_text_name} (${node.notion_page_id})" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
     );
   }
 }
