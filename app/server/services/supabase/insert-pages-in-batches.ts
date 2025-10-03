@@ -43,6 +43,7 @@ export async function insertPagesInBatches(pages: NotionDatabasePage[], batchSiz
       child_needed_research_ids: p.child_needed_research_ids,
       extra_fields: p.extra_fields,
       sort_order: p.sort_order,
+      updated_at: p.updated_at ?? null,
       last_edited_by_user_id: p.last_edited_by_user_id ?? null,
     }));
 

@@ -224,6 +224,7 @@ BEGIN
     child_needed_research_ids,
     extra_fields,
     sort_order,
+    updated_at,
     last_edited_by_user_id,
     date_valid_from,
     date_valid_to
@@ -254,6 +255,7 @@ BEGIN
     COALESCE(child_needed_research_ids, '[]'::JSONB),
     COALESCE(extra_fields, '{}'::JSONB),
     sort_order,
+    updated_at,
     last_edited_by_user_id,
     v_now,
     NULL
@@ -283,6 +285,7 @@ BEGIN
     child_needed_research_ids JSONB,
     extra_fields JSONB,
     sort_order DECIMAL(5,2),
+    updated_at TIMESTAMPTZ,
     last_edited_by_user_id TEXT
   );
 END;
