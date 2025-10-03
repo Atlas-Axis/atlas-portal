@@ -1,5 +1,5 @@
 import { parseArgs } from 'node:util';
-import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
+import { type AtlasDatabaseName, IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
 import { displayImportSummary } from '@/app/server/services/notion/display-import-summary';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
@@ -30,6 +30,10 @@ async function main() {
         type: 'boolean',
         description: 'Delete all existing sync locks from notion_sync_status table before importing',
       },
+      database: {
+        type: 'string',
+        description: 'Import only a specific database (e.g., "Scopes", "Articles", "Sections & Primary Docs")',
+      },
     },
     strict: true,
   });
@@ -38,10 +42,15 @@ async function main() {
     console.log(`Usage: npx tsx scripts/import-notion-databases [options]
 
 Options:
-  -h, --help                  Show help message
-  -v, --verbose               Enable verbose output
-      --local-cache           Enable local caching of Notion API responses to .notion-cache folder
-      --disable-existing-locks Delete all existing sync locks from notion_sync_status table before importing`);
+  -h, --help                   Show help message
+  -v, --verbose                Enable verbose output
+      --local-cache            Enable local caching of Notion API responses to .notion-cache folder
+      --disable-existing-locks Delete all existing sync locks from notion_sync_status table before importing
+      --database <name>        Import only a specific database (e.g., "Scopes", "Articles", "Sections & Primary Docs")
+
+Available databases:
+${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
+
     process.exit(0);
   }
 
@@ -56,6 +65,15 @@ Options:
 
   loadEnv();
 
+  // Validate database argument if provided
+  const targetDatabase = args.database as AtlasDatabaseName | undefined;
+  if (targetDatabase && !IMPORT_DATABASES.includes(targetDatabase)) {
+    console.error(`❌ Error: Unknown database "${targetDatabase}"`);
+    console.error(`\nAvailable databases:`);
+    IMPORT_DATABASES.forEach((db) => console.error(`  - ${db}`));
+    process.exit(1);
+  }
+
   // Delete existing sync locks if requested
   if (args['disable-existing-locks']) {
     console.log('Deleting all existing sync locks from notion_sync_status table...');
@@ -67,12 +85,18 @@ Options:
     console.log('✅ All sync locks deleted successfully');
   }
 
-  console.log(`Starting Notion database import...`);
+  const databasesToImport = targetDatabase ? [targetDatabase] : IMPORT_DATABASES;
+
+  if (targetDatabase) {
+    console.log(`Starting import for database: ${targetDatabase}...`);
+  } else {
+    console.log(`Starting Notion database import...`);
+  }
 
   try {
     // Import all Atlas databases and collect results
     const results = [];
-    for (const atlasDatabaseName of IMPORT_DATABASES) {
+    for (const atlasDatabaseName of databasesToImport) {
       console.log('\n\n');
       const result = await importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName,
@@ -117,6 +141,8 @@ Options:
  * npx tsx scripts/import-notion-databases --verbose --local-cache
  * npx tsx scripts/import-notion-databases --disable-existing-locks
  * npx tsx scripts/import-notion-databases --disable-existing-locks --verbose
+ * npx tsx scripts/import-notion-databases --database "Scopes"
+ * npx tsx scripts/import-notion-databases --database "Sections & Primary Docs" --local-cache
  */
 main().catch((err) => {
   console.error(err);
