@@ -294,7 +294,7 @@ export default function ContentTree({ atlas }: { atlas: AtlasTreeResult }) {
         {scopeTrees.map((scopeTree) => (
           <AccordionItem
             key={scopeTree.notion_page_id}
-            aria-label={scopeTree.canonical_document_title || `Document ${scopeTree.notion_page_id}`}
+            aria-label={scopeTree.generatedDocName || `Document ${scopeTree.notion_page_id}`}
             title={
               <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
                 <span>
@@ -334,7 +334,8 @@ function logIfDuplicatedDocument(
   if (existingParentId && existingParentId !== parentPageId) {
     console.warn(`‼️ This Atlas document has already been rendered under a different parent:`, {
       pageId: currentPageId,
-      canonicalTitle: node.canonical_document_title,
+      docId: node.generatedDocID,
+      name: node.generatedDocName,
       existingParent: {
         id: existingParentId,
         title: 'Unknown (would need lookup)', // TODO
