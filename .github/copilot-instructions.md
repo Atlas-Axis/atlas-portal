@@ -71,7 +71,7 @@ This Next.js application enables change tracking for Atlas documents stored in N
 Scripts:
 
 ```bash
-npm test                 # watch mode
+npm test                 # watch mode (not CI-friendly)
 npm run test:run         # single run (CI-friendly)
 npm run test:coverage    # coverage report (text, html, lcov)
 npm run test:ui          # Vitest UI
