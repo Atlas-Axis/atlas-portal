@@ -5,6 +5,7 @@ import {
   NotionDatabasePropertyKey,
   PROPERTY_MAPPING_NAMES,
   REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
+  SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
   ScenarioExtraFields,
@@ -64,7 +65,7 @@ function compareTypeSpecificationExtraFields(
 function compareScenarioExtraFields(notionPage: EnhancedPageObjectResponse, supabasePage: NotionDatabasePage): boolean {
   // Extract extra fields from Notion page
   const notionExtraFields: Partial<ScenarioExtraFields> = {};
-  for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_VARIATION_PROPERTY_MAPPING)) {
+  for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_PROPERTY_MAPPING)) {
     const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
     notionExtraFields[supabaseField as keyof ScenarioExtraFields] = notionValue ? String(notionValue) : null;
   }
@@ -73,7 +74,7 @@ function compareScenarioExtraFields(notionPage: EnhancedPageObjectResponse, supa
   const supabaseExtraFields = (supabasePage.extra_fields as unknown as ScenarioExtraFields) || {};
 
   // Compare each field
-  for (const field of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING) as Array<keyof ScenarioExtraFields>) {
+  for (const field of Object.keys(SCENARIO_PROPERTY_MAPPING) as Array<keyof ScenarioExtraFields>) {
     const notionValue = notionExtraFields[field] || null;
     const supabaseValue = supabaseExtraFields[field] || null;
 
