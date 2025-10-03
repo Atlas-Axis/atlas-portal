@@ -98,7 +98,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentName: 'Document Name',
       atlasDocumentType: 'Doc Type',
       content: 'Content',
-      sortOrder: 'No.',
     },
     childRelationships: {
       [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
