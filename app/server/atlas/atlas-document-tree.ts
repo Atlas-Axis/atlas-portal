@@ -131,14 +131,14 @@ function collectRenderedNodeIds(
  * @param atlasPagesPerDatabase - Record of database ID to pages
  * @returns Array of orphaned page objects with detailed information
  */
-export function getAtlasOrphanedNodes(atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>): Array<{
+export function getAtlasOrphanedNodes(atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>): {
   pageId: string;
   page: NotionDatabasePage;
-  canonical_document_title?: string;
+  name?: string;
   atlas_document_type?: string;
   plain_text_name?: string;
   plain_text_content_preview?: string;
-}> {
+}[] {
   const pageIdMap = getAtlasPageIdMap(atlasPagesPerDatabase);
   const rootPages = getAtlasRootPages(atlasPagesPerDatabase);
 
@@ -147,7 +147,7 @@ export function getAtlasOrphanedNodes(atlasPagesPerDatabase: Record<string, Noti
     return Array.from(pageIdMap.entries()).map(([pageId, page]) => ({
       pageId,
       page,
-      canonical_document_title: page.canonical_document_title || undefined,
+      name: page.plain_text_name || undefined,
       atlas_document_type: page.atlas_document_type || undefined,
       plain_text_name: page.plain_text_name || undefined,
       plain_text_content_preview: page.plain_text_content?.substring(0, 100) || undefined,
@@ -169,7 +169,7 @@ export function getAtlasOrphanedNodes(atlasPagesPerDatabase: Record<string, Noti
     return {
       pageId,
       page,
-      canonical_document_title: page.canonical_document_title || undefined,
+      name: page.plain_text_name || undefined,
       atlas_document_type: page.atlas_document_type || undefined,
       plain_text_name: page.plain_text_name || undefined,
       plain_text_content_preview: page.plain_text_content?.substring(0, 100) || undefined,
@@ -186,16 +186,14 @@ export function logAtlasOrphanedNodes(atlasPagesPerDatabase: Record<string, Noti
 
   if (orphanedNodes.length > 0) {
     console.log('🔍 Found orphaned nodes (not rendered in tree):', orphanedNodes.length);
-    orphanedNodes.forEach(
-      ({ pageId, canonical_document_title, atlas_document_type, plain_text_name, plain_text_content_preview }) => {
-        console.log(`📍 Orphaned node: ${pageId}`, {
-          canonical_document_title,
-          atlas_document_type,
-          plain_text_name,
-          plain_text_content_preview: plain_text_content_preview ? plain_text_content_preview + '...' : undefined,
-        });
-      },
-    );
+    orphanedNodes.forEach(({ pageId, name, atlas_document_type, plain_text_name, plain_text_content_preview }) => {
+      console.log(`📍 Orphaned node: ${pageId}`, {
+        name,
+        atlas_document_type,
+        plain_text_name,
+        plain_text_content_preview: plain_text_content_preview ? plain_text_content_preview + '...' : undefined,
+      });
+    });
   } else {
     console.log('✅ No orphaned nodes found - all nodes in pageIdMap have been rendered');
   }
