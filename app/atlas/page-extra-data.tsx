@@ -1,46 +1,75 @@
 'use client';
 
-import { isTypeSpecificationAtlasDocument } from '@/app/server/atlas/detect-type-specification-atlas-document';
-import { TypeSpecificationExtraFields } from '@/app/server/atlas/notion-database-properties-and-relationships';
+import {
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+} from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 
+type ExtraFieldsMapping = Record<string, string>;
+
 export default function PageExtraData({ page, className }: { page: NotionDatabasePage; className?: string }) {
-  if (isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type)) {
-    const extraFields = getTypeSpecificationExtraFields(page);
-    return (
-      <div className={`${className} my-2 leading-relaxed`}>
-        <dl>
-          <dt>Doc Identifier Rules</dt>
-          <dd>{extraFields.type_specification_doc_identifier_rules}</dd>
-          <dt>Additional Logic</dt>
-          <dd>{extraFields.type_specification_additional_logic}</dd>
-          <dt>Type Category</dt>
-          <dd>{extraFields.type_specification_type_category}</dd>
-          <dt>Type Name</dt>
-          <dd>{extraFields.type_specification_type_name}</dd>
-          <dt>Type Overview</dt>
-          <dd>{extraFields.type_specification_type_overview}</dd>
-        </dl>
-      </div>
-    );
+  const { mapping, extraFieldsData } = getExtraFieldsForDocument(page);
+
+  // If no extra fields mapping found, return null
+  if (!mapping || !extraFieldsData) {
+    return null;
   }
 
-  return null;
+  return (
+    <div className={`${className} my-2 leading-relaxed`}>
+      <dl>
+        {Object.entries(mapping).map(([fieldKey, label]) => {
+          const value = extraFieldsData[fieldKey];
+          return (
+            <div key={fieldKey}>
+              <dt>{label}</dt>
+              <dd>{value !== null && value !== undefined ? String(value) : null}</dd>
+            </div>
+          );
+        })}
+      </dl>
+    </div>
+  );
 }
 
-// Extract extra fields for "Type Specification" Atlas documents
-function getTypeSpecificationExtraFields(page: NotionDatabasePage): TypeSpecificationExtraFields {
-  // Extract `extra_fields` from Supabase page
-  const supabaseExtraFields = (page.extra_fields as unknown as TypeSpecificationExtraFields) || {};
-  if (!isTypeSpecificationAtlasDocument(page.atlas_database_name, page.atlas_document_type)) {
-    throw new Error('Not a Type Specification Atlas document');
+/**
+ * Returns the appropriate property mapping and extra fields data based on document type
+ */
+function getExtraFieldsForDocument(page: NotionDatabasePage): {
+  mapping: ExtraFieldsMapping | null;
+  extraFieldsData: Record<string, unknown> | null;
+} {
+  const supabaseExtraFields = (page.extra_fields as Record<string, unknown>) || {};
+
+  // Type Specification documents
+  if (page.atlas_document_type === 'Type Specification') {
+    return {
+      mapping: TYPE_SPECIFICATION_PROPERTY_MAPPING,
+      extraFieldsData: supabaseExtraFields,
+    };
   }
 
+  // Scenario documents
+  if (page.atlas_document_type === 'Scenario') {
+    return {
+      mapping: SCENARIO_PROPERTY_MAPPING,
+      extraFieldsData: supabaseExtraFields,
+    };
+  }
+
+  // Scenario Variation documents
+  if (page.atlas_document_type === 'Scenario Variation') {
+    return {
+      mapping: SCENARIO_VARIATION_PROPERTY_MAPPING,
+      extraFieldsData: supabaseExtraFields,
+    };
+  }
+
+  // No extra fields for this document type
   return {
-    type_specification_doc_identifier_rules: supabaseExtraFields?.type_specification_doc_identifier_rules || null,
-    type_specification_additional_logic: supabaseExtraFields?.type_specification_additional_logic || null,
-    type_specification_type_category: supabaseExtraFields?.type_specification_type_category || null,
-    type_specification_type_name: supabaseExtraFields?.type_specification_type_name || null,
-    type_specification_type_overview: supabaseExtraFields?.type_specification_type_overview || null,
+    mapping: null,
+    extraFieldsData: null,
   };
 }

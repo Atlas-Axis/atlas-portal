@@ -1,6 +1,5 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
-import { isTypeSpecificationAtlasDocument } from '@/app/server/atlas/detect-type-specification-atlas-document';
 import {
   ChildLists,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
@@ -84,7 +83,7 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   // Extract extra fields for "Type Specification" documents
   let extraFields: Json | null = null;
-  if (documentType && isTypeSpecificationAtlasDocument(atlasDatabaseName, documentType)) {
+  if (documentType && documentType === 'Type Specification') {
     extraFields = extractTypeSpecificationExtraFields(notionPage) as unknown as Json;
   }
   // Extract extra fields for "Scenario" documents
