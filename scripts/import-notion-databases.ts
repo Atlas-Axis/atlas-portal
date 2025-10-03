@@ -3,6 +3,7 @@ import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
 import { displayImportSummary } from '@/app/server/services/notion/display-import-summary';
 import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
@@ -25,6 +26,10 @@ async function main() {
         type: 'boolean',
         description: 'Enable local caching of Notion API responses to .notion-cache folder',
       },
+      'disable-existing-locks': {
+        type: 'boolean',
+        description: 'Delete all existing sync locks from notion_sync_status table before importing',
+      },
     },
     strict: true,
   });
@@ -33,9 +38,10 @@ async function main() {
     console.log(`Usage: npx tsx scripts/import-notion-databases [options]
 
 Options:
-  -h, --help        Show help message
-  -v, --verbose     Enable verbose output
-      --local-cache Enable local caching of Notion API responses to .notion-cache folder`);
+  -h, --help                  Show help message
+  -v, --verbose               Enable verbose output
+      --local-cache           Enable local caching of Notion API responses to .notion-cache folder
+      --disable-existing-locks Delete all existing sync locks from notion_sync_status table before importing`);
     process.exit(0);
   }
 
@@ -49,6 +55,17 @@ Options:
   }
 
   loadEnv();
+
+  // Delete existing sync locks if requested
+  if (args['disable-existing-locks']) {
+    console.log('Deleting all existing sync locks from notion_sync_status table...');
+    const { error } = await supabase().from('notion_sync_status').delete().not('id', 'is', null);
+    if (error) {
+      console.error('Error deleting sync locks:', error);
+      process.exit(1);
+    }
+    console.log('✅ All sync locks deleted successfully');
+  }
 
   console.log(`Starting Notion database import...`);
 
@@ -98,6 +115,8 @@ Options:
  * npx tsx scripts/import-notion-databases --verbose
  * npx tsx scripts/import-notion-databases --local-cache
  * npx tsx scripts/import-notion-databases --verbose --local-cache
+ * npx tsx scripts/import-notion-databases --disable-existing-locks
+ * npx tsx scripts/import-notion-databases --disable-existing-locks --verbose
  */
 main().catch((err) => {
   console.error(err);
