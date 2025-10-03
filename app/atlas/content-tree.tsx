@@ -336,6 +336,7 @@ function logIfDuplicatedDocument(
       pageId: currentPageId,
       docId: node.generatedDocID,
       name: node.generatedDocName,
+      type: node.atlas_document_type,
       existingParent: {
         id: existingParentId,
         title: 'Unknown (would need lookup)', // TODO
