@@ -34,21 +34,6 @@ async function fetchEntriesWithEmptyMasterStatus(notionDatabaseId: string) {
     },
   ];
 
-  // Add Type filter only if the database has a Type property and it's named "Type"
-  if (atlasDatabaseName) {
-    const properties = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName]?.properties;
-    const typePropertyName = properties?.atlasDocumentType;
-
-    if (typePropertyName === 'Type') {
-      filterConditions.push({
-        property: 'Type',
-        select: {
-          does_not_equal: 'Category',
-        },
-      });
-    }
-  }
-
   const response = await notion().databases.query({
     database_id: notionDatabaseId,
     page_size: 100,

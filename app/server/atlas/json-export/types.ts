@@ -16,7 +16,6 @@ export interface BaseAtlasDocument {
 export type StandardizedAtlasDocument =
   | ScopeDocument
   | ArticleDocument
-  | CategoryDocument
   | SectionDocument
   | CoreDocument
   | ActiveDataControllerDocument
@@ -26,8 +25,7 @@ export type StandardizedAtlasDocument =
   | TenetDocument
   | ScenarioDocument
   | ScenarioVariationDocument
-  | NeededResearchDocument
-  | PlaceholderDocument;
+  | NeededResearchDocument;
 
 /** Root array of standardized Scope trees. */
 export type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
@@ -36,7 +34,6 @@ export const childCollectionNameToDocumentType = {
   scopes: 'Scope',
   articles: 'Article',
   sections: 'Section',
-  categories: 'Category',
   coreDocuments: 'Core',
   activeDataControllers: 'Active Data Controller',
   typeSpecifications: 'Type Specification',
@@ -54,7 +51,6 @@ export const childCollectionNames: ChildCollectionName[] = [
   'scopes',
   'articles',
   'sections',
-  'categories',
   'coreDocuments',
   'activeDataControllers',
   'typeSpecifications',
@@ -66,14 +62,10 @@ export const childCollectionNames: ChildCollectionName[] = [
   'neededResearch',
 ];
 
-// This is not used - TODO: Delete?
-export const allowedChildCollectionNamesPerDocumentType: Record<
-  Exclude<AtlasDocumentType, 'Spell SP Controller' | 'Placeholder'>,
-  ChildCollectionName[]
-> = {
+// This is not used - TODO: Delete? Also, these are out of date
+export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentType, ChildCollectionName[]> = {
   Scope: ['articles'],
-  Article: ['sections', 'categories', 'annotations', 'neededResearch', 'tenets'],
-  Category: ['sections'],
+  Article: ['sections', 'annotations', 'neededResearch', 'tenets'],
   Section: ['coreDocuments', 'activeDataControllers', 'typeSpecifications', 'annotations', 'neededResearch', 'tenets'],
   Core: ['coreDocuments', 'activeDataControllers', 'typeSpecifications', 'annotations', 'neededResearch', 'tenets'],
   'Active Data Controller': ['activeData', 'annotations', 'neededResearch', 'tenets'],
@@ -97,51 +89,53 @@ export interface ScopeDocument extends BaseAtlasDocument {
 
 // ✅
 export interface ArticleDocument extends BaseAtlasDocument {
-  sections?: SectionDocument[];
-  categories?: CategoryDocument[];
-  supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
+  sections: SectionDocument[];
+  // supporting documents
+  annotations: AnnotationDocument[];
+  neededResearch: NeededResearchDocument[];
+  tenets: TenetDocument[]; // TODO: Disable?
   // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
-  coreDocuments?: CoreDocument[];
-  placeholders?: PlaceholderDocument[];
-}
-
-// ✅
-export interface CategoryDocument extends Omit<BaseAtlasDocument, 'docNo'> {
-  sections?: SectionDocument[];
-  // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
-  categories?: CategoryDocument[];
-  placeholders?: PlaceholderDocument[];
+  coreDocuments: CoreDocument[];
 }
 
 export interface SectionDocument extends BaseAtlasDocument {
-  coreDocuments?: CoreDocument[];
-  activeDataControllers?: ActiveDataControllerDocument[];
-  typeSpecifications?: TypeSpecificationDocument[];
-  placeholders?: PlaceholderDocument[];
-  supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
+  coreDocuments: CoreDocument[];
+  activeDataControllers: ActiveDataControllerDocument[];
+  typeSpecifications: TypeSpecificationDocument[];
+  // supporting documents
+  annotations: AnnotationDocument[];
+  neededResearch: NeededResearchDocument[];
+  tenets: TenetDocument[];
 }
 
 /**
  * Primary Documents
  */
 
-// ✅
 export interface CoreDocument extends BaseAtlasDocument {
-  coreDocuments?: CoreDocument[];
-  activeDataControllers?: ActiveDataControllerDocument[];
-  typeSpecifications?: TypeSpecificationDocument[];
-  placeholders?: PlaceholderDocument[];
-  supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
+  coreDocuments: CoreDocument[];
+  activeDataControllers: ActiveDataControllerDocument[];
+  typeSpecifications: TypeSpecificationDocument[];
+  // supporting documents
+  annotations: AnnotationDocument[];
+  neededResearch: NeededResearchDocument[];
+  tenets: TenetDocument[];
 }
 
-// ✅
 export interface ActiveDataControllerDocument extends BaseAtlasDocument {
-  supportingDocuments?: Pick<SupportingDocuments, 'activeData' | 'annotations' | 'neededResearch' | 'tenets'>;
+  // supporting documents
+  activeData: ActiveDataDocument[];
+  annotations: AnnotationDocument[];
+  neededResearch: NeededResearchDocument[];
+  tenets: TenetDocument[];
 }
 
 export interface TypeSpecificationDocument extends BaseAtlasDocument {
   // TODO: Extra fields
-  supportingDocuments?: Pick<SupportingDocuments, 'annotations' | 'neededResearch' | 'tenets'>;
+  // supporting documents
+  annotations: AnnotationDocument[];
+  neededResearch: NeededResearchDocument[];
+  tenets: TenetDocument[];
 }
 
 /**
@@ -149,15 +143,12 @@ export interface TypeSpecificationDocument extends BaseAtlasDocument {
  */
 
 // ActiveData must always be under ActiveDataController
-// ✅
-export type ActiveDataDocument = BaseAtlasDocument;
+export interface ActiveDataDocument extends BaseAtlasDocument {}
 
-// ✅
-export type AnnotationDocument = BaseAtlasDocument;
+export interface AnnotationDocument extends BaseAtlasDocument {}
 
-// ✅
 export interface TenetDocument extends BaseAtlasDocument {
-  scenarios?: ScenarioDocument[];
+  scenarios: ScenarioDocument[];
 }
 
 export interface ScenarioDocument extends BaseAtlasDocument {
@@ -171,20 +162,4 @@ export interface ScenarioVariationDocument extends BaseAtlasDocument {
 
 export interface NeededResearchDocument extends BaseAtlasDocument {
   // TODO: Extra fields
-}
-
-export interface PlaceholderDocument extends BaseAtlasDocument {
-  // TODO: Extra fields
-}
-
-/**
- * Type Collections
- */
-
-// ✅
-export interface SupportingDocuments {
-  annotations?: AnnotationDocument[];
-  tenets?: TenetDocument[];
-  neededResearch?: NeededResearchDocument[];
-  activeData?: ActiveDataDocument[];
 }

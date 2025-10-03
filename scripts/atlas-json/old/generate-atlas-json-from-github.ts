@@ -140,7 +140,7 @@ function parseSection(document: Document, sectionId: string, category: GitHubAtl
     // Skip empty rows
     if (!name && !typeText && !content) continue;
 
-    const type = (typeText || 'Placeholder') as AtlasDocumentType;
+    const type = typeText as AtlasDocumentType;
 
     rows.push({
       type,

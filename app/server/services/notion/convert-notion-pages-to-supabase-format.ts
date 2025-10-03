@@ -78,7 +78,8 @@ async function convertSingleNotionPageToDatabaseFormat(
   // Extract document type
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
   if (!documentType) {
-    console.warn(`⚠️ Document type is missing for page ${notionPage.id}. Setting to "Placeholder".`);
+    console.error(`⚠️ Document type is missing for page ${notionPage.id}.`);
+    throw new Error(`Document type is missing for page ${notionPage.id} (${pageTitle.plainText})`);
   }
 
   // Extract extra fields for "Type Specification" documents
@@ -143,7 +144,7 @@ async function convertSingleNotionPageToDatabaseFormat(
   const databasePage: NotionDatabasePage = {
     notion_page_id: notionPage.id,
     canonical_document_title: canonicalDocumentTitle ? String(canonicalDocumentTitle) : null,
-    atlas_document_type: (documentType as NotionDatabasePage['atlas_document_type']) || 'Placeholder',
+    atlas_document_type: documentType as NotionDatabasePage['atlas_document_type'],
     atlas_document_number: documentNumber,
     atlas_database_name: atlasDatabaseName,
     // has_children: hasChildren,

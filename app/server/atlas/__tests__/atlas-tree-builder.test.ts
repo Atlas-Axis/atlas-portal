@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
@@ -12,11 +12,14 @@ import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-
 /**
  * Test helper to create a base NotionDatabasePage with default values
  */
-function makeBasePage(overrides: Partial<NotionDatabasePage>): NotionDatabasePage {
+function makeBasePage(
+  documentType: AtlasDocumentType,
+  overrides: Partial<NotionDatabasePage> = {},
+): NotionDatabasePage {
   return {
     notion_page_id: 'test-id',
     canonical_document_title: null,
-    atlas_document_type: 'Placeholder',
+    atlas_document_type: documentType,
     atlas_document_number: '',
     atlas_document_number_sortable: '',
     atlas_database_name: 'Sections & Primary Docs',
@@ -53,9 +56,8 @@ describe('Atlas Tree Builder', () => {
 
   describe('buildAtlasTree', () => {
     it('should build a simple scope tree', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
       });
@@ -83,24 +85,21 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should build a scope with articles', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1', 'article-2'],
       });
 
-      const article1 = makeBasePage({
+      const article1 = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
       });
 
-      const article2 = makeBasePage({
+      const article2 = makeBasePage('Article', {
         notion_page_id: 'article-2',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 2',
       });
@@ -127,16 +126,14 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should handle multiple root scopes', () => {
-      const scope1 = makeBasePage({
+      const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 1',
       });
 
-      const scope2 = makeBasePage({
+      const scope2 = makeBasePage('Scope', {
         notion_page_id: 'scope-2',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 2',
       });
@@ -162,16 +159,14 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should detect orphaned nodes', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
       });
 
-      const orphanedArticle = makeBasePage({
+      const orphanedArticle = makeBasePage('Article', {
         notion_page_id: 'orphaned-article',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Orphaned Article',
       });
@@ -197,17 +192,15 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should throw error for circular references', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_scope_ids: ['scope-1'], // Circular reference!
@@ -230,9 +223,8 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should handle missing child documents gracefully', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['missing-article'],
@@ -264,17 +256,15 @@ describe('Atlas Tree Builder', () => {
     });
 
     it('should assign document numbers when requested', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
       });
@@ -301,9 +291,8 @@ describe('Atlas Tree Builder', () => {
 
   describe('Tree Structure Validation', () => {
     it('should create proper tree structure with all child types', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
@@ -316,58 +305,50 @@ describe('Atlas Tree Builder', () => {
         child_needed_research_ids: ['research-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
       });
 
-      const annotation = makeBasePage({
+      const annotation = makeBasePage('Annotation', {
         notion_page_id: 'annotation-1',
-        atlas_document_type: 'Annotation',
         atlas_database_name: 'Annotations',
         plain_text_name: 'Annotation 1',
       });
 
-      const tenet = makeBasePage({
+      const tenet = makeBasePage('Action Tenet', {
         notion_page_id: 'tenet-1',
-        atlas_document_type: 'Action Tenet',
         atlas_database_name: 'Tenets',
         plain_text_name: 'Tenet 1',
       });
 
-      const scenario = makeBasePage({
+      const scenario = makeBasePage('Scenario', {
         notion_page_id: 'scenario-1',
-        atlas_document_type: 'Scenario',
         atlas_database_name: 'Scenarios',
         plain_text_name: 'Scenario 1',
       });
 
-      const variation = makeBasePage({
+      const variation = makeBasePage('Scenario Variation', {
         notion_page_id: 'variation-1',
-        atlas_document_type: 'Scenario Variation',
         atlas_database_name: 'Scenario Variations',
         plain_text_name: 'Variation 1',
       });
 
-      const activeData = makeBasePage({
+      const activeData = makeBasePage('Active Data', {
         notion_page_id: 'active-data-1',
-        atlas_document_type: 'Active Data',
         atlas_database_name: 'Active Data',
         plain_text_name: 'Active Data 1',
       });
 
-      const agent = makeBasePage({
+      const agent = makeBasePage('Core', {
         notion_page_id: 'agent-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent 1',
       });
 
-      const research = makeBasePage({
+      const research = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 1',
       });
@@ -405,25 +386,22 @@ describe('filterDirectChildren', () => {
 
   describe('Core document internal hierarchy filtering', () => {
     it('should filter out nested Core documents from Section parent', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         // Contains both direct Core children and nested Core descendants
@@ -431,34 +409,30 @@ describe('filterDirectChildren', () => {
       });
 
       // Direct Core children of Section
-      const core1 = makeBasePage({
+      const core1 = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
         parent_notion_page_id: null, // Direct child of section (via child array)
       });
 
-      const core2 = makeBasePage({
+      const core2 = makeBasePage('Core', {
         notion_page_id: 'core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 2',
         parent_notion_page_id: null, // Direct child of section (via child array)
       });
 
       // Nested Core documents (should be filtered out from section's children)
-      const nestedCore1 = makeBasePage({
+      const nestedCore1 = makeBasePage('Core', {
         notion_page_id: 'nested-core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Nested Core 1',
         parent_notion_page_id: 'core-1', // Nested under core-1
       });
 
-      const nestedCore2 = makeBasePage({
+      const nestedCore2 = makeBasePage('Core', {
         notion_page_id: 'nested-core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Nested Core 2',
         parent_notion_page_id: 'core-2', // Nested under core-2
@@ -494,26 +468,23 @@ describe('filterDirectChildren', () => {
     });
 
     it('should correctly handle Core document filtering its own children', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['parent-core'],
       });
 
       // Parent Core document that has its own nested Core children
-      const parentCore = makeBasePage({
+      const parentCore = makeBasePage('Core', {
         notion_page_id: 'parent-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Parent Core',
         parent_notion_page_id: null, // Direct child of article (via child array)
@@ -522,18 +493,16 @@ describe('filterDirectChildren', () => {
       });
 
       // Direct children of Parent Core
-      const childCore1 = makeBasePage({
+      const childCore1 = makeBasePage('Core', {
         notion_page_id: 'child-core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Child Core 1',
         parent_notion_page_id: 'parent-core', // Direct child of parent-core
         child_section_and_primary_doc_ids: ['grandchild-core'], // Has its own child
       });
 
-      const childCore2 = makeBasePage({
+      const childCore2 = makeBasePage('Core', {
         notion_page_id: 'child-core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Child Core 2',
         parent_notion_page_id: 'parent-core', // Direct child of parent-core
@@ -541,9 +510,8 @@ describe('filterDirectChildren', () => {
       });
 
       // Grandchild (nested under child-core-1, should be filtered out from parent-core's direct children)
-      const grandchildCore = makeBasePage({
+      const grandchildCore = makeBasePage('Core', {
         notion_page_id: 'grandchild-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Grandchild Core',
         parent_notion_page_id: 'child-core-1', // Nested under child-core-1
@@ -584,26 +552,23 @@ describe('filterDirectChildren', () => {
     });
 
     it('should handle 4-level deep Core document nesting correctly', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['level1-core'],
       });
 
       // Level 1: Root Core
-      const level1Core = makeBasePage({
+      const level1Core = makeBasePage('Core', {
         notion_page_id: 'level1-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Level 1 Core',
         parent_notion_page_id: null,
@@ -612,9 +577,8 @@ describe('filterDirectChildren', () => {
       });
 
       // Level 2: Child of Level 1
-      const level2Core = makeBasePage({
+      const level2Core = makeBasePage('Core', {
         notion_page_id: 'level2-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Level 2 Core',
         parent_notion_page_id: 'level1-core',
@@ -623,9 +587,8 @@ describe('filterDirectChildren', () => {
       });
 
       // Level 3: Child of Level 2
-      const level3Core = makeBasePage({
+      const level3Core = makeBasePage('Core', {
         notion_page_id: 'level3-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Level 3 Core',
         parent_notion_page_id: 'level2-core',
@@ -633,9 +596,8 @@ describe('filterDirectChildren', () => {
       });
 
       // Level 4: Child of Level 3
-      const level4Core = makeBasePage({
+      const level4Core = makeBasePage('Core', {
         notion_page_id: 'level4-core',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Level 4 Core',
         parent_notion_page_id: 'level3-core',
@@ -676,18 +638,16 @@ describe('filterDirectChildren', () => {
     });
 
     it('should handle complex mixed hierarchy with Agent Scope Database filtering', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_agent_scope_ids: ['agent-root'],
       });
 
       // Agent Scope root document
-      const agentRoot = makeBasePage({
+      const agentRoot = makeBasePage('Core', {
         notion_page_id: 'agent-root',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Root',
         parent_notion_page_id: null,
@@ -696,18 +656,16 @@ describe('filterDirectChildren', () => {
       });
 
       // Direct children
-      const agentChild1 = makeBasePage({
+      const agentChild1 = makeBasePage('Core', {
         notion_page_id: 'agent-child-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Child 1',
         parent_notion_page_id: 'agent-root',
         child_agent_scope_ids: ['agent-grandchild'],
       });
 
-      const agentChild2 = makeBasePage({
+      const agentChild2 = makeBasePage('Active Data Controller', {
         notion_page_id: 'agent-child-2',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Child 2',
         parent_notion_page_id: 'agent-root',
@@ -715,9 +673,8 @@ describe('filterDirectChildren', () => {
       });
 
       // Grandchild (should be filtered from root's direct children)
-      const agentGrandchild = makeBasePage({
+      const agentGrandchild = makeBasePage('Core', {
         notion_page_id: 'agent-grandchild',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Grandchild',
         parent_notion_page_id: 'agent-child-1',
@@ -756,35 +713,31 @@ describe('filterDirectChildren', () => {
     });
 
     it('should handle circular reference protection in deep nesting', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['core-a'],
       });
 
       // Create a potential circular reference scenario in ancestry checking
-      const coreA = makeBasePage({
+      const coreA = makeBasePage('Core', {
         notion_page_id: 'core-a',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core A',
         parent_notion_page_id: null,
         child_section_and_primary_doc_ids: ['core-b', 'core-c'],
       });
 
-      const coreB = makeBasePage({
+      const coreB = makeBasePage('Core', {
         notion_page_id: 'core-b',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core B',
         parent_notion_page_id: 'core-a',
@@ -792,9 +745,8 @@ describe('filterDirectChildren', () => {
       });
 
       // This could create a circular ancestry if not handled properly
-      const coreC = makeBasePage({
+      const coreC = makeBasePage('Core', {
         notion_page_id: 'core-c',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core C',
         parent_notion_page_id: 'core-b', // Child of B, but also in A's child array
@@ -832,25 +784,22 @@ describe('filterDirectChildren', () => {
     });
 
     it('should handle extremely deep nesting (8 levels) with complex hierarchy', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         // Flattened array with all 8 levels of Core descendants
@@ -885,9 +834,8 @@ describe('filterDirectChildren', () => {
             : [];
 
         coreDocuments.push(
-          makeBasePage({
+          makeBasePage('Core', {
             notion_page_id: `core-l${i}`,
-            atlas_document_type: 'Core',
             atlas_database_name: 'Sections & Primary Docs',
             plain_text_name: `Core Level ${i}`,
             parent_notion_page_id: parentId,
@@ -930,25 +878,22 @@ describe('filterDirectChildren', () => {
     });
 
     it('should handle mixed document types with Core nesting in Sections & Primary Docs', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         // Mix of document types with nested Core documents
@@ -956,27 +901,24 @@ describe('filterDirectChildren', () => {
       });
 
       // Direct children (different types)
-      const core1 = makeBasePage({
+      const core1 = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
         parent_notion_page_id: null, // Direct child
         child_section_and_primary_doc_ids: ['nested-core-1', 'nested-core-2'],
       });
 
-      const adc1 = makeBasePage({
+      const adc1 = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
         parent_notion_page_id: null, // Direct child
         child_section_and_primary_doc_ids: [],
       });
 
-      const typeSpec1 = makeBasePage({
+      const typeSpec1 = makeBasePage('Type Specification', {
         notion_page_id: 'type-spec-1',
-        atlas_document_type: 'Type Specification',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Type Spec 1',
         parent_notion_page_id: null, // Direct child
@@ -984,18 +926,16 @@ describe('filterDirectChildren', () => {
       });
 
       // Nested Core documents (should be filtered from section's direct children)
-      const nestedCore1 = makeBasePage({
+      const nestedCore1 = makeBasePage('Core', {
         notion_page_id: 'nested-core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Nested Core 1',
         parent_notion_page_id: 'core-1', // Nested under core-1
         child_section_and_primary_doc_ids: [],
       });
 
-      const nestedCore2 = makeBasePage({
+      const nestedCore2 = makeBasePage('Core', {
         notion_page_id: 'nested-core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Nested Core 2',
         parent_notion_page_id: 'core-1', // Nested under core-1
@@ -1040,25 +980,22 @@ describe('Tree Traversal', () => {
   let scopeTree: ReturnType<typeof buildAtlasTree>['scopeTrees'][0];
 
   beforeEach(() => {
-    const scope = makeBasePage({
+    const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
-      atlas_document_type: 'Scope',
       atlas_database_name: 'Scopes',
       plain_text_name: 'Test Scope',
       child_article_ids: ['article-1'],
     });
 
-    const article = makeBasePage({
+    const article = makeBasePage('Article', {
       notion_page_id: 'article-1',
-      atlas_document_type: 'Article',
       atlas_database_name: 'Articles',
       plain_text_name: 'Article 1',
       child_section_and_primary_doc_ids: ['section-1'],
     });
 
-    const section = makeBasePage({
+    const section = makeBasePage('Section', {
       notion_page_id: 'section-1',
-      atlas_document_type: 'Section',
       atlas_database_name: 'Sections & Primary Docs',
       plain_text_name: 'Section 1',
     });
@@ -1093,17 +1030,15 @@ describe('Tree Traversal', () => {
 
   it('should find node by document ID', () => {
     // Create a fresh test with proper NotionDatabasePage objects
-    const scope = makeBasePage({
+    const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
-      atlas_document_type: 'Scope',
       atlas_database_name: 'Scopes',
       plain_text_name: 'Test Scope',
       child_article_ids: ['article-1'],
     });
 
-    const article = makeBasePage({
+    const article = makeBasePage('Article', {
       notion_page_id: 'article-1',
-      atlas_document_type: 'Article',
       atlas_database_name: 'Articles',
       plain_text_name: 'Article 1',
     });
@@ -1137,17 +1072,15 @@ describe('Tree Traversal', () => {
 
 describe('Document Numbering', () => {
   it('should assign document numbers correctly', () => {
-    const scope = makeBasePage({
+    const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
-      atlas_document_type: 'Scope',
       atlas_database_name: 'Scopes',
       plain_text_name: 'Test Scope',
       child_article_ids: ['article-1'],
     });
 
-    const article = makeBasePage({
+    const article = makeBasePage('Article', {
       notion_page_id: 'article-1',
-      atlas_document_type: 'Article',
       atlas_database_name: 'Articles',
       plain_text_name: 'Article 1',
     });
@@ -1172,16 +1105,14 @@ describe('Document Numbering', () => {
   });
 
   it('should handle multiple scopes with correct numbering', () => {
-    const scope1 = makeBasePage({
+    const scope1 = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
-      atlas_document_type: 'Scope',
       atlas_database_name: 'Scopes',
       plain_text_name: 'Scope 1',
     });
 
-    const scope2 = makeBasePage({
+    const scope2 = makeBasePage('Scope', {
       notion_page_id: 'scope-2',
-      atlas_document_type: 'Scope',
       atlas_database_name: 'Scopes',
       plain_text_name: 'Scope 2',
     });
@@ -1207,36 +1138,32 @@ describe('Document Numbering', () => {
 
   describe('duplicated nodes tracking', () => {
     it('should track nodes that appear in multiple parent contexts', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         atlas_document_number: 'A.1',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         atlas_document_number: 'A.1.1',
         plain_text_name: 'Test Article',
         child_section_and_primary_doc_ids: ['section-1', 'section-2'],
       });
 
-      const section1 = makeBasePage({
+      const section1 = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         atlas_document_number: 'A.1.1.1',
         plain_text_name: 'Section 1',
         child_needed_research_ids: ['research-1'], // research-1 appears here
       });
 
-      const section2 = makeBasePage({
+      const section2 = makeBasePage('Section', {
         notion_page_id: 'section-2',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         atlas_document_number: 'A.1.1.2',
         plain_text_name: 'Section 2',
@@ -1244,9 +1171,8 @@ describe('Document Numbering', () => {
       });
 
       // This research document appears under both section-1 and section-2
-      const research1 = makeBasePage({
+      const research1 = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         atlas_document_number: 'NR-1',
         plain_text_name: 'Shared Research Item',
@@ -1286,46 +1212,40 @@ describe('Document Numbering', () => {
     });
 
     it('should track multiple duplications of the same node', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         atlas_document_number: 'A.1',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         atlas_document_number: 'A.1.1',
         child_section_and_primary_doc_ids: ['section-1', 'section-2', 'section-3'],
       });
 
-      const section1 = makeBasePage({
+      const section1 = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         child_needed_research_ids: ['research-1'],
       });
 
-      const section2 = makeBasePage({
+      const section2 = makeBasePage('Section', {
         notion_page_id: 'section-2',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         child_needed_research_ids: ['research-1'], // First duplication
       });
 
-      const section3 = makeBasePage({
+      const section3 = makeBasePage('Section', {
         notion_page_id: 'section-3',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         child_needed_research_ids: ['research-1'], // Second duplication
       });
 
-      const research1 = makeBasePage({
+      const research1 = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Triple Shared Research',
       });

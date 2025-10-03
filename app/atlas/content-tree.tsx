@@ -20,29 +20,6 @@ interface RenderTreeNodeProps {
   parentPageId?: string;
 }
 
-function renderTreeNodeHeader(node: AtlasTreeNode) {
-  const documentType = node?.atlas_document_type;
-  const isCategory = documentType === 'Category';
-
-  // Special rendering for Category nodes - These are just headers, not Atlas documents
-  if (isCategory) {
-    return (
-      <h3 className={`inline-flex items-center rounded-lg bg-stone-100 px-3 py-2 text-base font-bold text-stone-800`}>
-        {node.generatedDocName}
-      </h3>
-    );
-  }
-
-  return (
-    <h3 className={styles.nodeTitle}>
-      {node.generatedDocID} - {node.generatedDocName}
-      <span className={styles.typeChipSpacing}>
-        <TypeChip type={node.atlas_document_type} />
-      </span>
-    </h3>
-  );
-}
-
 function renderSupportingDocumentListInSameType({
   label,
   documentType,
@@ -155,7 +132,14 @@ function renderTreeNode({
 
   const nodeContent = (
     <>
-      {!isRootNode && renderTreeNodeHeader(node)}
+      {!isRootNode && (
+        <h3 className={styles.nodeTitle}>
+          {node.generatedDocID} - {node.generatedDocName}
+          <span className={styles.typeChipSpacing}>
+            <TypeChip type={node.atlas_document_type} />
+          </span>
+        </h3>
+      )}
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
 

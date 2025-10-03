@@ -89,9 +89,6 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     if ('sections' in doc && doc.sections) {
       traverseChildren(doc.sections);
     }
-    if ('categories' in doc && doc.categories) {
-      traverseChildren(doc.categories);
-    }
     if ('coreDocuments' in doc && doc.coreDocuments) {
       traverseChildren(doc.coreDocuments);
     }
@@ -100,9 +97,6 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     }
     if ('typeSpecifications' in doc && doc.typeSpecifications) {
       traverseChildren(doc.typeSpecifications);
-    }
-    if ('placeholders' in doc && doc.placeholders) {
-      traverseChildren(doc.placeholders);
     }
     if ('scenarios' in doc && doc.scenarios) {
       traverseChildren(doc.scenarios);

@@ -1,34 +1,6 @@
 import { AtlasTreeNode } from './atlas-tree-types';
 
 /**
- * Recursively flattens Category documents from a sectionsAndPrimaryDocs array.
- * Categories are organizational containers that don't get numbered themselves,
- * but their children are inserted in-place where the Category appears.
- *
- * This function handles nested Categories by recursively processing all levels.
- *
- * @param sectionsAndPrimaryDocs - Array that may contain Category documents
- * @returns Flattened array with Category children in-place of Categories
- */
-function flattenCategories(sectionsAndPrimaryDocs: AtlasTreeNode[]): AtlasTreeNode[] {
-  const flattened: AtlasTreeNode[] = [];
-
-  for (const node of sectionsAndPrimaryDocs) {
-    if (node.atlas_document_type === 'Category') {
-      // Recursively flatten Category children and insert them in-place
-      // This handles nested Categories by processing their children recursively
-      const flattenedChildren = flattenCategories(node.sectionsAndPrimaryDocs);
-      flattened.push(...flattenedChildren);
-    } else {
-      // Non-Category documents are included as-is
-      flattened.push(node);
-    }
-  }
-
-  return flattened;
-}
-
-/**
  * Document number generation for Atlas documents. (see rules in `docs/ATLAS_DOCUMENT_NUMBERING_RULES.md`)
  *
  * This module implements the hierarchical document numbering system for Atlas documents
@@ -110,9 +82,7 @@ function traverseAndNumberNode(
   });
 
   // Number documents in Sections & Primary Docs database
-  // First, flatten Categories so their children are numbered in sequence
-  const flattenedSectionsAndPrimaryDocs = flattenCategories(node.sectionsAndPrimaryDocs);
-  flattenedSectionsAndPrimaryDocs.forEach((section, index) => {
+  node.sectionsAndPrimaryDocs.forEach((section, index) => {
     const sectionsAndPrimaryDocsDocumentNumber = `${parentNumber}.${index + 1}`;
     section.generatedDocID = sectionsAndPrimaryDocsDocumentNumber;
     docNumbers.set(section.notion_page_id, sectionsAndPrimaryDocsDocumentNumber);

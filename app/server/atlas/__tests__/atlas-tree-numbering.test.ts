@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { assignDocumentNumbersToTreesRecursively } from '../atlas-tree-numbering';
@@ -24,11 +24,14 @@ import { AtlasTreeNode } from '../atlas-tree-types';
 /**
  * Test helper to create a base NotionDatabasePage with default values
  */
-function makeBasePage(overrides: Partial<NotionDatabasePage>): NotionDatabasePage {
+function makeBasePage(
+  documentType: AtlasDocumentType,
+  overrides: Partial<NotionDatabasePage> = {},
+): NotionDatabasePage {
   return {
     notion_page_id: 'test-id',
     canonical_document_title: null,
-    atlas_document_type: 'Placeholder',
+    atlas_document_type: documentType,
     atlas_document_number: '',
     atlas_document_number_sortable: '',
     atlas_database_name: 'Sections & Primary Docs',
@@ -77,25 +80,22 @@ describe('Atlas Document Numbering System', () => {
 
   describe('Basic Document Type Numbering', () => {
     it('should number Scope documents sequentially starting at A.0', () => {
-      const scope1 = makeBasePage({
+      const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'First Scope',
         atlas_document_number: 'A.0',
       });
 
-      const scope2 = makeBasePage({
+      const scope2 = makeBasePage('Scope', {
         notion_page_id: 'scope-2',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Second Scope',
         atlas_document_number: 'A.1',
       });
 
-      const scope3 = makeBasePage({
+      const scope3 = makeBasePage('Scope', {
         notion_page_id: 'scope-3',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Third Scope',
         atlas_document_number: 'A.2',
@@ -122,31 +122,27 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Article documents under Scope starting at 1', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1', 'article-2', 'article-3'],
       });
 
-      const article1 = makeBasePage({
+      const article1 = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
       });
 
-      const article2 = makeBasePage({
+      const article2 = makeBasePage('Article', {
         notion_page_id: 'article-2',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 2',
       });
 
-      const article3 = makeBasePage({
+      const article3 = makeBasePage('Article', {
         notion_page_id: 'article-3',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 3',
       });
@@ -173,32 +169,28 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Section documents under Article starting at 1', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1', 'section-2'],
       });
 
-      const section1 = makeBasePage({
+      const section1 = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
       });
 
-      const section2 = makeBasePage({
+      const section2 = makeBasePage('Section', {
         notion_page_id: 'section-2',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 2',
       });
@@ -223,49 +215,43 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Primary documents under Section sequentially (Core, Active Data Controller, Type Specification)', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_section_and_primary_doc_ids: ['core-1', 'adc-1', 'typespec-1'],
       });
 
-      const core = makeBasePage({
+      const core = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
         parent_notion_page_id: null, // Direct child
       });
 
-      const adc = makeBasePage({
+      const adc = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
         parent_notion_page_id: null, // Direct child
       });
 
-      const typespec = makeBasePage({
+      const typespec = makeBasePage('Type Specification', {
         notion_page_id: 'typespec-1',
-        atlas_document_type: 'Type Specification',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'TypeSpec 1',
         parent_notion_page_id: null, // Direct child
@@ -294,40 +280,35 @@ describe('Atlas Document Numbering System', () => {
 
   describe('Supporting Document Numbering', () => {
     it('should number Annotations with .0.3 segment', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_annotation_ids: ['annotation-1', 'annotation-2'],
       });
 
-      const annotation1 = makeBasePage({
+      const annotation1 = makeBasePage('Annotation', {
         notion_page_id: 'annotation-1',
-        atlas_document_type: 'Annotation',
         atlas_database_name: 'Annotations',
         plain_text_name: 'Annotation 1',
       });
 
-      const annotation2 = makeBasePage({
+      const annotation2 = makeBasePage('Annotation', {
         notion_page_id: 'annotation-2',
-        atlas_document_type: 'Annotation',
         atlas_database_name: 'Annotations',
         plain_text_name: 'Annotation 2',
       });
@@ -352,40 +333,35 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Tenets with .0.4 segment', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_tenet_ids: ['tenet-1', 'tenet-2'],
       });
 
-      const tenet1 = makeBasePage({
+      const tenet1 = makeBasePage('Action Tenet', {
         notion_page_id: 'tenet-1',
-        atlas_document_type: 'Action Tenet',
         atlas_database_name: 'Tenets',
         plain_text_name: 'Tenet 1',
       });
 
-      const tenet2 = makeBasePage({
+      const tenet2 = makeBasePage('Action Tenet', {
         notion_page_id: 'tenet-2',
-        atlas_document_type: 'Action Tenet',
         atlas_database_name: 'Tenets',
         plain_text_name: 'Tenet 2',
       });
@@ -410,32 +386,28 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Scenarios under Tenets with .1.X suffix', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_tenet_ids: ['tenet-1'],
       });
 
-      const tenet = makeBasePage({
+      const tenet = makeBasePage('Action Tenet', {
         notion_page_id: 'tenet-1',
-        atlas_document_type: 'Action Tenet',
         atlas_database_name: 'Tenets',
         plain_text_name: 'Tenet 1',
         child_scenario_ids: ['scenario-1', 'scenario-2'],
       });
 
-      const scenario1 = makeBasePage({
+      const scenario1 = makeBasePage('Scenario', {
         notion_page_id: 'scenario-1',
-        atlas_document_type: 'Scenario',
         atlas_database_name: 'Scenarios',
         plain_text_name: 'Scenario 1',
       });
 
-      const scenario2 = makeBasePage({
+      const scenario2 = makeBasePage('Scenario', {
         notion_page_id: 'scenario-2',
-        atlas_document_type: 'Scenario',
         atlas_database_name: 'Scenarios',
         plain_text_name: 'Scenario 2',
       });
@@ -461,32 +433,28 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Scenario Variations with .varX suffix', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_scenario_ids: ['scenario-1'],
       });
 
-      const scenario = makeBasePage({
+      const scenario = makeBasePage('Scenario', {
         notion_page_id: 'scenario-1',
-        atlas_document_type: 'Scenario',
         atlas_database_name: 'Scenarios',
         plain_text_name: 'Scenario 1',
         child_scenario_variation_ids: ['variation-1', 'variation-2'],
       });
 
-      const variation1 = makeBasePage({
+      const variation1 = makeBasePage('Scenario Variation', {
         notion_page_id: 'variation-1',
-        atlas_document_type: 'Scenario Variation',
         atlas_database_name: 'Scenario Variations',
         plain_text_name: 'Variation 1',
       });
 
-      const variation2 = makeBasePage({
+      const variation2 = makeBasePage('Scenario Variation', {
         notion_page_id: 'variation-2',
-        atlas_document_type: 'Scenario Variation',
         atlas_database_name: 'Scenario Variations',
         plain_text_name: 'Variation 2',
       });
@@ -512,40 +480,35 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should number Active Data with .0.6 segment', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['adc-1'],
       });
 
-      const adc = makeBasePage({
+      const adc = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
         child_active_data_ids: ['active-data-1', 'active-data-2'],
       });
 
-      const activeData1 = makeBasePage({
+      const activeData1 = makeBasePage('Active Data', {
         notion_page_id: 'active-data-1',
-        atlas_document_type: 'Active Data',
         atlas_database_name: 'Active Data',
         plain_text_name: 'Active Data 1',
       });
 
-      const activeData2 = makeBasePage({
+      const activeData2 = makeBasePage('Active Data', {
         notion_page_id: 'active-data-2',
-        atlas_document_type: 'Active Data',
         atlas_database_name: 'Active Data',
         plain_text_name: 'Active Data 2',
       });
@@ -573,39 +536,34 @@ describe('Atlas Document Numbering System', () => {
 
   describe('Global and Special Numbering', () => {
     it('should number Needed Research with global numbering (NR-1, NR-2)', () => {
-      const scope1 = makeBasePage({
+      const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 1',
         child_needed_research_ids: ['research-1'],
       });
 
-      const scope2 = makeBasePage({
+      const scope2 = makeBasePage('Scope', {
         notion_page_id: 'scope-2',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 2',
         child_needed_research_ids: ['research-2', 'research-3'],
       });
 
-      const research1 = makeBasePage({
+      const research1 = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 1',
       });
 
-      const research2 = makeBasePage({
+      const research2 = makeBasePage('Needed Research', {
         notion_page_id: 'research-2',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 2',
       });
 
-      const research3 = makeBasePage({
+      const research3 = makeBasePage('Needed Research', {
         notion_page_id: 'research-3',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 3',
       });
@@ -631,46 +589,40 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should maintain global Needed Research counter across multiple scopes', () => {
-      const scope1 = makeBasePage({
+      const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 1',
         child_needed_research_ids: ['research-1', 'research-2'],
       });
 
-      const scope2 = makeBasePage({
+      const scope2 = makeBasePage('Scope', {
         notion_page_id: 'scope-2',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Scope 2',
         child_needed_research_ids: ['research-3', 'research-4'],
       });
 
-      const research1 = makeBasePage({
+      const research1 = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 1',
       });
 
-      const research2 = makeBasePage({
+      const research2 = makeBasePage('Needed Research', {
         notion_page_id: 'research-2',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 2',
       });
 
-      const research3 = makeBasePage({
+      const research3 = makeBasePage('Needed Research', {
         notion_page_id: 'research-3',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 3',
       });
 
-      const research4 = makeBasePage({
+      const research4 = makeBasePage('Needed Research', {
         notion_page_id: 'research-4',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 4',
       });
@@ -700,33 +652,29 @@ describe('Atlas Document Numbering System', () => {
 
   describe('Mixed Document Type Scenarios', () => {
     it('should handle Agent Scope Database mixed Core + Active Data Controller types', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_agent_scope_ids: ['agent-core-1', 'agent-adc-1', 'agent-core-2'],
       });
 
-      const agentCore1 = makeBasePage({
+      const agentCore1 = makeBasePage('Core', {
         notion_page_id: 'agent-core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Core 1',
         parent_notion_page_id: null,
       });
 
-      const agentAdc = makeBasePage({
+      const agentAdc = makeBasePage('Active Data Controller', {
         notion_page_id: 'agent-adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent ADC 1',
         parent_notion_page_id: null,
       });
 
-      const agentCore2 = makeBasePage({
+      const agentCore2 = makeBasePage('Core', {
         notion_page_id: 'agent-core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Core 2',
         parent_notion_page_id: null,
@@ -753,67 +701,59 @@ describe('Atlas Document Numbering System', () => {
     });
 
     it('should handle complex multiple sections with different document type combinations', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1', 'section-2'],
       });
 
       // Section 1 has Core + ADC
-      const section1 = makeBasePage({
+      const section1 = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_section_and_primary_doc_ids: ['core-1', 'adc-1'],
       });
 
       // Section 2 has TypeSpec + Core
-      const section2 = makeBasePage({
+      const section2 = makeBasePage('Section', {
         notion_page_id: 'section-2',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 2',
         child_section_and_primary_doc_ids: ['typespec-1', 'core-2'],
       });
 
-      const core1 = makeBasePage({
+      const core1 = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
         parent_notion_page_id: null,
       });
 
-      const adc1 = makeBasePage({
+      const adc1 = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
         parent_notion_page_id: null,
       });
 
-      const typespec1 = makeBasePage({
+      const typespec1 = makeBasePage('Type Specification', {
         notion_page_id: 'typespec-1',
-        atlas_document_type: 'Type Specification',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'TypeSpec 1',
         parent_notion_page_id: null,
       });
 
-      const core2 = makeBasePage({
+      const core2 = makeBasePage('Core', {
         notion_page_id: 'core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 2',
         parent_notion_page_id: null,
@@ -852,9 +792,8 @@ describe('Atlas Document Numbering System', () => {
   describe('Complete Hierarchy Integration Tests', () => {
     it('should handle complete Atlas hierarchy with all document types', () => {
       // Build a comprehensive hierarchy
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
@@ -862,17 +801,15 @@ describe('Atlas Document Numbering System', () => {
         child_needed_research_ids: ['research-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_section_and_primary_doc_ids: ['core-1', 'adc-1'],
@@ -880,71 +817,62 @@ describe('Atlas Document Numbering System', () => {
         child_tenet_ids: ['tenet-1'],
       });
 
-      const core = makeBasePage({
+      const core = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
         parent_notion_page_id: null,
       });
 
-      const adc = makeBasePage({
+      const adc = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
-        atlas_document_type: 'Active Data Controller',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
         parent_notion_page_id: null,
         child_active_data_ids: ['active-data-1'],
       });
 
-      const annotation = makeBasePage({
+      const annotation = makeBasePage('Annotation', {
         notion_page_id: 'annotation-1',
-        atlas_document_type: 'Annotation',
         atlas_database_name: 'Annotations',
         plain_text_name: 'Annotation 1',
       });
 
-      const tenet = makeBasePage({
+      const tenet = makeBasePage('Action Tenet', {
         notion_page_id: 'tenet-1',
-        atlas_document_type: 'Action Tenet',
         atlas_database_name: 'Tenets',
         plain_text_name: 'Tenet 1',
         child_scenario_ids: ['scenario-1'],
       });
 
-      const scenario = makeBasePage({
+      const scenario = makeBasePage('Scenario', {
         notion_page_id: 'scenario-1',
-        atlas_document_type: 'Scenario',
         atlas_database_name: 'Scenarios',
         plain_text_name: 'Scenario 1',
         child_scenario_variation_ids: ['variation-1'],
       });
 
-      const variation = makeBasePage({
+      const variation = makeBasePage('Scenario Variation', {
         notion_page_id: 'variation-1',
-        atlas_document_type: 'Scenario Variation',
         atlas_database_name: 'Scenario Variations',
         plain_text_name: 'Variation 1',
       });
 
-      const activeData = makeBasePage({
+      const activeData = makeBasePage('Active Data', {
         notion_page_id: 'active-data-1',
-        atlas_document_type: 'Active Data',
         atlas_database_name: 'Active Data',
         plain_text_name: 'Active Data 1',
       });
 
-      const agentCore = makeBasePage({
+      const agentCore = makeBasePage('Core', {
         notion_page_id: 'agent-core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Core 1',
         parent_notion_page_id: null,
       });
 
-      const research = makeBasePage({
+      const research = makeBasePage('Needed Research', {
         notion_page_id: 'research-1',
-        atlas_document_type: 'Needed Research',
         atlas_database_name: 'Needed Research',
         plain_text_name: 'Research 1',
       });
@@ -982,59 +910,52 @@ describe('Atlas Document Numbering System', () => {
 
   describe('Nested Core Document Numbering', () => {
     it('should handle nested Core documents correctly', () => {
-      const scope = makeBasePage({
+      const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
-        atlas_document_type: 'Scope',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
       });
 
-      const article = makeBasePage({
+      const article = makeBasePage('Article', {
         notion_page_id: 'article-1',
-        atlas_document_type: 'Article',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
         child_section_and_primary_doc_ids: ['section-1'],
       });
 
-      const section = makeBasePage({
+      const section = makeBasePage('Section', {
         notion_page_id: 'section-1',
-        atlas_document_type: 'Section',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Section 1',
         child_section_and_primary_doc_ids: ['core-1'],
       });
 
-      const parentCore = makeBasePage({
+      const parentCore = makeBasePage('Core', {
         notion_page_id: 'core-1',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Parent Core',
         parent_notion_page_id: null,
         child_section_and_primary_doc_ids: ['core-2', 'core-3'],
       });
 
-      const childCore1 = makeBasePage({
+      const childCore1 = makeBasePage('Core', {
         notion_page_id: 'core-2',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Child Core 1',
         parent_notion_page_id: 'core-1',
         child_section_and_primary_doc_ids: ['core-4'],
       });
 
-      const childCore2 = makeBasePage({
+      const childCore2 = makeBasePage('Core', {
         notion_page_id: 'core-3',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Child Core 2',
         parent_notion_page_id: 'core-1',
       });
 
-      const grandchildCore = makeBasePage({
+      const grandchildCore = makeBasePage('Core', {
         notion_page_id: 'core-4',
-        atlas_document_type: 'Core',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Grandchild Core',
         parent_notion_page_id: 'core-2',
@@ -1059,265 +980,6 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('core-2')).toBe('A.0.1.1.1.1');
       expect(docNumbers.get('core-3')).toBe('A.0.1.1.1.2');
       expect(docNumbers.get('core-4')).toBe('A.0.1.1.1.1.1');
-    });
-  });
-
-  describe('Category Document Handling', () => {
-    test('should skip Category documents during numbering and flatten their children', () => {
-      pagesByDatabase = {
-        Scopes: [
-          makeBasePage({
-            notion_page_id: 'scope-1',
-            atlas_document_type: 'Scope',
-            atlas_database_name: 'Scopes',
-            plain_text_name: 'Test Scope',
-            atlas_document_number: 'A.0',
-            sort_order: 0,
-            child_article_ids: ['article-1'],
-          }),
-        ],
-        Articles: [
-          makeBasePage({
-            notion_page_id: 'article-1',
-            atlas_document_type: 'Article',
-            atlas_database_name: 'Articles',
-            plain_text_name: 'Test Article',
-            atlas_document_number: 'A.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['section-1'],
-          }),
-        ],
-        'Sections & Primary Docs': [
-          makeBasePage({
-            notion_page_id: 'section-1',
-            atlas_document_type: 'Section',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Test Section',
-            atlas_document_number: 'A.1.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['core-1', 'category-1', 'core-3'],
-          }),
-          // Non-Category documents
-          makeBasePage({
-            notion_page_id: 'core-1',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'First Core',
-            atlas_document_number: '',
-            sort_order: 1,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-3',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Third Core',
-            atlas_document_number: '',
-            sort_order: 3,
-          }),
-          // Category document with its own children
-          makeBasePage({
-            notion_page_id: 'category-1',
-            atlas_document_type: 'Category',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Test Category',
-            atlas_document_number: '',
-            sort_order: 2,
-            child_section_and_primary_doc_ids: ['core-2a', 'core-2b'],
-          }),
-          // Category's children
-          makeBasePage({
-            notion_page_id: 'core-2a',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Second Core A',
-            atlas_document_number: '',
-            sort_order: 1,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-2b',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Second Core B',
-            atlas_document_number: '',
-            sort_order: 2,
-          }),
-        ],
-      };
-
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
-
-      // Category should not have a document number
-      expect(docNumbers.has('category-1')).toBe(false);
-
-      // Non-Category documents should be numbered sequentially, with Category children flattened in place
-      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1'); // First document
-      expect(docNumbers.get('core-2a')).toBe('A.0.1.1.2'); // First child of Category (flattened)
-      expect(docNumbers.get('core-2b')).toBe('A.0.1.1.3'); // Second child of Category (flattened)
-      expect(docNumbers.get('core-3')).toBe('A.0.1.1.4'); // Document after Category
-    });
-
-    test('should handle nested Categories correctly', () => {
-      pagesByDatabase = {
-        Scopes: [
-          makeBasePage({
-            notion_page_id: 'scope-1',
-            atlas_document_type: 'Scope',
-            atlas_database_name: 'Scopes',
-            plain_text_name: 'Test Scope',
-            atlas_document_number: 'A.0',
-            sort_order: 0,
-            child_article_ids: ['article-1'],
-          }),
-        ],
-        Articles: [
-          makeBasePage({
-            notion_page_id: 'article-1',
-            atlas_document_type: 'Article',
-            atlas_database_name: 'Articles',
-            plain_text_name: 'Test Article',
-            atlas_document_number: 'A.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['section-1'],
-          }),
-        ],
-        'Sections & Primary Docs': [
-          makeBasePage({
-            notion_page_id: 'section-1',
-            atlas_document_type: 'Section',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Test Section',
-            atlas_document_number: 'A.1.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['category-1'],
-          }),
-          // Outer Category
-          makeBasePage({
-            notion_page_id: 'category-1',
-            atlas_document_type: 'Category',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Outer Category',
-            atlas_document_number: '',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['core-1', 'category-2', 'core-3'],
-          }),
-          // Inner Category
-          makeBasePage({
-            notion_page_id: 'category-2',
-            atlas_document_type: 'Category',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Inner Category',
-            atlas_document_number: '',
-            sort_order: 2,
-            child_section_and_primary_doc_ids: ['core-2a', 'core-2b'],
-          }),
-          // Actual documents
-          makeBasePage({
-            notion_page_id: 'core-1',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'First Core',
-            atlas_document_number: '',
-            sort_order: 1,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-2a',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Second Core A',
-            atlas_document_number: '',
-            sort_order: 1,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-2b',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Second Core B',
-            atlas_document_number: '',
-            sort_order: 2,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-3',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Third Core',
-            atlas_document_number: '',
-            sort_order: 3,
-          }),
-        ],
-      };
-
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
-
-      // Categories should not have document numbers
-      expect(docNumbers.has('category-1')).toBe(false);
-      expect(docNumbers.has('category-2')).toBe(false);
-
-      // All actual documents should be numbered sequentially in flattened order
-      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1'); // First in outer category
-      expect(docNumbers.get('core-2a')).toBe('A.0.1.1.2'); // First in inner category (nested flatten)
-      expect(docNumbers.get('core-2b')).toBe('A.0.1.1.3'); // Second in inner category (nested flatten)
-      expect(docNumbers.get('core-3')).toBe('A.0.1.1.4'); // After inner category in outer category
-    });
-
-    test('should handle Categories only in Sections & Primary Docs database', () => {
-      // Categories should only exist in Sections & Primary Docs, not in other databases
-      pagesByDatabase = {
-        Scopes: [
-          makeBasePage({
-            notion_page_id: 'scope-1',
-            atlas_document_type: 'Scope',
-            atlas_database_name: 'Scopes',
-            plain_text_name: 'Test Scope',
-            atlas_document_number: 'A.0',
-            sort_order: 0,
-            child_article_ids: ['article-1'],
-          }),
-        ],
-        Articles: [
-          makeBasePage({
-            notion_page_id: 'article-1',
-            atlas_document_type: 'Article',
-            atlas_database_name: 'Articles',
-            plain_text_name: 'Test Article',
-            atlas_document_number: 'A.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['section-1'],
-          }),
-        ],
-        'Sections & Primary Docs': [
-          makeBasePage({
-            notion_page_id: 'section-1',
-            atlas_document_type: 'Section',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Test Section',
-            atlas_document_number: 'A.1.1.1',
-            sort_order: 1,
-            child_section_and_primary_doc_ids: ['core-1', 'core-2'],
-          }),
-          makeBasePage({
-            notion_page_id: 'core-1',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'First Core',
-            atlas_document_number: '',
-            sort_order: 1,
-          }),
-          makeBasePage({
-            notion_page_id: 'core-2',
-            atlas_document_type: 'Core',
-            atlas_database_name: 'Sections & Primary Docs',
-            plain_text_name: 'Second Core',
-            atlas_document_number: '',
-            sort_order: 2,
-          }),
-        ],
-      };
-
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
-
-      // Regular numbering should work without Categories
-      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
-      expect(docNumbers.get('core-2')).toBe('A.0.1.1.2');
     });
   });
 });
