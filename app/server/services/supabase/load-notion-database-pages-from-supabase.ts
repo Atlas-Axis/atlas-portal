@@ -20,7 +20,7 @@ const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, 
 const DEFAULT_SORT_CRITERIA: (keyof NotionDatabasePage)[] = [
   'sort_order',
   'atlas_document_number_sortable',
-  'canonical_document_title',
+  // 'canonical_document_title',
   'notion_page_id',
 ];
 
