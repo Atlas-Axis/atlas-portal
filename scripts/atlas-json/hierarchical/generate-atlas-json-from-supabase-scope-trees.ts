@@ -110,14 +110,18 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     if ('scenarioVariations' in doc && doc.scenarioVariations) {
       traverseChildren(doc.scenarioVariations);
     }
-    if ('supportingDocuments' in doc && doc.supportingDocuments) {
-      const supporting = doc.supportingDocuments;
-      if (supporting.annotations) traverseChildren(supporting.annotations);
-      if (supporting.tenets) traverseChildren(supporting.tenets);
-      if (supporting.neededResearch) traverseChildren(supporting.neededResearch);
-      if ('activeData' in supporting && supporting.activeData) {
-        traverseChildren(supporting.activeData);
-      }
+    // annotations, tenets, neededResearch, activeData are supporting documents
+    if ('annotations' in doc && doc.annotations) {
+      traverseChildren(doc.annotations);
+    }
+    if ('tenets' in doc && doc.tenets) {
+      traverseChildren(doc.tenets);
+    }
+    if ('neededResearch' in doc && doc.neededResearch) {
+      traverseChildren(doc.neededResearch);
+    }
+    if ('activeData' in doc && doc.activeData) {
+      traverseChildren(doc.activeData);
     }
   }
 
