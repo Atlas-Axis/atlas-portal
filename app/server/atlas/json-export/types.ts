@@ -9,7 +9,7 @@ export interface BaseAtlasDocument {
   docNo: string;
   name: string;
   uuid: string | null;
-
+  lastModified: string;
   content: string;
 }
 

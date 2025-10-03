@@ -72,6 +72,7 @@ function toBase(node: AtlasTreeNode): BaseAtlasDocument {
     docNo: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
+    lastModified: node.updated_at,
     content: node.plain_text_content ?? '',
   };
 }
