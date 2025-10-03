@@ -1,4 +1,4 @@
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
