@@ -127,7 +127,7 @@ Stores Notion database pages and their hierarchical relationships.
 - `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
 - `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at` (TIMESTAMPTZ) - Database row creation time
-- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
+- `updated_at` (TIMESTAMPTZ)
 - `last_edited_by_user_id` (TEXT) - Notion user ID who last edited
 
 Child relationship fields (JSONB arrays of UUID strings):

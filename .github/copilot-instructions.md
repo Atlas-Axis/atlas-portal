@@ -117,7 +117,7 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 - `sort_order` (INTEGER, NOT NULL) - Position within parent (0-indexed) for maintaining order
 - `canonical_document_title` (TEXT) - Atlas document identifier (e.g., "A.2.3.21")
 - `created_at` (TIMESTAMPTZ) - Database row creation time
-- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
+- `updated_at` (TIMESTAMPTZ)
 - `last_edited_by_user_id` (TEXT) - Notion user ID who last edited
 
 **Edit Page Fields:**
