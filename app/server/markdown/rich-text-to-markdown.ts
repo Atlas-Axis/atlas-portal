@@ -109,10 +109,13 @@ function formatInlineSpan(rt: NotionRichText): string {
         ? (rt.text?.content ?? rt.plain_text ?? '')
         : (rt.plain_text ?? '');
 
-  const escaped = escapeMarkdown(textContent);
-
-  // Inline code
-  const withInlineCode = wrapIf(rt.annotations?.code, (s) => `\`${s}\``, escaped);
+  // Inline code: don't escape inside backticks, only escape backticks themselves
+  const withInlineCode = rt.annotations?.code
+    ? (() => {
+        const escapedBackticks = textContent.replace(/`/g, '\\`');
+        return `\`${escapedBackticks}\``;
+      })()
+    : escapeMarkdown(textContent);
   // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
   const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
   const withUnderline = withBold; // Markdown has no underline; leave unchanged

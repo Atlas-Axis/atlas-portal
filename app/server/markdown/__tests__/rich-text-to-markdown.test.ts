@@ -45,6 +45,24 @@ describe('convertNotionRichTextToHtml', () => {
     ] as NotionRichText[]);
     expect(html).toBe('$t_{i}$ = $i$');
   });
+
+  it('renders inline code without escaping special characters inside backticks', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'text', text: { content: 'f(Utilization)' }, annotations: { code: true } },
+      { type: 'text', text: { content: ' is calculated using the formula:\n\n' } },
+      {
+        type: 'text',
+        text: {
+          content:
+            'f(Utilization) = Utilization * ((SKY Borrow Maximum Rate - SKY Borrow Minimum Rate + Beta) * Utilization + SKY Borrow Minimum Rate - SKY Borrow Rate)',
+        },
+        annotations: { code: true },
+      },
+    ] as NotionRichText[]);
+    expect(html).toBe(
+      '`f(Utilization)` is calculated using the formula:  \n  \n`f(Utilization) = Utilization * ((SKY Borrow Maximum Rate - SKY Borrow Minimum Rate + Beta) * Utilization + SKY Borrow Minimum Rate - SKY Borrow Rate)`',
+    );
+  });
 });
 
 describe('convertNotionBlocksToHtml (Markdown output)', () => {
