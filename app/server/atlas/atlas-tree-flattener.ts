@@ -2,6 +2,8 @@ import { traverseTree } from './atlas-tree-traversal';
 import { AtlasTreeNode } from './atlas-tree-types';
 import { AtlasDatabaseName } from './constants';
 
+const ALLOWED_DUPLICATE_TYPES = ['Needed Research', 'Action Tenet'];
+
 export function flattenAtlasScopeTreesToNotionPages({
   scopeTrees,
 }: {
@@ -37,7 +39,7 @@ export function flattenAtlasScopeTreesToNotionPages({
     neededResearch: [],
   });
 
-  // Keep track of seen nodes to prevent duplicates
+  // Keep track of seen nodes to prevent duplicates for most types
   const seenNodeIds = new Set<string>();
 
   // Traverse each scope tree and flatten all nodes by database
@@ -45,15 +47,33 @@ export function flattenAtlasScopeTreesToNotionPages({
     traverseTree(
       scopeTree,
       (node) => {
-        // Skip if we've already processed this node
-        if (seenNodeIds.has(node.notion_page_id)) {
+        const allowDuplicatesForType = ALLOWED_DUPLICATE_TYPES.includes(node.atlas_document_type);
+
+        // Skip if we've already processed this node (except allowed duplicate types)
+        if (seenNodeIds.has(node.notion_page_id) && !allowDuplicatesForType) {
           console.warn(
             `[flattenAtlasScopeTreesToNotionPages] Duplicate node detected: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
           );
           // Continue traversal
         }
 
-        seenNodeIds.add(node.notion_page_id);
+        // Log duplicates by type
+        if (seenNodeIds.has(node.notion_page_id) && allowDuplicatesForType) {
+          if (node.atlas_document_type === 'Needed Research') {
+            console.info(
+              `[flattenAtlasScopeTreesToNotionPages] Duplicate 'Needed Research' document kept: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
+            );
+          } else if (node.atlas_document_type === 'Action Tenet') {
+            console.warn(
+              `[flattenAtlasScopeTreesToNotionPages] Duplicate 'Action Tenet' document kept: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
+            );
+          }
+        }
+
+        if (!seenNodeIds.has(node.notion_page_id)) {
+          seenNodeIds.add(node.notion_page_id);
+        }
+
         const normalizedNode = normalizeNode(node);
         flatAtlasNodesPerDatabase[node.atlas_database_name].push(normalizedNode);
         return true; // Continue traversal

@@ -413,14 +413,14 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'core-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
-        parent_notion_page_id: null, // Direct child of section (via child array)
+        parent_notion_page_id: 'section-1', // Direct child of section
       });
 
       const core2 = makeBasePage('Core', {
         notion_page_id: 'core-2',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 2',
-        parent_notion_page_id: null, // Direct child of section (via child array)
+        parent_notion_page_id: 'section-1', // Direct child of section
       });
 
       // Nested Core documents (should be filtered out from section's children)
@@ -566,7 +566,7 @@ describe('filterDirectChildren', () => {
         child_section_and_primary_doc_ids: ['level1-core'],
       });
 
-      // Level 1: Root Core
+      // Level 1: Root Core (direct child of Article -> cross-db => parent must be null)
       const level1Core = makeBasePage('Core', {
         notion_page_id: 'level1-core',
         atlas_database_name: 'Sections & Primary Docs',
@@ -818,7 +818,7 @@ describe('filterDirectChildren', () => {
       // Create 8 levels of Core documents, each nested under the previous
       const coreDocuments = [];
       for (let i = 1; i <= 8; i++) {
-        const parentId = i === 1 ? null : `core-l${i - 1}`;
+        const parentId = i === 1 ? 'section-1' : `core-l${i - 1}`;
         const children =
           i < 8
             ? [
@@ -905,7 +905,7 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'core-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child
         child_section_and_primary_doc_ids: ['nested-core-1', 'nested-core-2'],
       });
 
@@ -913,7 +913,7 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'adc-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child
         child_section_and_primary_doc_ids: [],
       });
 
@@ -921,7 +921,7 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'type-spec-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Type Spec 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child
         child_section_and_primary_doc_ids: [],
       });
 

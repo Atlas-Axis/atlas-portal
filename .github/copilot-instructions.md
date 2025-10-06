@@ -243,18 +243,18 @@ The Atlas documents are organized in a hierarchical structure across multiple No
 
 ```
 Scopes
-├── Articles
-│   ├── Sections & Primary Docs
-│   │   ├── Annotations
-│   │   └── Tenets
-│   │       └── Scenarios
-│   │           └── Scenario Variations
-Agent Scope Database
-├── Annotations
-├── Tenets
-│   └── Scenarios
-│       └── Scenario Variations
-└── Active Data
+└── Articles
+    ├── Sections & Primary Docs
+    │   ├── Annotations
+    │   └── Tenets
+    │   │   └── Scenarios
+    │   │       └── Scenario Variations
+    └── Agent Scope Database
+        ├── Annotations
+        ├── Tenets
+        │   └── Scenarios
+        │       └── Scenario Variations
+        └── Active Data
 
 "Needed Research" documents may be nested under any other document type
 ```
@@ -589,16 +589,19 @@ The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays prese
    - **Direct children** (Core documents that should be immediate children of the Section)
    - **Nested descendants** (Core documents that are descendants of other Core documents)
 
-3. **The Solution**: Use `parent_notion_page_id` as additional context:
-   - If `parent_notion_page_id` is NULL → Direct child of the filtering parent
-   - If `parent_notion_page_id` matches another Core document → Nested descendant, should be filtered out
-   - **Exception**: When a Core document filters its own descendants, it must accept descendants where `parent_notion_page_id` matches its own ID
+3. **The Solution (Generalized Direct-Child Rules)**:
+   - Cross-database → internally nested DB child: keep only if `parent_notion_page_id` is null.
+   - Same internally nested DB (Sections & Primary Docs, Agent Scope Database): keep only if `parent_notion_page_id === parentPageId`.
+   - Applies to all document types in those DBs.
 
 4. **Implementation Requirements**:
-   - Pass `parentPageId` parameter to `filterDirectChildren`
-   - Check ancestry chain: `page.parent_notion_page_id === null || page.parent_notion_page_id === parentPageId`
-   - Protects against circular references in ancestry checking
+   - Pass `parentPageId` to `filterDirectChildren` and apply the rules above.
+   - Retain cycle guards and depth limits for safety.
 
-5. **Real-World Impact**: Without proper filtering, tree building creates incorrect hierarchy where nested Core documents appear as siblings instead of proper parent-descendant relationships.
+5. **Real-World Impact**: Prevents nested docs from incorrectly appearing at multiple levels.
 
-**Agent Scope Database Special Case**: The `child_agent_scope_ids` array in Agent Scope Database follows the same pattern and requires identical filtering logic for nested Core and Active Data Controller documents.
+**Duplicates Policy**
+
+- Needed Research: allowed; log info.
+- Tenets: allowed; log warning.
+- Others: unexpected; rely on filtering to prevent.

@@ -283,63 +283,31 @@ function filterDirectChildren(descendantIds: string[], lookupMaps: AtlasLookupMa
     return [];
   }
 
-  // Convert to Set for O(1) lookup performance
-  const descendantIdsSet = new Set(descendantIds);
+  const directParentPageWithinSameDatabase = parentPageId ? findPageById(parentPageId, lookupMaps) : undefined;
 
   return descendantIds.filter((childId) => {
-    const descendantPage = findPageById(childId, lookupMaps);
-    if (!descendantPage) {
+    const childPage = findPageById(childId, lookupMaps);
+    if (!childPage) {
       // Keep missing children for error reporting
       return true;
     }
 
-    // If parent_notion_page_id is null/empty, it's a direct child
-    if (!descendantPage.parent_notion_page_id) {
+    // If no parent context is provided, conservatively keep (should not happen in our usage)
+    if (!directParentPageWithinSameDatabase) {
       return true;
     }
 
-    // Walk up the ancestry chain to check for any ancestor in the descendantIds array
-    // OR if the parent is the parentPageId (for Core documents filtering their own children)
-    // If we find an ancestor in either set, this document is not a direct child
-    let currentParentId: string | null = descendantPage.parent_notion_page_id;
-    const visitedIds = new Set<string>(); // Prevent infinite loops
-    const maxDepth = 20; // Safety limit for deeply nested structures
-    let depth = 0;
+    const isSameDatabase = directParentPageWithinSameDatabase.atlas_database_name === childPage.atlas_database_name;
 
-    while (currentParentId && depth < maxDepth) {
-      // Circular reference protection
-      if (visitedIds.has(currentParentId)) {
-        console.warn(
-          `Circular reference detected in ancestry check for ${childId}, parent chain: ${Array.from(visitedIds).join(' -> ')}`,
-        );
-        break;
-      }
-      visitedIds.add(currentParentId);
-
-      // If any ancestor is in the descendantIds array, this is not a direct child
-      if (descendantIdsSet.has(currentParentId)) {
-        return false;
-      }
-
-      // If the parent is the parentPageId being filtered, this IS a direct child
-      if (parentPageId && currentParentId === parentPageId) {
-        return true;
-      }
-
-      // Move up to the next ancestor
-      const parentPage = findPageById(currentParentId, lookupMaps);
-      if (!parentPage) {
-        // Parent not found - treat as direct child (parent outside this array)
-        break;
-      }
-
-      currentParentId = parentPage.parent_notion_page_id;
-      depth++;
+    if (!isSameDatabase) {
+      // Cross-database: Only direct children are those without internal nesting
+      // i.e., child must have parent_notion_page_id === null
+      return childPage.parent_notion_page_id === null;
     }
 
-    // If we've walked the entire ancestry chain without finding an ancestor
-    // in the descendantIds array, this is a direct child
-    return true;
+    // Same database (e.g., Sections & Primary Docs or Agent Scope Database):
+    // Direct child if the child's immediate parent is the current parentPageId
+    return childPage.parent_notion_page_id === parentPageId;
   });
 }
 
