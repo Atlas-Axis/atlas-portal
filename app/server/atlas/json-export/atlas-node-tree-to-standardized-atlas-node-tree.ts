@@ -11,9 +11,9 @@
  * - For relationships:
  *   - Simple 1:1 arrays are mapped directly (`articles`, `annotations`, etc.).
  *   - Mixed collections are split by document type:
- *     - `sectionsAndPrimaryDocs` → `sections`, `coreDocuments`,
+ *     - `sectionsAndPrimaryDocs` → `sections`, `core_documents`,
  *       `activeDataControllers`, `typeSpecifications`.
- *     - `agentScopeDocs` → `coreDocuments`, `activeDataControllers`.
+ *     - `agentScopeDocs` → `core_documents`, `activeDataControllers`.
  *   - Supporting documents are grouped under `supportingDocuments` when present.
  * - Everything is recursive: child nodes are converted with the same function.
  *
@@ -74,10 +74,10 @@ function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType
 function toBase(node: AtlasTreeNode): BaseAtlasDocument {
   return {
     type: node.atlas_document_type,
-    docNo: node.generatedDocID ?? node.atlas_document_number ?? '',
+    doc_no: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
-    lastModified: node.updated_at,
+    last_modified: node.updated_at,
     content: node.plain_text_content ?? '',
   };
 }
@@ -97,29 +97,32 @@ function mapAllAs<T extends StandardizedAtlasDocument>(items: AtlasTreeNode[]): 
 // Split `sectionsAndPrimaryDocs` (atlas-database-grouped) into atlas-document-type-grouped arrays
 function mapSectionsAndPrimaryDocs(node: AtlasTreeNode): {
   sections: SectionDocument[];
-  coreDocuments: CoreDocument[];
-  activeDataControllers: ActiveDataControllerDocument[];
-  typeSpecifications: TypeSpecificationDocument[];
+  core_documents: CoreDocument[];
+  active_data_controllers: ActiveDataControllerDocument[];
+  type_specifications: TypeSpecificationDocument[];
 } {
   return {
     sections: filterMapByType<SectionDocument>(node.sectionsAndPrimaryDocs, 'Section'),
-    coreDocuments: filterMapByType<CoreDocument>(node.sectionsAndPrimaryDocs, 'Core'),
-    activeDataControllers: filterMapByType<ActiveDataControllerDocument>(
+    core_documents: filterMapByType<CoreDocument>(node.sectionsAndPrimaryDocs, 'Core'),
+    active_data_controllers: filterMapByType<ActiveDataControllerDocument>(
       node.sectionsAndPrimaryDocs,
       'Active Data Controller',
     ),
-    typeSpecifications: filterMapByType<TypeSpecificationDocument>(node.sectionsAndPrimaryDocs, 'Type Specification'),
+    type_specifications: filterMapByType<TypeSpecificationDocument>(node.sectionsAndPrimaryDocs, 'Type Specification'),
   };
 }
 
 // Split `agentScopeDocs` (mixed Core + Active Data Controller) into atlas-document-type-grouped arrays
 function mapAgentScopeDocs(node: AtlasTreeNode): {
-  coreDocuments: CoreDocument[];
-  activeDataControllers: ActiveDataControllerDocument[];
+  core_documents: CoreDocument[];
+  active_data_controllers: ActiveDataControllerDocument[];
 } {
   return {
-    coreDocuments: filterMapByType<CoreDocument>(node.agentScopeDocs, 'Core'),
-    activeDataControllers: filterMapByType<ActiveDataControllerDocument>(node.agentScopeDocs, 'Active Data Controller'),
+    core_documents: filterMapByType<CoreDocument>(node.agentScopeDocs, 'Core'),
+    active_data_controllers: filterMapByType<ActiveDataControllerDocument>(
+      node.agentScopeDocs,
+      'Active Data Controller',
+    ),
   };
 }
 
@@ -162,10 +165,10 @@ export function atlasNodeToStandardized(
       const doc: ArticleDocument = {
         ...base,
         sections: splitDb.sections,
-        coreDocuments: [...splitDb.coreDocuments, ...splitAgent.coreDocuments],
+        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
         // Supporting docs
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
+        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
         tenets: mapAllAs<TenetDocument>(node.tenets),
       };
       return doc;
@@ -186,12 +189,12 @@ export function atlasNodeToStandardized(
       const splitAgent = mapAgentScopeDocs(node);
       const doc: SectionDocument = {
         ...base,
-        coreDocuments: [...splitDb.coreDocuments, ...splitAgent.coreDocuments],
-        activeDataControllers: [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers],
-        typeSpecifications: splitDb.typeSpecifications,
+        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
+        active_data_controllers: [...splitDb.active_data_controllers, ...splitAgent.active_data_controllers],
+        type_specifications: splitDb.type_specifications,
         // Supporting docs
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
+        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
         tenets: mapAllAs<TenetDocument>(node.tenets),
       };
       return doc;
@@ -211,13 +214,13 @@ export function atlasNodeToStandardized(
       const splitAgent = mapAgentScopeDocs(node);
       const doc: CoreDocument = {
         ...base,
-        coreDocuments: [...splitDb.coreDocuments, ...splitAgent.coreDocuments],
-        activeDataControllers: [...splitDb.activeDataControllers, ...splitAgent.activeDataControllers],
-        typeSpecifications: splitDb.typeSpecifications,
+        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
+        active_data_controllers: [...splitDb.active_data_controllers, ...splitAgent.active_data_controllers],
+        type_specifications: splitDb.type_specifications,
 
         // Supporting docs
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
+        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
         tenets: mapAllAs<TenetDocument>(node.tenets),
       };
       return doc;
@@ -230,9 +233,9 @@ export function atlasNodeToStandardized(
         ...base,
 
         // Supporting docs
-        activeData: mapAllAs<ActiveDataDocument>(node.activeData),
+        active_data: mapAllAs<ActiveDataDocument>(node.activeData),
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
+        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
         tenets: mapAllAs<TenetDocument>(node.tenets),
       };
       return doc;
@@ -255,7 +258,7 @@ export function atlasNodeToStandardized(
         ...extraFields,
         // Supporting docs
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
+        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
         tenets: mapAllAs<TenetDocument>(node.tenets),
       };
       return doc;
@@ -284,7 +287,9 @@ export function atlasNodeToStandardized(
         // Extra fields
         ...extraFields,
         // Child docs
-        scenarioVariations: node.scenarioVariations.map((c) => atlasNodeToStandardized(c) as ScenarioVariationDocument),
+        scenario_variations: node.scenarioVariations.map(
+          (c) => atlasNodeToStandardized(c) as ScenarioVariationDocument,
+        ),
       };
       return doc;
     }

@@ -6,10 +6,10 @@ import { AtlasDocumentType } from '@/app/server/atlas/constants';
  */
 export interface BaseAtlasDocument {
   type: AtlasDocumentType; // Allow string for unknown/custom types
-  docNo: string;
+  doc_no: string;
   name: string;
   uuid: string | null;
-  lastModified: string;
+  last_modified: string;
   content: string;
 }
 
@@ -34,15 +34,15 @@ export const childCollectionNameToDocumentType = {
   scopes: 'Scope',
   articles: 'Article',
   sections: 'Section',
-  coreDocuments: 'Core',
-  activeDataControllers: 'Active Data Controller',
-  typeSpecifications: 'Type Specification',
+  core_documents: 'Core',
+  active_data_controllers: 'Active Data Controller',
+  type_specifications: 'Type Specification',
   annotations: 'Annotation',
   tenets: 'Action Tenet',
   scenarios: 'Scenario',
-  scenarioVariations: 'Scenario Variation',
-  activeData: 'Active Data',
-  neededResearch: 'Needed Research',
+  scenario_variations: 'Scenario Variation',
+  active_data: 'Active Data',
+  needed_research: 'Needed Research',
 } as const satisfies Record<string, AtlasDocumentType>;
 
 export type ChildCollectionName = keyof typeof childCollectionNameToDocumentType;
@@ -51,29 +51,43 @@ export const childCollectionNames: ChildCollectionName[] = [
   'scopes',
   'articles',
   'sections',
-  'coreDocuments',
-  'activeDataControllers',
-  'typeSpecifications',
+  'core_documents',
+  'active_data_controllers',
+  'type_specifications',
   'annotations',
   'tenets',
   'scenarios',
-  'scenarioVariations',
-  'activeData',
-  'neededResearch',
+  'scenario_variations',
+  'active_data',
+  'needed_research',
 ];
 
 // This is not used - TODO: Delete? Also, these are out of date
 // TODO: Refresh these rules based on the latest Atlas hierarchy rules and use in `validateChildTypes
 export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentType, ChildCollectionName[]> = {
   Scope: ['articles'],
-  Article: ['sections', 'annotations', 'neededResearch', 'tenets'],
-  Section: ['coreDocuments', 'activeDataControllers', 'typeSpecifications', 'annotations', 'neededResearch', 'tenets'],
-  Core: ['coreDocuments', 'activeDataControllers', 'typeSpecifications', 'annotations', 'neededResearch', 'tenets'],
-  'Active Data Controller': ['activeData', 'annotations', 'neededResearch', 'tenets'],
-  'Type Specification': ['annotations', 'neededResearch', 'tenets'],
+  Article: ['sections', 'annotations', 'needed_research', 'tenets'],
+  Section: [
+    'core_documents',
+    'active_data_controllers',
+    'type_specifications',
+    'annotations',
+    'needed_research',
+    'tenets',
+  ],
+  Core: [
+    'core_documents',
+    'active_data_controllers',
+    'type_specifications',
+    'annotations',
+    'needed_research',
+    'tenets',
+  ],
+  'Active Data Controller': ['active_data', 'annotations', 'needed_research', 'tenets'],
+  'Type Specification': ['annotations', 'needed_research', 'tenets'],
   Annotation: [],
   'Action Tenet': ['scenarios'],
-  Scenario: ['scenarioVariations'],
+  Scenario: ['scenario_variations'],
   'Scenario Variation': [],
   'Needed Research': [],
   'Active Data': [],
@@ -93,19 +107,19 @@ export interface ArticleDocument extends BaseAtlasDocument {
   sections: SectionDocument[];
   // Supporting documents
   annotations: AnnotationDocument[];
-  neededResearch: NeededResearchDocument[];
+  needed_research: NeededResearchDocument[];
   tenets: TenetDocument[]; // TODO: Disable?
   // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
-  coreDocuments: CoreDocument[];
+  core_documents: CoreDocument[];
 }
 
 export interface SectionDocument extends BaseAtlasDocument {
-  coreDocuments: CoreDocument[];
-  activeDataControllers: ActiveDataControllerDocument[];
-  typeSpecifications: TypeSpecificationDocument[];
+  core_documents: CoreDocument[];
+  active_data_controllers: ActiveDataControllerDocument[];
+  type_specifications: TypeSpecificationDocument[];
   // Supporting documents
   annotations: AnnotationDocument[];
-  neededResearch: NeededResearchDocument[];
+  needed_research: NeededResearchDocument[];
   tenets: TenetDocument[];
 }
 
@@ -114,20 +128,20 @@ export interface SectionDocument extends BaseAtlasDocument {
  */
 
 export interface CoreDocument extends BaseAtlasDocument {
-  coreDocuments: CoreDocument[];
-  activeDataControllers: ActiveDataControllerDocument[];
-  typeSpecifications: TypeSpecificationDocument[];
+  core_documents: CoreDocument[];
+  active_data_controllers: ActiveDataControllerDocument[];
+  type_specifications: TypeSpecificationDocument[];
   // Supporting documents
   annotations: AnnotationDocument[];
-  neededResearch: NeededResearchDocument[];
+  needed_research: NeededResearchDocument[];
   tenets: TenetDocument[];
 }
 
 export interface ActiveDataControllerDocument extends BaseAtlasDocument {
   // Supporting documents
-  activeData: ActiveDataDocument[];
+  active_data: ActiveDataDocument[];
   annotations: AnnotationDocument[];
-  neededResearch: NeededResearchDocument[];
+  needed_research: NeededResearchDocument[];
   tenets: TenetDocument[];
 }
 
@@ -140,7 +154,7 @@ export interface TypeSpecificationDocument extends BaseAtlasDocument {
   type_specification_type_overview: string | null;
   // Supporting documents
   annotations: AnnotationDocument[];
-  neededResearch: NeededResearchDocument[];
+  needed_research: NeededResearchDocument[];
   tenets: TenetDocument[];
 }
 
@@ -162,7 +176,7 @@ export interface ScenarioDocument extends BaseAtlasDocument {
   scenario_finding: string | null;
   scenario_additional_guidance: string | null;
   // Child docs
-  scenarioVariations: ScenarioVariationDocument[];
+  scenario_variations: ScenarioVariationDocument[];
 }
 
 export interface ScenarioVariationDocument extends BaseAtlasDocument {

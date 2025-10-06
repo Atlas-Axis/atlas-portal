@@ -89,20 +89,20 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     if ('sections' in doc && doc.sections) {
       traverseChildren(doc.sections);
     }
-    if ('coreDocuments' in doc && doc.coreDocuments) {
-      traverseChildren(doc.coreDocuments);
+    if ('core_documents' in doc && doc.core_documents) {
+      traverseChildren(doc.core_documents);
     }
-    if ('activeDataControllers' in doc && doc.activeDataControllers) {
-      traverseChildren(doc.activeDataControllers);
+    if ('active_data_controllers' in doc && doc.active_data_controllers) {
+      traverseChildren(doc.active_data_controllers);
     }
-    if ('typeSpecifications' in doc && doc.typeSpecifications) {
-      traverseChildren(doc.typeSpecifications);
+    if ('type_specifications' in doc && doc.type_specifications) {
+      traverseChildren(doc.type_specifications);
     }
     if ('scenarios' in doc && doc.scenarios) {
       traverseChildren(doc.scenarios);
     }
-    if ('scenarioVariations' in doc && doc.scenarioVariations) {
-      traverseChildren(doc.scenarioVariations);
+    if ('scenario_variations' in doc && doc.scenario_variations) {
+      traverseChildren(doc.scenario_variations);
     }
     // annotations, tenets, neededResearch, activeData are supporting documents
     if ('annotations' in doc && doc.annotations) {
@@ -111,11 +111,11 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     if ('tenets' in doc && doc.tenets) {
       traverseChildren(doc.tenets);
     }
-    if ('neededResearch' in doc && doc.neededResearch) {
-      traverseChildren(doc.neededResearch);
+    if ('needed_research' in doc && doc.needed_research) {
+      traverseChildren(doc.needed_research);
     }
-    if ('activeData' in doc && doc.activeData) {
-      traverseChildren(doc.activeData);
+    if ('active_data' in doc && doc.active_data) {
+      traverseChildren(doc.active_data);
     }
   }
 
@@ -221,7 +221,7 @@ async function main() {
       // Return a minimal document for counting purposes
       return {
         type: orphanedNode.atlas_document_type,
-        docNo: orphanedNode.generatedDocID ?? orphanedNode.atlas_document_number ?? '',
+        doc_no: orphanedNode.generatedDocID ?? orphanedNode.atlas_document_number ?? '',
         name: orphanedNode.generatedDocName ?? orphanedNode.plain_text_name ?? '',
         uuid: orphanedNode.notion_page_id ?? null,
         content: orphanedNode.plain_text_content ?? '',
