@@ -1,0 +1,132 @@
+import { describe, expect, it } from 'vitest';
+import { convertNotionBlocksToMarkdown, convertNotionRichTextToMarkdown } from '../rich-text-to-markdown';
+import type { NotionBlock, NotionRichText } from '../rich-text-to-markdown';
+
+describe('convertNotionRichTextToHtml', () => {
+  it('renders paragraph inline formatting (bold/italic/underline/strike/code)', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'text', text: { content: 'hello ' }, annotations: { bold: true } },
+      { type: 'text', text: { content: 'world' }, annotations: { italic: true, underline: true } },
+      { type: 'text', text: { content: '!' }, annotations: { strikethrough: true } },
+      { type: 'text', text: { content: 'code' }, annotations: { code: true } },
+    ] as NotionRichText[]);
+    expect(html).toBe('**hello **_world_~~!~~`code`');
+  });
+
+  it('renders links from href or text.link', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'text', text: { content: 'link1', link: { url: 'https://a.com' } } },
+      { type: 'text', text: { content: ' ' } },
+      { type: 'text', text: { content: 'link2' }, href: 'https://b.com' },
+    ] as NotionRichText[]);
+    expect(html).toBe('[link1](https://a.com) [link2](https://b.com)');
+  });
+
+  it('sanitizes unsafe href schemes', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'text', text: { content: 'bad', link: { url: 'javascript:alert(1)' } } },
+      { type: 'text', text: { content: ' ok', link: { url: 'https://ok.com' } } },
+    ] as NotionRichText[]);
+    expect(html).toBe('bad[ ok](https://ok.com)');
+  });
+
+  it('converts newlines to Markdown line breaks', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'text', text: { content: 'line1\nline2' } },
+    ] as NotionRichText[]);
+    expect(html).toBe('line1  \nline2');
+  });
+
+  it('renders equation inline as $...$', () => {
+    const html = convertNotionRichTextToMarkdown([
+      { type: 'equation', equation: { expression: 't_{i}' } },
+      { type: 'text', text: { content: ' = ' } },
+      { type: 'equation', equation: { expression: 'i' } },
+    ] as NotionRichText[]);
+    expect(html).toBe('$t_{i}$ = $i$');
+  });
+});
+
+describe('convertNotionBlocksToHtml (Markdown output)', () => {
+  it('renders paragraphs', () => {
+    const md = convertNotionBlocksToMarkdown([
+      { type: 'paragraph', paragraph: { rich_text: [{ type: 'text', text: { content: 'Hello' } }] } },
+    ] as NotionBlock[]);
+    expect(md).toBe('Hello');
+  });
+
+  it('renders code block with language', () => {
+    const md = convertNotionBlocksToMarkdown([
+      { type: 'code', code: { language: 'ts', rich_text: [{ type: 'text', text: { content: 'const x = 1 < 2' } }] } },
+    ] as NotionBlock[]);
+    expect(md).toBe('```ts\nconst x = 1 < 2\n```');
+  });
+
+  it('renders lists (bulleted and numbered)', () => {
+    const md = convertNotionBlocksToMarkdown([
+      { type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'a' } }] } },
+      { type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'b' } }] } },
+      { type: 'numbered_list_item', numbered_list_item: { rich_text: [{ type: 'text', text: { content: 'c' } }] } },
+      { type: 'numbered_list_item', numbered_list_item: { rich_text: [{ type: 'text', text: { content: 'd' } }] } },
+    ] as NotionBlock[]);
+    expect(md).toBe('- a\n- b\n1. c\n2. d');
+  });
+
+  it('renders nested list children', () => {
+    const md = convertNotionBlocksToMarkdown([
+      {
+        type: 'bulleted_list_item',
+        bulleted_list_item: {
+          rich_text: [{ type: 'text', text: { content: 'parent' } }],
+          children: [
+            {
+              type: 'bulleted_list_item',
+              bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'child' } }] },
+            },
+          ],
+        },
+      },
+    ] as NotionBlock[]);
+    expect(md).toBe('- parent\n  - child');
+  });
+
+  it('renders table with rows and cells (GFM)', () => {
+    const md = convertNotionBlocksToMarkdown([
+      {
+        type: 'table',
+        table: {
+          has_column_header: true,
+          children: [
+            {
+              type: 'table_row',
+              table_row: {
+                cells: [[{ type: 'text', text: { content: 'A' } }], [{ type: 'text', text: { content: 'B' } }]],
+              },
+            },
+            {
+              type: 'table_row',
+              table_row: {
+                cells: [[{ type: 'text', text: { content: '1' } }], [{ type: 'text', text: { content: '2' } }]],
+              },
+            },
+          ],
+        },
+      },
+    ] as NotionBlock[]);
+    expect(md).toBe(['| A | B |', '| --- | --- |', '| 1 | 2 |'].join('\n'));
+  });
+
+  it('renders equation block as $$...$$', () => {
+    const md = convertNotionBlocksToMarkdown([{ type: 'equation', equation: { expression: 'x^2' } }] as NotionBlock[]);
+    expect(md).toBe('$$x^2$$');
+  });
+
+  it('renders headings as markdown', () => {
+    const md = convertNotionBlocksToMarkdown([
+      { type: 'heading_1', heading_1: { rich_text: [{ type: 'text', text: { content: 'Title' } }] } },
+      { type: 'heading_2', heading_2: { rich_text: [{ type: 'text', text: { content: 'Subtitle' } }] } },
+      { type: 'heading_3', heading_3: { rich_text: [{ type: 'text', text: { content: 'Section' } }] } },
+    ] as NotionBlock[]);
+    expect(md).toBe('# Title\n## Subtitle\n### Section');
+  });
+});
