@@ -25,6 +25,7 @@
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDocumentType } from '@/app/server/atlas/constants';
+import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
 import {
   ScenarioExtraFields,
   ScenarioVariationExtraFields,
@@ -78,7 +79,7 @@ function toBase(node: AtlasTreeNode): BaseAtlasDocument {
     name: node.generatedDocName ?? node.plain_text_name ?? '',
     uuid: node.notion_page_id ?? null,
     last_modified: node.updated_at,
-    content: node.plain_text_content ?? '',
+    content: atlasDatabasePageToMarkdown(node),
   };
 }
 
