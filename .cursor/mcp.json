@@ -5,8 +5,7 @@
       "args": ["trigger.dev@latest", "mcp", "--dev-only"]
     },
     "supabase": {
-      "command": "npx",
-      "args": ["-y", "@supabase/mcp-server-supabase", "--read-only", "--project-ref=kvxffffzfsnosaqmofut"]
+      "url": "https://mcp.supabase.com/mcp?project_ref=kvxffffzfsnosaqmofut"
     }
   }
 }
