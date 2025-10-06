@@ -1,4 +1,4 @@
-import { renderMarkdown } from '../server/markdown/render';
+import { markdownToHTML } from '../server/markdown/render';
 
 const markdownInput = `# Markdown Demo
 
@@ -28,7 +28,7 @@ You can write inline code like \`const x = 42\` or create tables:
 `;
 
 export default function MarkdownPage() {
-  const htmlOutput = renderMarkdown(markdownInput);
+  const htmlOutput = markdownToHTML(markdownInput);
 
   return (
     <div className="typography container mx-auto min-h-screen max-w-6xl p-8">

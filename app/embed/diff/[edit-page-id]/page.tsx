@@ -1,6 +1,6 @@
 import { ChangeList } from '@/app/embed/diff/change-list';
 import { _delete_calculateNotionPageHierarchyChanges } from '@/app/server/diff/to_delete/_old.calculate-notion-page-changes';
-import { renderMarkdown } from '@/app/server/markdown/render';
+import { markdownToHTML } from '@/app/server/markdown/render';
 import { getOriginalRootNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 
@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: Promise<{ 'edit-page-id
   });
 
   // Generate HTML output from Markdown edit proposal
-  const htmlOutput = renderMarkdown(result.proposalMarkdown);
+  const htmlOutput = markdownToHTML(result.proposalMarkdown);
 
   return (
     <div className="mx-auto max-w-4xl space-y-9 p-6">

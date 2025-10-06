@@ -4,7 +4,7 @@ import { AtlasDatabaseName } from './constants';
 
 const ALLOWED_DUPLICATE_TYPES = ['Needed Research', 'Action Tenet'];
 
-export function flattenAtlasScopeTreesToNotionPages({
+export function flattenAtlasScopeTreesToNodesPerDatabase({
   scopeTrees,
 }: {
   scopeTrees: AtlasTreeNode[];
