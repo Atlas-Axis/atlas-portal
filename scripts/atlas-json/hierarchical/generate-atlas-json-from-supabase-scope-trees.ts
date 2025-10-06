@@ -25,9 +25,25 @@ import path from 'path';
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-types';
 import atlasNodeToStandardized from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
-import type { StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from '@/app/server/atlas/json-export/types';
+import type {
+  ChildCollectionName,
+  StandardizedAtlasDocument,
+  StandardizedAtlasScopeTrees,
+} from '@/app/server/atlas/json-export/types';
+import { childCollectionNames } from '@/app/server/atlas/json-export/types';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
+
+/**
+ * Type-safe helper to check if a property exists on a StandardizedAtlasDocument
+ * and narrow its type. This ensures we only use valid child collection names.
+ */
+function hasChildCollection(
+  doc: StandardizedAtlasDocument,
+  collectionName: ChildCollectionName,
+): doc is StandardizedAtlasDocument & Record<ChildCollectionName, StandardizedAtlasDocument[]> {
+  return collectionName in doc && Array.isArray((doc as unknown as Record<string, unknown>)[collectionName]);
+}
 
 /**
  * Recursively count all unique documents in an AtlasTreeNode tree structure.
@@ -82,40 +98,11 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
       uniqueUuids.add(doc.uuid);
     }
 
-    // Recursively traverse all child collections based on document type
-    if ('articles' in doc && doc.articles) {
-      traverseChildren(doc.articles);
-    }
-    if ('sections' in doc && doc.sections) {
-      traverseChildren(doc.sections);
-    }
-    if ('core_documents' in doc && doc.core_documents) {
-      traverseChildren(doc.core_documents);
-    }
-    if ('active_data_controllers' in doc && doc.active_data_controllers) {
-      traverseChildren(doc.active_data_controllers);
-    }
-    if ('type_specifications' in doc && doc.type_specifications) {
-      traverseChildren(doc.type_specifications);
-    }
-    if ('scenarios' in doc && doc.scenarios) {
-      traverseChildren(doc.scenarios);
-    }
-    if ('scenario_variations' in doc && doc.scenario_variations) {
-      traverseChildren(doc.scenario_variations);
-    }
-    // annotations, tenets, neededResearch, activeData are supporting documents
-    if ('annotations' in doc && doc.annotations) {
-      traverseChildren(doc.annotations);
-    }
-    if ('tenets' in doc && doc.tenets) {
-      traverseChildren(doc.tenets);
-    }
-    if ('needed_research' in doc && doc.needed_research) {
-      traverseChildren(doc.needed_research);
-    }
-    if ('active_data' in doc && doc.active_data) {
-      traverseChildren(doc.active_data);
+    // Recursively traverse all child collections using type-safe checks
+    for (const collectionName of childCollectionNames) {
+      if (hasChildCollection(doc, collectionName)) {
+        traverseChildren(doc[collectionName]);
+      }
     }
   }
 
