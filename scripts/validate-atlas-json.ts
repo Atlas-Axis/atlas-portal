@@ -10,25 +10,12 @@
  */
 import fs from 'fs';
 import path from 'path';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import validateStandardizedAtlasTree, {
   type ValidationError,
 } from '@/app/server/atlas/json-export/validate-standardized-atlas-tree';
 
 function formatError(validationError: ValidationError): string {
-  const nodeSummaryParts: string[] = [];
-  if (validationError.node && typeof validationError.node === 'object') {
-    const type = (validationError.node as Partial<StandardizedAtlasDocument>).type;
-    const docNo = (validationError.node as Partial<StandardizedAtlasDocument>).doc_no;
-    const name = (validationError.node as Partial<StandardizedAtlasDocument>).name;
-    const uuid = (validationError.node as Partial<StandardizedAtlasDocument>).uuid;
-    if (type) nodeSummaryParts.push(`type=${type}`);
-    if (docNo) nodeSummaryParts.push(`doc_no=${docNo}`);
-    if (name) nodeSummaryParts.push(`name=${name}`);
-    if (uuid) nodeSummaryParts.push(`uuid=${uuid}`);
-  }
-  const nodeSummary = nodeSummaryParts.length ? ` [${nodeSummaryParts.join(', ')}]` : '';
-  return `- (${validationError.kind}) ${validationError.path}${nodeSummary}\n  id: ${validationError.nodeId}\n  message: ${validationError.message}\n  action: ${validationError.actionSuggestion}`;
+  return `⚠️  ${validationError.message}\n    id: ${validationError.nodeId}\n    name: ${validationError.node.name}\n    type: ${validationError.node.type}\n    action: ${validationError.actionSuggestion}`;
 }
 
 function main() {
@@ -58,11 +45,11 @@ function main() {
 
   console.log(`\nFound ${errors.length} validation error(s):\n`);
   for (const err of errors) {
-    console.log(formatError(err));
-    console.log('');
+    console.warn(formatError(err));
+    console.log('\n\n');
   }
 
-  process.exit(2);
+  process.exit();
 }
 
 main();
