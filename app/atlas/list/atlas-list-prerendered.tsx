@@ -8,30 +8,21 @@ import AtlasList from './atlas-list';
 
 interface AtlasListWithAgentsProps {
   initialAtlasNodesPerDatabase: Record<string, AtlasTreeNode[]>;
-  initialPageIdToHTMLMap: Record<string, string>;
 }
 
-export default function AtlasListPrerendered({
-  initialAtlasNodesPerDatabase,
-  initialPageIdToHTMLMap,
-}: AtlasListWithAgentsProps) {
+export default function AtlasListPrerendered({ initialAtlasNodesPerDatabase }: AtlasListWithAgentsProps) {
   const [atlasPagesPerDatabase, setAtlasPagesPerDatabase] = useState(initialAtlasNodesPerDatabase);
-  const [pageIdToHTMLMap, setPageIdToHTMLMap] = useState(initialPageIdToHTMLMap);
 
-  const handleAgentsLoaded = useCallback((agentNodes: AtlasTreeNode[], agentPageIdsToHTML: Record<string, string>) => {
+  const handleAgentsLoaded = useCallback((agentNodes: AtlasTreeNode[]) => {
     setAtlasPagesPerDatabase((prev) => ({
       ...prev,
       [ATLAS_DATABASES.AGENTS]: agentNodes,
-    }));
-    setPageIdToHTMLMap((prev) => ({
-      ...prev,
-      ...agentPageIdsToHTML,
     }));
   }, []);
 
   return (
     <>
-      <AtlasList atlasPagesPerDatabase={atlasPagesPerDatabase} pageIdToHTMLMap={pageIdToHTMLMap} />
+      <AtlasList atlasPagesPerDatabase={atlasPagesPerDatabase} />
 
       {/*
        The AgentsSection is a client component that loads the agents data from the API after the AtlasList has been rendered.

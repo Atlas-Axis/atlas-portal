@@ -1,6 +1,7 @@
 'use client';
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { atlasDatabasePageToMarkdown } from '@/app/server/atlas/atlas-rich-text-formatter';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
@@ -8,10 +9,9 @@ import { FormattedContent } from './formatted-content';
 
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
-  pageIdToHTMLMap: Record<string, string>;
 }
 
-export default function AtlasList({ atlasPagesPerDatabase, pageIdToHTMLMap }: AtlasListClientProps) {
+export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
 
   return (
@@ -41,7 +41,7 @@ export default function AtlasList({ atlasPagesPerDatabase, pageIdToHTMLMap }: At
                 {pages.length > 0 ? (
                   <div className="space-y-3">
                     {pages.map((page) => (
-                      <ListItem key={page.notion_page_id} node={page} pageIdToHTMLMap={pageIdToHTMLMap} />
+                      <ListItem key={page.notion_page_id} node={page} />
                     ))}
                   </div>
                 ) : (
@@ -58,11 +58,10 @@ export default function AtlasList({ atlasPagesPerDatabase, pageIdToHTMLMap }: At
 
 interface ListItemProps {
   node: AtlasTreeNode;
-  pageIdToHTMLMap: Record<string, string>;
 }
 
-function ListItem({ node, pageIdToHTMLMap }: ListItemProps) {
-  const formattedContent = pageIdToHTMLMap[node.notion_page_id] || '';
+function ListItem({ node }: ListItemProps) {
+  const formattedContent = atlasDatabasePageToMarkdown(node);
   const hasContent = formattedContent.trim().length > 0;
 
   // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {
@@ -102,9 +101,9 @@ function ListItem({ node, pageIdToHTMLMap }: ListItemProps) {
         </div>
 
         {hasContent && (
-          <p className="mt-1 line-clamp-2 text-sm text-gray-600">
+          <div className="mt-1 line-clamp-2 text-sm text-gray-600">
             <FormattedContent html={formattedContent} />
-          </p>
+          </div>
         )}
 
         <div className="mt-2 flex flex-col items-start text-xs text-gray-300">
