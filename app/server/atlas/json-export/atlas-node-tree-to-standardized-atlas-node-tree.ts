@@ -25,6 +25,7 @@
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDocumentType } from '@/app/server/atlas/constants';
+import { TypeSpecificationExtraFields } from '../notion-database-properties-and-relationships';
 import {
   type ActiveDataControllerDocument,
   type ActiveDataDocument,
@@ -236,9 +237,18 @@ export function atlasNodeToStandardized(
     case 'Type Specification': {
       // Type Specification → supporting docs only
       validateChildTypes(node, ['Annotation', 'Action Tenet', 'Needed Research']);
+      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
+      const extraFields: TypeSpecificationExtraFields = {
+        type_specification_doc_identifier_rules: nodeExtraFields.type_specification_doc_identifier_rules,
+        type_specification_additional_logic: nodeExtraFields.type_specification_additional_logic,
+        type_specification_type_category: nodeExtraFields.type_specification_type_category,
+        type_specification_type_name: nodeExtraFields.type_specification_type_name,
+        type_specification_type_overview: nodeExtraFields.type_specification_type_overview,
+      };
       const doc: TypeSpecificationDocument = {
         ...base,
-
+        // Extra fields
+        ...extraFields,
         // Supporting docs
         annotations: mapAllAs<AnnotationDocument>(node.annotations),
         neededResearch: mapAllAs<NeededResearchDocument>(node.neededResearch),
@@ -260,22 +270,47 @@ export function atlasNodeToStandardized(
     case 'Scenario': {
       // Scenario → has `scenarioVariations`
       validateChildTypes(node, ['Scenario Variation']);
+      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
+      const extraFields = {
+        scenario_finding: nodeExtraFields.scenario_finding,
+        scenario_additional_guidance: nodeExtraFields.scenario_additional_guidance,
+      };
       const doc: ScenarioDocument = {
         ...base,
+        // Extra fields
+        ...extraFields,
+        // Child docs
         scenarioVariations: node.scenarioVariations.map((c) => atlasNodeToStandardized(c) as ScenarioVariationDocument),
+      };
+      return doc;
+    }
+
+    case 'Scenario Variation': {
+      // Scenario Variation → has extra fields
+      validateChildTypes(node, []);
+      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
+      const extraFields = {
+        scenario_variation_finding: nodeExtraFields.scenario_variation_finding,
+        scenario_variation_additional_guidance: nodeExtraFields.scenario_variation_additional_guidance,
+      };
+      const doc: ScenarioVariationDocument = {
+        ...base,
+        // Extra fields
+        ...extraFields,
       };
       return doc;
     }
 
     case 'Annotation':
     case 'Active Data':
-    case 'Scenario Variation':
-    case 'Needed Research':
+    case 'Needed Research': {
       // Leaf docs → base only
       validateChildTypes(node, []);
-      return {
+      const doc: StandardizedAtlasDocument = {
         ...base,
-      } as StandardizedAtlasDocument;
+      };
+      return doc;
+    }
 
     default:
       console.error(`Unknown document type: ${node.atlas_document_type}`);

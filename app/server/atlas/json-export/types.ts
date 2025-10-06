@@ -90,7 +90,7 @@ export interface ScopeDocument extends BaseAtlasDocument {
 // ✅
 export interface ArticleDocument extends BaseAtlasDocument {
   sections: SectionDocument[];
-  // supporting documents
+  // Supporting documents
   annotations: AnnotationDocument[];
   neededResearch: NeededResearchDocument[];
   tenets: TenetDocument[]; // TODO: Disable?
@@ -102,7 +102,7 @@ export interface SectionDocument extends BaseAtlasDocument {
   coreDocuments: CoreDocument[];
   activeDataControllers: ActiveDataControllerDocument[];
   typeSpecifications: TypeSpecificationDocument[];
-  // supporting documents
+  // Supporting documents
   annotations: AnnotationDocument[];
   neededResearch: NeededResearchDocument[];
   tenets: TenetDocument[];
@@ -116,14 +116,14 @@ export interface CoreDocument extends BaseAtlasDocument {
   coreDocuments: CoreDocument[];
   activeDataControllers: ActiveDataControllerDocument[];
   typeSpecifications: TypeSpecificationDocument[];
-  // supporting documents
+  // Supporting documents
   annotations: AnnotationDocument[];
   neededResearch: NeededResearchDocument[];
   tenets: TenetDocument[];
 }
 
 export interface ActiveDataControllerDocument extends BaseAtlasDocument {
-  // supporting documents
+  // Supporting documents
   activeData: ActiveDataDocument[];
   annotations: AnnotationDocument[];
   neededResearch: NeededResearchDocument[];
@@ -131,8 +131,13 @@ export interface ActiveDataControllerDocument extends BaseAtlasDocument {
 }
 
 export interface TypeSpecificationDocument extends BaseAtlasDocument {
-  // TODO: Extra fields
-  // supporting documents
+  // Extra fields
+  type_specification_doc_identifier_rules: string | null;
+  type_specification_additional_logic: string | null;
+  type_specification_type_category: string | null;
+  type_specification_type_name: string | null;
+  type_specification_type_overview: string | null;
+  // Supporting documents
   annotations: AnnotationDocument[];
   neededResearch: NeededResearchDocument[];
   tenets: TenetDocument[];
@@ -152,14 +157,17 @@ export interface TenetDocument extends BaseAtlasDocument {
 }
 
 export interface ScenarioDocument extends BaseAtlasDocument {
+  // Extra fields
+  scenario_finding: string | null;
+  scenario_additional_guidance: string | null;
+  // Child docs
   scenarioVariations: ScenarioVariationDocument[];
-  // TODO: Extra fields
 }
 
 export interface ScenarioVariationDocument extends BaseAtlasDocument {
-  // TODO: Extra fields
+  // Extra fields
+  scenario_variation_finding: string | null;
+  scenario_variation_additional_guidance: string | null;
 }
 
-export interface NeededResearchDocument extends BaseAtlasDocument {
-  // TODO: Extra fields
-}
+export interface NeededResearchDocument extends BaseAtlasDocument {}
