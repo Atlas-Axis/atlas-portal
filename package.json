@@ -31,7 +31,8 @@
     "notion-to-md": "^3.1.9",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "yaml": "^2.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

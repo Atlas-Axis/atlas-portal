@@ -1,5 +1,5 @@
 import { _delete_calculateNotionPageHierarchyChanges } from '@/app/server/diff/to_delete/_old.calculate-notion-page-changes';
-import { markdownToHTML } from '@/app/server/markdown/render';
+import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { getOriginalRootNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 

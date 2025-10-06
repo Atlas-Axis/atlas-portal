@@ -1,4 +1,4 @@
-import { markdownToHTML } from '../server/markdown/render';
+import { markdownToHTML } from '../server/markdown/markdown-to-html';
 
 const markdownInput = `# Markdown Demo
 
