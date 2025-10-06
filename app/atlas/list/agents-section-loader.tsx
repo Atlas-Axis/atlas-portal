@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 
 interface AgentsSectionProps {
-  onAgentsLoaded: (agentPages: AtlasTreeNode[]) => void;
+  onAgentsLoaded: (agentNodes: AtlasTreeNode[], agentPageIdsToHTML: Record<string, string>) => void;
 }
 
 export default function AgentsSection({ onAgentsLoaded }: AgentsSectionProps) {
@@ -23,7 +23,7 @@ export default function AgentsSection({ onAgentsLoaded }: AgentsSectionProps) {
         }
 
         const data = await response.json();
-        onAgentsLoaded(data.agentPages);
+        onAgentsLoaded(data.agentNodes, data.agentPageIdsToHTML);
       } catch (err) {
         console.error('Error loading agents:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');

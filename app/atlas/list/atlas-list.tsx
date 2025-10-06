@@ -4,12 +4,14 @@ import { Accordion, AccordionItem } from '@heroui/accordion';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
+import { FormattedContent } from './formatted-content';
 
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
+  pageIdToHTMLMap: Record<string, string>;
 }
 
-export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProps) {
+export default function AtlasList({ atlasPagesPerDatabase, pageIdToHTMLMap }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
 
   return (
@@ -39,7 +41,7 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
                 {pages.length > 0 ? (
                   <div className="space-y-3">
                     {pages.map((page) => (
-                      <ListItem key={page.notion_page_id} node={page} />
+                      <ListItem key={page.notion_page_id} node={page} pageIdToHTMLMap={pageIdToHTMLMap} />
                     ))}
                   </div>
                 ) : (
@@ -56,11 +58,12 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
 
 interface ListItemProps {
   node: AtlasTreeNode;
+  pageIdToHTMLMap: Record<string, string>;
 }
 
-function ListItem({ node }: ListItemProps) {
-  // TODO: Create a reusable function in the atlas folder for calculating display title based on database type
-  const hasContent = node.plain_text_content && node.plain_text_content.trim().length > 0;
+function ListItem({ node, pageIdToHTMLMap }: ListItemProps) {
+  const formattedContent = pageIdToHTMLMap[node.notion_page_id] || '';
+  const hasContent = formattedContent.trim().length > 0;
 
   // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {
   //   console.log({ node });
@@ -98,7 +101,11 @@ function ListItem({ node }: ListItemProps) {
           </h3>
         </div>
 
-        {hasContent && <p className="mt-1 line-clamp-2 text-sm text-gray-600">{node.plain_text_content}</p>}
+        {hasContent && (
+          <p className="mt-1 line-clamp-2 text-sm text-gray-600">
+            <FormattedContent html={formattedContent} />
+          </p>
+        )}
 
         <div className="mt-2 flex flex-col items-start text-xs text-gray-300">
           {node.sort_order && <span>Order: {node.sort_order}</span>}

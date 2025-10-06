@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { flattenAtlasScopeTreesToNotionPages } from '@/app/server/atlas/atlas-tree-flattener';
-import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
+import { atlasDatabasePagesToHTML } from '@/app/server/atlas/atlas-rich-text-formatter';
+import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
+import { AtlasTreeNode, buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 
@@ -22,11 +23,16 @@ export async function GET() {
     });
 
     // Flatten the scope trees back into a flat list of NotionDatabasePage objects, per database
-    const flatAtlasPagesPerDatabase = flattenAtlasScopeTreesToNotionPages({ scopeTrees });
+    const flatAtlasNodesPerDatabase = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees });
+    // Render formatted content for each page as a lookup map
+    const agentPageIdsToHTML = await atlasDatabasePagesToHTML<AtlasTreeNode>(
+      flatAtlasNodesPerDatabase[ATLAS_DATABASES.AGENTS],
+    );
 
     return NextResponse.json({
       // Return ONLY the flattened agent pages
-      agentPages: flatAtlasPagesPerDatabase[ATLAS_DATABASES.AGENTS] || [],
+      agentNodes: flatAtlasNodesPerDatabase[ATLAS_DATABASES.AGENTS] || [],
+      agentPageIdsToHTML,
     });
   } catch (error) {
     console.error('Error loading agents data:', error);
