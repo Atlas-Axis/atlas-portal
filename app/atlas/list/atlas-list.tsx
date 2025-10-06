@@ -1,11 +1,11 @@
 'use client';
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { atlasDatabasePageToMarkdown } from '@/app/server/atlas/atlas-rich-text-formatter';
+import { atlasDatabasePageToHTML } from '@/app/server/atlas/atlas-rich-text-formatter';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
-import { FormattedContent } from './formatted-content';
+import { CustomHTML } from '../../components/custom-html';
 
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
@@ -61,7 +61,7 @@ interface ListItemProps {
 }
 
 function ListItem({ node }: ListItemProps) {
-  const formattedContent = atlasDatabasePageToMarkdown(node);
+  const formattedContent = atlasDatabasePageToHTML(node);
   const hasContent = formattedContent.trim().length > 0;
 
   // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {
@@ -102,7 +102,7 @@ function ListItem({ node }: ListItemProps) {
 
         {hasContent && (
           <div className="mt-1 line-clamp-2 text-sm text-gray-600">
-            <FormattedContent html={formattedContent} />
+            <CustomHTML html={formattedContent} />
           </div>
         )}
 

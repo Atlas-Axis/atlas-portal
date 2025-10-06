@@ -134,6 +134,46 @@ describe('convertNotionBlocksToHtml (Markdown output)', () => {
     expect(md).toBe(['| A | B |', '| --- | --- |', '| 1 | 2 |'].join('\n'));
   });
 
+  it('renders table without escaping pipe characters in cell content', () => {
+    const md = convertNotionBlocksToMarkdown([
+      {
+        type: 'table',
+        table: {
+          has_column_header: true,
+          children: [
+            {
+              type: 'table_row',
+              table_row: {
+                cells: [
+                  [{ type: 'text', text: { content: 'Date' } }],
+                  [{ type: 'text', text: { content: 'Conserver Role' } }],
+                  [{ type: 'text', text: { content: 'Identity' } }],
+                ],
+              },
+            },
+            {
+              type: 'table_row',
+              table_row: {
+                cells: [
+                  [{ type: 'text', text: { content: '2023-06-08' } }],
+                  [{ type: 'text', text: { content: 'AVC Member' } }],
+                  [{ type: 'text', text: { content: 'HKUST_EPI_BLOCKCHAIN' } }],
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ] as NotionBlock[]);
+    expect(md).toBe(
+      [
+        '| Date | Conserver Role | Identity |',
+        '| --- | --- | --- |',
+        '| 2023-06-08 | AVC Member | HKUST_EPI_BLOCKCHAIN |',
+      ].join('\n'),
+    );
+  });
+
   it('renders equation block as $$...$$', () => {
     const md = convertNotionBlocksToMarkdown([{ type: 'equation', equation: { expression: 'x^2' } }] as NotionBlock[]);
     expect(md).toBe('$$x^2$$');

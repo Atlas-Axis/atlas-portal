@@ -8,6 +8,8 @@ import { AtlasDocumentType } from '@/app/server/atlas/constants';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
+import { CustomHTML } from '../components/custom-html';
+import { atlasDatabasePageToHTML } from '../server/atlas/atlas-rich-text-formatter';
 import styles from './content-tree.module.css';
 import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
@@ -111,7 +113,7 @@ function renderTreeNode({
   isRootNode = false,
   parentPageId,
 }: RenderTreeNodeProps): React.ReactElement {
-  const content = node?.plain_text_content || ``;
+  const formattedContent = atlasDatabasePageToHTML(node);
 
   // Get children from the tree node structure
   const immutableAndPrimaryDocumentPages = [
@@ -141,7 +143,9 @@ function renderTreeNode({
         </h3>
       )}
 
-      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>{content}</div>
+      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
+        <CustomHTML html={formattedContent} />
+      </div>
 
       <PageExtraData page={node as unknown as NotionDatabasePage} className={styles.nodeContent} />
 

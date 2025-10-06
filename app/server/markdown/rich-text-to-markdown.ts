@@ -81,6 +81,19 @@ function escapeMarkdown(input: string): string {
     .replace(/\)/g, '\\)');
 }
 
+function escapeMarkdownForTable(input: string): string {
+  // For table cells, don't escape pipe characters or underscores as they're handled by table structure
+  return input
+    .replace(/\\/g, '\\\\')
+    .replace(/\*/g, '\\*')
+    .replace(/~/g, '\\~')
+    .replace(/`/g, '\\`')
+    .replace(/\[/g, '\\[')
+    .replace(/\]/g, '\\]')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)');
+}
+
 function sanitizeHref(href: string | undefined): string | null {
   if (!href) return null;
   const trimmed = href.trim();
@@ -116,6 +129,49 @@ function formatInlineSpan(rt: NotionRichText): string {
         return `\`${escapedBackticks}\``;
       })()
     : escapeMarkdown(textContent);
+  // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
+  const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
+  const withUnderline = withBold; // Markdown has no underline; leave unchanged
+  const withItalic = wrapIf(rt.annotations?.italic, (s) => `_${s}_`, withUnderline);
+  const withStrike = wrapIf(rt.annotations?.strikethrough, (s) => `~~${s}~~`, withItalic);
+
+  // Links: explicit href on rich text or text.link.url
+  const href = rt.href || (rt.text && rt.text.link ? rt.text.link.url : undefined);
+  const sanitized = sanitizeHref(href);
+  if (sanitized) {
+    const txt = withStrike;
+    return `[${txt}](${sanitized})`;
+  }
+
+  // Mentions without href: just text
+  if (rt.type === 'mention') {
+    return withStrike;
+  }
+
+  // Equation as inline math
+  if (rt.type === 'equation') {
+    return `$${textContent}$`;
+  }
+
+  return withStrike;
+}
+
+function formatInlineSpanForTable(rt: NotionRichText): string {
+  const textContent =
+    rt.type === 'equation'
+      ? (rt.equation?.expression ?? rt.plain_text ?? '')
+      : rt.type === 'text'
+        ? (rt.text?.content ?? rt.plain_text ?? '')
+        : (rt.plain_text ?? '');
+
+  // Inline code: don't escape inside backticks, only escape backticks themselves
+  const withInlineCode = rt.annotations?.code
+    ? (() => {
+        const escapedBackticks = textContent.replace(/`/g, '\\`');
+        return `\`${escapedBackticks}\``;
+      })()
+    : escapeMarkdownForTable(textContent);
+
   // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
   const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
   const withUnderline = withBold; // Markdown has no underline; leave unchanged
@@ -209,7 +265,7 @@ function renderTable(block: NotionBlock): string {
   const rows = (block.table?.children || []).filter((c: NotionBlock) => c.type === 'table_row');
   const mdRows = rows.map((row) => {
     const cells = row.table_row?.cells || [];
-    const cellMd = cells.map((cellRt) => convertNotionRichTextToMarkdown(cellRt)).join(' | ');
+    const cellMd = cells.map((cellRt) => cellRt.map(formatInlineSpanForTable).join('')).join(' | ');
     return `| ${cellMd} |`;
   });
   if (mdRows.length === 0) return '';

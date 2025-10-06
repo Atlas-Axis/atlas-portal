@@ -1,8 +1,8 @@
 'use client';
 
-import styles from './formatted-content.module.css';
+import styles from './custom-html.module.css';
 
-export function FormattedContent({ html }: { html: string }) {
+export function CustomHTML({ html }: { html: string }) {
   // TODO: sanitize HTML to prevent XSS
   return <div className={styles.formattedContent} dangerouslySetInnerHTML={{ __html: html }} />;
 }
