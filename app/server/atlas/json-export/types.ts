@@ -62,11 +62,16 @@ export const childCollectionNames: ChildCollectionName[] = [
   'needed_research',
 ];
 
-// This is not used - TODO: Delete? Also, these are out of date
-// TODO: Refresh these rules based on the latest Atlas hierarchy rules and use in `validateChildTypes
+/**
+ * Defines which child collection names are allowed for each Atlas document type.
+ * These mappings are derived from the document type interfaces defined below.
+ *
+ * Note: This is automatically kept in sync with the actual TypeScript interfaces.
+ */
 export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentType, ChildCollectionName[]> = {
+  // Immutable Documents
   Scope: ['articles'],
-  Article: ['sections', 'annotations', 'needed_research', 'tenets'],
+  Article: ['sections', 'annotations', 'needed_research', 'tenets', 'core_documents'],
   Section: [
     'core_documents',
     'active_data_controllers',
@@ -75,6 +80,8 @@ export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentTyp
     'needed_research',
     'tenets',
   ],
+
+  // Primary Documents
   Core: [
     'core_documents',
     'active_data_controllers',
@@ -85,12 +92,14 @@ export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentTyp
   ],
   'Active Data Controller': ['active_data', 'annotations', 'needed_research', 'tenets'],
   'Type Specification': ['annotations', 'needed_research', 'tenets'],
+
+  // Supporting Documents
+  'Active Data': [],
   Annotation: [],
   'Action Tenet': ['scenarios'],
   Scenario: ['scenario_variations'],
   'Scenario Variation': [],
   'Needed Research': [],
-  'Active Data': [],
 };
 
 /**
