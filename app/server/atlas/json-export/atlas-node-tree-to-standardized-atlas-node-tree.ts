@@ -25,7 +25,11 @@
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDocumentType } from '@/app/server/atlas/constants';
-import { TypeSpecificationExtraFields } from '../notion-database-properties-and-relationships';
+import {
+  ScenarioExtraFields,
+  ScenarioVariationExtraFields,
+  TypeSpecificationExtraFields,
+} from '../notion-database-properties-and-relationships';
 import {
   type ActiveDataControllerDocument,
   type ActiveDataDocument,
@@ -271,7 +275,7 @@ export function atlasNodeToStandardized(
       // Scenario → has `scenarioVariations`
       validateChildTypes(node, ['Scenario Variation']);
       const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
-      const extraFields = {
+      const extraFields: ScenarioExtraFields = {
         scenario_finding: nodeExtraFields.scenario_finding,
         scenario_additional_guidance: nodeExtraFields.scenario_additional_guidance,
       };
@@ -289,7 +293,7 @@ export function atlasNodeToStandardized(
       // Scenario Variation → has extra fields
       validateChildTypes(node, []);
       const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
-      const extraFields = {
+      const extraFields: ScenarioVariationExtraFields = {
         scenario_variation_finding: nodeExtraFields.scenario_variation_finding,
         scenario_variation_additional_guidance: nodeExtraFields.scenario_variation_additional_guidance,
       };

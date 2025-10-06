@@ -63,6 +63,7 @@ export const childCollectionNames: ChildCollectionName[] = [
 ];
 
 // This is not used - TODO: Delete? Also, these are out of date
+// TODO: Refresh these rules based on the latest Atlas hierarchy rules and use in `validateChildTypes
 export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentType, ChildCollectionName[]> = {
   Scope: ['articles'],
   Article: ['sections', 'annotations', 'neededResearch', 'tenets'],
