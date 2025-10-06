@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import validateStandardizedAtlasTree from '@/scripts/atlas-json/hierarchical/validate-standardized-atlas-tree';
+import validateStandardizedAtlasTree from '@/app/server/atlas/json-export/validate-standardized-atlas-tree';
 
 describe('validateStandardizedAtlasTree', () => {
   it('returns JSON_PARSE_ERROR on invalid JSON', () => {

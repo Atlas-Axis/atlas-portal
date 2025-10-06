@@ -13,7 +13,7 @@ import path from 'path';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import validateStandardizedAtlasTree, {
   type ValidationError,
-} from '@/scripts/atlas-json/hierarchical/validate-standardized-atlas-tree';
+} from '@/app/server/atlas/json-export/validate-standardized-atlas-tree';
 
 function formatError(validationError: ValidationError): string {
   const nodeSummaryParts: string[] = [];
