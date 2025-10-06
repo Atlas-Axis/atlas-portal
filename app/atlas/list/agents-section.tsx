@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 
 interface AgentsSectionProps {
-  onAgentsLoaded: (agentPages: NotionDatabasePage[]) => void;
+  onAgentsLoaded: (agentPages: AtlasTreeNode[]) => void;
 }
 
 export default function AgentsSection({ onAgentsLoaded }: AgentsSectionProps) {

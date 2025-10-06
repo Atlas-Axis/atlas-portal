@@ -21,5 +21,5 @@ export default async function AtlasListPage() {
   // Flatten the scope trees back into a flat list of NotionDatabasePage objects, per database
   const flatAtlasPagesPerDatabase = flattenAtlasScopeTreesToNotionPages({ scopeTrees });
 
-  return <AtlasListPrerendered initialAtlasPagesPerDatabase={flatAtlasPagesPerDatabase} />;
+  return <AtlasListPrerendered initialAtlasNodesPerDatabase={flatAtlasPagesPerDatabase} />;
 }

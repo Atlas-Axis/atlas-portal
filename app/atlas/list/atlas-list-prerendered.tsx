@@ -1,19 +1,21 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import AgentsSection from './agents-section';
 import AtlasList from './atlas-list';
 
 interface AtlasListWithAgentsProps {
-  initialAtlasPagesPerDatabase: Record<string, NotionDatabasePage[]>;
+  initialAtlasNodesPerDatabase: Record<string, AtlasTreeNode[]>;
 }
 
-export default function AtlasListPrerendered({ initialAtlasPagesPerDatabase }: AtlasListWithAgentsProps) {
+export default function AtlasListPrerendered({
+  initialAtlasNodesPerDatabase: initialAtlasPagesPerDatabase,
+}: AtlasListWithAgentsProps) {
   const [atlasPagesPerDatabase, setAtlasPagesPerDatabase] = useState(initialAtlasPagesPerDatabase);
 
-  const handleAgentsLoaded = useCallback((agentPages: NotionDatabasePage[]) => {
+  const handleAgentsLoaded = useCallback((agentPages: AtlasTreeNode[]) => {
     setAtlasPagesPerDatabase((prev) => ({
       ...prev,
       [ATLAS_DATABASES.AGENTS]: agentPages,

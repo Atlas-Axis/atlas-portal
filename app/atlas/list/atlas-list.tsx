@@ -1,12 +1,12 @@
 'use client';
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
-import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 
 interface AtlasListClientProps {
-  atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>;
+  atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
 }
 
 export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProps) {
@@ -39,7 +39,7 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
                 {pages.length > 0 ? (
                   <div className="space-y-3">
                     {pages.map((page) => (
-                      <PageListItem key={page.notion_page_id} page={page} />
+                      <ListItem key={page.notion_page_id} node={page} />
                     ))}
                   </div>
                 ) : (
@@ -54,48 +54,63 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
   );
 }
 
-interface PageListItemProps {
-  page: NotionDatabasePage;
+interface ListItemProps {
+  node: AtlasTreeNode;
 }
 
-function PageListItem({ page }: PageListItemProps) {
+function ListItem({ node }: ListItemProps) {
   // TODO: Create a reusable function in the atlas folder for calculating display title based on database type
-  const hasContent = page.plain_text_content && page.plain_text_content.trim().length > 0;
+  const hasContent = node.plain_text_content && node.plain_text_content.trim().length > 0;
+
+  // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {
+  //   console.log({ node });
+  // }
+
+  const handleTitleClick = () => {
+    if (node.generatedDocID) {
+      window.location.hash = node.generatedDocID;
+    }
+  };
 
   return (
-    <div className="flex items-start space-x-3 py-3">
+    <div className="flex items-start space-x-3 py-3" id={node.generatedDocID}>
       <div className="min-w-0 flex-1">
         <div className="space-y-2">
           <div className="flex items-center">
-            {page.atlas_document_number && (
+            {node.atlas_document_number && (
               <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">
-                {page.atlas_document_number}
+                {node.atlas_document_number}
               </h3>
             )}
             <div>
               <span
-                className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[page.atlas_document_type]}`}
+                className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[node.atlas_document_type]}`}
               >
-                {page.atlas_document_type || 'Unknown Type'}
+                {node.atlas_document_type || 'Unknown Type'}
               </span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold">{page.canonical_document_title || '<Untitled>'}</h3>
+          <h3
+            className="cursor-pointer text-lg font-semibold transition-colors hover:text-blue-600"
+            onClick={handleTitleClick}
+          >
+            {node.canonical_document_title || '<Untitled>'}
+          </h3>
         </div>
 
-        {hasContent && <p className="mt-1 line-clamp-2 text-sm text-gray-600">{page.plain_text_content}</p>}
+        {hasContent && <p className="mt-1 line-clamp-2 text-sm text-gray-600">{node.plain_text_content}</p>}
 
         <div className="mt-2 flex flex-col items-start text-xs text-gray-300">
-          {page.sort_order && <span>Order: {page.sort_order}</span>}
+          {node.sort_order && <span>Order: {node.sort_order}</span>}
           <span>
             Notion ID:{' '}
             <a
-              href={`https://www.notion.so/${uuidToNoHyphens(page.notion_page_id)}`}
+              href={`https://www.notion.so/${uuidToNoHyphens(node.notion_page_id)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-700 hover:underline"
             >
-              {uuidToNoHyphens(page.notion_page_id)}
+              {uuidToNoHyphens(node.notion_page_id)}
             </a>
           </span>
         </div>
