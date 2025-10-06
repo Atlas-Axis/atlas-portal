@@ -4,8 +4,8 @@ import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 
-// Cache for 2 minutes
-export const revalidate = 120;
+// Cache for 1 minute
+export const revalidate = 60;
 
 // This route is used on the `/atlas` page to load the agents data after the initial ISR page is loaded.
 // This is used to prevent a build error caused by 19 MB limit on the prerendered HTML, so some data loading is deferred to the client.
