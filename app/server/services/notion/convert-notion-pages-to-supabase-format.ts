@@ -12,6 +12,7 @@ import {
   TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { Json } from '../supabase/database.types';
 import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
@@ -77,7 +78,7 @@ async function convertSingleNotionPageToDatabaseFormat(
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
   if (!documentType) {
     console.error(`⚠️ Document type is missing for page ${notionPage.id}.`);
-    console.error(`🔗 Notion page URL: https://www.notion.so/${notionPage.id}`);
+    console.error(`🔗 Notion page URL: https://www.notion.so/${uuidToNoHyphens(notionPage.id)}`);
     throw new Error(`Document type is missing for page ${notionPage.id} (${pageTitle.plainText})`);
   }
 
