@@ -1,3 +1,4 @@
+import { compareDocNumbers } from '../atlas-utils';
 import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
@@ -63,7 +64,8 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   for (const collectionName of childCollectionOrder) {
     const children = getChildren(doc, collectionName);
     if (!children || children.length === 0) continue;
-    for (const child of children) {
+    const sortedChildren = [...children].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
+    for (const child of sortedChildren) {
       lines.push(...formatDocumentRecursive(child, depth + 1));
     }
   }
