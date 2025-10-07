@@ -38,7 +38,7 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   const lines: string[] = [];
 
   const hashes = '#'.repeat(Math.max(1, depth + 1));
-  const title = `${hashes} ${doc.doc_no} - ${doc.name}`.trim();
+  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}]`.trim();
   lines.push(title, '');
 
   if (doc.content && doc.content.trim().length > 0) {
@@ -51,13 +51,7 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
     lines.push(...extraFieldLines, '');
   }
 
-  const formattedDate = formatISODateYYYYMMDD(doc.last_modified);
-  lines.push(
-    `**Document Type:** ${doc.type}`,
-    `**UUID:** ${doc.uuid ?? ''}`,
-    `**Last Modified:** ${formattedDate}`,
-    '',
-  );
+  lines.push(`**UUID:** ${doc.uuid ?? ''}`, '');
 
   // Children: follow allowed child collection order per type; preserve item order in each array
   const childCollectionOrder = allowedChildCollectionNamesPerDocumentType[doc.type] ?? [];
