@@ -9,13 +9,6 @@ export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | Atlas
     const richText = page.json_content as RichTextItemResponse[];
     const result = convertRichTextToMarkdown(richText);
 
-    if (
-      page.notion_page_id === 'c518c0b4-dea2-4c6f-8ef8-231d61dd375c' ||
-      page.notion_page_id === '151f2ff0-8d73-806a-b3c8-d334d3fb5e0f'
-    ) {
-      console.log('Markdown conversion for page c518c0b4-dea2-4c6f-8ef8-231d61dd375c');
-      console.log(result);
-    }
     return result;
   }
   console.warn(`Page ${page.notion_page_id} has no valid json_content for markdown conversion.`);
@@ -26,13 +19,7 @@ export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTree
   if (page.json_content && Array.isArray(page.json_content)) {
     const richText = page.json_content as RichTextItemResponse[];
     const markdown = convertRichTextToMarkdown(richText);
-    if (
-      page.notion_page_id === 'c518c0b4-dea2-4c6f-8ef8-231d61dd375c' ||
-      page.notion_page_id === '151f2ff0-8d73-806a-b3c8-d334d3fb5e0f'
-    ) {
-      console.log('HTML conversion for page c518c0b4-dea2-4c6f-8ef8-231d61dd375c');
-      console.log(markdownToHTML(markdown));
-    }
+
     return markdownToHTML(markdown);
   }
   console.warn(`Page ${page.notion_page_id} has no valid json_content for HTML conversion.`);
