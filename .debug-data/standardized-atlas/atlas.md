@@ -1838,6 +1838,14 @@ Another point to research involves the concepts of due process or fairness. Spec
 **UUID:** c1a605bb-ae3e-486d-a153-c900e643750b
 **Last Modified:** 2024-08-24
 
+#### A.1.4.9.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action
+
+By "swiftly,” the Target Document requires Facilitators to take immediate and prompt action without unnecessary delay. The urgency is intended to prevent further harm or disruption within the governance system. A highly time-sensitive response is mandated for any breaches or potential risks of AC misalignment.
+
+**Document Type:** Action Tenet
+**UUID:** 2d1891c7-1c5b-4e05-abc9-791a325f85b7
+**Last Modified:** 2024-08-26
+
 #### A.1.5.8.0.4.1 - Facilitators’ Authority To Raise Formal Allegation
 
 Any community member or Aligned Delegate with information pertinent to suspected Alignment Conserver misalignment may take their concerns directly to the Core Facilitator.  Upon receiving such information, the Core Facilitator must promptly conduct an initial review to quickly assess the credibility of the concern. Based on this preliminary review, the Core Facilitator must decide whether to initiate a formal adjudication process in accordance with [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](https://www.notion.so/45b9378d78b44bffb650d55ca048b814).  
@@ -1847,14 +1855,6 @@ Where the allegation of misalignment concerns a Governance Facilitator, a commun
 **Document Type:** Action Tenet
 **UUID:** 1cfbee44-9897-459f-b56b-8c67bcf7b07f
 **Last Modified:** 2025-09-19
-
-#### A.1.4.9.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action
-
-By "swiftly,” the Target Document requires Facilitators to take immediate and prompt action without unnecessary delay. The urgency is intended to prevent further harm or disruption within the governance system. A highly time-sensitive response is mandated for any breaches or potential risks of AC misalignment.
-
-**Document Type:** Action Tenet
-**UUID:** 2d1891c7-1c5b-4e05-abc9-791a325f85b7
-**Last Modified:** 2024-08-26
 
 ### A.1.4.10 - Adjudication Process
 

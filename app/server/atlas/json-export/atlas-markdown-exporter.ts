@@ -64,6 +64,7 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   for (const collectionName of childCollectionOrder) {
     const children = getChildren(doc, collectionName);
     if (!children || children.length === 0) continue;
+    // TODO: There should be nesting between different child collection types, e.g. sections above core documents
     const sortedChildren = [...children].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
     for (const child of sortedChildren) {
       lines.push(...formatDocumentRecursive(child, depth + 1));
