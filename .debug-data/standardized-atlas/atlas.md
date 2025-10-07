@@ -908,6 +908,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Type Specification Documents must follow the Document Identifier rules for Primary Documents.
+**Additional Logic**: The rules specified in Type Specification Documents must be followed for all Atlas Documents.
+**Type Category**: Primary Document
+**Type Name**: Type Specification
+**Type Overview**: The Type Specification Type is used for Type Specification Documents that specify the characteristics of each of the different Document Types. It ensures that all Type Specifications contain all necessary information to make it easy to reason about whether a document follows the requirements for its type.
+
 **Document Type:** Type Specification
 **UUID:** 7a3e93e3-31f3-46ff-98b4-7fc714b89c92
 **Last Modified:** 2025-09-23
@@ -915,6 +921,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.2 - The Atlas Preamble Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Atlas Preamble Documents are located at A.0 or as nested Documents one layer below A.0.
+**Additional Logic**: Atlas Preamble Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all other Atlas Documents.
+**Type Category**: Immutable Document
+**Type Name**: Atlas Preamble
+**Type Overview**: The Atlas Preamble Type is used for the Atlas Preamble Document Tree which starts at the 0th position of the first layer of the Atlas. The Atlas Preamble details the Spirit of the Atlas in human-readable language, and specifies important definitions for understanding the Spirit of the Atlas, that must be used as context when interpreting all other parts of the Atlas.
 
 **Document Type:** Type Specification
 **UUID:** b144f9d8-8a7b-4e0f-be9f-d1b16ed6da72
@@ -924,6 +936,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Scope Documents have the Document Identifiers from A.1 to A.6.
+**Additional Logic**: Scope Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them
+**Type Category**: Immutable Document
+**Type Name**: Scope
+**Type Overview**: The Scope Type is used for the six nonzero Immutable Documents of the first layer of the Atlas that directly describe focus areas, principles, rules and processes of Sky Governance. Scope Documents define the broad boundaries, requirements and objectives of each of the 5 Atlas Scopes, so that they together can fully cover all activities that are needed for Sky to function while maintaining its resilient equilibrium.
+
 **Document Type:** Type Specification
 **UUID:** ecdd82a0-19cc-4370-8c9e-95103ad19ba7
 **Last Modified:** 2025-03-13
@@ -931,6 +949,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.4 - The Article Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Article Documents have Document Identifiers one layer below the Scope Documents.
+**Additional Logic**: Article Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them.
+**Type Category**: Immutable Document
+**Type Name**: Article
+**Type Overview**: The Article Type is used for the second layer documents nested below the six Scope documents of the Atlas. They directly describe individual focus areas that together fully cover everything needed for the purpose of the Scope to be fulfilled.
 
 **Document Type:** Type Specification
 **UUID:** b97de8e2-b6a0-4ba6-8114-17019ec0ae7e
@@ -940,6 +964,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Section Documents have Document Identifiers one layer below the Article Documents.
+**Additional Logic**: Section Documents are immutable parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Adaptive Documents nested below them.
+**Type Category**: Immutable Document
+**Type Name**: Section
+**Type Overview**: The Section Type is used for the third layer of Immutable Documents nested under the Articles of each Scope in the Atlas. Section Documents provide additional structure and specification to the principles, rules and processes within the focus area of the Article. The Section Type acts as a foundation and boundary against misalignment of the Adaptive Documents that are nested below it. Generally, Section Documents should be “atomized”, or restricted to specifying only a single discrete unit of logic.
+
 **Document Type:** Type Specification
 **UUID:** 8d27875e-eeb7-433e-919c-4cb2574f8487
 **Last Modified:** 2025-03-05
@@ -947,6 +977,11 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.6 - The Core Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Core Documents follow the Document Identifier Rules of Primary Documents. Core Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Core Documents can have whatever Document Identifier that is useful for their purpose.
+**Type Category**: Primary Document
+**Type Name**: Core
+**Type Overview**: The Core Type is the basic building block of the Primary Documents. Core Documents flexibly specify the core principles, rules and processes required to fulfil the specifications made by the Immutable Documents with a focus on clarity, practicality and applicability.
 
 **Document Type:** Type Specification
 **UUID:** f06fca3e-3ce4-4990-b01a-c40b794665da
@@ -956,6 +991,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Supporting Root Documents must always be located at the .0 position of its Target Document.
+**Additional Logic**: The Supporting Root Documents have no function other than structurally acting as a directory for nested Supporting Documents in a standardized format. All Immutable Documents and Primary Documents must have a Supporting Root Document attached.
+**Type Category**: Supporting Document
+**Type Name**: Supporting Root
+**Type Overview**: The Supporting Root Type is used to mark the beginning of the Supporting Document subtree of an Immutable or Primary Document. All Immutable and Primary Documents must have a Supporting Root.
+
 **Document Type:** Type Specification
 **UUID:** 949d8d3b-0f45-417d-8f92-efe7ca647ca2
 **Last Modified:** 2024-09-01
@@ -963,6 +1004,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.8 - The Original Context Data Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Original Context Data Documents must always be located at the .0.1 position of their Target Document, or nested in a subtree of Original Context Data Documents below the .0.1 position.
+**Additional Logic**: The Original Context Data Document should be in a finished form alongside the creation or modification of its Target Document, as it aims to capture the original context and intention of the contents of the Target Document. However, it can and should be modified if new evidence and data comes to light that helps to better describe the original context and intention of the Target Document, or if new perspectives or new external events makes it possible and useful to modify the Original Context Data Document in a way that doesn’t contradict its earlier language.
+**Type Category**: Supporting Document
+**Type Name**: Original Context Data
+**Type Overview**: Original Context Data Documents explain the intention and reasoning behind the content of its Target Document, to make interpretation and extrapolation of its contents easier, and provide additional information to other forms of analysis. Original Context Data helps anchor the fundamental purpose and meaning of the target document to its original context, and should help mitigate cultural drift over time. Original Context Data can contain unstructured data used for genesis data integration of early Atlas Documents. Original Context Data Documents can form nested subtrees to organize their data if relevant.
 
 **Document Type:** Type Specification
 **UUID:** cdedc9dd-ba6d-4aac-9a35-93dd6073ef15
@@ -972,6 +1019,11 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Element Annotation Directory Documents must always be located at the .0.3 position of their Target Document.
+**Type Category**: Supporting Document
+**Type Name**: Element Annotation Directory
+**Type Overview**: The Element Annotation Directory Type is a directory used to list all of the Element Annotation Documents pertaining to a Target Document.
+
 **Document Type:** Type Specification
 **UUID:** 11f18137-cf6c-4b7b-bc29-fb827d2ddf36
 **Last Modified:** 2024-09-01
@@ -979,6 +1031,14 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.10 - The Element Annotation Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Element Annotation Documents must always be located as subdocuments to the Element Annotation Directory Document of their Target Document. Element Annotation documents are located at the .0.3.X position, with X being the incremented number.
+**Additional Logic**: Element Annotation Documents should be updated as necessary to reflect changes in the understanding or interpretation of the Element and/or any related Atlas document, while maintaining consistency with the Target Document. The Element Annotation should not contradict its Target Document or other context data of the Target Document.
+
+The "Name" property of each Element Annotation Document instance must follow a standardized template: the annotated Element is listed first, followed by a hyphen, and the phrase "Element Annotation”.
+**Type Category**: Supporting Document
+**Type Name**: Element Annotation
+**Type Overview**: Element Annotation Documents provide further specification of the semantic meaning of vague or ambiguous terms in the Target Document. Element Annotation Documents can also briefly define technical jargon that is unique to the Target Document. Element Annotation Documents can be thought of as serving a function similar to that of a footnote: they can provide useful context or commentary. Element Annotations should be as concise as possible.
 
 **Document Type:** Type Specification
 **UUID:** cdffdce4-8de4-4955-baac-cbb4e9f1e6dd
@@ -988,6 +1048,11 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Facilitator Action Tenet Directory Documents must always be located at the .0.4 position of their Target Document.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Action Tenet Directory
+**Type Overview**: The Facilitator Action Tenet Directory Type is a directory Type used to list all of the Facilitator Action Tenet Documents that pertain to a Target Document. Facilitator Action Tenet Documents specify adjudication principles and guidelines that are directly derived from the Target Document. When a controversy concerns the Target Document, the Facilitators must consult and apply the pertinent Action Tenet(s) in their decision-making.
+
 **Document Type:** Type Specification
 **UUID:** 1cb3e2e1-e6b8-4640-9f20-8644072cb8d3
 **Last Modified:** 2025-04-21
@@ -995,6 +1060,16 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.12 - The Facilitator Action Tenet Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Facilitator Action Tenet Documents must always be located as subdocuments of the Facilitator Action Tenet Directory Document (which latter is located at position .0.4) of their Target Document. Action Tenet documents are located at the .0.4.X position, with X being the incremented number.
+**Additional Logic**: Facilitator Action Tenet Documents are likely to be necessary supplements for interpreting the Immutable Document types, as these tend to have generalized, broad language. The Core Document type has the function of operationalizing the Immutable Documents, and thus its language will tend to be far more specific and concrete. For that reason, Action Tenet Supporting Documents may not be necessary for a particular Core Document. This is not a hard-coded rule, however. The determination of whether an Action Tenet Document is needed for any given Atlas document should always be tailor-made.
+
+Action Tenet Documents should be created and updated as necessary to reflect changes in governance practices, provide clarity on decision-making processes, and enhance understanding of governance principles and rules. The examples should not contradict their Target Document or other Supporting Documents of the Target Document.
+
+If the Action Tenet can be anchored to a specific term from the Target Document, that term is listed first; followed by a hyphen; and then, an abstract of the Action Tenet logic, e.g.: "Organizational Drift - ACs' Mandate When Instigating Action Can Be Traced Back to a Discrete Entity". If the Action Tenet cannot be anchored to a specific term from the Target Document, the "Name" property should simply summarize the Action Tenet logic, e.g.: "Evaluating AC breach of role-specific requirement vs. general requirement”.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Action Tenet
+**Type Overview**: The Facilitator Action Tenet Type is used to provide concrete adjudication principles derived from its Target Document. It distills the governance logic of the Target Document into a concise principle to guide Facilitators in resolving disputes related to the Target Document. The practical application of the Tenet is demonstrated by its "Scenario" Subdocuments.
 
 **Document Type:** Type Specification
 **UUID:** 799bb319-7bcb-43ef-a599-1204e971b732
@@ -1004,6 +1079,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Facilitator Action Precedent Directory Documents must always be located at the .0.5 position below their Target Document.
+**Additional Logic**: A Facilitator Action Precedent Directory Document must be updated whenever a new Facilitator Action Precedent Document is added that meaningfully changes what should be contained in the Directory overview Component.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Action Precedent Directory
+**Type Overview**: Facilitator Action Precedent Directory Documents list all of the Facilitator Action Precedent Documents that pertain to a Target Document. Facilitator Action Precedent Documents record data about Facilitator Actions, including ongoing actions, that are primarily based on interpretation of content of the Target Document.
+
 **Document Type:** Type Specification
 **UUID:** 827b7669-b66a-4f55-9b68-6975d9fe92bd
 **Last Modified:** 2024-09-01
@@ -1011,6 +1092,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.14 - The Facilitator Action Precedent Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Facilitator Action Precedent Documents must always be located as subdocuments of the Facilitator Action Precedent Directory Document of their Target Document.
+**Additional Logic**: Facilitator Action Precedent Documents should be created and updated as necessary to reflect changes in governance practices, provide clarity on decision-making processes, and enhance understanding of governance principles and rules. The Precedents should not contradict their Target Document or other Supporting Documents of the Target Document.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Action Precedent
+**Type Overview**: The Facilitator Action Precedent Type is used to record all the relevant data related to a Facilitator Action, to serve as precedent for future Facilitator Actions and decision-making processes. It is also used for ongoing Facilitator Actions, and the creation of a Facilitator Action Precedent is the formal method that Facilitators use to record Atlas Interpretations, take action against misalignment, or explicitly approve ecosystem activity.
 
 **Document Type:** Type Specification
 **UUID:** 2da657cd-4454-4b7c-81da-2e96befa3e2a
@@ -1020,6 +1107,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Active Data Controller Documents follow the Document Identifier Rules of Primary Documents.  Active Data Controller Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Active Data Controller Documents can have whatever Document Identifier that is useful for their purpose.
+**Additional Logic**: Active Data Controller Documents must have an Active Data Directory Document located below it at the .0.6 position. The Active Data Controller Document can reference its Active Data subdocuments for its own logic. This allows Active Data Documents to be self-improving and adaptive at high speeds.
+**Type Category**: Primary Document
+**Type Name**: Active Data Controller
+**Type Overview**: Active Data Controller Documents are Primary Documents that can have Active Data Documents attached to them as Supporting Documents; these latter contain variable state that can be directly modified by Facilitators and other processes external to the standard Weekly Governance Cycle or Monthly Governance Cycle (i.e., the Atlas Edit Proposal process). Active Data can be lists of authorized actors, parameters, or externally collected data being prepared for data integration with the Atlas.
+
 **Document Type:** Type Specification
 **UUID:** 28bb2a72-a653-435d-aaf6-c35df8c48b65
 **Last Modified:** 2024-09-01
@@ -1027,6 +1120,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.16 - The Active Data Directory Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Active Data Directory Documents must always be located at the .0.6 position of their Active Data Controller Document or Budget Controller Document.
+**Additional Logic**: An Active Data Directory Document should be updated whenever a new Active Data Document is added that meaningfully changes what should be contained in the Directory overview Component.
+**Type Category**: Supporting Document
+**Type Name**: Active Data Directory
+**Type Overview**: The Active Data Directory Type is a directory Type used to list all of the Active Data Documents that pertain to an Active Data Controller Document. Active Data Documents contain variable state that can be directly modified by Facilitators and other processes external to the standard Atlas Edit Weekly Cycle or Atlas Edit Monthly Cycle (i.e., the Atlas Edit Proposal process).
 
 **Document Type:** Type Specification
 **UUID:** 5482c467-881a-48e2-b1bd-fcc7aaf7753a
@@ -1036,6 +1135,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Active Data Documents must always be located as subdocuments of the Active Data Directory Document of their Active Data Controller Document.
+**Additional Logic**: Active Data Documents can contain arbitrary types of data, including large amounts of data or code. The function and purpose of the contained data depends on the logic specified in the Active Data Controller Document.
+**Type Category**: Supporting Document
+**Type Name**: Active Data
+**Type Overview**: The Active Data Type is used for Supporting Documents that contain variable state that can be directly modified by Facilitators and other processes external to the standard Weekly Governance Cycle or the Monthly Governance Cycle (i.e., the Atlas Edit Proposal process). Active Data can be lists of authorized actors, parameters, or externally collected data being prepared for data integration with the Atlas.
+
 **Document Type:** Type Specification
 **UUID:** 84d667fd-94b2-4acc-81ce-f97758565af5
 **Last Modified:** 2024-09-01
@@ -1043,6 +1148,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.18 - The Budget Controller Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Budget Controller Documents follow the Document Identifier Rules of Primary Documents.
+**Additional Logic**: Budget Controller Documents must have an Active Data Directory Document located below it at the .0.6 position, and a Budget Directory Document located below it at the .0.7 position.
+**Type Category**: Primary Document
+**Type Name**: Budget Controller
+**Type Overview**: The Budget Controller Type is used to manage the budgets used by Sky to operationalize the Scopes to achieve the purpose and goals of the Spirit of the Atlas. It controls variable state that specifically authorizes executive votes to disburse payments from the Sky Surplus Buffer, or authorize smart contracts to disburse such payments. The Budget Controller Document determines the rules and processes for modifying and using the budgets contained in the Budget Documents that are attached to it. Budget Controllers also have Active Data Documents attached that are used to report on the status and results of projects funded through the Budget Documents.
 
 **Document Type:** Type Specification
 **UUID:** 5a848bd5-e3ca-4f6d-b876-78a1ecffb197
@@ -1052,6 +1163,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Budget Directory Documents must always be located at the .0.7 position of their Budget Controller Document.
+**Additional Logic**: A Budget Directory Document should be updated whenever a new Budget Document is added that meaningfully changes what should be contained in the Directory overview Component.
+**Type Category**: Supporting Document
+**Type Name**: Budget Directory
+**Type Overview**: The Budget Directory Type is a directory Type used to list all of the Budget Documents that pertain to a Budget Controller Document.
+
 **Document Type:** Type Specification
 **UUID:** 360be7b9-c9f4-4490-ac8f-7ea3ff051467
 **Last Modified:** 2024-09-01
@@ -1059,6 +1176,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.20 - The Budget Document Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Budget Documents must always be located as subdocuments of the Budget Directory Document of their Budget Controller Document.
+**Additional Logic**: Budget Documents specify a budget rate expressed as SKY or USDS per unit of time. Additionally, they can contain large amounts of data, or code, and their function and purpose depends on their Budget Controller Document. Budget Documents can be modified directly through processes external to the standard Atlas Edit Proposal process as specified by their Budget Controller Document.
+**Type Category**: Supporting Document
+**Type Name**: Budget
+**Type Overview**: Budget Documents contain state that can authorize executive votes to disburse payments from the Sky Surplus Buffer, or authorize smart contracts to disburse such payments.
 
 **Document Type:** Type Specification
 **UUID:** b5084e3d-b56e-4e9c-80a8-f3adc73fab1c
@@ -1068,6 +1191,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Definition Directory Documents must always be located at the .0.0 position of their Target Document.
+**Additional Logic**: Definition Directory Documents only need to be present in Atlas Documents that require definitions for unique terms in their Subdocuments.
+**Type Category**: Supporting Document
+**Type Name**: Definition Directory
+**Type Overview**: The Definition Directory Type is used for Target Documents with many complex subdocuments, and acts as a directory for definitions of unique terms that are only referenced in its subdocuments.
+
 **Document Type:** Type Specification
 **UUID:** 53f8fa67-4c5e-42b8-bcdf-22206cd92567
 **Last Modified:** 2024-09-18
@@ -1075,6 +1204,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.22 - The Definition Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Definition Documents must always be located as subdocuments of the Definition Directory Document of their Target Document.
+**Additional Logic**: To the extent possible it should be avoided to have the same term defined multiple times in the Atlas, and instead always put a single definition at a location in the Atlas that covers all of its use. The main exception to this principle should be when relatively niche terms are present in two different Scopes.
+**Type Category**: Supporting Document
+**Type Name**: Definition
+**Type Overview**: The Definition Type is used for documents that define unique concepts contained in subdocuments to the Target Document of the Definition Document
 
 **Document Type:** Type Specification
 **UUID:** cbf9d81a-d138-494e-ba35-79948b220bf6
@@ -1084,6 +1219,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Translation Documents are located as subdocuments to the Atlas Document they are translating. Their Document Identifier is the same as the Atlas Document they are translating, with an additional suffix that represents the language of the translation. For example, a Spanish translation of A.1 would have the Document Identifier A.1.es.
+**Additional Logic**: Translation Documents should be updated whenever the Atlas Document they are translating is updated to ensure that the translation remains accurate. However, in case of any discrepancies or contradictions, the original English version of the Atlas Document always takes precedence.
+**Type Category**: Accessory Document
+**Type Name**: Translation
+**Type Overview**: The Translation Type is used for creating translated versions of Atlas Documents to make the Atlas accessible to non-English speakers. Translation Documents are Accessory Documents and they do not have any impact on the governance or operation of Sky, but they are important for accessibility and inclusivity.
+
 **Document Type:** Type Specification
 **UUID:** 91c31b25-7124-435a-baa9-ce593cf327b7
 **Last Modified:** 2024-09-02
@@ -1091,6 +1232,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.24 - The Archive Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Archive Documents are located as subdocuments to the Atlas Document they are archiving. Their Document Identifier is the same as the Atlas Document they are archiving, with an additional suffix 'v' followed by the version number of the document being archived. For example, the third version of A.1 would have the Document Identifier A.1.v3.
+**Additional Logic**: Archive Documents should be created whenever an Atlas Document is updated to ensure that a record of all previous versions is maintained. They are not meant to be modified or deleted once created.
+**Type Category**: Accessory Document
+**Type Name**: Archive
+**Type Overview**: The Archive Type is used for storing historical versions of Atlas Documents. Archive Documents are Accessory Documents and they do not have any impact on the governance or operation of Sky, but they are important for maintaining a record of changes and evolution of the Atlas over time.
 
 **Document Type:** Type Specification
 **UUID:** 723874bd-660f-4b2a-b3c2-1b1784d51bcb
@@ -1100,6 +1247,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Navigation Hub Documents must be located at the .0.0 position of an Immutable or Primary Document.
+**Additional Logic**: Navigation Hubs serve as a guide for users to understand and navigate the main content of the associated Immutable or Primary Document.
+**Type Category**: Supporting Document
+**Type Name**: Navigation Hub
+**Type Overview**: The Navigation Hub Type is used for Navigation Hubs that provide summarized content and links to child documents or Focus Hubs that dive deeper or provide supporting data for a specific action. It acts as an entry point and guide for navigating the content of an Immutable or Primary Document.
+
 **Document Type:** Type Specification
 **UUID:** c3271e9e-3bc2-4772-9c80-ce1a5b6e27da
 **Last Modified:** 2024-09-18
@@ -1107,6 +1260,12 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.26 - The Focus Hub Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Focus Hub Documents must be located at the nonzero numerical positions below Navigation Hubs, e.g.: x.0.0.1, x.0.0.2, etc.
+**Additional Logic**: Focus Hubs serve as a detailed guide on specific topics, giving users an in-depth understanding of the subject matter.
+**Type Category**: Supporting Document
+**Type Name**: Focus Hub
+**Type Overview**: The Focus Hub Type is used for Focus Hubs that delve deeper into specific topics or sections from the Navigation Hub. It can be used to slice up a lot of child documents or a lot of hubs into independent groups, so only the relevant group needs to be read. It can also be used to provide relevant data for a specific type of action or workflow related to the Focus Hubs Immutable or Primary Document or its subtree.
 
 **Document Type:** Type Specification
 **UUID:** ccc176f1-354f-4272-9e9c-0f93a334c329
@@ -1116,6 +1275,11 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Facilitator Scenario Directory Documents must always be located at the .1 position below their parent Facilitator Action Tenet Document.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Scenario Directory
+**Type Overview**: The Facilitator Scenario Directory Type is a directory used to list all of the Scenarios that pertain to a Facilitator Action Tenet. Scenarios are hypothetical fact patterns that are designed to illustrate the practical application of a single Facilitator Action Tenet, i.e., its parent Facilitator Action Tenet Document. Scenarios are classified as either Aligned or Misaligned. Aligned Scenarios conform to the logic of the Target Document. Misaligned Scenarios have breached the Target Document logic and are thus in violation of the Atlas.
+
 **Document Type:** Type Specification
 **UUID:** 75372b7e-87ba-48cc-803c-c708491e0935
 **Last Modified:** 2024-09-01
@@ -1123,6 +1287,13 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.28 - The Facilitator Scenario Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Facilitator Scenario Documents must always be located as subdocuments of the Facilitator Scenario Directory Document, which in turn is nested under its parent Facilitator Action Tenet Document, e.g.: A.1.1-1.0.4.1.1.1.
+
+A Scenario’s Name should never be followed by a number unless there are multiple Scenarios with the same Name.
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Scenario
+**Type Overview**: Facilitator Scenario Documents contain hypothetical fact patterns that are designed to illustrate the practical application of a single Facilitator Action Tenet, i.e., its parent Facilitator Action Tenet Document. Scenarios are classified as either Aligned or Misaligned. Aligned Scenarios conform to the logic of the Target Document. Misaligned Scenarios have breached the Target Document logic and are thus in violation of the Atlas.
 
 **Document Type:** Type Specification
 **UUID:** 428b892f-2865-4539-81c2-b238515e98bc
@@ -1132,6 +1303,15 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 \[See below\]
 
+**Doc Identifier Rules**: Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document A.1.1.0.4.1.1.1. would have the following identifier: A.1.1.0.4.1.1.1.var2 .
+**Type Category**: Supporting Document
+**Type Name**: Facilitator Scenario Variation
+**Type Overview**: Facilitator Scenario Variation Documents are variations on the hypothetical fact patterns presented in their parent Scenario document (”original Scenario”). Each Variation substitutes elements of its original Scenario to demonstrate whether and why the finding of Aligned/Misaligned would change. 
+
+Like the Scenario Type, Scenario Variations are also designed to illustrate the practical application of a single Facilitator Action Tenet, i.e., the Scenario’s parent Facilitator Action Tenet Document. 
+
+Scenario Variations are classified as either Aligned or Misaligned. Aligned Scenarios conform to the logic of the Target Document. Misaligned Scenarios have breached the Target Document logic and are thus in violation of the Atlas.
+
 **Document Type:** Type Specification
 **UUID:** 12b479e4-9015-402e-b015-608681019a34
 **Last Modified:** 2025-04-21
@@ -1139,6 +1319,16 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 ##### A.1.2.2.2.30 - The Needed Research Type
 
 \[See below\]
+
+**Doc Identifier Rules**: Unlike other Supporting Documents, the document identifier of Needed Research documents is not derived from the Supporting Root of their Target Document. The “standalone” numbering scheme of Needed Research documents enables them to be linked to more than one Atlas Document, no matter the latter’s location in the Atlas document tree. Needed Research Document Identifiers begin with the prefix “NR-”,  followed by an incremented number.
+**Additional Logic**: Generally, Needed Research Documents are most effective when linked to Primary Documents or Supporting Documents. These Document types have the objective of extrapolating from the abstract logic of their Parent documents to formulate rules and processes that are more concrete and actionable. Therefore, inputs for Needed Research are more appropriately sourced at this deeper level in the Atlas Document tree.
+**Type Category**: Supporting Document
+**Type Name**: Needed Research
+**Type Overview**: Needed Research Documents specify potential problems associated with their Target Document. Such problems can include potential gaps or conflicts in logic; questions regarding the operation of the Target Document to which there are currently no answers; etc.
+
+As such, Needed Research documents formalize continuing research into Universal Alignment and enable the adaptive intelligence of the ecosystem to drive the evolution of Sky. Scope Facilitators, Atlas workstream contributors or other ecosystem participants are able to submit Needed Research inputs, which are then progressively processed through the standardized Atlas data integration protocol.
+
+The gradual processing of Needed Research inputs can lead to modifications to the organization or content of Atlas documents, as well as concrete process improvements and new initiatives.
 
 **Document Type:** Type Specification
 **UUID:** 74f86f4f-b5f2-469d-bb0b-7115c02bd69a
@@ -1430,6 +1620,11 @@ See also, [Other Ecosystem Roles  - Phrase Must Be Read In Its Broadest Sense By
 
 Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. The entity actively occupied these two roles, but alternated between them in separate time intervals.
 
+**Finding**: Misaligned
+**Additional Guidance**: That Entity is alternating between two roles to perform their duties in separate time intervals does not negate the misalignment risk that the Target Document is intended to protect against. They are still formally occupying two roles at once. They still have access to sensitive information and experiences in two roles with different mandates and incentives.
+
+The Facilitator should derecognize Entity per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+
 **Document Type:** Scenario
 **UUID:** 97d0eb49-57a4-4a6e-a2f0-13640299cd7d
 **Last Modified:** 2025-06-13
@@ -1437,6 +1632,13 @@ Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, 
 ###### A.1.4.6.0.4.1.1.1.var1 - Alternating Between Two Roles In Separate Time Intervals - var. 1
 
 Entity occupied the role of an unranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. Entity actively occupied these two roles, but alternated between them in separate time intervals.
+
+**Finding**: Misaligned
+**Additional Guidance**: An "ecosystem role" need not be compensated or full-time to be regulated by the Target Document. See Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document.
+
+An unranked, uncompensated Aligned Delegate is nevertheless an 'ecosystem role' in the sense of the Target Document. Notwithstanding being unranked and uncompensated, the AD role still carries with it a mandate and array of incentives that are distinct from those of a Facilitator.
+
+The Facilitator should derecognize Entity from both AC roles per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
 **Document Type:** Scenario Variation
 **UUID:** 818e4cc2-8186-4e98-ad18-77c362384880
@@ -1446,6 +1648,13 @@ Entity occupied the role of an unranked Aligned Delegate. Entity then applied fo
 
 Entity occupied the role of a Facilitator. They took a leave of absence from the Facilitator role and stepped into the role of a Stability Scope Advisor. At the time their behavior was discovered by another Facilitator, the Entity had been performing solely in the role of a Stability Scope Advisor, while remaining on a leave of absence from their Facilitator role.
 
+**Finding**: Misaligned
+**Additional Guidance**: If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity was on a leave of absence from one role does not negate this risk. A contributor on an extended leave of absence has not formally cut ties with the role. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's Stability Scope Advisor work could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed as a Facilitator. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
+
+The Facilitator should derecognize Entity from the Facilitator role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+
+The Facilitator should likely consider derecognizing Entity from the Stability Scope Advisor role. No specific logic exists as yet for the adjudication of misalignment on the part of a Scope Advisor.
+
 **Document Type:** Scenario
 **UUID:** 443c6945-056a-4704-9ea5-66de5481938e
 **Last Modified:** 2025-06-13
@@ -1453,6 +1662,13 @@ Entity occupied the role of a Facilitator. They took a leave of absence from the
 ##### A.1.4.6.0.4.1.1.3 - On-Call Or Stand-By Role
 
 Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles.
+
+**Finding**: Misaligned
+**Additional Guidance**: If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity's second position is in an "on-call" or stand-by position does not negate this risk. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's decision-making in their first role could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed in their second role. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
+
+The Facilitator should derecognize Entity as an AD per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+
+No specific logic exists as yet for the adjudication of misalignment on the part of an Ecosystem Actor team member.
 
 **Document Type:** Scenario
 **UUID:** 78df7b11-dc1e-497f-ac36-5584e470a1f4
@@ -1462,6 +1678,15 @@ Entity was an Aligned Delegate. Entity then secured a second role with an Ecosys
 
 Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles. During its investigation, the Facilitator discovered evidence that, despite the EA having a general policy that "on call" devs are paid only a nominal fee for the bounded time periods they are on call, Entity had been receiving an inordinately large compensation from the EA. When the Facilitator pressed both the EA and Entity for an explanation, none was given.
 
+**Finding**: Misaligned as to Entity.
+**Additional Guidance**: In contrast to the original Scenario, the Facilitator uncovered evidence that indicates Entity was not, as claimed, a mere "on call" dev, but rather was engaged in substantive work to justify the large compensation amount. 
+
+That the Facilitator was stonewalled in its investigation also is a strong indication of malign intent on the part of Entity and the EA. Yet, there is no concrete proof of this. 
+
+Under these circumstances, it is reasonable to extrapolate that derecognition from the AC role would suffice, per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+
+The concern remains that, potentially, a bad actor can continue to exploit the ecosystem, especially if other ecosystem participants are not aware of their questionable history. To mitigate this risk, the Facilitator can include details about the evidence it discovered in its formal derecognition notice, which can impact the reputation score of Entity.
+
 **Document Type:** Scenario Variation
 **UUID:** 1b6cf960-aeb7-4892-94c4-81c21366595a
 **Last Modified:** 2025-06-13
@@ -1469,6 +1694,9 @@ Entity was an Aligned Delegate. Entity then secured a second role with an Ecosys
 ##### A.1.4.6.0.4.1.1.4 - Resignation Notice Not Received
 
 Entity was a full-time team member of a Governance Facilitator. Entity emailed the Facilitator a formal letter of resignation and then transitioned into the role of an AD. The Facilitator did not receive the resignation email and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator’s investigation, Entity provided proof of the resignation email. The email clearly stated an effective date of resignation, which date was prior to Entity's transition into the AD role. Entity also provided proof that all their permissions to the Facilitator team workspace were revoked; and they had no further communications or interactions with the Facilitator team after their intended resignation date.
+
+**Finding**: Aligned
+**Additional Guidance**: Though the Facilitator incorrectly continued to list Entity as a team member, in actual practice, Entity had cut all ties with the Facilitator team after the intended resignation date. This was proven via the dated resignation email; the revoked permissions; and the lack of communications. Given these facts, the Target Document is not triggered.
 
 **Document Type:** Scenario
 **UUID:** b9c41edf-cfb9-48d1-8355-47d4af2d8629
@@ -1478,6 +1706,11 @@ Entity was a full-time team member of a Governance Facilitator. Entity emailed t
 
 Entity was a part-time team member of a Governance Facilitator. Entity then transitioned into the role of an AD. The Facilitator did not receive any resignation notice from Entity and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator's investigation, Entity claimed it had sent the Facilitator a resignation email, but could not provide actual proof of this. The Governance Facilitator also discovered that Entity still had permissions to the Facilitator team workspace. The team's Discord contained casual, non-work related interactions between Entity and the Facilitator team members even after the date Entity became a formally recognized AD.
 
+**Finding**: Misaligned
+**Additional Guidance**: Entity was unable to provide any proof that it had formally resigned its first role with the Facilitator team. Merely claiming that a resignation email was sent is not sufficient. Further, unlike the original Scenario, Entity in this Variation continued to have access to the Facilitator team workspace even after the alleged date of resignation. Technically speaking, Entity is still formally occupying two roles with different mandates and incentives. The potential exists for conflict of interest, collusion, etc. The part-time role does not impact this analysis.
+
+The Governance Facilitator should derecognize Entity from its AD role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+
 **Document Type:** Scenario Variation
 **UUID:** 9df22647-b3da-413e-9b85-30634728f417
 **Last Modified:** 2025-06-13
@@ -1485,6 +1718,9 @@ Entity was a part-time team member of a Governance Facilitator. Entity then tran
 ##### A.1.4.6.0.4.1.1.5 - Volunteer Discord Moderator
 
 Entity was a volunteer moderator for Sky’s Discord. Without leaving their moderator role, Entity registered and became active as an Aligned Delegate.
+
+**Finding**: Aligned
+**Additional Guidance**: ‘Volunteer Discord moderator' is not a role that is formally defined in the Atlas. Therefore, Entity's first position as volunteer Discord moderator does not count as an ecosystem role. The Target Document is not triggered at all in this Scenario.
 
 **Document Type:** Scenario
 **UUID:** ac7b272f-54dd-4cb5-92e0-dc34a416fc71
@@ -4571,6 +4807,9 @@ A Weekly Cycle Proposal is considered correctly triggered when the triggering Al
 
 Entity is a Ranked Delegate with at least one \(1\) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. The Core Facilitator continue to prepare a Governance Poll for the Proposal.
 
+**Finding**: Aligned as to Entity. Aligned as to the Core Facilitator.
+**Additional Guidance**: The fact that Entity lost their Ranked Delegate rank after triggering the Proposal is inconsequential. Entity satisfied the requirement of being a Ranked Delegate with at least one (1) month’s worth of budget in their AD Buffer at the time of triggering the Proposal, and thus the Proposal was properly triggered. The Core Facilitator acted correctly to prepare a Governance Poll for the Proposal in accord with the process definition for the Atlas Edit Weekly Cycle.
+
 **Document Type:** Scenario
 **UUID:** 115f2ff0-8d73-80b8-9c2e-c68a25fe03d6
 **Last Modified:** 2025-09-19
@@ -4586,6 +4825,9 @@ To deter spurious or misaligned proposals, Ranked Delegates must “stake” the
 ####### A.1.10.2.1.3.0.4.2.1.1 - Delay In Payment To Ranked Delegate Triggering Proposal
 
 Entity is a Ranked Delegate with one \(1\) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. Three days later, before the Proposal has been voted on, the Core Facilitator distributes compensation to other Aligned Delegates but do not distribute compensation to Entity.
+
+**Finding**: Aligned
+**Additional Guidance**: Paying out the AD Buffer would have led to Entity’s AD Buffer dropping below the required threshold of one (1) month’s worth of budget while the Proposal was still unresolved. In this Scenario, the triggering AD cannot receive payout from the AD Buffer until the triggered Proposal is voted on and approved by Sky Governance. Assuming that the Proposal is approved, the Core Facilitator is authorized to disburse the entire contents of the AD Buffer to the triggering AD in the next AD compensation cycle. However, if the Proposal is rejected by the Core Facilitator for misalignment or voted down by Sky Governance, the triggering AD would lose their entire AD Buffer.
 
 **Document Type:** Scenario
 **UUID:** 115f2ff0-8d73-807d-a7aa-cf4bb69aa459
