@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { buildAtlasJSON } from '@/app/server/atlas/atlas-json-exporter';
+import { buildAtlasJSON } from '@/app/server/atlas/json-export/atlas-json-exporter';
 
 export async function GET() {
   try {
