@@ -20,6 +20,19 @@ export type AtlasPageChange = {
   };
 };
 
+export const CHILD_FIELDS: Array<keyof NotionDatabasePage> = [
+  'child_scope_ids',
+  'child_article_ids',
+  'child_section_and_primary_doc_ids',
+  'child_annotation_ids',
+  'child_tenet_ids',
+  'child_scenario_ids',
+  'child_scenario_variation_ids',
+  'child_active_data_ids',
+  'child_agent_scope_ids',
+  'child_needed_research_ids',
+];
+
 export async function loadAtlasChangeHistory(params?: { since?: Date | string }): Promise<AtlasPageChange[]> {
   type RpcRow = {
     notion_page_id: string;
@@ -125,20 +138,6 @@ export async function loadAtlasChangeHistory(params?: { since?: Date | string })
       };
     }
 
-    // Compare child relationship arrays (as sets of strings)
-    const childFields: Array<keyof NotionDatabasePage> = [
-      'child_scope_ids',
-      'child_article_ids',
-      'child_section_and_primary_doc_ids',
-      'child_annotation_ids',
-      'child_tenet_ids',
-      'child_scenario_ids',
-      'child_scenario_variation_ids',
-      'child_active_data_ids',
-      'child_agent_scope_ids',
-      'child_needed_research_ids',
-    ];
-
     const toSortedStringArray = (v: unknown): string[] => {
       if (!Array.isArray(v)) return [];
       const mapped = v.map((x) => String(x));
@@ -146,13 +145,26 @@ export async function loadAtlasChangeHistory(params?: { since?: Date | string })
       return mapped;
     };
 
-    for (const field of childFields) {
+    // Compare child relationship arrays (as sets of strings)
+    for (const field of CHILD_FIELDS) {
       const beforeArr = toSortedStringArray(oldPage[field] as unknown);
       const afterArr = toSortedStringArray(newPage[field] as unknown);
       if (beforeArr.length !== afterArr.length || beforeArr.some((v, i) => v !== afterArr[i])) {
+        // Compute only the differences to avoid very large payloads
+        const beforeSet = new Set(beforeArr);
+        const afterSet = new Set(afterArr);
+        const removed: string[] = [];
+        const added: string[] = [];
+        for (const id of beforeSet) if (!afterSet.has(id)) removed.push(id);
+        for (const id of afterSet) if (!beforeSet.has(id)) added.push(id);
+        removed.sort();
+        added.sort();
+
         properties[String(field)] = {
-          oldValue: JSON.stringify(beforeArr),
-          newValue: JSON.stringify(afterArr),
+          // oldValue shows items that were removed
+          oldValue: JSON.stringify(removed),
+          // newValue shows items that were added
+          newValue: JSON.stringify(added),
         };
       }
     }
