@@ -1,5 +1,9 @@
 import { Edit3, FileText, Minus, Plus } from 'lucide-react';
-import { type AtlasPageChange, loadAtlasChangeHistory } from '@/app/server/atlas/load-atlas-change-history';
+import {
+  type AtlasPageChange,
+  CHILD_FIELDS,
+  loadAtlasChangeHistory,
+} from '@/app/server/atlas/load-atlas-change-history';
 
 export default async function AtlasChangelogPage() {
   const changes = await loadAtlasChangeHistory();
@@ -124,13 +128,17 @@ function ChangeCard({ change }: { change: AtlasPageChange }) {
                   </div>
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div>
-                      <div className="mb-1 text-xs text-gray-500">Before:</div>
+                      <div className="mb-1 text-xs text-gray-500">
+                        {(CHILD_FIELDS as string[]).includes(field) ? 'Removed:' : 'Before:'}
+                      </div>
                       <div className="rounded border border-red-200 bg-red-50 p-2 font-mono text-sm text-red-800">
                         {changeData.oldValue || '(empty)'}
                       </div>
                     </div>
                     <div>
-                      <div className="mb-1 text-xs text-gray-500">After:</div>
+                      <div className="mb-1 text-xs text-gray-500">
+                        {(CHILD_FIELDS as string[]).includes(field) ? 'Added:' : 'After:'}
+                      </div>
                       <div className="rounded border border-green-200 bg-green-50 p-2 font-mono text-sm text-green-800">
                         {changeData.newValue || '(empty)'}
                       </div>
