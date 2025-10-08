@@ -4,12 +4,59 @@ import {
   CHILD_FIELDS,
   loadAtlasChangeHistory,
 } from '@/app/server/atlas/load-atlas-change-history';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
+
+async function fetchPageIdToAtlasDocumentNameMap(changes: AtlasPageChange[]): Promise<Map<string, string>> {
+  // Collect all Notion page IDs referenced in child field diffs across all changes
+  const referencedChildIds = new Set<string>();
+  for (const change of changes) {
+    if (change.type !== 'changed') continue;
+    for (const [field, changeData] of Object.entries(change.changes.properties)) {
+      if (!(CHILD_FIELDS as string[]).includes(field)) continue;
+      try {
+        const removed: unknown = JSON.parse(changeData.oldValue || '[]');
+        const added: unknown = JSON.parse(changeData.newValue || '[]');
+        if (Array.isArray(removed)) for (const id of removed) referencedChildIds.add(String(id));
+        if (Array.isArray(added)) for (const id of added) referencedChildIds.add(String(id));
+      } catch {
+        // Ignore malformed JSON values
+        console.warn('Failed to parse JSON for child field diff:', field, changeData);
+      }
+    }
+  }
+
+  // Fetch names for referenced child IDs in a single query
+  const idToName = new Map<string, string>();
+  if (referencedChildIds.size > 0) {
+    const ids = Array.from(referencedChildIds);
+    // Chunk to avoid URL length limits if needed; use 1000 as a safe chunk size
+    const chunkSize = 1000;
+    for (let i = 0; i < ids.length; i += chunkSize) {
+      const chunk = ids.slice(i, i + chunkSize);
+      const { data, error } = await supabase()
+        .from('notion_database_pages_current')
+        .select('notion_page_id, plain_text_name')
+        .in('notion_page_id', chunk);
+      if (error) {
+        console.error('Failed to load names for child IDs', { error });
+        break;
+      }
+      for (const row of data ?? []) {
+        idToName.set(row.notion_page_id as string, (row.plain_text_name as string) ?? '');
+      }
+    }
+  }
+
+  return idToName;
+}
 
 export default async function AtlasChangelogPage() {
   const changes = await loadAtlasChangeHistory();
 
   console.log(`Loaded ${changes.length} changes for the changelog page.`);
   console.log(changes);
+
+  const idToName = await fetchPageIdToAtlasDocumentNameMap(changes);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -28,14 +75,14 @@ export default async function AtlasChangelogPage() {
             </div>
           </div>
         ) : (
-          changes.map((change, index) => <ChangeCard key={index} change={change} />)
+          changes.map((change, index) => <ChangeCard key={index} change={change} idToName={idToName} />)
         )}
       </div>
     </div>
   );
 }
 
-function ChangeCard({ change }: { change: AtlasPageChange }) {
+function ChangeCard({ change, idToName }: { change: AtlasPageChange; idToName: Map<string, string> }) {
   const getChangeIcon = () => {
     switch (change.type) {
       case 'new':
@@ -51,6 +98,17 @@ function ChangeCard({ change }: { change: AtlasPageChange }) {
 
   const page = change.newPage || change.oldPage;
   const changeCount = Object.keys(change.changes.properties).length;
+
+  const formatChildArrayAsNames = (rawJsonArray: string): string => {
+    try {
+      const arr = JSON.parse(rawJsonArray || '[]');
+      if (!Array.isArray(arr)) return rawJsonArray || '[]';
+      const names = arr.map((id) => idToName.get(String(id)) || String(id));
+      return JSON.stringify(names);
+    } catch {
+      return rawJsonArray || '[]';
+    }
+  };
 
   if (changeCount === 0 && change.type === 'changed') {
     console.warn('Change of type "changed" has no actual property changes:', change);
@@ -132,7 +190,9 @@ function ChangeCard({ change }: { change: AtlasPageChange }) {
                         {(CHILD_FIELDS as string[]).includes(field) ? 'Removed:' : 'Before:'}
                       </div>
                       <div className="rounded border border-red-200 bg-red-50 p-2 font-mono text-sm text-red-800">
-                        {changeData.oldValue || '(empty)'}
+                        {(CHILD_FIELDS as string[]).includes(field)
+                          ? formatChildArrayAsNames(changeData.oldValue)
+                          : changeData.oldValue || '(empty)'}
                       </div>
                     </div>
                     <div>
@@ -140,7 +200,9 @@ function ChangeCard({ change }: { change: AtlasPageChange }) {
                         {(CHILD_FIELDS as string[]).includes(field) ? 'Added:' : 'After:'}
                       </div>
                       <div className="rounded border border-green-200 bg-green-50 p-2 font-mono text-sm text-green-800">
-                        {changeData.newValue || '(empty)'}
+                        {(CHILD_FIELDS as string[]).includes(field)
+                          ? formatChildArrayAsNames(changeData.newValue)
+                          : changeData.newValue || '(empty)'}
                       </div>
                     </div>
                   </div>
