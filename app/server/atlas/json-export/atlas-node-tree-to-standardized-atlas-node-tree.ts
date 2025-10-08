@@ -3,19 +3,16 @@
  *
  * Purpose
  * - Converts an `AtlasTreeNode` (children grouped by Atlas database) into a
- *   `StandardizedAtlasDocument` (children grouped by Atlas document type).
+ *   `StandardizedAtlasDocument` (children grouped by Atlas database).
  * - Preserves original child order and recursively converts all descendants.
  *
  * How it works
- * - Base fields are mapped 1:1 from the node: `type`, `docNo`, `name`, `uuid`.
- * - For relationships:
- *   - Simple 1:1 arrays are mapped directly (`articles`, `annotations`, etc.).
- *   - Mixed collections are split by document type:
- *     - `sectionsAndPrimaryDocs` → `sections`, `core_documents`,
- *       `activeDataControllers`, `typeSpecifications`.
- *     - `agentScopeDocs` → `core_documents`, `activeDataControllers`.
- *   - Supporting documents are grouped under `supportingDocuments` when present.
+ * - Base fields are mapped 1:1 from the node: `type` (document type), `doc_no`, `name`, `uuid`.
+ * - For relationships: children are grouped by Atlas database, maintaining the same structure as AtlasTreeNode.
+ * - The `type` field uses Atlas document types (Scope, Article, Section, etc.) for compatibility.
+ * - Child collections use database-based grouping (articles, sections_and_primary_docs, etc.).
  * - Everything is recursive: child nodes are converted with the same function.
+ * - Uses underscore_case for JSON export compatibility.
  *
  * Usage
  * ```ts
@@ -24,32 +21,26 @@
  * ```
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
-import { AGENT_ROOT_SECTION_UUIDS, type AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUIDS, type AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
 import {
-  ScenarioExtraFields,
-  ScenarioVariationExtraFields,
-  TypeSpecificationExtraFields,
-} from '../notion-database-properties-and-relationships';
-import {
-  type ActiveDataControllerDocument,
+  extraFieldsByDatabase,
   type ActiveDataDocument,
-  type AnnotationDocument,
-  type ArticleDocument,
+  type AgentScopeDatabaseDocument,
+  type AnnotationsDocument,
+  type ArticlesDocument,
   type BaseAtlasDocument,
-  type CoreDocument,
   type NeededResearchDocument,
-  type ScenarioDocument,
-  type ScenarioVariationDocument,
-  type ScopeDocument,
-  type SectionDocument,
+  type ScenarioVariationsDocument,
+  type ScenariosDocument,
+  type ScopesDocument,
+  type SectionsAndPrimaryDocsDocument,
   type StandardizedAtlasDocument,
-  type TenetDocument,
-  type TypeSpecificationDocument,
+  type TenetsDocument,
 } from './types';
 
-// Validation helper to check allowed child types per Atlas hierarchy rules
-function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType[]): void {
+// Validation helper to check allowed child databases per Atlas hierarchy rules
+function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasDatabaseName[]): void {
   const allChildren = [
     ...node.scopes,
     ...node.articles,
@@ -63,10 +54,10 @@ function validateChildTypes(node: AtlasTreeNode, allowedTypes: AtlasDocumentType
     ...node.neededResearch,
   ];
 
-  const invalidChildren = allChildren.filter((child) => !allowedTypes.includes(child.atlas_document_type));
+  const invalidChildren = allChildren.filter((child) => !allowedDatabases.includes(child.atlas_database_name));
   if (invalidChildren.length > 0) {
     console.warn(
-      `‼️  ${node.atlas_document_type} "${node.plain_text_name} (${node.notion_page_id})" has invalid child types: ${invalidChildren.map((c) => c.atlas_document_type).join(', ')}`,
+      `‼️  ${node.atlas_database_name} "${node.plain_text_name} (${node.notion_page_id})" has invalid child databases: ${invalidChildren.map((c) => c.atlas_database_name).join(', ')}`,
     );
   }
 }
@@ -80,50 +71,6 @@ function toBase(node: AtlasTreeNode): BaseAtlasDocument {
     uuid: node.notion_page_id ?? null,
     last_modified: node.updated_at,
     content: atlasDatabasePageToMarkdown(node),
-  };
-}
-
-// Generic helpers to reduce duplication
-function filterMapByType<T extends StandardizedAtlasDocument>(
-  items: AtlasTreeNode[],
-  expectedType: AtlasDocumentType,
-): T[] {
-  return items.filter((c) => c.atlas_document_type === expectedType).map((c) => atlasNodeToStandardized(c) as T);
-}
-
-function mapAllAs<T extends StandardizedAtlasDocument>(items: AtlasTreeNode[]): T[] {
-  return items.map((c) => atlasNodeToStandardized(c) as T);
-}
-
-// Split `sectionsAndPrimaryDocs` (atlas-database-grouped) into atlas-document-type-grouped arrays
-function mapSectionsAndPrimaryDocs(node: AtlasTreeNode): {
-  sections: SectionDocument[];
-  core_documents: CoreDocument[];
-  active_data_controllers: ActiveDataControllerDocument[];
-  type_specifications: TypeSpecificationDocument[];
-} {
-  return {
-    sections: filterMapByType<SectionDocument>(node.sectionsAndPrimaryDocs, 'Section'),
-    core_documents: filterMapByType<CoreDocument>(node.sectionsAndPrimaryDocs, 'Core'),
-    active_data_controllers: filterMapByType<ActiveDataControllerDocument>(
-      node.sectionsAndPrimaryDocs,
-      'Active Data Controller',
-    ),
-    type_specifications: filterMapByType<TypeSpecificationDocument>(node.sectionsAndPrimaryDocs, 'Type Specification'),
-  };
-}
-
-// Split `agentScopeDocs` (mixed Core + Active Data Controller) into atlas-document-type-grouped arrays
-function mapAgentScopeDocs(node: AtlasTreeNode): {
-  core_documents: CoreDocument[];
-  active_data_controllers: ActiveDataControllerDocument[];
-} {
-  return {
-    core_documents: filterMapByType<CoreDocument>(node.agentScopeDocs, 'Core'),
-    active_data_controllers: filterMapByType<ActiveDataControllerDocument>(
-      node.agentScopeDocs,
-      'Active Data Controller',
-    ),
   };
 }
 
@@ -141,189 +88,169 @@ export function atlasNodeToStandardized(
     return { ...base } as StandardizedAtlasDocument;
   }
 
-  switch (node.atlas_document_type) {
-    case 'Scope': {
-      // Scope → has `articles`
-      validateChildTypes(node, ['Article']);
-      const doc: ScopeDocument = {
+  switch (node.atlas_database_name) {
+    case 'Scopes': {
+      // Scopes → has `articles`
+      validateChildDatabases(node, ['Articles']);
+      const doc: ScopesDocument = {
         ...base,
-        articles: node.articles.map((c) => atlasNodeToStandardized(c) as ArticleDocument),
+        articles: node.articles.map((c) => atlasNodeToStandardized(c) as ArticlesDocument),
       };
       return doc;
     }
 
-    case 'Article': {
-      // Article → only sections (per Atlas hierarchy rules) - But in practice can have mixed children
-      validateChildTypes(node, [
-        'Section',
-        'Core',
-        'Annotation',
-        // 'Action Tenet',
+    case 'Articles': {
+      // Articles → has `sections_and_primary_docs` and `agent_scope_database`
+      validateChildDatabases(node, [
+        'Sections & Primary Docs',
+        'Agent Scope Database',
+        'Annotations',
         'Needed Research',
-      ]);
-      const splitDb = mapSectionsAndPrimaryDocs(node);
-      const splitAgent = mapAgentScopeDocs(node);
-      const doc: ArticleDocument = {
+      ]); // TODO: Add annotations, needed_research
+      const doc: ArticlesDocument = {
         ...base,
-        sections: splitDb.sections,
-        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
-        // Supporting docs
-        annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
-        tenets: mapAllAs<TenetDocument>(node.tenets),
-      };
-      return doc;
-    }
-
-    case 'Section': {
-      // Section → mixed children split + supporting docs
-      validateChildTypes(node, [
-        'Section', // TODO: Remove
-        'Core',
-        'Active Data Controller',
-        'Type Specification',
-        'Annotation',
-        'Action Tenet',
-        'Needed Research',
-      ]);
-      const splitDb = mapSectionsAndPrimaryDocs(node);
-      const splitAgent = mapAgentScopeDocs(node);
-      const doc: SectionDocument = {
-        ...base,
-        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
-        active_data_controllers: [...splitDb.active_data_controllers, ...splitAgent.active_data_controllers],
-        type_specifications: splitDb.type_specifications,
-        // Supporting docs
-        annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
-        tenets: mapAllAs<TenetDocument>(node.tenets),
-      };
-      return doc;
-    }
-
-    case 'Core': {
-      // Core → mixed children split + supporting docs
-      validateChildTypes(node, [
-        'Core',
-        'Active Data Controller',
-        'Type Specification',
-        'Annotation',
-        'Action Tenet',
-        'Needed Research',
-      ]);
-      const splitDb = mapSectionsAndPrimaryDocs(node);
-      const splitAgent = mapAgentScopeDocs(node);
-      const doc: CoreDocument = {
-        ...base,
-        core_documents: [...splitDb.core_documents, ...splitAgent.core_documents],
-        active_data_controllers: [...splitDb.active_data_controllers, ...splitAgent.active_data_controllers],
-        type_specifications: splitDb.type_specifications,
-
-        // Supporting docs
-        annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
-        tenets: mapAllAs<TenetDocument>(node.tenets),
-      };
-      return doc;
-    }
-
-    case 'Active Data Controller': {
-      // Active Data Controller → supporting docs include `activeData`
-      validateChildTypes(node, ['Active Data', 'Annotation', 'Action Tenet', 'Needed Research']);
-      const doc: ActiveDataControllerDocument = {
-        ...base,
-
-        // Supporting docs
-        active_data: mapAllAs<ActiveDataDocument>(node.activeData),
-        annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
-        tenets: mapAllAs<TenetDocument>(node.tenets),
-      };
-      return doc;
-    }
-
-    case 'Type Specification': {
-      // Type Specification → supporting docs only
-      validateChildTypes(node, ['Annotation', 'Action Tenet', 'Needed Research']);
-      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
-      const extraFields: TypeSpecificationExtraFields = {
-        type_specification_doc_identifier_rules: nodeExtraFields.type_specification_doc_identifier_rules,
-        type_specification_additional_logic: nodeExtraFields.type_specification_additional_logic,
-        type_specification_type_category: nodeExtraFields.type_specification_type_category,
-        type_specification_type_name: nodeExtraFields.type_specification_type_name,
-        type_specification_type_overview: nodeExtraFields.type_specification_type_overview,
-      };
-      const doc: TypeSpecificationDocument = {
-        ...base,
-        // Extra fields
-        ...extraFields,
-        // Supporting docs
-        annotations: mapAllAs<AnnotationDocument>(node.annotations),
-        needed_research: mapAllAs<NeededResearchDocument>(node.neededResearch),
-        tenets: mapAllAs<TenetDocument>(node.tenets),
-      };
-      return doc;
-    }
-
-    case 'Action Tenet': {
-      // Tenet → has `scenarios`
-      validateChildTypes(node, ['Scenario']);
-      const doc: TenetDocument = {
-        ...base,
-        scenarios: node.scenarios.map((c) => atlasNodeToStandardized(c) as ScenarioDocument),
-      };
-      return doc;
-    }
-
-    case 'Scenario': {
-      // Scenario → has `scenarioVariations`
-      validateChildTypes(node, ['Scenario Variation']);
-      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
-      const extraFields: ScenarioExtraFields = {
-        scenario_finding: nodeExtraFields.scenario_finding,
-        scenario_additional_guidance: nodeExtraFields.scenario_additional_guidance,
-      };
-      const doc: ScenarioDocument = {
-        ...base,
-        // Extra fields
-        ...extraFields,
-        // Child docs
-        scenario_variations: node.scenarioVariations.map(
-          (c) => atlasNodeToStandardized(c) as ScenarioVariationDocument,
+        sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
+          (c) => atlasNodeToStandardized(c) as SectionsAndPrimaryDocsDocument,
         ),
+        // agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument),
+        // TODO: Add annotations, needed_research
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
       };
       return doc;
     }
 
-    case 'Scenario Variation': {
-      // Scenario Variation → has extra fields
-      validateChildTypes(node, []);
-      const nodeExtraFields = (node.extra_fields as Record<string, string | null>) || {};
-      const extraFields: ScenarioVariationExtraFields = {
-        scenario_variation_finding: nodeExtraFields.scenario_variation_finding,
-        scenario_variation_additional_guidance: nodeExtraFields.scenario_variation_additional_guidance,
-      };
-      const doc: ScenarioVariationDocument = {
+    case 'Sections & Primary Docs': {
+      // Sections & Primary Docs → has `annotations` and `tenets`
+      validateChildDatabases(node, [
+        'Sections & Primary Docs',
+        'Agent Scope Database',
+        'Annotations',
+        'Tenets',
+        'Active Data',
+        'Needed Research',
+      ]);
+      const doc: SectionsAndPrimaryDocsDocument = {
         ...base,
-        // Extra fields
-        ...extraFields,
+        ...(node.atlas_document_type === 'Type Specification' && node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
+          ? Object.fromEntries(
+              extraFieldsByDatabase['Sections & Primary Docs'].map((field) => [
+                field,
+                (node.extra_fields as Record<string, unknown>)[field],
+              ])
+            )
+          : {}),
+        sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
+          (c) => atlasNodeToStandardized(c) as SectionsAndPrimaryDocsDocument,
+        ),
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
+        tenets: node.tenets.map((c) => atlasNodeToStandardized(c) as TenetsDocument),
+        active_data: node.activeData.map((c) => atlasNodeToStandardized(c) as ActiveDataDocument),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      if (node.agentScopeDocs.length > 0) {
+        doc.agent_scope_database = node.agentScopeDocs.map(
+          (c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument,
+        );
+      }
+      return doc;
+    }
+
+    case 'Annotations': {
+      // Annotations → leaf database
+      validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
+      const doc: AnnotationsDocument = {
+        ...base,
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
       };
       return doc;
     }
 
-    case 'Annotation':
-    case 'Active Data':
+    case 'Tenets': {
+      // Tenets → has `scenarios`
+      validateChildDatabases(node, ['Scenarios', 'Needed Research']); // TODO: Add needed_research
+      const doc: TenetsDocument = {
+        ...base,
+        scenarios: node.scenarios.map((c) => atlasNodeToStandardized(c) as ScenariosDocument),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      return doc;
+    }
+
+    case 'Scenarios': {
+      // Scenarios → has `scenario_variations`
+      validateChildDatabases(node, ['Scenario Variations', 'Needed Research']); // TODO: Add needed_research
+      const doc: ScenariosDocument = {
+        ...base,
+        ...(node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
+          ? Object.fromEntries(
+              extraFieldsByDatabase['Scenarios'].map((field) => [
+                field,
+                (node.extra_fields as Record<string, unknown>)[field],
+              ])
+            )
+          : {}),
+        scenario_variations: node.scenarioVariations.map(
+          (c) => atlasNodeToStandardized(c) as ScenarioVariationsDocument,
+        ),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      return doc;
+    }
+
+    case 'Scenario Variations': {
+      // Scenario Variations → leaf database
+      validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
+      const doc: ScenarioVariationsDocument = {
+        ...base,
+        ...(node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
+          ? Object.fromEntries(
+              extraFieldsByDatabase['Scenario Variations'].map((field) => [
+                field,
+                (node.extra_fields as Record<string, unknown>)[field],
+              ])
+            )
+          : {}),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      return doc;
+    }
+
+    case 'Active Data': {
+      // Active Data → leaf database
+      validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
+      const doc: ActiveDataDocument = {
+        ...base,
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      return doc;
+    }
+
+    case 'Agent Scope Database': {
+      // Agent Scope Database → has `annotations`, `tenets`, and `active_data`
+      validateChildDatabases(node, ['Agent Scope Database', 'Annotations', 'Tenets', 'Active Data', 'Needed Research']); // TODO: Add needed_research
+      const doc: AgentScopeDatabaseDocument = {
+        ...base,
+        agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument),
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
+        tenets: node.tenets.map((c) => atlasNodeToStandardized(c) as TenetsDocument),
+        active_data: node.activeData.map((c) => atlasNodeToStandardized(c) as ActiveDataDocument),
+        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+      };
+      return doc;
+    }
+
     case 'Needed Research': {
-      // Leaf docs → base only
-      validateChildTypes(node, []);
-      const doc: StandardizedAtlasDocument = {
+      // Needed Research → leaf database
+      validateChildDatabases(node, []);
+      const doc: NeededResearchDocument = {
         ...base,
       };
       return doc;
     }
 
     default:
-      console.error(`Unknown document type: ${node.atlas_document_type}`);
+      console.error(`Unknown database: ${node.atlas_database_name}`);
       return { ...base } as StandardizedAtlasDocument;
   }
 }

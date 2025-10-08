@@ -10,6 +10,21 @@ export type AtlasDocumentType = Exclude<
   'Spell SP Controller' | 'Placeholder' | 'Category'
 >;
 
+export const ATLAS_DOCUMENT_TYPES: AtlasDocumentType[] = [
+  'Section',
+  'Core',
+  'Type Specification',
+  'Active Data Controller',
+  'Action Tenet',
+  'Active Data',
+  'Annotation',
+  'Scope',
+  'Article',
+  'Scenario',
+  'Scenario Variation',
+  'Needed Research',
+];
+
 export type GitHubAtlasDocumentType =
   | 'Scopes'
   | 'Articles'

@@ -1,7 +1,6 @@
 import {
   type StandardizedAtlasDocument,
-  allowedChildCollectionNamesPerDocumentType,
-  childCollectionNameToDocumentType,
+  allowedChildCollectionNamesPerDatabase,
   childCollectionNames,
 } from '@/app/server/atlas/json-export/types';
 import {
@@ -9,17 +8,14 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
-
-/**
- * Union of valid Atlas document type strings supported by the standardized format.
- */
-type AllowedDocType = keyof typeof allowedChildCollectionNamesPerDocumentType;
+import { ATLAS_DOCUMENT_TYPES, AtlasDatabaseName, AtlasDocumentType } from '../constants';
 
 export type ValidationErrorKind =
   | 'JSON_PARSE_ERROR'
   | 'ROOT_NOT_ARRAY'
   | 'NODE_MISSING_TYPE'
   | 'NODE_INVALID_TYPE'
+  | 'NODE_INVALID_DATABASE' // TODO
   | 'NODE_UNEXPECTED_FIELD'
   | 'NODE_MISSING_REQUIRED_FIELD'
   | 'FIELD_TYPE_MISMATCH'
@@ -40,23 +36,6 @@ export interface ValidationError {
 // Base fields required on every StandardizedAtlasDocument
 // `last_modified` is optional in inputs
 const baseRequiredFields = ['type', 'doc_no', 'name', 'uuid', 'content'] as const;
-const baseOptionalFields: string[] = ['last_modified']; // keep explicit for clarity
-
-// Extra fields per document type (non-child fields beyond base)
-const extraFieldsByType: Record<AllowedDocType, string[]> = {
-  Scope: [],
-  Article: [],
-  Section: [],
-  Core: [],
-  'Active Data Controller': [],
-  'Type Specification': Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING),
-  'Active Data': [],
-  Annotation: [],
-  'Action Tenet': [],
-  Scenario: Object.keys(SCENARIO_PROPERTY_MAPPING),
-  'Scenario Variation': Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING),
-  'Needed Research': [],
-};
 
 /**
  * Returns true when value is a non-null object (and not an array).
@@ -65,17 +44,24 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function asAllowedType(typeValue: unknown): AllowedDocType | null {
-  if (typeof typeValue !== 'string') return null;
-  return (Object.keys(allowedChildCollectionNamesPerDocumentType) as AllowedDocType[]).includes(
-    typeValue as AllowedDocType,
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function asAllowedDatabase(databaseValue: unknown): AtlasDatabaseName | null {
+  if (typeof databaseValue !== 'string') return null;
+  return (Object.keys(allowedChildCollectionNamesPerDatabase) as AtlasDatabaseName[]).includes(
+    databaseValue as AtlasDatabaseName,
   )
-    ? (typeValue as AllowedDocType)
+    ? (databaseValue as AtlasDatabaseName)
     : null;
 }
 
-function validTypesList(): string {
-  return (Object.keys(allowedChildCollectionNamesPerDocumentType) as AllowedDocType[]).join(', ');
+function asAllowedDocumentType(typeValue: unknown): AtlasDocumentType | null {
+  if (typeof typeValue !== 'string') return null;
+  const allowedTypes: AtlasDocumentType[] = ATLAS_DOCUMENT_TYPES;
+  return allowedTypes.includes(typeValue as AtlasDocumentType) ? (typeValue as AtlasDocumentType) : null;
+}
+
+function validDocumentTypesList(): string {
+  return ATLAS_DOCUMENT_TYPES.join(', ');
 }
 
 function makeNodeSnapshot(node: Record<string, unknown>): Partial<StandardizedAtlasDocument> {
@@ -132,19 +118,20 @@ function validateNode(node: Record<string, unknown>, path: string, errors: Valid
       'NODE_MISSING_TYPE',
       node,
       path,
-      `Missing field "type". Set to a valid Atlas document type. Valid types: ${validTypesList()}.`,
-      'Add a valid "type" to this node (see valid types above).',
+      `Missing field "type". Set to a valid Atlas document type. Valid document types: ${validDocumentTypesList()}.`,
+      'Add a valid "type" to this node (see valid document types above).',
     );
     return; // Without a type we cannot derive allowed fields; stop node-level checks but do not stop entire validation
   }
-  const docType = asAllowedType(node.type);
-  if (!docType) {
+
+  const documentType = asAllowedDocumentType(node.type);
+  if (!documentType) {
     addError(
       errors,
       'NODE_INVALID_TYPE',
       node,
       path,
-      `Invalid "type" value. Expected one of the Atlas document types; found ${String(node.type)}. Valid types: ${validTypesList()}.`,
+      `Invalid "type" value. Expected one of the Atlas document types; found ${String(node.type)}. Valid document types: ${validDocumentTypesList()}.`,
       'Set "type" to one of the valid Atlas document types listed.',
     );
     return;
@@ -225,100 +212,101 @@ function validateNode(node: Record<string, unknown>, path: string, errors: Valid
       }
     }
   };
-  if (docType === 'Type Specification') {
-    for (const k of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
-  } else if (docType === 'Scenario') {
+  if (documentType === 'Scenario') {
     for (const k of Object.keys(SCENARIO_PROPERTY_MAPPING)) ensureStringOrNull(k);
-  } else if (docType === 'Scenario Variation') {
+  } else if (documentType === 'Scenario Variation') {
     for (const k of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
+  } else if (documentType === 'Type Specification') {
+    for (const k of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
   }
 
-  // allowed child collections for this type
-  const allowedCollections = new Set<string>(allowedChildCollectionNamesPerDocumentType[docType] ?? []);
+  // allowed child collections for this database
+  // TODO:
+  // const allowedCollections = new Set<string>(allowedChildCollectionNamesPerDatabase[databaseType] ?? []);
   // compute full allowed keys: base + extra + child collections
-  const allowedKeys = new Set<string>([
-    ...baseRequiredFields,
-    ...baseOptionalFields,
-    ...(extraFieldsByType[docType] ?? []),
-    ...allowedCollections,
-  ]);
+  // const allowedKeys = new Set<string>([
+  //   ...baseRequiredFields,
+  //   ...baseOptionalFields,
+  //   ...(extraFieldsByDatabase[databaseType] ?? []),
+  //   ...allowedCollections,
+  // ]);
 
   // flag unexpected fields
-  for (const key of Object.keys(node)) {
-    if (allowedKeys.has(key)) continue;
-    // Only treat as unexpected if it's one of the known child collection names not allowed for this type,
-    // or if it's not any recognized field at all
-    if ((childCollectionNames as ReadonlyArray<string>).includes(key)) {
-      if (!allowedCollections.has(key)) {
-        addError(
-          errors,
-          'CHILD_COLLECTION_NOT_ALLOWED',
-          node,
-          path,
-          `Child collection "${key}" is not allowed for type "${docType}". Remove it.`,
-          `Remove child collection "${key}" from this node.`,
-        );
-      }
-    } else {
-      addError(
-        errors,
-        'NODE_UNEXPECTED_FIELD',
-        node,
-        path,
-        `Unexpected field "${key}" for type "${docType}". Remove this field.`,
-        `Remove unexpected field "${key}".`,
-      );
-    }
-  }
+  // for (const key of Object.keys(node)) {
+  //   if (allowedKeys.has(key)) continue;
+  //   // Only treat as unexpected if it's one of the known child collection names not allowed for this type,
+  //   // or if it's not any recognized field at all
+  //   if ((childCollectionNames as ReadonlyArray<string>).includes(key)) {
+  //     if (!allowedCollections.has(key)) {
+  //       addError(
+  //         errors,
+  //         'CHILD_COLLECTION_NOT_ALLOWED',
+  //         node,
+  //         path,
+  //         `Child collection "${key}" is not allowed for database "${databaseType}". Remove it.`,
+  //         `Remove child collection "${key}" from this node.`,
+  //       );
+  //     }
+  //   } else {
+  //     addError(
+  //       errors,
+  //       'NODE_UNEXPECTED_FIELD',
+  //       node,
+  //       path,
+  //       `Unexpected field "${key}" for database "${databaseType}". Remove this field.`,
+  //       `Remove unexpected field "${key}".`,
+  //     );
+  //   }
+  // }
 
   // validate child collections and recurse
-  for (const collectionName of allowedChildCollectionNamesPerDocumentType[docType]) {
-    const value = (node as Record<string, unknown>)[collectionName] as unknown;
-    if (value === undefined) continue; // absent is fine
-    if (!Array.isArray(value)) {
-      addError(
-        errors,
-        'CHILD_COLLECTION_NOT_ARRAY',
-        node,
-        `${path}.${collectionName}`,
-        `Child collection "${collectionName}" must be an array.`,
-        `Change "${collectionName}" to be an array.`,
-      );
-      continue;
-    }
+  // for (const collectionName of allowedChildCollectionNamesPerDatabase[databaseType]) {
+  //   const value = (node as Record<string, unknown>)[collectionName] as unknown;
+  //   if (value === undefined) continue; // absent is fine
+  //   if (!Array.isArray(value)) {
+  //     addError(
+  //       errors,
+  //       'CHILD_COLLECTION_NOT_ARRAY',
+  //       node,
+  //       `${path}.${collectionName}`,
+  //       `Child collection "${collectionName}" must be an array.`,
+  //       `Change "${collectionName}" to be an array.`,
+  //     );
+  //     continue;
+  //   }
 
-    const expectedChildType =
-      childCollectionNameToDocumentType[collectionName as keyof typeof childCollectionNameToDocumentType];
-    value.forEach((child: unknown, idx: number) => {
-      const childPath = `${path}.${collectionName}.${idx}`;
-      if (!isPlainObject(child)) {
-        addError(
-          errors,
-          'CHILD_ITEM_NOT_OBJECT',
-          node,
-          childPath,
-          'Each child must be an object.',
-          'Replace this child with an object node.',
-        );
-        return;
-      }
-      const childType = (child as Record<string, unknown>).type;
-      if (childType !== expectedChildType) {
-        addError(
-          errors,
-          'CHILD_NODE_TYPE_MISMATCH',
-          child as Record<string, unknown>,
-          childPath,
-          `Child node has type "${String(
-            childType,
-          )}" but "${collectionName}" requires "${expectedChildType}". Fix the child "type".`,
-          `Set child node "type" to "${expectedChildType}".`,
-        );
-      }
-      // Recurse to validate child fully
-      validateNode(child as Record<string, unknown>, childPath, errors);
-    });
-  }
+  //   const expectedChildDatabase =
+  //     childCollectionNameToDatabaseName[collectionName as keyof typeof childCollectionNameToDatabaseName];
+  //   value.forEach((child: unknown, idx: number) => {
+  //     const childPath = `${path}.${collectionName}.${idx}`;
+  //     if (!isPlainObject(child)) {
+  //       addError(
+  //         errors,
+  //         'CHILD_ITEM_NOT_OBJECT',
+  //         node,
+  //         childPath,
+  //         'Each child must be an object.',
+  //         'Replace this child with an object node.',
+  //       );
+  //       return;
+  //     }
+  //     const childType = (child as Record<string, unknown>).type;
+  //     if (childType !== expectedChildDatabase) {
+  //       addError(
+  //         errors,
+  //         'CHILD_NODE_TYPE_MISMATCH',
+  //         child as Record<string, unknown>,
+  //         childPath,
+  //         `Child node has type "${String(
+  //           childType,
+  //         )}" but "${collectionName}" requires "${expectedChildDatabase}". Fix the child "type".`,
+  //         `Set child node "type" to "${expectedChildDatabase}".`,
+  //       );
+  //     }
+  //     // Recurse to validate child fully
+  //     validateNode(child as Record<string, unknown>, childPath, errors);
+  //   });
+  // }
 }
 
 /**

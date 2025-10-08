@@ -1,24 +1,10 @@
-import { compareDocNumbers } from '../atlas-utils';
 import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../notion-database-properties-and-relationships';
 import { buildAtlasJSON } from './atlas-json-exporter';
-import {
-  type ActiveDataControllerDocument,
-  type ArticleDocument,
-  type ChildCollectionName,
-  type CoreDocument,
-  type ScenarioDocument,
-  type ScopeDocument,
-  type SectionDocument,
-  type StandardizedAtlasDocument,
-  StandardizedAtlasScopeTrees,
-  type TenetDocument,
-  type TypeSpecificationDocument,
-  allowedChildCollectionNamesPerDocumentType,
-} from './types';
+import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from './types';
 
 export async function buildAtlasMarkdown() {
   // Load Atlas JSON
@@ -53,14 +39,13 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
 
   lines.push(`**UUID:** ${doc.uuid ?? ''}`, '');
 
-  // Children: follow allowed child collection order per type; preserve item order in each array
-  const childCollectionOrder = allowedChildCollectionNamesPerDocumentType[doc.type] ?? [];
-  for (const collectionName of childCollectionOrder) {
-    const children = getChildren(doc, collectionName);
-    if (!children || children.length === 0) continue;
-    // TODO: There should be nesting between different child collection types, e.g. sections above core documents
-    const sortedChildren = [...children].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
-    for (const child of sortedChildren) {
+  // Children: follow the original tree structure without document type grouping
+  // Just iterate through all child collections in the order they appear in the data structure
+  const allChildren = getAllChildren(doc);
+  if (allChildren.length > 0) {
+    // TODO: Don't sort here, the original tree is already sorted
+    // const sortedChildren = [...allChildren].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
+    for (const child of allChildren) {
       lines.push(...formatDocumentRecursive(child, depth + 1));
     }
   }
@@ -90,96 +75,46 @@ function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
   const source = doc as unknown as Record<string, unknown>;
   for (const [fieldKey, label] of Object.entries(mapping)) {
     const raw = source[fieldKey];
-    if (raw == null) continue;
+    if (raw == null) {
+      console.warn(`getExtraFieldsForDocument: Missing expected field '${fieldKey}' on document type '${doc.type}'`);
+      continue;
+    }
     const value = typeof raw === 'string' ? raw : String(raw);
     const trimmed = value.trim();
     if (trimmed.length > 0) {
       out.push(`**${label}**: ${trimmed}`);
+    } else {
+      console.warn(`getExtraFieldsForDocument: Empty value for field '${fieldKey}' on document type '${doc.type}'`);
     }
   }
   return out;
 }
 
-function getChildren(
-  doc: StandardizedAtlasDocument,
-  collection: ChildCollectionName,
-): StandardizedAtlasDocument[] | undefined {
-  // Use precise narrowing by document type
-  switch (doc.type) {
-    case 'Scope': {
-      const scope = doc as ScopeDocument;
-      if (collection === 'articles') return scope.articles;
-      return undefined;
-    }
-    case 'Article': {
-      const article = doc as ArticleDocument;
-      if (collection === 'sections') return article.sections;
-      if (collection === 'annotations') return article.annotations;
-      if (collection === 'needed_research') return article.needed_research;
-      if (collection === 'tenets') return article.tenets;
-      if (collection === 'core_documents') return article.core_documents;
-      return undefined;
-    }
-    case 'Section': {
-      const section = doc as SectionDocument;
-      if (collection === 'core_documents') return section.core_documents;
-      if (collection === 'active_data_controllers') return section.active_data_controllers;
-      if (collection === 'type_specifications') return section.type_specifications;
-      if (collection === 'annotations') return section.annotations;
-      if (collection === 'needed_research') return section.needed_research;
-      if (collection === 'tenets') return section.tenets;
-      return undefined;
-    }
-    case 'Core': {
-      const core = doc as CoreDocument;
-      if (collection === 'core_documents') return core.core_documents;
-      if (collection === 'active_data_controllers') return core.active_data_controllers;
-      if (collection === 'type_specifications') return core.type_specifications;
-      if (collection === 'annotations') return core.annotations;
-      if (collection === 'needed_research') return core.needed_research;
-      if (collection === 'tenets') return core.tenets;
-      return undefined;
-    }
-    case 'Active Data Controller': {
-      const adc = doc as ActiveDataControllerDocument;
-      if (collection === 'active_data') return adc.active_data;
-      if (collection === 'annotations') return adc.annotations;
-      if (collection === 'needed_research') return adc.needed_research;
-      if (collection === 'tenets') return adc.tenets;
-      return undefined;
-    }
-    case 'Type Specification': {
-      const typeSpec = doc as TypeSpecificationDocument;
-      if (collection === 'annotations') return typeSpec.annotations;
-      if (collection === 'needed_research') return typeSpec.needed_research;
-      if (collection === 'tenets') return typeSpec.tenets;
-      return undefined;
-    }
-    case 'Action Tenet': {
-      const tenet = doc as TenetDocument;
-      if (collection === 'scenarios') return tenet.scenarios;
-      return undefined;
-    }
-    case 'Scenario': {
-      const scenario = doc as ScenarioDocument;
-      if (collection === 'scenario_variations') return scenario.scenario_variations;
-      return undefined;
-    }
-    case 'Active Data':
-    case 'Annotation':
-    case 'Scenario Variation':
-    case 'Needed Research':
-    default:
-      return undefined;
-  }
-}
+function getAllChildren(doc: StandardizedAtlasDocument): StandardizedAtlasDocument[] {
+  const children: StandardizedAtlasDocument[] = [];
 
-function formatISODateYYYYMMDD(value: string): string {
-  if (!value) return '';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    // Fall back to raw string if not parseable
-    return value;
+  // Collect all children from all possible collections, following the original tree structure
+  const docAsRecord = doc as unknown as Record<string, unknown>;
+
+  // Check all possible child collection names
+  const possibleCollections = [
+    'articles',
+    'sections_and_primary_docs',
+    'agent_scope_database',
+    'annotations',
+    'tenets',
+    'scenarios',
+    'scenario_variations',
+    'active_data',
+    'needed_research',
+  ];
+
+  for (const collectionName of possibleCollections) {
+    const collection = docAsRecord[collectionName];
+    if (Array.isArray(collection)) {
+      children.push(...(collection as StandardizedAtlasDocument[]));
+    }
   }
-  return date.toISOString().slice(0, 10);
+
+  return children;
 }

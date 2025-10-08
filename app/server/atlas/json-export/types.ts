@@ -1,197 +1,167 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
+import {
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
+  ScenarioExtraFields,
+  ScenarioVariationExtraFields,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+  TypeSpecificationExtraFields,
+} from '../notion-database-properties-and-relationships';
 
 /**
  * A simplified, standardized representation of an Atlas document used for downstream processing.
+ * Now grouped by Atlas database instead of document type.
  */
 export interface BaseAtlasDocument {
-  type: AtlasDocumentType; // Allow string for unknown/custom types
+  type: AtlasDocumentType;
   doc_no: string;
   name: string;
   uuid: string | null;
-  last_modified: string;
+  last_modified: string; // TODO: Remove - The Markdown doesn't include this
   content: string;
 }
 
 export type StandardizedAtlasDocument =
-  | ScopeDocument
-  | ArticleDocument
-  | SectionDocument
-  | CoreDocument
-  | ActiveDataControllerDocument
-  | TypeSpecificationDocument
+  | ScopesDocument
+  | ArticlesDocument
+  | SectionsAndPrimaryDocsDocument
+  | AnnotationsDocument
+  | TenetsDocument
+  | ScenariosDocument
+  | ScenarioVariationsDocument
   | ActiveDataDocument
-  | AnnotationDocument
-  | TenetDocument
-  | ScenarioDocument
-  | ScenarioVariationDocument
+  | AgentScopeDatabaseDocument
   | NeededResearchDocument;
 
-/** Root array of standardized Scope trees. */
+/** Root array of standardized Atlas database trees. */
 export type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
 
-export const childCollectionNameToDocumentType = {
-  scopes: 'Scope',
-  articles: 'Article',
-  sections: 'Section',
-  core_documents: 'Core',
-  active_data_controllers: 'Active Data Controller',
-  type_specifications: 'Type Specification',
-  annotations: 'Annotation',
-  tenets: 'Action Tenet',
-  scenarios: 'Scenario',
-  scenario_variations: 'Scenario Variation',
+export const childCollectionNameToDatabaseName = {
+  scopes: 'Scopes',
+  articles: 'Articles',
+  sections_and_primary_docs: 'Sections & Primary Docs',
+  annotations: 'Annotations',
+  tenets: 'Tenets',
+  scenarios: 'Scenarios',
+  scenario_variations: 'Scenario Variations',
   active_data: 'Active Data',
+  agent_scope_database: 'Agent Scope Database',
   needed_research: 'Needed Research',
-} as const satisfies Record<string, AtlasDocumentType>;
+} as const satisfies Record<string, AtlasDatabaseName>;
 
-export type ChildCollectionName = keyof typeof childCollectionNameToDocumentType;
+export type ChildCollectionName = keyof typeof childCollectionNameToDatabaseName;
 
 export const childCollectionNames: ChildCollectionName[] = [
   'scopes',
   'articles',
-  'sections',
-  'core_documents',
-  'active_data_controllers',
-  'type_specifications',
+  'sections_and_primary_docs',
   'annotations',
   'tenets',
   'scenarios',
   'scenario_variations',
   'active_data',
+  'agent_scope_database',
   'needed_research',
 ];
 
 /**
- * Defines which child collection names are allowed for each Atlas document type.
- * These mappings are derived from the document type interfaces defined below.
- *
- * Note: This is automatically kept in sync with the actual TypeScript interfaces.
+ * Defines which child collection names are allowed for each Atlas database.
+ * Based on the Atlas Database Hierarchy from the documentation.
  */
-export const allowedChildCollectionNamesPerDocumentType: Record<AtlasDocumentType, ChildCollectionName[]> = {
-  // Immutable Documents
-  Scope: ['articles'],
-  Article: ['sections', 'annotations', 'needed_research', 'tenets', 'core_documents'],
-  Section: [
-    'core_documents',
-    'active_data_controllers',
-    'type_specifications',
+export const allowedChildCollectionNamesPerDatabase: Record<AtlasDatabaseName, ChildCollectionName[]> = {
+  Scopes: ['articles'],
+  Articles: ['sections_and_primary_docs'], // TODO: Add annotations, needed_research
+  'Sections & Primary Docs': [
+    'sections_and_primary_docs',
+    'agent_scope_database',
     'annotations',
-    'needed_research',
     'tenets',
-  ],
-
-  // Primary Documents
-  Core: [
-    'core_documents',
-    'active_data_controllers',
-    'type_specifications',
-    'annotations',
+    'active_data',
     'needed_research',
-    'tenets',
-  ],
-  'Active Data Controller': ['active_data', 'annotations', 'needed_research', 'tenets'],
-  'Type Specification': ['annotations', 'needed_research', 'tenets'],
-
-  // Supporting Documents
-  'Active Data': [],
-  Annotation: [],
-  'Action Tenet': ['scenarios'],
-  Scenario: ['scenario_variations'],
-  'Scenario Variation': [],
+  ], // TODO: Add tenets, annotations, active_data, needed_research
+  Annotations: ['needed_research'], // TODO: Add needed_research
+  Tenets: ['scenarios', 'needed_research'], // TODO: Add needed_research
+  Scenarios: ['scenario_variations', 'needed_research'], // TODO: Add needed_research
+  'Scenario Variations': ['needed_research'], // TODO: Add needed_research
+  'Active Data': ['needed_research'], // TODO: Add needed_research
+  'Agent Scope Database': ['agent_scope_database', 'annotations', 'tenets', 'active_data', 'needed_research'], // TODO: Add needed_research
   'Needed Research': [],
 };
 
 /**
- * Immutable Documents
+ * Atlas Database Documents
+ * Each document type represents an Atlas database and contains children grouped by database.
  */
 
-// ✅
-export interface ScopeDocument extends BaseAtlasDocument {
-  articles: ArticleDocument[];
+export interface ScopesDocument extends BaseAtlasDocument {
+  articles: ArticlesDocument[];
 }
 
-// ✅
-export interface ArticleDocument extends BaseAtlasDocument {
-  sections: SectionDocument[];
-  // Supporting documents
-  annotations: AnnotationDocument[];
+export interface ArticlesDocument extends BaseAtlasDocument {
+  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
+  // agent_scope_database: AgentScopeDatabaseDocument[];
+  annotations: AnnotationsDocument[];
   needed_research: NeededResearchDocument[];
-  tenets: TenetDocument[]; // TODO: Disable?
-  // TODO: These are not allowed by Atlas hierarchy rules but it's present in the data
-  core_documents: CoreDocument[];
 }
 
-export interface SectionDocument extends BaseAtlasDocument {
-  core_documents: CoreDocument[];
-  active_data_controllers: ActiveDataControllerDocument[];
-  type_specifications: TypeSpecificationDocument[];
-  // Supporting documents
-  annotations: AnnotationDocument[];
-  needed_research: NeededResearchDocument[];
-  tenets: TenetDocument[];
-}
-
-/**
- * Primary Documents
- */
-
-export interface CoreDocument extends BaseAtlasDocument {
-  core_documents: CoreDocument[];
-  active_data_controllers: ActiveDataControllerDocument[];
-  type_specifications: TypeSpecificationDocument[];
-  // Supporting documents
-  annotations: AnnotationDocument[];
-  needed_research: NeededResearchDocument[];
-  tenets: TenetDocument[];
-}
-
-export interface ActiveDataControllerDocument extends BaseAtlasDocument {
-  // Supporting documents
+export interface SectionsAndPrimaryDocsDocument extends BaseAtlasDocument, Partial<TypeSpecificationExtraFields> {
+  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
+  agent_scope_database?: AgentScopeDatabaseDocument[];
+  annotations: AnnotationsDocument[];
+  tenets: TenetsDocument[];
   active_data: ActiveDataDocument[];
-  annotations: AnnotationDocument[];
   needed_research: NeededResearchDocument[];
-  tenets: TenetDocument[];
+  // TODO: Add extra fields for Type Specification documents (optional)
 }
 
-export interface TypeSpecificationDocument extends BaseAtlasDocument {
-  // Extra fields
-  type_specification_doc_identifier_rules: string | null;
-  type_specification_additional_logic: string | null;
-  type_specification_type_category: string | null;
-  type_specification_type_name: string | null;
-  type_specification_type_overview: string | null;
-  // Supporting documents
-  annotations: AnnotationDocument[];
+export interface AnnotationsDocument extends BaseAtlasDocument {
+  // No children - leaf database
   needed_research: NeededResearchDocument[];
-  tenets: TenetDocument[];
 }
 
-/**
- * Supporting Documents
- */
-
-// ActiveData must always be under ActiveDataController
-export interface ActiveDataDocument extends BaseAtlasDocument {}
-
-export interface AnnotationDocument extends BaseAtlasDocument {}
-
-export interface TenetDocument extends BaseAtlasDocument {
-  scenarios: ScenarioDocument[];
+export interface TenetsDocument extends BaseAtlasDocument {
+  scenarios: ScenariosDocument[];
+  needed_research: NeededResearchDocument[];
 }
 
-export interface ScenarioDocument extends BaseAtlasDocument {
-  // Extra fields
-  scenario_finding: string | null;
-  scenario_additional_guidance: string | null;
-  // Child docs
-  scenario_variations: ScenarioVariationDocument[];
+export interface ScenariosDocument extends BaseAtlasDocument, Partial<ScenarioExtraFields> {
+  scenario_variations: ScenarioVariationsDocument[];
+  needed_research: NeededResearchDocument[];
 }
 
-export interface ScenarioVariationDocument extends BaseAtlasDocument {
-  // Extra fields
-  scenario_variation_finding: string | null;
-  scenario_variation_additional_guidance: string | null;
+export interface ScenarioVariationsDocument extends BaseAtlasDocument, Partial<ScenarioVariationExtraFields> {
+  // No children - leaf database
+  needed_research: NeededResearchDocument[];
 }
 
-export interface NeededResearchDocument extends BaseAtlasDocument {}
+export interface ActiveDataDocument extends BaseAtlasDocument {
+  // No children - leaf database
+  needed_research: NeededResearchDocument[];
+}
+
+export interface AgentScopeDatabaseDocument extends BaseAtlasDocument {
+  agent_scope_database: AgentScopeDatabaseDocument[];
+  annotations: AnnotationsDocument[];
+  tenets: TenetsDocument[];
+  active_data: ActiveDataDocument[];
+  needed_research: NeededResearchDocument[];
+}
+
+export interface NeededResearchDocument extends BaseAtlasDocument {
+  // No children - leaf database
+}
+
+// Extra fields per database (non-child fields beyond base)
+export const extraFieldsByDatabase: Record<AtlasDatabaseName, string[]> = {
+  Scopes: [],
+  Articles: [],
+  'Sections & Primary Docs': Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING),
+  Annotations: [],
+  Tenets: [],
+  Scenarios: Object.keys(SCENARIO_PROPERTY_MAPPING),
+  'Scenario Variations': Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING),
+  'Active Data': [],
+  'Agent Scope Database': [],
+  'Needed Research': [],
+};
