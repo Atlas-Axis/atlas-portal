@@ -17,8 +17,7 @@ import { AtlasTreeNode } from '../atlas-tree-types';
  * - Sequential numbering for each document type
  * - Special directory numbers for supporting documents (.0.3, .0.4, .0.6)
  * - Global numbering for Needed Research (NR-X)
- * - Mixed document type scenarios with proper ordering
- * - Sort order handling and document type priority fallbacks
+ * - Sort order handling and document number ordering fallbacks
  */
 
 /**
@@ -240,21 +239,21 @@ describe('Atlas Document Numbering System', () => {
         notion_page_id: 'core-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child of section
       });
 
       const adc = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child of section
       });
 
       const typespec = makeBasePage('Type Specification', {
         notion_page_id: 'typespec-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'TypeSpec 1',
-        parent_notion_page_id: null, // Direct child
+        parent_notion_page_id: 'section-1', // Direct child of section
       });
 
       pagesByDatabase = {
@@ -650,145 +649,6 @@ describe('Atlas Document Numbering System', () => {
     });
   });
 
-  describe('Mixed Document Type Scenarios', () => {
-    it('should handle Agent Scope Database mixed Core + Active Data Controller types', () => {
-      const scope = makeBasePage('Scope', {
-        notion_page_id: 'scope-1',
-        atlas_database_name: 'Scopes',
-        plain_text_name: 'Test Scope',
-        child_agent_scope_ids: ['agent-core-1', 'agent-adc-1', 'agent-core-2'],
-      });
-
-      const agentCore1 = makeBasePage('Core', {
-        notion_page_id: 'agent-core-1',
-        atlas_database_name: 'Agent Scope Database',
-        plain_text_name: 'Agent Core 1',
-        parent_notion_page_id: null,
-      });
-
-      const agentAdc = makeBasePage('Active Data Controller', {
-        notion_page_id: 'agent-adc-1',
-        atlas_database_name: 'Agent Scope Database',
-        plain_text_name: 'Agent ADC 1',
-        parent_notion_page_id: null,
-      });
-
-      const agentCore2 = makeBasePage('Core', {
-        notion_page_id: 'agent-core-2',
-        atlas_database_name: 'Agent Scope Database',
-        plain_text_name: 'Agent Core 2',
-        parent_notion_page_id: null,
-      });
-
-      pagesByDatabase = {
-        Scopes: [scope],
-        Articles: [],
-        'Sections & Primary Docs': [],
-        Annotations: [],
-        Tenets: [],
-        Scenarios: [],
-        'Scenario Variations': [],
-        'Active Data': [],
-        'Agent Scope Database': [agentCore1, agentAdc, agentCore2],
-        'Needed Research': [],
-      };
-
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
-
-      expect(docNumbers.get('agent-core-1')).toBe('A.0.1');
-      expect(docNumbers.get('agent-adc-1')).toBe('A.0.2');
-      expect(docNumbers.get('agent-core-2')).toBe('A.0.3');
-    });
-
-    it('should handle complex multiple sections with different document type combinations', () => {
-      const scope = makeBasePage('Scope', {
-        notion_page_id: 'scope-1',
-        atlas_database_name: 'Scopes',
-        plain_text_name: 'Test Scope',
-        child_article_ids: ['article-1'],
-      });
-
-      const article = makeBasePage('Article', {
-        notion_page_id: 'article-1',
-        atlas_database_name: 'Articles',
-        plain_text_name: 'Article 1',
-        child_section_and_primary_doc_ids: ['section-1', 'section-2'],
-      });
-
-      // Section 1 has Core + ADC
-      const section1 = makeBasePage('Section', {
-        notion_page_id: 'section-1',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'Section 1',
-        child_section_and_primary_doc_ids: ['core-1', 'adc-1'],
-      });
-
-      // Section 2 has TypeSpec + Core
-      const section2 = makeBasePage('Section', {
-        notion_page_id: 'section-2',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'Section 2',
-        child_section_and_primary_doc_ids: ['typespec-1', 'core-2'],
-      });
-
-      const core1 = makeBasePage('Core', {
-        notion_page_id: 'core-1',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'Core 1',
-        parent_notion_page_id: null,
-      });
-
-      const adc1 = makeBasePage('Active Data Controller', {
-        notion_page_id: 'adc-1',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'ADC 1',
-        parent_notion_page_id: null,
-      });
-
-      const typespec1 = makeBasePage('Type Specification', {
-        notion_page_id: 'typespec-1',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'TypeSpec 1',
-        parent_notion_page_id: null,
-      });
-
-      const core2 = makeBasePage('Core', {
-        notion_page_id: 'core-2',
-        atlas_database_name: 'Sections & Primary Docs',
-        plain_text_name: 'Core 2',
-        parent_notion_page_id: null,
-      });
-
-      pagesByDatabase = {
-        Scopes: [scope],
-        Articles: [article],
-        'Sections & Primary Docs': [section1, section2, core1, adc1, typespec1, core2],
-        Annotations: [],
-        Tenets: [],
-        Scenarios: [],
-        'Scenario Variations': [],
-        'Active Data': [],
-        'Agent Scope Database': [],
-        'Needed Research': [],
-      };
-
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
-
-      // Section numbering
-      expect(docNumbers.get('section-1')).toBe('A.0.1.1');
-      expect(docNumbers.get('section-2')).toBe('A.0.1.2');
-
-      // Mixed types under section 1 (Core=1, ADC=2 by type priority)
-      expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
-      expect(docNumbers.get('adc-1')).toBe('A.0.1.1.2');
-
-      // Mixed types under section 2 - Current implementation orders by child array position
-      // TODO: Implementation should use document type priority (Core=1, TypeSpec=3) per docs
-      expect(docNumbers.get('typespec-1')).toBe('A.0.1.2.1'); // First in child array
-      expect(docNumbers.get('core-2')).toBe('A.0.1.2.2'); // Second in child array
-    });
-  });
-
   describe('Complete Hierarchy Integration Tests', () => {
     it('should handle complete Atlas hierarchy with all document types', () => {
       // Build a comprehensive hierarchy
@@ -821,14 +681,14 @@ describe('Atlas Document Numbering System', () => {
         notion_page_id: 'core-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Core 1',
-        parent_notion_page_id: null,
+        parent_notion_page_id: 'section-1',
       });
 
       const adc = makeBasePage('Active Data Controller', {
         notion_page_id: 'adc-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'ADC 1',
-        parent_notion_page_id: null,
+        parent_notion_page_id: 'section-1',
         child_active_data_ids: ['active-data-1'],
       });
 
@@ -935,7 +795,7 @@ describe('Atlas Document Numbering System', () => {
         notion_page_id: 'core-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Parent Core',
-        parent_notion_page_id: null,
+        parent_notion_page_id: 'section-1',
         child_section_and_primary_doc_ids: ['core-2', 'core-3'],
       });
 

@@ -238,7 +238,7 @@ The numbering system uses special directory numbers for organizational purposes:
 >
 > **Example**: If a section has 1 Core, 1 Active Data Controller, and 1 Type Specification document, they are numbered sequentially as A.1.1.1, A.1.1.2, A.1.1.3 respectively - NOT as A.1.1.1, A.1.1.1, A.1.1.1 (which would create duplicate numbers).
 >
-> **Implementation**: The `sortSiblings` function uses document type priority ordering (Core=1, Active Data Controller=2, Type Specification=3, Section=4) when `sort_order` is null to ensure consistent, deterministic numbering.
+> **Implementation**: The `sortAtlasDocuments` sorts sibling nodes by sort_order and document number.
 
 ## Implementation Guidelines
 

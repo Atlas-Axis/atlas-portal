@@ -457,7 +457,7 @@ function buildTreeNode(
           }
         }
 
-        // Sort children by sort_order and document type priority
+        // Sort children by sort_order and document number
         const sortedChildren = sortAtlasDocuments<AtlasTreeNode>(childNodes);
         treeNode[type] = sortedChildren;
       }

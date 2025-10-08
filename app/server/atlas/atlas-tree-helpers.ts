@@ -49,10 +49,7 @@ export function getAllButLastTitlePart(s: string) {
 }
 
 /**
- * Sorts child nodes by sort_order and document type priority.
- *
- * This function implements the same sorting logic as the original document numbering system,
- * ensuring consistent ordering across the tree structure.
+ * Sorts child nodes by sort_order and document number.
  *
  * @param documents - Array of child tree nodes to sort
  * @returns Sorted array of child tree nodes
