@@ -1,7 +1,7 @@
 import { parseArgs } from 'node:util';
 import { type AtlasDatabaseName, IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
-import { importMultipleDatabasesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
+import { importDatabasesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from './utils/load-env';
 
@@ -87,9 +87,10 @@ ${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
 
   try {
     // Import all Atlas databases using the unified function
-    await importMultipleDatabasesFromNotionToSupabase({
+    await importDatabasesFromNotionToSupabase({
       databasesToImport,
       useLocalCache: args['local-cache'] ?? false,
+      importType: targetDatabase ? 'partial' : 'full_sync',
     });
 
     // Revalidate /atlas page to reflect the newly imported data

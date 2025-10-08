@@ -9,6 +9,7 @@ import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
 import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
+import { logImportOperation } from '../supabase/log-import';
 import { DatabasePageChanges, compareDatabasePages } from './compare-database-pages';
 import { convertNotionPagesToDatabaseFormat } from './convert-notion-pages-to-supabase-format';
 import { displayImportSummary } from './display-import-summary';
@@ -25,6 +26,8 @@ export interface ImportResult {
     changedProperties: number;
     changedRelationships: number;
   };
+  changedDocumentIds: string[];
+  changes: DatabasePageChanges | null;
 }
 
 /**
@@ -177,37 +180,41 @@ export async function importDatabasePagesFromNotionToSupabase({
 
     console.log(`⏱️  Import duration: ${durationMinutes.toFixed(2)} minutes (${durationSeconds.toFixed(2)}s)`);
 
-    // Return summary of changes
-    if (changes) {
-      return {
-        atlasDatabaseName,
-        hasChanges:
-          changes.newPages.length > 0 ||
-          changes.deletedPages.length > 0 ||
-          changes.changedProperties.length > 0 ||
-          changes.changedRelationships.length > 0,
-        durationMinutes,
-        summary: {
-          newPages: changes.newPages.length,
-          deletedPages: changes.deletedPages.length,
-          changedProperties: changes.changedProperties.length,
-          changedRelationships: changes.changedRelationships.length,
-        },
-      };
-    } else {
-      // First time import
-      return {
-        atlasDatabaseName,
-        hasChanges: true,
-        durationMinutes,
-        summary: {
-          newPages: syncedCount,
-          deletedPages: 0,
-          changedProperties: 0,
-          changedRelationships: 0,
-        },
-      };
-    }
+    // Prepare result data
+    const hasChanges = changes
+      ? changes.newPages.length > 0 ||
+        changes.deletedPages.length > 0 ||
+        changes.changedProperties.length > 0 ||
+        changes.changedRelationships.length > 0
+      : true; // First time import always has changes
+
+    const changedDocumentIds = changes
+      ? [...changes.newPages, ...changes.deletedPages, ...changes.changedProperties, ...changes.changedRelationships]
+      : [];
+
+    const result: ImportResult = {
+      atlasDatabaseName,
+      hasChanges,
+      durationMinutes,
+      // TODO: Remove summary, use changes instead
+      summary: changes
+        ? {
+            newPages: changes.newPages.length,
+            deletedPages: changes.deletedPages.length,
+            changedProperties: changes.changedProperties.length,
+            changedRelationships: changes.changedRelationships.length,
+          }
+        : {
+            newPages: syncedCount,
+            deletedPages: 0,
+            changedProperties: 0,
+            changedRelationships: 0,
+          },
+      changes,
+      changedDocumentIds,
+    };
+
+    return result;
   } catch (error) {
     const endTime = performance.now();
     const durationMs = endTime - startTime;
@@ -235,12 +242,16 @@ export async function importDatabasePagesFromNotionToSupabase({
  * This function handles the common logic of looping over databases, logging progress,
  * and displaying summary.
  */
-export async function importMultipleDatabasesFromNotionToSupabase({
+export async function importDatabasesFromNotionToSupabase({
   databasesToImport = IMPORT_DATABASES,
   useLocalCache = false,
+  triggerDevRunId = null,
+  importType = 'full_sync',
 }: {
   databasesToImport?: AtlasDatabaseName[];
   useLocalCache?: boolean;
+  triggerDevRunId?: string | null;
+  importType?: 'full_sync' | 'partial';
 } = {}): Promise<ImportResult[]> {
   const startTime = Date.now();
   const results: ImportResult[] = [];
@@ -261,6 +272,32 @@ export async function importMultipleDatabasesFromNotionToSupabase({
 
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
+    const durationMinutes = Number(durationSeconds) / 60;
+
+    // Aggregate results for logging
+    const totalNewPages = results.reduce((sum, r) => sum + r.summary.newPages, 0);
+    const totalDeletedPages = results.reduce((sum, r) => sum + r.summary.deletedPages, 0);
+    const totalChangedProperties = results.reduce((sum, r) => sum + r.summary.changedProperties, 0);
+    const totalChangedRelationships = results.reduce((sum, r) => sum + r.summary.changedRelationships, 0);
+    const hasAnyChanges = results.some((r) => r.hasChanges);
+    const allChangedDocumentIds = results.flatMap((r) => r.changedDocumentIds);
+
+    // Log the overall import operation
+    await logImportOperation({
+      success: true,
+      has_changes: hasAnyChanges,
+      duration_minutes: durationMinutes,
+      finished_at: new Date(endTime).toISOString(),
+      started_at: new Date(startTime).toISOString(),
+      changed_notion_page_ids: allChangedDocumentIds,
+      trigger_dev_run_id: triggerDevRunId,
+      import_type: importType,
+      error_message: null,
+      new_pages_count: totalNewPages,
+      deleted_pages_count: totalDeletedPages,
+      changed_properties_count: totalChangedProperties,
+      changed_relationships_count: totalChangedRelationships,
+    });
 
     // Display summary of all changes
     displayImportSummary(results);
@@ -268,15 +305,38 @@ export async function importMultipleDatabasesFromNotionToSupabase({
     console.log(`🎉 All databases imported successfully!`);
     // Show in minutes if over 120 seconds
     if (Number(durationSeconds) > 120) {
-      const durationMinutes = (Number(durationSeconds) / 60).toFixed(2);
-      console.log(`⏰ Total processing time: ${durationMinutes} minutes`);
+      const durationMinutesDisplay = (Number(durationSeconds) / 60).toFixed(2);
+      console.log(`⏰ Total processing time: ${durationMinutesDisplay} minutes`);
     } else {
       console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
     }
 
     return results;
   } catch (error) {
+    const endTime = Date.now();
+    const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
+    const durationMinutes = Number(durationSeconds) / 60;
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
     console.error(`Error importing Notion databases:`, error);
+
+    // Log the failed import operation
+    await logImportOperation({
+      success: false,
+      has_changes: false,
+      duration_minutes: durationMinutes,
+      finished_at: new Date(endTime).toISOString(),
+      started_at: new Date(startTime).toISOString(),
+      changed_notion_page_ids: [],
+      trigger_dev_run_id: triggerDevRunId,
+      import_type: importType,
+      error_message: errorMessage,
+      new_pages_count: 0,
+      deleted_pages_count: 0,
+      changed_properties_count: 0,
+      changed_relationships_count: 0,
+    });
+
     throw error;
   }
 }

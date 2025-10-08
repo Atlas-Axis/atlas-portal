@@ -71,6 +71,57 @@ export type Database = {
         };
         Relationships: [];
       };
+      import_logs: {
+        Row: {
+          changed_notion_page_ids: Json;
+          changed_properties_count: number;
+          changed_relationships_count: number;
+          deleted_pages_count: number;
+          duration_minutes: number;
+          error_message: string | null;
+          finished_at: string;
+          has_changes: boolean;
+          id: string;
+          import_type: string;
+          new_pages_count: number;
+          started_at: string;
+          success: boolean;
+          trigger_dev_run_id: string | null;
+        };
+        Insert: {
+          changed_notion_page_ids?: Json;
+          changed_properties_count?: number;
+          changed_relationships_count?: number;
+          deleted_pages_count?: number;
+          duration_minutes: number;
+          error_message?: string | null;
+          finished_at: string;
+          has_changes: boolean;
+          id?: string;
+          import_type: string;
+          new_pages_count?: number;
+          started_at: string;
+          success: boolean;
+          trigger_dev_run_id?: string | null;
+        };
+        Update: {
+          changed_notion_page_ids?: Json;
+          changed_properties_count?: number;
+          changed_relationships_count?: number;
+          deleted_pages_count?: number;
+          duration_minutes?: number;
+          error_message?: string | null;
+          finished_at?: string;
+          has_changes?: boolean;
+          id?: string;
+          import_type?: string;
+          new_pages_count?: number;
+          started_at?: string;
+          success?: boolean;
+          trigger_dev_run_id?: string | null;
+        };
+        Relationships: [];
+      };
       notion_blocks: {
         Row: {
           archived: boolean;

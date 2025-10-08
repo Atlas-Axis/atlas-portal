@@ -1,7 +1,7 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
-import { importMultipleDatabasesFromNotionToSupabase as importDatabasesFromNotionToSupabase } from '../notion/import-database-to-supabase';
+import { importDatabasesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -18,7 +18,9 @@ export const notionFullAtlasSyncTask = task({
     factor: 2,
   },
   machine: 'small-1x',
-  run: async () => {
+  run: async (_payload: unknown, { ctx }) => {
+    const runId = ctx.run.id;
+
     // Initialize API call count metadata
     setApiCallCountTriggerMetadata(0);
 
@@ -30,7 +32,10 @@ export const notionFullAtlasSyncTask = task({
 
     try {
       // Start the sync process - import all databases using the unified function
-      const results = await importDatabasesFromNotionToSupabase();
+      const results = await importDatabasesFromNotionToSupabase({
+        triggerDevRunId: runId,
+        importType: 'full_sync',
+      });
 
       // Log final Notion API call stats before flushing metadata
       const finalStats = notion().getNotionProxyStats();
