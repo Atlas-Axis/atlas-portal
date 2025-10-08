@@ -171,7 +171,7 @@ async function loadJsonFiles(
       throw new Error(`Supabase file does not contain a valid array: ${supabaseFile}`);
     }
 
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`Loaded ${github.length} GitHub categories and ${supabase.length} Supabase categories`);
     }
 
@@ -472,7 +472,7 @@ async function main(): Promise<void> {
   try {
     const options = parseArgs();
 
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log('Options:', options);
     }
 

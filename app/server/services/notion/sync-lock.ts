@@ -6,7 +6,7 @@ type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelle
 const SYNC_LOCK_TIMEOUT_MINUTES = 30;
 
 export async function acquireSyncLock(notionDatabaseId: string) {
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
   }
 
@@ -28,7 +28,7 @@ export async function acquireSyncLock(notionDatabaseId: string) {
     )
     .throwOnError();
 
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Sync lock acquired successfully`);
   }
 
@@ -46,7 +46,7 @@ export async function releaseSyncLock({
   syncErrorMessage: string | null;
   syncedCount: number | null;
 }) {
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Releasing sync lock for database ${notionDatabaseId} with status ${syncStatus}`);
   }
   if (syncErrorMessage) {

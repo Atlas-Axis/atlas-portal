@@ -17,8 +17,7 @@ import { Json } from '../supabase/database.types';
 import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
-
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 // Local type for future relationship extraction usage
 type Relationships = Record<string, string[]>;
@@ -47,7 +46,7 @@ export async function convertNotionPagesToDatabaseFormat({
     }
   }
 
-  if (DEBUG_LOGGING) console.log(`Converted ${databasePages.length} pages to database format`);
+  if (DEBUG_LOGGING()) console.log(`Converted ${databasePages.length} pages to database format`);
 
   return databasePages;
 }
@@ -123,10 +122,10 @@ async function convertSingleNotionPageToDatabaseFormat(
   const hasChildRelationships = Object.values(childIdsByNotionPropertyName).some((rel) => rel.length > 0);
 
   // Debug logging
-  if (parentNotionId && DEBUG_LOGGING) {
+  if (parentNotionId && DEBUG_LOGGING()) {
     console.log(`⬆️ Parent ID for page ${notionPage.id}:`, parentNotionId);
   }
-  if (hasChildRelationships && DEBUG_LOGGING) {
+  if (hasChildRelationships && DEBUG_LOGGING()) {
     console.log(`🔥 Child relationships for page ${notionPage.id}:`, childIdsByNotionPropertyName);
   }
 
@@ -402,12 +401,12 @@ function determineHasChildren(page: EnhancedPageObjectResponse, subItemsProperty
   if (subItemsPropertyName) {
     const subItemsProperty = page.properties[subItemsPropertyName];
     if (subItemsProperty && subItemsProperty.type === 'relation' && subItemsProperty.relation.length > 0) {
-      if (DEBUG_LOGGING) {
+      if (DEBUG_LOGGING()) {
         console.log(`Sub-item IDs for page ${page.id}:`, subItemsProperty.relation);
       }
       return true; // Has children
     }
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`No sub-item IDs found for page ${page.id} using property "${subItemsPropertyName}"`);
     }
   } else console.log(`No sub-items property name defined for page ${page.id}`);

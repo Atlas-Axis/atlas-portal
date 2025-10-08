@@ -161,12 +161,12 @@ function parseAll(html: string): AtlasCategoryJson[] {
   const categories: AtlasCategoryJson[] = [];
   for (const { id, label } of SECTION_CONFIGS) {
     const rows = parseSection(document, id, label);
-    if (DEBUG_LOGGING) console.log(`#${id}: ${rows.length} rows`);
+    if (DEBUG_LOGGING()) console.log(`#${id}: ${rows.length} rows`);
     // Sort within category using natural doc number ordering
     const sortStart = Date.now();
     rows.sort((a, b) => compareDocNumbers(a.originalDocNumber, b.originalDocNumber));
     const sortMs = Date.now() - sortStart;
-    if (DEBUG_LOGGING) console.log(`Sorted ${rows.length} documents for "${label}" in ${sortMs}ms`);
+    if (DEBUG_LOGGING()) console.log(`Sorted ${rows.length} documents for "${label}" in ${sortMs}ms`);
     categories.push({ type: label, documents: rows });
   }
   return categories;
@@ -200,15 +200,15 @@ export async function generateAtlasGithubJson(): Promise<AtlasCategoryJson[]> {
         break;
       }
     } catch (e) {
-      if (DEBUG_LOGGING) console.warn(`Failed to load ${src.name} source:`, e);
+      if (DEBUG_LOGGING()) console.warn(`Failed to load ${src.name} source:`, e);
     }
   }
 
-  if (DEBUG_LOGGING) console.log(`Using source: ${usedSource || 'none (0 rows)'}`);
+  if (DEBUG_LOGGING()) console.log(`Using source: ${usedSource || 'none (0 rows)'}`);
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(allRows, null, 2), 'utf8');
-  if (DEBUG_LOGGING) console.log(`Wrote ${allRows.length} documents (${allRows.length} categories) to ${OUTPUT_FILE}`);
+  if (DEBUG_LOGGING()) console.log(`Wrote ${allRows.length} documents (${allRows.length} categories) to ${OUTPUT_FILE}`);
   return allRows;
 }
 

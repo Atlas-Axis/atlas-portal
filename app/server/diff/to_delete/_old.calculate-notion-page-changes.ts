@@ -27,8 +27,6 @@ export async function _delete_calculateNotionPageHierarchyChanges({
   // }> {
   const startTime = Date.now();
 
-  const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
-
   console.log(`Starting calculation of Notion page hierarchy changes...`);
   console.log(`Original root Notion page ID: ${originalRootNotionPageId}`);
   console.log(`Duplicated root Notion page ID: ${duplicatedRootNotionPageId}`);

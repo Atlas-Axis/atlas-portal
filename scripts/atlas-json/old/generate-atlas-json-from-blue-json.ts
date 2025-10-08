@@ -246,7 +246,7 @@ function categorizeDocuments(items: FlattenedDoc[]): AtlasCategoryJson[] {
       .sort((a, b) => compareDocNumbers(a.generatedDocNumber, b.generatedDocNumber)),
   }));
 
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     for (const c of categories) {
       const start = Date.now();
       [...c.documents].sort((a, b) => compareDocNumbers(a.generatedDocNumber, b.generatedDocNumber));
@@ -266,21 +266,21 @@ export async function generateAtlasBlueJson(keepInactives = false): Promise<Atla
   }
 
   const { items: flattened, inactive } = flattenBlueTree(json, keepInactives);
-  if (DEBUG_LOGGING) console.log(`Flattened ${flattened.length} documents from blue.json`);
+  if (DEBUG_LOGGING()) console.log(`Flattened ${flattened.length} documents from blue.json`);
 
   const categories = categorizeDocuments(flattened);
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(categories, null, 2), 'utf8');
   const total = categories.reduce((acc, c) => acc + c.documents.length, 0);
-  if (DEBUG_LOGGING) console.log(`Wrote ${total} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
+  if (DEBUG_LOGGING()) console.log(`Wrote ${total} documents (${categories.length} categories) to ${OUTPUT_FILE}`);
   // Report inactive nodes
   if (keepInactives) {
     console.log(`Inactive nodes included: ${inactive.length}`);
   } else {
     console.log(`Inactive nodes skipped: ${inactive.length}`);
   }
-  if (DEBUG_LOGGING && inactive.length > 0) {
+  if (DEBUG_LOGGING() && inactive.length > 0) {
     for (const { docNumber, name } of inactive) {
       console.log(`  - ${docNumber || '?'} ${name || ''}`.trim());
     }

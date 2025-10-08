@@ -24,7 +24,7 @@ export class NotionRateLimiter {
 
   private log(level: 'info' | 'warn' | 'error', message: string, data?: unknown) {
     if (!this.enableLogging) return;
-    if (!DEBUG_LOGGING && level === 'info') return;
+    if (!DEBUG_LOGGING() && level === 'info') return;
 
     const timestamp = new Date().toUTCString().slice(17, 25); // HH:MM:SS format in UTC
     const prefix = level === 'info' ? '' : `[${timestamp} UTC]`;
@@ -103,7 +103,7 @@ export class NotionRateLimiter {
         const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
         const retryInfo = realRetryCount > 0 ? ` on retry ${realRetryCount}` : '';
         // Only log successful requests when DEBUG_LOGGING is enabled or if there were retries
-        if (DEBUG_LOGGING || realRetryCount > 0) {
+        if (DEBUG_LOGGING() || realRetryCount > 0) {
           this.log('info', `Notion API call succeeded${retryInfo} (${durationSeconds}s)`);
         }
         return apiResult;

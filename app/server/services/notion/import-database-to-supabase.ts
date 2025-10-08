@@ -42,7 +42,7 @@ export async function importDatabasePagesFromNotionToSupabase({
   console.log(`Sync started at: ${new Date().toUTCString()}`);
 
   // Verify that the sync is not already in progress
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Verifying sync lock for database ${notionDatabaseId}...`);
   }
   await verifySyncLock(notionDatabaseId);
@@ -52,7 +52,7 @@ export async function importDatabasePagesFromNotionToSupabase({
     await acquireSyncLock(notionDatabaseId);
 
     // Load existing database pages from Supabase
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`Loading existing database pages from Supabase to detect changes...`);
     }
     const existingPages = await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName });

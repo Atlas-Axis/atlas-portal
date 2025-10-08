@@ -172,7 +172,7 @@ function printAnalytics(analytics: OverallAnalytics): void {
   const sortedSections = [...analytics.sectionBreakdown].sort((a, b) => b.documentCount - a.documentCount);
 
   // Section breakdown
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log('📋 SECTION BREAKDOWN');
     console.log('-'.repeat(40));
 

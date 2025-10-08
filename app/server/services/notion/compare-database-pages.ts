@@ -155,7 +155,7 @@ export function compareDatabasePages({
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const trackedProperties = Object.values(databaseConfig.properties).filter((prop) => prop !== '');
 
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Tracked properties for ${atlasDatabaseName}: ${trackedProperties.join(', ')}`);
   }
 

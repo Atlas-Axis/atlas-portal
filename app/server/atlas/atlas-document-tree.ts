@@ -63,7 +63,7 @@ export function getAtlasDocumentChildPages(
       // This is caused by weird Notion relationship mappings in some cases, where the parent document defines all its descendants' IDs in the relationship list, not just its direct children
       if (child.atlas_database_name !== parentAtlasDatabaseName) {
         const isRootInItsOwnDatabase = !child.parent_notion_page_id;
-        if (!isRootInItsOwnDatabase && DEBUG_LOGGING) {
+        if (!isRootInItsOwnDatabase && DEBUG_LOGGING()) {
           console.log(
             'Skipping non-root child document to avoid duplicated entries showing up on the wrong level:',
             child.notion_page_id,
@@ -83,7 +83,7 @@ export function getAtlasDocumentChildPages(
       // This is caused by weird Notion relationship mappings in some cases, where the parent document defines all its descendants' IDs in the relationship list, not just its direct children
       if (child.atlas_database_name !== parentAtlasDatabaseName) {
         const isRootInItsOwnDatabase = !child.parent_notion_page_id;
-        if (!isRootInItsOwnDatabase && DEBUG_LOGGING) {
+        if (!isRootInItsOwnDatabase && DEBUG_LOGGING()) {
           console.log(
             'Skipping non-root child document to avoid duplicated entries showing up on the wrong level:',
             child.notion_page_id,

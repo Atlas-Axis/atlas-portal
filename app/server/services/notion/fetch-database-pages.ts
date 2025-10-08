@@ -4,8 +4,7 @@ import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas
 import { NOTION_DATABASE_FILTERS } from '@/app/server/atlas/notion-master-status-filters';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
-
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 // Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than in the initial fetch.
 export interface EnhancedPageObjectResponse extends PageObjectResponse {
@@ -30,7 +29,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
     notionPageRelationshipPropertyNames.push(databaseConfig.parentPropertyName);
   }
 
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Database config for "${atlasDatabaseName}":`, databaseConfig);
     console.log(`Notion property names to check for relationships:`, notionPageRelationshipPropertyNames);
   }
@@ -91,16 +90,37 @@ export async function fetchNotionDatabasePagesWithRelationships({
     console.log(`📊 ${needFullPropFetch.length} properties need full relationship fetching`);
   }
 
-  // Second pass: fetch full relationships for properties that were truncated
-  for (const { pageId, propertyName, propertyId } of needFullPropFetch) {
-    const fullRelationIds = await fetchAllRelationIds(pageId, propertyId);
+  // Second pass: fetch full relationships for properties that were truncated (in parallel with safe batching)
+  if (needFullPropFetch.length > 0) {
+    const concurrency = 12; // logical concurrency; real API concurrency is enforced by Notion proxy rate limiter
+    let processed = 0;
 
-    // Update the enhanced page with full relationship data using efficient Map lookup
-    const enhancedPage = enhancedPagesById.get(pageId);
-    if (enhancedPage) {
-      enhancedPage.enhancedRelations.set(propertyName, fullRelationIds);
-    } else {
-      console.warn(`⚠️ Could not find enhanced page with ID ${pageId} for relationship update`);
+    for (let i = 0; i < needFullPropFetch.length; i += concurrency) {
+      const batch = needFullPropFetch.slice(i, i + concurrency);
+      if (DEBUG_LOGGING()) {
+        console.log(`🔗 Fetching full relations batch ${i / concurrency + 1} (${batch.length} items)`);
+      }
+
+      const batchResults = await Promise.all(
+        batch.map(async ({ pageId, propertyName, propertyId }) => {
+          const ids = await fetchAllRelationIds(pageId, propertyId);
+          return { pageId, propertyName, ids };
+        }),
+      );
+
+      for (const { pageId, propertyName, ids } of batchResults) {
+        const enhancedPage = enhancedPagesById.get(pageId);
+        if (enhancedPage) {
+          enhancedPage.enhancedRelations.set(propertyName, ids);
+        } else {
+          console.warn(`⚠️ Could not find enhanced page with ID ${pageId} for relationship update`);
+        }
+      }
+
+      processed += batch.length;
+      if (DEBUG_LOGGING()) {
+        console.log(`✅ Updated ${processed}/${needFullPropFetch.length} properties with full relations`);
+      }
     }
   }
 
@@ -120,7 +140,7 @@ export async function fetchNotionDatabasePages({
   atlasDatabaseName: AtlasDatabaseName;
 }): Promise<PageObjectResponse[]> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
-  if (DEBUG_LOGGING) {
+  if (DEBUG_LOGGING()) {
     console.log(`Starting to fetch all pages from Notion database "${atlasDatabaseName}" (${notionDatabaseId})`);
   }
 
@@ -130,7 +150,7 @@ export async function fetchNotionDatabasePages({
   let batchNumber = 1;
 
   do {
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`  🔄 Fetching batch ${batchNumber} from Notion API...`);
     }
     const response: QueryDatabaseResponse = await notion().databases.query({
@@ -140,7 +160,7 @@ export async function fetchNotionDatabasePages({
       filter: NOTION_DATABASE_FILTERS,
     });
 
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       const batchSize = response.results.length;
       console.log(`  📄 Received ${batchSize} Notion pages in batch ${batchNumber}`);
     }
@@ -156,16 +176,16 @@ export async function fetchNotionDatabasePages({
     }
 
     cursor = response.next_cursor ?? undefined;
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`  Batch ${batchNumber} processed - Total Notion pages so far: ${pageCount}`);
     }
 
     if (cursor) {
-      if (DEBUG_LOGGING) {
+      if (DEBUG_LOGGING()) {
         console.log(`  ➡️ More Notion pages available, continuing to next batch...`);
       }
     } else {
-      if (DEBUG_LOGGING) {
+      if (DEBUG_LOGGING()) {
         console.log(`  🏁 Reached end of database - no more Notion pages to fetch`);
       }
     }
@@ -224,7 +244,7 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
       console.log(`    Fetching relations for page ${pageId}...`);
       isFirstIteration = false;
     } else {
-      if (DEBUG_LOGGING) {
+      if (DEBUG_LOGGING()) {
         console.log(`    Fetching more relations...`);
       }
     }
@@ -237,7 +257,7 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
     });
     const endTime = Date.now();
     const durationSeconds = Math.ceil((endTime - startTime) / 1000);
-    if (DEBUG_LOGGING) {
+    if (DEBUG_LOGGING()) {
       console.log(`        ${durationSeconds}s`);
     }
 

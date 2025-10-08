@@ -19,6 +19,7 @@ export class ParallelNotionRateLimiter {
   private requestTimestamps: number[] = [];
   private inFlight = 0;
   private nextId = 1;
+  private drainScheduled = false;
 
   private readonly windowSizeMs = 1000; // 1 second
   private readonly maxRequestsPerWindow = 3; // 3 requests per 1 second max
@@ -33,7 +34,7 @@ export class ParallelNotionRateLimiter {
 
   private log(level: 'info' | 'warn' | 'error', message: string, data?: unknown) {
     if (!this.enableLogging) return;
-    if (!DEBUG_LOGGING && level === 'info') return;
+    if (!DEBUG_LOGGING() && level === 'info') return;
 
     const timestamp = new Date().toUTCString().slice(17, 25); // HH:MM:SS UTC
     const prefix = level === 'info' ? '' : `[${timestamp} UTC]`;
@@ -90,11 +91,14 @@ export class ParallelNotionRateLimiter {
   }
 
   private schedule() {
+    if (this.drainScheduled) return;
+    this.drainScheduled = true;
     const schedule = typeof setImmediate === 'function' ? setImmediate : (fn: () => void) => setTimeout(fn, 0);
     schedule(() => this.drain());
   }
 
   private async drain() {
+    this.drainScheduled = false;
     // Start as many tasks as allowed right now
     while (this.queue.length > 0) {
       const now = Date.now();
@@ -117,6 +121,7 @@ export class ParallelNotionRateLimiter {
       if (this.inFlight >= this.maxRequestsPerWindow) {
         // Try later when in-flight decreases
         this.log('info', 'Max concurrency reached, deferring scheduling');
+        this.schedule();
         return;
       }
 
@@ -149,7 +154,7 @@ export class ParallelNotionRateLimiter {
         const result = await this.withTimeout(apiCall, this.apiTimeoutMs);
 
         const secs = ((Date.now() - startedAt) / 1000).toFixed(2);
-        if (DEBUG_LOGGING || retries > 0)
+        if (DEBUG_LOGGING() || retries > 0)
           this.log('info', `Notion API call succeeded${retries ? ` on retry ${retries}` : ''} (${secs}s)`);
         return result;
       } catch (error: unknown) {
