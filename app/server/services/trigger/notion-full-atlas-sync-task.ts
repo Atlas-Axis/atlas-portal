@@ -26,7 +26,6 @@ export const notionFullAtlasSyncTask = task({
     // Set up periodic stats logging every 5 seconds
     const statsInterval = setInterval(() => {
       const stats = notion().getNotionProxyStats();
-      console.log(`- ${stats.totalApiCalls} Notion API calls`);
       setApiCallCountTriggerMetadata(stats.totalApiCalls);
     }, 5000);
 
@@ -34,12 +33,10 @@ export const notionFullAtlasSyncTask = task({
       // Start the sync process - import all databases
       const results = [];
       for (const atlasDatabaseName of IMPORT_DATABASES) {
-        console.log(`📋 Starting sync for database: ${atlasDatabaseName}`);
         const result = await importDatabasePagesFromNotionToSupabase({
           atlasDatabaseName,
         });
         results.push(result);
-        console.log(`✅ Completed sync for database: ${atlasDatabaseName}`);
       }
 
       // Log final Notion API call stats before flushing metadata

@@ -46,7 +46,9 @@ export async function releaseSyncLock({
   syncErrorMessage: string | null;
   syncedCount: number | null;
 }) {
-  console.log(`Releasing sync lock for database ${notionDatabaseId} with status ${syncStatus}`);
+  if (DEBUG_LOGGING) {
+    console.log(`Releasing sync lock for database ${notionDatabaseId} with status ${syncStatus}`);
+  }
   if (syncErrorMessage) {
     console.error(`Sync error message: ${syncErrorMessage}`);
   }
