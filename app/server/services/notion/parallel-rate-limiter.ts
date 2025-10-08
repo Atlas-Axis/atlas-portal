@@ -165,8 +165,9 @@ export class ParallelNotionRateLimiter {
         const result = await this.withTimeout(apiCall, this.apiTimeoutMs);
 
         const secs = ((Date.now() - startedAt) / 1000).toFixed(2);
-        if (DEBUG_LOGGING() || retries > 0)
+        if (DEBUG_LOGGING() || retries > 0) {
           this.log('info', `Notion API call succeeded${retries ? ` on retry ${retries}` : ''} (${secs}s)`);
+        }
         return result;
       } catch (error: unknown) {
         lastError = error;
@@ -195,12 +196,10 @@ export class ParallelNotionRateLimiter {
   }
 
   private async withTimeout<T>(fn: () => Promise<T>, timeoutMs: number): Promise<T> {
-    let timedOut = false;
     const apiPromise = fn();
 
     const timeoutPromise = new Promise<never>((_, reject) => {
       const timer = setTimeout(() => {
-        timedOut = true;
         reject(new Error(`API call timed out after ${timeoutMs}ms`));
       }, timeoutMs);
       // Clear the timer when apiPromise settles to avoid leaks
@@ -211,10 +210,11 @@ export class ParallelNotionRateLimiter {
       // Race api vs timeout
       return await Promise.race([apiPromise, timeoutPromise]);
     } finally {
-      // If timeout won, suppress later apiPromise rejection to avoid unhandled rejection
-      if (timedOut) {
-        apiPromise.catch(() => {});
-      }
+      // Always suppress any late rejection to avoid unhandled rejections from downstream libraries
+      // (safe because the winner of the race determines the control flow here)
+      apiPromise.catch(() => {
+        console.warn('Suppressed late rejection from API promise');
+      });
     }
   }
 
