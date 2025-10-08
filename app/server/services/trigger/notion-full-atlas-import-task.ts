@@ -7,8 +7,8 @@ const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
 const flushTriggerMetadata = () => metadata.flush();
 
-export const notionFullAtlasSyncTask = task({
-  id: 'notion-database-sync',
+export const notionFullAtlasImportTask = task({
+  id: 'notion-database-import',
   // Set an optional maxDuration to prevent tasks from running indefinitely
   maxDuration: 60 * 60, // Stop executing after 60 mins of compute
   retry: {

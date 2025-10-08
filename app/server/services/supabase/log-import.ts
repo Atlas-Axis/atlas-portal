@@ -12,7 +12,7 @@ export async function logImportOperation(logData: ImportLogCreateInput): Promise
       console.error('Failed to log import operation:', error);
       // Don't throw here - logging failure shouldn't break the import
     } else {
-      console.log('✅ Import operation logged successfully');
+      console.log('Import operation logged successfully');
     }
   } catch (error) {
     console.error('Error logging import operation:', error);
