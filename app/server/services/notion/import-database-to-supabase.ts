@@ -151,6 +151,14 @@ export async function importDatabasePagesFromNotionToSupabase({
 
     console.log(`✅ Completed importing: ${atlasDatabaseName}`);
 
+    // Log how many minutes the import took
+    const endTime = performance.now();
+    const durationMs = endTime - startTime;
+    const durationSeconds = durationMs / 1000;
+    const durationMinutes = durationSeconds / 60;
+
+    console.log(`⏱️  Import duration: ${durationMinutes.toFixed(2)} minutes (${durationSeconds.toFixed(2)}s)`);
+
     // Return summary of changes
     if (changes) {
       return {
@@ -182,9 +190,14 @@ export async function importDatabasePagesFromNotionToSupabase({
     }
   } catch (error) {
     const endTime = performance.now();
-    const duration = endTime - startTime;
+    const durationMs = endTime - startTime;
+    const durationSeconds = durationMs / 1000;
+    const durationMinutes = durationSeconds / 60;
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error(`❌ Import failed after ${duration.toFixed(2)}ms (${(duration / 1000).toFixed(2)}s):`, error);
+    console.error(
+      `❌ Import failed after ${durationMinutes.toFixed(2)} minutes (${durationSeconds.toFixed(2)}s):`,
+      error,
+    );
 
     await releaseSyncLock({
       notionDatabaseId,
