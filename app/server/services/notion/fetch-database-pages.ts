@@ -1,10 +1,15 @@
 import { PageObjectResponse, QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import {
+  ATLAS_DATABASES,
+  ATLAS_DATABASE_ID_MAP,
+  AtlasDatabaseID,
+  AtlasDatabaseName,
+} from '@/app/server/atlas/constants';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NOTION_DATABASE_FILTERS } from '@/app/server/atlas/notion-master-status-filters';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
-import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 // Enhanced version of PageObjectResponse with all relationships loaded, even if there are more than in the initial fetch.
 export interface EnhancedPageObjectResponse extends PageObjectResponse {
@@ -92,7 +97,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
 
   // Second pass: fetch full relationships for properties that were truncated (in parallel with safe batching)
   if (needFullPropFetch.length > 0) {
-    const concurrency = 12; // logical concurrency; real API concurrency is enforced by Notion proxy rate limiter
+    const concurrency = atlasDatabaseName === ATLAS_DATABASES.ARTICLES ? 60 : 1; // logical concurrency; real API concurrency is enforced by Notion proxy rate limiter
     let processed = 0;
 
     for (let i = 0; i < needFullPropFetch.length; i += concurrency) {
@@ -245,7 +250,7 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
       isFirstIteration = false;
     } else {
       if (DEBUG_LOGGING()) {
-        console.log(`    Fetching more relations...`);
+        console.log(`    Fetching more relations...` + DEBUG_LOGGING() ? ` (${pageId})` : '');
       }
     }
     const startTime = Date.now();
