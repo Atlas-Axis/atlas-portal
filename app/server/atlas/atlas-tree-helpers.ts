@@ -50,6 +50,7 @@ export function getAllButLastTitlePart(s: string) {
 
 /**
  * Sorts child nodes by sort_order and document number.
+ * Uses the same logic as `array.sort` in `buildTreeNode` in `atlas-tree-builder.ts`.
  *
  * @param documents - Array of child tree nodes to sort
  * @returns Sorted array of child tree nodes
@@ -59,26 +60,30 @@ export function sortAtlasDocuments<
     sort_order: number | null;
     atlas_document_type: string;
     atlas_document_number: string;
+    atlas_database_name: string;
   },
 >(documents: T[]): T[] {
   return [...documents].sort((a, b) => {
-    // First sort by sort_order
-    const aOrder = a.sort_order;
-    const bOrder = b.sort_order;
-    const aHasOrder = aOrder != null;
-    const bHasOrder = bOrder != null;
-
-    // If both have sort_order and they differ, sort by that
-    if (aHasOrder && bHasOrder && aOrder! !== bOrder!) {
-      return aOrder! - bOrder!;
+    switch (a.atlas_database_name) {
+      case 'Scopes':
+      case 'Articles':
+      case 'Agent Scope Database':
+      case 'Annotations':
+      case 'Tenets':
+      case 'Active Data':
+      case 'Scenarios':
+      case 'Scenario Variations':
+      case 'Needed Research':
+        // Compare document numbers like "A.1" vs "A.10" using compareDocNumbers
+        return compareDocNumbers(a.atlas_document_number || '', b.atlas_document_number || '');
+      case 'Sections & Primary Docs':
+        // Sort by sort_order first, then by document number using compareDocNumbers
+        if (a.sort_order !== b.sort_order) {
+          return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+        }
+        return compareDocNumbers(a.atlas_document_number || '', b.atlas_document_number || '');
+      default:
+        return 0;
     }
-    // If only one has sort_order, it comes first
-    if (aHasOrder && !bHasOrder) return -1;
-    if (!aHasOrder && bHasOrder) return 1;
-
-    // Final fallback: use atlas_document_number
-    const an = a.atlas_document_number || '';
-    const bn = b.atlas_document_number || '';
-    return compareDocNumbers(an, bn);
   });
 }

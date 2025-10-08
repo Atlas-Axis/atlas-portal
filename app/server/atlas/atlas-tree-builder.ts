@@ -396,34 +396,12 @@ function buildTreeNode(
         const childNodes: AtlasTreeNode[] = [];
 
         // Sort siblings based on rules before processing. Docs: https://www.notion.so/atlas-axis/Ordering-Of-Atlas-Documents-280f2ff08d73802e8e08d0bd88e081be
-        const sortedArray = array.sort((a, b) => {
-          const aDoc = findPageById(a, lookupMaps);
-          const bDoc = findPageById(b, lookupMaps);
-          if (aDoc && bDoc) {
-            switch (aDoc.atlas_database_name) {
-              case 'Scopes':
-              case 'Articles':
-              case 'Agent Scope Database':
-              case 'Annotations':
-              case 'Tenets':
-              case 'Active Data':
-              case 'Scenarios':
-              case 'Scenario Variations':
-              case 'Needed Research':
-                // Compare document numbers like "A.1" vs "A.10" using compareDocNumbers
-                return compareDocNumbers(aDoc.atlas_document_number || '', bDoc.atlas_document_number || '');
-              case 'Sections & Primary Docs':
-                // Sort by sort_order first, then by document number using compareDocNumbers
-                if (aDoc.sort_order !== bDoc.sort_order) {
-                  return (aDoc.sort_order ?? 0) - (bDoc.sort_order ?? 0);
-                }
-                return compareDocNumbers(aDoc.atlas_document_number || '', bDoc.atlas_document_number || '');
-              default:
-                return 0;
-            }
-          }
-          return 0;
-        });
+        const childPages = array
+          .map((id) => findPageById(id, lookupMaps))
+          .filter((page): page is NotionDatabasePage => page !== undefined);
+
+        const sortedChildPages = sortAtlasDocuments(childPages);
+        const sortedArray = sortedChildPages.map((page) => page.notion_page_id);
 
         for (const childId of sortedArray) {
           if (typeof childId === 'string') {
