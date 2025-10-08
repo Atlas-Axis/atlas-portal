@@ -223,6 +223,7 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
       page.child_needed_research_ids,
     ];
 
+    // Collect all child IDs and build parent-child relationship map
     const childIds: string[] = [];
     for (const array of childArrays) {
       if (Array.isArray(array)) {

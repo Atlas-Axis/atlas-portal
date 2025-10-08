@@ -80,28 +80,6 @@ export function sortAtlasDocuments<
     if (aHasOrder && !bHasOrder) return -1;
     if (!aHasOrder && bHasOrder) return 1;
 
-    // Then sort by Atlas database priority
-    // Example where this is wrong: A.1.5 - A1... Active Data Controller and Core documents are on the same level under this Section
-    const typePriority: Record<string, number> = {
-      [ATLAS_DATABASES.SCOPES]: 1,
-      [ATLAS_DATABASES.AGENTS]: 1,
-      [ATLAS_DATABASES.ARTICLES]: 2,
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 3,
-      [ATLAS_DATABASES.ANNOTATIONS]: 4,
-      [ATLAS_DATABASES.TENETS]: 5,
-      [ATLAS_DATABASES.ACTIVE_DATA]: 6,
-      [ATLAS_DATABASES.SCENARIOS]: 7,
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 8,
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 9,
-    };
-
-    const aPriority = typePriority[a.atlas_document_type] || 999;
-    const bPriority = typePriority[b.atlas_document_type] || 999;
-
-    if (aPriority !== bPriority) {
-      return aPriority - bPriority;
-    }
-
     // Final fallback: use atlas_document_number
     const an = a.atlas_document_number || '';
     const bn = b.atlas_document_number || '';
