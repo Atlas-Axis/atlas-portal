@@ -19,6 +19,7 @@ export const notionFullAtlasSyncTask = task({
     maxTimeoutInMs: 30_000,
     factor: 2,
   },
+  machine: 'small-1x',
   run: async () => {
     // Initialize API call count metadata
     setApiCallCountTriggerMetadata(0);
