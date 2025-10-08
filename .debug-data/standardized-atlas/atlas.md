@@ -1222,6 +1222,16 @@ Alignment Conservers are held to the highest standard when judging whether their
 
 **UUID:** 86e68d54-7b35-4781-8df6-02f9e0858b85
 
+#### A.1.4.5.0.4.1 - Highest Standard - Facilitators must apply strictest possible requirements of Universal Alignment on ACs [Action Tenet]
+
+In any adjudication involving potential misalignment of Alignment Conservers \(ACs\), Facilitators are unequivocally directed to apply the strictest and highest standards of Universal Alignment.  
+  
+As ACs are held to the most rigorous standards of Universal Alignment, Facilitators should acknowledge evidence of misalignment if such evidence is deemed at least 51% more likely than not to be valid or to substantiate the presented claim. Additionally, should the overall weight of the evidence demonstrate a 51% or greater chance that the AC committed a misaligned act, the Facilitator is required to derecognize the AC.  
+  
+Given the exceptionally high stakes in cases of potential AC misalignment, Facilitators must prioritize an approach grounded in an abundance of caution, steering away from notions of 'fairness' or 'lenience.' Any lapse or misjudgment on the part of an AC cannot be excused based on ignorance of the rules, good intentions, honest mistake or similar factors. Maximal accountability for ACs is non-negotiable, a principle underpinned by the indispensable role of ACs as stewards of Universal Alignment.
+
+**UUID:** 709fdb63-40ee-488b-b6d7-0087ebe9884f
+
 #### NR-2 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]
 
 This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc.   
@@ -1235,16 +1245,6 @@ Then there is the matter of assessing evidence in a way that is rigorous and imp
 How much discretion should Facilitators have in interpreting and applying the element “the highest standard of Universal Alignment”? How to safeguard against bias and ensure all Facilitator adjudications are made impartially? Investigate mechanisms to maintain objectivity and impartiality throughout the adjudication, fact-finding, and evidence evaluation processes. This could include the establishment of independent review panels \(which could operate post facto to avoid excessively delaying the deplatforming of misaligned ACs\), the use of conflict-of-interest policies, and training on cognitive biases for those involved in decision-making.
 
 **UUID:** 54895f40-8344-4676-9ca9-89b477109fce
-
-#### A.1.4.5.0.4.1 - Highest Standard - Facilitators must apply strictest possible requirements of Universal Alignment on ACs [Action Tenet]
-
-In any adjudication involving potential misalignment of Alignment Conservers \(ACs\), Facilitators are unequivocally directed to apply the strictest and highest standards of Universal Alignment.  
-  
-As ACs are held to the most rigorous standards of Universal Alignment, Facilitators should acknowledge evidence of misalignment if such evidence is deemed at least 51% more likely than not to be valid or to substantiate the presented claim. Additionally, should the overall weight of the evidence demonstrate a 51% or greater chance that the AC committed a misaligned act, the Facilitator is required to derecognize the AC.  
-  
-Given the exceptionally high stakes in cases of potential AC misalignment, Facilitators must prioritize an approach grounded in an abundance of caution, steering away from notions of 'fairness' or 'lenience.' Any lapse or misjudgment on the part of an AC cannot be excused based on ignorance of the rules, good intentions, honest mistake or similar factors. Maximal accountability for ACs is non-negotiable, a principle underpinned by the indispensable role of ACs as stewards of Universal Alignment.
-
-**UUID:** 709fdb63-40ee-488b-b6d7-0087ebe9884f
 
 ### A.1.4.6 - ACs Can Be Operationally Active In Only One Role At A Time [Section]
 
@@ -1269,24 +1269,6 @@ The Facilitator “Ecosystem” is temporarily exempt from the general rule proh
 The element “operationally active” refers to being formally engaged in a specific role that is defined in the Atlas as executing a mission or function within the Sky ecosystem.
 
 **UUID:** ea050b28-edc5-449e-a716-5caea766cc85
-
-#### NR-3 - Should Ban Against Occupying Two Ecosystem Roles Apply to All Sky Stakeholder Roles? [Needed Research]
-
-Given the rationale behind the Target Document [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](https://www.notion.so/100b7e91896c4e9d8914b8ed5ef4c318), the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
-
-**UUID:** e99b5a3b-5ad1-494e-bbc5-672782febbd2
-
-#### NR-4 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]
-
-Should team contributors be subject to the Target Document’s prohibition against occupying two roles? What would be the arguments for and against such a position?   
-  
-One argument against this would be that quality contributors are a scarce resource. Further, the decentralized work paradigm encourages having several part-time jobs.   
-  
-The sharing of contributors across several Sky teams  - such that contributors gain experience in multiple operational aspects - might arguably enhance ecosystem intelligence.   
-  
-Would it make a meaningful difference to require contributors who do wish to work multiple roles to be doxxed?
-
-**UUID:** d0255716-8352-4f57-8209-97deef72c1af
 
 #### A.1.4.6.0.4.1 - Operationally Active - Whether An Entity Is “Operationally Active" In A Role Is Determined Purely On A Formal Basis [Action Tenet]
 
@@ -1410,6 +1392,24 @@ An "ecosystem role" need not be compensated or full-time to be regulated by the 
 
 **UUID:** 687933ce-87eb-4f35-a171-30333b31a462
 
+#### NR-3 - Should Ban Against Occupying Two Ecosystem Roles Apply to All Sky Stakeholder Roles? [Needed Research]
+
+Given the rationale behind the Target Document [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](https://www.notion.so/100b7e91896c4e9d8914b8ed5ef4c318), the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
+
+**UUID:** e99b5a3b-5ad1-494e-bbc5-672782febbd2
+
+#### NR-4 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]
+
+Should team contributors be subject to the Target Document’s prohibition against occupying two roles? What would be the arguments for and against such a position?   
+  
+One argument against this would be that quality contributors are a scarce resource. Further, the decentralized work paradigm encourages having several part-time jobs.   
+  
+The sharing of contributors across several Sky teams  - such that contributors gain experience in multiple operational aspects - might arguably enhance ecosystem intelligence.   
+  
+Would it make a meaningful difference to require contributors who do wish to work multiple roles to be doxxed?
+
+**UUID:** d0255716-8352-4f57-8209-97deef72c1af
+
 ### A.1.4.7 - ACs Subject To Both General And Role-specific Requirements [Section]
 
 An Alignment Conserver is fully responsible for meeting all requirements tied to the general AC role, which requirements are specified in this Article.   
@@ -1440,6 +1440,12 @@ This limited exemption takes precedence over any conflicting provisions in the A
 
 **UUID:** 107f2ff0-8d73-803c-b4bc-d0c82a03f407
 
+#### A.1.4.8.0.4.1 - ADs & Facilitators required to adhere to comprehensive operational security practices [Action Tenet]
+
+The operational security of the Alignment Conserver roles is key to governance integrity overall. Aligned Delegates and Facilitators are mandated to maintain rigorous operational security practices to ensure that their identities and work activities are anonymized and all related information is safeguarded. Such practices must go beyond basic privacy-enhancing measures and must include the use of secure communication channels, stringent data encryption, anonymity tools like VPNs and TOR networks, regular security audits, and rigorous digital footprint management.
+
+**UUID:** 5165334d-9563-409e-bbb0-9017f060b3ba
+
 #### NR-5 - Operational Security Protocols - Research Track [Needed Research]
 
 The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post \([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)\) on AD derecognition:  
@@ -1453,12 +1459,6 @@ The Security Scope Advisor could also assist in reviewing an informant's evidenc
 This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
 
 **UUID:** 1a1f2ff0-8d73-8087-b2d7-c0afd0e90bca
-
-#### A.1.4.8.0.4.1 - ADs & Facilitators required to adhere to comprehensive operational security practices [Action Tenet]
-
-The operational security of the Alignment Conserver roles is key to governance integrity overall. Aligned Delegates and Facilitators are mandated to maintain rigorous operational security practices to ensure that their identities and work activities are anonymized and all related information is safeguarded. Such practices must go beyond basic privacy-enhancing measures and must include the use of secure communication channels, stringent data encryption, anonymity tools like VPNs and TOR networks, regular security audits, and rigorous digital footprint management.
-
-**UUID:** 5165334d-9563-409e-bbb0-9017f060b3ba
 
 ### A.1.4.9 - Swift Action Is Required From Facilitators To Redress AC Misalignment [Section]
 
@@ -1474,20 +1474,6 @@ The element “risk of misalignment spreading among ACs" refers to the potential
 
 **UUID:** ba3f9d08-2d95-416b-b9e7-229387fb0e00
 
-#### NR-6 - Derecognition Procedure [Needed Research]
-
-Research specific procedural steps for the derecognition of an AC. The procedure should account for ways in which this process can be streamlined or standardized to ensure swift action. Research should identify potential bottlenecks and suggest ways to eliminate them, such as pre-defined decision-making protocols, clear documentation requirements, and fast-track procedures for urgent cases.  
-  
-Another point to research involves the concepts of due process or fairness. Specific logic currently active in the Atlas clearly indicates that ACs are held to the highest standards of Universal Alignment. Such a standard would seem to indicate that “fairness” is not an objective in any proceeding involving AC derecognition. What are the arguments for and against this?
-
-**UUID:** c1a605bb-ae3e-486d-a153-c900e643750b
-
-#### A.1.4.9.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action [Action Tenet]
-
-By "swiftly,” the Target Document requires Facilitators to take immediate and prompt action without unnecessary delay. The urgency is intended to prevent further harm or disruption within the governance system. A highly time-sensitive response is mandated for any breaches or potential risks of AC misalignment.
-
-**UUID:** 2d1891c7-1c5b-4e05-abc9-791a325f85b7
-
 #### A.1.5.8.0.4.1 - Facilitators’ Authority To Raise Formal Allegation [Action Tenet]
 
 Any community member or Aligned Delegate with information pertinent to suspected Alignment Conserver misalignment may take their concerns directly to the Core Facilitator.  Upon receiving such information, the Core Facilitator must promptly conduct an initial review to quickly assess the credibility of the concern. Based on this preliminary review, the Core Facilitator must decide whether to initiate a formal adjudication process in accordance with [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](https://www.notion.so/45b9378d78b44bffb650d55ca048b814).  
@@ -1495,6 +1481,20 @@ Any community member or Aligned Delegate with information pertinent to suspected
 Where the allegation of misalignment concerns a Governance Facilitator, a community member can take their concerns to any other Scope Facilitator, who is then empowered to initiate the formal adjudication process.
 
 **UUID:** 1cfbee44-9897-459f-b56b-8c67bcf7b07f
+
+#### A.1.4.9.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action [Action Tenet]
+
+By "swiftly,” the Target Document requires Facilitators to take immediate and prompt action without unnecessary delay. The urgency is intended to prevent further harm or disruption within the governance system. A highly time-sensitive response is mandated for any breaches or potential risks of AC misalignment.
+
+**UUID:** 2d1891c7-1c5b-4e05-abc9-791a325f85b7
+
+#### NR-6 - Derecognition Procedure [Needed Research]
+
+Research specific procedural steps for the derecognition of an AC. The procedure should account for ways in which this process can be streamlined or standardized to ensure swift action. Research should identify potential bottlenecks and suggest ways to eliminate them, such as pre-defined decision-making protocols, clear documentation requirements, and fast-track procedures for urgent cases.  
+  
+Another point to research involves the concepts of due process or fairness. Specific logic currently active in the Atlas clearly indicates that ACs are held to the highest standards of Universal Alignment. Such a standard would seem to indicate that “fairness” is not an objective in any proceeding involving AC derecognition. What are the arguments for and against this?
+
+**UUID:** c1a605bb-ae3e-486d-a153-c900e643750b
 
 ### A.1.4.10 - Adjudication Process [Section]
 
@@ -1557,12 +1557,6 @@ The Active Data is updated as follows:
 
 **UUID:** c518c0b4-dea2-4c6f-8ef8-231d61dd375c
 
-###### NR-7 - Defining Threshold For “Very Mild Slippery Slope" Breaches [Needed Research]
-
-What specific actions or omissions qualify as "very mild slippery slope" breaches? Helpful research can include: developing a set of criteria or a checklist that defines what constitutes a "very mild slippery slope" breach. This could involve an analysis of past or hypothetical incidents, consultations with the Facilitators, etc. Such guidelines are likely needed to help Facilitators reliably determine whether an act should be classified as a 'minor' slippery slope infraction or a more severe act which would merit derecognition.
-
-**UUID:** bbfd7504-375a-4501-9cd0-b7d564975bfd
-
 ###### A.1.4.10.2.1.0.4.1 - Adjudication Guidelines to be applied to a second misaligned act or a first misaligned act that is not mild [Action Tenet]
 
 The Target Document fails to specify accountability measures for an AC who commits a misaligned act that is not mild. The Target Document is also silent on the subject of the proper remedial approach if an AC commits a subsequent misaligned act after an initial mild breach. The language does imply subsequent breaches should be treated with increasing severity.  
@@ -1587,6 +1581,12 @@ Any Alignment Conserver misalignment, regardless of its seemingly trivial nature
 
 **UUID:** f0e7115a-3cc4-4e4c-8c64-3060ac08eaf2
 
+###### NR-7 - Defining Threshold For “Very Mild Slippery Slope" Breaches [Needed Research]
+
+What specific actions or omissions qualify as "very mild slippery slope" breaches? Helpful research can include: developing a set of criteria or a checklist that defines what constitutes a "very mild slippery slope" breach. This could involve an analysis of past or hypothetical incidents, consultations with the Facilitators, etc. Such guidelines are likely needed to help Facilitators reliably determine whether an act should be classified as a 'minor' slippery slope infraction or a more severe act which would merit derecognition.
+
+**UUID:** bbfd7504-375a-4501-9cd0-b7d564975bfd
+
 ##### A.1.4.10.2.2 - Mandated Derecognition For Severe Breaches [Core]
 
 In cases where severe actions or violations occur that can be reasonably interpreted as Governance Attacks, the Alignment Conserver must be promptly derecognized by the Core Facilitator.
@@ -1599,14 +1599,6 @@ The element “governance attack” is a critical violation of the Sky ecosystem
 
 **UUID:** db15a751-6b5a-4392-a8fd-27779c1e31f0
 
-###### NR-8 - Defining “Severe Actions Or Violations" And “Governance Attack” [Needed Research]
-
-What specific criteria or actions qualify as "severe" enough to warrant derecognition? Develop clear guidelines that define what constitutes a "severe case" in the context of misaligned actions. This involves identifying key indicators of severity, such as the magnitude of the impact, the intent behind the actions, and the potential or actual harm caused.  
-  
-Also needed: What actions or behaviors specifically constitute a "Governance Attack”? Can you propose criteria or frameworks for assessing intent, the scope of actions, and their potential consequences? The research can perhaps explore how different governance models define and respond to attacks and consider psychological, legal, and operational perspectives to support a more fact-driven interpretive approach.
-
-**UUID:** 04d6d7c7-c40b-4fc3-97b2-8748851013e3
-
 ###### A.1.4.10.2.2.0.4.1 - Promptly Derecognized - Mandated Timeline For AC Derecognition For Misalignment [Action Tenet]
 
 The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'  
@@ -1614,6 +1606,14 @@ The element 'promptly' in the Target Document means 'as soon as is reasonably po
 To adhere to this commitment, the Core Facilitator must derecognize the AC within a general timeframe of 1-2 calendar days upon conclusion of an adjudication that finds against the AC for misalignment. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
 
 **UUID:** 3e44053d-4c11-4a12-89ae-6b294056e783
+
+###### NR-8 - Defining “Severe Actions Or Violations" And “Governance Attack” [Needed Research]
+
+What specific criteria or actions qualify as "severe" enough to warrant derecognition? Develop clear guidelines that define what constitutes a "severe case" in the context of misaligned actions. This involves identifying key indicators of severity, such as the magnitude of the impact, the intent behind the actions, and the potential or actual harm caused.  
+  
+Also needed: What actions or behaviors specifically constitute a "Governance Attack”? Can you propose criteria or frameworks for assessing intent, the scope of actions, and their potential consequences? The research can perhaps explore how different governance models define and respond to attacks and consider psychological, legal, and operational perspectives to support a more fact-driven interpretive approach.
+
+**UUID:** 04d6d7c7-c40b-4fc3-97b2-8748851013e3
 
 #### A.1.4.10.3 - Issuing of Public Report [Core]
 
@@ -1633,20 +1633,6 @@ If the Core Facilitator is the subject of an allegation of misalignment or opera
 
 **UUID:** c85e397a-dd2b-4864-bcef-b8d98bbe0126
 
-#### NR-9 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]
-
-This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc.   
-  
-The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies \(including Alignment Conserver misalignment\) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence.   
-  
-Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](https://www.notion.so/1aebce58d3164be29d0f2f3d618996e5). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential?   
-  
-Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof \(e.g., preponderance of evidence, beyond a reasonable doubt\), and the use of experts.   
-  
-How much discretion should Facilitators have in interpreting and applying the element “the highest standard of Universal Alignment”? How to safeguard against bias and ensure all Facilitator adjudications are made impartially? Investigate mechanisms to maintain objectivity and impartiality throughout the adjudication, fact-finding, and evidence evaluation processes. This could include the establishment of independent review panels \(which could operate post facto to avoid excessively delaying the deplatforming of misaligned ACs\), the use of conflict-of-interest policies, and training on cognitive biases for those involved in decision-making.
-
-**UUID:** 1a1f2ff0-8d73-80a4-9e10-d37463f4891c
-
 #### A.1.4.10.0.4.1 - ACs Must Go Beyond Mere Technical Compliance With Rules [Action Tenet]
 
 Alignment Conservers \(ACs\) must meet the most stringent standards for Universal Alignment, demonstrating not only compliance with the letter of the rules but also a deep and authentic commitment to the spirit of the rules, i.e., the underlying principles and goals of Sky. This demanding standard goes beyond mere technical compliance and requires proof of genuine intent and actions consistent with upholding the Spirit of the Atlas.   
@@ -1660,6 +1646,20 @@ See [A.0.1 - Atlas Preamble - Definitions - Letter Of The Rule Vs Spirit Of The 
 In adjudicating potential misalignment of Alignment Conservers, Facilitators are not to assume innocence or give leeway in cases of ambiguity. Instead, the burden is on the Alignment Conserver to provide clear and convincing evidence of their alignment. Any uncertainty or doubt regarding the AC’s alignment will be resolved against them, requiring them to definitively prove their adherence to the Atlas.
 
 **UUID:** 30d146c1-e676-472d-9c56-33dd5d12e6fb
+
+#### NR-9 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]
+
+This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc.   
+  
+The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies \(including Alignment Conserver misalignment\) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence.   
+  
+Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](https://www.notion.so/1aebce58d3164be29d0f2f3d618996e5). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential?   
+  
+Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof \(e.g., preponderance of evidence, beyond a reasonable doubt\), and the use of experts.   
+  
+How much discretion should Facilitators have in interpreting and applying the element “the highest standard of Universal Alignment”? How to safeguard against bias and ensure all Facilitator adjudications are made impartially? Investigate mechanisms to maintain objectivity and impartiality throughout the adjudication, fact-finding, and evidence evaluation processes. This could include the establishment of independent review panels \(which could operate post facto to avoid excessively delaying the deplatforming of misaligned ACs\), the use of conflict-of-interest policies, and training on cognitive biases for those involved in decision-making.
+
+**UUID:** 1a1f2ff0-8d73-80a4-9e10-d37463f4891c
 
 ## A.1.5 - Aligned Delegates [Article]
 
@@ -1897,22 +1897,6 @@ Any remaining funds in the AD’s Buffer should be paid out to the derecognized 
 
 **UUID:** fb2de9a9-8154-46b8-9631-a5dda875921e
 
-#### NR-11 - AD Whistleblower Bounty [Needed Research]
-
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws.   
-  
-Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered?   
-  
-For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable?   
-  
-And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation?   
-  
-How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.  
-  
-What are the expectations placed on Facilitators to verify whistleblower evidence?
-
-**UUID:** 1a1f2ff0-8d73-8029-a6f9-e7d24e180998
-
 #### A.1.5.9.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically [Action Tenet]
 
 The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available data \(e.g., public Discord or Forum posts\) to demonstrate that an Aligned Delegate committed misaligned acts will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty.   
@@ -1930,6 +1914,22 @@ The element “useful” means that the evidence provided by the whistleblower m
 It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
 
 **UUID:** f8135bb8-2839-4707-9fe9-d40a08e2a7a4
+
+#### NR-11 - AD Whistleblower Bounty [Needed Research]
+
+The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws.   
+  
+Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered?   
+  
+For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable?   
+  
+And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation?   
+  
+How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.  
+  
+What are the expectations placed on Facilitators to verify whistleblower evidence?
+
+**UUID:** 1a1f2ff0-8d73-8029-a6f9-e7d24e180998
 
 ### A.1.5.10 - Mandate To Maintain High Level of Operational Security [Section]
 
@@ -1987,6 +1987,24 @@ Where a whistleblower responsibly provided useful information for determining th
 
 **UUID:** 39192e45-c38f-41fd-b67e-18566d829218
 
+#### A.1.5.13.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Operational Security Breach Must Be Secured Ethically [Action Tenet]
+
+The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available blockchain data to demonstrate that an Aligned Delegate breached operational security best practices will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty.   
+  
+Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.  
+  
+Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](https://www.notion.so/f5907d9fb7204297b7998cb60671b60a).
+
+**UUID:** a1d3d61c-83c0-451a-81a9-59000c82f20b
+
+#### A.1.5.13.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]
+
+The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.  
+  
+It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
+
+**UUID:** 2f4a5f50-02af-4db3-8386-bae5036ccca3
+
 #### NR-13 - AD Whistleblower Bounty [Needed Research]
 
 The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws.   
@@ -2016,24 +2034,6 @@ The Security Scope Advisor could also assist in reviewing an informant's evidenc
 This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
 
 **UUID:** 1a1f2ff0-8d73-8009-8a68-c4a1064160f0
-
-#### A.1.5.13.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Operational Security Breach Must Be Secured Ethically [Action Tenet]
-
-The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available blockchain data to demonstrate that an Aligned Delegate breached operational security best practices will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty.   
-  
-Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.  
-  
-Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](https://www.notion.so/f5907d9fb7204297b7998cb60671b60a).
-
-**UUID:** a1d3d61c-83c0-451a-81a9-59000c82f20b
-
-#### A.1.5.13.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]
-
-The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.  
-  
-It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
-
-**UUID:** 2f4a5f50-02af-4db3-8386-bae5036ccca3
 
 ### A.1.5.14 - Facilitators Must Err On Side Of Caution [Section]
 
@@ -2514,24 +2514,6 @@ The membership of the Emergency Response Group may change at the discretion of S
 
 **UUID:** 151f2ff0-8d73-8077-9156-e5f2452e4a31
 
-##### A.1.8.1.2.3 - Emergency Response Group Team Members [Core]
-
-Where an Emergency Response Group Member is a team, that team should assign two \(2\) of its own team members to be responsible for incident response.  
-  
-A team may assign more than two \(2\) of its team members to be responsible for incident response at the discretion of the Support Facilitators.  
-  
-To the extent possible, the selected team members should be in different timezones and jurisdictions for maximum operational and regulatory resilience.  
-  
-The team members assigned to the Emergency Response Group should not be disclosed publicly under any circumstances as this could make them targets.
-
-**UUID:** 151f2ff0-8d73-80b7-b7cf-e13be65f1c7f
-
-###### A.1.8.1.2.3.1 - Ecosystem Actor Embedding [Core]
-
-As an extension of, and pursuant to [A.1.15 - Scope Bootstrapping - Governance Security & Ecosystem Actor Embedding](https://www.notion.so/a0dedb27476d45d89aa4ca202fce345d), Ecosystem Actor Atlas Axis is permitted to assign more than two \(2\) of its team members to the permissioned Emergency Response Communication Channels defined in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Communication Channels](https://www.notion.so/151f2ff08d7380eaac67ece4bc0eb866), as well as any Emergency Response calls.
-
-**UUID:** 151f2ff0-8d73-8053-aeb8-d7eaaf1d7406
-
 ##### A.1.8.1.2.2 - Emergency Response Group Membership [Active Data Controller]
 
 The membership of the Emergency Response Group is defined as Active Data in [A.1.8 - Emergency Response Group Current Membership](https://www.notion.so/151f2ff08d73806ab3c8d334d3fb5e0f).  
@@ -2568,6 +2550,24 @@ The members of the Emergency Response Group are:
 • TechOps Services
 
 **UUID:** 151f2ff0-8d73-806a-b3c8-d334d3fb5e0f
+
+##### A.1.8.1.2.3 - Emergency Response Group Team Members [Core]
+
+Where an Emergency Response Group Member is a team, that team should assign two \(2\) of its own team members to be responsible for incident response.  
+  
+A team may assign more than two \(2\) of its team members to be responsible for incident response at the discretion of the Support Facilitators.  
+  
+To the extent possible, the selected team members should be in different timezones and jurisdictions for maximum operational and regulatory resilience.  
+  
+The team members assigned to the Emergency Response Group should not be disclosed publicly under any circumstances as this could make them targets.
+
+**UUID:** 151f2ff0-8d73-80b7-b7cf-e13be65f1c7f
+
+###### A.1.8.1.2.3.1 - Ecosystem Actor Embedding [Core]
+
+As an extension of, and pursuant to [A.1.15 - Scope Bootstrapping - Governance Security & Ecosystem Actor Embedding](https://www.notion.so/a0dedb27476d45d89aa4ca202fce345d), Ecosystem Actor Atlas Axis is permitted to assign more than two \(2\) of its team members to the permissioned Emergency Response Communication Channels defined in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Communication Channels](https://www.notion.so/151f2ff08d7380eaac67ece4bc0eb866), as well as any Emergency Response calls.
+
+**UUID:** 151f2ff0-8d73-8053-aeb8-d7eaaf1d7406
 
 #### A.1.8.1.3 - Emergency Response Communication Channels [Core]
 
@@ -10654,20 +10654,6 @@ The Support Facilitators have budgets available to support the tasks described i
 
 **UUID:** 68d7da04-9954-4800-8ef4-ae07dbc10fd7
 
-#### A.2.7.1.4 - Currently Incubating Ecosystem Actors Template [Core]
-
-The list of Incubating Ecosystem Actors must follow this template for each recorded Incubating Ecosystem Actor:  
-  
-• **.x:** \[Incubating Ecosystem Actor name and short description\]  
-  
-• **.1:** \[Budget information\]  
-  
-• **.2:** \[Deliverables and focus areas\]  
-  
-• **.3:** \[Team information, including headcount grouped by skill sets\]
-
-**UUID:** a57fabfd-f4c1-4749-afd7-52033eb408df
-
 #### A.2.7.1.3 - Currently Incubating Ecosystem Actors [Active Data Controller]
 
 Incubating Ecosystem Actors and their current key terms and data are defined as Active Data in [A.2.8 - Currently Incubating Ecosystem Actors](https://www.notion.so/4e9bdb49705643af86d9bdca1d440ad9).   
@@ -10692,6 +10678,20 @@ The Active Data is updated as follows:
 | Chronicle Labs                     | 310,150 USDS and 4,432,800 SKY for full team provided monthly as a linear dssvest stream for a 12 month period beginning July 1st 2023.       | Launch a sustainable, secure, and decentralized oracle protocol and infrastructure service provider which supports the needs of Agents. Raise private capital and cease any further direct funding from Sky. | 1x General Manager, 3x Smart Contract Engineer, 3x Backend Engineer, 1x Fullstack Engineer, 1x DevOps Engineer, 1x Operations Manager, 1x Business Development Lead, 1x Marketing Strategist, 1x DevRel / Account Manager |
 
 **UUID:** 4e9bdb49-7056-43af-86d9-bdca1d440ad9
+
+#### A.2.7.1.4 - Currently Incubating Ecosystem Actors Template [Core]
+
+The list of Incubating Ecosystem Actors must follow this template for each recorded Incubating Ecosystem Actor:  
+  
+• **.x:** \[Incubating Ecosystem Actor name and short description\]  
+  
+• **.1:** \[Budget information\]  
+  
+• **.2:** \[Deliverables and focus areas\]  
+  
+• **.3:** \[Team information, including headcount grouped by skill sets\]
+
+**UUID:** a57fabfd-f4c1-4749-afd7-52033eb408df
 
 ## A.2.8 - Ecosystem Communication Channels [Article]
 
@@ -17398,30 +17398,6 @@ Parameter changes designed to offboard users, such as changes to the liquidation
 
 **UUID:** 7a4bfbe5-022a-479a-be69-dbcca5a069f6
 
-##### A.3.8.1.4.4 - Expedited Offboarding [Core]
-
-The subdocuments herein define an expedited offboarding process in the event a collateral type needs to be removed quickly due to security or solvency concerns.
-
-**UUID:** 8c6d152c-b193-4977-9e78-36f959e96e58
-
-###### A.3.8.1.4.4.1 - Requirements [Core]
-
-When a collateral type threatens the security or solvency of the Sky Protocol, an expedited offboarding is in order. Expedited offboardings override the timeline specified in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](https://www.notion.so/d31df3fee2d2448088b050b2e9f23ed9) and allow the immediate modification of all relevant parameters.  
-  
-Expedited offboardings must proceed pursuant to the following requirements:  
-  
-• The Offboarding Proposal must state that the offboarding should be expedited due to an emergency or urgent concern, as defined in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](https://www.notion.so/67a49f53fb824e539875434d85a682cd)**.**  
-  
-• The Offboarding Proposal must explicitly reference this Atlas document.
-
-**UUID:** e065a496-fe13-460b-9345-44df6eb52694
-
-###### A.3.8.1.4.4.2 - Announcements [Core]
-
-The public announcements defined in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](https://www.notion.so/d31df3fee2d2448088b050b2e9f23ed9) must still be carried out. However, the timing of these announcements no longer constrains the modification of parameters. These announcements must also state that the offboarding is being expedited and explain the reasons for this accelerated process.
-
-**UUID:** 91a248f0-7c6f-4bd7-8afb-7cb762a20b63
-
 ##### A.3.8.1.4.3 - Communication Channels And Media Assets [Active Data Controller]
 
 The process for adding, removing, and modifying communication channels and media assets, and the order of announcement publication, are defined as Active Data in [A.3.9 - Communication Channels And Media Assets Listing](https://www.notion.so/296bfc801ea548d188e8df7ed347bdff).  
@@ -17459,6 +17435,30 @@ Additionally, outreach may be done to cover more channels not listed here. These
 Unless otherwise noted in [A.3.9 - Measures For Endgame Transition - Offboarding Process](https://www.notion.so/a9e4b326fab3427287b5777e56094481) and its subdocuments, the Accessibility Facilitators will take the lead in coordinating channels announcements.
 
 **UUID:** 296bfc80-1ea5-48d1-88e8-df7ed347bdff
+
+##### A.3.8.1.4.4 - Expedited Offboarding [Core]
+
+The subdocuments herein define an expedited offboarding process in the event a collateral type needs to be removed quickly due to security or solvency concerns.
+
+**UUID:** 8c6d152c-b193-4977-9e78-36f959e96e58
+
+###### A.3.8.1.4.4.1 - Requirements [Core]
+
+When a collateral type threatens the security or solvency of the Sky Protocol, an expedited offboarding is in order. Expedited offboardings override the timeline specified in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](https://www.notion.so/d31df3fee2d2448088b050b2e9f23ed9) and allow the immediate modification of all relevant parameters.  
+  
+Expedited offboardings must proceed pursuant to the following requirements:  
+  
+• The Offboarding Proposal must state that the offboarding should be expedited due to an emergency or urgent concern, as defined in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](https://www.notion.so/67a49f53fb824e539875434d85a682cd)**.**  
+  
+• The Offboarding Proposal must explicitly reference this Atlas document.
+
+**UUID:** e065a496-fe13-460b-9345-44df6eb52694
+
+###### A.3.8.1.4.4.2 - Announcements [Core]
+
+The public announcements defined in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](https://www.notion.so/d31df3fee2d2448088b050b2e9f23ed9) must still be carried out. However, the timing of these announcements no longer constrains the modification of parameters. These announcements must also state that the offboarding is being expedited and explain the reasons for this accelerated process.
+
+**UUID:** 91a248f0-7c6f-4bd7-8afb-7cb762a20b63
 
 #### A.3.8.1.5 - Genesis Capital Backstop [Core]
 
@@ -19183,22 +19183,6 @@ Initial one-time budget for the Launch Project:
 
 **UUID:** 8031238c-017e-4019-a05b-816db4886e2d
 
-#### A.5.5.1.8 - Sky On Solana Short Term Crosschain Strategy [Core]
-
-The Accessibility Facilitators must work with Advisors and Ecosystem Actors to research and implement a decentralized crosschain solution using Wormhole that enables the bridging of USDS to Solana.  
-  
-Once the crosschain solution is implemented, the Accessibility Facilitators must use the USDS integration boost system to encourage integration and adoption of USDS on Solana.
-
-**UUID:** 107f2ff0-8d73-80ac-a765-d155988eeaa8
-
-#### A.5.5.1.9 - Sky Ecosystem Liquidity Bootstrapping [Core]
-
-The Accessibility Facilitators must work with advisors and Ecosystem Actors to implement a liquidity bootstrapping program using up to 20 million USDS and 320 million SKY. These assets can be used for liquidity programs, or for liquidity infrastructure integration costs. Anything leftover from usage in liquidity programs must be returned to Sky control at the end of the bootstrapping program.  
-  
-The funds can be paid into multisig accounts for future use via executive votes at will by the Accessibility Facilitators.
-
-**UUID:** 109f2ff0-8d73-8029-baba-da835b70d03e
-
 #### A.5.5.1.7 - Budget Remaining Amount [Active Data Controller]
 
 The remaining budget for the Launch Project is defined as Active Data  in [A.5.9 - Current Remaining Amount](https://www.notion.so/e54a74d00cb14df3900cb7e2f3e4f101).   
@@ -19220,6 +19204,22 @@ Remaining available one-time budget for the Launch Project:
 • 0 SKY - The SKY can at most be spent at the rate of 48,000,000 SKY per month.
 
 **UUID:** e54a74d0-0cb1-4df3-900c-b7e2f3e4f101
+
+#### A.5.5.1.8 - Sky On Solana Short Term Crosschain Strategy [Core]
+
+The Accessibility Facilitators must work with Advisors and Ecosystem Actors to research and implement a decentralized crosschain solution using Wormhole that enables the bridging of USDS to Solana.  
+  
+Once the crosschain solution is implemented, the Accessibility Facilitators must use the USDS integration boost system to encourage integration and adoption of USDS on Solana.
+
+**UUID:** 107f2ff0-8d73-80ac-a765-d155988eeaa8
+
+#### A.5.5.1.9 - Sky Ecosystem Liquidity Bootstrapping [Core]
+
+The Accessibility Facilitators must work with advisors and Ecosystem Actors to implement a liquidity bootstrapping program using up to 20 million USDS and 320 million SKY. These assets can be used for liquidity programs, or for liquidity infrastructure integration costs. Anything leftover from usage in liquidity programs must be returned to Sky control at the end of the bootstrapping program.  
+  
+The funds can be paid into multisig accounts for future use via executive votes at will by the Accessibility Facilitators.
+
+**UUID:** 109f2ff0-8d73-8029-baba-da835b70d03e
 
 # A.6 - The Agent Scope [Scope]
 
