@@ -1,6 +1,5 @@
 // Original name example: "A.1.5 - Aligned Delegates - Budget And Participation Requirements - Eligibility To Receive Budget"
 import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
-import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { AtlasTreeNode } from './atlas-tree-system';
 
