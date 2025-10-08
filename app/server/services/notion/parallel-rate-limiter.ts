@@ -20,11 +20,14 @@ export class ParallelNotionRateLimiter {
   private inFlight = 0;
   private nextId = 1;
   private drainScheduled = false;
+  private lastConcurrencyLogAt = 0;
+  private concurrencyLogSuppressed = 0;
 
   private readonly windowSizeMs = 1000; // 1 second
   private readonly maxRequestsPerWindow = 3; // 3 requests per 1 second max
-  private readonly apiTimeoutMs = 90_000; // 90 second timeout for API calls
-  private readonly queueTimeoutMs = 180_000; // 180 second timeout for queued item processing
+  private readonly maxConcurrent = 100; // parallel in-flight cap; can be > maxRequestsPerWindow if desired
+  private readonly apiTimeoutMs = 120_000; // 120 second timeout for API calls
+  private readonly queueTimeoutMs = 10 * 60 * 1000; // 10 minutes timeout for queued item processing
   private readonly maxRetries = 3;
   private readonly enableLogging: boolean;
 
@@ -117,11 +120,19 @@ export class ParallelNotionRateLimiter {
         }
       }
 
-      // Also respect current in-flight concurrency up to maxRequestsPerWindow
-      if (this.inFlight >= this.maxRequestsPerWindow) {
-        // Try later when in-flight decreases
-        this.log('info', 'Max concurrency reached, deferring scheduling');
-        this.schedule();
+      // Also respect current in-flight concurrency up to maxConcurrent
+      if (this.inFlight >= this.maxConcurrent) {
+        const nowTs = Date.now();
+        if (nowTs - this.lastConcurrencyLogAt >= 1000) {
+          const suppressed = this.concurrencyLogSuppressed;
+          this.concurrencyLogSuppressed = 0;
+          this.lastConcurrencyLogAt = nowTs;
+          const suffix = suppressed > 0 ? ` (suppressed ${suppressed} similar messages)` : '';
+          this.log('info', `Max concurrency reached, waiting for in-flight requests to complete${suffix}`);
+        } else {
+          this.concurrencyLogSuppressed++;
+        }
+        // Do NOT reschedule here to avoid a tight loop; completions call schedule()
         return;
       }
 
