@@ -1,14 +1,12 @@
 import { parseArgs } from 'node:util';
 import { type AtlasDatabaseName, IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
-import { displayImportSummary } from '@/app/server/services/notion/display-import-summary';
-import { importDatabasePagesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
+import { importMultipleDatabasesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
 async function main() {
-  const startTime = Date.now();
   const { values: args } = parseArgs({
     args: process.argv.slice(2),
     options: {
@@ -60,7 +58,7 @@ ${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
   }
 
   if (args['local-cache']) {
-    console.log(`Local cache enabled - will use/create .notion-cache folder`);
+    console.log(`Local cache enabled - will use .notion-cache folder instead of making Notion API calls`);
   }
 
   loadEnv();
@@ -87,42 +85,15 @@ ${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
 
   const databasesToImport = targetDatabase ? [targetDatabase] : IMPORT_DATABASES;
 
-  if (targetDatabase) {
-    console.log(`Starting import for database: ${targetDatabase}...`);
-  } else {
-    console.log(`Starting Notion database import...`);
-  }
-
   try {
-    // Import all Atlas databases and collect results
-    const results = [];
-    for (const atlasDatabaseName of databasesToImport) {
-      console.log('\n\n');
-      const result = await importDatabasePagesFromNotionToSupabase({
-        atlasDatabaseName,
-        useLocalCache: args['local-cache'] ?? false,
-      });
-      results.push(result);
-      console.log('\n\n');
-    }
+    // Import all Atlas databases using the unified function
+    await importMultipleDatabasesFromNotionToSupabase({
+      databasesToImport,
+      useLocalCache: args['local-cache'] ?? false,
+    });
 
     // Revalidate /atlas page to reflect the newly imported data
     await revalidatePage('/atlas');
-
-    const endTime = Date.now();
-    const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
-
-    // Display summary of all changes
-    displayImportSummary(results);
-
-    console.log(`🎉 All databases imported successfully!`);
-    // Show in minutes if over 120 seconds
-    if (Number(durationSeconds) > 120) {
-      const durationMinutes = (Number(durationSeconds) / 60).toFixed(2);
-      console.log(`⏰ Total processing time: ${durationMinutes} minutes`);
-    } else {
-      console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
-    }
 
     // The command hangs after completion, so we explicitly exit. TODO: Investigate why and fix.
     process.exit(0);

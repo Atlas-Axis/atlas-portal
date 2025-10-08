@@ -1,9 +1,7 @@
 import { metadata, task } from '@trigger.dev/sdk/v3';
-import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
-import { displayImportSummary } from '../notion/display-import-summary';
-import { ImportResult, importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
+import { importMultipleDatabasesFromNotionToSupabase as importDatabasesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -31,23 +29,14 @@ export const notionFullAtlasSyncTask = task({
     }, 5000);
 
     try {
-      // Start the sync process - import all databases
-      const results: ImportResult[] = [];
-      for (const atlasDatabaseName of IMPORT_DATABASES) {
-        const result = await importDatabasePagesFromNotionToSupabase({
-          atlasDatabaseName,
-        });
-        results.push(result);
-      }
+      // Start the sync process - import all databases using the unified function
+      const results = await importDatabasesFromNotionToSupabase();
 
       // Log final Notion API call stats before flushing metadata
       const finalStats = notion().getNotionProxyStats();
       console.log(`➡️ Total Notion API calls: ${finalStats.totalApiCalls}`);
       setApiCallCountTriggerMetadata(finalStats.totalApiCalls);
       flushTriggerMetadata();
-
-      // Display change summary
-      displayImportSummary(results, { showSeparator: false, title: 'SYNC SUMMARY' });
 
       // Revalidate /atlas page to reflect the newly imported data
       await revalidatePage('/atlas');

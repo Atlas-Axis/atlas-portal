@@ -90,7 +90,7 @@ export type MasterStatus = (typeof MASTER_STATUSES)[keyof typeof MASTER_STATUSES
 
 export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
 
-export const IMPORT_DATABASES = [
+export const IMPORT_DATABASES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCOPES,
   ATLAS_DATABASES.ARTICLES,
   ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,

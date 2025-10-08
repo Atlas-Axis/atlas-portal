@@ -1,4 +1,9 @@
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import {
+  ATLAS_DATABASE_ID_MAP,
+  AtlasDatabaseID,
+  AtlasDatabaseName,
+  IMPORT_DATABASES,
+} from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
@@ -6,6 +11,7 @@ import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
 import { DatabasePageChanges, compareDatabasePages } from './compare-database-pages';
 import { convertNotionPagesToDatabaseFormat } from './convert-notion-pages-to-supabase-format';
+import { displayImportSummary } from './display-import-summary';
 import { fetchNotionDatabasePagesWithRelationships } from './fetch-database-pages';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 
@@ -220,6 +226,57 @@ export async function importDatabasePagesFromNotionToSupabase({
       syncedCount: null,
     });
 
+    throw error;
+  }
+}
+
+/**
+ * Unified function to import multiple Atlas databases from Notion to Supabase
+ * This function handles the common logic of looping over databases, logging progress,
+ * and displaying summary.
+ */
+export async function importMultipleDatabasesFromNotionToSupabase({
+  databasesToImport = IMPORT_DATABASES,
+  useLocalCache = false,
+}: {
+  databasesToImport?: AtlasDatabaseName[];
+  useLocalCache?: boolean;
+} = {}): Promise<ImportResult[]> {
+  const startTime = Date.now();
+  const results: ImportResult[] = [];
+
+  console.log(`Starting Notion database import for ${databasesToImport.length} databases...`);
+
+  try {
+    // Import all Atlas databases and collect results
+    for (const atlasDatabaseName of databasesToImport) {
+      console.log('\n\n');
+      const result = await importDatabasePagesFromNotionToSupabase({
+        atlasDatabaseName,
+        useLocalCache,
+      });
+      results.push(result);
+      console.log('\n\n');
+    }
+
+    const endTime = Date.now();
+    const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
+
+    // Display summary of all changes
+    displayImportSummary(results);
+
+    console.log(`🎉 All databases imported successfully!`);
+    // Show in minutes if over 120 seconds
+    if (Number(durationSeconds) > 120) {
+      const durationMinutes = (Number(durationSeconds) / 60).toFixed(2);
+      console.log(`⏰ Total processing time: ${durationMinutes} minutes`);
+    } else {
+      console.log(`⏰ Total processing time: ${durationSeconds} seconds`);
+    }
+
+    return results;
+  } catch (error) {
+    console.error(`Error importing Notion databases:`, error);
     throw error;
   }
 }
