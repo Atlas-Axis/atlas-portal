@@ -23,8 +23,7 @@
  */
 import { JSDOM } from 'jsdom';
 import { ATLAS_GITHUB_HTML_URL } from '@/app/server/atlas/constants';
-
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 interface SectionAnalytics {
   sectionId: string;

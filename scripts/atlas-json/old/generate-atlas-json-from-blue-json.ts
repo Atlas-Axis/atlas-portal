@@ -32,12 +32,10 @@ import {
   AtlasDocumentType,
   GitHubAtlasDocumentType,
 } from '@/app/server/atlas/constants';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { fixDocumentNumberPrefix } from '../utils';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_BLUE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
-
-// Toggle verbose logs with DEBUG_LOGGING=1
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 // Parse command line arguments
 const args = process.argv.slice(2);

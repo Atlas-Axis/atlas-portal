@@ -14,6 +14,7 @@ import {
   TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
@@ -154,7 +155,9 @@ export function compareDatabasePages({
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const trackedProperties = Object.values(databaseConfig.properties).filter((prop) => prop !== '');
 
-  console.log(`Tracked properties for ${atlasDatabaseName}: ${trackedProperties.join(', ')}`);
+  if (DEBUG_LOGGING) {
+    console.log(`Tracked properties for ${atlasDatabaseName}: ${trackedProperties.join(', ')}`);
+  }
 
   const changes: DatabasePageChanges = {
     newPages: [],

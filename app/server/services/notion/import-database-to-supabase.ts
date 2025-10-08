@@ -1,5 +1,6 @@
 import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
 import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
@@ -20,16 +21,18 @@ export async function importDatabasePagesFromNotionToSupabase({
 }) {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   const startTime = performance.now();
-  let blocksSyncedCount = 0;
+  let syncedCount = 0;
 
   console.log(`--------------------------------------------------------------------------------`);
   console.log(`📊 Database: 👉👉👉👉👉👉👉👉👉👉 ${atlasDatabaseName} 👈👈👈👈👈👈👈👈👈👈`);
   console.log(`--------------------------------------------------------------------------------`);
-  console.log(`🚀 Starting database import from Notion to Supabase`);
+  console.log(`Starting database import from Notion to Supabase`);
   console.log(`Sync started at: ${new Date().toUTCString()}`);
 
   // Verify that the sync is not already in progress
-  console.log(`Verifying sync lock for database ${notionDatabaseId}...`);
+  if (DEBUG_LOGGING) {
+    console.log(`Verifying sync lock for database ${notionDatabaseId}...`);
+  }
   await verifySyncLock(notionDatabaseId);
 
   try {
@@ -37,9 +40,10 @@ export async function importDatabasePagesFromNotionToSupabase({
     await acquireSyncLock(notionDatabaseId);
 
     // Load existing database pages from Supabase
-    console.log(`Loading existing database pages from Supabase to detect changes...`);
+    if (DEBUG_LOGGING) {
+      console.log(`Loading existing database pages from Supabase to detect changes...`);
+    }
     const existingPages = await loadNotionDatabasePagesFromSupabase({ atlasDatabaseName });
-    console.log(`Loaded ${existingPages.length} existing pages from Supabase`);
 
     // Fetch all pages with relationships via Notion API
     console.log(`Fetching all pages with relationships from Notion database "${atlasDatabaseName}"...`);
@@ -49,9 +53,6 @@ export async function importDatabasePagesFromNotionToSupabase({
     });
 
     console.log(`Fetched ${notionPagesWithRelationships.length} pages with relationships from Notion database`);
-
-    // Process and sync the pages to Supabase
-    console.log(`Syncing changed pages to Supabase...`);
 
     // Store changes for later use in return value
     let changes: DatabasePageChanges | null = null;
@@ -127,7 +128,7 @@ export async function importDatabasePagesFromNotionToSupabase({
         }
       }
 
-      blocksSyncedCount = changes.deletedPages.length + pagesToInsert.length + pagesToUpsert.length;
+      syncedCount = changes.deletedPages.length + pagesToInsert.length + pagesToUpsert.length;
     } else {
       // First time import - insert all pages
       console.log(`📝 First time import - inserting all ${notionPagesWithRelationships.length} pages...`);
@@ -138,14 +139,14 @@ export async function importDatabasePagesFromNotionToSupabase({
       await insertPagesInBatches(databasePages);
       console.log(`✅ Successfully inserted all ${databasePages.length} pages`);
 
-      blocksSyncedCount = databasePages.length;
+      syncedCount = databasePages.length;
     }
 
     await releaseSyncLock({
       notionDatabaseId,
       syncStatus: 'completed',
       syncErrorMessage: null,
-      blocksSyncedCount,
+      syncedCount,
     });
 
     console.log(`✅ Completed importing: ${atlasDatabaseName}`);
@@ -172,7 +173,7 @@ export async function importDatabasePagesFromNotionToSupabase({
         atlasDatabaseName,
         hasChanges: true,
         summary: {
-          newPages: blocksSyncedCount,
+          newPages: syncedCount,
           deletedPages: 0,
           changedProperties: 0,
           changedRelationships: 0,
@@ -189,7 +190,7 @@ export async function importDatabasePagesFromNotionToSupabase({
       notionDatabaseId,
       syncStatus: 'failed',
       syncErrorMessage: errorMessage,
-      blocksSyncedCount: null,
+      syncedCount: null,
     });
 
     throw error;

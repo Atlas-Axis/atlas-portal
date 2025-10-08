@@ -1,5 +1,6 @@
 import { Client as NotionClient } from '@notionhq/client';
 import { NotionRateLimiter } from '@/app/server/services/notion/rate-limiter';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 /**
  * Reads and validates Notion API secrets from environment variables.
@@ -33,7 +34,9 @@ export class NotionProxy {
   private totalApiCalls = 0;
 
   constructor(secrets: string[]) {
-    console.log(`Initializing Notion proxy with ${secrets.length} API client(s)`);
+    if (DEBUG_LOGGING) {
+      console.log(`Initializing Notion proxy with ${secrets.length} API client(s)`);
+    }
 
     this.clients = secrets.map((secret) => ({
       client: new NotionClient({ auth: secret }),

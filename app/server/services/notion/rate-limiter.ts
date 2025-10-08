@@ -1,7 +1,7 @@
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { delay } from '@/app/shared/utils/utils';
 
 const MAX_RETRIES = 3;
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 /**
  * Rate limiter for Notion API requests using sliding window, and exponential backoff

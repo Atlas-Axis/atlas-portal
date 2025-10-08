@@ -105,7 +105,7 @@ export async function fetchNotionDatabasePagesWithRelationships({
   }
 
   console.log(
-    `✅ Completed fetching all pages with relationships: ${enhancedPages.length} total pages from database "${atlasDatabaseName}"`,
+    `Completed fetching all pages with relationships: ${enhancedPages.length} total pages from database "${atlasDatabaseName}"`,
   );
 
   // Save to file cache
@@ -156,7 +156,9 @@ export async function fetchNotionDatabasePages({
     }
 
     cursor = response.next_cursor ?? undefined;
-    console.log(`  Batch ${batchNumber} processed - Total Notion pages so far: ${pageCount}`);
+    if (DEBUG_LOGGING) {
+      console.log(`  Batch ${batchNumber} processed - Total Notion pages so far: ${pageCount}`);
+    }
 
     if (cursor) {
       if (DEBUG_LOGGING) {
@@ -222,7 +224,9 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
       console.log(`    Fetching relations for page ${pageId}...`);
       isFirstIteration = false;
     } else {
-      console.log(`    Fetching more relations...`);
+      if (DEBUG_LOGGING) {
+        console.log(`    Fetching more relations...`);
+      }
     }
     const startTime = Date.now();
     const response = await notion().pages.properties.retrieve({
@@ -233,7 +237,9 @@ async function fetchAllRelationIds(pageId: string, relationPropertyId: string): 
     });
     const endTime = Date.now();
     const durationSeconds = Math.ceil((endTime - startTime) / 1000);
-    console.log(`        ${durationSeconds}s`);
+    if (DEBUG_LOGGING) {
+      console.log(`        ${durationSeconds}s`);
+    }
 
     if (response.object === 'list' && Array.isArray(response.results)) {
       for (const item of response.results) {

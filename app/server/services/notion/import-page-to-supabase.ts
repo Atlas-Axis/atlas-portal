@@ -46,7 +46,7 @@ export async function importNotionPageToSupabase({ notionPageId }: { notionPageI
       notionDatabaseId: notionPageId,
       syncStatus: 'completed',
       syncErrorMessage: null,
-      blocksSyncedCount: blocks.length,
+      syncedCount: blocks.length,
     });
 
     return blocks;
@@ -59,7 +59,7 @@ export async function importNotionPageToSupabase({ notionPageId }: { notionPageI
       notionDatabaseId: notionPageId,
       syncStatus: 'failed',
       syncErrorMessage: JSON.stringify(error),
-      blocksSyncedCount: null,
+      syncedCount: null,
     });
 
     throw error;

@@ -1,7 +1,6 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { ATLAS_DATABASES } from './constants';
-
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 export function getAtlasPageIdMap(
   atlasPagesPerDatabase: Record<string, NotionDatabasePage[]>,

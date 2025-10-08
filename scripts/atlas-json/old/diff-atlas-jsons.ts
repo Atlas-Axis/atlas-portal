@@ -25,11 +25,9 @@
  */
 import { readFile } from 'fs/promises';
 import path from 'path';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB, ATLAS_JSON_OUTPUT_FILE_SUPABASE } from './constants';
 import { AtlasCategoryJson, AtlasDocumentJson } from './types';
-
-// Toggle verbose logs with DEBUG_LOGGING=1
-const DEBUG_LOGGING = Boolean(Number(process.env.DEBUG_LOGGING));
 
 // Resolve file paths (assumes running from repository root)
 const REPO_ROOT = process.cwd();

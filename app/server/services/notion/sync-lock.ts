@@ -1,11 +1,14 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 type SyncStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'cancelled';
 
 const SYNC_LOCK_TIMEOUT_MINUTES = 30;
 
 export async function acquireSyncLock(notionDatabaseId: string) {
-  console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
+  if (DEBUG_LOGGING) {
+    console.log(`Acquiring sync lock for database ${notionDatabaseId}`);
+  }
 
   const result = supabase()
     .from('notion_sync_status')
@@ -25,7 +28,9 @@ export async function acquireSyncLock(notionDatabaseId: string) {
     )
     .throwOnError();
 
-  console.log(`Sync lock acquired successfully`);
+  if (DEBUG_LOGGING) {
+    console.log(`Sync lock acquired successfully`);
+  }
 
   return result;
 }
@@ -34,16 +39,18 @@ export async function releaseSyncLock({
   notionDatabaseId,
   syncStatus,
   syncErrorMessage = null,
-  blocksSyncedCount = null,
+  syncedCount = null,
 }: {
   notionDatabaseId: string;
   syncStatus: SyncStatus;
   syncErrorMessage: string | null;
-  blocksSyncedCount: number | null;
+  syncedCount: number | null;
 }) {
   console.log(`Releasing sync lock for database ${notionDatabaseId} with status ${syncStatus}`);
-  console.log(`Sync error message: ${syncErrorMessage}`);
-  console.log(`Blocks synced count: ${blocksSyncedCount}`);
+  if (syncErrorMessage) {
+    console.error(`Sync error message: ${syncErrorMessage}`);
+  }
+  console.log(`Synced count: ${syncedCount}`);
 
   return supabase()
     .from('notion_sync_status')
@@ -53,7 +60,7 @@ export async function releaseSyncLock({
         sync_status: syncStatus,
         last_sync_completed_at: new Date().toISOString(),
         sync_error_message: syncErrorMessage,
-        blocks_synced_count: blocksSyncedCount,
+        blocks_synced_count: syncedCount,
         is_sync_locked: false,
         sync_lock_acquired_at: null,
         sync_lock_expires_at: null,
