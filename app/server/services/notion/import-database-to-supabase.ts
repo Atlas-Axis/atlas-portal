@@ -9,6 +9,17 @@ import { convertNotionPagesToDatabaseFormat } from './convert-notion-pages-to-su
 import { fetchNotionDatabasePagesWithRelationships } from './fetch-database-pages';
 import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 
+export interface ImportResult {
+  atlasDatabaseName: string;
+  hasChanges: boolean;
+  summary: {
+    newPages: number;
+    deletedPages: number;
+    changedProperties: number;
+    changedRelationships: number;
+  };
+}
+
 /**
  * Sync all pages from a Notion database to Supabase
  */
@@ -18,7 +29,7 @@ export async function importDatabasePagesFromNotionToSupabase({
 }: {
   atlasDatabaseName: AtlasDatabaseName;
   useLocalCache?: boolean;
-}) {
+}): Promise<ImportResult> {
   const notionDatabaseId: AtlasDatabaseID = ATLAS_DATABASE_ID_MAP[atlasDatabaseName];
   const startTime = performance.now();
   let syncedCount = 0;

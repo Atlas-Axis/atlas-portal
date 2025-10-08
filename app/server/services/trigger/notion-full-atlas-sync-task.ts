@@ -3,7 +3,7 @@ import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
 import { displayImportSummary } from '../notion/display-import-summary';
-import { importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
+import { ImportResult, importDatabasePagesFromNotionToSupabase } from '../notion/import-database-to-supabase';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -32,7 +32,7 @@ export const notionFullAtlasSyncTask = task({
 
     try {
       // Start the sync process - import all databases
-      const results = [];
+      const results: ImportResult[] = [];
       for (const atlasDatabaseName of IMPORT_DATABASES) {
         const result = await importDatabasePagesFromNotionToSupabase({
           atlasDatabaseName,

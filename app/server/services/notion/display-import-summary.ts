@@ -1,17 +1,7 @@
 /**
  * Reusable function to display import summary for Atlas database changes
  */
-
-export interface ImportResult {
-  atlasDatabaseName: string;
-  hasChanges: boolean;
-  summary: {
-    newPages: number;
-    deletedPages: number;
-    changedProperties: number;
-    changedRelationships: number;
-  };
-}
+import { ImportResult } from './import-database-to-supabase';
 
 /**
  * Displays a formatted summary of Atlas database import results
