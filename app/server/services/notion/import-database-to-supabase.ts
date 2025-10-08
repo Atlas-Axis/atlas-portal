@@ -12,6 +12,7 @@ import { acquireSyncLock, releaseSyncLock, verifySyncLock } from './sync-lock';
 export interface ImportResult {
   atlasDatabaseName: string;
   hasChanges: boolean;
+  durationMinutes: number;
   summary: {
     newPages: number;
     deletedPages: number;
@@ -179,6 +180,7 @@ export async function importDatabasePagesFromNotionToSupabase({
           changes.deletedPages.length > 0 ||
           changes.changedProperties.length > 0 ||
           changes.changedRelationships.length > 0,
+        durationMinutes,
         summary: {
           newPages: changes.newPages.length,
           deletedPages: changes.deletedPages.length,
@@ -191,6 +193,7 @@ export async function importDatabasePagesFromNotionToSupabase({
       return {
         atlasDatabaseName,
         hasChanges: true,
+        durationMinutes,
         summary: {
           newPages: syncedCount,
           deletedPages: 0,
