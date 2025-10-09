@@ -32,6 +32,7 @@ import type {
 } from '@/app/server/atlas/json-export/types';
 import { childCollectionNames } from '@/app/server/atlas/json-export/types';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 /**
@@ -132,6 +133,9 @@ async function main() {
   // Load Atlas data from Supabase
   const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
+  // Load UUID mappings
+  const uuidMappings = await loadUuidMappings();
+
   // Configure options
   const options: TreeConstructionOptions = {
     reportMissingChildNodes: false,
@@ -196,13 +200,13 @@ async function main() {
 
   // Convert Scope trees to standardized JSON format
   const standardizedScopeTrees: StandardizedAtlasScopeTrees = originalScopeTrees.map((scopeNode) =>
-    atlasNodeToStandardized(scopeNode),
+    atlasNodeToStandardized(scopeNode, uuidMappings),
   );
 
   // Convert orphaned nodes to standardized format
   const standardizedOrphanedNodes: StandardizedAtlasDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
     try {
-      return atlasNodeToStandardized(orphanedNode);
+      return atlasNodeToStandardized(orphanedNode, uuidMappings);
     } catch (error) {
       console.warn(`Failed to convert orphaned node ${orphanedNode.notion_page_id}: ${error}`);
       // Return a minimal document for counting purposes

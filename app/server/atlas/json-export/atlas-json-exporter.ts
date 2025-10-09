@@ -3,6 +3,7 @@ import type { TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-type
 import atlasNodeToStandardized from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { StandardizedAtlasScopeTrees } from '@/app/server/atlas/json-export/types';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { loadUuidMappings } from '../load-uuid-mapping';
 
 export async function buildAtlasJSON() {
   // Load Atlas data
@@ -19,9 +20,11 @@ export async function buildAtlasJSON() {
   const scopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 
+  const uuidMappings = await loadUuidMappings();
+
   // Convert Scope trees to standardized JSON format
   const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((scopeNode) =>
-    atlasNodeToStandardized(scopeNode),
+    atlasNodeToStandardized(scopeNode, uuidMappings),
   );
 
   return standardizedTrees;

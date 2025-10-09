@@ -19,6 +19,7 @@ import {
   type TenetsDocument,
   extraFieldsByDocumentType,
 } from '../types';
+import { loadUuidMappings, UuidMappings } from '../../load-uuid-mapping';
 
 vi.mock('../atlas-rich-text-formatter', () => ({
   atlasDatabasePageToMarkdown: vi.fn().mockImplementation((node: AtlasTreeNode) => `# ${node.plain_text_name ?? ''}`),
@@ -71,10 +72,12 @@ function cryptoRandomId(): string {
 describe('atlasNodeToStandardized', () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
   let errorSpy: ReturnType<typeof vi.spyOn>;
-
-  beforeEach(() => {
+  let uuidMappings: UuidMappings;
+  
+  beforeEach(async () => {
     warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    uuidMappings = await loadUuidMappings();
   });
 
   afterEach(() => {
@@ -92,7 +95,7 @@ describe('atlasNodeToStandardized', () => {
       generatedDocName: 'Generated Name',
     });
 
-    const result = atlasNodeToStandardized(node);
+    const result = atlasNodeToStandardized(node, uuidMappings);
     expect(result.type).toBe('Article');
     expect(result.doc_no).toBe('GEN.1');
     expect(result.name).toBe('Generated Name');
@@ -117,7 +120,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       articles: [child1, child2],
     });
-    const result = atlasNodeToStandardized(root) as ScopesDocument;
+    const result = atlasNodeToStandardized(root, uuidMappings) as ScopesDocument;
     expect(result.type).toBe('Scope');
     expect(result.articles[0].name).toBe('1');
     expect(result.articles[1].name).toBe('2');
@@ -134,7 +137,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       articles: [art],
     });
-    const result = atlasNodeToStandardized(scope) as ScopesDocument;
+    const result = atlasNodeToStandardized(scope, uuidMappings) as ScopesDocument;
     expect(result).toHaveProperty('articles');
     expect(result.articles).toHaveLength(1);
     expect(result.articles[0].type).toBe('Article');
@@ -159,7 +162,7 @@ describe('atlasNodeToStandardized', () => {
       neededResearch: [nr],
       agentScopeDocs: [agent],
     });
-    const result = atlasNodeToStandardized(art) as ArticlesDocument;
+    const result = atlasNodeToStandardized(art, uuidMappings) as ArticlesDocument;
     expect(result).toHaveProperty('sections_and_primary_docs');
     expect(result).toHaveProperty('annotations');
     expect(result).toHaveProperty('needed_research');
@@ -191,7 +194,7 @@ describe('atlasNodeToStandardized', () => {
       neededResearch: [nr],
       extra_fields: { type_specification_type_name: 'T', unknown_prop: 'x' },
     });
-    const result = atlasNodeToStandardized(typeSpec) as SectionsAndPrimaryDocsDocument;
+    const result = atlasNodeToStandardized(typeSpec, uuidMappings) as SectionsAndPrimaryDocsDocument;
     expect(result.sections_and_primary_docs).toHaveLength(1);
     expect(result.annotations).toHaveLength(1);
     expect(result.tenets).toHaveLength(1);
@@ -214,7 +217,7 @@ describe('atlasNodeToStandardized', () => {
       scenarios: [scen],
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(tenet) as TenetsDocument;
+    const result = atlasNodeToStandardized(tenet, uuidMappings) as TenetsDocument;
     expect(result.scenarios).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
   });
@@ -235,7 +238,7 @@ describe('atlasNodeToStandardized', () => {
       neededResearch: [nr],
       extra_fields: { scenario_finding: 'S', unknown: 1 },
     });
-    const result = atlasNodeToStandardized(scen) as ScenariosDocument;
+    const result = atlasNodeToStandardized(scen, uuidMappings) as ScenariosDocument;
     expect(result.scenario_variations).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_finding).toBeDefined();
@@ -253,7 +256,7 @@ describe('atlasNodeToStandardized', () => {
       neededResearch: [nr],
       extra_fields: { scenario_variation_finding: 'SV', bogus: true },
     });
-    const result = atlasNodeToStandardized(sv) as ScenarioVariationsDocument;
+    const result = atlasNodeToStandardized(sv, uuidMappings) as ScenarioVariationsDocument;
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_variation_finding).toBeDefined();
     expect('bogus' in (result as object)).toBe(false);
@@ -267,7 +270,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node);
+    const result = atlasNodeToStandardized(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -282,7 +285,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node);
+    const result = atlasNodeToStandardized(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -297,7 +300,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node);
+    const result = atlasNodeToStandardized(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -314,7 +317,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Active Data',
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(ad) as ActiveDataDocument;
+    const result = atlasNodeToStandardized(ad, uuidMappings) as ActiveDataDocument;
     expect(result.needed_research).toHaveLength(1);
   });
 
@@ -336,7 +339,7 @@ describe('atlasNodeToStandardized', () => {
       activeData: [ad],
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(agentRoot) as AgentScopeDatabaseDocument;
+    const result = atlasNodeToStandardized(agentRoot, uuidMappings) as AgentScopeDatabaseDocument;
     expect(result.agent_scope_database).toHaveLength(1);
     expect(result.annotations).toHaveLength(1);
     expect(result.tenets).toHaveLength(1);
@@ -349,7 +352,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_database_name: ATLAS_DATABASES.NEEDED_RESEARCH,
       atlas_document_type: 'Needed Research',
     });
-    const result = atlasNodeToStandardized(nr);
+    const result = atlasNodeToStandardized(nr, uuidMappings);
     // no child arrays on type interface beyond base
     expect(Object.keys(result)).not.toContain('articles');
   });
@@ -364,7 +367,7 @@ describe('atlasNodeToStandardized', () => {
       notion_page_id: agentRootId,
       agentScopeDocs: [child],
     });
-    const result = atlasNodeToStandardized(agentRoot, { omitAgents: true });
+    const result = atlasNodeToStandardized(agentRoot, uuidMappings, { omitAgents: true });
     expect(result.type).toBe('Core');
     expect('agent_scope_database' in (result as object)).toBe(false);
   });
@@ -373,7 +376,7 @@ describe('atlasNodeToStandardized', () => {
     const node = makeNode({
       atlas_database_name: 'Unknown' as unknown as (typeof ATLAS_DATABASES)[keyof typeof ATLAS_DATABASES],
     });
-    const result = atlasNodeToStandardized(node);
+    const result = atlasNodeToStandardized(node, uuidMappings);
     expect(errorSpy).toHaveBeenCalled();
     expect('articles' in (result as object)).toBe(false);
   });
@@ -385,7 +388,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       activeData: [badChild],
     });
-    const result = atlasNodeToStandardized(scope);
+    const result = atlasNodeToStandardized(scope, uuidMappings);
     expect(result.type).toBe('Scope');
     expect(warnSpy).toHaveBeenCalled();
   });
@@ -398,7 +401,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node) as SectionsAndPrimaryDocsDocument;
+    const result = atlasNodeToStandardized(node, uuidMappings) as SectionsAndPrimaryDocsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -413,7 +416,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node) as ScenariosDocument;
+    const result = atlasNodeToStandardized(node, uuidMappings) as ScenariosDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -428,7 +431,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node) as ScenarioVariationsDocument;
+    const result = atlasNodeToStandardized(node, uuidMappings) as ScenarioVariationsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);

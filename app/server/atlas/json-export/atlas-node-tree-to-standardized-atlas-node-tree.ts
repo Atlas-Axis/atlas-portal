@@ -28,6 +28,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
+import { UuidMappings } from '../load-uuid-mapping';
 import {
   type ActiveDataDocument,
   type AgentScopeDatabaseDocument,
@@ -69,18 +70,23 @@ function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasData
 }
 
 // Convert simple fields
-function toBase(node: AtlasTreeNode): BaseAtlasDocument {
+function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocument {
   if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
     console.warn(
       `⚠️  Missing 'generatedDocName' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
     );
   }
 
+  const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id) ?? null;
+  if (!atlasUUID) {
+    console.warn(`⚠️  Missing Atlas UUID for ${node.atlas_document_type} document (id: ${node.notion_page_id})`);
+  }
+
   return {
     type: node.atlas_document_type,
     doc_no: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? '',
-    uuid: node.notion_page_id ?? null,
+    uuid: atlasUUID,
     last_modified: node.updated_at,
     content: atlasDatabasePageToMarkdown(node),
   };
@@ -127,9 +133,10 @@ function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
 // Main entry: convert an `AtlasTreeNode` into a `StandardizedAtlasDocument`
 export function atlasNodeToStandardized(
   node: AtlasTreeNode,
+  uuidMappings: UuidMappings,
   options?: { omitAgents: boolean },
 ): StandardizedAtlasDocument {
-  const base = toBase(node);
+  const base = toBase(node, uuidMappings);
 
   // If omitting Agent Scope subtrees (for BLUE JSON compatibility) and this node matches one of the agent roots,
   // prune all its children (keep the node itself with empty children arrays).
@@ -144,7 +151,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Articles']);
       const doc: ScopesDocument = {
         ...base,
-        articles: node.articles.map((c) => atlasNodeToStandardized(c) as ArticlesDocument),
+        articles: node.articles.map((c) => atlasNodeToStandardized(c, uuidMappings) as ArticlesDocument),
       };
       return doc;
     }
@@ -160,12 +167,13 @@ export function atlasNodeToStandardized(
       const doc: ArticlesDocument = {
         ...base,
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => atlasNodeToStandardized(c) as SectionsAndPrimaryDocsDocument,
+          (c) => atlasNodeToStandardized(c, uuidMappings) as SectionsAndPrimaryDocsDocument,
         ),
         // agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument),
-        // TODO: Add annotations, needed_research
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -184,16 +192,18 @@ export function atlasNodeToStandardized(
         ...base,
         ...pickExtraFields(node),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => atlasNodeToStandardized(c) as SectionsAndPrimaryDocsDocument,
+          (c) => atlasNodeToStandardized(c, uuidMappings) as SectionsAndPrimaryDocsDocument,
         ),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
-        tenets: node.tenets.map((c) => atlasNodeToStandardized(c) as TenetsDocument),
-        active_data: node.activeData.map((c) => atlasNodeToStandardized(c) as ActiveDataDocument),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
+        tenets: node.tenets.map((c) => atlasNodeToStandardized(c, uuidMappings) as TenetsDocument),
+        active_data: node.activeData.map((c) => atlasNodeToStandardized(c, uuidMappings) as ActiveDataDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       if (node.agentScopeDocs.length > 0) {
         doc.agent_scope_database = node.agentScopeDocs.map(
-          (c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument,
+          (c) => atlasNodeToStandardized(c, uuidMappings) as AgentScopeDatabaseDocument,
         );
       }
       return doc;
@@ -204,7 +214,9 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
       const doc: AnnotationsDocument = {
         ...base,
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -214,8 +226,10 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Scenarios', 'Needed Research']); // TODO: Add needed_research
       const doc: TenetsDocument = {
         ...base,
-        scenarios: node.scenarios.map((c) => atlasNodeToStandardized(c) as ScenariosDocument),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        scenarios: node.scenarios.map((c) => atlasNodeToStandardized(c, uuidMappings) as ScenariosDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -227,9 +241,11 @@ export function atlasNodeToStandardized(
         ...base,
         ...pickExtraFields(node),
         scenario_variations: node.scenarioVariations.map(
-          (c) => atlasNodeToStandardized(c) as ScenarioVariationsDocument,
+          (c) => atlasNodeToStandardized(c, uuidMappings) as ScenarioVariationsDocument,
         ),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -240,7 +256,9 @@ export function atlasNodeToStandardized(
       const doc: ScenarioVariationsDocument = {
         ...base,
         ...pickExtraFields(node),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -250,7 +268,9 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
       const doc: ActiveDataDocument = {
         ...base,
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
@@ -260,11 +280,15 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Agent Scope Database', 'Annotations', 'Tenets', 'Active Data', 'Needed Research']); // TODO: Add needed_research
       const doc: AgentScopeDatabaseDocument = {
         ...base,
-        agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c) as AnnotationsDocument),
-        tenets: node.tenets.map((c) => atlasNodeToStandardized(c) as TenetsDocument),
-        active_data: node.activeData.map((c) => atlasNodeToStandardized(c) as ActiveDataDocument),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
+        agent_scope_database: node.agentScopeDocs.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as AgentScopeDatabaseDocument,
+        ),
+        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
+        tenets: node.tenets.map((c) => atlasNodeToStandardized(c, uuidMappings) as TenetsDocument),
+        active_data: node.activeData.map((c) => atlasNodeToStandardized(c, uuidMappings) as ActiveDataDocument),
+        needed_research: node.neededResearch.map(
+          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+        ),
       };
       return doc;
     }
