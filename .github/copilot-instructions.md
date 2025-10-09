@@ -165,7 +165,7 @@ Child relationship fields (JSONB arrays of UUID strings):
 
 **Additional Fields:**
 
-- `extra_fields` (JSONB) - Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to Type Specification Atlas documents
+- `extra_fields` (JSONB) - Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to some Atlas document types (Type Specification, Scenario, Scenario Variation)
 
 Relationship modeling note:
 
