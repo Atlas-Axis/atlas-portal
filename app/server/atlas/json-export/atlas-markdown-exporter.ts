@@ -24,7 +24,9 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   const lines: string[] = [];
 
   const hashes = '#'.repeat(Math.max(1, depth + 1));
-  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}]`.trim();
+  // const uuid = ` <!-- UUID: ${doc.uuid ?? ''} -->`
+  // const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}] ${uuid}`;
+  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}]`;
   lines.push(title, '');
 
   if (doc.content && doc.content.trim().length > 0) {
@@ -75,17 +77,15 @@ function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
   const source = doc as unknown as Record<string, unknown>;
   for (const [fieldKey, label] of Object.entries(mapping)) {
     const raw = source[fieldKey];
-    if (raw == null) {
-      console.warn(`getExtraFieldsForDocument: Missing expected field '${fieldKey}' on document type '${doc.type}'`);
+    if (raw === undefined) {
+      console.warn(
+        `getExtraFieldsForDocument: Missing expected field '${fieldKey}' on document type '${doc.type}' for doc ${doc.uuid}`,
+      );
       continue;
     }
-    const value = typeof raw === 'string' ? raw : String(raw);
+    const value = raw === null ? '' : typeof raw === 'string' ? raw : String(raw);
     const trimmed = value.trim();
-    if (trimmed.length > 0) {
-      out.push(`**${label}**: ${trimmed}`);
-    } else {
-      console.warn(`getExtraFieldsForDocument: Empty value for field '${fieldKey}' on document type '${doc.type}'`);
-    }
+    out.push(`**${label}**: ${trimmed}`);
   }
   return out;
 }
