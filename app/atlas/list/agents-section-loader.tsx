@@ -7,7 +7,7 @@ interface AgentsSectionProps {
   onAgentsLoaded: (agentNodes: AtlasTreeNode[]) => void;
 }
 
-export default function AgentsSection({ onAgentsLoaded }: AgentsSectionProps) {
+export default function AgentsSectionLoader({ onAgentsLoaded }: AgentsSectionProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
