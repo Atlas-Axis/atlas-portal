@@ -1,5 +1,6 @@
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
 
 export const dynamic = 'force-static';
@@ -10,6 +11,9 @@ export default async function Page() {
   // Load Atlas pages from Supabase, grouped by Atlas database
   const atlasPagesPerDatabase = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
+  // Load UUID mappings
+  const uuidMappings = await loadUuidMappings();
+
   // Build the Atlas tree structure with validation
   const atlas = buildAtlasTree(atlasPagesPerDatabase, {
     assignDocumentNumbers: true,
@@ -19,7 +23,7 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen bg-white p-6">
-      <ContentTree atlas={atlas} />
+      <ContentTree atlas={atlas} uuidMappings={uuidMappings} />
     </div>
   );
 }

@@ -3,15 +3,17 @@
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { atlasDatabasePageToHTML } from '@/app/server/atlas/atlas-rich-text-formatter';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
+import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../../components/custom-html';
 
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
+  uuidMappings: UuidMappings;
 }
 
-export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProps) {
+export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
 
   return (
@@ -41,7 +43,7 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
                 {pages.length > 0 ? (
                   <div className="space-y-3">
                     {pages.map((page) => (
-                      <ListItem key={page.notion_page_id} node={page} />
+                      <ListItem key={page.notion_page_id} node={page} uuidMappings={uuidMappings} />
                     ))}
                   </div>
                 ) : (
@@ -58,10 +60,11 @@ export default function AtlasList({ atlasPagesPerDatabase }: AtlasListClientProp
 
 interface ListItemProps {
   node: AtlasTreeNode;
+  uuidMappings: UuidMappings;
 }
 
-function ListItem({ node }: ListItemProps) {
-  const formattedContent = atlasDatabasePageToHTML(node);
+function ListItem({ node, uuidMappings }: ListItemProps) {
+  const formattedContent = atlasDatabasePageToHTML(node, uuidMappings);
   const hasContent = formattedContent.trim().length > 0;
 
   // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {

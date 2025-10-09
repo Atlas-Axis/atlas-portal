@@ -1,13 +1,17 @@
 import { RichTextItemResponse } from '@notionhq/client';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { NotionDatabasePage } from '../database/notion-database-page';
-import { convertNotionRichTextToMarkdown } from '../markdown/rich-text-to-markdown';
+import { convertNotionRichTextToMarkdown, notionLinkToMappedUUID } from '../markdown/rich-text-to-markdown';
 import { AtlasTreeNode } from './atlas-tree-types';
+import { UuidMappings } from './load-uuid-mapping';
 
-export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | AtlasTreeNode>(page: T): string {
+export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | AtlasTreeNode>(
+  page: T,
+  uuidMappings: UuidMappings,
+): string {
   if (page.json_content && Array.isArray(page.json_content)) {
     const richText = page.json_content as RichTextItemResponse[];
-    const result = convertRichTextToMarkdown(richText);
+    const result = convertRichTextToMarkdown(richText, uuidMappings);
 
     return result;
   }
@@ -15,10 +19,13 @@ export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | Atlas
   return '';
 }
 
-export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTreeNode>(page: T): string {
+export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTreeNode>(
+  page: T,
+  uuidMappings: UuidMappings,
+): string {
   if (page.json_content && Array.isArray(page.json_content)) {
     const richText = page.json_content as RichTextItemResponse[];
-    const markdown = convertRichTextToMarkdown(richText);
+    const markdown = convertRichTextToMarkdown(richText, uuidMappings);
 
     return markdownToHTML(markdown);
   }
@@ -26,22 +33,22 @@ export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTree
   return '';
 }
 
-function convertRichTextToMarkdown(richText: RichTextItemResponse[]): string {
+function convertRichTextToMarkdown(richText: RichTextItemResponse[], uuidMappings: UuidMappings): string {
   // For table content, we need to avoid escaping pipe characters and underscores
   // This is a simplified approach that detects table-like patterns and handles them specially
   const plainText = richText.map((rt) => rt.plain_text || '').join('');
   const isTable = hasTableLikePattern(plainText);
 
   if (isTable) {
-    return convertTableRichTextToMarkdown(richText);
+    return convertTableRichTextToMarkdown(richText, uuidMappings);
   }
 
   // For non-table content, use the regular converter
-  return convertNotionRichTextToMarkdown(richText);
+  return convertNotionRichTextToMarkdown(richText, uuidMappings);
 }
 
 // Specialized function to handle table content in rich text without escaping
-function convertTableRichTextToMarkdown(richText: RichTextItemResponse[]): string {
+function convertTableRichTextToMarkdown(richText: RichTextItemResponse[], uuidMappings: UuidMappings): string {
   // For table content, manually construct the markdown without escaping
   return richText
     .map((rt) => {
@@ -66,16 +73,9 @@ function convertTableRichTextToMarkdown(richText: RichTextItemResponse[]): strin
 
       // Handle links
       const href = rt.href || (rt.type === 'text' && 'text' in rt && rt.text?.link ? rt.text.link.url : undefined);
-      if (
-        href &&
-        (href.startsWith('https://') ||
-          href.startsWith('http://') ||
-          href.startsWith('mailto:') ||
-          href.startsWith('tel:') ||
-          href.startsWith('/') ||
-          href.startsWith('#'))
-      ) {
-        formatted = `[${formatted}](${href})`;
+      if (href) {
+        const mappedUUID = notionLinkToMappedUUID(href, uuidMappings);
+        formatted = `[${formatted}](${mappedUUID || href})`;
       }
 
       return formatted;

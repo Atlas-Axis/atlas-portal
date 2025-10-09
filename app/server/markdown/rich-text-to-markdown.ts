@@ -25,6 +25,8 @@
   // => "Intro\n```ts\nconst x = 1;\n```"
   ```
 */
+import { uuidToHyphens } from '@/app/shared/utils/utils';
+import { UuidMappings } from '../atlas/load-uuid-mapping';
 
 export type NotionAnnotations = {
   bold?: boolean;
@@ -94,27 +96,29 @@ function escapeMarkdownForTable(input: string): string {
     .replace(/\)/g, '\\)');
 }
 
-function sanitizeHref(href: string | undefined): string | null {
-  if (!href) return null;
-  const trimmed = href.trim();
-  if (
-    trimmed.startsWith('https://') ||
-    trimmed.startsWith('http://') ||
-    trimmed.startsWith('mailto:') ||
-    trimmed.startsWith('tel:') ||
-    trimmed.startsWith('/') ||
-    trimmed.startsWith('#')
-  ) {
-    return trimmed;
+export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: UuidMappings): string | null {
+  const isNotionURL = href?.startsWith('https://www.notion.so/');
+  if (!isNotionURL) {
+    return null;
   }
-  return null;
+  const notionIDFromURL = href?.replace('https://www.notion.so/', '').split('?')[0].split('#')[0].split('-').pop();
+  if (!notionIDFromURL) {
+    console.warn(`Could not extract Notion ID from URL: ${href}`);
+    return null;
+  }
+  const mappedUUID = href ? uuidMappings.notionPageIDsToAtlasUUIDs.get(uuidToHyphens(notionIDFromURL)) : undefined;
+  if (!mappedUUID) {
+    console.warn(`No mapping found for Notion link: ${href} (${notionIDFromURL}, ${mappedUUID})`);
+    return null;
+  }
+  return mappedUUID;
 }
 
 function wrapIf(condition: boolean | undefined, wrapper: (s: string) => string, content: string): string {
   return condition ? wrapper(content) : content;
 }
 
-function formatInlineSpan(rt: NotionRichText): string {
+function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings, isTableContext = false): string {
   const textContent =
     rt.type === 'equation'
       ? (rt.equation?.expression ?? rt.plain_text ?? '')
@@ -128,24 +132,31 @@ function formatInlineSpan(rt: NotionRichText): string {
         const escapedBackticks = textContent.replace(/`/g, '\\`');
         return `\`${escapedBackticks}\``;
       })()
-    : escapeMarkdown(textContent);
+    : isTableContext
+      ? escapeMarkdownForTable(textContent)
+      : escapeMarkdown(textContent);
+
   // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
   const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
   const withUnderline = withBold; // Markdown has no underline; leave unchanged
   const withItalic = wrapIf(rt.annotations?.italic, (s) => `_${s}_`, withUnderline);
   const withStrike = wrapIf(rt.annotations?.strikethrough, (s) => `~~${s}~~`, withItalic);
+  const formatted = withStrike;
 
   // Links: explicit href on rich text or text.link.url
   const href = rt.href || (rt.text && rt.text.link ? rt.text.link.url : undefined);
-  const sanitized = sanitizeHref(href);
-  if (sanitized) {
-    const txt = withStrike;
-    return `[${txt}](${sanitized})`;
+  if (href) {
+    if (!uuidMappings) {
+      console.warn('No uuidMappings provided, cannot map Notion links to UUIDs');
+      return `[${formatted}](${href})`;
+    }
+    const mappedUUID = notionLinkToMappedUUID(href, uuidMappings);
+    return `[${formatted}](${mappedUUID || href})`;
   }
 
   // Mentions without href: just text
   if (rt.type === 'mention') {
-    return withStrike;
+    return formatted;
   }
 
   // Equation as inline math
@@ -153,59 +164,27 @@ function formatInlineSpan(rt: NotionRichText): string {
     return `$${textContent}$`;
   }
 
-  return withStrike;
+  return formatted;
 }
 
-function formatInlineSpanForTable(rt: NotionRichText): string {
-  const textContent =
-    rt.type === 'equation'
-      ? (rt.equation?.expression ?? rt.plain_text ?? '')
-      : rt.type === 'text'
-        ? (rt.text?.content ?? rt.plain_text ?? '')
-        : (rt.plain_text ?? '');
-
-  // Inline code: don't escape inside backticks, only escape backticks themselves
-  const withInlineCode = rt.annotations?.code
-    ? (() => {
-        const escapedBackticks = textContent.replace(/`/g, '\\`');
-        return `\`${escapedBackticks}\``;
-      })()
-    : escapeMarkdownForTable(textContent);
-
-  // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
-  const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
-  const withUnderline = withBold; // Markdown has no underline; leave unchanged
-  const withItalic = wrapIf(rt.annotations?.italic, (s) => `_${s}_`, withUnderline);
-  const withStrike = wrapIf(rt.annotations?.strikethrough, (s) => `~~${s}~~`, withItalic);
-
-  // Links: explicit href on rich text or text.link.url
-  const href = rt.href || (rt.text && rt.text.link ? rt.text.link.url : undefined);
-  const sanitized = sanitizeHref(href);
-  if (sanitized) {
-    const txt = withStrike;
-    return `[${txt}](${sanitized})`;
-  }
-
-  // Mentions without href: just text
-  if (rt.type === 'mention') {
-    return withStrike;
-  }
-
-  // Equation as inline math
-  if (rt.type === 'equation') {
-    return `$${textContent}$`;
-  }
-
-  return withStrike;
+function formatInlineSpanForTable(rt: NotionRichText, uuidMappings?: UuidMappings): string {
+  return formatInlineSpan(rt, uuidMappings, true);
 }
 
-export function convertNotionRichTextToMarkdown(richText: NotionRichText[] | undefined | null): string {
+export function convertNotionRichTextToMarkdown(
+  richText: NotionRichText[] | undefined | null,
+  uuidMappings?: UuidMappings,
+): string {
   if (!richText || richText.length === 0) return '';
-  return richText.map(formatInlineSpan).join('').replace(/\n/g, '  \n');
+  return richText
+    .map((rt) => formatInlineSpan(rt, uuidMappings))
+    .join('')
+    .replace(/\n/g, '  \n');
 }
 
-function renderParagraph(block: NotionBlock): string {
-  const md = convertNotionRichTextToMarkdown(block.paragraph?.rich_text);
+function renderParagraph(block: NotionBlock, uuidMappings: UuidMappings): string {
+  // TODO: Can I remove uuidMappings? It's only used for links
+  const md = convertNotionRichTextToMarkdown(block.paragraph?.rich_text, uuidMappings);
   return md;
 }
 
@@ -225,7 +204,7 @@ function renderEquationBlock(block: NotionBlock): string {
   return expr ? `$$${expr}$$` : '';
 }
 
-function groupListItems(blocks: NotionBlock[]): { html: string; consumed: number } {
+function groupListItems(blocks: NotionBlock[], uuidMappings: UuidMappings): { html: string; consumed: number } {
   if (blocks.length === 0) return { html: '', consumed: 0 };
   const first = blocks[0];
   const isBullet = first.type === 'bulleted_list_item';
@@ -247,7 +226,7 @@ function groupListItems(blocks: NotionBlock[]): { html: string; consumed: number
     let nested = '';
     if (rt?.children && rt.children.length > 0) {
       // indent nested list by two spaces per GFM common style
-      const nestedMd = convertNotionBlocksToMarkdown(rt.children)
+      const nestedMd = convertNotionBlocksToMarkdown(rt.children, uuidMappings)
         .split('\n')
         .map((line) => (line.length ? `  ${line}` : line))
         .join('\n');
@@ -261,11 +240,13 @@ function groupListItems(blocks: NotionBlock[]): { html: string; consumed: number
   return { html: items.join('\n'), consumed: i };
 }
 
-function renderTable(block: NotionBlock): string {
+function renderTable(block: NotionBlock, uuidMappings: UuidMappings): string {
   const rows = (block.table?.children || []).filter((c: NotionBlock) => c.type === 'table_row');
   const mdRows = rows.map((row) => {
     const cells = row.table_row?.cells || [];
-    const cellMd = cells.map((cellRt) => cellRt.map(formatInlineSpanForTable).join('')).join(' | ');
+    const cellMd = cells
+      .map((cellRt) => cellRt.map((rt) => formatInlineSpanForTable(rt, uuidMappings)).join(''))
+      .join(' | ');
     return `| ${cellMd} |`;
   });
   if (mdRows.length === 0) return '';
@@ -285,14 +266,17 @@ function renderHeading(block: NotionBlock): string {
   return md ? `${'#'.repeat(level)} ${md}` : '';
 }
 
-export function convertNotionBlocksToMarkdown(blocks: NotionBlock[] | undefined | null): string {
+export function convertNotionBlocksToMarkdown(
+  blocks: NotionBlock[] | undefined | null,
+  uuidMappings: UuidMappings,
+): string {
   if (!blocks || blocks.length === 0) return '';
   const output: string[] = [];
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i];
     switch (block.type) {
       case 'paragraph':
-        output.push(renderParagraph(block));
+        output.push(renderParagraph(block, uuidMappings));
         break;
       case 'heading_1':
       case 'heading_2':
@@ -307,13 +291,13 @@ export function convertNotionBlocksToMarkdown(blocks: NotionBlock[] | undefined 
         break;
       case 'bulleted_list_item':
       case 'numbered_list_item': {
-        const { html, consumed } = groupListItems(blocks.slice(i));
+        const { html, consumed } = groupListItems(blocks.slice(i), uuidMappings);
         output.push(html);
         i += consumed - 1; // advance past grouped items
         break;
       }
       case 'table':
-        output.push(renderTable(block));
+        output.push(renderTable(block, uuidMappings));
         break;
       case 'table_row':
         // handled by parent table
@@ -325,7 +309,7 @@ export function convertNotionBlocksToMarkdown(blocks: NotionBlock[] | undefined 
           | undefined;
         const rich = container?.rich_text;
         if (rich && Array.isArray(rich)) {
-          output.push(convertNotionRichTextToMarkdown(rich));
+          output.push(convertNotionRichTextToMarkdown(rich, uuidMappings));
         } else if (typeof block.plain_text === 'string') {
           output.push(escapeMarkdown(block.plain_text));
         }

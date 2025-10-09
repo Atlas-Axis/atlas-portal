@@ -20,7 +20,7 @@ export const uuidToHyphens = (uuid: string): string => {
 
   // Otherwise, expect no-hyphen format
   if (uuid.length !== 32) {
-    throw new Error('Invalid UUID format: expected 32 characters without hyphens or valid hyphenated UUID');
+    throw new Error(`Invalid UUID format: expected 32 characters without hyphens or valid hyphenated UUID (${uuid})`);
   }
 
   return [uuid.slice(0, 8), uuid.slice(8, 12), uuid.slice(12, 16), uuid.slice(16, 20), uuid.slice(20, 32)].join('-');

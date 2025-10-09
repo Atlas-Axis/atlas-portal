@@ -7,6 +7,7 @@ import {
   type TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { type Json } from '@/app/server/services/supabase/database.types';
+import { UuidMappings, loadUuidMappings } from '../../load-uuid-mapping';
 import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
 import {
   type ActiveDataDocument,
@@ -19,10 +20,17 @@ import {
   type TenetsDocument,
   extraFieldsByDocumentType,
 } from '../types';
-import { loadUuidMappings, UuidMappings } from '../../load-uuid-mapping';
+
+const mockUUIDMappings: UuidMappings = {
+  atlasUUIDsToNotionPageIds: new Map<string, string>(),
+  notionPageIDsToAtlasUUIDs: new Map<string, string>(),
+};
 
 vi.mock('../atlas-rich-text-formatter', () => ({
-  atlasDatabasePageToMarkdown: vi.fn().mockImplementation((node: AtlasTreeNode) => `# ${node.plain_text_name ?? ''}`),
+  atlasDatabasePageToMarkdown: vi.fn().mockImplementation(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (node: AtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) => `# ${node.plain_text_name ?? ''}`,
+  ),
 }));
 
 function makeNode(overrides: Partial<AtlasTreeNode> = {}): AtlasTreeNode {
@@ -73,7 +81,7 @@ describe('atlasNodeToStandardized', () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
   let errorSpy: ReturnType<typeof vi.spyOn>;
   let uuidMappings: UuidMappings;
-  
+
   beforeEach(async () => {
     warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

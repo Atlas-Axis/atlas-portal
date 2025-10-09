@@ -27,6 +27,7 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
 import { UuidMappings } from '../load-uuid-mapping';
 import {
@@ -77,7 +78,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
     );
   }
 
-  const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id) ?? null;
+  const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(uuidToHyphens(node.notion_page_id)) ?? null;
   if (!atlasUUID) {
     console.warn(`⚠️  Missing Atlas UUID for ${node.atlas_document_type} document (id: ${node.notion_page_id})`);
   }
@@ -88,7 +89,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
     name: node.generatedDocName ?? '',
     uuid: atlasUUID,
     last_modified: node.updated_at,
-    content: atlasDatabasePageToMarkdown(node),
+    content: atlasDatabasePageToMarkdown(node, uuidMappings),
   };
 }
 

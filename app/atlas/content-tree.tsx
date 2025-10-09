@@ -10,6 +10,7 @@ import type { NotionDatabasePage } from '@/app/server/database/notion-database-p
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';
 import { atlasDatabasePageToHTML } from '../server/atlas/atlas-rich-text-formatter';
+import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import styles from './content-tree.module.css';
 import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
@@ -20,6 +21,7 @@ interface RenderTreeNodeProps {
   depth?: number;
   isRootNode?: boolean;
   parentPageId?: string;
+  uuidMappings: UuidMappings;
 }
 
 function renderSupportingDocumentListInSameType({
@@ -29,6 +31,7 @@ function renderSupportingDocumentListInSameType({
   node,
   parentTrackingMap,
   depth,
+  uuidMappings,
 }: {
   label: string;
   documentType: AtlasDocumentType;
@@ -36,6 +39,7 @@ function renderSupportingDocumentListInSameType({
   node: AtlasTreeNode;
   parentTrackingMap: Map<string, string>;
   depth: number;
+  uuidMappings: UuidMappings;
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
@@ -50,6 +54,7 @@ function renderSupportingDocumentListInSameType({
             depth: depth + 1,
             isRootNode: false,
             parentPageId: node.notion_page_id,
+            uuidMappings,
           }),
         )}
       </ul>
@@ -61,10 +66,12 @@ function renderSupportingDocuments({
   node,
   parentTrackingMap,
   depth,
+  uuidMappings,
 }: {
   node: AtlasTreeNode;
   parentTrackingMap: Map<string, string>;
   depth: number;
+  uuidMappings: UuidMappings;
 }) {
   const supportingDocumentPages = [
     ...node.annotations,
@@ -100,6 +107,7 @@ function renderSupportingDocuments({
           node,
           parentTrackingMap,
           depth,
+          uuidMappings,
         }),
       )}
     </div>
@@ -112,8 +120,9 @@ function renderTreeNode({
   depth = 0,
   isRootNode = false,
   parentPageId,
+  uuidMappings,
 }: RenderTreeNodeProps): React.ReactElement {
-  const formattedContent = atlasDatabasePageToHTML(node);
+  const formattedContent = atlasDatabasePageToHTML(node, uuidMappings);
 
   // Get children from the tree node structure
   const immutableAndPrimaryDocumentPages = [
@@ -169,12 +178,13 @@ function renderTreeNode({
               depth: depth + 1,
               isRootNode: false,
               parentPageId: node.notion_page_id,
+              uuidMappings,
             }),
           )}
         </ul>
       )}
 
-      {renderSupportingDocuments({ node, parentTrackingMap, depth })}
+      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings })}
     </>
   );
 
@@ -193,7 +203,7 @@ function renderTreeNode({
   );
 }
 
-export default function ContentTree({ atlas }: { atlas: AtlasTreeResult }) {
+export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeResult; uuidMappings: UuidMappings }) {
   const { scopeTrees, orphanedNodes } = atlas;
 
   // Create a map to track which parent each page is rendered under
@@ -302,6 +312,7 @@ export default function ContentTree({ atlas }: { atlas: AtlasTreeResult }) {
               parentTrackingMap,
               depth: 0,
               isRootNode: true,
+              uuidMappings,
             })}
           </AccordionItem>
         ))}
