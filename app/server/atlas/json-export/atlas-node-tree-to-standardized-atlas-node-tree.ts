@@ -61,17 +61,25 @@ function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasData
   const invalidChildren = allChildren.filter((child) => !allowedDatabases.includes(child.atlas_database_name));
   if (invalidChildren.length > 0) {
     console.warn(
-      `‼️  ${node.atlas_database_name} "${node.plain_text_name} (${node.notion_page_id})" has invalid child databases: ${invalidChildren.map((c) => c.atlas_database_name).join(', ')}`,
+      `‼️  ${node.atlas_database_name} (generatedDocName: "${node.generatedDocName ?? ''}", id: ${node.notion_page_id}) has invalid child databases: ${invalidChildren
+        .map((c) => c.atlas_database_name)
+        .join(', ')}`,
     );
   }
 }
 
 // Convert simple fields
 function toBase(node: AtlasTreeNode): BaseAtlasDocument {
+  if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
+    console.warn(
+      `⚠️  Missing 'generatedDocName' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
+    );
+  }
+
   return {
     type: node.atlas_document_type,
     doc_no: node.generatedDocID ?? node.atlas_document_number ?? '',
-    name: node.generatedDocName ?? node.plain_text_name ?? '',
+    name: node.generatedDocName ?? '',
     uuid: node.notion_page_id ?? null,
     last_modified: node.updated_at,
     content: atlasDatabasePageToMarkdown(node),
@@ -98,17 +106,19 @@ function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
 
   if (!node.extra_fields || typeof node.extra_fields !== 'object' || Array.isArray(node.extra_fields)) {
     console.warn(
-      `⚠️  Missing extra_fields for ${node.atlas_document_type} document "${node.plain_text_name} (${node.notion_page_id})". Expected keys: ${allowedKeys.join(', ')}`,
+      `⚠️  Missing extra_fields for ${node.atlas_document_type} document (generatedDocName: "${node.generatedDocName ?? ''}", id: ${node.notion_page_id}). Expected keys: ${allowedKeys.join(', ')}`,
     );
-    return {};
+    // Provide all expected keys with null so downstream generators can surface "empty" rather than "missing"
+    const nullFilled = Object.fromEntries(allowedKeys.map((key) => [key, null]));
+    return nullFilled;
   }
 
   const extra = node.extra_fields as Record<string, unknown>;
-  const result = Object.fromEntries(allowedKeys.map((key) => [key, extra[key]]));
+  const result = Object.fromEntries(allowedKeys.map((key) => [key, key in extra ? extra[key] : null]));
   const missingKeys = allowedKeys.filter((k) => !(k in extra));
   if (missingKeys.length > 0) {
     console.warn(
-      `⚠️  Incomplete extra_fields for ${node.atlas_document_type} document "${node.plain_text_name} (${node.notion_page_id})". Missing keys: ${missingKeys.join(', ')}`,
+      `⚠️  Incomplete extra_fields for ${node.atlas_document_type} document (generatedDocName: "${node.generatedDocName ?? ''}", id: ${node.notion_page_id}). Missing keys: ${missingKeys.join(', ')}`,
     );
   }
   return result;
