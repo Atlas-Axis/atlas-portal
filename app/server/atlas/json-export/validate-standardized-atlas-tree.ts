@@ -1,7 +1,9 @@
 import {
   type StandardizedAtlasDocument,
   allowedChildCollectionNamesPerDatabase,
+  childCollectionNameToDatabaseName,
   childCollectionNames,
+  extraFieldsByDocumentType,
 } from '@/app/server/atlas/json-export/types';
 import {
   SCENARIO_PROPERTY_MAPPING,
@@ -110,7 +112,12 @@ function addError(
  * Validates a single node and recursively validates all of its children.
  * Accumulates all issues in `errors` without short-circuiting.
  */
-function validateNode(node: Record<string, unknown>, path: string, errors: ValidationError[]): void {
+function validateNode(
+  node: Record<string, unknown>,
+  path: string,
+  errors: ValidationError[],
+  currentDatabase: AtlasDatabaseName | null,
+): void {
   // type present and valid
   if (!('type' in node)) {
     addError(
@@ -212,101 +219,98 @@ function validateNode(node: Record<string, unknown>, path: string, errors: Valid
       }
     }
   };
-  if (documentType === 'Scenario') {
-    for (const k of Object.keys(SCENARIO_PROPERTY_MAPPING)) ensureStringOrNull(k);
-  } else if (documentType === 'Scenario Variation') {
-    for (const k of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
-  } else if (documentType === 'Type Specification') {
-    for (const k of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
+
+  switch (documentType) {
+    case 'Scenario': {
+      for (const k of Object.keys(SCENARIO_PROPERTY_MAPPING)) ensureStringOrNull(k);
+      break;
+    }
+    case 'Scenario Variation': {
+      for (const k of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
+      break;
+    }
+    case 'Type Specification': {
+      for (const k of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
+      break;
+    }
+    default:
+      break;
   }
 
-  // allowed child collections for this database
-  // TODO:
-  // const allowedCollections = new Set<string>(allowedChildCollectionNamesPerDatabase[databaseType] ?? []);
-  // compute full allowed keys: base + extra + child collections
-  // const allowedKeys = new Set<string>([
-  //   ...baseRequiredFields,
-  //   ...baseOptionalFields,
-  //   ...(extraFieldsByDatabase[databaseType] ?? []),
-  //   ...allowedCollections,
-  // ]);
+  // allowed child collections are based on the current database, not the document type
+  const allowedCollectionsForDb: Set<string> | null = currentDatabase
+    ? new Set<string>(allowedChildCollectionNamesPerDatabase[currentDatabase])
+    : null;
+  // compute full allowed keys for unexpected-field detection: base + extra fields (by document type) + any child collection names
+  const allowedKeys = new Set<string>([
+    ...baseRequiredFields,
+    ...(extraFieldsByDocumentType[documentType] ?? []),
+    ...childCollectionNames,
+  ]);
 
-  // flag unexpected fields
-  // for (const key of Object.keys(node)) {
-  //   if (allowedKeys.has(key)) continue;
-  //   // Only treat as unexpected if it's one of the known child collection names not allowed for this type,
-  //   // or if it's not any recognized field at all
-  //   if ((childCollectionNames as ReadonlyArray<string>).includes(key)) {
-  //     if (!allowedCollections.has(key)) {
-  //       addError(
-  //         errors,
-  //         'CHILD_COLLECTION_NOT_ALLOWED',
-  //         node,
-  //         path,
-  //         `Child collection "${key}" is not allowed for database "${databaseType}". Remove it.`,
-  //         `Remove child collection "${key}" from this node.`,
-  //       );
-  //     }
-  //   } else {
-  //     addError(
-  //       errors,
-  //       'NODE_UNEXPECTED_FIELD',
-  //       node,
-  //       path,
-  //       `Unexpected field "${key}" for database "${databaseType}". Remove this field.`,
-  //       `Remove unexpected field "${key}".`,
-  //     );
-  //   }
-  // }
+  // flag unexpected fields and disallowed child collections
+  for (const key of Object.keys(node)) {
+    if ((childCollectionNames as ReadonlyArray<string>).includes(key)) {
+      // it's a child collection name
+      if (allowedCollectionsForDb && !allowedCollectionsForDb.has(key)) {
+        addError(
+          errors,
+          'CHILD_COLLECTION_NOT_ALLOWED',
+          node,
+          path,
+          `Child collection "${key}" is not allowed for database "${currentDatabase}". Remove it.`,
+          `Remove child collection "${key}" from this node.`,
+        );
+      }
+      continue;
+    }
+    if (!allowedKeys.has(key)) {
+      addError(
+        errors,
+        'NODE_UNEXPECTED_FIELD',
+        node,
+        path,
+        `Unexpected field "${key}". Remove this field.`,
+        `Remove unexpected field "${key}".`,
+      );
+    }
+  }
 
-  // validate child collections and recurse
-  // for (const collectionName of allowedChildCollectionNamesPerDatabase[databaseType]) {
-  //   const value = (node as Record<string, unknown>)[collectionName] as unknown;
-  //   if (value === undefined) continue; // absent is fine
-  //   if (!Array.isArray(value)) {
-  //     addError(
-  //       errors,
-  //       'CHILD_COLLECTION_NOT_ARRAY',
-  //       node,
-  //       `${path}.${collectionName}`,
-  //       `Child collection "${collectionName}" must be an array.`,
-  //       `Change "${collectionName}" to be an array.`,
-  //     );
-  //     continue;
-  //   }
+  // validate child collections and recurse for any present child arrays
+  for (const collectionName of childCollectionNames) {
+    const value = (node as Record<string, unknown>)[collectionName] as unknown;
+    if (value === undefined) continue; // absent is fine
+    if (!Array.isArray(value)) {
+      addError(
+        errors,
+        'CHILD_COLLECTION_NOT_ARRAY',
+        node,
+        `${path}.${collectionName}`,
+        `Child collection "${collectionName}" must be an array.`,
+        `Change "${collectionName}" to be an array.`,
+      );
+      continue;
+    }
 
-  //   const expectedChildDatabase =
-  //     childCollectionNameToDatabaseName[collectionName as keyof typeof childCollectionNameToDatabaseName];
-  //   value.forEach((child: unknown, idx: number) => {
-  //     const childPath = `${path}.${collectionName}.${idx}`;
-  //     if (!isPlainObject(child)) {
-  //       addError(
-  //         errors,
-  //         'CHILD_ITEM_NOT_OBJECT',
-  //         node,
-  //         childPath,
-  //         'Each child must be an object.',
-  //         'Replace this child with an object node.',
-  //       );
-  //       return;
-  //     }
-  //     const childType = (child as Record<string, unknown>).type;
-  //     if (childType !== expectedChildDatabase) {
-  //       addError(
-  //         errors,
-  //         'CHILD_NODE_TYPE_MISMATCH',
-  //         child as Record<string, unknown>,
-  //         childPath,
-  //         `Child node has type "${String(
-  //           childType,
-  //         )}" but "${collectionName}" requires "${expectedChildDatabase}". Fix the child "type".`,
-  //         `Set child node "type" to "${expectedChildDatabase}".`,
-  //       );
-  //     }
-  //     // Recurse to validate child fully
-  //     validateNode(child as Record<string, unknown>, childPath, errors);
-  //   });
-  // }
+    const childDatabase =
+      childCollectionNameToDatabaseName[collectionName as keyof typeof childCollectionNameToDatabaseName];
+    value.forEach((child: unknown, idx: number) => {
+      const childPath = `${path}.${collectionName}.${idx}`;
+      if (!isPlainObject(child)) {
+        addError(
+          errors,
+          'CHILD_ITEM_NOT_OBJECT',
+          node,
+          childPath,
+          'Each child must be an object.',
+          'Replace this child with an object node.',
+        );
+        return;
+      }
+      // Recurse to validate child fully, carrying database context inferred from the collection name
+      validateNode(child as Record<string, unknown>, childPath, errors, childDatabase);
+    });
+  }
 }
 
 /**
@@ -374,7 +378,8 @@ export function validateStandardizedAtlasTree(jsonString: string): {
       );
       return;
     }
-    validateNode(item, path, errors);
+    // Root-level items have no inherent database context; child collections establish database groupings.
+    validateNode(item, path, errors, null);
   });
 
   return { errors, root: parsed as StandardizedAtlasDocument[] };
