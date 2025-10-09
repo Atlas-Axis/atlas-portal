@@ -24,9 +24,8 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   const lines: string[] = [];
 
   const hashes = '#'.repeat(Math.max(1, depth + 1));
-  // const uuid = ` <!-- UUID: ${doc.uuid ?? ''} -->`
-  // const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}] ${uuid}`;
-  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}]`;
+  const uuid = ` <!-- UUID: ${doc.uuid ?? ''} -->`;
+  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}] ${uuid}`;
   lines.push(title, '');
 
   if (doc.content && doc.content.trim().length > 0) {
@@ -38,8 +37,6 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   if (extraFieldLines.length > 0) {
     lines.push(...extraFieldLines, '');
   }
-
-  lines.push(`**UUID:** ${doc.uuid ?? ''}`, '');
 
   // Children: follow the original tree structure without document type grouping
   // Just iterate through all child collections in the order they appear in the data structure
