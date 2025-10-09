@@ -6,6 +6,8 @@ import {
 } from '@/app/server/atlas/load-atlas-change-history';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
+export const dynamic = 'force-dynamic';
+
 async function fetchPageIdToAtlasDocumentNameMap(changes: AtlasPageChange[]): Promise<Map<string, string>> {
   // Collect all Notion page IDs referenced in child field diffs across all changes
   const referencedChildIds = new Set<string>();
