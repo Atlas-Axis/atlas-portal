@@ -71,7 +71,7 @@ export const childCollectionNames: ChildCollectionName[] = [
  */
 export const allowedChildCollectionNamesPerDatabase: Record<AtlasDatabaseName, ChildCollectionName[]> = {
   Scopes: ['articles'],
-  Articles: ['sections_and_primary_docs'], // TODO: Add annotations, needed_research
+  Articles: ['sections_and_primary_docs', 'annotations', 'needed_research'],
   'Sections & Primary Docs': [
     'sections_and_primary_docs',
     'agent_scope_database',
@@ -79,13 +79,13 @@ export const allowedChildCollectionNamesPerDatabase: Record<AtlasDatabaseName, C
     'tenets',
     'active_data',
     'needed_research',
-  ], // TODO: Add tenets, annotations, active_data, needed_research
-  Annotations: ['needed_research'], // TODO: Add needed_research
-  Tenets: ['scenarios', 'needed_research'], // TODO: Add needed_research
-  Scenarios: ['scenario_variations', 'needed_research'], // TODO: Add needed_research
-  'Scenario Variations': ['needed_research'], // TODO: Add needed_research
-  'Active Data': ['needed_research'], // TODO: Add needed_research
-  'Agent Scope Database': ['agent_scope_database', 'annotations', 'tenets', 'active_data', 'needed_research'], // TODO: Add needed_research
+  ],
+  Annotations: ['needed_research'],
+  Tenets: ['scenarios', 'needed_research'],
+  Scenarios: ['scenario_variations', 'needed_research'],
+  'Scenario Variations': ['needed_research'],
+  'Active Data': ['needed_research'],
+  'Agent Scope Database': ['agent_scope_database', 'annotations', 'tenets', 'active_data', 'needed_research'],
   'Needed Research': [],
 };
 
