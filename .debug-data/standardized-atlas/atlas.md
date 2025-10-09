@@ -773,6 +773,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 \[See below\]
 
 **Doc Identifier Rules**: Core Documents follow the Document Identifier Rules of Primary Documents. Core Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Core Documents can have whatever Document Identifier that is useful for their purpose.
+**Additional Logic**: 
 **Type Category**: Primary Document
 **Type Name**: Core
 **Type Overview**: The Core Type is the basic building block of the Primary Documents. Core Documents flexibly specify the core principles, rules and processes required to fulfil the specifications made by the Immutable Documents with a focus on clarity, practicality and applicability.
@@ -808,6 +809,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 \[See below\]
 
 **Doc Identifier Rules**: Element Annotation Directory Documents must always be located at the .0.3 position of their Target Document.
+**Additional Logic**: 
 **Type Category**: Supporting Document
 **Type Name**: Element Annotation Directory
 **Type Overview**: The Element Annotation Directory Type is a directory used to list all of the Element Annotation Documents pertaining to a Target Document.
@@ -833,6 +835,7 @@ The "Name" property of each Element Annotation Document instance must follow a s
 \[See below\]
 
 **Doc Identifier Rules**: Facilitator Action Tenet Directory Documents must always be located at the .0.4 position of their Target Document.
+**Additional Logic**: 
 **Type Category**: Supporting Document
 **Type Name**: Facilitator Action Tenet Directory
 **Type Overview**: The Facilitator Action Tenet Directory Type is a directory Type used to list all of the Facilitator Action Tenet Documents that pertain to a Target Document. Facilitator Action Tenet Documents specify adjudication principles and guidelines that are directly derived from the Target Document. When a controversy concerns the Target Document, the Facilitators must consult and apply the pertinent Action Tenet(s) in their decision-making.
@@ -1028,6 +1031,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 \[See below\]
 
 **Doc Identifier Rules**: Facilitator Scenario Directory Documents must always be located at the .1 position below their parent Facilitator Action Tenet Document.
+**Additional Logic**: 
 **Type Category**: Supporting Document
 **Type Name**: Facilitator Scenario Directory
 **Type Overview**: The Facilitator Scenario Directory Type is a directory used to list all of the Scenarios that pertain to a Facilitator Action Tenet. Scenarios are hypothetical fact patterns that are designed to illustrate the practical application of a single Facilitator Action Tenet, i.e., its parent Facilitator Action Tenet Document. Scenarios are classified as either Aligned or Misaligned. Aligned Scenarios conform to the logic of the Target Document. Misaligned Scenarios have breached the Target Document logic and are thus in violation of the Atlas.
@@ -1041,6 +1045,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 **Doc Identifier Rules**: Facilitator Scenario Documents must always be located as subdocuments of the Facilitator Scenario Directory Document, which in turn is nested under its parent Facilitator Action Tenet Document, e.g.: A.1.1-1.0.4.1.1.1.
 
 A Scenario’s Name should never be followed by a number unless there are multiple Scenarios with the same Name.
+**Additional Logic**: 
 **Type Category**: Supporting Document
 **Type Name**: Facilitator Scenario
 **Type Overview**: Facilitator Scenario Documents contain hypothetical fact patterns that are designed to illustrate the practical application of a single Facilitator Action Tenet, i.e., its parent Facilitator Action Tenet Document. Scenarios are classified as either Aligned or Misaligned. Aligned Scenarios conform to the logic of the Target Document. Misaligned Scenarios have breached the Target Document logic and are thus in violation of the Atlas.
@@ -1052,6 +1057,7 @@ A Scenario’s Name should never be followed by a number unless there are multip
 \[See below\]
 
 **Doc Identifier Rules**: Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document A.1.1.0.4.1.1.1. would have the following identifier: A.1.1.0.4.1.1.1.var2 .
+**Additional Logic**: 
 **Type Category**: Supporting Document
 **Type Name**: Facilitator Scenario Variation
 **Type Overview**: Facilitator Scenario Variation Documents are variations on the hypothetical fact patterns presented in their parent Scenario document (”original Scenario”). Each Variation substitutes elements of its original Scenario to demonstrate whether and why the finding of Aligned/Misaligned would change. 
