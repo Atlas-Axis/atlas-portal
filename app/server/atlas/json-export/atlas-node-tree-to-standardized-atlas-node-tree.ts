@@ -22,9 +22,13 @@
  */
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDatabaseName } from '@/app/server/atlas/constants';
+import {
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+} from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
 import {
-  extraFieldsByDatabase,
   type ActiveDataDocument,
   type AgentScopeDatabaseDocument,
   type AnnotationsDocument,
@@ -72,6 +76,42 @@ function toBase(node: AtlasTreeNode): BaseAtlasDocument {
     last_modified: node.updated_at,
     content: atlasDatabasePageToMarkdown(node),
   };
+}
+
+// Helper: deterministically pick extra_fields for a node based on database
+// Optionally require a specific document type to include fields
+function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
+  let allowedKeys: string[] = [];
+  switch (node.atlas_document_type) {
+    case 'Type Specification':
+      allowedKeys = Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING);
+      break;
+    case 'Scenario':
+      allowedKeys = Object.keys(SCENARIO_PROPERTY_MAPPING);
+      break;
+    case 'Scenario Variation':
+      allowedKeys = Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING);
+      break;
+    default:
+      return {};
+  }
+
+  if (!node.extra_fields || typeof node.extra_fields !== 'object' || Array.isArray(node.extra_fields)) {
+    console.warn(
+      `⚠️  Missing extra_fields for ${node.atlas_document_type} document "${node.plain_text_name} (${node.notion_page_id})". Expected keys: ${allowedKeys.join(', ')}`,
+    );
+    return {};
+  }
+
+  const extra = node.extra_fields as Record<string, unknown>;
+  const result = Object.fromEntries(allowedKeys.map((key) => [key, extra[key]]));
+  const missingKeys = allowedKeys.filter((k) => !(k in extra));
+  if (missingKeys.length > 0) {
+    console.warn(
+      `⚠️  Incomplete extra_fields for ${node.atlas_document_type} document "${node.plain_text_name} (${node.notion_page_id})". Missing keys: ${missingKeys.join(', ')}`,
+    );
+  }
+  return result;
 }
 
 // Main entry: convert an `AtlasTreeNode` into a `StandardizedAtlasDocument`
@@ -132,14 +172,7 @@ export function atlasNodeToStandardized(
       ]);
       const doc: SectionsAndPrimaryDocsDocument = {
         ...base,
-        ...(node.atlas_document_type === 'Type Specification' && node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
-          ? Object.fromEntries(
-              extraFieldsByDatabase['Sections & Primary Docs'].map((field) => [
-                field,
-                (node.extra_fields as Record<string, unknown>)[field],
-              ])
-            )
-          : {}),
+        ...pickExtraFields(node),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
           (c) => atlasNodeToStandardized(c) as SectionsAndPrimaryDocsDocument,
         ),
@@ -182,14 +215,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Scenario Variations', 'Needed Research']); // TODO: Add needed_research
       const doc: ScenariosDocument = {
         ...base,
-        ...(node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
-          ? Object.fromEntries(
-              extraFieldsByDatabase['Scenarios'].map((field) => [
-                field,
-                (node.extra_fields as Record<string, unknown>)[field],
-              ])
-            )
-          : {}),
+        ...pickExtraFields(node),
         scenario_variations: node.scenarioVariations.map(
           (c) => atlasNodeToStandardized(c) as ScenarioVariationsDocument,
         ),
@@ -203,14 +229,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
       const doc: ScenarioVariationsDocument = {
         ...base,
-        ...(node.extra_fields && typeof node.extra_fields === 'object' && !Array.isArray(node.extra_fields)
-          ? Object.fromEntries(
-              extraFieldsByDatabase['Scenario Variations'].map((field) => [
-                field,
-                (node.extra_fields as Record<string, unknown>)[field],
-              ])
-            )
-          : {}),
+        ...pickExtraFields(node),
         needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c) as NeededResearchDocument),
       };
       return doc;
