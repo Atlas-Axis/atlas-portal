@@ -331,6 +331,21 @@ export type Database = {
         };
         Relationships: [];
       };
+      uuid_mapping: {
+        Row: {
+          atlas_document_uuid: string;
+          notion_page_id: string;
+        };
+        Insert: {
+          atlas_document_uuid: string;
+          notion_page_id: string;
+        };
+        Update: {
+          atlas_document_uuid?: string;
+          notion_page_id?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       notion_database_pages_current: {
