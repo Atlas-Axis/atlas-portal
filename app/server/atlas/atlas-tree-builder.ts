@@ -159,6 +159,8 @@ export function buildAtlasTree(
 function generateNormalizedDocumentNames(lookupMaps: AtlasLookupMaps): void {
   for (const treeNode of lookupMaps.nodeMapByPageId.values()) {
     treeNode.generatedDocName = getDocumentTitle(treeNode);
+    // TODO: Enable trimming again in the near future to fix data in Notion. Disabled for now to avoid overwhelming the diff in the beginning.
+    // treeNode.generatedDocName = getDocumentTitle(treeNode).trim();
   }
 }
 
@@ -402,6 +404,18 @@ function buildTreeNode(
 
         const sortedChildPages = sortAtlasDocuments(childPages);
         const sortedArray = sortedChildPages.map((page) => page.notion_page_id);
+
+        // Log missing children that could not be resolved to pages
+        if (reportMissingChildNodes) {
+          for (const originalId of array) {
+            if (typeof originalId === 'string') {
+              const exists = lookupMaps.originalPageMap.has(originalId);
+              if (!exists) {
+                console.error(`Missing child document referenced in ${type}:`, originalId);
+              }
+            }
+          }
+        }
 
         for (const childId of sortedArray) {
           if (typeof childId === 'string') {
