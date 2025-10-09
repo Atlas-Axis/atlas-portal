@@ -152,16 +152,8 @@ export interface NeededResearchDocument extends BaseAtlasDocument {
   // No children - leaf database
 }
 
-// Extra fields per database (non-child fields beyond base)
-export const extraFieldsByDatabase: Record<AtlasDatabaseName, string[]> = {
-  Scopes: [],
-  Articles: [],
-  'Sections & Primary Docs': Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING),
-  Annotations: [],
-  Tenets: [],
-  Scenarios: Object.keys(SCENARIO_PROPERTY_MAPPING),
-  'Scenario Variations': Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING),
-  'Active Data': [],
-  'Agent Scope Database': [],
-  'Needed Research': [],
+export const extraFieldsByDocumentType: Partial<Record<AtlasDocumentType, string[]>> = {
+  'Type Specification': Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING),
+  Scenario: Object.keys(SCENARIO_PROPERTY_MAPPING),
+  'Scenario Variation': Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING),
 };
