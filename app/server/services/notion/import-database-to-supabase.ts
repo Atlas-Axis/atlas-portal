@@ -7,7 +7,7 @@ import {
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';
-import { insertPagesInBatches } from '../supabase/insert-pages-in-batches';
+import { upsertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
 import { logImportOperation } from '../supabase/log-import';
 import { DatabasePageChanges, compareDatabasePages } from './compare-database-pages';
@@ -134,7 +134,7 @@ export async function importDatabasePagesFromNotionToSupabase({
             pagesToInsert.includes(page.notion_page_id),
           );
           console.log(`📝 Inserting ${newPages.length} new pages...`);
-          await insertPagesInBatches(newPages);
+          await upsertPagesInBatches(newPages, 'insert');
           console.log(`✅ Successfully inserted ${newPages.length} new pages`);
         }
 
@@ -144,7 +144,7 @@ export async function importDatabasePagesFromNotionToSupabase({
             pagesToUpsert.includes(page.notion_page_id),
           );
           console.log(`🔄 Upserting ${changedPages.length} changed pages...`);
-          await insertPagesInBatches(changedPages);
+          await upsertPagesInBatches(changedPages, 'update');
           console.log(`✅ Successfully upserted ${changedPages.length} changed pages`);
         }
       }
@@ -157,7 +157,7 @@ export async function importDatabasePagesFromNotionToSupabase({
         notionPages: notionPagesWithRelationships,
         atlasDatabaseName,
       });
-      await insertPagesInBatches(databasePages);
+      await upsertPagesInBatches(databasePages, 'insert');
       console.log(`✅ Successfully inserted all ${databasePages.length} pages`);
 
       syncedCount = databasePages.length;

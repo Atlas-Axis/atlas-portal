@@ -6,7 +6,11 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 /**
  * Insert Notion pages into Supabase in batches to handle large datasets efficiently
  */
-export async function insertPagesInBatches(pages: NotionDatabasePage[], batchSize: number = 500): Promise<void> {
+export async function upsertPagesInBatches(
+  pages: NotionDatabasePage[],
+  changeType: 'insert' | 'update',
+  batchSize: number = 500,
+): Promise<void> {
   const totalPages = pages.length;
 
   for (let i = 0; i < totalPages; i += batchSize) {
@@ -55,16 +59,18 @@ export async function insertPagesInBatches(pages: NotionDatabasePage[], batchSiz
       .throwOnError();
 
     // Log all page IDs that were upserted as a list
-    const insertedPageIds = batch.map((p) => p.notion_page_id);
-    console.log(`  ✓ Upserted page IDs: ${insertedPageIds.join(', ')}`);
+    const upsertedPageIds = batch.map((p) => p.notion_page_id);
+    console.log(`  ✓ Upserted page IDs: ${upsertedPageIds.join(', ')}`);
 
     console.log(`  ✓ Batch ${batchNumber}/${totalBatches} completed successfully`);
   }
 
-  // Create UUID mappings for all pages after inserting Atlas documents
-  console.log(`  🔄 Creating UUID mappings for ${totalPages} pages...`);
-  await insertUuidMappingsForBatch(pages);
-  console.log(`  ✓ UUID mappings completed successfully`);
+  // Create UUID mappings for new pages after inserting Atlas documents
+  if (changeType === 'insert') {
+    console.log(`  🔄 Creating UUID mappings for ${totalPages} pages...`);
+    await insertUuidMappingsForBatch(pages);
+    console.log(`  ✓ UUID mappings completed successfully`);
+  }
 }
 
 /**
