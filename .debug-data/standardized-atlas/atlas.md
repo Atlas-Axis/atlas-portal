@@ -1878,7 +1878,7 @@ This Article defines a general emergency response protocol for managing emergenc
 
 The Sky Protocol has often required changes outside of the standard Weekly Governance Cycle and Monthly Governance Cycle to help maintain the peg or to quickly respond to changes in the Ecosystem. This Section defines a general protocol for handling emergency or urgent situations.  
   
-[A.1.9 - A4 - Sky Core Governance Security - Emergency Spells](b8266c11-3a84-4bbe-abe2-de9474f74ffd) governs the resolution of emergency / urgent situations involving the Executive Process.
+[A.1.9 - A5 - Sky Core Governance Security - Emergency Spells](b8266c11-3a84-4bbe-abe2-de9474f74ffd) governs the resolution of emergency / urgent situations involving the Executive Process.
 
 #### A.1.8.1.1 - Definition Of Emergency Situations [Core]  <!-- UUID: 5eafb29e-84a0-4a53-a798-3f958c880225 -->
 
@@ -2109,11 +2109,1546 @@ The spell teams need not share their identities. Therefore, it is no longer a re
 
 The Chainlog is an on-chain, governance-managed registry that records the official addresses of Sky’s core smart contracts. Each contract entry in the Chainlog is identified by a unique key \(“Chainlog key”\), which is used to reference the contract in documentation, governance actions, and integrations. It serves as the single source of truth for contract addresses in the protocol. The Chainlog is available at [https://chainlog.sky.money/](https://chainlog.sky.money/). Updates to the Chainlog are defined as housekeeping items \(see [A.1.11 - Weekly Governance Cycle - Operational Weekly Cycle - Definition Of Housekeeping Items](7648bf12-d600-4e0d-807b-5eb18e8d0f4f)\) and can be included directly in an Executive Vote \(see [A.1.11 - Weekly Governance Cycle - Operational Weekly Cycle - Process for Adding Housekeeping Item In Executive Vote](2d165c27-5daf-4a84-af8c-7c36f5de03d2)\).
 
-### A.1.9.2 - Governance Security Delay Requirements [Section]  <!-- UUID: c5f0e955-0441-42e0-a6fc-eab875bba568 -->
+### A.1.9.2 - Executive Process Definition [Section]  <!-- UUID: 03d32549-1da5-4a9c-902f-196641370eaf -->
+
+This Section defines the Executive Process, which is the end-to-end process through which Sky makes changes to the Sky Protocol.
+
+#### A.1.9.2.1 - Definitions [Core]  <!-- UUID: 324f379a-6341-4f39-aad5-f79f0d56812c -->
+
+The documents herein contain common definitions that are relevant to the entirety of the Executive Process.
+
+##### A.1.9.2.1.1 - Executive Sheet [Core]  <!-- UUID: af04619b-5b0b-4762-86de-067550e079b9 -->
+
+The Executive Sheet serves as a planning instrument and documentation for the agreed content of the Spell. It is therefore one of the foundational documents in the Executive Process. Each Spell has a dedicated Executive Sheet. The Governance Point creates a new Executive Sheet for each Executive Vote cycle, listing every executive item intended for inclusion in that cycle along with the provenance of each item. In this way, the Executive Sheet helps ensure transparency and verification in the Executive Process. Past Executive Sheets are preserved in order to provide a record of Executive Votes and their provenance.  
+  
+The Executive Sheet \(also referred to as the “exec sheet” or “sheet”\) is maintained on a large Google Sheets spreadsheet with several tabs. Each Executive Vote has its own tab, whose title is the designated Target Date for each spell.  
+  
+The Executive Sheet provides a publicly visible list of plain-English instructions outlining the executive actions performed in a given spell. Each executive action is populated in the Executive Sheet under a column and broken down into input actions \(high-level actions\) and derived actions \(resulting from input actions\).  
+  
+The Executive Sheet is used by several actors in the Executive Process. It is managed and populated by the Governance Point, used by stakeholders, who are required to provide confirmation for proposed executive items, and by the Spell Team. The Executive Sheet is the source of truth for the Spell Crafter who crafts the Spell based on its content. Only the Core Facilitators have write access to the Executive Sheet.
+
+##### A.1.9.2.1.2 - Target Date [Core]  <!-- UUID: 2f06dd6a-8664-4916-8f82-5155d703d61a -->
+
+The Target Date refers to the planned date when the Spell is expected to be made available to be voted on. The Target Date is decided by the Governance Point in collaboration with the Spell Crafter. Spells are usually deployed following a two-week cadence. Normally, the Target Date falls on Thursdays.
+
+##### A.1.9.2.1.3 - Executive Document [Core]  <!-- UUID: a352b5e8-752e-48f8-a393-cf5df5ae523d -->
+
+The Executive Document \(also referred to as the "Executive Copy," "executive,” "Executive Proposal," or "exec doc"\) is a formal, plain-English Markdown document that serves as the primary communication tool for presenting the contents of an Executive Vote to the community. Created after the Executive Sheet is finalized, it provides a detailed breakdown of the actions proposed in the Executive Vote. Unlike the Executive Sheet, which organizes actions in a cell-based format, the Executive Document expresses these actions in sentence format for improved readability.  
+  
+Each Executive Document corresponds to a specific spell and describes the actions that the spell will perform if executed. It is a critical tool for ensuring transparency, clarity, and alignment among stakeholders. The document serves as a proposal that can be voted on and either approved or rejected by Sky Governance. The Core Facilitators are responsible for producing and finalizing the Executive Document; and any changes must be made by them.  
+  
+The Executive Document is designed to be accessible to both technical and non-technical members of the Sky Ecosystem. It enables Aligned Delegates and SKY holders to understand the actions that will be executed when the spell is cast. Its contents are publicly visible on the Voting Portal, where Aligned Delegates review it before voting on the spell. In addition to serving as a reference for voters, the Executive Document also guides the Spell Team in developing and finalizing the Spell, ensuring that the proposed actions are accurately implemented. The contents of the Executive Document are hashed and included within the Spell code to provide an additional layer of verification.
+
+##### A.1.9.2.1.4 - Executive Vote [Core]  <!-- UUID: c0aea3f8-4ed9-4bd6-928b-f43ccc7d5ecf -->
+
+Executive Vote refers to the voting process of approving governance proposals within Sky Governance. These votes are conducted onchain and are used to implement technical changes to the Sky Protocol. For an Executive Vote to be executed, it must accumulate more SKY token support than any other active proposal, including the current leading proposal, ensuring it reflects the highest level of community backing at the time of approval.
+
+##### A.1.9.2.1.5 - Sky Governance Voting Portal [Core]  <!-- UUID: 0919d4bd-2050-43dc-a1b9-8cdfdf0cba54 -->
+
+The Voting Portal is the primary user interface where Executive Votes are published and where Aligned Delegates and SKY holders review and vote on proposals. It serves as the canonical location for viewing active and past Executive Votes, associated documentation, and vote tallies. The Voting Portal can be found at [https://vote.sky.money/executive](https://vote.sky.money/executive).
+
+##### A.1.9.2.1.6 - Custom Spell Voting Page [Core]  <!-- UUID: 7171aa68-668e-49bb-bf00-511cb79eb5e9 -->
+
+The custom spell voting page is the public interface used to submit, review, and vote on Executive Votes that are not accompanied by a formal Executive Document. It also supports voting on pre-deployed standby spells by allowing stakeholders to specify target contract addresses and calldata directly. The custom spell voting page can be found at [https://vote.sky.money/custom-spell](https://vote.sky.money/custom-spell).
+
+##### A.1.9.2.1.7 - Spell [Core]  <!-- UUID: 7d798e34-cdb0-4416-ab11-b5b48ccf61e6 -->
+
+Spell is a term specific to the Sky Protocol. It refers to all technical components of an Executive Vote, encompassing the codebase, code operations, code reviews, and overall code quality. The term "spell" is often used interchangeably with the Executive Vote itself, as it represents the smart contract responsible for enacting changes to the protocol. Spells are categorized as either "regular" or "out-of-schedule." Regular spells adhere to a biweekly cadence, while out-of-schedule spells are handled with service-level agreements \(SLAs\) determined on a case-by-case basis.
+
+##### A.1.9.2.1.8 - Ecosystem Spell Validation [Core]  <!-- UUID: e2bc30b0-1370-44e6-9872-39530ff61d65 -->
+
+Ecosystem Spell Validation \(also referred to as “spell validation” or “validation”\) refers to the process of performing a set of checks and high-level review of a specific spell’s code as it exists on the blockchain \(referred to as a “deployed spell”\). This process applies only to the deployed spell and is not as comprehensive as the reviews conducted during the spell development process by the Spell Reviewers. The purpose of spell validation is to validate the safety of the current spell in respect to its security impacts in relation to Sky Protocol smart contracts.
+
+##### A.1.9.2.1.9 - Spell Roster [Core]  <!-- UUID: 34fb69c2-12db-452c-a773-1d3ed706b993 -->
+
+Spell Roster refers to the two teams of technical contributors in the Sky Ecosystem, Sidestream and Dewiz. The Spell Team for the Executive Vote is selected from the members of the Spell Roster.
+
+##### A.1.9.2.1.10 - Spell Team [Core]  <!-- UUID: 202874e5-65f8-4250-bfb1-5122e5656395 -->
+
+Each Executive Vote has a dedicated Spell Team, made up of Spell Crafters and Spell Reviewers. The Spell Team must include one Crafter, who is responsible for crafting the spells. The Spell Team must also include at least two Reviewers, responsible for reviewing and confirming that the spells are ready for the Executive Vote, at least one of whom should be a member of a different Ecosystem Actor than the Spell Crafter. A Crafter cannot serve as a Reviewer for the same spell. The Spell Team is a set of technical contributors working on developing all technical and smart-contract-related aspects of a particular Executive Vote, based on instructions set out by the Governance Point.
+
+##### A.1.9.2.1.11 - Spell Crafter [Core]  <!-- UUID: e007c08a-5fef-42df-a63b-7b4d78b3366f -->
+
+The Spell Crafter \(the Crafter\) is the person or entity who parses the written instruction set of a proposed Executive to Solidity code in order to develop the spell in the first instance. Every addition, modification, or removal of code or content within the spell must be performed by the Crafter. The designated Spell Crafter must be rotated, such that the same person does not craft the spells for two consecutive Executive Votes. The Spell Crafter is a member of the Spell Team for a particular Executive Vote.
+
+##### A.1.9.2.1.12 - Spell Reviewer [Core]  <!-- UUID: 8d7a61c4-c1fd-4fbb-bbe9-1c2d6f4f3cdd -->
+
+The Spell Reviewers \(the Reviewers\) are the people or entities responsible for reviewing the draft spell as parsed by the Spell Crafter. The Reviewers are responsible for verifying the spell, finding issues and catching bugs and mistakes in the spell, and otherwise ensuring its quality. There is an important delineation between the function of Spell Crafters and Spell Reviewers: the Reviewers may not perform any addition, modification or removal of code or content within the spell, although they may suggest changes to the Spell Crafter. Spell Reviewers are members of the wider Spell Team for a particular Executive Vote.
+
+#### A.1.9.2.2 - Roles in the Executive Process [Core]  <!-- UUID: fb57a48c-5c33-45a4-a49b-2547234129c0 -->
+
+Several different actors within the Sky Community play a role in the Executive Process. The specific actors involved vary depending on the content of the items included in the Executive Process. These actors are categorized into four groups: Governance Point, Technical Point, Content Liaisons, and SKY holders \(acting directly or via Aligned Delegates and Shadow Delegates\).
+
+##### A.1.9.2.2.1 - Governance Point And Governance Backup [Core]  <!-- UUID: b8d55094-f75e-4316-9b68-59cbb72e5b26 -->
+
+The Governance Point is selected from the Core Facilitators. Currently, the only Core Facilitator is JanSky. Each Spell also has a designated Governance Backup. The Governance Backup is required to assume the responsibilities of the Governance Point if the original Governance Point becomes unavailable, effectively stepping into the role as needed. The Governance Point is responsible for coordinating the Executive Vote and ensuring that the information in the Executive Sheet accurately reflects the progress of the spell.  
+  
+The Technical Point has domain expertise as the crafter of the smart contracts, but the Governance Point also has crucial context and should serve as a cross-check to the extent they can. The Governance Point is expected to ask questions where needed.
+
+###### A.1.9.2.2.1.1 - Role Of Governance Point And Backup [Core]  <!-- UUID: 4137e37c-27ac-4618-8327-d88a23a7c9ce -->
+
+The role of Governance Point and Governance Backup alternates from within the Core Facilitator. The positions rotate, following an internal schedule.
+
+###### A.1.9.2.2.1.2 - Responsibilities For Governance Point [Core]  <!-- UUID: 6de84303-18f4-4d70-b259-b8f02c49b9bc -->
+
+The Governance Point has the following responsibilities in the Executive process:  
+  
+• Gather the proposed content for the Executive sheet and prepare a draft of the Executive Vote.  
+  
+• Align on Executive Vote contents with the relevant teams, and coordinate technical details.  
+  
+• Ensure the contents of each Executive Vote are justified by processes or structures ratified by Sky Governance.  
+  
+• Produce the text \(Executive Document\) that accompanies each Executive Vote and verify that the delivered code matches the code reviewed and approved on GitHub and that it contains all expected actions from the sheet.  
+  
+• Publish the Executive Vote on the official Voting Portal.
+
+##### A.1.9.2.2.2 - Technical Point [Core]  <!-- UUID: 6474ab2e-da22-4227-9aff-7f13ac0dd471 -->
+
+The Technical Point role is filled by the Spell Team or the Spell Crafter from that group. For each Executive Vote, a Spell Team is selected from the Spell Roster to steward the spell development process.  
+  
+Within the Spell Team, the Spell Crafter serves as the primary point of contact for the Governance Point and any external parties. If the Spell Crafter is unavailable or if disagreements arise, the Governance Point’s secondary point of contact is the Spell Reviewers.  
+  
+Input or opinions from external parties on technical details should be treated as informational and should not influence the spell decision-making process.
+
+###### A.1.9.2.2.2.1 - Spell Team Configuration [Core]  <!-- UUID: 4862ed4e-097b-42fa-a197-1d407d220a77 -->
+
+The Spell Team consists of the Crafter\(s\) and Reviewers for a designated spell.  
+  
+Currently, Sky has two teams of technical contributors for spell development, Dewiz, and Sidestream. They rotate the responsibility of crafting and reviewing as follows:  
+  
+• When Dewiz is crafting:  
+    ◦ Crafting: one Dewiz member  
+    ◦ Reviewing: one Dewiz member, one Sidestream member  
+  
+• When Sidestream is crafting:  
+    ◦ Crafting: one Sidestream member  
+    ◦ Reviewing: one Sidestream member, one Dewiz member.
+
+##### A.1.9.2.2.3 - Content Liaisons [Core]  <!-- UUID: 4ed84898-db7b-4759-bd00-e3cf09ac27e9 -->
+
+The Content Liaisons are the stakeholders involved in a specific spell. They participate in the verification process and confirm the accuracy of items relevant to their area of expertise, to ensure accuracy of those items in the Executive Sheet. Many different actors in the Sky Ecosystem serve as Content Liaisons for Executive Votes.
+
+##### A.1.9.2.2.4 - SKY Holders [Core]  <!-- UUID: 3e1d0486-4805-4bed-a246-f75198e111e6 -->
+
+The SKY token is a governance token that grants the owner voting rights in the Sky Protocol. SKY holders can exercise their voting power directly by participating in governance decisions, such as Executive Votes, or they can delegate their tokens to an Aligned Delegate or a Shadow Delegate to vote on their behalf.
+
+###### A.1.9.2.2.4.1 - Aligned Delegates [Core]  <!-- UUID: 891a72ff-bfdc-4353-b6a0-0719de4d36ac -->
+
+Aligned Delegates are recognized representatives who vote on Sky governance decisions on behalf of their delegators. They are officially listed in the Atlas and, if they fulfill certain requirements such as operational security and engagement levels, they can receive compensation from Sky. They validate and vote on Executive Votes, and should inform the community about their validation of a Spell, along with the reasoning for their vote, through the Sky Forum.
+
+###### A.1.9.2.2.4.2 - Shadow Delegates [Core]  <!-- UUID: c38ceb17-a35c-4f1c-a526-2267d1b424b5 -->
+
+Shadow Delegates serve as alternative representatives for SKY holders who delegate their tokens. They are not officially recorded in the Atlas and do not receive any compensation from Sky. They may participate in governance decisions and vote on behalf of their delegators.
+
+#### A.1.9.2.3 - Content Of The Executive Vote [Core]  <!-- UUID: 7b4c9934-5ba4-4218-b601-8f44ffb5881e -->
+
+The content of an Executive Vote typically consists of the set of onchain changes executed by the Spell. Depending on the specific needs of Sky and the Agents, an Executive Vote may also include DAO resolutions or other off-chain decisions.  
+  
+There is a set of recurring items in all Executive Votes, and some onchain changes reflect frequently occurring actions. These are set forth in more detail in the subdocuments herein.
+
+##### A.1.9.2.3.1 - Recurring Items [Core]  <!-- UUID: d1d16776-3eec-4e7d-b591-052fe9c2c45b -->
+
+For each Executive Vote, the parameters listed in the subdocuments herein are always specified. It is the Spell Crafter who is responsible for identifying if the proposed contents of the Spell require the parameters to be set to “Yes” or “No”.
+
+###### A.1.9.2.3.1.1 - Office Hours [Core]  <!-- UUID: 11cf1764-aefa-4343-ad44-e993024b3192 -->
+
+Office hours are set to “Yes”  if a spell introduces major changes that can affect external parties, or if a stakeholder makes a specific request for the office-hours modifier to be switched on. Typical examples include collateral offboarding, onboarding new modules, oracle changes, and other actions that may have a significant impact on the protocol or its users.  
+  
+While stakeholders can request that Office Hours be switched on, the final decision and responsibility for setting this parameter rests with the Spell Crafter. If the office hours modifier is on, the spell can only be executed between 14:00 and 21:00 UTC, Monday - Friday. The purpose of this modifier is to ensure that Ecosystem Actors are available to address any issues that may arise during or shortly after the execution of the spell. The spell will have an extra restriction on top of the GSM Pause Delay, meaning it can only be cast during that timeframe, regardless of when it was approved.
+
+###### A.1.9.2.3.1.2 - Global Line Modifier [Core]  <!-- UUID: df0835ea-e299-4fe2-aaca-3926f09913b9 -->
+
+The Global Line Modifier, also referred to as the Global Debt Ceiling, defines the system-wide debt ceiling for Sky. It is set to “Yes” if there is a modification to any collateral type’s line that necessitates that the global Line is also modified.
+
+###### A.1.9.2.3.1.3 - Order Of Operations [Core]  <!-- UUID: 18b4c424-68bd-4599-b8b5-9325d0dd8f3b -->
+
+The Order of Operations parameter is relevant when actions within a spell, or across multiple spells, must be executed in a specific order to ensure that the correct final value is set. This applies to cases where dependencies, conflicting changes, or timing-sensitive modifications require precise sequencing to achieve the intended outcome. The Order of Operations parameter is set to “Yes” when actions must be executed in a specific order.
+
+##### A.1.9.2.3.2 - Common Items [Core]  <!-- UUID: 64edb1ca-e577-41c4-aa9e-5af759b2d240 -->
+
+Some onchain changes frequently occur as part of the normal operations of Sky. Sometimes these common items have specialized processes associated with them. Common items for Executive Votes are listed in the subdocuments herein.
+
+###### A.1.9.2.3.2.1 - Smart Contract Deployment Verification [Core]  <!-- UUID: 55e774c1-dcef-4262-bc47-c32c94c0d557 -->
+
+For deployments of new modules such as an Allocation System Invocation or SP-BEAM, or to replace an old module, the process outlined in the subdocuments must be followed. The subdocuments provide additional detail regarding the smart contract deployment verification for each step in the Executive Process, where relevant. Unless otherwise stated, the normal process set out in [A.1.9 - Executive Process Breakdown](98298ab3-8d08-4c4f-b47b-81242a3e3903) applies.
+
+####### A.1.9.2.3.2.1.1 - Preparatory Phase for Module Deployment [Core]  <!-- UUID: 9ad39944-b2cf-44ab-872c-a57c7eba1d5a -->
+
+Before the Executive Process begins, the module is implemented, tested, audited, and reviewed by relevant stakeholders to ensure readiness for inclusion. These steps will be further developed in a future iteration of the Atlas. The subdocuments describe the crafting of an Atlas Edit Proposal for a technical deployment.
+
+######## A.1.9.2.3.2.1.1.1 - Atlas Crafting Stage [Core]  <!-- UUID: 12a9e981-412d-4d34-b014-5500c33901d4 -->
+
+The stage of crafting an Atlas Edit Proposal to integrate the module into the Atlas is outlined in the subdocuments herein.
+
+######### A.1.9.2.3.2.1.1.1.1 - Atlas Draft [Core]  <!-- UUID: 1ab0de04-ea89-473f-b0b5-5c30219dcde8 -->
+
+Core GovOps Atlas Axis receives a policy document or other relevant documentation explaining the required features and technical specifications of the new module.
+
+######### A.1.9.2.3.2.1.1.1.2 - Atlas Edit Review [Core]  <!-- UUID: 7ac692f1-9829-41d8-83d4-4cb1bd053302 -->
+
+Atlas Axis reviews the provided documentation, ensuring alignment with Atlas standards, and updates the documents as necessary.
+
+######### A.1.9.2.3.2.1.1.1.3 - Atlas Edit Sign-Off [Core]  <!-- UUID: 7b41e751-8387-426f-9ff5-e45cc032e172 -->
+
+Atlas Axis shares the draft proposal with the relevant Ecosystem Actors for final review and sign-off, confirming that the proposal meets all requirements and expectations.
+
+######### A.1.9.2.3.2.1.1.1.4 - Atlas Edit Proposal [Core]  <!-- UUID: 0465a8ef-0ec5-43b7-8b6f-bed778758364 -->
+
+Atlas Axis publishes the proposal as an Atlas Edit Proposal, which is submitted for inclusion in a subsequent Governance Poll to seek community approval for integration into the Atlas.
+
+####### A.1.9.2.3.2.1.2 - Forum Post And Deployment Of Module [Core]  <!-- UUID: 8dc369b7-36bd-46f2-b66b-cd336035fa89 -->
+
+The module deployment is discussed on the [A.1.9 - Governance Point Conducts GovOps Meeting Week 1 Tuesday \(Step 3\)](0f74afdf-bc2d-4512-9b11-8f5a26511787) and the actions specified in the subdocuments are taken.
+
+######## A.1.9.2.3.2.1.2.1 - Deployment And Forum Post [Core]  <!-- UUID: 769c850b-9e74-4706-bbce-b65c3f47c32c -->
+
+During this stage the module is deployed and a Technical Forum Post is created.
+
+######### A.1.9.2.3.2.1.2.1.1 - Module Deployment [Core]  <!-- UUID: 22ee3dc8-47e1-4591-b341-ddef5f4a53aa -->
+
+The module is usually deployed eight or seven days prior to the spell.
+
+######### A.1.9.2.3.2.1.2.1.2 - Technical Scope Forum Post [Core]  <!-- UUID: ef6d73e5-cdcb-48dd-873c-264c07af80bf -->
+
+The team that implemented and deployed the module publishes a Forum Post with the technical scope. The Spell Team not involved in the technical Forum Post creation must confirm the contents of the Forum Post as a public reply to ensure transparency and independent verification.
+
+########## A.1.9.2.3.2.1.2.1.2.1 - Requirements For Forum Post [Core]  <!-- UUID: 3d031b7c-1b1f-4f84-8668-1cdf43cb2ab2 -->
+
+The Forum post must include the following:  
+  
+• The addresses of the deployed contracts  
+  
+• A link to the audit reports, ideally externally verifiable sources, such as the Chain Security website link to an audit report.  
+  
+• Confirmation that the deployed code matches the commit hash that was sent for audit.  
+  
+• Constructor arguments are as expected in the Init script  
+  
+• \(optional\) Authority is given to the protocol owner: `MCD_PAUSE_PROXY` in the case of SKY and denied from the deployer address.  
+  
+• Include instructions to be added to the Executive Sheet, such as adding the module to the chainlog, defining parameters for the module \(provided by the Risk Advisor\), further authorization that needs to be done to different module elements.
+
+######### A.1.9.2.3.2.1.2.1.3 - Core Facilitator Approve Inclusion In Executive Vote [Core]  <!-- UUID: d0c4f880-902e-4d32-ac55-f05725753ac1 -->
+
+The Core Facilitator should post a reply to the Technical Scope Forum post and approve its inclusion in the next Executive Vote.
+
+####### A.1.9.2.3.2.1.3 - Populating Content Regarding Module Deployment In Executive Votes [Core]  <!-- UUID: 5e125907-87f9-4c3a-b1a8-54ad6c204179 -->
+
+The actions specified herein take place as part of the [A.1.9 - Governance Point Creates Executive Sheet Week 1 Monday \(Step 2\)](298819fe-cc26-49a8-a7cb-3ff83e55f291) step of the Executive Process.
+
+######## A.1.9.2.3.2.1.3.1 - Governance Point Includes Module Deployment In The Executive Sheet [Core]  <!-- UUID: d2a2b598-db4d-44b5-a23b-a7f62cadfa9d -->
+
+The Governance Point should include the module deployment in the Executive Sheet. The “Input Action” describes the high level logic of the Deployment, for example “Add \[Module Name\] to Chainlog”. The Reasoning URL for the “Input Action” should contain a link to the Atlas Edit Proposal Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Input Action” should contain a link to Atlas documents. The “Derived Action” is more specific for deployment address and other necessary information. The Reasoning URL for the “Derived Action” should contain a link to the Technical Scope Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Derived Action” should contain a link to the approval of the Core Facilitator as specified in [A.1.9 - Core Facilitator Approve Inclusion In Executive Vote](d0c4f880-902e-4d32-ac55-f05725753ac1).
+
+######## A.1.9.2.3.2.1.3.2 - Confirmation Of Module Deployment In The Executive Sheet [Core]  <!-- UUID: 10ccad57-0d04-4d95-89d5-1da66e6172f9 -->
+
+The author of the Forum post usually acts as Content Liaison and confirms in the Executive Sheet see [A.1.9 - Confirmation By Content Liaisons](26133c1d-29da-42de-b9a2-00f4e13699f2).
+
+####### A.1.9.2.3.2.1.4 - Populating Content Regarding Module Deployment In Executive Document [Core]  <!-- UUID: fb98f4b8-d45e-47ac-8a88-a3cc1e71c42e -->
+
+The actions specified herein take place as part of the [A.1.9 - Core Facilitator Creates And Finalizes Executive Document Week 2 Tuesday \(Step 8\)](1df24674-3095-44a7-b1b6-cb583b0787dd) step of the Executive Process.
+
+######## A.1.9.2.3.2.1.4.1 - Core Facilitator Includes Module Deployment In The Executive Document [Core]  <!-- UUID: b81371c0-0bfb-4276-9fcb-f333de6e5a3a -->
+
+The Core Facilitator must include the module deployment in the Executive Document. The format for this content should be as specified below:  
+  
+• The title of the module deployment should be listed as a section for example “Add \[Module Name\] to the Chainlog”.  
+  
+• The authorization should include links to the Atlas documents and the approval from the Core Facilitator.  
+  
+• The proposal should include links to the Technical Scope Forum post created by the team that deployed the module and the Atlas Edit Proposal.
+
+###### A.1.9.2.3.2.2 - Prime Spells [Core]  <!-- UUID: 8b5181e8-51e2-4d8b-a49a-d88ab42218e7 -->
+
+A future iteration of the Atlas will specify the process for Prime Spells.
+
+#### A.1.9.2.4 - Executive Process Breakdown [Core]  <!-- UUID: 98298ab3-8d08-4c4f-b47b-81242a3e3903 -->
+
+The Executive Process for Sky Core consists of 13 steps as outlined in the subdocuments herein. The deadlines for internal coordination between the Governance Point, Technical Point, and Content Liaisons are designed to optimize efficiency. While these timelines should generally be adhered to, they do not take precedence over security considerations. Any delays must be communicated promptly, along with updated and realistic time estimates.
+
+##### A.1.9.2.4.1 - Governance Point Determines Preliminary Content For Executive Sheet (Step 1) [Core]  <!-- UUID: 0f0f7021-f753-4c8b-8b80-46abce259aa9 -->
+
+The Governance Point prepares the Executive Sheet by identifying items for potential inclusion. At this stage, all content and values are considered provisional. While the Governance Point prepares this preliminary plan for the content of the spell, the final consensus regarding what to include is reached during the GovOps meeting with the Spell Team. The subdocuments herein explain how the Governance Point identifies these items. This preparatory phase ensures that content is outlined and organized in advance.
+
+###### A.1.9.2.4.1.1 - Consideration For Determining Preliminary Content For Executive Sheet [Core]  <!-- UUID: 2c99fa29-4f22-4f40-9284-ac0c07a6cd6e -->
+
+The process of determining which content to include in the Executive Sheet, as well as the timing of its inclusion, varies based on the nature of the items in question. Several factors must be carefully considered, including adherence to governance processes, addressing security concerns, and evaluating the urgency of the Sky Protocol. Every item included in the spell poses a security risk to Sky.
+
+###### A.1.9.2.4.1.2 - Sources For Determining Preliminary Content For Executive Sheet [Core]  <!-- UUID: 35d0ed69-3ec4-4ead-8e41-b1b9a9b5538d -->
+
+The Governance Point must review the sources described in the subdocuments herein for potential items to include in the Executive Sheet.
+
+####### A.1.9.2.4.1.2.1 - Governance Point Reviews And Assesses Content In The Executive Vote Queue [Core]  <!-- UUID: 4aa6a4d5-390d-47a9-af9e-b20a993741e0 -->
+
+The Governance Point must review the Executive Vote queue, which contains items that were included in the previous cycle\(s\) but removed from the Executive Sheet. The Governance Point then determines which of these items should be included in the current cycle’s Executive Sheet.
+
+####### A.1.9.2.4.1.2.2 - Items From Approved Governance Polls Or Authorized Ecosystem Actor Requests [Core]  <!-- UUID: 465c6f95-8ac0-4405-9443-bcf1e233aa82 -->
+
+For certain changes to the Sky Protocol, the Atlas may require items to first undergo formal governance steps, such as Forum announcements or Governance Polls, before they can be included in the Executive Sheet. The Governance Point is responsible for reviewing Governance Polls and any recent Forum posts and including potential items in the Executive Sheet.
+
+####### A.1.9.2.4.1.2.3 - Potential Items From Ecosystem Actors [Core]  <!-- UUID: ea70f102-5e35-42a7-8658-9e8053acef39 -->
+
+The Governance Point maintains ongoing communication with Ecosystem Actors to plan and prioritize items for inclusion in the Executive Sheet. This ensures that the most critical and time-sensitive items are prioritized.
+
+###### A.1.9.2.4.1.3 - Planning Checklist For Governance Point [Core]  <!-- UUID: dc610140-5660-4743-a9f7-4a1032c83dd5 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the steps for the Governance Point in planning the Executive Sheet.
+
+##### A.1.9.2.4.2 - Governance Point Creates Executive Sheet Week 1 Monday (Step 2) [Core]  <!-- UUID: 298819fe-cc26-49a8-a7cb-3ff83e55f291 -->
+
+For every Executive Vote, a new Executive Sheet must be created. The process follows a standardized approach to ensure consistency across all Executive Votes. The Governance Point is responsible for the creation and maintenance of the Executive Sheet.
+
+###### A.1.9.2.4.2.1 - Structure Of The Executive Sheet [Core]  <!-- UUID: bf3a5524-52cd-463b-8058-b65ca8b2c94c -->
+
+While the content of the Executive Sheet will vary depending on the actions Sky Governance wishes to execute for the Sky Protocol, the structure of the Executive Sheet and the method of communicating the different executive actions described in the subdocuments must be adhered to.
+
+####### A.1.9.2.4.2.1.1 - Executive Action [Core]  <!-- UUID: d41c2e6a-2afc-458c-ab90-3ce863495095 -->
+
+Every action that should be included in the spell must be present in the Executive Sheet. Each executive action is populated in the Executive Sheet under a column and broken down into “input” actions and “derived” actions. An Input Action represents a high-level category, and a Derived Action breaks down the Input Action into specific, actionable steps or changes. Each action in the Executive Sheet, whether input or derived, must have sufficient provenance to support its presence during the spell.
+
+####### A.1.9.2.4.2.1.2 - Formatting Rules For The Executive Sheet [Core]  <!-- UUID: a935cfad-6674-4e77-b3f4-e605c076417e -->
+
+The Executive Sheet should be formatted as follows:  
+  
+• One single row of empty cells should be present directly above every “input” action in the Executive Sheet.  
+  
+• Each “input” action must be written in bold and must be present before any actions that are derived from the ‘input’ action. Optionally, ‘input’ actions may also use underlined text.  
+  
+• Actions that are “derived” from an “input” action must not use bold or underlined text and must be located directly after the “input” action.
+
+####### A.1.9.2.4.2.1.3 - Language Consistency In The Executive Sheet [Core]  <!-- UUID: 199931bd-0e55-4796-b3f7-f6926c3b119a -->
+
+The text for both “input“ and “derived“ actions listed in the Executive Sheet should follow previous wording and structural patterns. There should be no deviation from existing patterns of wording or sentence structure used in the Executive Sheet unless it is absolutely required for the spell process to be completed. The instructions should be specific and follow previous instructions in the archive.
+
+######## A.1.9.2.4.2.1.3.1 - Values In The Executive Sheet [Core]  <!-- UUID: f6f1efeb-9f99-407e-a53a-43468c66afc4 -->
+
+Values should be expressed as a specific number and then specify the start and end times over which this value occurs. In general, expressing values as “per day” or any other measurement per unit of time should be avoided to maintain clarity and specificity. However, certain values may require a “per unit of time” definition when it's essential for the calculation.
+
+######## A.1.9.2.4.2.1.3.2 - Expressing Relative And Absolute Changes [Core]  <!-- UUID: 3583410e-3504-4a85-98a0-90619848129c -->
+
+Relative and absolute value increases or decreases should be stated as “Increase SSR by 3.00 percentage points from 15.50% to 18.50%”.
+
+######## A.1.9.2.4.2.1.3.3 - Express The Value Of Numbers Numerically [Core]  <!-- UUID: e60557ed-593f-4946-96f6-efcf7a853544 -->
+
+Every number in the Executive Sheet should be expressed with a number instead of being spelled out. For example, if a value is zero the number “0” should be used instead of the word “zero”. This maintains the consistency between values and thus reduces the chances of a misread or misinterpreted value.  
+  
+When expressing rates or percentages, the appropriate unit should always be included \(e.g., “0%” for a zero percent rate\).
+
+######## A.1.9.2.4.2.1.3.4 - Checksummed Addresses [Core]  <!-- UUID: 33ac6653-d963-4ac5-9ff5-c77c5633a9a7 -->
+
+All blockchain addresses listed in the Executive Sheet must be checksummed to ensure accuracy and prevent errors. The addresses follow the EIP-55 standard, using mixed-case letters to create a verifiable format that helps detect typos or mismatches.
+
+###### A.1.9.2.4.2.2 - Creation Of The Executive Sheet [Core]  <!-- UUID: 755fe505-8058-4f0a-bccf-eafbdcfb4f9b -->
+
+The creation process of the Executive Sheet must follow the steps specified in the subdocuments herein.
+
+####### A.1.9.2.4.2.2.1 - The Governance Point Creates The Executive Sheet [Core]  <!-- UUID: ec06d92c-5836-4df9-9680-5977e5a64a72 -->
+
+The Governance Point creates the Executive Sheet by duplicating the template tab to create a new tab within the same Google Sheet. The Executive Sheet template can be found here: [https://docs.google.com/spreadsheets/d/1w\_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262](https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262).
+
+####### A.1.9.2.4.2.2.2 - The Governance Point Names The Executive Sheet [Core]  <!-- UUID: e34b72db-973c-4cfd-8e8c-ff424c081805 -->
+
+For scheduled Executive Votes in the Executive Process, the Executive Sheet must be named in the following format: "Executive Contents - YYYY-MM-DD” \(Target Date\). For Out-of-Schedule Executive Votes, the naming format can diverge from this standard to reflect the specific context or purpose of the vote.
+
+####### A.1.9.2.4.2.2.3 - The Governance Point Includes The Executive Vote In The Spell Progress Tracker [Core]  <!-- UUID: 1dac0bce-7edc-45a1-97f8-f11fc381015d -->
+
+In the Google Sheet document, there is a tab named “spell progress tracking”. The Governance Point must:  
+  
+1. Add a new column for the Executive Vote. The column should be added to the right in the document to make sure that the Executive Votes are sorted in chronological order.  
+  
+2. Enter the Target Date.
+
+####### A.1.9.2.4.2.2.4 - The Governance Point Maintains the Spell Progress Tracker [Core]  <!-- UUID: a6bab26a-a334-4d44-a45a-cf848ed36480 -->
+
+The Governance Point must ensure that the progress for the spell is updated accurately in the spell progress tracker. When a step is completed, the Governance Point must write “done” in the spell progress tracker column. This is an ongoing responsibility throughout the lifecycle of the Executive Vote to maintain real-time accuracy.
+
+###### A.1.9.2.4.2.3 - Governance Point Populates The Executive Sheet In Consultation With Ecosystem Actors [Core]  <!-- UUID: 7a40558a-3eb4-4199-9fe5-6f5b3561c702 -->
+
+After the formal creation of the Executive Sheet, the Governance Point populates it with items in coordination with relevant Ecosystem Actors and contributors.
+
+####### A.1.9.2.4.2.3.1 - Governance Point Includes Items In The Executive Sheet [Core]  <!-- UUID: 9e96fca0-6a7c-4c6d-81f8-052d24d32a48 -->
+
+The Governance Point lists the preliminary items determined for inclusion in the Executive Sheet. The Governance Point must complete information for the Input Action\(s\), Derived Action\(s\), and Type, and populate the “Liaison Confirm,” “Technical Confirm,” and “Governance Confirm” fields as Unconfirmed. If URLs for the Reasoning and URL Authority can be completed at this stage, the Governance Point should populate these fields.  
+  
+The Governance Point will mark any items as “TBD” or “TBC” if they require further discussion or confirmation by the Technical Point or Content Liaisons.
+
+####### A.1.9.2.4.2.3.2 - Governance Point Includes Recurring Items In The Executive Sheet [Core]  <!-- UUID: 37d03695-8ccb-40a9-84e9-a9871dd6caf3 -->
+
+In every Executive Vote there are recurring items that must always be included. These are Office Hours, Global Line Modifier, and Order of Operations Issues. The values of these items can be marked with a question mark or “TBC”. During the GovOps meeting the Spell Crafter will confirm the values of these items.
+
+####### A.1.9.2.4.2.3.3 - Governance Point Communicates Deadlines To Ecosystem Actors [Core]  <!-- UUID: ea9e4dd4-8148-4755-bd39-fd44b1de49b3 -->
+
+The Governance Point is responsible for making sure that the relevant ecosystem actors included in the Executive Process are aware of the deadlines associated with the process. This includes informing them of when the Executive Sheet must be finalized and when final rates must be announced.
+
+####### A.1.9.2.4.2.3.4 - Coordination Checklist For Governance Point [Core]  <!-- UUID: 9d1900e4-49bf-41f1-af94-20b0c770f845 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the steps for the Governance Point when preparing the Executive Sheet.
+
+##### A.1.9.2.4.3 - Governance Point Conducts GovOps Meeting Week 1 Tuesday (Step 3) [Core]  <!-- UUID: 0f74afdf-bc2d-4512-9b11-8f5a26511787 -->
+
+On Tuesday week 1, key actors involved in the Executive Process have a gov-ops meeting to discuss the upcoming Executive Vote.
+
+###### A.1.9.2.4.3.1 - GovOps Meeting [Core]  <!-- UUID: b0d1a683-3b92-4283-8e32-22251192a716 -->
+
+The meeting, which is conducted by text, takes place on Discord in the #govops channel, 9 days before the Target Date. The Governance Point invites and leads the meeting. The Governance Point must make sure that the items specified in the subdocuments herein are processed at the meeting. The meeting takes place at 15.00 UTC. The Governance Point creates a separate thread in the #govops channel for every Executive Vote. The thread is named the target spell date: “YYYY-MM-DD Executive Coordination”.  
+  
+The GovOps meeting includes various stakeholders. Governance Point, Technical Point, and Content Liaisons typically attend, whether sync or async.  
+  
+The Executive Sheet serves as the basic reference for stakeholders. The decisions made by stakeholders will often result in real-time changes to the Executive Sheet.
+
+####### A.1.9.2.4.3.1.1 - Confirmation Of Roles [Core]  <!-- UUID: d8e11fe9-dec8-4a71-9519-8aede2213167 -->
+
+During the GovOps meeting the Governance Point will ask for confirmation of who will act as Crafter and Reviewers for the Executive Vote. The technical teams provide names for the roles.
+
+####### A.1.9.2.4.3.1.2 - Content Review [Core]  <!-- UUID: 25bbdd08-4823-449b-bc95-944450336286 -->
+
+The Governance Point lists the preliminary content in the Executive Sheet. Each item is discussed at the meeting. The review during the GovOps meeting primarily focuses on the technical aspects of the instructions in the Executive Sheet. The Technical Point often provides technical advice to the Governance Point during the GovOps meetings, including technical risk and other implications that the Governance Point may not otherwise be aware of. If the spell includes complex code, the Technical Point may sometimes prepare technical documents to facilitate the process.  
+  
+The Governance Point may have additional discussions with Ecosystem Actors in separate Discord channels.
+
+####### A.1.9.2.4.3.1.3 - Obtain Consensus On Content [Core]  <!-- UUID: bba8d328-8210-428b-95ae-f690936c6016 -->
+
+Based on the review of requested and planned content, the teams must reach a consensus on which items to include in the spell. In some cases, the Spell Crafter may request the removal of certain items if the spell is deemed high risk, too big or contains novel code. Such removals typically affect non-critical items, such as internal payments. Content being removed from the Executive Sheet is added to the Executive Vote queue to be included in the next Executive Vote cycle.  
+  
+Onboarding of sensitive modules is considered increasing the spell's complexity in such a manner that the Spell Reviewers should only focus on this; therefore, non-crucial items should be removed from the Executive Sheet and included in the Executive Vote queue.
+
+####### A.1.9.2.4.3.1.4 - Confirming Values Of Recurring Items [Core]  <!-- UUID: d79509f0-089e-46ee-ada8-bb1a66e99482 -->
+
+Based on the planned content of the spell, the Governance Point must ask the Technical Point to confirm the values of the recurring checklist items. See [A.1.9 - Governance Point Includes Recurring Items In The Executive Sheet](37d03695-8ccb-40a9-84e9-a9871dd6caf3).
+
+####### A.1.9.2.4.3.1.5 - GovOps Meeting Checklist [Core]  <!-- UUID: 6361b7c7-8cb3-49bf-83a8-a3684623d37e -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the discussion points for the GovOps meeting.
+
+###### A.1.9.2.4.3.2 - Post Meeting Tasks [Core]  <!-- UUID: c38da8ab-1fdd-42e9-8b96-366a51a26e85 -->
+
+After the GovOps meeting, the Governance Point must do the items specified in the subdocuments herein. The items should be completed week 1 Tuesday.
+
+####### A.1.9.2.4.3.2.1 - Specify Roles And Recurring Items In Executive Sheet [Core]  <!-- UUID: a51689a8-dd58-4cd6-9490-da2bf4148d64 -->
+
+The values of the recurring items, as determined during the GovOps meeting, must be added to the Executive Sheet. Additionally, the roles for the Spell Crafter, Spell Reviewers, and Content Liaisons must be recorded in the sheet. The identity of the Content Liaison is determined as the party that originally requested the item for inclusion.
+
+####### A.1.9.2.4.3.2.2 - Update The Executive Sheet Content [Core]  <!-- UUID: 28fea6ae-c0f8-47a9-be72-7d4ab2c58272 -->
+
+Items that reached a consensus during the GovOps meeting must be reflected in the Executive Sheet. This includes both the removal of existing items and the addition of new items, as confirmed by all parties during the GovOps meeting.
+
+####### A.1.9.2.4.3.2.3 - Checksums [Core]  <!-- UUID: b97f9d90-82cd-4ca8-a78f-a7e9c115a4f5 -->
+
+The total amount of token transfers must always be summed up in the Executive Sheet. The Governance Point and Technical Point independently sum up the value. The value of USDS and Dai must always be expressed as integers, with no decimal places, due to tests and helper functions used by developers requiring integer values. For USDS and Dai, values must always be rounded up to ensure recipients receive at least the expected amount. The values of SKY and other tokens must be listed to exactly two decimal places. All summations must occur only after the Executive Sheet is complete to avoid missing any transfers.
+
+####### A.1.9.2.4.3.2.4 - Post-meeting Checklist [Core]  <!-- UUID: 3f90dcbd-8a43-44ce-9c2a-c6efdabcbba7 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the steps for the post-meeting tasks.
+
+##### A.1.9.2.4.4 - Governance Point Requests Confirmation Of Executive Sheet Week 1 Wednesday (Step 4) [Core]  <!-- UUID: 3bf7e2f3-a5e4-4bb6-ace7-3b8102a2cab7 -->
+
+The Governance Point must request confirmations from the relevant stakeholders for each item in the Executive Sheet on Wednesday week 1.
+
+###### A.1.9.2.4.4.1 - Governance Point Must Coordinate With Stakeholders [Core]  <!-- UUID: 17f172c6-2469-4447-8c36-3aff93a6b10b -->
+
+The Governance Point is responsible for coordinating with all relevant stakeholders and clarifying which items should be confirmed by the different stakeholders.
+
+###### A.1.9.2.4.4.2 - Governance Point Must Correct Discrepancies [Core]  <!-- UUID: 89d800a0-edba-4905-b38c-815f6a45949b -->
+
+The Governance Point must ensure that any discrepancies between the Executive Sheet and stakeholder input are corrected.  
+  
+The stakeholders communicate in the #govops channel in Discord if there are any issues or required changes that need to be made in the Executive Sheet. The Governance Point then changes the instruction in accordance with the stakeholder's input, and asks the stakeholder to confirm that the new instruction is correct. This is common for technical instructions in the Executive Sheet.
+
+###### A.1.9.2.4.4.3 - Summary Checklist [Core]  <!-- UUID: 835d1f82-b0ee-40d3-8e7b-41f47d25e6b7 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the items for the confirmation process that should be done.
+
+##### A.1.9.2.4.5 - Confirmation Of Content Of Executive Sheet Week 1 Friday (Step 5) [Core]  <!-- UUID: 558451e8-1b04-48ce-bcb2-9c69ba22929b -->
+
+On Friday week 1, the Governance Point, Technical Point and Content Liaisons must confirm the items in the Executive Sheet.
+
+###### A.1.9.2.4.5.1 - Provenance [Core]  <!-- UUID: c86c3a65-e601-465d-9961-9f38dcd4c35a -->
+
+All actions in the Executive Sheet require sufficient provenance for their inclusion in the sheet and later in the Executive Vote. The legitimacy of a provenance is assessed on the basis of its mutability, visibility and resistance to compromise by external malicious actors. There are different ways of providing sufficient provenance, including “strong comment type“ provenance, “onchain“ provenance and “strong document type“ provenance. These types of provenance are defined in the subdocuments herein.  
+  
+If Executive actions and items do not have sufficient provenance, for example, “weak comment type“, they cannot be included in the Executive Vote. If the Governance Point has any question whether a proposed Executive action has sufficient provenance, they must resolve that question of validity before including that action in the Executive Process.
+
+####### A.1.9.2.4.5.1.1 - Weak Comment Type Provenance [Core]  <!-- UUID: 4140df92-a505-46e0-a399-2c8d3ece9284 -->
+
+The provenance type “weak comment type provenance” refers to informal or editable comments made by stakeholders, which lack the security and visibility needed for Executive actions. For example, Discord messages, forum posts, or unverified social media comments are considered weak comment provenance, even if they relate to an action affecting the commenter \(e.g., confirming a payment\). Weak comment types are highly mutable, as they can often be edited or deleted without a public trace, and may not be visible to all ecosystem participants \(e.g., requiring platform-specific accounts or access to private channels\). They also have low resistance to compromise, relying on accounts without strong security protocols, making them vulnerable to malicious edits or takeovers by bad actors. As such, weak comment provenance does not qualify as sufficient and must not be used to authorize Executive actions.
+
+####### A.1.9.2.4.5.1.2 - Strong Comment Type Provenance [Core]  <!-- UUID: 8e18add4-2ac0-4ee8-b42f-5187bfccc212 -->
+
+The provenance type “strong comment type provenance” refers to comments made by stakeholders that relate to a specific executive action. For example, Google Sheets confirmation comments left by payment recipients and GitHub pull request comments left by Agent representatives are considered strong comment provenance if the comment relates to an action that affects them \(i.e. where they are a stakeholder receiving a payment in the Executive\). Strong comment provenance types are considered easy to modify by the commenting party, hence why they possess lower legitimacy than document provenance types. While these comments may store a record of the fact that they were edited, the edit history is not always publicly visible and therefore they are considered to possess high mutability.
+
+####### A.1.9.2.4.5.1.3 - OnChain Provenance [Core]  <!-- UUID: d6c5909e-031c-43d9-984c-09e48985a1a1 -->
+
+The provenance type “onchain provenance” is one of the most legitimate types of provenance. Onchain information refers to information obtained from Sky Protocol-associated smart contracts and is considered practically immutable and publicly visible. Due to the design of these decentralized storage providers such as IPFS, information referred to by on-chain values or content hashes but stored on IPFS or other similar services is also considered practically immutable. The compromise resistance of on-chain values is very strong and relies on a compromised controller of a Sky Protocol-associated smart contract or severe supply chain attack to manipulate information.
+
+####### A.1.9.2.4.5.1.4 - Strong Document Type Provenance [Core]  <!-- UUID: ea9dd463-9330-4a61-8958-4e2083a93101 -->
+
+The provenance type “strong document type provenance” refers to actions approved by Sky Governance either directly \(as through a Governance Poll\) or through the inherent authority of the Sky Atlas. Examples of strong document type provenance are very hard to modify, as they cannot be modified or changed without a subsequent vote. They are always public in nature, as they are either required to be voted on or refer to the Sky Atlas which is publicly accessible. There is practically no account compromise risk with this category of provenance as all changes go through a vote and review process. Accordingly, strong document type provenance is considered one of the most legitimate types of provenance.
+
+####### A.1.9.2.4.5.1.5 - Provenance URLs [Core]  <!-- UUID: 9f3b48a1-2b3e-41f0-b352-2c39aec28118 -->
+
+The Governance Point can leave comments in the designated columns ”Reasoning URL” and “Authority URL”. These comments typically provide instances of the ‘strong comment type’ of provenance and therefore authorize the execution of executive actions using the authority provided to the commenting party by the Atlas. The provenance URLs always correspond to comments in the spell code.
+
+###### A.1.9.2.4.5.2 - Confirmation By Technical Point [Core]  <!-- UUID: 4c37fa46-1853-4bf2-a9fa-edae67da0fa2 -->
+
+The Executive Sheet includes a column titled “Technical Confirm.” Items requiring confirmation by the Technical Point must be marked as “Confirmed” by the end of the day \(UTC\) Friday week 1.
+
+###### A.1.9.2.4.5.3 - Confirmation By Content Liaisons [Core]  <!-- UUID: 26133c1d-29da-42de-b9a2-00f4e13699f2 -->
+
+The Executive Sheet includes a column titled “Liaison Confirm.” Items requiring confirmation by the Content Liaisons must be marked as “Confirmed” by the end of the day \(UTC\) week 1 Friday. The Executive Sheet can name several different Content Liaisons, and the confirmation should only be done for the items the different Content Liaisons are responsible for.  
+  
+The Content Liaisons do not have access to edit the Executive Sheet, and therefore leave a comment in the document at the appropriate cell to provide confirmation. After the Content Liaisons confirm their items by leaving a comment, the Governance Point edits the Executive Sheet from “Unconfirmed” to “Confirmed”. The comments are only made for cells of the type “Derived”.  
+  
+Items requiring confirmation include, for example, addresses, token amounts, parameter values, etc.
+
+###### A.1.9.2.4.5.4 - Confirmation By Governance [Core]  <!-- UUID: 5370113e-97ef-438a-ad16-69caad421fe4 -->
+
+The Executive Sheet includes a column titled “Governance Confirm.” Items requiring confirmation by Governance must be marked as “Confirmed” by the end of the day \(UTC\) week 1 Friday.
+
+###### A.1.9.2.4.5.5 - Summary Checklist [Core]  <!-- UUID: ddf293ed-a846-480c-99ab-cb429a789c93 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-creation.md) outlines the items for the confirmation process that should be done.
+
+##### A.1.9.2.4.6 - Governance Point Finalizes Executive Sheet Week 1 Friday (Step 6) [Core]  <!-- UUID: 9f291bda-cace-4787-b31b-24b8b42bdd27 -->
+
+On Friday week 1, the Governance Point must make sure that the Executive Sheet is finalized and ready for handover to the Spell Team. This includes verifying that all required fields are completed, the content aligns with decisions made during the GovOps meeting, and all financial details are accurate. The Governance Point must notify the Spell Team in the #govops channel that the Executive Sheet is finalized. Any updates to the Executive Sheet made after Friday, week 1, must follow the procedure in [A.1.9 - Core Facilitator Must Notify Spell Team Of Changes](e3d137d7-3244-497b-b065-25cc2dffafeb).
+
+###### A.1.9.2.4.6.1 - Governance Point Must Ensure The Executive Sheet Is Completed [Core]  <!-- UUID: ed4254b8-983d-4cf9-acc1-0bb9130ec2e2 -->
+
+The Governance Point is responsible for ensuring that the Executive Sheet is fully completed and accurate. This includes the following:  
+  
+• That all fields in the Executive Sheet are filled in with the required information, including URLs, figures, and confirmations. For any incomplete items \(e.g., awaiting final figures\), they must be marked with a `TODO` tag.  
+  
+• That all items included in the Executive Sheet were discussed and approved during the GovOps meeting.  
+    ◦ No approved items from the discussions can be omitted without a valid reason.  
+  
+• That the financial transfers are accurate.  
+    ◦ USDS transfers must be rounded up to the nearest whole number \(no decimal points\).  
+    ◦ SKY transfers must be listed to exactly two decimal places.  
+    ◦ Verify that the checksum for USDS and SKY transfers is accurate.  
+  
+• The spell items must be listed in order of importance for an average SKY voter except when there are order of operations concerns.
+
+###### A.1.9.2.4.6.2 - Summary Checklist [Core]  <!-- UUID: d246530d-693c-4b1f-b139-2c3fef8b1de0 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-review.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/spell-sheet-review.md) outlines the items for the finalization process that should be done.
+
+##### A.1.9.2.4.7 - Spell Crafter Crafts Spell Week 2 Monday (Step 7) [Core]  <!-- UUID: 60aac647-4fa3-4c1c-b9d4-8ababf001958 -->
+
+The Spell Crafter must ensure that the spell is crafted and completed on Monday week 2.
+
+###### A.1.9.2.4.7.1 - Spell Crafting Workflow [Core]  <!-- UUID: 510651ca-5a9a-4ac1-ba69-f3c160e185d2 -->
+
+In the Development Stage, the Spell Crafter writes the code for the spell based on the contents of the Executive Sheet. The output of the Development Process is a Pull Request containing the code for the Spell that is ready for review. In performing the Development Stage, the Crafter takes the steps set forth in the checklists found here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md).
+
+###### A.1.9.2.4.7.2 - Spell Crafting Rules [Core]  <!-- UUID: c714f3b3-d11a-4089-89a5-0183937cb8dc -->
+
+The Crafter must comply with a number of rules when carrying out their role and responsibilities in spell development. These rules are generally aimed at maximizing the safety and security of the spell and are set out in the subdocuments herein.
+
+####### A.1.9.2.4.7.2.1 - Previous Spell Code Cleanup [Core]  <!-- UUID: 3889281f-3306-4701-b1a3-5e0707bb7ef8 -->
+
+Before developing the current spell, the designated Crafter must clean up the previous spell code. Code cleanup includes the `DssSpell.sol` \(spell code\), `DssSpell.t.sol` \(spell code tests\) and `config.sol `\(deployed spell information\) files. In this process of code cleanup, the Crafter must remove unused interfaces as well as spell code and test code from the last spell. If relevant, they must also clean up any dependency files from the previous spell that are not being used for the current spell.
+
+####### A.1.9.2.4.7.2.2 - The Executive Sheet Serves As Source Of Truth [Core]  <!-- UUID: cff7d85c-2bbb-4f93-afa8-0bcfabcb838d -->
+
+The Crafter must use the Executive Sheet as their key reference document and source of truth while developing the spell. While the Executive Document is the instruction document for the Executive Process, the Executive Sheet is available earlier which enables the Crafter to begin spell development at an earlier stage.
+
+####### A.1.9.2.4.7.2.3 - The Crafter Is The Only Party Permitted To Approve GitHub Suggestions [Core]  <!-- UUID: 816601b0-2fdf-4c6d-9c63-a5ef5d4bebbd -->
+
+The designated Crafter is the only person or entity permitted to commit GitHub code suggestions to the spell. The Crafter can only commit suggestions that have been made by a designated Reviewer for the particular spell. However, using GitHub suggestions is generally discouraged while developing the spell.
+
+####### A.1.9.2.4.7.2.4 - Crafter Master Branch Safety Check [Core]  <!-- UUID: 1a0d9151-df9c-403d-a38c-b7d0afc1f8a9 -->
+
+In order to ensure that no malicious maintenance pull requests have been merged, the Crafter must check that the latest commit made to the “master” \(or “main”\) branch of the spell repository is the commit that merged the last spell to master.
+
+####### A.1.9.2.4.7.2.5 - Tests Must Pass Before Crafter Provides Spell to Reviewers [Core]  <!-- UUID: 12c126be-0535-4147-a17e-91f670ad8339 -->
+
+Before marking a spell’s Pull Request as “ready for review”, the Crafter must ensure that both continuous integration tests and locally run tests are all passing successfully. The only exception to this rule is when the continuous integration tests are broken at no fault of the Spell Team - due to a GitHub failure or otherwise - in which case the spell can be marked as “ready for review” if locally run tests are passing. The Crafter must not remove or disable failing tests in order to bypass this rule.
+
+###### A.1.9.2.4.7.3 - Process For Handling Technical Issues [Core]  <!-- UUID: 2c8e81bf-b79a-486f-80eb-bd9b15464695 -->
+
+The Crafter plays a key role in the process for identifying, analyzing, and resolving technical issues like bugs, mistakes, and exploits when they arise during the spell development process. Other stakeholders, including the Spell Reviewer and Core Facilitators, also play an important role. This process is set out in the subdocuments herein.
+
+####### A.1.9.2.4.7.3.1 - Issue Detection and Classification [Core]  <!-- UUID: 38a261c4-de67-429e-a6f2-4f8ca470a56e -->
+
+When a technical issue is encountered, the party discovering the issue \(whether the Crafter, a Reviewer, or another party\) must determine whether the issue is either a mistake, a bug, or an exploit. The issue should also be classified as either a result of collusion or a genuine accident. The Spell Team must notify the Core Facilitator of technical issues that require input or adjustments from outside the Spell Team. Note that if a Crafter makes an error in their original development of the spell, but discovers their own mistake and corrects it before the Reviewers commence the review process, this should not be treated as a technical issue per this handling process.
+
+####### A.1.9.2.4.7.3.2 - Issue Analysis and Evidence Capture [Core]  <!-- UUID: 86a2c5ba-ae8f-4a3d-8f56-124cd27580c8 -->
+
+Once a technical issue has been categorized as an instance of a mistake, bug or exploit, the party discovering the issue must prepare documentation of the issue. This generally involves investigating the impacts of the issue, determining how the issue arose, and documenting how the issue manifests. In cases where the issue may be non-technical in nature - such as possible instances of collusion - supporting evidence should be captured, which supports the argument that a non-technical issue may be present. This evidence should be captured in a manner that does not permit bad actors to manipulate or erase the evidence through methods such as editing or deleting messages.
+
+####### A.1.9.2.4.7.3.3 - Determining the Handling Party [Core]  <!-- UUID: b5740bb5-6895-48fe-bb16-01a9c5605eb1 -->
+
+Once a technical issue has been classified and evidence supporting its existence is collected, an entity needs to be designated as the handling party for resolving the issue. This party will typically be the Core Facilitators. However, if there is a non-trivial chance that the Core Facilitators will ignore or downplay the issue, another entity should serve as the handling party.
+
+####### A.1.9.2.4.7.3.4 - Publicly Reporting the Issue  [Core]  <!-- UUID: b9cfe356-2909-4f1b-99c9-0a4c98f826d4 -->
+
+Discovered issues must be reported publicly unless doing so poses a threat to the security of the Sky Protocol. Technical issues that are currently or likely to become, actively exploitable must not be discussed in a public manner, as this poses a threat to the security of the Sky Protocol.
+
+####### A.1.9.2.4.7.3.5 - Resolving the Issue and Following Up [Core]  <!-- UUID: 8b86845a-6d47-4834-9d7d-36ecef988a23 -->
+
+The Crafter or Reviewer, if they discovered the technical issue, should address or remedy the issue as necessary to resolve it. The handling party \(typically the Core Facilitators\) must follow up to ensure that the technical issue has been resolved. If the issue poses a threat to the Sky Protocol - such as an exploit or instance of collusion - it should be followed up on as a matter of urgency by the handling party.
+
+####### A.1.9.2.4.7.3.6 - Issue Retrospective [Core]  <!-- UUID: cffb2455-0b31-4a0c-8ec7-2de99392b236 -->
+
+Following the resolution of a technical issue, the parties involved in the development process, or other relevant processes leading to the issue arising, must document how the issue arose. These parties \(often the Crafter or Reviewer\) should also detail any measures that were previously in place to prevent this type of issue occurring, and any measures that can be implemented going forward in order to prevent the same issue from occurring again in the future.
+
+###### A.1.9.2.4.7.4 - Spell Team Operational Principles [Core]  <!-- UUID: bd45083c-50de-47d2-b0c3-808c04f726e3 -->
+
+As a core member of the Spell Team, the Crafter must comply with the Spell Team Operational Principles throughout their involvement in the spell development process. These principles apply to both spell crafting and spell reviewing processes, and have been included in the documentation of both. These principels are set out in the subdocuments herein.
+
+####### A.1.9.2.4.7.4.1 - Security First [Core]  <!-- UUID: 3f01cb21-b2ef-4b09-9617-be0435998740 -->
+
+Any choice between efficiency and security must always be made to maximize security, even at the cost of time, process inefficiency, or gas cost. Smart contract system designs as well as individual smart contracts, their code, and their interactions must always prioritize increased security over increased efficiency, reduced gas cost, or any other benefits. Rules and processes must always maximize security and safety, even at the cost of inefficiency, repetitiveness, longer review or audit timelines, or other drawbacks.
+
+####### A.1.9.2.4.7.4.2 - Attention to Detail [Core]  <!-- UUID: b5daecf9-d4fb-4291-88e0-b08b6e39688e -->
+
+Developing, modifying or reviewing code should be done line by line. No change, issue or fix is too minor or unimportant to be commented on or addressed. Sky Core Contracts are immutable, and disabling them often requires waiting for a long period. As such, bugs and exploits should never be present in production code, as they are typically difficult to fix and their presence harms the reputation of the Sky Protocol. Any deployed contract that contains a bug indicates that the existing quality control, auditing, and review processes are not adequately preventing bugs.
+
+####### A.1.9.2.4.7.4.3 - Minimizing Complexity [Core]  <!-- UUID: 361f1e3c-e974-4f58-98bb-13c7adea4c06 -->
+
+Smart contract system designs, as well as individual smart contracts, their code, and their interactions must always use a simpler design over a more complex design, unless the more complex design provides a significant net increase to the safety and security of the Sky Protocol.
+
+####### A.1.9.2.4.7.4.4 - Lindy-Based Risk Aversion [Core]  <!-- UUID: aa0a8049-f883-4366-9924-6651aeec14e6 -->
+
+The “Lindy Effect” states that the longer something has been in existence in its current state, the longer its remaining life expectancy. The “Lindy” of a system or smart contract refers to the duration it has been operating in its current state and therefore implies its future stability. Specifically, the “Lindy” of immutable systems uses their history of safe and secure operation as a predictor of future safety and security. It is considered best practice to consider the “Lindy” of systems, elements,and smart contracts when evaluating their use or inclusion in the wider system of the Sky Protocol.
+
+####### A.1.9.2.4.7.4.5 - Chesterton’s Fence [Core]  <!-- UUID: e5a69e08-353b-41ad-9cff-aa2f0b8199c6 -->
+
+Chesterton’s Fence is a principle that states that changes must not be made to the current state of affairs unless the reasoning behind the current state of affairs is understood and can be explained. Changes to the Sky Protocol must only be proposed after the context - such as the reasoning, actions, and history - leading to the thing’s current state are known and can be explained by the party proposing the change. Changes must not be approved by team members or otherwise accepted until all parties responsible for overseeing, checking, or reviewing the change are aware of the context behind the current state of affairs as it exists before the change is enacted.
+
+####### A.1.9.2.4.7.4.6 - Existing Process Adherence [Core]  <!-- UUID: c6ff5871-72bc-471a-a8fd-34f738098219 -->
+
+All existing Sky processes and patterns, whether pertaining to rules, processes, systems, smart contracts, or code, must be complied with. If regular operation is impossible due to a technical limitation or otherwise, it is permitted so long as it does not compromise the safety or security of the Sky Protocol in any way. New patterns developed in this way must prioritize the safety and security of the Sky Protocol over all other considerations and should be as similar to old patterns as possible. However, deviation from industry norms and best practices is encouraged so long as they are made in the interest of maximizing security. Any deviations by the Crafter or Reviewers must be communicated to the Core Facilitators.
+
+####### A.1.9.2.4.7.4.7 - Tenth Man Mandate [Core]  <!-- UUID: 5a4e1225-6151-4eb0-ae6b-5644f15b1b12 -->
+
+If a group of people making a decision unanimously holds a certain opinion, all make the same assumption or all come to the same conclusion, it is the responsibility of one member of the group to assume that the rest of the group is incorrect. The member of the group assigned to hold this contrarian viewpoint is referred to as the ‘tenth man’ and must attempt to disprove the group’s decision. Where the ‘tenth man’ is able to provide compelling arguments against the group’s conclusion, the decision must be reassessed.
+
+##### A.1.9.2.4.8 - Core Facilitator Creates And Finalizes Executive Document Week 2 Tuesday (Step 8) [Core]  <!-- UUID: 1df24674-3095-44a7-b1b6-cb583b0787dd -->
+
+The process for the creation, review, and finalization of the Executive Document is outlined in the subdocuments herein.
+
+###### A.1.9.2.4.8.1 - Guiding Principles For Crafting The Executive Document [Core]  <!-- UUID: 1fcee4d2-912e-478c-ac81-0ce1f48054a7 -->
+
+The Executive Document process is guided by the core values of clarity, transparency and legitimacy. The document must balance its technical and implementation-focused nature with the need to remain clear and accessible to all voters. The Core Facilitator, responsible for producing the Executive Document, must ensure adherence to these principles as outlined in the subdocuments.
+
+####### A.1.9.2.4.8.1.1 - Providing Voters With Sufficient Information [Core]  <!-- UUID: aefa846c-b4af-444a-a22e-39a9a8839410 -->
+
+The Core Facilitator must ensure that voters have access to sufficient information to make informed decisions. This might include:  
+  
+• Links to documentation or discussions related to the actions included in the Executive Document.  
+  
+• Summaries of the actions included in the Executive Document, created by unbiased and knowledgeable third parties.  
+  
+• Links to any analysis published by DAO-funded entities regarding the actions in the Executive Document.  
+  
+• Links to well-maintained resources describing the nature of any parameters that may be changed if the Executive Proposal passes.  
+  
+Providing accessible and complete information is essential to maintaining the legitimacy of the process. Voters should not later regret their vote due to a lack of understanding of the actions they voted on.
+
+####### A.1.9.2.4.8.1.2 - Ensuring Transparency And Clarity [Core]  <!-- UUID: f494539b-e704-409e-843e-361dd6959603 -->
+
+The Core Facilitator must ensure that the Executive Document is clear, transparent, and accessible to all voters. This involves eliminating ambiguity and confusion to the greatest extent possible while balancing technical detail with readability. Voters should clearly understand:  
+  
+• The effects and impacts of the Executive Vote if passed.  
+  
+• The processes that led to each item being included in the Executive Document.  
+  
+• The identities \(pseudonymous or entity-level\) of those responsible for publishing, writing, and reviewing the Executive Vote.  
+  
+The goal is to ensure that voters are always provided with information on why an item is included, what will happen if the Executive Vote passes, or who is responsible for its contents.  
+  
+Clarity reduces the risk of disruption, confusion, or a breakdown of legitimacy in the governance process.
+
+####### A.1.9.2.4.8.1.3 - Organizing For Maximum Impact [Core]  <!-- UUID: 3316956f-2e70-4106-92af-da4a2e26c043 -->
+
+The Core Facilitator must organize the Executive Document to maximize readability and comprehension for voters. While transparency and access to information are essential, the document should avoid unnecessary length or complexity.  
+  
+Best Practices for organization:  
+  
+• Use strategic hyperlinks and text formatting to reduce the document's length while maintaining accessibility.  
+  
+• Regularly review and update templates to eliminate unnecessary content.  
+  
+• Present information in a logical order, prioritizing the most critical actions and details.  
+  
+A concise and well-structured document increases the likelihood that voters will read, understand, and consider the actions on which they are voting.
+
+####### A.1.9.2.4.8.1.4 - Balancing Technical Detail And Accessibility [Core]  <!-- UUID: 1247b21a-b3b6-4dcd-ad5f-dbfa50d7ccfe -->
+
+The Core Facilitator must ensure that the Executive Document balances technical detail with readability. Voters should not require in-depth technical knowledge of the Sky Protocol to understand the Executive Document.  
+Guidelines for Technical Detail:  
+  
+• Avoid including excessive technical details that obscure clarity or clutter the Executive Document.  
+  
+• Include technical details only when they are strictly necessary, such as:  
+    ◦ In emergency or urgent responses when technical details are the primary focus of the proposal.  
+    ◦ For non-urgent technical fixes or housekeeping when technical details are relevant, but should be given lower priority compared to other actions in the Executive Vote.  
+  
+In cases where technical details are included, the Governance Point must ensure they fully understand the technical aspects themselves to present them accurately and clearly.  
+  
+Excessive technical detail can overwhelm voters and obscure the document's primary purpose. By carefully managing technical content, the Core Facilitator ensures that the document remains accessible and focused.
+
+###### A.1.9.2.4.8.2 - Structure Of The Executive Document [Core]  <!-- UUID: 756c8cd0-9c53-4c98-8368-50d635fec7db -->
+
+The Executive Document is a Markdown document created and stored in the executive-votes GitHub repository. It serves as the primary communication tool for presenting the contents of an Executive Vote and is divided into several key sections, each serving a specific purpose in the governance process.
+
+####### A.1.9.2.4.8.2.1 - Content And Metadata Fields [Core]  <!-- UUID: f57aab8a-efc2-42aa-83e1-367c91907777 -->
+
+The Executive Document contains both text content and metadata fields, which are essential for its functionality and clarity. These include:  
+  
+• The title field provides a concise and descriptive summary of the Executive Document, making it easy for stakeholders to identify the proposal.  
+  
+• The summary field offers a high-level overview of the actions included in the spell, helping voters quickly understand the scope and purpose of the proposal.  
+  
+• The date field ensures that the proposal is aligned with the governance schedule and provides a clear reference for when the spell is intended to be executed. The date specifies the Target Date of the spell in UTC time.  
+  
+• The address field contains the Ethereum address of the deployed Mainnet spell on the blockchain, allowing stakeholders to verify its contents and execution status. When the Executive Vote is published on the Voting Portal the spell address is a hyperlink that links to Etherscan.
+
+####### A.1.9.2.4.8.2.2 - Markdown Headings [Core]  <!-- UUID: 6656674a-c598-474d-b8a7-64d7dda3bd91 -->
+
+The document uses different levels of Markdown headings to organize its content into distinct sections:  
+  
+• First-level heading is used for the title of the document.  
+  
+• Second-level headings are used for the four major sections of the Executive Document: Executive Summary, Proposal Details, Review, and Resources.  
+  
+• Third-level headings are used within the Proposal Details section to describe individual input executive actions. Each action is presented under its own third-level heading, making it easy to identify and review.  
+  
+• Fourth-level headings are used to describe specific derived actions within an input action. These headings provide additional context or detail necessary for understanding the implications of the input action, such as actions triggered by an Agent spell or changes to market parameters.  
+  
+This structured approach ensures that the document is both easy to navigate and comprehensive.
+
+####### A.1.9.2.4.8.2.3 - Preamble [Core]  <!-- UUID: f3b16344-ebd0-43e7-978d-e91cbebe9010 -->
+
+The preamble serves as an introduction to the Executive Document, providing key context for voters. It identifies the entities responsible for crafting, publishing, and reviewing the proposal, ensuring accountability and transparency. Additionally, it includes a link to the voting guide, which helps new participants understand the voting process.
+
+####### A.1.9.2.4.8.2.4 - Executive Summary [Core]  <!-- UUID: 1e44fedd-79c0-4216-a533-a2c8b0f7c305 -->
+
+The Executive Summary outlines the key actions that will occur if the proposal passes. It includes:  
+  
+• The GSM Pause Delay, which specifies the minimum time before the Spell can be executed and is enforced by ds-pause.  
+  
+• The Office-Hours Modifier, if applicable, which restricts execution to specific times.  
+  
+• The Expiration Date of the Spell.  
+      ◦ The Spell must always have an expiration date; it can’t be more than 90 days in the future, and the typical expiration window is 30 days.  
+  
+• A high-level explanation of the actions being performed in the Spell, presented in bullet-point form.  
+  
+The summary should provide a high-level overview of the Executive Vote and ensure that SKY holders can quickly understand the scope and purpose of the proposal. This section also explains that voting for the proposal with SKY places support for these actions.
+
+####### A.1.9.2.4.8.2.5 - Proposal Details [Core]  <!-- UUID: d399f662-1b9a-40d0-b535-d3215d09cba1 -->
+
+This section provides a detailed breakdown of each item included in the proposal. It includes:  
+  
+• Input executive actions, which are presented under third-level Markdown headings. Each action includes links to the authorization and proposal documents and explains the implications of the action if the proposal passes.  
+  
+• Derived actions, which are described under fourth-level Markdown headings when they provide additional context or detail necessary for understanding the implications of an input action. These headings are used to outline specific actions triggered by an input action, such as actions executed by an Agent spell or changes to market parameters. Derived actions that are overly technical, redundant, or irrelevant to the proposal's primary focus may be excluded to maintain clarity and accessibility.  
+  
+This section ensures that all actions are clearly explained and linked to their reasoning and authorization documents.
+
+####### A.1.9.2.4.8.2.6 - Best Practices [Core]  <!-- UUID: 3de17a79-145a-4ec5-b43d-d8c371ee598e -->
+
+To ensure clarity and consistency, the Governance Point should adhere to the following practices when including items in the Executive Document:  
+  
+• **Headers and Bullet Points**:  
+    ◦ Each item should be separated by a header for clarity.  
+    ◦ Typically, two bullet points are included for each item: one for "Authorization" and one for "Proposal."  
+    ◦ The "Authorization" link may lead to an Atlas document, a Governance Poll or a Forum Post, while the "Proposal" link is usually a Forum Post.  
+  
+• **Formatting for Key Values**:  
+    ◦ If the item involves amending a parameter or distributing funds, the relevant values should be marked in bold to emphasize the new outcomes that will take effect if the Executive Proposal passes.  
+    ◦ For transfers, Ethereum addresses should be included to provide transparency and direct access to transaction details.  
+  
+• **Use of Tables**:  
+    ◦ Tables are often used in the Executive Document to provide an easy-to-read overview of key information, such as parameter changes, funding distributions, or other technical details.
+
+####### A.1.9.2.4.8.2.7 - Review Section [Core]  <!-- UUID: b6117ca8-0d19-47ad-a20e-2f6e5a55746e -->
+
+The review section includes standardized language directing voters to the Sky Governance Forum for community debate and discussion. It encourages voters to review linked threads to inform their position before voting.
+
+####### A.1.9.2.4.8.2.8 - Resources [Core]  <!-- UUID: aaa621d0-8886-4b32-a903-eee6e4a2f66f -->
+
+The Resources section provides links to additional materials that help voters understand the governance process and stay informed about upcoming votes. These materials include:  
+  
+• The Operational Manual serves as a guide to governance processes, is included as a resource.  
+  
+• The Sky Governance Calendar is a resource for tracking upcoming votes and governance events.
+
+###### A.1.9.2.4.8.3 - Core Facilitator Creates Executive Document [Core]  <!-- UUID: 6d40ab22-bcf5-42c2-8a27-fef39fa43d6f -->
+
+The Core Facilitator must create the Executive Document. The subdocuments herein provide a step-by-step guide to the document’s creation.
+
+####### A.1.9.2.4.8.3.1 - Core Facilitator Reviews The Executive Sheet [Core]  <!-- UUID: fba002f8-39ab-43c4-8c29-5f4f7cf86c49 -->
+
+The Core Facilitator must thoroughly review the Executive Sheet. The technical information in the Executive Sheet must be identical to the Executive Document.
+
+####### A.1.9.2.4.8.3.2 - Core Facilitator Copies Executive Template [Core]  <!-- UUID: b99efbf0-a58d-429f-96a8-b4ca357da4fb -->
+
+The template for the Executive Document is stored in the Executive Votes template directory \([https://github.com/sky-ecosystem/executive-votes/tree/main/templates](https://github.com/sky-ecosystem/executive-votes/tree/main/templates)\) on GitHub. The Core Facilitator must copy the template into the working branch to draft the Executive Document.
+
+####### A.1.9.2.4.8.3.3 - Core Facilitator Updates Metadata [Core]  <!-- UUID: 15a1cb2b-6311-410c-a401-4d70f6132fc9 -->
+
+The Core Facilitator must update the metadata of the template. This includes updating the filename and dates to reflect the current values of the Executive Vote.  
+  
+• Rename the file to “Executive vote - YYYY, MONTH, DD”. The filename must end with .md and must not contain any banned characters \(e.g., "<>:"/?\*\|"\). The date in the filename should correspond to the day the Executive Vote will go live on the voting platform.  
+  
+• Replace the placeholder dates in the template with the correct dates for the Executive Vote. The exact time is not required for the Executive Vote and should therefore be left at midnight.
+
+####### A.1.9.2.4.8.3.4 - Core Facilitator Creates Title [Core]  <!-- UUID: 63c9d3b3-e155-4aee-bca1-9316da530878 -->
+
+The Core Facilitator must create a title for the Executive Document that clearly highlights the most impactful/important actions included in the proposal. This ensures that SKY holders can easily understand the purpose of the vote.
+
+####### A.1.9.2.4.8.3.5 - Core Facilitator Creates Summary [Core]  <!-- UUID: dd779187-bc53-448b-9171-89b4655494d1 -->
+
+The Core Facilitator must create a summary that refers to every action included in the proposal. Under the Executive summary, the Core Facilitator must include the following details:  
+  
+1. Office-Hours Modifier:  
+  
+• If the office-hours parameter has the value “Yes” and will be present in the spell code, this must be explicitly mentioned:  
+    ◦ “This Executive Proposal includes an office-hours modifier that means that it **can only be executed between 14:00 and 21:00 UTC, Monday - Friday**.”  
+  
+2. GSM Pause Delay:  
+  
+• The GSM Pause Delay period and affected items must be clearly communicated.  
+  
+• The term “GSM Pause Delay” must include a link to the Atlas document specifying its definition [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Pause Delay](3c9545d9-775f-4149-88bf-7d297b5302c6).  
+  
+• The current value of the GSM Pause Delay must include a link to the Atlas document specifying its value [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Pause Delay Current Value](db442d8a-8d98-47a2-b162-01c2adc22b67).  
+  
+3. Proposal Expiry:  
+  
+• The expiry of the proposal must be explicitly noted, including the length of time for which the proposal is valid:  
+    ◦ “If this Executive Proposal does not pass within 30 days, then it will expire and can no longer have any effect on the Sky Protocol.”
+
+####### A.1.9.2.4.8.3.6 - Core Facilitator Specifies Entities In Preamble [Core]  <!-- UUID: c99fbfde-bd39-42f6-b67d-f6b9cb7f3dce -->
+
+The Core Facilitator must specify the entities responsible for publishing the Executive Vote on the Voting Portal, as well as the Crafters and Reviewers of the executive code. The entities should be specified at the entity level.  
+  
+• The publishers of the Executive Vote are the Core Facilitator.  
+  
+• The Crafters and Reviewers alternate between Dewiz and Sidestream.  
+  
+• The Crafters and Reviewers are determined during the GovOps meeting and recorded in the Executive Sheet.
+
+####### A.1.9.2.4.8.3.7 - Core Facilitator Includes Every Item From Executive Sheet [Core]  <!-- UUID: 2724c79e-f6bf-42a2-8018-33b773ba3733 -->
+
+The Core Facilitator must ensure that every item from the Executive Sheet is included in the details section of the Executive Document. These items should be presented in order of judged impact/importance. If the order of items in the Executive Document differs from the Executive Sheet, the Executive Sheet must be updated to match, maintaining consistency between the two documents.  
+  
+The Core Facilitator must make sure that each item:  
+  
+• Includes links to the reasoning and authorization for its inclusion.  
+  
+• Provides additional links required for voters to understand the context surrounding the item’s inclusion.  
+  
+• Uses future-conditional language and clearly outlines the actions that will take place if the Executive Proposal passes. For example, phrasing such as "If this Executive Proposal passes, then this action will take place" ensures clarity and avoids ambiguity.  
+  
+• Has hyperlinked key parameters, terms, and contracts where appropriate, making it easier for voters to access relevant information. Ethereum and IPFS addresses should also be linked to provide direct access to technical details.  
+  
+The Core Facilitator must also make sure that the parties implicated in the proposal outcome are aware of the wording used for each item in the Executive Document.
+
+####### A.1.9.2.4.8.3.8 - Core Facilitator Must Notify Spell Team Of Changes [Core]  <!-- UUID: e3d137d7-3244-497b-b065-25cc2dffafeb -->
+
+If any updates are made to the Executive Sheet during the Spell Process at a stage prior to the handover of the deployed Spell, the members of the Spell Team must be notified of the update. The notification must be done in Discord in the dedicated thread for the Executive Vote in the #govops channel.
+
+####### A.1.9.2.4.8.3.9 - Core Facilitator Self-Review Executive Document Draft [Core]  <!-- UUID: e33843ce-e536-4a74-b432-817dd1626f04 -->
+
+The Core Facilitator must self-review the Executive Document to ensure it is clear, unambiguous, and free of errors. All ”$” parameter signifiers must be replaced with their correct values, except for the Spell address, which remains unknown at this stage.  
+  
+Once the document is finalized, the Core Facilitator must commit the changes and create a Pull Request to the executive-votes GitHub repository. The Core Facilitator must then request a review from another member of the Core Facilitator team.
+
+####### A.1.9.2.4.8.3.10 - Commits To The Executive Document [Core]  <!-- UUID: 711c0453-ce81-4e44-8590-d17c0b82fe26 -->
+
+Any member of the Core Facilitator team can commit changes to the Executive Document. The standard process is to request changes to the drafter of the Executive Document.
+
+####### A.1.9.2.4.8.3.11 - Checklist For Core Facilitator Creating Executive Document [Core]  <!-- UUID: ac23449a-ce35-45f6-aa9e-500404bfa2a4 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md) ensures that all steps in the Executive Document creation process are completed. The Core Facilitator should use this checklist as a final check before the official review.
+
+###### A.1.9.2.4.8.4 - Core Facilitator Review Executive Document [Core]  <!-- UUID: 95c1e447-704f-421e-a6c9-82f342e02a17 -->
+
+Another member of the Core Facilitator team must review the Executive Document to ensure adherence to all specified conventions. As a general rule, the reviewer must not be the author of the Executive Document to provide independent validation. The detailed review process and criteria are specified in the relevant subdocuments.
+
+####### A.1.9.2.4.8.4.1 - Core Facilitator Familiarizes With Executive Document [Core]  <!-- UUID: e6ffd366-1ba8-4c51-acc2-f94261bf6353 -->
+
+The Core Facilitator conducting the official review must read the document in full to ensure that it is clear and unambiguous.
+
+####### A.1.9.2.4.8.4.2 - Core Facilitator Verifies Information In Executive Document [Core]  <!-- UUID: 65157925-4368-4c45-acf1-d454ffbc68d2 -->
+
+The Core Facilitator must make sure that the Executive Document is accurate and adheres to the specified conventions. The Core Facilitator must ensure that all the steps outlined in [A.1.9 - Core Facilitator Creates Executive Document](6d40ab22-bcf5-42c2-8a27-fef39fa43d6f) are followed.
+
+####### A.1.9.2.4.8.4.3 - Core Facilitator Finalize Review [Core]  <!-- UUID: c3055900-e3c0-4f7d-a233-402f1ebfcc62 -->
+
+After thoroughly reviewing the Executive Document, the Core Facilitator must communicate any issues or discrepancies to the Governance Point. The Governance Point must address all issues before the review is marked as complete. Once all issues are resolved, the reviewer must confirm that the document is ready for publication.
+
+####### A.1.9.2.4.8.4.4 - Checklist For Reviewer Of Executive Vote [Core]  <!-- UUID: d6e79bb0-1e04-43ef-a8e7-ebf22e29b600 -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-review-checklist.md](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-review-checklist.md) serves as a final verification tool for the reviewer of the Executive Document. It ensures that all aspects of the document have been reviewed and meet the required standards.
+
+###### A.1.9.2.4.8.5 - Core Facilitator Finalizes Executive Document [Core]  <!-- UUID: ec5599fa-3b3c-4a29-8f00-e9d5075646e0 -->
+
+The Governance Point must finalize and merge the Executive Document on Week 2 Tuesday. The subdocuments herein specify the finalization process.
+
+####### A.1.9.2.4.8.5.1 - Core Facilitator Generates Hash Of Executive Document [Core]  <!-- UUID: 99bc6de0-9d6c-44d9-a82e-a0ddfd59647f -->
+
+The Core Facilitator must generate the hash of the Executive Document. The hash must be verified by another member of the Core Facilitator team. The hash is then recorded as a comment in GitHub under the “Conversation” tab. This validation step ensures that potential hash mismatches or validation errors are identified and resolved early in the process.  
+  
+The Core Facilitator’s comment typically includes:  
+  
+• The command used to generate the hash,  
+  
+• The resulting hash, and  
+  
+• A secondary tool used to validate the locally generated hash \(Keccak-256 Online Tool, [https://emn178.github.io/online-tools/keccak\_256.html](https://emn178.github.io/online-tools/keccak_256.html), is most commonly used\).
+
+####### A.1.9.2.4.8.5.2 - Core Facilitator Merges Executive Document [Core]  <!-- UUID: 966fa5d7-c640-4251-891c-a4a3c58bee8a -->
+
+The Core Facilitator must merge the approved Pull Request for the Executive Document into the main branch of the executive-votes GitHub repository by 16:00 UTC. Before merging, the Core Facilitator must ensure that the Executive Document has been reviewed and approved by the designated reviewer. Merging into the main branch requires two approvals.
+
+####### A.1.9.2.4.8.5.3 - Core Facilitator Validates Executive Document [Core]  <!-- UUID: 95c6809a-17a3-4741-b428-5ecb1b1f5b20 -->
+
+The Core Facilitator must validate the Executive Document on the voting platform. This is done by pasting the raw URL of the document into the validation field and clicking the “Validate” button. The validation tool can be accessed at Executive Validator [\(https://vote.sky.money/executive/create](https://vote.sky.money/executive/create)\).  
+  
+The raw URL can be found by opening the specific Markdown file for the Executive Document. On the file’s page, locate the Raw button near the top-right corner of the file viewer. Clicking the Raw button will open a new page. The URL of this new page is the “raw URL.”  
+  
+The validation tool provides a preview of how the Executive Vote will appear on the voting platform, allowing the Core Facilitator to confirm the document's formatting and content.
+
+####### A.1.9.2.4.8.5.4 - Core Facilitator Shares Link And Hash Of Executive Document With Technical Point [Core]  <!-- UUID: 16b6e606-f16e-4324-95d1-cc46be0d71bd -->
+
+The Core Facilitator must share the link to the merged Executive Document on GitHub and its hash with the Technical Point. This communication must be provided in a public manner, typically on Discord.
+
+####### A.1.9.2.4.8.5.5 - Core Facilitator Must Communicate Executive Document With Media Liaison [Core]  <!-- UUID: 84a87065-fbd8-43c1-b4ac-77d89ab98b6c -->
+
+The Core Facilitator must share the Executive Document with the Media Liaison. This is done via the #twitter-requests channel in the Growth Core Unit Discord. Both the document and the timeline should be shared.
+
+####### A.1.9.2.4.8.5.6 - Checklist For Core Facilitator Finalizing Executive Document [Core]  <!-- UUID: cb3303a9-1383-408c-ac8a-9d31beae43cf -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission) serves as a final verification tool for the Core Facilitator finalizing the Executive Document. It ensures that all steps in the process are completed.
+
+##### A.1.9.2.4.9 - Spell Reviewers Review Spell Week 2 Tuesday (Step 9) [Core]  <!-- UUID: 249a4dc7-35a3-4c5e-8b0e-fbfd53b5bd12 -->
+
+The Spell Reviewers must review the Spell after the crafting is completed. The reviews should be done on Tuesday week 2.
+
+###### A.1.9.2.4.9.1 - Spell Reviewing Workflow [Core]  <!-- UUID: 4319b89d-a0e3-4e3c-bf99-0390053bd347 -->
+
+Spell Reviewers must comprehensively review the draft Spell in accordance with Reviewer checklists and testing requirements, set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-reviewer-mainnet-checklist.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-reviewer-mainnet-checklist.md).
+
+###### A.1.9.2.4.9.2 - Spell Reviewing Rules [Core]  <!-- UUID: fcc34865-894b-4fb8-b430-0957909ffe9f -->
+
+Spell Reviewers must comply with a number of rules when carrying out their review functions throughout the Executive Process. These rules are generally aimed at maximizing the safety and security of the Spell.
+
+####### A.1.9.2.4.9.2.1 - Spell Reviewers Must Review All Spell Content [Core]  <!-- UUID: 32feb38a-043e-4715-9a3e-c94ee6fbf92f -->
+
+Spell Reviewers must review all relevant content in the Spell; it is prohibited for a Reviewer to selectively omit their review of specific content within a Spell. While unlikely, an actor may attempt to convince the Spell Reviewers that they should skip a section of checklist items within their review checklist and allow for a section of content to be reviewed by a party external to the current Spell Team. Any party encouraging selective review of content must be considered negligent or malicious, especially where the offending party is the Spell Crafter or another entity involved in Spell development.
+
+####### A.1.9.2.4.9.2.2 - Executive Document as Key Reference [Core]  <!-- UUID: a9be4af3-1824-4c67-9664-a9a52be438fb -->
+
+For the Reviewers’ checks and review of the Spell before deployment, the Executive Document is the primary source of truth for the Spell.
+
+####### A.1.9.2.4.9.2.3 - A.1.9 -Spell Reviewer Direct Authoring Ban [Core]  <!-- UUID: 952d9bdc-1298-49b5-a52f-11ab480a82b7 -->
+
+Reviewers for a Spell are strictly prohibited from _directly_ committing, adding, contributing, or modifying code to a Spell they are reviewing.
+
+####### A.1.9.2.4.9.2.4 - Spell Reviewers May Not Add or Change Content Through Pull Requests [Core]  <!-- UUID: d3a48eb5-278e-4417-aae5-94b4ee7cf4ea -->
+
+Reviewers for a Spell are strictly prohibited from _indirectly_ committing, adding, contributing, or modifying code to the Spell they are reviewing. If a Reviewer added code via a Pull Request \(even from a trusted party such as an Agent\), this would be indirectly modifying the Spell code. This is not permitted.
+
+####### A.1.9.2.4.9.2.5 - Spell Reviewers May Not Approve GitHub Suggestions [Core]  <!-- UUID: eb22b81f-4f34-47c2-8d24-8c85909fb531 -->
+
+The designated Crafter is the only person or entity permitted to commit GitHub code suggestions to the Spell. The Reviewers can make suggestions, but cannot commit those suggestions.
+
+####### A.1.9.2.4.9.2.6 - Spell Reviewers Must Raise Comments When They Find Issues [Core]  <!-- UUID: 558e18e8-7277-4be6-895b-1f419069f4c8 -->
+
+When Spell Reviewers find any issues within the current Spell, they must raise these to the Spell Team and other relevant actors via a comment in GitHub, relevant Discord channels, or other communications channels as necessary.
+
+####### A.1.9.2.4.9.2.7 - Smart Contract Testing [Core]  <!-- UUID: ed3350d8-37c4-430e-a0f3-c2ee0692b801 -->
+
+Spell Reviewers must conduct smart contract testing in order to ensure that the Spell behaves as intended. Tests must be exhaustive and should cover every facet of code in the smart contract.
+
+####### A.1.9.2.4.9.2.8 - Spell Reviewer Final Approval [Core]  <!-- UUID: 1de9360f-c414-431c-abc4-cda5593cd870 -->
+
+As the Reviewers are prohibited from modifying the contents of a Spell via commits or authoring, the most important power they possess is whether to approve the progression of a Spell to its next stage. As such, a Reviewer approving the final deployed Spell for handover represents confirmation that they believe that the role of the Spell Team has been completed for the Spell. This means that they believe that the Spell has fulfilled the Spell Team’s role of creating a smart contract that performs the exact set of actions described in the Executive Document, with no actions omitted or additional actions present.
+
+####### A.1.9.2.4.9.2.9 - Prohibition on Merging Pull Request [Core]  <!-- UUID: 83f1374d-aa42-4f1d-bea2-5326b578a2af -->
+
+Spell Reviewers are prohibited from merging the Pull Request associated with a Spell. The only party permitted to merge a Spell’s Pull Request is the Crafter of that Spell.
+
+####### A.1.9.2.4.9.2.10 - Prohibition on Leaving GitHub Suggestions Post Deployment [Core]  <!-- UUID: 357b6485-46fd-442a-ad6e-8ddff5ca4f7f -->
+
+Spell Reviewers are prohibited from leaving GitHub suggestions after the Spell has been deployed or archived.
+
+###### A.1.9.2.4.9.3 - Process For Handling Technical Issues [Core]  <!-- UUID: e3b236e9-972a-407b-81bf-1411b4d7de60 -->
+
+The Reviewers play a key role in the process for identifying, analyzing and resolving technical issues like bugs, mistakes and exploits when they arise during the Spell development process. Other stakeholders, including the Spell Crafter and Core Facilitators, also play an important role. The technical issue process is outlined here [A.1.9 - Process For Handling Technical Issues](2c8e81bf-b79a-486f-80eb-bd9b15464695). All technical issues identified by Reviewers should follow the steps specified in this process
+
+###### A.1.9.2.4.9.4 - Spell Team Operational Principles [Core]  <!-- UUID: 71f8c21f-2d23-4c93-a710-efd365f1d405 -->
+
+As a core member of the Spell Team, the Reviewers must comply with the Spell Team Operational Principles throughout their involvement in the Spell development process. These principles apply to both Spell crafting and Spell reviewing processes, and are outlined here [A.1.9 - Spell Team Operational Principles](bd45083c-50de-47d2-b0c3-808c04f726e3).
+
+##### A.1.9.2.4.10 - Spell Crafter Deploys Spell On Target Date (Step 10) [Core]  <!-- UUID: 746bfb60-2d46-4064-a7f0-3d1d249463ee -->
+
+The Spell Crafter follows the process specified herein to deploy the Spell.
+
+###### A.1.9.2.4.10.1 - Spell Crafter Performs Pre-Deployment Steps [Core]  <!-- UUID: 59638793-d1ed-4d6c-9d34-d9359ecfd100 -->
+
+After the Spell Reviewers have finished their review, the Spell Crafter performs the last steps before the Spell is ready to be deployed. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md).
+
+###### A.1.9.2.4.10.2 - Spell Reviewers Review Pre-Deployment Steps [Core]  <!-- UUID: e31813f6-77ce-438e-a791-4d127e783bc7 -->
+
+The Spell Reviewers review the pre-deployment steps. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-reviewer-mainnet-checklist.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-reviewer-mainnet-checklist.md). When they have completed their review, they indicate their approval in a comment to the Github pull request, such as “good to deploy”. The Spell Crafter may only proceed with the Spell deployment when approvals have been received from the two Spell Reviewers.
+
+###### A.1.9.2.4.10.3 - Spell Crafter Conducts Pre-Deployment Setup And Checks [Core]  <!-- UUID: a7e04b56-d754-423d-8ad9-6f1013023a91 -->
+
+The Spell Crafter performs pre-deploy setup and checks. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md).
+
+###### A.1.9.2.4.10.4 - Spell Crafter Deploys The Spell On Mainnet [Core]  <!-- UUID: 81b4e7f6-8f56-497f-889c-48e412244801 -->
+
+The Spell Crafter then deploys the Spell as specified herein. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md).
+
+###### A.1.9.2.4.10.5 - Spell Crafter Casts Spell On Newly Deployed Tenderly Testnet [Core]  <!-- UUID: 1463db73-6121-48e9-950a-09dbc699076f -->
+
+The Spell Crafter then casts the deployed Spell on a newly deployed Tenderly Testnet. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md).
+
+###### A.1.9.2.4.10.6 - Spell Crafter Archives Spell [Core]  <!-- UUID: 959dea0e-219f-4caa-8101-09bd690ce051 -->
+
+The Spell Crafter archives the Spell using the `make archive-Spell` command, if the current date equals the Target Date in the Executive Document. If the current date does not equal the Target Date in the Executive Document, the Spell Crafter should instead use `make archive-Spell date="YYYY-MM-DD"`, where “YYYY-MM-DD”
+
+###### A.1.9.2.4.10.7 - Spell Crafter Pushes Changes And Requests Review [Core]  <!-- UUID: 119f1132-4d75-4823-89d0-872aeb0aa1de -->
+
+The Spell Crafter then commits their changes and requests review by the Spell Reviewers. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md)/
+
+###### A.1.9.2.4.10.8 - Spell Reviewers Review Pull Request [Core]  <!-- UUID: 56106653-7764-466a-a5a5-ff6843b100d7 -->
+
+The Spell Reviewers review the Pull Request. As part of this review, they run tests locally. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-reviewer-mainnet-checklist.md.](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md) When they have completed this, each Spell Reviewer posts a comment approving the handover of the Spell \(e.g. “good to handover”\), including a copy of the test results.
+
+###### A.1.9.2.4.10.9 - Spell Crafter Hands Over Spell [Core]  <!-- UUID: 8411d3bb-f5b8-4f0e-94b1-4ce7bb223099 -->
+
+Once the Spell Crafter has received approval to handover the Spell from both the Spell Reviewers, the Spell Crafter proceeds to hand over the Spell to the Governance Point. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md)
+
+###### A.1.9.2.4.10.10 - Spell Crafter Conducts Final Checks [Core]  <!-- UUID: 3d0a743a-1e14-4376-b5ef-2ebd0f2820d7 -->
+
+The Spell Crafter conducts a final set of checks to guard against Pull Request attack vectors before merging the Pull Request as specified herein. These steps are set out here: [https://github.com/sky-ecosystem/pe-checklists/blob/master/Spell/Spell-crafter-mainnet-workflow.md](https://github.com/sky-ecosystem/pe-checklists/blob/master/spell/spell-crafter-mainnet-workflow.md)
+
+###### A.1.9.2.4.10.11 - Spell Crafter Squashes And Merges Pull Request [Core]  <!-- UUID: f394fe65-d60a-40cb-8cc9-e607fe0c0487 -->
+
+Finally, the Spell Crafter squashes and merges the Pull Request.
+
+##### A.1.9.2.4.11 - Governance Point Reviews Spell And Publishes To Voting Portal On Target Date (Step 11) [Core]  <!-- UUID: 4a26e84d-6b1c-4ccf-b829-5ee665d8c813 -->
+
+After the completion of the Spell development process, the Governance Point is responsible for finalizing the steps required to make the Executive Vote available for voting. These steps are outlined in the subdocuments herein.
+
+###### A.1.9.2.4.11.1 - Governance Point Reviews Spell And Final Preparation [Core]  <!-- UUID: 0719e89e-5a2b-416f-803d-83cf4c3d09ec -->
+
+After the Spell Team has handed over the Spell, the Governance Point is responsible for performing a high-level review of the Spell and completing the final preparation steps required to integrate the Spell into the governance process. These steps include reviewing the Spell, handling the Spell address, and ensuring all necessary checks are completed. Detailed instructions for each step are provided in the subdocuments.
+
+####### A.1.9.2.4.11.1.1 - Governance Point Reviews Spell Content [Core]  <!-- UUID: d3f61923-443e-4b36-9a84-d3a1ff25d59a -->
+
+After the Spell is deployed, the Governance Point must review the Spell to ensure that the Spell is accurate and complete.  
+  
+The Governance Point must perform the following checks:  
+  
+• Verify that all items listed in the Executive Sheet are accurately reflected in the Spell code.  
+  
+• Confirm that all values in the Spell code match those specified in the Executive Sheet.  
+  
+• Ensure that no items are present in the Spell code that are not included in the Executive Sheet, with limited exceptions such as approvals or other predefined standard actions  
+  
+• Confirm that reviews have been submitted by the designated reviewers as part of the validation process.  
+  
+• After handover, verify that the deployed code matches the corresponding code in the GitHub repository.  
+  
+• Ensure that reviewers have approved the deployed code at the specified handover address.
+
+####### A.1.9.2.4.11.1.2 - Governance Point Requests TechOps Services To Whitelist Spell Address [Core]  <!-- UUID: 93b1ccb0-ee1e-4e41-8a3b-03520de76ab4 -->
+
+The Governance Point must request that TechOps Services whitelist the Spell address provided by the Spell Team. This support request is submitted in the Discord channel #techops-request. The message should include a request to whitelist the Spell and must specify the Spell address.
+
+####### A.1.9.2.4.11.1.3 - Governance Point Adds Spell Address In Executive Document [Core]  <!-- UUID: 6a1c7d77-4f03-40db-8ed5-05b1e94442cf -->
+
+The Governance Point must update the Executive Document with the Spell address. This is done by creating a new Pull Request in GitHub. Only the “address” field in the Executive Document is permitted to be modified after the Spell has been deployed.
+
+####### A.1.9.2.4.11.1.4 - Review Of Spell Address In Executive Document [Core]  <!-- UUID: 328db91a-758d-4476-b2aa-876d667bb7a8 -->
+
+After the Governance Point has added the Spell address to the Executive Document, it must be reviewed. This review is conducted by any member of the Core Facilitator team. The reviewer must confirm that the “address” field in the Executive Document has been updated with the correct Spell address.
+
+####### A.1.9.2.4.11.1.5 - Governance Point Merges Pull Request [Core]  <!-- UUID: 75b9e342-de70-43c2-967f-0023474ce822 -->
+
+Once the Pull Request has been reviewed and approved, the Governance Point must merge it into the main branch of the executive-votes GitHub repository.
+
+####### A.1.9.2.4.11.1.6 - Governance Point Validates Executive Document [Core]  <!-- UUID: 12ebd0d9-52dc-4d1f-8e1a-8bdc2a51b9b0 -->
+
+The Governance Point must validate the Executive Document on the voting platform. This is done by pasting the raw URL of the document into the validation field and clicking the “Validate” button. The validation tool can be accessed at Executive Validator [\(](https://vote.makerdao.com/executive/create)[https://vote.sky.money/executive/create](https://vote.sky.money/executive/create)\).  
+  
+The raw URL can be found by opening the specific Markdown file for the Executive Document. On the file’s page, locate the Raw button near the top-right corner of the file viewer. Clicking the Raw button will open a new page. The URL of this new page is the “raw URL.”  
+  
+The validation tool provides a preview of how the Executive Vote will appear on the voting platform, allowing the Governance Point to confirm the document's formatting and content.
+
+####### A.1.9.2.4.11.1.7 - Checklist For Governance Point Review Of Spell And Final Preparation [Core]  <!-- UUID: 16b127f0-b8b6-463d-8f3c-0fc00623ddac -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission) serves as a final verification tool for the Governance Point when reviewing and finalizing the Spell.
+
+###### A.1.9.2.4.11.2 - Governance Point Publishes Executive Vote [Core]  <!-- UUID: 5e78a59d-fad1-4991-9689-c9220cef7db2 -->
+
+The Governance Point is responsible for publishing the Executive Vote on the Voting Portal, enabling the community to participate in the voting process. This process includes updating the active proposals file, merging changes, refreshing the Voting Portal cache, and notifying the community. The subdocuments herein outline the detailed steps.
+
+####### A.1.9.2.4.11.2.1 - Governance Point Updates Active Executives File [Core]  <!-- UUID: 3593993e-bc81-44f6-9e3a-c113a7940092 -->
+
+The Governance Point must update the proposals.json file \([https://github.com/sky-ecosystem/executive-votes/blob/main/active/proposals.json](https://github.com/sky-ecosystem/executive-votes/blob/main/active/proposals.json)\) in the GitHub repository to ensure the Voting Portal reflects the correct active proposal. This involves adding a link to the raw Markdown file for the Executive Document.
+
+####### A.1.9.2.4.11.2.2 - Core Facilitator Reviews Active Executive File Update [Core]  <!-- UUID: 047b842a-c5af-414d-8b8e-4151cea24eb4 -->
+
+Once the Governance Point has updated the active proposal file, the changes must be reviewed by another member of the Core Facilitator team.
+
+####### A.1.9.2.4.11.2.3 - Governance Point Merges The Updated Active Executive File [Core]  <!-- UUID: 77583ed9-933e-477b-85be-1458e83586d3 -->
+
+Once the Pull Request for the updated proposals.json file has been reviewed and approved, the Governance Point must merge it into the master branch of the executive-votes GitHub repository. This step ensures that the active executive file is updated and accurately reflected in the Voting Portal. The approvals of the Pull Request can be made by any member of the Core Facilitator team.
+
+####### A.1.9.2.4.11.2.4 - Governance Point Updates Voting Portal Cache [Core]  <!-- UUID: 6aceef83-49b4-4318-b693-ba318ab0eebd -->
+
+The Governance Point must refresh the cache of the Voting Portal \([https://vote.sky.money/dashboard](https://vote.sky.money/dashboard)\). This ensures that the executive corresponding to the new Spell is displayed promptly, marking the start of the Ecosystem Spell Validation window.  
+  
+If required, Jetstream can provide the Governance Point with the necessary password to execute this action.
+
+####### A.1.9.2.4.11.2.5 - Governance Point Notifies Community Of New Executive Vote [Core]  <!-- UUID: e7f1fd21-5e39-4bdf-a166-994563e45fb7 -->
+
+The Governance Point must post a message in the official Sky Builder Discord server channel #governance to notify the community about the new Executive Vote. This post tags the community and includes the full summary of the proposal, along with a link to the proposal on the voting platform. The notification is published after the Executive Vote goes live.
+
+####### A.1.9.2.4.11.2.6 - Checklist For Governance Point Publishing Executive Vote [Core]  <!-- UUID: 447d5a6d-7051-4092-ac3f-06a23bd282ae -->
+
+The checklist found at [https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission](https://github.com/sky-ecosystem/executive-votes/blob/main/processes/executive-doc-creation-checklist.md#submission) serves as a final verification tool for the Governance Point to ensure all steps in the process of publishing the Executive Vote are completed.
+
+##### A.1.9.2.4.12 - Ecosystem Validators Validates Spell During Validation Window (Step 12) [Core]  <!-- UUID: 84d31eb0-fbbc-4783-a7cf-ef7dddfa8271 -->
+
+After the Spell is live on the voting platform, the Spell must be validated by the Ecosystem Validators. The validation process is outlined in the subdocuments herein.
+
+###### A.1.9.2.4.12.1 - Ecosystem Spell Validation Overview [Core]  <!-- UUID: 6be80bce-df84-4e8a-ab38-c4f2c5e7d373 -->
+
+Ecosystem Spell Validation refers to the process of reviewing and verifying the accuracy, functionality, and compliance of a Spell's code on the blockchain. The subdocuments herein outline the key concepts, roles, and timelines involved in the validation of Spells.
+
+####### A.1.9.2.4.12.1.1 - Ecosystem Spell Validators [Core]  <!-- UUID: 1ddd532f-ac63-48d8-b873-c2d106252328 -->
+
+Ecosystem Spell Validators are members of the Sky Ecosystem responsible for performing the Spell validation process. Currently, Aligned Delegates serve as the primary Spell validators for the Sky Ecosystem.
+
+####### A.1.9.2.4.12.1.2 - Ecosystem Spell Validation Window [Core]  <!-- UUID: 64c1fbdd-8d78-439d-810f-985734946744 -->
+
+The Ecosystem Spell Validation Window is the period of time during which a Spell can be validated. Validation must occur:  
+  
+1. After the Spell becomes visible and is available for voting on the Voting Portal \(start of the validation window\).  
+  
+2. Before the Spell’s actions become executable, which occurs when the `GSM Pause Delay` elapses \(end of the validation window\).  
+  
+Validation outside this window is ineffective because:  
+  
+• The Spell may still be subject to changes before the start of the validation window.  
+  
+• The Spell may already be executable after the end of the validation window.  
+  
+The duration of the validation window is determined by the value of the GSM Pause Delay.
+
+####### A.1.9.2.4.12.1.3 - Ecosystem Spell Verification Scope [Core]  <!-- UUID: 101d5bee-6ba8-449e-9bb0-cc31bc929390 -->
+
+The scope of Spell validation includes any code in the Sky Protocol that:  
+  
+1. Must adhere to the `GSM Pause Delay` enforced by the Sky Protocol’s `ds-pause` contract, and  
+  
+2. Is directly executed by the Sky Protocol’s `Pause Proxy` contract.  
+  
+Actions that do not meet these criteria—such as `instant actions`, `MOM` and `IAM` contract calls—are excluded from Spell validation.  
+  
+This exclusion is due to the absence of a pause delay for such actions, which prevents ecosystem actors from having sufficient time to perform their reviews.  
+  
+Validators should also consider validating the source code or associated audits for contracts added to the Chainlog as part of a Spell, even if these contracts are not immediately executed or fall outside the standard validation scope. This includes pre-deployed emergency Spell contracts, ensuring that their integrity and security are assessed at the time of addition to the Chainlog for potential future use.
+
+###### A.1.9.2.4.12.2 - Tools And Resources For Spell Validation [Core]  <!-- UUID: 1f2d6e6a-2fc2-48ae-80ef-817a592bf446 -->
+
+The Spell validation process requires the use of specific tools and resources to perform the necessary checks and ensure the accuracy and security of the Spell. These include online platforms, development environments, and blockchain-related utilities, as detailed in the subdocuments herein.  
+  
+Many of these tools are also used during the Spell development process. Therefore, it is recommended that Spell validators rely on the same setup to ensure consistency and reliability during validation
+
+####### A.1.9.2.4.12.2.1 - Supported Operating System For Spell Validation [Core]  <!-- UUID: e32e109f-e101-4d96-85bb-b6341773353f -->
+
+Spell validation must be performed on macOS or a Linux-based operating system. Windows Subsystem for Linux \(WSL\) may be used by Windows users, but it is not officially supported.
+
+####### A.1.9.2.4.12.2.2 - System And Language Requirement For Spell Validation [Core]  <!-- UUID: 8c7fe7a6-2bda-443b-8470-872ca1e341c6 -->
+
+Spell validators are required to understand English, and the validation must be performed in English.
+
+####### A.1.9.2.4.12.2.3 - Required Programming And Command Languages For Spell Validation [Core]  <!-- UUID: ee18215c-7a45-4fda-8ede-6c3c60e27125 -->
+
+Spell validators must use the Solidity programming language to review smart contracts and the Bash command language to execute validation scripts.
+
+####### A.1.9.2.4.12.2.4 - Recommended Browser For Spell Validation [Core]  <!-- UUID: 4800adb1-b0e3-4791-b80a-b27ef03e27cb -->
+
+Firefox is recommended for Spell validation due to its wide support, strong privacy features, and speed.
+
+####### A.1.9.2.4.12.2.5 - Version Control Tools For Spell Validation [Core]  <!-- UUID: cc6f9990-ffcf-49a8-ba0a-76453155063c -->
+
+Spell validators are strongly recommended to use Git during Spell validation, although it is not required.
+
+####### A.1.9.2.4.12.2.6 - Development Toolchain For Spell Validation [Core]  <!-- UUID: 78db1070-9ab9-4e71-964d-3c73d5d9b015 -->
+
+The Foundry toolchain is required for ecosystem validation of Spells. Spell validators should refer to the "Getting started" section in Foundry’s FoundryBook documentation for installation instructions.  
+  
+The toolchain’s dependencies vary by operating system and may include:  
+  
+• The Rust programming language and the Cargo package manager.  
+  
+• For macOS users, the Homebrew package manager and the libusb package.
+
+####### A.1.9.2.4.12.2.7 - Mainnet Ethereum Node For Spell Validation [Core]  <!-- UUID: f26a1e7c-e189-4fa7-bd0c-05b36bb054fb -->
+
+The validation of Spells requires access to a local or remote Mainnet Ethereum node. While the use of a local node is preferred for enhanced control and security, a remote node is recommended for most Spell validators to simplify setup and maintenance. Services like Tenderly provide a fast and reliable remote node for Ethereum Mainnet access and are often favored for their performance.
+
+####### A.1.9.2.4.12.2.8 - Using Chainlog Smart Contract For Spell Validation [Core]  <!-- UUID: 42979dc0-bf99-4ba4-97a5-ccfe02845ad7 -->
+
+Retrieving values from the Chainlog smart contract is mandatory during the validation of Spells.  
+  
+The most secure method for retrieving values is to query the Chainlog directly using multiple sources, such as Foundry’s `cast` tool, the Etherscan blockchain explorer, and the IPFS link accessible on the official Chainlog for Sky at [https://chainlog.sky.money/](https://chainlog.sky.money/), ensuring that the returned addresses match across all platforms.
+
+####### A.1.9.2.4.12.2.9 - Using GitHub Website For Spell Validation [Core]  <!-- UUID: 0c457a50-037e-4d5f-bbff-a531c0ecf52e -->
+
+GitHub is the platform that hosts Spell repositories, Spell code, pull requests, and public communication between Spell Team members. The use of the GitHub website is required during Spell validation to obtain the current Spell code.  
+  
+While using GitHub’s web interface through a browser is not explicitly required, it is strongly recommended.
+
+####### A.1.9.2.4.12.2.10 - Using Etherscan Website For Spell Validation [Core]  <!-- UUID: 230c15db-6c5a-4486-b44b-ef915db39d11 -->
+
+The use of the Etherscan website is required when validating Spells, as it is the only blockchain explorer that displays the verified code of the current Spell’s smart contract, including its Solidity compiler version, licensing settings, optimization settings, and libraries used.  
+  
+Aside from the current Spell’s smart contract, using Etherscan to make calls to, interact with, or read information from other smart contracts is not required during the validation process. Many smart contracts associated with the Sky Protocol have only been verified on Etherscan.  
+  
+Automated Spell deployment and code comparison scripts within the Spell repositories may require an Etherscan API key; however, these scripts must not be used when validating Spells.
+
+####### A.1.9.2.4.12.2.11 - Using Discord For Spell Validation [Core]  <!-- UUID: 3326e18a-a909-448b-a9b3-ee17afc87160 -->
+
+The use of Discord is not required during Spell verification, as it primarily serves as a platform for public communication between Core Facilitators and members of the current Spell Team.  
+  
+However, using Discord is highly recommended for Spell validators, as the communication history in the #new-Spells channel may provide valuable context or additional information for the validation process.
+
+###### A.1.9.2.4.12.3 - Spell Validation Checks [Core]  <!-- UUID: 6668e922-1831-4cb2-b948-c528a80198eb -->
+
+When validating a Spell, specific checks must be performed to determine whether the Spell passes or fails validation. These checks are categorized into three levels of priority:  
+  
+• Required Checks: Must be completed for the Spell to pass validation.  
+  
+• Recommended Checks: Should be completed to ensure best practices, but are not mandatory.  
+  
+• Additional Checks: Community-developed checks that enhance the validation process.  
+  
+These checks are detailed in the subdocuments.
+
+####### A.1.9.2.4.12.3.1 - Required Spell Validation Checks [Core]  <!-- UUID: 4aa4dc55-736c-4e5c-994c-3d99616e1d71 -->
+
+Validators must complete the checks outlined in the subdocuments to be able to determine if a Spell passes or fails validation.
+
+######## A.1.9.2.4.12.3.1.1 - Spell Validators Must Ensure Tests Pass [Core]  <!-- UUID: ea1d866c-41ed-474b-91ce-d9f6428bc158 -->
+
+Ecosystem Spell validators must execute the predefined tests associated with a Spell. These tests are provided as scripts in the Spell repository on GitHub. Validators must run these scripts to verify the correctness, security, and compatibility of the Spell. All tests must pass successfully—without errors or failures—for the Spell to pass validation.  
+  
+The best practice for running the tests are specified herein:  
+  
+1. If you haven’t cloned the repository before, run: `git clone <https://github.com/sky-ecosystem/Spells-mainnet`>.  
+  
+2. Navigate to the Spell repository directory by running: `cd Spells-mainnet`.  
+  
+3. Update the repository for the latest changes by running: `git pull`.  
+  
+4. Switch to the correct branch by finding the name from the Spell’s pull request on GitHub, run the command: `git checkout NAME`.  
+  
+5. Verify your setup and check that you’re on the correct branch by running: `git status`.  
+  
+6. Clean up old Spell library dependencies by running the command: `rm -r lib` or deleting the `lib` folder and its contents.  
+  
+7. Install libraries required for the current Spell by running `git submodule update --init --recursive`.  
+  
+8. Configure the local or remote node being used by running `export ETH_RPC_URL=URL` with the URL of your local or remote node. If using a remote node, do not share the URL as it can be used maliciously.  
+  
+9. Run the Spell tests by running `make test`.  If there are concerns about potential modifications to the function, validators can bypass the `make` command and directly execute the test script using `./scripts/test-dssSpell-forge.sh`.  
+  
+10. Wait for completion. Allow 20 to 60 minutes for the tests to complete.  
+  
+11. Review and Save Results: Save the test results \(pass or fail\) for logging purposes.
+
+######## A.1.9.2.4.12.3.1.2 - Spell Validators Must Verify Spell On Etherscan [Core]  <!-- UUID: a8bc220b-ed35-4c3a-95c3-88fb625b14ed -->
+
+Validators must confirm that the Spell’s smart contract is verified on Etherscan.  
+  
+Validation can be performed by ensuring that the source code is visible under the “Contract” tab and under “Contract Source Code” on Etherscan. If only bytecode is displayed, the contract is not verified. Additionally, the source must match the correct version in Spells-mainnet on GitHub. A Spell is considered verified if these conditions are met.
+
+######## A.1.9.2.4.12.3.1.3 - Spell Validators Must Validate DssExecLib Library [Core]  <!-- UUID: 2407adac-7204-4dbe-acb8-abde6e0e57e9 -->
+
+Validators must ensure that the address of the `DssExecLib` library is correct. The correct address corresponds to the latest release as specified in the `DssExecLib` GitHub repository. The deployed Spell must use and display the correct `DssExecLib` address on Etherscan to pass validation.  
+  
+The validation can be performed by navigating to the ”Libraries Used” section on the ”Contract tab” on Etherscan. The library address displayed there must be compared against the official address specified in the README file \([https://github.com/sky-ecosystem/dss-exec-lib?tab=readme-ov-file#dss-exec-library](https://github.com/sky-ecosystem/dss-exec-lib?tab=readme-ov-file#dss-exec-library)\) of the `DssExecLib` GitHub repository.
+
+######## A.1.9.2.4.12.3.1.4 - Spell Validators Must Check Deployed Spell Code [Core]  <!-- UUID: 438343b7-8d2a-4698-8d0f-2ab01a570ff8 -->
+
+The Spell validator must ensure that the deployed Spell code matches the Spell code present in the GitHub Repository.  
+  
+In order to pass validation, the deployed Spell must not contain any potentially malicious code or any notable functional changes within the `DssSpellAction`.  
+  
+The validation for the Spell code can be done by using the `diff-deployed-Spell` script present in the Spell repository on GitHub to ensure that the deployed Spell’s code matches locally compiled code. Alternatively, an online tool like diff checker \([https://www.diffchecker.com/](https://www.diffchecker.com/)\) can be used. The Spell code on Etherscan should be compared with the `DssSpell.sol` in the GitHub repository for the relevant Spell. If the Spell goes live before the code is merged to the main branch, it’s possible to find the branch by the Target Date name of the Spell \(e.g., YYYY-MM-DD\).  
+  
+When comparing, note that the following differences are acceptable and should not be flagged \(based on validation guides\):  
+  
+• Comments: Lines starting with `//` or inside `/* */`.  
+  
+• Imports and Solidity versions: Multiple declarations in the GitHub code.  
+  
+• Interfaces: Numerical suffixes like `_1` or `_2` added to interface names in the contract.  
+  
+• DssExecLib Interface: Extra code or warnings within the `DssExecLib` library.
+
+######## A.1.9.2.4.12.3.1.5 - Spell Validators Must Check Deployed Spell Is Not A DarkSpell [Core]  <!-- UUID: 354e4b28-61fd-4416-aa8b-085e40cdf920 -->
+
+Validators must confirm that the deployed Spell does not execute an external `DssAction` contract. This validation ensures that the Spell is self-contained, does not rely on external contracts or pre-defined Ethereum addresses, and that the `DssExec` and `DssSpellAction` contracts are deployed together and not separately, as is done when using DarkSpells. Validators must perform the following two checks:  
+  
+1. Check that the DssAction contract’s `execute()` function only calls the `actions()` function and does not interact with any external contracts or explicitly defined Ethereum addresses.  
+  
+2. Check that the second argument used in the constructor when instantiating the `DssExec` is a newly created Spell action contract \(e.g. `address(new DssSpellAction())`\) and not an explicitly defined Ethereum address. This confirms that the Spell is linked to the correct action contract.  
+  
+If either of these checks fails, the Spell cannot pass validation.  
+  
+The validation checks can be performed by navigating to the ”Contract tab” on Etherscan for the deployed Spell. In the source code, first locate the `DssAction` contract \(or its equivalent, such as `DssSpellAction`\). Review the `execute()` function and make sure that it only calls the `actions()` function. Then, locate the constructor and confirm that the `action` argument is instantiated as a new contract.
+
+######## A.1.9.2.4.12.3.1.6 - Spell Validators Must Check Deployed Spell Was Not Deployed Using CREATE2 [Core]  <!-- UUID: 0ad70737-d32f-4c50-a4ff-d3f505e171c2 -->
+
+Validators must ensure that no contract, neither the Spell Executive contract \(DssSpell / DssExec\) nor the Spell Action contract \(DssSpellAction / DssAction\) - was deployed using the `CREATE2` opcode.  
+  
+To perform this validation, the validator must:  
+  
+• Locate and copy the contract creation transaction on Etherscan. The contract creation transaction can be found under the “internal transactions” tab on Etherscan.  
+  
+• Use a transaction decoder, such as Tenderly or another blockchain analysis tool, to decode the transaction hash and identify the opcode used during deployment.  
+  
+• Ensure the opcode is `CREATE`. If `CREATE2` is used, the Spell fails validation.
+
+######## A.1.9.2.4.12.3.1.7 - Spell Validators Must Check Deployed Spell Optimization Settings [Core]  <!-- UUID: 7f3112c8-ed90-4dfc-b29a-eae1d3492a11 -->
+
+Validators must ensure that the code optimization settings used by the Spell contract are correct.  
+Validators should ensure the following:  
+  
+• The `Optimization Enabled` field on Etherscan is set to `No with 200 runs` unless explicitly required due to contract size constraints during deployment.  
+  
+• If optimization is enabled, the value of the `Optimization Enabled` must be `Yes with 200 runs` unless the optimization settings have been specified in the Instruction Document as a specific number of runs, which must be a multiple of 100 other than 0.  
+  
+• If the optimization settings are incorrect \(e.g., `No with 13767 runs` or `Yes with 0 runs`\), the Spell fails validation.  
+  
+To perform this validation, the validator must go to the contract tab on Etherscan and review the `Optimization Enabled` field under the contract’s metadata.
+
+######## A.1.9.2.4.12.3.1.8 - Spell Validators Must Check Deployed Spell EVM Version [Core]  <!-- UUID: a1773da6-7656-47b7-a31a-a4bd366d0d85 -->
+
+Validators must ensure that the correct EVM version for the Spell contract is displayed on Etherscan. The EVM version is determined by the Solidity compiler version used during compilation but should be displayed as Default. For the Spell to pass validation, Default must be displayed in the `Other Settings` field on Etherscan.  
+  
+To perform this validation the validator must go to the “Contract” tab on Etherscan and review the `Other Settings` field under the contract’s metadata.
+
+######## A.1.9.2.4.12.3.1.9 - Spell Validators Must Perform Basic Spell Code Validation [Core]  <!-- UUID: 46cbc700-20e4-4a57-9508-07a6baa26fca -->
+
+The Spell validator must perform a brief review of the Spell code. This includes reviewing the `DssSpellAction` contract within the `DssSpell.sol` file.  
+  
+Validators should look for any unusual behavior, such as:  
+  
+• Low-level assembly operations \(e.g., `assembly` blocks\).  
+  
+• The use of Solidity opcodes, such as `delegatecall`, `callcode`, or `selfdestruct`.  
+  
+• Suspicious-looking payments or transfers.  
+  
+• Any other malicious or unauthorized code. This includes cross-checking the Solidity code in `actions()` against the Executive Sheet and the Executive Document. Each action must be authorized per the Atlas.  
+  
+Spell validators must report any code they find that appears to be malicious or which likely forms part of an attempted attack. A Spell must not pass validation if the Spell validator is convinced that malicious code is present in a Spell or that its execution can lead to an attack on the Sky Protocol.  
+  
+To perform this validation, the validator must go to the “Contract” tab on Etherscan and review the source code.
+
+###### A.1.9.2.4.12.4 - Validation Outcome Reporting [Core]  <!-- UUID: 43d2fe19-727f-4722-b913-7d5f79e1a2a7 -->
+
+The Spell validator is responsible for reporting the outcome of the validation process. This includes determining whether the Spell passes or fails validation, documenting any issues discovered during the validation process, and ensuring that all issues are resolved before the Spell can be classified as passing validation. The process for reporting, including how to report and to whom issues should be reported, is detailed in the subdocuments herein.
+
+####### A.1.9.2.4.12.4.1 - Spell Passing Validation [Core]  <!-- UUID: 6f0fce93-7274-4cb1-921e-d120989294b4 -->
+
+A Spell is classified as passing validation when:  
+  
+1. All validation checks are completed without identifying issues, or  
+  
+2. All reported issues have been resolved to the satisfaction of the Spell validator  
+  
+Validation of the Spell should ideally be public, though this is not mandatory.
+
+####### A.1.9.2.4.12.4.2 - Spell Failing Validation [Core]  <!-- UUID: 66a80a93-fcfa-48d5-819e-99489288fa83 -->
+
+A Spell is classified as failing validation when:  
+  
+1. One or more issues are identified during validation, or  
+  
+2. Reported issues remain unresolved to the satisfaction of the Spell validator.
+
+####### A.1.9.2.4.12.4.3 - Reporting Issues Found During Validation [Core]  <!-- UUID: 6ea115ff-4554-4c3c-b3d5-a0407972de6a -->
+
+Issues discovered during validation must be reported as follows:  
+  
+1. Mandatory Reporting: If the validation check is required, the issue must be reported immediately.  
+  
+2. Recommended Reporting: If the validation check is recommended, validators are strongly encouraged to report issues unless they are certain the issue is not malicious, a bug, or an attack on the Sky Protocol.  
+  
+3. Out-of-Scope Issues: Any issues found outside the scope of validation checks should also be reported as soon as it is found.  
+  
+In general, any issue that appears functional or potentially functional should be reported.
+
+####### A.1.9.2.4.12.4.4 - Resolving Issues [Core]  <!-- UUID: eca405af-edd5-42a9-8bec-4a9e49bcd090 -->
+
+When an issue has been reported by a Spell validator, the Core Facilitators or the Spell Team who worked on the Spell are likely to respond to the issue. The Spell validator must assume that the parties providing the answer are acting maliciously and lying to prevent the discovery of their attack.  
+  
+The validator may only consider the issue as resolved once they are comfortable that the issue does not constitute a bug or attack that poses a threat to the Sky Protocol. Only the validator who raised the issue is permitted to consider an issue as resolved, and any unresolved issue will prevent the Spell from passing validation.
+
+####### A.1.9.2.4.12.4.5 - Primary Reporting Counterparty [Core]  <!-- UUID: 8bd3523a-751f-4371-a20e-b267680410ad -->
+
+Issues found during the Spell validation should be reported to all Core Facilitators, not a single Facilitator, to mitigate the risk of compromised or malicious actors.
+
+####### A.1.9.2.4.12.4.6 - Secondary Reporting Counterparty [Core]  <!-- UUID: 813e403a-2ffb-463c-b9ac-1cc6653ba755 -->
+
+If a validator suspects that Core Facilitators are malicious or colluding, they must notify Sky Governance by reporting the issues they found publicly. This permits Sky Governance community to independently investigate the issue and act together to mitigate an attack, even if all Core Facilitators are compromised or acting maliciously.
+
+####### A.1.9.2.4.12.4.7 - Private Validation Status Reporting [Core]  <!-- UUID: 55d6723f-c93d-4a81-ad4e-e55cfd8b096c -->
+
+Privately reporting issues found during Ecosystem Spell Validation is only recommended where the private communication involves a group of Core Facilitators, as a single Core Facilitator may be acting maliciously and provide false information. Private reporting of issues can be performed using platforms such as Discord or Signal.
+
+####### A.1.9.2.4.12.4.8 - Public Validation Status Reporting [Core]  <!-- UUID: 2a14eed2-f334-410c-a669-d055ed0a9e59 -->
+
+Publicly reporting issues found during Spell validation is the recommended method of issue reporting. Issues reported publicly may be reported to Core Facilitators using the “#new-Spells” channel in the Sky Builder Discord Group. In cases of potentially malicious Core Facilitators, issues should be reported to Aligned Delegates and wider Sky Governance using the “#governance” channel in the Sky Builder Discord Group. In cases where this is not possible, posts made to the Sky Forum may be used; however, these should be used as a last resort as they will likely cause a slower response time.
+
+##### A.1.9.2.4.13 - Spell Execution Process And Retro (Step 13) [Core]  <!-- UUID: 761cd866-17a9-47f5-8ae6-ab1788371be1 -->
+
+The subdocuments herein provide a detailed breakdown of the technical steps involved in the execution of Spells and follow-ups after Spell execution.
+
+###### A.1.9.2.4.13.1 - Outcome Of The Executive Proposal Vote [Core]  <!-- UUID: d87a286e-ebfa-477b-8d03-b69c6fead235 -->
+
+When an Executive Proposal is ready for a vote by Sky Governance, SKY holders cast their votes. The voting process determines whether the Executive Proposal gains enough support to move forward to the execution phase. If the executive does not accumulate sufficient SKY to "move the hat" \(i.e., reach the required threshold for approval\), it does not proceed to execution immediately; however, it can still gain support and be executed later within the expiration window. For official Spells, there is a 30-day expiration period after deployment. Once this period lapses, the Spell process ends, and no further actions can be taken for the associated Spell. If the executive gains enough support to be approved, the process moves forward to the execution phase.
+
+###### A.1.9.2.4.13.2 - Lifting the Spell [Core]  <!-- UUID: ee6fc86b-99da-4782-bc7f-7c01e5bbcd81 -->
+
+Before a Spell can be scheduled for execution, it must be "lifted" to become the active "hat" in the DSChief contract. To lift a Spell, that Spell must have more approvals than the current hat. This action is permissionless, meaning any Ethereum address can trigger the execution without requiring special permissions.
+
+####### A.1.9.2.4.13.2.1 - Chief-keeper [Core]  <!-- UUID: f31bd0d0-fc5b-4c86-9b84-30c4b010c986 -->
+
+The chief-keeper monitors and interacts with DSChief and DSSSpells. When a Spell receives more approval than the current hat, the chief-keeper calls the `lift` function to make this Spell the new hat. After confirming hat status, the chief-keeper proceeds to schedule the Spell, ensuring that only the current hat is scheduled for execution.
+
+###### A.1.9.2.4.13.3 - Execution Setup For Approved Vote [Core]  <!-- UUID: e06f6a83-7c74-4abd-b4da-771cbfdf2fb9 -->
+
+If the executive is approved and has been lifted to become the current hat in the DSChief, a future action to execute the Spell's actions is prepared by calling `schedule()` on the Spell contract. This action is permissionless, meaning any Ethereum address can trigger the execution without requiring special permissions. This process involves calling `plot` on `ds-pause` with four parameters related to the Spell action contract:  
+  
+• The address of the Spell action contract.  
+  
+• The `extcodehash` value of the Spell action contract.  
+  
+• Any `calldata` information required for the future execution of the Spell contract's actions using `execute()`.  
+  
+• The `eta`, which is the earliest time the Spell's actions can be executed. This must be scheduled at least the duration of the pause delay into the future.  
+  
+Once the Spell's actions are "plotted" in the Pause, the Spell is considered `scheduled`, and the countdown to the `eta` time begins. In the absence of Office Hours, this countdown is typically equal to the duration of the `GSM Pause Delay`. If Office Hours are set to "Yes" then the countdown will be equal to the `GSM Pause Delay` plus whatever time is needed to enter the Office Hours window.
+
+###### A.1.9.2.4.13.4 - Casting And Execution Of Approved Spell [Core]  <!-- UUID: a900623d-15e0-4fc6-a393-bae5da03c139 -->
+
+Once the current time exceeds the `eta` value set during scheduling, the Spell can be `cast` \(see [A.1.9 - Execution Setup For Approved Vote](e06f6a83-7c74-4abd-b4da-771cbfdf2fb9)\). Casting and the subsequent execution path occur atomically within the same transaction. This entire process is permissionless, meaning any Ethereum address can trigger the execution without requiring special permissions.
+
+####### A.1.9.2.4.13.4.1 - Casting Of Spell [Core]  <!-- UUID: cdd724f1-5cc7-48df-81f7-25c6a932a184 -->
+
+When the `cast` function in the DssSpell contract is called:  
+  
+• The Spell is marked as `cast`, preventing it from being executed again.  
+  
+• The `cast` function initiates the execution process by calling the `exec` function in the `ds-pause` contract.
+
+####### A.1.9.2.4.13.4.2 - Execution Of Spell [Core]  <!-- UUID: 8ee36ed9-cae6-462b-a6b4-9aa5479fee18 -->
+
+Within the same transaction initiated by `cast()`, ds-pause proceeds as follows:  
+  
+1. Validation and Removal: The `exec` function in `ds-pause` validates the execution request and removes it from the list of scheduled executions.  
+  
+2. Delegate Call to Spell Action Contract: The `ds-pause` contract calls `exec` on the Pause Proxy contract, which performs a `delegatecall` to the Spell action contract address specified during scheduling.  
+  
+3. Execution of Spell Actions:  
+    ◦ For regular Spells, the Pause Proxy calls the `execute()` function on the `DssSpellAction` contract.  
+    ◦ The `execute()` function calls the `actions()` function, where the Spell’s actions are carried out.  
+  
+4. Error Handling: If the transaction reverts at any point \(e.g., due to an error in `actions()`\), the Pause Proxy halts execution.  
+  
+5. Final Checks: If the transaction succeeds, the `exec` function in `ds-pause` performs a final ownership check to ensure the Pause Proxy is still owned by `ds-pause`.  
+  
+6. Completion: Once the final check passes, the execution of `cast()` is finalized, marking the end of the process.
+
+###### A.1.9.2.4.13.5 - Spell Crafter Initiates Retrospective And Conducts Any Needed Follow Ups [Core]  <!-- UUID: 300fc1fe-ffa7-4204-8e38-0b9069b75bb9 -->
+
+With the Pull Request merged, the Spell Crafter turns to initiating the retrospective and conducting any needed follow-up as specified herein.
+
+####### A.1.9.2.4.13.5.1 - Spell Crafter Initiates Retrospective [Core]  <!-- UUID: a5959563-d525-4431-b2e3-b1ebcaf88b99 -->
+
+The Spell Crafter initiates a retrospective on the Spell in the existing Spell thread in the `#govops` Discord channel. The Spell Crafter prefaces the message with `initiating retro`. The Spell Crafter should include any problems identified during the Spell, including concrete improvement proposals. If there is nothing to discuss, the Spell Crafter should communicate that \(e.g `Initiating retro: nothing to discuss from my side`\).
+
+####### A.1.9.2.4.13.5.2 - Spell Crafter Conducts Any Needed Follow Up Regarding Megapoker [Core]  <!-- UUID: e3009714-a46c-43b9-8f90-d09bd2e816b6 -->
+
+If any changes related to Megapoker were made in the Spell \(e.g., oracles replaced, collaterals onboarded or offboarded\), the Spell Crafter should inform the Ecosystem Actor responsible for maintaining Megapoker and ensure the contract is updated.  
+  
+The following steps are necessary to ensure the Megapoker contract is updated:  
+  
+• Coordinate with Ecosystem Actor responsible for maintaining Megapoker and TechOps  
+  
+• Previous code patterns are followed  
+  
+• Megapoker changes are reviewed and approved  
+  
+• CI and local tests pass  
+  
+• New Megapoker contract is deployed  
+  
+• New deployed Megapoker contract address is handed to TechOps  
+  
+• New deployed Megapoker contract address is updated in README
+
+####### A.1.9.2.4.13.5.3 - Spell Crafter Conducts Any Needed Follow Up Regarding New Collateral [Core]  <!-- UUID: 2d902745-59ae-4ea1-88bb-c5146ebd1750 -->
+
+If new collateral is onboarded, the Spell Crafter works with TechOps to ensure that there is Keeper support for the newly onboarded collateral.
+
+####### A.1.9.2.4.13.5.4 - Spell Crafter Conducts Any Needed Follow-Up Regarding Linear Interpolation Module [Core]  <!-- UUID: f1365a6d-3749-48ed-aed4-966c3aa0bd5b -->
+
+If a Linear Interpolation Module was added, the Spell Crafter ensures keeper support to call the `tall` function on a daily basis.
+
+####### A.1.9.2.4.13.5.5 - Spell Crafter Conducts Specific Checks As Needed For High-Stakes Spells [Core]  <!-- UUID: 0ad20a0f-2e23-4c24-b68d-55af08c32657 -->
+
+For critical or high-stakes Spells, the Spell Crafter conducts specific checks as required in the particular context of the Spell.
+
+#### A.1.9.2.5 - Voting Process For Executive Votes [Core]  <!-- UUID: 3aa5bc98-91ce-4588-b345-a96af8ba2366 -->
+
+The subdocuments herein provide a high-level summary of the voting process for Executive Votes within the Sky Protocol.
+
+##### A.1.9.2.5.1 - Voting Requirements [Core]  <!-- UUID: 441d8bef-e71a-4621-bc03-353821865031 -->
+
+Participation in Executive Votes requires access to SKY for voting, the governance token of the Sky Protocol, whether through direct ownership or delegated authority. Voters can connect their Ethereum wallet to the official voting platform \(accessible at [https://vote.sky.money](https://vote.sky.money/)\) to allocate their SKY vote-weight in support of an active proposal, or directly via onchain transactions using other interfaces or smart contract interactions. Voting incurs a gas fee, as it is an onchain transaction. SKY tokens can be used directly by holders or delegated to representatives like Aligned Delegates or Shadow Delegates, who vote on behalf of token holders see [A.1.9 - SKY Holders](3e1d0486-4805-4bed-a246-f75198e111e6). There is no minimum SKY amount required to vote, and each SKY token carries equal voting rights, ensuring a democratic process where cumulative vote-weight determines a proposal’s chance of execution.
+
+##### A.1.9.2.5.2 - Voting Validation [Core]  <!-- UUID: c888b306-369e-4db4-98cc-75beddc3689a -->
+
+Once an Executive Vote is live on the Voting Portal, it enters the Ecosystem Spell Validation Window, a critical period for community review. For more details of the validation process see [A.1.9 - Ecosystem Validators Validates Spell During Validation Window \(Step 12\)](84d31eb0-fbbc-4783-a7cf-ef7dddfa8271).
+
+##### A.1.9.2.5.3 - Continuous Approval Voting [Core]  <!-- UUID: 9b43b664-fcfc-484e-9faa-5ca0ffabd10e -->
+
+Executive Votes operate under a Continuous Approval Voting mechanism. Voters can support multiple proposals by allocating their SKY vote-weight to each, with the goal of helping a favored proposal surpass the current "hat"—the proposal with the most approval in the DSChief contract. Voters can apply their full SKY vote-weight to up to 5 different proposals simultaneously \(as defined by the `max_yays` limit in the contract\), rather than splitting their tokens between them. If SKY token holders disagree with a new proposal, they can redirect their SKY vote-weight to the inactive proposal with the highest vote-weight \(often the last successfully passed proposal\) to maintain the status quo or support an alternative. An active proposal can become the hat if it accumulates more votes than any other, including the current hat, at which point it is "lifted" to become the new hat. This lifting process marks the active proposal, and it may now be scheduled and later executed, provided it meets other conditions like the GSM Pause Delay. There are three key aspects to Continuous Approval Voting:  
+  
+• Victory threshold set by the hat: The vote-weight on the current hat proposal establishes the "victory threshold" that new proposals must exceed to become eligible for execution. This ensures only the most supported changes advance.  
+  
+• Dynamic vote-weight movement: Vote-weight can shift from the hat to a new proposal, simultaneously lowering the victory threshold for the hat while boosting the new proposal’s chances. This fluidity allows for real-time community consensus shifts.  
+  
+• Securing the hat: Vote-weight is encouraged to remain on the hat proposal even after it’s lifted, acting as a security measure against "rogue" or less-supported proposals that might attempt to overtake it with minimal backing.
+
+##### A.1.9.2.5.4 - Voting Outcome [Core]  <!-- UUID: 9c5cae66-1317-43e9-bd85-041a9d8b5623 -->
+
+The voting outcome is determined by the amount of SKY vote-weight allocated to the Executive Vote. If a proposal does not receive more SKY vote-weight than the current hat, it will not be scheduled for execution and will eventually expire; SKY holders can continue supporting it or redirect their vote-weight to another proposal, often the previously approved one, to maintain the status quo. For details of the execution process see [A.1.9 - Spell Execution Process And Retro \(Step 13\)](761cd866-17a9-47f5-8ae6-ab1788371be1).
+
+### A.1.9.3 - Governance Security Delay Requirements [Section]  <!-- UUID: c5f0e955-0441-42e0-a6fc-eab875bba568 -->
 
 This subdocuments herein define critical processes and requirements concerning the Governance Security Module \(GSM\) Pause Delay.
 
-#### A.1.9.2.1 - Pause Delay [Core]  <!-- UUID: 3c9545d9-775f-4149-88bf-7d297b5302c6 -->
+#### A.1.9.3.1 - Pause Delay [Core]  <!-- UUID: 3c9545d9-775f-4149-88bf-7d297b5302c6 -->
 
 The GSM \(Governance Security Module\) Pause Delay parameter sets the minimum amount of time after an Executive Vote has passed before changes will come into effect in the Sky Protocol.   
   
@@ -2121,7 +3656,7 @@ Once an Executive Vote passes, the GSM Pause Delay must pass before the changes 
   
 It is possible to move functionality outside of the GSM Pause Delay; however, this requires additional engineering work. A list of exceptional functionality can be found in [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Exceptions](6781594b-5dff-45ec-89a4-1c9684c4eed8).
 
-##### A.1.9.2.1.1 - Pause Delay Adjustment [Core]  <!-- UUID: bcf9f14d-9c9b-4b3f-b417-a7e52fca0399 -->
+##### A.1.9.3.1.1 - Pause Delay Adjustment [Core]  <!-- UUID: bcf9f14d-9c9b-4b3f-b417-a7e52fca0399 -->
 
 Adjusting the GSM Pause Delay parameter is a manual process that requires an Executive Vote. Changes to the GSM Pause Delay are subject to the pre-change GSM Pause Delay.  
   
@@ -2129,15 +3664,15 @@ An increase to the GSM Pause Delay parameter should be considered if the risk of
   
 A decrease should be considered if time-critical governance actions are projected to be needed in the near future. For example, if extreme market volatility is expected, it may be beneficial to reduce the GSM Pause Delay temporarily to allow Governance to better react to changing conditions.
 
-##### A.1.9.2.1.2 - Pause Delay Current Value [Core]  <!-- UUID: db442d8a-8d98-47a2-b162-01c2adc22b67 -->
+##### A.1.9.3.1.2 - Pause Delay Current Value [Core]  <!-- UUID: db442d8a-8d98-47a2-b162-01c2adc22b67 -->
 
 The GSM Pause Delay is: 24 hours
 
-#### A.1.9.2.2 - Exceptions [Core]  <!-- UUID: 6781594b-5dff-45ec-89a4-1c9684c4eed8 -->
+#### A.1.9.3.2 - Exceptions [Core]  <!-- UUID: 6781594b-5dff-45ec-89a4-1c9684c4eed8 -->
 
 The current exceptions to the GSM Pause Delay are specified in the subdocuments herein.
 
-##### A.1.9.2.2.1 - Executive Drop Exception [Core]  <!-- UUID: 3041b5f2-36f4-49c5-b1ca-f0c97d6e63b2 -->
+##### A.1.9.3.2.1 - Executive Drop Exception [Core]  <!-- UUID: 3041b5f2-36f4-49c5-b1ca-f0c97d6e63b2 -->
 
 The MCD\_PAUSE contract manages the general governance timelock of the GSM Pause Delay; however, it also contains an in-built exception to its own rule.  
   
@@ -2147,7 +3682,7 @@ This functionality allows Sky Governance to prevent a malicious attack on the pr
   
 The risk opened up by this exceptional functionality is that a malicious attacker may be able to delay or permanently block a legitimate governance proposal.
 
-##### A.1.9.2.2.2 - Oracle Freeze Exception [Core]  <!-- UUID: e604c477-e8e4-483f-a41e-c93dcff3acfd -->
+##### A.1.9.3.2.2 - Oracle Freeze Exception [Core]  <!-- UUID: e604c477-e8e4-483f-a41e-c93dcff3acfd -->
 
 The OSM\_MOM contract manages the freezing of Sky’s oracles. The freeze functionality allows a successful governance proposal to immediately freeze the oracle price for any or all of the vault types in the Sky Protocol. Once frozen, the oracle price will remain at its current value.  
   
@@ -2159,7 +3694,7 @@ The risk opened up by this exceptional functionality is that the oracles may be 
   
 • Take advantage of a significant drop in collateral prices to mint unbacked USDS.
 
-##### A.1.9.2.2.3 - Debt Ceiling Breaker Exception [Core]  <!-- UUID: cd57f7e4-6acd-431e-97fd-89c3453c8eba -->
+##### A.1.9.3.2.3 - Debt Ceiling Breaker Exception [Core]  <!-- UUID: cd57f7e4-6acd-431e-97fd-89c3453c8eba -->
 
 The LINE\_MOM contract manages the breaker for the Debt Ceilings of a configurable subset of the vault types in the Sky Protocol. This Debt Ceiling Breaker allows a successful governance proposal to reduce the debt ceilings of a pre-configured whitelist of vault types to zero without waiting for the GSM Pause Delay to expire.  
   
@@ -2167,7 +3702,7 @@ The Debt Ceiling Breaker affects both the Debt Ceiling and the Maximum Debt Ceil
   
 The whitelist may be configured via a successful governance proposal, but must wait for the GSM Pause Delay before changes come into effect. The whitelist is defined in [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Debt Ceiling Breaker Exception Whitelist](4937205a-5be0-4def-9b7f-00f9f3bff421) and can be changed via the Weekly Governance Cycle.
 
-###### A.1.9.2.2.3.1 - Debt Ceiling Breaker Exception Whitelist [Core]  <!-- UUID: 4937205a-5be0-4def-9b7f-00f9f3bff421 -->
+###### A.1.9.3.2.3.1 - Debt Ceiling Breaker Exception Whitelist [Core]  <!-- UUID: 4937205a-5be0-4def-9b7f-00f9f3bff421 -->
 
 • PSM \(USDC\) - PSM-USDC-A  
   
@@ -2191,7 +3726,7 @@ The whitelist may be configured via a successful governance proposal, but must w
   
 • WBTC-C
 
-##### A.1.9.2.2.4 - Liquidations Circuit Breaker Exception [Core]  <!-- UUID: 54b41b8f-8104-47b9-a115-14a4a9716cf7 -->
+##### A.1.9.3.2.4 - Liquidations Circuit Breaker Exception [Core]  <!-- UUID: 54b41b8f-8104-47b9-a115-14a4a9716cf7 -->
 
 The CLIPPER\_MOM contract manages the circuit breaker for vault types using Liquidations 2.0. The circuit breaker functionality allows a successful governance proposal to impose Sky Governance’s choice of limitations on liquidations for any or all of the vault types in the Sky Protocol.  
   
@@ -2215,7 +3750,7 @@ The risk opened up by this exceptional functionality is that liquidations may be
   
 • Take advantage of a significant drop in collateral prices to mint unbacked USDS.
 
-###### A.1.9.2.2.4.1 - Liquidations Circuit Breaker Exception Price Tolerance [Core]  <!-- UUID: a228410a-353b-45dc-8f26-aae54ad8bf44 -->
+###### A.1.9.3.2.4.1 - Liquidations Circuit Breaker Exception Price Tolerance [Core]  <!-- UUID: a228410a-353b-45dc-8f26-aae54ad8bf44 -->
 
 Breaker Price Tolerance is a parameter which determines the condition for the permissionless activation of circuit breaker. Adjusting the Breaker Price Tolerance requires an Executive Vote, which is subject to GSM Pause Delay.  
   
@@ -2223,17 +3758,17 @@ The Breaker Price Tolerance is expressed as a number between zero and one, and w
   
 In instances where the price oracle model does not support the price delay function, the permissionless activation of the liquidation circuit breaker ceases to function, since there is no next oracle price.
 
-####### A.1.9.2.2.4.1.1 - Liquidations Circuit Breaker Exception Price Tolerance Current Value [Core]  <!-- UUID: cd377adf-aee4-42b2-9bbc-0e4a69570e0b -->
+####### A.1.9.3.2.4.1.1 - Liquidations Circuit Breaker Exception Price Tolerance Current Value [Core]  <!-- UUID: cd377adf-aee4-42b2-9bbc-0e4a69570e0b -->
 
 The Breaker Price Tolerance is: 0.5
 
-##### A.1.9.2.2.5 - Direct Deposit Breaker Exception [Core]  <!-- UUID: 2a0f27c9-7468-465d-9e07-19481f5e8c89 -->
+##### A.1.9.3.2.5 - Direct Deposit Breaker Exception [Core]  <!-- UUID: 2a0f27c9-7468-465d-9e07-19481f5e8c89 -->
 
 The DIRECT\_MOM contract manages the breaker for Direct Deposit Modules \(D3Ms\). The breaker functionality allows a successful governance proposal to disable any or all of the active D3Ms. In practice, this will set the bar parameter to zero, which \(contrary to intuition\) disables the module by setting the allowed Debt Ceiling to zero. At this point, no further USDS can be minted through the Direct Deposit Module. To reverse the effect, parameters of affected Direct Deposit Modules must be reconfigured with an Executive Vote which is subject to GSM Pause Delay.  
   
 The risk opened up by this exceptional functionality is that a given line of USDS credit is unexpectedly shut down. This has the potential to disrupt the protocol in question, which may impact Sky indirectly.
 
-##### A.1.9.2.2.6 - Dynamic Debt Ceiling Exception [Core]  <!-- UUID: d07e74b5-2faa-4d4d-9b4f-eb6ea72e8768 -->
+##### A.1.9.3.2.6 - Dynamic Debt Ceiling Exception [Core]  <!-- UUID: d07e74b5-2faa-4d4d-9b4f-eb6ea72e8768 -->
 
 The MCD\_IAM\_AUTO\_LINE contract manages the debt ceiling parameters for many of Sky’s vault types according to preset rules. Keepers can use the contract to attempt to maintain a Target Available Debt in a given vault type. The contract modifies the debt ceiling up or down to maintain a level of available debt.  
   
@@ -2241,13 +3776,13 @@ This functionality is exceptional so that the Sky protocol can react to changes 
   
 The risk opened up by this exceptional functionality is a theoretical griefing attack on the IAM that prevents debt from being accessible in affected vault types.
 
-##### A.1.9.2.2.7 - SparkLend Freezer Mom Exception [Core]  <!-- UUID: 645443f1-9004-48d3-868c-139b608bb1f9 -->
+##### A.1.9.3.2.7 - SparkLend Freezer Mom Exception [Core]  <!-- UUID: 645443f1-9004-48d3-868c-139b608bb1f9 -->
 
 The SparkLend FREEZER\_MOM contract allows Sky Governance to bypass the GSM Pause Delay to either freeze or pause any markets in SparkLend. The contract also allows the undoing of such actions for any market in SparkLend.  
   
 This functionality allows Sky Governance to react faster in an emergency. Freezing markets does not allow for new supplies or borrows, while pause restricts all market functionality, including deposits/withdrawals/borrows/repays and liquidations.
 
-##### A.1.9.2.2.8 - Smart Burn Engine Breaker Exception [Core]  <!-- UUID: 5247c795-7f9d-4d3f-a040-6bc9b070e2d4 -->
+##### A.1.9.3.2.8 - Smart Burn Engine Breaker Exception [Core]  <!-- UUID: 5247c795-7f9d-4d3f-a040-6bc9b070e2d4 -->
 
 The SPLITTER\_MOM contract allows for the disabling of the Smart Burn Engine without the GSM Pause Delay.  
   
@@ -2255,17 +3790,17 @@ This functionality is available so that Sky Governance can react to emergencies 
   
 Since the Splitter contract also allocates USDS from the Surplus Buffer to USDS Staking Rewards, the activation of SPLITTER\_MOM also disables these rewards until the activation is reversed by Sky Governance.
 
-##### A.1.9.2.2.9 - PSM Breaker Exception [Core]  <!-- UUID: 704fbaff-fa10-4c63-af5b-3ee5fd1ea6a8 -->
+##### A.1.9.3.2.9 - PSM Breaker Exception [Core]  <!-- UUID: 704fbaff-fa10-4c63-af5b-3ee5fd1ea6a8 -->
 
 The LITE\_PSM\_MOM contract manages the breaker for swaps through the LitePSM. The PSM Breaker allows a successful governance proposal to halt swaps through the LitePSM.
 
-##### A.1.9.2.2.10 - Bounded External Access Modules [Core]  <!-- UUID: 5533c091-e638-4c3d-92e8-43e3e7026078 -->
+##### A.1.9.3.2.10 - Bounded External Access Modules [Core]  <!-- UUID: 5533c091-e638-4c3d-92e8-43e3e7026078 -->
 
 Bounded External Access Modules \(BEAMs\) are contracts that allow whitelisted operators to manage parameters in the Sky Ecosystem without needing to use the standard Executive Vote process. Thus, parameter changes enacted via these modules are not subject to the GSM Pause Delay.  
   
 The actions of BEAMs are limited by risk parameters, which are set by Sky Core Governance and require an Executive Vote to change.
 
-###### A.1.9.2.2.10.1 - Bounded External Access Module Risk Disclosure [Core]  <!-- UUID: b2bffec7-2a62-43a1-bfed-1e38370ac086 -->
+###### A.1.9.3.2.10.1 - Bounded External Access Module Risk Disclosure [Core]  <!-- UUID: b2bffec7-2a62-43a1-bfed-1e38370ac086 -->
 
 BEAMs allow whitelisted operators greater flexibility to respond to market movements when setting parameters in the Sky Ecosystem. This flexibility introduces additional risk since operators are able to bypass the Executive Vote process when changing the parameters relevant to the BEAM that they operate.  
   
@@ -2273,7 +3808,7 @@ This risk can be mitigated by limiting the frequency and size of modifications t
   
 Any operator that fails to follow the defined procedures for a BEAM they are operating should be considered misaligned.
 
-###### A.1.9.2.2.10.2 - Stability Parameter Bounded External Access Module Exception [Core]  <!-- UUID: 12bb55dc-8f44-4f7a-a7f8-bf197a278784 -->
+###### A.1.9.3.2.10.2 - Stability Parameter Bounded External Access Module Exception [Core]  <!-- UUID: 12bb55dc-8f44-4f7a-a7f8-bf197a278784 -->
 
 The Stability Parameter Bounded External Access Module \(SP-BEAM\) MCD\_SPBEAM contract manages the rates applied to Sky Protocol’s native vaults as well as the savings rates. Whitelisted operators can use the SP-BEAM to modify rates without waiting for the GSM Pause Delay. The SP-BEAM modifies rates up or down within specified parameters. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a).   
   
@@ -2281,7 +3816,7 @@ This functionality allows the Sky Protocol to react to changes in market rates m
   
 The risk opened up by this functionality is malicious action by whitelisted operators setting rates to undesirable values. This risk can be mitigated through the SP-BEAM parameters and the SPBEAM\_MOM.
 
-###### A.1.9.2.2.10.3 - stUSDS Bounded External Access Module Exception [Core]  <!-- UUID: 5ce20b57-b8bb-4a67-b5b6-a28b707e2cb2 -->
+###### A.1.9.3.2.10.3 - stUSDS Bounded External Access Module Exception [Core]  <!-- UUID: 5ce20b57-b8bb-4a67-b5b6-a28b707e2cb2 -->
 
 The stUSDS Bounded External Access Module \(stUSDS BEAM\) manages the parameters of the stUSDS system. Whitelisted operators can use the stUSDS BEAM to modify certain stUSDS parameters without waiting for the GSM Pause Delay. The stUSDS BEAM modifies stUSDS parameters within specified ranges. See [A.4.4 - stUSDS Bounded External Access Module](37f8f82e-7239-4cfb-8f95-d2cc40515cd9).   
   
@@ -2289,27 +3824,27 @@ This functionality allows the Sky Protocol to update stUSDS parameters more quic
   
 The risk opened up by this functionality is malicious action by whitelisted operators setting stUSDS parameters to undesirable values. This risk can be mitigated through the stUSDS BEAM parameters and the STUSDS\_MOM.
 
-##### A.1.9.2.2.11 - Stability Parameter Bounded External Access Module Breaker Exception [Core]  <!-- UUID: 1fd7d164-e9f3-4d6c-ab5e-0122bb415f8d -->
+##### A.1.9.3.2.11 - Stability Parameter Bounded External Access Module Breaker Exception [Core]  <!-- UUID: 1fd7d164-e9f3-4d6c-ab5e-0122bb415f8d -->
 
 The SPBEAM\_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the Stability Parameter Bounded External Access Module.  
   
 This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the SP-BEAM is hacked or is a malicious actor. Once the SPBEAM\_MOM is activated, the SP-BEAM will not be able to change any rates in the system. If the SPBEAM\_MOM has been triggered, it will still be possible to modify rates through the usual Executive Vote process, subject to the GSM Pause Delay.
 
-##### A.1.9.2.2.12 - stUSDS Bounded External Access Module Breaker Exception [Core]  <!-- UUID: b9f3824c-31a5-472c-8a53-8166f3eeb7ee -->
+##### A.1.9.3.2.12 - stUSDS Bounded External Access Module Breaker Exception [Core]  <!-- UUID: b9f3824c-31a5-472c-8a53-8166f3eeb7ee -->
 
 The STUSDS\_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the stUSDS Bounded External Access Module or set the `cap` or `line` stUSDS parameters to zero.  
   
 This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the stUSDS BEAM is hacked or is a malicious actor. Once the STUSDS\_MOM is activated to disable the stUSDS BEAM, the stUSDS BEAM will not be able to change any stUSDS parameters in the system. If the STUSDS\_MOM has been triggered, it will still be possible to modify stUSDS parameters through the usual Executive Vote process, subject to the GSM Pause Delay.
 
-##### A.1.9.2.2.13 - Linear Interpolation Module [Core]  <!-- UUID: 60767684-f67f-4e03-85db-7718af41b827 -->
+##### A.1.9.3.2.13 - Linear Interpolation Module [Core]  <!-- UUID: 60767684-f67f-4e03-85db-7718af41b827 -->
 
 The Linear Interpolation Module \(`lerp`\) is a smart contract tool that allows a governance parameter to be adjusted on a straight-line basis over time, without requiring additional Executive Votes. The Linear Interpolation Module refers to the smart contract logic that enables time-based parameter changes. To deploy individual `lerp` instances, each of which manages the adjustment of a specific parameter over time, the Linear Interpolation Module Factory contract is used. Once authorized through an Executive Vote, the `lerp` may enact parameter changes without being subject to the GSM Pause Delay. The subdocuments herein specify the features of the `lerp` and its authorized use.
 
-###### A.1.9.2.2.13.1 - Linear Interpolation Module Features [Core]  <!-- UUID: c21d4246-8294-4f30-b69d-3d6056247893 -->
+###### A.1.9.3.2.13.1 - Linear Interpolation Module Features [Core]  <!-- UUID: c21d4246-8294-4f30-b69d-3d6056247893 -->
 
 The `lerp` must be activated in an Executive Vote but can thereafter change the value of the designated parameter without additional Executive Votes. Each `lerp` instance is defined in terms of a `start` value, representing the desired starting value, an `end` value, representing the desired ending value, and a `duration` over which the parameter will be adjusted between the starting value and the ending value. Any user can then permissionlessly call `tick` to set the governance parameter to the appropriate value based on the time elapsed.
 
-####### A.1.9.2.2.13.1.1 - Linear Interpolation Module Parameters [Core]  <!-- UUID: ac2fb8ab-4137-4243-8f75-1817f8529a70 -->
+####### A.1.9.3.2.13.1.1 - Linear Interpolation Module Parameters [Core]  <!-- UUID: ac2fb8ab-4137-4243-8f75-1817f8529a70 -->
 
 Each `lerp` instance has the following parameters:  
       
@@ -2321,31 +3856,31 @@ Each `lerp` instance has the following parameters:
 ◦ `duration` - How long this `lerp` instance will run for      
 ◦ `done` - Indicates whether this given `lerp` instance is completed or not
 
-####### A.1.9.2.2.13.1.2 - Linear Interpolation Module Factory [Core]  <!-- UUID: 59fecdcf-6d2b-4a2d-96bf-af1729fc2bf9 -->
+####### A.1.9.3.2.13.1.2 - Linear Interpolation Module Factory [Core]  <!-- UUID: 59fecdcf-6d2b-4a2d-96bf-af1729fc2bf9 -->
 
 `lerp` instances are created using a factory contract LERP\_FAB that contains standard logic for creating those instances and maintains a registry of all active `lerp` instances. The contract may also be used to cancel an existing `lerp` instance through the `remove` function. The factory contract provides a `list` method that lists the addresses of all active `lerp` instances, as well as a `tall` \(short for “tick all”\) method that calls `tick` on all active contracts.
 
-###### A.1.9.2.2.13.2 - Linear Interpolation Module Usage Process Definition [Core]  <!-- UUID: 2de4d031-e079-415e-b982-66a4efa78c05 -->
+###### A.1.9.3.2.13.2 - Linear Interpolation Module Usage Process Definition [Core]  <!-- UUID: 2de4d031-e079-415e-b982-66a4efa78c05 -->
 
 The subdocuments herein define the governance process for using the Linear Interpolation Module.
 
-####### A.1.9.2.2.13.2.1 - Linear Interpolation Module Authorization [Core]  <!-- UUID: 9652bd2c-f51c-42bb-9240-701e9723f574 -->
+####### A.1.9.3.2.13.2.1 - Linear Interpolation Module Authorization [Core]  <!-- UUID: 9652bd2c-f51c-42bb-9240-701e9723f574 -->
 
 The Facilitators responsible for the Scope that governs the parameter to be adjusted by the Linear Interpolation Module, in consultation with the Scope Advisor\(s\), may recommend deploying the Linear Interpolation Module for parameter adjustments.
 
-######## A.1.9.2.2.13.2.1.1 - Linear Interpolation Module Consideration [Core]  <!-- UUID: dd631146-0227-4fe3-87dd-085d0c909879 -->
+######## A.1.9.3.2.13.2.1.1 - Linear Interpolation Module Consideration [Core]  <!-- UUID: dd631146-0227-4fe3-87dd-085d0c909879 -->
 
 The Facilitators must take into consideration the benefits and costs with using the Linear Interpolation Module. A longer `duration` has the benefit of adjusting the parameter more slowly, giving users more time to adjust. However, the drawback of a longer `duration` is that the parameter will not reach its desired `end` value for a longer period of time. When the cost of a parameter not being at its desired value is high, use of the Linear Interpolation Module is not appropriate, and the parameter should be adjusted to its desired value following the required process.
 
-######## A.1.9.2.2.13.2.1.2 - Governance Process For Linear Interpolation Module [Core]  <!-- UUID: 3a075a4b-4071-4993-8210-5a87d13203b2 -->
+######## A.1.9.3.2.13.2.1.2 - Governance Process For Linear Interpolation Module [Core]  <!-- UUID: 3a075a4b-4071-4993-8210-5a87d13203b2 -->
 
 The process to utilize the Linear Interpolation Module to adjust a parameter must follow the same governance process required to modify the designated parameter. If the parameter can be updated directly through an Executive Vote, then utilizing the Linear Interpolation Module to adjust it may also be included directly in an Executive Vote. If modifying the parameter requires a prior Governance Poll, then utilizing the Linear Interpolation Module for that parameter must also be preceded by a Governance Poll.
 
-### A.1.9.3 - Governance Security Culture And Research [Section]  <!-- UUID: 19222532-1ce1-4306-8129-ea95a982c247 -->
+### A.1.9.4 - Governance Security Culture And Research [Section]  <!-- UUID: 19222532-1ce1-4306-8129-ea95a982c247 -->
 
 This Section must define processes to cultivate and maintain a strong security culture within the Sky Ecosystem. This Section must implement continuous research and integration of best practices to ensure that the Ecosystem’s security remains effective and up-to-date.
 
-#### A.1.9.3.1 - Spark Agent [Core]  <!-- UUID: fe525e67-1142-4312-bab7-bd9549747f77 -->
+#### A.1.9.4.1 - Spark Agent [Core]  <!-- UUID: fe525e67-1142-4312-bab7-bd9549747f77 -->
 
 Spark is one of the initial Agents focused on developing crypto on-chain lending engines. Spark will be governed by Spark token holders pursuant to the conditions specified in the Atlas.  
   
@@ -2353,13 +3888,13 @@ SparkLend Protocol is the first such on-chain lending engine, structured as a Co
   
 The subdocuments below outline the governance security procedures specifically in development for the SparkLend Protocol.
 
-##### A.1.9.3.1.1 - Multisig Freeze Of SparkLend [Core]  <!-- UUID: df709091-a82b-4bd6-ab05-42c56a49d326 -->
+##### A.1.9.4.1.1 - Multisig Freeze Of SparkLend [Core]  <!-- UUID: df709091-a82b-4bd6-ab05-42c56a49d326 -->
 
 In addition to the SparkLend Freezer Mom contract defined in [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - SparkLend Freezer Mom Exception](645443f1-9004-48d3-868c-139b608bb1f9), an external SparkLend Security Access Multisig has been established that allows for pausing and/or freezing SparkLend markets. The SparkLend Security Access Multisig can enable or disable the SparkLend Freezer Mom contract without the need for inclusion in a spell through the standard Executive Vote process.   
   
 Each action executed by the multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum. Such actions include activating or disabling the pause or freeze function.
 
-###### A.1.9.3.1.1.1 - SparkLend Multisig Usage Standards [Core]  <!-- UUID: 95dd3a55-eff4-4d5c-971d-c9bb8a145d36 -->
+###### A.1.9.4.1.1.1 - SparkLend Multisig Usage Standards [Core]  <!-- UUID: 95dd3a55-eff4-4d5c-971d-c9bb8a145d36 -->
 
 The SparkLend Security Access Multisig can only be used in urgent or emergency situations \(e.g., potential code exploits\). Such situations are characterized by the fact that 1\) they have the potential to harm the Sky Ecosystem or SparkLend users; and 2\) the preparation time required for an Executive Vote would leave the ecosystem vulnerable to harm \(e.g., an exploit\).  
   
@@ -2369,19 +3904,19 @@ The Multsig can also be used in cases where a vulnerability or exploit is discov
   
 The Governance Facilitators must ensure that use of the multisig is generally aligned and specifically accords with the requirements defined herein.
 
-####### A.1.9.3.1.1.1.0.3.1 - Same Codebase - Element Annotation [Annotation]  <!-- UUID: d373ebcb-c746-4388-885c-d1bba4edbf05 -->
+####### A.1.9.4.1.1.1.0.3.1 - Same Codebase - Element Annotation [Annotation]  <!-- UUID: d373ebcb-c746-4388-885c-d1bba4edbf05 -->
 
 The element “same codebase” refers to the fact that SparkLend is based on the Aave codebase. Vulnerabilities or exploits discovered within Aave, or any other protocol utilizing the Aave codebase, could potentially be replicated and affect SparkLend.
 
-####### A.1.9.3.1.1.1.0.4.1 - Governance Facilitators Must Exercise Due Caution In Reviewing Use Of Multisig [Action Tenet]  <!-- UUID: 71898c9e-1bb5-43fb-95bb-e9aeec2bdd0c -->
+####### A.1.9.4.1.1.1.0.4.1 - Governance Facilitators Must Exercise Due Caution In Reviewing Use Of Multisig [Action Tenet]  <!-- UUID: 71898c9e-1bb5-43fb-95bb-e9aeec2bdd0c -->
 
 The list of instances justifying use of the multisig in the Target Document is not intended to be exhaustive. However, the Governance Facilitators must exercise due caution in reviewing and validating use of the multisig in edge cases, i.e., use of the multisig that falls outside of the examples provided in the Target Document. In such “edge cases,” the Governance Facilitators must ensure that a postmortem is publicly published on the Sky Forum which justifies the use of the multisig. The Governance Facilitators should also consider proposing an edit to the Target Document so that the edge case is explicitly included in the examples provided in the Target Document.
 
-###### A.1.9.3.1.1.2 - SparkLend Multisig Number Of Signers [Core]  <!-- UUID: 0c71e677-9acb-4f89-bb25-1726e8dac076 -->
+###### A.1.9.4.1.1.2 - SparkLend Multisig Number Of Signers [Core]  <!-- UUID: 0c71e677-9acb-4f89-bb25-1726e8dac076 -->
 
 The SparkLend Security Access Multisig currently has a 3/5 signing requirement.
 
-###### A.1.9.3.1.1.3 - SparkLend Multisig Current Signers [Core]  <!-- UUID: 526a954b-5939-47d0-aacf-fdc190f71d5e -->
+###### A.1.9.4.1.1.3 - SparkLend Multisig Current Signers [Core]  <!-- UUID: 526a954b-5939-47d0-aacf-fdc190f71d5e -->
 
 The SparkLend Security Access Multisig currently has the following signers:  
   
@@ -2391,7 +3926,7 @@ The SparkLend Security Access Multisig currently has the following signers:
 ◦ MonetSupply  
 ◦ LucasManuel
 
-###### A.1.9.3.1.1.4 - SparkLend Multisig Signer Modifications [Core]  <!-- UUID: d8e0d76b-dd1f-4f3e-9a8b-7724ce4fc880 -->
+###### A.1.9.4.1.1.4 - SparkLend Multisig Signer Modifications [Core]  <!-- UUID: d8e0d76b-dd1f-4f3e-9a8b-7724ce4fc880 -->
 
 Modification of the signers of the SparkLend Security Access Multisig must be approved through a Governance Poll; no Executive Vote is required.  
   
@@ -2399,13 +3934,13 @@ The only exceptions to this are if: 1\) a signer self-reports a loss of access t
   
 Any changes to the multisig signers that do not fall within the two exceptions listed above, or that have not been ratified by Sky Governance, should be questioned immediately and treated as malicious. The Governance Facilitators should consider preparing an expedited Executive Vote so that Sky Governance can vote on removing external security access from the multisig.
 
-###### A.1.9.3.1.1.5 - SparkLend Multisig Address [Core]  <!-- UUID: 13ad3a13-d446-40db-9db6-18ab34fe049a -->
+###### A.1.9.4.1.1.5 - SparkLend Multisig Address [Core]  <!-- UUID: 13ad3a13-d446-40db-9db6-18ab34fe049a -->
 
 The current whitelisted SparkLend Security Access Multisig address is:  
   
 `0x44efFc473e81632B12486866AA1678edbb7BEeC3`
 
-###### A.1.9.3.1.1.0.3.1 - Multisig - Element Annotation [Annotation]  <!-- UUID: 1844a8bf-ad90-413c-9278-129379dc17bb -->
+###### A.1.9.4.1.1.0.3.1 - Multisig - Element Annotation [Annotation]  <!-- UUID: 1844a8bf-ad90-413c-9278-129379dc17bb -->
 
 The element “multisig” refers to a blockchain wallet implemented as a smart contract and requiring multiple signers to approve transactions.  
   
@@ -2413,15 +3948,15 @@ A blockchain wallet has an address associated with it and can hold cryptocurrenc
   
 A multisig allows the control of a wallet to be shared among the signers based on specified parameters, including the number of signers and how many signers are needed to approve each transaction. This allows a wallet to be more safely managed: for instance, a multisig prevents the possibility that a single signer could take malicious action and allows the signers to be updated if necessary.
 
-### A.1.9.4 - Emergency Spells [Section]  <!-- UUID: b8266c11-3a84-4bbe-abe2-de9474f74ffd -->
+### A.1.9.5 - Emergency Spells [Section]  <!-- UUID: b8266c11-3a84-4bbe-abe2-de9474f74ffd -->
 
 The subdocuments herein govern the management of emergencies whose resolution requires an Executive Vote.
 
-#### A.1.9.4.1 - Emergency Spells Definition [Core]  <!-- UUID: b28a2439-3d64-4e64-aaa1-d7a58090d3a0 -->
+#### A.1.9.5.1 - Emergency Spells Definition [Core]  <!-- UUID: b28a2439-3d64-4e64-aaa1-d7a58090d3a0 -->
 
 Emergency Spells are expedited ad hoc spells that, while typically compliant with all customary quality-assurance processes, do not adhere to the normal spell cadence. Emergency Spells solve the root issue of an emergency / urgent situation impacting the Protocol and are used when a rapid response time is needed. The Support and Governance Facilitators are responsible for managing the use of Emergency Spells pursuant to [A.1.8 - Emergency Response System - Emergency Response - Facilitators’ Roles And Responsibilities](c9c32f24-cf6c-43d5-ac4c-bd2b4d02032b) and [A.1.8 - Emergency Response System - Emergency Response Process - Known And Uncontentious Remedies](3f5f79fa-698c-42db-a941-ead5a5d0aa48).
 
-#### A.1.9.4.2 - Standby Spells [Core]  <!-- UUID: 5e40b575-4eda-4a6b-ae63-15a046cfb35d -->
+#### A.1.9.5.2 - Standby Spells [Core]  <!-- UUID: 5e40b575-4eda-4a6b-ae63-15a046cfb35d -->
 
 A subset of Emergency Spells is Standby Spells.  
   
@@ -2429,7 +3964,7 @@ Standby Spells allow Sky Governance to bypass the GSM Pause Delay and directly p
   
 The subdocuments herein specify the authorized use of Standby Spells.
 
-##### A.1.9.4.2.1 - Standby Spells Definition [Core]  <!-- UUID: 022b27ab-220d-4411-bfc8-5d09681ecc48 -->
+##### A.1.9.5.2.1 - Standby Spells Definition [Core]  <!-- UUID: 022b27ab-220d-4411-bfc8-5d09681ecc48 -->
 
 Sky Protocol uses circuit-breakers to mitigate undesired scenarios, which circuit-breakers are called MOM contracts. MOM contracts must first be triggered through a spell, after which they bypass the GSM Pause Delay and can immediately act on the Protocol. See [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Exceptions](6781594b-5dff-45ec-89a4-1c9684c4eed8).  
   
@@ -2437,75 +3972,75 @@ In emergency scenarios, time is a scarce resource. Therefore, Standby Spells are
   
 Standby Spells open new attack vectors that must be mitigated pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Standby Spells](53cea69b-45cc-4f9c-b863-9bf259e37deb).
 
-###### A.1.9.4.2.1.1 - Standby Spell Incorporation Into New MOM Contracts [Core]  <!-- UUID: 646ed712-24c6-4b77-9d2d-2599be50f325 -->
+###### A.1.9.5.2.1.1 - Standby Spell Incorporation Into New MOM Contracts [Core]  <!-- UUID: 646ed712-24c6-4b77-9d2d-2599be50f325 -->
 
 Each new MOM contract created must incorporate a Standby Spell or Standby Spell factory, which can be used to create new Standby Spells that can trigger the MOM contract. With a Standby Spell per every MOM contract, the generation of technical debt can be avoided.
 
-##### A.1.9.4.2.2 - Available Standby Spells [Core]  <!-- UUID: bd8bf8d3-e98f-48ae-91c0-a5f671c21cba -->
+##### A.1.9.5.2.2 - Available Standby Spells [Core]  <!-- UUID: bd8bf8d3-e98f-48ae-91c0-a5f671c21cba -->
 
 The currently available Standby Spells are defined in the subdocuments herein. The following list of Standby Spells is not exhaustive: that is, Core GovOps, in collaboration with the Emergency Response Group and spell teams, have the discretion to develop and use a Standby Spell that is not listed in the subdocuments below. When that occurs, however, Core GovOps must ensure that the new Standby Spell is subsequently added to the subdocuments below.
 
-###### A.1.9.4.2.2.1 - Single-Collateral Standby Spells [Core]  <!-- UUID: 8b1f9d33-ed32-4fa9-88b9-19f39c4a4af6 -->
+###### A.1.9.5.2.2.1 - Single-Collateral Standby Spells [Core]  <!-- UUID: 8b1f9d33-ed32-4fa9-88b9-19f39c4a4af6 -->
 
 The subdocuments herein define currently available single-collateral Standby Spells. For each instance of use, single-collateral Standby Spell contracts require a transaction to deploy the Standby Spell from a factory.
 
-####### A.1.9.4.2.2.1.1 - SingleOsmStopSpell [Core]  <!-- UUID: d84fd214-6fba-4a0d-a624-e054968ccacc -->
+####### A.1.9.5.2.2.1.1 - SingleOsmStopSpell [Core]  <!-- UUID: d84fd214-6fba-4a0d-a624-e054968ccacc -->
 
 This Standby Spell can be used in an emergency to freeze an OSM for a single collateral. If the oracle price provider fails for any reason, Governance can act before the OSM registers the next price; this allows for the problem to be fixed with no impact on the system.
 
-####### A.1.9.4.2.2.1.2 - SingleDdmDisableSpell [Core]  <!-- UUID: dedab114-26eb-49d3-987c-2ca8e95eeeb4 -->
+####### A.1.9.5.2.2.1.2 - SingleDdmDisableSpell [Core]  <!-- UUID: dedab114-26eb-49d3-987c-2ca8e95eeeb4 -->
 
 This Standby Spell can be used in an emergency to disable a D3M integration. If a D3M partner is experiencing a problem such as a hack, this emergency spell can be used to prevent abuse. While it cannot recover Dai already injected into the compromised protocol, the Emergency Spell can prevent additional exposure.
 
-####### A.1.9.4.2.2.1.3 - SingleLitePsmHaltFactory [Core]  <!-- UUID: 7c763597-d1df-48b3-8aed-625f77f517e4 -->
+####### A.1.9.5.2.2.1.3 - SingleLitePsmHaltFactory [Core]  <!-- UUID: 7c763597-d1df-48b3-8aed-625f77f517e4 -->
 
 This Standby Spell can be used in an emergency to halt a LitePSM completely.
 
-###### A.1.9.4.2.2.2 - Grouped Standby Spells [Core]  <!-- UUID: 2f9fb16b-b71f-4423-85f5-b366e84e261e -->
+###### A.1.9.5.2.2.2 - Grouped Standby Spells [Core]  <!-- UUID: 2f9fb16b-b71f-4423-85f5-b366e84e261e -->
 
 The subdocuments herein define currently available grouped Standby Spells. For each instance of use, grouped Standby Spell contracts require a transaction to deploy the Standby Spell from a factory. Unlike single-collateral Standby Spells, a grouped Standby Spell is configured at the time of deployment with a specific list of collaterals it can operate on. This setup enables a single grouped Standby Spell to operate on multiple related collaterals.
 
-####### A.1.9.4.2.2.2.1 - GroupedLineWipeSpell [Core]  <!-- UUID: 844d0f55-0f7a-40a8-b2e6-8e5ce72c73b3 -->
+####### A.1.9.5.2.2.2.1 - GroupedLineWipeSpell [Core]  <!-- UUID: 844d0f55-0f7a-40a8-b2e6-8e5ce72c73b3 -->
 
 This Standby Spell will perform a Line MOM Wipe \(set debt ceiling to zero\) for the specified collaterals. It can be used if the specified collaterals fail - for example, if a stablecoin depegs or the protocol that provides the token is hacked. Users will still be able to exit their positions, but no new debt will be allowed to be created for the collaterals.
 
-####### A.1.9.4.2.2.2.2 - GroupedClipBreakerSpell [Core]  <!-- UUID: d51e41f6-c29d-4476-92c2-ceae38ddca9c -->
+####### A.1.9.5.2.2.2.2 - GroupedClipBreakerSpell [Core]  <!-- UUID: d51e41f6-c29d-4476-92c2-ceae38ddca9c -->
 
 This Standby Spell can be used in an emergency to stop liquidations for the specified collaterals.
 
-###### A.1.9.4.2.2.3 - Multi-Collateral Standby Spells [Core]  <!-- UUID: a43090f2-f8a6-4703-ac02-47f3cad16529 -->
+###### A.1.9.5.2.2.3 - Multi-Collateral Standby Spells [Core]  <!-- UUID: a43090f2-f8a6-4703-ac02-47f3cad16529 -->
 
 The subdocuments herein define currently available multi-collateral Standby Spells. Multi-collateral Standby Spell contracts are spells in themselves and are thus reusable; beyond the initial deployment of the contract, no further deployment is needed.
 
-####### A.1.9.4.2.2.3.1 - MultiLineWipeSpell [Core]  <!-- UUID: 8b4f7c2e-817c-40f8-9b2c-d1a3f907fe3a -->
+####### A.1.9.5.2.2.3.1 - MultiLineWipeSpell [Core]  <!-- UUID: 8b4f7c2e-817c-40f8-9b2c-d1a3f907fe3a -->
 
 This Standby Spell will wipe all lines, setting the debt ceilings for all collaterals \(lines\) to zero. Users will still be able to exit their positions, but no new debt will be allowed to be created for any collateral.
 
-####### A.1.9.4.2.2.3.2 - MultiClipBreakerSpell [Core]  <!-- UUID: f5587483-d4cb-452d-b3ad-a5f565a36275 -->
+####### A.1.9.5.2.2.3.2 - MultiClipBreakerSpell [Core]  <!-- UUID: f5587483-d4cb-452d-b3ad-a5f565a36275 -->
 
 This Standby Spell will freeze liquidations for all collaterals.
 
-####### A.1.9.4.2.2.3.3 - MultiOsmStopSpell [Core]  <!-- UUID: 4cc57ff9-576e-4e35-a166-06e4e1e287a6 -->
+####### A.1.9.5.2.2.3.3 - MultiOsmStopSpell [Core]  <!-- UUID: 4cc57ff9-576e-4e35-a166-06e4e1e287a6 -->
 
 This Standby Spell will freeze all OSMs. If the oracle price provider fails for any reason, Governance can act before the OSM registers the next price; this allows for the problem to be fixed with no impact on the system.
 
-###### A.1.9.4.2.2.4 - Global Standby Spells [Core]  <!-- UUID: ea6670a4-58d9-4608-8240-32c098b3db11 -->
+###### A.1.9.5.2.2.4 - Global Standby Spells [Core]  <!-- UUID: ea6670a4-58d9-4608-8240-32c098b3db11 -->
 
 The subdocuments herein define currently available global Standby Spells. Global Standby Spell contracts are spells in themselves and are thus reusable; beyond the initial deployment of the contract, no further deployment is needed. Global Standby Spells differ from multi-collateral Standby Spells in that the former operates on the Protocol globally and not on some set of collaterals.
 
-####### A.1.9.4.2.2.4.1 - SplitterStopSpell [Core]  <!-- UUID: 06f796a3-4f91-4ba8-b7e9-f08e90a52a8d -->
+####### A.1.9.5.2.2.4.1 - SplitterStopSpell [Core]  <!-- UUID: 06f796a3-4f91-4ba8-b7e9-f08e90a52a8d -->
 
 This Standby Spell can be used in an emergency to disable the Smart Burn Engine.
 
-####### A.1.9.4.2.2.4.2 - SPBEAMHaltSpell [Core]  <!-- UUID: 7a151ea1-5fe7-4d2f-901f-071f141abbf9 -->
+####### A.1.9.5.2.2.4.2 - SPBEAMHaltSpell [Core]  <!-- UUID: 7a151ea1-5fe7-4d2f-901f-071f141abbf9 -->
 
 This Standby Spell can be used in an emergency to disable the Stability Parameter Bounded External Access Module \(SP-BEAM\). See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a). After this Standby Spell is invoked, the SP-BEAM will no longer be able to set rates in the system. Invoking the Standby Spell has no impact on rates, which remain at pre-invocation levels until adjusted by Sky Governance via an Executive Vote.
 
-##### A.1.9.4.2.3 - Emergency Spells - Standby Spell Process Definition [Core]  <!-- UUID: eeaaa751-cc77-475c-a60f-13a3dcc5e3bb -->
+##### A.1.9.5.2.3 - Emergency Spells - Standby Spell Process Definition [Core]  <!-- UUID: eeaaa751-cc77-475c-a60f-13a3dcc5e3bb -->
 
 The subdocuments herein define the process for using Standby Spells.
 
-###### A.1.9.4.2.3.1 - Support Scope Facilitators’ Role In Standby Spells [Core]  <!-- UUID: 50d68397-c09d-4f82-9e8b-44c2bcc30fd7 -->
+###### A.1.9.5.2.3.1 - Support Scope Facilitators’ Role In Standby Spells [Core]  <!-- UUID: 50d68397-c09d-4f82-9e8b-44c2bcc30fd7 -->
 
 The role of the Support Facilitators in the Standby Spell process is as follows:  
   
@@ -2519,13 +4054,13 @@ The decision to initiate the process to use a Standby Spell is reserved for 
   
 **• After the Support Facilitators decide to use a Standby Spell, TechOps Services must promptly trigger an incident to the Emergency Response Group as specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency-Contact Mechanism Trigger](34a3d273-ce49-4147-adf3-6d52b4a2fad5).
 
-###### A.1.9.4.2.3.2 - Governance Facilitators’ Role In Standby Spells [Core]  <!-- UUID: 832b2591-8512-4e87-a355-b87ded894e07 -->
+###### A.1.9.5.2.3.2 - Governance Facilitators’ Role In Standby Spells [Core]  <!-- UUID: 832b2591-8512-4e87-a355-b87ded894e07 -->
 
 All Governance Facilitators must promptly acknowledge receipt of the Support Facilitators’ decision to use a Standby Spell. This acknowledgment must take place in the communication channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).  
   
 The Governance Facilitators are responsible for actioning the Standby Spell and liaising with the Ranked Delegates \(and other Aligned Delegates as needed\) to gather the necessary support for it.
 
-####### A.1.9.4.2.3.2.1 - Requirement To Validate Authenticity Of Standby Spell [Core]  <!-- UUID: 82393e1d-1021-4f48-ac4e-a98d2328f2e7 -->
+####### A.1.9.5.2.3.2.1 - Requirement To Validate Authenticity Of Standby Spell [Core]  <!-- UUID: 82393e1d-1021-4f48-ac4e-a98d2328f2e7 -->
 
 One Authorized Representative, as defined in the subdocument below, from each Governance Facilitator must validate the authenticity of the Standby Spell.  
   
@@ -2533,7 +4068,7 @@ This validation must be in the form of a written communication in the secure cha
   
 Pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Standby Spells](53cea69b-45cc-4f9c-b863-9bf259e37deb), ADs are prohibited from voting for a Standby Spell without this validation of authenticity.
 
-######## A.1.9.4.2.3.2.1.1 - Current Entities Authorized To Validate Authenticity of Standby Spell [Core]  <!-- UUID: 4cf98145-079f-44e0-9a2b-1d7b16037f4a -->
+######## A.1.9.5.2.3.2.1.1 - Current Entities Authorized To Validate Authenticity of Standby Spell [Core]  <!-- UUID: 4cf98145-079f-44e0-9a2b-1d7b16037f4a -->
 
 This document defines the term “Authorized Representative” as used in [A.1.9 - Sky Core Governance Security - Emergency Spells - Requirement To Validate Authenticity Of Standby Spell](82393e1d-1021-4f48-ac4e-a98d2328f2e7).  
   
@@ -2549,11 +4084,11 @@ The Authorized Representatives listed are synonymous with the Sky Forum account 
 • ldr  
 • CivicSage
 
-####### A.1.9.4.2.3.2.2 - Custom Spell Voting For Standby Spells [Core]  <!-- UUID: 387fa314-7c0a-469d-8996-5dc4c30b4f7e -->
+####### A.1.9.5.2.3.2.2 - Custom Spell Voting For Standby Spells [Core]  <!-- UUID: 387fa314-7c0a-469d-8996-5dc4c30b4f7e -->
 
 The Governance Facilitators may use the Custom Spell Voting Page when it is beneficial to coordinate voting without using the standard Spell process. The Governance Facilitators must not use this method unless domain expert Ecosystem Actors in the Emergency Response Group have recommended this approach; such a recommendation must be explicitly documented in the communication channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).
 
-###### A.1.9.4.2.3.3 - ADs’ Role In Standby Spells [Core]  <!-- UUID: 53cea69b-45cc-4f9c-b863-9bf259e37deb -->
+###### A.1.9.5.2.3.3 - ADs’ Role In Standby Spells [Core]  <!-- UUID: 53cea69b-45cc-4f9c-b863-9bf259e37deb -->
 
 ADs are strictly prohibited from voting to use a Standby Spell unless they have first confirmed all of the following requirements:  
   
@@ -2565,31 +4100,31 @@ _• All Governance Facilitators have validated the authenticity of the Standby
   
 After ADs have confirmed all requirements are met, they must either \(1\) promptly vote to approve the Standby Spell, or \(2\) communicate any concerns to the Governance Facilitators and collaborate with the latter for a speedy resolution.
 
-####### A.1.9.4.2.3.3.1 - AD Reliance On Governance Facilitators In Standby Spell Process Where Governance Facilitator Is Nonresponsive [Core]  <!-- UUID: 0567fc4c-4a93-4f7e-803e-f587ddbd4f15 -->
+####### A.1.9.5.2.3.3.1 - AD Reliance On Governance Facilitators In Standby Spell Process Where Governance Facilitator Is Nonresponsive [Core]  <!-- UUID: 0567fc4c-4a93-4f7e-803e-f587ddbd4f15 -->
 
 There is an exception to the requirement that all Governance Facilitators must validate the authenticity of a Standby Spell. In situations where a Governance Facilitator has failed to respond to the emergency situation, the Support Facilitators may temporarily grant the responding Governance Facilitator\(s\) the sole authority to validate the authenticity of the Emergency Spell pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Standby Spells](53cea69b-45cc-4f9c-b863-9bf259e37deb). The Support Facilitators must communicate this in writing in the secure channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).
 
-####### A.1.9.4.2.3.3.2 - Misalignment To Vote For Unvalidated Standby Spell [Core]  <!-- UUID: 75cdffe9-bec6-478c-aa6c-adcc3edb4fbe -->
+####### A.1.9.5.2.3.3.2 - Misalignment To Vote For Unvalidated Standby Spell [Core]  <!-- UUID: 75cdffe9-bec6-478c-aa6c-adcc3edb4fbe -->
 
 It is severe misalignment for an Aligned Delegate to vote for a Standby Spell whose authenticity has not been validated pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Standby Spells](53cea69b-45cc-4f9c-b863-9bf259e37deb)**.** Aligned Delegates in breach of this requirement must be immediately derecognized and their full AD Buffer should be confiscated.
 
-##### A.1.9.4.2.4 - Accountability [Core]  <!-- UUID: 1ac0d0c7-5942-4f4d-9730-3a14244fcb38 -->
+##### A.1.9.5.2.4 - Accountability [Core]  <!-- UUID: 1ac0d0c7-5942-4f4d-9730-3a14244fcb38 -->
 
 Breach of any requirement concerning Emergency Spells - including Standby Spells - constitutes misalignment and must be addressed pursuant to [A.1.8 - Emergency Response System - Emergency Response - Accountability For Emergency Response Preparedness](8df982ee-754c-4cd9-a5f9-ce1c30e06cf8).
 
-#### A.1.9.4.3 - Protego [Core]  <!-- UUID: 13cdbb75-527a-4b68-b02e-90641881dbe6 -->
+#### A.1.9.5.3 - Protego [Core]  <!-- UUID: 13cdbb75-527a-4b68-b02e-90641881dbe6 -->
 
 Protego is a contract that allows Sky Governance to cancel the execution of planned governance actions that are awaiting the expiration of the Governance Security Module Pause Delay \(GSM Pause Delay\). See [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Pause Delay](3c9545d9-775f-4149-88bf-7d297b5302c6). The subdocuments herein specify the features of the Protego contract and its authorized use.
 
-##### A.1.9.4.3.1 - Protego Features [Core]  <!-- UUID: 152e5205-8fed-4240-aa0c-00fd433d3542 -->
+##### A.1.9.5.3.1 - Protego Features [Core]  <!-- UUID: 152e5205-8fed-4240-aa0c-00fd433d3542 -->
 
 The Protego contract allows canceling the execution of planned governance actions within the Sky Protocol. Technical updates and other protocol changes are implemented as Spells within the Sky Protocol, approved by Sky Governance via Executive Votes. These planned governance actions have a time delay before taking effect. In this period between approval and execution, the Protego contract allows for planned governance actions to be canceled. The documents herein specify the core features of the Protego contract.
 
-###### A.1.9.4.3.1.1 - Emergency Drop Spells [Core]  <!-- UUID: 4f5e346e-5ed4-4e2e-a463-19cbcfb5021c -->
+###### A.1.9.5.3.1.1 - Emergency Drop Spells [Core]  <!-- UUID: 4f5e346e-5ed4-4e2e-a463-19cbcfb5021c -->
 
 The Protego contract can be used to deploy an Emergency Drop Spell. Once authorized by Sky Governance, the Emergency Drop Spell can cancel any planned governance action that is awaiting GSM Pause Delay expiration.
 
-####### A.1.9.4.3.1.1.1 - Deployment Of Emergency Drop Spells [Core]  <!-- UUID: 583c1a98-b63a-42fa-b29e-ce0688dcdaf6 -->
+####### A.1.9.5.3.1.1.1 - Deployment Of Emergency Drop Spells [Core]  <!-- UUID: 583c1a98-b63a-42fa-b29e-ce0688dcdaf6 -->
 
 Any user can permissionlessly deploy an Emergency Drop Spell by invoking the `deploy` function on the Protego contract with parameters identifying the planned governance action to be canceled:  
   
@@ -2597,15 +4132,15 @@ Any user can permissionlessly deploy an Emergency Drop Spell by invoking the `de
   
 The parameters of the `deploy` function are defined in [A.1.9 - Sky Core Governance Security - Emergency Spells - Protego Parameters](55195cdc-90c3-4133-a0e4-792444b60ed8).
 
-####### A.1.9.4.3.1.1.2 - Execution Of Emergency Drop Spells [Core]  <!-- UUID: 44bb2b0d-ba95-47db-9195-6c80f97734b7 -->
+####### A.1.9.5.3.1.1.2 - Execution Of Emergency Drop Spells [Core]  <!-- UUID: 44bb2b0d-ba95-47db-9195-6c80f97734b7 -->
 
 Once an Emergency Drop Spell has been deployed, it can be used to cancel the execution of the planned governance action by invoking its `drop` function. This function can only be invoked if the Emergency Drop Spell has been granted authority by Sky Governance by giving the Emergency Drop Spell the `hat` in the Chief contract.
 
-###### A.1.9.4.3.1.2 - Allowing Permissionless Cancellation Of Planned Governance Actions [Core]  <!-- UUID: 540d277c-cc25-4e1b-b17e-3a13001483ba -->
+###### A.1.9.5.3.1.2 - Allowing Permissionless Cancellation Of Planned Governance Actions [Core]  <!-- UUID: 540d277c-cc25-4e1b-b17e-3a13001483ba -->
 
 The Protego contract can be granted authority by Sky Governance to allow any user to permissionlessly cancel any planned governance action. This is done by giving the Protego contract the `hat` in the Chief contract. Once the Protego contract has been granted authority, any user can cancel either a single planned governance action or a set of planned governance actions as specified herein.
 
-####### A.1.9.4.3.1.2.1 - Permissionless Cancellation Of Single Planned Governance Action [Core]  <!-- UUID: e4e3c3d9-939d-43ef-9f7a-64f5d4cfe7d6 -->
+####### A.1.9.5.3.1.2.1 - Permissionless Cancellation Of Single Planned Governance Action [Core]  <!-- UUID: e4e3c3d9-939d-43ef-9f7a-64f5d4cfe7d6 -->
 
 If the Protego contract has authority from Sky Governance, any user can permissionlessly invoke the `drop` function to cancel a specified Spell:  
   
@@ -2614,7 +4149,7 @@ drop(address _usr, bytes32 _tag, bytes memory _fax, uint256 _eta)`
   
 The parameters of the `drop` function are defined in [A.1.9 - Sky Core Governance Security - Emergency Spells - Protego Parameters](55195cdc-90c3-4133-a0e4-792444b60ed8).
 
-####### A.1.9.4.3.1.2.2 - Permissionless Cancellation Of Multiple Planned Governance Actions [Core]  <!-- UUID: 6022623f-e7cd-4a04-a8ab-e5b61c11a9da -->
+####### A.1.9.5.3.1.2.2 - Permissionless Cancellation Of Multiple Planned Governance Actions [Core]  <!-- UUID: 6022623f-e7cd-4a04-a8ab-e5b61c11a9da -->
 
 If the Protego contract has authority from Sky Governance, any user can permissionlessly invoke the `drop` function to cancel a specified set of Spells:  
   
@@ -2623,27 +4158,27 @@ drop(Plan[] calldata plans)`
   
 The parameter of the `drop` function is defined in [A.1.9 - Sky Core Governance Security - Emergency Spells - Protego Parameters](55195cdc-90c3-4133-a0e4-792444b60ed8).
 
-###### A.1.9.4.3.1.3 - Protego Parameters [Core]  <!-- UUID: 55195cdc-90c3-4133-a0e4-792444b60ed8 -->
+###### A.1.9.5.3.1.3 - Protego Parameters [Core]  <!-- UUID: 55195cdc-90c3-4133-a0e4-792444b60ed8 -->
 
 The documents herein define parameters that are used in functions of the Protego contract and the process for determining them.
 
-####### A.1.9.4.3.1.3.1 - Protego Usr Parameter Definition [Core]  <!-- UUID: 4ff6766c-53a7-4c77-8f72-b4e120728d92 -->
+####### A.1.9.5.3.1.3.1 - Protego Usr Parameter Definition [Core]  <!-- UUID: 4ff6766c-53a7-4c77-8f72-b4e120728d92 -->
 
 The `usr` parameter is the address of the scheduled Spell to be canceled.
 
-####### A.1.9.4.3.1.3.2 - Protego Tag Parameter Definition [Core]  <!-- UUID: 29e06433-4d5f-458e-9adb-2e93b44a29f0 -->
+####### A.1.9.5.3.1.3.2 - Protego Tag Parameter Definition [Core]  <!-- UUID: 29e06433-4d5f-458e-9adb-2e93b44a29f0 -->
 
 The `tag` parameter identifies the address of the scheduled Spell to be canceled.
 
-####### A.1.9.4.3.1.3.3 - Protego Fax Parameter Definition [Core]  <!-- UUID: 559f640c-bca7-4f8b-8fa2-8745566a2d03 -->
+####### A.1.9.5.3.1.3.3 - Protego Fax Parameter Definition [Core]  <!-- UUID: 559f640c-bca7-4f8b-8fa2-8745566a2d03 -->
 
 The `fax` parameter is the encoded call to be made in the scheduled Spell to be canceled.
 
-####### A.1.9.4.3.1.3.4 - Protego Eta Parameter Definitio [Core]  <!-- UUID: da310ed1-1d3c-425f-9369-c65782b8f092 -->
+####### A.1.9.5.3.1.3.4 - Protego Eta Parameter Definitio [Core]  <!-- UUID: da310ed1-1d3c-425f-9369-c65782b8f092 -->
 
 The `eta` parameter is the expiration time of the scheduled Spell to be canceled.
 
-####### A.1.9.4.3.1.3.5 - Plans Parameter Definition [Core]  <!-- UUID: 4a154956-88d7-4b90-a9b0-3a96871087a7 -->
+####### A.1.9.5.3.1.3.5 - Plans Parameter Definition [Core]  <!-- UUID: 4a154956-88d7-4b90-a9b0-3a96871087a7 -->
 
 The `plans` parameter is an array of scheduled Spells to be canceled. Each scheduled Spell to be canceled is represented as a `Plan` struct:  
   
@@ -2663,15 +4198,15 @@ struct Plan {
   
 The parameters of the `Plan` struct are defined in [A.1.9 - Sky Core Governance Security - Emergency Spells - Protego Parameters](55195cdc-90c3-4133-a0e4-792444b60ed8).
 
-####### A.1.9.4.3.1.3.6 - Determining Protego Parameters [Core]  <!-- UUID: 49997c91-ec3c-47be-ad1a-abfd33dd259b -->
+####### A.1.9.5.3.1.3.6 - Determining Protego Parameters [Core]  <!-- UUID: 49997c91-ec3c-47be-ad1a-abfd33dd259b -->
 
 The parameters for the scheduled Spell to be canceled, as specified in [A.1.9 - Sky Core Governance Security - Emergency Spells - Protego Parameters](55195cdc-90c3-4133-a0e4-792444b60ed8), should always be determined by inspecting the logs emitted from the `plot` function of the Pause contract. The parameters should never be determined by calling functions on the Spell to be canceled, because these functions may not return the correct values in the case of a malicious Spell.
 
-##### A.1.9.4.3.2 - Protego Usage Process Definition [Core]  <!-- UUID: 69da8af1-ecc0-4fd3-9268-33fff87d5253 -->
+##### A.1.9.5.3.2 - Protego Usage Process Definition [Core]  <!-- UUID: 69da8af1-ecc0-4fd3-9268-33fff87d5253 -->
 
 The subdocuments herein define the governance process for using Protego.
 
-###### A.1.9.4.3.2.1 - Support Facilitators’ Role In Protego Usage [Core]  <!-- UUID: afa90735-e752-462c-b06f-c3bd9076e06f -->
+###### A.1.9.5.3.2.1 - Support Facilitators’ Role In Protego Usage [Core]  <!-- UUID: afa90735-e752-462c-b06f-c3bd9076e06f -->
 
 The role of the Support Facilitators in the usage of Protego is as follows:  
   
@@ -2685,13 +4220,13 @@ The role of the Support Facilitators in the usage of Protego is as follows:
   
 • If the Support Facilitators decide to use Protego, TechOps Services must promptly trigger an incident to the Emergency Response Group as specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency-Contact Mechanism Trigger](34a3d273-ce49-4147-adf3-6d52b4a2fad5).
 
-###### A.1.9.4.3.2.2 - Governance Facilitators’ Role In Protego Usage [Core]  <!-- UUID: 62d53156-9b53-447b-9655-cef35a74defd -->
+###### A.1.9.5.3.2.2 - Governance Facilitators’ Role In Protego Usage [Core]  <!-- UUID: 62d53156-9b53-447b-9655-cef35a74defd -->
 
 All Governance Facilitators must promptly acknowledge receipt of the Support Facilitators’ decision to use Protego. This acknowledgment must take place in the communication channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).  
   
 The Governance Facilitators are responsible for actioning the usage of Protego and liaising with the Ranked Delegates \(and other Aligned Delegates as needed\) to gather the necessary support for it.
 
-####### A.1.9.4.3.2.2.1 - Requirement To Validate Authenticity Of Emergency Drop Spell [Core]  <!-- UUID: 44b9503d-bc11-427e-8deb-47feed07eba2 -->
+####### A.1.9.5.3.2.2.1 - Requirement To Validate Authenticity Of Emergency Drop Spell [Core]  <!-- UUID: 44b9503d-bc11-427e-8deb-47feed07eba2 -->
 
 One Authorized Representative, as defined in the subdocument below, from each Governance Facilitator must validate the authenticity of the Emergency Drop Spell, if applicable.  
   
@@ -2699,7 +4234,7 @@ This validation must be in the form of a written communication in the secure cha
   
 Pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Protego Usage](0cec9b17-ef83-4d25-9b6e-dbba11587d52), ADs are prohibited from voting for an Emergency Drop Spell without this validation of authenticity.
 
-######## A.1.9.4.3.2.2.1.1 - Current Entities Authorized To Validate Authenticity of Emergency Drop Spell [Core]  <!-- UUID: a15e7cd9-ea93-48ac-b53a-afc476ca2d05 -->
+######## A.1.9.5.3.2.2.1.1 - Current Entities Authorized To Validate Authenticity of Emergency Drop Spell [Core]  <!-- UUID: a15e7cd9-ea93-48ac-b53a-afc476ca2d05 -->
 
 This document defines the term “Authorized Representative” as used in [A.1.9 - Sky Core Governance Security - Emergency Spells - Requirement To Validate Authenticity Of Emergency Drop Spell](44b9503d-bc11-427e-8deb-47feed07eba2).  
   
@@ -2715,11 +4250,11 @@ The Authorized Representatives listed are synonymous with the Sky Forum account 
 • ldr  
 • CivicSage
 
-######## A.1.9.4.3.2.2.1.2 - Custom Spell Voting For Protego Usage [Core]  <!-- UUID: 5bf1e3b0-1e2a-4237-b87f-7db48def5960 -->
+######## A.1.9.5.3.2.2.1.2 - Custom Spell Voting For Protego Usage [Core]  <!-- UUID: 5bf1e3b0-1e2a-4237-b87f-7db48def5960 -->
 
 The Governance Facilitators may use the Custom Spell Voting Page when it is beneficial to coordinate voting without using the standard Spell process. The Governance Facilitators must not use this method unless domain expert Ecosystem Actors in the Emergency Response Group have recommended this approach; such a recommendation must be explicitly documented in the communication channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).
 
-###### A.1.9.4.3.2.3 - ADs’ Role In Protego Usage [Core]  <!-- UUID: 0cec9b17-ef83-4d25-9b6e-dbba11587d52 -->
+###### A.1.9.5.3.2.3 - ADs’ Role In Protego Usage [Core]  <!-- UUID: 0cec9b17-ef83-4d25-9b6e-dbba11587d52 -->
 
 ADs are strictly prohibited from voting to use an Emergency Drop Spell, or to give authority to the Protego contract, unless they have first confirmed all of the following requirements:  
   
@@ -2731,15 +4266,15 @@ ADs are strictly prohibited from voting to use an Emergency Drop Spell, or to gi
   
 After ADs have confirmed all requirements are met, they must either \(1\) promptly vote to approve the usage of Protego or the Emergency Drop Spell, or \(2\) communicate any concerns to the Governance Facilitators and collaborate with the latter for a speedy resolution.
 
-####### A.1.9.4.3.2.3.1 - AD Reliance On Governance Facilitators In Emergency Drop Spell Process Where Governance Facilitator Is Nonresponsive [Core]  <!-- UUID: 5bff38dc-5416-40e7-ab84-25adacb1e60a -->
+####### A.1.9.5.3.2.3.1 - AD Reliance On Governance Facilitators In Emergency Drop Spell Process Where Governance Facilitator Is Nonresponsive [Core]  <!-- UUID: 5bff38dc-5416-40e7-ab84-25adacb1e60a -->
 
 There is an exception to the requirement that all Governance Facilitators must validate the authenticity of an Emergency Drop Spell. In situations where a Governance Facilitator has failed to respond to the emergency situation, the Support Facilitators may temporarily grant the responding Governance Facilitator\(s\) the sole authority to validate the authenticity of the Emergency Drop Spell pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Protego Usage](0cec9b17-ef83-4d25-9b6e-dbba11587d52). The Support Facilitators must communicate this in writing in the secure channel specified in [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf).
 
-####### A.1.9.4.3.2.3.2 - Misalignment To Vote For Unvalidated Emergency Drop Spell [Core]  <!-- UUID: fc62902d-f408-4f45-a284-193ed7688c19 -->
+####### A.1.9.5.3.2.3.2 - Misalignment To Vote For Unvalidated Emergency Drop Spell [Core]  <!-- UUID: fc62902d-f408-4f45-a284-193ed7688c19 -->
 
 It is severe misalignment for an Aligned Delegate to vote for an Emergency Drop Spell whose authenticity has not been validated pursuant to [A.1.9 - Sky Core Governance Security - Emergency Spells - ADs’ Role In Protego Usage](0cec9b17-ef83-4d25-9b6e-dbba11587d52). Aligned Delegates in breach of this requirement must be immediately derecognized and their full AD Buffer should be confiscated.
 
-##### A.1.9.4.3.3 - Protego Usage Accountability [Core]  <!-- UUID: fd63dc4d-851a-4995-801d-843e68bfb68e -->
+##### A.1.9.5.3.3 - Protego Usage Accountability [Core]  <!-- UUID: fd63dc4d-851a-4995-801d-843e68bfb68e -->
 
 Breach of any requirement concerning Emergency Spells - including usage of Protego - constitutes misalignment and must be addressed pursuant to [A.1.8 - Emergency Response System - Emergency Response - Accountability For Emergency Response Preparedness](8df982ee-754c-4cd9-a5f9-ce1c30e06cf8).
 
@@ -8590,9 +10125,9 @@ In the short term before the implementation of the Senior Risk Capital system, S
 
 In the short term before the implementation of the Senior Risk Capital system, Sky will provide Grove with 15 million USDS of Senior Risk Capital. See [A.3.3 - Short Term Transitionary Measures](d33ac81e-bab1-4969-b46d-e605da2afae3). This Senior Risk Capital will not be transferred by Sky to Grove’s SubProxy Account; instead, it will be credited towards Grove’s Total Risk Capital. See [A.3.3 - Total Risk Capital](be7589f5-32c0-42d2-8d10-38bceb1de28b).
 
-#### A.2.9.2.3 - Ecosystem Accord 3: Sky And Launch Agent 2 [Core]  <!-- UUID: 63a88b08-e6cd-48bf-9cec-64ce7e42ae0e -->
+#### A.2.9.2.3 - Ecosystem Accord 3: Sky And Keel [Core]  <!-- UUID: 63a88b08-e6cd-48bf-9cec-64ce7e42ae0e -->
 
-The subdocuments herein record the terms of agreement between Sky and Launch Agent 2 as agreed in Ecosystem Accord 3.
+The subdocuments herein record the terms of agreement between Sky and Keel as agreed in Ecosystem Accord 3.
 
 ##### A.2.9.2.3.1 - Accord Key Details [Core]  <!-- UUID: 40a876f3-e0bb-4bdf-a980-ffa38d9f46d7 -->
 
@@ -8600,7 +10135,7 @@ The subdocuments herein set out the key details of Ecosystem Accord 3, such as p
 
 ###### A.2.9.2.3.1.1 - Parties To The Accord [Core]  <!-- UUID: 0577460f-3f87-44ea-b39b-a614e7507338 -->
 
-The parties to Ecosystem Accord 3 are Sky and Launch Agent 2, as defined in the subdocuments herein.
+The parties to Ecosystem Accord 3 are Sky and Keel, as defined in the subdocuments herein.
 
 ####### A.2.9.2.3.1.1.1 - Sky Details [Core]  <!-- UUID: 7042cc09-20d7-4a83-a0f0-c718cdc489f2 -->
 
@@ -8608,7 +10143,7 @@ The party ‘Sky’ comprises Sky Core.
 
 ####### A.2.9.2.3.1.1.2 - Launch Agent 2 Details [Core]  <!-- UUID: 2e888dad-7700-450a-be85-49d7405e3541 -->
 
-The party ‘Launch Agent 2’ comprises the Launch Agent 2 Prime Agent, Launch Agent 2 Foundation, and Launch Agent 2 Development Company.
+The party ‘Keel’ comprises the Keel Prime Agent, Keel Foundation, and Matariki Labs.
 
 ###### A.2.9.2.3.1.2 - Duration Of The Accord [Core]  <!-- UUID: d936e118-89d8-4be7-9fcd-dd4d4334b26d -->
 
@@ -8618,26 +10153,26 @@ The duration of Ecosystem Accord 3 is indefinite, commencing from June 23, 2025.
 
 The subdocuments herein set out the substantive terms of Ecosystem Accord 3.
 
-###### A.2.9.2.3.2.1 - Transfer From Liquidity Bootstrapping Budget To Launch Agent 2 [Core]  <!-- UUID: a0b2e17d-1483-40d0-a771-f12c1b42a0a9 -->
+###### A.2.9.2.3.2.1 - Transfer From Liquidity Bootstrapping Budget To Keel [Core]  <!-- UUID: a0b2e17d-1483-40d0-a771-f12c1b42a0a9 -->
 
-Sky has transferred 500,000 USDS from the Sky Ecosystem Liquidity Bootstrapping Budget to Launch Agent 2 to provide liquidity to decentralized finance protocols on Solana \(see [A.5.9 - Launch Project - Sky Ecosystem Liquidity Bootstrapping](cd4ae79c-0e34-4388-8ac2-41d7677bd955)\). This amount shall be treated as an advance against Launch Agent 2’s Genesis Capital Allocation and deducted from Launch Agent 2’s allocated capital funds at the time of the Capital Transfer.  
+Sky has transferred 500,000 USDS from the Sky Ecosystem Liquidity Bootstrapping Budget to Keel to provide liquidity to decentralized finance protocols on Solana \(see [A.5.9 - Launch Project - Sky Ecosystem Liquidity Bootstrapping](cd4ae79c-0e34-4388-8ac2-41d7677bd955)\). This amount shall be treated as an advance against Keel’s Genesis Capital Allocation and deducted from Keel’s allocated capital funds at the time of the Capital Transfer.  
   
-The transfer must be made to a multisig controlled by Launch Agent 2’s Operational Executor Agent and the multisig must have the ability to withdraw the liquidity provided to decentralized finance protocols at any time. The address of the multisig on Solana is `6cTVPDJ8WR1XGxdgnjzhpYKRqcv78T4Nqt95DY8dvMmn`.
+The transfer must be made to a multisig controlled by Keel’s Operational Executor Agent and the multisig must have the ability to withdraw the liquidity provided to decentralized finance protocols at any time. The address of the multisig on Solana is `6cTVPDJ8WR1XGxdgnjzhpYKRqcv78T4Nqt95DY8dvMmn`.
 
-####### A.2.9.2.3.2.1.1 - Use Of Funds For Launch Agent 2 Development Expenses [Core]  <!-- UUID: 4109ab2b-e1ae-43bb-8f96-d1cb07f98a5c -->
+####### A.2.9.2.3.2.1.1 - Use Of Funds For Keel Development Expenses [Core]  <!-- UUID: 4109ab2b-e1ae-43bb-8f96-d1cb07f98a5c -->
 
-Launch Agent 2 may also use the funds specified in [A.2.10 - Transfer From Liquidity Bootstrapping Budget To Launch Agent 2](a0b2e17d-1483-40d0-a771-f12c1b42a0a9) to fund development expenses at its discretion.  
+Keel may also use the funds specified in [A.2.10 - Transfer From Liquidity Bootstrapping Budget To Keel](a0b2e17d-1483-40d0-a771-f12c1b42a0a9) to fund development expenses at its discretion.  
   
-If Launch Agent 2 elects to use funds in this way, it shall notify its Operational Executor Agent of the amount to be used for development expenses. The Operational Executor Agent will then withdraw the liquidity from the decentralized finance protocols, if necessary, and transfer it to an account designated by Launch Agent 2.
+If Keel elects to use funds in this way, it shall notify its Operational Executor Agent of the amount to be used for development expenses. The Operational Executor Agent will then withdraw the liquidity from the decentralized finance protocols, if necessary, and transfer it to an account designated by Keel.
 
 ###### A.2.9.2.3.2.2 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: c929aef7-1b81-4693-8fd8-3d75e62882af -->
 
-Launch Agent 2 is eligible for a Pre-Pioneer Incentive Pool. See [A.2.4 - Pre-Pioneer Incentive Pool](15e14f25-8d56-4699-ac37-0cef4f0503c5).   
+Keel is eligible for a Pre-Pioneer Incentive Pool. See [A.2.4 - Pre-Pioneer Incentive Pool](15e14f25-8d56-4699-ac37-0cef4f0503c5).   
   
 The Pre-Pioneer Incentive Pool is calculated on a monthly basis as \(1\) the Sky Savings Rate multiplied by all USDS balances on Solana, less \(2\) all Integration Boost payments made to partners on Solana.  
-Payments are made on a monthly basis from the Integration Boost wallets specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5) to a Pre-Pioneer Incentive Pool wallet controlled by Launch Agent 2’s Operational Executor Agent. The address of the Pre-Pioneer Incentive Pool wallet on Solana is `8JmDPG5BFQ6gpUPJV9xBixYJLqTKCSNotkXksTmNsQfj`.  
+Payments are made on a monthly basis from the Integration Boost wallets specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5) to a Pre-Pioneer Incentive Pool wallet controlled by Keel’s Operational Executor Agent. The address of the Pre-Pioneer Incentive Pool wallet on Solana is `8JmDPG5BFQ6gpUPJV9xBixYJLqTKCSNotkXksTmNsQfj`.  
   
-Funds from the Pre-Pioneer Incentive Pool wallet may be used to incentivize partners on Solana to promote USDS adoption as directed by Launch Agent 2. Funds from the Pre-Pioneer Incentive Pool may not be transferred to Launch Agent 2’s SubProxy Account, Launch Agent 2 Foundation, or Launch Agent 2 Development Company.
+Funds from the Pre-Pioneer Incentive Pool wallet may be used to incentivize partners on Solana to promote USDS adoption as directed by Keel. Funds from the Pre-Pioneer Incentive Pool may not be transferred to Keel’s SubProxy Account, Keel Foundation, or Matariki Labs.
 
 ### A.2.9.0.3.1 - Business Activities - Element Annotation [Annotation]  <!-- UUID: 31df7e2b-184f-428c-9c4f-23fd8054c5d3 -->
 
@@ -13082,9 +14617,9 @@ If a “SKY Backstop Event” is in progress and the SKY price equals zero, the 
 
 ##### A.3.8.1.5.1 - Implementation [Core]  <!-- UUID: 4381df75-0d4f-4f17-a263-f796cc33be27 -->
 
-In the near term, transfers are made through Executive Votes and may be made through Emergency Spells \(see [A.1.9 - A4 - Sky Core Governance Security - Emergency Spells](b8266c11-3a84-4bbe-abe2-de9474f74ffd)\) as part of the Emergency Response System \(see [A.1.8 - A1 - Emergency Response System - Emergency Response](20dcf582-8862-48b3-9ca9-c3703871bd14)\).  
+In the near term, transfers are made through Executive Votes and may be made through Emergency Spells \(see [A.1.9 - A5 - Sky Core Governance Security - Emergency Spells](b8266c11-3a84-4bbe-abe2-de9474f74ffd)\) as part of the Emergency Response System \(see [A.1.8 - A1 - Emergency Response System - Emergency Response](20dcf582-8862-48b3-9ca9-c3703871bd14)\).  
   
-A solution must be developed to allow these transfers to be accomplished on an automated basis without waiting for the GSM Pause Delay \(see [A.1.9 - A2 - Sky Core Governance Security - Governance Security Delay Requirements](c5f0e955-0441-42e0-a6fc-eab875bba568)\).
+A solution must be developed to allow these transfers to be accomplished on an automated basis without waiting for the GSM Pause Delay \(see [A.1.9 - A3 - Sky Core Governance Security - Governance Security Delay Requirements](c5f0e955-0441-42e0-a6fc-eab875bba568)\).
 
 ##### A.3.8.1.5.2 - Post Backstop Settlement [Core]  <!-- UUID: 1edfed11-0234-4d15-b52b-37d7493565cd -->
 
@@ -22045,7 +23580,7 @@ The kill switch disables all borrowing across SparkLend markets in the event of 
   
 The kill switch is defined in terms of a threshold for specified pegged assets. If the ratio of the price of a specified asset to its peg is equal to or less than the threshold, then any user can trigger the kill switch to disable borrowing across all SparkLend markets.  
   
-After the kill switch is triggered, markets can be reactivated by Sky Governance after resetting the kill switch. Resetting the kill switch is subject to the Governance Security Delay specified in [A.1.9 - A2 - Sky Core Governance Security - Governance Security Delay Requirements](c5f0e955-0441-42e0-a6fc-eab875bba568).
+After the kill switch is triggered, markets can be reactivated by Sky Governance after resetting the kill switch. Resetting the kill switch is subject to the Governance Security Delay specified in [A.1.9 - A3 - Sky Core Governance Security - Governance Security Delay Requirements](c5f0e955-0441-42e0-a6fc-eab875bba568).
 
 ########## A.6.1.1.1.3.2.1.1.4.1 - SparkLend Risk Parameters Kill Switch Current Configuration [Core]  <!-- UUID: d9e7ca3f-53f9-46aa-9e2c-c09f9d6392e1 -->
 
@@ -25679,15 +27214,15 @@ The name of Launch Agent 2’s token is Launch Agent 2.
 
 ########### A.6.1.1.3.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 41c58fff-ec4b-4bd1-bcb7-7bec6c9141b5 -->
 
-The symbol of Launch Agent 2’s token is AGENT2.
+The symbol of Launch Agent 2’s token is KEEL.
 
 ########### A.6.1.1.3.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: ffb7392d-e4ab-40fd-a886-104140ef3a64 -->
 
-The Genesis Supply of AGENT2 will be specified in a future iteration of the Launch Agent 2 Artifact.
+The Genesis Supply of KEEL will be specified in a future iteration of the Launch Agent 2 Artifact.
 
 ########### A.6.1.1.3.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: c3a2a1c7-7e09-49f6-9789-8fb62412b9ad -->
 
-The address of AGENT2 will be specified in a future iteration of the Launch Agent 2 Artifact.
+The address of KEEL will be specified in a future iteration of the Launch Agent 2 Artifact.
 
 ########### A.6.1.1.3.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 603c0bd3-547b-46e5-b96c-ea9d48b06e48 -->
 
@@ -25892,15 +27427,15 @@ The documents herein define the process for using the Root Edit Primitive to upd
 
 ############ A.6.1.1.3.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: 98f59541-8896-4e64-8e99-2b25e7791bf0 -->
 
-The Root Edit process begins with an AGENT2 token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. An AGENT2 token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Launch Agent 2 Prime” category.
+The Root Edit process begins with a KEEL token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. A KEEL token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Launch Agent 2 Prime” category.
 
 ############# A.6.1.1.3.2.2.2.2.1.2.1.1.1 - Root Edit Proposal Submission Requirements Exception [Core]  <!-- UUID: b3c428c6-d73f-4ed3-a876-dcc130e23ab4 -->
 
-For proposals that solely entail a buyback or a grant of AGENT2 tokens, the requirement that AGENT2 token holders must hold at least 1% of the circulating token supply to submit a proposal is waived. However, all other procedural requirements within the Root Edit process continue to apply.
+For proposals that solely entail a buyback or a grant of KEEL tokens, the requirement that KEEL token holders must hold at least 1% of the circulating token supply to submit a proposal is waived. However, all other procedural requirements within the Root Edit process continue to apply.
 
 ############# A.6.1.1.3.2.2.2.2.1.2.1.1.2 - Short-Term Transitionary Measures [Core]  <!-- UUID: d4c3c15b-7cdc-4c57-9bf0-53bbfd95e52c -->
 
-Until the Powerhouse system supports submitting Artifact Edit Proposals, AGENT2 token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Launch Agent 2 Prime” category. The title of the post must include the text “Launch Agent 2 Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total AGENT2 token supply specified in [Root Edit Proposal Submission](98f59541-8896-4e64-8e99-2b25e7791bf0).
+Until the Powerhouse system supports submitting Artifact Edit Proposals, KEEL token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Launch Agent 2 Prime” category. The title of the post must include the text “Launch Agent 2 Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total KEEL token supply specified in [Root Edit Proposal Submission](98f59541-8896-4e64-8e99-2b25e7791bf0).
 
 ############ A.6.1.1.3.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: b9858413-c2da-4e8f-9945-b03acb0b64f6 -->
 
@@ -27231,7 +28766,7 @@ Launch Agent 2 has formally agreed to the Ecosystem Accords herein.
 
 ####### A.6.1.1.3.3.3.1 - Ecosystem Accord 3 [Core]  <!-- UUID: 962d4b79-2dea-4b86-a72f-8a460189327f -->
 
-Launch Agent 2 engaged in terms of agreement with Sky in Ecosystem Accord 3, located in [A.2.10 - Ecosystem Accord 3: Sky And Launch Agent 2](63a88b08-e6cd-48bf-9cec-64ce7e42ae0e).
+Launch Agent 2 engaged in terms of agreement with Sky in Ecosystem Accord 3, located in [A.2.10 - Ecosystem Accord 3: Sky And Keel](63a88b08-e6cd-48bf-9cec-64ce7e42ae0e).
 
 #### A.6.1.1.4 - Launch Agent 3 [Core]  <!-- UUID: c88439b5-f456-4e51-8825-42e0ba83546f -->
 
