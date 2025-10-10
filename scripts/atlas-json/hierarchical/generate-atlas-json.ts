@@ -17,7 +17,7 @@
  *
  * How to run
  * ```bash
- * npx tsx scripts/atlas-json/hierarchical/generate-atlas-json-from-supabase-scope-trees.ts
+ * npx tsx scripts/atlas-json/hierarchical/generate-atlas-json.ts
  * ```
  */
 import fs from 'fs';
