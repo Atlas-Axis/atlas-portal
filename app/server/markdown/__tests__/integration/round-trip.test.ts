@@ -1,3 +1,5 @@
+import colors from 'colors';
+import * as diff from 'diff';
 import { existsSync, readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { describe, expect, it } from 'vitest';
@@ -8,6 +10,94 @@ import { convertNotionRichTextToMarkdown } from '../../rich-text-to-markdown';
 
 // Test data directory
 const TEST_DATA_DIR = join(process.cwd(), '.debug-data', 'rich-text-and-markdown');
+
+// Helper function to create colored diff output
+function createColoredDiff(expected: string, received: string): string {
+  const diffs = diff.diffChars(expected, received);
+  let output = '';
+
+  for (const part of diffs) {
+    if (part.added) {
+      output += colors.green(`+${part.value}`);
+    } else if (part.removed) {
+      output += colors.red(`-${part.value}`);
+    } else {
+      output += part.value;
+    }
+  }
+
+  return output;
+}
+
+// Helper function to create a more detailed diff with line-by-line comparison
+function createDetailedDiff(expected: string, received: string): string {
+  const diffs = diff.diffLines(expected, received);
+  let output = `\n${colors.cyan('📊 Detailed Line-by-Line Diff:')}\n`;
+
+  for (const part of diffs) {
+    if (part.added) {
+      output += colors.green(`+ ${part.value}`);
+    } else if (part.removed) {
+      output += colors.red(`- ${part.value}`);
+    } else {
+      output += `  ${part.value}`; // Unchanged lines
+    }
+  }
+
+  return output;
+}
+
+// Helper function to create JSON diff output
+function createJsonDiff(expected: unknown, received: unknown): string {
+  const expectedStr = JSON.stringify(expected, null, 2);
+  const receivedStr = JSON.stringify(received, null, 2);
+
+  // Use line-by-line diff for JSON which is more readable
+  const diffs = diff.diffLines(expectedStr, receivedStr);
+  let output = `\n${colors.cyan('📋 JSON Structure Diff:')}\n`;
+
+  for (const part of diffs) {
+    if (part.added) {
+      output += colors.green(`+ ${part.value}`);
+    } else if (part.removed) {
+      output += colors.red(`- ${part.value}`);
+    } else {
+      output += `  ${part.value}`; // Unchanged lines
+    }
+  }
+
+  return output;
+}
+
+// Helper function to create a summary of differences
+function createDiffSummary(expected: string, received: string): string {
+  const diffs = diff.diffChars(expected, received);
+  let addedCount = 0;
+  let removedCount = 0;
+  let unchangedCount = 0;
+
+  for (const part of diffs) {
+    if (part.added) {
+      addedCount += part.value.length;
+    } else if (part.removed) {
+      removedCount += part.value.length;
+    } else {
+      unchangedCount += part.value.length;
+    }
+  }
+
+  const totalChanges = addedCount + removedCount;
+  const totalLength = addedCount + removedCount + unchangedCount;
+  const changePercentage = totalLength > 0 ? ((totalChanges / totalLength) * 100).toFixed(1) : '0.0';
+
+  return (
+    `\n${colors.magenta('📈 Diff Summary:')} ` +
+    `${colors.green(`+${addedCount}`)} ` +
+    `${colors.red(`-${removedCount}`)} ` +
+    `${colors.blue(`~${unchangedCount}`)} ` +
+    `(${colors.yellow(`${changePercentage}% changed`)})\n`
+  );
+}
 
 // Mock UUID mappings for Notion page mentions
 const mockUuidMappings: UuidMappings = {
@@ -249,6 +339,119 @@ describe('Round-trip conversion tests', () => {
         } else {
           expect(normalizedConverted).toBe(normalizedOriginal);
         }
+      });
+    }
+  });
+
+  describe('STRICT: Perfect Round-trip Tests (Will Fail Until Converters Are Fixed)', () => {
+    for (const { name, jsonPath } of testFilePairs) {
+      it(`STRICT: should perfectly round-trip ${name} (Rich Text → Markdown → Rich Text)`, () => {
+        // Read original Rich Text JSON
+        const jsonContent = readFileSync(jsonPath, 'utf-8');
+        const originalRichText: NotionRichText[] = JSON.parse(jsonContent);
+
+        // HACK: Trim whitespace from text content to prevent whitespace discrepancies
+        const trimmedRichText = originalRichText.map((richText) => {
+          if (richText.text?.content) {
+            return {
+              ...richText,
+              text: {
+                ...richText.text,
+                content: richText.text.content.trim(),
+              },
+              plain_text: richText.plain_text?.trim() || richText.plain_text,
+            };
+          }
+          return richText;
+        });
+
+        // Convert Rich Text → Markdown
+        const markdown = convertNotionRichTextToMarkdown(trimmedRichText, mockUuidMappings);
+
+        // Convert Markdown → Rich Text
+        // Rich Text from Notion API is always a single array of Rich Text objects
+        const convertedRichText = convertMarkdownToNotionRichText(markdown);
+
+        // STRICT: Perfect round-trip should be achieved
+        // This test will fail until converters are fixed
+        // Note: Color normalization (default_background ↔ default) is handled in normalizeAnnotations
+
+        // Apply UUID mapping and color normalization to trimmed Rich Text for comparison
+        const mappedOriginalRichText = trimmedRichText.map((richText) => {
+          let updatedRichText = { ...richText };
+
+          // Apply UUID mapping for mentions
+          if (richText.type === 'mention' && richText.mention?.page?.id) {
+            const originalId = richText.mention.page.id;
+            const mappedId = mockUuidMappings.notionPageIDsToAtlasUUIDs.get(originalId);
+            if (mappedId) {
+              updatedRichText = {
+                ...updatedRichText,
+                mention: {
+                  ...richText.mention,
+                  page: {
+                    ...richText.mention.page,
+                    id: mappedId,
+                  },
+                },
+                href: mappedId,
+              };
+            }
+          }
+
+          // HACK: Normalize color values for comparison
+          if (updatedRichText.annotations?.color === 'default_background') {
+            updatedRichText = {
+              ...updatedRichText,
+              annotations: {
+                ...updatedRichText.annotations,
+                color: 'default',
+              },
+            };
+          }
+
+          return updatedRichText;
+        });
+
+        // Always show diff for debugging, even if test passes
+        console.error(colors.blue(`\n🔍 Rich Text → Markdown → Rich Text round-trip for ${name}:`));
+        console.error(createJsonDiff(mappedOriginalRichText, convertedRichText));
+
+        // Show summary for JSON comparison
+        const expectedJson = JSON.stringify(mappedOriginalRichText, null, 2);
+        const receivedJson = JSON.stringify(convertedRichText, null, 2);
+        console.error(createDiffSummary(expectedJson, receivedJson));
+
+        // Manual comparison to avoid massive console output from expect().toEqual()
+        const isEqual = JSON.stringify(convertedRichText) === JSON.stringify(mappedOriginalRichText);
+        expect(isEqual).toBe(true);
+      });
+    }
+
+    for (const { name, mdPath } of testFilePairs) {
+      it(`STRICT: should perfectly round-trip ${name} (Markdown → Rich Text → Markdown)`, () => {
+        // Read original Markdown
+        const originalMarkdown = readFileSync(mdPath, 'utf-8');
+
+        // Convert Markdown → Rich Text
+        // Rich Text from Notion API is always a single array of Rich Text objects
+        const richText = convertMarkdownToNotionRichText(originalMarkdown);
+
+        // Convert Rich Text → Markdown
+        const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
+
+        // STRICT: Perfect round-trip should be achieved
+        // This test will fail until converters are fixed
+
+        // Always show diff for debugging, even if test passes
+        console.error(colors.blue(`\n🔍 Markdown → Rich Text → Markdown round-trip for ${name}:`));
+        console.error(createColoredDiff(originalMarkdown, convertedMarkdown));
+        console.error(createDetailedDiff(originalMarkdown, convertedMarkdown));
+        console.error(createDiffSummary(originalMarkdown, convertedMarkdown));
+
+        // Manual comparison to avoid massive console output from expect().toBe()
+        const isEqual = convertedMarkdown === originalMarkdown;
+        expect(isEqual).toBe(true);
       });
     }
   });
