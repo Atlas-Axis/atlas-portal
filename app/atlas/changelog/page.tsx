@@ -5,7 +5,6 @@ import {
   loadAtlasChangeHistory,
 } from '@/app/server/atlas/load-atlas-change-history';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 export const dynamic = 'force-dynamic';
 
