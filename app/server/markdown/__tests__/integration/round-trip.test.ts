@@ -202,7 +202,9 @@ function deepCompareWithDetails(obj1: unknown, obj2: unknown, path: string = '',
     }
     if (typeof obj1 !== 'object') {
       if (obj1 !== obj2) {
-        differences.push(colors.red(`❌ ${currentPath}: ${JSON.stringify(obj1)} vs ${JSON.stringify(obj2)}`));
+        differences.push(
+          colors.red(`❌ ${currentPath}: Content mismatch: ${JSON.stringify(obj1)} vs ${JSON.stringify(obj2)}`),
+        );
       } else if (verbose) {
         differences.push(colors.green(`✅ ${currentPath}: ${JSON.stringify(obj1)}`));
       }
@@ -520,7 +522,7 @@ describe('Round-trip conversion tests', () => {
     });
   });
 
-  describe('STRICT: Perfect Round-trip Tests (Will Fail Until Converters Are Fixed)', () => {
+  describe('STRICT: Perfect Round-trip Tests', () => {
     for (const { name, jsonPath } of testFilePairs) {
       it(`STRICT: should perfectly round-trip ${name} (Rich Text → Markdown → Rich Text)`, () => {
         // Read original Rich Text JSON
@@ -550,7 +552,6 @@ describe('Round-trip conversion tests', () => {
         const convertedRichText = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
 
         // STRICT: Perfect round-trip should be achieved
-        // This test will fail until converters are fixed
 
         // Apply color normalization to original (trimmed) Rich Text for comparison
         const normalizedOriginalRichText = trimmedRichText.map((richText) => {
@@ -570,14 +571,16 @@ describe('Round-trip conversion tests', () => {
           return updatedRichText;
         });
 
-        // Always show diff for debugging, even if test passes
-        // console.log(colors.blue(`\n🔍 Rich Text → Markdown → Rich Text round-trip for ${name}:`));
-        // console.error(createJsonDiff(mappedOriginalRichText, convertedRichText));
-
         // Deep object comparison to avoid false positives from property order differences
         const isEqual = deepEqual(normalizedOriginalRichText, convertedRichText);
         if (!isEqual) {
           console.error(createColoredDiff(normalizedOriginalRichText, convertedRichText));
+          console.error(
+            createDiffSummary(
+              JSON.stringify(normalizedOriginalRichText, null, 2),
+              JSON.stringify(convertedRichText, null, 2),
+            ),
+          );
           console.error('Expected JSON:', JSON.stringify(normalizedOriginalRichText, null, 2));
           console.error('Received JSON:', JSON.stringify(convertedRichText, null, 2));
         }
@@ -586,31 +589,30 @@ describe('Round-trip conversion tests', () => {
       });
     }
 
-    // for (const { name, mdPath } of testFilePairs) {
-    //   it(`STRICT: should perfectly round-trip ${name} (Markdown → Rich Text → Markdown)`, () => {
-    //     // Read original Markdown
-    //     const originalMarkdown = readFileSync(mdPath, 'utf-8');
+    for (const { name, mdPath } of testFilePairs) {
+      it(`STRICT: should perfectly round-trip ${name} (Markdown → Rich Text → Markdown)`, () => {
+        // Read original Markdown
+        const originalMarkdown = readFileSync(mdPath, 'utf-8');
 
-    //     // Convert Markdown → Rich Text
-    //     // Rich Text from Notion API is always a single array of Rich Text objects
-    //     const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
+        // Convert Markdown → Rich Text
+        // Rich Text from Notion API is always a single array of Rich Text objects
+        const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
 
-    //     // Convert Rich Text → Markdown
-    //     const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
+        // Convert Rich Text → Markdown
+        const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
 
-    //     // STRICT: Perfect round-trip should be achieved
-    //     // This test will fail until converters are fixed
+        // STRICT: Perfect round-trip should be achieved
 
-    //     // Manual comparison to avoid massive console output from expect().toBe()
-    //     const isEqual = convertedMarkdown === originalMarkdown;
+        // Manual comparison to avoid massive console output from expect().toBe()
+        const isEqual = convertedMarkdown.trim() === originalMarkdown.trim();
 
-    //     if (!isEqual) {
-    //       console.error(createColoredDiff(originalMarkdown, convertedMarkdown));
-    //     //   console.error(createDetailedDiff(originalMarkdown, convertedMarkdown));
-    //       console.error(createDiffSummary(originalMarkdown, convertedMarkdown));
-    //     }
-    //     expect(isEqual).toBe(true);
-    //   });
-    // }
+        if (!isEqual) {
+          console.error(createColoredDiff(originalMarkdown, convertedMarkdown));
+          //   console.error(createDetailedDiff(originalMarkdown, convertedMarkdown));
+          console.error(createDiffSummary(originalMarkdown, convertedMarkdown));
+        }
+        expect(isEqual).toBe(true);
+      });
+    }
   });
 });
