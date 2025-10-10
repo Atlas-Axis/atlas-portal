@@ -28,15 +28,12 @@
   margin-top: 0.25rem;
   font-size: 0.75rem;
   color: rgb(209 213 219);
+  font-size: 0.75rem;
+  font-weight: 400;
 }
 
 .notionLinkRoot {
   margin-bottom: 1rem;
-}
-
-.notionLinkAnchor {
-  font-size: 0.75rem;
-  font-weight: 400;
 }
 
 .notionLinkAnchor:hover {

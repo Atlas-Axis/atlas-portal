@@ -167,6 +167,10 @@ function renderTreeNode({
         >
           {`Notion ID: ${uuidToNoHyphens(node.notion_page_id)}`}
         </a>
+
+        <span className='mx-2'>•</span>
+
+        <span>{`Atlas UUID: ${uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id)}`}</span>
       </div>
 
       {immutableAndPrimaryDocumentPages.length > 0 && (
