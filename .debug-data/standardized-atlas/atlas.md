@@ -7005,7 +7005,6 @@ The process flow is defined herein.
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface.
 
-
 • Edit `Instance Configuration Document` to reflect ratified Primitive Instance.
     ◦ Updated fields
         • Parameters/Status - automatically inherits from `Primitive Hub Document`
@@ -19492,8 +19491,6 @@ The operator must initialize the `pool` variable as an interface for the Aave po
 
 The operator must retrieve the Aave pool contract address associated with the given `aToken`. This address represents the Aave lending pool where the assets are deposited. `IAavePool` interface allows interaction with the Aave pool's functions (like `supply`).
 
-
-
 `    IAavePool pool       = IAavePool(IATokenWithPool(aToken).POOL());`
 
 ############## A.6.1.1.1.2.6.1.3.1.2.1.3.1.6 - Call Approve Function [Core]  <!-- UUID: 989427e7-7ced-49a9-88b1-df3c461b15b6 -->
@@ -20075,8 +20072,6 @@ The documents herein define the process for an operator to set a delegated signe
 
 The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `setDelegatedSigner`. Also, they must ensure the contract `isActive` i.e. can process the request.
 
-
-
 `function setDelegatedSigner(address delegatedSigner) 
         external 
         onlyRole(RELAYER) 
@@ -20085,8 +20080,6 @@ The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` rol
 ############## A.6.1.1.1.2.6.1.3.1.4.1.3.2.2 - Encode Function [Core]  <!-- UUID: 77e7f0e6-016f-4d66-b7cf-39efa5b4f0b2 -->
 
 The operator must use `proxy.doCall()` to forward the call to the `ethenaMinter` contract and call `setDelegatedSigner` function to set the address that will be authorized as a `delegatedSigner`. To call on `ethenaMinter` contract, the function must be encoded using `abi.encodeCall`.
-
-
 
 `{
     proxy.doCall(
@@ -20288,7 +20281,6 @@ The documents herein define the process for an operator to cool down sUSDe share
 ############## A.6.1.1.1.2.6.1.3.1.4.2.3.2.1 - Relayer Role [Core]  <!-- UUID: eacdbe29-1c6b-43b4-93a6-5e4eb9aa0fa7 -->
 
 The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `cooldownSharesSUSDe`. Also, they must ensure the contract `isActive` i.e. can process the request.
-
 
 `function cooldownSharesSUSDe(uint256 susdeAmount) 
         external 
@@ -25256,14 +25248,12 @@ The operator must ensure they are working as an Admin. Only the `DEFAULT_ADMIN_R
 
 The operator must associate the `mintRecipient` with the `destinationDomain` such that any tokens minted on this domain will go to this recipient.
 
-
 `{
         mintRecipients[destinationDomain] = mintRecipient;`
 
 ############### A.6.1.1.2.2.6.1.2.2.1.2.1.1.1.3 - Emit Event To Logs [Core]  <!-- UUID: e3e6ca9d-7cd6-44f1-a688-80f1e744ed0f -->
 
 The operator must emit the event to the blockchain logs.
-
 
 `        emit MintRecipientSet(destinationDomain, mintRecipient);
     }`
@@ -26185,8 +26175,6 @@ The documents herein define the process for an operator to set a delegated signe
 
 The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `setDelegatedSigner`. Also, they must ensure the contract `isActive` i.e. can process the request.
 
-
-
 `function setDelegatedSigner(address delegatedSigner) 
         external 
         onlyRole(RELAYER) 
@@ -26195,8 +26183,6 @@ The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` rol
 ############## A.6.1.1.2.2.6.1.3.1.4.1.3.2.2 - Encode Function [Core]  <!-- UUID: 0338eae8-0c00-4eb4-858f-50d66f2c65d7 -->
 
 The operator must use `proxy.doCall()` to forward the call to the `ethenaMinter` contract and call `setDelegatedSigner` function to set the address that will be authorized as a `delegatedSigner`. To call on `ethenaMinter` contract, the function must be encoded using `abi.encodeCall`.
-
-
 
 `{
     proxy.doCall(
@@ -26402,7 +26388,6 @@ The documents herein define the process for an operator to cool down sUSDe share
 ############## A.6.1.1.2.2.6.1.3.1.4.2.3.2.1 - Relayer Role [Core]  <!-- UUID: ba771f78-163f-4ec6-990d-ec8cc25e0393 -->
 
 The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `cooldownSharesSUSDe`. Also, they must ensure the contract `isActive` i.e. can process the request.
-
 
 `function cooldownSharesSUSDe(uint256 susdeAmount) 
         external 
