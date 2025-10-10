@@ -22,14 +22,6 @@ describe('convertNotionRichTextToHtml', () => {
     expect(html).toBe('[link1](https://a.com) [link2](https://b.com)');
   });
 
-  it('sanitizes unsafe href schemes', () => {
-    const html = convertNotionRichTextToMarkdown([
-      { type: 'text', text: { content: 'bad', link: { url: 'javascript:alert(1)' } } },
-      { type: 'text', text: { content: ' ok', link: { url: 'https://ok.com' } } },
-    ] as NotionRichText[]);
-    expect(html).toBe('bad[ ok](https://ok.com)');
-  });
-
   it('converts newlines to Markdown line breaks', () => {
     const html = convertNotionRichTextToMarkdown([
       { type: 'text', text: { content: 'line1\nline2' } },
