@@ -298,7 +298,75 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
     // Trim leading and trailing empty lines
     const trimmedMarkdown = markdown.replace(/^\n+/, '').replace(/\n+$/, '');
 
-    return parseInlineMarkdown(trimmedMarkdown, uuidMappings);
+    // Check if this content contains multiline inline code blocks
+    // A multiline inline code block is when we have a backtick that spans multiple lines
+    const hasMultilineInlineCode = /`[^`]*\n[^`]*`/.test(trimmedMarkdown);
+
+    if (hasMultilineInlineCode) {
+      // For content with multiline inline code blocks, we need to process line by line
+      // but merge lines that are part of the same multiline inline code
+      const lines = trimmedMarkdown.split('\n');
+      const richText: NotionRichText[] = [];
+
+      let i = 0;
+      while (i < lines.length) {
+        const line = lines[i];
+
+        // Check if this line starts a multiline inline code block
+        // We need to parse the line to see if there's an unclosed backtick
+        const backtickMatches = line.match(/`/g);
+        const backtickCount = backtickMatches ? backtickMatches.length : 0;
+
+        // If we have an odd number of backticks, we have an unclosed inline code block
+        const hasUnclosedBacktick = backtickCount % 2 === 1;
+
+        if (hasUnclosedBacktick) {
+          // This line starts a multiline inline code block, collect lines until we find the closing backtick
+          let multilineContent = line;
+          let j = i + 1;
+
+          while (j < lines.length) {
+            multilineContent += '\n' + lines[j];
+            const closingBacktickCount = (lines[j].match(/`/g) || []).length;
+
+            // If we have an odd number of backticks on this line, it closes our multiline block
+            // If we have an even number (including 0), we need to continue
+            if (closingBacktickCount % 2 === 1) {
+              // Found a line with an odd number of backticks, this closes our multiline block
+              break;
+            }
+            j++;
+          }
+
+          // Process the multiline content as one block
+          const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings);
+          richText.push(...multilineRichText);
+
+          // Skip the lines we just processed
+          i = j + 1;
+        } else {
+          // Regular line, process normally
+          const lineRichText = parseInlineMarkdown(line, uuidMappings);
+          richText.push(...lineRichText);
+          i++;
+        }
+
+        // Add newline after each line (except the last one)
+        if (i < lines.length) {
+          richText.push(
+            createRichText({
+              content: '\n',
+              annotations: {},
+            }),
+          );
+        }
+      }
+
+      return richText;
+    } else {
+      // For regular content without multiline inline code, process the entire text as one block
+      return parseInlineMarkdown(trimmedMarkdown, uuidMappings);
+    }
   } catch (error) {
     throw new Error(
       `Failed to convert markdown to rich text: ${error instanceof Error ? error.message : 'Unknown error'}`,

@@ -349,4 +349,216 @@ describe('convertMarkdownToNotionRichText', () => {
     expect(result[3].type).toBe('equation');
     expect(result[3].equation?.expression).toBe('200');
   });
+
+  describe('complex multiline inline code cases', () => {
+    it('should handle single-line inline code followed by multiline inline code on same line', () => {
+      const result = convertMarkdownToNotionRichText(
+        'Hello `code` and then `multiline\ncode\nhere` world',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(5);
+
+      // First part: "Hello "
+      expect(result[0].text?.content).toBe('Hello ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // Single-line inline code: "code"
+      expect(result[1].text?.content).toBe('code');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // Middle part: " and then "
+      expect(result[2].text?.content).toBe(' and then ');
+      expect(result[2].annotations?.code).toBe(false);
+
+      // Multiline inline code: "multiline\ncode\nhere"
+      expect(result[3].text?.content).toBe('multiline\ncode\nhere');
+      expect(result[3].annotations?.code).toBe(true);
+
+      // Last part: " world"
+      expect(result[4].text?.content).toBe(' world');
+      expect(result[4].annotations?.code).toBe(false);
+    });
+
+    it('should handle multiple single-line inline codes followed by multiline inline code', () => {
+      const result = convertMarkdownToNotionRichText(
+        'Hello `code1` and `code2` and `multiline\ncode\nhere` world',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(7);
+
+      // "Hello "
+      expect(result[0].text?.content).toBe('Hello ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // "code1"
+      expect(result[1].text?.content).toBe('code1');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // " and "
+      expect(result[2].text?.content).toBe(' and ');
+      expect(result[2].annotations?.code).toBe(false);
+
+      // "code2"
+      expect(result[3].text?.content).toBe('code2');
+      expect(result[3].annotations?.code).toBe(true);
+
+      // " and "
+      expect(result[4].text?.content).toBe(' and ');
+      expect(result[4].annotations?.code).toBe(false);
+
+      // Multiline: "multiline\ncode\nhere"
+      expect(result[5].text?.content).toBe('multiline\ncode\nhere');
+      expect(result[5].annotations?.code).toBe(true);
+
+      // " world"
+      expect(result[6].text?.content).toBe(' world');
+      expect(result[6].annotations?.code).toBe(false);
+    });
+
+    it('should handle table with inline code (should NOT be treated as multiline)', () => {
+      const result = convertMarkdownToNotionRichText('| Column | `code` |\n| Another | `more` |', mockUuidMappings);
+      expect(result).toHaveLength(7);
+
+      // First line: "| Column | "
+      expect(result[0].text?.content).toBe('| Column | ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // Inline code: "code"
+      expect(result[1].text?.content).toBe('code');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // End of first line: " |"
+      expect(result[2].text?.content).toBe(' |');
+      expect(result[2].annotations?.code).toBe(false);
+
+      // Newline
+      expect(result[3].text?.content).toBe('\n');
+      expect(result[3].annotations?.code).toBe(false);
+
+      // Second line: "| Another | "
+      expect(result[4].text?.content).toBe('| Another | ');
+      expect(result[4].annotations?.code).toBe(false);
+
+      // Inline code: "more"
+      expect(result[5].text?.content).toBe('more');
+      expect(result[5].annotations?.code).toBe(true);
+
+      // End of second line: " |"
+      expect(result[6].text?.content).toBe(' |');
+      expect(result[6].annotations?.code).toBe(false);
+    });
+
+    it('should handle text with backticks but no multiline code', () => {
+      const result = convertMarkdownToNotionRichText(
+        'This has `backticks` in text but no multiline code',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(3);
+
+      // "This has "
+      expect(result[0].text?.content).toBe('This has ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // "backticks"
+      expect(result[1].text?.content).toBe('backticks');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // " in text but no multiline code"
+      expect(result[2].text?.content).toBe(' in text but no multiline code');
+      expect(result[2].annotations?.code).toBe(false);
+    });
+
+    it('should handle multiline inline code with formatting inside', () => {
+      const result = convertMarkdownToNotionRichText(
+        'Here is `code with\n**bold** and *italic*\nmore code` end',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(3);
+
+      // "Here is "
+      expect(result[0].text?.content).toBe('Here is ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // Multiline code with formatting (should be treated as plain text inside code)
+      expect(result[1].text?.content).toBe('code with\n**bold** and *italic*\nmore code');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // " end"
+      expect(result[2].text?.content).toBe(' end');
+      expect(result[2].annotations?.code).toBe(false);
+    });
+
+    it('should handle multiple multiline inline code blocks', () => {
+      const result = convertMarkdownToNotionRichText(
+        'First `multiline\ncode` and second `another\nmultiline` end',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(5);
+
+      // "First "
+      expect(result[0].text?.content).toBe('First ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // First multiline: "multiline\ncode"
+      expect(result[1].text?.content).toBe('multiline\ncode');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // " and second "
+      expect(result[2].text?.content).toBe(' and second ');
+      expect(result[2].annotations?.code).toBe(false);
+
+      // Second multiline: "another\nmultiline"
+      expect(result[3].text?.content).toBe('another\nmultiline');
+      expect(result[3].annotations?.code).toBe(true);
+
+      // " end"
+      expect(result[4].text?.content).toBe(' end');
+      expect(result[4].annotations?.code).toBe(false);
+    });
+
+    it('should handle edge case with backticks at start and end of line', () => {
+      const result = convertMarkdownToNotionRichText('`start\nmiddle\nend`', mockUuidMappings);
+      expect(result).toHaveLength(1);
+
+      // Single multiline code block
+      expect(result[0].text?.content).toBe('start\nmiddle\nend');
+      expect(result[0].annotations?.code).toBe(true);
+    });
+
+    it('should handle complex mixed case with single-line, multiline, and regular text', () => {
+      const result = convertMarkdownToNotionRichText(
+        'Start `single` middle `multiline\ncode` and `another` end',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(7);
+
+      // "Start "
+      expect(result[0].text?.content).toBe('Start ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // "single"
+      expect(result[1].text?.content).toBe('single');
+      expect(result[1].annotations?.code).toBe(true);
+
+      // " middle "
+      expect(result[2].text?.content).toBe(' middle ');
+      expect(result[2].annotations?.code).toBe(false);
+
+      // "multiline\ncode"
+      expect(result[3].text?.content).toBe('multiline\ncode');
+      expect(result[3].annotations?.code).toBe(true);
+
+      // " and "
+      expect(result[4].text?.content).toBe(' and ');
+      expect(result[4].annotations?.code).toBe(false);
+
+      // "another"
+      expect(result[5].text?.content).toBe('another');
+      expect(result[5].annotations?.code).toBe(true);
+
+      // " end"
+      expect(result[6].text?.content).toBe(' end');
+      expect(result[6].annotations?.code).toBe(false);
+    });
+  });
 });
