@@ -1,9 +1,9 @@
 /*
   Notion Rich Text/Blocks → Markdown converter
   - Supports: paragraph, inline code (annotations.code), code block, equation (rich_text type), link, lists, table/table_row
-  - Mentions render as Markdown links when href present
+  - Mentions render as Markdown links
   - Unsupported types fall back to plain_text where available
-  - Output is Markdown (GFM for tables)
+  - Output is Markdown (GFM (GitHub Flavored Markdown) for tables)
 
   Example usage:
   ```ts
@@ -27,46 +27,7 @@
 */
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
-
-export type NotionAnnotations = {
-  bold?: boolean;
-  italic?: boolean;
-  strikethrough?: boolean;
-  underline?: boolean;
-  code?: boolean;
-  color?: string;
-};
-
-export type NotionRichText = {
-  type: 'text' | 'mention' | 'equation' | string;
-  plain_text?: string;
-  href?: string | null;
-  annotations?: NotionAnnotations;
-  text?: { content: string; link?: { url: string } | null };
-  mention?: unknown;
-  equation?: { expression: string };
-};
-
-export type NotionBlock = {
-  type: string;
-  paragraph?: { rich_text?: NotionRichText[] };
-  heading_1?: { rich_text?: NotionRichText[] };
-  heading_2?: { rich_text?: NotionRichText[] };
-  heading_3?: { rich_text?: NotionRichText[] };
-  bulleted_list_item?: { rich_text?: NotionRichText[]; children?: NotionBlock[] };
-  numbered_list_item?: { rich_text?: NotionRichText[]; children?: NotionBlock[] };
-  code?: { rich_text?: NotionRichText[]; language?: string };
-  equation?: { expression: string };
-  table?: {
-    table_width?: number;
-    has_column_header?: boolean;
-    has_row_header?: boolean;
-    children?: NotionBlock[]; // expected to be table_row
-  };
-  table_row?: { cells: NotionRichText[][] };
-  // Allow other fields without typing them
-  [key: string]: unknown;
-};
+import { NotionBlock, NotionRichText } from './notion-types';
 
 function escapeMarkdown(input: string): string {
   // Minimal escaping for Markdown special characters outside code spans
