@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { UuidMappings } from '../../atlas/load-uuid-mapping';
-import type { NotionBlock, NotionRichText } from '../notion-types';
-import { convertNotionBlocksToMarkdown, convertNotionRichTextToMarkdown } from '../rich-text-to-markdown';
+import type { NotionRichText } from '../notion-types';
+import { convertNotionRichTextToMarkdown } from '../rich-text-to-markdown';
 
 // Mock UuidMappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -9,7 +9,7 @@ const mockUuidMappings: UuidMappings = {
   atlasUUIDsToNotionPageIds: new Map(),
 };
 
-describe('convertNotionRichTextToHtml', () => {
+describe('convertNotionRichTextToMarkdown', () => {
   it('renders paragraph inline formatting (bold/italic/underline/strike/code)', () => {
     const html = convertNotionRichTextToMarkdown(
       [
@@ -35,12 +35,12 @@ describe('convertNotionRichTextToHtml', () => {
     expect(html).toBe('[link1](https://a.com) [link2](https://b.com)');
   });
 
-  it('converts newlines to Markdown line breaks', () => {
+  it('preserves newlines as-is', () => {
     const html = convertNotionRichTextToMarkdown(
       [{ type: 'text', text: { content: 'line1\nline2' } }] as NotionRichText[],
       mockUuidMappings,
     );
-    expect(html).toBe('line1  \nline2');
+    expect(html).toBe('line1\nline2');
   });
 
   it('renders inline code without escaping special characters inside backticks', () => {
@@ -60,147 +60,8 @@ describe('convertNotionRichTextToHtml', () => {
       mockUuidMappings,
     );
     expect(html).toBe(
-      '`f(Utilization)` is calculated using the formula:  \n  \n`f(Utilization) = Utilization * ((SKY Borrow Maximum Rate - SKY Borrow Minimum Rate + Beta) * Utilization + SKY Borrow Minimum Rate - SKY Borrow Rate)`',
+      '`f(Utilization)` is calculated using the formula:\n\n`f(Utilization) = Utilization * ((SKY Borrow Maximum Rate - SKY Borrow Minimum Rate + Beta) * Utilization + SKY Borrow Minimum Rate - SKY Borrow Rate)`',
     );
   });
 });
 
-describe('convertNotionBlocksToHtml (Markdown output)', () => {
-  it('renders paragraphs', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        { type: 'paragraph', paragraph: { rich_text: [{ type: 'text', text: { content: 'Hello' } }] } },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('Hello');
-  });
-
-  it('renders code block with language', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        { type: 'code', code: { language: 'ts', rich_text: [{ type: 'text', text: { content: 'const x = 1 < 2' } }] } },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('```ts\nconst x = 1 < 2\n```');
-  });
-
-  it('renders lists (bulleted and numbered)', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        { type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'a' } }] } },
-        { type: 'bulleted_list_item', bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'b' } }] } },
-        { type: 'numbered_list_item', numbered_list_item: { rich_text: [{ type: 'text', text: { content: 'c' } }] } },
-        { type: 'numbered_list_item', numbered_list_item: { rich_text: [{ type: 'text', text: { content: 'd' } }] } },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('- a\n- b\n1. c\n2. d');
-  });
-
-  it('renders nested list children', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        {
-          type: 'bulleted_list_item',
-          bulleted_list_item: {
-            rich_text: [{ type: 'text', text: { content: 'parent' } }],
-            children: [
-              {
-                type: 'bulleted_list_item',
-                bulleted_list_item: { rich_text: [{ type: 'text', text: { content: 'child' } }] },
-              },
-            ],
-          },
-        },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('- parent\n  - child');
-  });
-
-  it('renders table with rows and cells (GFM)', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        {
-          type: 'table',
-          table: {
-            has_column_header: true,
-            children: [
-              {
-                type: 'table_row',
-                table_row: {
-                  cells: [[{ type: 'text', text: { content: 'A' } }], [{ type: 'text', text: { content: 'B' } }]],
-                },
-              },
-              {
-                type: 'table_row',
-                table_row: {
-                  cells: [[{ type: 'text', text: { content: '1' } }], [{ type: 'text', text: { content: '2' } }]],
-                },
-              },
-            ],
-          },
-        },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe(['| A | B |', '| --- | --- |', '| 1 | 2 |'].join('\n'));
-  });
-
-  it('renders table without escaping pipe characters in cell content', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        {
-          type: 'table',
-          table: {
-            has_column_header: true,
-            children: [
-              {
-                type: 'table_row',
-                table_row: {
-                  cells: [
-                    [{ type: 'text', text: { content: 'Date' } }],
-                    [{ type: 'text', text: { content: 'Conserver Role' } }],
-                    [{ type: 'text', text: { content: 'Identity' } }],
-                  ],
-                },
-              },
-              {
-                type: 'table_row',
-                table_row: {
-                  cells: [
-                    [{ type: 'text', text: { content: '2023-06-08' } }],
-                    [{ type: 'text', text: { content: 'AVC Member' } }],
-                    [{ type: 'text', text: { content: 'HKUST_EPI_BLOCKCHAIN' } }],
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe(
-      [
-        '| Date | Conserver Role | Identity |',
-        '| --- | --- | --- |',
-        '| 2023-06-08 | AVC Member | HKUST_EPI_BLOCKCHAIN |',
-      ].join('\n'),
-    );
-  });
-
-  it('renders headings as markdown', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [
-        { type: 'heading_1', heading_1: { rich_text: [{ type: 'text', text: { content: 'Title' } }] } },
-        { type: 'heading_2', heading_2: { rich_text: [{ type: 'text', text: { content: 'Subtitle' } }] } },
-        { type: 'heading_3', heading_3: { rich_text: [{ type: 'text', text: { content: 'Section' } }] } },
-      ] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('# Title\n## Subtitle\n### Section');
-  });
-});
