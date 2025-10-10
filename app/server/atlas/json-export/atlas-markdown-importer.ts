@@ -30,12 +30,7 @@
  *   applicable) and trim only one leading and one trailing separator blank line
  *   from the content segment, preserving author-intended whitespace.
  */
-import {
-  AGENT_ROOT_SECTION_UUIDS,
-  AGENT_ROOT_SECTION_UUID_FOR_NESTING,
-  type AtlasDatabaseName,
-  type AtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUIDS_MAPPED, type AtlasDatabaseName, type AtlasDocumentType } from '@/app/server/atlas/constants';
 import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
@@ -96,11 +91,11 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
     if (!currentItem) return;
     // Trim trailing blank lines
     const parsed = extractContentAndExtraFields((currentItem.node as unknown as BaseAtlasDocument).type, contentBuffer);
-    (currentItem.node as unknown as BaseAtlasDocument).content = parsed.content;
     if (parsed.extra) {
       const asRecord = currentItem.node as unknown as Record<string, unknown>;
       for (const [k, v] of Object.entries(parsed.extra)) asRecord[k] = v;
     }
+    (currentItem.node as unknown as BaseAtlasDocument).content = parsed.content;
     contentBuffer = [];
   };
 
@@ -147,6 +142,21 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
         );
       }
       pushChildIntoCollection(parent.node, collection, item.node);
+
+      // Post-insert cleanup: remove empty cross-database collections to avoid misleading empty arrays
+      // - If parent is 'Sections & Primary Docs' and agent_scope_database stays empty, omit it
+      // - If parent is 'Agent Scope Database', never keep sections_and_primary_docs on parent
+      if (parent.database === 'Sections & Primary Docs') {
+        const p = parent.node as unknown as { agent_scope_database?: unknown[] };
+        if (Array.isArray(p.agent_scope_database) && p.agent_scope_database.length === 0) {
+          delete (p as Record<string, unknown>).agent_scope_database;
+        }
+      } else if (parent.database === 'Agent Scope Database') {
+        const p = parent.node as unknown as { sections_and_primary_docs?: unknown[] };
+        if (Array.isArray(p.sections_and_primary_docs) && p.sections_and_primary_docs.length === 0) {
+          delete (p as Record<string, unknown>).sections_and_primary_docs;
+        }
+      }
     }
 
     stack.push(item);
@@ -169,39 +179,14 @@ function parseHeaderLine(line: string): ParsedHeader | null {
   return { depth, docNo, name, type, uuid };
 }
 
-function trimOneLeadingBlankLine(lines: string[]): string[] {
-  if (lines.length > 0 && lines[0].trim() === '') {
-    return lines.slice(1);
-  }
-  return lines;
-}
-
-function trimOneTrailingBlankLine(lines: string[]): string[] {
-  if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
-    return lines.slice(0, lines.length - 1);
-  }
-  return lines;
-}
-
-function trimSeparators(lines: string[], opts: { leading?: boolean; trailing?: boolean } = {}): string {
-  let out = lines;
-  if (opts.leading) out = trimOneLeadingBlankLine(out);
-  if (opts.trailing) out = trimOneTrailingBlankLine(out);
-  return out.join('\n');
-}
-
-// Normalize separators to ensure: at most one blank line at the start; ensure content ends with a newline
+// Normalize separators: remove all leading/trailing blank lines, preserve internal spacing exactly
 function normalizeContentSeparators(lines: string[]): string {
-  // Remove all leading blank lines and then add exactly one leading blank separator
   let start = 0;
   while (start < lines.length && lines[start].trim() === '') start++;
-  // Remove all trailing blank lines
   let end = lines.length - 1;
   while (end >= start && lines[end].trim() === '') end--;
   const middle = lines.slice(start, end + 1);
-  // Compose with exactly one leading blank and exactly one trailing newline
-  const composed = [''].concat(middle).join('\n');
-  return composed.endsWith('\n') ? composed : composed + '\n';
+  return middle.join('\n');
 }
 
 type ExtraMap = Partial<Record<string, string | null>>;
@@ -282,9 +267,14 @@ function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): Atl
     case 'Core':
     case 'Active Data Controller': {
       // Disambiguate by ancestry: if descendant of agent root section, it belongs to Agent Scope Database
-      const isUnderAgentRoot = ancestors.some(
-        (a) => !!a.uuid && (AGENT_ROOT_SECTION_UUIDS.has(a.uuid) || a.uuid === AGENT_ROOT_SECTION_UUID_FOR_NESTING),
-      );
+      const isUnderAgentRoot = ancestors.some((a) => {
+        if (!a.uuid) return false;
+        // Compare against mapped Atlas UUIDs of agent root sections
+        for (const mapped of AGENT_ROOT_SECTION_UUIDS_MAPPED.values()) {
+          if (a.uuid === mapped) return true;
+        }
+        return false;
+      });
       return isUnderAgentRoot ? 'Agent Scope Database' : 'Sections & Primary Docs';
     }
     case 'Annotation':
@@ -379,7 +369,6 @@ function createNodeForDatabase(
       return {
         ...common,
         sections_and_primary_docs: [],
-        agent_scope_database: [],
         annotations: [],
         tenets: [],
         active_data: [],

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AGENT_ROOT_SECTION_UUID_FOR_NESTING } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AGENT_ROOT_SECTION_UUIDS_MAPPED } from '@/app/server/atlas/constants';
 import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
 
 function md(strings: TemplateStringsArray, ...values: Array<string | number>): string {
@@ -132,7 +132,7 @@ Variation intro
 
   it('assigns Core under agent root to Agent Scope Database collection', () => {
     const input = md`
-#### A.6.1.1 - Agent Section [Section]  <!-- UUID: ${AGENT_ROOT_SECTION_UUID_FOR_NESTING} -->
+#### A.6.1.1 - Agent Section [Section]  <!-- UUID: ${AGENT_ROOT_SECTION_UUIDS_MAPPED.get(AGENT_ROOT_SECTION_UUID_FOR_NESTING) ?? ''} -->
 
 Parent content
 
@@ -155,7 +155,7 @@ Core content`;
     expect(child.content).toContain('Core content');
   });
 
-  it('preserves author-intended blank lines, trimming only single separators', () => {
+  it('preserves internal blank lines but trims outer separators completely', () => {
     const input = md`
 ### A.2.3 - Test Doc [Section] <!-- UUID: 00000000-0000-0000-0000-000000000033 -->
 
@@ -166,9 +166,7 @@ Last line
     const trees = parseAtlasMarkdown(input);
     expect(trees).toHaveLength(1);
     const node = trees[0] as { content: string };
-    // After trimming only one leading and one trailing blank line, we should still have
-    // one leading and one trailing blank line in content
-    expect(node.content.startsWith('\nFirst line')).toBe(true);
-    expect(node.content.endsWith('Last line\n')).toBe(true);
+    // No extra leading or trailing blank lines; internal blank line preserved
+    expect(node.content).toBe('First line\n\nLast line');
   });
 });
