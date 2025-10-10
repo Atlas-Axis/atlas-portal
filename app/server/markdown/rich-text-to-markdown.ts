@@ -90,6 +90,12 @@ export function convertNotionRichTextToMarkdown(
   uuidMappings?: UuidMappings,
 ): string {
   if (!richText || richText.length === 0) return '';
-  return richText.map((rt) => formatInlineSpan(rt, uuidMappings)).join('');
-  // Removed: .replace(/\n/g, '  \n') - this was causing extra spaces
+  const markdown = richText.map((rt) => formatInlineSpan(rt, uuidMappings)).join('');
+  
+  // Normalize line breaks: squash multiple consecutive empty lines into single newlines
+  // This includes lines with only whitespace
+  return markdown
+    .replace(/\n\s*\n\s*\n+/g, '\n\n')  // Replace 3+ consecutive newlines with 2
+    .replace(/^\n+/, '')               // Remove leading newlines
+    .replace(/\n+$/, '');              // Remove trailing newlines
 }

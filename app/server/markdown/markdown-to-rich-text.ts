@@ -295,17 +295,29 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
       return [];
     }
 
-    // Trim leading and trailing empty lines
-    const trimmedMarkdown = markdown.replace(/^\n+/, '').replace(/\n+$/, '');
+    // Normalize line breaks: squash multiple consecutive empty lines into single newlines
+    // This includes lines with only whitespace
+    let normalizedMarkdown = markdown
+      .replace(/\n\s*\n\s*\n+/g, '\n\n') // Replace 3+ consecutive newlines with 2
+      .replace(/^\n+/, '') // Remove leading newlines
+      .replace(/\n+$/, ''); // Remove trailing newlines
+
+    // Handle markdown line breaks: convert "  \n" to just "\n" for processing
+    // This preserves the line break intent while normalizing the format
+    normalizedMarkdown = normalizedMarkdown.replace(/  \n/g, '\n');
+
+    // For round-trip compatibility, we need to preserve the structure where
+    // text objects can have trailing newlines, rather than creating separate newline objects
+    // This matches the original rich text data structure
 
     // Check if this content contains multiline inline code blocks
     // A multiline inline code block is when we have a backtick that spans multiple lines
-    const hasMultilineInlineCode = /`[^`]*\n[^`]*`/.test(trimmedMarkdown);
+    const hasMultilineInlineCode = /`[^`]*\n[^`]*`/.test(normalizedMarkdown);
 
     if (hasMultilineInlineCode) {
       // For content with multiline inline code blocks, we need to process line by line
       // but merge lines that are part of the same multiline inline code
-      const lines = trimmedMarkdown.split('\n');
+      const lines = normalizedMarkdown.split('\n');
       const richText: NotionRichText[] = [];
 
       let i = 0;
@@ -340,6 +352,26 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
 
           // Process the multiline content as one block
           const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings);
+
+          // For round-trip compatibility, preserve trailing newlines within text objects
+          if (j < lines.length - 1) {
+            // Not the last line
+            if (multilineRichText.length > 0) {
+              const lastObject = multilineRichText[multilineRichText.length - 1];
+              if (lastObject.text) {
+                lastObject.text.content += '\n';
+                lastObject.plain_text += '\n';
+              }
+            } else {
+              multilineRichText.push(
+                createRichText({
+                  content: '\n',
+                  annotations: {},
+                }),
+              );
+            }
+          }
+
           richText.push(...multilineRichText);
 
           // Skip the lines we just processed
@@ -347,25 +379,37 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
         } else {
           // Regular line, process normally
           const lineRichText = parseInlineMarkdown(line, uuidMappings);
+
+          // For round-trip compatibility, preserve trailing newlines within text objects
+          // instead of creating separate newline objects
+          if (i < lines.length - 1) {
+            // Not the last line
+            // Add newline to the last text object if it exists, otherwise create one
+            if (lineRichText.length > 0) {
+              const lastObject = lineRichText[lineRichText.length - 1];
+              if (lastObject.text) {
+                lastObject.text.content += '\n';
+                lastObject.plain_text += '\n';
+              }
+            } else {
+              lineRichText.push(
+                createRichText({
+                  content: '\n',
+                  annotations: {},
+                }),
+              );
+            }
+          }
+
           richText.push(...lineRichText);
           i++;
-        }
-
-        // Add newline after each line (except the last one)
-        if (i < lines.length) {
-          richText.push(
-            createRichText({
-              content: '\n',
-              annotations: {},
-            }),
-          );
         }
       }
 
       return richText;
     } else {
       // For regular content without multiline inline code, process the entire text as one block
-      return parseInlineMarkdown(trimmedMarkdown, uuidMappings);
+      return parseInlineMarkdown(normalizedMarkdown, uuidMappings);
     }
   } catch (error) {
     throw new Error(
