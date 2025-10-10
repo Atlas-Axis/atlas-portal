@@ -220,8 +220,11 @@ const INLINE_PATTERNS = [
   { regex: /~~([^~]+)~~/g, type: 'strikethrough' as const },
   // Links [text](url)
   { regex: /\[([^\]]+)\]\(([^)]+)\)/g, type: 'link' as const },
-  // Inline math expressions $formula$
-  { regex: /\$([^$]+)\$/g, type: 'equation' as const },
+  // Inline math expressions $formula$ (but not $$ which is block math)
+  // DISABLED: This regex causes false positives with literal $ characters in text
+  // The content contains literal $ characters that are not math expressions
+  // Only match $...$ patterns that contain actual mathematical expressions
+  // { regex: /\$(?!\$)([^$\n]*?[a-zA-Z0-9\s\+\-\*\/\=\<\>\(\)\[\]\{\}]+?)\$/g, type: 'equation' as const },
 ] as const;
 
 /**
@@ -308,22 +311,41 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
         annotations: {},
       });
     } else if (match.type === 'link') {
-      // Links include URL information
-      richText.push({
-        type: 'text',
-        text: { content: match.content, link: { url: match.url! } },
-        plain_text: match.content,
-        href: match.url!,
-        annotations,
-      });
+      // Check if this is a mention (UUID-only href) vs external link
+      const isMention = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(match.url!);
+
+      if (isMention) {
+        // This is a mention - create mention object
+        richText.push({
+          type: 'mention',
+          mention: {
+            page: {
+              id: match.url!,
+            },
+            type: 'page',
+          },
+          plain_text: match.content,
+          href: match.url!,
+          annotations,
+        });
+      } else {
+        // This is an external link - use createRichText for consistent annotation handling
+        richText.push(
+          createRichText({
+            content: match.content,
+            href: match.url!,
+            annotations,
+          }),
+        );
+      }
     } else {
-      // Regular formatted text (bold, italic, etc.)
-      richText.push({
-        type: 'text',
-        text: { content: match.content },
-        plain_text: match.content,
-        annotations,
-      });
+      // Regular formatted text (bold, italic, etc.) - use createRichText for consistency
+      richText.push(
+        createRichText({
+          content: match.content,
+          annotations,
+        }),
+      );
     }
 
     lastEnd = match.end; // Update our position
@@ -348,23 +370,38 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
 function createRichText(options: CreateRichTextOptions): NotionRichText {
   const { content, annotations = {}, href, type = 'text', equation } = options;
 
+  // Don't unescape content - let it pass through as-is
+  // This prevents double-escaping issues and maintains consistency
+  const unescapedContent = content;
+
   // Handle equation type specially
   if (type === 'equation') {
     return {
       type: 'equation',
-      equation: equation || { expression: content },
-      plain_text: content,
+      equation: equation || { expression: unescapedContent },
+      plain_text: unescapedContent,
       annotations: {},
     };
   }
 
+  // Normalize annotations to match Notion's explicit default format
+  const normalizedAnnotations: NotionAnnotations = {
+    bold: annotations.bold || false,
+    code: annotations.code || false,
+    // Normalize color values - both 'default' and 'default_background' are equivalent
+    color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
+    italic: annotations.italic || false,
+    underline: annotations.underline || false,
+    strikethrough: annotations.strikethrough || false,
+  };
+
   // Create regular text rich text object
   return {
     type: 'text',
-    text: { content, link: href ? { url: href } : null },
-    plain_text: content,
+    text: { content: unescapedContent, link: href ? { url: href } : null },
+    plain_text: unescapedContent,
     href: href || null,
-    annotations,
+    annotations: normalizedAnnotations,
   };
 }
 
@@ -428,6 +465,7 @@ export function convertMarkdownToNotionRichText(markdown: string): NotionRichTex
     if (!markdown || markdown.trim() === '') {
       return [];
     }
+
 
     return parseInlineMarkdown(markdown);
   } catch (error) {
