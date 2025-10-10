@@ -31,30 +31,30 @@ import { NotionBlock, NotionRichText } from './notion-types';
 
 function escapeMarkdown(input: string): string {
   // Minimal escaping for Markdown special characters outside code spans
+  // Only escape characters that are actually problematic in Markdown
   return input
-    .replace(/\\/g, '\\\\')
     .replace(/\|/g, '\\|')
     .replace(/\*/g, '\\*')
     .replace(/_/g, '\\_')
     .replace(/~/g, '\\~')
     .replace(/`/g, '\\`')
     .replace(/\[/g, '\\[')
-    .replace(/\]/g, '\\]')
-    .replace(/\(/g, '\\(')
-    .replace(/\)/g, '\\)');
+    .replace(/\]/g, '\\]');
+  // Don't escape backslashes, parentheses, or dollar signs to prevent double-escaping
+  // These are commonly used in text and cause issues when over-escaped
 }
 
 function escapeMarkdownForTable(input: string): string {
   // For table cells, don't escape pipe characters or underscores as they're handled by table structure
+  // Don't escape parentheses as they're commonly used in text and cause double-escaping issues
   return input
     .replace(/\\/g, '\\\\')
     .replace(/\*/g, '\\*')
     .replace(/~/g, '\\~')
     .replace(/`/g, '\\`')
     .replace(/\[/g, '\\[')
-    .replace(/\]/g, '\\]')
-    .replace(/\(/g, '\\(')
-    .replace(/\)/g, '\\)');
+    .replace(/\]/g, '\\]');
+  // Removed: .replace(/\(/g, '\\(') and .replace(/\)/g, '\\)')
 }
 
 export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: UuidMappings): string | null {
@@ -137,10 +137,8 @@ export function convertNotionRichTextToMarkdown(
   uuidMappings?: UuidMappings,
 ): string {
   if (!richText || richText.length === 0) return '';
-  return richText
-    .map((rt) => formatInlineSpan(rt, uuidMappings))
-    .join('')
-    .replace(/\n/g, '  \n');
+  return richText.map((rt) => formatInlineSpan(rt, uuidMappings)).join('');
+  // Removed: .replace(/\n/g, '  \n') - this was causing extra spaces
 }
 
 function renderParagraph(block: NotionBlock, uuidMappings: UuidMappings): string {
