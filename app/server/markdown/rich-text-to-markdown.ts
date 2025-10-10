@@ -29,33 +29,6 @@ import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { NotionBlock, NotionRichText } from './notion-types';
 
-function escapeMarkdown(input: string): string {
-  // Minimal escaping for Markdown special characters outside code spans
-  // Only escape characters that are actually problematic in Markdown
-  return input
-    .replace(/\|/g, '\\|')
-    .replace(/\*/g, '\\*')
-    .replace(/_/g, '\\_')
-    .replace(/~/g, '\\~')
-    .replace(/`/g, '\\`')
-    .replace(/\[/g, '\\[')
-    .replace(/\]/g, '\\]');
-  // Don't escape backslashes, parentheses, or dollar signs to prevent double-escaping
-  // These are commonly used in text and cause issues when over-escaped
-}
-
-function escapeMarkdownForTable(input: string): string {
-  // For table cells, don't escape pipe characters or underscores as they're handled by table structure
-  // Don't escape parentheses as they're commonly used in text and cause double-escaping issues
-  return input
-    .replace(/\\/g, '\\\\')
-    .replace(/\*/g, '\\*')
-    .replace(/~/g, '\\~')
-    .replace(/`/g, '\\`')
-    .replace(/\[/g, '\\[')
-    .replace(/\]/g, '\\]');
-  // Removed: .replace(/\(/g, '\\(') and .replace(/\)/g, '\\)')
-}
 
 export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: UuidMappings): string | null {
   const isNotionURL = href?.startsWith('https://www.notion.so/');
@@ -93,9 +66,7 @@ function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings, isTab
         const escapedBackticks = textContent.replace(/`/g, '\\`');
         return `\`${escapedBackticks}\``;
       })()
-    : isTableContext
-      ? escapeMarkdownForTable(textContent)
-      : escapeMarkdown(textContent);
+    : textContent;
 
   // Bold, then underline (not supported in MD; keep as-is), then italic, then strike
   const withBold = wrapIf(rt.annotations?.bold, (s) => `**${s}**`, withInlineCode);
@@ -270,7 +241,7 @@ export function convertNotionBlocksToMarkdown(
         if (rich && Array.isArray(rich)) {
           output.push(convertNotionRichTextToMarkdown(rich, uuidMappings));
         } else if (typeof block.plain_text === 'string') {
-          output.push(escapeMarkdown(block.plain_text));
+          output.push(block.plain_text);
         }
         break;
       }
