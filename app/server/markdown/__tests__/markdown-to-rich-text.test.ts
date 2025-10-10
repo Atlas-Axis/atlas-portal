@@ -1,9 +1,16 @@
 import { describe, expect, it } from 'vitest';
+import type { UuidMappings } from '../../atlas/load-uuid-mapping';
 import { convertMarkdownToNotionRichText } from '../markdown-to-rich-text';
+
+// Mock UuidMappings for testing
+const mockUuidMappings: UuidMappings = {
+  notionPageIDsToAtlasUUIDs: new Map(),
+  atlasUUIDsToNotionPageIds: new Map(),
+};
 
 describe('convertMarkdownToNotionRichText', () => {
   it('should convert plain text', () => {
-    const result = convertMarkdownToNotionRichText('Hello World');
+    const result = convertMarkdownToNotionRichText('Hello World', mockUuidMappings);
     expect(result).toEqual([
       {
         type: 'text',
@@ -23,7 +30,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert bold text', () => {
-    const result = convertMarkdownToNotionRichText('Hello **World**');
+    const result = convertMarkdownToNotionRichText('Hello **World**', mockUuidMappings);
     expect(result.length).toBeGreaterThanOrEqual(2);
     expect(result[0].text?.content).toBe('Hello ');
     // Find the bold element
@@ -34,7 +41,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert italic text', () => {
-    const result = convertMarkdownToNotionRichText('Hello *World*');
+    const result = convertMarkdownToNotionRichText('Hello *World*', mockUuidMappings);
     expect(result).toHaveLength(2);
     expect(result[0].text?.content).toBe('Hello ');
     expect(result[1]).toBeDefined();
@@ -43,7 +50,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert strikethrough text', () => {
-    const result = convertMarkdownToNotionRichText('Hello ~~World~~');
+    const result = convertMarkdownToNotionRichText('Hello ~~World~~', mockUuidMappings);
     expect(result).toHaveLength(2);
     expect(result[0].text?.content).toBe('Hello ');
     expect(result[1]).toBeDefined();
@@ -52,7 +59,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert inline code', () => {
-    const result = convertMarkdownToNotionRichText('Hello `World`');
+    const result = convertMarkdownToNotionRichText('Hello `World`', mockUuidMappings);
     expect(result).toHaveLength(2);
     expect(result[0].text?.content).toBe('Hello ');
     expect(result[1]).toBeDefined();
@@ -61,7 +68,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert inline code with newlines', () => {
-    const result = convertMarkdownToNotionRichText('Hello `code\nwith\nnewlines` world');
+    const result = convertMarkdownToNotionRichText('Hello `code\nwith\nnewlines` world', mockUuidMappings);
     expect(result).toHaveLength(3);
     expect(result[0].text?.content).toBe('Hello ');
     expect(result[1]).toBeDefined();
@@ -71,7 +78,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert links', () => {
-    const result = convertMarkdownToNotionRichText('Hello [World](https://example.com)');
+    const result = convertMarkdownToNotionRichText('Hello [World](https://example.com)', mockUuidMappings);
     expect(result).toHaveLength(2);
     expect(result[0].text?.content).toBe('Hello ');
     expect(result[1]).toBeDefined();
@@ -80,7 +87,10 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle complex combinations', () => {
-    const result = convertMarkdownToNotionRichText('Hello **bold** and `code` and [link](https://example.com)');
+    const result = convertMarkdownToNotionRichText(
+      'Hello **bold** and `code` and [link](https://example.com)',
+      mockUuidMappings,
+    );
     expect(result.length).toBeGreaterThanOrEqual(6);
     // Find the bold element
     const boldElement = result.find((r) => r.annotations?.bold);
@@ -98,18 +108,18 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle empty input', () => {
-    const result = convertMarkdownToNotionRichText('');
+    const result = convertMarkdownToNotionRichText('', mockUuidMappings);
     expect(result).toEqual([]);
   });
 
   it('should handle whitespace-only input', () => {
-    const result = convertMarkdownToNotionRichText('   ');
+    const result = convertMarkdownToNotionRichText('   ', mockUuidMappings);
     expect(result).toEqual([]);
   });
 
   it('should handle edge cases in inline formatting', () => {
     // Test with empty formatting markers
-    const result = convertMarkdownToNotionRichText('**');
+    const result = convertMarkdownToNotionRichText('**', mockUuidMappings);
     expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('**');
   });
@@ -117,7 +127,7 @@ describe('convertMarkdownToNotionRichText', () => {
   it('should handle very long text efficiently', () => {
     const longText = 'A'.repeat(10000) + ' **bold** ' + 'B'.repeat(10000);
     const start = Date.now();
-    const result = convertMarkdownToNotionRichText(longText);
+    const result = convertMarkdownToNotionRichText(longText, mockUuidMappings);
     const duration = Date.now() - start;
 
     expect(result.length).toBeGreaterThanOrEqual(3);
@@ -125,13 +135,16 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle special characters in markdown', () => {
-    const result = convertMarkdownToNotionRichText('Text with special chars: !@#$%^&*()_+-=[]{}|;:,.<>?');
+    const result = convertMarkdownToNotionRichText(
+      'Text with special chars: !@#$%^&*()_+-=[]{}|;:,.<>?',
+      mockUuidMappings,
+    );
     expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Text with special chars: !@#$%^&*()_+-=[]{}|;:,.<>?');
   });
 
   it('should handle unicode characters in simple formatting', () => {
-    const result = convertMarkdownToNotionRichText('**Hello 世界**');
+    const result = convertMarkdownToNotionRichText('**Hello 世界**', mockUuidMappings);
     expect(result.length).toBeGreaterThanOrEqual(1);
     // Find the bold segment
     const boldSegment = result.find((r) => r.annotations?.bold);
@@ -141,7 +154,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should treat content inside code blocks as plain text without further processing', () => {
-    const result = convertMarkdownToNotionRichText('`**bold** and *italic* and ~~strikethrough~~`');
+    const result = convertMarkdownToNotionRichText('`**bold** and *italic* and ~~strikethrough~~`', mockUuidMappings);
     expect(result).toHaveLength(1);
     expect(result[0].annotations?.code).toBe(true);
     // Content inside code should be treated as plain text, not processed for other formatting
@@ -153,7 +166,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should preserve empty lines in plain text content', () => {
-    const result = convertMarkdownToNotionRichText('Line 1\n\nLine 3');
+    const result = convertMarkdownToNotionRichText('Line 1\n\nLine 3', mockUuidMappings);
     expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Line 1\n\nLine 3');
     expect(result[0].annotations?.bold).toBe(false);
@@ -161,7 +174,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should remove leading empty lines when content exists', () => {
-    const result = convertMarkdownToNotionRichText('\n\nContent');
+    const result = convertMarkdownToNotionRichText('\n\nContent', mockUuidMappings);
     expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Content');
     expect(result[0].annotations?.bold).toBe(false);
@@ -169,7 +182,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should remove trailing empty lines when content exists', () => {
-    const result = convertMarkdownToNotionRichText('Content\n\n');
+    const result = convertMarkdownToNotionRichText('Content\n\n', mockUuidMappings);
     expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Content');
     expect(result[0].annotations?.bold).toBe(false);
@@ -177,7 +190,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle formatted text with empty lines between them', () => {
-    const result = convertMarkdownToNotionRichText('**Bold**\n\n*Italic*');
+    const result = convertMarkdownToNotionRichText('**Bold**\n\n*Italic*', mockUuidMappings);
     expect(result).toHaveLength(3);
 
     // First item should be bold
@@ -197,7 +210,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle mixed content with empty lines and formatting', () => {
-    const result = convertMarkdownToNotionRichText('Plain text\n\n*Italic*');
+    const result = convertMarkdownToNotionRichText('Plain text\n\n*Italic*', mockUuidMappings);
     expect(result).toHaveLength(2);
 
     // First item should be plain text with empty line
@@ -212,7 +225,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle complex formatting with empty lines', () => {
-    const result = convertMarkdownToNotionRichText('**Bold**\n\nPlain text\n\n*Italic*');
+    const result = convertMarkdownToNotionRichText('**Bold**\n\nPlain text\n\n*Italic*', mockUuidMappings);
     expect(result).toHaveLength(3);
 
     // Should have bold, plain text with empty lines, italic
@@ -231,7 +244,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should convert inline math equations', () => {
-    const result = convertMarkdownToNotionRichText('The equation $E=mc^2$ is famous');
+    const result = convertMarkdownToNotionRichText('The equation $E=mc^2$ is famous', mockUuidMappings);
     expect(result).toHaveLength(3);
 
     expect(result[0].text?.content).toBe('The equation ');
@@ -248,6 +261,7 @@ describe('convertMarkdownToNotionRichText', () => {
   it('should convert complex mathematical expressions', () => {
     const result = convertMarkdownToNotionRichText(
       'The integral $\\int_0^\\infty e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}$ is important',
+      mockUuidMappings,
     );
     expect(result).toHaveLength(3);
 
@@ -258,7 +272,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle multiple equations in the same text', () => {
-    const result = convertMarkdownToNotionRichText('Pythagorean theorem: $a^2$ + $b^2$ = $c^2$');
+    const result = convertMarkdownToNotionRichText('Pythagorean theorem: $a^2$ + $b^2$ = $c^2$', mockUuidMappings);
     expect(result).toHaveLength(6);
 
     expect(result[0].text?.content).toBe('Pythagorean theorem: ');
@@ -275,6 +289,7 @@ describe('convertMarkdownToNotionRichText', () => {
   it('should handle equations with special characters', () => {
     const result = convertMarkdownToNotionRichText(
       'The formula $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ is the quadratic formula',
+      mockUuidMappings,
     );
     expect(result).toHaveLength(3);
 
@@ -284,7 +299,7 @@ describe('convertMarkdownToNotionRichText', () => {
 
   // TODO: Verify this is expected behavior - empty equations should be empty strings?
   it('should handle empty equations', () => {
-    const result = convertMarkdownToNotionRichText('Empty equation: $$');
+    const result = convertMarkdownToNotionRichText('Empty equation: $$', mockUuidMappings);
     expect(result).toHaveLength(2);
 
     expect(result[0].text?.content).toBe('Empty equation: ');
@@ -293,7 +308,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle equations mixed with other formatting', () => {
-    const result = convertMarkdownToNotionRichText('**Bold** text with $E=mc^2$ and `code`');
+    const result = convertMarkdownToNotionRichText('**Bold** text with $E=mc^2$ and `code`', mockUuidMappings);
     expect(result.length).toBeGreaterThanOrEqual(5);
 
     // Find the bold element
@@ -313,7 +328,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should not process formatting inside equations', () => {
-    const result = convertMarkdownToNotionRichText('$E=mc^2$ and $\\frac{a}{b}$');
+    const result = convertMarkdownToNotionRichText('$E=mc^2$ and $\\frac{a}{b}$', mockUuidMappings);
     expect(result).toHaveLength(3);
 
     expect(result[0].type).toBe('equation');
@@ -324,7 +339,7 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   it('should handle equations with dollar signs in content', () => {
-    const result = convertMarkdownToNotionRichText('Price: $100$ and $200$');
+    const result = convertMarkdownToNotionRichText('Price: $100$ and $200$', mockUuidMappings);
     expect(result).toHaveLength(4);
 
     expect(result[0].text?.content).toBe('Price: ');

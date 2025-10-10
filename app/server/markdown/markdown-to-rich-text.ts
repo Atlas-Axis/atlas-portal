@@ -14,6 +14,7 @@
   // => [{ type: 'text', text: { content: 'Hello ' }, annotations: {} }, ...]
   ```
 */
+import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './notion-types';
 
 // Simple markdown parser - we'll implement a basic one for now
@@ -40,10 +41,11 @@ const INLINE_PATTERNS = [
  * Handles bold, italic, strikethrough, inline code, links
  *
  * @param text - The markdown text to parse
+ * @param uuidMappings - Optional UUID mappings for converting Atlas UUIDs to Notion URLs
  * @returns Array of Notion Rich Text objects
  * @throws {Error} If text contains invalid markdown syntax
  */
-function parseInlineMarkdown(text: string): NotionRichText[] {
+function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRichText[] {
   // Input validation
   if (typeof text !== 'string') {
     throw new Error('Text must be a string');
@@ -167,20 +169,34 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
     // Handle special cases that need different Notion Rich Text structures
     if (match.type === 'link') {
       // Check if this is a mention (UUID-only href) vs external link
-      const isMention = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(match.url!);
+      const isUUIDFormat = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(match.url!);
+      const isMention = isUUIDFormat;
 
       if (isMention) {
-        // This is a mention - create mention object
+        // This is a mention - convert UUID back to Notion URL if mappings are provided
+        let mentionUrl = match.url!;
+        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!);
+        if (!notionPageID) {
+          console.warn(`No mapping found for mention UUID: ${match.url}`);
+        }
+
+        // Convert back to Notion URL if possible
+        const notionURL = notionPageID ? `https://www.notion.so/${notionPageID}` : null;
+        if (notionURL) {
+          mentionUrl = notionURL;
+        }
+
+        // Create mention object with proper Notion URL
         richText.push({
           type: 'mention',
           mention: {
             page: {
-              id: match.url!,
+              id: uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!) || match.url!,
             },
             type: 'page',
           },
           plain_text: match.content,
-          href: match.url!,
+          href: mentionUrl, // Use the converted Notion URL for the href
           annotations,
         });
       } else {
@@ -254,10 +270,11 @@ function createRichText(options: CreateRichTextOptions): NotionRichText {
  * Handles formatting like bold, italic, links, inline code
  *
  * @param markdown - The markdown text to convert
+ * @param uuidMappings - Optional UUID mappings for converting Atlas UUIDs to Notion URLs
  * @returns Array of Notion Rich Text objects
  * @throws {Error} If markdown is invalid or parsing fails
  */
-export function convertMarkdownToNotionRichText(markdown: string): NotionRichText[] {
+export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: UuidMappings): NotionRichText[] {
   try {
     // Return empty array for empty input
     if (!markdown || markdown.trim() === '') {
@@ -267,7 +284,7 @@ export function convertMarkdownToNotionRichText(markdown: string): NotionRichTex
     // Trim leading and trailing empty lines
     const trimmedMarkdown = markdown.replace(/^\n+/, '').replace(/\n+$/, '');
 
-    return parseInlineMarkdown(trimmedMarkdown);
+    return parseInlineMarkdown(trimmedMarkdown, uuidMappings);
   } catch (error) {
     throw new Error(
       `Failed to convert markdown to rich text: ${error instanceof Error ? error.message : 'Unknown error'}`,

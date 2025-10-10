@@ -235,7 +235,7 @@ describe('Round-trip conversion tests', () => {
         const markdown = convertNotionRichTextToMarkdown(originalRichText, mockUuidMappings);
 
         // Convert Markdown → Rich Text
-        const convertedRichText = convertMarkdownToNotionRichText(markdown);
+        const convertedRichText = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
 
         // For complex cases like inline-multiline-code, we expect some differences
         // but the core content should be preserved
@@ -289,7 +289,7 @@ describe('Round-trip conversion tests', () => {
         const originalMarkdown = readFileSync(mdPath, 'utf-8');
 
         // Convert Markdown → Rich Text
-        const richText = convertMarkdownToNotionRichText(originalMarkdown);
+        const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
 
         // Convert Rich Text → Markdown
         const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
@@ -367,7 +367,7 @@ describe('Round-trip conversion tests', () => {
 
         // Convert Markdown → Rich Text
         // Rich Text from Notion API is always a single array of Rich Text objects
-        const convertedRichText = convertMarkdownToNotionRichText(markdown);
+        const convertedRichText = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
 
         // STRICT: Perfect round-trip should be achieved
         // This test will fail until converters are fixed
@@ -432,7 +432,7 @@ describe('Round-trip conversion tests', () => {
 
         // Convert Markdown → Rich Text
         // Rich Text from Notion API is always a single array of Rich Text objects
-        const richText = convertMarkdownToNotionRichText(originalMarkdown);
+        const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
 
         // Convert Rich Text → Markdown
         const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
