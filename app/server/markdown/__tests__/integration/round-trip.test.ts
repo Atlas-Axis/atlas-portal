@@ -11,67 +11,54 @@ import { convertNotionRichTextToMarkdown } from '../../rich-text-to-markdown';
 // Test data directory
 const TEST_DATA_DIR = join(process.cwd(), '.debug-data', 'rich-text-and-markdown');
 
-// Helper function to create colored diff output
-function createColoredDiff(expected: string, received: string): string {
-  const diffs = diff.diffChars(expected, received);
-  let output = '';
-
-  for (const part of diffs) {
-    if (part.added) {
-      output += colors.green(`+${part.value}`);
-    } else if (part.removed) {
-      output += colors.red(`-${part.value}`);
-    } else {
-      output += part.value;
-    }
-  }
-
-  return output;
+// Helper function to create colored diff output for objects using deep comparison
+function createColoredDiff(expected: unknown, received: unknown, verbose: boolean = false): string {
+  return deepCompareWithDetails(expected, received, '', verbose);
 }
 
 // Helper function to create a more detailed diff with line-by-line comparison
-function createDetailedDiff(expected: string, received: string): string {
-  const diffs = diff.diffLines(expected, received);
-  let output = `\n${colors.cyan('📊 Detailed Line-by-Line Diff:')}\n`;
+// function createDetailedDiff(expected: string, received: string): string {
+//   const diffs = diff.diffLines(expected, received);
+//   let output = `\n${colors.cyan('📊 Detailed Line-by-Line Diff:')}\n`;
 
-  for (const part of diffs) {
-    if (part.added) {
-      output += colors.green(`+ ${part.value}`);
-    } else if (part.removed) {
-      output += colors.red(`- ${part.value}`);
-    } else {
-      output += `  ${part.value}`; // Unchanged lines
-    }
-  }
+//   for (const part of diffs) {
+//     if (part.added) {
+//       output += colors.green(`+ ${part.value}`);
+//     } else if (part.removed) {
+//       output += colors.red(`- ${part.value}`);
+//     } else {
+//       output += `  ${part.value}`; // Unchanged lines
+//     }
+//   }
 
-  return output;
-}
+//   return output;
+// }
 
 // Helper function to create JSON diff output
-function createJsonDiff(expected: unknown, received: unknown): string {
-  const expectedStr = JSON.stringify(expected, null, 2);
-  const receivedStr = JSON.stringify(received, null, 2);
+// function createJsonDiff(expected: unknown, received: unknown): string {
+//   const expectedStr = JSON.stringify(expected, null, 2);
+//   const receivedStr = JSON.stringify(received, null, 2);
 
-  // Use line-by-line diff for JSON which is more readable
-  const diffs = diff.diffLines(expectedStr, receivedStr);
-  let output = `\n${colors.cyan('📋 JSON Structure Diff:')}\n`;
+//   // Use line-by-line diff for JSON which is more readable
+//   const diffs = diff.diffLines(expectedStr, receivedStr);
+//   let output = `\n${colors.cyan('📋 JSON Structure Diff:')}\n`;
 
-  for (const part of diffs) {
-    if (part.added) {
-      output += colors.green(`+ ${part.value}`);
-    } else if (part.removed) {
-      output += colors.red(`- ${part.value}`);
-    } else {
-      output += `  ${part.value}`; // Unchanged lines
-    }
-  }
+//   for (const part of diffs) {
+//     if (part.added) {
+//       output += colors.green(`+ ${part.value}`);
+//     } else if (part.removed) {
+//       output += colors.red(`- ${part.value}`);
+//     } else {
+//       output += `  ${part.value}`; // Unchanged lines
+//     }
+//   }
 
-  return output;
-}
+//   return output;
+// }
 
 // Helper function to create a summary of differences
 function createDiffSummary(expected: string, received: string): string {
-  const diffs = diff.diffChars(expected, received);
+  const diffs = diff.diffLines(expected, received);
   let addedCount = 0;
   let removedCount = 0;
   let unchangedCount = 0;
@@ -141,6 +128,139 @@ function normalizeAnnotations(annotations: Record<string, unknown> | undefined):
     underline: annotations.underline || false,
     strikethrough: annotations.strikethrough || false,
   };
+}
+
+/**
+ * Deep object comparison that handles property order differences
+ * Recursively compares objects, arrays, and primitives
+ */
+function deepEqual(obj1: unknown, obj2: unknown, path: string = ''): boolean {
+  // Handle null/undefined cases
+  if (obj1 === null && obj2 === null) return true;
+  if (obj1 === undefined && obj2 === undefined) return true;
+  if (obj1 === null || obj2 === null) return false;
+  if (obj1 === undefined || obj2 === undefined) return false;
+
+  // Handle primitive types
+  if (typeof obj1 !== typeof obj2) return false;
+  if (typeof obj1 !== 'object') return obj1 === obj2;
+
+  // Handle arrays
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    if (obj1.length !== obj2.length) return false;
+    for (let i = 0; i < obj1.length; i++) {
+      if (!deepEqual(obj1[i], obj2[i], `${path}[${i}]`)) return false;
+    }
+    return true;
+  }
+
+  // Handle objects
+  if (Array.isArray(obj1) || Array.isArray(obj2)) return false;
+
+  const keys1 = Object.keys(obj1 as Record<string, unknown>);
+  const keys2 = Object.keys(obj2 as Record<string, unknown>);
+
+  // Check if both objects have the same number of properties
+  if (keys1.length !== keys2.length) return false;
+
+  // Check if all keys in obj1 exist in obj2 and have equal values
+  for (const key of keys1) {
+    if (!keys2.includes(key)) return false;
+    if (!deepEqual((obj1 as Record<string, unknown>)[key], (obj2 as Record<string, unknown>)[key], `${path}.${key}`))
+      return false;
+  }
+
+  return true;
+}
+
+/**
+ * Deep recursive comparison with detailed difference reporting
+ * Returns a formatted string showing all differences between two objects
+ */
+function deepCompareWithDetails(obj1: unknown, obj2: unknown, path: string = '', verbose: boolean = false): string {
+  const differences: string[] = [];
+
+  function compare(obj1: unknown, obj2: unknown, currentPath: string): void {
+    // Handle null/undefined cases
+    if (obj1 === null && obj2 === null) return;
+    if (obj1 === undefined && obj2 === undefined) return;
+    if (obj1 === null || obj2 === null) {
+      differences.push(colors.red(`❌ ${currentPath}: null vs ${obj2 === null ? 'null' : 'not null'}`));
+      return;
+    }
+    if (obj1 === undefined || obj2 === undefined) {
+      differences.push(
+        colors.red(`❌ ${currentPath}: undefined vs ${obj2 === undefined ? 'undefined' : 'not undefined'}`),
+      );
+      return;
+    }
+
+    // Handle primitive types
+    if (typeof obj1 !== typeof obj2) {
+      differences.push(colors.red(`❌ ${currentPath}: type mismatch (${typeof obj1} vs ${typeof obj2})`));
+      return;
+    }
+    if (typeof obj1 !== 'object') {
+      if (obj1 !== obj2) {
+        differences.push(colors.red(`❌ ${currentPath}: ${JSON.stringify(obj1)} vs ${JSON.stringify(obj2)}`));
+      } else if (verbose) {
+        differences.push(colors.green(`✅ ${currentPath}: ${JSON.stringify(obj1)}`));
+      }
+      return;
+    }
+
+    // Handle arrays
+    if (Array.isArray(obj1) && Array.isArray(obj2)) {
+      if (obj1.length !== obj2.length) {
+        differences.push(colors.red(`❌ ${currentPath}: array length mismatch (${obj1.length} vs ${obj2.length})`));
+        return;
+      }
+      for (let i = 0; i < obj1.length; i++) {
+        compare(obj1[i], obj2[i], `${currentPath}[${i}]`);
+      }
+      return;
+    }
+
+    // Handle objects
+    if (Array.isArray(obj1) || Array.isArray(obj2)) {
+      differences.push(colors.red(`❌ ${currentPath}: array vs object mismatch`));
+      return;
+    }
+
+    const keys1 = Object.keys(obj1 as Record<string, unknown>);
+    const keys2 = Object.keys(obj2 as Record<string, unknown>);
+
+    // Check for missing keys
+    for (const key of keys1) {
+      if (!keys2.includes(key)) {
+        differences.push(colors.red(`❌ ${currentPath}.${key}: missing in second object`));
+      }
+    }
+    for (const key of keys2) {
+      if (!keys1.includes(key)) {
+        differences.push(colors.red(`❌ ${currentPath}.${key}: extra in second object`));
+      }
+    }
+
+    // Compare common keys
+    for (const key of keys1) {
+      if (keys2.includes(key)) {
+        compare(
+          (obj1 as Record<string, unknown>)[key],
+          (obj2 as Record<string, unknown>)[key],
+          `${currentPath}.${key}`,
+        );
+      }
+    }
+  }
+
+  compare(obj1, obj2, path);
+
+  if (differences.length === 0) {
+    return colors.green('✅ Objects are deeply equal');
+  }
+
+  return colors.cyan('📊 Deep Object Comparison:\n') + differences.join('\n');
 }
 
 /**
@@ -400,116 +520,97 @@ describe('Round-trip conversion tests', () => {
     });
   });
 
-  //   describe('STRICT: Perfect Round-trip Tests (Will Fail Until Converters Are Fixed)', () => {
-  //     for (const { name, jsonPath } of testFilePairs) {
-  //       it(`STRICT: should perfectly round-trip ${name} (Rich Text → Markdown → Rich Text)`, () => {
-  //         // Read original Rich Text JSON
-  //         const jsonContent = readFileSync(jsonPath, 'utf-8');
-  //         const originalRichText: NotionRichText[] = JSON.parse(jsonContent);
+  describe('STRICT: Perfect Round-trip Tests (Will Fail Until Converters Are Fixed)', () => {
+    for (const { name, jsonPath } of testFilePairs) {
+      it(`STRICT: should perfectly round-trip ${name} (Rich Text → Markdown → Rich Text)`, () => {
+        // Read original Rich Text JSON
+        const jsonContent = readFileSync(jsonPath, 'utf-8');
+        const originalRichText: NotionRichText[] = JSON.parse(jsonContent);
 
-  //         // HACK: Trim whitespace from text content to prevent whitespace discrepancies
-  //         const trimmedRichText = originalRichText.map((richText) => {
-  //           if (richText.text?.content) {
-  //             return {
-  //               ...richText,
-  //               text: {
-  //                 ...richText.text,
-  //                 content: richText.text.content.trim(),
-  //               },
-  //               plain_text: richText.plain_text?.trim() || richText.plain_text,
-  //             };
-  //           }
-  //           return richText;
-  //         });
+        // HACK: Trim whitespace from text content to prevent whitespace discrepancies
+        const trimmedRichText = originalRichText.map((richText) => {
+          if (richText.text?.content) {
+            return {
+              ...richText,
+              text: {
+                ...richText.text,
+                content: richText.text.content.trim(),
+              },
+              plain_text: richText.plain_text?.trim() || richText.plain_text,
+            };
+          }
+          return richText;
+        });
 
-  //         // Convert Rich Text → Markdown
-  //         const markdown = convertNotionRichTextToMarkdown(trimmedRichText, mockUuidMappings);
+        // Convert Rich Text → Markdown
+        const markdown = convertNotionRichTextToMarkdown(trimmedRichText, mockUuidMappings);
 
-  //         // Convert Markdown → Rich Text
-  //         // Rich Text from Notion API is always a single array of Rich Text objects
-  //         const convertedRichText = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
+        // Convert Markdown → Rich Text
+        // Rich Text from Notion API is always a single array of Rich Text objects
+        const convertedRichText = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
 
-  //         // STRICT: Perfect round-trip should be achieved
-  //         // This test will fail until converters are fixed
-  //         // Note: Color normalization (default_background ↔ default) is handled in normalizeAnnotations
+        // STRICT: Perfect round-trip should be achieved
+        // This test will fail until converters are fixed
 
-  //         // Apply UUID mapping and color normalization to trimmed Rich Text for comparison
-  //         const mappedOriginalRichText = trimmedRichText.map((richText) => {
-  //           let updatedRichText = { ...richText };
+        // Apply color normalization to original (trimmed) Rich Text for comparison
+        const normalizedOriginalRichText = trimmedRichText.map((richText) => {
+          let updatedRichText = { ...richText };
 
-  //           // Apply UUID mapping for mentions
-  //           if (richText.type === 'mention' && richText.mention?.page?.id) {
-  //             const originalId = richText.mention.page.id;
-  //             const mappedId = mockUuidMappings.notionPageIDsToAtlasUUIDs.get(originalId);
-  //             if (mappedId) {
-  //               updatedRichText = {
-  //                 ...updatedRichText,
-  //                 mention: {
-  //                   ...richText.mention,
-  //                   page: {
-  //                     ...richText.mention.page,
-  //                     id: mappedId,
-  //                   },
-  //                 },
-  //                 href: mappedId,
-  //               };
-  //             }
-  //           }
+          // HACK: Normalize color values for comparison
+          if (updatedRichText.annotations?.color === 'default_background') {
+            updatedRichText = {
+              ...updatedRichText,
+              annotations: {
+                ...updatedRichText.annotations,
+                color: 'default',
+              },
+            };
+          }
 
-  //           // HACK: Normalize color values for comparison
-  //           if (updatedRichText.annotations?.color === 'default_background') {
-  //             updatedRichText = {
-  //               ...updatedRichText,
-  //               annotations: {
-  //                 ...updatedRichText.annotations,
-  //                 color: 'default',
-  //               },
-  //             };
-  //           }
+          return updatedRichText;
+        });
 
-  //           return updatedRichText;
-  //         });
+        // Always show diff for debugging, even if test passes
+        // console.log(colors.blue(`\n🔍 Rich Text → Markdown → Rich Text round-trip for ${name}:`));
+        // console.error(createJsonDiff(mappedOriginalRichText, convertedRichText));
 
-  //         // Always show diff for debugging, even if test passes
-  //         console.error(colors.blue(`\n🔍 Rich Text → Markdown → Rich Text round-trip for ${name}:`));
-  //         console.error(createJsonDiff(mappedOriginalRichText, convertedRichText));
+        // Deep object comparison to avoid false positives from property order differences
+        const isEqual = deepEqual(normalizedOriginalRichText, convertedRichText);
+        if (!isEqual) {
+          console.error(createColoredDiff(normalizedOriginalRichText, convertedRichText));
+          console.error('Expected JSON:', JSON.stringify(normalizedOriginalRichText, null, 2));
+          console.error('Received JSON:', JSON.stringify(convertedRichText, null, 2));
+        }
 
-  //         // Show summary for JSON comparison
-  //         const expectedJson = JSON.stringify(mappedOriginalRichText, null, 2);
-  //         const receivedJson = JSON.stringify(convertedRichText, null, 2);
-  //         console.error(createDiffSummary(expectedJson, receivedJson));
+        expect(isEqual).toBe(true);
+      });
+    }
 
-  //         // Manual comparison to avoid massive console output from expect().toEqual()
-  //         const isEqual = JSON.stringify(convertedRichText) === JSON.stringify(mappedOriginalRichText);
-  //         expect(isEqual).toBe(true);
-  //       });
-  //     }
+    // for (const { name, mdPath } of testFilePairs) {
+    //   it(`STRICT: should perfectly round-trip ${name} (Markdown → Rich Text → Markdown)`, () => {
+    //     // Read original Markdown
+    //     const originalMarkdown = readFileSync(mdPath, 'utf-8');
 
-  //     for (const { name, mdPath } of testFilePairs) {
-  //       it(`STRICT: should perfectly round-trip ${name} (Markdown → Rich Text → Markdown)`, () => {
-  //         // Read original Markdown
-  //         const originalMarkdown = readFileSync(mdPath, 'utf-8');
+    //     // Convert Markdown → Rich Text
+    //     // Rich Text from Notion API is always a single array of Rich Text objects
+    //     const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
 
-  //         // Convert Markdown → Rich Text
-  //         // Rich Text from Notion API is always a single array of Rich Text objects
-  //         const richText = convertMarkdownToNotionRichText(originalMarkdown, mockUuidMappings);
+    //     // Convert Rich Text → Markdown
+    //     const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
 
-  //         // Convert Rich Text → Markdown
-  //         const convertedMarkdown = convertNotionRichTextToMarkdown(richText, mockUuidMappings);
+    //     // STRICT: Perfect round-trip should be achieved
+    //     // This test will fail until converters are fixed
 
-  //         // STRICT: Perfect round-trip should be achieved
-  //         // This test will fail until converters are fixed
+    //     // Manual comparison to avoid massive console output from expect().toBe()
+    //     const isEqual = convertedMarkdown === originalMarkdown;
 
-  //         // Always show diff for debugging, even if test passes
-  //         console.error(colors.blue(`\n🔍 Markdown → Rich Text → Markdown round-trip for ${name}:`));
-  //         console.error(createColoredDiff(originalMarkdown, convertedMarkdown));
-  //         console.error(createDetailedDiff(originalMarkdown, convertedMarkdown));
-  //         console.error(createDiffSummary(originalMarkdown, convertedMarkdown));
-
-  //         // Manual comparison to avoid massive console output from expect().toBe()
-  //         const isEqual = convertedMarkdown === originalMarkdown;
-  //         expect(isEqual).toBe(true);
-  //       });
-  //     }
-  //   });
+    //     if (!isEqual) {
+    //       console.error(createColoredDiff(originalMarkdown, convertedMarkdown));
+    //     //   console.error(createDetailedDiff(originalMarkdown, convertedMarkdown));
+    //       console.error(createDiffSummary(originalMarkdown, convertedMarkdown));
+    //     }
+    //     expect(isEqual).toBe(true);
+    //   });
+    // }
+  });
 });

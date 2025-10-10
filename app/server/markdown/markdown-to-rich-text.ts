@@ -148,14 +148,21 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
       }
     }
 
-    // Handle equation type first - equations don't use annotations
+    // Handle equation type first - equations need default annotations to match Notion API
     if (match.type === 'equation') {
       richText.push({
         type: 'equation',
         equation: { expression: match.content },
         plain_text: match.content,
         href: null,
-        annotations: {},
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
       });
       lastEnd = match.end;
       continue;
@@ -196,7 +203,14 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
           },
           plain_text: match.content,
           href: mentionUrl || null, // Use the converted Notion URL for the href, default to null
-          annotations,
+          annotations: {
+            bold: annotations.bold || false,
+            code: annotations.code || false,
+            color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
+            italic: annotations.italic || false,
+            underline: annotations.underline || false,
+            strikethrough: annotations.strikethrough || false,
+          },
         });
       } else {
         // This is an external link - use createRichText for consistent annotation handling
@@ -244,6 +258,7 @@ function createRichText(options: CreateRichTextOptions): NotionRichText {
   const unescapedContent = content;
 
   // Normalize annotations to match Notion's explicit default format
+  // Always include all annotation properties to match Notion API structure
   const normalizedAnnotations: NotionAnnotations = {
     bold: annotations.bold || false,
     code: annotations.code || false,
