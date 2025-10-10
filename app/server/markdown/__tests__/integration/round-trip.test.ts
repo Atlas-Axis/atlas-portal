@@ -179,9 +179,6 @@ function compareRichTextArrays(original: NotionRichText[], converted: NotionRich
     // Compare links
     if (orig.href !== conv.href) return false;
     if (orig.text?.link?.url !== conv.text?.link?.url) return false;
-
-    // Compare equations
-    if (orig.equation?.expression !== conv.equation?.expression) return false;
   }
 
   return true;

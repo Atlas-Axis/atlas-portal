@@ -43,18 +43,6 @@ describe('convertNotionRichTextToHtml', () => {
     expect(html).toBe('line1  \nline2');
   });
 
-  it('renders equation inline as $...$', () => {
-    const html = convertNotionRichTextToMarkdown(
-      [
-        { type: 'equation', equation: { expression: 't_{i}' } },
-        { type: 'text', text: { content: ' = ' } },
-        { type: 'equation', equation: { expression: 'i' } },
-      ] as NotionRichText[],
-      mockUuidMappings,
-    );
-    expect(html).toBe('$t_{i}$ = $i$');
-  });
-
   it('renders inline code without escaping special characters inside backticks', () => {
     const html = convertNotionRichTextToMarkdown(
       [
@@ -202,14 +190,6 @@ describe('convertNotionBlocksToHtml (Markdown output)', () => {
         '| 2023-06-08 | AVC Member | HKUST_EPI_BLOCKCHAIN |',
       ].join('\n'),
     );
-  });
-
-  it('renders equation block as $$...$$', () => {
-    const md = convertNotionBlocksToMarkdown(
-      [{ type: 'equation', equation: { expression: 'x^2' } }] as NotionBlock[],
-      mockUuidMappings,
-    );
-    expect(md).toBe('$$x^2$$');
   });
 
   it('renders headings as markdown', () => {

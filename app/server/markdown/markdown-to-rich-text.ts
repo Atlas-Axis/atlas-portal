@@ -1,6 +1,6 @@
 /*
   Markdown → Notion Rich Text converter
-  - Supports: inline code, bold, italic, strikethrough, links, math expressions
+  - Supports: inline code, bold, italic, strikethrough, links
   - Converts Markdown to Notion's Rich Text format
   - Handles multiline inline code by preserving line breaks
   - Output is Notion Rich Text format for single blocks
@@ -141,15 +141,7 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
     if (match.type === 'strikethrough') annotations.strikethrough = true;
 
     // Handle special cases that need different Notion Rich Text structures
-    if (match.type === 'equation') {
-      // Math expressions become equation objects
-      richText.push({
-        type: 'equation',
-        equation: { expression: match.content },
-        plain_text: match.content,
-        annotations: {},
-      });
-    } else if (match.type === 'link') {
+    if (match.type === 'link') {
       // Check if this is a mention (UUID-only href) vs external link
       const isMention = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(match.url!);
 
@@ -204,24 +196,13 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
 
 /**
  * Helper function to create a Notion Rich Text object
- * Handles both regular text and equation types
  */
 function createRichText(options: CreateRichTextOptions): NotionRichText {
-  const { content, annotations = {}, href, type = 'text', equation } = options;
+  const { content, annotations = {}, href } = options;
 
   // Don't unescape content - let it pass through as-is
   // This prevents double-escaping issues and maintains consistency
   const unescapedContent = content;
-
-  // Handle equation type specially
-  if (type === 'equation') {
-    return {
-      type: 'equation',
-      equation: equation || { expression: unescapedContent },
-      plain_text: unescapedContent,
-      annotations: {},
-    };
-  }
 
   // Normalize annotations to match Notion's explicit default format
   const normalizedAnnotations: NotionAnnotations = {
@@ -246,7 +227,7 @@ function createRichText(options: CreateRichTextOptions): NotionRichText {
 
 /**
  * Convert inline markdown text to Notion Rich Text format
- * Handles formatting like bold, italic, links, inline code, and math
+ * Handles formatting like bold, italic, links, inline code
  *
  * @param markdown - The markdown text to convert
  * @returns Array of Notion Rich Text objects

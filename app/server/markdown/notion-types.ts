@@ -13,13 +13,12 @@ export type NotionAnnotations = {
 };
 
 export type NotionRichText = {
-  type: 'text' | 'mention' | 'equation' | string;
+  type: 'text' | 'mention' | string;
   plain_text?: string;
   href?: string | null;
   annotations?: NotionAnnotations;
   text?: { content: string; link?: { url: string } | null };
   mention?: unknown;
-  equation?: { expression: string };
 };
 
 // Helper type for creating rich text objects
@@ -27,6 +26,21 @@ export type CreateRichTextOptions = {
   content: string;
   annotations?: NotionAnnotations;
   href?: string;
-  type?: 'text' | 'equation';
-  equation?: { expression: string };
+  type?: 'text';
+};
+
+// Notion block types for markdown conversion
+export type NotionBlock = {
+  type: string;
+  paragraph?: { rich_text: NotionRichText[] };
+  code?: { language: string; rich_text: NotionRichText[] };
+  heading_1?: { rich_text: NotionRichText[] };
+  heading_2?: { rich_text: NotionRichText[] };
+  heading_3?: { rich_text: NotionRichText[] };
+  bulleted_list_item?: { rich_text: NotionRichText[]; children?: NotionBlock[] };
+  numbered_list_item?: { rich_text: NotionRichText[]; children?: NotionBlock[] };
+  table?: { children?: NotionBlock[]; has_column_header?: boolean };
+  table_row?: { children?: NotionBlock[]; cells?: NotionRichText[][] };
+  table_cell?: { rich_text: NotionRichText[] };
+  plain_text?: string;
 };

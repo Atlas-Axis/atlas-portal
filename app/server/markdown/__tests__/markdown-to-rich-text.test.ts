@@ -69,12 +69,6 @@ describe('convertMarkdownToNotionRichText', () => {
     expect(result[1].href).toBe('https://example.com');
   });
 
-  it('should convert inline math', () => {
-    const result = convertMarkdownToNotionRichText('Hello $x^2$ World');
-    // Inline math regex is disabled, so it should be treated as plain text
-    expect(result).toHaveLength(1);
-    expect(result[0].text?.content).toBe('Hello $x^2$ World');
-  });
 
   it('should handle complex combinations', () => {
     const result = convertMarkdownToNotionRichText('Hello **bold** and `code` and [link](https://example.com)');

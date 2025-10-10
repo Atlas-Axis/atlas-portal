@@ -1,6 +1,6 @@
 /*
   Notion Rich Text/Blocks → Markdown converter
-  - Supports: paragraph, inline code (annotations.code), code block, equation (rich_text type), link, lists, table/table_row
+  - Supports: paragraph, inline code (annotations.code), code block, link, lists, table/table_row
   - Mentions render as Markdown links
   - Unsupported types fall back to plain_text where available
   - Output is Markdown (GFM (GitHub Flavored Markdown) for tables)
@@ -12,10 +12,9 @@
   // Rich text inline content (from Notion block rich_text)
   const mdInline = convertNotionRichTextToMarkdown([
     { type: 'text', text: { content: 'Hello ' } },
-    { type: 'text', text: { content: 'World' }, annotations: { bold: true } },
-    { type: 'equation', equation: { expression: 'x^2' } },
+    { type: 'text', text: { content: 'World $x^2$' }, annotations: { bold: true } },
   ]);
-  // => "Hello **World**$x^2$"
+  // => "Hello **World $x^2$**"
 
   // Full blocks (paragraph, list, code, table)
   const mdBlocks = convertNotionBlocksToMarkdown([
@@ -28,7 +27,6 @@
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { NotionBlock, NotionRichText } from './notion-types';
-
 
 export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: UuidMappings): string | null {
   const isNotionURL = href?.startsWith('https://www.notion.so/');
@@ -52,13 +50,8 @@ function wrapIf(condition: boolean | undefined, wrapper: (s: string) => string, 
   return condition ? wrapper(content) : content;
 }
 
-function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings, isTableContext = false): string {
-  const textContent =
-    rt.type === 'equation'
-      ? (rt.equation?.expression ?? rt.plain_text ?? '')
-      : rt.type === 'text'
-        ? (rt.text?.content ?? rt.plain_text ?? '')
-        : (rt.plain_text ?? '');
+function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings): string {
+  const textContent = rt.type === 'text' ? (rt.text?.content ?? rt.plain_text ?? '') : (rt.plain_text ?? '');
 
   // Inline code: don't escape inside backticks, only escape backticks themselves
   const withInlineCode = rt.annotations?.code
@@ -91,16 +84,11 @@ function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings, isTab
     return formatted;
   }
 
-  // Equation as inline math
-  if (rt.type === 'equation') {
-    return `$${textContent}$`;
-  }
-
   return formatted;
 }
 
 function formatInlineSpanForTable(rt: NotionRichText, uuidMappings?: UuidMappings): string {
-  return formatInlineSpan(rt, uuidMappings, true);
+  return formatInlineSpan(rt, uuidMappings);
 }
 
 export function convertNotionRichTextToMarkdown(
@@ -127,11 +115,6 @@ function renderCodeBlock(block: NotionBlock): string {
   const fence = '```';
   const language = lang ? lang : '';
   return `${fence}${language ? language : ''}\n${raw}\n${fence}`;
-}
-
-function renderEquationBlock(block: NotionBlock): string {
-  const expr = block.equation?.expression ?? '';
-  return expr ? `$$${expr}$$` : '';
 }
 
 function groupListItems(blocks: NotionBlock[], uuidMappings: UuidMappings): { html: string; consumed: number } {
@@ -215,9 +198,6 @@ export function convertNotionBlocksToMarkdown(
         break;
       case 'code':
         output.push(renderCodeBlock(block));
-        break;
-      case 'equation':
-        output.push(renderEquationBlock(block));
         break;
       case 'bulleted_list_item':
       case 'numbered_list_item': {
