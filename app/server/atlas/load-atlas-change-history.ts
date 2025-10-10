@@ -108,13 +108,12 @@ export async function loadAtlasChangeHistory(params?: { since?: Date | string })
       'atlas_document_number',
       'canonical_document_title',
       'parent_notion_page_id',
-      'sort_order',
+      // 'sort_order',
       'archived',
       'in_trash',
       'has_children',
       'atlas_document_type',
       'atlas_database_name',
-      'last_edited_by_user_id',
     ];
 
     for (const field of fieldsToCompare) {

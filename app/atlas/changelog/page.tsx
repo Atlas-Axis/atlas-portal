@@ -5,6 +5,7 @@ import {
   loadAtlasChangeHistory,
 } from '@/app/server/atlas/load-atlas-change-history';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,7 +57,9 @@ export default async function AtlasChangelogPage() {
   const changes = await loadAtlasChangeHistory();
 
   console.log(`Loaded ${changes.length} changes for the changelog page.`);
-  console.log(changes);
+  if (DEBUG_LOGGING()) {
+    console.log(changes);
+  }
 
   const idToName = await fetchPageIdToAtlasDocumentNameMap(changes);
 
