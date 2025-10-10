@@ -190,6 +190,20 @@ function trimSeparators(lines: string[], opts: { leading?: boolean; trailing?: b
   return out.join('\n');
 }
 
+// Normalize separators to ensure: at most one blank line at the start; ensure content ends with a newline
+function normalizeContentSeparators(lines: string[]): string {
+  // Remove all leading blank lines and then add exactly one leading blank separator
+  let start = 0;
+  while (start < lines.length && lines[start].trim() === '') start++;
+  // Remove all trailing blank lines
+  let end = lines.length - 1;
+  while (end >= start && lines[end].trim() === '') end--;
+  const middle = lines.slice(start, end + 1);
+  // Compose with exactly one leading blank and exactly one trailing newline
+  const composed = [''].concat(middle).join('\n');
+  return composed.endsWith('\n') ? composed : composed + '\n';
+}
+
 type ExtraMap = Partial<Record<string, string | null>>;
 
 function extractContentAndExtraFields(
@@ -205,8 +219,8 @@ function extractContentAndExtraFields(
 
   const mapping = typeToMapping[type];
   if (!mapping) {
-    // No structured fields for this type; remove only the known separators
-    const content = trimSeparators(rawLines, { leading: true, trailing: true });
+    // No structured fields for this type; normalize to keep exactly one leading separator
+    const content = normalizeContentSeparators(rawLines);
     return { content, extra: null };
   }
 
@@ -228,12 +242,12 @@ function extractContentAndExtraFields(
   }
 
   if (firstIdx === -1) {
-    // No structured fields found; content is everything, minus separators
-    const content = trimSeparators(lines, { leading: true, trailing: true });
+    // No structured fields found; normalize separators
+    const content = normalizeContentSeparators(lines);
     return { content, extra: null };
   }
 
-  const content = trimSeparators(lines.slice(0, firstIdx), { leading: true, trailing: true });
+  const content = normalizeContentSeparators(lines.slice(0, firstIdx));
   const extra: ExtraMap = {};
 
   for (let i = firstIdx; i < lines.length; i++) {
