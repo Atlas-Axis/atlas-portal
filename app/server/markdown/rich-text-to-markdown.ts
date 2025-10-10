@@ -11,9 +11,9 @@
   // Rich text inline content (from Notion block rich_text)
   const mdInline = convertNotionRichTextToMarkdown([
     { type: 'text', text: { content: 'Hello ' } },
-    { type: 'text', text: { content: 'World $x^2$' }, annotations: { bold: true } },
+    { type: 'text', text: { content: 'World' }, annotations: { bold: true } },
   ]);
-  // => "Hello **World $x^2$**"
+  // => "Hello **World**"
   ```
 */
 import { uuidToHyphens } from '@/app/shared/utils/utils';
@@ -43,6 +43,12 @@ function wrapIf(condition: boolean | undefined, wrapper: (s: string) => string, 
 }
 
 function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings): string {
+  // Handle equation type first - equations should not be processed for formatting
+  if (rt.type === 'equation') {
+    const expression = rt.equation?.expression ?? rt.plain_text ?? '';
+    return `$${expression}$`;
+  }
+
   const textContent = rt.type === 'text' ? (rt.text?.content ?? rt.plain_text ?? '') : (rt.plain_text ?? '');
 
   // Inline code: don't escape inside backticks, only escape backticks themselves
@@ -79,7 +85,6 @@ function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings): stri
   return formatted;
 }
 
-
 export function convertNotionRichTextToMarkdown(
   richText: NotionRichText[] | undefined | null,
   uuidMappings?: UuidMappings,
@@ -88,5 +93,3 @@ export function convertNotionRichTextToMarkdown(
   return richText.map((rt) => formatInlineSpan(rt, uuidMappings)).join('');
   // Removed: .replace(/\n/g, '  \n') - this was causing extra spaces
 }
-
-

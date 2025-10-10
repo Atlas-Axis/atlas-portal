@@ -13,12 +13,13 @@ export type NotionAnnotations = {
 };
 
 export type NotionRichText = {
-  type: 'text' | 'mention' | string;
+  type: 'text' | 'mention' | 'equation' | string;
   plain_text?: string;
   href?: string | null;
   annotations?: NotionAnnotations;
   text?: { content: string; link?: { url: string } | null };
   mention?: unknown;
+  equation?: { expression: string };
 };
 
 // Helper type for creating rich text objects
