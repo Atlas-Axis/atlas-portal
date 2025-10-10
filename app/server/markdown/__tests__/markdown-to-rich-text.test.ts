@@ -416,8 +416,12 @@ describe('convertMarkdownToNotionRichText', () => {
     });
 
     it('should handle table with inline code (should NOT be treated as multiline)', () => {
+      // Note: This test expects 6 elements, not 7, because newlines are embedded in the
+      // preceding text object rather than creating separate newline elements. This behavior
+      // is intentional for round-trip compatibility: when converting Notion → Markdown → Notion,
+      // preserving newlines within text objects maintains the original rich text structure.
       const result = convertMarkdownToNotionRichText('| Column | `code` |\n| Another | `more` |', mockUuidMappings);
-      expect(result).toHaveLength(7);
+      expect(result).toHaveLength(6);
 
       // First line: "| Column | "
       expect(result[0].text?.content).toBe('| Column | ');
@@ -427,25 +431,21 @@ describe('convertMarkdownToNotionRichText', () => {
       expect(result[1].text?.content).toBe('code');
       expect(result[1].annotations?.code).toBe(true);
 
-      // End of first line: " |"
-      expect(result[2].text?.content).toBe(' |');
+      // End of first line with newline: " |\n" (newline is embedded for round-trip compatibility)
+      expect(result[2].text?.content).toBe(' |\n');
       expect(result[2].annotations?.code).toBe(false);
 
-      // Newline
-      expect(result[3].text?.content).toBe('\n');
+      // Second line: "| Another | "
+      expect(result[3].text?.content).toBe('| Another | ');
       expect(result[3].annotations?.code).toBe(false);
 
-      // Second line: "| Another | "
-      expect(result[4].text?.content).toBe('| Another | ');
-      expect(result[4].annotations?.code).toBe(false);
-
       // Inline code: "more"
-      expect(result[5].text?.content).toBe('more');
-      expect(result[5].annotations?.code).toBe(true);
+      expect(result[4].text?.content).toBe('more');
+      expect(result[4].annotations?.code).toBe(true);
 
       // End of second line: " |"
-      expect(result[6].text?.content).toBe(' |');
-      expect(result[6].annotations?.code).toBe(false);
+      expect(result[5].text?.content).toBe(' |');
+      expect(result[5].annotations?.code).toBe(false);
     });
 
     it('should handle text with backticks but no multiline code', () => {

@@ -306,9 +306,17 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
     // This preserves the line break intent while normalizing the format
     normalizedMarkdown = normalizedMarkdown.replace(/  \n/g, '\n');
 
-    // For round-trip compatibility, we need to preserve the structure where
-    // text objects can have trailing newlines, rather than creating separate newline objects
-    // This matches the original rich text data structure
+    // Round-trip compatibility strategy: Embed newlines within text objects
+    // -----------------------------------------------------------------------
+    // When converting Notion → Markdown → Notion, we must preserve the original rich text structure.
+    // Notion's rich text format typically embeds trailing newlines within text objects rather than
+    // creating separate newline-only elements. By maintaining this pattern, we ensure that:
+    // 1. The converted rich text matches Notion's native structure
+    // 2. Round-trip conversions preserve the exact same element count and boundaries
+    // 3. Text formatting is correctly maintained across line boundaries
+    //
+    // Example: "Hello\n" is stored as one text object with content "Hello\n",
+    // not as two objects: "Hello" + "\n"
 
     // Check if this content contains multiline inline code blocks
     // A multiline inline code block is when we have a backtick that spans multiple lines
@@ -353,7 +361,8 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
           // Process the multiline content as one block
           const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings);
 
-          // For round-trip compatibility, preserve trailing newlines within text objects
+          // Round-trip compatibility: Embed newline in the last text object
+          // This prevents creating separate newline-only elements and matches Notion's structure
           if (j < lines.length - 1) {
             // Not the last line
             if (multilineRichText.length > 0) {
@@ -380,8 +389,8 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
           // Regular line, process normally
           const lineRichText = parseInlineMarkdown(line, uuidMappings);
 
-          // For round-trip compatibility, preserve trailing newlines within text objects
-          // instead of creating separate newline objects
+          // Round-trip compatibility: Embed newline in the last text object
+          // This prevents creating separate newline-only elements and matches Notion's structure
           if (i < lines.length - 1) {
             // Not the last line
             // Add newline to the last text object if it exists, otherwise create one
