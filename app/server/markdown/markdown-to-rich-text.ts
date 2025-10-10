@@ -23,10 +23,12 @@ import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './noti
 const INLINE_PATTERNS = [
   // Inline code (must come before other patterns to avoid conflicts)
   { regex: /`([^`]+)`/g, type: 'code' as const },
+  // Inline math equations (must come before other patterns to avoid conflicts)
+  { regex: /\$([^$]*)\$/g, type: 'equation' as const },
   // Bold text (must come before italic to avoid conflicts)
   { regex: /\*\*([^*]+)\*\*/g, type: 'bold' as const },
-  // Italic text
-  { regex: /\*([^*]+)\*/g, type: 'italic' as const },
+  // Italic text - improved to not match across newlines and avoid conflicts with bold
+  { regex: /\*([^*\n]+)\*/g, type: 'italic' as const },
   // Strikethrough text
   { regex: /~~([^~]+)~~/g, type: 'strikethrough' as const },
   // Links [text](url)
@@ -108,6 +110,16 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
         continue;
       }
 
+      // Check if this match overlaps with any existing match
+      // If it does, skip it to prevent conflicts (higher priority patterns are processed first)
+      const hasOverlap = matches.some(
+        (existingMatch) => !(matchEnd <= existingMatch.start || matchStart >= existingMatch.end),
+      );
+
+      if (hasOverlap) {
+        continue;
+      }
+
       matches.push({
         start: matchStart, // Start position
         end: matchEnd, // End position
@@ -131,6 +143,18 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
       if (beforeText) {
         richText.push(createRichText({ content: beforeText }));
       }
+    }
+
+    // Handle equation type first - equations don't use annotations
+    if (match.type === 'equation') {
+      richText.push({
+        type: 'equation',
+        equation: { expression: match.content },
+        plain_text: match.content,
+        annotations: {},
+      });
+      lastEnd = match.end;
+      continue;
     }
 
     // Create annotations object for the formatted text
@@ -240,7 +264,10 @@ export function convertMarkdownToNotionRichText(markdown: string): NotionRichTex
       return [];
     }
 
-    return parseInlineMarkdown(markdown);
+    // Trim leading and trailing empty lines
+    const trimmedMarkdown = markdown.replace(/^\n+/, '').replace(/\n+$/, '');
+
+    return parseInlineMarkdown(trimmedMarkdown);
   } catch (error) {
     throw new Error(
       `Failed to convert markdown to rich text: ${error instanceof Error ? error.message : 'Unknown error'}`,
