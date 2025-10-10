@@ -5,14 +5,14 @@
  * Description
  * - Reads Atlas Scope trees produced by `buildAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
  * - Converts each node from `AtlasTreeNode` shape to a simplified `StandardizedAtlasDocument` shape.
- * - Writes the standardized trees to `.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json`.
+ * - Writes the standardized trees to `.debug-data/standardized-atlas/atlas.json`.
  *
  * Input
  * - Supabase: `buildAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
  * - Type: `AtlasTreeNode[]` roots representing Scope documents
  *
  * Output (result format)
- * - File: `.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json`
+ * - File: `.debug-data/standardized-atlas/atlas.json`
  * - Type: `StandardizedAtlasDocument[]` (same child array names as input)
  *
  * How to run
@@ -126,7 +126,7 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
  */
 async function main() {
   const outputDir = '.debug-data/standardized-atlas';
-  const outputFile = path.join(outputDir, 'atlas-supabase-scope-trees-standardized.json');
+  const outputFile = path.join(outputDir, 'atlas.json');
 
   loadEnv();
 

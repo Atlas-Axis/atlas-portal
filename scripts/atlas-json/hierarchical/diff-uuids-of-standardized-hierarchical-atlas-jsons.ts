@@ -9,7 +9,7 @@
  *
  * Defaults
  * - File A: `.debug-data/standardized-atlas/atlas-powerhouse-standardized.json`
- * - File B: `.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json`
+ * - File B: `.debug-data/standardized-atlas/atlas.json`
  *
  * Usage
  * ```bash
@@ -194,7 +194,7 @@ async function main() {
     limitFlagIndex >= 0 ? Math.max(0, Number(argv[limitFlagIndex + 1] ?? defaultPreviewLimit)) : defaultPreviewLimit;
 
   const defaultFileA = '.debug-data/standardized-atlas/atlas-powerhouse-standardized.json';
-  const defaultFileB = '.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json';
+  const defaultFileB = '.debug-data/standardized-atlas/atlas.json';
 
   const fileA = args[0] ?? defaultFileA;
   const fileB = args[1] ?? defaultFileB;

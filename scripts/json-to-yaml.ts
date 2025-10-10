@@ -10,7 +10,7 @@ import { stringify } from 'yaml';
  *   npx tsx scripts/json-to-yaml.ts --help
  *
  * If no input file is provided, defaults to:
- *   .debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json
+ *   .debug-data/standardized-atlas/atlas.json
  *
  * Output file will be in the same directory as input with .yaml extension
  */
@@ -43,7 +43,7 @@ Usage:
 
 Arguments:
   input-file    Path to the JSON file to convert (optional)
-                Default: .debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json
+                Default: .debug-data/standardized-atlas/atlas.json
 
 Options:
   --help        Show this help message
@@ -143,7 +143,7 @@ function main(): void {
   }
 
   // Get input file path from command line arguments
-  const inputFile = args[0] || '.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json';
+  const inputFile = args[0] || '.debug-data/standardized-atlas/atlas.json';
 
   try {
     // Resolve the input file path

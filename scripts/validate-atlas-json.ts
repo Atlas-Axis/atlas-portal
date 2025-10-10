@@ -6,7 +6,7 @@
  *   npx tsx scripts/validate-atlas-json.ts [path/to/file.json]
  *
  * If no file path is provided, defaults to:
- *   .debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json
+ *   .debug-data/standardized-atlas/atlas.json
  */
 import fs from 'fs';
 import path from 'path';
@@ -19,7 +19,7 @@ function formatError(validationError: ValidationError): string {
 }
 
 function main() {
-  const defaultPath = '.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json';
+  const defaultPath = '.debug-data/standardized-atlas/atlas.json';
   const argPath = process.argv[2] ? String(process.argv[2]) : defaultPath;
   const absPath = path.isAbsolute(argPath) ? argPath : path.join(process.cwd(), argPath);
 

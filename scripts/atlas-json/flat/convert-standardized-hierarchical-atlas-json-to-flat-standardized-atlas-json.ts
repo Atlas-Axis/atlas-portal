@@ -9,7 +9,7 @@
  * - Writes the grouped output JSON.
  *
  * Defaults
- * - Input file: `.debug-data/standardized-atlas/atlas-supabase-scope-trees-standardized.json`
+ * - Input file: `.debug-data/standardized-atlas/atlas.json`
  * - Output file: `.debug-data/standardized-atlas/flat/atlas-supabase-scope-trees-standardized-flattened.json`
  *
  * Usage
@@ -224,7 +224,7 @@ async function main() {
   const inputDir = '.debug-data/standardized-atlas';
   const outputDir = '.debug-data/standardized-atlas/flat';
 
-  const inputFileName = inArg ?? 'atlas-supabase-scope-trees-standardized.json';
+  const inputFileName = inArg ?? 'atlas.json';
   const outputFileName = outArg ?? 'atlas-supabase-scope-trees-standardized-flattened.json';
 
   const inputPath = path.join(inputDir, inputFileName);
