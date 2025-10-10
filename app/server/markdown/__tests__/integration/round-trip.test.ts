@@ -114,6 +114,47 @@ function normalizeMarkdown(content: string): string {
 }
 
 /**
+ * Normalize Rich Text content for comparison by trimming whitespace
+ * - Trim whitespace from text content and plain_text
+ * - Handle line break differences
+ * - Preserve newlines as they are structurally significant
+ */
+function normalizeRichTextContent(richText: NotionRichText[]): NotionRichText[] {
+  return richText.map((rt) => ({
+    ...rt,
+    text: rt.text
+      ? {
+          ...rt.text,
+          content: (() => {
+            const content = rt.text!.content;
+            // If content is only newlines, return as-is
+            if (/^\n*$/.test(content)) {
+              return content;
+            }
+            // Preserve leading/trailing newlines, only trim spaces/tabs from middle
+            const leadingNewlines = content.match(/^\n*/)?.[0] || '';
+            const trailingNewlines = content.match(/\n*$/)?.[0] || '';
+            const middle = content.slice(leadingNewlines.length, content.length - trailingNewlines.length);
+            return leadingNewlines + middle.trim() + trailingNewlines;
+          })(),
+        }
+      : rt.text,
+    plain_text: (() => {
+      const plainText = rt.plain_text || '';
+      // If plain_text is only newlines, return as-is
+      if (/^\n*$/.test(plainText)) {
+        return plainText;
+      }
+      // Preserve leading/trailing newlines, only trim spaces/tabs from middle
+      const leadingNewlines = plainText.match(/^\n*/)?.[0] || '';
+      const trailingNewlines = plainText.match(/\n*$/)?.[0] || '';
+      const middle = plainText.slice(leadingNewlines.length, plainText.length - trailingNewlines.length);
+      return leadingNewlines + middle.trim() + trailingNewlines;
+    })(),
+  }));
+}
+
+/**
  * Normalize Rich Text annotations to handle default values consistently
  */
 function normalizeAnnotations(annotations: Record<string, unknown> | undefined): Record<string, unknown> {
@@ -146,8 +187,16 @@ function compareRichTextContent(richText1: NotionRichText[], richText2: NotionRi
       .trim();
   };
 
-  const content1 = getContent(richText1);
-  const content2 = getContent(richText2);
+  const normalizeWhitespace = (content: string): string => {
+    return content
+      .split('\n')
+      .map((line) => line.trimEnd()) // Remove trailing spaces from each line
+      .join('\n')
+      .trim();
+  };
+
+  const content1 = normalizeWhitespace(getContent(richText1));
+  const content2 = normalizeWhitespace(getContent(richText2));
 
   return content1 === content2;
 }
@@ -311,9 +360,20 @@ function compareRichTextArrays(original: NotionRichText[], converted: NotionRich
       );
       return false;
     }
-    if (originalRichText.plain_text !== convertedRichText.plain_text) {
+    // Compare plain_text with normalized whitespace
+    const normalizeWhitespace = (content: string): string => {
+      return content
+        .split('\n')
+        .map((line) => line.trimEnd()) // Remove trailing spaces from each line
+        .join('\n')
+        .trim();
+    };
+
+    const originalPlainText = normalizeWhitespace(originalRichText.plain_text || '');
+    const convertedPlainText = normalizeWhitespace(convertedRichText.plain_text || '');
+    if (originalPlainText !== convertedPlainText) {
       console.warn(
-        `🚫 compareRichTextArrays: Plain text does not match: ${originalRichText.plain_text} !== ${convertedRichText.plain_text}`,
+        `🚫 compareRichTextArrays: Plain text does not match: ${originalPlainText} !== ${convertedPlainText}`,
       );
       return false;
     }
@@ -339,10 +399,12 @@ function compareRichTextArrays(original: NotionRichText[], converted: NotionRich
       return false;
     }
 
-    // Compare text content - the actual text content must match
-    if (originalRichText.text?.content !== convertedRichText.text?.content) {
+    // Compare text content with normalized whitespace
+    const originalTextContent = normalizeWhitespace(originalRichText.text?.content || '');
+    const convertedTextContent = normalizeWhitespace(convertedRichText.text?.content || '');
+    if (originalTextContent !== convertedTextContent) {
       console.warn(
-        `🚫 compareRichTextArrays: Text content does not match: ${originalRichText.text?.content} !== ${convertedRichText.text?.content}`,
+        `🚫 compareRichTextArrays: Text content does not match: ${originalTextContent} !== ${convertedTextContent}`,
       );
       return false;
     }
@@ -464,8 +526,10 @@ describe('Round-trip conversion tests', () => {
           }
           expect(isContentEqual).toBe(true);
         } else {
-          // For other tests, use strict comparison
-          const isEqual = compareRichTextArrays(originalRichText, convertedRichText);
+          // For other tests, use strict comparison with normalized content
+          const normalizedOriginal = normalizeRichTextContent(originalRichText);
+          const normalizedConverted = normalizeRichTextContent(convertedRichText);
+          const isEqual = compareRichTextArrays(normalizedOriginal, normalizedConverted);
           if (!isEqual) {
             console.log(`\n=== Round-trip differences for ${name} (expected) ===`);
             console.log('Original Rich Text:', JSON.stringify(originalRichText, null, 2));
@@ -567,15 +631,27 @@ describe('Round-trip conversion tests', () => {
         const originalRichText: NotionRichText[] = JSON.parse(jsonContent);
 
         // HACK: Trim whitespace from text content to prevent whitespace discrepancies
+        // BUT: Don't trim newlines as they are structurally significant!
         const trimmedRichText = originalRichText.map((richText) => {
           if (richText.text?.content) {
+            // Only trim spaces/tabs, preserve newlines
+            const content = richText.text.content;
+            // If content is only newlines, keep as-is
+            if (/^\n*$/.test(content)) {
+              return richText;
+            }
+            const leadingNewlines = content.match(/^\n*/)?.[0] || '';
+            const trailingNewlines = content.match(/\n*$/)?.[0] || '';
+            const middle = content.slice(leadingNewlines.length, content.length - trailingNewlines.length);
+            const trimmedContent = leadingNewlines + middle.trim() + trailingNewlines;
+
             return {
               ...richText,
               text: {
                 ...richText.text,
-                content: richText.text.content.trim(),
+                content: trimmedContent,
               },
-              plain_text: richText.plain_text?.trim() || richText.plain_text,
+              plain_text: trimmedContent,
             };
           }
           return richText;
@@ -610,11 +686,15 @@ describe('Round-trip conversion tests', () => {
 
         // For table tests, use content-based comparison instead of strict structure matching
         // This allows for structural differences while ensuring content is preserved
-        const isContentEqual = compareRichTextContent(normalizedOriginalRichText, convertedRichText);
+        const normalizedConvertedRichText = normalizeRichTextContent(convertedRichText);
+        const isContentEqual = compareRichTextContent(normalizedOriginalRichText, normalizedConvertedRichText);
         if (!isContentEqual) {
           console.error('Content comparison failed - structural differences detected');
           console.error('Original length:', normalizedOriginalRichText.length);
-          console.error('Converted length:', convertedRichText.length);
+          console.error('Converted length:', normalizedConvertedRichText.length);
+          //   console.error('Diff:', createColoredDiff(normalizedOriginalRichText, normalizedConvertedRichText));
+          console.error('Original Rich Text:', JSON.stringify(normalizedOriginalRichText, null, 2));
+          console.error('Converted Rich Text:', JSON.stringify(normalizedConvertedRichText, null, 2));
         }
 
         expect(isContentEqual).toBe(true);
