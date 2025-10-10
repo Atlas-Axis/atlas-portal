@@ -1,53 +1,7 @@
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/atlas/constants';
-import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 
-async function loadDatabaseEntriesWithEmptyMasterStatus() {
-  console.log('Fetching database entries with empty Master Status...');
-
-  // Loop over all Notion databases in ATLAS_DATABASE_ID_MAP
-  for (const [atlasDatabaseName, notionDatabaseId] of Object.entries(ATLAS_DATABASE_ID_MAP)) {
-    console.log(`\nDatabase: ${atlasDatabaseName} (${notionDatabaseId})`);
-    await fetchEntriesWithEmptyMasterStatus(notionDatabaseId);
-  }
-}
-
-/**
- * Fetches and logs all pages in a Notion database where the "Master Status" property is empty.
- * @param notionDatabaseId - The ID of the Notion database to query.
- */
-async function fetchEntriesWithEmptyMasterStatus(notionDatabaseId: string) {
-  // Find the atlas database name for this ID
-  const atlasDatabaseName = Object.entries(ATLAS_DATABASE_ID_MAP).find(
-    ([, id]) => id.replace(/[-]/g, '') === notionDatabaseId.replace(/[-]/g, ''),
-  )?.[0] as AtlasDatabaseName | undefined;
-
-  // Build filter conditions - use any type for flexibility with Notion API
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filterConditions: any[] = [
-    {
-      property: 'Master Status',
-      relation: {
-        is_empty: true,
-      },
-    },
-  ];
-
-  const response = await notion().databases.query({
-    database_id: notionDatabaseId,
-    page_size: 100,
-    filter: {
-      and: filterConditions,
-    },
-  });
-
-  const prefix = response.results.length === 0 ? '' : '👉👉👉';
-  console.log(`${prefix} Fetched ${response.results.length} entries with empty Master Status.`);
-  for (const page of response.results) {
-    console.log(`- Page ID: ${page.id}`);
-  }
-}
+const NOTION_DATABASE_ID = '288f2ff08d73804fa179ef76388d6d26';
 
 // #!/usr/bin/env node
 async function main() {
@@ -57,7 +11,143 @@ async function main() {
   loadEnv();
 
   try {
-    await loadDatabaseEntriesWithEmptyMasterStatus();
+    console.log('🚀 Creating a new page in Notion database...');
+
+    // Create a new page in the database with rich text content
+    const now = new Date();
+    const dateTimeString = now.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+
+    const response = await notion('write').pages.create({
+      parent: {
+        database_id: NOTION_DATABASE_ID,
+      },
+      properties: {
+        Name: {
+          title: [
+            {
+              type: 'text',
+              text: {
+                content: `Test ${dateTimeString}`,
+              },
+            },
+          ],
+        },
+        Content: {
+          rich_text: [
+            {
+              type: 'text',
+              text: {
+                content: 'This is a demo page created via the Notion API! 🎉',
+              },
+              annotations: {
+                bold: true,
+                italic: false,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'blue',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n\nThis page demonstrates rich text formatting with multiple styles.',
+              },
+              annotations: {
+                bold: false,
+                italic: true,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'default',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n\nHere are some features:',
+              },
+              annotations: {
+                bold: true,
+                italic: false,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'default',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n• Bold text',
+              },
+              annotations: {
+                bold: true,
+                italic: false,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'default',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n• Italic text',
+              },
+              annotations: {
+                bold: false,
+                italic: true,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'default',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n• Code text',
+              },
+              annotations: {
+                bold: false,
+                italic: false,
+                strikethrough: false,
+                underline: false,
+                code: true,
+                color: 'default',
+              },
+            },
+            {
+              type: 'text',
+              text: {
+                content: '\n• Colored text',
+              },
+              annotations: {
+                bold: false,
+                italic: false,
+                strikethrough: false,
+                underline: false,
+                code: false,
+                color: 'green',
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    console.log('✅ Page created successfully!');
+    console.log(`📄 Page ID: ${response.id}`);
+    console.log(`🔗 Page URL: https://www.notion.so/${response.id}`);
 
     // Log processing time
     const endTime = Date.now();
