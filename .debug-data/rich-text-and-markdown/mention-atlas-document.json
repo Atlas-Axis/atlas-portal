@@ -1,0 +1,47 @@
+[
+  {
+    "href": null,
+    "text": { "link": null, "content": "The public announcements defined in " },
+    "type": "text",
+    "plain_text": "The public announcements defined in ",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  },
+  {
+    "href": "https://www.notion.so/d31df3fee2d2448088b050b2e9f23ed9",
+    "type": "mention",
+    "mention": { "page": { "id": "d31df3fe-e2d2-4480-88b0-50b2e9f23ed9" }, "type": "page" },
+    "plain_text": "A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  },
+  {
+    "href": null,
+    "text": {
+      "link": null,
+      "content": " must still be carried out. However, the timing of these announcements no longer constrains the modification of parameters. These announcements must also state that the offboarding is being expedited and explain the reasons for this accelerated process."
+    },
+    "type": "text",
+    "plain_text": " must still be carried out. However, the timing of these announcements no longer constrains the modification of parameters. These announcements must also state that the offboarding is being expedited and explain the reasons for this accelerated process.",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  }
+]

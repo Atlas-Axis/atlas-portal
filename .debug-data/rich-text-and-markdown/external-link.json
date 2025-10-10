@@ -1,0 +1,55 @@
+[
+  {
+    "href": null,
+    "text": {
+      "link": null,
+      "content": "Periodically, collateral and vault types (ilks) are re-evaluated, which sometimes results in an offboarding of that collateral or vault type. \n\nThere have been several instances where users entered official Sky forums/chats to understand why they had been suddenly liquidated, despite historically comfortable collateralization ratios ("
+    },
+    "type": "text",
+    "plain_text": "Periodically, collateral and vault types (ilks) are re-evaluated, which sometimes results in an offboarding of that collateral or vault type. \n\nThere have been several instances where users entered official Sky forums/chats to understand why they had been suddenly liquidated, despite historically comfortable collateralization ratios (",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  },
+  {
+    "href": "https://forum.sky.money/t/an-assessment-first-hand-experience-and-recommendations-from-the-aave-offboarding/11836",
+    "text": {
+      "link": {
+        "url": "https://forum.sky.money/t/an-assessment-first-hand-experience-and-recommendations-from-the-aave-offboarding/11836"
+      },
+      "content": "https://forum.sky.money/t/an-assessment-first-hand-experience-and-recommendations-from-the-aave-offboarding/11836"
+    },
+    "type": "text",
+    "plain_text": "https://forum.sky.money/t/an-assessment-first-hand-experience-and-recommendations-from-the-aave-offboarding/11836",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  },
+  {
+    "href": null,
+    "text": {
+      "link": null,
+      "content": "). This is, understandably, a poor user experience. \n\nEven with liquidation penalties set to 0%, the forced unwinding of levered positions conceivably can result in user losses, as well as potentially taxable events. \n\nThis Section defines procedures concerning the dissemination of information about upcoming collateral offboarding on a best-effort basis. The objective is to minimize the number of users who are unaware of the offboarding prior to getting their positions liquidated."
+    },
+    "type": "text",
+    "plain_text": "). This is, understandably, a poor user experience. \n\nEven with liquidation penalties set to 0%, the forced unwinding of levered positions conceivably can result in user losses, as well as potentially taxable events. \n\nThis Section defines procedures concerning the dissemination of information about upcoming collateral offboarding on a best-effort basis. The objective is to minimize the number of users who are unaware of the offboarding prior to getting their positions liquidated.",
+    "annotations": {
+      "bold": false,
+      "code": false,
+      "color": "default",
+      "italic": false,
+      "underline": false,
+      "strikethrough": false
+    }
+  }
+]
