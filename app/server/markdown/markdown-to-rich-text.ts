@@ -14,6 +14,7 @@
   // => [{ type: 'text', text: { content: 'Hello ' }, annotations: {} }, ...]
   ```
 */
+import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './notion-types';
 
@@ -153,6 +154,7 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
         type: 'equation',
         equation: { expression: match.content },
         plain_text: match.content,
+        href: null,
         annotations: {},
       });
       lastEnd = match.end;
@@ -174,16 +176,13 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
 
       if (isMention) {
         // This is a mention - convert UUID back to Notion URL if mappings are provided
-        let mentionUrl = match.url!;
+        let mentionUrl = null;
         const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!);
         if (!notionPageID) {
           console.warn(`No mapping found for mention UUID: ${match.url}`);
-        }
-
-        // Convert back to Notion URL if possible
-        const notionURL = notionPageID ? `https://www.notion.so/${notionPageID}` : null;
-        if (notionURL) {
-          mentionUrl = notionURL;
+        } else {
+          // Convert back to Notion URL if mapping exists
+          mentionUrl = `https://www.notion.so/${uuidToNoHyphens(notionPageID)}`;
         }
 
         // Create mention object with proper Notion URL
@@ -196,7 +195,7 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
             type: 'page',
           },
           plain_text: match.content,
-          href: mentionUrl, // Use the converted Notion URL for the href
+          href: mentionUrl || null, // Use the converted Notion URL for the href, default to null
           annotations,
         });
       } else {
@@ -260,7 +259,7 @@ function createRichText(options: CreateRichTextOptions): NotionRichText {
     type: 'text',
     text: { content: unescapedContent, link: href ? { url: href } : null },
     plain_text: unescapedContent,
-    href: href || null,
+    href: href ?? null, // Always include href field, defaulting to null
     annotations: normalizedAnnotations,
   };
 }
