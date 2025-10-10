@@ -7702,6 +7702,10 @@ The initial Monthly Settlement Cycle conducted in September 2025 will be for the
 
 For the initial Monthly Settlement Cycle conducted in September 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Demand Side Stablecoin Primitives \(see [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)\). The Independent Calculation prepared by BA Labs on behalf of the Core Council will be prepared normally. The calculations related to Demand Side Stablecoin Primitives will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts. The Initial Calculation and the Independent Calculation will be posted to the Sky Forum by September 10, 2025.
 
+####### A.2.5.1.2.1.6.3 - Process For October 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 8e8ff62f-c6c5-4094-afd1-2cedcf482df6 -->
+
+For the Monthly Settlement Cycle conducted in October 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Spark. The Independent Calculation prepared by BA Labs on behalf of the Core Council will be prepared normally. The calculations related to Spark will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts.
+
 ##### A.2.5.1.2.2 - Implementation Stages [Core]  <!-- UUID: cf1d76c1-fc9f-499d-866f-265276e421f0 -->
 
 The initial implementation of the Monthly Settlement Cycle will occur in three stages as specified in the documents herein.
@@ -7824,7 +7828,7 @@ In Stage 2 of the implementation of the Monthly Settlement Cycle, the net amount
 
 ####### A.2.5.1.2.2.2.2 - Stage 2 Timing [Core]  <!-- UUID: ceb3c433-d73f-4c58-bac9-e79b44e66fcf -->
 
-The timing for Stage 2 implementation of the Monthly Settlement Cycle will be specified in a future iteration of the Atlas.
+Stage 2 is currently expected to be implemented in the February 2026 Monthly Settlement Cycle for the period from January 1, 2026 to January 31, 2026.
 
 ####### A.2.5.1.2.2.2.3 - Stage 2 Actions [Core]  <!-- UUID: b8c86fb3-2ba4-4c53-a509-81d022dffd20 -->
 
@@ -10408,7 +10412,7 @@ The near-term treatment for Ethena is specified in the documents herein.
 
 ########## A.3.3.2.1.1.1.2.1.1.1 - Ethena Required Risk Capital [Core]  <!-- UUID: 7ce05a43-e3ec-4c54-a11e-30e56526cfdd -->
 
-Ethena Exposures consist of Direct Ethena Exposures \(see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)\) and Indirect Ethena Exposures \(see [A.3.3 - Indirect Ethena Exposures](d549b42d-a62e-4a5c-98a8-0ddc72aa6a67)\). The Instance Financial RRC for Ethena Exposures is specified in the documents herein.
+Ethena Exposures consist of Direct Ethena Exposures \(see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)\), Indirect Ethena Exposures \(see [A.3.3 - Indirect Ethena Exposures](d549b42d-a62e-4a5c-98a8-0ddc72aa6a67)\), and Pendle Ethena Exposures \(see [A.3.3 - Pendle Ethena Exposures](4094c159-9132-454a-81be-361a461b5098)\). The Instance Financial RRC for Ethena Exposures is specified in the documents herein.
 
 ########### A.3.3.2.1.1.1.2.1.1.1.1 - Direct Ethena Exposures [Core]  <!-- UUID: e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb -->
 
@@ -10438,15 +10442,25 @@ Ethena Aggregate Exposure is the sum of Ethena Exposures \(see [A.3.3 - Ethena R
 
 ########### A.3.3.2.1.1.1.2.1.1.2.2 - Ethena Aggregate Exposure Limit [Core]  <!-- UUID: 176c8562-848c-4868-8490-8e64da24adcd -->
 
-The Ethena Aggregate Exposure Limit is 1,500,000,000 USDS.
+The Ethena Aggregate Exposure Limit is 1,300,000,000 USDS.
 
-########### A.3.3.2.1.1.1.2.1.1.2.3 - Prohibition On Investments That Would Cause Ethena Aggregate Exposure Limit To Be Exceeded [Core]  <!-- UUID: 50854ba8-c788-4df5-9c70-b6f070a28bfd -->
+########### A.3.3.2.1.1.1.2.1.1.2.3 - Ethena Exposure Limit [Core]  <!-- UUID: 8e120edf-c87b-4d99-8f2a-65fb49bcc3b7 -->
 
-No Prime Agent may make an investment in Ethena Exposures that would cause the Ethena Aggregate Exposure to exceed the Ethena Aggregate Exposure Limit.
+The Ethena Exposure Limit for each Agent is:  
+  
+• Spark - One half of the Ethena Aggregate Exposure Limit  
+  
+• Grove - One half of the Ethena Aggregate Exposure Limit  
+  
+• All other Prime Agents - Zero
 
-########### A.3.3.2.1.1.1.2.1.1.2.4 - Sale Of Investments When Ethena Aggregate Exposure Limit Is Exceeded [Core]  <!-- UUID: 81e64445-f74c-4d61-8322-b2d30d3582f1 -->
+########### A.3.3.2.1.1.1.2.1.1.2.4 - Prohibition On Investments That Would Cause Ethena Exposure Limit To Be Exceeded [Core]  <!-- UUID: 50854ba8-c788-4df5-9c70-b6f070a28bfd -->
 
-If the Ethena Aggregate Exposure exceeds the Ethena Aggregate Exposure Limit, then the Core Council may direct Prime Agents to sell Ethena Exposures to reduce the Ethena Aggregate Exposure below the Ethena Aggregate Exposure Limit.
+No Prime Agent may make an investment in Ethena Exposures that would cause its Ethena Exposures to exceed its Ethena Exposure Limit.
+
+########### A.3.3.2.1.1.1.2.1.1.2.5 - Sale Of Investments When Ethena Exposure Limit Is Exceeded [Core]  <!-- UUID: 81e64445-f74c-4d61-8322-b2d30d3582f1 -->
+
+If a Prime Agent’s Ethena Exposures exceed its Ethena Exposure Limit, then the Core Council may direct the Agent to sell Ethena Exposures to reduce its Ethena Exposures below its Ethena Exposure Limit.
 
 ######### A.3.3.2.1.1.1.2.1.2 - Superstate [Core]  <!-- UUID: 465472b5-acc2-4a8e-9a42-543e16854e71 -->
 
@@ -10454,7 +10468,7 @@ The near-term treatment for Superstate is specified in the documents herein.
 
 ########## A.3.3.2.1.1.1.2.1.2.1 - Superstate Required Risk Capital [Core]  <!-- UUID: ffca1065-7f92-4815-8a65-52bdbc82c558 -->
 
-Superstate Exposures are exposures from holding USCC. Superstate Exposures have a 3% Instance Financial RRC Ratio.
+Superstate Exposures are exposures from holding USCC. Superstate Exposures have a 4.5% Instance Financial RRC Ratio.
 
 ########## A.3.3.2.1.1.1.2.1.2.2 - Superstate Aggregate Exposure Limits [Core]  <!-- UUID: f5348df6-6161-454d-a8d4-bd02d2acc354 -->
 
@@ -10682,6 +10696,14 @@ Investments in JTRSY and JAAA on Avalanche are subject to the following addition
 ◦ Each additional deployment of capital into JTRSY or JAAA must be approved by the Stability Scope Advisors;      
 ◦ Until audits of Centrifuge v3 are approved by the Protocol Security Workstream Lead, the Prime must be below a 90% Risk Tolerance Ratio on a pro forma basis assuming that each additional deployment of capital into JTRSY and JAAA requires 100% Instance Total RRC; and      
 ◦ Total investments in JTRSY and JAAA on Avalanche may not exceed 250 million USDS.
+
+######### A.3.3.2.1.1.1.5.3.2 - Restrictions On Investments On Plume [Core]  <!-- UUID: c5d70220-4797-4df9-8977-4998d4a57888 -->
+
+Investments on Plume are subject to the following restrictions:  
+  
+• Assets other than RWAs on Plume or being bridged to Plume require 100% Instance Total RRC; and  
+  
+• Total investments on Plume may not exceed 125 million USDS.
 
 ####### A.3.3.2.1.1.1.6 - Cash Stablecoins [Core]  <!-- UUID: 3c0a9e8b-4a0b-4059-87a4-155deaee0486 -->
 
@@ -11354,35 +11376,63 @@ def calculate_rrc_coverage(
 
 The documents herein define exceptions to the calculation of Instance Smart Contract RRC for specific asset classes or protocols.
 
-####### A.3.3.2.1.2.4.1 - Real World Assets [Core]  <!-- UUID: b6f7a096-65c9-4379-aba1-c64f84caa887 -->
+####### A.3.3.2.1.2.4.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 52c23a24-aedf-4a1e-abf3-23b819ec9fc5 -->
 
-Investments in Real World Assets, as defined in [A.3.3 - Real World Assets](72076b08-d4f4-4cbf-af6d-379363cade39), have Instance Smart Contract RRC and Instance Administrative RRC as specified in the documents herein. An additional type of Legal RRC, reflecting the unique risks of these assets, will be incorporated in future iterations of the Risk Framework.
+In the short term, investments in BUIDL, JTRSY, USTB, and JAAA have Instance Smart Contract RRC and Instance Administrative RRC of zero.
 
-######## A.3.3.2.1.2.4.1.1 - Short Term Application To Real World Assets [Core]  <!-- UUID: 8b6d78f1-47b9-421a-9c35-7b5160495344 -->
+####### A.3.3.2.1.2.4.2 - Legal Recourse Assets [Core]  <!-- UUID: 717b33c3-708e-4acf-acb4-7be5d5039a2f -->
 
-In the short term, investments in the following Real World Assets automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero:  
-      
-◦ BUIDL      
-◦ JTRSY through Centrifuge v2      
-◦ USTB      
-◦ JAAA through Centrifuge v2      
-◦ JTRSY and JAAA through Centrifuge v3 once audits have been approved by the Protocol Security Workstream Lead  
+The exposure for investments in Legal Recourse Assets is calculated as specified in the documents herein.
+
+######## A.3.3.2.1.2.4.2.1 - Definition [Core]  <!-- UUID: 48216554-13d2-460d-b7c5-539167946528 -->
+
+Legal Recourse Assets \(”LRAs”\) are Real World Assets where legal recourse can be used to recover the assets even if the smart contract is technically hacked or exploited.
+
+######## A.3.3.2.1.2.4.2.2 - Exposure Calculation [Core]  <!-- UUID: 522e7dc2-9f9d-40f8-a24f-21a688099f15 -->
+
+The exposure for investments in Legal Recourse Assets is calculated according to the following formula:  
   
-All other investments in RWAs have Instance Total RRC of 100%.
+`Exposure = Equivalent Loss * Effective Age + Raw Exposure * (1 - Effective Age)`  
+  
+The parameters of this formula are defined in the documents herein.
 
-######## A.3.3.2.1.2.4.1.2 - Long Term Application To Real World Assets [Core]  <!-- UUID: f1839c9b-3080-4740-8696-0f6c00959c21 -->
+######### A.3.3.2.1.2.4.2.2.1 - Equivalent Loss [Core]  <!-- UUID: dbe94efe-061f-4821-9494-aea27a8c80bf -->
 
-In the long term, adapted frameworks for Smart Contract Risk and Administrative Risk for Real World Assets must be developed. These frameworks should take into account \(1\) the reduced risk in an expected worst case scenario due to the legal backstop on these assets and \(2\) the factors normally considered in assessing Smart Contract Risk and Administrative Risk.
+Equivalent Loss is an estimate of the loss that the holder of a Legal Recourse Asset would experience if they had to use legal recourse to recover the assets, based on a combination of expected time to recovery and litigation financing costs. It is calculated according to the following formula:  
+  
+`Equivalent Loss = Raw Exposure * Expected Frozen Duration * Litigation Financing Costs`  
+  
+The parameters of this formula are defined in the documents herein.
 
-####### A.3.3.2.1.2.4.2 - Ethena [Core]  <!-- UUID: 4d4f4c60-4941-41c8-8164-c1f35c4574c8 -->
+########## A.3.3.2.1.2.4.2.2.1.1 - Raw Exposure [Core]  <!-- UUID: 60833a59-f7f8-45db-92c0-a3bc71ea5375 -->
 
-In the short term, Direct Ethena Exposures \(see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)\) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+Raw Exposure is specified in [A.3.3 - Raw Exposure](87fe863b-801d-4415-a3d2-8b4fb977b6c2).
 
-####### A.3.3.2.1.2.4.3 - Superstate [Core]  <!-- UUID: d129279e-73a5-4f55-9cc8-3950a05c3fc1 -->
+########## A.3.3.2.1.2.4.2.2.1.2 - Expected Frozen Duration [Core]  <!-- UUID: 1e07154c-2a3f-40ff-b96b-476558bc0002 -->
 
-In the short term, Superstate Exposures \(see [A.3.3 - Superstate Required Risk Capital](ffca1065-7f92-4815-8a65-52bdbc82c558)\) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+Expected Frozen Duration is the estimated time, in years or fractions thereof, that the Legal Recourse Asset would remain frozen after a hack or technical exploit before the holder would be able to recover the underlying assets through legal recourse. The value of the Expected Frozen Duration is 0.5.
 
-####### A.3.3.2.1.2.4.4 - Fluid [Core]  <!-- UUID: 442c47ef-0fef-4d10-9b5c-12b163795cdd -->
+########## A.3.3.2.1.2.4.2.2.1.3 - Litigation Financing Costs [Core]  <!-- UUID: 061ee579-9c4f-4f59-b5cf-401ff4c11f72 -->
+
+Litigation Financing Costs are the annual costs of borrowing against the right to receive the future recovery of the assets underlying the Legal Recourse Asset through legal recourse. The value of the Litigation Financing Costs is 20%.
+
+######### A.3.3.2.1.2.4.2.2.2 - Effective Age [Core]  <!-- UUID: c06bbc44-09c0-43f9-b443-39c2802a4a78 -->
+
+The Effective Age is calculated as specified in [A.3.3 - Effective Age](a8db99b2-f072-4132-9ee2-c8ebcc2b3609) except that the Effective Age cannot exceed one \(1\) year.
+
+######### A.3.3.2.1.2.4.2.2.3 - Raw Exposure [Core]  <!-- UUID: 87fe863b-801d-4415-a3d2-8b4fb977b6c2 -->
+
+The Raw Exposure is the total exposure to the particular Allocation System opportunity.
+
+####### A.3.3.2.1.2.4.3 - Ethena [Core]  <!-- UUID: 4d4f4c60-4941-41c8-8164-c1f35c4574c8 -->
+
+In the short term, Direct Ethena Exposures \(see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)\) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+
+####### A.3.3.2.1.2.4.4 - Superstate [Core]  <!-- UUID: d129279e-73a5-4f55-9cc8-3950a05c3fc1 -->
+
+In the short term, Superstate Exposures \(see [A.3.3 - Superstate Required Risk Capital](ffca1065-7f92-4815-8a65-52bdbc82c558)\) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+
+####### A.3.3.2.1.2.4.5 - Fluid [Core]  <!-- UUID: 442c47ef-0fef-4d10-9b5c-12b163795cdd -->
 
 The Smart Contract Risk Rating for Fluid is `25`.
 
@@ -11440,19 +11490,23 @@ The second step in calculating the Instance Administrative RRC with respect to a
 
 The documents herein define exceptions to the calculation of Instance Administrative RRC for specific asset classes or protocols.
 
-####### A.3.3.2.1.3.3.1 - Real World Assets [Core]  <!-- UUID: baa6a7b1-1b13-4401-bcaf-c391f5a1e273 -->
+####### A.3.3.2.1.3.3.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 095464ba-2301-4bb6-b342-e840bdd3c018 -->
 
-The Administrative RRC for Real World Assets is calculated as specified in [A.3.3 - Real World Assets](b6f7a096-65c9-4379-aba1-c64f84caa887).
+The Administrative RRC for BUIDL, JTRSY, USTB, and JAAA is calculated as specified in [A.3.3 - BUIDL, JTRSY, USTB, And JAAA](52c23a24-aedf-4a1e-abf3-23b819ec9fc5).
 
-####### A.3.3.2.1.3.3.2 - Ethena [Core]  <!-- UUID: 2397551e-9704-435e-b815-0384429be224 -->
+####### A.3.3.2.1.3.3.2 - Legal Recourse Assets [Core]  <!-- UUID: e5cf1f62-b8e7-405d-9e3e-46e2e4cbcfd1 -->
+
+The exposure for investments in Legal Recourse Assets is calculated as specified in [A.3.3 - Legal Recourse Assets](717b33c3-708e-4acf-acb4-7be5d5039a2f).
+
+####### A.3.3.2.1.3.3.3 - Ethena [Core]  <!-- UUID: 2397551e-9704-435e-b815-0384429be224 -->
 
 The Administrative RRC for Ethena is calculated as specified in [A.3.3 - Ethena](4d4f4c60-4941-41c8-8164-c1f35c4574c8).
 
-####### A.3.3.2.1.3.3.3 - Superstate [Core]  <!-- UUID: 92c06f19-21a3-4aea-9503-db685b3fd7f9 -->
+####### A.3.3.2.1.3.3.4 - Superstate [Core]  <!-- UUID: 92c06f19-21a3-4aea-9503-db685b3fd7f9 -->
 
 The Administrative RRC for Superstate is calculated as specified in [A.3.3 - Superstate](d129279e-73a5-4f55-9cc8-3950a05c3fc1).
 
-####### A.3.3.2.1.3.3.4 - Fluid [Core]  <!-- UUID: 6bbbfa59-7988-4d34-bd75-05402d8ac6f8 -->
+####### A.3.3.2.1.3.3.5 - Fluid [Core]  <!-- UUID: 6bbbfa59-7988-4d34-bd75-05402d8ac6f8 -->
 
 The Administrative Risk Rating for Fluid is `25`.
 
@@ -11804,6 +11858,58 @@ In the event of a disagreement regarding the penalties for a violation of Risk C
 ####### A.3.3.2.7.2.3.2 - Sky Governance Process [Core]  <!-- UUID: 1ccb4063-facc-42d6-a71e-21fe29e84519 -->
 
 Once a matter has been escalated to Sky Governance, the Sky Core Facilitators may request any information they deem necessary from Core GovOps, Operational GovOps, and the Prime Agent. Sky Governance then acts through a Governance Poll to determine its resolution of the matter.
+
+### A.3.3.3 - Pendle Ethena Exposures [Core]  <!-- UUID: 4094c159-9132-454a-81be-361a461b5098 -->
+
+Pendle Ethena Exposures are exposures from directly holding PT-USDe or PT-sUSDe. The Instance Financial RRC for Pendle Ethena Exposures is specified in the documents herein.
+
+#### A.3.3.3.1 - Maturity Greater Than Six Months [Core]  <!-- UUID: ee9246d9-7500-4cd6-a934-0d2312d9e2a6 -->
+
+Pendle Ethena Exposures with more than six \(6\) months to maturity require 100% Instance Total RRC.
+
+#### A.3.3.3.2 - Maturity Less Than Or Equal To Six Months [Core]  <!-- UUID: 6ed19cc0-5447-4df9-a9c1-45c8730f5f44 -->
+
+Pendle Ethena Exposures with less than or equal to six \(6\) months to maturity have Instance Financial RRC calculated as follows:  
+  
+`Instance Financial RRC = initialValue - ((currentTime - startTime) * decayRatePerSecond)`  
+  
+The parameters of this formula are defined in the documents herein.
+
+##### A.3.3.3.2.1 - Initial Value [Core]  <!-- UUID: 5d2d2430-2fd5-4418-a688-e8f091eb44b9 -->
+
+The Initial Value `initialValue` is the Instance Financial RRC when the PT has exactly six \(6\) months to maturity. The `initialValue` is 15%.
+
+##### A.3.3.3.2.2 - Current Time [Core]  <!-- UUID: 340be283-72fe-4b51-9d75-d7f3c28fdab2 -->
+
+The Current Time `currentTime` is the timestamp of the current Ethereum block.
+
+##### A.3.3.3.2.3 - Start Time [Core]  <!-- UUID: 461eef24-5b4d-44b2-8281-a8c86bc4bc40 -->
+
+The Start Time `startTime` is the timestamp of the block exactly six \(6\) months before the expiration timestamp of the PT.
+
+##### A.3.3.3.2.4 - Decay Rate Per Second [Core]  <!-- UUID: cda560ff-5b25-44e1-bad4-e6ccfefdf7eb -->
+
+The Decay Rate Per Second `decayRatePerSecond` is calculated as follows:  
+  
+`decayRatePerSecond = totalDecay / totalDuration`  
+  
+The parameters of this formula are defined in the documents herein.
+
+###### A.3.3.3.2.4.1 - Total Decay [Core]  <!-- UUID: c5530d25-b8ef-4ebe-9b38-7b2a29014ff3 -->
+
+The Total Decay `totalDecay` is equal to the Initial Value minus the Final Value.
+
+####### A.3.3.3.2.4.1.1 - Final Value [Core]  <!-- UUID: 900ecd08-64b7-4f37-8539-f4e822f11d98 -->
+
+The Final Value is the Instance Financial RRC when the PT is at maturity. Since the PT is convertible into the underlying asset at this point it is equal to the Instance Financial RRC for Direct Ethena Exposures specified in [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb).
+
+###### A.3.3.3.2.4.2 - Total Duration [Core]  <!-- UUID: 0e21a4c4-cd66-4ace-9dcd-6015fc9e4966 -->
+
+The Total Duration `totalDuration` is equal to the Expiration Time minus the Start Time.
+
+#### A.3.3.3.3 - Concentration Limit [Core]  <!-- UUID: 6f850537-5e8a-4e57-95c8-f57a099ed8f3 -->
+
+Any investments made by Prime Agents in Pendle Ethena Exposures in excess of 20% of their total Allocation System Investments require 100% Instance Total RRC.
 
 ## A.3.4 - Asset Liability Management [Article]  <!-- UUID: 6478afd5-7c3f-4bed-a2b7-9f8ee402bb64 -->
 
@@ -12972,7 +13078,7 @@ The public announcements defined in [A.3.9 - Measures For Endgame Transition - O
 
 #### A.3.8.1.5 - Genesis Capital Backstop [Core]  <!-- UUID: a9965d58-8cda-49fc-8a7f-f8cc2e0d6b98 -->
 
-If a “SKY Backstop Event” is in progress and the SKY price equals zero, the Sky Protocol must apply a pro‑rata haircut across each Genesis Agent’s Sky‑contributed capital, implemented as a transfer of eligible assets from each Agent to the Sky Surplus Buffer. The haircut must be sized exactly to restore the Surplus Buffer to zero.
+If a “SKY Backstop Event” is in progress and the SKY price equals zero, the Sky Protocol must apply a pro‑rata haircut across each Genesis Agent’s Genesis Capital, implemented as a transfer of eligible assets from each Agent to the Sky Surplus Buffer. The haircut must be sized exactly to restore the Surplus Buffer to zero.
 
 ##### A.3.8.1.5.1 - Implementation [Core]  <!-- UUID: 4381df75-0d4f-4f17-a263-f796cc33be27 -->
 
@@ -13002,6 +13108,10 @@ Genesis Agents are Agents that receive capital contributions from Sky, including
 ◦ Grove      
 ◦ Launch Agent 2      
 ◦ Launch Agent 3
+
+##### A.3.8.1.5.6 - Genesis Capital [Core]  <!-- UUID: 18f3de06-064b-4b08-a855-4720240e37f5 -->
+
+The Genesis Capital of an Agent is the lesser of \(1\) the amount of capital contributed by Sky to the Agent and \(2\) the total capital of the Agent.
 
 # A.4 - The Protocol Scope [Scope]  <!-- UUID: 5c20d9af-0bb9-4ca1-a944-1e2cb6f8bb6b -->
 
@@ -13891,6 +14001,35 @@ In the short term while Utilization is above 100%, the `line` must be set to 200
 In the long term, the `line` must be gradually increased when Utilization is above 85% according to the following formula:  
   
 `line = 1.14 * current SKY borrowing`
+
+##### A.4.4.1.2.9 - SKY-Backed Borrowing Capped OSM Wrapper [Core]  <!-- UUID: c0fbc4e6-754c-4838-aa27-4ef6226f2769 -->
+
+In order to prevent excessive price spikes if there is high demand for leverage against SKY tokens, which could potentially lead to excessive USDS borrowing against SKY, a wrapper for the SKY OSM contract has been developed.  
+  
+The wrapper enforces an upper limit on the price of SKY for the purposes of SKY-Backed   
+Borrowing, which is set to be the minimum value of:  
+  
+1. The current price reported by PIP\_SKY.  
+  
+2. The `cap` that has been set on the OSM wrapper contract.
+
+###### A.4.4.1.2.9.1 - Cap Parameter [Core]  <!-- UUID: 532ed9cb-51de-4ac2-ade9-58c07b3ea3d5 -->
+
+The subdocuments herein further describe the `cap` parameter and the process for its modification.
+
+####### A.4.4.1.2.9.1.1 - Definition [Core]  <!-- UUID: b65c4542-5fb3-4379-9412-8113f4d2444a -->
+
+The `cap` parameter represents one of the potential inputs for the SKY-Backed Borrowing Capped OSM Wrapper. The OSM wrapper uses the minimum value of the `cap` or the PIP\_SKY oracle price to determine the price utilized for SKY-backed borrowing.
+
+####### A.4.4.1.2.9.1.2 - Modification [Core]  <!-- UUID: 0d86a609-e432-4312-8989-4e6c1eb9be83 -->
+
+The Core Facilitator, in consultation with BA Labs, has the ability to modify the `cap` parameter. The modification of said parameter is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a prior Governance Poll.
+
+####### A.4.4.1.2.9.1.3 - Current Value [Core]  <!-- UUID: 161ee404-89b3-43a1-80a9-f387f73c0f6f -->
+
+The current value of the `cap` parameter is:  
+  
+• 0.04 USDS.
 
 #### A.4.4.1.3 - Short-Term Transitionary Measures [Core]  <!-- UUID: 22b8f8bf-b477-4439-86f7-ec605d3c657a -->
 
