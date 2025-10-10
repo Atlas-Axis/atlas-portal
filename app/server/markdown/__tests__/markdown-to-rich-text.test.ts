@@ -137,4 +137,16 @@ describe('convertMarkdownToNotionRichText', () => {
     expect(boldSegment?.annotations?.bold).toBe(true);
     expect(boldSegment?.text?.content).toBe('Hello 世界');
   });
+
+  it('should treat content inside code blocks as plain text without further processing', () => {
+    const result = convertMarkdownToNotionRichText('`**bold** and *italic* and ~~strikethrough~~`');
+    expect(result).toHaveLength(1);
+    expect(result[0].annotations?.code).toBe(true);
+    // Content inside code should be treated as plain text, not processed for other formatting
+    expect(result[0].text?.content).toBe('**bold** and *italic* and ~~strikethrough~~');
+    // Should not have any other annotations applied
+    expect(result[0].annotations?.bold).toBe(false);
+    expect(result[0].annotations?.italic).toBe(false);
+    expect(result[0].annotations?.strikethrough).toBe(false);
+  });
 });

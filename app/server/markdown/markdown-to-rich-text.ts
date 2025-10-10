@@ -31,16 +31,11 @@ const INLINE_PATTERNS = [
   { regex: /~~([^~]+)~~/g, type: 'strikethrough' as const },
   // Links [text](url)
   { regex: /\[([^\]]+)\]\(([^)]+)\)/g, type: 'link' as const },
-  // Inline math expressions $formula$ (but not $$ which is block math)
-  // DISABLED: This regex causes false positives with literal $ characters in text
-  // The content contains literal $ characters that are not math expressions
-  // Only match $...$ patterns that contain actual mathematical expressions
-  // { regex: /\$(?!\$)([^$\n]*?[a-zA-Z0-9\s\+\-\*\/\=\<\>\(\)\[\]\{\}]+?)\$/g, type: 'equation' as const },
 ] as const;
 
 /**
  * Parse inline markdown formatting within text and convert to Notion Rich Text
- * Handles bold, italic, strikethrough, inline code, links, and math expressions
+ * Handles bold, italic, strikethrough, inline code, links
  *
  * @param text - The markdown text to parse
  * @returns Array of Notion Rich Text objects
@@ -68,6 +63,31 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
     url?: string; // URL for links
   }> = [];
 
+  // First, find all code blocks to exclude other patterns from being processed inside them
+  const codeBlocks: Array<{ start: number; end: number }> = [];
+  const codePattern = INLINE_PATTERNS.find((p) => p.type === 'code');
+  if (codePattern) {
+    let match;
+    codePattern.regex.lastIndex = 0;
+    while ((match = codePattern.regex.exec(text)) !== null) {
+      // Prevent infinite loops on zero-length matches
+      if (match.index === codePattern.regex.lastIndex) {
+        codePattern.regex.lastIndex++;
+        continue;
+      }
+
+      codeBlocks.push({
+        start: match.index,
+        end: match.index + match[0].length,
+      });
+    }
+  }
+
+  // Helper function to check if a position is inside any code block
+  const isInsideCodeBlock = (start: number, end: number): boolean => {
+    return codeBlocks.some((block) => start >= block.start && end <= block.end);
+  };
+
   // Find all formatting matches using pre-compiled regex patterns
   INLINE_PATTERNS.forEach((pattern) => {
     let match;
@@ -80,9 +100,17 @@ function parseInlineMarkdown(text: string): NotionRichText[] {
         continue;
       }
 
+      const matchStart = match.index;
+      const matchEnd = match.index + match[0].length;
+
+      // Skip this match if it's inside a code block (except for code patterns themselves)
+      if (pattern.type !== 'code' && isInsideCodeBlock(matchStart, matchEnd)) {
+        continue;
+      }
+
       matches.push({
-        start: match.index, // Start position
-        end: match.index + match[0].length, // End position
+        start: matchStart, // Start position
+        end: matchEnd, // End position
         type: pattern.type, // Formatting type
         content: match[1], // Captured content
         url: pattern.type === 'link' ? match[2] : undefined, // URL for links
