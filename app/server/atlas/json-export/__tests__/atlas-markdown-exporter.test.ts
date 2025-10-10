@@ -44,7 +44,7 @@ describe('atlas-markdown-exporter', () => {
 
     expect(md).toContain('# A.1.2 - An Article [Article]');
     expect(md).toContain('Article body');
-    expect(md).toContain('**UUID:** 00000000-0000-0000-0000-000000000001');
+    expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000001 -->');
   });
 
   it('includes extra fields for Type Specification', async () => {
@@ -75,7 +75,7 @@ describe('atlas-markdown-exporter', () => {
 
     // Title and UUID
     expect(md).toContain('# A.1.1.3.1 - Spec: Example [Type Specification]');
-    expect(md).toContain('**UUID:** 00000000-0000-0000-0000-000000000010');
+    expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000010 -->');
 
     // Extra fields (labels come from TYPE_SPECIFICATION_PROPERTY_MAPPING)
     expect(md).toContain(
@@ -107,7 +107,7 @@ describe('atlas-markdown-exporter', () => {
     const md = await buildAtlasMarkdown();
 
     expect(md).toContain('# A.1.1.4.1 - Scenario Alpha [Scenario]');
-    expect(md).toContain('**UUID:** 00000000-0000-0000-0000-000000000020');
+    expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000020 -->');
     expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_finding}**: Key finding`);
     expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_additional_guidance}**: Some guidance`);
   });
@@ -131,7 +131,7 @@ describe('atlas-markdown-exporter', () => {
     const md = await buildAtlasMarkdown();
 
     expect(md).toContain('# A.1.1.4.1.var1 - Scenario Alpha - Variant 1 [Scenario Variation]');
-    expect(md).toContain('**UUID:** 00000000-0000-0000-0000-000000000030');
+    expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000030 -->');
     expect(md).toContain(`**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_finding}**: Variant finding`);
     expect(md).toContain(
       `**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_additional_guidance}**: Variant guidance`,

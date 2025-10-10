@@ -57,9 +57,6 @@ export default async function AtlasChangelogPage() {
   const changes = await loadAtlasChangeHistory();
 
   console.log(`Loaded ${changes.length} changes for the changelog page.`);
-  if (DEBUG_LOGGING()) {
-    console.log(changes);
-  }
 
   const idToName = await fetchPageIdToAtlasDocumentNameMap(changes);
 

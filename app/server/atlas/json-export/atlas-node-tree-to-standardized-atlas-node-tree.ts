@@ -88,7 +88,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
     doc_no: node.generatedDocID ?? node.atlas_document_number ?? '',
     name: node.generatedDocName ?? '',
     uuid: atlasUUID,
-    last_modified: node.updated_at,
+    last_modified: node.updated_at, // TODO: Remove
     content: atlasDatabasePageToMarkdown(node, uuidMappings),
   };
 }
