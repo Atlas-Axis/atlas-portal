@@ -2,7 +2,7 @@ import { PostgrestError } from '@supabase/supabase-js';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
-const LIMIT = 10;
+const LIMIT = 200;
 
 export type AtlasPageChangeType = 'new' | 'deleted' | 'changed';
 
