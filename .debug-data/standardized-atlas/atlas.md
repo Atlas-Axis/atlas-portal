@@ -514,7 +514,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.1 - The Type Specification Type [Type Specification]  <!-- UUID: 468d192b-83bc-45ab-896f-53e8ca307135 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Type Specification Documents must follow the Document Identifier rules for Primary Documents.
 **Additional Logic**: The rules specified in Type Specification Documents must be followed for all Atlas Documents.
@@ -524,7 +524,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.2 - The Atlas Preamble Type [Type Specification]  <!-- UUID: 08676a8f-96a1-4656-8352-ff4857f95ba6 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Atlas Preamble Documents are located at A.0 or as nested Documents one layer below A.0.
 **Additional Logic**: Atlas Preamble Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all other Atlas Documents.
@@ -534,7 +534,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.3 - The Scope Type [Type Specification]  <!-- UUID: 69dc9b57-ad4d-4d84-9775-cc5338c43820 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Scope Documents have the Document Identifiers from A.1 to A.6.
 **Additional Logic**: Scope Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them
@@ -544,7 +544,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.4 - The Article Type [Type Specification]  <!-- UUID: f1c62cc8-df7c-4153-b3dd-ea4c9f32193c -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Article Documents have Document Identifiers one layer below the Scope Documents.
 **Additional Logic**: Article Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them.
@@ -554,7 +554,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.5 - The Section Type [Type Specification]  <!-- UUID: 8b8e224e-5d1a-4387-8afe-06f65dc8548c -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Section Documents have Document Identifiers one layer below the Article Documents.
 **Additional Logic**: Section Documents are immutable parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Adaptive Documents nested below them.
@@ -564,7 +564,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.6 - The Core Type [Type Specification]  <!-- UUID: 1c19b404-d396-4148-9cd8-4657ad37e896 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Core Documents follow the Document Identifier Rules of Primary Documents. Core Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Core Documents can have whatever Document Identifier that is useful for their purpose.
 **Additional Logic**: 
@@ -574,7 +574,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.7 - The Supporting Root Type [Type Specification]  <!-- UUID: c68d22b2-adf7-4889-9547-ec19e850a1b2 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Supporting Root Documents must always be located at the .0 position of its Target Document.
 **Additional Logic**: The Supporting Root Documents have no function other than structurally acting as a directory for nested Supporting Documents in a standardized format. All Immutable Documents and Primary Documents must have a Supporting Root Document attached.
@@ -584,7 +584,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.8 - The Original Context Data Type [Type Specification]  <!-- UUID: ff7f74ee-356d-403c-9454-56fcef514e9e -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Original Context Data Documents must always be located at the .0.1 position of their Target Document, or nested in a subtree of Original Context Data Documents below the .0.1 position.
 **Additional Logic**: The Original Context Data Document should be in a finished form alongside the creation or modification of its Target Document, as it aims to capture the original context and intention of the contents of the Target Document. However, it can and should be modified if new evidence and data comes to light that helps to better describe the original context and intention of the Target Document, or if new perspectives or new external events makes it possible and useful to modify the Original Context Data Document in a way that doesn’t contradict its earlier language.
@@ -594,7 +594,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.9 - The Element Annotation Directory Type [Type Specification]  <!-- UUID: 95ad533a-40d0-4dbd-8d3a-3224ac77e672 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Element Annotation Directory Documents must always be located at the .0.3 position of their Target Document.
 **Additional Logic**: 
@@ -604,7 +604,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 ##### A.1.2.2.2.10 - The Element Annotation Type [Type Specification]  <!-- UUID: 71db0980-a49f-4d48-b277-87f9a2340a8f -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Element Annotation Documents must always be located as subdocuments to the Element Annotation Directory Document of their Target Document. Element Annotation documents are located at the .0.3.X position, with X being the incremented number.
 **Additional Logic**: Element Annotation Documents should be updated as necessary to reflect changes in the understanding or interpretation of the Element and/or any related Atlas document, while maintaining consistency with the Target Document. The Element Annotation should not contradict its Target Document or other context data of the Target Document.
@@ -616,7 +616,7 @@ The "Name" property of each Element Annotation Document instance must follow a s
 
 ##### A.1.2.2.2.11 - The Facilitator Action Tenet Directory Type [Type Specification]  <!-- UUID: fa44ae5a-01e6-4583-8ff5-a6e1458df62e -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Action Tenet Directory Documents must always be located at the .0.4 position of their Target Document.
 **Additional Logic**: 
@@ -626,7 +626,7 @@ The "Name" property of each Element Annotation Document instance must follow a s
 
 ##### A.1.2.2.2.12 - The Facilitator Action Tenet Type [Type Specification]  <!-- UUID: 9ab18c94-b9b6-43d0-b260-873ad1ef66fe -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Action Tenet Documents must always be located as subdocuments of the Facilitator Action Tenet Directory Document (which latter is located at position .0.4) of their Target Document. Action Tenet documents are located at the .0.4.X position, with X being the incremented number.
 **Additional Logic**: Facilitator Action Tenet Documents are likely to be necessary supplements for interpreting the Immutable Document types, as these tend to have generalized, broad language. The Core Document type has the function of operationalizing the Immutable Documents, and thus its language will tend to be far more specific and concrete. For that reason, Action Tenet Supporting Documents may not be necessary for a particular Core Document. This is not a hard-coded rule, however. The determination of whether an Action Tenet Document is needed for any given Atlas document should always be tailor-made.
@@ -640,7 +640,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.13 - The Facilitator Action Precedent Directory Type [Type Specification]  <!-- UUID: fd4260fd-f56d-40e7-bd8a-baefa1901dff -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Action Precedent Directory Documents must always be located at the .0.5 position below their Target Document.
 **Additional Logic**: A Facilitator Action Precedent Directory Document must be updated whenever a new Facilitator Action Precedent Document is added that meaningfully changes what should be contained in the Directory overview Component.
@@ -650,7 +650,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.14 - The Facilitator Action Precedent Type [Type Specification]  <!-- UUID: 7323b3c5-ffd3-4f8f-af51-5d176531dd0f -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Action Precedent Documents must always be located as subdocuments of the Facilitator Action Precedent Directory Document of their Target Document.
 **Additional Logic**: Facilitator Action Precedent Documents should be created and updated as necessary to reflect changes in governance practices, provide clarity on decision-making processes, and enhance understanding of governance principles and rules. The Precedents should not contradict their Target Document or other Supporting Documents of the Target Document.
@@ -660,7 +660,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.15 - The Active Data Controller Type [Type Specification]  <!-- UUID: 095edfd9-1a87-46f1-a5a5-7ff8f3d26eb1 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Active Data Controller Documents follow the Document Identifier Rules of Primary Documents.  Active Data Controller Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Active Data Controller Documents can have whatever Document Identifier that is useful for their purpose.
 **Additional Logic**: Active Data Controller Documents must have an Active Data Directory Document located below it at the .0.6 position. The Active Data Controller Document can reference its Active Data subdocuments for its own logic. This allows Active Data Documents to be self-improving and adaptive at high speeds.
@@ -670,7 +670,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.16 - The Active Data Directory Type [Type Specification]  <!-- UUID: 343f4477-2981-4a99-825d-a92fb9d320e4 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Active Data Directory Documents must always be located at the .0.6 position of their Active Data Controller Document or Budget Controller Document.
 **Additional Logic**: An Active Data Directory Document should be updated whenever a new Active Data Document is added that meaningfully changes what should be contained in the Directory overview Component.
@@ -680,7 +680,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.17 - The Active Data Type [Type Specification]  <!-- UUID: 925ce2e3-c3a9-4774-a96c-cf77e024d37c -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Active Data Documents must always be located as subdocuments of the Active Data Directory Document of their Active Data Controller Document.
 **Additional Logic**: Active Data Documents can contain arbitrary types of data, including large amounts of data or code. The function and purpose of the contained data depends on the logic specified in the Active Data Controller Document.
@@ -690,7 +690,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.18 - The Budget Controller Type [Type Specification]  <!-- UUID: c0c0d3cb-389e-4dc7-a475-e9bbb5bf633f -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Budget Controller Documents follow the Document Identifier Rules of Primary Documents.
 **Additional Logic**: Budget Controller Documents must have an Active Data Directory Document located below it at the .0.6 position, and a Budget Directory Document located below it at the .0.7 position.
@@ -700,7 +700,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.19 - The Budget Directory Type [Type Specification]  <!-- UUID: 0d1f3e25-089f-41ab-994a-39225b164e69 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Budget Directory Documents must always be located at the .0.7 position of their Budget Controller Document.
 **Additional Logic**: A Budget Directory Document should be updated whenever a new Budget Document is added that meaningfully changes what should be contained in the Directory overview Component.
@@ -710,7 +710,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.20 - The Budget Document Type [Type Specification]  <!-- UUID: 278864f9-e03d-44fa-8bae-e1377b95973e -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Budget Documents must always be located as subdocuments of the Budget Directory Document of their Budget Controller Document.
 **Additional Logic**: Budget Documents specify a budget rate expressed as SKY or USDS per unit of time. Additionally, they can contain large amounts of data, or code, and their function and purpose depends on their Budget Controller Document. Budget Documents can be modified directly through processes external to the standard Atlas Edit Proposal process as specified by their Budget Controller Document.
@@ -720,7 +720,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.21 - The Definition Directory Type [Type Specification]  <!-- UUID: 5e74901e-6f18-4e46-b108-3e7268eaa427 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Definition Directory Documents must always be located at the .0.0 position of their Target Document.
 **Additional Logic**: Definition Directory Documents only need to be present in Atlas Documents that require definitions for unique terms in their Subdocuments.
@@ -730,7 +730,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.22 - The Definition Type [Type Specification]  <!-- UUID: 6eceace8-f499-4954-9ecc-1ada12a02c18 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Definition Documents must always be located as subdocuments of the Definition Directory Document of their Target Document.
 **Additional Logic**: To the extent possible it should be avoided to have the same term defined multiple times in the Atlas, and instead always put a single definition at a location in the Atlas that covers all of its use. The main exception to this principle should be when relatively niche terms are present in two different Scopes.
@@ -740,7 +740,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.23 - The Translation Type [Type Specification]  <!-- UUID: dde9bb23-9ba2-4de6-a3fe-3093e5108fa4 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Translation Documents are located as subdocuments to the Atlas Document they are translating. Their Document Identifier is the same as the Atlas Document they are translating, with an additional suffix that represents the language of the translation. For example, a Spanish translation of A.1 would have the Document Identifier A.1.es.
 **Additional Logic**: Translation Documents should be updated whenever the Atlas Document they are translating is updated to ensure that the translation remains accurate. However, in case of any discrepancies or contradictions, the original English version of the Atlas Document always takes precedence.
@@ -750,7 +750,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.24 - The Archive Type [Type Specification]  <!-- UUID: 65c724f5-56d7-4ea6-a0fe-de30e6f04560 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Archive Documents are located as subdocuments to the Atlas Document they are archiving. Their Document Identifier is the same as the Atlas Document they are archiving, with an additional suffix 'v' followed by the version number of the document being archived. For example, the third version of A.1 would have the Document Identifier A.1.v3.
 **Additional Logic**: Archive Documents should be created whenever an Atlas Document is updated to ensure that a record of all previous versions is maintained. They are not meant to be modified or deleted once created.
@@ -760,7 +760,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.25 - The Navigation Hub Type [Type Specification]  <!-- UUID: fe9164c5-423c-41e8-b8a8-34f8a5d8d6b7 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Navigation Hub Documents must be located at the .0.0 position of an Immutable or Primary Document.
 **Additional Logic**: Navigation Hubs serve as a guide for users to understand and navigate the main content of the associated Immutable or Primary Document.
@@ -770,7 +770,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.26 - The Focus Hub Type [Type Specification]  <!-- UUID: 57c17134-5c45-4a98-8015-38e5e0438095 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Focus Hub Documents must be located at the nonzero numerical positions below Navigation Hubs, e.g.: x.0.0.1, x.0.0.2, etc.
 **Additional Logic**: Focus Hubs serve as a detailed guide on specific topics, giving users an in-depth understanding of the subject matter.
@@ -780,7 +780,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.27 - The Facilitator Scenario Directory Type [Type Specification]  <!-- UUID: 3ad64e25-e64d-454f-a2cd-836e81ee2447 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Scenario Directory Documents must always be located at the .1 position below their parent Facilitator Action Tenet Document.
 **Additional Logic**: 
@@ -790,7 +790,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 ##### A.1.2.2.2.28 - The Facilitator Scenario Type [Type Specification]  <!-- UUID: e896e0f2-2156-4647-8e0d-8001140ae980 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Facilitator Scenario Documents must always be located as subdocuments of the Facilitator Scenario Directory Document, which in turn is nested under its parent Facilitator Action Tenet Document, e.g.: A.1.1-1.0.4.1.1.1.
 
@@ -802,7 +802,7 @@ A Scenario’s Name should never be followed by a number unless there are multip
 
 ##### A.1.2.2.2.29 - The Scenario Variation Type [Type Specification]  <!-- UUID: 935bd219-df68-4466-99fe-0f9c5b328032 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document A.1.1.0.4.1.1.1. would have the following identifier: A.1.1.0.4.1.1.1.var2 .
 **Additional Logic**: 
@@ -816,7 +816,7 @@ Scenario Variations are classified as either Aligned or Misaligned. Aligned Scen
 
 ##### A.1.2.2.2.30 - The Needed Research Type [Type Specification]  <!-- UUID: 90490d29-6410-4d0b-b3f7-7359615fb656 -->
 
-\[See below\]
+[See below]
 
 **Doc Identifier Rules**: Unlike other Supporting Documents, the document identifier of Needed Research documents is not derived from the Supporting Root of their Target Document. The “standalone” numbering scheme of Needed Research documents enables them to be linked to more than one Atlas Document, no matter the latter’s location in the Atlas document tree. Needed Research Document Identifiers begin with the prefix “NR-”,  followed by an incremented number.
 **Additional Logic**: Generally, Needed Research Documents are most effective when linked to Primary Documents or Supporting Documents. These Document types have the objective of extrapolating from the abstract logic of their Parent documents to formulate rules and processes that are more concrete and actionable. Therefore, inputs for Needed Research are more appropriately sourced at this deeper level in the Atlas Document tree.
@@ -1332,10 +1332,10 @@ A simple way to provide the required cryptographically signed messages is to use
 The AD Recognition Submission Message on the Sky Forum must follow this template:
 
 Title: AD Recognition Submission
-\[Ecosystem Actor Ethereum address\]
-\[Ethereum address of Delegate Contract\]
-\[Cryptographically signed AD Recognition Submission Message from the Ethereum address controlling Delegate Contract\]
-\[Cryptographically signed AD Recognition Submission Message from the Ecosystem Actor Ethereum address, where this address is not an address controlling a Delegate Contract\]
+[Ecosystem Actor Ethereum address]
+[Ethereum address of Delegate Contract]
+[Cryptographically signed AD Recognition Submission Message from the Ethereum address controlling Delegate Contract]
+[Cryptographically signed AD Recognition Submission Message from the Ecosystem Actor Ethereum address, where this address is not an address controlling a Delegate Contract]
 
 #### A.1.5.1.4 - List Of Recognized Aligned Delegates [Active Data Controller]  <!-- UUID: 79e4e209-2925-4074-95f5-28544117c680 -->
 
@@ -2339,7 +2339,7 @@ The actions specified herein take place as part of the [A.1.9 - Governance Point
 
 ######## A.1.9.2.3.2.1.3.1 - Governance Point Includes Module Deployment In The Executive Sheet [Core]  <!-- UUID: d2a2b598-db4d-44b5-a23b-a7f62cadfa9d -->
 
-The Governance Point should include the module deployment in the Executive Sheet. The “Input Action” describes the high level logic of the Deployment, for example “Add \[Module Name\] to Chainlog”. The Reasoning URL for the “Input Action” should contain a link to the Atlas Edit Proposal Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Input Action” should contain a link to Atlas documents. The “Derived Action” is more specific for deployment address and other necessary information. The Reasoning URL for the “Derived Action” should contain a link to the Technical Scope Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Derived Action” should contain a link to the approval of the Core Facilitator as specified in [A.1.9 - Core Facilitator Approve Inclusion In Executive Vote](d0c4f880-902e-4d32-ac55-f05725753ac1).
+The Governance Point should include the module deployment in the Executive Sheet. The “Input Action” describes the high level logic of the Deployment, for example “Add [Module Name] to Chainlog”. The Reasoning URL for the “Input Action” should contain a link to the Atlas Edit Proposal Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Input Action” should contain a link to Atlas documents. The “Derived Action” is more specific for deployment address and other necessary information. The Reasoning URL for the “Derived Action” should contain a link to the Technical Scope Forum post specified in [A.1.9 - Technical Scope Forum Post](ef6d73e5-cdcb-48dd-873c-264c07af80bf) and the Authority URL for the “Derived Action” should contain a link to the approval of the Core Facilitator as specified in [A.1.9 - Core Facilitator Approve Inclusion In Executive Vote](d0c4f880-902e-4d32-ac55-f05725753ac1).
 
 ######## A.1.9.2.3.2.1.3.2 - Confirmation Of Module Deployment In The Executive Sheet [Core]  <!-- UUID: 10ccad57-0d04-4d95-89d5-1da66e6172f9 -->
 
@@ -2353,7 +2353,7 @@ The actions specified herein take place as part of the [A.1.9 - Core Facilitator
 
 The Core Facilitator must include the module deployment in the Executive Document. The format for this content should be as specified below:
 
-• The title of the module deployment should be listed as a section for example “Add \[Module Name\] to the Chainlog”.
+• The title of the module deployment should be listed as a section for example “Add [Module Name] to the Chainlog”.
 
 • The authorization should include links to the Atlas documents and the approval from the Core Facilitator.
 
@@ -2445,7 +2445,7 @@ The creation process of the Executive Sheet must follow the steps specified in t
 
 ####### A.1.9.2.4.2.2.1 - The Governance Point Creates The Executive Sheet [Core]  <!-- UUID: ec06d92c-5836-4df9-9680-5977e5a64a72 -->
 
-The Governance Point creates the Executive Sheet by duplicating the template tab to create a new tab within the same Google Sheet. The Executive Sheet template can be found here: [https://docs.google.com/spreadsheets/d/1w\_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262](https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262).
+The Governance Point creates the Executive Sheet by duplicating the template tab to create a new tab within the same Google Sheet. The Executive Sheet template can be found here: [https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262](https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?pli=1&gid=1971670262#gid=1971670262).
 
 ####### A.1.9.2.4.2.2.2 - The Governance Point Names The Executive Sheet [Core]  <!-- UUID: e34b72db-973c-4cfd-8e8c-ff424c081805 -->
 
@@ -2893,7 +2893,7 @@ The template for the Executive Document is stored in the Executive Votes templat
 
 The Core Facilitator must update the metadata of the template. This includes updating the filename and dates to reflect the current values of the Executive Vote.
 
-• Rename the file to “Executive vote - YYYY, MONTH, DD”. The filename must end with .md and must not contain any banned characters (e.g., "<>:"/?\*\|"). The date in the filename should correspond to the day the Executive Vote will go live on the voting platform.
+• Rename the file to “Executive vote - YYYY, MONTH, DD”. The filename must end with .md and must not contain any banned characters (e.g., "<>:"/?*|"). The date in the filename should correspond to the day the Executive Vote will go live on the voting platform.
 
 • Replace the placeholder dates in the template with the correct dates for the Executive Vote. The exact time is not required for the Executive Vote and should therefore be left at midnight.
 
@@ -3001,7 +3001,7 @@ The Core Facilitator’s comment typically includes:
 
 • The resulting hash, and
 
-• A secondary tool used to validate the locally generated hash (Keccak-256 Online Tool, [https://emn178.github.io/online-tools/keccak\_256.html](https://emn178.github.io/online-tools/keccak_256.html), is most commonly used).
+• A secondary tool used to validate the locally generated hash (Keccak-256 Online Tool, [https://emn178.github.io/online-tools/keccak_256.html](https://emn178.github.io/online-tools/keccak_256.html), is most commonly used).
 
 ####### A.1.9.2.4.8.5.2 - Core Facilitator Merges Executive Document [Core]  <!-- UUID: 966fa5d7-c640-4251-891c-a4a3c58bee8a -->
 
@@ -3688,7 +3688,7 @@ The current exceptions to the GSM Pause Delay are specified in the subdocuments 
 
 ##### A.1.9.3.2.1 - Executive Drop Exception [Core]  <!-- UUID: 3041b5f2-36f4-49c5-b1ca-f0c97d6e63b2 -->
 
-The MCD\_PAUSE contract manages the general governance timelock of the GSM Pause Delay; however, it also contains an in-built exception to its own rule.
+The MCD_PAUSE contract manages the general governance timelock of the GSM Pause Delay; however, it also contains an in-built exception to its own rule.
 
 The executive drop functionality allows a successful governance proposal to cancel a previous governance proposal that has not yet passed the GSM Pause Delay period and been executed. As in any other situation, the new Executive proposal must be the hat proposal, meaning more SKY is voting for it than is voting for any other Executive proposal.
 
@@ -3698,7 +3698,7 @@ The risk opened up by this exceptional functionality is that a malicious attacke
 
 ##### A.1.9.3.2.2 - Oracle Freeze Exception [Core]  <!-- UUID: e604c477-e8e4-483f-a41e-c93dcff3acfd -->
 
-The OSM\_MOM contract manages the freezing of Sky’s oracles. The freeze functionality allows a successful governance proposal to immediately freeze the oracle price for any or all of the vault types in the Sky Protocol. Once frozen, the oracle price will remain at its current value.
+The OSM_MOM contract manages the freezing of Sky’s oracles. The freeze functionality allows a successful governance proposal to immediately freeze the oracle price for any or all of the vault types in the Sky Protocol. Once frozen, the oracle price will remain at its current value.
 
 The oracle cannot be unfrozen without waiting for the GSM Pause Delay as part of a regular governance proposal.
 
@@ -3710,7 +3710,7 @@ The risk opened up by this exceptional functionality is that the oracles may be 
 
 ##### A.1.9.3.2.3 - Debt Ceiling Breaker Exception [Core]  <!-- UUID: cd57f7e4-6acd-431e-97fd-89c3453c8eba -->
 
-The LINE\_MOM contract manages the breaker for the Debt Ceilings of a configurable subset of the vault types in the Sky Protocol. This Debt Ceiling Breaker allows a successful governance proposal to reduce the debt ceilings of a pre-configured whitelist of vault types to zero without waiting for the GSM Pause Delay to expire.
+The LINE_MOM contract manages the breaker for the Debt Ceilings of a configurable subset of the vault types in the Sky Protocol. This Debt Ceiling Breaker allows a successful governance proposal to reduce the debt ceilings of a pre-configured whitelist of vault types to zero without waiting for the GSM Pause Delay to expire.
 
 The Debt Ceiling Breaker affects both the Debt Ceiling and the Maximum Debt Ceiling of a given vault type when activated, disabling the Dynamic Debt Ceiling functionality for that vault type if enabled. To reverse the effect, parameters of affected vault types must be reconfigured with an Executive Vote which is subject to the GSM Pause Delay.
 
@@ -3742,7 +3742,7 @@ The whitelist may be configured via a successful governance proposal, but must w
 
 ##### A.1.9.3.2.4 - Liquidations Circuit Breaker Exception [Core]  <!-- UUID: 54b41b8f-8104-47b9-a115-14a4a9716cf7 -->
 
-The CLIPPER\_MOM contract manages the circuit breaker for vault types using Liquidations 2.0. The circuit breaker functionality allows a successful governance proposal to impose Sky Governance’s choice of limitations on liquidations for any or all of the vault types in the Sky Protocol.
+The CLIPPER_MOM contract manages the circuit breaker for vault types using Liquidations 2.0. The circuit breaker functionality allows a successful governance proposal to impose Sky Governance’s choice of limitations on liquidations for any or all of the vault types in the Sky Protocol.
 
 • Level 0 - Liquidations Enabled - The breaker is not tripped, new vaults can be liquidated and old liquidations can proceed.
 
@@ -3778,13 +3778,13 @@ The Breaker Price Tolerance is: 0.5
 
 ##### A.1.9.3.2.5 - Direct Deposit Breaker Exception [Core]  <!-- UUID: 2a0f27c9-7468-465d-9e07-19481f5e8c89 -->
 
-The DIRECT\_MOM contract manages the breaker for Direct Deposit Modules (D3Ms). The breaker functionality allows a successful governance proposal to disable any or all of the active D3Ms. In practice, this will set the bar parameter to zero, which (contrary to intuition) disables the module by setting the allowed Debt Ceiling to zero. At this point, no further USDS can be minted through the Direct Deposit Module. To reverse the effect, parameters of affected Direct Deposit Modules must be reconfigured with an Executive Vote which is subject to GSM Pause Delay.
+The DIRECT_MOM contract manages the breaker for Direct Deposit Modules (D3Ms). The breaker functionality allows a successful governance proposal to disable any or all of the active D3Ms. In practice, this will set the bar parameter to zero, which (contrary to intuition) disables the module by setting the allowed Debt Ceiling to zero. At this point, no further USDS can be minted through the Direct Deposit Module. To reverse the effect, parameters of affected Direct Deposit Modules must be reconfigured with an Executive Vote which is subject to GSM Pause Delay.
 
 The risk opened up by this exceptional functionality is that a given line of USDS credit is unexpectedly shut down. This has the potential to disrupt the protocol in question, which may impact Sky indirectly.
 
 ##### A.1.9.3.2.6 - Dynamic Debt Ceiling Exception [Core]  <!-- UUID: d07e74b5-2faa-4d4d-9b4f-eb6ea72e8768 -->
 
-The MCD\_IAM\_AUTO\_LINE contract manages the debt ceiling parameters for many of Sky’s vault types according to preset rules. Keepers can use the contract to attempt to maintain a Target Available Debt in a given vault type. The contract modifies the debt ceiling up or down to maintain a level of available debt.
+The MCD_IAM_AUTO_LINE contract manages the debt ceiling parameters for many of Sky’s vault types according to preset rules. Keepers can use the contract to attempt to maintain a Target Available Debt in a given vault type. The contract modifies the debt ceiling up or down to maintain a level of available debt.
 
 This functionality is exceptional so that the Sky protocol can react to changes in debt demand more quickly than waiting for the GSM Pause Delay.
 
@@ -3792,21 +3792,21 @@ The risk opened up by this exceptional functionality is a theoretical griefing a
 
 ##### A.1.9.3.2.7 - SparkLend Freezer Mom Exception [Core]  <!-- UUID: 645443f1-9004-48d3-868c-139b608bb1f9 -->
 
-The SparkLend FREEZER\_MOM contract allows Sky Governance to bypass the GSM Pause Delay to either freeze or pause any markets in SparkLend. The contract also allows the undoing of such actions for any market in SparkLend.
+The SparkLend FREEZER_MOM contract allows Sky Governance to bypass the GSM Pause Delay to either freeze or pause any markets in SparkLend. The contract also allows the undoing of such actions for any market in SparkLend.
 
 This functionality allows Sky Governance to react faster in an emergency. Freezing markets does not allow for new supplies or borrows, while pause restricts all market functionality, including deposits/withdrawals/borrows/repays and liquidations.
 
 ##### A.1.9.3.2.8 - Smart Burn Engine Breaker Exception [Core]  <!-- UUID: 5247c795-7f9d-4d3f-a040-6bc9b070e2d4 -->
 
-The SPLITTER\_MOM contract allows for the disabling of the Smart Burn Engine without the GSM Pause Delay.
+The SPLITTER_MOM contract allows for the disabling of the Smart Burn Engine without the GSM Pause Delay.
 
 This functionality is available so that Sky Governance can react to emergencies regarding the Smart Burn Engine.
 
-Since the Splitter contract also allocates USDS from the Surplus Buffer to USDS Staking Rewards, the activation of SPLITTER\_MOM also disables these rewards until the activation is reversed by Sky Governance.
+Since the Splitter contract also allocates USDS from the Surplus Buffer to USDS Staking Rewards, the activation of SPLITTER_MOM also disables these rewards until the activation is reversed by Sky Governance.
 
 ##### A.1.9.3.2.9 - PSM Breaker Exception [Core]  <!-- UUID: 704fbaff-fa10-4c63-af5b-3ee5fd1ea6a8 -->
 
-The LITE\_PSM\_MOM contract manages the breaker for swaps through the LitePSM. The PSM Breaker allows a successful governance proposal to halt swaps through the LitePSM.
+The LITE_PSM_MOM contract manages the breaker for swaps through the LitePSM. The PSM Breaker allows a successful governance proposal to halt swaps through the LitePSM.
 
 ##### A.1.9.3.2.10 - Bounded External Access Modules [Core]  <!-- UUID: 5533c091-e638-4c3d-92e8-43e3e7026078 -->
 
@@ -3824,11 +3824,11 @@ Any operator that fails to follow the defined procedures for a BEAM they are ope
 
 ###### A.1.9.3.2.10.2 - Stability Parameter Bounded External Access Module Exception [Core]  <!-- UUID: 12bb55dc-8f44-4f7a-a7f8-bf197a278784 -->
 
-The Stability Parameter Bounded External Access Module (SP-BEAM) MCD\_SPBEAM contract manages the rates applied to Sky Protocol’s native vaults as well as the savings rates. Whitelisted operators can use the SP-BEAM to modify rates without waiting for the GSM Pause Delay. The SP-BEAM modifies rates up or down within specified parameters. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a). 
+The Stability Parameter Bounded External Access Module (SP-BEAM) MCD_SPBEAM contract manages the rates applied to Sky Protocol’s native vaults as well as the savings rates. Whitelisted operators can use the SP-BEAM to modify rates without waiting for the GSM Pause Delay. The SP-BEAM modifies rates up or down within specified parameters. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a). 
 
 This functionality allows the Sky Protocol to react to changes in market rates more quickly than waiting for an Executive Vote and the GSM Pause Delay.
 
-The risk opened up by this functionality is malicious action by whitelisted operators setting rates to undesirable values. This risk can be mitigated through the SP-BEAM parameters and the SPBEAM\_MOM.
+The risk opened up by this functionality is malicious action by whitelisted operators setting rates to undesirable values. This risk can be mitigated through the SP-BEAM parameters and the SPBEAM_MOM.
 
 ###### A.1.9.3.2.10.3 - stUSDS Bounded External Access Module Exception [Core]  <!-- UUID: 5ce20b57-b8bb-4a67-b5b6-a28b707e2cb2 -->
 
@@ -3836,19 +3836,19 @@ The stUSDS Bounded External Access Module (stUSDS BEAM) manages the parameters o
 
 This functionality allows the Sky Protocol to update stUSDS parameters more quickly than waiting for an Executive Vote and the GSM Pause Delay.
 
-The risk opened up by this functionality is malicious action by whitelisted operators setting stUSDS parameters to undesirable values. This risk can be mitigated through the stUSDS BEAM parameters and the STUSDS\_MOM.
+The risk opened up by this functionality is malicious action by whitelisted operators setting stUSDS parameters to undesirable values. This risk can be mitigated through the stUSDS BEAM parameters and the STUSDS_MOM.
 
 ##### A.1.9.3.2.11 - Stability Parameter Bounded External Access Module Breaker Exception [Core]  <!-- UUID: 1fd7d164-e9f3-4d6c-ab5e-0122bb415f8d -->
 
-The SPBEAM\_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the Stability Parameter Bounded External Access Module.
+The SPBEAM_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the Stability Parameter Bounded External Access Module.
 
-This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the SP-BEAM is hacked or is a malicious actor. Once the SPBEAM\_MOM is activated, the SP-BEAM will not be able to change any rates in the system. If the SPBEAM\_MOM has been triggered, it will still be possible to modify rates through the usual Executive Vote process, subject to the GSM Pause Delay.
+This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the SP-BEAM is hacked or is a malicious actor. Once the SPBEAM_MOM is activated, the SP-BEAM will not be able to change any rates in the system. If the SPBEAM_MOM has been triggered, it will still be possible to modify rates through the usual Executive Vote process, subject to the GSM Pause Delay.
 
 ##### A.1.9.3.2.12 - stUSDS Bounded External Access Module Breaker Exception [Core]  <!-- UUID: b9f3824c-31a5-472c-8a53-8166f3eeb7ee -->
 
-The STUSDS\_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the stUSDS Bounded External Access Module or set the `cap` or `line` stUSDS parameters to zero.
+The STUSDS_MOM contract allows Sky Governance to bypass the GSM Pause Delay and disable the stUSDS Bounded External Access Module or set the `cap` or `line` stUSDS parameters to zero.
 
-This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the stUSDS BEAM is hacked or is a malicious actor. Once the STUSDS\_MOM is activated to disable the stUSDS BEAM, the stUSDS BEAM will not be able to change any stUSDS parameters in the system. If the STUSDS\_MOM has been triggered, it will still be possible to modify stUSDS parameters through the usual Executive Vote process, subject to the GSM Pause Delay.
+This functionality allows Sky Governance to react more quickly in an emergency, e.g., if an operator of the stUSDS BEAM is hacked or is a malicious actor. Once the STUSDS_MOM is activated to disable the stUSDS BEAM, the stUSDS BEAM will not be able to change any stUSDS parameters in the system. If the STUSDS_MOM has been triggered, it will still be possible to modify stUSDS parameters through the usual Executive Vote process, subject to the GSM Pause Delay.
 
 ##### A.1.9.3.2.13 - Linear Interpolation Module [Core]  <!-- UUID: 60767684-f67f-4e03-85db-7718af41b827 -->
 
@@ -3872,7 +3872,7 @@ Each `lerp` instance has the following parameters:
 
 ####### A.1.9.3.2.13.1.2 - Linear Interpolation Module Factory [Core]  <!-- UUID: 59fecdcf-6d2b-4a2d-96bf-af1729fc2bf9 -->
 
-`lerp` instances are created using a factory contract LERP\_FAB that contains standard logic for creating those instances and maintains a registry of all active `lerp` instances. The contract may also be used to cancel an existing `lerp` instance through the `remove` function. The factory contract provides a `list` method that lists the addresses of all active `lerp` instances, as well as a `tall` (short for “tick all”) method that calls `tick` on all active contracts.
+`lerp` instances are created using a factory contract LERP_FAB that contains standard logic for creating those instances and maintains a registry of all active `lerp` instances. The contract may also be used to cancel an existing `lerp` instance through the `remove` function. The factory contract provides a `list` method that lists the addresses of all active `lerp` instances, as well as a `tall` (short for “tick all”) method that calls `tick` on all active contracts.
 
 ###### A.1.9.3.2.13.2 - Linear Interpolation Module Usage Process Definition [Core]  <!-- UUID: 2de4d031-e079-415e-b982-66a4efa78c05 -->
 
@@ -4354,7 +4354,7 @@ The Core Facilitator add the Executive Vote to the Voting Portal and communicate
 
 ##### A.1.10.1.3.0.3.1 - Executive Sheet - Element Annotation [Annotation]  <!-- UUID: 52aef6ac-9eda-4795-9dab-73ea85b8ca31 -->
 
-The Executive Sheet refers to a Google Sheets document located at [https://docs.google.com/spreadsheets/d/1w\_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?gid=1593813984#gid=1593813984](https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?gid=1593813984#gid=1593813984). The Executive Sheet contains a list of content which is planned to be included in a given spell. The Executive Sheet is prepared by the Core Facilitator.
+The Executive Sheet refers to a Google Sheets document located at [https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?gid=1593813984#gid=1593813984](https://docs.google.com/spreadsheets/d/1w_z5WpqxzwreCcaveB2Ye1PP5B8QAHDglzyxKHG3CHw/edit?gid=1593813984#gid=1593813984). The Executive Sheet contains a list of content which is planned to be included in a given spell. The Executive Sheet is prepared by the Core Facilitator.
 
 ##### A.1.10.1.3.0.3.2 - Operational Weekly Cycle - Element Annotation [Annotation]  <!-- UUID: afe57048-78b8-4deb-9dde-971c49f2f442 -->
 
@@ -6625,13 +6625,13 @@ The Agent Artifact is updated pursuant to the following requirements. Each Outpu
                 ◦ New value: set to `Planning`
             • Instance Configuration Document Location
                 ◦ New value: link to `Instance Configuration Document` (created at Create `Instance Configuration` Document for prospective Primitive Instance. The Instance Configuration Document contains a `Data Repository.`)
-    ◦ Responsible party: Operational GovOps \[automated\]
+    ◦ Responsible party: Operational GovOps [automated]
 • After Prime Agent's `Initial planning document` Status is set to `Ready for GovOps review`.
     ◦ Edit `Primitive Hub Document/In Progress Invocations/Instance Name`
         • Updated fields:
             • Invocation Status:
                 ◦ New value: set to `Pending GovOps review`
-        • Responsible party: Operational GovOps \[automated\]
+        • Responsible party: Operational GovOps [automated]
         • Trigger - Process: [A.2.4 - Process Definition For Operational GovOps Review](5fd265ef-17f0-4400-b06c-a6ce9fa87636).
 
 ####### A.2.3.9.1.2.3.2 - Process Definition For Operational GovOps Review [Core]  <!-- UUID: 5fd265ef-17f0-4400-b06c-a6ce9fa87636 -->
@@ -6712,7 +6712,7 @@ The Document is updated as follows.
 • Updated fields
     ◦ Invocation Status
         • New value: set to `Proposal drafting in progress`
-• Responsible Party: Operational GovOps \[automated\]
+• Responsible Party: Operational GovOps [automated]
 • Triggers: [A.2.4 - Process Definition For Artifact Update Draft](240e0e2c-64b6-4290-aa23-ec19eb2f6e59)
 
 ####### A.2.3.9.1.2.3.3 - Process Definition For Artifact Update Draft [Core]  <!-- UUID: 240e0e2c-64b6-4290-aa23-ec19eb2f6e59 -->
@@ -6771,7 +6771,7 @@ The required Primitive Inputs for this process are defined herein and implemente
     ◦ Updated fields
         • Content
             • New value: Inherits data from Artifact Edit Draft content field.
-    ◦ Responsible party: Operational GovOps \[if not automated\]
+    ◦ Responsible party: Operational GovOps [if not automated]
 
 • Agent submits `Artifact Edit Proposal` Document to Powerhouse system
     ◦ Updated fields
@@ -6847,7 +6847,7 @@ The required Primitive Inputs to this process are defined herein and organized a
             • `Commentary`
                 ◦ New value (optional): populate with reasoning for Approval
             • `Status`
-                ◦ New value: set to `Proposal Approved by Facilitator` \[automated\]
+                ◦ New value: set to `Proposal Approved by Facilitator` [automated]
         • Responsible party: Operational Facilitator
         • Trigger-Process: [A.2.4 - Process Definition For Offchain Vote](3170b9a1-d074-4cbd-bb81-ae1661bc0ed8) 
 
@@ -6859,7 +6859,7 @@ The required Primitive Inputs to this process are defined herein and organized a
             • `Commentary`
                 ◦ New value (required): populate with reasoning for Rejection
             • `Status`
-                ◦ New value: set to `Proposal Rejected By Facilitator` \[automated\]
+                ◦ New value: set to `Proposal Rejected By Facilitator` [automated]
         ◦ Responsible party: Operational Facilitator
 
 ######## A.2.3.9.1.2.3.4.4 - Required Outputs [Core]  <!-- UUID: b63e78d1-112d-4d48-a647-a1e3fc2f54a5 -->
@@ -7015,7 +7015,7 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
             • New Value: set to `Tracking Methodology` value from the approved Proposal
         • Parameters/Custom Instance Parameters
             • New Value: set to `Custom Instance Parameters` value from approved Proposal
-        • Responsible Party: Operational GovOps \[if not automated\]
+        • Responsible Party: Operational GovOps [if not automated]
 
 ######## A.2.3.9.1.2.3.6.4 - Required Outputs [Core]  <!-- UUID: 231e3527-5534-42d4-b83e-0f99cb40bf76 -->
 
@@ -7644,14 +7644,14 @@ The Agent Artifact is updated pursuant to the following requirements. Each Outpu
                 ◦ New value: set to `Planning`
             • Instance Configuration Document Location
                 ◦ New value: link to `Instance Configuration Document` (created at Create `Instance Configuration` Document for prospective Primitive Instance. The Instance Configuration Document contains a `Data Repository`.)
-    ◦ Responsible party: Operational GovOps \[automated\]
+    ◦ Responsible party: Operational GovOps [automated]
 
 • After Prime Agent's `Initial planning document` Status is set to `Ready for GovOps review`.
     ◦ Edit `Primitive Hub Document/In Progress Invocations/Instance Name`
         • Updated fields:
             • Invocation Status:
                 ◦ New value: set to `Pending GovOps review`
-        • Responsible party: Operational GovOps \[ automated\]
+        • Responsible party: Operational GovOps [ automated]
         • Trigger - Process: [A.2.4 - Process Definition for Operational GovOps Review](38c54d2b-715b-433d-a9ff-af5cbecc89a2).
 
 ####### A.2.3.9.2.2.3.2 - Process Definition for Operational GovOps Review [Core]  <!-- UUID: 38c54d2b-715b-433d-a9ff-af5cbecc89a2 -->
@@ -7733,7 +7733,7 @@ The Document is updated as follows.
 • Updated fields
     ◦ Active instances/Instance name/Instance status -
         • New value: set to `Proposal drafting in progress`
-• Responsible Party: Operational GovOps \[automated\]
+• Responsible Party: Operational GovOps [automated]
 • Triggers: [A.2.4 - Process Definition for Artifact Update Draft](6a8b5e8b-cca6-48be-b543-6db468f83ebb).
 
 ####### A.2.3.9.2.2.3.3 - Process Definition for Artifact Update Draft [Core]  <!-- UUID: 6a8b5e8b-cca6-48be-b543-6db468f83ebb -->
@@ -7793,7 +7793,7 @@ The required Primitive Inputs for this process are defined herein and implemente
     ◦ Updated fields
         • Content
             • New value: Inherits data from `Artifact Edit Draft` Document’s Content field.
-    ◦ Responsible party: Operational GovOps \[if not automated\]
+    ◦ Responsible party: Operational GovOps [if not automated]
 
 • Agent submits `Artifact Edit Proposal` Document to Powerhouse system
     ◦ Updated fields
@@ -7869,7 +7869,7 @@ The required Primitive Inputs to this process are defined herein and organized a
             • `Commentary`
                 ◦ New value (optional): populate with reasoning for Approval
             • `Status`
-                ◦ New value: set to `Proposal Approved by Facilitator` \[automated\]
+                ◦ New value: set to `Proposal Approved by Facilitator` [automated]
         • Responsible party: Operational Facilitator
         • Trigger-Process: [A.2.4 - Process Definition for Offchain Vote](24fa76f6-4728-4f1d-97ff-fd7e72dac2ac).
  
@@ -7881,7 +7881,7 @@ The required Primitive Inputs to this process are defined herein and organized a
             • `Commentary`
                 ◦ New value (required): populate with reasoning for Rejection
             • `Status`
-                ◦ New value: set to `Proposal Rejected By Facilitator` \[automated\]
+                ◦ New value: set to `Proposal Rejected By Facilitator` [automated]
         • Responsible party: Operational Facilitator
 
 ######## A.2.3.9.2.2.3.4.4 - Required Outputs [Core]  <!-- UUID: c7436489-4aac-47cb-be2d-31774bd7ee99 -->
@@ -8043,7 +8043,7 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
             • New Value: set to `Integration Boost Savings Rate Adjustment Strategy` value from approved Proposal
         • Parameters/Custom Instance Parameters
             • New Value: set to `Custom Instance Parameters` value from approved Proposal
-        •  Responsible party: Operational GovOps \[if not automated\]
+        •  Responsible party: Operational GovOps [if not automated]
 
 ######## A.2.3.9.2.2.3.6.4 - Required Outputs [Core]  <!-- UUID: bd74388f-69d8-48fc-bab8-522f1b3b5806 -->
 
@@ -8089,7 +8089,7 @@ The Document in the Agent Artifact is updated as follows:
 • Updated fields
     ◦ Active Instances/Instance Name/Instance Status
         • New value: `Active`
-    ◦ Instance Location: \[links to `Instance Configuration Document` subtree\]
+    ◦ Instance Location: [links to `Instance Configuration Document` subtree]
 • Responsible Party: Operational Facilitator
 • Trigger-Process: None.
 
@@ -9460,13 +9460,13 @@ The Active Data is updated as follows:
 
 The list of Incubating Ecosystem Actors must follow this template for each recorded Incubating Ecosystem Actor:
 
-• **.x:** \[Incubating Ecosystem Actor name and short description\]
+• **.x:** [Incubating Ecosystem Actor name and short description]
 
-• **.1:** \[Budget information\]
+• **.1:** [Budget information]
 
-• **.2:** \[Deliverables and focus areas\]
+• **.2:** [Deliverables and focus areas]
 
-• **.3:** \[Team information, including headcount grouped by skill sets\]
+• **.3:** [Team information, including headcount grouped by skill sets]
 
 ## A.2.8 - Ecosystem Communication Channels [Article]  <!-- UUID: a520fea9-c2b7-4fda-a2b0-254b76504bc0 -->
 
@@ -10398,15 +10398,15 @@ Valid PoE:
 
 Applications for the Resilience Fund must follow this template:
 
-• .x: \[Application RF\]
+• .x: [Application RF]
 
-• .x.1: \[PoE\]
+• .x.1: [PoE]
 
-• .x.2: \[Active Period\]
+• .x.2: [Active Period]
 
-• .x.3: \[Relevant Executive Proposal: Governance decision ratified by a governance vote\]
+• .x.3: [Relevant Executive Proposal: Governance decision ratified by a governance vote]
 
-• .x4: \[Signature hash\]
+• .x4: [Signature hash]
 
 ######## A.2.10.1.1.1.4.1.3 - Resilience Fund Proof Of Eligibility Digital Signature [Core]  <!-- UUID: c83e0e76-f5b2-43f1-9bef-14c6571e72e2 -->
 
@@ -10663,15 +10663,15 @@ Lawyers included on the Lawyer Registry for litigious categories, must have been
 
 Entries in the LR must follow this template:
 
-• .x: \[Advisor name and short description\]
+• .x: [Advisor name and short description]
 
-• .x.1: \[Name of Firm\]
+• .x.1: [Name of Firm]
 
-• .x.2: \[Specialization Area\]
+• .x.2: [Specialization Area]
 
-• .x.3: \[Jurisdiction\]
+• .x.3: [Jurisdiction]
 
-• .x.4: \[RF qualified (y/n)\]
+• .x.4: [RF qualified (y/n)]
 
 ###### A.2.10.1.1.2.5 - Requirements For Resilience Technical Committee [Core]  <!-- UUID: ba0f1c77-3fe8-45b5-bb5b-1bc84a3a5f8f -->
 
@@ -10873,25 +10873,25 @@ Resilience Research Proposals must justify how the project will mitigate a speci
 
 Applications for Resilience Research projects must follow this template:
 
-• .x: \[Project Name\]
+• .x: [Project Name]
 
-• .x.1: \[Project Abstract: In 3-5 sentences, what problem are you trying to solve?\]
+• .x.1: [Project Abstract: In 3-5 sentences, what problem are you trying to solve?]
 
-• .x.2: \[Objectives: What are you hoping to accomplish? How do you define and measure success for this project?\]
+• .x.2: [Objectives: What are you hoping to accomplish? How do you define and measure success for this project?]
 
-• .x.3: \[Outcomes: How does this project benefit the Sky Ecosystem? How does this project help fulfill one of the Legal Resilience Objectives in [A.2.11](ac707ae4-65da-4cf9-8a34-8b9304cd9a95)\]
+• .x.3: [Outcomes: How does this project benefit the Sky Ecosystem? How does this project help fulfill one of the Legal Resilience Objectives in [A.2.11](ac707ae4-65da-4cf9-8a34-8b9304cd9a95)]
 
-• .x.4: \[Scope: What will you research/build /design/implement? What is the expected output?\]
+• .x.4: [Scope: What will you research/build /design/implement? What is the expected output?]
 
-• .x.5: \[Project Team: How many people are working on this project? Please list their names and roles for the project and how many hours per month each person will work on this project?\]
+• .x.5: [Project Team: How many people are working on this project? Please list their names and roles for the project and how many hours per month each person will work on this project?]
 
-• .x.6: \[Background: Relevant links, reference to other projects or research papers\]
+• .x.6: [Background: Relevant links, reference to other projects or research papers]
 
-• .x.7: \[Methodology: How do you plan to achieve your objectives?\]
+• .x.7: [Methodology: How do you plan to achieve your objectives?]
 
-• .x.8: \[Timeline: Please include a brief explanation of the milestones/roadmap, along with expected deliverables and KPIs.\]
+• .x.8: [Timeline: Please include a brief explanation of the milestones/roadmap, along with expected deliverables and KPIs.]
 
-• .x.9: \[Budget: Requested grant amount and how this will be used. Please provide the requested amount and outline how the funds will be used.\]
+• .x.9: [Budget: Requested grant amount and how this will be used. Please provide the requested amount and outline how the funds will be used.]
 
 #### A.2.11.1.5 - Review Process [Core]  <!-- UUID: 35aec115-f27c-42f2-9812-644a2df8f38f -->
 
@@ -11524,7 +11524,7 @@ The documents herein define the process for calculating Instance Financial RRC f
 The first step is calculating the Probability Of Default $PD$. $PD$ is calculated using the following formula:
 
 $$
-\text{PD} = N(-d\_1) + N(-d\_2) \left( \frac{\sum\_{i=1}^n \text{LT}_i V\_0^i}{\sum_{j=1}^m D\_0^j} \right)^{-2a}
+\text{PD} = N(-d_1) + N(-d_2) \left( \frac{\sum_{i=1}^n \text{LT}_i V_0^i}{\sum_{j=1}^m D_0^j} \right)^{-2a}
 $$
 
 Here $N$ is the normal cumulative probability distribution function.
@@ -11536,100 +11536,100 @@ The parameters of this formula are specified in the subdocuments herein.
 The Leverage Adjusted Drift To Risk Ratio $a$ is calculated as follows:
 
 $$
-a = \frac{\sum\_{i=1}^n w\_U^i (r\_c^i + r\_s^i) - \sum\_{j=1}^m w\_D^j (r\_d^j + r\_s^j) + \rho\_{UD} \sigma\_U \sigma\_D - \sigma\_U^2}{\sigma\_U^2 + \sigma\_D^2 - 2 \rho\_{UD} \sigma\_U \sigma\_D}
+a = \frac{\sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j) + \rho_{UD} \sigma_U \sigma_D - \sigma_U^2}{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.2 - Distance To Default [Core]  <!-- UUID: b449741c-0144-406e-9d18-eabb050bcba0 -->
 
-The Distance To Default $d\_1$ is calculated using the following formula:
+The Distance To Default $d_1$ is calculated using the following formula:
 
 $$
-d\_1 = \frac{\ln\left( \frac{\sum\_{i=1}^n \text{LT}_i V\_0^i}{\sum_{j=1}^m D\_0^j} \right) + \left( \sum\_{i=1}^n w\_U^i (r\_c^i + r\_s^i) - \sum\_{j=1}^m w\_D^j (r\_d^j + r\_s^j) + \rho\_{UD} \sigma\_U \sigma\_D - \sigma\_U^2 \right) T}{\sqrt{\sigma\_U^2 + \sigma\_D^2 - 2 \rho\_{UD} \sigma\_U \sigma\_D} \sqrt{T}}
+d_1 = \frac{\ln\left( \frac{\sum_{i=1}^n \text{LT}_i V_0^i}{\sum_{j=1}^m D_0^j} \right) + \left( \sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j) + \rho_{UD} \sigma_U \sigma_D - \sigma_U^2 \right) T}{\sqrt{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D} \sqrt{T}}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.3 - Downward Adjusted Distance To Default [Core]  <!-- UUID: 6eedb98a-0238-421a-9f8d-613859ddfcef -->
 
-The Downward Adjusted Distance To Default $d\_2$ is calculated using the following formula:
+The Downward Adjusted Distance To Default $d_2$ is calculated using the following formula:
 
 $$
-d\_2 = \frac{\ln\left( \frac{\sum\_{i=1}^n \text{LT}_i V\_0^i}{\sum_{j=1}^m D\_0^j} \right) - \left( \sum\_{i=1}^n w\_U^i (r\_c^i + r\_s^i) - \sum\_{j=1}^m w\_D^j (r\_d^j + r\_s^j)+ \rho\_{UD} \sigma\_U \sigma\_D - \sigma\_U^2 \right) T}{\sqrt{\sigma\_U^2 + \sigma\_D^2 - 2 \rho\_{UD} \sigma\_U \sigma\_D} \sqrt{T}}
+d_2 = \frac{\ln\left( \frac{\sum_{i=1}^n \text{LT}_i V_0^i}{\sum_{j=1}^m D_0^j} \right) - \left( \sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j)+ \rho_{UD} \sigma_U \sigma_D - \sigma_U^2 \right) T}{\sqrt{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D} \sqrt{T}}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.4 - Total Variance Of Underlying Asset Portfolio [Core]  <!-- UUID: d7f84a30-53f6-425c-afba-3ffc59e03e0f -->
 
-The Total Variance Of Underlying Asset Portfolio $\sigma\_U^2$ is calculated using the following formula:
+The Total Variance Of Underlying Asset Portfolio $\sigma_U^2$ is calculated using the following formula:
 
 $$
-\sigma\_U^2 = \sum\_{i,k=1}^n w\_U^i w\_U^k \sigma\_V^i \sigma\_V^k \rho\_{V,ik}
+\sigma_U^2 = \sum_{i,k=1}^n w_U^i w_U^k \sigma_V^i \sigma_V^k \rho_{V,ik}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.5 - Total Variance Of Debt Portfolio [Core]  <!-- UUID: 1db43b96-d2eb-4563-87ad-d5046c21b66c -->
 
-The Total Variance Of Debt Portfolio $\sigma\_D^2$ is calculated using the following formula:
+The Total Variance Of Debt Portfolio $\sigma_D^2$ is calculated using the following formula:
 
 $$
-\sigma\_D^2 = \sum\_{j,l=1}^m w\_D^j w\_D^l \sigma\_D^j \sigma\_D^l \rho\_{D,jl}
+\sigma_D^2 = \sum_{j,l=1}^m w_D^j w_D^l \sigma_D^j \sigma_D^l \rho_{D,jl}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.6 - Correlation Between Asset Portfolio And Debt Portfolio [Core]  <!-- UUID: ae1dbcb9-828d-40c0-8ad8-96b3072dad4e -->
 
-The Correlation Between Asset Portfolio And Debt Portfolio $\rho\_{UD}$ is calculated using the following formula:
+The Correlation Between Asset Portfolio And Debt Portfolio $\rho_{UD}$ is calculated using the following formula:
 
 $$
-\rho\_{UD} = \frac{\sum\_{i=1}^n \sum\_{j=1}^m w\_U^i w\_D^j \sigma\_V^i \sigma\_D^j \rho\_{VD,ij}}{\sqrt{\sigma\_U^2 \sigma\_D^2}}
+\rho_{UD} = \frac{\sum_{i=1}^n \sum_{j=1}^m w_U^i w_D^j \sigma_V^i \sigma_D^j \rho_{VD,ij}}{\sqrt{\sigma_U^2 \sigma_D^2}}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.7 - Weight Of Asset In Underlying Asset Portfolio [Core]  <!-- UUID: c614e705-59c8-40bd-aa15-c8d61c0ead4f -->
 
-The weight of asset $i$ in the underlying asset portfolio $w\_U^i$ is calculated using the following formula:
+The weight of asset $i$ in the underlying asset portfolio $w_U^i$ is calculated using the following formula:
 
 $$
-w\_U^i = \frac{\text{LT}_i V\_0^i}{\sum_{k=1}^n \text{LT}\_k V\_0^k}
+w_U^i = \frac{\text{LT}_i V_0^i}{\sum_{k=1}^n \text{LT}_k V_0^k}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.8 - Weight Of Debt Instrument In Debt Portfolio [Core]  <!-- UUID: c5605290-8c64-4ed0-8fab-f2824488c4c9 -->
 
-The weight of debt instrument $j$ in the debt portfolio $w\_D^j$ is calculated using the following formula:
+The weight of debt instrument $j$ in the debt portfolio $w_D^j$ is calculated using the following formula:
 
 $$
-w\_D^j = \frac{D\_0^j}{\sum\_{l=1}^m D\_0^l}
+w_D^j = \frac{D_0^j}{\sum_{l=1}^m D_0^l}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.9 - Return On Asset [Core]  <!-- UUID: 9f322c61-92d7-4ff5-aa9b-523e124c8748 -->
 
-The Return On Asset $r\_c^i$ of an asset $i$ is the yield earned for supplying the asset in the lending market.
+The Return On Asset $r_c^i$ of an asset $i$ is the yield earned for supplying the asset in the lending market.
 
 ########## A.3.3.2.1.1.1.1.1.1.10 - Asset Yield [Core]  <!-- UUID: e0fea8fd-3925-463b-ab0d-3ff9fee1298d -->
 
-The Asset Yield $r\_s^i$ of an asset $i$ is the income yield of the asset and would include any dividends or interest paid by the asset and/or asset issuer, including staking rewards for yield-bearing assets.
+The Asset Yield $r_s^i$ of an asset $i$ is the income yield of the asset and would include any dividends or interest paid by the asset and/or asset issuer, including staking rewards for yield-bearing assets.
 
 ########## A.3.3.2.1.1.1.1.1.1.11 - Cost Of Debt [Core]  <!-- UUID: 5051029f-8e9c-4234-9951-c6a95fc0cddb -->
 
-The Cost Of Debt $r\_d^j$ of a debt instrument $j$ is the interest rate on the debt.
+The Cost Of Debt $r_d^j$ of a debt instrument $j$ is the interest rate on the debt.
 
 ########## A.3.3.2.1.1.1.1.1.1.12 - Debt Yield [Core]  <!-- UUID: 022a0b3b-18db-4440-9868-be62ad2f6d47 -->
 
-The Debt Yield $r\_s^j$ of a debt instrument $j$ is the income yield on the debt asset. It includes any dividends or interest paid by the debt asset and/or debt asset issuer, including staking rewards for yield-bearing debt assets.
+The Debt Yield $r_s^j$ of a debt instrument $j$ is the income yield on the debt asset. It includes any dividends or interest paid by the debt asset and/or debt asset issuer, including staking rewards for yield-bearing debt assets.
 
 ########## A.3.3.2.1.1.1.1.1.1.13 - Correlation Coefficient [Core]  <!-- UUID: 0663022c-c7bf-49db-800c-c186e9819455 -->
 
-The correlation coefficient $\rho$ between two instruments is the correlation of block-weighted log returns of those assets over the last 365 days. In the documents herein, the correlation coefficient is followed by subscripts indicating the relevant instruments. For example, $\rho\_{UD}$ is the correlation between the underlying asset portfolio $U$ and the debt portfolio $D$ as specified in [A.3.3 - Correlation Between Asset Portfolio And Debt Portfolio](ae1dbcb9-828d-40c0-8ad8-96b3072dad4e). The subscript may begin with $V$ or $D$ to indicate whether the relevant instruments are part of the asset portfolio or debt portfolio. For example, $\rho\_{VD,ij}$ is the correlation coefficient between the asset $i$ and the debt instrument $j$.
+The correlation coefficient $\rho$ between two instruments is the correlation of block-weighted log returns of those assets over the last 365 days. In the documents herein, the correlation coefficient is followed by subscripts indicating the relevant instruments. For example, $\rho_{UD}$ is the correlation between the underlying asset portfolio $U$ and the debt portfolio $D$ as specified in [A.3.3 - Correlation Between Asset Portfolio And Debt Portfolio](ae1dbcb9-828d-40c0-8ad8-96b3072dad4e). The subscript may begin with $V$ or $D$ to indicate whether the relevant instruments are part of the asset portfolio or debt portfolio. For example, $\rho_{VD,ij}$ is the correlation coefficient between the asset $i$ and the debt instrument $j$.
 
 ########## A.3.3.2.1.1.1.1.1.1.14 - Loan To Value Ratio [Core]  <!-- UUID: ce774017-be30-4482-8df7-361875cb771d -->
 
-The Loan To Value Ratio $LT\_i$ of an asset $i$ is the ratio of the debt backed by an asset to the value of the asset backing it:
+The Loan To Value Ratio $LT_i$ of an asset $i$ is the ratio of the debt backed by an asset to the value of the asset backing it:
 
 $$
-LT\_i = \frac{D\_0^i}{V\_0^i}
+LT_i = \frac{D_0^i}{V_0^i}
 $$
 
 ########## A.3.3.2.1.1.1.1.1.1.15 - Asset Value [Core]  <!-- UUID: 63b212be-2bde-43b3-ba61-7ebf9c442137 -->
 
-The Asset Value $V\_0^i$ of an asset $i$ is the market value of that asset.
+The Asset Value $V_0^i$ of an asset $i$ is the market value of that asset.
 
 ########## A.3.3.2.1.1.1.1.1.1.16 - Debt Value [Core]  <!-- UUID: 65032e2b-5da8-4fed-b893-20b18e13383b -->
 
-The Debt Value $D\_0^i$ of a debt instrument is the notional value of the debt.
+The Debt Value $D_0^i$ of a debt instrument is the notional value of the debt.
 
 ########## A.3.3.2.1.1.1.1.1.1.17 - Time Horizon [Core]  <!-- UUID: 9dc1abf3-365b-4ed5-b4aa-fdbb9024e0e2 -->
 
@@ -11640,7 +11640,7 @@ The Time Horizon $T$ is the time horizon in years over which the Probability Of 
 The second step is calculating the Loss Given Default $LGD$. $LGD$ is calculated using the following formula:
 
 $$
-LGD = min(1 - \frac{(1 - LP) \* (1 - S)}{LT}, 0)
+LGD = min(1 - \frac{(1 - LP) * (1 - S)}{LT}, 0)
 $$
 
 Here $min$ is the mathematical minimum function that returns the lower of the two specified parameters.
@@ -11688,7 +11688,7 @@ The Sensitivity Factor `K` is a tuning parameter indicating how quickly the corr
 The fourth step is to calculate the Capital Requirement Without Buffers $K$. $K$ is calculated as follows:
 
 $$
-K = \left\[ LGD \times N\left( \frac{N^{-1}(PD) + \sqrt{R} \cdot N^{-1}(0.999)}{\sqrt{1-R}} \right) - PD \times LGD \right\]
+K = \left[ LGD \times N\left( \frac{N^{-1}(PD) + \sqrt{R} \cdot N^{-1}(0.999)}{\sqrt{1-R}} \right) - PD \times LGD \right]
 $$
 
 Here $N$ is the cumulative normal probability distribution function and $N^{-1}$ is the inverse cumulative normal probability distribution function.
@@ -12082,7 +12082,7 @@ The documents herein define common methodologies that are applicable to the enti
 
 ######### A.3.3.2.1.1.1.5.1.1 - Basis In Basel Framework [Core]  <!-- UUID: 95695429-cc27-403d-ad12-4ecf89203637 -->
 
-The process for calculating Instance Financial RRC for Real World Assets is based on the Basel Framework developed by the Basel Committee on Bank Supervision. See [https://www.bis.org/basel\_framework/index.htm](https://www.bis.org/basel_framework/index.htm).
+The process for calculating Instance Financial RRC for Real World Assets is based on the Basel Framework developed by the Basel Committee on Bank Supervision. See [https://www.bis.org/basel_framework/index.htm](https://www.bis.org/basel_framework/index.htm).
 
 ######### A.3.3.2.1.1.1.5.1.2 - Citations To Basel Framework [Core]  <!-- UUID: 0c97534b-d4f4-4a42-854c-b39993c95f02 -->
 
@@ -12287,7 +12287,7 @@ Second, the source code for each relevant contract must be obtained. The source 
 The second step in calculating the Instance Smart Contract RRC with respect to an Allocation System opportunity is to calculate the Smart Contract Risk Rating $SCRR$ for the covered smart contracts identified in [A.3.3 - Defining Relevant Smart Contracts](162cfc93-77bd-4878-a8be-370d8862d792). The $SCRR$ is calculated as follows:
 
 $$
-\text{SCRR} = min\[\text{CAP}, (\text{SR} + \text{CCR}) \times \text{LAF} \times {AF}\]
+\text{SCRR} = min[\text{CAP}, (\text{SR} + \text{CCR}) \times \text{LAF} \times {AF}]
 $$
 
 Here $min$ is the mathematical minimum function that returns the lesser of the specified parameters.
@@ -12424,7 +12424,7 @@ The Total Value Locked Threshold $\text{TVLthreshold}$ is a factor used to norma
 The Audit Factor $AF$ is a measure of the extent to which the Base Risk is reduced by audits. The $AF$ is calculated as:
 
 $$
-AF = \Pi{\[1 - \text{effAuditValue} \times \text{decayFactor}\]}
+AF = \Pi{[1 - \text{effAuditValue} \times \text{decayFactor}]}
 $$
 
 The audit from each audit firm with the highest product of Effective Audit Value and Delay factor should be included in this calculation.
@@ -12555,7 +12555,7 @@ Low risk protocols are ones with a Risk Rating between less than or equal to `25
 
 ######### A.3.3.2.1.2.3.1.1.1 - Calculate F1 Parameter [Core]  <!-- UUID: 4f841792-cffb-4817-939a-454ce4f262f0 -->
 
-For low risk protocols, the F1 parameter $f\_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
+For low risk protocols, the F1 parameter $f_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
 
 ######### A.3.3.2.1.2.3.1.1.2 - Calculate Required Capital Percentage Using Piecewise Function With F1 Thresholds [Core]  <!-- UUID: e7be59bb-a72c-4ca8-afeb-da78f1afd44e -->
 
@@ -12567,11 +12567,11 @@ Medium risk protocols are ones with a Risk Rating greater than `25` but less tha
 
 ######### A.3.3.2.1.2.3.1.2.1 - Calculate F1 Parameter [Core]  <!-- UUID: fb47383f-e7f9-412b-893d-86e4c7b83def -->
 
-For medium risk protocols, the F1 parameter $f\_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
+For medium risk protocols, the F1 parameter $f_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
 
 ######### A.3.3.2.1.2.3.1.2.2 - Calculate F2 Parameter [Core]  <!-- UUID: 3f2622e3-dce6-44ef-9bc5-2853413abbe8 -->
 
-The F2 parameter $f\_{2}$ should then be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
+The F2 parameter $f_{2}$ should then be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
 
 ######### A.3.3.2.1.2.3.1.2.3 - Calculate Required Capital Percentage Using F1 Piecewise Function [Core]  <!-- UUID: 15290d29-ea87-4d07-a25e-84a6c34c6c87 -->
 
@@ -12586,7 +12586,7 @@ The Required Capital Percentage using the F2 Piecewise Function should then be c
 The final Required Capital Percentage $x$ should be calculated as a weighted average of the F1 Required Capital Percentage and the F2 Required Capital Percentage as follows:
 
 $$
-x = b \times \alpha \times f\_2 + (1 - \alpha) \times f\_1
+x = b \times \alpha \times f_2 + (1 - \alpha) \times f_1
 $$
 
 The parameters of this formula are defined in the subdocuments herein.
@@ -12607,11 +12607,11 @@ Here $r$ is the Risk Rating of the protocol.
 
 ########## A.3.3.2.1.2.3.1.2.5.3 - F1 Required Capital Percentage [Core]  <!-- UUID: 04abc79f-ad0f-49d9-91d4-1a94271e1979 -->
 
-The F1 Required Capital Percentage $f\_1$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F1 Piecewise Function](15290d29-ea87-4d07-a25e-84a6c34c6c87).
+The F1 Required Capital Percentage $f_1$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F1 Piecewise Function](15290d29-ea87-4d07-a25e-84a6c34c6c87).
 
 ########## A.3.3.2.1.2.3.1.2.5.4 - F2 Required Capital Percentage [Core]  <!-- UUID: 44f6339f-988c-494b-9f0f-37460d11ac56 -->
 
-The F2 Required Capital Percentage $f\_2$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F2 Piecewise Function](ac7e97eb-a780-4986-8f4d-0f9c5a0831a4).
+The F2 Required Capital Percentage $f_2$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F2 Piecewise Function](ac7e97eb-a780-4986-8f4d-0f9c5a0831a4).
 
 ######## A.3.3.2.1.2.3.1.3 - High Risk Protocols [Core]  <!-- UUID: 5dc03a3c-aac9-4a32-bcf6-16077d21e4fd -->
 
@@ -12619,7 +12619,7 @@ High risk protocols are ones with a Risk Rating greater than `50` but less than 
 
 ######### A.3.3.2.1.2.3.1.3.1 - Calculate F2 Parameter [Core]  <!-- UUID: 234dea0c-e4db-49ea-8dff-30bd7652f6c2 -->
 
-For high risk protocols, the F2 parameter $f\_{2}$ should first be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
+For high risk protocols, the F2 parameter $f_{2}$ should first be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
 
 ######### A.3.3.2.1.2.3.1.3.2 - Calculate Required Capital Percentage Using Piecewise Function With F2 Thresholds [Core]  <!-- UUID: 456c0a8f-348a-477b-8550-eea23e9fd4a5 -->
 
@@ -12646,7 +12646,7 @@ The documents herein define functions and parameters that are used in multiple p
 The Piecewise Function $RCC(x)$ calculates a percentage risk capital requirement based on an input $x$ and is defined as follows:
 
 $$
-\text{RCC}(x) =\begin{cases}a & \text{if } x \le x\_{\text{start}}, \\\[8pt\]b \times \dfrac{x - x\_{\text{start}}}{x\_{\text{kink}} - x\_{\text{start}}} & \text{if } x\_{\text{start}} < x \le x\_{\text{kink}}, \\\[8pt\]b \;+\; c \;\dfrac{x - x\_{\text{kink}}}{x\_{\text{max}} - x\_{\text{kink}}}& \text{if } x\_{\text{kink}} < x < x\_{\text{max}}, \\\[8pt\]d& \text{if } x \ge x\_{\text{max}}.\end{cases}
+\text{RCC}(x) =\begin{cases}a & \text{if } x \le x_{\text{start}}, \\[8pt]b \times \dfrac{x - x_{\text{start}}}{x_{\text{kink}} - x_{\text{start}}} & \text{if } x_{\text{start}} < x \le x_{\text{kink}}, \\[8pt]b \;+\; c \;\dfrac{x - x_{\text{kink}}}{x_{\text{max}} - x_{\text{kink}}}& \text{if } x_{\text{kink}} < x < x_{\text{max}}, \\[8pt]d& \text{if } x \ge x_{\text{max}}.\end{cases}
 $$
 
 ######### A.3.3.2.1.2.3.3.1.1 - Low Risk Parameter [Core]  <!-- UUID: d6fda10f-7eff-4703-a2b4-29bbcd2241e1 -->
@@ -12671,10 +12671,10 @@ The documents herein define the thresholds for the piecewise function.
 
 ########## A.3.3.2.1.2.3.3.1.5.1 - Starting Threshold [Core]  <!-- UUID: bbda61eb-828d-486a-8bba-df1f517ad0b5 -->
 
-The Starting Threshold $x\_{\text{start}}$ is calculated as follows:
+The Starting Threshold $x_{\text{start}}$ is calculated as follows:
 
 $$
-x\_{\text{start}}(r) = i \times (r\_i - r)
+x_{\text{start}}(r) = i \times (r_i - r)
 $$
 
 Here $r$ is the Risk Rating.
@@ -12683,10 +12683,10 @@ The parameters of this formula are defined in [A.3.3 - Threshold Parameters](654
 
 ########## A.3.3.2.1.2.3.3.1.5.2 - Maximum Threshold [Core]  <!-- UUID: df77d6b1-b08a-45c9-8fc2-74268918b0b0 -->
 
-The Maximum Threshold $x\_{\text{max}}$ is calculated as follows:
+The Maximum Threshold $x_{\text{max}}$ is calculated as follows:
 
 $$
-x\_{\text{max}}(r) = x\_{\text{start}}(r) + i\_{max}
+x_{\text{max}}(r) = x_{\text{start}}(r) + i_{max}
 $$
 
 Here $r$ is the Risk Rating.
@@ -12695,10 +12695,10 @@ The parameters of this formula are defined in [A.3.3 - Threshold Parameters](654
 
 ########## A.3.3.2.1.2.3.3.1.5.3 - Kink Threshold [Core]  <!-- UUID: c28b47a8-951b-4ca4-8501-bbd6d2279b74 -->
 
-The Kink Threshold $x\_{\text{kink}}$ is calculated as follows:
+The Kink Threshold $x_{\text{kink}}$ is calculated as follows:
 
 $$
-x\_{\text{kink}}(r) = x\_{\text{start}}(r) \;+\; i\_{kink} \times\bigl\[\;x\_{\text{max}}(r)\;-\;x\_{\text{start}}(r)\bigr\]
+x_{\text{kink}}(r) = x_{\text{start}}(r) \;+\; i_{kink} \times\bigl[\;x_{\text{max}}(r)\;-\;x_{\text{start}}(r)\bigr]
 $$
 
 Here $r$ is the Risk Rating.
@@ -12719,15 +12719,15 @@ The value of the Rating Point Scaling Coefficient $i$ is `0.01`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.1.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 26fc2a85-86c4-4b75-b561-357d1fcc6115 -->
 
-The value of the Reference Inflection Risk Rating $r\_i$ is `50`.
+The value of the Reference Inflection Risk Rating $r_i$ is `50`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.1.3 - Maximum Interval Width [Core]  <!-- UUID: 4f28bafe-6366-40ce-a3df-b796421af66c -->
 
-The value of the Maximum Interval Width $i\_{max}$ is `0.50`.
+The value of the Maximum Interval Width $i_{max}$ is `0.50`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.1.4 - Kink Location Fraction [Core]  <!-- UUID: 648567a4-b457-46a0-b9da-7a1586c0735e -->
 
-The value of the Kink Location Fraction $i\_{kink}$ is `0.75`.
+The value of the Kink Location Fraction $i_{kink}$ is `0.75`.
 
 ########### A.3.3.2.1.2.3.3.1.5.4.2 - F2 Threshold Parameters [Core]  <!-- UUID: a7250cdc-5bf8-48c0-a79f-beb774de8196 -->
 
@@ -12739,15 +12739,15 @@ The value of the Rating Point Scaling Coefficient $i$ is `0.02`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.2.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 9cee8e99-7d32-4eaa-a559-c364c428f7e1 -->
 
-The value of the Reference Inflection Risk Rating $r\_i$ is `75`.
+The value of the Reference Inflection Risk Rating $r_i$ is `75`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.2.3 - Maximum Interval Width [Core]  <!-- UUID: e746474b-16ae-4472-b382-f431060a72ec -->
 
-The value of the Maximum Interval Width $i\_{max}$ is `0.50`.
+The value of the Maximum Interval Width $i_{max}$ is `0.50`.
 
 ############ A.3.3.2.1.2.3.3.1.5.4.2.4 - Kink Location Fraction [Core]  <!-- UUID: 0e04acfb-336b-499a-bbec-e332a82685fd -->
 
-The value of the Kink Location Fraction $i\_{kink}$ is `0.75`.
+The value of the Kink Location Fraction $i_{kink}$ is `0.75`.
 
 ######## A.3.3.2.1.2.3.3.2 - F1 And F2 Functions [Core]  <!-- UUID: 3f150022-5449-42cf-b673-fd6ca037f624 -->
 
@@ -12759,40 +12759,40 @@ The documents herein define variables used in the F1 and F2 functions.
 
 ########## A.3.3.2.1.2.3.3.2.1.1 - Internal Exposure [Core]  <!-- UUID: 23cebf79-75ee-49d5-8244-a3e67add3b89 -->
 
-The Internal Exposure $e\_{\text{int}}$ is the Agent’s allocation to the protocol.
+The Internal Exposure $e_{\text{int}}$ is the Agent’s allocation to the protocol.
 
 ########## A.3.3.2.1.2.3.3.2.1.2 - Total Exposure [Core]  <!-- UUID: ca513c78-e517-4d95-9d5e-d9485cbaee7a -->
 
-The Total Exposure $e\_{\text{tot}}$ is the Sky Ecosystem’s aggregate allocation to the protocol.
+The Total Exposure $e_{\text{tot}}$ is the Sky Ecosystem’s aggregate allocation to the protocol.
 
 ########## A.3.3.2.1.2.3.3.2.1.3 - Internal Liquid Surplus [Core]  <!-- UUID: 291fabbc-2121-4439-8129-f9eb9d9ec863 -->
 
-The Internal Liquid Surplus $s\_{\text{liq}}$ is equal to the Total Risk Capital of the Agent.
+The Internal Liquid Surplus $s_{\text{liq}}$ is equal to the Total Risk Capital of the Agent.
 
 ########## A.3.3.2.1.2.3.3.2.1.4 - Exposure Beyond Surplus [Core]  <!-- UUID: 6e3f511e-c4bc-479b-b34a-56c42863da2e -->
 
-The Exposure Beyond Surplus $E\_{\text{beyond}}$ is the difference between the Sky Ecosystem’s aggregate allocation to the protocol and aggregate internal liquid surplus of all Agents.
+The Exposure Beyond Surplus $E_{\text{beyond}}$ is the difference between the Sky Ecosystem’s aggregate allocation to the protocol and aggregate internal liquid surplus of all Agents.
 
 ########## A.3.3.2.1.2.3.3.2.1.5 - Total Collateral [Core]  <!-- UUID: 567dd86e-9df5-4dd5-94a9-dcb2d3d4a1e9 -->
 
-The Total Collateral $C\_{\text{tot}}$ is the total USDS and Dai debt in the system.
+The Total Collateral $C_{\text{tot}}$ is the total USDS and Dai debt in the system.
 
 ######### A.3.3.2.1.2.3.3.2.2 - F1 Function [Core]  <!-- UUID: 443bcf99-b015-44d3-99c9-42fd611710fe -->
 
-The F1 parameter $f\_{1}$ is calculated as follows:
+The F1 parameter $f_{1}$ is calculated as follows:
 
 $$
-f\_{1} = \dfrac{E\_{\text{beyond}}}{C\_{\text{tot}}}
+f_{1} = \dfrac{E_{\text{beyond}}}{C_{\text{tot}}}
 $$
 
 The parameters of this function are defined in [A.3.3 - Variable Definitions](7f919121-af12-4adb-904a-8ee88a70e98a).
 
 ######### A.3.3.2.1.2.3.3.2.3 - F2 Function [Core]  <!-- UUID: 3286915a-7d81-4eb4-a238-bc7ded8e2634 -->
 
-The F2 parameter $f\_2$ is calculated as follows:
+The F2 parameter $f_2$ is calculated as follows:
 
 $$
-f\_{2} = \dfrac{e\_{\text{int}} + a \,\bigl(e\_{\text{tot}} - e\_{\text{int}}\bigr)}{s\_{\text{liq}}}
+f_{2} = \dfrac{e_{\text{int}} + a \,\bigl(e_{\text{tot}} - e_{\text{int}}\bigr)}{s_{\text{liq}}}
 $$
 
 Here $\alpha$ is equal to `0.1`.
@@ -12994,7 +12994,7 @@ The documents herein define the implementation of the Risk Framework for calcula
 The first step in calculating the Instance Administrative RRC with respect to an Allocation System opportunity is to calculate the Administrative Risk Rating $\text{ARR}$ for the protocol being invested in. The $\text{ARR}$ is calculated as follows:
 
 $$
-\text{ARR} = min\[\text{CAP}, \text{SR} \times \text{DF} \times \text{LAF}\]
+\text{ARR} = min[\text{CAP}, \text{SR} \times \text{DF} \times \text{LAF}]
 $$
 
 Here $min$ is the mathematical minimum function that returns the lesser of the specified parameters.
@@ -13188,7 +13188,7 @@ Bids are ranked descending by price. TSRC is allocated sequentially to the highe
 
 ###### A.3.3.2.4.3.5 - Settlement Of Origination [Core]  <!-- UUID: fff0112a-58dd-4041-97f9-7baf113b4e70 -->
 
-During the Monthly Settlement Cycle following allocation, the cost (Allocated OSRC Quantity \* Clearing Price) is deducted from each winning Prime Agent’s operational account. Concurrently, the allocated OSRC amount is credited to the Prime Agent’s Risk Capital account as OSRC for the upcoming monthly period.
+During the Monthly Settlement Cycle following allocation, the cost (Allocated OSRC Quantity * Clearing Price) is deducted from each winning Prime Agent’s operational account. Concurrently, the allocated OSRC amount is credited to the Prime Agent’s Risk Capital account as OSRC for the upcoming monthly period.
 
 ###### A.3.3.2.4.3.6 - OSRC Duration and Renewal [Core]  <!-- UUID: b63d43f9-cea7-42ee-bfea-5098e55fa68f -->
 
@@ -14755,7 +14755,7 @@ A new Oracle Security Module based on the Scribe SKY oracle must be deployed.
 
 ####### A.4.1.2.1.2.2.8 - Add New SKY Oracle to Oracle Security Module MOM Contract [Core]  <!-- UUID: 6a27417d-6a05-4c91-8699-da9dc3165155 -->
 
-The new SKY oracle must be added to the OSM\_MOM contract. See [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Oracle Freeze Exception](e604c477-e8e4-483f-a41e-c93dcff3acfd).
+The new SKY oracle must be added to the OSM_MOM contract. See [A.1.9 - Sky Core Governance Security - Governance Security Delay Requirements - Oracle Freeze Exception](e604c477-e8e4-483f-a41e-c93dcff3acfd).
 
 ####### A.4.1.2.1.2.2.9 - Update Smart Burn Engine Parameters [Core]  <!-- UUID: 786426a1-1d83-46fc-ae9c-9f34d034c2c6 -->
 
@@ -14797,7 +14797,7 @@ SKY Staking must be launched with the following parameters for borrowing against
 ◦ `Name`: LockstakeSky    
 ◦ `Symbol`: lsSKY    
 ◦ Use new SKY Chronicle Scribe oracle instance OSM    
-◦ Deny the CLIPPER\_MOM from the new lockstake clipper
+◦ Deny the CLIPPER_MOM from the new lockstake clipper
 
 ####### A.4.1.2.1.2.2.11 - Deploy New Vote Delegate Factory Contract [Core]  <!-- UUID: afc62581-9159-4519-ace5-c36a6c8fe433 -->
 
@@ -14939,7 +14939,7 @@ With each Executive Vote, the distribution of SKY token rewards to USDS holders 
 
 To achieve this normalization, the quantity of SKY token rewards to be distributed is determined through the following calculation, performed for each normalization period:
 
-1. Determine Target Reward Value: Calculate the total US dollar value required to meet the SSR for the period: (Total Eligible USDS Balance \* SSR).
+1. Determine Target Reward Value: Calculate the total US dollar value required to meet the SSR for the period: (Total Eligible USDS Balance * SSR).
     
 2. Determine SKY Token Quantity: Divide the Target Reward Value (from step 1) by the Current Market Price of SKY (determined at the time of the Executive Vote).
 
@@ -15055,7 +15055,7 @@ If $t_{0}$ is greater than $T_{0}$ then a synthetic event is inserted at $T_{0}$
 
 Finally, the time-weighted utilization is calculated using the following formula:
 
-$$\text{Util}_{\mathrm{avg}} = \frac{\sum_{i=0}^{n-1} U\_i \cdot (t\_{i+1} - t\_i)}{T\_n - T\_0}$$
+$$\text{Util}_{\mathrm{avg}} = \frac{\sum_{i=0}^{n-1} U_i \cdot (t_{i+1} - t_i)}{T_n - T_0}$$
 
 ########## A.4.4.1.2.2.1.4.1.1.5 - Reference Implementation [Core]  <!-- UUID: 53ed66f4-d010-4370-b83b-e36a185f12ad -->
 
@@ -15114,7 +15114,7 @@ print(f"30-day time-weighted average utilization: {avg_utilization:.2%}")`
 `Rfactor` is calculated using the formula:
 
 $$
-Rfactor = \frac{2u\_m - 1}{2u\_m \left( u\_{opt}(\alpha + 1) - 1 + \frac{\beta u\_{opt}}{slope1} \right)}
+Rfactor = \frac{2u_m - 1}{2u_m \left( u_{opt}(\alpha + 1) - 1 + \frac{\beta u_{opt}}{slope1} \right)}
 $$
 
 The parameters of this formula are specified in the documents herein.
@@ -15562,7 +15562,7 @@ In order to prevent excessive price spikes if there is high demand for leverage 
 The wrapper enforces an upper limit on the price of SKY for the purposes of SKY-Backed 
 Borrowing, which is set to be the minimum value of:
 
-1. The current price reported by PIP\_SKY.
+1. The current price reported by PIP_SKY.
 
 2. The `cap` that has been set on the OSM wrapper contract.
 
@@ -15572,7 +15572,7 @@ The subdocuments herein further describe the `cap` parameter and the process f
 
 ####### A.4.4.1.2.9.1.1 - Definition [Core]  <!-- UUID: b65c4542-5fb3-4379-9412-8113f4d2444a -->
 
-The `cap` parameter represents one of the potential inputs for the SKY-Backed Borrowing Capped OSM Wrapper. The OSM wrapper uses the minimum value of the `cap` or the PIP\_SKY oracle price to determine the price utilized for SKY-backed borrowing.
+The `cap` parameter represents one of the potential inputs for the SKY-Backed Borrowing Capped OSM Wrapper. The OSM wrapper uses the minimum value of the `cap` or the PIP_SKY oracle price to determine the price utilized for SKY-backed borrowing.
 
 ####### A.4.4.1.2.9.1.2 - Modification [Core]  <!-- UUID: 0d86a609-e432-4312-8989-4e6c1eb9be83 -->
 
@@ -15638,7 +15638,7 @@ The current risk parameters for MKR-backed borrowing funded directly by Sky are:
 ◦ Dust: 30,000 DAI    
 ◦ Ilk.hole: 3M DAI    
 ◦ Stability Fee: 20%
-◦ spotter\[ilk\].mat (Liquidation Ratio): 125%    
+◦ spotter[ilk].mat (Liquidation Ratio): 125%    
 ◦ DC-IAM line: 45M    
 ◦ DC-IAM gap: 45M    
 ◦ DC-IAM ttl: 30 minutes
@@ -15669,7 +15669,7 @@ Transfers of Dai or USDS that are not required to pay down vault debt should res
 
 ####### A.4.6.1.1.1.1.1 - DssBlow2 [Core]  <!-- UUID: 764ec592-5ff7-462c-9617-759914e1077b -->
 
-Dai or USDS tokens can be transferred to the DssBlow2 contract, MCD\_BLOW2, at `0x81EFc7Dd25241acd8E5620F177E42F4857A02B79`. Calling the `blow` function on this contract will cause any Dai or USDS tokens held by it to be added to the Surplus Buffer. During this process, the ERC-20 tokens are burned and the tokens are instead reflected as an internal balance in the MCD\_VAT contract.
+Dai or USDS tokens can be transferred to the DssBlow2 contract, MCD_BLOW2, at `0x81EFc7Dd25241acd8E5620F177E42F4857A02B79`. Calling the `blow` function on this contract will cause any Dai or USDS tokens held by it to be added to the Surplus Buffer. During this process, the ERC-20 tokens are burned and the tokens are instead reflected as an internal balance in the MCD_VAT contract.
 
 ######## A.4.6.1.1.1.1.1.1 - Unrecoverability Of Non-Dai Or USDS Tokens [Core]  <!-- UUID: 736476a2-1dd3-4ce5-85e2-e003a1e6a1ed -->
 
@@ -15689,7 +15689,7 @@ Transfers of non-stablecoins to Sky should be sent to the Pause Proxy contract.
 
 ####### A.4.6.1.1.2.1.1 - Pause Proxy [Core]  <!-- UUID: 8d8cc32d-f724-4eac-bca8-bab0e6d990ba -->
 
-The Pause Proxy Contract, MCD\_PAUSE\_PROXY, at `0xbe8e3e3618f7474f8cb1d074a26affef007e98fb`, is under the direct control of Sky Governance. Sky Governance may take actions through Executive Votes to interact with the tokens held by the Pause Proxy, including selling these tokens.
+The Pause Proxy Contract, MCD_PAUSE_PROXY, at `0xbe8e3e3618f7474f8cb1d074a26affef007e98fb`, is under the direct control of Sky Governance. Sky Governance may take actions through Executive Votes to interact with the tokens held by the Pause Proxy, including selling these tokens.
 
 # A.5 - The Accessibility Scope [Scope]  <!-- UUID: 99b1b47d-3c7a-4859-ac00-8c0849f9070e -->
 
@@ -17076,7 +17076,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.1.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 56404af1-c2ec-4bd5-876d-aa5db178ff40 -->
 
@@ -17223,7 +17223,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.1.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: b0601983-b6ad-44fb-abda-907a3fe53048 -->
 
@@ -17575,23 +17575,23 @@ The documents herein contain global key addresses for the Allocator Contracts.
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.1.1 - Allocator Buffer Contract [Core]  <!-- UUID: 86a5b9c5-8d49-4538-9995-c8c1200f5942 -->
 
-The address of the ALLOCATOR\_BUFFER contract is: `0xc395D150e71378B47A1b8E9de0c1a83b75a08324`
+The address of the ALLOCATOR_BUFFER contract is: `0xc395D150e71378B47A1b8E9de0c1a83b75a08324`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.1.2 - Allocator Oracle Contract [Core]  <!-- UUID: fcad0844-97d7-429b-b4bf-8ba4c657a0fc -->
 
-The address of the ALLOCATOR\_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
+The address of the ALLOCATOR_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.1.3 - Allocator Registry Contract [Core]  <!-- UUID: 6936b2a0-5933-4550-88eb-ee87c9227d8e -->
 
-The address of the ALLOCATOR\_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
+The address of the ALLOCATOR_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.1.4 - Allocator Roles Contract [Core]  <!-- UUID: b64d1f0a-3c6d-48af-bb79-0504e4e58a88 -->
 
-The address of the ALLOCATOR\_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
+The address of the ALLOCATOR_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.1.5 - Allocator Vault (Spark-A) Contract [Core]  <!-- UUID: a9b28dbc-1993-43ba-9b24-dcca91f08f14 -->
 
-The address of the ALLOCATOR\_VAULT (ALLOCATOR-SPARK-A) contract is: `0x691a6c29e9e96dd897718305427Ad5D534db16BA`
+The address of the ALLOCATOR_VAULT (ALLOCATOR-SPARK-A) contract is: `0x691a6c29e9e96dd897718305427Ad5D534db16BA`
 
 ############ A.6.1.1.1.2.6.1.2.1.1.1.2 - ALM Contracts [Core]  <!-- UUID: 7db865de-8519-464b-8752-f39ecaf54fd2 -->
 
@@ -17603,7 +17603,7 @@ The documents herein contain the ALM Contract Addresses for the SLL on the Ether
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.1.1 - ALM Controller (MainnetController) Contract [Core]  <!-- UUID: 3546c2d3-7b7c-4446-aa16-ff357c1a7a0f -->
 
-The address of the ALM\_CONTROLLER (MainnetController) contract is: `0xF8Dff673b555a225e149218C5005FC88f4a13870`
+The address of the ALM_CONTROLLER (MainnetController) contract is: `0xF8Dff673b555a225e149218C5005FC88f4a13870`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.1.2 - ALM Freezer Multisig (Mainnet) Address [Core]  <!-- UUID: 8d6c5c86-4b70-4115-b712-65106416aa77 -->
 
@@ -17615,11 +17615,11 @@ The address of the Multisigs that has the Relayer Role are specified in [Address
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.1.4 - ALM Proxy (Mainnet) Contract [Core]  <!-- UUID: a29a6751-4809-446c-a659-0dd93ca40379 -->
 
-The address of the ALM\_PROXY contract is: `0x1601843c5E9bC251A3272907010AFa41Fa18347E`
+The address of the ALM_PROXY contract is: `0x1601843c5E9bC251A3272907010AFa41Fa18347E`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.1.5 - ALM Rate Limits (Mainnet) Contract [Core]  <!-- UUID: 3d7c06c5-18ab-4c30-82f1-4de153e2bc76 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x7A5FD5cf045e010e62147F065cEAe59e5344b188`
+The address of the ALM_RATE_LIMITS contract is: `0x7A5FD5cf045e010e62147F065cEAe59e5344b188`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.2.2 - Base [Core]  <!-- UUID: 339e27da-297e-458f-8420-546e085a51dd -->
 
@@ -17627,7 +17627,7 @@ The documents herein list the ALM Contract Addresses for the SLL on Base.
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.2.1 - ALM Controller (ForeignController Base) Contract [Core]  <!-- UUID: eaa1d582-a814-49ef-a3ec-3fbffa414a3a -->
 
-The address of the ALM\_CONTROLLER (ForeignController) contract is: `0xB94378b5347a3E199AF3575719F67A708a5D8b9B`
+The address of the ALM_CONTROLLER (ForeignController) contract is: `0xB94378b5347a3E199AF3575719F67A708a5D8b9B`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.2.2 - ALM Freezer Multisig (Base) Address [Core]  <!-- UUID: 5147079e-3ff5-44c5-8039-5b1d3895ceec -->
 
@@ -17639,11 +17639,11 @@ The address of the Multisigs that has the Relayer Role are specified in [Address
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.2.4 - ALM Proxy (Base) Contract [Core]  <!-- UUID: 425339ce-8e44-430b-ab8c-6c69f0b757e9 -->
 
-The address of the ALM\_PROXY contract is: `0x2917956eFF0B5eaF030abDB4EF4296DF775009cA`
+The address of the ALM_PROXY contract is: `0x2917956eFF0B5eaF030abDB4EF4296DF775009cA`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.2.5 - ALM Rate Limits (Base) Contract [Core]  <!-- UUID: 576b33fc-ee31-40a4-8a04-2b6c0e618a58 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x983eC82E45C61a42FDDA7B3c43B8C767004c8A74`
+The address of the ALM_RATE_LIMITS contract is: `0x983eC82E45C61a42FDDA7B3c43B8C767004c8A74`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.2.3 - Arbitrum [Core]  <!-- UUID: de02348b-d300-4b85-b7f9-5546106c5191 -->
 
@@ -17651,7 +17651,7 @@ This document contains the ALM Contract Addresses for the SLL on Arbitrum.
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.3.1 - ALM Controller (ForeignController Arbitrum) Contract [Core]  <!-- UUID: 60979099-707d-497d-ad65-4fd6dd6c7cb0 -->
 
-The address of the ALM\_CONTROLLER (ForeignController) contract is: 
+The address of the ALM_CONTROLLER (ForeignController) contract is: 
 `0x98f567464e91e9B4831d3509024b7868f9F79ee1`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.3.2 - ALM Freezer Multisig (Arbitrum) Address [Core]  <!-- UUID: 294230e0-d7f9-43c5-9f38-d19074b61d47 -->
@@ -17664,11 +17664,11 @@ The address of the Multisigs that has the Relayer Role are specified in [Address
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.3.4 - ALM Proxy (Arbitrum) Contract [Core]  <!-- UUID: c671b407-fcb2-48eb-8217-2ec156b581ad -->
 
-The address of the ALM\_PROXY contract is: `0x92afd6F2385a90e44da3a8B60fe36f6cBe1D8709`
+The address of the ALM_PROXY contract is: `0x92afd6F2385a90e44da3a8B60fe36f6cBe1D8709`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.3.5 - ALM Rate Limits (Arbitrum) Contract [Core]  <!-- UUID: 83f8da05-267e-4dd7-beaa-7561c9b8c5c1 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x19D08879851FB54C2dCc4bb32b5a1EA5E9Ad6838`
+The address of the ALM_RATE_LIMITS contract is: `0x19D08879851FB54C2dCc4bb32b5a1EA5E9Ad6838`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.2.4 - Unichain [Core]  <!-- UUID: 6cd31b91-4309-49ae-8d23-2486129f3b20 -->
 
@@ -17676,7 +17676,7 @@ This document contains the ALM Contract Addresses for the SLL on Unichain.
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.4.1 - ALM Controller (ForeignController Unichain) Contract [Core]  <!-- UUID: bcc685eb-d28c-4306-8b78-5639b1d31f6b -->
 
-The address of the ALM\_CONTROLLER (ForeignController) contract is: 
+The address of the ALM_CONTROLLER (ForeignController) contract is: 
 `0x9B1BEB11CFE05117029a30eb799B6586125321FF`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.4.2 - ALM Freezer Multisig (Unichain) Address [Core]  <!-- UUID: 23bb04f0-d312-4230-930d-27782b73b04f -->
@@ -17689,11 +17689,11 @@ The address of the Multisigs that has the Relayer Role are specified in [Address
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.4.4 - ALM Proxy (Unichain) Contract [Core]  <!-- UUID: 6affe08d-0c1c-4cbf-a100-4a04c58220bb -->
 
-The address of the ALM\_PROXY contract is: `0x345E368fcCd62266B3f5F37C9a131FD1c39f5869`
+The address of the ALM_PROXY contract is: `0x345E368fcCd62266B3f5F37C9a131FD1c39f5869`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.4.5 - ALM Rate Limits (Unichain) Contract [Core]  <!-- UUID: 422a99bd-357f-4c48-882b-2608e0526282 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x5A1a44D2192Dd1e21efB9caA50E32D0716b35535`
+The address of the ALM_RATE_LIMITS contract is: `0x5A1a44D2192Dd1e21efB9caA50E32D0716b35535`
 
 ############# A.6.1.1.1.2.6.1.2.1.1.1.2.5 - Optimism [Core]  <!-- UUID: 2c97bd03-ef58-411f-b2cc-1db6d8396d95 -->
 
@@ -17701,7 +17701,7 @@ This document contains the ALM Contract Addresses for the SLL on Optimism.
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.5.1 - ALM Controller (ForeignController Optimism) Contract [Core]  <!-- UUID: 1eaa9220-d5e2-44f2-83eb-232add8f04ff -->
 
-The address of the ALM\_CONTROLLER (ForeignController) contract is: 
+The address of the ALM_CONTROLLER (ForeignController) contract is: 
 `0x1d54A093b8FDdFcc6fBB411d9Af31D96e034B3D5`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.5.2 - ALM Freezer Multisig (Optimism) Address [Core]  <!-- UUID: a4cb2345-64a9-4e1f-b084-c25f6df7082a -->
@@ -17714,11 +17714,11 @@ The address of the Multisigs that has the Relayer Role are specified in [Address
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.5.4 - ALM Proxy (Optimism) Contract [Core]  <!-- UUID: f1895dfc-a18c-4009-bfd3-1c16c9a62092 -->
 
-The address of the ALM\_PROXY contract is: `0x876664f0c9Ff24D1aa355Ce9f1680AE1A5bf36fB`
+The address of the ALM_PROXY contract is: `0x876664f0c9Ff24D1aa355Ce9f1680AE1A5bf36fB`
 
 ############## A.6.1.1.1.2.6.1.2.1.1.1.2.5.5 - ALM Rate Limits (Optimism) Contract [Core]  <!-- UUID: 71eaf0a6-1d32-4b8c-b55f-c56c9af11634 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x6B34A6B84444dC3Fc692821D5d077a1e4927342d`
+The address of the ALM_RATE_LIMITS contract is: `0x6B34A6B84444dC3Fc692821D5d077a1e4927342d`
 
 ########### A.6.1.1.1.2.6.1.2.1.1.2 - Off-Chain Operational Parameters [Core]  <!-- UUID: 257dcfcb-9bb8-4989-a063-69ae4f01f224 -->
 
@@ -20475,7 +20475,7 @@ The operator must call the `approve` ERC-4626 function to update the allowance o
 
 ############### A.6.1.1.1.2.6.1.3.1.5.1.3.1.4.1 - Encode Function Call [Core]  <!-- UUID: a2430308-7a82-457e-b505-ea9889bf90d5 -->
 
-The operator must encode the function call to the ERC-4626 `approve` method, using `abi.encodeCall` to allow the `token` address (`[Instance_Fluid_USDS_Vault_Address_Placeholder`\]) spend up to `amount` of a token from ALM Proxy’s balance.
+The operator must encode the function call to the ERC-4626 `approve` method, using `abi.encodeCall` to allow the `token` address (`[Instance_Fluid_USDS_Vault_Address_Placeholder`]) spend up to `amount` of a token from ALM Proxy’s balance.
 
 ############### A.6.1.1.1.2.6.1.3.1.5.1.3.1.4.2 - Send Encoded Call [Core]  <!-- UUID: 07418471-50d1-4c6b-92a1-c883121f2622 -->
 
@@ -22143,8 +22143,8 @@ The subdocuments herein list each active Delegate’s name, wallet address, effe
 
 The list of Delegates must follow this template for each recorded Delegate:
 
-\[Insert Delegate Handle\]
-◦ Delegate Name: \[Insert Handle\]   
+[Insert Delegate Handle]
+◦ Delegate Name: [Insert Handle]   
 ◦ Delegate Wallet Address:    
 ◦ Effective Date:    
 ◦ Status: Active/Inactive/Suspended
@@ -22370,7 +22370,7 @@ The borrow rate is the annualized percentage yield for borrowing the asset, whic
 ########## A.6.1.1.1.3.2.1.1.1.2 - Supply Rate Definition [Core]  <!-- UUID: 5c4963af-872c-45b9-ac39-fda5ac4f43a1 -->
 
 The supply rate is the annualized percentage yield for supplying the asset, which is determined based on borrow rate as:
-supply rate = market utilization \* borrow rate \* (1-reserve factor)
+supply rate = market utilization * borrow rate * (1-reserve factor)
 
 ########## A.6.1.1.1.3.2.1.1.1.3 - Interest Rate Model Definition [Core]  <!-- UUID: 9006fd8d-bd13-48fc-bf2f-04f47579b3b0 -->
 
@@ -25008,23 +25008,23 @@ The documents herein contain global key addresses for the Allocator Contracts.
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.1.1 - Allocator Buffer Contract [Core]  <!-- UUID: 599b6748-597f-4a9a-b35b-6638a2f8785f -->
 
-The address of the ALLOCATOR\_BUFFER contract is: `0x629aD4D779F46B8A1491D3f76f7E97Cb04D8b1Cd`
+The address of the ALLOCATOR_BUFFER contract is: `0x629aD4D779F46B8A1491D3f76f7E97Cb04D8b1Cd`
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.1.2 - Allocator Oracle Contract [Core]  <!-- UUID: 49c84e7b-8885-4107-9dd6-05de425c6217 -->
 
-The address of the ALLOCATOR\_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
+The address of the ALLOCATOR_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.1.3 - Allocator Registry Contract [Core]  <!-- UUID: d2fdbf24-f6bf-4f67-8c7c-4619e57411c8 -->
 
-The address of the ALLOCATOR\_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
+The address of the ALLOCATOR_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.1.4 - Allocator Roles Contract [Core]  <!-- UUID: b5ab51c6-e66f-418b-9073-25728227847a -->
 
-The address of the ALLOCATOR\_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
+The address of the ALLOCATOR_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.1.5 - Allocator Vault (Bloom-A) Contract [Core]  <!-- UUID: a2060039-8764-412d-a55b-1f705a0612b3 -->
 
-The address of the ALLOCATOR\_VAULT (ALLOCATOR-BLOOM-A) contract is: `0x26512A41C8406800f21094a7a7A0f980f6e25d43`
+The address of the ALLOCATOR_VAULT (ALLOCATOR-BLOOM-A) contract is: `0x26512A41C8406800f21094a7a7A0f980f6e25d43`
 
 ############ A.6.1.1.2.2.6.1.2.1.1.1.2 - ALM Contracts [Core]  <!-- UUID: f233a46b-8dff-4335-8ccf-dc3f1c18a96f -->
 
@@ -25036,7 +25036,7 @@ The documents herein contain the ALM Contract Addresses for the Grove Liquidity 
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.1.1 - ALM Controller (MainnetController) Contract [Core]  <!-- UUID: 53d016e8-dd83-42ca-a74b-7ed440d50bc5 -->
 
-The address of the ALM\_CONTROLLER (MainnetController) contract is: `0x3048386E09c72C20FB268a37d2B630D7f2Ee9138`
+The address of the ALM_CONTROLLER (MainnetController) contract is: `0x3048386E09c72C20FB268a37d2B630D7f2Ee9138`
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.1.2 - ALM Freezer Multisig (Mainnet) Address [Core]  <!-- UUID: fb21540d-950c-4607-90a3-4736b1f0e517 -->
 
@@ -25048,11 +25048,11 @@ The address of the Multisig that has the Relayer Role is: `0x0eEC86649E756a23CBc
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.1.4 - ALM Proxy (Mainnet) Contract [Core]  <!-- UUID: fda13ac2-b3ed-4b2a-9be6-9247632dafe3 -->
 
-The address of the ALM\_PROXY contract is: `0x491EDFB0B8b608044e227225C715981a30F3A44E`
+The address of the ALM_PROXY contract is: `0x491EDFB0B8b608044e227225C715981a30F3A44E`
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.1.5 - ALM Rate Limits (Mainnet) Contract [Core]  <!-- UUID: d647b167-e936-4521-805e-f7851e48fe94 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x5F5cfCB8a463868E37Ab27B5eFF3ba02112dF19a`
+The address of the ALM_RATE_LIMITS contract is: `0x5F5cfCB8a463868E37Ab27B5eFF3ba02112dF19a`
 
 ############# A.6.1.1.2.2.6.1.2.1.1.1.2.2 - Avalanche [Core]  <!-- UUID: 621734b8-dfaf-42f2-8ab1-9017e5e9c990 -->
 
@@ -25060,7 +25060,7 @@ This document contains the ALM Contract Addresses for the GLL on Avalanche.
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.2.1 - ALM Controller (ForeignController Avalanche) Contract [Core]  <!-- UUID: 6445bdc4-6208-407f-820e-9d1e73213694 -->
 
-The address of the ALM\_CONTROLLER (ForeignController) contract is: `0xEc4Cb675AF8C8665903025C2812d1234A1708bb6`
+The address of the ALM_CONTROLLER (ForeignController) contract is: `0xEc4Cb675AF8C8665903025C2812d1234A1708bb6`
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.2.2 - ALM Freezer Multisig (Avalanche) Address [Core]  <!-- UUID: 228514c4-9a74-4324-b93a-4c10025d4bc7 -->
 
@@ -25072,11 +25072,11 @@ The address of the Multisig that has the Relayer Role is: `0x0eEC86649E756a23CB
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.2.4 - ALM Proxy (Avalanche) Contract [Core]  <!-- UUID: 0704f4b5-ee5c-455c-932f-94591b8a6594 -->
 
-The address of the ALM\_PROXY contract is: `0x7107DD8F56642327945294a18A4280C78e153644`
+The address of the ALM_PROXY contract is: `0x7107DD8F56642327945294a18A4280C78e153644`
 
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.2.5 - ALM Rate Limits (Avalanche) Contract [Core]  <!-- UUID: fae298c2-f505-4d8f-904e-28220926b6d8 -->
 
-The address of the ALM\_RATE\_LIMITS contract is: `0x6ba2e6bCCe3d2A31F1e3e1d3e11CDffBaA002A21`
+The address of the ALM_RATE_LIMITS contract is: `0x6ba2e6bCCe3d2A31F1e3e1d3e11CDffBaA002A21`
 
 ########### A.6.1.1.2.2.6.1.2.1.1.2 - Off-chain Operational Parameters [Core]  <!-- UUID: ec6cc8a0-3811-485a-9f9a-78f388659d46 -->
 
@@ -28073,7 +28073,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.3.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: c30f58b3-2431-428f-92ff-2519457e2c4d -->
 
@@ -28164,7 +28164,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.3.2.5.2.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 97aa301f-1b42-45fa-915a-3d3e0dcb55ee -->
 
@@ -28255,7 +28255,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.3.2.5.2.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6e865551-6993-4193-9d2b-9aa3f7517e3e -->
 
@@ -28346,7 +28346,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Keel Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.3.2.5.2.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6bbaef28-382b-4c2c-8a9a-020de7727c86 -->
 
@@ -28441,7 +28441,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Keel Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.3.2.5.2.3.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 9a62f3b7-bef9-4002-865a-9d59dd19fb23 -->
 
@@ -29931,7 +29931,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: eff49ccd-5874-41d9-aff0-3e3e2a348336 -->
 
@@ -30003,7 +30003,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2ff3ed8b-6466-4a3d-87e0-040fb8940859 -->
 
@@ -30075,7 +30075,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 47306338-2f28-4c95-b0d3-843744e04165 -->
 
@@ -30169,7 +30169,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: a1f81f47-953d-4fde-8406-48ef1f4bf55a -->
 
@@ -30263,7 +30263,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.5.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8f48dd88-d114-4c6f-9b01-a8c7468808b8 -->
 
@@ -30357,7 +30357,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.6.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 0d81e6c2-4586-4aa1-9a1b-c8ce66a05fd1 -->
 
@@ -30451,7 +30451,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.7.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8998657a-ed5e-4610-b1bc-171f715a5d48 -->
 
@@ -30545,7 +30545,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.2.8.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 940153fc-b44e-4421-82de-2d196fe1b505 -->
 
@@ -30651,7 +30651,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 167f2753-e45f-4d55-b182-2c17c4f1e2c5 -->
 
@@ -30749,7 +30749,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.4.2.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 7a34becd-4afd-405c-bfb2-a367568c516f -->
 
@@ -30847,7 +30847,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.4.3.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 9b770474-14bd-4846-8813-4df2bfa77a8f -->
 
@@ -30945,7 +30945,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.4.4.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 4eee5be9-976e-4899-8444-a73c41a952e7 -->
 
@@ -31043,7 +31043,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.1.4.5.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 45119527-f6d5-46ab-b86b-3b1eb038cba3 -->
 
@@ -31213,7 +31213,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fa57673c-3d0f-426a-b7c2-3954db4e3b8a -->
 
@@ -31317,7 +31317,7 @@ Modifications to the base operational logic automatically propagate to this Inst
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
-\[No customization presently.\]
+[No customization presently.]
 
 ########### A.6.1.1.4.2.5.2.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 3aab09cc-2cdb-4afa-82db-230aae80437d -->
 
