@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import AgentsSectionLoader from './agents-section-loader';
+import AgentsListHydrator from './agents-list-hydrator';
 import AtlasList from './atlas-list';
 
 interface AtlasListWithAgentsProps {
@@ -14,6 +14,12 @@ interface AtlasListWithAgentsProps {
 
 export default function AtlasListPrerendered({ initialAtlasNodesPerDatabase, uuidMappings }: AtlasListWithAgentsProps) {
   const [atlasPagesPerDatabase, setAtlasPagesPerDatabase] = useState(initialAtlasNodesPerDatabase);
+
+  // Extract agent nodes for embedding as JSON
+  const agentNodes = useMemo(
+    () => initialAtlasNodesPerDatabase[ATLAS_DATABASES.AGENTS] || [],
+    [initialAtlasNodesPerDatabase],
+  );
 
   const handleAgentsLoaded = useCallback((agentNodes: AtlasTreeNode[]) => {
     setAtlasPagesPerDatabase((prev) => ({
@@ -26,11 +32,14 @@ export default function AtlasListPrerendered({ initialAtlasNodesPerDatabase, uui
     <>
       <AtlasList atlasPagesPerDatabase={atlasPagesPerDatabase} uuidMappings={uuidMappings} />
 
-      {/*
-       The AgentsSection is a client component that loads the agents data from the API after the AtlasList has been rendered.
-       This is used to prevent a build error caused by 19 MB limit on the prerendered HTML.
-       */}
-      <AgentsSectionLoader onAgentsLoaded={handleAgentsLoaded} />
+      {/* Embed agent data as JSON in the HTML for client-side hydration */}
+      <script
+        id="agent-list-data"
+        type="application/json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(agentNodes) }}
+      />
+
+      <AgentsListHydrator onAgentsLoaded={handleAgentsLoaded} />
     </>
   );
 }

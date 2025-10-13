@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
 import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
-import { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
@@ -22,6 +22,7 @@ interface RenderTreeNodeProps {
   isRootNode?: boolean;
   parentPageId?: string;
   uuidMappings: UuidMappings;
+  agentsLoading?: boolean;
 }
 
 function renderSupportingDocumentListInSameType({
@@ -32,6 +33,7 @@ function renderSupportingDocumentListInSameType({
   parentTrackingMap,
   depth,
   uuidMappings,
+  agentsLoading = false,
 }: {
   label: string;
   documentType: AtlasDocumentType;
@@ -40,6 +42,7 @@ function renderSupportingDocumentListInSameType({
   parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
+  agentsLoading?: boolean;
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
@@ -55,6 +58,7 @@ function renderSupportingDocumentListInSameType({
             isRootNode: false,
             parentPageId: node.notion_page_id,
             uuidMappings,
+            agentsLoading,
           }),
         )}
       </ul>
@@ -67,11 +71,13 @@ function renderSupportingDocuments({
   parentTrackingMap,
   depth,
   uuidMappings,
+  agentsLoading = false,
 }: {
   node: AtlasTreeNode;
   parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
+  agentsLoading?: boolean;
 }) {
   const supportingDocumentPages = [
     ...node.annotations,
@@ -109,6 +115,7 @@ function renderSupportingDocuments({
             parentTrackingMap,
             depth,
             uuidMappings,
+            agentsLoading,
           })}
         </div>
       ))}
@@ -123,15 +130,21 @@ function renderTreeNode({
   isRootNode = false,
   parentPageId,
   uuidMappings,
+  agentsLoading = false,
 }: RenderTreeNodeProps): React.ReactElement {
   const formattedContent = atlasDatabasePageToHTML(node, uuidMappings);
 
+  // Check if this is the agent root section and agents are still loading
+  const isAgentRootSection = node.notion_page_id === AGENT_ROOT_SECTION_UUID_FOR_NESTING;
+  const shouldShowAgentPlaceholder = isAgentRootSection && agentsLoading;
+
   // Get children from the tree node structure
+  // Exclude agentScopeDocs if we're showing the placeholder
   const immutableAndPrimaryDocumentPages = [
     ...node.scopes,
     ...node.articles,
     ...node.sectionsAndPrimaryDocs,
-    ...node.agentScopeDocs,
+    ...(shouldShowAgentPlaceholder ? [] : node.agentScopeDocs),
   ];
 
   if (depth > 50) {
@@ -175,6 +188,12 @@ function renderTreeNode({
         <span>{`Atlas UUID: ${uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id)}`}</span>
       </div>
 
+      {shouldShowAgentPlaceholder && (
+        <div id="agent-section-placeholder" className="mt-4 ml-4 rounded bg-gray-50 px-4 py-3 text-sm text-gray-500">
+          Loading agents...
+        </div>
+      )}
+
       {immutableAndPrimaryDocumentPages.length > 0 && (
         <ul className={styles.immutableDocsList}>
           {immutableAndPrimaryDocumentPages.map((child) =>
@@ -185,12 +204,13 @@ function renderTreeNode({
               isRootNode: false,
               parentPageId: node.notion_page_id,
               uuidMappings,
+              agentsLoading,
             }),
           )}
         </ul>
       )}
 
-      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings })}
+      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading })}
     </>
   );
 
@@ -212,11 +232,11 @@ function renderTreeNode({
 export default function ContentTree({
   atlas,
   uuidMappings,
-  agentsLoaded,
+  agentsLoading,
 }: {
   atlas: AtlasTreeResult;
   uuidMappings: UuidMappings;
-  agentsLoaded?: boolean;
+  agentsLoading?: boolean;
 }) {
   const { scopeTrees, orphanedNodes } = atlas;
 
@@ -329,6 +349,7 @@ export default function ContentTree({
               depth: 0,
               isRootNode: true,
               uuidMappings,
+              agentsLoading,
             })}
           </AccordionItem>
         ))}
