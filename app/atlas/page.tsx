@@ -1,16 +1,17 @@
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
-import ContentTree from './content-tree';
-import Sidebar from './sidebar';
+import AtlasPagePrerendered from './atlas-page-prerendered';
 
 export const dynamic = 'force-static';
 
 console.log('/atlas is being prerendered');
 
 export default async function Page() {
-  // Load Atlas pages from Supabase, grouped by Atlas database
-  const atlasPagesPerDatabase = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  // Load Atlas pages WITHOUT agents to reduce ISR size
+  const atlasPagesPerDatabase = await loadAtlasFromSupabaseWithNestingAgentsUnderSection({
+    excludeAgents: true,
+  });
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();
@@ -22,12 +23,5 @@ export default async function Page() {
     reportOrphanedNodes: true,
   });
 
-  return (
-    <div className="flex min-h-screen overflow-x-hidden bg-white">
-      <Sidebar atlas={atlas} />
-      <div className="min-w-0 flex-1 p-6">
-        <ContentTree atlas={atlas} uuidMappings={uuidMappings} />
-      </div>
-    </div>
-  );
+  return <AtlasPagePrerendered initialAtlas={atlas} uuidMappings={uuidMappings} />;
 }

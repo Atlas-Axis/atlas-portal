@@ -209,7 +209,15 @@ function renderTreeNode({
   );
 }
 
-export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeResult; uuidMappings: UuidMappings }) {
+export default function ContentTree({
+  atlas,
+  uuidMappings,
+  agentsLoaded,
+}: {
+  atlas: AtlasTreeResult;
+  uuidMappings: UuidMappings;
+  agentsLoaded?: boolean;
+}) {
   const { scopeTrees, orphanedNodes } = atlas;
 
   // Memoize scopeKeys to prevent unnecessary re-renders
