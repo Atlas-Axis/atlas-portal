@@ -5,6 +5,10 @@
   font-weight: 600;
 }
 
+.nodeTitle:hover {
+  text-decoration: underline;
+}
+
 .typeChipSpacing {
   margin-left: 0.5rem;
 }

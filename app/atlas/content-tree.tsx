@@ -146,12 +146,12 @@ function renderTreeNode({
   const nodeContent = (
     <>
       {!isRootNode && (
-        <h3 className={styles.nodeTitle}>
+        <a className={styles.nodeTitle} href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}>
           {node.generatedDocID} - {node.generatedDocName}
           <span className={styles.typeChipSpacing}>
             <TypeChip type={node.atlas_document_type} />
           </span>
-        </h3>
+        </a>
       )}
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
@@ -196,9 +196,9 @@ function renderTreeNode({
 
   if (isRootNode) {
     return (
-      <h3 className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID}>
+      <a className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID} href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}>
         {nodeContent}
-      </h3>
+      </a>
     );
   }
 
