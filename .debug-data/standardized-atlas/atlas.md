@@ -3470,11 +3470,155 @@ Validators are encouraged to perform the Spell validation checks outlined in the
 
 The correct license for the Spell contract is GNU AGPLv3. Validators should confirm that this license is used, which can be verified in one of two ways under the “Contract” tab on Etherscan:
 
-    1. In the `Other Settings` field under the contract’s metadata. The license should be displayed as `GNU AGPLv3`.
-    2. In the Spell Code in the commented line of code in the `DssSpell` contract. The line should contain: `SPDX-License-Identifier: AGPL-3.0-or-later`.
+1. In the `Other Settings` field under the contract’s metadata. The license should be displayed as `GNU AGPLv3`.
+
+2. In the Spell Code in the commented line of code in the `DssSpell` contract. The line should contain: `SPDX-License-Identifier: AGPL-3.0-or-later`.
+
 While the Spell should use the correct license to pass validation, this is not considered a strict requirement.
 
-####### A.1.9.2.4.12.3.3 - Validation Outcome Reporting [Core]  <!-- UUID: 56b1cc27-a9e3-4099-8f1f-648da7d1c56b -->
+######## A.1.9.2.4.12.3.2.2 - Spell Validators Must Check Compiler Version [Core]  <!-- UUID: 83f53a73-7e2f-4dc9-a371-e19238924bf3 -->
+
+Validators should ensure that the Solidity compiler version used in the deployed Spell matches the version specified in the `Spells-mainnet` repository on GitHub. Validators should verify this by:
+
+• Navigate to the ”Contract” tab on Etherscan and check the `Compiler Version` field under the contract’s metadata. The version displayed must match the version specified in the `DssSpell.sol` contract (e.g., pragma solidity `0.8.16`;).
+
+• Only the first part of the version (e.g., `v0.8.16`) needs to match; any additional commit information can be ignored.
+
+While the Spell should use the correct version to pass validation, this is not considered a strict requirement.
+
+####### A.1.9.2.4.12.3.3 - Additional Community Developed Spell Validation Checks  [Core]  <!-- UUID: 56b1cc27-a9e3-4099-8f1f-648da7d1c56b -->
+
+The community has developed additional checks to enhance the Spell validation process. These checks are outlined in the subdocuments.
+
+######## A.1.9.2.4.12.3.3.1 - Spell Validators Should Validate Executive Document [Core]  <!-- UUID: 2662dc31-d68b-4b63-91d9-8ca420632eb2 -->
+
+The Spell validator should confirm that the smart contract developers referenced the correct governance copy when building the Spell and that the document voters see on the Voting Portal matches the Spell contents. This is done by verifying that the hash in the Spell corresponds to the version of the Executive Document stored in the GitHub repository.
+
+To perform this validation, the validator must first locate the Executive Hash, which can be found on the voting platform under “Spell Details” for the Executive Vote. Validators should be aware that the hash refers to an earlier commit of the Executive Document markdown, prior to the inclusion of the contract address. After validating the hash against this earlier commit, validators must conduct a diff check between the commit associated with the Executive Hash and the final version of the document to confirm that the only difference is the replacement of the Spell address placeholder.
+
+• The check can be performed in two ways:
+
+1. Using an Online Tool:
+
+  ◦ Copy and paste the body of the Executive Document from GitHub into the online Keccak-256 hash generator tool ([https://emn178.github.io/online-tools/keccak_256.html](https://emn178.github.io/online-tools/keccak_256.html)).
+
+  ◦ Compare the generated hash with the hash included in the Spell.
+
+ 2. Using `cast`
+
+  • Generate the hash directly from the raw GitHub URL at the specific commit:
+     • Run the following command to generate the hash: `cast keccak -- "$(wget $RAW_EXEC_URL -O -)"`
+     • Use the raw file URL at the specific commit.
+
+  • Compare the generated hash with the hash included in the Spell.
+
+######## A.1.9.2.4.12.3.3.2 - Spell Validators Should Review Spell Constructor [Core]  <!-- UUID: b28afb60-f8cc-4529-9775-1a3a0e22efed -->
+
+Validators should ensure that the Spell constructor is properly implemented. The constructor is a critical part of the Spell contract, as it defines key parameters such as the Spell's expiry time and the inclusion of the `DssSpellAction` code block, which specifies the actions the Spell will execute.
+
+Validators should follow these steps to review the constructor:
+
+• Navigate to the ”Contract” tab on Etherscan and scroll to the bottom of the contract source code to locate the constructor declaration.
+
+    ◦ Verify that the Spell inherits from the `DssExec` contract, which serves as the base contract for all Sky Spells.
+
+    ◦ Verify that the constructor is properly implemented with the correct parameters. For example, the expiry time should be set to the correct duration (e.g., `30 days`).
+
+######## A.1.9.2.4.12.3.3.3 - Spell Validators Should Review Spell Actions [Core]  <!-- UUID: 97f4831e-1566-46e1-bbac-2a668e4b5ca7 -->
+
+Validators should ensure that all values before and after the Spell actions are constants or immutable. If values are not constants, they could present malicious code in the form of memory mutations impacting the function of the pause proxy.
+
+To perform this validation, the validator must go to the “Contract” tab on Etherscan and review the source code.
+
+######## A.1.9.2.4.12.3.3.4 - Spell Validators Should Review Office Hours Function [Core]  <!-- UUID: 39f67b68-ad24-40b3-9cda-6aaa6006722f -->
+
+Validators should verify that the office hours function matches the Executive Document. If this function is missing from the Spell Action, the code will default to the true state (office hours on).
+
+To perform this validation, the validator must go to the “Contract” tab on Etherscan and review the source code.
+
+######## A.1.9.2.4.12.3.3.5 - Spell Validators Should Review Chainlog [Core]  <!-- UUID: 4f7f2b2f-3514-4ba6-a1a2-6dd40fff5a92 -->
+
+Spell validators should ensure that all `DssExecLib` calls to the chainlog use the correct name descriptors.
+
+• Verify that all Chainlog references, such as name descriptors or keys, correspond to valid, existing entries in the Chainlog.
+
+• Confirm that the name descriptors match the expected values as recorded in the Chainlog.
+
+• The chainlog patch version is updated correctly (e.g., `x.y.z` → `x.y.z+1`).
+
+To perform this validation the validators must go to the “Contract” tab on Etherscan and review the source code. Look for `DssExecLib` calls in the code. Compare the name descriptors in the code with the expected values in the Chainlog.
+
+######## A.1.9.2.4.12.3.3.6 - Spell Validators Should Review Oracle Address [Core]  <!-- UUID: 9a7a0d5e-ac6a-481d-ae61-d6504969524e -->
+
+Spell validators should ensure that oracle addresses are correctly verified.
+
+To perform this validation the validators should go to the Chainlog and locate the relevant oracle (e.g. `PIP_ETH`). Take the contract address listed in the Chainlog to Etherscan. Open the “Read” tab of the contract on Etherscan. Look for the `src` value. Verify that the `src` value matches the `MedianETHUSDcontract` address referenced in the Spell.
+
+######## A.1.9.2.4.12.3.3.7 - Spell Validators Should Review Constants [Core]  <!-- UUID: a6940e22-f25c-4f29-9307-328b7f590ce7 -->
+
+Validators should ensure that the rates are defined as per-second accumulation values, using the correct precision units common in the Sky Protocol (e.g., RAY for rates, RAD for debt/DAI amounts, WAD for general token amounts).
+
+**Precision Units Overview**:
+
+• **WAD (10^18)**: Used for token amounts and balances.
+
+• **RAD (10^45)**: Used for debt values, ceilings, or large accumulations.
+
+• **RAY (10^27)**: Used for rates and multipliers.
+
+These units prevent floating-point issues in Solidity — always confirm they're applied correctly to avoid overflows or miscalculations. Group this with general constant validations (e.g., ensuring hardcoded values like fees or ceilings are computed accurately).
+
+Rate values can be validated against the commented rate by using the `bc` command in a bash shell. Using the `NEW_FEE` variable in the example contract the following is visible: `bc -l <<< 'scale=27; e( l(1.095)/(60 * 60 * 24 * 365) )`. This produces 1.000000002877801985002875644. Removing the decimal place will allow you to see that this matches the definition of `NEW_FEE`.
+
+Validating all rate adjustments can be done the same way. For more information on the rates module, refer to the developer guide ([https://github.com/sky-ecosystem/developerguides/blob/master/mcd/intro-rate-mechanism/intro-rate-mechanism.md](https://github.com/sky-ecosystem/developerguides/blob/master/mcd/intro-rate-mechanism/intro-rate-mechanism.md)). For easy reference, common pre-computed rates can also be viewed at the following ipfs link ([https://ipfs.io/ipfs/QmefQMseb3AiTapiAKKexdKHig8wroKuZbmLtPLv4u2YwW](https://ipfs.io/ipfs/QmefQMseb3AiTapiAKKexdKHig8wroKuZbmLtPLv4u2YwW)).
+
+Immediately prior to making rate changes, `drip` must be called on the respective contracts.
+
+######## A.1.9.2.4.12.3.3.8 - Spell Validators Should Review Timestamps [Core]  <!-- UUID: 353d7fab-461c-4141-b0b5-24a91357ee4d -->
+
+Validators should ensure that all timestamps in the Spell (e.g., ETAs, expirations, or delays like GSM Pause) are calculated correctly and use Unix timestamp format (seconds since epoch) to prevent execution issues, such as invalid timings or reverts. Use the `make time` command in Spells-mainnet to validate these.
+
+######## A.1.9.2.4.12.3.3.9 - Spell Validators Should Review Require Statements [Core]  <!-- UUID: 2f10b68b-e398-45de-bb9a-62f832e22e7a -->
+
+Validators should confirm that all `require` statements in the Spell's code are used only as sanity checks and not under normal conditions or inputs (e.g., the Spell should not revert during expected execution)
+
+######## A.1.9.2.4.12.3.3.10 - Spell Validators Should Review Contract For Unusual Elements [Core]  <!-- UUID: de343461-5583-4157-b71a-a15e3e3b1ad1 -->
+
+Validators should assess whether any unusual or unexpected elements appear in the contract. It could be:
+
+• Hidden state changes: Look for retrieval functions (e.g., `get` or `view`) that include assignments (`=`), indicating state changes.
+
+• External Calls At The End: Check for external calls (e.g., `.call`, `.send`, `.transfer`) made after state changes, as this could indicate potential reentrancy attacks.
+
+• Force Ether, DAI or SKY Reception: Look for a `receive` function with no logic, which could forcibly receive assets.
+
+• Use of `tx.origin`: The tx.origin variable refers to the address that started the current transaction. If `tx.origin` is used instead of `msg.sender` in decision-making processes, it could lead to unintended authorization.
+
+• Function Naming Overlaps: A contract might have function names that are similar or overlap with common Solidity functions to mislead a reviewer. Check for misleading function names (e.g., `transfer`, `approve`, `mint`) with unexpected logic or assignments.
+
+To perform this validation the validator must go to the “Contract” tab on Etherscan and review the source code.
+
+######## A.1.9.2.4.12.3.3.11 - Spell Validators Should Do Spell Tests And Repository Validation [Core]  <!-- UUID: a564f010-a30f-40bb-bf36-12f91f30b8fe -->
+
+Validators should check the following:
+
+• Ensure that all dependencies in the Spell repository (e.g., imported libraries like dss-exec-lib or git submodules) are current and up to date with the Spell. To perform this check the validator must browse or clone the GitHub repository (e.g., Spells-mainnet). Review Solidity files (e.g., in src/) for import statements, check the .gitmodules file for submodules, and run `git submodule status` to verify versions. Compare against source repositories for updates, then test with `make test` to confirm compatibility. The source repository can be identified in the Spell's source code, as the imported library or dependency is followed by "from", which points to the source path (e.g., `import {GemAbstract} from "dss-interfaces/ERC/GemAbstract.sol";` points to dss-interfaces.)
+
+• Verify that the test scripts themselves have not been tampered with or maliciously modified in the repository.
+
+• Confirm that the Spell repository branch matches the branch specified in the pull request or governance proposal.
+
+######## A.1.9.2.4.12.3.3.12 - Spell Validators Should Verify The Contract ABI [Core]  <!-- UUID: fdcea934-c3fb-4735-acc3-3e320ad89b00 -->
+
+Validators should verify that the contract ABI (Application Binary Interface) is correctly generated and matches the deployed contract.
+
+To perform this check, the validator must go to the “Contract” tab on Etherscan and the “Contract ABI” section. Copy the ABI JSON and compare it against the expected ABI from the official GitHub repository (e.g., Spells-mainnet repo). To obtain the expected ABI from the GitHub repository download the relevant Solidity file, paste it into a tool like Remix IDE, select the matching compiler version, and compile to extract the ABI JSON. Use a diff tool to check for exact matches in functions, parameters, and types.
+
+######## A.1.9.2.4.12.3.3.13 - Spell Validators Should Check For Hidden Or Unverified Contracts [Core]  <!-- UUID: 4674dbfa-77d8-4d99-980e-330342b0ffa9 -->
+
+Validators should check for hidden or unverified contracts linked to the Spell (e.g., libraries or proxies).
+
+To perform these checks, the validator must go to the “Contract” tab on Etherscan and review the source code. Scan the code for any referenced contracts or addresses: Look for imports, inherited contracts, hardcoded addresses, or function calls to external contracts. If it's an address, search it directly on Etherscan and confirm it's verified (e.g., green checkmark with available source code). Compare the referenced code to the official GitHub repository (e.g., Spells-mainnet repo) to ensure versions match and nothing has been altered.
 
 ###### A.1.9.2.4.12.4 - Validation Outcome Reporting [Core]  <!-- UUID: 43d2fe19-727f-4722-b913-7d5f79e1a2a7 -->
 
