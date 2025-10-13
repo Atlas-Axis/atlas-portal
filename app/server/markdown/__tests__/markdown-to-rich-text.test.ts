@@ -351,6 +351,57 @@ describe('convertMarkdownToNotionRichText', () => {
   });
 
   describe('complex multiline inline code cases', () => {
+    it('should not process markdown links inside multiline inline code', () => {
+      const result = convertMarkdownToNotionRichText(
+        'Text `with [link](https://example.com) inside\ncode` end',
+        mockUuidMappings,
+      );
+      expect(result).toHaveLength(3);
+
+      // "Text "
+      expect(result[0].text?.content).toBe('Text ');
+      expect(result[0].annotations?.code).toBe(false);
+
+      // Multiline code with markdown link syntax (should be treated as plain text)
+      expect(result[1].text?.content).toBe('with [link](https://example.com) inside\ncode');
+      expect(result[1].annotations?.code).toBe(true);
+      expect(result[1].href).toBeNull();
+      expect(result[1].text?.link).toBeNull();
+
+      // " end"
+      expect(result[2].text?.content).toBe(' end');
+      expect(result[2].annotations?.code).toBe(false);
+    });
+
+    it('should not process any markdown formatting inside multiline inline code with complex table', () => {
+      const complexTableMarkdown = '`| Header | [Link](https://example.com) |\n| Row | **Bold** and *Italic* |`';
+      const result = convertMarkdownToNotionRichText(complexTableMarkdown, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+
+      // Should be a single code element with all content as plain text
+      expect(result[0].text?.content).toBe('| Header | [Link](https://example.com) |\n| Row | **Bold** and *Italic* |');
+      expect(result[0].annotations?.code).toBe(true);
+      expect(result[0].annotations?.bold).toBe(false);
+      expect(result[0].annotations?.italic).toBe(false);
+      expect(result[0].href).toBeNull();
+    });
+
+    it('should handle very complex multiline inline code with multiple markdown links', () => {
+      const markdown =
+        '`Line 1 [link1](https://example1.com) text\nLine 2 [link2](https://example2.com) more\nLine 3 [link3](https://example3.com) end`';
+      const result = convertMarkdownToNotionRichText(markdown, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+
+      // All content should be in a single code block with no link processing
+      expect(result[0].text?.content).toBe(
+        'Line 1 [link1](https://example1.com) text\nLine 2 [link2](https://example2.com) more\nLine 3 [link3](https://example3.com) end',
+      );
+      expect(result[0].annotations?.code).toBe(true);
+      expect(result[0].href).toBeNull();
+    });
+
     it('should handle single-line inline code followed by multiline inline code on same line', () => {
       const result = convertMarkdownToNotionRichText(
         'Hello `code` and then `multiline\ncode\nhere` world',

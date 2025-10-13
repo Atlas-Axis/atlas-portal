@@ -23,8 +23,12 @@ import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './noti
 
 // Pre-compiled regex patterns for better performance
 const INLINE_PATTERNS = [
+  // Link with code: [`code`](url) - must come first to avoid conflicts
+  // Allow empty code blocks: [``](url)
+  { regex: /\[`([^`]*)`\]\(([^)]+)\)/g, type: 'code_link' as const },
   // Inline code (must come before other patterns to avoid conflicts)
-  { regex: /`([^`]+)`/g, type: 'code' as const },
+  // Allow empty code blocks: ``
+  { regex: /`([^`]*)`/g, type: 'code' as const },
   // Inline math equations (must come before other patterns to avoid conflicts)
   { regex: /\$([^$]*)\$/g, type: 'equation' as const },
   // Bold text (must come before italic to avoid conflicts)
@@ -128,7 +132,7 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
         end: matchEnd, // End position
         type: pattern.type, // Formatting type
         content: match[1], // Captured content
-        url: pattern.type === 'link' ? match[2] : undefined, // URL for links
+        url: pattern.type === 'link' || pattern.type === 'code_link' ? match[2] : undefined, // URL for links and code_links
       });
     }
   });
@@ -174,9 +178,29 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
     if (match.type === 'bold') annotations.bold = true;
     if (match.type === 'italic') annotations.italic = true;
     if (match.type === 'strikethrough') annotations.strikethrough = true;
+    if (match.type === 'code_link') annotations.code = true; // [`code`](url) pattern
 
     // Handle special cases that need different Notion Rich Text structures
-    if (match.type === 'link') {
+    if (match.type === 'link' || match.type === 'code_link') {
+      // For code_link, content is already extracted without backticks
+      // For regular link, check if content is wrapped in backticks
+      let linkContent = match.content;
+
+      if (match.type === 'link') {
+        // Check if the link content is wrapped in backticks: [`code`](url)
+        // This represents a link with code annotation
+        const codeInLinkMatch = match.content.match(/^`(.+)`$/);
+
+        if (codeInLinkMatch) {
+          // Extract content from backticks and unescape any escaped backticks
+          linkContent = codeInLinkMatch[1].replace(/\\`/g, '`');
+          annotations.code = true;
+        }
+      } else if (match.type === 'code_link') {
+        // Unescape any escaped backticks in code_link content
+        linkContent = match.content.replace(/\\`/g, '`');
+      }
+
       // Check if this is a mention (UUID-only href) vs external link
       const isUUIDFormat = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(match.url!);
       const isMention = isUUIDFormat;
@@ -201,7 +225,7 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
             },
             type: 'page',
           },
-          plain_text: match.content,
+          plain_text: linkContent,
           href: mentionUrl || null, // Use the converted Notion URL for the href, default to null
           annotations: {
             bold: annotations.bold || false,
@@ -216,7 +240,7 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
         // This is an external link - use createRichText for consistent annotation handling
         richText.push(
           createRichText({
-            content: match.content,
+            content: linkContent,
             href: match.url!,
             annotations,
           }),

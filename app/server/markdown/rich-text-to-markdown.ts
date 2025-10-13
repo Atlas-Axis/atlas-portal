@@ -51,8 +51,27 @@ function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings): stri
 
   const textContent = rt.type === 'text' ? (rt.text?.content ?? rt.plain_text ?? '') : (rt.plain_text ?? '');
 
+  // Check if this element has both code annotation and a link
+  const href = rt.href || (rt.text && rt.text.link ? rt.text.link.url : undefined);
+  const hasLink = !!href;
+  const hasCode = !!rt.annotations?.code;
+
+  // Special case: code + link combination
+  // Use [`code`](url) format to preserve both code formatting and link
+  if (hasCode && hasLink) {
+    const escapedBackticks = textContent.replace(/`/g, '\\`');
+    const codeFormatted = `\`${escapedBackticks}\``;
+
+    if (!uuidMappings) {
+      console.warn('No uuidMappings provided, cannot map Notion links to UUIDs');
+      return `[${codeFormatted}](${href})`;
+    }
+    const mappedUUID = notionLinkToMappedUUID(href, uuidMappings);
+    return `[${codeFormatted}](${mappedUUID || href})`;
+  }
+
   // Inline code: don't escape inside backticks, only escape backticks themselves
-  const withInlineCode = rt.annotations?.code
+  const withInlineCode = hasCode
     ? (() => {
         const escapedBackticks = textContent.replace(/`/g, '\\`');
         return `\`${escapedBackticks}\``;
@@ -67,8 +86,8 @@ function formatInlineSpan(rt: NotionRichText, uuidMappings?: UuidMappings): stri
   const formatted = withStrike;
 
   // Links: explicit href on rich text or text.link.url
-  const href = rt.href || (rt.text && rt.text.link ? rt.text.link.url : undefined);
-  if (href) {
+  // (code+link case already handled above)
+  if (hasLink && !hasCode) {
     if (!uuidMappings) {
       console.warn('No uuidMappings provided, cannot map Notion links to UUIDs');
       return `[${formatted}](${href})`;
@@ -90,12 +109,13 @@ export function convertNotionRichTextToMarkdown(
   uuidMappings?: UuidMappings,
 ): string {
   if (!richText || richText.length === 0) return '';
+
   const markdown = richText.map((rt) => formatInlineSpan(rt, uuidMappings)).join('');
-  
+
   // Normalize line breaks: squash multiple consecutive empty lines into single newlines
   // This includes lines with only whitespace
   return markdown
-    .replace(/\n\s*\n\s*\n+/g, '\n\n')  // Replace 3+ consecutive newlines with 2
-    .replace(/^\n+/, '')               // Remove leading newlines
-    .replace(/\n+$/, '');              // Remove trailing newlines
+    .replace(/\n\s*\n\s*\n+/g, '\n\n') // Replace 3+ consecutive newlines with 2
+    .replace(/^\n+/, '') // Remove leading newlines
+    .replace(/\n+$/, ''); // Remove trailing newlines
 }
