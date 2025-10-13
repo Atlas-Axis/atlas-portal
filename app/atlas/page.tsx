@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <div className="flex min-h-screen bg-white">
       <Sidebar atlas={atlas} />
-      <div className="flex-1 p-6">
+      <div className="min-w-0 flex-1 p-6">
         <ContentTree atlas={atlas} uuidMappings={uuidMappings} />
       </div>
     </div>
