@@ -30,9 +30,9 @@ export default function AtlasPagePrerendered({ initialAtlas, uuidMappings }: Atl
   }, []);
 
   return (
-    <div className="flex min-h-screen overflow-x-hidden bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-white">
       <Sidebar atlas={atlas} />
-      <div className="min-w-0 flex-1 p-6">
+      <div className="min-w-0 p-6 md:ml-80">
         <ContentTree atlas={atlas} uuidMappings={uuidMappings} agentsLoading={!agentsLoaded} />
       </div>
 

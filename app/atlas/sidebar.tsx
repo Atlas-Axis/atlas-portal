@@ -77,6 +77,7 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
           base: 'px-0',
           trigger: 'px-2 py-1',
           content: 'px-0 pt-0 pb-1',
+          indicator: 'hover:text-blue-600 hover:bg-slate-100 rounded-full p-2 cursor-pointer',
         }}
       >
         <div className="ml-3 border-l border-slate-200 pl-2">
@@ -103,7 +104,7 @@ export default function Sidebar({ atlas }: SidebarProps) {
 
   return (
     <div
-      className="sticky top-0 hidden h-screen w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50 md:block"
+      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50 md:block"
       role="navigation"
       aria-label="Atlas navigation"
     >
