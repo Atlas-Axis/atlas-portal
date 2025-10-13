@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
 import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
@@ -99,17 +99,19 @@ function renderSupportingDocuments({
     <div className={styles.supportingDocsContainer}>
       <span className={styles.supportingDocsLabel}>Supporting Documents</span>
 
-      {supportingDocumentLabels.map(({ label, documentType, documents }) =>
-        renderSupportingDocumentListInSameType({
-          label,
-          documentType,
-          documents,
-          node,
-          parentTrackingMap,
-          depth,
-          uuidMappings,
-        }),
-      )}
+      {supportingDocumentLabels.map(({ label, documentType, documents }) => (
+        <div key={`${node.notion_page_id}-${label}`}>
+          {renderSupportingDocumentListInSameType({
+            label,
+            documentType,
+            documents,
+            node,
+            parentTrackingMap,
+            depth,
+            uuidMappings,
+          })}
+        </div>
+      ))}
     </div>
   );
 }
@@ -168,7 +170,7 @@ function renderTreeNode({
           {`Notion ID: ${uuidToNoHyphens(node.notion_page_id)}`}
         </a>
 
-        <span className='mx-2'>•</span>
+        <span className="mx-2">•</span>
 
         <span>{`Atlas UUID: ${uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id)}`}</span>
       </div>
@@ -194,14 +196,14 @@ function renderTreeNode({
 
   if (isRootNode) {
     return (
-      <h3 className={styles.rootTitle} key={node.notion_page_id}>
+      <h3 className={styles.rootTitle} key={node.notion_page_id} id={node.notion_page_id}>
         {nodeContent}
       </h3>
     );
   }
 
   return (
-    <li key={node.notion_page_id} className={styles.listItem}>
+    <li key={node.notion_page_id} className={styles.listItem} id={node.notion_page_id}>
       {nodeContent}
     </li>
   );
@@ -209,6 +211,9 @@ function renderTreeNode({
 
 export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeResult; uuidMappings: UuidMappings }) {
   const { scopeTrees, orphanedNodes } = atlas;
+
+  // Memoize scopeKeys to prevent unnecessary re-renders
+  const scopeKeys = useMemo(() => scopeTrees.map((scopes) => scopes.notion_page_id), [scopeTrees]);
 
   // Create a map to track which parent each page is rendered under
   const parentTrackingMap = new Map<string, string>();
@@ -245,10 +250,15 @@ export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeR
   console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
   console.log(`🌳 Found ${scopeTrees.length} scope trees, ${orphanedNodes.length} orphaned nodes`);
 
+  // On first load, expand all scope trees
+  useEffect(() => {
+    setExpandedKeys(new Set(scopeKeys));
+    console.log('📂 Expanding all scope trees on initial load: ', scopeKeys);
+  }, [scopeKeys]);
+
   // Function to expand all accordions
   const expandAll = () => {
-    const allKeys = scopeTrees.map((tree) => tree.notion_page_id);
-    setExpandedKeys(new Set(allKeys));
+    setExpandedKeys(new Set(scopeKeys));
   };
 
   // Function to collapse all accordions

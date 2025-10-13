@@ -2,6 +2,7 @@ import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
+import Sidebar from './sidebar';
 
 export const dynamic = 'force-static';
 
@@ -22,8 +23,11 @@ export default async function Page() {
   });
 
   return (
-    <div className="min-h-screen bg-white p-6">
-      <ContentTree atlas={atlas} uuidMappings={uuidMappings} />
+    <div className="flex min-h-screen bg-white">
+      <Sidebar atlas={atlas} />
+      <div className="flex-1 p-6">
+        <ContentTree atlas={atlas} uuidMappings={uuidMappings} />
+      </div>
     </div>
   );
 }
