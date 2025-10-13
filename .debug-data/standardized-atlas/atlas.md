@@ -23861,6 +23861,44 @@ Spark engaged in terms of agreement with the Grove Agent in Ecosystem Accord 1, 
 
 Spark engaged in terms of agreement with Sky, Moonbow and Grove in Ecosystem Accord 2, located in [A.2.10 - Ecosystem Accord 2: Grove And Spark - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
+###### A.6.1.1.1.3.4 - SubDAO Proxy Management [Core]  <!-- UUID: 2ad53f55-44cb-44fd-9e68-6c7ed128e360 -->
+
+The documents herein specify Spark's strategy and operational processes for managing assets held in the Spark SubDAO Proxy, and obligations relating to these assets.
+
+####### A.6.1.1.1.3.4.1 - Operational Process Definition [Core]  <!-- UUID: bfdc08d5-42f5-4d49-9390-b6ad210c5c40 -->
+
+The documents herein define the process for updating Spark's SubDAO Proxy management policies.
+
+######## A.6.1.1.1.3.4.1.1 - Spark SubDAO Proxy Policy Changes [Core]  <!-- UUID: 90240e75-6e5f-4a54-8999-ee430cfcf20d -->
+
+Changes to Spark SubDAO Proxy management policies are implemented using the Root Edit Primitive.
+
+######## A.6.1.1.1.3.4.1.2 - Preapproved Subdao Proxy Activities [Core]  <!-- UUID: 8a421648-d732-44c1-8666-bbbb9b7bfff2 -->
+
+Dispositions of Spark SubDAO Proxy assets that have already been approved by governance and added to the Spark artifact, including periodic payments and disposal of non-core assets, can continue as planned until a superseding policy change is adopted via the Spark SubDAO Proxy Policy Changes process.
+
+####### A.6.1.1.1.3.4.2 - Policies and Parameters [Core]  <!-- UUID: 262ff1c9-9634-45a4-9f18-ed222352ddb4 -->
+
+The documents herein define the currently active policies for managing the Spark SubDAO Proxy, alongside relevant parameters for implementing the policies.
+
+######## A.6.1.1.1.3.4.2.1 - Risk Tolerance Ratio [Core]  <!-- UUID: 9995ba51-1de7-4b32-8b76-a71462dc4c5b -->
+
+The documents herein define Spark's policy for managing the Risk Tolerance Ratio.
+
+######### A.6.1.1.1.3.4.2.1.1 - Definition [Core]  <!-- UUID: f426cc6e-336a-43bf-825d-1f0c08d1795e -->
+
+The Risk Tolerance Ratio is defined as the ratio of Spark's Required Risk Capital (RRC) to Total Risk Capital (TRC), as these terms are defined in the Sky Atlas Stability Scope ([A.3.3 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9)). Spark will seek to maintain a Risk Tolerance Ratio not greater than the Target Risk Tolerance Ratio specified in [Parameters](https://www.notion.so/28bf2ff08d7380bc9b49e98f9ecdf029).
+
+######### A.6.1.1.1.3.4.2.1.2 - Operational Process [Core]  <!-- UUID: 7bc96051-ce11-4e29-aa30-b535183aeaa7 -->
+
+Spark governance and contributors must take immediate action to reduce the Risk Tolerance Ratio when it exceeds the Target Risk Tolerance Ratio level. These actions may fall into two categories, risk capital actions or allocation system actions.
+
+Risk capital actions are actions Spark takes to increase Total Risk Capital, including increasing Internal Junior Risk Capital, sourcing External Junior Risk Capital from other Prime Agents or tokenized sources, or sourcing External Senior Risk Capital from Sky or tokenized sources.
+
+Allocation system actions involve adjusting the capital allocations within the Spark instance of the Allocation System to reduce Required Risk Capital, such as unwinding or disposing of assets requiring higher levels of risk capital as a percent of exposure.
+
+The operational processes implemented at Spark will meet or exceed the requirements specified in the Sky Atlas at [A.2.4 - Primes’ Total Risk Capital (TRC) Management](3af8a3a2-25e5-44b3-87a4-7df1f2712685).
+
 #### A.6.1.1.2 - Grove [Core]  <!-- UUID: 727b0de6-095b-485e-bf9c-02108a364480 -->
 
 The documents herein specify all of the logic for Grove, including Grove’s strategy and how it uses the Sky Primitives to operationalize this strategy.
