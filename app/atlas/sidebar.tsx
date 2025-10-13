@@ -60,16 +60,18 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
       <AccordionItem
         aria-label={`${node.generatedDocID} - ${node.generatedDocName || 'Untitled'}`}
         title={
-          <a
-            className="block cursor-pointer text-sm transition-colors hover:text-blue-600"
-            href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}
+          <div
+            className="cursor-pointer text-sm transition-colors hover:text-blue-600"
             onClick={(e) => {
-              // Prevent accordion toggle when clicking the title; allow hash navigation
+              // Prevent accordion toggle when clicking the title; navigate to hash
               e.stopPropagation();
+              if (node.generatedDocID) {
+                window.location.hash = node.generatedDocID;
+              }
             }}
           >
             {node.generatedDocID} - {node.generatedDocName || 'Untitled'}
-          </a>
+          </div>
         }
         classNames={{
           base: 'px-0',

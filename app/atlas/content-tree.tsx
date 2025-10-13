@@ -196,9 +196,9 @@ function renderTreeNode({
 
   if (isRootNode) {
     return (
-      <a className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID} href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}>
+      <div className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID}>
         {nodeContent}
-      </a>
+      </div>
     );
   }
 
@@ -266,21 +266,22 @@ export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeR
   return (
     <div className={styles.containerMain}>
       <div className="flex items-center gap-6">
-        <h3 className={styles.headerTitle}>Atlas</h3>
         {/* Expand/Collapse All Buttons */}
-        <div>
-          <ButtonGroup>
-            <Button onPress={expandAll} variant="flat" size="sm">
-              Expand All
-            </Button>
-            <Button onPress={collapseAll} variant="flat" size="sm">
-              Collapse All
-            </Button>
-          </ButtonGroup>
+        <div className="mb-2 flex w-full justify-end">
+          <div className="flex flex-col items-end gap-2">
+            <ButtonGroup>
+              <Button onPress={expandAll} variant="flat" size="sm">
+                Expand All
+              </Button>
+              <Button onPress={collapseAll} variant="flat" size="sm">
+                Collapse All
+              </Button>
+            </ButtonGroup>
+
+            <div className="text-xs text-slate-500">Click on a scope to expand/collapse its contents.</div>
+          </div>
         </div>
       </div>
-
-      <div className="my-6 text-slate-300">Click on a scope to expand/collapse its contents.</div>
 
       <Accordion
         disableAnimation={true}
