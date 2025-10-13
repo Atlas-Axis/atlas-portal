@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
@@ -11,9 +12,10 @@ interface SidebarProps {
 interface RenderSidebarNodeProps {
   node: AtlasTreeNode;
   depth?: number;
+  activeHash: string;
 }
 
-function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.ReactElement | null {
+function renderSidebarNode({ node, depth = 0, activeHash }: RenderSidebarNodeProps): React.ReactElement | null {
   // Collect only immutable and primary document children (exclude supporting documents)
   const allChildren: AtlasTreeNode[] = [
     ...node.scopes,
@@ -35,12 +37,17 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
     return null;
   }
 
+  // Check if this node is active
+  const isActive = activeHash === node.generatedDocID;
+
   // If node has no children, render as a simple clickable item
   if (sortedChildren.length === 0) {
     return (
       <a
         key={node.notion_page_id}
-        className="block rounded px-2 py-1 text-sm transition-colors hover:bg-slate-100"
+        className={`block rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out hover:bg-slate-100 ${
+          isActive ? 'text-blue-600' : ''
+        }`}
         href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}
       >
         {node.generatedDocID} - {node.generatedDocName || 'Untitled'}
@@ -55,16 +62,17 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
       selectionMode="multiple"
       variant="light"
       className="px-0"
-      //   disableAnimation={true}
+      disableAnimation={true}
     >
       <AccordionItem
         aria-label={`${node.generatedDocID} - ${node.generatedDocName || 'Untitled'}`}
         title={
           <div
-            className="cursor-pointer text-sm transition-colors hover:text-blue-600"
-            onClick={(e) => {
+            className={`cursor-pointer text-sm transition-all duration-300 ease-in-out hover:text-blue-600 ${
+              isActive ? 'text-blue-600' : ''
+            }`}
+            onClick={() => {
               // Prevent accordion toggle when clicking the title; navigate to hash
-              e.stopPropagation();
               if (node.generatedDocID) {
                 window.location.hash = node.generatedDocID;
               }
@@ -86,6 +94,7 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
               {renderSidebarNode({
                 node: child,
                 depth: depth + 1,
+                activeHash,
               })}
             </div>
           ))}
@@ -97,6 +106,20 @@ function renderSidebarNode({ node, depth = 0 }: RenderSidebarNodeProps): React.R
 
 export default function Sidebar({ atlas }: SidebarProps) {
   const { scopeTrees } = atlas;
+  const [activeHash, setActiveHash] = useState('');
+
+  useEffect(() => {
+    // Set initial hash (remove the '#' prefix)
+    const updateHash = () => {
+      setActiveHash(window.location.hash.slice(1));
+    };
+
+    updateHash();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', updateHash);
+    return () => window.removeEventListener('hashchange', updateHash);
+  }, []);
 
   if (scopeTrees.length === 0) {
     return null;
@@ -109,12 +132,21 @@ export default function Sidebar({ atlas }: SidebarProps) {
       aria-label="Atlas navigation"
     >
       <div className="p-4">
-        <h2 className="mb-4 text-lg font-semibold text-slate-900">Atlas</h2>
+        <div className="mb-4 flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://makerdao-forum-backup.s3.dualstack.us-east-1.amazonaws.com/original/3X/1/9/19cc0c65340a5e0c48cd777583fa119c4a4dad84.png"
+            alt="Sky Logo"
+            className="h-6 w-6 object-contain"
+          />
+          <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
+        </div>
         <div className="space-y-1">
           {scopeTrees.map((scopeTree) =>
             renderSidebarNode({
               node: scopeTree,
               depth: 0,
+              activeHash,
             }),
           )}
         </div>
