@@ -23,7 +23,7 @@ export default async function Page() {
   });
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen overflow-x-hidden bg-white">
       <Sidebar atlas={atlas} />
       <div className="min-w-0 flex-1 p-6">
         <ContentTree atlas={atlas} uuidMappings={uuidMappings} />

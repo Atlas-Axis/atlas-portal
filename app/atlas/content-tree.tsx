@@ -286,7 +286,7 @@ export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeR
         disableAnimation={true}
         selectionMode="multiple"
         variant="splitted"
-        className="space-y-6"
+        className="max-w-full space-y-6 overflow-x-hidden"
         selectedKeys={expandedKeys}
         onSelectionChange={(keys) => {
           if (typeof keys === 'string') {
