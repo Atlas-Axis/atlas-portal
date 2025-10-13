@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
 import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
@@ -196,14 +196,14 @@ function renderTreeNode({
 
   if (isRootNode) {
     return (
-      <h3 className={styles.rootTitle} key={node.notion_page_id} id={node.notion_page_id}>
+      <h3 className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID}>
         {nodeContent}
       </h3>
     );
   }
 
   return (
-    <li key={node.notion_page_id} className={styles.listItem} id={node.notion_page_id}>
+    <li key={node.notion_page_id} className={styles.listItem} id={node.generatedDocID}>
       {nodeContent}
     </li>
   );
@@ -220,8 +220,7 @@ export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeR
 
   // State to control which accordion items are expanded
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
-    const firstPageId = scopeTrees?.[0]?.notion_page_id;
-    return new Set(firstPageId ? [firstPageId] : []);
+    return new Set(scopeKeys);
   });
 
   // Calculate total nodes for debugging
@@ -249,12 +248,6 @@ export default function ContentTree({ atlas, uuidMappings }: { atlas: AtlasTreeR
 
   console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
   console.log(`🌳 Found ${scopeTrees.length} scope trees, ${orphanedNodes.length} orphaned nodes`);
-
-  // On first load, expand all scope trees
-  useEffect(() => {
-    setExpandedKeys(new Set(scopeKeys));
-    console.log('📂 Expanding all scope trees on initial load: ', scopeKeys);
-  }, [scopeKeys]);
 
   // Function to expand all accordions
   const expandAll = () => {
