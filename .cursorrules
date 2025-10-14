@@ -15,6 +15,7 @@
 - If my prompt is ambiguous, please ask me clarifying questions to resolve any confusion. This will help prevent generating incorrect code, even if it means I'll need to put in extra effort to answer your questions.
 - Don't ask for permission to run console commands (tests, etc.), just run them.
 - When you ask me questions, assign numbers to each question so that I can answer them more easily
+- When you finish any task, run `npx tsx scripts/agent-notification.ts`
 
 # Project Overview
 
