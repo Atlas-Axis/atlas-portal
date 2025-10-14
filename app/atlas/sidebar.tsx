@@ -69,6 +69,17 @@ function renderSidebarNode({
           isActive ? 'text-blue-600' : ''
         }`}
         href={node.doc_no ? `#${node.doc_no}` : undefined}
+        onClick={() => {
+          if (node.doc_no) {
+            // Extract root scope from document ID (e.g., A.2.9 -> A.2)
+            const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
+            // Trigger expansion of the target scope
+            const event = new CustomEvent('expandScope', {
+              detail: { rootScopeDocID },
+            });
+            window.dispatchEvent(event);
+          }
+        }}
       >
         {node.doc_no} - {node.name || 'Untitled'}
       </a>
@@ -95,6 +106,13 @@ function renderSidebarNode({
             onClick={() => {
               // Prevent accordion toggle when clicking the title; navigate to hash
               if (node.doc_no) {
+                // Extract root scope from document ID (e.g., A.2.9 -> A.2)
+                const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
+                // Trigger expansion of the target scope
+                const event = new CustomEvent('expandScope', {
+                  detail: { scopeId: rootScopeDocID },
+                });
+                window.dispatchEvent(event);
                 window.location.hash = node.doc_no;
               }
             }}
@@ -111,7 +129,13 @@ function renderSidebarNode({
       >
         <div className="ml-3 border-l border-slate-200 pl-2">
           {sortedChildren.map((child) => (
-            <div key={(child.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid)) || child.doc_no || `node-${child.uuid || 'unknown'}`}>
+            <div
+              key={
+                (child.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid)) ||
+                child.doc_no ||
+                `node-${child.uuid || 'unknown'}`
+              }
+            >
               {renderSidebarNode({
                 node: child,
                 depth: depth + 1,

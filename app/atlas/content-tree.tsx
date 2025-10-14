@@ -352,11 +352,7 @@ function renderTreeNode({
 
   if (isRootNode) {
     return (
-      <div
-        className={styles.rootTitle}
-        key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}
-        id={docNumber || undefined}
-      >
+      <div className={styles.rootTitle} key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}>
         {nodeContent}
       </div>
     );
@@ -397,6 +393,27 @@ export default function ContentTree({
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
     return new Set(scopeKeys);
   });
+
+  // Listen for expandScope custom events from sidebar
+  React.useEffect(() => {
+    const handleExpandScope = (event: CustomEvent) => {
+      const { scopeDocID } = event.detail;
+
+      // Find the scope that matches the scopeDocID
+      const targetScope = scopeTreesWithoutAgents.find((scope) => scope.doc_no === scopeDocID);
+      if (targetScope) {
+        const targetScopeUuid = targetScope.uuid || '';
+
+        // Expand the target scope after a brief delay to ensure collapse happens first
+        setTimeout(() => {
+          setExpandedKeys(new Set([targetScopeUuid]));
+        }, 50);
+      }
+    };
+
+    window.addEventListener('expandScope', handleExpandScope as EventListener);
+    return () => window.removeEventListener('expandScope', handleExpandScope as EventListener);
+  }, [scopeTreesWithoutAgents, expandedKeys]);
 
   // Calculate total nodes for debugging
   // TODO: Use a page-id map instead for efficiency
@@ -486,7 +503,8 @@ export default function ContentTree({
       >
         {scopeTreesWithoutAgents.map((scopeTree, idx) => (
           <AccordionItem
-            key={(scopeTree.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(scopeTree.uuid)) || `scope-${idx}`}
+            key={scopeTree.uuid || `scope-${idx}`}
+            id={scopeTree.doc_no || undefined}
             aria-label={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
             title={
               <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
