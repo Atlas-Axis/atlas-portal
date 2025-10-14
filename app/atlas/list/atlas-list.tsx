@@ -1,15 +1,15 @@
 'use client';
 
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { atlasDatabasePageToHTML } from '@/app/server/atlas/atlas-rich-text-formatter';
-import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
+import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../../components/custom-html';
 
 interface AtlasListClientProps {
-  atlasPagesPerDatabase: Record<string, AtlasTreeNode[]>;
+  atlasPagesPerDatabase: Record<string, StandardizedAtlasDocument[]>;
   uuidMappings: UuidMappings;
 }
 
@@ -42,8 +42,17 @@ export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: Atlas
               <div className="pt-6">
                 {pages.length > 0 ? (
                   <div className="space-y-3">
-                    {pages.map((page) => (
-                      <ListItem key={page.notion_page_id} node={page} uuidMappings={uuidMappings} />
+                    {pages.map((page, idx) => (
+                      <ListItem
+                        // Prefer Notion page ID (mapped from UUID)
+                        key={
+                          (page.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(page.uuid)) ||
+                          page.doc_no ||
+                          `doc-${idx}`
+                        }
+                        item={page}
+                        uuidMappings={uuidMappings}
+                      />
                     ))}
                   </div>
                 ) : (
@@ -59,39 +68,44 @@ export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: Atlas
 }
 
 interface ListItemProps {
-  node: AtlasTreeNode;
+  item: StandardizedAtlasDocument;
   uuidMappings: UuidMappings;
 }
 
-function ListItem({ node, uuidMappings }: ListItemProps) {
-  const formattedContent = atlasDatabasePageToHTML(node, uuidMappings);
+function ListItem({ item, uuidMappings }: ListItemProps) {
+  // Extract fields from StandardizedAtlasDocument
+  const docNumber = item.doc_no;
+  const docType = item.type;
+  const docName = item.name;
+  const docId = item.doc_no;
+
+  // Get Notion ID for link - from UUID mappings
+  let notionId: string | null = null;
+  if (item.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
+    notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(item.uuid) || null;
+  }
+
+  // Format content
+  const formattedContent = markdownToHTML(item.content);
   const hasContent = formattedContent.trim().length > 0;
 
-  // if (node.notion_page_id === '280f2ff0-8d73-80f8-a5d5-fcfb43950956') {
-  //   console.log({ node });
-  // }
-
   const handleTitleClick = () => {
-    if (node.generatedDocID) {
-      window.location.hash = node.generatedDocID;
+    if (docId) {
+      window.location.hash = docId;
     }
   };
 
   return (
-    <div className="flex items-start space-x-3 py-3" id={node.generatedDocID}>
+    <div className="flex items-start space-x-3 py-3" id={docId || undefined}>
       <div className="min-w-0 flex-1">
         <div className="space-y-2">
           <div className="flex items-center">
-            {node.atlas_document_number && (
-              <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">
-                {node.atlas_document_number}
-              </h3>
+            {docNumber && (
+              <h3 className="mr-2 inline-block rounded-md bg-slate-50 px-2 py-1 text-xs font-medium">{docNumber}</h3>
             )}
             <div>
-              <span
-                className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[node.atlas_document_type]}`}
-              >
-                {node.atlas_document_type || 'Unknown Type'}
+              <span className={`inline-block rounded-md px-2 py-1 text-xs font-medium ${typeColorMap[docType]}`}>
+                {docType || 'Unknown Type'}
               </span>
             </div>
           </div>
@@ -99,7 +113,7 @@ function ListItem({ node, uuidMappings }: ListItemProps) {
             className="cursor-pointer text-lg font-semibold transition-colors hover:text-blue-600"
             onClick={handleTitleClick}
           >
-            {node.canonical_document_title || '<Untitled>'}
+            {docName || '<Untitled>'}
           </h3>
         </div>
 
@@ -110,18 +124,19 @@ function ListItem({ node, uuidMappings }: ListItemProps) {
         )}
 
         <div className="mt-2 flex flex-col items-start text-xs text-gray-300">
-          {node.sort_order && <span>Order: {node.sort_order}</span>}
-          <span>
-            Notion ID:{' '}
-            <a
-              href={`https://www.notion.so/${uuidToNoHyphens(node.notion_page_id)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-700 hover:underline"
-            >
-              {uuidToNoHyphens(node.notion_page_id)}
-            </a>
-          </span>
+          {notionId && (
+            <span>
+              Notion ID:{' '}
+              <a
+                href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-700 hover:underline"
+              >
+                {uuidToNoHyphens(notionId)}
+              </a>
+            </span>
+          )}
         </div>
       </div>
     </div>

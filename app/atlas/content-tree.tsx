@@ -1,48 +1,105 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
-import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
-import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
+import {
+  AGENT_ROOT_SECTION_UUIDS,
+  AGENT_ROOT_SECTION_UUID_FOR_NESTING,
+  AtlasDocumentType,
+} from '@/app/server/atlas/constants';
+import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
+import {
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+} from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
-import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';
-import { atlasDatabasePageToHTML } from '../server/atlas/atlas-rich-text-formatter';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import styles from './content-tree.module.css';
-import PageExtraData from './page-extra-data';
 import TypeChip from './type-chip';
 
+function StandardizedExtraData({
+  node,
+  className,
+}: {
+  node: StandardizedAtlasDocument;
+  className?: string;
+}): React.ReactElement | null {
+  const extraKeys = extraFieldsByDocumentType[node.type] || [];
+  if (extraKeys.length === 0) {
+    return null;
+  }
+
+  const record = node as unknown as Record<string, string | number | boolean | string[] | null | undefined>;
+  let labelMapping: Record<string, string> = {};
+  switch (node.type) {
+    case 'Type Specification':
+      labelMapping = TYPE_SPECIFICATION_PROPERTY_MAPPING as Record<string, string>;
+      break;
+    case 'Scenario':
+      labelMapping = SCENARIO_PROPERTY_MAPPING as Record<string, string>;
+      break;
+    case 'Scenario Variation':
+      labelMapping = SCENARIO_VARIATION_PROPERTY_MAPPING as Record<string, string>;
+      break;
+    default:
+      labelMapping = {};
+  }
+
+  const rows = extraKeys
+    .map((key) => ({ key, label: labelMapping[key] || key, value: record[key] }))
+    .filter(({ value }) => value !== null && value !== undefined && value !== '');
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={className}>
+      <div className="mt-2 text-sm text-slate-600">
+        {rows.map(({ key, label, value }) => (
+          <div key={key} className="mb-1">
+            <p className="font-semibold text-slate-700">{label}:</p>{' '}
+            <p>{Array.isArray(value) ? value.join(', ') : String(value)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 interface RenderTreeNodeProps {
-  node: AtlasTreeNode;
+  node: StandardizedAtlasDocument;
   parentTrackingMap: Map<string, string>;
   depth?: number;
   isRootNode?: boolean;
-  parentPageId?: string;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  agentDocs?: StandardizedAtlasDocument[];
 }
 
 function renderSupportingDocumentListInSameType({
   label,
   documentType,
   documents,
-  node,
   parentTrackingMap,
   depth,
   uuidMappings,
   agentsLoading = false,
+  agentDocs,
 }: {
   label: string;
   documentType: AtlasDocumentType;
-  documents: AtlasTreeNode[];
-  node: AtlasTreeNode;
+  documents: StandardizedAtlasDocument[];
   parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  agentDocs?: StandardizedAtlasDocument[];
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
@@ -50,17 +107,23 @@ function renderSupportingDocumentListInSameType({
     <div className="mt-2 ml-0">
       <span className={`${colorStyles} rounded px-2 py-1 text-sm`}>{label}</span>
       <ul className={styles.supportingDocsList}>
-        {documents.map((child) =>
-          renderTreeNode({
-            node: child,
-            parentTrackingMap,
-            depth: depth + 1,
-            isRootNode: false,
-            parentPageId: node.notion_page_id,
-            uuidMappings,
-            agentsLoading,
-          }),
-        )}
+        {documents.map((child, idx) => {
+          const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
+          const key = childNotionId || `doc-${idx}`;
+          return (
+            <React.Fragment key={key}>
+              {renderTreeNode({
+                node: child,
+                parentTrackingMap,
+                depth: depth + 1,
+                isRootNode: false,
+                uuidMappings,
+                agentsLoading,
+                agentDocs,
+              })}
+            </React.Fragment>
+          );
+        })}
       </ul>
     </div>
   );
@@ -72,50 +135,75 @@ function renderSupportingDocuments({
   depth,
   uuidMappings,
   agentsLoading = false,
+  agentDocs,
 }: {
-  node: AtlasTreeNode;
+  node: StandardizedAtlasDocument;
   parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  agentDocs?: StandardizedAtlasDocument[];
 }) {
-  const supportingDocumentPages = [
-    ...node.annotations,
-    ...node.tenets,
-    ...node.scenarios,
-    ...node.scenarioVariations,
-    ...node.activeData,
-    ...node.neededResearch,
-  ];
+  const nodeId = node.uuid || '';
 
-  if (supportingDocumentPages.length === 0) {
+  // Get supporting documents based on node type
+  let supportingDocumentLabels: {
+    label: string;
+    documentType: AtlasDocumentType;
+    documents: StandardizedAtlasDocument[];
+  }[] = [];
+
+  // For StandardizedAtlasDocument, get from child collections
+  type SupportingDocsContainer = {
+    annotations?: StandardizedAtlasDocument[];
+    tenets?: StandardizedAtlasDocument[];
+    scenarios?: StandardizedAtlasDocument[];
+    scenario_variations?: StandardizedAtlasDocument[];
+    active_data?: StandardizedAtlasDocument[];
+    needed_research?: StandardizedAtlasDocument[];
+  };
+  const docWithSupporting = node as StandardizedAtlasDocument & SupportingDocsContainer;
+
+  supportingDocumentLabels = [
+    { label: 'Annotations', documentType: 'Annotation' as const, documents: docWithSupporting.annotations || [] },
+    { label: 'Tenets', documentType: 'Action Tenet' as const, documents: docWithSupporting.tenets || [] },
+    { label: 'Scenarios', documentType: 'Scenario' as const, documents: docWithSupporting.scenarios || [] },
+    {
+      label: 'Scenario Variations',
+      documentType: 'Scenario Variation' as const,
+      documents: docWithSupporting.scenario_variations || [],
+    },
+    { label: 'Active Data', documentType: 'Active Data' as const, documents: docWithSupporting.active_data || [] },
+    {
+      label: 'Needed Research',
+      documentType: 'Needed Research' as const,
+      documents: docWithSupporting.needed_research || [],
+    },
+  ].filter((entry) => entry.documents.length > 0);
+
+  if (supportingDocumentLabels.length === 0) {
     return null;
   }
-
-  const supportingDocumentLabels: { label: string; documentType: AtlasDocumentType; documents: AtlasTreeNode[] }[] = [
-    { label: 'Annotations', documentType: 'Annotation' as const, documents: node.annotations },
-    { label: 'Tenets', documentType: 'Action Tenet' as const, documents: node.tenets },
-    { label: 'Scenarios', documentType: 'Scenario' as const, documents: node.scenarios },
-    { label: 'Scenario Variations', documentType: 'Scenario Variation' as const, documents: node.scenarioVariations },
-    { label: 'Active Data', documentType: 'Active Data' as const, documents: node.activeData },
-    { label: 'Needed Research', documentType: 'Needed Research' as const, documents: node.neededResearch },
-  ].filter((entry) => entry.documents.length > 0); // Only include if there are documents
 
   return (
     <div className={styles.supportingDocsContainer}>
       <span className={styles.supportingDocsLabel}>Supporting Documents</span>
 
       {supportingDocumentLabels.map(({ label, documentType, documents }) => (
-        <div key={`${node.notion_page_id}-${label}`}>
+        <div
+          key={`${
+            (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || node.doc_no || nodeId
+          }-${label}`}
+        >
           {renderSupportingDocumentListInSameType({
             label,
             documentType,
             documents,
-            node,
             parentTrackingMap,
             depth,
             uuidMappings,
             agentsLoading,
+            agentDocs,
           })}
         </div>
       ))}
@@ -128,41 +216,58 @@ function renderTreeNode({
   parentTrackingMap,
   depth = 0,
   isRootNode = false,
-  parentPageId,
   uuidMappings,
   agentsLoading = false,
+  agentDocs,
 }: RenderTreeNodeProps): React.ReactElement {
-  const formattedContent = atlasDatabasePageToHTML(node, uuidMappings);
+  // Get node identifiers and metadata based on type
+  const nodeId = node.uuid || '';
+  const docNumber = node.doc_no;
+  const docName = node.name;
+  const docType = node.type;
 
-  // Check if this is the agent root section and agents are still loading
-  const isAgentRootSection = node.notion_page_id === AGENT_ROOT_SECTION_UUID_FOR_NESTING;
+  // Get Notion page ID for links and root agent section detection
+  let notionId: string | null = null;
+  if (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
+    notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
+  }
+
+  // Format content based on type
+  const formattedContent = markdownToHTML(node.content);
+
+  // Check if this is the agent root section
+  // For StandardizedAtlasDocument, use the mapped Notion page ID
+  const isAgentRootSection = Boolean(notionId && notionId === AGENT_ROOT_SECTION_UUID_FOR_NESTING);
   const shouldShowAgentPlaceholder = isAgentRootSection && agentsLoading;
+  const shouldRenderAgentDocs = isAgentRootSection && !agentsLoading && agentDocs && agentDocs.length > 0;
 
-  // Get children from the tree node structure
-  // Exclude agentScopeDocs if we're showing the placeholder
-  const immutableAndPrimaryDocumentPages = [
-    ...node.scopes,
-    ...node.articles,
-    ...node.sectionsAndPrimaryDocs,
-    ...(shouldShowAgentPlaceholder ? [] : node.agentScopeDocs),
+  // Get immutable and primary document children based on node type
+  type ImmutableDocsContainer = {
+    scopes?: StandardizedAtlasDocument[];
+    articles?: StandardizedAtlasDocument[];
+    sections_and_primary_docs?: StandardizedAtlasDocument[];
+    agent_scope_database?: StandardizedAtlasDocument[];
+  };
+  const docWithImmutable = node as StandardizedAtlasDocument & ImmutableDocsContainer;
+
+  const immutableAndPrimaryDocumentPages: StandardizedAtlasDocument[] = [
+    ...(docWithImmutable.scopes || []),
+    ...(docWithImmutable.articles || []),
+    ...(docWithImmutable.sections_and_primary_docs || []),
+    ...(shouldShowAgentPlaceholder ? [] : docWithImmutable.agent_scope_database || []),
   ];
 
   if (depth > 50) {
     throw new Error('Maximum tree depth exceeded, possible circular reference');
   }
 
-  // Track parent relationships and detect duplicates
-  if (!isRootNode && parentPageId) {
-    logIfDuplicatedDocument(node, parentPageId, parentTrackingMap);
-  }
-
   const nodeContent = (
     <>
       {!isRootNode && (
-        <a className={styles.nodeTitle} href={node.generatedDocID ? `#${node.generatedDocID}` : undefined}>
-          {node.generatedDocID} - {node.generatedDocName}
+        <a className={styles.nodeTitle} href={docNumber ? `#${docNumber}` : undefined}>
+          {docNumber} - {docName}
           <span className={styles.typeChipSpacing}>
-            <TypeChip type={node.atlas_document_type} />
+            <TypeChip type={docType} />
           </span>
         </a>
       )}
@@ -171,21 +276,25 @@ function renderTreeNode({
         <CustomHTML html={formattedContent} />
       </div>
 
-      <PageExtraData page={node as unknown as NotionDatabasePage} className={styles.nodeContent} />
+      <StandardizedExtraData node={node} className={styles.nodeContent} />
 
       <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
-        <a
-          href={`https://www.notion.so/${uuidToNoHyphens(node.notion_page_id)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.notionLinkAnchor}
-        >
-          {`Notion ID: ${uuidToNoHyphens(node.notion_page_id)}`}
-        </a>
-
-        <span className="mx-2">•</span>
-
-        <span>{`Atlas UUID: ${uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id)}`}</span>
+        {notionId ? (
+          <>
+            <a
+              href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.notionLinkAnchor}
+            >
+              {`Notion ID: ${uuidToNoHyphens(notionId)}`}
+            </a>
+            <span className="mx-2">•</span>
+          </>
+        ) : (
+          <span className="text-gray-400">No Notion ID</span>
+        )}
+        <span>{`Atlas UUID: ${node.uuid}`}</span>
       </div>
 
       {shouldShowAgentPlaceholder && (
@@ -194,54 +303,96 @@ function renderTreeNode({
         </div>
       )}
 
-      {immutableAndPrimaryDocumentPages.length > 0 && (
+      {shouldRenderAgentDocs && (
         <ul className={styles.immutableDocsList}>
-          {immutableAndPrimaryDocumentPages.map((child) =>
-            renderTreeNode({
-              node: child,
-              parentTrackingMap,
-              depth: depth + 1,
-              isRootNode: false,
-              parentPageId: node.notion_page_id,
-              uuidMappings,
-              agentsLoading,
-            }),
-          )}
+          {agentDocs!.map((agentDoc, idx) => {
+            const agentNotionId = agentDoc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(agentDoc.uuid) : null;
+            const key = agentNotionId || `agent-${idx}`;
+            return (
+              <React.Fragment key={key}>
+                {renderTreeNode({
+                  node: agentDoc,
+                  parentTrackingMap,
+                  depth: depth + 1,
+                  isRootNode: false,
+                  uuidMappings,
+                  agentsLoading: false,
+                  agentDocs: [],
+                })}
+              </React.Fragment>
+            );
+          })}
         </ul>
       )}
 
-      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading })}
+      {immutableAndPrimaryDocumentPages.length > 0 && (
+        <ul className={styles.immutableDocsList}>
+          {immutableAndPrimaryDocumentPages.map((child, idx) => {
+            const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
+            const key = childNotionId || `child-${idx}`;
+            return (
+              <React.Fragment key={key}>
+                {renderTreeNode({
+                  node: child,
+                  parentTrackingMap,
+                  depth: depth + 1,
+                  isRootNode: false,
+                  uuidMappings,
+                  agentsLoading,
+                  agentDocs,
+                })}
+              </React.Fragment>
+            );
+          })}
+        </ul>
+      )}
+
+      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })}
     </>
   );
 
+  // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
+  const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
+
   if (isRootNode) {
     return (
-      <div className={styles.rootTitle} key={node.notion_page_id} id={node.generatedDocID}>
+      <div
+        className={styles.rootTitle}
+        key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}
+        id={docNumber || undefined}
+      >
         {nodeContent}
       </div>
     );
   }
 
   return (
-    <li key={node.notion_page_id} className={styles.listItem} id={node.generatedDocID}>
+    <li
+      key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}
+      className={styles.listItem}
+      id={docNumber || undefined}
+    >
       {nodeContent}
     </li>
   );
 }
 
 export default function ContentTree({
-  atlas,
+  scopeTreesWithoutAgents,
   uuidMappings,
   agentsLoading,
+  agentDocs,
 }: {
-  atlas: AtlasTreeResult;
+  scopeTreesWithoutAgents: StandardizedAtlasDocument[];
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  agentDocs?: StandardizedAtlasDocument[];
 }) {
-  const { scopeTrees, orphanedNodes } = atlas;
-
   // Memoize scopeKeys to prevent unnecessary re-renders
-  const scopeKeys = useMemo(() => scopeTrees.map((scopes) => scopes.notion_page_id), [scopeTrees]);
+  const scopeKeys = useMemo(
+    () => scopeTreesWithoutAgents.map((scopes) => scopes.uuid || ''),
+    [scopeTreesWithoutAgents],
+  );
 
   // Create a map to track which parent each page is rendered under
   const parentTrackingMap = new Map<string, string>();
@@ -253,29 +404,41 @@ export default function ContentTree({
 
   // Calculate total nodes for debugging
   // TODO: Use a page-id map instead for efficiency
-  const totalNodes = scopeTrees.reduce((count, tree) => {
+  const totalNodes = scopeTreesWithoutAgents.reduce((count, tree) => {
     let nodeCount = 0;
-    const countNodes = (node: AtlasTreeNode): void => {
+    const countNodes = (
+      node: StandardizedAtlasDocument & {
+        scopes?: StandardizedAtlasDocument[];
+        articles?: StandardizedAtlasDocument[];
+        sections_and_primary_docs?: StandardizedAtlasDocument[];
+        agent_scope_database?: StandardizedAtlasDocument[];
+        annotations?: StandardizedAtlasDocument[];
+        tenets?: StandardizedAtlasDocument[];
+        scenarios?: StandardizedAtlasDocument[];
+        scenario_variations?: StandardizedAtlasDocument[];
+        active_data?: StandardizedAtlasDocument[];
+        needed_research?: StandardizedAtlasDocument[];
+      },
+    ): void => {
       nodeCount++;
       [
-        ...node.scopes,
-        ...node.articles,
-        ...node.sectionsAndPrimaryDocs,
-        ...node.agentScopeDocs,
-        ...node.annotations,
-        ...node.tenets,
-        ...node.scenarios,
-        ...node.scenarioVariations,
-        ...node.activeData,
-        ...node.neededResearch,
+        ...(node.scopes || []),
+        ...(node.articles || []),
+        ...(node.sections_and_primary_docs || []),
+        ...(node.agent_scope_database || []),
+        ...(node.annotations || []),
+        ...(node.tenets || []),
+        ...(node.scenarios || []),
+        ...(node.scenario_variations || []),
+        ...(node.active_data || []),
+        ...(node.needed_research || []),
       ].forEach(countNodes);
     };
-    countNodes(tree);
+    countNodes(tree as StandardizedAtlasDocument);
     return count + nodeCount;
   }, 0);
 
   console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
-  console.log(`🌳 Found ${scopeTrees.length} scope trees, ${orphanedNodes.length} orphaned nodes`);
 
   // Function to expand all accordions
   const expandAll = () => {
@@ -287,7 +450,7 @@ export default function ContentTree({
     setExpandedKeys(new Set());
   };
 
-  if (scopeTrees.length === 0) {
+  if (scopeTreesWithoutAgents.length === 0) {
     return <div>No Scopes found in Atlas</div>;
   }
 
@@ -325,16 +488,16 @@ export default function ContentTree({
           }
         }}
       >
-        {scopeTrees.map((scopeTree) => (
+        {scopeTreesWithoutAgents.map((scopeTree, idx) => (
           <AccordionItem
-            key={scopeTree.notion_page_id}
-            aria-label={scopeTree.generatedDocName || `Document ${scopeTree.notion_page_id}`}
+            key={(scopeTree.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(scopeTree.uuid)) || `scope-${idx}`}
+            aria-label={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
             title={
               <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
                 <span>
-                  {scopeTree.generatedDocID} - {scopeTree.generatedDocName}
+                  {scopeTree.doc_no} - {scopeTree.name}
                 </span>
-                <TypeChip type={scopeTree.atlas_document_type} />
+                <TypeChip type={scopeTree.type} />
               </div>
             }
             classNames={{
@@ -350,6 +513,7 @@ export default function ContentTree({
               isRootNode: true,
               uuidMappings,
               agentsLoading,
+              agentDocs,
             })}
           </AccordionItem>
         ))}
@@ -358,31 +522,4 @@ export default function ContentTree({
   );
 }
 
-// Helper function to log if a document is duplicated under different parents
-function logIfDuplicatedDocument(
-  node: AtlasTreeNode,
-  parentPageId: string,
-  parentTrackingMap: Map<string, string>,
-): void {
-  const currentPageId = node.notion_page_id;
-  const existingParentId = parentTrackingMap.get(currentPageId);
-
-  if (existingParentId && existingParentId !== parentPageId) {
-    console.warn(`‼️ This Atlas document has already been rendered under a different parent:`, {
-      pageId: currentPageId,
-      docId: node.generatedDocID,
-      name: node.generatedDocName,
-      type: node.atlas_document_type,
-      existingParent: {
-        id: existingParentId,
-        title: 'Unknown (would need lookup)', // TODO
-      },
-      newParent: {
-        id: parentPageId,
-        title: 'Unknown (would need lookup)', // TODO
-      },
-    });
-  } else {
-    parentTrackingMap.set(currentPageId, parentPageId);
-  }
-}
+// (AtlasTreeNode duplicate logging removed; StandardizedAtlasDocument does not use Notion page IDs here)

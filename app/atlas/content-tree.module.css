@@ -14,7 +14,7 @@
 }
 
 .nodeContent {
-  font-size: 0.75rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: rgb(31 41 55);
 }

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
+import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { type SerializedUuidMappings, deserializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 
 interface AgentsListHydratorProps {
-  onAgentsLoaded: (agentNodes: AtlasTreeNode[]) => void;
+  onAgentsLoaded: (agentDocs: StandardizedAtlasDocument[]) => void;
 }
 
 export default function AgentsListHydrator({ onAgentsLoaded }: AgentsListHydratorProps) {
@@ -22,19 +23,31 @@ export default function AgentsListHydrator({ onAgentsLoaded }: AgentsListHydrato
     const hydrateAgents = () => {
       try {
         // Read agent data from embedded JSON
-        const script = document.getElementById('agent-list-data');
-        if (!script?.textContent) {
+        const agentListJSON = document.getElementById('agent-list-data');
+        if (!agentListJSON?.textContent) {
           throw new Error('Agent data not found in page');
         }
 
-        const agentNodes: AtlasTreeNode[] = JSON.parse(script.textContent);
+        const agentDocs: StandardizedAtlasDocument[] = JSON.parse(agentListJSON.textContent);
 
         // Validate parsed data
-        if (!Array.isArray(agentNodes)) {
+        if (!Array.isArray(agentDocs)) {
           throw new Error('Invalid agent data format: expected array');
         }
 
-        onAgentsLoaded(agentNodes);
+        // Read UUID mappings from embedded JSON
+        const uuidMappingsScript = document.getElementById('uuid-mappings-data');
+        if (!uuidMappingsScript?.textContent) {
+          throw new Error('UUID mappings data not found in page');
+        }
+
+        const serializedMappings: SerializedUuidMappings = JSON.parse(uuidMappingsScript.textContent);
+        const uuidMappings = deserializeUuidMappings(serializedMappings);
+
+        // Store UUID mappings in window for use by rendering components
+        (window as typeof window & { __atlasUuidMappings?: typeof uuidMappings }).__atlasUuidMappings = uuidMappings;
+
+        onAgentsLoaded(agentDocs);
       } catch (err) {
         console.error('Error hydrating agents:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');

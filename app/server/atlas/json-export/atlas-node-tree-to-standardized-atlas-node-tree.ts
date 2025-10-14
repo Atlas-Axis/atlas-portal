@@ -140,7 +140,7 @@ export function atlasNodeToStandardized(
 ): StandardizedAtlasDocument {
   const base = toBase(node, uuidMappings);
 
-  // If omitting Agent Scope subtrees (for BLUE JSON compatibility) and this node matches one of the agent roots,
+  // If omitting Agent Scope subtrees (for ISR optimization) and this node matches one of the agent roots,
   // prune all its children (keep the node itself with empty children arrays).
   const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_SECTION_UUIDS.has(node.notion_page_id);
   if (options?.omitAgents && isAgentRoot) {

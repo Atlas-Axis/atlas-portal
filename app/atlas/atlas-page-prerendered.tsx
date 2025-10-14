@@ -1,49 +1,61 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
-import type { AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
-import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import type { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { type UuidMappings, serializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import AgentsHydrator from './agents-hydrator';
 import ContentTree from './content-tree';
 import Sidebar from './sidebar';
 
 interface AtlasPagePrerenderedProps {
-  initialAtlas: AtlasTreeResult;
+  standardizedScopeTreesWithoutAgents: StandardizedAtlasDocument[];
+  standardizedAgentDocs: StandardizedAtlasDocument[];
   uuidMappings: UuidMappings;
 }
 
-export default function AtlasPagePrerendered({ initialAtlas, uuidMappings }: AtlasPagePrerenderedProps) {
-  const [atlas, setAtlas] = useState(initialAtlas);
+export default function AtlasPagePrerendered({
+  standardizedScopeTreesWithoutAgents,
+  standardizedAgentDocs,
+  uuidMappings,
+}: AtlasPagePrerenderedProps) {
+  const [scopeTreesWithoutAgents] = useState(standardizedScopeTreesWithoutAgents);
+  const [agentDocs, setAgentDocs] = useState<StandardizedAtlasDocument[]>(standardizedAgentDocs);
   const [agentsLoaded, setAgentsLoaded] = useState(false);
 
-  // Extract agent nodes from the initial tree for embedding as JSON
-  const agentNodes = useMemo(() => {
-    const flattened = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees: initialAtlas.scopeTrees });
-    return flattened[ATLAS_DATABASES.AGENTS] || [];
-  }, [initialAtlas.scopeTrees]);
+  const serializedUuidMappings = useMemo(() => serializeUuidMappings(uuidMappings), [uuidMappings]);
 
-  const handleAgentsLoaded = useCallback((updatedAtlas: AtlasTreeResult) => {
-    setAtlas(updatedAtlas);
+  const handleAgentsLoaded = useCallback((loadedAgentDocs: StandardizedAtlasDocument[]) => {
+    setAgentDocs(loadedAgentDocs);
     setAgentsLoaded(true);
   }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white">
-      <Sidebar atlas={atlas} />
+      <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       <div className="min-w-0 p-6 md:ml-80">
-        <ContentTree atlas={atlas} uuidMappings={uuidMappings} agentsLoading={!agentsLoaded} />
+        <ContentTree
+          scopeTreesWithoutAgents={scopeTreesWithoutAgents}
+          uuidMappings={uuidMappings}
+          agentsLoading={!agentsLoaded}
+          agentDocs={agentDocs}
+        />
       </div>
 
       {/* Embed agent data as JSON in the HTML for client-side hydration */}
       <script
         id="agent-data"
         type="application/json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(agentNodes) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(standardizedAgentDocs) }}
       />
 
-      <AgentsHydrator initialAtlas={initialAtlas} onAgentsLoaded={handleAgentsLoaded} />
+      {/* Embed UUID mappings for client-side rendering */}
+      <script
+        id="uuid-mappings-data"
+        type="application/json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serializedUuidMappings) }}
+      />
+
+      <AgentsHydrator onAgentsLoaded={handleAgentsLoaded} />
     </div>
   );
 }

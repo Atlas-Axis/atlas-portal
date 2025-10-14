@@ -51,3 +51,34 @@ export async function loadUuidMappings(): Promise<UuidMappings> {
 
   return { notionPageIDsToAtlasUUIDs, atlasUUIDsToNotionPageIds };
 }
+
+/**
+ * Serialized version of UuidMappings for embedding in HTML/JSON.
+ * Uses plain objects instead of Maps for JSON serialization.
+ */
+export interface SerializedUuidMappings {
+  notionPageIDsToAtlasUUIDs: Record<string, string>;
+  atlasUUIDsToNotionPageIds: Record<string, string>;
+}
+
+/**
+ * Converts UuidMappings (with Maps) to a JSON-serializable format.
+ * Useful for embedding in HTML script tags or API responses.
+ */
+export function serializeUuidMappings(mappings: UuidMappings): SerializedUuidMappings {
+  return {
+    notionPageIDsToAtlasUUIDs: Object.fromEntries(mappings.notionPageIDsToAtlasUUIDs),
+    atlasUUIDsToNotionPageIds: Object.fromEntries(mappings.atlasUUIDsToNotionPageIds),
+  };
+}
+
+/**
+ * Converts serialized UUID mappings back to UuidMappings format with Maps.
+ * Used on the client to deserialize embedded UUID mapping data.
+ */
+export function deserializeUuidMappings(serialized: SerializedUuidMappings): UuidMappings {
+  return {
+    notionPageIDsToAtlasUUIDs: new Map(Object.entries(serialized.notionPageIDsToAtlasUUIDs)),
+    atlasUUIDsToNotionPageIds: new Map(Object.entries(serialized.atlasUUIDsToNotionPageIds)),
+  };
+}

@@ -1,18 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
-import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
-import type { AtlasTreeNode, AtlasTreeResult } from '@/app/server/atlas/atlas-tree-types';
-import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import type { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { type SerializedUuidMappings, deserializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 
 interface AgentsHydratorProps {
-  initialAtlas: AtlasTreeResult;
-  onAgentsLoaded: (updatedAtlas: AtlasTreeResult) => void;
+  onAgentsLoaded: (agentDocs: StandardizedAtlasDocument[]) => void;
 }
 
-export default function AgentsHydrator({ initialAtlas, onAgentsLoaded }: AgentsHydratorProps) {
+export default function AgentsHydrator({ onAgentsLoaded }: AgentsHydratorProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const hasHydrated = useRef(false);
@@ -27,38 +23,33 @@ export default function AgentsHydrator({ initialAtlas, onAgentsLoaded }: AgentsH
     const hydrateAgents = () => {
       try {
         // Read agent data from embedded JSON
-        const script = document.getElementById('agent-data');
-        if (!script?.textContent) {
+        const agentScript = document.getElementById('agent-data');
+        if (!agentScript?.textContent) {
           throw new Error('Agent data not found in page');
         }
 
-        const agentNodes: AtlasTreeNode[] = JSON.parse(script.textContent);
+        const agentDocs: StandardizedAtlasDocument[] = JSON.parse(agentScript.textContent);
 
         // Validate parsed data
-        if (!Array.isArray(agentNodes)) {
+        if (!Array.isArray(agentDocs)) {
           throw new Error('Invalid agent data format: expected array');
         }
 
-        // Rebuild tree with agents by flattening initial tree, adding agents, and rebuilding
-        const flatInitial = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees: initialAtlas.scopeTrees });
+        // Read UUID mappings from embedded JSON
+        const uuidMappingsScript = document.getElementById('uuid-mappings-data');
+        if (!uuidMappingsScript?.textContent) {
+          throw new Error('UUID mappings data not found in page');
+        }
 
-        // Cast AtlasTreeNode arrays to NotionDatabasePage arrays for buildAtlasTree
-        // This is safe because AtlasTreeNode contains all the required fields from NotionDatabasePage
-        // The child_*_ids fields are not used during tree building (only the embedded child arrays are)
-        const atlasPagesWithAgents = Object.fromEntries(
-          Object.entries({
-            ...flatInitial,
-            [ATLAS_DATABASES.AGENTS]: agentNodes,
-          }).map(([key, value]) => [key, value as unknown as NotionDatabasePage[]]),
-        );
+        const serializedMappings: SerializedUuidMappings = JSON.parse(uuidMappingsScript.textContent);
+        const uuidMappings = deserializeUuidMappings(serializedMappings);
 
-        const updatedAtlas = buildAtlasTree(atlasPagesWithAgents, {
-          assignDocumentNumbers: true,
-          reportMissingChildNodes: false,
-          reportOrphanedNodes: true,
-        });
+        // Store UUID mappings in window for use by rendering components
+        (window as typeof window & { __atlasUuidMappings?: typeof uuidMappings }).__atlasUuidMappings = uuidMappings;
 
-        onAgentsLoaded(updatedAtlas);
+        // Pass agent docs directly to parent - no tree rebuilding needed
+        // The ContentTree will render them at the appropriate location
+        onAgentsLoaded(agentDocs);
       } catch (err) {
         console.error('Error hydrating agents:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
