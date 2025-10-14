@@ -9,12 +9,13 @@ import '../scripts/utils/load-env';
  */
 
 // Customize your message + title
-const title = process.argv[2] || 'Atlas Workflow';
-const message = process.argv[3] || 'Task finished successfully!';
+const title = process.argv[2] || 'Cursor finished';
+const pushcutWebhookUrl =
+  process.env.PUSHCUT_WEBHOOK_URL || 'https://api.pushcut.io/2bPya0Cr3P_UT9SYqs9Ds/notifications/Cursor%20finished';
 
 const script = `
 afplay /System/Library/Sounds/Funk.aiff;
-osascript -e 'display notification "${message}" with title "${title}"'
+osascript -e 'display notification "" with title "${title}"'
 `;
 
 exec(script, (error) => {
@@ -22,5 +23,10 @@ exec(script, (error) => {
     console.error('Notification failed:', error);
     process.exit(1);
   }
-  console.log(`✓ Notification sent: "${title}" - "${message}"`);
+  console.log(`✓ Notification sent: "${title}"`);
+
+  // Send webhook
+  fetch(pushcutWebhookUrl, {
+    method: 'POST',
+  });
 });
