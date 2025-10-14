@@ -1,5 +1,4 @@
 import colors from 'colors';
-import * as diff from 'diff';
 import { existsSync, readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { describe, expect, it } from 'vitest';
@@ -12,9 +11,6 @@ import { convertNotionRichTextToMarkdown } from '../../rich-text-to-markdown';
 const TEST_DATA_DIR = join(process.cwd(), '.debug-data', 'rich-text-and-markdown');
 
 // Helper function to create colored diff output for objects using deep comparison
-function createColoredDiff(expected: unknown, received: unknown, verbose: boolean = false): string {
-  return deepCompareWithDetails(expected, received, '', verbose);
-}
 
 // Helper function to create a more detailed diff with line-by-line comparison
 // function createDetailedDiff(expected: string, received: string): string {
@@ -57,34 +53,6 @@ function createColoredDiff(expected: unknown, received: unknown, verbose: boolea
 // }
 
 // Helper function to create a summary of differences
-function createDiffSummary(expected: string, received: string): string {
-  const diffs = diff.diffLines(expected, received);
-  let addedCount = 0;
-  let removedCount = 0;
-  let unchangedCount = 0;
-
-  for (const part of diffs) {
-    if (part.added) {
-      addedCount += part.value.length;
-    } else if (part.removed) {
-      removedCount += part.value.length;
-    } else {
-      unchangedCount += part.value.length;
-    }
-  }
-
-  const totalChanges = addedCount + removedCount;
-  const totalLength = addedCount + removedCount + unchangedCount;
-  const changePercentage = totalLength > 0 ? ((totalChanges / totalLength) * 100).toFixed(1) : '0.0';
-
-  return (
-    `\n${colors.magenta('📈 Diff Summary:')} ` +
-    `${colors.green(`+${addedCount}`)} ` +
-    `${colors.red(`-${removedCount}`)} ` +
-    `${colors.blue(`~${unchangedCount}`)} ` +
-    `(${colors.yellow(`${changePercentage}% changed`)})\n`
-  );
-}
 
 // Mock UUID mappings for Notion page mentions
 const mockUuidMappings: UuidMappings = {
@@ -199,51 +167,6 @@ function compareRichTextContent(richText1: NotionRichText[], richText2: NotionRi
   const content2 = normalizeWhitespace(getContent(richText2));
 
   return content1 === content2;
-}
-
-function deepEqual(obj1: unknown, obj2: unknown, path: string = ''): boolean {
-  // Handle null/undefined cases
-  if (obj1 === null && obj2 === null) return true;
-  if (obj1 === undefined && obj2 === undefined) return true;
-  if (obj1 === null || obj2 === null) return false;
-  if (obj1 === undefined || obj2 === undefined) return false;
-
-  // Handle primitive types
-  if (typeof obj1 !== typeof obj2) return false;
-  if (typeof obj1 !== 'object') {
-    // For strings, normalize whitespace differences
-    if (typeof obj1 === 'string' && typeof obj2 === 'string') {
-      return obj1.trim() === obj2.trim();
-    }
-    return obj1 === obj2;
-  }
-
-  // Handle arrays
-  if (Array.isArray(obj1) && Array.isArray(obj2)) {
-    if (obj1.length !== obj2.length) return false;
-    for (let i = 0; i < obj1.length; i++) {
-      if (!deepEqual(obj1[i], obj2[i], `${path}[${i}]`)) return false;
-    }
-    return true;
-  }
-
-  // Handle objects
-  if (Array.isArray(obj1) || Array.isArray(obj2)) return false;
-
-  const keys1 = Object.keys(obj1 as Record<string, unknown>);
-  const keys2 = Object.keys(obj2 as Record<string, unknown>);
-
-  // Check if both objects have the same number of properties
-  if (keys1.length !== keys2.length) return false;
-
-  // Check if all keys in obj1 exist in obj2 and have equal values
-  for (const key of keys1) {
-    if (!keys2.includes(key)) return false;
-    if (!deepEqual((obj1 as Record<string, unknown>)[key], (obj2 as Record<string, unknown>)[key], `${path}.${key}`))
-      return false;
-  }
-
-  return true;
 }
 
 /**

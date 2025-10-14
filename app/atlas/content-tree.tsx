@@ -3,11 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Button, ButtonGroup } from '@heroui/react';
-import {
-  AGENT_ROOT_SECTION_UUIDS,
-  AGENT_ROOT_SECTION_UUID_FOR_NESTING,
-  AtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import {
   SCENARIO_PROPERTY_MAPPING,

@@ -1,9 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { flattenStandardizedAtlasDocuments } from '@/app/server/atlas/json-export/flatten-standardized-atlas-documents';
 import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings, serializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -11,32 +9,30 @@ import AgentsListHydrator from './agents-list-hydrator';
 import AtlasList from './atlas-list';
 
 interface AtlasListWithAgentsProps {
-  initialAtlasNodesPerDatabase: Record<string, AtlasTreeNode[]>;
+  initialAtlasNodesPerDatabase: Record<string, StandardizedAtlasDocument[]>;
   uuidMappings: UuidMappings;
+  standardizedAgentDocs?: StandardizedAtlasDocument[];
 }
 
-export default function AtlasListPrerendered({ initialAtlasNodesPerDatabase, uuidMappings }: AtlasListWithAgentsProps) {
+export default function AtlasListPrerendered({
+  initialAtlasNodesPerDatabase,
+  uuidMappings,
+  standardizedAgentDocs,
+}: AtlasListWithAgentsProps) {
   const [atlasPagesPerDatabase, setAtlasPagesPerDatabase] =
-    useState<Record<string, (AtlasTreeNode | StandardizedAtlasDocument)[]>>(initialAtlasNodesPerDatabase);
+    useState<Record<string, StandardizedAtlasDocument[]>>(initialAtlasNodesPerDatabase);
 
-  // Extract and convert agent nodes to StandardizedAtlasDocument for embedding
-  const { standardizedAgentDocs, serializedUuidMappings } = useMemo(() => {
-    const agentNodes = initialAtlasNodesPerDatabase[ATLAS_DATABASES.AGENTS] || [];
-
-    // Convert agent nodes to StandardizedAtlasDocument[]
-    const standardizedAgentDocs = agentNodes.map((node) => atlasNodeToStandardized(node, uuidMappings));
-
-    // Flatten to get flat array grouped by database
-    const flattenedAgents = flattenStandardizedAtlasDocuments(standardizedAgentDocs);
-
-    // Get just the Agent Scope Database documents
-    const agentScopeDocs = flattenedAgents[ATLAS_DATABASES.AGENTS] || [];
-
-    // Serialize UUID mappings for embedding
+  // Prepare agent docs for embedding (use provided standardizedAgentDocs if present)
+  const { agentDocsForEmbed, serializedUuidMappings } = useMemo(() => {
+    let agentDocsForEmbed = standardizedAgentDocs;
+    if (!agentDocsForEmbed) {
+      const agentNodes = initialAtlasNodesPerDatabase[ATLAS_DATABASES.AGENTS] || [];
+      const flattenedAgents = flattenStandardizedAtlasDocuments(agentNodes);
+      agentDocsForEmbed = flattenedAgents[ATLAS_DATABASES.AGENTS] || [];
+    }
     const serializedUuidMappings = serializeUuidMappings(uuidMappings);
-
-    return { standardizedAgentDocs: agentScopeDocs, serializedUuidMappings };
-  }, [initialAtlasNodesPerDatabase, uuidMappings]);
+    return { agentDocsForEmbed, serializedUuidMappings };
+  }, [initialAtlasNodesPerDatabase, uuidMappings, standardizedAgentDocs]);
 
   const handleAgentsLoaded = useCallback((agentDocs: StandardizedAtlasDocument[]) => {
     setAtlasPagesPerDatabase((prev) => ({
@@ -53,7 +49,7 @@ export default function AtlasListPrerendered({ initialAtlasNodesPerDatabase, uui
       <script
         id="agent-list-data"
         type="application/json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(standardizedAgentDocs) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(agentDocsForEmbed) }}
       />
 
       {/* Embed UUID mappings for client-side rendering */}
