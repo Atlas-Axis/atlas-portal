@@ -1,3 +1,5 @@
+import TypeChip from '@/app/atlas/type-chip';
+import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/atlas-diff';
 import type { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
@@ -6,6 +8,7 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 
 export default async function AtlasSyncPage() {
   const result = await diffAtlasScopeTreeLists();
@@ -154,15 +157,12 @@ function ChangeCard({
   return (
     <div className={`border-l-4 ${colorClass} rounded bg-white p-4 shadow dark:bg-gray-900`}>
       <div className="flex flex-col gap-2">
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className="font-mono text-sm text-gray-500 dark:text-gray-400">{formatDocReference(change.uuid)}</div>
-            <div className="text-lg font-semibold">{doc.name}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Type: <span className="font-medium">{doc.type}</span> | Doc No:{' '}
-              <span className="font-medium">{doc.doc_no}</span>
-            </div>
-          </div>
+        {/* Document title in Atlas style */}
+        <div className="flex items-center gap-2 text-base font-semibold">
+          <span>
+            {doc.doc_no} - {doc.name}
+          </span>
+          <TypeChip type={doc.type} />
         </div>
 
         {/* Show old and new values for changes */}
@@ -210,13 +210,15 @@ function ChangeCard({
 
         {/* Show content and extra fields for added documents */}
         {change.changeType === 'added' && change.newValues && (
-          <div className="mt-2 rounded bg-green-50 p-3 dark:bg-green-900/20">
+          <div className="mt-2">
             {change.newAncestry && change.newAncestry.length > 0 && (
               <div className="mb-2 text-xs">
                 <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
               </div>
             )}
-            <DocumentContent doc={change.newValues} />
+            <div className="rounded bg-green-50 p-3 dark:bg-green-900/20">
+              <DocumentContent doc={change.newValues} />
+            </div>
           </div>
         )}
 
@@ -300,7 +302,7 @@ function FieldChanges({
                 <div className="mt-1">
                   <InlineTextDiff oldContent={change.oldValue} newContent={change.newValue} />
                 </div>
-                <div>
+                <div className="hidden">
                   <span className="font-medium text-red-600">Old:</span>
                   <pre className="bg-gray-100 p-2 text-xs dark:bg-gray-800">
                     {JSON.stringify(change.oldValue, null, 2)}
@@ -347,45 +349,39 @@ function formatFieldValue(value: unknown): string {
 }
 
 /**
- * Display document content and extra fields.
+ * Display document content and extra fields in Atlas style.
  */
 function DocumentContent({ doc }: { doc: { type: string; content: string } }) {
   const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
   const docRecord = doc as unknown as Record<string, unknown>;
 
+  // Format content as HTML like in content-tree
+  const formattedContent = markdownToHTML(doc.content);
+
   return (
-    <div className="space-y-2">
-      {/* Document content */}
+    <div className="space-y-3">
+      {/* Document content in Atlas style */}
       {doc.content && (
-        <div>
-          <div className="mb-1 text-xs font-semibold text-gray-600 dark:text-gray-400">Content</div>
-          <div className="rounded border border-gray-200 bg-white p-2 font-mono text-xs whitespace-pre-wrap text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
-            {doc.content}
-          </div>
+        <div className="text-sm font-medium text-gray-800 dark:text-gray-300">
+          <CustomHTML html={formattedContent} />
         </div>
       )}
 
-      {/* Extra fields if present */}
+      {/* Extra fields if present - styled like content-tree */}
       {extraFieldMapping && (
-        <div>
-          <div className="mb-1 text-xs font-semibold text-gray-600 dark:text-gray-400">Extra Fields</div>
-          <div className="space-y-1">
-            {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
-              const fieldValue = docRecord[fieldKey];
-              if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
-                return (
-                  <div
-                    key={fieldKey}
-                    className="rounded border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400">{displayName}</div>
-                    <div className="mt-1 text-xs text-gray-800 dark:text-gray-200">{String(fieldValue)}</div>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
+        <div className="mt-2 text-sm text-slate-600">
+          {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
+            const fieldValue = docRecord[fieldKey];
+            if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
+              return (
+                <div key={fieldKey} className="mb-1">
+                  <p className="font-semibold text-slate-700">{displayName}:</p>
+                  <p>{Array.isArray(fieldValue) ? fieldValue.join(', ') : String(fieldValue)}</p>
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       )}
     </div>
