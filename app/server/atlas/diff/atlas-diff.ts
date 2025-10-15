@@ -124,15 +124,29 @@ function arraysEqual<T>(a: T[], b: T[]): boolean {
 }
 
 /**
+ * Normalize whitespace in text by trimming each line individually.
+ * This handles multi-line text more intelligently by removing leading and trailing
+ * whitespace from each line, not just from the entire string.
+ */
+function normalizeWhitespace(text: string): string {
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .join('\n')
+    .trim();
+}
+
+/**
  * Compare document fields to detect changes.
  * Compares: type, name, content, and extra fields for specific document types.
  * Does NOT compare last_modified.
+ * Trims whitespace from each line in multi-line texts for comparison.
  */
 export function compareDocumentFields(original: BaseAtlasDocument, updated: BaseAtlasDocument): boolean {
   // Compare basic fields
   if (original.type !== updated.type) return true;
-  if (original.name.trim() !== updated.name.trim()) return true;
-  if (original.content.trim() !== updated.content.trim()) return true;
+  if (normalizeWhitespace(original.name) !== normalizeWhitespace(updated.name)) return true;
+  if (normalizeWhitespace(original.content) !== normalizeWhitespace(updated.content)) return true;
 
   // Compare extra fields for specific document types
   const extraFieldKeys = getExtraFieldKeysForDocumentType(original.type);
@@ -145,9 +159,9 @@ export function compareDocumentFields(original: BaseAtlasDocument, updated: Base
       const updatedValue = updatedRecord[key];
 
       // Ensure values are compared as strings, and handle undefined/null safely
-      const originalStr = originalValue !== undefined && originalValue !== null ? String(originalValue).trim() : '';
-      const updatedStr = updatedValue !== undefined && updatedValue !== null ? String(updatedValue).trim() : '';
-      if (originalStr !== updatedStr) return true;
+      const originalStr = originalValue !== undefined && originalValue !== null ? String(originalValue) : '';
+      const updatedStr = updatedValue !== undefined && updatedValue !== null ? String(updatedValue) : '';
+      if (normalizeWhitespace(originalStr) !== normalizeWhitespace(updatedStr)) return true;
     }
   }
 

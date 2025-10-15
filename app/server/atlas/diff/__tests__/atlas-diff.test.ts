@@ -304,6 +304,145 @@ describe('compareDocumentFields', () => {
     };
     expect(compareDocumentFields(doc1, doc2)).toBe(true);
   });
+
+  describe('whitespace normalization', () => {
+    it('ignores leading and trailing whitespace in name', () => {
+      const doc1 = { ...baseDoc, name: 'Test Name' };
+      const doc2 = { ...baseDoc, name: '  Test Name  ' };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores leading and trailing whitespace in content', () => {
+      const doc1 = { ...baseDoc, content: 'Test Content' };
+      const doc2 = { ...baseDoc, content: '  Test Content  ' };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores leading and trailing whitespace per line in multi-line content', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'Line 1\nLine 2\nLine 3',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: '  Line 1  \n  Line 2  \n  Line 3  ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores leading and trailing whitespace per line in multi-line name', () => {
+      const doc1 = {
+        ...baseDoc,
+        name: 'First Line\nSecond Line',
+      };
+      const doc2 = {
+        ...baseDoc,
+        name: '  First Line  \n  Second Line  ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('detects actual content changes despite whitespace differences', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: '  Line 1  \n  Line 2  ',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: 'Line 1\nLine 2 Modified',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(true);
+    });
+
+    it('ignores blank lines with only whitespace', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'Line 1\n\nLine 3',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: 'Line 1\n   \nLine 3',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores leading and trailing blank lines', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'Line 1\nLine 2',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: '\n\nLine 1\nLine 2\n\n',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores complex whitespace variations in multi-line content', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'First paragraph\n\nSecond paragraph\nContinued',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: '  First paragraph  \n  \n  Second paragraph  \n  Continued  ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores whitespace in extra fields', () => {
+      const doc1 = {
+        ...baseDoc,
+        type: 'Type Specification' as const,
+        type_specification_type_name: 'TypeName',
+      };
+      const doc2 = {
+        ...baseDoc,
+        type: 'Type Specification' as const,
+        type_specification_type_name: '  TypeName  ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('ignores whitespace per line in multi-line extra fields', () => {
+      const doc1 = {
+        ...baseDoc,
+        type: 'Type Specification' as const,
+        type_specification_type_overview: 'Line 1\nLine 2\nLine 3',
+      };
+      const doc2 = {
+        ...baseDoc,
+        type: 'Type Specification' as const,
+        type_specification_type_overview: '  Line 1  \n  Line 2  \n  Line 3  ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('handles mixed indentation levels correctly', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'No indent\n  Two spaces\n    Four spaces',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: '      No indent      \n          Two spaces          \n              Four spaces              ',
+      };
+      expect(compareDocumentFields(doc1, doc2)).toBe(false);
+    });
+
+    it('detects actual changes when only middle whitespace differs', () => {
+      const doc1 = {
+        ...baseDoc,
+        content: 'Word1 Word2',
+      };
+      const doc2 = {
+        ...baseDoc,
+        content: 'Word1  Word2', // Two spaces in the middle
+      };
+      // This should be detected as different because we only trim line edges
+      expect(compareDocumentFields(doc1, doc2)).toBe(true);
+    });
+  });
 });
 
 describe('detectChanges', () => {
