@@ -1,7 +1,7 @@
+import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import { NestedSubpageList } from '@/app/embed/diff/nested-subpages';
 import { ProposalContext } from '@/app/server/atlas/proposal-types';
 import { TreeChange } from '@/app/server/diff/diff-trees';
-import { InlineTextDiff } from './inline-text-diff';
 
 interface ChangeListProps {
   changes: TreeChange[];
