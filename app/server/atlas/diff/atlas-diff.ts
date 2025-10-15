@@ -29,8 +29,16 @@ export interface AtlasDocumentChange {
   newAncestry?: string[]; // UUIDs from parent to root
 }
 
+export interface GroupedAtlasChanges {
+  added: AtlasDocumentChange[];
+  deleted: AtlasDocumentChange[];
+  changed: AtlasDocumentChange[];
+  parent_changed: AtlasDocumentChange[];
+  sibling_order_changed: AtlasDocumentChange[];
+}
+
 export interface AtlasDiffResult {
-  changes: AtlasDocumentChange[];
+  changes: GroupedAtlasChanges;
   originalIdsToDocuments: Map<string, BaseAtlasDocument>;
   newIdsToDocuments: Map<string, BaseAtlasDocument>;
 }
@@ -193,20 +201,22 @@ export function stripChildCollections(doc: StandardizedAtlasDocument): BaseAtlas
 
 /**
  * Detect changes between original and new documents.
- * Returns an array of change records.
+ * Returns changes grouped by change type.
  *
  * Uses ancestry arrays (tracked during tree traversal) to detect parent changes.
  * This works correctly for all document types, including Needed Research with global numbering.
- *
- * TODO: Sort changes by doc_no - question: which order should we use? original or new? Or don't sort at all - just show added/deleted changes in the beginning?
  */
 export function detectChanges(
   originalMaps: LookupMaps,
   newMaps: LookupMaps,
   originalUuids: Set<string>,
   newUuids: Set<string>,
-): AtlasDocumentChange[] {
-  const changes: AtlasDocumentChange[] = [];
+): GroupedAtlasChanges {
+  const added: AtlasDocumentChange[] = [];
+  const deleted: AtlasDocumentChange[] = [];
+  const changed: AtlasDocumentChange[] = [];
+  const parent_changed: AtlasDocumentChange[] = [];
+  const sibling_order_changed: AtlasDocumentChange[] = [];
 
   // Added documents: exist in new but not in original
   for (const uuid of newUuids) {
@@ -216,7 +226,7 @@ export function detectChanges(
         console.error(`Added document with UUID ${uuid} not found in new lookup map`);
         continue;
       }
-      changes.push({
+      added.push({
         uuid,
         changeType: 'added',
         newValues: newDoc,
@@ -233,7 +243,7 @@ export function detectChanges(
         console.error(`Deleted document with UUID ${uuid} not found in original lookup map`);
         continue;
       }
-      changes.push({
+      deleted.push({
         uuid,
         changeType: 'deleted',
         oldValues: originalDoc,
@@ -261,30 +271,50 @@ export function detectChanges(
       const ancestryChanged = !arraysEqual(oldAncestry, newAncestry);
 
       if (fieldsChanged || docNoChanged || ancestryChanged) {
-        // Determine the type of change based on what changed
-        let changeType: AtlasChangeType = 'changed';
+        // A document can have multiple types of changes simultaneously.
+        // Create separate change records for each type of change - except for parent_changed and sibling_order_changed, which are mutually exclusive.
 
-        if (ancestryChanged) {
-          // Parent changed (works for all doc types including Needed Research)
-          changeType = 'parent_changed';
-        } else if (docNoChanged) {
-          // Only sibling order changed (doc_no changed but parent stayed the same)
-          changeType = 'sibling_order_changed';
-        }
-
-        changes.push({
+        // Base change object shared by all change types
+        const baseChange = {
           uuid,
-          changeType,
           oldValues: originalDoc,
           newValues: newDoc,
           oldAncestry,
           newAncestry,
-        });
+        };
+
+        if (ancestryChanged) {
+          // Parent changed (works for all doc types including Needed Research)
+          parent_changed.push({
+            ...baseChange,
+            changeType: 'parent_changed',
+          });
+        } else if (docNoChanged) {
+          // Only sibling order changed (doc_no changed but parent stayed the same)
+          sibling_order_changed.push({
+            ...baseChange,
+            changeType: 'sibling_order_changed',
+          });
+        }
+
+        // If fields changed, record as a separate change (even if parent/sibling order also changed)
+        if (fieldsChanged) {
+          changed.push({
+            ...baseChange,
+            changeType: 'changed',
+          });
+        }
       }
     }
   }
 
-  return changes;
+  return {
+    added,
+    deleted,
+    changed,
+    parent_changed,
+    sibling_order_changed,
+  };
 }
 
 /**
