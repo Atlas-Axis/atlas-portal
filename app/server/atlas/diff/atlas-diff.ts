@@ -131,8 +131,8 @@ function arraysEqual<T>(a: T[], b: T[]): boolean {
 export function compareDocumentFields(original: BaseAtlasDocument, updated: BaseAtlasDocument): boolean {
   // Compare basic fields
   if (original.type !== updated.type) return true;
-  if (original.name !== updated.name) return true;
-  if (original.content !== updated.content) return true;
+  if (original.name.trim() !== updated.name.trim()) return true;
+  if (original.content.trim() !== updated.content.trim()) return true;
 
   // Compare extra fields for specific document types
   const extraFieldKeys = getExtraFieldKeysForDocumentType(original.type);
@@ -143,7 +143,11 @@ export function compareDocumentFields(original: BaseAtlasDocument, updated: Base
     for (const key of extraFieldKeys) {
       const originalValue = originalRecord[key];
       const updatedValue = updatedRecord[key];
-      if (originalValue !== updatedValue) return true;
+
+      // Ensure values are compared as strings, and handle undefined/null safely
+      const originalStr = originalValue !== undefined && originalValue !== null ? String(originalValue).trim() : '';
+      const updatedStr = updatedValue !== undefined && updatedValue !== null ? String(updatedValue).trim() : '';
+      if (originalStr !== updatedStr) return true;
     }
   }
 
@@ -342,34 +346,12 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   };
 }
 
-/**
- * Find the project root by searching upward for package.json
- */
-async function findProjectRoot(startDir: string = __dirname): Promise<string> {
-  let currentDir = startDir;
-
-  while (currentDir !== path.parse(currentDir).root) {
-    const packageJsonPath = path.join(currentDir, 'package.json');
-
-    try {
-      await fs.access(packageJsonPath);
-      return currentDir;
-    } catch {
-      // package.json not found, continue searching upward
-      currentDir = path.dirname(currentDir);
-    }
-  }
-
-  // Throw an error if the project root is not found
-  throw new Error('Project root not found');
-}
-
 async function loadSupabaseAsStandardizedAtlasScopeTrees() {
   return buildAtlasJSON();
 }
 
 async function loadMarkdownAsStandardizedAtlasScopeTrees() {
-  const projectRoot = await findProjectRoot();
+  const projectRoot = process.cwd();
   const dir = path.join(projectRoot, '.debug-data', 'standardized-atlas');
   const inFile = path.join(dir, 'atlas.md');
 
