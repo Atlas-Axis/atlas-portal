@@ -30,7 +30,11 @@
  *   applicable) and trim only one leading and one trailing separator blank line
  *   from the content segment, preserving author-intended whitespace.
  */
-import { AGENT_ROOT_SECTION_UUIDS_MAPPED, type AtlasDatabaseName, type AtlasDocumentType } from '@/app/server/atlas/constants';
+import {
+  AGENT_ROOT_SECTION_UUIDS_MAPPED,
+  type AtlasDatabaseName,
+  type AtlasDocumentType,
+} from '@/app/server/atlas/constants';
 import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
@@ -233,15 +237,46 @@ function extractContentAndExtraFields(
   }
 
   const content = normalizeContentSeparators(lines.slice(0, firstIdx));
+
+  // Initialize all expected fields to empty strings
   const extra: ExtraMap = {};
+  for (const fieldKey of Object.keys(mapping)) {
+    extra[fieldKey] = '';
+  }
+
+  // Parse extra fields: accumulate all lines for each field until the next labeled line
+  let currentFieldKey: string | null = null;
+  let currentFieldLines: string[] = [];
+
+  const flushField = () => {
+    if (currentFieldKey && currentFieldLines.length > 0) {
+      // Normalize the field value: trim leading/trailing blank lines
+      let start = 0;
+      while (start < currentFieldLines.length && currentFieldLines[start].trim() === '') start++;
+      let end = currentFieldLines.length - 1;
+      while (end >= start && currentFieldLines[end].trim() === '') end--;
+      const trimmedLines = currentFieldLines.slice(start, end + 1);
+      extra[currentFieldKey] = trimmedLines.join('\n');
+    }
+  };
 
   for (let i = firstIdx; i < lines.length; i++) {
     const { label, value } = parseLabeledLine(lines[i]);
-    if (!label) continue;
-    const key = labelToFieldKey.get(label);
-    if (!key) continue; // ignore unknown labels
-    extra[key] = value ?? '';
+    if (label && labelToFieldKey.has(label)) {
+      // New field starts; flush previous
+      flushField();
+      currentFieldKey = labelToFieldKey.get(label)!;
+      currentFieldLines = [value ?? ''];
+    } else {
+      // Continuation of current field
+      if (currentFieldKey) {
+        currentFieldLines.push(lines[i]);
+      }
+    }
   }
+
+  // Flush last field
+  flushField();
 
   return { content, extra };
 }
