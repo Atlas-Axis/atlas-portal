@@ -9,7 +9,7 @@ import {
 
 export default async function AtlasSyncPage() {
   const result = await diffAtlasScopeTreeLists();
-  const { changes } = result;
+  const { changes, originalIdsToDocuments, newIdsToDocuments } = result;
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
@@ -47,6 +47,7 @@ export default async function AtlasSyncPage() {
         changes={changes.added}
         colorClass="border-green-500"
         emptyMessage="No documents added"
+        uuidToDocMap={newIdsToDocuments}
       />
 
       {/* Changed Documents */}
@@ -55,6 +56,7 @@ export default async function AtlasSyncPage() {
         changes={changes.changed}
         colorClass="border-blue-500"
         emptyMessage="No documents changed"
+        uuidToDocMap={newIdsToDocuments}
       />
 
       {/* Sibling Order Changed */}
@@ -63,6 +65,7 @@ export default async function AtlasSyncPage() {
         changes={changes.sibling_order_changed}
         colorClass="border-yellow-500"
         emptyMessage="No sibling order changes"
+        uuidToDocMap={newIdsToDocuments}
       />
 
       {/* Parent Changed */}
@@ -71,6 +74,7 @@ export default async function AtlasSyncPage() {
         changes={changes.parent_changed}
         colorClass="border-orange-500"
         emptyMessage="No parent changes"
+        uuidToDocMap={newIdsToDocuments}
       />
 
       {/* Deleted Documents */}
@@ -79,6 +83,7 @@ export default async function AtlasSyncPage() {
         changes={changes.deleted}
         colorClass="border-red-500"
         emptyMessage="No documents deleted"
+        uuidToDocMap={originalIdsToDocuments}
       />
     </div>
   );
@@ -89,11 +94,13 @@ function ChangeSection({
   changes,
   colorClass,
   emptyMessage,
+  uuidToDocMap,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
   colorClass: string;
   emptyMessage: string;
+  uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
 }) {
   if (changes.length === 0) {
     return (
@@ -111,23 +118,45 @@ function ChangeSection({
       </h2>
       <div className="space-y-4">
         {changes.map((change, index) => (
-          <ChangeCard key={`${change.uuid}-${index}`} change={change} colorClass={colorClass} />
+          <ChangeCard
+            key={`${change.uuid}-${index}`}
+            change={change}
+            colorClass={colorClass}
+            uuidToDocMap={uuidToDocMap}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function ChangeCard({ change, colorClass }: { change: AtlasDocumentChange; colorClass: string }) {
+function ChangeCard({
+  change,
+  colorClass,
+  uuidToDocMap,
+}: {
+  change: AtlasDocumentChange;
+  colorClass: string;
+  uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
+}) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
+
+  // Format UUID as document reference
+  const formatDocReference = (uuid: string) => {
+    const refDoc = uuidToDocMap.get(uuid);
+    if (refDoc) {
+      return `${refDoc.doc_no} - ${refDoc.name} [${refDoc.type}]`;
+    }
+    return uuid; // Fallback to UUID if not found
+  };
 
   return (
     <div className={`border-l-4 ${colorClass} rounded bg-white p-4 shadow dark:bg-gray-900`}>
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <div className="font-mono text-sm text-gray-500 dark:text-gray-400">{change.uuid}</div>
+            <div className="font-mono text-sm text-gray-500 dark:text-gray-400">{formatDocReference(change.uuid)}</div>
             <div className="text-lg font-semibold">{doc.name}</div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Type: <span className="font-medium">{doc.type}</span> | Doc No:{' '}
@@ -153,10 +182,16 @@ function ChangeCard({ change, colorClass }: { change: AtlasDocumentChange; color
                 <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
               </div>
               <div>
-                <span className="font-medium">Old ancestry:</span> {change.oldAncestry?.join(' → ') || 'root'}
+                <span className="font-medium">Old parent:</span>{' '}
+                {change.oldAncestry && change.oldAncestry.length > 0
+                  ? formatDocReference(change.oldAncestry[0])
+                  : 'root'}
               </div>
               <div>
-                <span className="font-medium">New ancestry:</span> {change.newAncestry?.join(' → ') || 'root'}
+                <span className="font-medium">New parent:</span>{' '}
+                {change.newAncestry && change.newAncestry.length > 0
+                  ? formatDocReference(change.newAncestry[0])
+                  : 'root'}
               </div>
             </div>
           </div>
@@ -173,21 +208,27 @@ function ChangeCard({ change, colorClass }: { change: AtlasDocumentChange; color
           </div>
         )}
 
-        {/* Show ancestry for added documents */}
-        {change.changeType === 'added' && change.newAncestry && change.newAncestry.length > 0 && (
+        {/* Show content and extra fields for added documents */}
+        {change.changeType === 'added' && change.newValues && (
           <div className="mt-2 rounded bg-green-50 p-3 dark:bg-green-900/20">
-            <div className="text-xs">
-              <span className="font-medium">Ancestry:</span> {change.newAncestry.join(' → ')}
-            </div>
+            {change.newAncestry && change.newAncestry.length > 0 && (
+              <div className="mb-2 text-xs">
+                <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
+              </div>
+            )}
+            <DocumentContent doc={change.newValues} />
           </div>
         )}
 
-        {/* Show ancestry for deleted documents */}
-        {change.changeType === 'deleted' && change.oldAncestry && change.oldAncestry.length > 0 && (
+        {/* Show content and extra fields for deleted documents */}
+        {change.changeType === 'deleted' && change.oldValues && (
           <div className="mt-2 rounded bg-red-50 p-3 dark:bg-red-900/20">
-            <div className="text-xs">
-              <span className="font-medium">Ancestry:</span> {change.oldAncestry.join(' → ')}
-            </div>
+            {change.oldAncestry && change.oldAncestry.length > 0 && (
+              <div className="mb-2 text-xs">
+                <span className="font-medium">Parent:</span> {formatDocReference(change.oldAncestry[0])}
+              </div>
+            )}
+            <DocumentContent doc={change.oldValues} />
           </div>
         )}
       </div>
@@ -259,6 +300,16 @@ function FieldChanges({
                 <div className="mt-1">
                   <InlineTextDiff oldContent={change.oldValue} newContent={change.newValue} />
                 </div>
+                <div>
+                  <span className="font-medium text-red-600">Old:</span>
+                  <pre className="bg-gray-100 p-2 text-xs dark:bg-gray-800">
+                    {JSON.stringify(change.oldValue, null, 2)}
+                  </pre>
+                  <span className="font-medium text-green-600">New:</span>
+                  <pre className="bg-gray-100 p-2 text-xs dark:bg-gray-800">
+                    {JSON.stringify(change.newValue, null, 2)}
+                  </pre>
+                </div>
               </div>
             </div>
           </div>
@@ -293,4 +344,50 @@ function formatFieldValue(value: unknown): string {
     return '(empty)';
   }
   return String(value);
+}
+
+/**
+ * Display document content and extra fields.
+ */
+function DocumentContent({ doc }: { doc: { type: string; content: string } }) {
+  const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
+  const docRecord = doc as unknown as Record<string, unknown>;
+
+  return (
+    <div className="space-y-2">
+      {/* Document content */}
+      {doc.content && (
+        <div>
+          <div className="mb-1 text-xs font-semibold text-gray-600 dark:text-gray-400">Content</div>
+          <div className="rounded border border-gray-200 bg-white p-2 font-mono text-xs whitespace-pre-wrap text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+            {doc.content}
+          </div>
+        </div>
+      )}
+
+      {/* Extra fields if present */}
+      {extraFieldMapping && (
+        <div>
+          <div className="mb-1 text-xs font-semibold text-gray-600 dark:text-gray-400">Extra Fields</div>
+          <div className="space-y-1">
+            {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
+              const fieldValue = docRecord[fieldKey];
+              if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
+                return (
+                  <div
+                    key={fieldKey}
+                    className="rounded border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <div className="text-xs font-medium text-gray-600 dark:text-gray-400">{displayName}</div>
+                    <div className="mt-1 text-xs text-gray-800 dark:text-gray-200">{String(fieldValue)}</div>
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
