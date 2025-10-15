@@ -45,18 +45,21 @@ export interface AtlasDiffResult {
 export interface LookupMaps {
   uuidToDoc: Map<string, BaseAtlasDocument>;
   docNoToDoc: Map<string, BaseAtlasDocument>;
+  uuidToAncestry: Map<string, string[]>; // UUID → ancestry list (from parent to root)
 }
 
 /**
  * Recursively traverse all documents in the tree and build flat lookup maps.
  * Documents without UUIDs are skipped and logged as errors.
- * Returns both UUID→document and doc_no→document maps for efficient lookups.
+ * Returns UUID→document, doc_no→document, and UUID→ancestry maps.
+ * Ancestry is tracked during traversal, not inferred from doc_no.
  */
 export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): LookupMaps {
   const uuidToDoc = new Map<string, BaseAtlasDocument>();
   const docNoToDoc = new Map<string, BaseAtlasDocument>();
+  const uuidToAncestry = new Map<string, string[]>(); // List of UUIDs from parent to root
 
-  function traverseDocument(doc: StandardizedAtlasDocument) {
+  function traverseDocument(doc: StandardizedAtlasDocument, ancestry: string[] = []) {
     const strippedDoc = stripChildCollections(doc);
 
     // Skip documents without UUIDs and log as error
@@ -65,10 +68,15 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
     } else {
       // Store stripped version (without children) in the UUID lookup map
       uuidToDoc.set(doc.uuid, strippedDoc);
+      // Store ancestry for this document (copy of current ancestry array)
+      uuidToAncestry.set(doc.uuid, [...ancestry]);
     }
 
-    // Always store in doc_no map for ancestry lookups
+    // Always store in doc_no map (may be used for other purposes)
     docNoToDoc.set(doc.doc_no, strippedDoc);
+
+    // Build extended ancestry for children (add current doc's UUID if it has one)
+    const childAncestry = doc.uuid ? [...ancestry, doc.uuid] : ancestry;
 
     // Traverse all child collections
     const docAsRecord = doc as unknown as Record<string, unknown>;
@@ -76,7 +84,7 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
       const collection = docAsRecord[collectionName];
       if (Array.isArray(collection)) {
         for (const child of collection as StandardizedAtlasDocument[]) {
-          traverseDocument(child);
+          traverseDocument(child, childAncestry);
         }
       }
     }
@@ -86,7 +94,7 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
     traverseDocument(rootDoc);
   }
 
-  return { uuidToDoc, docNoToDoc };
+  return { uuidToDoc, docNoToDoc, uuidToAncestry };
 }
 
 /**
@@ -94,6 +102,17 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
  */
 export function extractAllUuids(lookupMap: Map<string, BaseAtlasDocument>): Set<string> {
   return new Set(lookupMap.keys());
+}
+
+/**
+ * Compare two arrays for equality.
+ */
+function arraysEqual<T>(a: T[], b: T[]): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }
 
 /**
@@ -140,75 +159,6 @@ function getExtraFieldKeysForDocumentType(type: string): string[] {
 }
 
 /**
- * Extract the ancestry path from a doc_no (everything except the last segment).
- * Examples:
- *   "A.2.9.1" → "A.2.9"
- *   ".var1" → ""
- *   ".0.3.1" → ".0.3"
- */
-export function extractDocNoAncestryPath(docNo: string): string {
-  const lastDotIndex = docNo.lastIndexOf('.');
-  if (lastDotIndex === -1) {
-    // No dots, so no parent (e.g., "A" or "NR-1")
-    return '';
-  }
-  return docNo.substring(0, lastDotIndex);
-}
-
-/**
- * Extract the last segment from a doc_no.
- * Examples:
- *   "A.2.9.1" → "1"
- *   ".var1" → "var1"
- *   "A" → "A"
- */
-export function extractDocNoLastSegment(docNo: string): string {
-  const lastDotIndex = docNo.lastIndexOf('.');
-  if (lastDotIndex === -1) {
-    return docNo;
-  }
-  return docNo.substring(lastDotIndex + 1);
-}
-
-/**
- * Build an ancestry list (UUIDs from parent to root) for a document.
- * Uses doc_no to identify the parent and recursively builds the list.
- */
-export function buildAncestryList(
-  uuid: string,
-  uuidToDoc: Map<string, BaseAtlasDocument>,
-  docNoToDoc: Map<string, BaseAtlasDocument>,
-  visited: Set<string> = new Set(),
-): string[] {
-  if (visited.has(uuid)) {
-    console.error(`Cycle detected while building ancestry for ${uuid}`);
-    return [];
-  }
-  visited.add(uuid);
-
-  const doc = uuidToDoc.get(uuid);
-  if (!doc) return [];
-
-  const parentDocNo = extractDocNoAncestryPath(doc.doc_no);
-  if (!parentDocNo) {
-    // No parent (root document)
-    return [];
-  }
-
-  // Find parent by doc_no using efficient lookup
-  const parentDoc = docNoToDoc.get(parentDocNo);
-  if (!parentDoc || !parentDoc.uuid) {
-    // Parent not found or has no UUID
-    console.error(`Parent document not found for ${doc.doc_no}`);
-    return [];
-  }
-
-  // Recursively build ancestry list
-  const parentAncestry = buildAncestryList(parentDoc.uuid, uuidToDoc, docNoToDoc, visited);
-  return [...parentAncestry, parentDoc.uuid];
-}
-
-/**
  * Create a shallow copy of a document without child collection properties.
  * Returns only core fields: type, doc_no, name, uuid, content, and extra fields.
  * Does NOT include last_modified.
@@ -245,6 +195,9 @@ export function stripChildCollections(doc: StandardizedAtlasDocument): BaseAtlas
  * Detect changes between original and new documents.
  * Returns an array of change records.
  *
+ * Uses ancestry arrays (tracked during tree traversal) to detect parent changes.
+ * This works correctly for all document types, including Needed Research with global numbering.
+ *
  * TODO: Sort changes by doc_no - question: which order should we use? original or new? Or don't sort at all - just show added/deleted changes in the beginning?
  */
 export function detectChanges(
@@ -267,7 +220,7 @@ export function detectChanges(
         uuid,
         changeType: 'added',
         newValues: newDoc,
-        newAncestry: buildAncestryList(uuid, newMaps.uuidToDoc, newMaps.docNoToDoc),
+        newAncestry: newMaps.uuidToAncestry.get(uuid) ?? [],
       });
     }
   }
@@ -284,7 +237,7 @@ export function detectChanges(
         uuid,
         changeType: 'deleted',
         oldValues: originalDoc,
-        oldAncestry: buildAncestryList(uuid, originalMaps.uuidToDoc, originalMaps.docNoToDoc),
+        oldAncestry: originalMaps.uuidToAncestry.get(uuid) ?? [],
       });
     }
   }
@@ -300,24 +253,23 @@ export function detectChanges(
         continue;
       }
 
+      const oldAncestry = originalMaps.uuidToAncestry.get(uuid) ?? [];
+      const newAncestry = newMaps.uuidToAncestry.get(uuid) ?? [];
+
       const fieldsChanged = compareDocumentFields(originalDoc, newDoc);
       const docNoChanged = originalDoc.doc_no !== newDoc.doc_no;
+      const ancestryChanged = !arraysEqual(oldAncestry, newAncestry);
 
-      if (fieldsChanged || docNoChanged) {
-        // Determine the type of change
+      if (fieldsChanged || docNoChanged || ancestryChanged) {
+        // Determine the type of change based on what changed
         let changeType: AtlasChangeType = 'changed';
 
-        if (docNoChanged) {
-          const originalAncestryPath = extractDocNoAncestryPath(originalDoc.doc_no);
-          const newAncestryPath = extractDocNoAncestryPath(newDoc.doc_no);
-
-          if (originalAncestryPath !== newAncestryPath) {
-            // Parent changed
-            changeType = 'parent_changed';
-          } else {
-            // Only last segment changed (sibling order)
-            changeType = 'sibling_order_changed';
-          }
+        if (ancestryChanged) {
+          // Parent changed (works for all doc types including Needed Research)
+          changeType = 'parent_changed';
+        } else if (docNoChanged) {
+          // Only sibling order changed (doc_no changed but parent stayed the same)
+          changeType = 'sibling_order_changed';
         }
 
         changes.push({
@@ -325,8 +277,8 @@ export function detectChanges(
           changeType,
           oldValues: originalDoc,
           newValues: newDoc,
-          oldAncestry: buildAncestryList(uuid, originalMaps.uuidToDoc, originalMaps.docNoToDoc),
-          newAncestry: buildAncestryList(uuid, newMaps.uuidToDoc, newMaps.docNoToDoc),
+          oldAncestry,
+          newAncestry,
         });
       }
     }
