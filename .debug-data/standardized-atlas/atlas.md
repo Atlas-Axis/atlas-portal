@@ -856,67 +856,39 @@ Alignment Conservers are subject to strict requirements due to their critical ro
 
 The Core Facilitator must be vigilant in enforcing all rules applicable to Alignment Conservers. The Core Facilitator must take prompt action against Alignment Conservers if they break rules specified in the Atlas, or otherwise act misaligned.
 
-### A.1.4.2 - AC Derecognition [Section]  <!-- UUID: ac998664-5b5e-4ea5-813b-dc3105ea6cf2 -->
-
-Derecognition is the ultimate accountability measure for misalignment and entails permanently removing the individual or entity from their role as an Alignment Conserver. An individual/entity who has been derecognized from a Facilitator role is not eligible to serve as an Aligned Delegate, and vice versa. 
-
-The subdocuments herein define rules and processes related to Alignment Conserver Derecognition.
-
-#### A.1.4.2.1 - Derecognition Notice [Core]  <!-- UUID: 9c05207d-5e11-43ae-a8a3-1b61734d6ef9 -->
-
-Derecognition notices are issued publicly, and justification and reasoning must be provided by the Core Facilitator.
-
-#### A.1.4.2.2 - Derecognition Recording [Active Data Controller]  <!-- UUID: 15def023-af2e-4a27-92c4-6fab7b6f02f6 -->
-
-Derecognitions of Alignment Conservers are recorded by adding the identity and known aliases or associated entities to [A.1.4 - Derecognized Alignment Conservers](e7aec672-ed19-4329-aaf7-736950be2eb7).
-
-The Active Data is updated as follows:
-
-• The Responsible Party is the Core Facilitator.
-
-• The Update Process must follow the protocol for ‘Alignment Conserver Changes’.
-
-##### A.1.4.2.2.0.6.1 - Derecognized Alignment Conservers [Active Data]  <!-- UUID: e7aec672-ed19-4329-aaf7-736950be2eb7 -->
-
-| Date | Conserver Role | Identity | Known Aliases | Reasoning Post | |------------|----------------|------------|---------------|-----------------------------------------------------------------------------------------------------------------| | 2023-06-08 | AD | Bulwark | - | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) | | 2023-10-30 | AD | PALC | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-10-30 | AD | Navigator | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-02-02 | AD | 0xDefensor | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619) | | 2024-04-06 | AD | TRUE NAME | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) | | 2024-12-17 | AD | UPMaker | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | QGov | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Skynet | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Pf | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |
-
-#### NR-1 - Derecognition Uncertainty Due To Anonymous Actors [Needed Research]  <!-- UUID: 69e4df9f-d2f3-4fd2-9add-e1314a0a5eb3 -->
-
-The Target Document defines the act of derecognition as “permanently removing” an entity from the Alignment Conserver role. In fact, it is not possible to effect such a permanent removal. Given the presence of anonymous/pseudonymous actors in the decentralized “workforce” of the Sky ecosystem, a known identity of an actor can be barred from an AC role; and yet that actor can easily re-enter the system under a different pseudonym or identity. Consider what measures can be implemented to counteract the scenario where derecognized entities reappear under a different guise. A robust reputation system is already planned; by tracking reputation that is earned over a long timescale, a derecognized entity would be barred from quickly regaining a foothold.
-
-### A.1.4.3 - ACs Must Safeguard The Spirit Of The Atlas [Section]  <!-- UUID: 933c2078-5353-4788-85cf-65bb0975f916 -->
+### A.1.4.2 - ACs Must Safeguard The Spirit Of The Atlas [Section]  <!-- UUID: 933c2078-5353-4788-85cf-65bb0975f916 -->
 
 Alignment Conservers must always act to preserve the Spirit of the Atlas and to protect Sky Ecosystem against all forms of corruption, organizational drift, and other misalignment threats.
 
-### A.1.4.4 - Universal Alignment Requirements [Section]  <!-- UUID: 403a05ce-f8e0-4ecf-8a56-026c0acd0d8a -->
+### A.1.4.3 - Universal Alignment Requirements [Section]  <!-- UUID: 403a05ce-f8e0-4ecf-8a56-026c0acd0d8a -->
 
 Alignment Conservers must operate only within the clearly delineated processes and frameworks of the Immutable Documents. ACs are strictly prohibited from colluding or secretly organizing to circumvent or undermine the Spirit of the Atlas. Any action of an Alignment Conserver that disrupts the governance dynamic of Sky is considered misalignment, as is any inaction that allows such violations to occur.
 
-#### A.1.4.4.0.3.1 - Circumvent - Element Annotation [Annotation]  <!-- UUID: 847eceb7-d788-437b-a8a3-b38d06e873ba -->
+#### A.1.4.3.0.3.1 - Circumvent - Element Annotation [Annotation]  <!-- UUID: 847eceb7-d788-437b-a8a3-b38d06e873ba -->
 
 The element “circumvent” means to find a way to evade or distort the Atlas’ established rules, principles, or processes, with the intent to undermine Universal Alignment.
 
-#### A.1.4.4.0.3.2 - Clearly Delineated Processes and Frameworks - Element Annotation [Annotation]  <!-- UUID: a9ad7689-50d0-465c-9983-75b0fb065082 -->
+#### A.1.4.3.0.3.2 - Clearly Delineated Processes and Frameworks - Element Annotation [Annotation]  <!-- UUID: a9ad7689-50d0-465c-9983-75b0fb065082 -->
 
 The element, “clearly delineated processes and frameworks,” highlights a central issue in interpreting the Atlas. All language must be interpreted to be understood. In this sense, eliminating subjectivity is an unattainable goal. (Even an artificial intelligence system which eliminates many steps of research for the user will still serve up information that must be first interpreted by the user before it can be effective.) Inference or extrapolation is necessarily inherent in interpretation, and comes in degrees. In the context of the Target Document, the element, “clearly delineated processes and frameworks,” affirms that an interpreter's extraction of rules/principles/processes should be maximally grounded in the explicit language of the Immutable Documents.
 
-#### A.1.4.4.0.3.3 - Colluding - Element Annotation [Annotation]  <!-- UUID: 5ecf688c-6f6f-4923-844b-a605966a31d1 -->
+#### A.1.4.3.0.3.3 - Colluding - Element Annotation [Annotation]  <!-- UUID: 5ecf688c-6f6f-4923-844b-a605966a31d1 -->
 
 The element “colluding” refers to the act of conspiring or working together in secret to achieve an outcome that violates or undermines Universal Alignment or the Spirit of the Atlas.
 
-#### A.1.4.4.0.3.4 - Governance Dynamic - Element Annotation [Annotation]  <!-- UUID: ac81d874-6f5a-45db-8d92-390b220d59d8 -->
+#### A.1.4.3.0.3.4 - Governance Dynamic - Element Annotation [Annotation]  <!-- UUID: ac81d874-6f5a-45db-8d92-390b220d59d8 -->
 
 The element “governance dynamic” refers generally to the balance of power and the integrity of operational processes that sustain Sky’s Governance system. Disruption of this dynamic can lead to instability or misalignment.
 
-#### A.1.4.4.0.3.5 - Inaction - Element Annotation [Annotation]  <!-- UUID: 666f3928-99f8-410e-a928-ad060d5cc354 -->
+#### A.1.4.3.0.3.5 - Inaction - Element Annotation [Annotation]  <!-- UUID: 666f3928-99f8-410e-a928-ad060d5cc354 -->
 
 The element "inaction" refers to the failure to act when action is necessary to prevent or address breaches of Universal Alignment or the Spirit of the Atlas. Inaction is considered as serious as active misalignment.
 
-#### A.1.4.4.0.3.6 - Secretly Organizing - Element Annotation [Annotation]  <!-- UUID: 21ec2c20-28fe-43e9-9e30-9e548bda7531 -->
+#### A.1.4.3.0.3.6 - Secretly Organizing - Element Annotation [Annotation]  <!-- UUID: 21ec2c20-28fe-43e9-9e30-9e548bda7531 -->
 
 The element “secretly organizing” is closely related to the term “colluding”. See [Colluding - Element Annotation](5ecf688c-6f6f-4923-844b-a605966a31d1). “Secretly organizing” means planning or coordinating actions behind closed doors, with the malign intent to bypass or undermine official processes or principles.
 
-#### A.1.4.4.0.4.1 - Clearly Delineated Processes and Frameworks - AC actions must be grounded in explicit frameworks of Immutable Documents [Action Tenet]  <!-- UUID: 61420b37-9c0f-424d-bb5e-dd5f261d3547 -->
+#### A.1.4.3.0.4.1 - Clearly Delineated Processes and Frameworks - AC actions must be grounded in explicit frameworks of Immutable Documents [Action Tenet]  <!-- UUID: 61420b37-9c0f-424d-bb5e-dd5f261d3547 -->
 
 Generally, when an AC acts to impact governance in any way, they must do so according to rules/principles/processes that are based on the explicit language of the Immutable Documents. Because of the nature of language and the fact that the Atlas can never anticipate all possible scenarios, it will sometimes be necessary for the basis of ACs' actions to be sourced from extrapolations or inferences of logic, but these must be grounded.
 
@@ -924,11 +896,11 @@ Generally, when an AC acts to impact governance in any way, they must do so acco
 
 Because ungrounded inferences of logic lack such a robust and clearly documented foundation, they introduce severe misalignment risk given the potential for intentional misrepresentation or distortion. The interpreter may deviate from the genuine intent of the Immutable Documents, not driven by an earnest effort to understand but rather influenced by personal motives or ulterior agendas.
 
-### A.1.4.5 - Standard of Proof In Universal Alignment Controversies [Section]  <!-- UUID: 034a9ad7-5d4d-40db-bef8-cad80c0a01e2 -->
+### A.1.4.4 - Standard of Proof In Universal Alignment Controversies [Section]  <!-- UUID: 034a9ad7-5d4d-40db-bef8-cad80c0a01e2 -->
 
 Alignment Conservers are held to the highest standard when judging whether their actions are Universally Aligned.
 
-#### A.1.4.5.0.4.1 - Highest Standard - Facilitators must apply strictest possible requirements of Universal Alignment on ACs [Action Tenet]  <!-- UUID: 8dfd71fc-7ded-4217-8b6a-2bef00f75b55 -->
+#### A.1.4.4.0.4.1 - Highest Standard - Facilitators must apply strictest possible requirements of Universal Alignment on ACs [Action Tenet]  <!-- UUID: 8dfd71fc-7ded-4217-8b6a-2bef00f75b55 -->
 
 In any adjudication involving potential misalignment of Alignment Conservers (ACs), Facilitators are unequivocally directed to apply the strictest and highest standards of Universal Alignment.
 
@@ -936,7 +908,7 @@ As ACs are held to the most rigorous standards of Universal Alignment, Facilitat
 
 Given the exceptionally high stakes in cases of potential AC misalignment, Facilitators must prioritize an approach grounded in an abundance of caution, steering away from notions of 'fairness' or 'lenience.' Any lapse or misjudgment on the part of an AC cannot be excused based on ignorance of the rules, good intentions, honest mistake or similar factors. Maximal accountability for ACs is non-negotiable, a principle underpinned by the indispensable role of ACs as stewards of Universal Alignment.
 
-#### NR-2 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 2da58ba2-a172-43bd-b7e7-d3d8e69233bf -->
+#### NR-1 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 2da58ba2-a172-43bd-b7e7-d3d8e69233bf -->
 
 This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
 
@@ -948,23 +920,23 @@ Then there is the matter of assessing evidence in a way that is rigorous and imp
 
 How much discretion should Facilitators have in interpreting and applying the element “the highest standard of Universal Alignment”? How to safeguard against bias and ensure all Facilitator adjudications are made impartially? Investigate mechanisms to maintain objectivity and impartiality throughout the adjudication, fact-finding, and evidence evaluation processes. This could include the establishment of independent review panels (which could operate post facto to avoid excessively delaying the deplatforming of misaligned ACs), the use of conflict-of-interest policies, and training on cognitive biases for those involved in decision-making.
 
-### A.1.4.6 - ACs Can Be Operationally Active In Only One Role At A Time [Section]  <!-- UUID: 9b1d1c2f-ace0-4637-8050-4711ae9f9a8c -->
+### A.1.4.5 - ACs Can Be Operationally Active In Only One Role At A Time [Section]  <!-- UUID: 9b1d1c2f-ace0-4637-8050-4711ae9f9a8c -->
 
 An Alignment Conserver can assume one of two roles: Aligned Delegate (AD) and Facilitator. ACs may only be operationally active in a single AC role and may not simultaneously assume multiple AC roles or other ecosystem roles such as Ecosystem Actors.
 
-#### A.1.4.6.1 - Exception for ADs Contributing To Atlas Core Development [Core]  <!-- UUID: 79ad7aaa-bf57-40f4-9824-589982e79d0c -->
+#### A.1.4.5.1 - Exception for ADs Contributing To Atlas Core Development [Core]  <!-- UUID: 79ad7aaa-bf57-40f4-9824-589982e79d0c -->
 
 [A.1.5 - A14 - Aligned Delegates - Budget And Participation Requirements - Atlas Workstreams](a1158473-3052-4af5-bdf5-c504ae3fdf6f) is an exception to the general rule prohibiting Alignment Conservers from being operationally active in multiple ecosystem roles.
 
-#### A.1.4.6.2 - Temporary Exception for Facilitator “Ecosystem” [Core]  <!-- UUID: 6aa88317-4dc2-4b50-87bd-27cc6de9c767 -->
+#### A.1.4.5.2 - Temporary Exception for Facilitator “Ecosystem” [Core]  <!-- UUID: 6aa88317-4dc2-4b50-87bd-27cc6de9c767 -->
 
 The Facilitator “Ecosystem” is temporarily exempt from the general rule prohibiting Alignment Conservers from being operationally active in multiple ecosystem roles. “Ecosystem” will continue to act in the Facilitator role as well as provide operational services as an Ecosystem Actor. This exception must be resolved as soon as it is reasonably possible to do so.
 
-#### A.1.4.6.0.3.1 - Operationally Active - Element Annotation [Annotation]  <!-- UUID: 8d706ce8-3d1f-4791-b416-a3a037b93feb -->
+#### A.1.4.5.0.3.1 - Operationally Active - Element Annotation [Annotation]  <!-- UUID: 8d706ce8-3d1f-4791-b416-a3a037b93feb -->
 
 The element “operationally active” refers to being formally engaged in a specific role that is defined in the Atlas as executing a mission or function within the Sky ecosystem.
 
-#### A.1.4.6.0.4.1 - Operationally Active - Whether An Entity Is “Operationally Active" In A Role Is Determined Purely On A Formal Basis [Action Tenet]  <!-- UUID: 38c70e00-b5b8-4d1b-9f57-809ef284cb25 -->
+#### A.1.4.5.0.4.1 - Operationally Active - Whether An Entity Is “Operationally Active" In A Role Is Determined Purely On A Formal Basis [Action Tenet]  <!-- UUID: 38c70e00-b5b8-4d1b-9f57-809ef284cb25 -->
 
 Whether an entity is "operationally active" in a role is determined purely on a formal basis. As long as an entity occupies or assumes a role that is formally defined in the Atlas, that entity is "operationally active" in that role. This is notwithstanding the amount of time the entity devotes to a role; the nature of the work performed by the entity in a role; the fact that the entity is on a leave of absence from one role; the fact that the entity's role is uncompensated; or the fact that the entity alternates between two roles to avoid simultaneous performance of both roles.
 
@@ -972,7 +944,7 @@ This Tenet is based on the rationale of protecting against misalignment risks th
 
 See also, [Other Ecosystem Roles  - Phrase Must Be Read In Its Broadest Sense By Facilitators](56fd4055-b412-4058-a33a-57d4d1b54181).
 
-##### A.1.4.6.0.4.1.1.1 - Alternating Between Two Roles In Separate Time Intervals [Scenario]  <!-- UUID: d5e82bc9-9d46-4d1b-a580-dc695d4a3c19 -->
+##### A.1.4.5.0.4.1.1.1 - Alternating Between Two Roles In Separate Time Intervals [Scenario]  <!-- UUID: d5e82bc9-9d46-4d1b-a580-dc695d4a3c19 -->
 
 Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. The entity actively occupied these two roles, but alternated between them in separate time intervals.
 
@@ -981,7 +953,7 @@ Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, 
 
 The Facilitator should derecognize Entity per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
-###### A.1.4.6.0.4.1.1.1.var1 - Alternating Between Two Roles In Separate Time Intervals - var. 1 [Scenario Variation]  <!-- UUID: b7eb5043-6f80-4dcf-8392-fbb3e200cf9e -->
+###### A.1.4.5.0.4.1.1.1.var1 - Alternating Between Two Roles In Separate Time Intervals - var. 1 [Scenario Variation]  <!-- UUID: b7eb5043-6f80-4dcf-8392-fbb3e200cf9e -->
 
 Entity occupied the role of an unranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. Entity actively occupied these two roles, but alternated between them in separate time intervals.
 
@@ -992,7 +964,7 @@ An unranked, uncompensated Aligned Delegate is nevertheless an 'ecosystem role' 
 
 The Facilitator should derecognize Entity from both AC roles per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
-##### A.1.4.6.0.4.1.1.2 - Extended Leave Of Absence [Scenario]  <!-- UUID: b3052722-26f3-4619-8535-99404e78ddae -->
+##### A.1.4.5.0.4.1.1.2 - Extended Leave Of Absence [Scenario]  <!-- UUID: b3052722-26f3-4619-8535-99404e78ddae -->
 
 Entity occupied the role of a Facilitator. They took a leave of absence from the Facilitator role and stepped into the role of a Stability Scope Advisor. At the time their behavior was discovered by another Facilitator, the Entity had been performing solely in the role of a Stability Scope Advisor, while remaining on a leave of absence from their Facilitator role.
 
@@ -1003,7 +975,7 @@ The Facilitator should derecognize Entity from the Facilitator role per A.1.4 - 
 
 The Facilitator should likely consider derecognizing Entity from the Stability Scope Advisor role. No specific logic exists as yet for the adjudication of misalignment on the part of a Scope Advisor.
 
-##### A.1.4.6.0.4.1.1.3 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
+##### A.1.4.5.0.4.1.1.3 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
 
 Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles.
 
@@ -1014,7 +986,7 @@ The Facilitator should derecognize Entity as an AD per A.1.4 - A10 - Alignment C
 
 No specific logic exists as yet for the adjudication of misalignment on the part of an Ecosystem Actor team member.
 
-###### A.1.4.6.0.4.1.1.3.var1 - On-Call Or Standby Role - var. 1 [Scenario Variation]  <!-- UUID: 1b2b438f-e34c-4683-97ef-2227f6c425eb -->
+###### A.1.4.5.0.4.1.1.3.var1 - On-Call Or Standby Role - var. 1 [Scenario Variation]  <!-- UUID: 1b2b438f-e34c-4683-97ef-2227f6c425eb -->
 
 Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles. During its investigation, the Facilitator discovered evidence that, despite the EA having a general policy that "on call" devs are paid only a nominal fee for the bounded time periods they are on call, Entity had been receiving an inordinately large compensation from the EA. When the Facilitator pressed both the EA and Entity for an explanation, none was given.
 
@@ -1027,14 +999,14 @@ Under these circumstances, it is reasonable to extrapolate that derecognition fr
 
 The concern remains that, potentially, a bad actor can continue to exploit the ecosystem, especially if other ecosystem participants are not aware of their questionable history. To mitigate this risk, the Facilitator can include details about the evidence it discovered in its formal derecognition notice, which can impact the reputation score of Entity.
 
-##### A.1.4.6.0.4.1.1.4 - Resignation Notice Not Received [Scenario]  <!-- UUID: 5754dde6-7b8f-45d6-a633-c40fd6382ca6 -->
+##### A.1.4.5.0.4.1.1.4 - Resignation Notice Not Received [Scenario]  <!-- UUID: 5754dde6-7b8f-45d6-a633-c40fd6382ca6 -->
 
 Entity was a full-time team member of a Governance Facilitator. Entity emailed the Facilitator a formal letter of resignation and then transitioned into the role of an AD. The Facilitator did not receive the resignation email and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator’s investigation, Entity provided proof of the resignation email. The email clearly stated an effective date of resignation, which date was prior to Entity's transition into the AD role. Entity also provided proof that all their permissions to the Facilitator team workspace were revoked; and they had no further communications or interactions with the Facilitator team after their intended resignation date.
 
 **Finding**: Aligned
 **Additional Guidance**: Though the Facilitator incorrectly continued to list Entity as a team member, in actual practice, Entity had cut all ties with the Facilitator team after the intended resignation date. This was proven via the dated resignation email; the revoked permissions; and the lack of communications. Given these facts, the Target Document is not triggered.
 
-###### A.1.4.6.0.4.1.1.4.var1 - Resignation Notice Not Received - var. 1 [Scenario Variation]  <!-- UUID: b13b099c-c90c-4e1a-9caa-3103c9b333a0 -->
+###### A.1.4.5.0.4.1.1.4.var1 - Resignation Notice Not Received - var. 1 [Scenario Variation]  <!-- UUID: b13b099c-c90c-4e1a-9caa-3103c9b333a0 -->
 
 Entity was a part-time team member of a Governance Facilitator. Entity then transitioned into the role of an AD. The Facilitator did not receive any resignation notice from Entity and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator's investigation, Entity claimed it had sent the Facilitator a resignation email, but could not provide actual proof of this. The Governance Facilitator also discovered that Entity still had permissions to the Facilitator team workspace. The team's Discord contained casual, non-work related interactions between Entity and the Facilitator team members even after the date Entity became a formally recognized AD.
 
@@ -1043,14 +1015,14 @@ Entity was a part-time team member of a Governance Facilitator. Entity then tran
 
 The Governance Facilitator should derecognize Entity from its AD role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
-##### A.1.4.6.0.4.1.1.5 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
+##### A.1.4.5.0.4.1.1.5 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
 
 Entity was a volunteer moderator for Sky’s Discord. Without leaving their moderator role, Entity registered and became active as an Aligned Delegate.
 
 **Finding**: Aligned
 **Additional Guidance**: ‘Volunteer Discord moderator' is not a role that is formally defined in the Atlas. Therefore, Entity's first position as volunteer Discord moderator does not count as an ecosystem role. The Target Document is not triggered at all in this Scenario.
 
-#### A.1.4.6.0.4.2 - Other Ecosystem Roles  - Phrase Must Be Read In Its Broadest Sense By Facilitators [Action Tenet]  <!-- UUID: 56fd4055-b412-4058-a33a-57d4d1b54181 -->
+#### A.1.4.5.0.4.2 - Other Ecosystem Roles  - Phrase Must Be Read In Its Broadest Sense By Facilitators [Action Tenet]  <!-- UUID: 56fd4055-b412-4058-a33a-57d4d1b54181 -->
 
 The Target Document is violated if an Alignment Conserver formally occupies two or more Sky ecosystem roles. The phrase "other ecosystem roles" is read in its broadest sense to mean the totality of roles that are formally defined in the Atlas with a function in the Sky ecosystem. 
 
@@ -1060,15 +1032,15 @@ The rationale of this rule is to protect against misalignment risks that arise w
 
 See also, [Operationally Active - Whether An Entity Is “Operationally Active" In A Role Is Determined Purely On A Formal Basis](38c70e00-b5b8-4d1b-9f57-809ef284cb25).
 
-#### A.1.4.6.0.4.3 - Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document [Action Tenet]  <!-- UUID: 9b3828a7-0e71-4c63-82d2-8f65ee84a1ca -->
+#### A.1.4.5.0.4.3 - Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document [Action Tenet]  <!-- UUID: 9b3828a7-0e71-4c63-82d2-8f65ee84a1ca -->
 
 An "ecosystem role" need not be compensated or full-time to be regulated by the Target Document.
 
-#### NR-3 - Should Ban Against Occupying Two Ecosystem Roles Apply to All Sky Stakeholder Roles? [Needed Research]  <!-- UUID: 25d8f23b-4d43-43be-aa5a-c48fe372cd7a -->
+#### NR-2 - Should Ban Against Occupying Two Ecosystem Roles Apply to All Sky Stakeholder Roles? [Needed Research]  <!-- UUID: 25d8f23b-4d43-43be-aa5a-c48fe372cd7a -->
 
 Given the rationale behind the Target Document [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](9b1d1c2f-ace0-4637-8050-4711ae9f9a8c), the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
 
-#### NR-4 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]  <!-- UUID: 4560326b-abab-4147-957f-c5c8ddfa96f1 -->
+#### NR-3 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]  <!-- UUID: 4560326b-abab-4147-957f-c5c8ddfa96f1 -->
 
 Should team contributors be subject to the Target Document’s prohibition against occupying two roles? What would be the arguments for and against such a position? 
 
@@ -1078,21 +1050,21 @@ The sharing of contributors across several Sky teams  - such that contributors g
 
 Would it make a meaningful difference to require contributors who do wish to work multiple roles to be doxxed?
 
-### A.1.4.7 - ACs Subject To Both General And Role-specific Requirements [Section]  <!-- UUID: a59420ba-5e2c-4736-99a4-fb64eea4cc32 -->
+### A.1.4.6 - ACs Subject To Both General And Role-specific Requirements [Section]  <!-- UUID: a59420ba-5e2c-4736-99a4-fb64eea4cc32 -->
 
 An Alignment Conserver is fully responsible for meeting all requirements tied to the general AC role, which requirements are specified in this Article. 
 
 In addition, Aligned Delegates and Facilitators must adhere to the specific requirements tied to their specialized roles. These specific requirements are detailed in [A.1.5](75f0063c-ad70-49e4-b356-9b76097ced7b) and [A.1.6](1ce24b08-84ff-4524-9710-49bba429c6ef). Breaching these role-specific requirements and responsibilities is misalignment equivalent to breaching the general AC-requirements.
 
-#### A.1.4.7.0.4.1 - Evaluating AC breach of role-specific requirement vs. general requirement [Action Tenet]  <!-- UUID: eef4ed65-7a72-474a-9f87-d2740bfe1960 -->
+#### A.1.4.6.0.4.1 - Evaluating AC breach of role-specific requirement vs. general requirement [Action Tenet]  <!-- UUID: eef4ed65-7a72-474a-9f87-d2740bfe1960 -->
 
 When an Alignment Conserver breaches a role-specific requirement, this is misalignment on par with a breach of a general AC requirement, and vice versa. Facilitators must not default to assigning greater or lesser culpability on the sole basis of whether the breached rule is role-specific or general. Apart from this caveat, misaligned acts can have varying degrees of severity or harm, and should be individually evaluated by the Facilitator in any action.
 
-### A.1.4.8 - AC Requirements Of Anonymity And High Operational Security [Section]  <!-- UUID: 36b68ff0-30a3-4fb9-af04-a2869a4233fe -->
+### A.1.4.7 - AC Requirements Of Anonymity And High Operational Security [Section]  <!-- UUID: 36b68ff0-30a3-4fb9-af04-a2869a4233fe -->
 
 The Alignment Conserver roles of Facilitator and Aligned Delegate require anonymity and high levels of operational security. Breaches of these anonymity and operational security requirements are considered serious misalignment. In the event of such breaches, the known identities of individuals holding these AC roles shall be promptly derecognized, and they will be barred from further participation as Alignment Conservers.
 
-#### A.1.4.8.1 - Exemption From Facilitator Anonymity Requirement [Core]  <!-- UUID: cb2ae821-e9b8-47b0-bda8-bc8bb149c5b5 -->
+#### A.1.4.7.1 - Exemption From Facilitator Anonymity Requirement [Core]  <!-- UUID: cb2ae821-e9b8-47b0-bda8-bc8bb149c5b5 -->
 
 The Facilitator “Ecosystem” is exempt from the anonymity requirement, as well as the requirement of high levels of operational security insofar as the latter requirement relates to maintaining anonymity. This exemption applies solely to the Facilitator "Ecosystem", as they onboarded into the role prior to the ratification of Atlas v1 (March 27, 2023), which introduced the anonymity requirement for Facilitators.
 
@@ -1100,11 +1072,11 @@ This exemption applies to limit the effect of the following provisions: [A.1.6 -
 
 This limited exemption takes precedence over any conflicting provisions in the Atlas.
 
-#### A.1.4.8.0.4.1 - ADs & Facilitators required to adhere to comprehensive operational security practices [Action Tenet]  <!-- UUID: 598ff9cf-146e-4499-93d3-583518c390a1 -->
+#### A.1.4.7.0.4.1 - ADs & Facilitators required to adhere to comprehensive operational security practices [Action Tenet]  <!-- UUID: 598ff9cf-146e-4499-93d3-583518c390a1 -->
 
 The operational security of the Alignment Conserver roles is key to governance integrity overall. Aligned Delegates and Facilitators are mandated to maintain rigorous operational security practices to ensure that their identities and work activities are anonymized and all related information is safeguarded. Such practices must go beyond basic privacy-enhancing measures and must include the use of secure communication channels, stringent data encryption, anonymity tools like VPNs and TOR networks, regular security audits, and rigorous digital footprint management.
 
-#### NR-5 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: e33879c1-93d0-48a6-8f08-ad00a4821bde -->
+#### NR-4 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: e33879c1-93d0-48a6-8f08-ad00a4821bde -->
 
 The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
 
@@ -1116,33 +1088,33 @@ The Security Scope Advisor could also assist in reviewing an informant's evidenc
 
 This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
 
-### A.1.4.9 - Swift Action Is Required From Facilitators To Redress AC Misalignment [Section]  <!-- UUID: 40f850ee-b3f2-4126-9128-4f6a6b38d275 -->
+### A.1.4.8 - Swift Action Is Required From Facilitators To Redress AC Misalignment [Section]  <!-- UUID: 40f850ee-b3f2-4126-9128-4f6a6b38d275 -->
 
 The Core Facilitator must act swiftly when an AC is suspected of breaching the requirements defined in this Article, or the requirements defined in the Articles specific to the Aligned Delegate or Facilitator role.
 
 The Core Facilitator's failure to act promptly in addressing credible evidence of AC misalignment or to mitigate the risk of misalignment spreading among ACs is considered an act of misalignment itself. Formal allegations of such failure must be adjudicated by Core GovOps pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57)
 
-#### A.1.4.9.0.3.1 - Risk Of Misalignment Spreading Among ACs - Element Annotation [Annotation]  <!-- UUID: 13c4f127-0ef2-43b5-a5ac-905719091bdd -->
+#### A.1.4.8.0.3.1 - Risk Of Misalignment Spreading Among ACs - Element Annotation [Annotation]  <!-- UUID: 13c4f127-0ef2-43b5-a5ac-905719091bdd -->
 
 The element “risk of misalignment spreading among ACs" refers to the potential for misalignment by one AC to influence or lead to misalignment among other ACs, creating a broader systemic risk. The element emphasizes the need for quick action to contain any breach before it spreads and causes wider disruptions.
 
-#### A.1.5.8.0.4.1 - Facilitators’ Authority To Raise Formal Allegation [Action Tenet]  <!-- UUID: e4e7dab8-5e4d-41ad-b1e0-ba3cb9a6f02a -->
+#### A.1.5.16.0.4.1 - Facilitators’ Authority To Raise Formal Allegation [Action Tenet]  <!-- UUID: e4e7dab8-5e4d-41ad-b1e0-ba3cb9a6f02a -->
 
 Any community member or Aligned Delegate with information pertinent to suspected Alignment Conserver misalignment may take their concerns directly to the Core Facilitator.  Upon receiving such information, the Core Facilitator must promptly conduct an initial review to quickly assess the credibility of the concern. Based on this preliminary review, the Core Facilitator must decide whether to initiate a formal adjudication process in accordance with [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
 
 Where the allegation of misalignment concerns a Governance Facilitator, a community member can take their concerns to any other Scope Facilitator, who is then empowered to initiate the formal adjudication process.
 
-#### A.1.4.9.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action [Action Tenet]  <!-- UUID: 364aaf22-d12f-4f48-9167-f91d6003dc5b -->
+#### A.1.4.8.0.4.2 - Must Act Swiftly - Facilitators Must Take Immediate And Prompt Action [Action Tenet]  <!-- UUID: 364aaf22-d12f-4f48-9167-f91d6003dc5b -->
 
 By "swiftly,” the Target Document requires Facilitators to take immediate and prompt action without unnecessary delay. The urgency is intended to prevent further harm or disruption within the governance system. A highly time-sensitive response is mandated for any breaches or potential risks of AC misalignment.
 
-#### NR-6 - Derecognition Procedure [Needed Research]  <!-- UUID: 7b90bfa2-c857-4170-b6cd-2d4adb290aa0 -->
+#### NR-5 - Derecognition Procedure [Needed Research]  <!-- UUID: 7b90bfa2-c857-4170-b6cd-2d4adb290aa0 -->
 
 Research specific procedural steps for the derecognition of an AC. The procedure should account for ways in which this process can be streamlined or standardized to ensure swift action. Research should identify potential bottlenecks and suggest ways to eliminate them, such as pre-defined decision-making protocols, clear documentation requirements, and fast-track procedures for urgent cases.
 
 Another point to research involves the concepts of due process or fairness. Specific logic currently active in the Atlas clearly indicates that ACs are held to the highest standards of Universal Alignment. Such a standard would seem to indicate that “fairness” is not an objective in any proceeding involving AC derecognition. What are the arguments for and against this?
 
-### A.1.4.10 - Adjudication Process [Section]  <!-- UUID: 560e1024-0897-4f1e-ae71-3ba31e29ed57 -->
+### A.1.4.9 - Adjudication Process [Section]  <!-- UUID: 560e1024-0897-4f1e-ae71-3ba31e29ed57 -->
 
 The Core Facilitator is responsible for adjudicating formal allegations of misalignment or operational security breaches brought against Alignment Conservers (ACs).
 
@@ -1150,27 +1122,27 @@ In the adjudication of these matters, the Core Facilitator is mandated to hold A
 
 The adjudication process is further defined in the subdocuments herein.
 
-#### A.1.4.10.1 - Opportunity to Respond [Core]  <!-- UUID: 4217002f-6c87-45fb-80ac-598472e3fff9 -->
+#### A.1.4.9.1 - Opportunity to Respond [Core]  <!-- UUID: 4217002f-6c87-45fb-80ac-598472e3fff9 -->
 
 As part of the formal adjudication of AC misalignment or operational security breach, the Core Facilitator must provide the individual/entity subject to the allegation with an opportunity to respond.
 
-##### A.1.4.10.1.0.4.1 - Opportunity To Respond [Action Tenet]  <!-- UUID: ef3b30b9-a03f-4150-a279-5982b63af973 -->
+##### A.1.4.9.1.0.4.1 - Opportunity To Respond [Action Tenet]  <!-- UUID: ef3b30b9-a03f-4150-a279-5982b63af973 -->
 
 The opportunity to respond should include sufficient time to prepare a response, the ability to submit information or evidence, and reasonable access to any information pertinent to the allegation. Where an internal or external whistleblower has provided evidence of potential AC misalignment, the Core Facilitator should keep the whistleblower’s identity confidential.
 
-#### A.1.4.10.2 - Imposing Appropriate Penalty [Core]  <!-- UUID: fad2c7d1-4fe0-44e5-a1f7-c551882d78da -->
+#### A.1.4.9.2 - Imposing Appropriate Penalty [Core]  <!-- UUID: fad2c7d1-4fe0-44e5-a1f7-c551882d78da -->
 
 If the Core Facilitator concludes that the allegation of misalignment or operational security breach was justified, they can impose an appropriate penalty up to and including derecognition of the Alignment Conserver.
 
-##### A.1.4.10.2.1 - Warnings Appropriate For Mild Breach [Core]  <!-- UUID: f8107b34-93b1-4ab8-a6ab-c4e70a048933 -->
+##### A.1.4.9.2.1 - Warnings Appropriate For Mild Breach [Core]  <!-- UUID: f8107b34-93b1-4ab8-a6ab-c4e70a048933 -->
 
 In cases of very mild “slippery slope” breaches of the Alignment Conserver requirements, a formal warning may be given and recorded in the subdocuments herein. Where such a breach was the first instance of misalignment by the Alignment Conserver, no disciplinary measures beyond a formal warning are required.
 
-###### A.1.4.10.2.1.1 - Warning Notice [Core]  <!-- UUID: 0222d1c6-67ab-456e-82d6-41f3b834f285 -->
+###### A.1.4.9.2.1.1 - Warning Notice [Core]  <!-- UUID: 0222d1c6-67ab-456e-82d6-41f3b834f285 -->
 
 Formal warnings are issued publicly, and justification and reasoning must be provided by the Core Facilitator.
 
-###### A.1.4.10.2.1.2 - Warning Recording [Active Data Controller]  <!-- UUID: ba80af50-c233-418b-8ed0-88dad26a9dc9 -->
+###### A.1.4.9.2.1.2 - Warning Recording [Active Data Controller]  <!-- UUID: ba80af50-c233-418b-8ed0-88dad26a9dc9 -->
 
 Formal warnings are recorded by adding the identity and known aliases or associated entities to the Active Data list in [A.1.4 - List of Formally Warned Alignment Conservers](beb9ed67-660b-4ac5-84fe-a5644df957ac).
 
@@ -1180,14 +1152,14 @@ The Active Data is updated as follows:
 
 • The Update Process must follow the protocol for ‘Alignment Conserver Changes’.
 
-####### A.1.4.10.2.1.2.0.6.1 - List of Formally Warned Alignment Conservers [Active Data]  <!-- UUID: beb9ed67-660b-4ac5-84fe-a5644df957ac -->
+####### A.1.4.9.2.1.2.0.6.1 - List of Formally Warned Alignment Conservers [Active Data]  <!-- UUID: beb9ed67-660b-4ac5-84fe-a5644df957ac -->
 
 | Date | Conserver Role | Identity | Known Aliases | Reasoning Post | |------------|----------------|-----------------------|---------------|-----------------------------------------------------------------------------------------------------------------|   
 | 2023-06-08 | AVC Member | HKUST_EPI_BLOCKCHAIN | - | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) |   
 | 2024-04-06 | AVC Member | ACRE DAOs | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) |  
 | 2025-08-15 | Aligned Delegate | SkyStaking | - | [https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9](https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9) |
 
-###### A.1.4.10.2.1.0.4.1 - Adjudication Guidelines to be applied to a second misaligned act or a first misaligned act that is not mild [Action Tenet]  <!-- UUID: 98407e43-d462-4aae-b0b4-89e110a6152c -->
+###### A.1.4.9.2.1.0.4.1 - Adjudication Guidelines to be applied to a second misaligned act or a first misaligned act that is not mild [Action Tenet]  <!-- UUID: 98407e43-d462-4aae-b0b4-89e110a6152c -->
 
 The Target Document fails to specify accountability measures for an AC who commits a misaligned act that is not mild. The Target Document is also silent on the subject of the proper remedial approach if an AC commits a subsequent misaligned act after an initial mild breach. The language does imply subsequent breaches should be treated with increasing severity.
 
@@ -1197,61 +1169,61 @@ Taken in its totality, the above cited Article requires Facilitators to take a h
 
 After the initial warning, any subsequent breach must immediately trigger derecognition, regardless of the degree of severity. Similarly, an initial breach that is not mild in scope or impact must trigger derecognition. This escalation is a necessary consequence of the Atlas's mandate that ACs are held to the highest standards of Universal Alignment.
 
-###### A.1.4.10.2.1.0.4.2 - Mild Slippery Slope Breaches - Evaluating Whether A Misaligned Act Is ‘Very Mild' [Action Tenet]  <!-- UUID: 27846f29-12dd-493e-9584-6091d30fb8cc -->
+###### A.1.4.9.2.1.0.4.2 - Mild Slippery Slope Breaches - Evaluating Whether A Misaligned Act Is ‘Very Mild' [Action Tenet]  <!-- UUID: 27846f29-12dd-493e-9584-6091d30fb8cc -->
 
 The element “mild slippery slope breach” characterizes a form of misalignment or rule breach that, when viewed in isolation, exhibits relatively insignificant scope or impact. Furthermore, a “very mild” act of misalignment often indicates a lack of ill intent (i.e., innocent mistake) or premeditation on the part of the rule violator. A “very mild slippery slope breach” will likely be the violator's first offense.
 
-###### A.1.4.10.2.1.0.4.3 - Mild Slippery Slope Breaches - Facilitators Required To Be Proactive Against Even Mild Misalignment [Action Tenet]  <!-- UUID: 9bf5a866-08bd-4519-88de-1749af02645c -->
+###### A.1.4.9.2.1.0.4.3 - Mild Slippery Slope Breaches - Facilitators Required To Be Proactive Against Even Mild Misalignment [Action Tenet]  <!-- UUID: 9bf5a866-08bd-4519-88de-1749af02645c -->
 
 Any Alignment Conserver misalignment, regardless of its seemingly trivial nature, carries inherent risks. ACs must be held to the highest standards of Universal Alignment. The Target Document indicates that leniency towards AC infractions could set a risky precedent, where, for instance, misaligned actors justify themselves based on prior instances of lenience.
 
-###### NR-7 - Defining Threshold For “Very Mild Slippery Slope" Breaches [Needed Research]  <!-- UUID: db47c59f-a822-4213-9305-8c8eb07c41f0 -->
+###### NR-6 - Defining Threshold For “Very Mild Slippery Slope" Breaches [Needed Research]  <!-- UUID: db47c59f-a822-4213-9305-8c8eb07c41f0 -->
 
 What specific actions or omissions qualify as "very mild slippery slope" breaches? Helpful research can include: developing a set of criteria or a checklist that defines what constitutes a "very mild slippery slope" breach. This could involve an analysis of past or hypothetical incidents, consultations with the Facilitators, etc. Such guidelines are likely needed to help Facilitators reliably determine whether an act should be classified as a 'minor' slippery slope infraction or a more severe act which would merit derecognition.
 
-##### A.1.4.10.2.2 - Mandated Derecognition For Severe Breaches [Core]  <!-- UUID: 12044fd7-4cfa-4431-aa03-a9531353c6dd -->
+##### A.1.4.9.2.2 - Mandated Derecognition For Severe Breaches [Core]  <!-- UUID: 12044fd7-4cfa-4431-aa03-a9531353c6dd -->
 
 In cases where severe actions or violations occur that can be reasonably interpreted as Governance Attacks, the Alignment Conserver must be promptly derecognized by the Core Facilitator.
 
-###### A.1.4.10.2.2.0.3.1 - Governance Attacks - Element Annotation [Annotation]  <!-- UUID: c5bb1fc6-942f-4edc-818b-bf7aa75137c2 -->
+###### A.1.4.9.2.2.0.3.1 - Governance Attacks - Element Annotation [Annotation]  <!-- UUID: c5bb1fc6-942f-4edc-818b-bf7aa75137c2 -->
 
 The element “governance attack” is a critical violation of the Sky ecosystem's governance protocols, far surpassing minor breaches in scope and impact. This term is reserved for misaligned acts with the near-term potential to severely compromise the Ecosystem's foundational structure and operational integrity. In contrast to mild breaches, which may involve actors with unintentional or benign motivations, a Governance Attack is distinguished by its deliberate and premeditated nature. Actors orchestrating such attacks are likely driven by strategic intent, aiming to destabilize or exploit the governance framework for their own gain.
 
-###### A.1.4.10.2.2.0.4.1 - Promptly Derecognized - Mandated Timeline For AC Derecognition For Misalignment [Action Tenet]  <!-- UUID: d7201212-e3f6-46a6-bab3-e859b88b0af2 -->
+###### A.1.4.9.2.2.0.4.1 - Promptly Derecognized - Mandated Timeline For AC Derecognition For Misalignment [Action Tenet]  <!-- UUID: d7201212-e3f6-46a6-bab3-e859b88b0af2 -->
 
 The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'
 
 To adhere to this commitment, the Core Facilitator must derecognize the AC within a general timeframe of 1-2 calendar days upon conclusion of an adjudication that finds against the AC for misalignment. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
 
-###### NR-8 - Defining “Severe Actions Or Violations" And “Governance Attack” [Needed Research]  <!-- UUID: 98d5b899-f012-403d-9c6a-2ffda4ec2961 -->
+###### NR-7 - Defining “Severe Actions Or Violations" And “Governance Attack” [Needed Research]  <!-- UUID: 98d5b899-f012-403d-9c6a-2ffda4ec2961 -->
 
 What specific criteria or actions qualify as "severe" enough to warrant derecognition? Develop clear guidelines that define what constitutes a "severe case" in the context of misaligned actions. This involves identifying key indicators of severity, such as the magnitude of the impact, the intent behind the actions, and the potential or actual harm caused.
 
 Also needed: What actions or behaviors specifically constitute a "Governance Attack”? Can you propose criteria or frameworks for assessing intent, the scope of actions, and their potential consequences? The research can perhaps explore how different governance models define and respond to attacks and consider psychological, legal, and operational perspectives to support a more fact-driven interpretive approach.
 
-#### A.1.4.10.3 - Issuing of Public Report [Core]  <!-- UUID: 8d8dfab8-1350-42e7-bc20-3ae2eca86005 -->
+#### A.1.4.9.3 - Issuing of Public Report [Core]  <!-- UUID: 8d8dfab8-1350-42e7-bc20-3ae2eca86005 -->
 
 Where feasible, the Core Facilitator should issue a report at the conclusion of their adjudication. The report should be posted on the Sky Forum and should summarize the findings and reasoning supporting their decision.
 
-##### A.1.4.10.3.0.4.1 - Where Feasible - Core Facilitator Have Discretion In Determining Whether Public Report Should Be Issued [Action Tenet]  <!-- UUID: f6f61fd9-9aec-4db4-b825-162098495376 -->
+##### A.1.4.9.3.0.4.1 - Where Feasible - Core Facilitator Have Discretion In Determining Whether Public Report Should Be Issued [Action Tenet]  <!-- UUID: f6f61fd9-9aec-4db4-b825-162098495376 -->
 
 The element “where feasible” means that the Core Facilitator have discretion to determine whether it is appropriate to issue a Public Report following an AC misalignment adjudication. Where an adjudication proceeding involves sensitive security matters or evidence, the Core Facilitator have the option to defer from issuing a public report entirely; or to issue a report that excludes the sensitive security matters, while maintaining as much transparency as possible. The latter option should be preferred where possible.
 
-#### A.1.4.10.4 - Governance Facilitator Is Subject Of Misalignment Allegation [Core]  <!-- UUID: 1fd1ecc3-49c6-4e8c-b1fe-4387460d3514 -->
+#### A.1.4.9.4 - Governance Facilitator Is Subject Of Misalignment Allegation [Core]  <!-- UUID: 1fd1ecc3-49c6-4e8c-b1fe-4387460d3514 -->
 
 If the Core Facilitator is the subject of an allegation of misalignment or operational security breach, the adjudication process may be initiated by Core GovOps.
 
-#### A.1.4.10.0.4.1 - ACs Must Go Beyond Mere Technical Compliance With Rules [Action Tenet]  <!-- UUID: 8d8980b8-3ac7-49c6-8bc9-f601733a3198 -->
+#### A.1.4.9.0.4.1 - ACs Must Go Beyond Mere Technical Compliance With Rules [Action Tenet]  <!-- UUID: 8d8980b8-3ac7-49c6-8bc9-f601733a3198 -->
 
 Alignment Conservers (ACs) must meet the most stringent standards for Universal Alignment, demonstrating not only compliance with the letter of the rules but also a deep and authentic commitment to the spirit of the rules, i.e., the underlying principles and goals of Sky. This demanding standard goes beyond mere technical compliance and requires proof of genuine intent and actions consistent with upholding the Spirit of the Atlas. 
 
 See [A.0.1 - Atlas Preamble - Definitions - Letter Of The Rule Vs Spirit Of The Rule](ff16fd74-3a81-4cac-92b4-1208d4d9f337).
 
-#### A.1.4.10.0.4.2 - Doubt Regarding AC’s Alignment Will Be Resolved Against Them [Action Tenet]  <!-- UUID: 3b516fa0-bc6f-4fae-8c98-274798ab858c -->
+#### A.1.4.9.0.4.2 - Doubt Regarding AC’s Alignment Will Be Resolved Against Them [Action Tenet]  <!-- UUID: 3b516fa0-bc6f-4fae-8c98-274798ab858c -->
 
 In adjudicating potential misalignment of Alignment Conservers, Facilitators are not to assume innocence or give leeway in cases of ambiguity. Instead, the burden is on the Alignment Conserver to provide clear and convincing evidence of their alignment. Any uncertainty or doubt regarding the AC’s alignment will be resolved against them, requiring them to definitively prove their adherence to the Atlas.
 
-#### NR-9 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 279f417e-2fec-473d-ab7c-eaf5b371c598 -->
+#### NR-8 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 279f417e-2fec-473d-ab7c-eaf5b371c598 -->
 
 This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
 
@@ -1262,6 +1234,34 @@ Needed Research here includes methods for implementing a structured fact-finding
 Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof (e.g., preponderance of evidence, beyond a reasonable doubt), and the use of experts. 
 
 How much discretion should Facilitators have in interpreting and applying the element “the highest standard of Universal Alignment”? How to safeguard against bias and ensure all Facilitator adjudications are made impartially? Investigate mechanisms to maintain objectivity and impartiality throughout the adjudication, fact-finding, and evidence evaluation processes. This could include the establishment of independent review panels (which could operate post facto to avoid excessively delaying the deplatforming of misaligned ACs), the use of conflict-of-interest policies, and training on cognitive biases for those involved in decision-making.
+
+### A.1.4.10 - AC Derecognition [Section]  <!-- UUID: ac998664-5b5e-4ea5-813b-dc3105ea6cf2 -->
+
+Derecognition is the ultimate accountability measure for misalignment and entails permanently removing the individual or entity from their role as an Alignment Conserver. An individual/entity who has been derecognized from a Facilitator role is not eligible to serve as an Aligned Delegate, and vice versa. 
+
+The subdocuments herein define rules and processes related to Alignment Conserver Derecognition.
+
+#### A.1.4.10.1 - Derecognition Notice [Core]  <!-- UUID: 9c05207d-5e11-43ae-a8a3-1b61734d6ef9 -->
+
+Derecognition notices are issued publicly, and justification and reasoning must be provided by the Core Facilitator.
+
+#### A.1.4.10.2 - Derecognition Recording [Active Data Controller]  <!-- UUID: 15def023-af2e-4a27-92c4-6fab7b6f02f6 -->
+
+Derecognitions of Alignment Conservers are recorded by adding the identity and known aliases or associated entities to [A.1.4 - Derecognized Alignment Conservers](e7aec672-ed19-4329-aaf7-736950be2eb7).
+
+The Active Data is updated as follows:
+
+• The Responsible Party is the Core Facilitator.
+
+• The Update Process must follow the protocol for ‘Alignment Conserver Changes’.
+
+##### A.1.4.10.2.0.6.1 - Derecognized Alignment Conservers [Active Data]  <!-- UUID: e7aec672-ed19-4329-aaf7-736950be2eb7 -->
+
+| Date | Conserver Role | Identity | Known Aliases | Reasoning Post | |------------|----------------|------------|---------------|-----------------------------------------------------------------------------------------------------------------| | 2023-06-08 | AD | Bulwark | - | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) | | 2023-10-30 | AD | PALC | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-10-30 | AD | Navigator | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-02-02 | AD | 0xDefensor | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619) | | 2024-04-06 | AD | TRUE NAME | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) | | 2024-12-17 | AD | UPMaker | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | QGov | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Skynet | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Pf | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |
+
+#### NR-9 - Derecognition Uncertainty Due To Anonymous Actors [Needed Research]  <!-- UUID: 69e4df9f-d2f3-4fd2-9add-e1314a0a5eb3 -->
+
+The Target Document defines the act of derecognition as “permanently removing” an entity from the Alignment Conserver role. In fact, it is not possible to effect such a permanent removal. Given the presence of anonymous/pseudonymous actors in the decentralized “workforce” of the Sky ecosystem, a known identity of an actor can be barred from an AC role; and yet that actor can easily re-enter the system under a different pseudonym or identity. Consider what measures can be implemented to counteract the scenario where derecognized entities reappear under a different guise. A robust reputation system is already planned; by tracking reputation that is earned over a long timescale, a derecognized entity would be barred from quickly regaining a foothold.
 
 ## A.1.5 - Aligned Delegates [Article]  <!-- UUID: 75f0063c-ad70-49e4-b356-9b76097ced7b -->
 
@@ -1353,219 +1353,15 @@ The Active Data is updated as follows:
 `[`https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92 `](https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92)[`https://etherscan.io/verifySig/275839`](https://etherscan.io/verifySig/275839)` |   
 `[`https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C `](https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C)[`https://etherscan.io/verifySig/275837`](https://etherscan.io/verifySig/275837)` | `[`https://forum.sky.money/t/ad-recognition-submission/26743`](https://forum.sky.money/t/ad-recognition-submission/26743)` |`
 
-### A.1.5.2 - Budget Contingency [Section]  <!-- UUID: cdea1271-c2fc-4274-bdfb-737e7450c6c4 -->
-
-A Ranked Delegate’s allocated budget can be reduced if they do not fully comply with the participation requirements defined in this Article at [A.1.5 - A11 - Aligned Delegates - Budget And Participation Requirements - Voting-Activity Metrics](f1fad141-fbcc-4f09-baa0-95875a26d4a3), [A.1.5 - A12 - Aligned Delegates - Budget And Participation Requirements - Voting-Communication Metrics](fedf06e5-7657-4aaf-9a1d-d2e3b71de773), and [A.1.5 - A13 - Aligned Delegates - Budget And Participation Requirements - Emergency Communications Requirement](a6bd8d88-4092-4547-86c9-fbda87aeacfd).
-
-### A.1.5.3 - Voting-Activity Metrics [Section]  <!-- UUID: f1fad141-fbcc-4f09-baa0-95875a26d4a3 -->
-
-The budget stream allocated to a Ranked Delegate (RD) is modified based on their voting-activity metrics over the past six (6) months. This budget modification takes into account the overall participation of the Ranked Delegate in all votes they are eligible to cast as an Aligned Delegate (AD).
-
-If an RD participates in less than 95% of all eligible votes within the last six (6) months, their RD budget stream is reduced. The reduction is applied on a proportional linear scale: for every percentage point below 95% voting activity, the RD's budget is reduced correspondingly. 
-
-Should an RD’s voting activity fall to 75% of all eligible votes within the last six (6) months, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
-
-#### A.1.5.3.0.3.1 - Proportional Linear Scale - Element Annotation [Annotation]  <!-- UUID: 57c35484-4c5f-4349-a7fe-097618b4213a -->
-
-The element "proportional linear scale" describes a method where the budget reduction is directly proportional to the decline in voting activity between 95% and 75%. Here, the pertinent range of voting activity spans from 95% to 75%, which is 20 percentage points. The budget decreases linearly across these 20 percentage points. In other words, the RD budget decreases by **5%** for every percentage point drop in voting activity from 95% to 75% (since 100% divided by 20 percentage points = 5% per point).
-
-### A.1.5.4 - Voting-Communication Metrics [Section]  <!-- UUID: fedf06e5-7657-4aaf-9a1d-d2e3b71de773 -->
-
-The budget stream allocated to a Ranked Delegate (RD) is modified based on their voting-communication metrics over the past six (6) months. An AD is required to provide an explanation for each vote they participate in. This budget modification takes into account the Ranked Delegate’s fulfillment of this voting-communication requirement in all votes they are eligible to cast as an Aligned Delegate (AD).
-
-If an RD provides the required voting-communication on less than 95% of all eligible votes within the last six (6) months, their RD budget stream is reduced. The reduction is applied on a proportional linear scale: for every percentage point below 95% voting-communication activity, the RD's budget is reduced correspondingly.
-
-Should a RD’s voting-communication activity fall to 75% of all eligible votes within the last six (6) months, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
-
-#### A.1.5.4.0.3.1 - Proportional Linear Scale - Element Annotation [Annotation]  <!-- UUID: 57a0be8f-c0d8-4d0c-bb99-ca3e63da5058 -->
-
-The element "proportional linear scale" describes a method where the budget reduction is directly proportional to the decline in voting-communication activity between 95% and 75%. Here, the pertinent range of voting-communication activity spans from 95% to 75%, which is 20 percentage points. The budget decreases linearly across these 20 percentage points. In other words, the RD budget decreases by **5%** for every percentage point drop in voting-communication activity from 95% to 75% (since 100% divided by 20 percentage points = 5% per point).
-
-#### A.1.5.4.0.3.2 - Voting-Communication Metrics - Element Annotation [Annotation]  <!-- UUID: ca88baad-2457-4454-9e34-367156a59e78 -->
-
-The element "voting-communication metrics" refers to the percentage of votes for which an Aligned Delegate provides the required written explanations or justifications of their casted votes in Governance Polls and Executive Votes. These written explanations are posted in the AD’s Forum thread. 
-
-The Target Document’s function is to ensure that SKY holders delegating to the AD have full transparency to understand the AD’s decision-making process.
-
-#### NR-10 - Criteria For AD Voting-Communication Requirement [Needed Research]  <!-- UUID: ea34cf2b-b756-4c55-b317-7e4802b6f9b3 -->
-
-For the purpose of enforcing the Target Document, should there be explicit criteria for Aligned Delegates’ voting-communications? What constitutes an adequate explanation for each vote? How would the Core Facilitator evaluate ADs’ explanations for quality, completeness, etc.? How can the Core Facilitator objectively assess explanations that may vary widely in style and content?
-
-How might ADs’ explanations vary across different types of votes, and should the criteria reflect these differences? Should more complex or high-stakes votes require more detailed explanations than routine or procedural votes?
-
-What feedback mechanisms should be in place to help ADs improve their explanations?
-
-What are the risks of not having explicit criteria for voting-communications? One is the potential failure of the Target Document’s objective to ensure that ADs’ voting activity is transparent to SKY holders who have delegated to that AD.
-
-### A.1.5.5 - Emergency Communications Requirement [Section]  <!-- UUID: a6bd8d88-4092-4547-86c9-fbda87aeacfd -->
-
-The budget stream allocated to a Ranked Delegate (RD) is modified based on their correct usage of required tools for emergency communications.
-
-Should an RD fail to correctly use the required communications tools, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
-
-#### A.1.5.5.1 - Signal Account Requirement [Core]  <!-- UUID: 90fd52f1-57bf-4416-a09f-37729669a0fe -->
-
-RDs are required to maintain an active Signal account to facilitate communications related to emergency / urgent situations. This requirement applies regardless of whether a RD has been appointed to the Emergency Response Group. See [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf). RDs must provide their Signal username to the Core Facilitator.
-
-The Core Facilitator is responsible for maintaining an internal registry of RDs’ Signal accounts. Because the ranked RDs are continually changing, the Core Facilitator must ensure that the internal registry is maintained on a frequent basis. The Core Facilitator must check the active status of the RDs’ Signal accounts by sending test messages and confirming the RDs’ timely response; this must be done regularly, on a schedule known only to the Core Facilitator. If a RD fails to timely respond to the test messages, the Core Facilitator must remove them from RD status.
-
-### A.1.5.6 - Atlas Workstreams [Section]  <!-- UUID: a1158473-3052-4af5-bdf5-c504ae3fdf6f -->
-
-Aligned Delegates (ADs) are permitted to concurrently participate in workstreams related to Atlas Core Development, and to receive budgets for this purpose. Such workstreams can include research, data collection, data processing, data review, drafting, peer review, etc. 
-
-This document constitutes an exception to [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](9b1d1c2f-ace0-4637-8050-4711ae9f9a8c), which generally prohibits Alignment Conservers from being operationally active in multiple ecosystem roles.
-
-### A.1.5.7 - Kickbacks Prohibited [Section]  <!-- UUID: 45e794a0-5092-4dea-a0de-6f373228f760 -->
-
-Aligned Delegates are not allowed to provide “kickbacks” from their compensation to SKY holders who delegate to them. Violation of this requirement constitutes misalignment.
-
-### A.1.5.8 - Swift Action Is Required From Facilitators To Redress AD Misalignment [Section]  <!-- UUID: 8953d5dc-1344-4fec-ae25-693204f64e38 -->
-
-The Facilitator must act swiftly when an AD is suspected of breaching the requirements defined in this Article, or the requirements defined in [A.1.4](df4f9bfd-e743-44b5-9c62-9c5f10b15340).
-
-Any Scope Facilitator has the authority to formally raise an allegation of AD misalignment with the Core Facilitator, which then obligates the latter to initiate a formal adjudication pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
-
-A Facilitator's failure to act promptly in addressing credible evidence of AD misalignment or to mitigate the risk of misalignment spreading among ADs is considered an act of misalignment itself. Formal allegations of such failure must be adjudicated by the Core Facilitator pursuant to the same process referenced in the above-cited document.
-
-#### A.1.5.8.0.4.1 - Facilitators’ Authority To Raise Formal Allegation [Action Tenet]  <!-- UUID: e4e7dab8-5e4d-41ad-b1e0-ba3cb9a6f02a -->
-
-Any community member or Aligned Delegate with information pertinent to suspected Alignment Conserver misalignment may take their concerns directly to the Core Facilitator.  Upon receiving such information, the Core Facilitator must promptly conduct an initial review to quickly assess the credibility of the concern. Based on this preliminary review, the Core Facilitator must decide whether to initiate a formal adjudication process in accordance with [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
-
-Where the allegation of misalignment concerns a Governance Facilitator, a community member can take their concerns to any other Scope Facilitator, who is then empowered to initiate the formal adjudication process.
-
-### A.1.5.9 - Whistleblower Bounty [Section]  <!-- UUID: 7ae648c2-e04c-42b1-8d20-21de8ed6bef2 -->
-
-If the Core Facilitator find that an AD has conducted a misaligned act warranting financial penalties or derecognition, such penalties may be deducted from the AD’s Buffer. The amount deducted is used as a whistleblower bounty to compensate any individual/entity who responsibly provided useful data, information or evidence that was helpful to the Facilitators’ adjudication.
-
-The whistleblower bounty is subject to the restrictions specified in [A.1.5 - A9 - Aligned Delegates - Budget And Participation Requirements - AD Buffer Used For Whistleblower Bounties](a26d6fcf-de00-46db-a4eb-ac6c2b8e712a).
-
-Any remaining funds in the AD’s Buffer should be paid out to the derecognized Aligned Delegate.
-
-#### A.1.5.9.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically [Action Tenet]  <!-- UUID: ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d -->
-
-The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available data (e.g., public Discord or Forum posts) to demonstrate that an Aligned Delegate committed misaligned acts will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty. 
-
-Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.
-
-Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](2ea378ee-9b12-4e09-9f42-0c6ec65ef33b).
-
-#### A.1.5.9.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]  <!-- UUID: 989f3891-72dd-4503-94b2-069021c7e947 -->
-
-The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.
-
-It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
-
-#### NR-11 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 02df546f-0c7b-445f-b06d-c51b44b0b84d -->
-
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
-
-Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
-
-For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable? 
-
-And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation? 
-
-How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.
-
-What are the expectations placed on Facilitators to verify whistleblower evidence?
-
-### A.1.5.10 - Mandate To Maintain High Level of Operational Security [Section]  <!-- UUID: c68b4c5d-adf7-49e6-850a-17a688664d40 -->
-
-Aligned Delegates (ADs) are required to maintain a high level of operational security, adhering to best practices in privacy, cybersecurity, and physical resilience. These measures must be implemented at a level that sufficiently safeguards the Sky Ecosystem from physical risk posed by the potential for attacks against ADs. ADs’ operational security protocols should be regularly reviewed and updated to address emerging risks and ensure continuous protection of the ecosystem.
-
-#### NR-12 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: fc6cb4f6-d0da-4696-9e07-9dfccb1ec17e -->
-
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
-
-The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
-
-With an explicit framework of agreed-upon Best Practices, all anon Alignment Conservers have a known target to meet. Further, the existence of an objective framework of Best Practices equips the Core Facilitator to easily determine when a breach of opsec best practice has occurred. The explicit framework removes the risk of the Facilitator inappropriately inserting subjective bias into the decision-making process.
-
-The Security Scope Advisor could also assist in reviewing an informant's evidence to evaluate its validity/quality. The Security Scope Advisor could ensure that the methods used by the informant to secure the evidence were ethical. (All communications, evidence and data shared with the Security Scope Advisor would be under confidentiality protection). Finally, such an Advisor would have specialized expertise in opsec and associated matters that the Core Facilitator lacks".
-
-This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
-
-### A.1.5.11 - Derecognition Required Where AD Operational Security Is Compromised [Section]  <!-- UUID: 7b0da718-62c1-4718-8d9d-47faa1647c6f -->
-
-All Facilitators must act swiftly to investigate ADs who are suspected of breaching their requirements regarding operational security and privacy.
-
-Any Scope Facilitator has the authority to formally raise an allegation concerning AD breach of operational security with the Core Facilitator, which then obligates the latter to initiate a formal adjudication pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
-
-If there is clear evidence or significant suspicion that the operational security of an AD has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the AD.
-
-#### A.1.5.11.0.4.1 - Promptly Derecognized - Mandated Timeline For AD Derecognition For Operational Security Breach [Action Tenet]  <!-- UUID: 36e7c024-0156-4941-a9f2-f53ce25ef39f -->
-
-The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'
-
-To adhere to this commitment, the Core Facilitator must derecognize the AD within a general timeframe of 1-2 calendar days upon conclusion of an investigation that finds against the AD for breach of operational security. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
-
-### A.1.5.12 - In General [Section]  <!-- UUID: 4e9e5868-92ea-486a-b30c-01391a027ba1 -->
+### A.1.5.2 - In General [Section]  <!-- UUID: 4e9e5868-92ea-486a-b30c-01391a027ba1 -->
 
 Delegate Contracts are smart contracts that can receive delegated voting power from SKY holders and Staking users.
 
-#### A.1.5.12.0.3.1 - Delegated Voting Power - Element Annotation [Annotation]  <!-- UUID: 9446b896-f33f-4593-97e9-60db6c385afd -->
+#### A.1.5.2.0.3.1 - Delegated Voting Power - Element Annotation [Annotation]  <!-- UUID: 9446b896-f33f-4593-97e9-60db6c385afd -->
 
 The element “delegated voting power” refers to the ability of SKY holders and Staking users to entrust their voting power to a Delegate Contract, allowing the Aligned Delegate controlling that contract to cast votes in the Sky Governance process on their behalf. The SKY or Staking user always maintains full ownership of their tokens.
 
-### A.1.5.13 - Whistleblower Bounty [Section]  <!-- UUID: 74d01046-995f-4783-aa72-c0d33d90b58c -->
-
-Where a whistleblower responsibly provided useful information for determining that the operational security of an AD was compromised, part of the AD Buffer can be confiscated and used as a whistleblower bounty. See [A.1.5 - A9 - Aligned Delegates - Budget And Participation Requirements - AD Buffer Used For Whistleblower Bounties](a26d6fcf-de00-46db-a4eb-ac6c2b8e712a).
-
-#### A.1.5.13.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Operational Security Breach Must Be Secured Ethically [Action Tenet]  <!-- UUID: deeced97-64e9-4f82-bd6d-a5c9693ca12c -->
-
-The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available blockchain data to demonstrate that an Aligned Delegate breached operational security best practices will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty. 
-
-Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.
-
-Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](2ea378ee-9b12-4e09-9f42-0c6ec65ef33b).
-
-#### A.1.5.13.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]  <!-- UUID: 5db1e203-819a-4283-b754-37b2e112feb4 -->
-
-The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.
-
-It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
-
-#### NR-13 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 6a1ff9bb-7c8a-43d8-b3e8-a0b0ed241058 -->
-
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
-
-Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
-
-For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable? 
-
-And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation? 
-
-How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.
-
-What are the expectations placed on Facilitators to verify whistleblower evidence?
-
-#### NR-14 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: 60e94138-8a37-4a75-8dec-a7b2ca3fc915 -->
-
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
-
-The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
-
-With an explicit framework of agreed-upon Best Practices, all anon Alignment Conservers have a known target to meet. Further, the existence of an objective framework of Best Practices equips the Core Facilitator to easily determine when a breach of opsec best practice has occurred. The explicit framework removes the risk of the Facilitator inappropriately inserting subjective bias into the decision-making process.
-
-The Security Scope Advisor could also assist in reviewing an informant's evidence to evaluate its validity/quality. The Security Scope Advisor could ensure that the methods used by the informant to secure the evidence were ethical. (All communications, evidence and data shared with the Security Scope Advisor would be under confidentiality protection). Finally, such an Advisor would have specialized expertise in opsec and associated matters that the Core Facilitator lacks".
-
-This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
-
-### A.1.5.14 - Facilitators Must Err On Side Of Caution [Section]  <!-- UUID: 09efe31d-28ae-47cc-a81e-caf4f669df95 -->
-
-Facilitators are required to err on the side of caution and take action whenever there is any real possibility that the operational security of an Aligned Delegate (AD) is compromised. Facilitators are afforded significant discretion in making judgement calls related to operational security standards for ADs. 
-
-Abuse of this power is severe misalignment. Any allegations of this abuse of power must be adjudicated by the Core Facilitator pursuant to the process defined in [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
-
-### A.1.5.15 - Emergency Contact Mechanism [Section]  <!-- UUID: d5d4cc4a-8877-4931-861f-056793387b92 -->
-
-Aligned Delegates must safeguard the security of the Sky Protocol through the Executive Vote process. To deal with emergencies related to Executive Votes, ADs are required to sign up for the approved emergency contact mechanism specified in [A.1.8 - Emergency Response System - Emergency Response - Approved Emergency Contact Mechanisms](57006d4e-cd91-4565-97b5-5fab73fa94d5). 
-
-ADs must strictly adhere to all onboarding procedures and usage instructions associated with this emergency contact mechanism. ADs that fail to do so will be considered in misalignment and will be derecognized.
-
-The high operational security requirements applicable to ADs extend to their use of the emergency contact mechanism.
-
-### A.1.5.16 - Eligibility To Receive Budget [Section]  <!-- UUID: cf2bfd51-4f69-432b-abd7-04d16fe0cfae -->
+### A.1.5.3 - Eligibility To Receive Budget [Section]  <!-- UUID: cf2bfd51-4f69-432b-abd7-04d16fe0cfae -->
 
 Aligned Delegates are eligible to receive a budget from the Sky Protocol if they fulfill two (2) requirements: 
 
@@ -1573,33 +1369,33 @@ Aligned Delegates are eligible to receive a budget from the Sky Protocol if they
 
 2) They fulfill specific participation requirements defined in this Article.
 
-#### A.1.5.16.0.3.1 - Total Voting Power Delegated - Element Annotation [Annotation]  <!-- UUID: 72292d09-0998-4ed6-9bbd-5e69d6248d34 -->
+#### A.1.5.3.0.3.1 - Total Voting Power Delegated - Element Annotation [Annotation]  <!-- UUID: 72292d09-0998-4ed6-9bbd-5e69d6248d34 -->
 
 The element “total Voting Power delegated” refers to the cumulative SKY that has been delegated to a Delegate Contract by SKY holders and Staking users.
 
-### A.1.5.17 - Ranked Delegates [Section]  <!-- UUID: 0836acf0-441d-4215-aee6-dc6d0c884516 -->
+### A.1.5.4 - Ranked Delegates [Section]  <!-- UUID: 0836acf0-441d-4215-aee6-dc6d0c884516 -->
 
 Aligned Delegates with the greatest delegated Voting Power are designated as Ranked Delegates and receive a budget. The number of Ranked Delegate slots is specified in [A.1.5 - A5 - Aligned Delegates - Budget And Participation Requirements - Number of Ranked Delegate Slots](9c3dc9e7-6ee5-4afd-a289-89615c74005d).
 
-### A.1.5.18 - Number of Ranked Delegate Slots [Section]  <!-- UUID: 9c3dc9e7-6ee5-4afd-a289-89615c74005d -->
+### A.1.5.5 - Number of Ranked Delegate Slots [Section]  <!-- UUID: 9c3dc9e7-6ee5-4afd-a289-89615c74005d -->
 
 The six (6) Aligned Delegates with the greatest delegated Voting Power are the Ranked Delegates.
 
-### A.1.5.19 - Budget For Ranked Delegate Slots [Section]  <!-- UUID: f2f57817-befe-4c14-bd8d-d89ae24e88df -->
+### A.1.5.6 - Budget For Ranked Delegate Slots [Section]  <!-- UUID: f2f57817-befe-4c14-bd8d-d89ae24e88df -->
 
 Each Ranked Delegate (RD) slot is allocated a continually accruing budget, the amount of which is specified in [A.1.5 - Aligned Delegates - Budget And Participation Requirements - Budget Amount For Ranked Delegate Slots](ef801c98-d49a-4c93-a8a3-bb22e7ee3ade).
 
-#### A.1.5.19.1 - Budget Amount For Ranked Delegate Slots [Core]  <!-- UUID: ef801c98-d49a-4c93-a8a3-bb22e7ee3ade -->
+#### A.1.5.6.1 - Budget Amount For Ranked Delegate Slots [Core]  <!-- UUID: ef801c98-d49a-4c93-a8a3-bb22e7ee3ade -->
 
 The budget for each Ranked Delegate slot is 48,000 USDS per year.
 
-### A.1.5.20 - AD Buffer [Section]  <!-- UUID: b27fa839-94ae-46fb-a5a5-21e8ed5adb0e -->
+### A.1.5.7 - AD Buffer [Section]  <!-- UUID: b27fa839-94ae-46fb-a5a5-21e8ed5adb0e -->
 
 The AD Buffer is an account of USDS that begins accumulating funds when an Aligned Delegate attains Ranked Delegate status. The budget allocated to the AD is deposited into the AD Buffer. Funds within the AD Buffer cannot be accessed or spent until they reach a minimum threshold equivalent to one (1) month's budget allocation.
 
 Once this threshold is met, the AD will receive payouts from the AD Buffer to the address that controls the AD Delegate Contract. ADs may use this budget for various purposes, including personal compensation, compensation for team members, research expenses, and other relevant activities.
 
-#### A.1.5.20.1 - AD Monthly Compensation Cycle [Core]  <!-- UUID: 7851ed05-24b4-4992-9473-16b8a051c43a -->
+#### A.1.5.7.1 - AD Monthly Compensation Cycle [Core]  <!-- UUID: 7851ed05-24b4-4992-9473-16b8a051c43a -->
 
 Aligned Delegates are eligible to receive payments from their AD Buffers in a monthly compensation cycle. The Core Facilitator is responsible for calculating the payout due to each Aligned Delegate.
 
@@ -1615,49 +1411,49 @@ This includes calculating:
 
 Once calculated by the Core Facilitator, AD payouts are bundled into the next Executive Vote.
 
-#### A.1.5.20.0.3.1 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: e360a6ac-822f-4ab5-ac39-25f56aeb8f2b -->
+#### A.1.5.7.0.3.1 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: e360a6ac-822f-4ab5-ac39-25f56aeb8f2b -->
 
 To arrive at the value of this one-month budget threshold in USDS, see [A.1.5 - Aligned Delegates - Budget And Participation Requirements - Budget Amount For Ranked Delegate Slots](ef801c98-d49a-4c93-a8a3-bb22e7ee3ade).
 
-#### NR-15 - AD Budget Management [Needed Research]  <!-- UUID: 6502ce76-3f29-4f50-a68c-9126feba1fb6 -->
+#### NR-10 - AD Budget Management [Needed Research]  <!-- UUID: 6502ce76-3f29-4f50-a68c-9126feba1fb6 -->
 
 Are there risks that should be considered regarding the potential mismanagement or misuse of the AD budget? The Target Document lists several examples of permissible ways to use the AD budget, which indicates implicitly constraints, or disallowed expenditures. How would compliance with these guidelines be monitored?
 
-### A.1.5.21 - AD Buffer And Loss Of Budget [Section]  <!-- UUID: 907b011d-2f73-4ee1-b4e7-27daaad3aa47 -->
+### A.1.5.8 - AD Buffer And Loss Of Budget [Section]  <!-- UUID: 907b011d-2f73-4ee1-b4e7-27daaad3aa47 -->
 
 If an AD loses its budget due to losing its Ranked Delegate rank, the full contents of the AD Buffer can be paid out in the next monthly compensation cycle, except as specified in [A.1.5 - Aligned Delegates - Budget And Participation Requirements - Payout Limitations For ADs Triggering Atlas Edit Weekly Cycle Proposals](baea6842-2e17-4587-8d3c-5ac7a3c8b6e6).
 
-#### A.1.5.21.1 - Payout Limitations For ADs Triggering Atlas Edit Weekly Cycle Proposals [Core]  <!-- UUID: baea6842-2e17-4587-8d3c-5ac7a3c8b6e6 -->
+#### A.1.5.8.1 - Payout Limitations For ADs Triggering Atlas Edit Weekly Cycle Proposals [Core]  <!-- UUID: baea6842-2e17-4587-8d3c-5ac7a3c8b6e6 -->
 
 If an AD has triggered an Atlas Edit Weekly Cycle Proposal pursuant to [A.1.11 - Weekly Governance Cycle - Atlas Edit Weekly Cycle - Triggering Requirement](cef09d74-efc6-45cc-a75b-1132dae9e743), no payouts may be made that would reduce their AD Buffer below one (1) month’s worth of the budget specified in [A.1.5 - Aligned Delegates - Budget And Participation Requirements - Budget Amount For Ranked Delegate Slots](ef801c98-d49a-4c93-a8a3-bb22e7ee3ade) until the Proposal has been voted on or rejected by the Core Facilitator for misalignment.
 
-#### A.1.5.21.0.3.1 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: ba40212e-fb72-4537-ba07-ff422d384539 -->
+#### A.1.5.8.0.3.1 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: ba40212e-fb72-4537-ba07-ff422d384539 -->
 
 See [One Month’s Budget Allocation - Element Annotation](e360a6ac-822f-4ab5-ac39-25f56aeb8f2b).
 
-### A.1.5.22 - AD Buffer Used For Whistleblower Bounties [Section]  <!-- UUID: a26d6fcf-de00-46db-a4eb-ac6c2b8e712a -->
+### A.1.5.9 - AD Buffer Used For Whistleblower Bounties [Section]  <!-- UUID: a26d6fcf-de00-46db-a4eb-ac6c2b8e712a -->
 
 The AD Buffer also serves as collateral for a whistleblower bounty. This bounty is capped at half of one month’s budget allocation. This bounty is payable to a whistleblower who responsibly provides evidence that is useful to the Facilitators’ investigation of either 1) misalignment by the AD, or 2) a breach of the AD's operational security or privacy.
 
 See [A.1.5 - A17 - Aligned Delegates - Misalignment Handling - Whistleblower Bounty](7ae648c2-e04c-42b1-8d20-21de8ed6bef2); and [A.1.5 - A20 - Aligned Delegates - Operational Security - Whistleblower Bounty](74d01046-995f-4783-aa72-c0d33d90b58c).
 
-#### A.1.5.22.0.3.1 - Collateral - Element Annotation [Annotation]  <!-- UUID: 02f6954d-9391-4e94-aad7-ea0c2cabd560 -->
+#### A.1.5.9.0.3.1 - Collateral - Element Annotation [Annotation]  <!-- UUID: 02f6954d-9391-4e94-aad7-ea0c2cabd560 -->
 
 The element "collateral" in this context refers to the funds within the AD Buffer that are set aside to guarantee the availability of a whistleblower bounty.
 
-#### A.1.5.22.0.3.2 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: ff085fc7-6da4-4176-b38f-c0e63ca4fd4a -->
+#### A.1.5.9.0.3.2 - One Month’s Budget Allocation - Element Annotation [Annotation]  <!-- UUID: ff085fc7-6da4-4176-b38f-c0e63ca4fd4a -->
 
 See [One Month’s Budget Allocation - Element Annotation](e360a6ac-822f-4ab5-ac39-25f56aeb8f2b).
 
-#### A.1.5.22.0.3.3 - Operational Security Or Privacy - Element Annotation [Annotation]  <!-- UUID: fd592ff8-ac42-4397-ba02-5a87442d07ab -->
+#### A.1.5.9.0.3.3 - Operational Security Or Privacy - Element Annotation [Annotation]  <!-- UUID: fd592ff8-ac42-4397-ba02-5a87442d07ab -->
 
 The element “operational security or privacy” refers to disclosure or compromise of sensitive information related to the AD’s identity, location and/or operations.
 
-#### A.1.5.22.0.3.4 - Whistleblower Bounty - Element Annotation [Annotation]  <!-- UUID: 872e042d-5d66-4e50-9096-f4faf6c8fb41 -->
+#### A.1.5.9.0.3.4 - Whistleblower Bounty - Element Annotation [Annotation]  <!-- UUID: 872e042d-5d66-4e50-9096-f4faf6c8fb41 -->
 
 The element "whistleblower bounty" is a financial reward allocated to individuals who responsibly provide credible evidence that is helpful to the Facilitators’ investigation of an AD’s misalignment or operational security breach.
 
-#### NR-16 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 71c826f0-2713-4756-8b5a-1d820383f301 -->
+#### NR-11 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 71c826f0-2713-4756-8b5a-1d820383f301 -->
 
 The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
 
@@ -1670,6 +1466,210 @@ And what sort of standards/criteria should be met by whistleblower evidence to b
 How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.
 
 What are the expectations placed on Facilitators to verify whistleblower evidence?
+
+### A.1.5.10 - Budget Contingency [Section]  <!-- UUID: cdea1271-c2fc-4274-bdfb-737e7450c6c4 -->
+
+A Ranked Delegate’s allocated budget can be reduced if they do not fully comply with the participation requirements defined in this Article at [A.1.5 - A11 - Aligned Delegates - Budget And Participation Requirements - Voting-Activity Metrics](f1fad141-fbcc-4f09-baa0-95875a26d4a3), [A.1.5 - A12 - Aligned Delegates - Budget And Participation Requirements - Voting-Communication Metrics](fedf06e5-7657-4aaf-9a1d-d2e3b71de773), and [A.1.5 - A13 - Aligned Delegates - Budget And Participation Requirements - Emergency Communications Requirement](a6bd8d88-4092-4547-86c9-fbda87aeacfd).
+
+### A.1.5.11 - Voting-Activity Metrics [Section]  <!-- UUID: f1fad141-fbcc-4f09-baa0-95875a26d4a3 -->
+
+The budget stream allocated to a Ranked Delegate (RD) is modified based on their voting-activity metrics over the past six (6) months. This budget modification takes into account the overall participation of the Ranked Delegate in all votes they are eligible to cast as an Aligned Delegate (AD).
+
+If an RD participates in less than 95% of all eligible votes within the last six (6) months, their RD budget stream is reduced. The reduction is applied on a proportional linear scale: for every percentage point below 95% voting activity, the RD's budget is reduced correspondingly. 
+
+Should an RD’s voting activity fall to 75% of all eligible votes within the last six (6) months, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
+
+#### A.1.5.11.0.3.1 - Proportional Linear Scale - Element Annotation [Annotation]  <!-- UUID: 57c35484-4c5f-4349-a7fe-097618b4213a -->
+
+The element "proportional linear scale" describes a method where the budget reduction is directly proportional to the decline in voting activity between 95% and 75%. Here, the pertinent range of voting activity spans from 95% to 75%, which is 20 percentage points. The budget decreases linearly across these 20 percentage points. In other words, the RD budget decreases by **5%** for every percentage point drop in voting activity from 95% to 75% (since 100% divided by 20 percentage points = 5% per point).
+
+### A.1.5.12 - Voting-Communication Metrics [Section]  <!-- UUID: fedf06e5-7657-4aaf-9a1d-d2e3b71de773 -->
+
+The budget stream allocated to a Ranked Delegate (RD) is modified based on their voting-communication metrics over the past six (6) months. An AD is required to provide an explanation for each vote they participate in. This budget modification takes into account the Ranked Delegate’s fulfillment of this voting-communication requirement in all votes they are eligible to cast as an Aligned Delegate (AD).
+
+If an RD provides the required voting-communication on less than 95% of all eligible votes within the last six (6) months, their RD budget stream is reduced. The reduction is applied on a proportional linear scale: for every percentage point below 95% voting-communication activity, the RD's budget is reduced correspondingly.
+
+Should a RD’s voting-communication activity fall to 75% of all eligible votes within the last six (6) months, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
+
+#### A.1.5.12.0.3.1 - Proportional Linear Scale - Element Annotation [Annotation]  <!-- UUID: 57a0be8f-c0d8-4d0c-bb99-ca3e63da5058 -->
+
+The element "proportional linear scale" describes a method where the budget reduction is directly proportional to the decline in voting-communication activity between 95% and 75%. Here, the pertinent range of voting-communication activity spans from 95% to 75%, which is 20 percentage points. The budget decreases linearly across these 20 percentage points. In other words, the RD budget decreases by **5%** for every percentage point drop in voting-communication activity from 95% to 75% (since 100% divided by 20 percentage points = 5% per point).
+
+#### A.1.5.12.0.3.2 - Voting-Communication Metrics - Element Annotation [Annotation]  <!-- UUID: ca88baad-2457-4454-9e34-367156a59e78 -->
+
+The element "voting-communication metrics" refers to the percentage of votes for which an Aligned Delegate provides the required written explanations or justifications of their casted votes in Governance Polls and Executive Votes. These written explanations are posted in the AD’s Forum thread. 
+
+The Target Document’s function is to ensure that SKY holders delegating to the AD have full transparency to understand the AD’s decision-making process.
+
+#### NR-12 - Criteria For AD Voting-Communication Requirement [Needed Research]  <!-- UUID: ea34cf2b-b756-4c55-b317-7e4802b6f9b3 -->
+
+For the purpose of enforcing the Target Document, should there be explicit criteria for Aligned Delegates’ voting-communications? What constitutes an adequate explanation for each vote? How would the Core Facilitator evaluate ADs’ explanations for quality, completeness, etc.? How can the Core Facilitator objectively assess explanations that may vary widely in style and content?
+
+How might ADs’ explanations vary across different types of votes, and should the criteria reflect these differences? Should more complex or high-stakes votes require more detailed explanations than routine or procedural votes?
+
+What feedback mechanisms should be in place to help ADs improve their explanations?
+
+What are the risks of not having explicit criteria for voting-communications? One is the potential failure of the Target Document’s objective to ensure that ADs’ voting activity is transparent to SKY holders who have delegated to that AD.
+
+### A.1.5.13 - Emergency Communications Requirement [Section]  <!-- UUID: a6bd8d88-4092-4547-86c9-fbda87aeacfd -->
+
+The budget stream allocated to a Ranked Delegate (RD) is modified based on their correct usage of required tools for emergency communications.
+
+Should an RD fail to correctly use the required communications tools, they become completely ineligible to receive RD income. Their RD rank, and the budget eligibility associated with that rank, is transferred to the next highest-ranking AD, as determined by total amount of SKY delegated to their Delegate Contract.
+
+#### A.1.5.13.1 - Signal Account Requirement [Core]  <!-- UUID: 90fd52f1-57bf-4416-a09f-37729669a0fe -->
+
+RDs are required to maintain an active Signal account to facilitate communications related to emergency / urgent situations. This requirement applies regardless of whether a RD has been appointed to the Emergency Response Group. See [A.1.8 - Emergency Response System - Emergency Response - Emergency Response Signal Group](45a7ccff-09fa-4d95-b3d8-e3f34f7917cf). RDs must provide their Signal username to the Core Facilitator.
+
+The Core Facilitator is responsible for maintaining an internal registry of RDs’ Signal accounts. Because the ranked RDs are continually changing, the Core Facilitator must ensure that the internal registry is maintained on a frequent basis. The Core Facilitator must check the active status of the RDs’ Signal accounts by sending test messages and confirming the RDs’ timely response; this must be done regularly, on a schedule known only to the Core Facilitator. If a RD fails to timely respond to the test messages, the Core Facilitator must remove them from RD status.
+
+### A.1.5.14 - Atlas Workstreams [Section]  <!-- UUID: a1158473-3052-4af5-bdf5-c504ae3fdf6f -->
+
+Aligned Delegates (ADs) are permitted to concurrently participate in workstreams related to Atlas Core Development, and to receive budgets for this purpose. Such workstreams can include research, data collection, data processing, data review, drafting, peer review, etc. 
+
+This document constitutes an exception to [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](9b1d1c2f-ace0-4637-8050-4711ae9f9a8c), which generally prohibits Alignment Conservers from being operationally active in multiple ecosystem roles.
+
+### A.1.5.15 - Kickbacks Prohibited [Section]  <!-- UUID: 45e794a0-5092-4dea-a0de-6f373228f760 -->
+
+Aligned Delegates are not allowed to provide “kickbacks” from their compensation to SKY holders who delegate to them. Violation of this requirement constitutes misalignment.
+
+### A.1.5.16 - Swift Action Is Required From Facilitators To Redress AD Misalignment [Section]  <!-- UUID: 8953d5dc-1344-4fec-ae25-693204f64e38 -->
+
+The Facilitator must act swiftly when an AD is suspected of breaching the requirements defined in this Article, or the requirements defined in [A.1.4](df4f9bfd-e743-44b5-9c62-9c5f10b15340).
+
+Any Scope Facilitator has the authority to formally raise an allegation of AD misalignment with the Core Facilitator, which then obligates the latter to initiate a formal adjudication pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
+
+A Facilitator's failure to act promptly in addressing credible evidence of AD misalignment or to mitigate the risk of misalignment spreading among ADs is considered an act of misalignment itself. Formal allegations of such failure must be adjudicated by the Core Facilitator pursuant to the same process referenced in the above-cited document.
+
+#### A.1.5.16.0.4.1 - Facilitators’ Authority To Raise Formal Allegation [Action Tenet]  <!-- UUID: e4e7dab8-5e4d-41ad-b1e0-ba3cb9a6f02a -->
+
+Any community member or Aligned Delegate with information pertinent to suspected Alignment Conserver misalignment may take their concerns directly to the Core Facilitator.  Upon receiving such information, the Core Facilitator must promptly conduct an initial review to quickly assess the credibility of the concern. Based on this preliminary review, the Core Facilitator must decide whether to initiate a formal adjudication process in accordance with [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
+
+Where the allegation of misalignment concerns a Governance Facilitator, a community member can take their concerns to any other Scope Facilitator, who is then empowered to initiate the formal adjudication process.
+
+### A.1.5.17 - Whistleblower Bounty [Section]  <!-- UUID: 7ae648c2-e04c-42b1-8d20-21de8ed6bef2 -->
+
+If the Core Facilitator find that an AD has conducted a misaligned act warranting financial penalties or derecognition, such penalties may be deducted from the AD’s Buffer. The amount deducted is used as a whistleblower bounty to compensate any individual/entity who responsibly provided useful data, information or evidence that was helpful to the Facilitators’ adjudication.
+
+The whistleblower bounty is subject to the restrictions specified in [A.1.5 - A9 - Aligned Delegates - Budget And Participation Requirements - AD Buffer Used For Whistleblower Bounties](a26d6fcf-de00-46db-a4eb-ac6c2b8e712a).
+
+Any remaining funds in the AD’s Buffer should be paid out to the derecognized Aligned Delegate.
+
+#### A.1.5.17.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically [Action Tenet]  <!-- UUID: ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d -->
+
+The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available data (e.g., public Discord or Forum posts) to demonstrate that an Aligned Delegate committed misaligned acts will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty. 
+
+Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.
+
+Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](2ea378ee-9b12-4e09-9f42-0c6ec65ef33b).
+
+#### A.1.5.17.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]  <!-- UUID: 989f3891-72dd-4503-94b2-069021c7e947 -->
+
+The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.
+
+It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
+
+#### NR-13 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 02df546f-0c7b-445f-b06d-c51b44b0b84d -->
+
+The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
+
+Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
+
+For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable? 
+
+And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation? 
+
+How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.
+
+What are the expectations placed on Facilitators to verify whistleblower evidence?
+
+### A.1.5.18 - Mandate To Maintain High Level of Operational Security [Section]  <!-- UUID: c68b4c5d-adf7-49e6-850a-17a688664d40 -->
+
+Aligned Delegates (ADs) are required to maintain a high level of operational security, adhering to best practices in privacy, cybersecurity, and physical resilience. These measures must be implemented at a level that sufficiently safeguards the Sky Ecosystem from physical risk posed by the potential for attacks against ADs. ADs’ operational security protocols should be regularly reviewed and updated to address emerging risks and ensure continuous protection of the ecosystem.
+
+#### NR-14 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: fc6cb4f6-d0da-4696-9e07-9dfccb1ec17e -->
+
+The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
+
+The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
+
+With an explicit framework of agreed-upon Best Practices, all anon Alignment Conservers have a known target to meet. Further, the existence of an objective framework of Best Practices equips the Core Facilitator to easily determine when a breach of opsec best practice has occurred. The explicit framework removes the risk of the Facilitator inappropriately inserting subjective bias into the decision-making process.
+
+The Security Scope Advisor could also assist in reviewing an informant's evidence to evaluate its validity/quality. The Security Scope Advisor could ensure that the methods used by the informant to secure the evidence were ethical. (All communications, evidence and data shared with the Security Scope Advisor would be under confidentiality protection). Finally, such an Advisor would have specialized expertise in opsec and associated matters that the Core Facilitator lacks".
+
+This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
+
+### A.1.5.19 - Derecognition Required Where AD Operational Security Is Compromised [Section]  <!-- UUID: 7b0da718-62c1-4718-8d9d-47faa1647c6f -->
+
+All Facilitators must act swiftly to investigate ADs who are suspected of breaching their requirements regarding operational security and privacy.
+
+Any Scope Facilitator has the authority to formally raise an allegation concerning AD breach of operational security with the Core Facilitator, which then obligates the latter to initiate a formal adjudication pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
+
+If there is clear evidence or significant suspicion that the operational security of an AD has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the AD.
+
+#### A.1.5.19.0.4.1 - Promptly Derecognized - Mandated Timeline For AD Derecognition For Operational Security Breach [Action Tenet]  <!-- UUID: 36e7c024-0156-4941-a9f2-f53ce25ef39f -->
+
+The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'
+
+To adhere to this commitment, the Core Facilitator must derecognize the AD within a general timeframe of 1-2 calendar days upon conclusion of an investigation that finds against the AD for breach of operational security. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
+
+### A.1.5.20 - Whistleblower Bounty [Section]  <!-- UUID: 74d01046-995f-4783-aa72-c0d33d90b58c -->
+
+Where a whistleblower responsibly provided useful information for determining that the operational security of an AD was compromised, part of the AD Buffer can be confiscated and used as a whistleblower bounty. See [A.1.5 - A9 - Aligned Delegates - Budget And Participation Requirements - AD Buffer Used For Whistleblower Bounties](a26d6fcf-de00-46db-a4eb-ac6c2b8e712a).
+
+#### A.1.5.20.0.4.1 - Responsibly Provided - Whistleblower Evidence Of Operational Security Breach Must Be Secured Ethically [Action Tenet]  <!-- UUID: deeced97-64e9-4f82-bd6d-a5c9693ca12c -->
+
+The phrase “responsibly provided” places limits on the sort of data, evidence and information that will enable a whistleblower to qualify for the bounty. Such data, evidence or information must have been secured ethically. A whistleblower who used publicly available blockchain data to demonstrate that an Aligned Delegate breached operational security best practices will qualify for the bounty. A whistleblower who hacked into the Aligned Delegate’s devices or accounts to make this same demonstration will be disqualified from receiving the bounty. 
+
+Where reasonable people would disagree about the ethical nature of the whistleblower’s actions, the Core Facilitator should err on the side of disqualifying the whistleblower. In such instances, disqualification prevents the setting of precedent that might incentivize future whistleblowers to engage in unethical or illegal activities.
+
+Both the Action Tenet and the above-stated presumption are supported by the Universal Alignment Assumption, which states that the “underlying intent of rules always aims to serve human values and promote public benefit within a given context.” See [A.0.1 - Atlas Preamble - Definitions - Universal Alignment Assumption](2ea378ee-9b12-4e09-9f42-0c6ec65ef33b).
+
+#### A.1.5.20.0.4.2 - Useful - Whistleblower Evidence Must Have Material Impact [Action Tenet]  <!-- UUID: 5db1e203-819a-4283-b754-37b2e112feb4 -->
+
+The element “useful” means that the evidence provided by the whistleblower must have had a material impact on the adjudication. The term "material impact" here does not imply that the adjudication process would have been impossible to resolve without the whistleblower's evidence. Instead, the evidence provided by the whistleblower can still be considered “useful” or of “material impact” if it serves a supportive role in the adjudication, even if it does not play a central or decisive part. The evidence simply needs to contribute meaningfully to the investigation, regardless of the extent of its influence. The Core Facilitator ultimately have broad discretion here in awarding the bounty.
+
+It is important to note that the payment of the whistleblower bounty is dependent on the outcome of the decision. If the Facilitator rule in favor of the AD, the bounty should not be awarded. If the Facilitator rule against the AD, the bounty should be awarded if the whistleblower has responsibly submitted useful evidence.
+
+#### NR-15 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 6a1ff9bb-7c8a-43d8-b3e8-a0b0ed241058 -->
+
+The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
+
+Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
+
+For instance, is evidence gathered from private communication channels considered responsibly obtained if it was leaked to the whistleblower by an insider? How do we handle situations where the evidence is obtained through methods that might be legal but are still ethically questionable? 
+
+And what sort of standards/criteria should be met by whistleblower evidence to be credible and useful in an investigation? 
+
+How to assess the credibility or probative value of evidence, especially when dealing with blockchain data, which can be complex and difficult to interpret? What standards of proof should be required for evidence to be considered credible, particularly in cases where the evidence is circumstantial rather than direct? Perhaps this is already answered by current logic that demands that Facilitators apply the highest standards of Universal Alignment to AC adjudications, without affording benefit of the doubt.
+
+What are the expectations placed on Facilitators to verify whistleblower evidence?
+
+#### NR-16 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: 60e94138-8a37-4a75-8dec-a7b2ca3fc915 -->
+
+The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
+
+The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
+
+With an explicit framework of agreed-upon Best Practices, all anon Alignment Conservers have a known target to meet. Further, the existence of an objective framework of Best Practices equips the Core Facilitator to easily determine when a breach of opsec best practice has occurred. The explicit framework removes the risk of the Facilitator inappropriately inserting subjective bias into the decision-making process.
+
+The Security Scope Advisor could also assist in reviewing an informant's evidence to evaluate its validity/quality. The Security Scope Advisor could ensure that the methods used by the informant to secure the evidence were ethical. (All communications, evidence and data shared with the Security Scope Advisor would be under confidentiality protection). Finally, such an Advisor would have specialized expertise in opsec and associated matters that the Core Facilitator lacks".
+
+This Needed Research is an extensive Research Track, given the wide-ranging implications and potential mechanisms around opsec best practices, and also how these should map onto the Atlas.
+
+### A.1.5.21 - Facilitators Must Err On Side Of Caution [Section]  <!-- UUID: 09efe31d-28ae-47cc-a81e-caf4f669df95 -->
+
+Facilitators are required to err on the side of caution and take action whenever there is any real possibility that the operational security of an Aligned Delegate (AD) is compromised. Facilitators are afforded significant discretion in making judgement calls related to operational security standards for ADs. 
+
+Abuse of this power is severe misalignment. Any allegations of this abuse of power must be adjudicated by the Core Facilitator pursuant to the process defined in [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
+
+### A.1.5.22 - Emergency Contact Mechanism [Section]  <!-- UUID: d5d4cc4a-8877-4931-861f-056793387b92 -->
+
+Aligned Delegates must safeguard the security of the Sky Protocol through the Executive Vote process. To deal with emergencies related to Executive Votes, ADs are required to sign up for the approved emergency contact mechanism specified in [A.1.8 - Emergency Response System - Emergency Response - Approved Emergency Contact Mechanisms](57006d4e-cd91-4565-97b5-5fab73fa94d5). 
+
+ADs must strictly adhere to all onboarding procedures and usage instructions associated with this emergency contact mechanism. ADs that fail to do so will be considered in misalignment and will be derecognized.
+
+The high operational security requirements applicable to ADs extend to their use of the emergency contact mechanism.
 
 ## A.1.6 - Facilitators [Article]  <!-- UUID: 1ce24b08-84ff-4524-9710-49bba429c6ef -->
 
@@ -1689,7 +1689,130 @@ Where a Governance Facilitator is acting in misalignment, any active Scope Facil
 
 Only currently active Scope Facilitators can initiate a formal adjudication pursuant to [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57). This Action Tenet does not limit in any way a Reserve or Interim Facilitator from bringing allegations of potential Facilitator misalignment to the Governance Facilitators or another active Scope Facilitator. If warranted, the active Scope Facilitators can then decide to initiate a formal adjudication to investigate the allegations.
 
-### A.1.6.2 - Acting Against Misalignment [Section]  <!-- UUID: 7aafa61e-8649-41fb-8c3f-64e5714f9f18 -->
+### A.1.6.2 - Facilitator Management [Section]  <!-- UUID: 23ee193c-a525-42e9-bd82-31a0fe3f41b5 -->
+
+This Section designates the Scopes’ Responsible Facilitators and defines key rules and processes related to Facilitator management.
+
+#### A.1.6.2.1 - Appointment Of Facilitators [Core]  <!-- UUID: 19b42170-d65b-496d-864a-6c72f6eebbda -->
+
+Sky Governance appoints the Facilitators that are responsible for each of the Scopes.
+
+#### A.1.6.2.2 - Role Of Governance Scope [Core]  <!-- UUID: 701a695e-3eb5-4e52-b489-ddc961ab8e91 -->
+
+In the transition to Endgame, the Governance Scope designates all Scopes’ responsible Facilitators and defines Facilitator budgets.
+
+#### A.1.6.2.3 - Scopes’ Responsible Facilitators [Core]  <!-- UUID: f30b0185-1066-4258-9eed-057564051d5e -->
+
+The Scopes and their Responsible Facilitators are defined in [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf). The List is modified through the Monthly Atlas Edit Cycle (i.e., the Atlas Edit Proposal Process).
+
+##### A.1.6.2.3.1 - List of Responsible Facilitators [Core]  <!-- UUID: bdb7a7e7-5662-461c-8218-8bc0d35baacf -->
+
+`| Scope Framework | Responsible Facilitator | ETH Address (if relevant)                             |  
+|-----------------|-------------------------|------------------------------------------------------|  
+| Governance      | JanSky                  | 0xf3F868534FAD48EF5a228Fe78669cf242745a755            |  
+| Governance      | Endgame Edge            | 0x9E72629dF4fcaA2c2F5813FbbDc55064345431b1            |  
+| Support         | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
+| Protocol        | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
+| Stability       | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
+| Accessibility   | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |`
+
+#### A.1.6.2.4 - Budgets [Core]  <!-- UUID: 75f2409e-d4b2-4d60-a8bb-6ef9d0056b5c -->
+
+The Ecosystem Actor name, Ethereum address and budgets of Responsible Facilitators are defined in [A.1.6 - Facilitators - Budgets - List of Facilitator Budgets](73968fb2-ac58-41f9-8822-bf0601704cc1). This List is modified through the Monthly Atlas Edit Cycle (i.e., the Atlas Edit Proposal Process). 
+
+Facilitator budgets are paid out even if the recipients are not active Facilitators, as long as they are using the budget to perform useful work for Sky Ecosystem.
+
+##### A.1.6.2.4.1 - List of Facilitator Budgets [Core]  <!-- UUID: 73968fb2-ac58-41f9-8822-bf0601704cc1 -->
+
+`| Facilitator    | ETH Address                                  | USDS per Month | SKY per Month | Notes |  
+|----------------|----------------------------------------------|---------------------|--------------------|-------|  
+| JanSky         | 0xf3F868534FAD48EF5a228Fe78669cf242745a755   | 42,000              | 432,000            | N/A   |  
+| Endgame Edge   | 0x9E72629dF4fcaA2c2F5813FbbDc55064345431b1   | 42,000              | 432,000            | N/A   |  
+| Ecosystem      | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75   | 42,000              | 432,000            | N/A   |`
+
+#### A.1.6.2.5 - Interim And Reserve Facilitators [Core]  <!-- UUID: 440331ed-9127-4cee-8797-f72e67029518 -->
+
+This document defines infrastructure and processes for managing the risks associated with a Facilitator becoming unavailable or otherwise unable to fulfill their duties.
+
+##### A.1.6.2.5.1 - Interim Facilitators [Core]  <!-- UUID: 55371d29-6b7b-487c-b18e-bda8077cbd94 -->
+
+If a Facilitator of a Scope is unavailable, unresponsive or otherwise unable to fulfill their duties, a majority of the remaining active Facilitators can choose amongst themselves an Interim Facilitator to temporarily assume the role of Responsible Facilitator for that Scope.
+
+###### A.1.6.2.5.1.0.3.1 - Otherwise Unable To Fulfill Their Duties - Element Annotation [Annotation]  <!-- UUID: 85fd54d6-467f-4d66-9f5a-87919aa5c417 -->
+
+This element refers to situations where the Scope Facilitator is unable to perform their role due to reasons such as illness, conflict of interest, temporary suspension, or any other circumstance that significantly impairs their ability to execute their responsibilities.
+
+###### A.1.6.2.5.1.0.3.2 - Unresponsive - Element Annotation [Annotation]  <!-- UUID: fae64a09-b5d3-457c-b9e4-ed58eb2dad6c -->
+
+The element “unresponsive" means the failure to communicate, perform duties, or acknowledge requests, without providing a valid reason.
+
+##### A.1.6.2.5.2 - Reserve Facilitator Takeover [Core]  <!-- UUID: d9f3c921-46b9-48d4-8946-73a6db515c21 -->
+
+Reserve Facilitators can help protect the continuity of Sky Governance in case other Facilitators become unavailable. If the Responsible Facilitators of a Scope become unresponsive or otherwise unavailable, the Reserve Facilitators can initiate a takeover as Interim Facilitators by posting their observations of inactivity or unavailability to the Sky Core Forum. 
+
+If the takeover is not disputed by the existing Facilitators within 48 hours, the Governance Facilitators must change the Reserve Facilitators’ status to Interim Facilitators in [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf). The Interim Facilitators are accountable for the duties of the role until a new Facilitator is selected.
+
+The Governance Facilitators are responsible for coordinating the takeover process defined herein.
+
+###### A.1.6.2.5.2.1 - Expedited Onboarding Of Reserve Facilitators [Core]  <!-- UUID: 52060209-2d25-4ba9-b487-a0e8bbd5d7ed -->
+
+The Governance Facilitators can propose expedited onboarding of Reserve Facilitators in order to ensure governance continuity in the event of emergencies. To propose such expedited onboarding, the Governance Facilitators can post the Ecosystem Actor Name(s), Ethereum address(es) and Scope(s) of responsibility to the Sky Core Forum.
+
+This triggers a Governance Poll following the Weekly Governance Cycle. If the Governance Poll is approved, the Reserve Facilitators are added to [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf) with the designation of ‘Reserve’ status.
+
+###### A.1.6.2.5.2.2 - Any Scope Facilitator Can Coordinate Reserve Facilitator Takeover [Core]  <!-- UUID: b88db37e-de6a-4493-b279-c692b0c0c2ca -->
+
+In the event that all Governance Facilitators are unresponsive or otherwise unable to fulfill their duties, any active Scope Facilitator is authorized to coordinate the takeover process defined in [A.1.6 - Facilitators - Reserve Facilitator Takeover](d9f3c921-46b9-48d4-8946-73a6db515c21).
+
+####### A.1.6.2.5.2.2.0.4.1 - Any Active Scope Facilitator - Only Active Scope Facilitators Can Take Over Expedited Onboarding of Reserve Facilitators [Action Tenet]  <!-- UUID: e46ede92-4742-4fb5-97ea-52ba7f9009e0 -->
+
+In the event that the Governance Facilitators are unable to fulfill their role, only currently active Scope Facilitators (not Reserve or Interim Facilitators) are authorized to take over the expedited process of onboarding Reserve Facilitators defined in [A.1.6 - Facilitators - Expedited Onboarding Of Reserve Facilitators](52060209-2d25-4ba9-b487-a0e8bbd5d7ed).
+
+### A.1.6.3 - Governance Scope Responsibility [Section]  <!-- UUID: 2ac0247c-c13c-44fe-8671-af657a5695ba -->
+
+All Facilitators always have responsibility for the Governance Scope.
+
+### A.1.6.4 - Full Scopes Coverage [Section]  <!-- UUID: 3fb0a3f2-eaa2-485d-8a82-eaf20d7d6826 -->
+
+The Governance Facilitators are responsible for ensuring that the Governance, Support, Stability, Protocol and Accessibility Scopes always have an active Facilitator assigned. If the current Scope Facilitator becomes unresponsive or otherwise unable to fulfill their duties, the procedures defined in [A.1.6 - Facilitators - Interim And Reserve Facilitators](440331ed-9127-4cee-8797-f72e67029518) should be followed. In cases where the Governance Facilitators themselves become unresponsive or otherwise unavailable to fulfill their role, other active Scope Facilitators must assume responsibility over coordinating these procedures.
+
+#### A.1.6.4.0.3.1 - Otherwise Unable To Fulfill Their Duties - Element Annotation [Annotation]  <!-- UUID: c15b5651-1257-4865-a16f-cfec36b022b0 -->
+
+This element refers to situations where the Scope Facilitator is unable to perform their role due to reasons such as illness, conflict of interest, temporary suspension, or any other circumstance that significantly impairs their ability to execute their responsibilities.
+
+#### A.1.6.4.0.3.2 - Unresponsive - Element Annotation [Annotation]  <!-- UUID: 3cbbd4df-35a9-49d2-9ef3-374333f41739 -->
+
+The element “unresponsive" means the failure to communicate, perform duties, or acknowledge requests, without providing a valid reason.
+
+### A.1.6.5 - Operational Executor Facilitator [Section]  <!-- UUID: 4354cb31-d2e3-433d-bbf8-5db2020acf48 -->
+
+Every Operational Executor Agent must have a Facilitator. The Operational Executor Agent and Facilitator must enter into an agreement where the Facilitator agrees to interpret the Atlas and Artifacts on behalf of the Agent.
+
+### A.1.6.6 - Core Executor Facilitator [Section]  <!-- UUID: 29a92947-8792-401b-b1e5-899a72e9fbdb -->
+
+Every Core Executor Agent must have a Facilitator. The Core Executor Agent and Facilitator must enter into an agreement where the Facilitator agrees to interpret the Atlas and Artifacts on behalf of the Agent.
+
+### A.1.6.7 - Facilitators Must Maintain High Level Of Operational Security [Section]  <!-- UUID: 014feb92-49dc-4117-911f-a6ec14451b30 -->
+
+Facilitators are required to maintain a high level of operational security, adhering to best practices in privacy, cybersecurity, and physical resilience. These measures must be implemented at a level that sufficiently safeguards the Sky Ecosystem from physical risk posed by the potential for attacks against Facilitators. Facilitators’ operational security protocols should be regularly reviewed and updated to address emerging risks and ensure continuous protection of the ecosystem.
+
+### A.1.6.8 - Derecognition Required Where Facilitator Operational Security Is Compromised [Section]  <!-- UUID: c3ba34f0-b3f0-449b-b609-52548db090ea -->
+
+The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.</p><p>If there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.
+
+#### A.1.6.8.0.4.1 - Promptly Derecognized - Mandated Timeline For Facilitator Derecognition [Action Tenet]  <!-- UUID: b8601ee2-6576-4a0a-83da-660d1b81936b -->
+
+The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'
+
+To adhere to this commitment, the Core Facilitator must derecognize the Facilitator within a general timeframe of 1-2 calendar days upon conclusion of an investigation that finds against the Facilitator. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
+
+### A.1.6.9 - Facilitators Must Err On Side Of Caution [Section]  <!-- UUID: ac9df70a-d110-42da-805a-abe03b52dcdc -->
+
+The Core Facilitator is required to err on the side of caution and take action whenever there is any real possibility that the operational security of a Facilitator is compromised. The Core Facilitator is afforded significant discretion in making judgement calls related to operational security standards for Facilitators.
+
+Abuse of this power is severe misalignment. Any allegations of this abuse of power must be adjudicated by Core GovOps pursuant to the process defined in [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
+
+### A.1.6.10 - Acting Against Misalignment [Section]  <!-- UUID: 7aafa61e-8649-41fb-8c3f-64e5714f9f18 -->
 
 The Core Facilitator is empowered with broad discretion in addressing situations where an Alignment Conserver, Ecosystem Actor or other relevant governance participant's actions are misaligned. See [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57), which defines the adjudication process that the Core Facilitator must follow in addressing Alignment Conserver misalignment.
 
@@ -1701,166 +1824,43 @@ The Core Facilitator's failure to act promptly in addressing credible evidence o
 
 Currently, the Atlas specifies an adjudication process for Alignment Conserver misalignment or breach of operational security. Research is needed to consider a process by which Facilitators investigate and adjudicate suspected misalignment on the part of Ecosystem Actors or other governance participants.
 
-### A.1.6.3 - Justification For Operational Decisions [Section]  <!-- UUID: 36be7725-ea36-4e37-a363-856a69d6ef2d -->
+### A.1.6.11 - Justification For Operational Decisions [Section]  <!-- UUID: 36be7725-ea36-4e37-a363-856a69d6ef2d -->
 
 The Core Facilitator must ensure that their decisions related to ordinary operations are clearly explained and justified using publicly available information. The Core Facilitator is generally prohibited from basing their decisions on internal knowledge or undisclosed data that is not accessible to the public.
 
 Limited exceptions to this rule apply when Facilitators' decisions involve sensitive security matters. However, even in these situations, the Core Facilitator should ensure that the rationale for their decision is communicated in a manner that respects security concerns while maintaining as much transparency as possible.
 
-#### A.1.6.3.0.3.1 - Internal Knowledge - Element Annotation [Annotation]  <!-- UUID: 4fbdf196-910c-4431-bdaa-f85f38bb4580 -->
+#### A.1.6.11.0.3.1 - Internal Knowledge - Element Annotation [Annotation]  <!-- UUID: 4fbdf196-910c-4431-bdaa-f85f38bb4580 -->
 
 This element refers to information, insights, or data that are available exclusively to the Facilitators and are not shared or accessible to the Sky Ecosystem community. This could include messages in private chats, internal memos, emails, or proprietary data.
 
-#### A.1.6.3.0.3.2 - Ordinary Operations - Element Annotation [Annotation]  <!-- UUID: 260f1bd6-10c4-484a-9dda-e259667ccceb -->
+#### A.1.6.11.0.3.2 - Ordinary Operations - Element Annotation [Annotation]  <!-- UUID: 260f1bd6-10c4-484a-9dda-e259667ccceb -->
 
 This element refers to the routine activities, processes, and decisions that are part of the day-to-day functioning of Sky. It excludes decisions involving extraordinary circumstances and emergencies, as these situations may require certain security-sensitive matters to be kept confidential.
 
-#### A.1.6.3.0.3.3 - Publicly Available Information - Element Annotation [Annotation]  <!-- UUID: 88bd0a0b-90df-43f8-a89e-2d931d2c3daf -->
+#### A.1.6.11.0.3.3 - Publicly Available Information - Element Annotation [Annotation]  <!-- UUID: 88bd0a0b-90df-43f8-a89e-2d931d2c3daf -->
 
 This element refers to data, records, and documents that are accessible to the Sky Ecosystem community without any special access rights or permissions. This includes information published on websites, in public reports, or through other open and accessible channels.
 
-#### A.1.6.3.0.3.4 - Sensitive Security Matters - Element Annotation [Annotation]  <!-- UUID: 66d51a72-b371-4334-a56d-fe5462918272 -->
+#### A.1.6.11.0.3.4 - Sensitive Security Matters - Element Annotation [Annotation]  <!-- UUID: 66d51a72-b371-4334-a56d-fe5462918272 -->
 
 This element refers to issues or decisions that, if publicly disclosed, could compromise the safety, integrity, or security of the Sky Ecosystem and its community members.
 
-### A.1.6.4 - Prohibition On Engaging With Counterparties [Section]  <!-- UUID: 3f056c21-92de-4177-8c81-f8ba83a880ca -->
+### A.1.6.12 - Prohibition On Engaging With Counterparties [Section]  <!-- UUID: 3f056c21-92de-4177-8c81-f8ba83a880ca -->
 
 Facilitators are generally prohibited from engaging with counterparties. The sole exception to this rule is where Facilitators must communicate with counterparties to set up governance processes. In such cases, the Facilitators must clearly detail their interactions with the counterparties.
 
-#### A.1.6.4.0.3.1 - Counterparties - Element Annotation [Annotation]  <!-- UUID: ce5d86d8-0a7c-4ad7-bc4c-d993d48d61a6 -->
+#### A.1.6.12.0.3.1 - Counterparties - Element Annotation [Annotation]  <!-- UUID: ce5d86d8-0a7c-4ad7-bc4c-d993d48d61a6 -->
 
 This element refers to external parties or entities with whom the Facilitators might interact in the context of governance operations, such as Ecosystem Actors (active or incubating).
 
-#### A.1.6.4.0.4.1 - Clearly Detail Their Interactions - Facilitators' Documentation Mandate [Action Tenet]  <!-- UUID: ce3344b0-a567-4fdf-b9e8-6520ee2e10fd -->
+#### A.1.6.12.0.4.1 - Clearly Detail Their Interactions - Facilitators' Documentation Mandate [Action Tenet]  <!-- UUID: ce3344b0-a567-4fdf-b9e8-6520ee2e10fd -->
 
 Facilitators are required to thoroughly document all aspects of their communications and dealings with counterparties. This includes the content of discussions, the context of interactions (date and time), and any decisions made or actions taken as a result.
 
-### A.1.6.5 - Governance Process And Interaction Documentation [Section]  <!-- UUID: f88d568e-bf5b-46f4-9adf-5299854de709 -->
+### A.1.6.13 - Governance Process And Interaction Documentation [Section]  <!-- UUID: f88d568e-bf5b-46f4-9adf-5299854de709 -->
 
 The operational security of Sky is reliant on clear, thorough documentation of governance processes. Facilitators must document all operational and governance processes, as well as all interactions with ecosystem stakeholders.
-
-### A.1.6.6 - Facilitator Management [Section]  <!-- UUID: 23ee193c-a525-42e9-bd82-31a0fe3f41b5 -->
-
-This Section designates the Scopes’ Responsible Facilitators and defines key rules and processes related to Facilitator management.
-
-#### A.1.6.6.1 - Appointment Of Facilitators [Core]  <!-- UUID: 19b42170-d65b-496d-864a-6c72f6eebbda -->
-
-Sky Governance appoints the Facilitators that are responsible for each of the Scopes.
-
-#### A.1.6.6.2 - Role Of Governance Scope [Core]  <!-- UUID: 701a695e-3eb5-4e52-b489-ddc961ab8e91 -->
-
-In the transition to Endgame, the Governance Scope designates all Scopes’ responsible Facilitators and defines Facilitator budgets.
-
-#### A.1.6.6.3 - Scopes’ Responsible Facilitators [Core]  <!-- UUID: f30b0185-1066-4258-9eed-057564051d5e -->
-
-The Scopes and their Responsible Facilitators are defined in [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf). The List is modified through the Monthly Atlas Edit Cycle (i.e., the Atlas Edit Proposal Process).
-
-##### A.1.6.6.3.1 - List of Responsible Facilitators [Core]  <!-- UUID: bdb7a7e7-5662-461c-8218-8bc0d35baacf -->
-
-`| Scope Framework | Responsible Facilitator | ETH Address (if relevant)                             |  
-|-----------------|-------------------------|------------------------------------------------------|  
-| Governance      | JanSky                  | 0xf3F868534FAD48EF5a228Fe78669cf242745a755            |  
-| Governance      | Endgame Edge            | 0x9E72629dF4fcaA2c2F5813FbbDc55064345431b1            |  
-| Support         | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
-| Protocol        | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
-| Stability       | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |  
-| Accessibility   | Ecosystem               | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75            |`
-
-#### A.1.6.6.4 - Budgets [Core]  <!-- UUID: 75f2409e-d4b2-4d60-a8bb-6ef9d0056b5c -->
-
-The Ecosystem Actor name, Ethereum address and budgets of Responsible Facilitators are defined in [A.1.6 - Facilitators - Budgets - List of Facilitator Budgets](73968fb2-ac58-41f9-8822-bf0601704cc1). This List is modified through the Monthly Atlas Edit Cycle (i.e., the Atlas Edit Proposal Process). 
-
-Facilitator budgets are paid out even if the recipients are not active Facilitators, as long as they are using the budget to perform useful work for Sky Ecosystem.
-
-##### A.1.6.6.4.1 - List of Facilitator Budgets [Core]  <!-- UUID: 73968fb2-ac58-41f9-8822-bf0601704cc1 -->
-
-`| Facilitator    | ETH Address                                  | USDS per Month | SKY per Month | Notes |  
-|----------------|----------------------------------------------|---------------------|--------------------|-------|  
-| JanSky         | 0xf3F868534FAD48EF5a228Fe78669cf242745a755   | 42,000              | 432,000            | N/A   |  
-| Endgame Edge   | 0x9E72629dF4fcaA2c2F5813FbbDc55064345431b1   | 42,000              | 432,000            | N/A   |  
-| Ecosystem      | 0xFCa6e196c2ad557E64D9397e283C2AFe57344b75   | 42,000              | 432,000            | N/A   |`
-
-#### A.1.6.6.5 - Interim And Reserve Facilitators [Core]  <!-- UUID: 440331ed-9127-4cee-8797-f72e67029518 -->
-
-This document defines infrastructure and processes for managing the risks associated with a Facilitator becoming unavailable or otherwise unable to fulfill their duties.
-
-##### A.1.6.6.5.1 - Interim Facilitators [Core]  <!-- UUID: 55371d29-6b7b-487c-b18e-bda8077cbd94 -->
-
-If a Facilitator of a Scope is unavailable, unresponsive or otherwise unable to fulfill their duties, a majority of the remaining active Facilitators can choose amongst themselves an Interim Facilitator to temporarily assume the role of Responsible Facilitator for that Scope.
-
-###### A.1.6.6.5.1.0.3.1 - Otherwise Unable To Fulfill Their Duties - Element Annotation [Annotation]  <!-- UUID: 85fd54d6-467f-4d66-9f5a-87919aa5c417 -->
-
-This element refers to situations where the Scope Facilitator is unable to perform their role due to reasons such as illness, conflict of interest, temporary suspension, or any other circumstance that significantly impairs their ability to execute their responsibilities.
-
-###### A.1.6.6.5.1.0.3.2 - Unresponsive - Element Annotation [Annotation]  <!-- UUID: fae64a09-b5d3-457c-b9e4-ed58eb2dad6c -->
-
-The element “unresponsive" means the failure to communicate, perform duties, or acknowledge requests, without providing a valid reason.
-
-##### A.1.6.6.5.2 - Reserve Facilitator Takeover [Core]  <!-- UUID: d9f3c921-46b9-48d4-8946-73a6db515c21 -->
-
-Reserve Facilitators can help protect the continuity of Sky Governance in case other Facilitators become unavailable. If the Responsible Facilitators of a Scope become unresponsive or otherwise unavailable, the Reserve Facilitators can initiate a takeover as Interim Facilitators by posting their observations of inactivity or unavailability to the Sky Core Forum. 
-
-If the takeover is not disputed by the existing Facilitators within 48 hours, the Governance Facilitators must change the Reserve Facilitators’ status to Interim Facilitators in [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf). The Interim Facilitators are accountable for the duties of the role until a new Facilitator is selected.
-
-The Governance Facilitators are responsible for coordinating the takeover process defined herein.
-
-###### A.1.6.6.5.2.1 - Expedited Onboarding Of Reserve Facilitators [Core]  <!-- UUID: 52060209-2d25-4ba9-b487-a0e8bbd5d7ed -->
-
-The Governance Facilitators can propose expedited onboarding of Reserve Facilitators in order to ensure governance continuity in the event of emergencies. To propose such expedited onboarding, the Governance Facilitators can post the Ecosystem Actor Name(s), Ethereum address(es) and Scope(s) of responsibility to the Sky Core Forum.
-
-This triggers a Governance Poll following the Weekly Governance Cycle. If the Governance Poll is approved, the Reserve Facilitators are added to [A.1.6 - Facilitators - Scopes’ Responsible Facilitators - List of Responsible Facilitators](bdb7a7e7-5662-461c-8218-8bc0d35baacf) with the designation of ‘Reserve’ status.
-
-###### A.1.6.6.5.2.2 - Any Scope Facilitator Can Coordinate Reserve Facilitator Takeover [Core]  <!-- UUID: b88db37e-de6a-4493-b279-c692b0c0c2ca -->
-
-In the event that all Governance Facilitators are unresponsive or otherwise unable to fulfill their duties, any active Scope Facilitator is authorized to coordinate the takeover process defined in [A.1.6 - Facilitators - Reserve Facilitator Takeover](d9f3c921-46b9-48d4-8946-73a6db515c21).
-
-####### A.1.6.6.5.2.2.0.4.1 - Any Active Scope Facilitator - Only Active Scope Facilitators Can Take Over Expedited Onboarding of Reserve Facilitators [Action Tenet]  <!-- UUID: e46ede92-4742-4fb5-97ea-52ba7f9009e0 -->
-
-In the event that the Governance Facilitators are unable to fulfill their role, only currently active Scope Facilitators (not Reserve or Interim Facilitators) are authorized to take over the expedited process of onboarding Reserve Facilitators defined in [A.1.6 - Facilitators - Expedited Onboarding Of Reserve Facilitators](52060209-2d25-4ba9-b487-a0e8bbd5d7ed).
-
-### A.1.6.7 - Governance Scope Responsibility [Section]  <!-- UUID: 2ac0247c-c13c-44fe-8671-af657a5695ba -->
-
-All Facilitators always have responsibility for the Governance Scope.
-
-### A.1.6.8 - Full Scopes Coverage [Section]  <!-- UUID: 3fb0a3f2-eaa2-485d-8a82-eaf20d7d6826 -->
-
-The Governance Facilitators are responsible for ensuring that the Governance, Support, Stability, Protocol and Accessibility Scopes always have an active Facilitator assigned. If the current Scope Facilitator becomes unresponsive or otherwise unable to fulfill their duties, the procedures defined in [A.1.6 - Facilitators - Interim And Reserve Facilitators](440331ed-9127-4cee-8797-f72e67029518) should be followed. In cases where the Governance Facilitators themselves become unresponsive or otherwise unavailable to fulfill their role, other active Scope Facilitators must assume responsibility over coordinating these procedures.
-
-#### A.1.6.8.0.3.1 - Otherwise Unable To Fulfill Their Duties - Element Annotation [Annotation]  <!-- UUID: c15b5651-1257-4865-a16f-cfec36b022b0 -->
-
-This element refers to situations where the Scope Facilitator is unable to perform their role due to reasons such as illness, conflict of interest, temporary suspension, or any other circumstance that significantly impairs their ability to execute their responsibilities.
-
-#### A.1.6.8.0.3.2 - Unresponsive - Element Annotation [Annotation]  <!-- UUID: 3cbbd4df-35a9-49d2-9ef3-374333f41739 -->
-
-The element “unresponsive" means the failure to communicate, perform duties, or acknowledge requests, without providing a valid reason.
-
-### A.1.6.9 - Operational Executor Facilitator [Section]  <!-- UUID: 4354cb31-d2e3-433d-bbf8-5db2020acf48 -->
-
-Every Operational Executor Agent must have a Facilitator. The Operational Executor Agent and Facilitator must enter into an agreement where the Facilitator agrees to interpret the Atlas and Artifacts on behalf of the Agent.
-
-### A.1.6.10 - Core Executor Facilitator [Section]  <!-- UUID: 29a92947-8792-401b-b1e5-899a72e9fbdb -->
-
-Every Core Executor Agent must have a Facilitator. The Core Executor Agent and Facilitator must enter into an agreement where the Facilitator agrees to interpret the Atlas and Artifacts on behalf of the Agent.
-
-### A.1.6.11 - Facilitators Must Maintain High Level Of Operational Security [Section]  <!-- UUID: 014feb92-49dc-4117-911f-a6ec14451b30 -->
-
-Facilitators are required to maintain a high level of operational security, adhering to best practices in privacy, cybersecurity, and physical resilience. These measures must be implemented at a level that sufficiently safeguards the Sky Ecosystem from physical risk posed by the potential for attacks against Facilitators. Facilitators’ operational security protocols should be regularly reviewed and updated to address emerging risks and ensure continuous protection of the ecosystem.
-
-### A.1.6.12 - Derecognition Required Where Facilitator Operational Security Is Compromised [Section]  <!-- UUID: c3ba34f0-b3f0-449b-b609-52548db090ea -->
-
-The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.</p><p>If there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.
-
-#### A.1.6.12.0.4.1 - Promptly Derecognized - Mandated Timeline For Facilitator Derecognition [Action Tenet]  <!-- UUID: b8601ee2-6576-4a0a-83da-660d1b81936b -->
-
-The element 'promptly' in the Target Document means 'as soon as is reasonably possible.'
-
-To adhere to this commitment, the Core Facilitator must derecognize the Facilitator within a general timeframe of 1-2 calendar days upon conclusion of an investigation that finds against the Facilitator. Failure to meet this deadline requires a showing of good cause, demonstrating extenuating circumstances beyond the Facilitators’ control.
-
-### A.1.6.13 - Facilitators Must Err On Side Of Caution [Section]  <!-- UUID: ac9df70a-d110-42da-805a-abe03b52dcdc -->
-
-The Core Facilitator is required to err on the side of caution and take action whenever there is any real possibility that the operational security of a Facilitator is compromised. The Core Facilitator is afforded significant discretion in making judgement calls related to operational security standards for Facilitators.
-
-Abuse of this power is severe misalignment. Any allegations of this abuse of power must be adjudicated by Core GovOps pursuant to the process defined in [A.1.4 - A9 - Alignment Conservers - Accountability And Misalignment Handling - Adjudication Process](560e1024-0897-4f1e-ae71-3ba31e29ed57).
 
 ## A.1.7 - Professional Ecosystem Actors [Article]  <!-- UUID: d6b43720-243e-4610-8c03-cd515ace6247 -->
 
@@ -5745,15 +5745,7 @@ The current Sky Primitives are:
 
 The set of available Sky Primitives may be amended in accordance with the governance processes established in the Sky Core Atlas.
 
-### A.2.3.2 - Core Governance Primitives [Section]  <!-- UUID: 6fa54611-c744-4b9d-897d-b2a20e9cae5d -->
-
-Core Governance Primitives allow Prime Agents to earn incentives for maintaining and securing Sky Governance frontends as well as borrow from the Smart Burn Engine.
-
-#### A.2.3.2.1 - Core Governance Reward Primitive [Core]  <!-- UUID: b22d1c08-042a-4466-94fe-9d28951e4d4a -->
-
-The Core Governance Reward Primitive is a reward that Sky pays to Prime Agents that provide SKY holders with secure access to the core Sky Governance features, ensuring that the Governance Security of Sky is maintained over time.
-
-### A.2.3.3 - Primitive Process Definition Schema [Section]  <!-- UUID: bdbb8ac9-d87e-4052-9e69-8267f38a54cf -->
+### A.2.3.2 - Primitive Process Definition Schema [Section]  <!-- UUID: bdbb8ac9-d87e-4052-9e69-8267f38a54cf -->
 
 Process Definitions function as the first-class objects through which Sky Primitives transform high-level governance logic into actionable document-driven workflows. All Sky Primitive Process Definitions are structured according to a common data schema - a set of fields that describe when they can start, how they run step by step, and what they must input or produce upon completion.
 
@@ -5761,19 +5753,19 @@ The documents herein define this data schema for Sky Primitive Process Definitio
 
 At present, only the Accessibility Reward Primitive and the Integration Boost Primitive specifications are structured using this schema. In future iterations of the Atlas, the schema will be applied to all Primitive specifications in this Article.
 
-#### A.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: 5df2043c-000a-4627-9c3a-2fdc12b78c47 -->
+#### A.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: 5df2043c-000a-4627-9c3a-2fdc12b78c47 -->
 
 The documents herein define when a Process is triggered, and what conditions must be satisfied, if any, for the Process to properly initiate.
 
-##### A.2.3.3.1.1 - Triggers [Core]  <!-- UUID: 134d8e80-6ec7-49fe-b7bb-6846694be11c -->
+##### A.2.3.2.1.1 - Triggers [Core]  <!-- UUID: 134d8e80-6ec7-49fe-b7bb-6846694be11c -->
 
 The presence of a Time-Based Trigger or Document Update Trigger for a given Process does not necessarily mean such Trigger is the sole means to initiate the Process. For example, an Atlas Document that is external to the Sky Primitives specifications may authorize a Facilitator to manually initiate a process.
 
-###### A.2.3.3.1.1.1 - Time-Based Trigger [Core]  <!-- UUID: 1040dd2b-e7f8-4f68-b6c6-4b910f394a5a -->
+###### A.2.3.2.1.1.1 - Time-Based Trigger [Core]  <!-- UUID: 1040dd2b-e7f8-4f68-b6c6-4b910f394a5a -->
 
 This field defines the triggering date/time for recurring or scheduled Processes.
 
-###### A.2.3.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 16be342d-0584-4092-9943-97a8c4eeb672 -->
+###### A.2.3.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 16be342d-0584-4092-9943-97a8c4eeb672 -->
 
 Document Update Triggers are a type of gating condition that automatically or deterministically compels initiation of a Process in response to a specific Core Atlas or Agent Artifact Document Update in a previous Process Definition.
 
@@ -5781,7 +5773,7 @@ Once the specified Atlas or Artifact Document Update occurs (and assuming any sp
 
 If no such deterministic Document Update-based trigger exists for a Process to initiate, this field is set to “None.”
 
-##### A.2.3.3.1.2 - Dependencies [Core]  <!-- UUID: 64bec5dc-e288-4c8e-b638-c7180a92aca9 -->
+##### A.2.3.2.1.2 - Dependencies [Core]  <!-- UUID: 64bec5dc-e288-4c8e-b638-c7180a92aca9 -->
 
 Dependencies are gating conditions that must be satisfied for the Process to be able to proceed, regardless of a triggering event.
 
@@ -5789,33 +5781,33 @@ Examples of Dependencies include actors possessing suitable permissions, or a ke
 
 If a trigger has occurred, but Dependencies are unmet, the Process cannot proceed.
 
-#### A.2.3.3.2 - Process Flow [Core]  <!-- UUID: 6964c2d4-2994-487b-b68a-f1df5fa916f7 -->
+#### A.2.3.2.2 - Process Flow [Core]  <!-- UUID: 6964c2d4-2994-487b-b68a-f1df5fa916f7 -->
 
 This field describes the step-by-step operational procedure that occurs once a Process is properly initiated. A step can reference specific Core Atlas or Artifact Documents and broadly describe how their state is manipulated and decisions are made. More granular specifications regarding Document state changes are defined in the `Required Primitive Inputs` schema component [A.2.4 - Required Primitive Inputs](1474b30b-7e2b-4c9a-8624-3c2c5f53abc8). Process flow steps can both consume and produce relevant Document data.
 
-#### A.2.3.3.3 - Required Primitive Inputs [Core]  <!-- UUID: 1474b30b-7e2b-4c9a-8624-3c2c5f53abc8 -->
+#### A.2.3.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 1474b30b-7e2b-4c9a-8624-3c2c5f53abc8 -->
 
 This field specifies the Agent Artifact Documents and their associated fields that must be manipulated using the Powerhouse interface as part of a Process. If any of the required Inputs is missing or incorrect, the Process cannot be completed.
 
-##### A.2.3.3.3.1 - Sequential Stages [Core]  <!-- UUID: e9422783-6196-4117-9099-b5ec0c338c05 -->
+##### A.2.3.2.3.1 - Sequential Stages [Core]  <!-- UUID: e9422783-6196-4117-9099-b5ec0c338c05 -->
 
 Some Processes require Primitive Inputs that are organized into multiple sequential stages (also called “Input stages”). Each Input stage must be completed before progressing to the next, ensuring that all dependencies and validations are met in order. Once an Input stage is completed, the subsequent Input stage is initiated automatically, continuing in this manner until all stages have been finished. 
 
 Upon completing the final Primitive Input stage, the Process Definition transitions to the `Required Outputs` schema component; this component defines the necessary updates to Sky Core Atlas or Agent Artifact Documents.
 
-###### A.2.3.3.3.1.1 - Required Output Trigger [Core]  <!-- UUID: 9c4f4cad-5124-44d8-b19e-bd931fae7963 -->
+###### A.2.3.2.3.1.1 - Required Output Trigger [Core]  <!-- UUID: 9c4f4cad-5124-44d8-b19e-bd931fae7963 -->
 
 Where a Process Definition has more than one set of `Required Outputs`, with each set corresponding to (or “triggered by”) a particular Input stage, the `Required Primitive Inputs` schema component must explicitly correlate each Input stage with the `Required Outputs` it triggers. See [A.2.4 - Multiple Required Outputs And Their Respective Input Stage or Mutually Exclusive Pathway](10c53693-4784-40ad-a8c6-fd2551f14280).
 
-##### A.2.3.3.3.2 - Mutually Exclusive Pathways [Core]  <!-- UUID: 926cd44b-e26c-4ae9-9091-d97c362d7e29 -->
+##### A.2.3.2.3.2 - Mutually Exclusive Pathways [Core]  <!-- UUID: 926cd44b-e26c-4ae9-9091-d97c362d7e29 -->
 
 Some Processes require Primitive Inputs that are organized into two or more mutually exclusive pathways (also “mutually exclusive Input pathways”). Once a pathway is chosen—either manually or automatically via the application of a defined decision or condition—the Process follows that pathway through to completion, rendering the other pathways inapplicable.
 
-###### A.2.3.3.3.2.1 - Required Output Trigger [Core]  <!-- UUID: a61d4797-9a1f-455c-8fe1-b62164e702b3 -->
+###### A.2.3.2.3.2.1 - Required Output Trigger [Core]  <!-- UUID: a61d4797-9a1f-455c-8fe1-b62164e702b3 -->
 
 When multiple “sets” of `Required Outputs` exist, with each set corresponding to (or “triggered by”) a particular Mutually Exclusive Input Pathway, the `Required Primitive Inputs` schema component must explicitly correlate each Mutually Exclusive Input Pathway with the `Required Outputs` it triggers. Because the pathways are mutually exclusive, only the Required Output set associated with the selected Pathway will be executed. The other Output sets remain inactive.
 
-#### A.2.3.3.4 - Required Outputs [Core]  <!-- UUID: dee40c3b-2f89-44c6-8813-c48888df08a7 -->
+#### A.2.3.2.4 - Required Outputs [Core]  <!-- UUID: dee40c3b-2f89-44c6-8813-c48888df08a7 -->
 
 This field specifies the particular Sky Core Atlas and/or Agent Artifact Documents that must be updated as an end result of a Process.
 
@@ -5823,7 +5815,7 @@ Where applicable, a Document Update can serve as a “trigger” that determinis
 
 Some processes do not need formal “Required Outputs” because the only process flow step is a simple update of an Artifact Document. In these edge cases, the change specified in `Required Primitive Inputs` (e.g., toggling a field to Globally Activate a Primitive) fully completes the process, effectively completing it in a single step. Once the designated Document and field are updated as prescribed, the Process is considered finalized.
 
-##### A.2.3.3.4.1 - Multiple Required Outputs And Their Respective Input Stage or Mutually Exclusive Pathway [Core]  <!-- UUID: 10c53693-4784-40ad-a8c6-fd2551f14280 -->
+##### A.2.3.2.4.1 - Multiple Required Outputs And Their Respective Input Stage or Mutually Exclusive Pathway [Core]  <!-- UUID: 10c53693-4784-40ad-a8c6-fd2551f14280 -->
 
 Where a Process Definition has more than one set of Required Outputs, and each set corresponds to (or is “triggered by”) either a specific Input stage or a specific Mutually Exclusive Input Pathway, the Process Definition’s `Required Primitive Input` field must define which `Required Output` set is Invoked upon completion of that stage or pathway.
 
@@ -5833,367 +5825,367 @@ When multiple sequential stages exist, each stage’s successful completion trig
 2. **For Mutually Exclusive Pathways**
 If the Required Primitive Input process instead (or additionally) involves mutually exclusive paths, once a pathway is chosen—either manually or automatically by a specified condition—only the Required Output set tied to that pathway is applied. Outputs associated with the unselected/unexecuted pathways remain inactive.
 
-##### A.2.3.3.4.2 - Agent Artifact Document Specification [Core]  <!-- UUID: 3b3e537c-4989-4674-94bc-05928146ab42 -->
+##### A.2.3.2.4.2 - Agent Artifact Document Specification [Core]  <!-- UUID: 3b3e537c-4989-4674-94bc-05928146ab42 -->
 
 In the Sky Primitives Data Schema, references to an Agent Artifact Document are made in terms of the generic Document type. See [A.1.2 - Atlas Documents - Structure, Categories, And Types Of Atlas Documents - List Of Document Types And Their Specifications](428b7f2e-30b0-4119-a10a-9c3496f19bd2). In practice, each Agent has its own Instance of that Document type in its Artifact. Thus, when a Primitive’s process flow indicates that an Agent Artifact Document must be updated, it is to be interpreted as referring to the _specific Instance_ of that Document type in the Prime Agent’s Artifact.
 
-### A.2.3.4 - Prerequisites For Activating Agent Creation Primitive [Section]  <!-- UUID: 9204bcaf-cfec-4f49-a115-31fad73ebd62 -->
+### A.2.3.3 - Prerequisites For Activating Agent Creation Primitive [Section]  <!-- UUID: 9204bcaf-cfec-4f49-a115-31fad73ebd62 -->
 
 The Agent Creation Primitive is the first Sky Primitive that must be activated by prospective Agent founders. Because an Agent Artifact does not yet exist at this stage, the prerequisite requirements set forth herein must be met, including off-chain obligations and governance outputs. Only after satisfying these prerequisites does the Agent Creation Primitive become accessible to the prospective founder.
 
-#### A.2.3.4.1 - Agent Inputs [Core]  <!-- UUID: df925d98-2e73-4b26-859b-33caa8865f0f -->
+#### A.2.3.3.1 - Agent Inputs [Core]  <!-- UUID: df925d98-2e73-4b26-859b-33caa8865f0f -->
 
 The prospective Agent founder must deploy the required startup capital and pay the Agent creation fee.
 
-##### A.2.3.4.1.1 - Capital Injection [Core]  <!-- UUID: bed7471a-54aa-4167-88dd-22ebd63f8827 -->
+##### A.2.3.3.1.1 - Capital Injection [Core]  <!-- UUID: bed7471a-54aa-4167-88dd-22ebd63f8827 -->
 
 The required capital and the process for deploying it will be specified in a future iteration of the Atlas.
 
-##### A.2.3.4.1.2 - Creation Fee [Core]  <!-- UUID: 708ad6b6-8e4a-46b3-9848-523d00a57420 -->
+##### A.2.3.3.1.2 - Creation Fee [Core]  <!-- UUID: 708ad6b6-8e4a-46b3-9848-523d00a57420 -->
 
 The prospective founder must pay the required creation fee. The required fee and the process for paying it will be specified in a future iteration of the Atlas.
 
-#### A.2.3.4.2 - Core GovOps Outputs [Core]  <!-- UUID: e1cef578-801c-4905-a88b-e9703b048d2a -->
+#### A.2.3.3.2 - Core GovOps Outputs [Core]  <!-- UUID: e1cef578-801c-4905-a88b-e9703b048d2a -->
 
 After the prospective Agent founder deploys the required startup capital and pays the Agent creation fee, Core GovOps creates a Proto-Agent and sets up a Scaffold Agent Artifact.
 
-##### A.2.3.4.2.1 - Proto-Agent Creation [Core]  <!-- UUID: 1f577977-2f4c-41a0-a3ba-f09fc77b8d09 -->
+##### A.2.3.3.2.1 - Proto-Agent Creation [Core]  <!-- UUID: 1f577977-2f4c-41a0-a3ba-f09fc77b8d09 -->
 
 Core GovOps creates a Proto-Agent with no specific functionality in the ecosystem.
 
-##### A.2.3.4.2.2 - Scaffold Artifact Setup [Core]  <!-- UUID: f55fdc70-dfe4-4c52-9be4-10bf3a6dc990 -->
+##### A.2.3.3.2.2 - Scaffold Artifact Setup [Core]  <!-- UUID: f55fdc70-dfe4-4c52-9be4-10bf3a6dc990 -->
 
 Core GovOps prepares a Scaffold Agent Artifact  (”Scaffold Artifact”) containing all Sky Primitives. In the Scaffold Artifact, the Upkeep Rebate Primitive is globally activated by default. See [A.2.4 - Initial Primitive Global Activation Status](377150b3-d64b-4436-ab6d-758b05d82f26). All other Primitives are initially set to `Inactive`. The Scaffold Artifact also includes an initial set of Omni Documents that provide general information about the Agent and organize the various Sky Primitive Instance Configuration Documents. Core GovOps must add the Scaffold Artifact to the Atlas’ Agent Artifact Scope.
 
-##### A.2.3.4.2.3 - Address Deploying Capital [Core]  <!-- UUID: 39d1cae8-a070-47a2-b69b-96e0f4f6a080 -->
+##### A.2.3.3.2.3 - Address Deploying Capital [Core]  <!-- UUID: 39d1cae8-a070-47a2-b69b-96e0f4f6a080 -->
 
 The address deploying the start-up capital is assigned `Founder Access` to the Scaffold Agent Artifact. See [A.2.4 - Founder Access](a4f65994-2526-4522-a986-cd444a5cb896).
 
-### A.2.3.5 - Genesis Primitives [Section]  <!-- UUID: 3d5e3668-8333-4908-adcc-5784cfe7f6b5 -->
+### A.2.3.4 - Genesis Primitives [Section]  <!-- UUID: 3d5e3668-8333-4908-adcc-5784cfe7f6b5 -->
 
 Genesis Primitives are a category of Primitives addressing different aspects of initial Agent setup—such as Agent creation, token launch and configuration, and transformation pathways.
 
-#### A.2.3.5.1 - Agent Creation Primitive [Core]  <!-- UUID: 82b95f6d-4883-4f08-ac3a-9d8189013fbe -->
+#### A.2.3.4.1 - Agent Creation Primitive [Core]  <!-- UUID: 82b95f6d-4883-4f08-ac3a-9d8189013fbe -->
 
 This Primitive may only be Invoked after the prospective Agent founder meets the prerequisites defined in [A.2.4 - A3 - Prerequisites For Activating Agent Creation Primitive](9204bcaf-cfec-4f49-a115-31fad73ebd62), resulting in the creation of a Proto-Agent. Invoking the Agent Creation Primitive allows the Proto-Agent to establish its identity by declaring its name, as well as articulate its intended vision, business model or ecosystem goals.
 
-##### A.2.3.5.1.1 - Agent Creation Primitive Process Definition [Core]  <!-- UUID: 46e64020-f283-48a6-b327-75ea15927ee4 -->
+##### A.2.3.4.1.1 - Agent Creation Primitive Process Definition [Core]  <!-- UUID: 46e64020-f283-48a6-b327-75ea15927ee4 -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of an Instance of the Agent Creation Primitive.
 
-###### A.2.3.5.1.1.1 - Agent Creation Instance Setup Process [Core]  <!-- UUID: 754e1599-28d7-499a-b68f-e2155e87105a -->
+###### A.2.3.4.1.1.1 - Agent Creation Instance Setup Process [Core]  <!-- UUID: 754e1599-28d7-499a-b68f-e2155e87105a -->
 
 The documents herein define the process for setting up an Instance of the Agent Creation Primitive.
 
-####### A.2.3.5.1.1.1.1 - Founder Inputs [Core]  <!-- UUID: cfde405d-e7e1-48eb-b044-3e9514c0aa96 -->
+####### A.2.3.4.1.1.1.1 - Founder Inputs [Core]  <!-- UUID: cfde405d-e7e1-48eb-b044-3e9514c0aa96 -->
 
 The Founder uses the Powerhouse interface to input the Agent's name and an introduction outlining the Agent's vision.
 
-####### A.2.3.5.1.1.1.2 - Validation [Core]  <!-- UUID: d2b0f57b-1596-4355-9c63-aec6466cf316 -->
+####### A.2.3.4.1.1.1.2 - Validation [Core]  <!-- UUID: d2b0f57b-1596-4355-9c63-aec6466cf316 -->
 
 Core GovOps validates the Founder’s inputs. This includes verifying that all of the documents created by the Founder using Founder Access are well-specified, that the documents are Aligned, and that all necessary Primitives to complete setup have been Activated. The necessary Primitives are the Agent Creation, Prime/Executor Transformation, Agent Token, Executor Accord, and Root Edit Primitives. In addition, at least one of the Distribution Requirement or the Market Cap Fee Primitives must be Activated. (See [A.2.4 - Founder Required Primitive Activation](1a48e833-d960-4bdf-8f67-0f9d9307e00d).) After confirming these conditions, Core GovOps creates a Genesis Account and a SubProxy Account for the Agent.
 
-####### A.2.3.5.1.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: c73a1815-b2dc-4cec-9ef4-ae6e6aabf633 -->
+####### A.2.3.4.1.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: c73a1815-b2dc-4cec-9ef4-ae6e6aabf633 -->
 
 After successful validation, the Agent Creation Primitive is considered successfully Invoked, and the Agent Artifact is officially upgraded to reflect an Agent Creation Primitive Instance, with a Status of `Completed`.
 
-###### A.2.3.5.1.1.2 - Agent Creation Instance Ongoing Management [Core]  <!-- UUID: b7238f7c-253d-4881-bbb8-10e3ca2d62ba -->
+###### A.2.3.4.1.1.2 - Agent Creation Instance Ongoing Management [Core]  <!-- UUID: b7238f7c-253d-4881-bbb8-10e3ca2d62ba -->
 
 The documents herein define the process for the ongoing management of an Instance of the Agent Creation Primitive.
 
-####### A.2.3.5.1.1.2.1 - Agent Creation Primitive Results In One-Time Creation [Core]  <!-- UUID: 1ca2f5f3-1be7-4855-bbb7-49630e7e2ae6 -->
+####### A.2.3.4.1.1.2.1 - Agent Creation Primitive Results In One-Time Creation [Core]  <!-- UUID: 1ca2f5f3-1be7-4855-bbb7-49630e7e2ae6 -->
 
 Because the Agent Creation Primitive is deployed solely to effect the one-time creation of the Agent, no further management process is needed post-deployment.
 
-##### A.2.3.5.1.2 - Agent Creation Primitive Input Requirements [Core]  <!-- UUID: 7a7a2631-e5e2-4b63-8f2b-45ecaec7af2e -->
+##### A.2.3.4.1.2 - Agent Creation Primitive Input Requirements [Core]  <!-- UUID: 7a7a2631-e5e2-4b63-8f2b-45ecaec7af2e -->
 
 The documents herein define the required inputs for a valid Invocation of the Agent Creation Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated.
 
-###### A.2.3.5.1.2.1 - Global Activation Status [Core]  <!-- UUID: f9de4749-2bf4-4871-a5a8-6fb6849af7ad -->
+###### A.2.3.4.1.2.1 - Global Activation Status [Core]  <!-- UUID: f9de4749-2bf4-4871-a5a8-6fb6849af7ad -->
 
 The Agent Creation Primitive must be Globally Activated.
 
-###### A.2.3.5.1.2.2 - Agent Name And Introduction [Core]  <!-- UUID: c7e7507e-4d57-4842-932c-88cf232a53a8 -->
+###### A.2.3.4.1.2.2 - Agent Name And Introduction [Core]  <!-- UUID: c7e7507e-4d57-4842-932c-88cf232a53a8 -->
 
 The Agent Creation Primitive must specify the Agent’s Name and provide a brief overview of its vision or business model.
 
-###### A.2.3.5.1.2.3 - Agent SubProxy Account [Core]  <!-- UUID: 585dc747-65f1-4443-b61b-9779031f9258 -->
+###### A.2.3.4.1.2.3 - Agent SubProxy Account [Core]  <!-- UUID: 585dc747-65f1-4443-b61b-9779031f9258 -->
 
 The Agent Creation Primitive must specify the SubProxy address of the Agent. This field is populated by Core GovOps. The SubProxy is an account that serves as the Agent’s treasury. The SubProxy Account is controlled by Sky Governance.
 
-###### A.2.3.5.1.2.4 - Agent Genesis Account  [Core]  <!-- UUID: 761966db-e9db-41f8-a9fe-cf8b0c1a7d26 -->
+###### A.2.3.4.1.2.4 - Agent Genesis Account  [Core]  <!-- UUID: 761966db-e9db-41f8-a9fe-cf8b0c1a7d26 -->
 
 The Agent Creation Primitive must designate the Genesis Account.  This field is populated by Core GovOps. The Genesis account initially controls 100% of the tokens of the Agent. The Genesis Account is initially controlled by the Agent Founder.
 
-#### A.2.3.5.2 - Prime Transformation Primitive [Core]  <!-- UUID: 81411106-fd6d-4f9c-b3ae-7af7b5e62482 -->
+#### A.2.3.4.2 - Prime Transformation Primitive [Core]  <!-- UUID: 81411106-fd6d-4f9c-b3ae-7af7b5e62482 -->
 
 Prior to Activating this Primitive, a Proto-Agent has been created, meaning it has not yet adopted any specialized role. Since a Proto-Agent cannot perform actions in the Sky Ecosystem, it must first transform into either a Prime Agent or Executor Agent to gain functionality. The Prime Transformation Primitive defined herein allows an Agent to transform into a Prime Agent, subject to certain conditions.
 
-##### A.2.3.5.2.1 - Prime Transformation Primitive Process Definition [Core]  <!-- UUID: ddfbb811-94f5-43bb-bf5e-a9bab2be046d -->
+##### A.2.3.4.2.1 - Prime Transformation Primitive Process Definition [Core]  <!-- UUID: ddfbb811-94f5-43bb-bf5e-a9bab2be046d -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of an Instance of the Prime Transformation Primitive.
 
-###### A.2.3.5.2.1.1 - Prime Transformation Primitive Setup Process [Core]  <!-- UUID: 3f1824b6-5325-43ac-b3d5-151fb0f55dec -->
+###### A.2.3.4.2.1.1 - Prime Transformation Primitive Setup Process [Core]  <!-- UUID: 3f1824b6-5325-43ac-b3d5-151fb0f55dec -->
 
 The documents herein define the process for setting up the Prime Transformation Primitive.
 
-####### A.2.3.5.2.1.1.1 - Agent Inputs [Core]  <!-- UUID: aef13d1b-08d6-4c89-8858-65f8acbe4adc -->
+####### A.2.3.4.2.1.1.1 - Agent Inputs [Core]  <!-- UUID: aef13d1b-08d6-4c89-8858-65f8acbe4adc -->
 
 The Proto-Agent must use the Powerhouse interface to input their desired Agent Type into the Primitive. For the Prime Transformation Primitive process, the Proto-Agent must specify ‘Prime Agent’ as their desired Agent Type.
 
-####### A.2.3.5.2.1.1.2 - Validation [Core]  <!-- UUID: 43598845-989e-44fc-8cb4-c60b67fd1f28 -->
+####### A.2.3.4.2.1.1.2 - Validation [Core]  <!-- UUID: 43598845-989e-44fc-8cb4-c60b67fd1f28 -->
 
 Core GovOps validates the Proto-Agent’s inputs, namely, the Agent Type.  Additionally, Core GovOps performs a further review to confirm that all the documents created by the Founder using Founder Access are well-specified, that the documents are Aligned, and that all necessary Primitives have been Activated. The necessary Primitives are the Agent Creation, Prime/Executor Transformation, Agent Token, Executor Accord, and Root Edit Primitives. In addition, at least one of the Distribution Requirement or the Market Cap Fee Primitives must be Activated. (See [A.2.4 - Founder Required Primitive Activation](1a48e833-d960-4bdf-8f67-0f9d9307e00d).)
 
-####### A.2.3.5.2.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 2182141b-a2bc-46bc-b9a6-2cb62e55b302 -->
+####### A.2.3.4.2.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 2182141b-a2bc-46bc-b9a6-2cb62e55b302 -->
 
 After successful validation, the Prime Transformation Primitive is considered successfully Invoked, and the Agent Artifact is officially upgraded to reflect a Prime Transformation Primitive Instance, with a Status of `Completed`.
 
-###### A.2.3.5.2.1.2 - Prime Transformation Primitive Ongoing Management [Core]  <!-- UUID: c1cae3bb-283e-44bf-9860-b721a1625bae -->
+###### A.2.3.4.2.1.2 - Prime Transformation Primitive Ongoing Management [Core]  <!-- UUID: c1cae3bb-283e-44bf-9860-b721a1625bae -->
 
 The documents herein define the process for the ongoing management of an Instance of the Prime Transformation Primitive.
 
-####### A.2.3.5.2.1.2.1 - Prime Transformation Primitive Results In One-Time Creation [Core]  <!-- UUID: 248bfb90-8bd8-410a-86d3-527e355eca43 -->
+####### A.2.3.4.2.1.2.1 - Prime Transformation Primitive Results In One-Time Creation [Core]  <!-- UUID: 248bfb90-8bd8-410a-86d3-527e355eca43 -->
 
 Because the Prime Transformation Primitive is deployed solely to effect the one-time transformation of the Proto-Agent, no further management process is needed post-deployment.
 
-##### A.2.3.5.2.2 - Prime Transformation Primitive Input Requirements [Core]  <!-- UUID: 062b9275-9778-4f24-b0e5-bccf9129c179 -->
+##### A.2.3.4.2.2 - Prime Transformation Primitive Input Requirements [Core]  <!-- UUID: 062b9275-9778-4f24-b0e5-bccf9129c179 -->
 
 The documents herein define the required inputs for a valid Invocation of the Prime Transformation Primitive.  If any input is noncompliant or omitted, the Primitive will be invalidated.
 
-###### A.2.3.5.2.2.1 - Global Activation Status [Core]  <!-- UUID: cd67fe26-d82d-4859-be8d-36f1a9c42a65 -->
+###### A.2.3.4.2.2.1 - Global Activation Status [Core]  <!-- UUID: cd67fe26-d82d-4859-be8d-36f1a9c42a65 -->
 
 The Prime Transformation Primitive must be Globally Activated.
 
-###### A.2.3.5.2.2.2 - Prime Agent Type [Core]  <!-- UUID: 857468db-7ff3-4986-b808-a7cd9854000a -->
+###### A.2.3.4.2.2.2 - Prime Agent Type [Core]  <!-- UUID: 857468db-7ff3-4986-b808-a7cd9854000a -->
 
 The Prime Transformation Primitive must specify the Prime Agent’s Type, e.g., that it is a Prime Agent.
 
-#### A.2.3.5.3 - Executor Transformation Primitive [Core]  <!-- UUID: 2f249be5-8edb-41e4-b429-734e1ba2cbc7 -->
+#### A.2.3.4.3 - Executor Transformation Primitive [Core]  <!-- UUID: 2f249be5-8edb-41e4-b429-734e1ba2cbc7 -->
 
 The Executor Transformation Primitive allows an Agent to transform into an Executor Agent, subject to certain conditions.
 
-#### A.2.3.5.4 - Agent Token Primitive [Core]  <!-- UUID: 2047c361-db28-4952-a70c-83d07b562064 -->
+#### A.2.3.4.4 - Agent Token Primitive [Core]  <!-- UUID: 2047c361-db28-4952-a70c-83d07b562064 -->
 
 The Agent Token Primitive enables Agents to define, mint, and distribute their governance tokens including foundation allocations, token rewards, and airdrops.
 
-##### A.2.3.5.4.1 - Agent Token Primitive Process Definition [Core]  <!-- UUID: f7a81be7-057c-4a05-97ab-78a37c674010 -->
+##### A.2.3.4.4.1 - Agent Token Primitive Process Definition [Core]  <!-- UUID: f7a81be7-057c-4a05-97ab-78a37c674010 -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of an Instance of the Agent Token Primitive.
 
-###### A.2.3.5.4.1.1 - Agent Token Primitive Setup Process [Core]  <!-- UUID: 3e49628d-1f82-4980-9855-75ad5e86aa54 -->
+###### A.2.3.4.4.1.1 - Agent Token Primitive Setup Process [Core]  <!-- UUID: 3e49628d-1f82-4980-9855-75ad5e86aa54 -->
 
 The documents herein define the process for setting up the Agent Token Primitive.
 
-####### A.2.3.5.4.1.1.1 - Agent Inputs [Core]  <!-- UUID: f74588a5-cbde-4635-9e18-bca3d9c80612 -->
+####### A.2.3.4.4.1.1.1 - Agent Inputs [Core]  <!-- UUID: f74588a5-cbde-4635-9e18-bca3d9c80612 -->
 
 The Agent must use the Powerhouse interface to input key data into the Agent Token Primitive, including token name, ticker, symbol, genesis supply, total supply, distribution rules, emissions schedule, pending token address and token admin address. The token admin address should be the Agent SubProxy Account. The Agent must also specify whether token emissions beyond the current supply have been irreversibly disabled.
 
-####### A.2.3.5.4.1.1.2 - Validation [Core]  <!-- UUID: 6f63137d-5385-46e9-96ac-fc16a568f54a -->
+####### A.2.3.4.4.1.1.2 - Validation [Core]  <!-- UUID: 6f63137d-5385-46e9-96ac-fc16a568f54a -->
 
 Core GovOps validates the Agent’s inputs.
 
-####### A.2.3.5.4.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 309e17ed-c75a-48f5-859f-70a5cb29a1f8 -->
+####### A.2.3.4.4.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 309e17ed-c75a-48f5-859f-70a5cb29a1f8 -->
 
 After successful validation, the Agent Token Primitive is considered successfully Invoked. The Agent Artifact is officially upgraded to reflect an Agent Token Primitive Instance, with a Status of `Active`.
 
-####### A.2.3.5.4.1.1.4 - Core GovOps Output [Core]  <!-- UUID: d26166c3-b07f-4583-8303-051a90468ed3 -->
+####### A.2.3.4.4.1.1.4 - Core GovOps Output [Core]  <!-- UUID: d26166c3-b07f-4583-8303-051a90468ed3 -->
 
 Upon successful validation, the token contract can now be deployed on-chain by Core GovOps. The minted supply must be allocated as specified in the Agent Token Primitive Instance. The Primitive is automatically updated to replace the pending token address with the actual token address.
 
-###### A.2.3.5.4.1.2 - Agent Token Primitive Ongoing Management [Core]  <!-- UUID: d8f6b024-f4f8-4897-99f2-d433137c8850 -->
+###### A.2.3.4.4.1.2 - Agent Token Primitive Ongoing Management [Core]  <!-- UUID: d8f6b024-f4f8-4897-99f2-d433137c8850 -->
 
 The documents herein define the process for the ongoing management of an Instance of the Agent Token Primitive.
 
-####### A.2.3.5.4.1.2.1 - Agent Token Primitive Results In One-Time Creation [Core]  <!-- UUID: 0489781a-243c-4704-86e5-efe422cdd41c -->
+####### A.2.3.4.4.1.2.1 - Agent Token Primitive Results In One-Time Creation [Core]  <!-- UUID: 0489781a-243c-4704-86e5-efe422cdd41c -->
 
 Because the Agent Token Primitive is deployed solely to create a one-off Token for an Agent, no further management process is needed post-deployment.
 
-##### A.2.3.5.4.2 - Agent Token Primitive Input Requirements [Core]  <!-- UUID: 9d88d70e-7dfc-42f3-9d58-0d2a905861fd -->
+##### A.2.3.4.4.2 - Agent Token Primitive Input Requirements [Core]  <!-- UUID: 9d88d70e-7dfc-42f3-9d58-0d2a905861fd -->
 
 The documents herein define the required inputs for a valid Invocation of the Agent Token Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated.
 
-###### A.2.3.5.4.2.1 - Global Activation Status [Core]  <!-- UUID: fb858d4e-5d42-4496-807b-979e1946f8f0 -->
+###### A.2.3.4.4.2.1 - Global Activation Status [Core]  <!-- UUID: fb858d4e-5d42-4496-807b-979e1946f8f0 -->
 
 The Agent Token Primitive must be Globally Activated.
 
-###### A.2.3.5.4.2.2 - Agent Token Name [Core]  <!-- UUID: 98fa133d-878a-4337-9d47-ad01ef19b9bb -->
+###### A.2.3.4.4.2.2 - Agent Token Name [Core]  <!-- UUID: 98fa133d-878a-4337-9d47-ad01ef19b9bb -->
 
 The Agent Token Primitive must specify the name of the token.
 
-###### A.2.3.5.4.2.3 - Agent Token Symbol [Core]  <!-- UUID: 46bbc08e-dcfc-4ed5-9e2f-3e78fd8735f9 -->
+###### A.2.3.4.4.2.3 - Agent Token Symbol [Core]  <!-- UUID: 46bbc08e-dcfc-4ed5-9e2f-3e78fd8735f9 -->
 
 The Agent Token Primitive must specify the symbol of the token.
 
-###### A.2.3.5.4.2.4 - Agent Token Genesis Supply [Core]  <!-- UUID: ed342c6e-15ae-4c95-ad4e-4702c27eba62 -->
+###### A.2.3.4.4.2.4 - Agent Token Genesis Supply [Core]  <!-- UUID: ed342c6e-15ae-4c95-ad4e-4702c27eba62 -->
 
 The Agent Token Primitive must specify the genesis supply of the token.
 
-###### A.2.3.5.4.2.5 - Agent Token Address [Core]  <!-- UUID: 745126ca-1d64-461e-b8b9-603216d7e74b -->
+###### A.2.3.4.4.2.5 - Agent Token Address [Core]  <!-- UUID: 745126ca-1d64-461e-b8b9-603216d7e74b -->
 
 The Agent Token Primitive must specify either the pending or permanent address of the token (depending on whether the Primitive has been successfully Invoked).
 
-###### A.2.3.5.4.2.6 - Agent Token Admin [Core]  <!-- UUID: 70e08dd1-8a2d-441b-95c4-92bce3bd37e8 -->
+###### A.2.3.4.4.2.6 - Agent Token Admin [Core]  <!-- UUID: 70e08dd1-8a2d-441b-95c4-92bce3bd37e8 -->
 
 The Agent Token Primitive must specify the Admin of the token.
 
-###### A.2.3.5.4.2.7 - Agent Token Emissions [Core]  <!-- UUID: 0f71bdc3-f18d-4e6f-8041-d73026a91d27 -->
+###### A.2.3.4.4.2.7 - Agent Token Emissions [Core]  <!-- UUID: 0f71bdc3-f18d-4e6f-8041-d73026a91d27 -->
 
 The Agent Token Primitive must specify whether token emissions beyond the current supply have been irreversibly disabled. Once Disabled is set to `True`, the action cannot be undone by the Agent. Sky Governance retains the ability to revert the Disabled setting where the Agent is in violation of Risk Capital requirements and emissions are required by the Risk Framework.
 
-###### A.2.3.5.4.2.8 - Agent Token Distribution Rules [Core]  <!-- UUID: 3d43ba11-ac87-41a5-a98d-c80071aaf1eb -->
+###### A.2.3.4.4.2.8 - Agent Token Distribution Rules [Core]  <!-- UUID: 3d43ba11-ac87-41a5-a98d-c80071aaf1eb -->
 
 The Agent Token Primitive must specify the process for distributing the initial token supply.
 
-### A.2.3.6 - Operational Primitives [Section]  <!-- UUID: 0192ec95-9207-480e-8c51-88d2a1da95ad -->
+### A.2.3.5 - Operational Primitives [Section]  <!-- UUID: 0192ec95-9207-480e-8c51-88d2a1da95ad -->
 
 Operational Primitives are a category of Primitives enabling the Agents’ own operation and governance and AI features, as well as the ability to create derivative Light Agents.
 
-#### A.2.3.6.1 - Executor Accord Primitive [Core]  <!-- UUID: 88017877-3ec1-4c43-a035-6bebdf11d9bb -->
+#### A.2.3.5.1 - Executor Accord Primitive [Core]  <!-- UUID: 88017877-3ec1-4c43-a035-6bebdf11d9bb -->
 
 The Executor Accord Primitive is the foundational mechanism that allows Prime Agents to operate autonomously according to the strategy specified in their Agent Artifacts with automated operational insurance provided by separate Operational Executor Agents that delegate the work to GovOps actors.
 
-##### A.2.3.6.1.1 - Executor Accord Primitive Process Definition [Core]  <!-- UUID: b2b42304-f715-4cc2-8fbf-68c794876386 -->
+##### A.2.3.5.1.1 - Executor Accord Primitive Process Definition [Core]  <!-- UUID: b2b42304-f715-4cc2-8fbf-68c794876386 -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of an Instance of the Executor Accord Primitive.
 
-###### A.2.3.6.1.1.1 - Executor Accord Primitive Setup Process [Core]  <!-- UUID: af7c2593-b397-4fff-9b81-3d640508a163 -->
+###### A.2.3.5.1.1.1 - Executor Accord Primitive Setup Process [Core]  <!-- UUID: af7c2593-b397-4fff-9b81-3d640508a163 -->
 
 The documents herein define the process for setting up an Instance of the Executor Accord Primitive.
 
-####### A.2.3.6.1.1.1.1 - Agent Inputs [Core]  <!-- UUID: d082d5de-a0b2-4441-8ba8-06d1e5fe2aed -->
+####### A.2.3.5.1.1.1.1 - Agent Inputs [Core]  <!-- UUID: d082d5de-a0b2-4441-8ba8-06d1e5fe2aed -->
 
 The Prime Agent and Operational Executor Agent must come to a consensus about the details of the Executor Accord. These details must be entered into the Powerhouse interface along with independent confirmation from each Agent that they agree to those terms.
 
-####### A.2.3.6.1.1.1.2 - Validation [Core]  <!-- UUID: dad19a7b-769c-43e3-a7b9-ce91d267c3b1 -->
+####### A.2.3.5.1.1.1.2 - Validation [Core]  <!-- UUID: dad19a7b-769c-43e3-a7b9-ce91d267c3b1 -->
 
 Core GovOps validates the Agent’s inputs, ensuring that the terms of the Executor Accord are reasonably specific.
 
-####### A.2.3.6.1.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 458ec13a-5352-4720-a6eb-70f1bec6cb20 -->
+####### A.2.3.5.1.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 458ec13a-5352-4720-a6eb-70f1bec6cb20 -->
 
 After successful validation, the Executor Accord Primitive is considered successfully Invoked. The Agent Artifact is officially upgraded to reflect an Executor Accord Primitive Instance, with a Status of `Active`.
 
-####### A.2.3.6.1.1.1.4 - Operational GovOps Takes Over Operational Duties [Core]  <!-- UUID: 8179ca9b-2875-4f7c-9573-9ed6fc5f91cf -->
+####### A.2.3.5.1.1.1.4 - Operational GovOps Takes Over Operational Duties [Core]  <!-- UUID: 8179ca9b-2875-4f7c-9573-9ed6fc5f91cf -->
 
 Upon successful validation, the Prime Agent has a documented relationship with an Executor Agent and so Core GovOps will no longer perform validation of the Agent’s Primitive inputs. Instead, the Operational GovOps associated with the Executor Agent specified in the Executor Accord will carry out operational tasks on behalf of the Prime Agent.
 
-###### A.2.3.6.1.1.2 - Executor Accord Primitive Ongoing Management [Core]  <!-- UUID: 8fe7d3f4-51bc-41bb-95b0-6dfe26fab562 -->
+###### A.2.3.5.1.1.2 - Executor Accord Primitive Ongoing Management [Core]  <!-- UUID: 8fe7d3f4-51bc-41bb-95b0-6dfe26fab562 -->
 
 The documents herein define the process for the ongoing management of an Instance of the Executor Accord Primitive.
 
-##### A.2.3.6.1.2 - Executor Accord Primitive Required Inputs [Core]  <!-- UUID: 5785964a-75ca-4109-af39-5ae1e872b89d -->
+##### A.2.3.5.1.2 - Executor Accord Primitive Required Inputs [Core]  <!-- UUID: 5785964a-75ca-4109-af39-5ae1e872b89d -->
 
 The documents herein define the required inputs for a valid Invocation of the Executor Accord Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated and the Executor Accord will not be set up.
 
-###### A.2.3.6.1.2.1 - Executor Accord Primitive Activation Status [Core]  <!-- UUID: 7dcc0b40-f577-4590-92d2-62697bfff33a -->
+###### A.2.3.5.1.2.1 - Executor Accord Primitive Activation Status [Core]  <!-- UUID: 7dcc0b40-f577-4590-92d2-62697bfff33a -->
 
 The Executor Accord Primitive must be Globally Activated.
 
-###### A.2.3.6.1.2.2 - Executor Accord Terms [Core]  <!-- UUID: 2ac80f9d-744d-4dde-9ecd-9497642716dc -->
+###### A.2.3.5.1.2.2 - Executor Accord Terms [Core]  <!-- UUID: 2ac80f9d-744d-4dde-9ecd-9497642716dc -->
 
 The Executor Accord Primitive must include the terms of the Executor Accord between the Prime Agent and Operational Executor Agent.
 
-###### A.2.3.6.1.2.3 - Agent Agreement [Core]  <!-- UUID: bf03d18d-e5f9-434c-9aff-f6f0679f5746 -->
+###### A.2.3.5.1.2.3 - Agent Agreement [Core]  <!-- UUID: bf03d18d-e5f9-434c-9aff-f6f0679f5746 -->
 
 The Executor Accord Primitive must include independent confirmation from each Agent that they agree to the terms of the Executor Accord.
 
-#### A.2.3.6.2 - Root Edit Primitive [Core]  <!-- UUID: 78488c6b-d77f-4344-b954-476e415a2c7d -->
+#### A.2.3.5.2 - Root Edit Primitive [Core]  <!-- UUID: 78488c6b-d77f-4344-b954-476e415a2c7d -->
 
 The Root Edit Primitive allows Prime Agents, through a token holder vote, to direct the Operational Executor Agent specified in the Executor Accord Primitive to directly modify the Prime Agent Artifact.
 
-##### A.2.3.6.2.1 - Root Edit Primitive Process Definition [Core]  <!-- UUID: f543db65-dac7-494d-bd0d-a24bf600157d -->
+##### A.2.3.5.2.1 - Root Edit Primitive Process Definition [Core]  <!-- UUID: f543db65-dac7-494d-bd0d-a24bf600157d -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of an Instance of the Root Edit Primitive.
 
-###### A.2.3.6.2.1.1 - Root Edit Primitive Setup Process [Core]  <!-- UUID: 1fbca4e2-e89f-4819-afba-e58702ca2ed9 -->
+###### A.2.3.5.2.1.1 - Root Edit Primitive Setup Process [Core]  <!-- UUID: 1fbca4e2-e89f-4819-afba-e58702ca2ed9 -->
 
 The documents herein define the process for setting up an Instance of the Root Edit Primitive.
 
-####### A.2.3.6.2.1.1.1 - Agent Inputs [Core]  <!-- UUID: 131380cc-df22-4862-a275-49e6a7302cf8 -->
+####### A.2.3.5.2.1.1.1 - Agent Inputs [Core]  <!-- UUID: 131380cc-df22-4862-a275-49e6a7302cf8 -->
 
 The Agent must use the Powerhouse interface to specify the process by which Root Edits occur. See [A.1.14 - Artifact Edit Processes](2be8d2f0-bf02-4aa1-ad37-afb7a811a3b8).
 
-####### A.2.3.6.2.1.1.2 - Validation  [Core]  <!-- UUID: 2a466974-af55-4d3f-84a5-7ac840ffb620 -->
+####### A.2.3.5.2.1.1.2 - Validation  [Core]  <!-- UUID: 2a466974-af55-4d3f-84a5-7ac840ffb620 -->
 
 Core GovOps validates the Agent’s inputs.
 
-####### A.2.3.6.2.1.1.3 - Official Update Of Artifact  [Core]  <!-- UUID: 3a95c852-efc0-43aa-b4fe-358332aaaf74 -->
+####### A.2.3.5.2.1.1.3 - Official Update Of Artifact  [Core]  <!-- UUID: 3a95c852-efc0-43aa-b4fe-358332aaaf74 -->
 
 After successful validation, the Root Edit Primitive is considered successfully Invoked. The Agent Artifact is officially upgraded to reflect a Root Edit Primitive Instance, with a Status of `Active`.
 
-###### A.2.3.6.2.1.2 - Root Edit Primitive Ongoing Management [Core]  <!-- UUID: 023847b4-9987-449f-9f2c-6c719856295f -->
+###### A.2.3.5.2.1.2 - Root Edit Primitive Ongoing Management [Core]  <!-- UUID: 023847b4-9987-449f-9f2c-6c719856295f -->
 
 The documents herein define the process for the ongoing management of an Instance of the Root Edit Primitive.
 
-####### A.2.3.6.2.1.2.1 - Root Edit Primitive Artifact Edit Proposal [Core]  <!-- UUID: 71ae684b-da79-4ece-ab38-91a498b3bdb1 -->
+####### A.2.3.5.2.1.2.1 - Root Edit Primitive Artifact Edit Proposal [Core]  <!-- UUID: 71ae684b-da79-4ece-ab38-91a498b3bdb1 -->
 
 The process for using the Root Edit Primitive begins with a party presenting a proposal for an Artifact Edit. The Root Edit Primitive specifies the requirements to submit a proposal, the required form of the proposal, and any other prerequisites that must be satisfied prior to the proposal being voted on.
 
-####### A.2.3.6.2.1.2.2 - Root Edit Primitive Review By Operational Facilitator [Core]  <!-- UUID: 823cad54-4438-4ec3-9e13-d2624795fabd -->
+####### A.2.3.5.2.1.2.2 - Root Edit Primitive Review By Operational Facilitator [Core]  <!-- UUID: 823cad54-4438-4ec3-9e13-d2624795fabd -->
 
 The Operational Facilitator reviews the proposal. This review encompasses two aspects. First, the Operational Executor reviews the proposal for alignment with the Atlas. Second, the Facilitator reviews the proposal for compliance with any requirements set out in the Root Edit Primitive for the Agent, such as eligible actors to submit proposals, form of the proposal, or required time for review before submitting a proposal.
 
-####### A.2.3.6.2.1.2.3 - Root Edit Primitive Voting [Core]  <!-- UUID: 7e4574c0-a83c-4e3f-bfa6-1f66db2a0aed -->
+####### A.2.3.5.2.1.2.3 - Root Edit Primitive Voting [Core]  <!-- UUID: 7e4574c0-a83c-4e3f-bfa6-1f66db2a0aed -->
 
 If the Operational Facilitator concludes that the proposal is aligned with the Atlas and consistent with the process specified in the Root Edit Primitive, then the Operational Facilitator moves forward with conducting the vote. The Root Edit Primitive specifies how the vote should be conducted (e.g. on-chain or off-chain), the time period over which voting should occur, and other relevant parameters for the vote such as quorum and approval requirements.
 
-####### A.2.3.6.2.1.2.4 - Root Edit Primitive Artifact Update [Core]  <!-- UUID: 34d06691-afc4-4ade-9ada-ad180c2aef0f -->
+####### A.2.3.5.2.1.2.4 - Root Edit Primitive Artifact Update [Core]  <!-- UUID: 34d06691-afc4-4ade-9ada-ad180c2aef0f -->
 
 After the voting period ends, the Operational Facilitator reviews the outcome of the vote. If the vote is successful, the Operational Facilitator actions the Artifact Edit in the Powerhouse system. In either case, the Operational Facilitator records the outcome of the vote, including all pertinent materials, in the Powerhouse system.
 
-##### A.2.3.6.2.2 - Root Edit Primitive Required Inputs [Core]  <!-- UUID: cec43505-2bf3-48ce-81d9-852f65edc468 -->
+##### A.2.3.5.2.2 - Root Edit Primitive Required Inputs [Core]  <!-- UUID: cec43505-2bf3-48ce-81d9-852f65edc468 -->
 
 The documents herein define the required inputs for a valid Invocation of the Root Edit Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated and the Root Edit Primitive will not be set up.
 
-###### A.2.3.6.2.2.1 - Root Edit Primitive Activation Status [Core]  <!-- UUID: 416b0a3a-fa97-40ad-8b58-50650f4a956b -->
+###### A.2.3.5.2.2.1 - Root Edit Primitive Activation Status [Core]  <!-- UUID: 416b0a3a-fa97-40ad-8b58-50650f4a956b -->
 
 The Root Edit Primitive must be Globally Activated.
 
-###### A.2.3.6.2.2.2 - Artifact Edit Process [Core]  <!-- UUID: dc7fd889-80dd-4ac0-b807-f01ab440ba8a -->
+###### A.2.3.5.2.2.2 - Artifact Edit Process [Core]  <!-- UUID: dc7fd889-80dd-4ac0-b807-f01ab440ba8a -->
 
 The Root Edit Primitive must specify the process by which updates to the Agent Artifact may be made by Agent token holder vote. The details of this process may be specified by the Agent, subject to the following conditions: (1) Agent token holders must vote to approve Artifact Edit proposals, (2) the Operational Facilitator must review each proposal for alignment and conformance with the process specified in the Root Edit Primitive, (3) the vote must be conducted by the Operational Facilitator, and (4) the Operational Facilitator must action the Artifact Edit if the vote passes. The process definition must include the elements included in the documents herein.
 
-####### A.2.3.6.2.2.2.1 - Proposal Format [Core]  <!-- UUID: 7a473c50-f947-481b-8466-468b8d1708d9 -->
+####### A.2.3.5.2.2.2.1 - Proposal Format [Core]  <!-- UUID: 7a473c50-f947-481b-8466-468b8d1708d9 -->
 
 The Root Edit Primitive must specify the required format of proposals.
 
-####### A.2.3.6.2.2.2.2 - Actors Eligible To Submit Proposals [Core]  <!-- UUID: b5e21f94-5239-44c5-8eec-b5a5e6e05cf9 -->
+####### A.2.3.5.2.2.2.2 - Actors Eligible To Submit Proposals [Core]  <!-- UUID: b5e21f94-5239-44c5-8eec-b5a5e6e05cf9 -->
 
 The Root Edit Primitive must specify the requirements for actors to be eligible to submit proposals.
 
-####### A.2.3.6.2.2.2.3 - Requirements For Proposals To Be Included In Vote [Core]  <!-- UUID: 0580f68b-06b4-41b0-b091-c88c8e6a0f81 -->
+####### A.2.3.5.2.2.2.3 - Requirements For Proposals To Be Included In Vote [Core]  <!-- UUID: 0580f68b-06b4-41b0-b091-c88c8e6a0f81 -->
 
 The Root Edit Primitive must specify the requirements for proposals to be included in a vote, such as any required review period or any reviews that must be conducted by other parties such as expert advisors.
 
-####### A.2.3.6.2.2.2.4 - Voting Period [Core]  <!-- UUID: 0ca3f0ee-92ee-420e-915d-37aae1ab4848 -->
+####### A.2.3.5.2.2.2.4 - Voting Period [Core]  <!-- UUID: 0ca3f0ee-92ee-420e-915d-37aae1ab4848 -->
 
 The Root Edit Primitive must specify the period over which voting should occur.
 
-####### A.2.3.6.2.2.2.5 - Quorum Requirement [Core]  <!-- UUID: d4ad86a0-ec69-49b6-a794-6826cde3be0e -->
+####### A.2.3.5.2.2.2.5 - Quorum Requirement [Core]  <!-- UUID: d4ad86a0-ec69-49b6-a794-6826cde3be0e -->
 
 The Root Edit Primitive must specify the percent of outstanding tokens that must participate in a vote for it to be considered valid.
 
-####### A.2.3.6.2.2.2.6 - Approval Threshold [Core]  <!-- UUID: 0c36f76d-17de-4958-bace-d1b1d7473982 -->
+####### A.2.3.5.2.2.2.6 - Approval Threshold [Core]  <!-- UUID: 0c36f76d-17de-4958-bace-d1b1d7473982 -->
 
 The Root Edit Primitive must specify the percent of tokens participating in the vote that must vote in favor of the proposal for it to be approved.
 
-####### A.2.3.6.2.2.2.7 - Handling Of Emergency Or Urgent Situations [Core]  <!-- UUID: dda24bc9-d7e3-4593-9cdd-afe62355d198 -->
+####### A.2.3.5.2.2.2.7 - Handling Of Emergency Or Urgent Situations [Core]  <!-- UUID: dda24bc9-d7e3-4593-9cdd-afe62355d198 -->
 
 The Root Edit Primitive must specify any procedures for expedited voting in emergency or urgent situations.
 
-####### A.2.3.6.2.2.2.8 - Special Voting Processes [Core]  <!-- UUID: b6fa5678-0b62-4607-b0e9-b3d27f57f689 -->
+####### A.2.3.5.2.2.2.8 - Special Voting Processes [Core]  <!-- UUID: b6fa5678-0b62-4607-b0e9-b3d27f57f689 -->
 
 The Root Edit Primitive must specify any exceptions to the general process, such as subject matter requiring supermajority approval.
 
-##### A.2.3.6.2.3 - Short-Term Limitations On Usage Of Root Edit Primitive [Core]  <!-- UUID: 459f257e-ef68-43b0-8d39-7836d98067ff -->
+##### A.2.3.5.2.3 - Short-Term Limitations On Usage Of Root Edit Primitive [Core]  <!-- UUID: 459f257e-ef68-43b0-8d39-7836d98067ff -->
 
 In the short term, usage of the Root Edit Primitive by Prime Agents will be limited as specified in the documents herein.
 
-###### A.2.3.6.2.3.1 - Limitations On Usage Of Root Edit Primitive Prior To Tokens Being Publicly Held [Core]  <!-- UUID: 8c15762a-ea7e-4c6d-9089-60d30c219c0f -->
+###### A.2.3.5.2.3.1 - Limitations On Usage Of Root Edit Primitive Prior To Tokens Being Publicly Held [Core]  <!-- UUID: 8c15762a-ea7e-4c6d-9089-60d30c219c0f -->
 
 Until the tokens of a Prime Agent are Publicly Held, as defined in [A.2.4 - Publicly Held Definition](d6265f88-d2d0-457b-8958-a3c22f9a5718), the Root Edit Primitive will not be operational. Instead, if a Prime Agent wishes to edit its Agent Artifact, it must use the customary Atlas Edit Proposal processes specified in the Sky Core Atlas at [A.1.11 - A2 - Weekly Governance Cycle - Atlas Edit Weekly Cycle](14e99d92-71fc-44d9-9dbf-933bce2e1b32) or [A.1.12 - A2 - Monthly Governance Cycle - Atlas Edit Monthly Cycle](d2cbddd2-58ef-4311-a71d-d2c340364cb5). The process for Prime Agents to use the Atlas Edit Proposal process is further specified in [A.2.4 - Atlas Edit Proposal Process For Prime Agents](364e52eb-4529-46a9-9852-edaaab88baeb).
 
-####### A.2.3.6.2.3.1.1 - Publicly Held Definition [Core]  <!-- UUID: d6265f88-d2d0-457b-8958-a3c22f9a5718 -->
+####### A.2.3.5.2.3.1.1 - Publicly Held Definition [Core]  <!-- UUID: d6265f88-d2d0-457b-8958-a3c22f9a5718 -->
 
 The tokens of a Prime Agent shall be deemed Publicly Held if they are held by at least 2,000 Public Holders who collectively own 10% or more of the Prime Agent’s portion of its genesis supply, as defined in [A.2.4 - Agent Token Genesis Supply](ed342c6e-15ae-4c95-ad4e-4702c27eba62).
 
@@ -6209,19 +6201,19 @@ Tokens held in liquidity pools or staking contracts shall be attributed to the b
 
 The Core Executor Agents are responsible for determining whether the tokens of a Prime Agent are Publicly Held. If the Core Executor Agents believe that a Prime Agent’s tokens are sufficiently decentralized despite failing to meet the technical criteria specified herein, they may conduct a Governance Poll to determine whether the Prime Agent’s tokens should be deemed Publicly Held.
 
-###### A.2.3.6.2.3.2 - Atlas Edit Proposal Process For Prime Agents [Core]  <!-- UUID: 364e52eb-4529-46a9-9852-edaaab88baeb -->
+###### A.2.3.5.2.3.2 - Atlas Edit Proposal Process For Prime Agents [Core]  <!-- UUID: 364e52eb-4529-46a9-9852-edaaab88baeb -->
 
 Prime Agents that do not have an operational Root Edit Primitive must work with Core GovOps to use the Atlas Edit Weekly Cycle (see [A.1.11 - A2 - Weekly Governance Cycle - Atlas Edit Weekly Cycle](14e99d92-71fc-44d9-9dbf-933bce2e1b32)) process to update their Agent Artifacts, as specified in the documents herein.
 
-####### A.2.3.6.2.3.2.1 - Prime Agent Submits Draft Proposal To Core GovOps [Core]  <!-- UUID: 461272f0-e9ae-43df-9571-4be49a2286c7 -->
+####### A.2.3.5.2.3.2.1 - Prime Agent Submits Draft Proposal To Core GovOps [Core]  <!-- UUID: 461272f0-e9ae-43df-9571-4be49a2286c7 -->
 
 The Prime Agent must submit a draft of the proposed edit to Core GovOps by 23:59 UTC on Monday in a given week. The draft need not be in the form of Atlas documents but should reflect a finished work product of the Prime Agent that is logically organized, contains all pertinent information, and is free of ambiguities to the best of the Prime’s ability.
 
-####### A.2.3.6.2.3.2.2 - Core GovOps Submits Atlas Edit Weekly Cycle Proposal [Core]  <!-- UUID: 07d1ed44-c457-49b9-a054-50e26aa70acc -->
+####### A.2.3.5.2.3.2.2 - Core GovOps Submits Atlas Edit Weekly Cycle Proposal [Core]  <!-- UUID: 07d1ed44-c457-49b9-a054-50e26aa70acc -->
 
 Upon receiving the draft from the Prime Agent, Core GovOps drafts a formal Atlas Edit Weekly Cycle proposal containing the relevant content, shares a draft with the Prime Agent for review, and then submits that proposal to be voted on Monday of the following week.
 
-######## A.2.3.6.2.3.2.2.1 - Potential Delays In Submission [Core]  <!-- UUID: 4b37392d-9c0f-4572-8293-e7c6b3fc3743 -->
+######## A.2.3.5.2.3.2.2.1 - Potential Delays In Submission [Core]  <!-- UUID: 4b37392d-9c0f-4572-8293-e7c6b3fc3743 -->
 
 Core GovOps may in their discretion delay submitting a proposed edit based on factors including, but not limited to:
     
@@ -6231,51 +6223,51 @@ Core GovOps may in their discretion delay submitting a proposed edit based on fa
 ◦ delays by the Prime Agent in responding to questions or requests to review drafts by Core GovOps; and    
 ◦ the overall workload of Core GovOps.
 
-####### A.2.3.6.2.3.2.3 - Atlas Edit Weekly Cycle Proposal Is Approved Or Rejected [Core]  <!-- UUID: afeaa98f-b8f5-48d9-adb2-8ceed287667d -->
+####### A.2.3.5.2.3.2.3 - Atlas Edit Weekly Cycle Proposal Is Approved Or Rejected [Core]  <!-- UUID: afeaa98f-b8f5-48d9-adb2-8ceed287667d -->
 
 The Atlas Edit Weekly Cycle proposal, if triggered by a Ranked Delegate and not rejected by the Core Facilitator for misalignment, is either approved or rejected by SKY holders by Thursday of the following week. A proposal that is not triggered or is rejected by the Core Facilitator for misalignment is treated as rejected.
 
-####### A.2.3.6.2.3.2.4 - If Approved Then Prime Agent Begins Operationalizing Change [Core]  <!-- UUID: 61414e64-815d-4bab-8b8b-f81d787453b6 -->
+####### A.2.3.5.2.3.2.4 - If Approved Then Prime Agent Begins Operationalizing Change [Core]  <!-- UUID: 61414e64-815d-4bab-8b8b-f81d787453b6 -->
 
 If the Atlas Edit Weekly Cycle proposal is approved by SKY holders, then the Prime Agent may begin operationalizing that logic immediately thereafter.
 
-#### A.2.3.6.3 - Light Agent Primitive [Core]  <!-- UUID: 44028423-2cd1-40cb-89ac-3f762b602b90 -->
+#### A.2.3.5.3 - Light Agent Primitive [Core]  <!-- UUID: 44028423-2cd1-40cb-89ac-3f762b602b90 -->
 
 The Light Agent Primitive enables users to create Light Agents, which are sub-agents operating on top of the Agent’s Executor Accord, conferring the advantages of Sky GovOps at a lower cost, but without direct access to other Sky Primitives.
 
-### A.2.3.7 - Ecosystem Upkeep Primitives [Section]  <!-- UUID: 25673fd2-76cb-4c4d-8ec6-8c489207bcfc -->
+### A.2.3.6 - Ecosystem Upkeep Primitives [Section]  <!-- UUID: 25673fd2-76cb-4c4d-8ec6-8c489207bcfc -->
 
 Ecosystem Upkeep Primitives ensure that all Agents contribute to long-term ecosystem sustainability. Prime Agents must choose between either the Distribution Requirement Primitive or the Market Cap Fee Primitive; whereas the Upkeep Rebate Primitive applies universally to all Prime Agents. The term “Ecosystem Upkeep Fees” refers to the upkeep obligation of a Prime Agent pursuant to either the Distribution Requirement Primitive or the Market Cap Fee Primitive.
 
-#### A.2.3.7.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 0804ab13-d276-4ad9-a935-dc9f7fc2e350 -->
+#### A.2.3.6.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 0804ab13-d276-4ad9-a935-dc9f7fc2e350 -->
 
 The Distribution Requirement Primitive requires Agents to periodically buy and distribute 0.25% of their token supply per year. The annual requirement of 0.25% of the token supply is divided into twelve (12) equal monthly distributions. Distributions must occur on the first day of each month, with tokens purchased by the Prime Agent on the open market and transferred to an address designated by Sky Core in [A.2.4 - Sky Core-Designated Address](3b05c60a-4f95-4dd8-bfaf-409a9f39ee9f). 
 
 Prime Agents choose between fulfilling either the Distribution Requirement Primitive or the Market Cap Fee Primitive.
 
-##### A.2.3.7.1.1 - Sky Core-Designated Address [Core]  <!-- UUID: 3b05c60a-4f95-4dd8-bfaf-409a9f39ee9f -->
+##### A.2.3.6.1.1 - Sky Core-Designated Address [Core]  <!-- UUID: 3b05c60a-4f95-4dd8-bfaf-409a9f39ee9f -->
 
 The address to which tokens must be transferred will be specified in a future iteration of the Atlas.
 
-##### A.2.3.7.1.2 - Calculation of Distributed Tokens [Core]  <!-- UUID: ef26607b-9635-4d42-a2cf-6c755f53883a -->
+##### A.2.3.6.1.2 - Calculation of Distributed Tokens [Core]  <!-- UUID: ef26607b-9635-4d42-a2cf-6c755f53883a -->
 
 The value of the distributed tokens is calculated as the number of tokens distributed, multiplied by the Time-Weighted Average Price (TWAP) of the token over the 24-hour period ending at 23:59 UTC on the last day of each month, immediately preceding the distribution event. This value is applied in the rebate calculation under the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
 
-#### A.2.3.7.2 - Market Cap Fee Primitive [Core]  <!-- UUID: a21616f4-1611-4e0b-87b2-efbdff9f6f28 -->
+#### A.2.3.6.2 - Market Cap Fee Primitive [Core]  <!-- UUID: a21616f4-1611-4e0b-87b2-efbdff9f6f28 -->
 
 The Market Cap Fee Primitive requires Prime Agents to pay an annual fee equivalent to 0.30% of their market capitalization to Sky, accounted for monthly. The annual fee of 0.30% of the market capitalization is divided into twelve (12) equal monthly payments, equating to 0.025% of the market capitalization per month. Payments must occur on the first day of each month, with the fee transferred to an address designated by Sky Core in [A.2.4 - Sky Core-Designated Address](2a5f0e38-e51a-4a68-a4b8-1a912b8bb12e). 
 
 Prime Agents choose between fulfilling either the Distribution Requirement Primitive or the Market Cap Fee Primitive.
 
-##### A.2.3.7.2.1 - Sky Core-Designated Address [Core]  <!-- UUID: 2a5f0e38-e51a-4a68-a4b8-1a912b8bb12e -->
+##### A.2.3.6.2.1 - Sky Core-Designated Address [Core]  <!-- UUID: 2a5f0e38-e51a-4a68-a4b8-1a912b8bb12e -->
 
 The address to which the fee must be transferred will be specified in a future iteration of the Atlas.
 
-##### A.2.3.7.2.2 - Valuation [Core]  <!-- UUID: 4b856873-8c6a-449a-8ca6-487d8fed9029 -->
+##### A.2.3.6.2.2 - Valuation [Core]  <!-- UUID: 4b856873-8c6a-449a-8ca6-487d8fed9029 -->
 
 The market capitalization is determined as the total token supply multiplied by the TWAP of the token over the 24-hour period ending at 23:59 UTC on the last day of each month, immediately preceding the payment event. This value is applied in the rebate calculation under the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
 
-#### A.2.3.7.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 569e1c2b-0e69-43e7-8491-06cc5f7d2988 -->
+#### A.2.3.6.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 569e1c2b-0e69-43e7-8491-06cc5f7d2988 -->
 
 The Upkeep Rebate Primitive allows a Prime Agent (”Holding Agent”) to claim a rebate on its Ecosystem Upkeep Fees when it holds any portion of the token supply of another Prime Agent (”Issuing Agent”).
 
@@ -6286,131 +6278,131 @@ Ecosystem Upkeep Fees are accounted on a monthly basis. The Upkeep Rebate is cal
 
 This resulting rebate amount is applied against the Holding Agent’s Ecosystem Upkeep Fees due in the calendar month immediately following the Issuing Agent’s payment.
 
-### A.2.3.8 - SkyLink Primitives [Section]  <!-- UUID: 7b5d8965-a64c-4c44-b742-607f51f69d8f -->
+### A.2.3.7 - SkyLink Primitives [Section]  <!-- UUID: 7b5d8965-a64c-4c44-b742-607f51f69d8f -->
 
 SkyLink Primitives are Sky Primitives that are technical infrastructure that extends the Sky Protocol. SkyLink Primitives are built autonomously by Prime Agents, but owned by Sky Core and shared among all Prime Agents. Prime Agents are reimbursed for the cost of setting up SkyLink Primitives and given additional first-mover incentives.
 
-#### A.2.3.8.1 - Token SkyLink Primitive [Core]  <!-- UUID: 4504d2d4-ee45-4a07-8c5b-9baf20b12e76 -->
+#### A.2.3.7.1 - Token SkyLink Primitive [Core]  <!-- UUID: 4504d2d4-ee45-4a07-8c5b-9baf20b12e76 -->
 
 The Token SkyLink Primitive allows users to bridge USDS, sUSDS, SKY, or an Agent token to new blockchains and enables other multichain features.
 
-##### A.2.3.8.1.1 - Token SkyLink Process Definition [Core]  <!-- UUID: 18386a64-1f20-4495-99a0-2271c7d607b0 -->
+##### A.2.3.7.1.1 - Token SkyLink Process Definition [Core]  <!-- UUID: 18386a64-1f20-4495-99a0-2271c7d607b0 -->
 
 The documents herein define the Process Definition for initial setup and ongoing management of the Token SkyLink Primitive.
 
-###### A.2.3.8.1.1.1 - Token SkyLink Setup Process Definition [Core]  <!-- UUID: 408400c0-db9d-41d8-b657-de59ac18a288 -->
+###### A.2.3.7.1.1.1 - Token SkyLink Setup Process Definition [Core]  <!-- UUID: 408400c0-db9d-41d8-b657-de59ac18a288 -->
 
 The documents herein define the process for setting up an Instance of the Token SkyLink Primitive.
 
-####### A.2.3.8.1.1.1.1 - Token SkyLink Setup Real World Agreements And Planning [Core]  <!-- UUID: f1836fc1-8691-4520-8159-e6d451a256b3 -->
+####### A.2.3.7.1.1.1.1 - Token SkyLink Setup Real World Agreements And Planning [Core]  <!-- UUID: f1836fc1-8691-4520-8159-e6d451a256b3 -->
 
 The documents herein define the preliminary, off-chain human coordination stage of setting up an Instance of the Token SkyLink Primitive.
 
-######## A.2.3.8.1.1.1.1.1 - Token SkyLink Setup Target Chain Identification And Feasibility Analysis [Core]  <!-- UUID: 298ee5be-2f95-46b2-8dc7-8cf68f99c038 -->
+######## A.2.3.7.1.1.1.1.1 - Token SkyLink Setup Target Chain Identification And Feasibility Analysis [Core]  <!-- UUID: 298ee5be-2f95-46b2-8dc7-8cf68f99c038 -->
 
 The Prime Agent researches potential target blockchains for token bridging, including evaluation of user base, DeFi ecosystem, and bridging security requirements. The Prime Agent confirms that the target chain supports LayerZero or can be integrated easily with the LayerZero Omnichain Fungible Token standard. The Prime Agent also estimates potential use of the token on the target chain to justify the bridge deployment and audit costs. The output of this step is a preliminary decision to proceed with deploying a bridge to the target chain including a scope of work for the bridge deployment and estimated audit costs.
 
-######## A.2.3.8.1.1.1.1.2 - Token SkyLink Setup Initial Alignment With Operational GovOps [Core]  <!-- UUID: eec4c93e-5012-4547-b1ad-ab6ba6d7042c -->
+######## A.2.3.7.1.1.1.1.2 - Token SkyLink Setup Initial Alignment With Operational GovOps [Core]  <!-- UUID: eec4c93e-5012-4547-b1ad-ab6ba6d7042c -->
 
 The Prime Agent presents the bridging plan to Operational GovOps, including a technical summary, proposed timeline, and estimate of audit costs. The Prime Agent and Operational GovOps also discuss any guidelines in the Atlas or the Agent Artifact that may affect bridging. The Prime Agent receives early feedback on the plan and modifies it accordingly. The output of this step is an informal agreement to proceed with developing a bridge deployment along with any documented conditions or feedback from Operational GovOps.
 
-######## A.2.3.8.1.1.1.1.3 - Token SkyLink Setup Audit Preparation And Proposal Of Costs [Core]  <!-- UUID: aa9f9672-2d80-404b-9c6e-fe69615fc125 -->
+######## A.2.3.7.1.1.1.1.3 - Token SkyLink Setup Audit Preparation And Proposal Of Costs [Core]  <!-- UUID: aa9f9672-2d80-404b-9c6e-fe69615fc125 -->
 
 The Prime Agent contacts a reputable third-party security audit firm for reviewing the bridge implementation. The Prime Agent negotiates audit scope, timeline, and fees with the audit firm. The Prime Agent documents the projected cost for the bridge, including development, audit, and deployment costs, for future reimbursement. The outcome of this step is a formal agreement with the audit firm and a detailed cost breakdown for bridge deployment and auditing.
 
-####### A.2.3.8.1.1.1.2 - Token SkyLink Setup Codification and Validation [Core]  <!-- UUID: 18ce8e21-898d-4bf9-9bf8-ef1c1e7266ee -->
+####### A.2.3.7.1.1.1.2 - Token SkyLink Setup Codification and Validation [Core]  <!-- UUID: 18ce8e21-898d-4bf9-9bf8-ef1c1e7266ee -->
 
 The documents herein define how agreements to setup an Instance of the Token SkyLink Primitive are codified and validated in the Powerhouse system and how governance votes happen.
 
-######## A.2.3.8.1.1.1.2.1 - Agent Inputs [Core]  <!-- UUID: 5027bb60-ea5f-4f1a-9ce6-a9a0afae33e5 -->
+######## A.2.3.7.1.1.1.2.1 - Agent Inputs [Core]  <!-- UUID: 5027bb60-ea5f-4f1a-9ce6-a9a0afae33e5 -->
 
 The Prime Agent drafts an update to the Prime Agent Artifact adding the Token SkyLink to the list of active Token SkyLink deployments and including the information specified in [A.2.4 - List of Active Token SkyLink Deployments](bf3ede73-bba3-4048-b105-a49400611fcb). The Prime Agent submits the draft to the Powerhouse system. The output of this step is a draft Prime Agent Artifact update in the Powerhouse system.
 
-######## A.2.3.8.1.1.1.2.2 - Validation And Off-Chain Vote [Core]  <!-- UUID: cac40223-e628-4248-a44d-2aaa6f03ba00 -->
+######## A.2.3.7.1.1.1.2.2 - Validation And Off-Chain Vote [Core]  <!-- UUID: cac40223-e628-4248-a44d-2aaa6f03ba00 -->
 
 The Operational Executor Facilitator reviews the proposal to ensure that it is complete and aligned with the Atlas. The Operational Executor Facilitator then initiates an off-chain snapshot vote, following the quorum and majority rules in the Prime Agent Artifact. When complete, the result of the vote is recorded in the Powerhouse system. The output of this step is the snapshot vote result recorded in the Powerhouse system.
 
-######## A.2.3.8.1.1.1.2.3 - Official Update of Artifact [Core]  <!-- UUID: 79abf483-f256-4ef6-9aa7-558a8800e7a8 -->
+######## A.2.3.7.1.1.1.2.3 - Official Update of Artifact [Core]  <!-- UUID: 79abf483-f256-4ef6-9aa7-558a8800e7a8 -->
 
 If the Token SkyLink Invocation is successfully approved, the Operational Executor Facilitator finalizes and publishes the update to the Prime Agent Artifact, making it effective in the Atlas. The output of this step is an updated Prime Agent Artifact with the Token SkyLink Instance Activated.
 
-####### A.2.3.8.1.1.1.3 - Token SkyLink Setup Deployment [Core]  <!-- UUID: 21241867-d25e-47ee-b4c2-13224dcd0292 -->
+####### A.2.3.7.1.1.1.3 - Token SkyLink Setup Deployment [Core]  <!-- UUID: 21241867-d25e-47ee-b4c2-13224dcd0292 -->
 
 The documents herein define how the deployment of an Instance of the Token SkyLink Primitive is executed on-chain.
 
-######## A.2.3.8.1.1.1.3.1 - Token SkyLink Setup Bridge Deployment And Initial Audit  [Core]  <!-- UUID: af88c454-2171-41ce-a8e8-1d6c40d4e209 -->
+######## A.2.3.7.1.1.1.3.1 - Token SkyLink Setup Bridge Deployment And Initial Audit  [Core]  <!-- UUID: af88c454-2171-41ce-a8e8-1d6c40d4e209 -->
 
 The Prime Agent, through Operational GovOps, deploys the Token SkyLink contract on the target chain. The Prime Agent shares the Token SkyLink contract’s final address with the audit firm for verification. Operational GovOps confirms that the bridge contract address and references match the updated Prime Agent Artifact. The audit firm completes and updates the bridging audit registry with the results of the audit. The output of this step is a deployed bridge contract with audit results uploaded to the bridging audit registry.
 
-######## A.2.3.8.1.1.1.3.2 - Token SkyLink Setup Activation On New Chain [Core]  <!-- UUID: c18d8c58-d347-4efd-9c33-4fd89cf40f90 -->
+######## A.2.3.7.1.1.1.3.2 - Token SkyLink Setup Activation On New Chain [Core]  <!-- UUID: c18d8c58-d347-4efd-9c33-4fd89cf40f90 -->
 
 Core GovOps formalizes the audit results with a Sky Core Executive Vote to fully activate bridging functionality. Operational GovOps updates the Prime Agent Reimbursement Module to begin counting any bridged tokens toward the incremental reward. The output of this step is fully enabled bridging on the target chain with the Prime Agent Reimbursement Module updated to track bridging based rewards.
 
-###### A.2.3.8.1.1.2 - Token SkyLink Ongoing Management  [Core]  <!-- UUID: d7adf706-c9cc-4408-9668-cec0fdc90be8 -->
+###### A.2.3.7.1.1.2 - Token SkyLink Ongoing Management  [Core]  <!-- UUID: d7adf706-c9cc-4408-9668-cec0fdc90be8 -->
 
 The documents herein define the process for managing an Instance of the Token SkyLink Primitive.
 
-####### A.2.3.8.1.1.2.1 - Token SkyLink Management Settlement Cycle [Core]  <!-- UUID: 97fb1954-b9f4-429e-bc29-e9eea9fe2e0e -->
+####### A.2.3.7.1.1.2.1 - Token SkyLink Management Settlement Cycle [Core]  <!-- UUID: 97fb1954-b9f4-429e-bc29-e9eea9fe2e0e -->
 
 During each settlement cycle, the Prime Agent Reimbursement Module tallies the total token bridging volume on the new chain. The Prime Agent Reimbursement Module calculates the reimbursement due for bridge development costs as a percent of the token bridging volume, in addition to normal Accessibility Rewards if applicable. Core GovOps executes a payment to the Prime Agent for the amount due for reimbursement of bridge development costs, to the extent that such costs have not already been fully reimbursed. Core GovOps updates the Powerhouse system to reflect the amount of bridge development costs that have been reimbursed.
 
-##### A.2.3.8.1.2 - Token SkyLink Input Requirements [Core]  <!-- UUID: 7d9a8373-ed56-4b01-8ec7-ebf2ed4ef8b0 -->
+##### A.2.3.7.1.2 - Token SkyLink Input Requirements [Core]  <!-- UUID: 7d9a8373-ed56-4b01-8ec7-ebf2ed4ef8b0 -->
 
 The documents herein define the required inputs for a valid Token SkyLink Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated and the SkyLink deployment will not move forward.
 
-###### A.2.3.8.1.2.1 - Token SkyLink Activation Status [Core]  <!-- UUID: 94a0a22c-cbd6-4022-80e8-4681f60c7cec -->
+###### A.2.3.7.1.2.1 - Token SkyLink Activation Status [Core]  <!-- UUID: 94a0a22c-cbd6-4022-80e8-4681f60c7cec -->
 
 The Token SkyLink Primitive must be Globally Activated.
 
-###### A.2.3.8.1.2.2 - List of Active Token SkyLink Deployments [Core]  <!-- UUID: bf3ede73-bba3-4048-b105-a49400611fcb -->
+###### A.2.3.7.1.2.2 - List of Active Token SkyLink Deployments [Core]  <!-- UUID: bf3ede73-bba3-4048-b105-a49400611fcb -->
 
 The Token SkyLink Primitive must list each active Token SkyLink deployment. The listing must include the following information: (1), the token being bridged, (2) the target chain of the bridge, (3) the address of the bridge contract on the Ethereum Mainnet, (4) the address of the bridge contract on the target chain, (5) the audit of the bridge contract, (6) the bridge parameters, (7) the total bridge deployment and audit costs, and (8) the amount of bridge deployment and audit costs that have been reimbursed to date.
 
-### A.2.3.9 - Demand Side Stablecoin Primitives [Section]  <!-- UUID: 26415305-432d-423b-9553-3f325279712d -->
+### A.2.3.8 - Demand Side Stablecoin Primitives [Section]  <!-- UUID: 26415305-432d-423b-9553-3f325279712d -->
 
 Demand Side Stablecoin Primitives are Sky Primitives that target demand generation for USDS. Prime Agents can create and control multiple instances of these Primitives which exist as technical infrastructure incentivizing the adoption or usage of USDS by end users or third parties.
 
-#### A.2.3.9.1 - Accessibility Reward Primitive [Core]  <!-- UUID: e632c38f-3e4e-4c7e-acfd-b6ec45a422e6 -->
+#### A.2.3.8.1 - Accessibility Reward Primitive [Core]  <!-- UUID: e632c38f-3e4e-4c7e-acfd-b6ec45a422e6 -->
 
 The documents herein govern the Accessibility Reward Primitive.
 
-##### A.2.3.9.1.1 - Introduction [Core]  <!-- UUID: 02189c79-a529-4388-98ad-a743d2a8980d -->
+##### A.2.3.8.1.1 - Introduction [Core]  <!-- UUID: 02189c79-a529-4388-98ad-a743d2a8980d -->
 
 The documents herein provide an introduction to the Accessibility Reward Primitive.
 
-###### A.2.3.9.1.1.1 - Purpose [Core]  <!-- UUID: 6f1bc619-b8a9-4917-a34b-f52016942c01 -->
+###### A.2.3.8.1.1.1 - Purpose [Core]  <!-- UUID: 6f1bc619-b8a9-4917-a34b-f52016942c01 -->
 
 The purpose of the Accessibility Reward is to incentivize Prime Agents and third parties to drive USDS adoption by providing a financial reward to these actors for all USDS and sUSDS balances attributable to them.
 
-###### A.2.3.9.1.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 45149960-fbf3-4079-be4e-fe2a71e5e43f -->
+###### A.2.3.8.1.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 45149960-fbf3-4079-be4e-fe2a71e5e43f -->
 
 Multiple instances of the Accessibility Reward Primitive are allowed. Each instance corresponds to an Accessibility Reward program with an associated Accessibility Reward Code.
 
-###### A.2.3.9.1.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: c788ebcf-98a4-4b97-ae3c-db578c75dc2e -->
+###### A.2.3.8.1.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: c788ebcf-98a4-4b97-ae3c-db578c75dc2e -->
 
 An Agent Artifact that has more than one active instance of the Accessibility Reward Primitive is not required to have a `Multi-Instance Coordinator Document`, since each Instance can be managed independently.
 
-##### A.2.3.9.1.2 - Global Specification [Core]  <!-- UUID: 7f0959dc-c6e2-4e64-9526-76563a2a6d29 -->
+##### A.2.3.8.1.2 - Global Specification [Core]  <!-- UUID: 7f0959dc-c6e2-4e64-9526-76563a2a6d29 -->
 
 The requirements herein apply universally across all possible deployments of the Accessibility Reward Primitive by Prime Agents. They include the steps that Agents must take to deploy the Primitive, including Global Activation of the Primitive, Instance Invocation, and ongoing management of the Primitive Instance(s).
 
-###### A.2.3.9.1.2.1 - Base Elements [Core]  <!-- UUID: dc123bca-eac1-40e1-ad1f-f888a6ec8d1f -->
+###### A.2.3.8.1.2.1 - Base Elements [Core]  <!-- UUID: dc123bca-eac1-40e1-ad1f-f888a6ec8d1f -->
 
 The documents herein define base elements of the Accessibility Reward Primitive.
 
-####### A.2.3.9.1.2.1.1 - Integrator Program [Core]  <!-- UUID: 37c38f07-b5a0-40df-939c-a54330ea3c7b -->
+####### A.2.3.8.1.2.1.1 - Integrator Program [Core]  <!-- UUID: 37c38f07-b5a0-40df-939c-a54330ea3c7b -->
 
 Integrators are actors that offer access to the Sky Protocol via their frontends or infrastructure. The documents herein define the Integrator Program, which includes the Accessibility Reward and Integration Boost. (Base elements specific to the Integration Boost Primitive are defined in [A.2.4 - Base Elements](c398b383-3752-4534-aec6-4cd8e7292119))
 
-######## A.2.3.9.1.2.1.1.1 - Integrator Requirements [Core]  <!-- UUID: 1c2b6983-1e03-41b9-a2bf-70f3eca19b98 -->
+######## A.2.3.8.1.2.1.1.1 - Integrator Requirements [Core]  <!-- UUID: 1c2b6983-1e03-41b9-a2bf-70f3eca19b98 -->
 
 The documents herein define the requirements for Integrators.
 
-######### A.2.3.9.1.2.1.1.1.1 - Alignment [Core]  <!-- UUID: 98e98f68-e749-4d0a-8972-7e36ed166326 -->
+######### A.2.3.8.1.2.1.1.1.1 - Alignment [Core]  <!-- UUID: 98e98f68-e749-4d0a-8972-7e36ed166326 -->
 
 The Integrator must be aligned with Sky’s overall strategy regarding promoting adoption of USDS. In the near term, this determination of a prospective or current Integrator’s alignment with Sky’s overall strategy is made by Operational GovOps in consultation with Ecosystem Actor Viridian Advisors. In the future Operational GovOps may make this determination themselves or consult with another actor to do so. Sky Core may choose whether to maintain an Integrator’s Reward Code in its sole and absolute discretion.
 
-######### A.2.3.9.1.2.1.1.1.2 - Compliance With Local Laws And Regulations As A Condition Precedent To Integrators Receiving Accessibility Rewards [Core]  <!-- UUID: f3b4b43d-b2e5-4f56-aeac-9627d3acc31e -->
+######### A.2.3.8.1.2.1.1.1.2 - Compliance With Local Laws And Regulations As A Condition Precedent To Integrators Receiving Accessibility Rewards [Core]  <!-- UUID: f3b4b43d-b2e5-4f56-aeac-9627d3acc31e -->
 
 This document and its subdocuments define the jurisdictional compliance rules applicable to Integrators that operate user-facing frontends that integrate with, and thus offer access to, the Sky Protocol and receive Accessibility Rewards.
 
@@ -6420,23 +6412,23 @@ In connection with integrating with, and thereby providing access to, the Sky Pr
 
 An Integrator’s right to participate in the Integrator Program is contingent upon its ongoing compliance with all applicable laws and regulations.
 
-########## A.2.3.9.1.2.1.1.1.2.1 - Consequence For Integrator Non-Compliance With Local Laws And Regulations [Core]  <!-- UUID: a01622fa-e81c-4bcb-8e31-7e66e36f2e57 -->
+########## A.2.3.8.1.2.1.1.1.2.1 - Consequence For Integrator Non-Compliance With Local Laws And Regulations [Core]  <!-- UUID: a01622fa-e81c-4bcb-8e31-7e66e36f2e57 -->
 
 Sky Ecosystem Governance, in its absolute and unilateral discretion, retains the right to withhold, revoke, or demand immediate repayment of any and all Accessibility Rewards from any Integrator that is determined, suspected, or alleged to be in violation of the Atlas or any legal, regulatory, or other obligations associated with its integration with, and provision of access to, the Sky Protocol.
 
-########## A.2.3.9.1.2.1.1.1.2.2 - Removal From Integrator Program [Core]  <!-- UUID: 0bdcef8a-b851-42ed-b2e2-77d85c14dad0 -->
+########## A.2.3.8.1.2.1.1.1.2.2 - Removal From Integrator Program [Core]  <!-- UUID: 0bdcef8a-b851-42ed-b2e2-77d85c14dad0 -->
 
 If Sky Governance removes an Integrator from the Integrator Program, Operational GovOps must remove the Integrator from the list of Current Integrators in [A.2.4 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157) and deactivate the Instances of the Accessibility Reward and Integration Boost Primitive associated with them.
 
-######## A.2.3.9.1.2.1.1.2 - Integrator Applications [Core]  <!-- UUID: abc79583-78da-4578-9ae0-51dc322ed1cb -->
+######## A.2.3.8.1.2.1.1.2 - Integrator Applications [Core]  <!-- UUID: abc79583-78da-4578-9ae0-51dc322ed1cb -->
 
 The documents herein define the process for applying to become an Integrator.
 
-######### A.2.3.9.1.2.1.1.2.1 - Near Term Process [Core]  <!-- UUID: 7fe5dbb2-a07d-4ef9-94de-f54a2d568c57 -->
+######### A.2.3.8.1.2.1.1.2.1 - Near Term Process [Core]  <!-- UUID: 7fe5dbb2-a07d-4ef9-94de-f54a2d568c57 -->
 
 In the near term, applications are made directly to Ecosystem Actor Viridian Advisors. Viridian Advisors must create and maintain a thread on the Sky Forum for Integrator Applications. Viridian Advisors reviews applications and coordinates with Prime Agents interested in working with specific applicants. Viridian Advisors issues Reward Codes to approved applicants.
 
-########## A.2.3.9.1.2.1.1.2.1.1 - Integrator Program Applications [Active Data Controller]  <!-- UUID: d251bbac-df0e-4aff-a26b-33d60e153e19 -->
+########## A.2.3.8.1.2.1.1.2.1.1 - Integrator Program Applications [Active Data Controller]  <!-- UUID: d251bbac-df0e-4aff-a26b-33d60e153e19 -->
 
 The list of Integrator Program applicants is defined as Active Data in [A.2.4 - List Of Integrator Applications](30db9618-ddf2-4df7-ad81-3f8f3395ff62).
 
@@ -6444,91 +6436,91 @@ The Active Data is updated as follows:
 • The Responsible Party is Viridian Advisors.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-########### A.2.3.9.1.2.1.1.2.1.1.0.6.1 - List Of Integrator Applications [Active Data]  <!-- UUID: 30db9618-ddf2-4df7-ad81-3f8f3395ff62 -->
+########### A.2.3.8.1.2.1.1.2.1.1.0.6.1 - List Of Integrator Applications [Active Data]  <!-- UUID: 30db9618-ddf2-4df7-ad81-3f8f3395ff62 -->
 
 The current Integrator Applications are:
 
-######### A.2.3.9.1.2.1.1.2.2 - Long Term Process [Core]  <!-- UUID: 6283379c-d871-40a9-a915-d716d7df5642 -->
+######### A.2.3.8.1.2.1.1.2.2 - Long Term Process [Core]  <!-- UUID: 6283379c-d871-40a9-a915-d716d7df5642 -->
 
 In the long term, Integrator applications come exclusively through Prime Agents. Prime Agents may establish whatever processes they deem appropriate to receive inbound requests for potential partnerships.
 
-######## A.2.3.9.1.2.1.1.3 - Integrator Onboarding [Core]  <!-- UUID: 361e2e68-b2ab-4b1e-93ce-030cf25e509e -->
+######## A.2.3.8.1.2.1.1.3 - Integrator Onboarding [Core]  <!-- UUID: 361e2e68-b2ab-4b1e-93ce-030cf25e509e -->
 
 The documents herein define the process for onboarding new Integrators.
 
-######### A.2.3.9.1.2.1.1.3.1 - Near Term Process [Core]  <!-- UUID: fc46821f-9d3d-4807-b519-d54faf546702 -->
+######### A.2.3.8.1.2.1.1.3.1 - Near Term Process [Core]  <!-- UUID: fc46821f-9d3d-4807-b519-d54faf546702 -->
 
 The near term Integrator Onboarding process is as follows. When a Prime Agent’s Invocation of the Accessibility Reward Primitive involves an actor who is not yet an approved Integrator, that actor must submit an Integrator Application to Viridian Advisors. Viridian Advisors determines, in consultation with Operational GovOps, whether the Integrator Requirements are met, and if so issues a Reward Code to the applicant. After the Reward Code has been issued, the Invocation of the Primitive may proceed.
 
-######### A.2.3.9.1.2.1.1.3.2 - Long Term Process [Core]  <!-- UUID: 0dda062b-5168-47be-bfa8-867f52eaae02 -->
+######### A.2.3.8.1.2.1.1.3.2 - Long Term Process [Core]  <!-- UUID: 0dda062b-5168-47be-bfa8-867f52eaae02 -->
 
 In the long term, Operational GovOps will review Integrator applications and determine whether the prospective partner satisfies the Integrator Requirements; if so, Operational GovOps issues a Reward Code. Operational GovOps may contract with Viridian Advisors or another actor to perform the work of reviewing applications and issuing Reward Codes.
 
-####### A.2.3.9.1.2.1.2 - Reward Codes [Core]  <!-- UUID: cda71b0c-37cc-4f6a-92a3-b6a14895bfe1 -->
+####### A.2.3.8.1.2.1.2 - Reward Codes [Core]  <!-- UUID: cda71b0c-37cc-4f6a-92a3-b6a14895bfe1 -->
 
 The documents herein define base elements related to Reward Codes.
 
-######## A.2.3.9.1.2.1.2.1 - Assignment [Core]  <!-- UUID: 225454ec-ac16-470e-b780-114acbb2a453 -->
+######## A.2.3.8.1.2.1.2.1 - Assignment [Core]  <!-- UUID: 225454ec-ac16-470e-b780-114acbb2a453 -->
 
 The documents herein define the process for assigning Reward Codes.
 
-######### A.2.3.9.1.2.1.2.1.1 - Near Term Process [Core]  <!-- UUID: e00e28d1-dad1-4cff-8ea4-1290c27d3b07 -->
+######### A.2.3.8.1.2.1.2.1.1 - Near Term Process [Core]  <!-- UUID: e00e28d1-dad1-4cff-8ea4-1290c27d3b07 -->
 
 In the near term, Reward Codes are assigned by Ecosystem Actor Viridian Advisors.
 
-######### A.2.3.9.1.2.1.2.1.2 - Long Term Process [Core]  <!-- UUID: 5c7aeef0-3490-4fdd-b486-a825b67285e0 -->
+######### A.2.3.8.1.2.1.2.1.2 - Long Term Process [Core]  <!-- UUID: 5c7aeef0-3490-4fdd-b486-a825b67285e0 -->
 
 In the long term, Reward Codes are assigned by Operational GovOps. Operational GovOps may contract with Viridian Advisors or another Ecosystem Actor to perform this work for them, at the discretion of Operational GovOps.
 
-######## A.2.3.9.1.2.1.2.2 - Marking [Core]  <!-- UUID: ec2c6d8a-e10f-471a-8f85-67803159cc37 -->
+######## A.2.3.8.1.2.1.2.2 - Marking [Core]  <!-- UUID: ec2c6d8a-e10f-471a-8f85-67803159cc37 -->
 
 To be eligible for the Accessibility Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
 
-######### A.2.3.9.1.2.1.2.2.1 - Ethereum Mainnet General Tracking Methodology [Core]  <!-- UUID: 87fd6861-ba8a-4bde-945e-ee9ad37ae3e2 -->
+######### A.2.3.8.1.2.1.2.2.1 - Ethereum Mainnet General Tracking Methodology [Core]  <!-- UUID: 87fd6861-ba8a-4bde-945e-ee9ad37ae3e2 -->
 
 The general Tracking Methodology for Ethereum Mainnet is to specify the Reward Code as a parameter to depositing USDS into the Sky Savings Rate contract or Token Rewards contracts. This on-chain deposit data is then combined with withdrawal data. In the interim, this data is further processed by Ecosystem Actor Viridian Advisors to estimate net deposits associated with the Reward Code on a First In First Out (FIFO) basis. In the long term, Operational Executor Agents will wholly manage this process.
 
-######### A.2.3.9.1.2.1.2.2.2 - Ethereum Mainnet CoW Swap Tracking Methodology [Core]  <!-- UUID: 1b5cc0ee-0ee8-467e-ab49-33c06ad417dc -->
+######### A.2.3.8.1.2.1.2.2.2 - Ethereum Mainnet CoW Swap Tracking Methodology [Core]  <!-- UUID: 1b5cc0ee-0ee8-467e-ab49-33c06ad417dc -->
 
 The Tracking Methodology for CoW Swap on the Ethereum Mainnet is the same as the general process for the Ethereum Mainnet, with the exception that events on CoW Swap’s decentralized network of solvers are tracked instead.
 
-######### A.2.3.9.1.2.1.2.2.3 - Base Tracking Methodology [Core]  <!-- UUID: f710bddf-dc1d-483c-9503-483574cb6333 -->
+######### A.2.3.8.1.2.1.2.2.3 - Base Tracking Methodology [Core]  <!-- UUID: f710bddf-dc1d-483c-9503-483574cb6333 -->
 
 The Tracking Methodology for Base is to specify the Reward Code as a parameter in calls to the Base PSM contract. Conversions from USDS or USDC to sUSDS are considered “deposits” and net deposits are calculated using an approach similar to that on Ethereum Mainnet.
 
-######### A.2.3.9.1.2.1.2.2.4 - Alternative Tracking Methodologies [Core]  <!-- UUID: 5eba1c21-4e93-4a0a-aa10-e99bcfa65f16 -->
+######### A.2.3.8.1.2.1.2.2.4 - Alternative Tracking Methodologies [Core]  <!-- UUID: 5eba1c21-4e93-4a0a-aa10-e99bcfa65f16 -->
 
 The Tracking Methodologies specified above are not exclusive. Prime Agents and Operational GovOps can develop additional Tracking Methodologies, so long as those methodologies reasonably estimate USDS balances that are attributable to the holder of the Reward Code and there is no possibility that the same USDS balances could be “double counted” for multiple Reward Code holders. Tracking methodologies must be based on either (1) on-chain data or (2) off-chain data that can be independently verified or attested to by a third party.
 
-######### A.2.3.9.1.2.1.2.2.5 - Lifetime [Core]  <!-- UUID: c0b77312-5e88-4311-bfe2-d95a1a2c5a7c -->
+######### A.2.3.8.1.2.1.2.2.5 - Lifetime [Core]  <!-- UUID: c0b77312-5e88-4311-bfe2-d95a1a2c5a7c -->
 
 USDS balances are eligible for an Accessibility Reward for a period of ten (10) years from the date of the event marking the USDS balance with the Reward Code. The date of the marking event is determined based on the Primitive Instance’s specified Tracking Methodology.
 
-######## A.2.3.9.1.2.1.2.3 - Management [Core]  <!-- UUID: 75ddec36-c39e-4333-9ec1-2d329128e848 -->
+######## A.2.3.8.1.2.1.2.3 - Management [Core]  <!-- UUID: 75ddec36-c39e-4333-9ec1-2d329128e848 -->
 
 In the near term, Ecosystem Actor Viridian Advisors manages the list of Actor Reward Codes. In the future, all current Integrators and onboarding Integrators must be specified in [A.2.4 - Current And Onboarding Integrators](f3952cc5-cde2-46b9-b575-034dda83570b) so that Prime Agents, through their Operational Executor Agents, can onboard new partners themselves without having to go through a single party.
 
-####### A.2.3.9.1.2.1.3 - Fees [Core]  <!-- UUID: 57384c49-e499-4c69-b22c-8e1f1dd34759 -->
+####### A.2.3.8.1.2.1.3 - Fees [Core]  <!-- UUID: 57384c49-e499-4c69-b22c-8e1f1dd34759 -->
 
 The documents herein define the methodology for calculating the Accessibility Reward due to the reward recipient for USDS and sUSDS balances attributable to them. The standard Accessibility Reward rate is set at 0.2%. The total 0.2% fee is divided between the frontend reward recipient and the relevant Prime Agent with an expectation of a 50/50 split.
 
-######## A.2.3.9.1.2.1.3.1 - Fee For USDS and sUSDS Balances [Core]  <!-- UUID: 9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e -->
+######## A.2.3.8.1.2.1.3.1 - Fee For USDS and sUSDS Balances [Core]  <!-- UUID: 9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e -->
 
 The frontend reward recipient can earn up to a maximum of a 0.1% Accessibility Reward rate annualized on all USDS and sUSDS balances attributable to them. The specific fee apportionment must be specified in the relevant Prime Agent Artifact.
 
-######## A.2.3.9.1.2.1.3.2 - Prime Agent Management Fee [Core]  <!-- UUID: 389ebf97-7ea6-4999-afd4-6419013a31af -->
+######## A.2.3.8.1.2.1.3.2 - Prime Agent Management Fee [Core]  <!-- UUID: 389ebf97-7ea6-4999-afd4-6419013a31af -->
 
 The Prime Agent that Invoked the Accessibility Reward Primitive is entitled to at least a 0.1% Accessibility Reward rate annualized on all USDS and sUSDS balances that use their relevant Reward Code. The specific fee apportionment must be specified in the relevant Prime Agent Artifact.
 
-####### A.2.3.9.1.2.1.4 - Rewards Distribution [Core]  <!-- UUID: 8dfabd92-aabc-4605-9ca5-d10f413203dc -->
+####### A.2.3.8.1.2.1.4 - Rewards Distribution [Core]  <!-- UUID: 8dfabd92-aabc-4605-9ca5-d10f413203dc -->
 
 The documents herein define base elements of the Accessibility Reward Primitive related to distribution of Accessibility Rewards.
 
-######## A.2.3.9.1.2.1.4.1 - Reward Cadence [Core]  <!-- UUID: 02d1e35f-0a24-43d9-9406-347eef58a9d1 -->
+######## A.2.3.8.1.2.1.4.1 - Reward Cadence [Core]  <!-- UUID: 02d1e35f-0a24-43d9-9406-347eef58a9d1 -->
 
 The Accessibility Reward is calculated and distributed on a monthly basis.
 
-######## A.2.3.9.1.2.1.4.2 - Reward Payment [Core]  <!-- UUID: 38cb0bfe-3733-4a11-8b3a-6728df00d08e -->
+######## A.2.3.8.1.2.1.4.2 - Reward Payment [Core]  <!-- UUID: 38cb0bfe-3733-4a11-8b3a-6728df00d08e -->
 
 The Accessibility Reward payment for each month is equal to 
 
@@ -6541,27 +6533,27 @@ The Accessibility Reward Fee specified in [A.2.4 - Fees](57384c49-e499-4c69-b22c
 1) Fees for USDS and sUSDS Balances specified in [A.2.4 - Fee For USDS and sUSDS Balances](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e); and
 2) the Prime Agent Management Fee specified in [A.2.4 - Prime Agent Management Fee](389ebf97-7ea6-4999-afd4-6419013a31af).
 
-######## A.2.3.9.1.2.1.4.3 - Treasury Management [Core]  <!-- UUID: 935b90bb-a854-4c06-b6ea-48a1cf8fd2f1 -->
+######## A.2.3.8.1.2.1.4.3 - Treasury Management [Core]  <!-- UUID: 935b90bb-a854-4c06-b6ea-48a1cf8fd2f1 -->
 
 The documents herein define the treasury management process.
 
-######### A.2.3.9.1.2.1.4.3.1 - Near-Term Process [Core]  <!-- UUID: 05fb732b-de55-4886-81a7-7c5d4c13d2d2 -->
+######### A.2.3.8.1.2.1.4.3.1 - Near-Term Process [Core]  <!-- UUID: 05fb732b-de55-4886-81a7-7c5d4c13d2d2 -->
 
 In the near term, Amatsu calculates the Accessibility Reward on behalf of the Support Facilitators. The Accessibility Facilitators then pay the Accessibility Reward from the Accessibility Reward Controller Wallet located on the Ethereum Mainnet at `0x05F471262d15EECA4059DadE070e5BEd509a4e73` within seven (7) days of the end of every month. The balance of this wallet may be topped up to 3 million USDS. This funding is subject to an Executive Vote.
 
-######### A.2.3.9.1.2.1.4.3.2 - Long Term Process [Core]  <!-- UUID: 07953e87-c201-4ad5-9c1e-b32efc5fba94 -->
+######### A.2.3.8.1.2.1.4.3.2 - Long Term Process [Core]  <!-- UUID: 07953e87-c201-4ad5-9c1e-b32efc5fba94 -->
 
 In the long term, Operational GovOps calculates the Accessibility Reward for each month. Operational GovOps then pays the Accessibility Reward recipient from its Buffer. Later Sky Core reimburses the Operational Agent Buffer for the amount paid as part of the Settlement Cycle. This minimizes the role of Sky Core in Accessibility Reward payments and emphasizes the primary role of the Operational Executor Agent, acting through Operational GovOps, in implementing the Sky Primitives. The process is specified in further detail in [A.2.4 - Routine Protocol](c2abdd22-fe0f-489e-b281-450e066db701).
 
-######## A.2.3.9.1.2.1.4.4 - Payment Errors [Core]  <!-- UUID: 1b5edf68-0825-449a-a404-34141a1892cc -->
+######## A.2.3.8.1.2.1.4.4 - Payment Errors [Core]  <!-- UUID: 1b5edf68-0825-449a-a404-34141a1892cc -->
 
 If it is discovered that previous Accessibility Reward calculations were made erroneously, underpayments are resolved retroactively. In cases where an Integrator was overpaid, the Prime Agent associated with the Integrator must reimburse Sky the overpayment amount and can use future Accessibility Rewards that the Integrator earns to reimburse itself.
 
-####### A.2.3.9.1.2.1.5 - Current And Onboarding Integrators [Core]  <!-- UUID: f3952cc5-cde2-46b9-b575-034dda83570b -->
+####### A.2.3.8.1.2.1.5 - Current And Onboarding Integrators [Core]  <!-- UUID: f3952cc5-cde2-46b9-b575-034dda83570b -->
 
 The documents herein specify current and onboarding Integrators.
 
-######## A.2.3.9.1.2.1.5.1 - Current Integrators [Active Data Controller]  <!-- UUID: 883f1b52-a6d2-417b-bb24-12917de83b53 -->
+######## A.2.3.8.1.2.1.5.1 - Current Integrators [Active Data Controller]  <!-- UUID: 883f1b52-a6d2-417b-bb24-12917de83b53 -->
 
 Current Integrators are Integrators who have a Reward Code specified in an `Active` Instance of the Accessibility Reward Primitive. The list of Current Integrators is defined as Active Data in [A.2.4 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157).
 
@@ -6569,11 +6561,11 @@ The Active Data is updated as follows:
 • The Responsible Party is Operational GovOps.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-######### A.2.3.9.1.2.1.5.1.0.6.1 - List Of Current Integrators [Active Data]  <!-- UUID: efbe7903-a76e-40f0-a440-56e463283157 -->
+######### A.2.3.8.1.2.1.5.1.0.6.1 - List Of Current Integrators [Active Data]  <!-- UUID: efbe7903-a76e-40f0-a440-56e463283157 -->
 
 The current Active Integrators are:
 
-######## A.2.3.9.1.2.1.5.2 - Onboarding Integrators [Active Data Controller]  <!-- UUID: 9a7f47ae-760f-44b5-9b5f-dd4fef86e1cc -->
+######## A.2.3.8.1.2.1.5.2 - Onboarding Integrators [Active Data Controller]  <!-- UUID: 9a7f47ae-760f-44b5-9b5f-dd4fef86e1cc -->
 
 Onboarding Integrators are actors whose application to the Integrator Program has been approved, but are specified in an Instance of the Accessibility Reward Primitive or Integration Boost Primitive that is “Pending”, or is not `Active` yet. The list of Onboarding Integrators is defined as Active Data in [A.2.4 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be). 
 
@@ -6581,15 +6573,15 @@ The Active Data is updated as follows:
 • The Responsible Party is Operational GovOps.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-######### A.2.3.9.1.2.1.5.2.0.6.1 - List Of Onboarding Integrators [Active Data]  <!-- UUID: eb644108-94fc-430f-ae5a-e3294b9dd9be -->
+######### A.2.3.8.1.2.1.5.2.0.6.1 - List Of Onboarding Integrators [Active Data]  <!-- UUID: eb644108-94fc-430f-ae5a-e3294b9dd9be -->
 
 The current Onboarding Integrators are:
 
-####### A.2.3.9.1.2.1.6 - Accessibility Reward Reimbursement [Core]  <!-- UUID: fd551536-2177-4e78-87a1-c2528ff2fcaf -->
+####### A.2.3.8.1.2.1.6 - Accessibility Reward Reimbursement [Core]  <!-- UUID: fd551536-2177-4e78-87a1-c2528ff2fcaf -->
 
 The documents herein specify the Accessibility Reward reimbursement.
 
-######## A.2.3.9.1.2.1.6.1 - Sky Core Accessibility Reward Reimbursement [Active Data Controller]  <!-- UUID: 2c0eb02c-144e-4326-b5ec-85805653f0b7 -->
+######## A.2.3.8.1.2.1.6.1 - Sky Core Accessibility Reward Reimbursement [Active Data Controller]  <!-- UUID: 2c0eb02c-144e-4326-b5ec-85805653f0b7 -->
 
 The Accessibility Reward reimbursement payments are defined as Active Data in [A.2.4 - Sky Core Accessibility Reward Reimbursement Amounts](169eb312-ed63-4a83-9f5d-43b621c0705e).
  
@@ -6597,39 +6589,39 @@ The Active Data is updated as follows:
 • The Responsible Party is Core GovOps.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-######### A.2.3.9.1.2.1.6.1.0.6.1 - Sky Core Accessibility Reward Reimbursement Amounts [Active Data]  <!-- UUID: 169eb312-ed63-4a83-9f5d-43b621c0705e -->
+######### A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Accessibility Reward Reimbursement Amounts [Active Data]  <!-- UUID: 169eb312-ed63-4a83-9f5d-43b621c0705e -->
 
 The current Sky Core Accessibility Reward Reimbursement Amounts are:
 
-###### A.2.3.9.1.2.2 - Global Activation [Core]  <!-- UUID: 49513ac9-43d6-4766-8a51-195e221de3f2 -->
+###### A.2.3.8.1.2.2 - Global Activation [Core]  <!-- UUID: 49513ac9-43d6-4766-8a51-195e221de3f2 -->
 
 An Agent who intends to deploy the Accessibility Reward Primitive must first Globally Activate it.
 
-####### A.2.3.9.1.2.2.1 - Process Initiation Logic [Core]  <!-- UUID: 776d926e-70d0-4771-bd60-d3fcef0a7ea3 -->
+####### A.2.3.8.1.2.2.1 - Process Initiation Logic [Core]  <!-- UUID: 776d926e-70d0-4771-bd60-d3fcef0a7ea3 -->
 
 The process initiation logic is specified herein.
 
-######## A.2.3.9.1.2.2.1.1 - Triggers [Core]  <!-- UUID: 090b3f8e-78a8-4df1-8db9-b9a6a2e23a33 -->
+######## A.2.3.8.1.2.2.1.1 - Triggers [Core]  <!-- UUID: 090b3f8e-78a8-4df1-8db9-b9a6a2e23a33 -->
 
 Triggers are specified herein.
 
-######### A.2.3.9.1.2.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: b4271bcd-12f5-4a14-bf5a-c77c9afd3629 -->
+######### A.2.3.8.1.2.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: b4271bcd-12f5-4a14-bf5a-c77c9afd3629 -->
 
 None.
 
-######### A.2.3.9.1.2.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: e2766ea3-ddf9-434d-a6ab-6e13ca23e164 -->
+######### A.2.3.8.1.2.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: e2766ea3-ddf9-434d-a6ab-6e13ca23e164 -->
 
 None.
 
-######## A.2.3.9.1.2.2.1.2 - Dependencies [Core]  <!-- UUID: 4e4476d8-0b98-4a2a-a3af-e879af06e01c -->
+######## A.2.3.8.1.2.2.1.2 - Dependencies [Core]  <!-- UUID: 4e4476d8-0b98-4a2a-a3af-e879af06e01c -->
 
 See [A.2.4 - Agent Launch And Sequence of Primitive Global Activation](2f5ff5c8-bcd1-44a4-ba56-2075ac8e9c61) for constraints on when an Agent can Globally Activate this Primitive.
 
-####### A.2.3.9.1.2.2.2 - Process Flow [Core]  <!-- UUID: 89d26f82-b662-41df-8935-44aa7e93be6d -->
+####### A.2.3.8.1.2.2.2 - Process Flow [Core]  <!-- UUID: 89d26f82-b662-41df-8935-44aa7e93be6d -->
 
 The Prime Agent uses the Powerhouse interface to Globally Activate (toggle on) the Accessibility Reward Primitive.
 
-####### A.2.3.9.1.2.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 108c6d9c-8ecf-48bf-bc8b-365f8cf65c0c -->
+####### A.2.3.8.1.2.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 108c6d9c-8ecf-48bf-bc8b-365f8cf65c0c -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface:
 
@@ -6637,47 +6629,47 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
     ◦ Updated Field: Global Activation Status
         • New Value: set to `Activated`
 
-####### A.2.3.9.1.2.2.4 - Required Outputs [Core]  <!-- UUID: faf79404-fe20-406d-a0a2-f3ac9e8592ab -->
+####### A.2.3.8.1.2.2.4 - Required Outputs [Core]  <!-- UUID: faf79404-fe20-406d-a0a2-f3ac9e8592ab -->
 
 The documents herein specify the required outputs from this process.
 
-######## A.2.3.9.1.2.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 74003afb-d603-4898-bd2a-bcf988e8c039 -->
+######## A.2.3.8.1.2.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 74003afb-d603-4898-bd2a-bcf988e8c039 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######## A.2.3.9.1.2.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 6af6cd24-9513-42a7-be91-3f16845ebadf -->
+######## A.2.3.8.1.2.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 6af6cd24-9513-42a7-be91-3f16845ebadf -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](108c6d9c-8ecf-48bf-bc8b-365f8cf65c0c) fully complete the Process.
 
-###### A.2.3.9.1.2.3 - Instance Invocation Protocol [Core]  <!-- UUID: ad3a3f6b-7bc3-4e5f-b1c3-225b5b4cbe15 -->
+###### A.2.3.8.1.2.3 - Instance Invocation Protocol [Core]  <!-- UUID: ad3a3f6b-7bc3-4e5f-b1c3-225b5b4cbe15 -->
 
 After fulfilling the requirements for Global Activation, an Agent can Invoke its first Instance of the Accessibility Reward Primitive by following the sequential process specified herein. Subsequent Invocations of the Primitive must also adhere to the same requirements defined below.
 
-####### A.2.3.9.1.2.3.1 - Process Definition For Initial Opportunity Identification And Planning [Core]  <!-- UUID: f07b1cca-5db2-4b1b-b760-ea738d2776f3 -->
+####### A.2.3.8.1.2.3.1 - Process Definition For Initial Opportunity Identification And Planning [Core]  <!-- UUID: f07b1cca-5db2-4b1b-b760-ea738d2776f3 -->
 
 The documents herein specify the process definition for initial opportunity identification and planning.
 
-######## A.2.3.9.1.2.3.1.1 - Process Initiation Logic [Core]  <!-- UUID: 005beba7-131f-43f9-93fc-29463905ef69 -->
+######## A.2.3.8.1.2.3.1.1 - Process Initiation Logic [Core]  <!-- UUID: 005beba7-131f-43f9-93fc-29463905ef69 -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.1.1.1 - Triggers [Core]  <!-- UUID: 222fc95e-eead-49ec-9d55-730b2b3cb0a0 -->
+######### A.2.3.8.1.2.3.1.1.1 - Triggers [Core]  <!-- UUID: 222fc95e-eead-49ec-9d55-730b2b3cb0a0 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: dec5be6c-3123-4808-93e9-0486fc8e9572 -->
+########## A.2.3.8.1.2.3.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: dec5be6c-3123-4808-93e9-0486fc8e9572 -->
 
 None.
 
-########## A.2.3.9.1.2.3.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 34497a9f-b623-45b3-a2f2-dc74a06c6700 -->
+########## A.2.3.8.1.2.3.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 34497a9f-b623-45b3-a2f2-dc74a06c6700 -->
 
 None.
 
-######### A.2.3.9.1.2.3.1.1.2 - Dependencies [Core]  <!-- UUID: c89c3cd1-20c4-461f-a220-1754d97e2049 -->
+######### A.2.3.8.1.2.3.1.1.2 - Dependencies [Core]  <!-- UUID: c89c3cd1-20c4-461f-a220-1754d97e2049 -->
 
 This process is dependent on a Prime Agent Globally Activating the Accessibility Reward Primitive pursuant to [A.2.4 - Global Activation](49513ac9-43d6-4766-8a51-195e221de3f2).
 
-######## A.2.3.9.1.2.3.1.2 - Process Flow [Core]  <!-- UUID: 75ff9b92-47e1-454f-864b-b74742df918e -->
+######## A.2.3.8.1.2.3.1.2 - Process Flow [Core]  <!-- UUID: 75ff9b92-47e1-454f-864b-b74742df918e -->
 
 The process flow is defined herein.
 
@@ -6707,7 +6699,7 @@ The process flow is defined herein.
         • The Prime Agent must first apply to the Integrator program and be approved by Operational GovOps pursuant to [A.2.4 - Long Term Process](6283379c-d871-40a9-a915-d716d7df5642). Post approval, Operational GovOps issues a Reward Code to the Prime Agent.
         • The Prime Agent develops a plan to track USDS utilization attributable to it using either on-chain or off-chain data.
 
-######## A.2.3.9.1.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 4d5482ad-7944-4073-8fbe-b9dbcd1a27a3 -->
+######## A.2.3.8.1.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 4d5482ad-7944-4073-8fbe-b9dbcd1a27a3 -->
 
 The required Primitive Inputs for this process are defined herein and organized in sequential stages.
 
@@ -6737,15 +6729,15 @@ The required Primitive Inputs for this process are defined herein and organized 
         • Responsible party: Prime Agent
         • Trigger - Required Output: After Prime Agent's `Initial planning document` Status is set to `Ready for GovOps review`.
 
-######## A.2.3.9.1.2.3.1.4 - Required Outputs [Core]  <!-- UUID: 1ad17e84-8bde-4669-9967-9f67d1d3c603 -->
+######## A.2.3.8.1.2.3.1.4 - Required Outputs [Core]  <!-- UUID: 1ad17e84-8bde-4669-9967-9f67d1d3c603 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.1.2.3.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: bab05cb6-532f-41e0-8fba-203b1b92294b -->
+######### A.2.3.8.1.2.3.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: bab05cb6-532f-41e0-8fba-203b1b92294b -->
 
 The Sky Core Atlas is updated pursuant to the following requirements.
 
-########## A.2.3.9.1.2.3.1.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 6857396f-f0ce-4471-8e48-ed5f06b86830 -->
+########## A.2.3.8.1.2.3.1.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 6857396f-f0ce-4471-8e48-ed5f06b86830 -->
 
 [A.2.4 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be) is updated as follows:
 
@@ -6756,7 +6748,7 @@ The Sky Core Atlas is updated pursuant to the following requirements.
         • New value: set to Reward Code
 • Responsible Party: Operational GovOps
 
-######### A.2.3.9.1.2.3.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 11161730-6568-445f-a250-ba5c67857390 -->
+######### A.2.3.8.1.2.3.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 11161730-6568-445f-a250-ba5c67857390 -->
 
 The Agent Artifact is updated pursuant to the following requirements. Each Output “set” is triggered following the completion of its respective Input stage, defined in [A.2.4 - Required Primitive Inputs](4d5482ad-7944-4073-8fbe-b9dbcd1a27a3). 
 
@@ -6778,31 +6770,31 @@ The Agent Artifact is updated pursuant to the following requirements. Each Outpu
         • Responsible party: Operational GovOps [automated]
         • Trigger - Process: [A.2.4 - Process Definition For Operational GovOps Review](5fd265ef-17f0-4400-b06c-a6ce9fa87636).
 
-####### A.2.3.9.1.2.3.2 - Process Definition For Operational GovOps Review [Core]  <!-- UUID: 5fd265ef-17f0-4400-b06c-a6ce9fa87636 -->
+####### A.2.3.8.1.2.3.2 - Process Definition For Operational GovOps Review [Core]  <!-- UUID: 5fd265ef-17f0-4400-b06c-a6ce9fa87636 -->
 
 The documents herein define the process for Operational GovOps Review for an Invocation of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: da868510-121f-442a-982e-8ab2d2149a25 -->
+######## A.2.3.8.1.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: da868510-121f-442a-982e-8ab2d2149a25 -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.2.1.1 - Triggers [Core]  <!-- UUID: f89a41b2-973b-4eca-b463-e0e77bc719ef -->
+######### A.2.3.8.1.2.3.2.1.1 - Triggers [Core]  <!-- UUID: f89a41b2-973b-4eca-b463-e0e77bc719ef -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: d1d3de53-ad5a-40cb-9155-58db67a6340c -->
+########## A.2.3.8.1.2.3.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: d1d3de53-ad5a-40cb-9155-58db67a6340c -->
 
 None.
 
-########## A.2.3.9.1.2.3.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: fd211726-1576-4b0a-8489-6e76e83ee92b -->
+########## A.2.3.8.1.2.3.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: fd211726-1576-4b0a-8489-6e76e83ee92b -->
 
 This process is triggered by the Artifact Document Update specified at Edit `Primitive Hub Document/In Progress Invocations/Instance Name`.
 
-######### A.2.3.9.1.2.3.2.1.2 - Dependencies [Core]  <!-- UUID: abb8f0ef-eae6-4af5-8a70-20630a33e7c9 -->
+######### A.2.3.8.1.2.3.2.1.2 - Dependencies [Core]  <!-- UUID: abb8f0ef-eae6-4af5-8a70-20630a33e7c9 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.1.2.3.2.2 - Process Flow [Core]  <!-- UUID: ef743f33-32b0-4a51-af00-a9e35c2e1017 -->
+######## A.2.3.8.1.2.3.2.2 - Process Flow [Core]  <!-- UUID: ef743f33-32b0-4a51-af00-a9e35c2e1017 -->
 
 The process flow is defined herein:
 
@@ -6816,7 +6808,7 @@ The process flow is defined herein:
 
 • The Prime Agent incorporates feedback from Operational GovOps and edits its `Initial Planning Document` as needed.
 
-######## A.2.3.9.1.2.3.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 9c4653fa-6afe-4567-9e85-54c0a84b9311 -->
+######## A.2.3.8.1.2.3.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 9c4653fa-6afe-4567-9e85-54c0a84b9311 -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface.
 
@@ -6828,19 +6820,19 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
                 ◦ New Value: GovOps populates with its review commentary and suggested changes that are agreed to by Agent and GovOps, if any.
             • Responsible party: Operational GovOps.
 
-######## A.2.3.9.1.2.3.2.4 - Required Outputs [Core]  <!-- UUID: a7a3e2d3-54bd-4c0f-a222-505b5e14a5e4 -->
+######## A.2.3.8.1.2.3.2.4 - Required Outputs [Core]  <!-- UUID: a7a3e2d3-54bd-4c0f-a222-505b5e14a5e4 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.1.2.3.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 9a94a573-8a51-4b04-9704-d84dc0623bb8 -->
+######### A.2.3.8.1.2.3.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 9a94a573-8a51-4b04-9704-d84dc0623bb8 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.1.2.3.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: ec050d61-1d48-453a-ac13-4cea23c68292 -->
+######### A.2.3.8.1.2.3.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: ec050d61-1d48-453a-ac13-4cea23c68292 -->
 
 The Agent Artifact is updated pursuant to the following requirements.
 
-########## A.2.3.9.1.2.3.2.4.2.1 - Initial Planning Document Update [Core]  <!-- UUID: 66a07769-2de9-4b15-a439-4fc84b6a1575 -->
+########## A.2.3.8.1.2.3.2.4.2.1 - Initial Planning Document Update [Core]  <!-- UUID: 66a07769-2de9-4b15-a439-4fc84b6a1575 -->
 
 The Document is updated as follows.
 
@@ -6849,7 +6841,7 @@ The Document is updated as follows.
         • New Value: as applicable, update to reflect any changes agreed to between the Prime Agent and Operational GovOps
     ◦ Responsible Party: Operational GovOps
 
-########## A.2.3.9.1.2.3.2.4.2.2 - Primitive Hub Document/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: 6f457b50-a98c-4516-9b37-932603a59627 -->
+########## A.2.3.8.1.2.3.2.4.2.2 - Primitive Hub Document/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: 6f457b50-a98c-4516-9b37-932603a59627 -->
 
 The Document is updated as follows.
 
@@ -6859,31 +6851,31 @@ The Document is updated as follows.
 • Responsible Party: Operational GovOps [automated]
 • Triggers: [A.2.4 - Process Definition For Artifact Update Draft](240e0e2c-64b6-4290-aa23-ec19eb2f6e59)
 
-####### A.2.3.9.1.2.3.3 - Process Definition For Artifact Update Draft [Core]  <!-- UUID: 240e0e2c-64b6-4290-aa23-ec19eb2f6e59 -->
+####### A.2.3.8.1.2.3.3 - Process Definition For Artifact Update Draft [Core]  <!-- UUID: 240e0e2c-64b6-4290-aa23-ec19eb2f6e59 -->
 
 The documents herein define the process for preparing the Artifact Update Draft for an Invocation of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: 9add3334-5779-4d23-bf5f-6c25cf9fcf9a -->
+######## A.2.3.8.1.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: 9add3334-5779-4d23-bf5f-6c25cf9fcf9a -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.3.1.1 - Triggers [Core]  <!-- UUID: bdc8d447-a140-4580-b439-b3ac8deb5aac -->
+######### A.2.3.8.1.2.3.3.1.1 - Triggers [Core]  <!-- UUID: bdc8d447-a140-4580-b439-b3ac8deb5aac -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: e379a9d8-c0d2-4aa6-ab62-41a6767dc490 -->
+########## A.2.3.8.1.2.3.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: e379a9d8-c0d2-4aa6-ab62-41a6767dc490 -->
 
 None.
 
-########## A.2.3.9.1.2.3.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 94d06bae-9bc9-4e8f-a38d-4b879466873b -->
+########## A.2.3.8.1.2.3.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 94d06bae-9bc9-4e8f-a38d-4b879466873b -->
 
 This process is triggered by the Document Update specified at [A.2.4 - Primitive Hub/In Progress Invocations Directory/Instance Name Update](b37c4266-2dd9-4cce-8b6b-cc35af2b94d9).
 
-######### A.2.3.9.1.2.3.3.1.2 - Dependencies [Core]  <!-- UUID: a6f968d6-0e8c-4962-b982-43beffc602db -->
+######### A.2.3.8.1.2.3.3.1.2 - Dependencies [Core]  <!-- UUID: a6f968d6-0e8c-4962-b982-43beffc602db -->
 
 This process has no dependencies.
 
-######## A.2.3.9.1.2.3.3.2 - Process Flow [Core]  <!-- UUID: ccb71126-1333-453c-aaeb-4359a8013f32 -->
+######## A.2.3.8.1.2.3.3.2 - Process Flow [Core]  <!-- UUID: ccb71126-1333-453c-aaeb-4359a8013f32 -->
 
 The process flow is defined herein:
 
@@ -6893,7 +6885,7 @@ The process flow is defined herein:
 
 • The Prime Agent submits the `Artifact Edit Proposal` Document to the Powerhouse system.
 
-######## A.2.3.9.1.2.3.3.3 - Required Primitive Inputs [Core]  <!-- UUID: 6f4e7971-1813-4ff6-9e4f-5953c8cb54af -->
+######## A.2.3.8.1.2.3.3.3 - Required Primitive Inputs [Core]  <!-- UUID: 6f4e7971-1813-4ff6-9e4f-5953c8cb54af -->
 
 The required Primitive Inputs for this process are defined herein and implemented in sequential stages.
 
@@ -6923,19 +6915,19 @@ The required Primitive Inputs for this process are defined herein and implemente
             • New value: set to  `Pending Facilitator Review`
     ◦ Responsible party: Agent
 
-######## A.2.3.9.1.2.3.3.4 - Required Outputs [Core]  <!-- UUID: c7ed27ce-d296-4a44-83c3-96bb1ed8976d -->
+######## A.2.3.8.1.2.3.3.4 - Required Outputs [Core]  <!-- UUID: c7ed27ce-d296-4a44-83c3-96bb1ed8976d -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.1.2.3.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 264273c8-7805-45ec-aa87-ebd08faf763d -->
+######### A.2.3.8.1.2.3.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 264273c8-7805-45ec-aa87-ebd08faf763d -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.1.2.3.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: a3294ae2-3fd7-446a-a628-dbddd487931e -->
+######### A.2.3.8.1.2.3.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: a3294ae2-3fd7-446a-a628-dbddd487931e -->
 
 The Agent Artifact documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.1.2.3.3.4.2.1 - Primitive Hub/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: b37c4266-2dd9-4cce-8b6b-cc35af2b94d9 -->
+########## A.2.3.8.1.2.3.3.4.2.1 - Primitive Hub/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: b37c4266-2dd9-4cce-8b6b-cc35af2b94d9 -->
 
 The Document is updated as follows:
 
@@ -6945,31 +6937,31 @@ The Document is updated as follows:
 • Responsible Party: Operational GovOps
 • Triggers: [A.2.4 - Process Definition For Operational Facilitator Review](fd9aac63-00a0-4fc5-ad7c-8bb131322bd7).
 
-####### A.2.3.9.1.2.3.4 - Process Definition For Operational Facilitator Review [Core]  <!-- UUID: fd9aac63-00a0-4fc5-ad7c-8bb131322bd7 -->
+####### A.2.3.8.1.2.3.4 - Process Definition For Operational Facilitator Review [Core]  <!-- UUID: fd9aac63-00a0-4fc5-ad7c-8bb131322bd7 -->
 
 The documents herein define the process for Operational Facilitator Review for an Invocation of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.3.4.1 - Process Initiation Logic [Core]  <!-- UUID: 4e87663b-619e-46b6-a672-9bc81d11f4e7 -->
+######## A.2.3.8.1.2.3.4.1 - Process Initiation Logic [Core]  <!-- UUID: 4e87663b-619e-46b6-a672-9bc81d11f4e7 -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.4.1.1 - Triggers [Core]  <!-- UUID: 48a12682-0218-4851-8a05-731ae7823b7b -->
+######### A.2.3.8.1.2.3.4.1.1 - Triggers [Core]  <!-- UUID: 48a12682-0218-4851-8a05-731ae7823b7b -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 296a23ca-988b-4516-aa78-230ed17b0bbb -->
+########## A.2.3.8.1.2.3.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 296a23ca-988b-4516-aa78-230ed17b0bbb -->
 
 None.
 
-########## A.2.3.9.1.2.3.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: bee5a2d9-1e98-4918-a77d-3e3607b51f0f -->
+########## A.2.3.8.1.2.3.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: bee5a2d9-1e98-4918-a77d-3e3607b51f0f -->
 
 This process is triggered by the Document Update specified at [A.2.4 - Primitive Hub/In Progress Invocations Directory/Instance Name Update](b37c4266-2dd9-4cce-8b6b-cc35af2b94d9).
 
-######### A.2.3.9.1.2.3.4.1.2 - Dependencies [Core]  <!-- UUID: 967572c4-ba29-4a98-ae05-e3698457d440 -->
+######### A.2.3.8.1.2.3.4.1.2 - Dependencies [Core]  <!-- UUID: 967572c4-ba29-4a98-ae05-e3698457d440 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.1.2.3.4.2 - Process Flow [Core]  <!-- UUID: 67dce065-9fed-4c23-abf5-881371792796 -->
+######## A.2.3.8.1.2.3.4.2 - Process Flow [Core]  <!-- UUID: 67dce065-9fed-4c23-abf5-881371792796 -->
 
 The process flow is defined herein.
 
@@ -6979,7 +6971,7 @@ The process flow is defined herein.
 
 • Where the Proposal is determined to be misaligned, the Operational Facilitator updates the `Artifact Edit Proposal` document to reflect their rejection and commentary. Commentary is required where the Operational Facilitator rejects the proposal for misalignment.
 
-######## A.2.3.9.1.2.3.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 967f54c6-9a51-4225-a8fd-e366f7a3d91e -->
+######## A.2.3.8.1.2.3.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 967f54c6-9a51-4225-a8fd-e366f7a3d91e -->
 
 The required Primitive Inputs to this process are defined herein and organized as two mutually exclusive pathways. Once the Review outcome is determined by the Facilitator, the corresponding Pathway is followed to the exclusion of the other.
 
@@ -7006,43 +6998,43 @@ The required Primitive Inputs to this process are defined herein and organized a
                 ◦ New value: set to `Proposal Rejected By Facilitator` [automated]
         ◦ Responsible party: Operational Facilitator
 
-######## A.2.3.9.1.2.3.4.4 - Required Outputs [Core]  <!-- UUID: b63e78d1-112d-4d48-a647-a1e3fc2f54a5 -->
+######## A.2.3.8.1.2.3.4.4 - Required Outputs [Core]  <!-- UUID: b63e78d1-112d-4d48-a647-a1e3fc2f54a5 -->
 
 The documents herein specify the required outputs from this process, if any.
 
-######### A.2.3.9.1.2.3.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: dfdf873a-c24a-4856-a3e9-717ea09dd9bb -->
+######### A.2.3.8.1.2.3.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: dfdf873a-c24a-4856-a3e9-717ea09dd9bb -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.1.2.3.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 9cb3ab72-37f5-4501-8661-a204d0747dd8 -->
+######### A.2.3.8.1.2.3.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 9cb3ab72-37f5-4501-8661-a204d0747dd8 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](967f54c6-9a51-4225-a8fd-e366f7a3d91e) fully complete the Process.
 
-####### A.2.3.9.1.2.3.5 - Process Definition For Offchain Vote [Core]  <!-- UUID: 3170b9a1-d074-4cbd-bb81-ae1661bc0ed8 -->
+####### A.2.3.8.1.2.3.5 - Process Definition For Offchain Vote [Core]  <!-- UUID: 3170b9a1-d074-4cbd-bb81-ae1661bc0ed8 -->
 
 The documents herein define the process for an Offchain Vote for an Invocation of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.3.5.1 - Process Initiation Logic [Core]  <!-- UUID: 3b38ec56-64c1-4093-82f0-fd5a162d549c -->
+######## A.2.3.8.1.2.3.5.1 - Process Initiation Logic [Core]  <!-- UUID: 3b38ec56-64c1-4093-82f0-fd5a162d549c -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.5.1.1 - Triggers [Core]  <!-- UUID: c743c744-a699-4236-b6d9-80563f789421 -->
+######### A.2.3.8.1.2.3.5.1.1 - Triggers [Core]  <!-- UUID: c743c744-a699-4236-b6d9-80563f789421 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.5.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 51f50be4-00f4-4023-8d43-dff42e8c7571 -->
+########## A.2.3.8.1.2.3.5.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 51f50be4-00f4-4023-8d43-dff42e8c7571 -->
 
 None.
 
-########## A.2.3.9.1.2.3.5.1.1.2 - Document Update Triggers [Core]  <!-- UUID: b43edb36-1255-4e9d-92e2-9e4435c7bb2f -->
+########## A.2.3.8.1.2.3.5.1.1.2 - Document Update Triggers [Core]  <!-- UUID: b43edb36-1255-4e9d-92e2-9e4435c7bb2f -->
 
 This process is triggered by the Artifact Update specified at Operational Facilitator Approves Proposal.
 
-######### A.2.3.9.1.2.3.5.1.2 - Dependencies [Core]  <!-- UUID: 174e41b1-0e93-491c-8da1-50c0845947c3 -->
+######### A.2.3.8.1.2.3.5.1.2 - Dependencies [Core]  <!-- UUID: 174e41b1-0e93-491c-8da1-50c0845947c3 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.1.2.3.5.2 - Process Flow [Core]  <!-- UUID: d0ceb4ed-8f65-45c6-808e-fca702dc2a62 -->
+######## A.2.3.8.1.2.3.5.2 - Process Flow [Core]  <!-- UUID: d0ceb4ed-8f65-45c6-808e-fca702dc2a62 -->
 
 The process flow for this process is defined herein:
 
@@ -7052,7 +7044,7 @@ The process flow for this process is defined herein:
 
 • After the voting concludes, the Operational Facilitator records the result of the vote in the Powerhouse system.
 
-######## A.2.3.9.1.2.3.5.3 - Required Primitive Inputs [Core]  <!-- UUID: b593ff77-2c46-418d-a7b3-9730437ce804 -->
+######## A.2.3.8.1.2.3.5.3 - Required Primitive Inputs [Core]  <!-- UUID: b593ff77-2c46-418d-a7b3-9730437ce804 -->
 
 The required Primitive Inputs to this process are defined herein.
 
@@ -7083,15 +7075,15 @@ The required Primitive Inputs to this process are defined herein.
             • Responsible party: Operational Facilitator.
             • Trigger - Required Output: Proposal Fails
 
-######## A.2.3.9.1.2.3.5.4 - Required Outputs [Core]  <!-- UUID: 1e95dff0-2a7f-461f-86f9-70433b888650 -->
+######## A.2.3.8.1.2.3.5.4 - Required Outputs [Core]  <!-- UUID: 1e95dff0-2a7f-461f-86f9-70433b888650 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.1.2.3.5.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: cc530c80-0c89-4c4a-b108-46a623f4f4c6 -->
+######### A.2.3.8.1.2.3.5.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: cc530c80-0c89-4c4a-b108-46a623f4f4c6 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.1.2.3.5.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 1efa0fc5-5377-428f-a203-8c3c10dcc153 -->
+######### A.2.3.8.1.2.3.5.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 1efa0fc5-5377-428f-a203-8c3c10dcc153 -->
 
 The Agent Artifact documents specified herein are updated as the output of this process. The Output “sets” are mutually exclusive.
 
@@ -7115,37 +7107,37 @@ The Agent Artifact documents specified herein are updated as the output of this 
             • `Instance Configuration Document` is `Archived` in Primitive Hub Document/Hub Data Repository
         • Responsible Party: Operational GovOps
 
-####### A.2.3.9.1.2.3.6 - Process Definition For Artifact Update [Core]  <!-- UUID: b3ed1e74-7ec2-4537-8e1d-2098dc17d984 -->
+####### A.2.3.8.1.2.3.6 - Process Definition For Artifact Update [Core]  <!-- UUID: b3ed1e74-7ec2-4537-8e1d-2098dc17d984 -->
 
 The documents herein define the Artifact Update process for an Invocation of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.3.6.1 - Process Initiation Logic [Core]  <!-- UUID: 005830a0-5845-4460-961a-9d5f15a722ab -->
+######## A.2.3.8.1.2.3.6.1 - Process Initiation Logic [Core]  <!-- UUID: 005830a0-5845-4460-961a-9d5f15a722ab -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.1.2.3.6.1.1 - Triggers [Core]  <!-- UUID: 9e5fb847-18f1-4b86-989f-95ec770236b7 -->
+######### A.2.3.8.1.2.3.6.1.1 - Triggers [Core]  <!-- UUID: 9e5fb847-18f1-4b86-989f-95ec770236b7 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.1.2.3.6.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 03ec388b-5e00-42da-a708-e2fd6a7d8775 -->
+########## A.2.3.8.1.2.3.6.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 03ec388b-5e00-42da-a708-e2fd6a7d8775 -->
 
 None.
 
-########## A.2.3.9.1.2.3.6.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 309ac677-8841-4821-aba5-6cf637b8e7a7 -->
+########## A.2.3.8.1.2.3.6.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 309ac677-8841-4821-aba5-6cf637b8e7a7 -->
 
 This process is triggered by the Artifact update specified in Proposal passes.
 
-######### A.2.3.9.1.2.3.6.1.2 - Dependencies [Core]  <!-- UUID: d7ec33fc-6c67-4632-80b2-1fab854699bc -->
+######### A.2.3.8.1.2.3.6.1.2 - Dependencies [Core]  <!-- UUID: d7ec33fc-6c67-4632-80b2-1fab854699bc -->
 
 This process has no dependencies.
 
-######## A.2.3.9.1.2.3.6.2 - Process Flow [Core]  <!-- UUID: 3a23ed21-d9ac-4575-9c53-806fddb10f5c -->
+######## A.2.3.8.1.2.3.6.2 - Process Flow [Core]  <!-- UUID: 3a23ed21-d9ac-4575-9c53-806fddb10f5c -->
 
 The process flow is defined herein.
 
 • Using the Powerhouse interface, the Operational Facilitator updates the Agent Artifact with the approved Proposal content.
 
-######## A.2.3.9.1.2.3.6.3 - Required Primitive Inputs [Core]  <!-- UUID: 6eb0901b-d324-4124-b27e-5f5416264f37 -->
+######## A.2.3.8.1.2.3.6.3 - Required Primitive Inputs [Core]  <!-- UUID: 6eb0901b-d324-4124-b27e-5f5416264f37 -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface.
 
@@ -7160,15 +7152,15 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
             • New Value: set to `Custom Instance Parameters` value from approved Proposal
         • Responsible Party: Operational GovOps [if not automated]
 
-######## A.2.3.9.1.2.3.6.4 - Required Outputs [Core]  <!-- UUID: 231e3527-5534-42d4-b83e-0f99cb40bf76 -->
+######## A.2.3.8.1.2.3.6.4 - Required Outputs [Core]  <!-- UUID: 231e3527-5534-42d4-b83e-0f99cb40bf76 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.1.2.3.6.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 108174f5-b53d-4bc0-8576-172b27021121 -->
+######### A.2.3.8.1.2.3.6.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 108174f5-b53d-4bc0-8576-172b27021121 -->
 
 The Sky Core Documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.1.2.3.6.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 4287ecd9-5ba6-4646-b949-306b494a108c -->
+########## A.2.3.8.1.2.3.6.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 4287ecd9-5ba6-4646-b949-306b494a108c -->
 
 [A.2.4 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be) is updated as follows:
 
@@ -7178,7 +7170,7 @@ The Sky Core Documents specified herein are updated as the output of this proces
 • Responsible Party: Operational GovOps
 • Triggers: None
 
-########## A.2.3.9.1.2.3.6.4.1.2 - Current Integrators Active Data Update [Core]  <!-- UUID: 1c0708d0-6388-4264-90f2-7a0d0b877012 -->
+########## A.2.3.8.1.2.3.6.4.1.2 - Current Integrators Active Data Update [Core]  <!-- UUID: 1c0708d0-6388-4264-90f2-7a0d0b877012 -->
 
 [**A.2.4 - List Of Current Integrators**](efbe7903-a76e-40f0-a440-56e463283157)** **is updated as follows:
 
@@ -7192,11 +7184,11 @@ The Sky Core Documents specified herein are updated as the output of this proces
 • Responsible Party: Operational GovOps
 • Triggers: None
 
-######### A.2.3.9.1.2.3.6.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 8336c1ad-e182-4c91-b4f9-b5f743500457 -->
+######### A.2.3.8.1.2.3.6.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 8336c1ad-e182-4c91-b4f9-b5f743500457 -->
 
 The Agent Artifact documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.1.2.3.6.4.2.1 - Instance Configuration Document Update [Core]  <!-- UUID: 3401c95d-3a9f-4af4-bc70-fb1be8f0f676 -->
+########## A.2.3.8.1.2.3.6.4.2.1 - Instance Configuration Document Update [Core]  <!-- UUID: 3401c95d-3a9f-4af4-bc70-fb1be8f0f676 -->
 
 The Document is updated as follows:
 
@@ -7204,7 +7196,7 @@ The Document is updated as follows:
     ◦ Document is moved from `In Progress Invocations` to `Active Instances`
 • Responsible Party: Operational Facilitator
 
-########## A.2.3.9.1.2.3.6.4.2.2 - Primitive Hub Document/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: f5b8f596-5999-4ed8-a998-9c920bb86c14 -->
+########## A.2.3.8.1.2.3.6.4.2.2 - Primitive Hub Document/In Progress Invocations Directory/Instance Name Update [Core]  <!-- UUID: f5b8f596-5999-4ed8-a998-9c920bb86c14 -->
 
 The Document  is updated as follows:
 
@@ -7215,39 +7207,39 @@ The Document  is updated as follows:
 • Responsible Party: Operational Facilitator
 • Trigger-Process: None.
 
-###### A.2.3.9.1.2.4 - Instance Ongoing Management Protocol [Core]  <!-- UUID: 3af0e156-b5c0-493b-bd6f-80185072b7b1 -->
+###### A.2.3.8.1.2.4 - Instance Ongoing Management Protocol [Core]  <!-- UUID: 3af0e156-b5c0-493b-bd6f-80185072b7b1 -->
 
 The documents herein define the process for the ongoing management of an Instance of the Accessibility Reward Primitive.
 
-####### A.2.3.9.1.2.4.1 - Routine Protocol [Core]  <!-- UUID: c2abdd22-fe0f-489e-b281-450e066db701 -->
+####### A.2.3.8.1.2.4.1 - Routine Protocol [Core]  <!-- UUID: c2abdd22-fe0f-489e-b281-450e066db701 -->
 
 The documents herein define the protocol for routine ongoing management of an Instance of the Accessibility Reward Primitive.
 
-######## A.2.3.9.1.2.4.1.1 - Process Definition For Reward Calculation By Operational Govops [Core]  <!-- UUID: 27229032-ddb6-41a5-a5d5-6168ccc3142f -->
+######## A.2.3.8.1.2.4.1.1 - Process Definition For Reward Calculation By Operational Govops [Core]  <!-- UUID: 27229032-ddb6-41a5-a5d5-6168ccc3142f -->
 
 The documents herein define the process for Accessibility Reward Calculation by Operational GovOps. The Accessibility Reward Calculation includes the calculation of the Fees for Unrewarded USDS Balances, the Fees for Rewarded USDS Balances, and the Prime Agent Management Fee.
 
-######### A.2.3.9.1.2.4.1.1.1 - Process Initiation Logic [Core]  <!-- UUID: a0a60c30-1c73-4bb1-b4c3-92a5541ff4b2 -->
+######### A.2.3.8.1.2.4.1.1.1 - Process Initiation Logic [Core]  <!-- UUID: a0a60c30-1c73-4bb1-b4c3-92a5541ff4b2 -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.1.2.4.1.1.1.1 - Triggers [Core]  <!-- UUID: 7a9450db-0d90-4578-ad14-6a8308b2b4b8 -->
+########## A.2.3.8.1.2.4.1.1.1.1 - Triggers [Core]  <!-- UUID: 7a9450db-0d90-4578-ad14-6a8308b2b4b8 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.1.2.4.1.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 3e14118d-b60b-49c4-a730-90eb3ad606a9 -->
+########### A.2.3.8.1.2.4.1.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 3e14118d-b60b-49c4-a730-90eb3ad606a9 -->
 
 This process is triggered on the 1st of every month for each Instance of the Accessibility Reward Primitive with an Instance Status of `Active`.
 
-########### A.2.3.9.1.2.4.1.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 351bd87e-1795-4b00-ad05-2b9869394854 -->
+########### A.2.3.8.1.2.4.1.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 351bd87e-1795-4b00-ad05-2b9869394854 -->
 
 None.
 
-########## A.2.3.9.1.2.4.1.1.1.2 - Dependencies [Core]  <!-- UUID: dfd59dc4-365c-4718-833a-b859f00dff9b -->
+########## A.2.3.8.1.2.4.1.1.1.2 - Dependencies [Core]  <!-- UUID: dfd59dc4-365c-4718-833a-b859f00dff9b -->
 
 This process has no dependencies.
 
-######### A.2.3.9.1.2.4.1.1.2 - Process Flow [Core]  <!-- UUID: 70360ef3-14b5-4eaf-abc1-8c3ceb1596a1 -->
+######### A.2.3.8.1.2.4.1.1.2 - Process Flow [Core]  <!-- UUID: 70360ef3-14b5-4eaf-abc1-8c3ceb1596a1 -->
 
 The process flow is defined herein:
 
@@ -7257,7 +7249,7 @@ The process flow is defined herein:
 
 • Operational GovOps updates the Powerhouse system with both the underlying data and their calculations.
 
-######### A.2.3.9.1.2.4.1.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 57921647-2a63-4d01-907b-131a50510d76 -->
+######### A.2.3.8.1.2.4.1.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 57921647-2a63-4d01-907b-131a50510d76 -->
 
 The required Primitive Inputs to this process are specified herein.
 
@@ -7276,43 +7268,43 @@ The required Primitive Inputs to this process are specified herein.
     ◦ Responsible party: Operational GovOps.
     ◦ Trigger-Process: [A.2.4 - Process Definition For Reward Issuance From Operational Executor Agent Buffer](ddd65b02-3a2b-4478-a435-989324c2f1b8).
 
-######### A.2.3.9.1.2.4.1.1.4 - Required Outputs [Core]  <!-- UUID: 082e5d05-9394-4b4a-8ef2-0e6d8110c2cc -->
+######### A.2.3.8.1.2.4.1.1.4 - Required Outputs [Core]  <!-- UUID: 082e5d05-9394-4b4a-8ef2-0e6d8110c2cc -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.1.2.4.1.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 34264a04-6a76-4bf0-9b32-283992d9364a -->
+########## A.2.3.8.1.2.4.1.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 34264a04-6a76-4bf0-9b32-283992d9364a -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-########## A.2.3.9.1.2.4.1.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f3ba519f-0d2f-4565-80be-3c095fc49b75 -->
+########## A.2.3.8.1.2.4.1.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f3ba519f-0d2f-4565-80be-3c095fc49b75 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified [A.2.4 - Required Primitive Inputs](57921647-2a63-4d01-907b-131a50510d76) fully complete the Process.
 
-######## A.2.3.9.1.2.4.1.2 - Process Definition For Reward Issuance From Operational Executor Agent Buffer [Core]  <!-- UUID: ddd65b02-3a2b-4478-a435-989324c2f1b8 -->
+######## A.2.3.8.1.2.4.1.2 - Process Definition For Reward Issuance From Operational Executor Agent Buffer [Core]  <!-- UUID: ddd65b02-3a2b-4478-a435-989324c2f1b8 -->
 
 The documents herein define the process for Accessibility Reward issuance from the Operational Executor Agent Buffer as part of ongoing management of an Instance of the Accessibility Reward Primitive.
 
-######### A.2.3.9.1.2.4.1.2.1 - Process Initiation Logic [Core]  <!-- UUID: a24bf9e6-3805-4a12-a277-ade2e24e0d77 -->
+######### A.2.3.8.1.2.4.1.2.1 - Process Initiation Logic [Core]  <!-- UUID: a24bf9e6-3805-4a12-a277-ade2e24e0d77 -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.1.2.4.1.2.1.1 - Triggers [Core]  <!-- UUID: 18123d66-7a54-40dd-a4a7-389f83658247 -->
+########## A.2.3.8.1.2.4.1.2.1.1 - Triggers [Core]  <!-- UUID: 18123d66-7a54-40dd-a4a7-389f83658247 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.1.2.4.1.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: aa6d4d8e-1b6a-41d6-b5f8-29dde7d5a55a -->
+########### A.2.3.8.1.2.4.1.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: aa6d4d8e-1b6a-41d6-b5f8-29dde7d5a55a -->
 
 None.
 
-########### A.2.3.9.1.2.4.1.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: a66e1d9d-f113-4e83-8a17-77ce1724c2c9 -->
+########### A.2.3.8.1.2.4.1.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: a66e1d9d-f113-4e83-8a17-77ce1724c2c9 -->
 
 This process is triggered by the Required Primitive Inputs specified in Edit Accessibility Reward Payments Document (Active Data).
 
-########## A.2.3.9.1.2.4.1.2.1.2 - Dependencies [Core]  <!-- UUID: 3741afa3-1593-4ca5-b90c-186f499b111b -->
+########## A.2.3.8.1.2.4.1.2.1.2 - Dependencies [Core]  <!-- UUID: 3741afa3-1593-4ca5-b90c-186f499b111b -->
 
 This process has no dependencies.
 
-######### A.2.3.9.1.2.4.1.2.2 - Process Flow [Core]  <!-- UUID: 3373c13d-907d-420b-9ad8-3cf6b4645359 -->
+######### A.2.3.8.1.2.4.1.2.2 - Process Flow [Core]  <!-- UUID: 3373c13d-907d-420b-9ad8-3cf6b4645359 -->
 
 The process flow is defined herein.
 
@@ -7320,7 +7312,7 @@ The process flow is defined herein.
 
 • Operational GovOps updates the Powerhouse system with the transaction details.
 
-######### A.2.3.9.1.2.4.1.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 63ba8de2-55ed-4df5-9e11-016a006cf828 -->
+######### A.2.3.8.1.2.4.1.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 63ba8de2-55ed-4df5-9e11-016a006cf828 -->
 
 The required Primitive Inputs to this process are specified herein.
 
@@ -7335,43 +7327,43 @@ The required Primitive Inputs to this process are specified herein.
     ◦ Responsible Party: Operational GovOps
     ◦ Trigger - Process: [A.2.4 - Process Definition For Settlement Cycle And Core GovOps Review](dfd65786-e4be-4dad-9e34-cd6235a30a4f).
 
-######### A.2.3.9.1.2.4.1.2.4 - Required Outputs [Core]  <!-- UUID: f33e0dee-b8e8-4d93-b56e-624dec274739 -->
+######### A.2.3.8.1.2.4.1.2.4 - Required Outputs [Core]  <!-- UUID: f33e0dee-b8e8-4d93-b56e-624dec274739 -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.1.2.4.1.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 810220a0-0694-4174-b438-6fb0a4b98299 -->
+########## A.2.3.8.1.2.4.1.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 810220a0-0694-4174-b438-6fb0a4b98299 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-########## A.2.3.9.1.2.4.1.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: ede7410d-a632-4209-ae79-7e3ba730cef1 -->
+########## A.2.3.8.1.2.4.1.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: ede7410d-a632-4209-ae79-7e3ba730cef1 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](63ba8de2-55ed-4df5-9e11-016a006cf828) fully complete the process.
 
-######## A.2.3.9.1.2.4.1.3 - Process Definition For Settlement Cycle And Core GovOps Review [Core]  <!-- UUID: dfd65786-e4be-4dad-9e34-cd6235a30a4f -->
+######## A.2.3.8.1.2.4.1.3 - Process Definition For Settlement Cycle And Core GovOps Review [Core]  <!-- UUID: dfd65786-e4be-4dad-9e34-cd6235a30a4f -->
 
 The documents herein define the process for the Accessibility Reward Settlement Cycle and Core GovOps review as part of ongoing management of an Instance of the Accessibility Reward Primitive.
 
-######### A.2.3.9.1.2.4.1.3.1 - Process Initiation Logic [Core]  <!-- UUID: e0495e9f-5dbd-4191-b52d-b87c6067d19a -->
+######### A.2.3.8.1.2.4.1.3.1 - Process Initiation Logic [Core]  <!-- UUID: e0495e9f-5dbd-4191-b52d-b87c6067d19a -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.1.2.4.1.3.1.1 - Triggers [Core]  <!-- UUID: 82b72cd2-b012-4865-9266-bcc35d644ec2 -->
+########## A.2.3.8.1.2.4.1.3.1.1 - Triggers [Core]  <!-- UUID: 82b72cd2-b012-4865-9266-bcc35d644ec2 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.1.2.4.1.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 97fba609-d197-43dc-a6e1-72c6b2c48519 -->
+########### A.2.3.8.1.2.4.1.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 97fba609-d197-43dc-a6e1-72c6b2c48519 -->
 
 This process is triggered at the beginning of every calendar quarter.
 
-########### A.2.3.9.1.2.4.1.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: c96dd69d-2be3-451e-8551-a17de1c81579 -->
+########### A.2.3.8.1.2.4.1.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: c96dd69d-2be3-451e-8551-a17de1c81579 -->
 
 None.
 
-########## A.2.3.9.1.2.4.1.3.1.2 - Dependencies [Core]  <!-- UUID: db7ad152-ee64-4185-b224-ad9ad7ec1093 -->
+########## A.2.3.8.1.2.4.1.3.1.2 - Dependencies [Core]  <!-- UUID: db7ad152-ee64-4185-b224-ad9ad7ec1093 -->
 
 This process has no dependencies.
 
-######### A.2.3.9.1.2.4.1.3.2 - Process Flow [Core]  <!-- UUID: 8b8308fd-e1ac-431c-8fe1-8e824ba7e978 -->
+######### A.2.3.8.1.2.4.1.3.2 - Process Flow [Core]  <!-- UUID: 8b8308fd-e1ac-431c-8fe1-8e824ba7e978 -->
 
 The process flow is defined herein.
 
@@ -7379,7 +7371,7 @@ The process flow is defined herein.
 
 • Once Core GovOps has completed review, they update Powerhouse system to indicate that they confirm the accuracy of the Accessibility Reward amounts.
 
-######### A.2.3.9.1.2.4.1.3.3 - Required Primitive Inputs [Core]  <!-- UUID: b55afaef-db92-4bbf-8d80-258d5849ef1c -->
+######### A.2.3.8.1.2.4.1.3.3 - Required Primitive Inputs [Core]  <!-- UUID: b55afaef-db92-4bbf-8d80-258d5849ef1c -->
 
 The required Primitive Inputs to this process are specified herein and are mutually exclusive pathways.
 
@@ -7403,11 +7395,11 @@ The required Primitive Inputs to this process are specified herein and are mutua
         • Responsible party: Core GovOps
         • Trigger - Process: Payment Inaccuracy Previously Found By Core GovOps
 
-######### A.2.3.9.1.2.4.1.3.4 - Required Outputs [Core]  <!-- UUID: 7cb3c11b-7356-4967-b232-6667b66b6f51 -->
+######### A.2.3.8.1.2.4.1.3.4 - Required Outputs [Core]  <!-- UUID: 7cb3c11b-7356-4967-b232-6667b66b6f51 -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.1.2.4.1.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: cca17fe9-3dc9-48ce-be26-39a1625b3690 -->
+########## A.2.3.8.1.2.4.1.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: cca17fe9-3dc9-48ce-be26-39a1625b3690 -->
 
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
@@ -7429,35 +7421,35 @@ The Sky Core Atlas documents specified herein are updated as the output of this 
 • Payment Inaccuracy Previously Found By Core GovOps
     ◦ TBD
 
-########## A.2.3.9.1.2.4.1.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 300fca05-66b1-4f31-966a-d26168ded7c3 -->
+########## A.2.3.8.1.2.4.1.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 300fca05-66b1-4f31-966a-d26168ded7c3 -->
 
 No Agent Artifact documents are updated as the output of this process.
 
-######## A.2.3.9.1.2.4.1.4 - Process Definition For Executive Vote Reimbursement [Core]  <!-- UUID: 59259360-a288-4412-a39a-da3991c60f8f -->
+######## A.2.3.8.1.2.4.1.4 - Process Definition For Executive Vote Reimbursement [Core]  <!-- UUID: 59259360-a288-4412-a39a-da3991c60f8f -->
 
 The documents herein define the process for Accessibility Reward Executive Vote reimbursement as part of ongoing management of an Instance of the Accessibility Reward Primitive.
 
-######### A.2.3.9.1.2.4.1.4.1 - Process Initiation Logic [Core]  <!-- UUID: f7bc89b8-424f-4f6a-8f1b-e173ca22f2ce -->
+######### A.2.3.8.1.2.4.1.4.1 - Process Initiation Logic [Core]  <!-- UUID: f7bc89b8-424f-4f6a-8f1b-e173ca22f2ce -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.1.2.4.1.4.1.1 - Triggers [Core]  <!-- UUID: 14d233e1-0e8e-4dd5-915a-89f2b94f6e18 -->
+########## A.2.3.8.1.2.4.1.4.1.1 - Triggers [Core]  <!-- UUID: 14d233e1-0e8e-4dd5-915a-89f2b94f6e18 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.1.2.4.1.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: b61d8b1d-5a03-41ba-9bc7-49e1e876b855 -->
+########### A.2.3.8.1.2.4.1.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: b61d8b1d-5a03-41ba-9bc7-49e1e876b855 -->
 
 None.
 
-########### A.2.3.9.1.2.4.1.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: c298f200-2ac8-4fc3-9d02-e05f4cf2f42f -->
+########### A.2.3.8.1.2.4.1.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: c298f200-2ac8-4fc3-9d02-e05f4cf2f42f -->
 
 This process is triggered by the Document Update specified in **`Sky Core Accessibility Reward Reimbursement`**** Active Data Document Update.**
 
-########## A.2.3.9.1.2.4.1.4.1.2 - Dependencies [Core]  <!-- UUID: ae1c6021-2790-43ce-9d9b-fe8a17a64b60 -->
+########## A.2.3.8.1.2.4.1.4.1.2 - Dependencies [Core]  <!-- UUID: ae1c6021-2790-43ce-9d9b-fe8a17a64b60 -->
 
 This process has no dependencies.
 
-######### A.2.3.9.1.2.4.1.4.2 - Process Flow [Core]  <!-- UUID: ffa519f8-71f9-4285-892f-49e79f8ed0de -->
+######### A.2.3.8.1.2.4.1.4.2 - Process Flow [Core]  <!-- UUID: ffa519f8-71f9-4285-892f-49e79f8ed0de -->
 
 The process flow is defined herein:
 
@@ -7465,7 +7457,7 @@ The process flow is defined herein:
 
 • After the Executive Vote passes, Core GovOps updates the Powerhouse system with the transaction details.
 
-######### A.2.3.9.1.2.4.1.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 6b90e3a1-48ce-4ac2-852e-00a8e4edf152 -->
+######### A.2.3.8.1.2.4.1.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 6b90e3a1-48ce-4ac2-852e-00a8e4edf152 -->
 
 The required Primitive Inputs to this process are specified herein and organized as sequential stages.
 
@@ -7487,15 +7479,15 @@ The required Primitive Inputs to this process are specified herein and organized
             • Status
                 ◦ New value: set to `Completed`
 
-######### A.2.3.9.1.2.4.1.4.4 - Required Outputs [Core]  <!-- UUID: d14fff67-fd16-443b-9d32-763b052dce8b -->
+######### A.2.3.8.1.2.4.1.4.4 - Required Outputs [Core]  <!-- UUID: d14fff67-fd16-443b-9d32-763b052dce8b -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.1.2.4.1.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7daf5881-434b-403e-b443-7bbfa0ce0534 -->
+########## A.2.3.8.1.2.4.1.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7daf5881-434b-403e-b443-7bbfa0ce0534 -->
 
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
-########### A.2.3.9.1.2.4.1.4.4.1.1 - Sky Core Accessibility Reward Reimbursement Active Data Update [Core]  <!-- UUID: 0c619a26-b9a6-495a-b7e6-a4a5c79c2da6 -->
+########### A.2.3.8.1.2.4.1.4.4.1.1 - Sky Core Accessibility Reward Reimbursement Active Data Update [Core]  <!-- UUID: 0c619a26-b9a6-495a-b7e6-a4a5c79c2da6 -->
 
 The Document in the Sky Core Atlas is updated as follows:
 
@@ -7505,47 +7497,47 @@ The Document in the Sky Core Atlas is updated as follows:
     ◦ Responsible Party: Core GovOps
     ◦ Trigger-Process: None
 
-########## A.2.3.9.1.2.4.1.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 594d3b57-107d-44bc-a1bf-3f1291b8cccb -->
+########## A.2.3.8.1.2.4.1.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 594d3b57-107d-44bc-a1bf-3f1291b8cccb -->
 
 No Agent Artifact documents are updated as the output of this process.
 
-####### A.2.3.9.1.2.4.2 - Non-Routine Protocol [Core]  <!-- UUID: e852bd1a-b257-4de9-b25b-63a5492ab720 -->
+####### A.2.3.8.1.2.4.2 - Non-Routine Protocol [Core]  <!-- UUID: e852bd1a-b257-4de9-b25b-63a5492ab720 -->
 
 The documents herein define the protocol for non-routine ongoing management of an Instance of the Accessibility Reward Primitive.
 
-####### A.2.3.9.1.2.4.3 - Emergency Protocol [Core]  <!-- UUID: 81b89dda-558c-438e-8ba4-b75a977b8fd3 -->
+####### A.2.3.8.1.2.4.3 - Emergency Protocol [Core]  <!-- UUID: 81b89dda-558c-438e-8ba4-b75a977b8fd3 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of an Instance of the Accessibility Reward Primitive.
 
-#### A.2.3.9.2 - Integration Boost Primitive [Core]  <!-- UUID: 73577399-62e4-4a83-ae11-64ef7e7b7f20 -->
+#### A.2.3.8.2 - Integration Boost Primitive [Core]  <!-- UUID: 73577399-62e4-4a83-ae11-64ef7e7b7f20 -->
 
 The documents herein govern the Integration Boost Primitive.
 
-##### A.2.3.9.2.1 - Introduction [Core]  <!-- UUID: 84b4b5c7-7125-4f8e-815d-72b3be20a8e9 -->
+##### A.2.3.8.2.1 - Introduction [Core]  <!-- UUID: 84b4b5c7-7125-4f8e-815d-72b3be20a8e9 -->
 
 The documents herein provide an introduction to the Integration Boost Primitive.
 
-###### A.2.3.9.2.1.1 - Purpose [Core]  <!-- UUID: a9751ac4-b292-4c43-a5e5-168df9f0e41e -->
+###### A.2.3.8.2.1.1 - Purpose [Core]  <!-- UUID: a9751ac4-b292-4c43-a5e5-168df9f0e41e -->
 
 The Integration Boost Primitive provides a low complexity version of the Sky Savings Rate to integration partners that hold USDS or lending markets that integrate USDS.
 
-###### A.2.3.9.2.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 7853b196-73d9-4662-a4aa-f057aa64280c -->
+###### A.2.3.8.2.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 7853b196-73d9-4662-a4aa-f057aa64280c -->
 
 Multiple instances of the Integration Boost Primitive are allowed. Each instance corresponds to an Integration Boost program.
 
-###### A.2.3.9.2.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 71c3bf8e-9c5c-447d-afb8-d6ca66acf45f -->
+###### A.2.3.8.2.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 71c3bf8e-9c5c-447d-afb8-d6ca66acf45f -->
 
 An Agent Artifact that has more than one active instance of the Integration Boost Primitive is not required to have a `Multi-Instance Coordinator Document`, since each Instance can be managed independently.
 
-##### A.2.3.9.2.2 - Global Specification [Core]  <!-- UUID: eecfa6ad-3419-411e-b25a-1ccde2d6484b -->
+##### A.2.3.8.2.2 - Global Specification [Core]  <!-- UUID: eecfa6ad-3419-411e-b25a-1ccde2d6484b -->
 
 The requirements herein apply universally across all possible deployments of the Integration Boost Primitive by Prime Agents. They include the steps that Agents must take to deploy the Primitive, including Global Activation of the Primitive, Instance Invocation, and ongoing management of the Primitive Instance(s).
 
-###### A.2.3.9.2.2.1 - Base Elements [Core]  <!-- UUID: c398b383-3752-4534-aec6-4cd8e7292119 -->
+###### A.2.3.8.2.2.1 - Base Elements [Core]  <!-- UUID: c398b383-3752-4534-aec6-4cd8e7292119 -->
 
 The documents herein define the base elements of the Integration Boost Primitive.
 
-####### A.2.3.9.2.2.1.1 - Integration Boost Partners [Core]  <!-- UUID: 31cb3b86-0125-4a04-996f-634b75b6cea2 -->
+####### A.2.3.8.2.2.1.1 - Integration Boost Partners [Core]  <!-- UUID: 31cb3b86-0125-4a04-996f-634b75b6cea2 -->
 
 The Integration Boost is provided to DeFi protocol partners that allow users to deposit USDS balances. Sky makes payments to Integration Boost partners equal to the Sky Savings Rate times the Unrewarded USDS balances in their protocol. The expectation is that the Integration Boost Partner will pass these Integration Boost Payments along to their users, thus providing USDS users with the equivalent of the Sky Savings Rate.
 
@@ -7553,39 +7545,39 @@ Integration Boost partners are part of the Integrator Program as defined in [A.2
 
 Current and onboarding Integrators are recorded in [A.2.4 - Current And Onboarding Integrators](f3952cc5-cde2-46b9-b575-034dda83570b).
 
-######## A.2.3.9.2.2.1.1.1 - No Obligation To Pass Through Integration Boost Payments [Core]  <!-- UUID: dc0bc012-2313-4eea-b898-2ebd97c2a59a -->
+######## A.2.3.8.2.2.1.1.1 - No Obligation To Pass Through Integration Boost Payments [Core]  <!-- UUID: dc0bc012-2313-4eea-b898-2ebd97c2a59a -->
 
 Integration Boost partners are under no obligation to pass through any portion of Integration Boost payments to their users. Nevertheless, the expectation is that most partners will pass through Integration Boost payments to remain competitive with other protocols.
 
-####### A.2.3.9.2.2.1.2 - Data Submission [Core]  <!-- UUID: 756b466e-2bc0-43af-957f-d827593f5fe2 -->
+####### A.2.3.8.2.2.1.2 - Data Submission [Core]  <!-- UUID: 756b466e-2bc0-43af-957f-d827593f5fe2 -->
 
 The documents herein specify data submission requirements related to the Integrator Program.
 
-######## A.2.3.9.2.2.1.2.1 - Data Verifiability Requirement [Core]  <!-- UUID: 6a2ec8d3-0403-46a9-8c96-3a9c86a59792 -->
+######## A.2.3.8.2.2.1.2.1 - Data Verifiability Requirement [Core]  <!-- UUID: 6a2ec8d3-0403-46a9-8c96-3a9c86a59792 -->
 
 Integration Boost Partners must submit net deposit data in such a form that the data can be verified by Sky using on-chain data. In the short term, Ecosystem Actor BA Labs calculates the net deposit data based on on-chain events and makes it available to Operational GovOps through an API endpoint. The API endpoint is [https://info-sky.blockanalitica.com/api/v1/incentivized-pools/](https://info-sky.blockanalitica.com/api/v1/incentivized-pools/) for Integration Boost Partners on Ethereum and [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/) on Solana. In the long term, Operational GovOps assumes responsibility for ensuring that the data submission meets the on-chain verifiability requirement; this is done as part of their review of Invocations of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.1.2.2 - Data Submission Responsible Party [Core]  <!-- UUID: 079abfa8-583a-4a95-a2d6-7fe50a1dd2dd -->
+######## A.2.3.8.2.2.1.2.2 - Data Submission Responsible Party [Core]  <!-- UUID: 079abfa8-583a-4a95-a2d6-7fe50a1dd2dd -->
 
 Integration Boost Partners must also identify a responsible party that will submit the net deposit data. In the near term, this is BA Labs. In the long term, this may be the Integration Boost Partner, a third party contractor, or the Prime Agent or Operational GovOps themselves if they agree to do so.
 
-######## A.2.3.9.2.2.1.2.3 - Data Submission Frequency [Core]  <!-- UUID: a26ea73f-ab67-4e02-93cd-b43d22a6e63c -->
+######## A.2.3.8.2.2.1.2.3 - Data Submission Frequency [Core]  <!-- UUID: a26ea73f-ab67-4e02-93cd-b43d22a6e63c -->
 
 Data is calculated on a weekly basis from Monday to Sunday for payment the following Monday. Failure to submit data on time will result in a delay of payment of the Integration Boost until the following week.
 
-####### A.2.3.9.2.2.1.3 - Distribution [Core]  <!-- UUID: 3b3914d0-eb7b-4a49-bbca-5f6237a4a8ac -->
+####### A.2.3.8.2.2.1.3 - Distribution [Core]  <!-- UUID: 3b3914d0-eb7b-4a49-bbca-5f6237a4a8ac -->
 
 The documents herein define base elements of the Integration Boost Primitive related to the distribution of the Integration Boost.
 
-######## A.2.3.9.2.2.1.3.1 - Cadence [Core]  <!-- UUID: 181954b6-d22c-4605-bffa-b5d964fbb10d -->
+######## A.2.3.8.2.2.1.3.1 - Cadence [Core]  <!-- UUID: 181954b6-d22c-4605-bffa-b5d964fbb10d -->
 
 The Cadence is the frequency at which the Integration Boost is calculated and distributed. There are only three options available for the Reward Cadence: (1) weekly, (2) biweekly, or (3) monthly.
 
-######## A.2.3.9.2.2.1.3.2 - Treasury Management [Core]  <!-- UUID: e27f2332-1072-4b61-84ab-efe6f2ca056e -->
+######## A.2.3.8.2.2.1.3.2 - Treasury Management [Core]  <!-- UUID: e27f2332-1072-4b61-84ab-efe6f2ca056e -->
 
 The documents herein define the treasury management process.
 
-######### A.2.3.9.2.2.1.3.2.1 - Near Term Process [Core]  <!-- UUID: 4ab621b4-ef8e-4b01-a6aa-9296601033c5 -->
+######### A.2.3.8.2.2.1.3.2.1 - Near Term Process [Core]  <!-- UUID: 4ab621b4-ef8e-4b01-a6aa-9296601033c5 -->
 
 In the short term, the Support Facilitators directly pay Integration Boost recipients from Integration Boost wallets. The balance of these wallets on the Ethereum Mainnet may be topped up to 3 million USDS, although the balance of Integration Boost wallets across blockchains may exceed that amount. The funding is subject to an Executive Vote. The addresses of these wallets are:
 
@@ -7593,35 +7585,35 @@ In the short term, the Support Facilitators directly pay Integration Boost recip
 • Solana (SOL) - `7Gf8AqAtmYkkVhQbbJr18RxVUuoGjA8ZEw3Af4NauyaY`
 • Solana Hot Wallet - `BKT2JR5wRWsXQBxrht1LbbbKtgUkz3sJdaBY8UzgRJPL`
 
-######### A.2.3.9.2.2.1.3.2.2 - Long Term Process [Core]  <!-- UUID: 787276c9-728b-491f-84d6-c1303fe72986 -->
+######### A.2.3.8.2.2.1.3.2.2 - Long Term Process [Core]  <!-- UUID: 787276c9-728b-491f-84d6-c1303fe72986 -->
 
 In the long term, Operational GovOps calculates the Integration Boost for each occurrence of the specified Cadence. Operational GovOps then pays the Integration Boost recipient from its Buffer. Later, Sky Core reimburses the Operational Agent Buffer for the amount paid as part of the Settlement Cycle. This minimizes the role of Sky Core in Integration Boost payments and emphasizes the primary role of the Operational Executor Agent, acting through Operational GovOps, in implementing the Sky Primitives. The process is specified in further detail in [A.2.4 - Routine Protocol](04864587-25ef-4179-b237-4dd0a23485a4).
 
-######## A.2.3.9.2.2.1.3.3 - Payment Errors [Core]  <!-- UUID: 8d19b08f-d10e-4db2-9e21-03e5021bdaec -->
+######## A.2.3.8.2.2.1.3.3 - Payment Errors [Core]  <!-- UUID: 8d19b08f-d10e-4db2-9e21-03e5021bdaec -->
 
 If it is discovered that previous Integration Boost calculations were made erroneously, underpayments are resolved retroactively. In cases where an Integrator was overpaid, the Prime Agent associated with the Integrator must reimburse Sky the overpayment amount and can use future Integration Boost payments that the Integrator earns to reimburse itself.
 
-####### A.2.3.9.2.2.1.4 - Accessibility Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
+####### A.2.3.8.2.2.1.4 - Accessibility Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
 
 Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Accessibility Reward.
 
-######## A.2.3.9.2.2.1.4.1 - Reporting Of Net USDS Balances Is Valid Tracking Methodology [Core]  <!-- UUID: a4ca2e70-d013-4c54-8e17-1d6f352ddbc0 -->
+######## A.2.3.8.2.2.1.4.1 - Reporting Of Net USDS Balances Is Valid Tracking Methodology [Core]  <!-- UUID: a4ca2e70-d013-4c54-8e17-1d6f352ddbc0 -->
 
 The methodology used to report net USDS balances in the protocol for the Integration Boost is itself an acceptable Tracking Methodology for purposes of the Accessibility Reward.
 
-######## A.2.3.9.2.2.1.4.2 - No Double Payments [Core]  <!-- UUID: 5828a3a0-243d-48a5-b537-297015a0c5f5 -->
+######## A.2.3.8.2.2.1.4.2 - No Double Payments [Core]  <!-- UUID: 5828a3a0-243d-48a5-b537-297015a0c5f5 -->
 
 Accessibility Reward may only be paid on net USDS balances of an Integration Boost partner to the extent that an Accessibility Reward is not already being paid on those balances.
 
-######## A.2.3.9.2.2.1.4.3 - Prime Agent May Choose Whether To Share Accessibility Reward With Integration Boost Partner [Core]  <!-- UUID: c27d41eb-61f4-4daa-a9c3-b463fa840f60 -->
+######## A.2.3.8.2.2.1.4.3 - Prime Agent May Choose Whether To Share Accessibility Reward With Integration Boost Partner [Core]  <!-- UUID: c27d41eb-61f4-4daa-a9c3-b463fa840f60 -->
 
 Prime Agents may choose whether to share Accessibility Reward payments with Integration Boost Partners.
 
-####### A.2.3.9.2.2.1.5 - Integration Boost Reimbursement [Core]  <!-- UUID: 63ff5ae5-4a50-4d44-b7e4-526608c44598 -->
+####### A.2.3.8.2.2.1.5 - Integration Boost Reimbursement [Core]  <!-- UUID: 63ff5ae5-4a50-4d44-b7e4-526608c44598 -->
 
 The documents herein specify the Integration Boost reimbursement.
 
-######## A.2.3.9.2.2.1.5.1 - Sky Core Integration Boost Reimbursement [Active Data Controller]  <!-- UUID: 7ed013c9-f7ac-4459-8675-8bbd398d5133 -->
+######## A.2.3.8.2.2.1.5.1 - Sky Core Integration Boost Reimbursement [Active Data Controller]  <!-- UUID: 7ed013c9-f7ac-4459-8675-8bbd398d5133 -->
 
 The Accessibility Reward reimbursement payments are defined as Active Data in [A.2.4 - Sky Core Integration Boost Reimbursement Amounts](8cbff90b-5633-427e-91da-0fb775812535). 
  
@@ -7629,39 +7621,39 @@ The Active Data is updated as follows:
 • The Responsible Party is Core GovOps.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-######### A.2.3.9.2.2.1.5.1.0.6.1 - Sky Core Integration Boost Reimbursement Amounts [Active Data]  <!-- UUID: 8cbff90b-5633-427e-91da-0fb775812535 -->
+######### A.2.3.8.2.2.1.5.1.0.6.1 - Sky Core Integration Boost Reimbursement Amounts [Active Data]  <!-- UUID: 8cbff90b-5633-427e-91da-0fb775812535 -->
 
 The current Sky Core Integration Boost Reimbursement Amounts are:
 
-###### A.2.3.9.2.2.2 - Global Activation [Core]  <!-- UUID: 4ad2a180-10bd-443d-ba5b-3e46f2b5cf52 -->
+###### A.2.3.8.2.2.2 - Global Activation [Core]  <!-- UUID: 4ad2a180-10bd-443d-ba5b-3e46f2b5cf52 -->
 
 An Agent who intends to deploy the Integration Boost Primitive must first Globally Activate it.
 
-####### A.2.3.9.2.2.2.1 - Process Initiation Logic [Core]  <!-- UUID: b68f9009-e002-4d92-bcb6-c0aeca9239a5 -->
+####### A.2.3.8.2.2.2.1 - Process Initiation Logic [Core]  <!-- UUID: b68f9009-e002-4d92-bcb6-c0aeca9239a5 -->
 
 The process initiation logic is specified herein.
 
-######## A.2.3.9.2.2.2.1.1 - Triggers [Core]  <!-- UUID: ea3fd0be-411c-44e4-9539-2c88000110b5 -->
+######## A.2.3.8.2.2.2.1.1 - Triggers [Core]  <!-- UUID: ea3fd0be-411c-44e4-9539-2c88000110b5 -->
 
 Triggers are specified herein.
 
-######### A.2.3.9.2.2.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 7457b041-e037-43fa-aee9-107bacdb3acb -->
+######### A.2.3.8.2.2.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 7457b041-e037-43fa-aee9-107bacdb3acb -->
 
 None.
 
-######### A.2.3.9.2.2.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: a007505e-aa58-40f5-bf83-1ded2aa87588 -->
+######### A.2.3.8.2.2.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: a007505e-aa58-40f5-bf83-1ded2aa87588 -->
 
 None.
 
-######## A.2.3.9.2.2.2.1.2 - Dependencies [Core]  <!-- UUID: befbf1d8-aa4e-4326-9536-6620754cc96b -->
+######## A.2.3.8.2.2.2.1.2 - Dependencies [Core]  <!-- UUID: befbf1d8-aa4e-4326-9536-6620754cc96b -->
 
 See [A.2.4 - Changing A Primitive’s Global Activation Status](51cfca28-c8de-457a-abc4-8ce1f64abb91) for constraints on when an Agent can Globally Activate this Primitive.
 
-####### A.2.3.9.2.2.2.2 - Process Flow [Core]  <!-- UUID: 163b998a-50fe-4bbe-872c-748f526f7604 -->
+####### A.2.3.8.2.2.2.2 - Process Flow [Core]  <!-- UUID: 163b998a-50fe-4bbe-872c-748f526f7604 -->
 
 The Prime Agent uses the Powerhouse interface to Globally Activate (toggle on) the Integration Boost Primitive.
 
-####### A.2.3.9.2.2.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 5e673229-0130-4b2c-94ce-f8597babd9c1 -->
+####### A.2.3.8.2.2.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 5e673229-0130-4b2c-94ce-f8597babd9c1 -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface:
 
@@ -7669,47 +7661,47 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
     ◦ Updated Field: Global Activation Status
         • New Value: set to `Activated`
 
-####### A.2.3.9.2.2.2.4 - Required Outputs [Core]  <!-- UUID: 9a9b56f4-eef8-4d31-af06-3b6d5ba4cb60 -->
+####### A.2.3.8.2.2.2.4 - Required Outputs [Core]  <!-- UUID: 9a9b56f4-eef8-4d31-af06-3b6d5ba4cb60 -->
 
 The documents herein specify the required outputs from this process.
 
-######## A.2.3.9.2.2.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 74f88b57-beef-4cae-a2a6-fafd74812e5c -->
+######## A.2.3.8.2.2.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 74f88b57-beef-4cae-a2a6-fafd74812e5c -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######## A.2.3.9.2.2.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 35c38264-03ec-4485-9de6-2ff368981066 -->
+######## A.2.3.8.2.2.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 35c38264-03ec-4485-9de6-2ff368981066 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](5e673229-0130-4b2c-94ce-f8597babd9c1) fully complete the Process.
 
-###### A.2.3.9.2.2.3 - Instance Invocation Protocol [Core]  <!-- UUID: a1dc075e-6c36-4375-89ff-fe9bb2c7a2fa -->
+###### A.2.3.8.2.2.3 - Instance Invocation Protocol [Core]  <!-- UUID: a1dc075e-6c36-4375-89ff-fe9bb2c7a2fa -->
 
 After fulfilling the requirements for Global Activation, an Agent can Invoke its first Instance of the Integration Boost Primitive by following the sequential process specified herein. Subsequent Invocations of the Primitive must adhere to the same requirements defined below.
 
-####### A.2.3.9.2.2.3.1 - Process Definition For Initial Opportunity Identification And Planning [Core]  <!-- UUID: a14cea92-f114-4cc8-abfe-77b202e3c1f7 -->
+####### A.2.3.8.2.2.3.1 - Process Definition For Initial Opportunity Identification And Planning [Core]  <!-- UUID: a14cea92-f114-4cc8-abfe-77b202e3c1f7 -->
 
 The documents herein specify the process definition for initial opportunity identification and planning.
 
-######## A.2.3.9.2.2.3.1.1 - Process Initiation Logic [Core]  <!-- UUID: 2645e2f0-2624-4fd0-bdc7-2eb09fe28498 -->
+######## A.2.3.8.2.2.3.1.1 - Process Initiation Logic [Core]  <!-- UUID: 2645e2f0-2624-4fd0-bdc7-2eb09fe28498 -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.1.1.1 - Triggers [Core]  <!-- UUID: 32cc16f9-2d59-4722-b56a-7f9eae661b57 -->
+######### A.2.3.8.2.2.3.1.1.1 - Triggers [Core]  <!-- UUID: 32cc16f9-2d59-4722-b56a-7f9eae661b57 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: e06ee9c9-72a5-47ac-8a20-400b3615994a -->
+########## A.2.3.8.2.2.3.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: e06ee9c9-72a5-47ac-8a20-400b3615994a -->
 
 None.
 
-########## A.2.3.9.2.2.3.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: def2ad89-c78b-4662-a2c3-5a889dbbd722 -->
+########## A.2.3.8.2.2.3.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: def2ad89-c78b-4662-a2c3-5a889dbbd722 -->
 
 None.
 
-######### A.2.3.9.2.2.3.1.1.2 - Dependencies [Core]  <!-- UUID: 85a0d037-6b82-4435-aa6d-2d8b481c8f60 -->
+######### A.2.3.8.2.2.3.1.1.2 - Dependencies [Core]  <!-- UUID: 85a0d037-6b82-4435-aa6d-2d8b481c8f60 -->
 
 This process is dependent on a Prime Agent Globally Activating the Integration Boost Primitive pursuant to [A.2.4 - Global Activation](4ad2a180-10bd-443d-ba5b-3e46f2b5cf52).
 
-######## A.2.3.9.2.2.3.1.2 - Process Flow [Core]  <!-- UUID: 179cb7a5-60ee-4fa0-bc22-d70d4a15c575 -->
+######## A.2.3.8.2.2.3.1.2 - Process Flow [Core]  <!-- UUID: 179cb7a5-60ee-4fa0-bc22-d70d4a15c575 -->
 
 The process flow is defined herein.
 
@@ -7717,7 +7709,7 @@ The process flow is defined herein.
 
 • The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Accessibility Reward.
 
-######## A.2.3.9.2.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: b91d0eb6-fa86-486c-8350-4564bdb5af09 -->
+######## A.2.3.8.2.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: b91d0eb6-fa86-486c-8350-4564bdb5af09 -->
 
 The required Primitive Inputs for this process are defined herein and organized in sequential stages.
 
@@ -7757,15 +7749,15 @@ The required Primitive Inputs for this process are defined herein and organized 
         • Responsible party: Prime Agent
         • Trigger - Required Output: After Prime Agent's `Initial planning document` Status is set to `Ready for GovOps review`.
 
-######## A.2.3.9.2.2.3.1.4 - Required Outputs [Core]  <!-- UUID: c0e07df6-d6b9-4268-95a6-f0f42877a639 -->
+######## A.2.3.8.2.2.3.1.4 - Required Outputs [Core]  <!-- UUID: c0e07df6-d6b9-4268-95a6-f0f42877a639 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.2.2.3.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 991aaf4f-3d85-41c3-b0c3-d1cf3a84ec0d -->
+######### A.2.3.8.2.2.3.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 991aaf4f-3d85-41c3-b0c3-d1cf3a84ec0d -->
 
 The Sky Core Atlas is updated pursuant to the following requirements.
 
-########## A.2.3.9.2.2.3.1.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: a227491c-903f-4571-aad0-b76422a5ea7f -->
+########## A.2.3.8.2.2.3.1.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: a227491c-903f-4571-aad0-b76422a5ea7f -->
 
 [A.2.4 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be) is updated as follows:
 
@@ -7774,7 +7766,7 @@ The Sky Core Atlas is updated pursuant to the following requirements.
         • New value: set to the name of the Integrator
 • Responsible Party: Operational GovOps
 
-######### A.2.3.9.2.2.3.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: d86e5f9f-7b1c-4605-9253-4281a6bdbc13 -->
+######### A.2.3.8.2.2.3.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: d86e5f9f-7b1c-4605-9253-4281a6bdbc13 -->
 
 The Agent Artifact is updated pursuant to the following requirements. Each Output “set” is triggered following the completion of its respective Input stage, which latter is defined in [A.2.4 - Required Primitive Inputs](b91d0eb6-fa86-486c-8350-4564bdb5af09). 
 
@@ -7797,31 +7789,31 @@ The Agent Artifact is updated pursuant to the following requirements. Each Outpu
         • Responsible party: Operational GovOps [ automated]
         • Trigger - Process: [A.2.4 - Process Definition for Operational GovOps Review](38c54d2b-715b-433d-a9ff-af5cbecc89a2).
 
-####### A.2.3.9.2.2.3.2 - Process Definition for Operational GovOps Review [Core]  <!-- UUID: 38c54d2b-715b-433d-a9ff-af5cbecc89a2 -->
+####### A.2.3.8.2.2.3.2 - Process Definition for Operational GovOps Review [Core]  <!-- UUID: 38c54d2b-715b-433d-a9ff-af5cbecc89a2 -->
 
 The documents herein define the process for Operational GovOps Review for an Invocation of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: ef37ff82-5639-4b5a-88b3-04cc4a4539cb -->
+######## A.2.3.8.2.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: ef37ff82-5639-4b5a-88b3-04cc4a4539cb -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.2.1.1 - Triggers [Core]  <!-- UUID: cb905fcc-6834-42a4-a0e8-534e600fad7e -->
+######### A.2.3.8.2.2.3.2.1.1 - Triggers [Core]  <!-- UUID: cb905fcc-6834-42a4-a0e8-534e600fad7e -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: ff9674e1-174c-4365-ba27-4af0aa10539e -->
+########## A.2.3.8.2.2.3.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: ff9674e1-174c-4365-ba27-4af0aa10539e -->
 
 None.
 
-########## A.2.3.9.2.2.3.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 4290c4b4-5c4d-4de5-bcbe-7d4d6db8b755 -->
+########## A.2.3.8.2.2.3.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 4290c4b4-5c4d-4de5-bcbe-7d4d6db8b755 -->
 
 This process is triggered by the Artifact Update specified at Edit `Primitive Hub Document/In Progress Invocations/Instance Name`.
 
-######### A.2.3.9.2.2.3.2.1.2 - Dependencies [Core]  <!-- UUID: 921d945d-5e36-4ffd-8c30-447aeca18045 -->
+######### A.2.3.8.2.2.3.2.1.2 - Dependencies [Core]  <!-- UUID: 921d945d-5e36-4ffd-8c30-447aeca18045 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.2.2.3.2.2 - Process Flow [Core]  <!-- UUID: 0eba9704-14c9-4be3-ab41-62129ff9f162 -->
+######## A.2.3.8.2.2.3.2.2 - Process Flow [Core]  <!-- UUID: 0eba9704-14c9-4be3-ab41-62129ff9f162 -->
 
 The process flow is defined herein:
 
@@ -7834,7 +7826,7 @@ The process flow is defined herein:
 
 • The Prime Agent incorporates feedback from Operational GovOps and edits its `Initial Planning Document` as needed.
 
-######## A.2.3.9.2.2.3.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 1eafc42a-1fd2-4f96-988c-8dc37c1ab317 -->
+######## A.2.3.8.2.2.3.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 1eafc42a-1fd2-4f96-988c-8dc37c1ab317 -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface.
 
@@ -7846,19 +7838,19 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
             • New Value: GovOps populates with its review commentary and suggested changes that are agreed to by Agent and GovOps, if any.
         • Responsible party: Operational GovOps.
 
-######## A.2.3.9.2.2.3.2.4 - Required Outputs [Core]  <!-- UUID: 0bce1c09-ba85-418f-8cf7-0f51c8fa0584 -->
+######## A.2.3.8.2.2.3.2.4 - Required Outputs [Core]  <!-- UUID: 0bce1c09-ba85-418f-8cf7-0f51c8fa0584 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.2.2.3.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 689a6ce6-0091-4e6a-b634-27ade6064e6b -->
+######### A.2.3.8.2.2.3.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 689a6ce6-0091-4e6a-b634-27ade6064e6b -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.2.2.3.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 22166d2b-40bc-4094-a3d8-fce46699a905 -->
+######### A.2.3.8.2.2.3.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 22166d2b-40bc-4094-a3d8-fce46699a905 -->
 
 The Agent Artifact is updated pursuant to the following requirements.
 
-########## A.2.3.9.2.2.3.2.4.2.1 - Initial Planning Document Update [Core]  <!-- UUID: ddcfe438-e322-425b-82c6-3bba3ce33823 -->
+########## A.2.3.8.2.2.3.2.4.2.1 - Initial Planning Document Update [Core]  <!-- UUID: ddcfe438-e322-425b-82c6-3bba3ce33823 -->
 
 The Document is updated as follows.
 
@@ -7869,7 +7861,7 @@ The Document is updated as follows.
         • New Value: as applicable, update to reflect any changes agreed to between the Prime Agent and Operational GovOps
     ◦ Responsible Party: Operational GovOps
 
-########## A.2.3.9.2.2.3.2.4.2.2 - Primitive Hub Document Update [Core]  <!-- UUID: 09ddd2c5-3768-4538-b979-629e1b369299 -->
+########## A.2.3.8.2.2.3.2.4.2.2 - Primitive Hub Document Update [Core]  <!-- UUID: 09ddd2c5-3768-4538-b979-629e1b369299 -->
 
 The Document is updated as follows.
 
@@ -7879,31 +7871,31 @@ The Document is updated as follows.
 • Responsible Party: Operational GovOps [automated]
 • Triggers: [A.2.4 - Process Definition for Artifact Update Draft](6a8b5e8b-cca6-48be-b543-6db468f83ebb).
 
-####### A.2.3.9.2.2.3.3 - Process Definition for Artifact Update Draft [Core]  <!-- UUID: 6a8b5e8b-cca6-48be-b543-6db468f83ebb -->
+####### A.2.3.8.2.2.3.3 - Process Definition for Artifact Update Draft [Core]  <!-- UUID: 6a8b5e8b-cca6-48be-b543-6db468f83ebb -->
 
 The documents herein define the process for preparing the Artifact Update Draft for an Invocation of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: cc3d967c-ec99-4c9c-a874-c42b8412791d -->
+######## A.2.3.8.2.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: cc3d967c-ec99-4c9c-a874-c42b8412791d -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.3.1.1 - Triggers [Core]  <!-- UUID: 428d6e85-5c6d-4469-9bc8-e1a127427ac0 -->
+######### A.2.3.8.2.2.3.3.1.1 - Triggers [Core]  <!-- UUID: 428d6e85-5c6d-4469-9bc8-e1a127427ac0 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 42848ad7-ad2e-402f-8ec5-cf6ee991c46c -->
+########## A.2.3.8.2.2.3.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 42848ad7-ad2e-402f-8ec5-cf6ee991c46c -->
 
 None.
 
-########## A.2.3.9.2.2.3.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 98b5465e-add9-4ae0-a02e-1c5be6006410 -->
+########## A.2.3.8.2.2.3.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 98b5465e-add9-4ae0-a02e-1c5be6006410 -->
 
 This process is triggered by the Document Update specified at [A.2.4 - Primitive Hub Document Update](09ddd2c5-3768-4538-b979-629e1b369299).
 
-######### A.2.3.9.2.2.3.3.1.2 - Dependencies [Core]  <!-- UUID: a616c3f6-b252-4d85-996a-019dea9f01e7 -->
+######### A.2.3.8.2.2.3.3.1.2 - Dependencies [Core]  <!-- UUID: a616c3f6-b252-4d85-996a-019dea9f01e7 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.2.2.3.3.2 - Process Flow [Core]  <!-- UUID: c860168e-b88e-4d2a-ad0b-388288d1e0cb -->
+######## A.2.3.8.2.2.3.3.2 - Process Flow [Core]  <!-- UUID: c860168e-b88e-4d2a-ad0b-388288d1e0cb -->
 
 The process flow is defined herein:
 
@@ -7913,7 +7905,7 @@ The process flow is defined herein:
 
 • The Prime Agent submits the `Artifact Edit Proposal` Document to the Powerhouse system.
 
-######## A.2.3.9.2.2.3.3.3 - Required Primitive Inputs [Core]  <!-- UUID: 01214a59-5119-4c77-ad41-c9d3dd72a517 -->
+######## A.2.3.8.2.2.3.3.3 - Required Primitive Inputs [Core]  <!-- UUID: 01214a59-5119-4c77-ad41-c9d3dd72a517 -->
 
 The required Primitive Inputs for this process are defined herein and implemented in sequential stages.
 
@@ -7944,19 +7936,19 @@ The required Primitive Inputs for this process are defined herein and implemente
             • New value: set to  `Pending Facilitator Review`
     ◦ Responsible Party: Agent
 
-######## A.2.3.9.2.2.3.3.4 - Required Outputs [Core]  <!-- UUID: bea2c790-2359-4bb7-8744-3f43deb05d26 -->
+######## A.2.3.8.2.2.3.3.4 - Required Outputs [Core]  <!-- UUID: bea2c790-2359-4bb7-8744-3f43deb05d26 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.2.2.3.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7e4e6528-b8a7-4aff-8d98-3cc3279c4f28 -->
+######### A.2.3.8.2.2.3.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7e4e6528-b8a7-4aff-8d98-3cc3279c4f28 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.2.2.3.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f654be61-baa0-4d5e-8d66-a9d8b3d5b277 -->
+######### A.2.3.8.2.2.3.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f654be61-baa0-4d5e-8d66-a9d8b3d5b277 -->
 
 The Agent Artifact documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.2.2.3.3.4.2.1 - Primitive Hub Document Update [Core]  <!-- UUID: e7fc7c2e-b6fc-4e0f-ae10-debb54124e8e -->
+########## A.2.3.8.2.2.3.3.4.2.1 - Primitive Hub Document Update [Core]  <!-- UUID: e7fc7c2e-b6fc-4e0f-ae10-debb54124e8e -->
 
 The Document in the Agent Artifact is updated as follows:
 
@@ -7966,31 +7958,31 @@ The Document in the Agent Artifact is updated as follows:
 • Responsible Party: Operational GovOps
 • Triggers: [A.2.4 - Process Definition for Operational Facilitator Review](2d1d83ea-2a90-4c34-93ea-5bea390f3f62).
 
-####### A.2.3.9.2.2.3.4 - Process Definition for Operational Facilitator Review [Core]  <!-- UUID: 2d1d83ea-2a90-4c34-93ea-5bea390f3f62 -->
+####### A.2.3.8.2.2.3.4 - Process Definition for Operational Facilitator Review [Core]  <!-- UUID: 2d1d83ea-2a90-4c34-93ea-5bea390f3f62 -->
 
 The documents herein define the process for Operational Facilitator Review for an Invocation of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.3.4.1 - Process Initiation Logic [Core]  <!-- UUID: 53016a06-1989-49af-8629-8cac254ef771 -->
+######## A.2.3.8.2.2.3.4.1 - Process Initiation Logic [Core]  <!-- UUID: 53016a06-1989-49af-8629-8cac254ef771 -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.4.1.1 - Triggers [Core]  <!-- UUID: 9fa7d744-2f7d-4fb5-81e2-0b348eb01bb6 -->
+######### A.2.3.8.2.2.3.4.1.1 - Triggers [Core]  <!-- UUID: 9fa7d744-2f7d-4fb5-81e2-0b348eb01bb6 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: c3b16255-ecdc-4d42-9345-945ede629203 -->
+########## A.2.3.8.2.2.3.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: c3b16255-ecdc-4d42-9345-945ede629203 -->
 
 None.
 
-########## A.2.3.9.2.2.3.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 555a08a4-e028-44bd-9ba2-91e4bbf61644 -->
+########## A.2.3.8.2.2.3.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 555a08a4-e028-44bd-9ba2-91e4bbf61644 -->
 
 This process is triggered by the Document Update specified at [A.2.4 - Primitive Hub Document Update](09ddd2c5-3768-4538-b979-629e1b369299).
 
-######### A.2.3.9.2.2.3.4.1.2 - Dependencies [Core]  <!-- UUID: f19c7277-65b4-4755-8756-fb0a242ba6a2 -->
+######### A.2.3.8.2.2.3.4.1.2 - Dependencies [Core]  <!-- UUID: f19c7277-65b4-4755-8756-fb0a242ba6a2 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.2.2.3.4.2 - Process Flow [Core]  <!-- UUID: 1b0c0956-1890-405f-b27b-22399b04526c -->
+######## A.2.3.8.2.2.3.4.2 - Process Flow [Core]  <!-- UUID: 1b0c0956-1890-405f-b27b-22399b04526c -->
 
 The process flow is defined herein.
 
@@ -8000,7 +7992,7 @@ The process flow is defined herein.
 
 • Where the Proposal is determined to be misaligned, the Operational Facilitator updates the `Artifact Edit Proposal` document to reflect their rejection and commentary. Commentary is required where the Operational Facilitator rejects the proposal for misalignment.
 
-######## A.2.3.9.2.2.3.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 7f991abf-3395-4f92-82e1-88e991ebd97a -->
+######## A.2.3.8.2.2.3.4.3 - Required Primitive Inputs [Core]  <!-- UUID: 7f991abf-3395-4f92-82e1-88e991ebd97a -->
 
 The required Primitive Inputs to this process are defined herein and organized as two mutually exclusive pathways. Once the Review outcome is determined by the Facilitator, the corresponding Pathway is followed to the exclusion of the other.
 
@@ -8027,43 +8019,43 @@ The required Primitive Inputs to this process are defined herein and organized a
                 ◦ New value: set to `Proposal Rejected By Facilitator` [automated]
         • Responsible party: Operational Facilitator
 
-######## A.2.3.9.2.2.3.4.4 - Required Outputs [Core]  <!-- UUID: c7436489-4aac-47cb-be2d-31774bd7ee99 -->
+######## A.2.3.8.2.2.3.4.4 - Required Outputs [Core]  <!-- UUID: c7436489-4aac-47cb-be2d-31774bd7ee99 -->
 
 The documents herein specify the required outputs from this process, if any.
 
-######### A.2.3.9.2.2.3.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: d7e64cf2-9f1a-4057-8395-fc1eca5c3059 -->
+######### A.2.3.8.2.2.3.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: d7e64cf2-9f1a-4057-8395-fc1eca5c3059 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.2.2.3.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: d5cce836-259e-48df-ba77-89d58d1476cc -->
+######### A.2.3.8.2.2.3.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: d5cce836-259e-48df-ba77-89d58d1476cc -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](7f991abf-3395-4f92-82e1-88e991ebd97a) fully complete the Process.
 
-####### A.2.3.9.2.2.3.5 - Process Definition for Offchain Vote [Core]  <!-- UUID: 24fa76f6-4728-4f1d-97ff-fd7e72dac2ac -->
+####### A.2.3.8.2.2.3.5 - Process Definition for Offchain Vote [Core]  <!-- UUID: 24fa76f6-4728-4f1d-97ff-fd7e72dac2ac -->
 
 The documents herein define the process for an Offchain Vote for an Invocation of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.3.5.1 - Process Initiation Logic [Core]  <!-- UUID: e5c0a813-e8d6-4687-a1ac-c9abbd7bb29f -->
+######## A.2.3.8.2.2.3.5.1 - Process Initiation Logic [Core]  <!-- UUID: e5c0a813-e8d6-4687-a1ac-c9abbd7bb29f -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.5.1.1 - Triggers [Core]  <!-- UUID: c5db0c30-6a19-492c-9389-926ffcbbca06 -->
+######### A.2.3.8.2.2.3.5.1.1 - Triggers [Core]  <!-- UUID: c5db0c30-6a19-492c-9389-926ffcbbca06 -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.5.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: c6ad2b62-8f38-41cd-987f-f771f1a53e38 -->
+########## A.2.3.8.2.2.3.5.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: c6ad2b62-8f38-41cd-987f-f771f1a53e38 -->
 
 None.
 
-########## A.2.3.9.2.2.3.5.1.1.2 - Document Update Triggers [Core]  <!-- UUID: bac65a98-2e36-471a-8d3b-68d207ede4e2 -->
+########## A.2.3.8.2.2.3.5.1.1.2 - Document Update Triggers [Core]  <!-- UUID: bac65a98-2e36-471a-8d3b-68d207ede4e2 -->
 
 This process is triggered by the Artifact Update specified at Operational Facilitator Approves Proposal.
 
-######### A.2.3.9.2.2.3.5.1.2 - Dependencies [Core]  <!-- UUID: bfdafaa4-e8bb-499b-99e6-f748d86cc569 -->
+######### A.2.3.8.2.2.3.5.1.2 - Dependencies [Core]  <!-- UUID: bfdafaa4-e8bb-499b-99e6-f748d86cc569 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.2.2.3.5.2 - Process Flow [Core]  <!-- UUID: 185d7f3b-9612-42ef-bde7-c9a64ad3ceab -->
+######## A.2.3.8.2.2.3.5.2 - Process Flow [Core]  <!-- UUID: 185d7f3b-9612-42ef-bde7-c9a64ad3ceab -->
 
 The process flow for this process is defined herein:
 
@@ -8073,7 +8065,7 @@ The process flow for this process is defined herein:
 
 • After the voting concludes, the Operational Facilitator records the result of the vote in the Powerhouse system.
 
-######## A.2.3.9.2.2.3.5.3 - Required Primitive Inputs [Core]  <!-- UUID: d247fec5-a19d-4307-94de-a2cbcc368d64 -->
+######## A.2.3.8.2.2.3.5.3 - Required Primitive Inputs [Core]  <!-- UUID: d247fec5-a19d-4307-94de-a2cbcc368d64 -->
 
 The required Primitive Inputs to this process are defined herein.
 
@@ -8104,15 +8096,15 @@ The required Primitive Inputs to this process are defined herein.
             • Responsible party: Operational Facilitator.
             • Trigger - Required Output: Proposal fails
 
-######## A.2.3.9.2.2.3.5.4 - Required Outputs [Core]  <!-- UUID: bae40b55-4f53-4992-a872-228fd3d87671 -->
+######## A.2.3.8.2.2.3.5.4 - Required Outputs [Core]  <!-- UUID: bae40b55-4f53-4992-a872-228fd3d87671 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.2.2.3.5.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 43a3722c-97d0-4389-9d3b-4ac24901d365 -->
+######### A.2.3.8.2.2.3.5.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 43a3722c-97d0-4389-9d3b-4ac24901d365 -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-######### A.2.3.9.2.2.3.5.4.2 - Agent Artifact Updates [Core]  <!-- UUID: adfb66a3-4f73-4fcc-bfa2-f5126503187c -->
+######### A.2.3.8.2.2.3.5.4.2 - Agent Artifact Updates [Core]  <!-- UUID: adfb66a3-4f73-4fcc-bfa2-f5126503187c -->
 
 The Agent Artifact documents specified herein are updated as the output of this process. The Output “sets” are mutually exclusive. 
 
@@ -8133,37 +8125,37 @@ The Agent Artifact documents specified herein are updated as the output of this 
             • `Instance Configuration Document` is `Archived` in Primitive Hub Document/Data Repository
         • Responsible Party: Operational GovOps
 
-####### A.2.3.9.2.2.3.6 - Process Definition for Artifact Update [Core]  <!-- UUID: 182ca3dc-108f-4941-ae2e-eb01c345125b -->
+####### A.2.3.8.2.2.3.6 - Process Definition for Artifact Update [Core]  <!-- UUID: 182ca3dc-108f-4941-ae2e-eb01c345125b -->
 
 The documents herein define the Artifact Update process for an Invocation of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.3.6.1 - Process Initiation Logic [Core]  <!-- UUID: 59306024-9642-4f4c-891e-dc515e1eff8e -->
+######## A.2.3.8.2.2.3.6.1 - Process Initiation Logic [Core]  <!-- UUID: 59306024-9642-4f4c-891e-dc515e1eff8e -->
 
 The process initiation logic is specified herein.
 
-######### A.2.3.9.2.2.3.6.1.1 - Triggers [Core]  <!-- UUID: 7ff087ca-2b81-45e2-98e9-08fd184722bc -->
+######### A.2.3.8.2.2.3.6.1.1 - Triggers [Core]  <!-- UUID: 7ff087ca-2b81-45e2-98e9-08fd184722bc -->
 
 Triggers are specified herein.
 
-########## A.2.3.9.2.2.3.6.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 95379a19-4115-4a94-a525-67ea27ccab85 -->
+########## A.2.3.8.2.2.3.6.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 95379a19-4115-4a94-a525-67ea27ccab85 -->
 
 None.
 
-########## A.2.3.9.2.2.3.6.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 97e2c2b5-f17b-46a4-9e01-9b782429bd39 -->
+########## A.2.3.8.2.2.3.6.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 97e2c2b5-f17b-46a4-9e01-9b782429bd39 -->
 
 This process is triggered by the Artifact update specified in Proposal passes.
 
-######### A.2.3.9.2.2.3.6.1.2 - Dependencies [Core]  <!-- UUID: 1c0ce5c0-df9a-417e-a3d4-2b09e96787f6 -->
+######### A.2.3.8.2.2.3.6.1.2 - Dependencies [Core]  <!-- UUID: 1c0ce5c0-df9a-417e-a3d4-2b09e96787f6 -->
 
 This process has no dependencies.
 
-######## A.2.3.9.2.2.3.6.2 - Process Flow [Core]  <!-- UUID: 48863e96-796e-4953-b811-cbbfdd294098 -->
+######## A.2.3.8.2.2.3.6.2 - Process Flow [Core]  <!-- UUID: 48863e96-796e-4953-b811-cbbfdd294098 -->
 
 The process flow is defined herein.
 
 • Using the Powerhouse interface, the Operational Facilitator updates the Agent Artifact with the approved Proposal content.
 
-######## A.2.3.9.2.2.3.6.3 - Required Primitive Inputs [Core]  <!-- UUID: 51ca2399-8c7f-4c2a-843a-c85f6c670d13 -->
+######## A.2.3.8.2.2.3.6.3 - Required Primitive Inputs [Core]  <!-- UUID: 51ca2399-8c7f-4c2a-843a-c85f6c670d13 -->
 
 The following inputs must be submitted into the Primitive using the Powerhouse interface.
 
@@ -8188,15 +8180,15 @@ The following inputs must be submitted into the Primitive using the Powerhouse i
             • New Value: set to `Custom Instance Parameters` value from approved Proposal
         •  Responsible party: Operational GovOps [if not automated]
 
-######## A.2.3.9.2.2.3.6.4 - Required Outputs [Core]  <!-- UUID: bd74388f-69d8-48fc-bab8-522f1b3b5806 -->
+######## A.2.3.8.2.2.3.6.4 - Required Outputs [Core]  <!-- UUID: bd74388f-69d8-48fc-bab8-522f1b3b5806 -->
 
 The documents herein specify the required outputs from this process.
 
-######### A.2.3.9.2.2.3.6.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 221cde4c-acb8-46c9-866b-7878fc6e5646 -->
+######### A.2.3.8.2.2.3.6.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 221cde4c-acb8-46c9-866b-7878fc6e5646 -->
 
 The Sky Core Documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.2.2.3.6.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 847092ba-eb97-47ee-a121-6c8e505bc480 -->
+########## A.2.3.8.2.2.3.6.4.1.1 - Onboarding Integrators Active Data Update [Core]  <!-- UUID: 847092ba-eb97-47ee-a121-6c8e505bc480 -->
 
 [A.2.4 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be) is updated as follows:
 
@@ -8206,7 +8198,7 @@ The Sky Core Documents specified herein are updated as the output of this proces
 • Responsible Party: Operational GovOps
 • Triggers: None
 
-########## A.2.3.9.2.2.3.6.4.1.2 - Current Integrators Active Data Update [Core]  <!-- UUID: 1b03bc85-a7f4-4cc5-be41-d13a16b8c379 -->
+########## A.2.3.8.2.2.3.6.4.1.2 - Current Integrators Active Data Update [Core]  <!-- UUID: 1b03bc85-a7f4-4cc5-be41-d13a16b8c379 -->
 
 [A.2.4 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157) is updated as follows:
 
@@ -8220,11 +8212,11 @@ The Sky Core Documents specified herein are updated as the output of this proces
 • Responsible Party: Operational GovOps
 • Triggers: None
 
-######### A.2.3.9.2.2.3.6.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 1ba7ea74-00a7-4e45-9fd4-d5222e40746b -->
+######### A.2.3.8.2.2.3.6.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 1ba7ea74-00a7-4e45-9fd4-d5222e40746b -->
 
 The Agent Artifact documents specified herein are updated as the output of this process.
 
-########## A.2.3.9.2.2.3.6.4.2.1 - Primitive Hub Document Update [Core]  <!-- UUID: f4323202-b7ef-437b-9667-226dea4f9dce -->
+########## A.2.3.8.2.2.3.6.4.2.1 - Primitive Hub Document Update [Core]  <!-- UUID: f4323202-b7ef-437b-9667-226dea4f9dce -->
 
 The Document in the Agent Artifact is updated as follows:
 
@@ -8236,39 +8228,39 @@ The Document in the Agent Artifact is updated as follows:
 • Responsible Party: Operational Facilitator
 • Trigger-Process: None.
 
-###### A.2.3.9.2.2.4 - Instance Ongoing Management Protocol [Core]  <!-- UUID: 805381e5-89e7-4fb9-bda7-a97e84b531ba -->
+###### A.2.3.8.2.2.4 - Instance Ongoing Management Protocol [Core]  <!-- UUID: 805381e5-89e7-4fb9-bda7-a97e84b531ba -->
 
 The documents herein define the process for the ongoing management of an Instance of the Integration Boost Primitive.
 
-####### A.2.3.9.2.2.4.1 - Routine Protocol [Core]  <!-- UUID: 04864587-25ef-4179-b237-4dd0a23485a4 -->
+####### A.2.3.8.2.2.4.1 - Routine Protocol [Core]  <!-- UUID: 04864587-25ef-4179-b237-4dd0a23485a4 -->
 
 The documents herein define the routine process for ongoing management of an Instance of the Integration Boost Primitive.
 
-######## A.2.3.9.2.2.4.1.1 - Process Definition For Integration Boost Calculation By Operational GovOps [Core]  <!-- UUID: 780719e8-ea6d-4ae1-b519-34d03be483df -->
+######## A.2.3.8.2.2.4.1.1 - Process Definition For Integration Boost Calculation By Operational GovOps [Core]  <!-- UUID: 780719e8-ea6d-4ae1-b519-34d03be483df -->
 
 The documents herein define the process for Integration Boost Calculation by Operational GovOps.
 
-######### A.2.3.9.2.2.4.1.1.1 - Process Initiation Logic [Core]  <!-- UUID: 0930f2b1-38ae-415e-85e6-bf96c7bcb0cb -->
+######### A.2.3.8.2.2.4.1.1.1 - Process Initiation Logic [Core]  <!-- UUID: 0930f2b1-38ae-415e-85e6-bf96c7bcb0cb -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.2.2.4.1.1.1.1 - Triggers [Core]  <!-- UUID: 52fc6ecc-d3c2-4c6e-babe-2a3bb0e10f22 -->
+########## A.2.3.8.2.2.4.1.1.1.1 - Triggers [Core]  <!-- UUID: 52fc6ecc-d3c2-4c6e-babe-2a3bb0e10f22 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.2.2.4.1.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 56e6b01b-5f00-4385-9876-951f3160cb70 -->
+########### A.2.3.8.2.2.4.1.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 56e6b01b-5f00-4385-9876-951f3160cb70 -->
 
 This process is triggered at the end of each occurrence of the Cadence for each Instance of the Integration Boost Primitive with an Instance Status of `Active`.
 
-########### A.2.3.9.2.2.4.1.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: fa1e98b5-18f4-4e9a-b008-50fb2906e35a -->
+########### A.2.3.8.2.2.4.1.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: fa1e98b5-18f4-4e9a-b008-50fb2906e35a -->
 
 None.
 
-########## A.2.3.9.2.2.4.1.1.1.2 - Dependencies [Core]  <!-- UUID: f8991663-df3f-49ea-9c96-d7c0f09d8ee8 -->
+########## A.2.3.8.2.2.4.1.1.1.2 - Dependencies [Core]  <!-- UUID: f8991663-df3f-49ea-9c96-d7c0f09d8ee8 -->
 
 This process has no dependencies.
 
-######### A.2.3.9.2.2.4.1.1.2 - Process Flow [Core]  <!-- UUID: fa744d67-6609-4b94-9126-dade273d3d4d -->
+######### A.2.3.8.2.2.4.1.1.2 - Process Flow [Core]  <!-- UUID: fa744d67-6609-4b94-9126-dade273d3d4d -->
 
 The process flow is defined herein:
 
@@ -8278,7 +8270,7 @@ The process flow is defined herein:
 
 • Operational GovOps then calculates the payout based on the net USDS deposit data and the Sky Savings Rate.
 
-######### A.2.3.9.2.2.4.1.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 4c84f0a6-0d4d-4718-a7c4-04fa29fadfcc -->
+######### A.2.3.8.2.2.4.1.1.3 - Required Primitive Inputs [Core]  <!-- UUID: 4c84f0a6-0d4d-4718-a7c4-04fa29fadfcc -->
 
 The required Primitive Inputs to this process are specified herein.
 
@@ -8295,43 +8287,43 @@ The required Primitive Inputs to this process are specified herein.
     ◦ Responsible party: Operational GovOps.
     ◦ Trigger-Process: [A.2.4 - Process Definition For Integration Boost Payment Issuance From Operational Executor Agent Buffer](16474cb5-8af4-4f11-b0c1-2c00f292cc2b).
 
-######### A.2.3.9.2.2.4.1.1.4 - Required Outputs [Core]  <!-- UUID: 08dd7788-9265-46f3-bc91-3215218bc69f -->
+######### A.2.3.8.2.2.4.1.1.4 - Required Outputs [Core]  <!-- UUID: 08dd7788-9265-46f3-bc91-3215218bc69f -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.2.2.4.1.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 273db3f1-9da3-4ef9-a5a0-31d537a62bbd -->
+########## A.2.3.8.2.2.4.1.1.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 273db3f1-9da3-4ef9-a5a0-31d537a62bbd -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-########## A.2.3.9.2.2.4.1.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: b785cb0c-1ebb-438d-a5c4-c385e7446977 -->
+########## A.2.3.8.2.2.4.1.1.4.2 - Agent Artifact Updates [Core]  <!-- UUID: b785cb0c-1ebb-438d-a5c4-c385e7446977 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified [A.2.4 - Required Primitive Inputs](4c84f0a6-0d4d-4718-a7c4-04fa29fadfcc) fully complete the Process.
 
-######## A.2.3.9.2.2.4.1.2 - Process Definition For Integration Boost Payment Issuance From Operational Executor Agent Buffer [Core]  <!-- UUID: 16474cb5-8af4-4f11-b0c1-2c00f292cc2b -->
+######## A.2.3.8.2.2.4.1.2 - Process Definition For Integration Boost Payment Issuance From Operational Executor Agent Buffer [Core]  <!-- UUID: 16474cb5-8af4-4f11-b0c1-2c00f292cc2b -->
 
 The documents herein define the process for Integration Boost payment from the Operational Executor Agent Buffer.
 
-######### A.2.3.9.2.2.4.1.2.1 - Process Initiation Logic [Core]  <!-- UUID: c12533a4-9e4c-4618-a02b-cd33178db95b -->
+######### A.2.3.8.2.2.4.1.2.1 - Process Initiation Logic [Core]  <!-- UUID: c12533a4-9e4c-4618-a02b-cd33178db95b -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.2.2.4.1.2.1.1 - Triggers [Core]  <!-- UUID: fd914a13-4bc6-4bfe-a809-a440d1acd1fa -->
+########## A.2.3.8.2.2.4.1.2.1.1 - Triggers [Core]  <!-- UUID: fd914a13-4bc6-4bfe-a809-a440d1acd1fa -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.2.2.4.1.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 9c5455f3-5f3b-484d-a253-62e417d7779c -->
+########### A.2.3.8.2.2.4.1.2.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 9c5455f3-5f3b-484d-a253-62e417d7779c -->
 
 None.
 
-########### A.2.3.9.2.2.4.1.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 358d4696-47d3-41a2-a34c-33e47487d3bb -->
+########### A.2.3.8.2.2.4.1.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 358d4696-47d3-41a2-a34c-33e47487d3bb -->
 
 This process is triggered by the Required Primitive Inputs specified in Edit Integration Boost Payments Document (Active Data).
 
-########## A.2.3.9.2.2.4.1.2.1.2 - Dependencies [Core]  <!-- UUID: 5cae5183-8c36-4d19-8db6-d6145b282fe6 -->
+########## A.2.3.8.2.2.4.1.2.1.2 - Dependencies [Core]  <!-- UUID: 5cae5183-8c36-4d19-8db6-d6145b282fe6 -->
 
 This process has no dependencies.
 
-######### A.2.3.9.2.2.4.1.2.2 - Process Flow [Core]  <!-- UUID: f894a7d2-8ef7-4130-8955-5a939f6eb535 -->
+######### A.2.3.8.2.2.4.1.2.2 - Process Flow [Core]  <!-- UUID: f894a7d2-8ef7-4130-8955-5a939f6eb535 -->
 
 The process flow is defined herein.
 
@@ -8339,7 +8331,7 @@ The process flow is defined herein.
 
 • Operational GovOps updates the Powerhouse system with the transaction details.
 
-######### A.2.3.9.2.2.4.1.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 862aff47-67fc-4b7f-bc16-b45b7edd9e83 -->
+######### A.2.3.8.2.2.4.1.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 862aff47-67fc-4b7f-bc16-b45b7edd9e83 -->
 
 The required Primitive Inputs to this process are specified herein.
 
@@ -8354,43 +8346,43 @@ The required Primitive Inputs to this process are specified herein.
     ◦ Responsible Party: Operational GovOps
     ◦ Trigger - Process: [A.2.4 - Process Definition For Settlement Cycle And Core GovOps Review](d9c13a1a-aa81-483a-bc72-453d27980717).
 
-######### A.2.3.9.2.2.4.1.2.4 - Required Outputs [Core]  <!-- UUID: baa296a6-7b9c-4134-b6a2-648d8a24a9bc -->
+######### A.2.3.8.2.2.4.1.2.4 - Required Outputs [Core]  <!-- UUID: baa296a6-7b9c-4134-b6a2-648d8a24a9bc -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.2.2.4.1.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7e7e516a-64d4-48fa-b138-11924474b48d -->
+########## A.2.3.8.2.2.4.1.2.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 7e7e516a-64d4-48fa-b138-11924474b48d -->
 
 No Sky Core Atlas documents are updated as the output of this process.
 
-########## A.2.3.9.2.2.4.1.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f1e0fb16-7f7d-4b91-8a21-e87e21a92979 -->
+########## A.2.3.8.2.2.4.1.2.4.2 - Agent Artifact Updates [Core]  <!-- UUID: f1e0fb16-7f7d-4b91-8a21-e87e21a92979 -->
 
 No Agent Artifact documents are updated as the output of this process. The requirements specified in [A.2.4 - Required Primitive Inputs](862aff47-67fc-4b7f-bc16-b45b7edd9e83) fully complete the process.
 
-######## A.2.3.9.2.2.4.1.3 - Process Definition For Settlement Cycle And Core GovOps Review [Core]  <!-- UUID: d9c13a1a-aa81-483a-bc72-453d27980717 -->
+######## A.2.3.8.2.2.4.1.3 - Process Definition For Settlement Cycle And Core GovOps Review [Core]  <!-- UUID: d9c13a1a-aa81-483a-bc72-453d27980717 -->
 
 The documents herein define the process for the Integration Boost Settlement Cycle and Core GovOps review as part of ongoing management of an Instance of the Integration Boost Primitive.
 
-######### A.2.3.9.2.2.4.1.3.1 - Process Initiation Logic [Core]  <!-- UUID: 0f8e3d69-eeb9-4ab7-9976-ad7fd93b9fb0 -->
+######### A.2.3.8.2.2.4.1.3.1 - Process Initiation Logic [Core]  <!-- UUID: 0f8e3d69-eeb9-4ab7-9976-ad7fd93b9fb0 -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.2.2.4.1.3.1.1 - Triggers [Core]  <!-- UUID: 7ba12eff-207b-4060-9a3e-8db1908cf982 -->
+########## A.2.3.8.2.2.4.1.3.1.1 - Triggers [Core]  <!-- UUID: 7ba12eff-207b-4060-9a3e-8db1908cf982 -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.2.2.4.1.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 44fb9520-c7e6-4a6a-8362-6c3a7b9fa765 -->
+########### A.2.3.8.2.2.4.1.3.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 44fb9520-c7e6-4a6a-8362-6c3a7b9fa765 -->
 
 This process is triggered at the beginning of every calendar quarter.
 
-########### A.2.3.9.2.2.4.1.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 30152570-8af2-4e2a-bab2-9dbb871a00f4 -->
+########### A.2.3.8.2.2.4.1.3.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 30152570-8af2-4e2a-bab2-9dbb871a00f4 -->
 
 None.
 
-########## A.2.3.9.2.2.4.1.3.1.2 - Dependencies [Core]  <!-- UUID: 8f3b3d8b-57cb-4ecf-a264-7818cd01d9b2 -->
+########## A.2.3.8.2.2.4.1.3.1.2 - Dependencies [Core]  <!-- UUID: 8f3b3d8b-57cb-4ecf-a264-7818cd01d9b2 -->
 
 This process has no dependencies.
 
-######### A.2.3.9.2.2.4.1.3.2 - Process Flow [Core]  <!-- UUID: 841497f9-b592-4365-8221-3bdbb82b8d4a -->
+######### A.2.3.8.2.2.4.1.3.2 - Process Flow [Core]  <!-- UUID: 841497f9-b592-4365-8221-3bdbb82b8d4a -->
 
 The process flow is defined herein.
 
@@ -8398,7 +8390,7 @@ The process flow is defined herein.
 
 • Once Core GovOps has completed review, they update Powerhouse system to indicate that they confirm the accuracy of the Integration Boost amounts.
 
-######### A.2.3.9.2.2.4.1.3.3 - Required Primitive Inputs [Core]  <!-- UUID: ebbfa305-4d56-45f4-8d06-180dc02cbb2f -->
+######### A.2.3.8.2.2.4.1.3.3 - Required Primitive Inputs [Core]  <!-- UUID: ebbfa305-4d56-45f4-8d06-180dc02cbb2f -->
 
 The required Primitive Inputs to this process are specified herein.
 
@@ -8410,15 +8402,15 @@ The required Primitive Inputs to this process are specified herein.
             • New value: populate with reasoning (required if confirmation value is `No`)
     ◦ Responsible party: Core GovOps
 
-######### A.2.3.9.2.2.4.1.3.4 - Required Outputs [Core]  <!-- UUID: 5a0f038c-c710-4889-882a-a0cb040577a3 -->
+######### A.2.3.8.2.2.4.1.3.4 - Required Outputs [Core]  <!-- UUID: 5a0f038c-c710-4889-882a-a0cb040577a3 -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.2.2.4.1.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 1f50ce0e-76f8-4436-820f-363bcf8fc017 -->
+########## A.2.3.8.2.2.4.1.3.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 1f50ce0e-76f8-4436-820f-363bcf8fc017 -->
 
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
-########### A.2.3.9.2.2.4.1.3.4.1.1 - Sky Core Integration Boost Reimbursement Active Data Document Update [Core]  <!-- UUID: 0f50e796-9486-42cd-a98d-b284f8340307 -->
+########### A.2.3.8.2.2.4.1.3.4.1.1 - Sky Core Integration Boost Reimbursement Active Data Document Update [Core]  <!-- UUID: 0f50e796-9486-42cd-a98d-b284f8340307 -->
 
 The document in the Sky Core Atlas is updated as follows:
 
@@ -8436,35 +8428,35 @@ The document in the Sky Core Atlas is updated as follows:
 • Responsible Party: Core GovOps
 • Triggers: [A.2.4 - Process Definition For Executive Vote Reimbursement](c40a0708-12e4-46da-89d7-0e5a3a839455).
 
-########## A.2.3.9.2.2.4.1.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 43aedc35-e90a-48ca-a0fc-346ced2bea0b -->
+########## A.2.3.8.2.2.4.1.3.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 43aedc35-e90a-48ca-a0fc-346ced2bea0b -->
 
 No Agent Artifact documents are updated as the output of this process.
 
-######## A.2.3.9.2.2.4.1.4 - Process Definition For Executive Vote Reimbursement [Core]  <!-- UUID: c40a0708-12e4-46da-89d7-0e5a3a839455 -->
+######## A.2.3.8.2.2.4.1.4 - Process Definition For Executive Vote Reimbursement [Core]  <!-- UUID: c40a0708-12e4-46da-89d7-0e5a3a839455 -->
 
 The documents herein define the process for Integration Boost Executive Vote reimbursement as part of ongoing management of an Instance of the Integration Boost Primitive.
 
-######### A.2.3.9.2.2.4.1.4.1 - Process Initiation Logic [Core]  <!-- UUID: 6dac32e6-593c-44db-908b-9075c8dd68ca -->
+######### A.2.3.8.2.2.4.1.4.1 - Process Initiation Logic [Core]  <!-- UUID: 6dac32e6-593c-44db-908b-9075c8dd68ca -->
 
 The process initiation logic is specified herein.
 
-########## A.2.3.9.2.2.4.1.4.1.1 - Triggers [Core]  <!-- UUID: dea4f41d-b36b-421f-be80-3f495532ab7a -->
+########## A.2.3.8.2.2.4.1.4.1.1 - Triggers [Core]  <!-- UUID: dea4f41d-b36b-421f-be80-3f495532ab7a -->
 
 Triggers are specified herein.
 
-########### A.2.3.9.2.2.4.1.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: fa1aab6f-61a8-493f-b282-6a0e3f64ce29 -->
+########### A.2.3.8.2.2.4.1.4.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: fa1aab6f-61a8-493f-b282-6a0e3f64ce29 -->
 
 None.
 
-########### A.2.3.9.2.2.4.1.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: ee6adeb0-b3e5-4d0f-8d1a-b9fdc1510074 -->
+########### A.2.3.8.2.2.4.1.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: ee6adeb0-b3e5-4d0f-8d1a-b9fdc1510074 -->
 
 This process is triggered by the Document Update specified in [A.2.4 - Sky Core Integration Boost Reimbursement Active Data Document Update](0f50e796-9486-42cd-a98d-b284f8340307).
 
-########## A.2.3.9.2.2.4.1.4.1.2 - Dependencies [Core]  <!-- UUID: 10cb9c97-e21b-4ad2-af48-eb2fa577aded -->
+########## A.2.3.8.2.2.4.1.4.1.2 - Dependencies [Core]  <!-- UUID: 10cb9c97-e21b-4ad2-af48-eb2fa577aded -->
 
 This process has no dependencies.
 
-######### A.2.3.9.2.2.4.1.4.2 - Process Flow [Core]  <!-- UUID: 9cb825c8-871f-47b7-9918-e48fe2a34d26 -->
+######### A.2.3.8.2.2.4.1.4.2 - Process Flow [Core]  <!-- UUID: 9cb825c8-871f-47b7-9918-e48fe2a34d26 -->
 
 The process flow is defined herein:
 
@@ -8472,7 +8464,7 @@ The process flow is defined herein:
 
 • After the Executive Vote passes, Core GovOps updates the Powerhouse system with the transaction details.
 
-######### A.2.3.9.2.2.4.1.4.3 - Required Primitive Inputs [Core]  <!-- UUID: f54de74a-4208-4878-8049-3184ab3f9a0d -->
+######### A.2.3.8.2.2.4.1.4.3 - Required Primitive Inputs [Core]  <!-- UUID: f54de74a-4208-4878-8049-3184ab3f9a0d -->
 
 The required Primitive Inputs to this process are specified herein and organized as sequential stages.
 
@@ -8494,15 +8486,15 @@ The required Primitive Inputs to this process are specified herein and organized
             • Status
                 ◦ New value: set to `Completed`
 
-######### A.2.3.9.2.2.4.1.4.4 - Required Outputs [Core]  <!-- UUID: 8d00d8df-f970-4b2e-8da9-3b9fe2af9e2b -->
+######### A.2.3.8.2.2.4.1.4.4 - Required Outputs [Core]  <!-- UUID: 8d00d8df-f970-4b2e-8da9-3b9fe2af9e2b -->
 
 The documents herein specify the required outputs from this process.
 
-########## A.2.3.9.2.2.4.1.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 9478c3d6-ce1d-4c73-a479-9127b5c245e1 -->
+########## A.2.3.8.2.2.4.1.4.4.1 - Sky Core Atlas Updates [Core]  <!-- UUID: 9478c3d6-ce1d-4c73-a479-9127b5c245e1 -->
 
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
-########### A.2.3.9.2.2.4.1.4.4.1.1 - Sky Core Integration Boost Reimbursement Active Data Document Update [Core]  <!-- UUID: 0ab76a83-ca8d-4ebf-83c1-b7e7dced0970 -->
+########### A.2.3.8.2.2.4.1.4.4.1.1 - Sky Core Integration Boost Reimbursement Active Data Document Update [Core]  <!-- UUID: 0ab76a83-ca8d-4ebf-83c1-b7e7dced0970 -->
 
 The Document in the Sky Core Atlas is updated as follows:
 
@@ -8512,31 +8504,31 @@ The Document in the Sky Core Atlas is updated as follows:
     ◦ Responsible Party: Core GovOps
     ◦ Trigger-Process: None
 
-########## A.2.3.9.2.2.4.1.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 39aba7ed-95ff-4247-acb7-61032649b218 -->
+########## A.2.3.8.2.2.4.1.4.4.2 - Agent Artifact Updates [Core]  <!-- UUID: 39aba7ed-95ff-4247-acb7-61032649b218 -->
 
 No Agent Artifact documents are updated as the output of this process.
 
-####### A.2.3.9.2.2.4.2 - Non-Routine Protocol [Core]  <!-- UUID: 9cdac621-4677-4c79-8372-68e0a778c27d -->
+####### A.2.3.8.2.2.4.2 - Non-Routine Protocol [Core]  <!-- UUID: 9cdac621-4677-4c79-8372-68e0a778c27d -->
 
 The documents herein define processes for handling non-routine situations in the ongoing management of an Instance of the Integration Boost Primitive.
 
-####### A.2.3.9.2.2.4.3 - Emergency Protocol [Core]  <!-- UUID: 0bbeab5f-ca17-463a-a9a4-9ab588347a0c -->
+####### A.2.3.8.2.2.4.3 - Emergency Protocol [Core]  <!-- UUID: 0bbeab5f-ca17-463a-a9a4-9ab588347a0c -->
 
 The documents herein define processes for handling emergency situations in the ongoing management of an Instance of the Integration Boost Primitive.
 
-#### A.2.3.9.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 4c7be4c6-44b5-407a-94ae-3d7ca7e8039c -->
+#### A.2.3.8.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 4c7be4c6-44b5-407a-94ae-3d7ca7e8039c -->
 
 The documents herein govern the Pioneer Chain Primitive.
 
-##### A.2.3.9.3.1 - Introduction [Core]  <!-- UUID: 4aab68fd-0e8c-4781-b6f6-f94a89cb22fa -->
+##### A.2.3.8.3.1 - Introduction [Core]  <!-- UUID: 4aab68fd-0e8c-4781-b6f6-f94a89cb22fa -->
 
 The documents herein provide an introduction to the Pioneer Chain Primitive.
 
-###### A.2.3.9.3.1.1 - Pioneer Prime Requirements [Core]  <!-- UUID: 219459b3-8333-4e9a-9b79-55e0c20d6dbb -->
+###### A.2.3.8.3.1.1 - Pioneer Prime Requirements [Core]  <!-- UUID: 219459b3-8333-4e9a-9b79-55e0c20d6dbb -->
 
 Pioneer Primes must be designated by the official team or foundation of the Pioneer Chain, they must be created for the specific purpose of being a Pioneer Prime from their genesis moment, and it is only possible for a Pioneer Chain to have Pioneer Prime once, and for a Pioneer Prime to have the Pioneer Prime status with a single blockchain, once.
 
-###### A.2.3.9.3.1.2 - Pioneer Prime Benefits [Core]  <!-- UUID: f0d5ab5e-bf35-4a9d-a73f-d82baac6e604 -->
+###### A.2.3.8.3.1.2 - Pioneer Prime Benefits [Core]  <!-- UUID: f0d5ab5e-bf35-4a9d-a73f-d82baac6e604 -->
 
 Pioneer Primes gain benefits and responsibilities related to the general adoption of USDS on the Pioneer Chain, and this benefit comes in two forms.
 
@@ -8544,43 +8536,43 @@ First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for 
 
 Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive Pool payments, see [A.2.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
-####### A.2.3.9.3.1.2.1 - Pioneer Phase [Core]  <!-- UUID: 0c7b0644-68d4-441d-8221-88382a6515e4 -->
+####### A.2.3.8.3.1.2.1 - Pioneer Phase [Core]  <!-- UUID: 0c7b0644-68d4-441d-8221-88382a6515e4 -->
 
 For purposes of [A.2.4 - Pioneer Prime Benefits](f0d5ab5e-bf35-4a9d-a73f-d82baac6e604), the Pioneer Phase is a period beginning on the date that a Prime Agent satisfies the Pioneer Prime Requirements specified in [A.2.4 - Pioneer Prime Requirements](219459b3-8333-4e9a-9b79-55e0c20d6dbb) and ending three (3) years thereafter.
 
-###### A.2.3.9.3.1.3 - Pioneer Incentive Pool [Core]  <!-- UUID: 04edac33-19d5-4a87-a8ab-945a0cd57771 -->
+###### A.2.3.8.3.1.3 - Pioneer Incentive Pool [Core]  <!-- UUID: 04edac33-19d5-4a87-a8ab-945a0cd57771 -->
 
 Every monthly settlement cycle, an amount of funds equivalent to the Sky Savings Rate multiplied by the balance of Unrewarded USDS is paid into the Pioneer Prime’s SubProxy Account (the “Pioneer Incentive Pool”). 80% of the funds going to the Pioneer Incentive Pool are not the property of the Pioneer Primes and must instead be used as incentives to promote general adoption of USDS on the Pioneer Chain. This must provide general benefit for the sake of growing USDS activity on the Pioneer Chain and cannot be biased towards benefiting the Pioneer Prime. The remaining 20% of the funds going to the Pioneer Incentive Pool may be retained by the Pioneer Prime as income.
 
-####### A.2.3.9.3.1.3.1 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: 15e14f25-8d56-4699-ac37-0cef4f0503c5 -->
+####### A.2.3.8.3.1.3.1 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: 15e14f25-8d56-4699-ac37-0cef4f0503c5 -->
 
 A Pre-Pioneer Incentive Pool is a temporary, chain-specific incentive mechanism designed to bootstrap USDS adoption on a new blockchain before a formal Pioneer Prime is established for that chain. It allows a designated Agent to direct incentive payments to ecosystem partners on that specific chain. The Pre-Pioneer Incentive Pool may operate under distinct rules that differ from the standard Pioneer Incentive Pool, which rules will be specified in an Ecosystem Accord between the respective Agent and Sky Core. A Pre-Pioneer Incentive Pool serves as a transitional phase until the conditions for a formal Pioneer Incentive Pool are met. See [A.2.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
-### A.2.3.10 - Supply Side Stablecoin Primitives [Section]  <!-- UUID: d1142876-33c2-4e21-9339-d8711525d46f -->
+### A.2.3.9 - Supply Side Stablecoin Primitives [Section]  <!-- UUID: d1142876-33c2-4e21-9339-d8711525d46f -->
 
 Supply Side Stablecoin Primitives are Sky Primitives focused on capital allocation and risk management.
 
-#### A.2.3.10.1 - Allocation System Primitive [Core]  <!-- UUID: 9db14ab7-bb4b-4751-8084-843bd4359f2a -->
+#### A.2.3.9.1 - Allocation System Primitive [Core]  <!-- UUID: 9db14ab7-bb4b-4751-8084-843bd4359f2a -->
 
 The Allocation System Primitive is the base mechanism that enables Prime Agents to put up Risk Capital to deploy USDS collateral into different opportunities that provide risk-adjusted return, by borrowing at the Base Rate from Sky, and following Asset Liability Management restrictions on the liquidity of deployed assets.
 
-##### A.2.3.10.1.1 - Allocation System Process Definition [Core]  <!-- UUID: 823a12c3-45d2-438a-b061-46ecd09cdca8 -->
+##### A.2.3.9.1.1 - Allocation System Process Definition [Core]  <!-- UUID: 823a12c3-45d2-438a-b061-46ecd09cdca8 -->
 
 The documents herein define the process for initial setup and ongoing management of an Allocation Instance (alternatively referred to as “conduits”) as part of the Allocation System Primitive.
 
-###### A.2.3.10.1.1.1 - Base Elements [Core]  <!-- UUID: 39f3ceee-2e0b-41b2-ad62-85cac3895cb0 -->
+###### A.2.3.9.1.1.1 - Base Elements [Core]  <!-- UUID: 39f3ceee-2e0b-41b2-ad62-85cac3895cb0 -->
 
 The documents herein define base elements of the Allocation System Primitive.
 
-####### A.2.3.10.1.1.1.1 - Liquidity Layer Parameter Definitions [Core]  <!-- UUID: a8a3e54d-980e-435d-9e08-0e5775af9aa3 -->
+####### A.2.3.9.1.1.1.1 - Liquidity Layer Parameter Definitions [Core]  <!-- UUID: a8a3e54d-980e-435d-9e08-0e5775af9aa3 -->
 
 The documents herein define common parameters of implementations of the Allocation System based on the Spark Liquidity Layer, including the Grove Liquidity Layer.
 
-######## A.2.3.10.1.1.1.1.1 - Rate Limiter [Core]  <!-- UUID: a578830d-18f0-451c-8ff0-4a66094650ae -->
+######## A.2.3.9.1.1.1.1.1 - Rate Limiter [Core]  <!-- UUID: a578830d-18f0-451c-8ff0-4a66094650ae -->
 
 Rate Limiter refers to the overall mechanism or system that limits the volume of token movements over time, implemented via the `RateLimits` contracts. The Rate Limiter manages multiple rate limits and enforces constraints on controller operations to prevent rapid asset drainage and mitigate risks from compromised relayers or other attacks. This ensures that the maximum amount of tokens processed within a specific time period stays within safe bounds. The `RateLimits` contracts and their addresses for each chain can be found in the Allocation System Primitive for a Prime, under ALM Contracts.
 
-######## A.2.3.10.1.1.1.1.2 - Rate Limits [Core]  <!-- UUID: 8efb0a11-b798-48eb-af19-f65b38f039b5 -->
+######## A.2.3.9.1.1.1.1.2 - Rate Limits [Core]  <!-- UUID: 8efb0a11-b798-48eb-af19-f65b38f039b5 -->
 
 Rate limits set the maximum allowable amount of tokens that can be processed for specific operations within a given time period. Each rate limit contains the rate limit data: `maxAmount`, `slope`, `lastAmount` and `lastUpdated`.  The current rate limit is calculated using the formula:
 
@@ -8590,67 +8582,67 @@ The rate limit data `maxAmount` and `slope` are configurable parameters that are
 
 Rate limits set caps on the rate of allocation to a given Instance, they do not act as a limit on the total amount that may be allocated to that Instance.
 
-######### A.2.3.10.1.1.1.1.2.1 - MaxAmount [Core]  <!-- UUID: 8b5f1ffd-9dfd-4aa0-8fc2-638a79d9fadb -->
+######### A.2.3.9.1.1.1.1.2.1 - MaxAmount [Core]  <!-- UUID: 8b5f1ffd-9dfd-4aa0-8fc2-638a79d9fadb -->
 
 `maxAmount` sets a hard cap on the level of allocation to an Instance at any given time. It sets the absolute rate limit regardless of how much time has passed since the last allocation. For example, if `maxAmount` is set to 1,000,000 tokens, the rate limit will increase over time at the rate determined by the `slope` until it reaches 1,000,000 tokens, at this point the rate limit will stop increasing, but it will resume increasing once an allocation to the Instance has been made.
 
-######### A.2.3.10.1.1.1.1.2.2 - Slope [Core]  <!-- UUID: ae8674bc-44ac-4b95-b5df-c6322a1d6e9a -->
+######### A.2.3.9.1.1.1.1.2.2 - Slope [Core]  <!-- UUID: ae8674bc-44ac-4b95-b5df-c6322a1d6e9a -->
 
 `slope` is the linear refill rate of a rate limiter’s allowance over time. It defines how quickly the capacity to perform additional inflow or outflow accrues after prior consumption. For example, if the slope is set to 1,000,000 tokens per day (converted to per second for on-chain execution), the rate limit will recover at that rate until it reaches the maxAmount.
 
-######### A.2.3.10.1.1.1.1.2.3 - LastUpdated [Core]  <!-- UUID: 8d0419a4-50c5-4a7b-b68e-84d8c9243694 -->
+######### A.2.3.9.1.1.1.1.2.3 - LastUpdated [Core]  <!-- UUID: 8d0419a4-50c5-4a7b-b68e-84d8c9243694 -->
 
 `lastUpdated` is the timestamp when the rate limit was last updated, serving as the reference point for calculating time-elapsed refills in the formula.
 
-######### A.2.3.10.1.1.1.1.2.4 - LastAmount [Core]  <!-- UUID: 02918cfc-5d10-41bc-bb8a-0be9df76cbac -->
+######### A.2.3.9.1.1.1.1.2.4 - LastAmount [Core]  <!-- UUID: 02918cfc-5d10-41bc-bb8a-0be9df76cbac -->
 
 `lastAmount` is the remaining allowance available at the last update, used to compute the current rate limit by adding accrued capacity.
 
-######## A.2.3.10.1.1.1.1.3 - Inflow Rate Limits [Core]  <!-- UUID: d59a233c-11b9-4140-b15f-51df37475fd8 -->
+######## A.2.3.9.1.1.1.1.3 - Inflow Rate Limits [Core]  <!-- UUID: d59a233c-11b9-4140-b15f-51df37475fd8 -->
 
 Inflow rate limits constrain the rate at which allocated liquidity can increase into a scope. “Inflow” means movements that raise exposure or capital allocated to an Instance or market, such as depositing, minting, or rebalancing into a position.
 
-######## A.2.3.10.1.1.1.1.4 - Outflow Rate Limits [Core]  <!-- UUID: e50fd86a-ffa4-4387-b212-420730a8d171 -->
+######## A.2.3.9.1.1.1.1.4 - Outflow Rate Limits [Core]  <!-- UUID: e50fd86a-ffa4-4387-b212-420730a8d171 -->
 
 Outflow Rate Limits constrain the rate at which allocated liquidity can be withdrawn or exposure reduced from a scope. “Outflow” means movements that lower exposure or capital allocated to an Instance or market, such as withdrawals, redemptions, or unwind operations.
 
 Outflow limits are often configured more permissively to prioritize safety and fast exits. When outflow limits are “unlimited,” the rate limits contract simply does not apply a cap in that direction.
 
-######## A.2.3.10.1.1.1.1.5 - Rate Limit IDs [Core]  <!-- UUID: b95b3bd8-d316-43d5-af56-df38d557aea3 -->
+######## A.2.3.9.1.1.1.1.5 - Rate Limit IDs [Core]  <!-- UUID: b95b3bd8-d316-43d5-af56-df38d557aea3 -->
 
 A `Rate Limit ID` is a bytes32 key that uniquely identifies a rate limit. Rate Limit IDs allow the system to maintain independent allowance state for each relevant transaction.
 
-######## A.2.3.10.1.1.1.1.6 - MaxSlippage [Core]  <!-- UUID: 7c6da187-7d17-42ae-8c64-8d828ee83ea7 -->
+######## A.2.3.9.1.1.1.1.6 - MaxSlippage [Core]  <!-- UUID: 7c6da187-7d17-42ae-8c64-8d828ee83ea7 -->
 
 `maxSlippage` is a configurable parameter that sets the maximum allowed price impact or deviation from expected output when executing trades or liquidity operations in a pool. `maxslippage` is expressed as a decimal and must be a non-zero value. This protects against excessive price impact during volatile market conditions.
 
-###### A.2.3.10.1.1.2 - Allocation Instance Setup Process Definition [Core]  <!-- UUID: f47513f6-34e4-40a4-b7ff-8d68d75070be -->
+###### A.2.3.9.1.1.2 - Allocation Instance Setup Process Definition [Core]  <!-- UUID: f47513f6-34e4-40a4-b7ff-8d68d75070be -->
 
 The documents herein define the process for setting up an Allocation Instance as part of the Allocation System Primitive.
 
-####### A.2.3.10.1.1.2.1 - Real World Agreements And Planning [Core]  <!-- UUID: eeeeb5ff-3f11-4857-a3da-ad354569f833 -->
+####### A.2.3.9.1.1.2.1 - Real World Agreements And Planning [Core]  <!-- UUID: eeeeb5ff-3f11-4857-a3da-ad354569f833 -->
 
 The documents herein define the preliminary, off-chain human coordination stage of setting up an Allocation Instance.
 
-######## A.2.3.10.1.1.2.1.1 - Initial Concept And Feasibility Discussions [Core]  <!-- UUID: b60b170f-9e8c-4577-a046-313039ff25ba -->
+######## A.2.3.9.1.1.2.1.1 - Initial Concept And Feasibility Discussions [Core]  <!-- UUID: b60b170f-9e8c-4577-a046-313039ff25ba -->
 
 The Prime Agent identifies a yield opportunity on a target chain that can exceed the Base Rate. The Prime Agent estimates Required Risk Capital (RRC) and Asset Liability Management requirements associated with the opportunity and evaluates options for fulfilling them. The Prime Agent also considers exchange and bridging costs, if applicable. Based on this, the Prime Agent develops a net yield target for the opportunity factoring in all of these costs. The output of this step is an internal meeting note summarizing the idea as well as estimates of Required Risk Capital, Asset Liability Management, and exchange / bridging costs.
 
-######## A.2.3.10.1.1.2.1.2 - Preliminary Required Risk Capital and Asset Liability Management Arrangement [Core]  <!-- UUID: 8d3b553c-440d-4c67-b661-37ab1edc1c58 -->
+######## A.2.3.9.1.1.2.1.2 - Preliminary Required Risk Capital and Asset Liability Management Arrangement [Core]  <!-- UUID: 8d3b553c-440d-4c67-b661-37ab1edc1c58 -->
 
 If necessary, the Prime Agent reaches out to other Prime Agents that could provide Junior Risk Capital (JRC) / Senior Risk Capital (SRC) or assume Asset Liability Management obligations. The Prime Agent negotiates with these other Prime Agents and documents these potential deals. The output of this step is an informal confirmation of JRC/SRC and Asset Liability Management transfer details.
 
-######## A.2.3.10.1.1.2.1.3 - Prime Agent Preparation Of Capital And Operational Plan [Core]  <!-- UUID: 4aa05a21-86d6-451e-a1b1-2afd1107edba -->
+######## A.2.3.9.1.1.2.1.3 - Prime Agent Preparation Of Capital And Operational Plan [Core]  <!-- UUID: 4aa05a21-86d6-451e-a1b1-2afd1107edba -->
 
 The Capital and Operational Plan (“C&O Plan”) articulates the Prime Agent’s strategy for a proposed new Allocation Instance or a modification to an existing Instance. In addition to articulating the Instance’s strategic objectives and operational parameters, the C&O Plan includes a pro-forma Required Risk Capital (RRC) estimate and a strategy for ensuring sufficient Total Risk Capital (TRC) coverage. 
 
 The C&O Plan is the major input into the Artifact Edit Proposal that codifies the new or modified Instance. Following the approval of such a proposal by Prime governance, the details and commitments outlined in the C&O Plan are formally integrated into the respective Instance Configuration Document of the Prime Agent’s Artifact.
 
-######### A.2.3.10.1.1.2.1.3.1 - Pro-Forma Instance RRC Estimate [Core]  <!-- UUID: c3b53ee8-328a-4a79-8afe-ac0de99d8706 -->
+######### A.2.3.9.1.1.2.1.3.1 - Pro-Forma Instance RRC Estimate [Core]  <!-- UUID: c3b53ee8-328a-4a79-8afe-ac0de99d8706 -->
 
 As a critical component of the Capital & Operational Plan, the Prime Agent must prepare an initial pro-forma Instance Required Risk Capital (RRC) estimate. This estimate serves as the basis for the Prime’s capital planning prior to the availability of official RRC figures from Sky Core. The estimate must strictly adhere to the implementation of RRC-models defined in [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
 
-######### A.2.3.10.1.1.2.1.3.2 - Notional Total Risk Capital (TRC) Coverage Strategy [Core]  <!-- UUID: a30447be-5214-4398-82aa-7306eeabd6f5 -->
+######### A.2.3.9.1.1.2.1.3.2 - Notional Total Risk Capital (TRC) Coverage Strategy [Core]  <!-- UUID: a30447be-5214-4398-82aa-7306eeabd6f5 -->
 
 As a critical component of the Capital & Operational Plan, the Prime Agent must articulate its strategy for ensuring its Total Risk Capital (TRC) adequately covers the pro-forma Instance RRC of a new or modified Instance and the resulting impact on its Aggregate RRC.
 
@@ -8672,7 +8664,7 @@ For instance, this risk-capital acquisition strategy could involve:
 
 The Prime’s capital-acquisition strategy should indicate how the Prime will remain in compliance with all relevant Atlas rules, such as sourcing ratios that constrain how much Senior Risk Capital can be “enabled” or counted toward a Prime’s Aggregate RRC. See [A.3.3 - Total Risk Capital Sourcing Ratios](9e99b084-f15a-4f60-b831-d6c0bd9aec04).
 
-######### A.2.3.10.1.1.2.1.3.3 - Additional Elements Of Capital And Operational Plan [Core]  <!-- UUID: a156b120-8b27-4a31-95fe-4154205ca102 -->
+######### A.2.3.9.1.1.2.1.3.3 - Additional Elements Of Capital And Operational Plan [Core]  <!-- UUID: a156b120-8b27-4a31-95fe-4154205ca102 -->
 
 The Capital & Operational Plan includes the following additional elements:
     
@@ -8686,59 +8678,59 @@ The Capital & Operational Plan includes the following additional elements:
 
 ◦ Performance-based Adjustments: define the conditions or KPIs that allow adjustments to Instance deposit caps or yield expansions without requiring a formal Artifact edit.
 
-######## A.2.3.10.1.1.2.1.4 - Preliminary Informal Check With Operational GovOps [Core]  <!-- UUID: e7d3d696-e2d0-4d4b-b4d6-c7a0c47b7cc6 -->
+######## A.2.3.9.1.1.2.1.4 - Preliminary Informal Check With Operational GovOps [Core]  <!-- UUID: e7d3d696-e2d0-4d4b-b4d6-c7a0c47b7cc6 -->
 
 The Prime Agent presents the Capital and Operational Plan for the Allocation Instance to Operational GovOps, including any associated JRC/SRC and Asset Liability Management arrangements. Operational GovOps reviews and either provides an informal greenlight or requests modifications to the Plan. The output of this step is Operational GovOps approval to proceed with a request to revise the C&O Plan, as applicable.
 
-####### A.2.3.10.1.1.2.2 - Instance Codification and Validation [Core]  <!-- UUID: 410c84be-ab41-4444-a7cb-1c19a0448948 -->
+####### A.2.3.9.1.1.2.2 - Instance Codification and Validation [Core]  <!-- UUID: 410c84be-ab41-4444-a7cb-1c19a0448948 -->
 
 The documents herein define how agreements to set up an Allocation Instance are codified and validated in the Powerhouse system and how governance votes happen.
 
-######## A.2.3.10.1.1.2.2.1 - Agent Inputs [Core]  <!-- UUID: 7a36f228-0438-43da-ae5f-a43af70c0121 -->
+######## A.2.3.9.1.1.2.2.1 - Agent Inputs [Core]  <!-- UUID: 7a36f228-0438-43da-ae5f-a43af70c0121 -->
 
 The Prime Agent drafts an update to the Prime Agent Artifact adding the Allocation Instance to the list of active Allocation Instances and including the information specified in [A.2.4 - List Of Allocation Instances](e4975062-6d19-438b-a5d5-cfc1a7fd8cb9). The Prime Agent submits the draft to the Powerhouse system. The output of this step is a draft Prime Agent Artifact update in the Powerhouse system.
 
-######## A.2.3.10.1.1.2.2.2 - Validation And Off-Chain Vote [Core]  <!-- UUID: dbae3918-75f7-469d-b623-8faa5ea7aa70 -->
+######## A.2.3.9.1.1.2.2.2 - Validation And Off-Chain Vote [Core]  <!-- UUID: dbae3918-75f7-469d-b623-8faa5ea7aa70 -->
 
 The Operational Executor Facilitator reviews the proposal to ensure that it is complete and aligned with the Atlas. The Operational Executor Facilitator then initiates an off-chain snapshot vote, following the quorum and majority rules in the Prime Agent Artifact. When complete, the result of the vote is recorded in the Powerhouse system. The output of this step is the snapshot vote result recorded in the Powerhouse system.
 
-######## A.2.3.10.1.1.2.2.3 - Official Update of Artifact [Core]  <!-- UUID: 2b1612b8-480c-49b3-a304-6a6f593340de -->
+######## A.2.3.9.1.1.2.2.3 - Official Update of Artifact [Core]  <!-- UUID: 2b1612b8-480c-49b3-a304-6a6f593340de -->
 
 If the Allocation Instance is successfully approved, the Operational Executor Facilitator finalizes and publishes the update to the Prime Agent Artifact, making it effective in the Atlas. The output of this step is an updated Prime Agent Artifact with the new Allocation Instance. 
 
 Once a new Instance is deployed, its data is integrated into risk-capital monitoring systems and its RRC will be officially determined and tracked via the Sky Core RRC Dashboard/API. See [A.2.4 - Sky Core Required Risk Capital (RRC) Dashboard And API](4eac2c9e-2718-4881-a3f1-ed10fb3f4d13). This official RRC figure supersedes the Prime-prepared pro-forma RRC.
 
-####### A.2.3.10.1.1.2.3 - Instance Setup Deployment [Core]  <!-- UUID: 3766cb8c-ab6c-41af-9465-b8dea76d0532 -->
+####### A.2.3.9.1.1.2.3 - Instance Setup Deployment [Core]  <!-- UUID: 3766cb8c-ab6c-41af-9465-b8dea76d0532 -->
 
 The documents herein define how the deployment of an Allocation Instance is executed on-chain.
 
-######## A.2.3.10.1.1.2.3.1 - Conduit Development And Testing [Core]  <!-- UUID: 6899a722-3d1a-4bd1-80f2-f36be91bbab0 -->
+######## A.2.3.9.1.1.2.3.1 - Conduit Development And Testing [Core]  <!-- UUID: 6899a722-3d1a-4bd1-80f2-f36be91bbab0 -->
 
 Once formally validated, the Prime Agent implements the new Allocation Instance based on the specifications in the Prime Agent Artifact. Operational GovOps must test the Allocation Instance with minimal funds from the Prime Agent’s Central Allocation Buffer, verifying deposit / withdrawal logic, slippage constraints, and oracle checks. If this testing is successful Operational GovOps confirms that the Allocation Instance satisfies all risk constraints specified in the Prime Agent Artifact. The output of this step is validated contracts for the Allocation Instance and a green light to proceed with a scaled deployment.
 
-######## A.2.3.10.1.1.2.3.2 - Initial Deployment and Required Risk Capital / Asset Liability Management Execution [Core]  <!-- UUID: 648bcae7-9723-4282-81fe-fcc77fd6f90e -->
+######## A.2.3.9.1.1.2.3.2 - Initial Deployment and Required Risk Capital / Asset Liability Management Execution [Core]  <!-- UUID: 648bcae7-9723-4282-81fe-fcc77fd6f90e -->
 
 The Prime Agent finalizes JRC/SRC and Asset Liability Management Arrangements. Operational GovOps records these arrangements in the Powerhouse interface. If Operational GovOps is charged with operationalizing an Instance, it deploys funds from the Prime Agent’s Operational Buffer into the Allocation Instance, performing any necessary DEX exchanges. See [A.2.4 - Operationalization Of Allocation Instances](989512c2-4fa1-46b8-947c-00e3c0b56024). In doing so, Operational GovOps follows instructions in the Agent Artifact regarding the amount of capital to deploy and slippage tolerances. The output of this step is a fully deployed Allocation Instance conforming to Risk Capital and Asset Liability Management requirements.
 
-###### A.2.3.10.1.1.3 - Allocation Instance Ongoing Management [Core]  <!-- UUID: 2db14aa7-ccfa-42f7-82a8-118048574d4c -->
+###### A.2.3.9.1.1.3 - Allocation Instance Ongoing Management [Core]  <!-- UUID: 2db14aa7-ccfa-42f7-82a8-118048574d4c -->
 
 The documents herein define the process for managing an Allocation Instance as part of the Allocation System Primitive.
 
-####### A.2.3.10.1.1.3.1 - Operationalization Of Allocation Instances [Core]  <!-- UUID: 989512c2-4fa1-46b8-947c-00e3c0b56024 -->
+####### A.2.3.9.1.1.3.1 - Operationalization Of Allocation Instances [Core]  <!-- UUID: 989512c2-4fa1-46b8-947c-00e3c0b56024 -->
 
 Prime Agent teams may choose to directly operationalize their Allocation System Primitive Instances (”Instances”) using internal, proprietary strategies that are not defined in their Artifacts. Alternatively, Prime Agents may elect to have the Instances operationalized by their Operational Executor Agent. This constitutes an exception to the general rule that Operational Executor Agents operationalize all Sky Primitives on behalf of Prime Agents. See [A.1.14 - Agent Role Delineation](fdf32ca5-5e2e-481e-9047-4d1599547216). 
 
 For Prime Agent teams that operationalize their Instances, they will be required to formulate KPIs for their proprietary strategies; should an Instance under-perform these KPIs, Operational GovOps is authorized to step in and operationalize the Instance(s) via a back-up strategy that is defined in the Agent Artifact. Additional logic on this point will be defined in a future iteration of the Atlas.
 
-####### A.2.3.10.1.1.3.2 - Requirements And Infrastructure For Risk Capital And Asset Liability Management [Core]  <!-- UUID: 13eb2346-07e5-48b6-9740-ce60a20146ab -->
+####### A.2.3.9.1.1.3.2 - Requirements And Infrastructure For Risk Capital And Asset Liability Management [Core]  <!-- UUID: 13eb2346-07e5-48b6-9740-ce60a20146ab -->
 
 The documents herein define Risk Capital and Asset Liability Management requirements and infrastructure.
 
-######## A.2.3.10.1.1.3.2.1 - Risk Capital Management [Core]  <!-- UUID: 1c5fb5bb-ec03-478c-89b7-4017d935276e -->
+######## A.2.3.9.1.1.3.2.1 - Risk Capital Management [Core]  <!-- UUID: 1c5fb5bb-ec03-478c-89b7-4017d935276e -->
 
 The documents herein detail the obligations, processes, standards and infrastructure related to risk-capital management.
 
-######### A.2.3.10.1.1.3.2.1.1 - Sky Core Required Risk Capital (RRC) Dashboard And API [Core]  <!-- UUID: 4eac2c9e-2718-4881-a3f1-ed10fb3f4d13 -->
+######### A.2.3.9.1.1.3.2.1.1 - Sky Core Required Risk Capital (RRC) Dashboard And API [Core]  <!-- UUID: 4eac2c9e-2718-4881-a3f1-ed10fb3f4d13 -->
 
 The Sky Core Required Risk Capital (RRC) Dashboard and its associated API serve as the official system for determining and disseminating RRC figures for Prime Agents and their Allocation System Primitive Instances.
 
@@ -8746,7 +8738,7 @@ Prior to the full operational deployment of the Powerhouse system, Prime Agents 
 
 The Sky Core RRC Dashboard is located at [https://sphere.blockanalitica.com/rrc](https://sphere.blockanalitica.com/rrc). The Sky Core RRC API is located at [https://sphere-api.blockanalitica.com/rrc/](https://sphere-api.blockanalitica.com/rrc/).
 
-########## A.2.3.10.1.1.3.2.1.1.1 - Role and Functionality of the RRC Dashboard and API  [Core]  <!-- UUID: f7da0f56-00f5-4bcf-bd31-b77c284c7992 -->
+########## A.2.3.9.1.1.3.2.1.1.1 - Role and Functionality of the RRC Dashboard and API  [Core]  <!-- UUID: f7da0f56-00f5-4bcf-bd31-b77c284c7992 -->
 
 The RRC Dashboard provides a user interface for Prime Agents to view their official RRC figures. The RRC API allows Prime Agents to programmatically access this same data for integration into their internal TRC management systems. Both the Dashboard and API provide the following key information:
     
@@ -8759,24 +8751,24 @@ The models for certain risk-factors are still currently under development. See [
     
 ◦ Aggregate RRC: For each Prime Agent, the system displays its Aggregate RRC, which is the sum of all its Instance Total RRCs. This is the figure against which a Prime Agent’s Total Risk Capital (TRC) adequacy is assessed.
 
-########## A.2.3.10.1.1.3.2.1.1.2 - Interim Notice Regarding RRC Dashboard/API Coverage [Core]  <!-- UUID: 18243e7a-5b62-459d-83fb-e50b9df05f9d -->
+########## A.2.3.9.1.1.3.2.1.1.2 - Interim Notice Regarding RRC Dashboard/API Coverage [Core]  <!-- UUID: 18243e7a-5b62-459d-83fb-e50b9df05f9d -->
 
 Some Allocation System Instances displayed on the RRC Dashboard concern asset types whose risk models have not yet been fully developed. See [A.3.3 - Financial Risk Models](2af9fa64-ab25-4017-920c-f1c07dff4c06). An active Instance’s respective Instance Configuration Document will specify its `RRC Framework Full Implementation` status as either `Covered` or `Pending`.
 
-######### A.2.3.10.1.1.3.2.1.2 - Primes’ Total Risk Capital (TRC) Management [Core]  <!-- UUID: 3af8a3a2-25e5-44b3-87a4-7df1f2712685 -->
+######### A.2.3.9.1.1.3.2.1.2 - Primes’ Total Risk Capital (TRC) Management [Core]  <!-- UUID: 3af8a3a2-25e5-44b3-87a4-7df1f2712685 -->
 
 Prime Agent teams are responsible for managing their Total Risk Capital (TRC) to continuously meet their Aggregate Required Risk Capital (RRC). The accounting of TRC considers all on-chain holdings and any off-chain agreements, encumbrances, or conditions that may affect the immediate availability or eligibility of capital for RRC coverage. For a definition of Total Risk Capital, see [A.3.3 - Total Risk Capital Definition](6f6b25d6-f73c-4733-ba37-12a0a411433c).
 
 The documents herein define requirements and standards for a Prime Agent’s internal TRC management systems.
 
-########## A.2.3.10.1.1.3.2.1.2.1 - Objective of Prime TRC Management [Core]  <!-- UUID: 9a8120c4-0a5b-426f-97a5-283c708413f5 -->
+########## A.2.3.9.1.1.3.2.1.2.1 - Objective of Prime TRC Management [Core]  <!-- UUID: 9a8120c4-0a5b-426f-97a5-283c708413f5 -->
 
 To comply with Atlas risk capital requirements, Prime Agent teams must establish, maintain, and operate an internal system for TRC management. A Prime Agent’s internal TRC management system should enable proactive operational risk management. This entails ongoing capital adequacy assessment and strategic capital allocation planning for current and future Allocation System Primitive Instances, including the ability to perform scenario analyses for potential deployments or market stresses.
 
 Prime Agents’ internal TRC management systems should enable them to maintain continuous sufficiency of the Prime Agent’s held TRC against its official Aggregate RRC. This requires real-time or near real-time comparison and internal alerting mechanisms to prevent and address potential shortfalls.
 Primes must ensure that their internal TRC management systems maintain comprehensive, verifiable internal records of all TRC components, related transactions, and compliance activities to support internal governance and external verification processes, such as the submission of TRC Reports to Core GovOps. See [A.2.4 - Primes’ TRC Report](41ca2085-d71b-47e5-8b1a-b183b6e2b6fc).
 
-########## A.2.3.10.1.1.3.2.1.2.2 - Minimum Capabilities of Prime TRC Management Systems [Core]  <!-- UUID: d034533f-9b6f-411c-8b60-3bccb374765f -->
+########## A.2.3.9.1.1.3.2.1.2.2 - Minimum Capabilities of Prime TRC Management Systems [Core]  <!-- UUID: d034533f-9b6f-411c-8b60-3bccb374765f -->
 
 A Prime Agent’s internal TRC management system should possess the following capabilities to meet the objectives outlined in [A.2.4 - Objective of Prime TRC Management](9a8120c4-0a5b-426f-97a5-283c708413f5). 
     
@@ -8801,11 +8793,11 @@ Furthermore, Prime Agent teams should establish and document internal processes 
 
 Prime Agent teams’ internal decision-making framework may consider the economic trade-offs of various actions, including the strategic acceptance of penalties for a TRC shortfall where such an approach is determined to be economically advantageous compared to immediate rebalancing (e.g., avoiding excessive transaction costs or market impact).
 
-########## A.2.3.10.1.1.3.2.1.2.3 - Primes’ TRC Report [Core]  <!-- UUID: 41ca2085-d71b-47e5-8b1a-b183b6e2b6fc -->
+########## A.2.3.9.1.1.3.2.1.2.3 - Primes’ TRC Report [Core]  <!-- UUID: 41ca2085-d71b-47e5-8b1a-b183b6e2b6fc -->
 
 Prime Agents are required to submit periodic Total Risk Capital (TRC) Reports to provide an accurate and verifiable attestation of their TRC composition and adherence to capital requirements.
 
-########### A.2.3.10.1.1.3.2.1.2.3.1 - Mandate and Rationale [Core]  <!-- UUID: 7e95efa7-e409-48dc-9b5a-96edce54bf31 -->
+########### A.2.3.9.1.1.3.2.1.2.3.1 - Mandate and Rationale [Core]  <!-- UUID: 7e95efa7-e409-48dc-9b5a-96edce54bf31 -->
 
 Prime Agents are required to periodically submit TRC Reports to Core GovOps. This report serves a dual purpose. It provides a verifiable snapshot of the Prime Agent's TRC composition and key capital ratios as of the end of the reporting period; and second, it provides a formal attestation regarding the Prime Agent's maintenance of TRC at or above its dynamically changing Aggregate Required Risk Capital (RRC) throughout the entire reporting period. See [A.3.3 - Aggregate RRC](6aed5cc1-9671-4b73-88a9-fdd86ac93ece). 
 
@@ -8815,7 +8807,7 @@ The TRC Report serves as an important basis for Core GovOps’  verification pro
 
 The long-term vision is for the Powerhouse system to enable the automation of TRC data aggregation and verification. The Powerhouse system will have capabilities such as directly querying Prime Agent SubProxy accounts for IJRC assets, programmatically accessing and interpreting Ecosystem Accords recorded in the Atlas, interfacing with TEJRC and OSRC smart contract systems, and automatically applying Atlas-defined eligibility rules. See [A.2.4 - Continuous Monitoring Of On-chain Verifiable Risk Capital (OVRC)](8048bdf0-84b7-4546-8f1a-98b62d073c84). Even in this advanced state, the TRC Report, or a similar form of periodic attestation, may remain necessary to cover elements of TRC verification that are not fully able to be automated or require explicit Prime Agent declaration.
 
-########### A.2.3.10.1.1.3.2.1.2.3.2 - TRC Report Contents [Core]  <!-- UUID: 4887e971-be6c-4f98-9137-7cdec3ed0fa0 -->
+########### A.2.3.9.1.1.3.2.1.2.3.2 - TRC Report Contents [Core]  <!-- UUID: 4887e971-be6c-4f98-9137-7cdec3ed0fa0 -->
 
 The Total Risk Capital (TRC) Report submitted by a Prime Agent must provide an accurate and verifiable breakdown of all TRC components held by the Prime Agent as of the end of the specified reporting period. The TRC Report should include the following essential information:
     
@@ -8843,11 +8835,11 @@ The Total Risk Capital (TRC) Report submitted by a Prime Agent must provide an a
                     ◦ EJRC-via-SPJ ÷ total SPJ capacity    
 ◦ Dynamic Period Attestation and Disclosures: In addition to the end-of-period snapshot figures, the TRC Report must include an Attestation from the Prime Agent confirming it maintained TRC at or above its Aggregate RRC at all times throughout the entire reporting period. In addition, the TRC Report must include disclosure of any events, Prime-initiated off-chain contractual obligations, impairments to the value or redeemability of held assets (such as RWA backing or bridged asset viability), encumbrances, or other conditions that occurred at any point during the reporting period which materially affected its TRC, even if such conditions were temporary or not continuously visible to on-chain monitoring systems. This disclosure must include the nature of the event/condition, its precise timing and duration, and its quantified impact on the Prime Agent's TRC.
 
-######### A.2.3.10.1.1.3.2.1.3 - Sky Core TRC Monitoring And Verification Infrastructure [Core]  <!-- UUID: 18d692ce-7a5d-47a7-ada9-dc73abd87987 -->
+######### A.2.3.9.1.1.3.2.1.3 - Sky Core TRC Monitoring And Verification Infrastructure [Core]  <!-- UUID: 18d692ce-7a5d-47a7-ada9-dc73abd87987 -->
 
 The documents herein define infrastructure for TRC monitoring and verification.
 
-########## A.2.3.10.1.1.3.2.1.3.1 - Continuous Monitoring Of On-chain Verifiable Risk Capital (OVRC) [Core]  <!-- UUID: 8048bdf0-84b7-4546-8f1a-98b62d073c84 -->
+########## A.2.3.9.1.1.3.2.1.3.1 - Continuous Monitoring Of On-chain Verifiable Risk Capital (OVRC) [Core]  <!-- UUID: 8048bdf0-84b7-4546-8f1a-98b62d073c84 -->
 
 An autonomous monitoring system must be designed and implemented to enable continuous tracking of Prime Agents’ on-chain verifiable risk-capital components in near real-time. The on-chain, verifiable risk-capital components that can be tracked by such a monitoring system in real time are termed “On-chain Verifiable Risk Capital” (OVRC).
 
@@ -8855,11 +8847,11 @@ OVRC is not necessarily equivalent to Total Risk Capital (TRC).  A Prime Agent�
 
 Where the OVRC of a Prime Agent is less than its Aggregate RRC, the shortfall will be logged and penalty accrual will commence on a pro-rata, per-second basis for the duration and magnitude of the observed shortfall, according to the penalty schedule defined in the Atlas. Thus, this on-chain monitoring system serves as an interim penalty ledger.
 
-########## A.2.3.10.1.1.3.2.1.3.2 - Validation of TRC Report In General [Core]  <!-- UUID: 482fc286-9969-40cc-b3c9-6233ecbb659c -->
+########## A.2.3.9.1.1.3.2.1.3.2 - Validation of TRC Report In General [Core]  <!-- UUID: 482fc286-9969-40cc-b3c9-6233ecbb659c -->
 
 Prime Agents are required to submit periodic Total Risk Capital (TRC) Reports to Core GovOps. See [A.2.4 - Primes’ TRC Report](41ca2085-d71b-47e5-8b1a-b183b6e2b6fc). The protocol for validation of Primes’ TRC reports is defined in the documents herein.
 
-########### A.2.3.10.1.1.3.2.1.3.2.1 - Core GovOps TRC Report Validation Process [Core]  <!-- UUID: 1ac3e606-f1c7-4a20-a9b6-a425920e98d3 -->
+########### A.2.3.9.1.1.3.2.1.3.2.1 - Core GovOps TRC Report Validation Process [Core]  <!-- UUID: 1ac3e606-f1c7-4a20-a9b6-a425920e98d3 -->
 
 Core GovOps receives TRC Reports from Primes on a regular basis and must perform the following validation process.
 
@@ -8873,7 +8865,7 @@ Core GovOps reviews all attestations and disclosures made by the Prime Agent in 
 
 Finally, Core GovOps independently calculates and verifies the Prime Agent's compliance with all Atlas-defined capital sourcing ratios (e.g., External Per Internal (EPI), Senior Per Junior (SPJ)).
 
-########## A.2.3.10.1.1.3.2.1.3.3 - Finalized Determination Of TRC Position And Penalties [Core]  <!-- UUID: 36f3e675-d372-4d25-a50f-f0ba84a36273 -->
+########## A.2.3.9.1.1.3.2.1.3.3 - Finalized Determination Of TRC Position And Penalties [Core]  <!-- UUID: 36f3e675-d372-4d25-a50f-f0ba84a36273 -->
 
 After reaching a definitive accounting of Prime Agents’ capital position and TRC adequacy, penalties are finalized by Core GovOps. This involves reconciling the interim penalty ledger (derived from the OVRC system) with the definitive TRC history, which incorporates all validated information from the TRC Report including any intra-period shortfalls.
     
@@ -8883,7 +8875,7 @@ After reaching a definitive accounting of Prime Agents’ capital position and T
     
 3. If the validated TRC Report confirms that TRC was higher than a misleading OVRC reading during a specific portion of the reporting period which led to an erroneously logged penalty: Core GovOps will adjust or void the penalty accordingly.
 
-######### A.2.3.10.1.1.3.2.1.4 - Risk-Capital Incident Response [Core]  <!-- UUID: 12b7d480-68a0-4493-9534-d6915f86c112 -->
+######### A.2.3.9.1.1.3.2.1.4 - Risk-Capital Incident Response [Core]  <!-- UUID: 12b7d480-68a0-4493-9534-d6915f86c112 -->
 
 Where a Prime Agent’s Allocation System Instances are operationalized by its Operational Executor Agent, the management of and response to Required Risk Capital (RRC)-related incidents requires a defined framework within each Prime Agent's Artifact (the Multi-Instance Coordinator Document for the Allocation System Primitive) and its associated Executor Accord.
 
@@ -8891,23 +8883,23 @@ While the Prime Agent's strategic team ("Prime Team") determines the specific re
 
 This document will be developed further in a future iteration of the Atlas.
 
-######### A.2.3.10.1.1.3.2.1.5 - Instance Operational Conformance [Core]  <!-- UUID: 1ec5f16f-194d-4163-b1ba-5c196ffa554b -->
+######### A.2.3.9.1.1.3.2.1.5 - Instance Operational Conformance [Core]  <!-- UUID: 1ec5f16f-194d-4163-b1ba-5c196ffa554b -->
 
 Operational deviation from Artifact specifications can render an Instance’s RRC, and thus the Prime’s Aggregate RRC, invalid. Prime Agents must therefore ensure that each Allocation System Instance adheres to its respective Instance Configuration Document. Whether a Prime self-operationalizes its Allocation System or contracts with an Operational Executor Agent, its Agent Artifact must define processes for monitoring for, and addressing deviations of, Instance operational conformance. This document will be developed further in a future iteration of the Atlas.
 
-######## A.2.3.10.1.1.3.2.2 - Asset Liability Management [Core]  <!-- UUID: ed10830e-6b17-4117-8ab4-5ea388b518bb -->
+######## A.2.3.9.1.1.3.2.2 - Asset Liability Management [Core]  <!-- UUID: ed10830e-6b17-4117-8ab4-5ea388b518bb -->
 
 Requirements and infrastructure related to Asset Liability Management shall be defined in a future iteration of the Atlas.
 
-####### A.2.3.10.1.1.3.3 - Allocation Instance Adjustments, Scaling, And Settlement [Core]  <!-- UUID: 93bfb0f9-d662-467d-b8bc-ef585e5b081e -->
+####### A.2.3.9.1.1.3.3 - Allocation Instance Adjustments, Scaling, And Settlement [Core]  <!-- UUID: 93bfb0f9-d662-467d-b8bc-ef585e5b081e -->
 
 On an ongoing basis, the Prime Agent team or Operational GovOps operates the Allocation Instance, scaling exposure up and down. Any change to the Allocation Instance outside of the limits specified in the Prime Agent Artifact or requiring judgment on the part of Operational GovOps (where the Allocation System Instance is operationalized by the Operational Executor Agent) requires a new vote of Prime Agent token holders. See [A.2.4 - Modification Of Existing Instances](c1b5708c-e88f-45e0-92e1-b76e68b34f13). As part of monthly and quarterly settlement cycles, Core GovOps reviews yields and obligations, applying penalties retroactively for any previously undisclosed violations. In the event of any such violations, Operational GovOps may be required to take escalatory steps based on the fallback strategy in the Prime Agent Artifact.
 
-######## A.2.3.10.1.1.3.3.1 - Modification Of Existing Instances [Core]  <!-- UUID: c1b5708c-e88f-45e0-92e1-b76e68b34f13 -->
+######## A.2.3.9.1.1.3.3.1 - Modification Of Existing Instances [Core]  <!-- UUID: c1b5708c-e88f-45e0-92e1-b76e68b34f13 -->
 
 When a Prime Agent wishes to modify an existing Allocation System Primitive Instance in a manner that cannot be accommodated by the existing operational parameters defined in its Agent Artifact, the Prime Agent must initiate an Artifact Edit Proposal process as detailed herein.
 
-######### A.2.3.10.1.1.3.3.1.1 - Conditions Requiring Artifact Edit Proposal [Core]  <!-- UUID: 3db4c73f-f480-4da4-9af3-8ecedd89e166 -->
+######### A.2.3.9.1.1.3.3.1.1 - Conditions Requiring Artifact Edit Proposal [Core]  <!-- UUID: 3db4c73f-f480-4da4-9af3-8ecedd89e166 -->
 
 An Artifact Edit Proposal is mandatory for an Instance modification under the following conditions:
 
@@ -8915,7 +8907,7 @@ An Artifact Edit Proposal is mandatory for an Instance modification under the fo
 
 2. a desired modification, even if notionally within defined ranges in the Artifact, is determined by Operational GovOps to materially alter the Instance's risk profile in a way that could invalidate the underlying Capital and Operational Plan and, consequently, the premises driving the current Required Risk Capital (RRC) for that Instance. Operational GovOps retains the discretion to require an Artifact Edit Proposal if a proposed change, regardless of its fit within existing operational ranges, is determined to pose a material change to the assessed risk.
 
-######### A.2.3.10.1.1.3.3.1.2 - Revision of Capital and Operational Plan for Instance Modification [Core]  <!-- UUID: 235a7317-ef29-48ed-a37f-5892108f8dc8 -->
+######### A.2.3.9.1.1.3.3.1.2 - Revision of Capital and Operational Plan for Instance Modification [Core]  <!-- UUID: 235a7317-ef29-48ed-a37f-5892108f8dc8 -->
 
 Prior to submitting an Artifact Edit Proposal for an Instance modification, the Prime Agent must revise the Capital and Operational Plan (C&O Plan) associated with that Instance to reflect the desired new state.
 
@@ -8927,69 +8919,77 @@ The revised Capital and Operational Plan for an Instance modification must inclu
     
 3. A revised notional Total Risk Capital (TRC) coverage strategy, detailing how the Prime Agent will manage any changes to the Instance RRC and the consequential impact on its Aggregate RRC, including plans for acquiring additional JRC or SRC if necessary.
 
-######### A.2.3.10.1.1.3.3.1.3 - Governance Process for Instance Modification [Core]  <!-- UUID: aee1d848-eee8-4590-a596-1884efcb474a -->
+######### A.2.3.9.1.1.3.3.1.3 - Governance Process for Instance Modification [Core]  <!-- UUID: aee1d848-eee8-4590-a596-1884efcb474a -->
 
 The Prime Agent's revised Capital and Operational Plan forms the core of the Artifact Edit Proposal for the Instance modification. This proposal must be submitted to the Operational Executor Facilitator for review. The Facilitator assesses the proposal for completeness and general alignment. Following this review, the proposal is subjected to the Prime Agent's governance process for approval to edit the Agent Artifact, typically involving a token holder vote as defined in the Prime Agent's Root Edit Primitive.
 
-######### A.2.3.10.1.1.3.3.1.4 - Post-Approval Integration and RRC Update [Core]  <!-- UUID: e3a00c33-9da7-4fa9-80ff-55d3a70100fa -->
+######### A.2.3.9.1.1.3.3.1.4 - Post-Approval Integration and RRC Update [Core]  <!-- UUID: e3a00c33-9da7-4fa9-80ff-55d3a70100fa -->
 
 If the Artifact Edit Proposal for the Instance modification is approved through the Prime Agent's governance process, the relevant content from the revised Capital and Operational Plan is formally integrated into the respective Instance Configuration Document within the Prime Agent's Artifact. Once the modified Instance is operational under its new, approved parameters and its data is integrated into the ecosystem's monitoring systems, its adjusted Required Risk Capital (RRC) will be officially determined and tracked via the Sky Core RRC Dashboard/API. This official RRC figure then supersedes the Prime-prepared pro-forma RRC that was part of the modification proposal.
 
-##### A.2.3.10.1.2 - Allocation System Input Requirements [Core]  <!-- UUID: b6ccdee2-a5e4-4d63-9af5-60b8163673af -->
+##### A.2.3.9.1.2 - Allocation System Input Requirements [Core]  <!-- UUID: b6ccdee2-a5e4-4d63-9af5-60b8163673af -->
 
 The documents herein define the required inputs for a valid Invocation of the Allocation System Primitive. If any input is noncompliant or omitted, the Primitive will be invalidated and the Allocation Instance deployment will not move forward.
 
-###### A.2.3.10.1.2.1 - Global Activation Status [Core]  <!-- UUID: 5a9cf81d-19dd-4f75-9ddc-be35c6b5cfb5 -->
+###### A.2.3.9.1.2.1 - Global Activation Status [Core]  <!-- UUID: 5a9cf81d-19dd-4f75-9ddc-be35c6b5cfb5 -->
 
 The Allocation System Primitive must be Globally Activated.
 
-###### A.2.3.10.1.2.2 - Core Allocation Vault Address [Core]  <!-- UUID: 4655b643-b03f-49b7-a474-493c3e059b62 -->
+###### A.2.3.9.1.2.2 - Core Allocation Vault Address [Core]  <!-- UUID: 4655b643-b03f-49b7-a474-493c3e059b62 -->
 
 The Prime Agent Artifact must specify the address of the Prime Agent’s Core Allocation Vault.
 
-###### A.2.3.10.1.2.3 - Core Allocation Buffer Address [Core]  <!-- UUID: 2cdb447e-ebf5-4e57-a722-181178fbe80f -->
+###### A.2.3.9.1.2.3 - Core Allocation Buffer Address [Core]  <!-- UUID: 2cdb447e-ebf5-4e57-a722-181178fbe80f -->
 
 The Prime Agent Artifact must specify the address of the Prime Agent’s Core Allocation Buffer.
 
-###### A.2.3.10.1.2.4 - Allocation System Core Security Parameters  [Core]  <!-- UUID: 9c5e2e23-7756-4856-951b-0bcbecaa867d -->
+###### A.2.3.9.1.2.4 - Allocation System Core Security Parameters  [Core]  <!-- UUID: 9c5e2e23-7756-4856-951b-0bcbecaa867d -->
 
 The Prime Agent Artifact must specify the rate limiters for the Allocation Vault and Core Allocation Buffer, including the address and parameters for each.
 
-###### A.2.3.10.1.2.5 - Capital Faucet [Core]  <!-- UUID: 4b8cf927-d5e3-4e5b-8626-62523fb286be -->
+###### A.2.3.9.1.2.5 - Capital Faucet [Core]  <!-- UUID: 4b8cf927-d5e3-4e5b-8626-62523fb286be -->
 
 The Prime Agent Artifact must specify the address of the Prime Agent’s Capital Faucet and its rate limits.
 
-###### A.2.3.10.1.2.6 - List Of Allocation Instances [Core]  <!-- UUID: e4975062-6d19-438b-a5d5-cfc1a7fd8cb9 -->
+###### A.2.3.9.1.2.6 - List Of Allocation Instances [Core]  <!-- UUID: e4975062-6d19-438b-a5d5-cfc1a7fd8cb9 -->
 
 If the Allocation System Primitive is Activated, then the Prime Agent Artifact must list each active Allocation Instance, grouped by blockchain. For each blockchain, the Prime Agent Artifact must specify: (1) the name of the blockchain, (2) the bridging mechanism for the blockchain, if any, (3) the allocation buffer on the blockchain, and (4) the Allocation Instances on the blockchain. For each Allocation Instance, the Prime Agent Artifact must contain the information specified herein.
 
-####### A.2.3.10.1.2.6.1 - Required Allocation Instance Parameters [Core]  <!-- UUID: 6ad0fdb4-bd11-4d5a-a436-0d106873e0ec -->
+####### A.2.3.9.1.2.6.1 - Required Allocation Instance Parameters [Core]  <!-- UUID: 6ad0fdb4-bd11-4d5a-a436-0d106873e0ec -->
 
 For each Allocation Instance, the Prime Agent Artifact must specify: (1) the name of the Allocation Instance, (2) the address of the Allocation Instance, (3) the rate limit of the conduit for inflows and outflows, (4) any other technical parameters of the Allocation Instance (e.g. maximum slippage, oracles used), (5) data submission protocols, and (6) specification of emergency measures that can be used by Operational GovOps if Required Risk Capital or Asset Liability Management obligations are breached.
 
-####### A.2.3.10.1.2.6.2 - Required Allocation Instance Allocation Strategy [Core]  <!-- UUID: 0e4a5264-1365-4e5c-9be4-dac85ed6b46b -->
+####### A.2.3.9.1.2.6.2 - Required Allocation Instance Allocation Strategy [Core]  <!-- UUID: 0e4a5264-1365-4e5c-9be4-dac85ed6b46b -->
 
 For each Allocation Instance, the Prime Agent Artifact must specify the strategy documents contained herein. These strategy documents must describe in detail how the Allocation Instance should be operated so that the Operational Executor Agent that the Prime Agent has contracted with can operate the Allocation Instance without further input from the Prime Agent or having to make “judgment calls”. To the extent that the Prime Agent’s strategy cuts across different Allocation Instances, the Prime Agent may include a single set of strategy documents covering all Allocation Instances.
 
-######## A.2.3.10.1.2.6.2.1 - Required Allocation Instance Asset Liability Management Strategy [Core]  <!-- UUID: 3f48dff7-3bf1-44d2-a92f-531ce42be318 -->
+######## A.2.3.9.1.2.6.2.1 - Required Allocation Instance Asset Liability Management Strategy [Core]  <!-- UUID: 3f48dff7-3bf1-44d2-a92f-531ce42be318 -->
 
 The allocation strategy for each Allocation Instance should specify how Operational GovOps should adjust the amount of funds allocated to the Conduit based on performance, market conditions, or other factors. It should also specify limits to the amount by which the allocation can be adjusted before a vote of Prime Agent token holders is required.
 
-######## A.2.3.10.1.2.6.2.2 - Required Allocation Conduit Asset Liability Management Strategy [Core]  <!-- UUID: 2cdd38d7-7f85-411b-854e-5768d564c275 -->
+######## A.2.3.9.1.2.6.2.2 - Required Allocation Conduit Asset Liability Management Strategy [Core]  <!-- UUID: 2cdd38d7-7f85-411b-854e-5768d564c275 -->
 
 The asset liability management strategy for each Allocation Instance must specify what steps Operational GovOps should take to ensure that the Prime Agent continues to satisfy its Asset Liability Management obligations as the amount of funds allocated to the Conduit changes.
 
-######## A.2.3.10.1.2.6.2.3 - Required Allocation Instance Fallback Strategy [Core]  <!-- UUID: 4363d9c4-afb3-44d1-a72a-9edbd40d415e -->
+######## A.2.3.9.1.2.6.2.3 - Required Allocation Instance Fallback Strategy [Core]  <!-- UUID: 4363d9c4-afb3-44d1-a72a-9edbd40d415e -->
 
 The fallback strategy for each Allocation Instance must specify how Operational GovOps should determine when an emergency situation is occurring regarding the Allocation Instance and what actions it should take to protect the Prime Agent from losses associated with the Allocation Instance. The fallback strategy must include emergency measures for Operational GovOps to reduce exposure to, drain, and ultimately shut down the Allocation Instance if Required Risk Capital or Asset Liability Management obligations are breached.
 
-#### A.2.3.10.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: d8086dc0-7e77-4c6b-98c7-5fc41337a1ce -->
+#### A.2.3.9.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: d8086dc0-7e77-4c6b-98c7-5fc41337a1ce -->
 
 The Junior Risk Capital Rental Primitive is a mechanism enabling Prime Agents to rapidly rent Junior Risk Capital from each other, ensuring that capital gets deployed to where the best opportunities are.
 
-#### A.2.3.10.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c -->
+#### A.2.3.9.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c -->
 
 The Asset Liability Management Rental Primitive is a mechanism enabling Prime Agents to trade Asset Liability Management obligations between each other, providing more flexibility in how capital is deployed through the Allocation System and reducing duplicate work.
+
+### A.2.3.10 - Core Governance Primitives [Section]  <!-- UUID: 6fa54611-c744-4b9d-897d-b2a20e9cae5d -->
+
+Core Governance Primitives allow Prime Agents to earn incentives for maintaining and securing Sky Governance frontends as well as borrow from the Smart Burn Engine.
+
+#### A.2.3.10.1 - Core Governance Reward Primitive [Core]  <!-- UUID: b22d1c08-042a-4466-94fe-9d28951e4d4a -->
+
+The Core Governance Reward Primitive is a reward that Sky pays to Prime Agents that provide SKY holders with secure access to the core Sky Governance features, ensuring that the Governance Security of Sky is maintained over time.
 
 ## A.2.4 - Treasury Management [Article]  <!-- UUID: 6c0af059-5d33-4e2b-90f1-1606957b8f85 -->
 
