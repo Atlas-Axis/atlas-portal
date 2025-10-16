@@ -6207,7 +6207,7 @@ To qualify as a Public Holder, tokens owned by a wallet address must not be subj
 
 Tokens held in liquidity pools or staking contracts shall be attributed to the beneficial owners of the deposited tokens, rather than to the pool or contract itself, for purposes of determining both the number of Public Holders and their collective ownership.
 
-The Core Executor Agents are responsible for determining whether the tokens of a Prime Agent are Publicly Held. If the Core Executor Agents believe that a Prime Agent’s tokens are sufficiently decentralized despite failing to meet the technical criteria specified herein they may propose a Governance Poll to deem that Prime Agent’s tokens as Publicly Held.
+The Core Executor Agents are responsible for determining whether the tokens of a Prime Agent are Publicly Held. If the Core Executor Agents believe that a Prime Agent’s tokens are sufficiently decentralized despite failing to meet the technical criteria specified herein, they may conduct a Governance Poll to determine whether the Prime Agent’s tokens should be deemed Publicly Held.
 
 ###### A.2.3.6.2.3.2 - Atlas Edit Proposal Process For Prime Agents [Core]  <!-- UUID: 364e52eb-4529-46a9-9852-edaaab88baeb -->
 
@@ -8887,7 +8887,7 @@ After reaching a definitive accounting of Prime Agents’ capital position and T
 
 Where a Prime Agent’s Allocation System Instances are operationalized by its Operational Executor Agent, the management of and response to Required Risk Capital (RRC)-related incidents requires a defined framework within each Prime Agent's Artifact (the Multi-Instance Coordinator Document for the Allocation System Primitive) and its associated Executor Accord.
 
-While the Prime Agent's strategic team ("Prime Team") determines the specific rectification strategy for an RRC incident—considering its holistic portfolio, prevailing market conditions, and the potential for strategic acceptance of penalties—this discretion is exercised subject to the authority of Sky Core to impose penalties and take corrective measures, up to and including the conservatorship of a Prime Agent, to protect the ecosystem and make whole losses.
+While the Prime Agent's strategic team ("Prime Team") determines the specific rectification strategy for an RRC incident—considering its holistic portfolio, prevailing market conditions, and the potential for strategic acceptance of penalties—this discretion is exercised subject to the authority of Sky Core to impose penalties and take corrective measures, up to and including the conservatorship of a Prime Agent, to protect the ecosystem and make any losses whole.
 
 This document will be developed further in a future iteration of the Atlas.
 
@@ -11758,13 +11758,9 @@ The Debt Yield $r_s^j$ of a debt instrument $j$ is the income yield on the debt 
 
 The correlation coefficient $\rho$ between two instruments is the correlation of block-weighted log returns of those assets over the last 365 days. In the documents herein, the correlation coefficient is followed by subscripts indicating the relevant instruments. For example, $\rho_{UD}$ is the correlation between the underlying asset portfolio $U$ and the debt portfolio $D$ as specified in [A.3.3 - Correlation Between Asset Portfolio And Debt Portfolio](ae1dbcb9-828d-40c0-8ad8-96b3072dad4e). The subscript may begin with $V$ or $D$ to indicate whether the relevant instruments are part of the asset portfolio or debt portfolio. For example, $\rho_{VD,ij}$ is the correlation coefficient between the asset $i$ and the debt instrument $j$.
 
-########## A.3.3.2.1.1.1.1.1.1.14 - Loan To Value Ratio [Core]  <!-- UUID: ce774017-be30-4482-8df7-361875cb771d -->
+########## A.3.3.2.1.1.1.1.1.1.14 - Liquidation Threshold [Core]  <!-- UUID: ce774017-be30-4482-8df7-361875cb771d -->
 
-The Loan To Value Ratio $LT_i$ of an asset $i$ is the ratio of the debt backed by an asset to the value of the asset backing it:
-
-$$
-LT_i = \frac{D_0^i}{V_0^i}
-$$
+The Liquidation Threshold $LT_i$ is the value of the debt as a percentage of the collateral value at which the lender may liquidate the collateral to satisfy the debt.
 
 ########## A.3.3.2.1.1.1.1.1.1.15 - Asset Value [Core]  <!-- UUID: 63b212be-2bde-43b3-ba61-7ebf9c442137 -->
 
@@ -13569,7 +13565,7 @@ The parameters of this formula are defined in the documents herein.
 
 ##### A.3.3.3.2.1 - Initial Value [Core]  <!-- UUID: 5d2d2430-2fd5-4418-a688-e8f091eb44b9 -->
 
-The Initial Value `initialValue` is the Instance Financial RRC when the PT has exactly six (6) months to maturity. The `initialValue` is 15%.
+The Initial Value `initialValue` is the Instance Financial RRC when the PT has exactly six (6) months to maturity. The `initialValue` is 10%.
 
 ##### A.3.3.3.2.2 - Current Time [Core]  <!-- UUID: 340be283-72fe-4b51-9d75-d7f3c28fdab2 -->
 
@@ -14385,7 +14381,7 @@ The Ceiling Increase Cooldown (`ttl`) parameter controls how frequently the Debt
 
 ###### A.3.8.1.1.2.5 - Auction Parameters [Core]  <!-- UUID: 5774fd7c-ecd9-46ea-b33d-77ea9c6de4f3 -->
 
-A clear justification and analysis must be provided to validate any proposed changes to the parameters specified in this document. Before these changes are added to an Executive Vote, Core GovOps, in consultation with BA Labs, must first propose a Governance Poll. However, in an emergency, Core GovOps, in consultation with BA Labs, has the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. The parameters contained herein must be regularly monitored and updated if needed.
+A clear justification and analysis must be provided to validate any proposed changes to the parameters specified in this document. Before these changes are added to an Executive Vote, Core GovOps, in consultation with BA Labs, must obtain approval through a Governance Poll. However, in an emergency, Core GovOps, in consultation with BA Labs, has the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. The parameters contained herein must be regularly monitored and updated if needed.
 
 ####### A.3.8.1.1.2.5.1 - Auction Price Function (calc) [Core]  <!-- UUID: fc7341c8-5a58-4be4-be8c-201f858e3861 -->
 
@@ -25136,6 +25132,10 @@ This Instance’s associated Instance Configuration Document is located at [Ethe
 
 This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena sUSDe Instance Configuration Document](5847fff3-ff82-4c01-ac24-7f06fac8c2a4).
 
+############ A.6.1.1.2.2.6.1.1.2.1.4.3 - Ethereum Mainnet - Ethena sUSDe Instance Configuration Document Location [Core]  <!-- UUID: 39fdf5a1-92e9-40de-a1f4-23732d6bbb1a -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena sUSDe Instance Configuration Document](5847fff3-ff82-4c01-ac24-7f06fac8c2a4).
+
 ######### A.6.1.1.2.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70ddaca1-07ca-402f-bf3b-cfab52a8f360 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
@@ -31844,6 +31844,1408 @@ Launch Agent 3’s strategy with respect to the Core Governance Reward Primitive
 The guiding criteria are as follows:
 - **Security & Reliability: **The Prime Agent will uphold robust security measures and maintain high availability to prevent disruptions or unauthorized access.
 - **Governance Framework Alignment:** Any updates to the frontend should integrate smoothly with Launch Agent 3’s existing governance mechanisms, preserving uninterrupted voting and proposal workflows.
+
+#### A.6.1.1.5 - Launch Agent 4 [Core]  <!-- UUID: f558e673-cbab-4696-8ca1-3af9b90fe5d4 -->
+
+The documents herein specify all of the logic for Launch Agent 4, including Launch Agent 4’s strategy and how it uses the Sky Primitives to operationalize this strategy.
+
+##### A.6.1.1.5.1 - Introduction [Core]  <!-- UUID: e395a323-3c53-4154-a7e6-d54c363f56f2 -->
+
+Launch Agent 4 is an ‘incubator’ Agent operationalizing a turnkey solution for the Sky Ecosystem’s development and deployment of Prime and Halo Agents. This will give Agent founders a streamlined pathway to establish, build, operationalize, fundraise, and launch new Agents. The overall goal of the Launch Agent 4 Agent is to produce Agents for the Sky Ecosystem at scale, supporting cohorts of new Agent founders through leveraging rich content, workstreams and turnkey services for legal, risk, tech, and operational requirements.
+
+##### A.6.1.1.5.2 - Sky Primitives [Core]  <!-- UUID: de2892b7-087c-49ee-8b85-e3753987d38e -->
+
+The documents herein implement the Sky Primitives for Launch Agent 4. See [A.2.4](fcde2604-a138-4c1b-9d9a-14895835c907).
+
+###### A.6.1.1.5.2.1 - Genesis Primitives [Core]  <!-- UUID: d5354d3f-8281-49e2-9ff6-c36091afa18a -->
+
+The documents herein implement the Genesis Primitives for Launch Agent 4. See [A.2.4 - A4 - Genesis Primitives](3d5e3668-8333-4908-adcc-5784cfe7f6b5).
+
+####### A.6.1.1.5.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: de89dc5f-7351-4ea0-bc7b-4a6eb25d6a4d -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Agent Creation Primitive. See [A.2.4 - Agent Creation Primitive](82b95f6d-4883-4f08-ac3a-9d8189013fbe).
+
+######## A.6.1.1.5.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: 38ef6c16-11fb-400f-ba72-88e7f50fc1e8 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Agent Creation Primitive.
+
+######### A.6.1.1.5.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: d812fe0d-1128-4824-b0df-ea61ba23a624 -->
+
+`Completed`
+
+######### A.6.1.1.5.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6229b346-ecd5-474a-bfd4-e22066a365f0 -->
+
+This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7c3e364b-84e7-4b47-9b5a-54978a127f97 -->
+
+This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Completed`.
+
+########## A.6.1.1.5.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: a1b0f1ed-1e3e-47ff-9690-afb6bfd22192 -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](9d67690d-87df-4fcf-bac0-0b2bcf75bf12).
+
+######### A.6.1.1.5.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c9952aea-58df-4a2e-a706-8f342a6d525c -->
+
+Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: d8bb6ab7-07b3-4224-9612-5c10b1a4cab2 -->
+
+The document herein contains the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 2d301483-65e6-4501-828f-67012966cbae -->
+
+The subtrees for archived Invocations and Instances of the Agent Creation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7c5074c6-0cf3-4f96-bd35-ecd14d4a8cf5 -->
+
+The subtrees for failed Invocations of the Agent Creation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 637cb4d7-f5d1-4181-bd60-d54f8893a4bd -->
+
+The subtrees for Instances of the Agent Creation Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.1.1.2 - Active Instances [Core]  <!-- UUID: 5f6b104e-2310-45d4-ba62-92d3a9a5ed0b -->
+
+The Instances of the Agent Creation Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 31bafd0d-b417-4759-88af-7589f9a32518 -->
+
+The Instances of the Agent Creation Primitive with `Completed` Status are contained herein.
+
+######### A.6.1.1.5.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 9d67690d-87df-4fcf-bac0-0b2bcf75bf12 -->
+
+The documents herein contain the Instance Configuration Document for the Single Agent Creation Primitive Instance.
+
+########## A.6.1.1.5.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: 151d3bb0-77bb-4aeb-8bcb-be120968400b -->
+
+The documents herein define the parameters of the Single Instance of the Agent Creation Primitive.
+
+########### A.6.1.1.5.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 05cdc5d1-c73e-4ccd-abe0-dd0a58d0c65c -->
+
+The name of the Agent is Launch Agent 4.
+
+########### A.6.1.1.5.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 510817f8-7ce6-4b32-b598-186610760525 -->
+
+The address of Launch Agent 4’s SubProxy Account will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: d77522ec-0987-474d-87b3-9377f107c9b6 -->
+
+The address of Launch Agent 4’s Genesis Account will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 6b501d73-1151-46a1-9994-1e51d25729da -->
+
+The documents herein define the custom parameters of the Single Instance of the Agent Creation Primitive, if any.
+
+########## A.6.1.1.5.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 8171b404-5ea7-47ed-869d-8bd94f6e9e86 -->
+
+Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further operational process is needed post-deployment.
+
+########## A.6.1.1.5.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: fab9e798-14f5-4105-8dec-1e49eacc2b36 -->
+
+The documents herein contain data relevant to the Single Instance of the Agent Creation Primitive.
+
+########### A.6.1.1.5.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: a5498802-b2d9-46d2-9a2e-30e546ba6110 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: a09fca08-e196-49b1-99e2-21e5c01a59cb -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e5c5930-3805-47c2-8c11-b05b8c5bdddc -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3731f5d8-ff05-4c80-9f3f-2b056b6b9b38 -->
+
+Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
+
+####### A.6.1.1.5.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 5c7d376d-ebb0-4477-8d96-129d362e7799 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s instance of the Prime Transformation Primitive. See [A.2.4 - Prime Transformation Primitive](81411106-fd6d-4f9c-b3ae-7af7b5e62482).
+
+######## A.6.1.1.5.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: b9e7cf68-feff-4a8b-9126-bc44bf3e7283 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Prime Transformation Primitive.
+
+######### A.6.1.1.5.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: 32f5e8a7-fdce-4e77-b032-4c1670ecb9da -->
+
+`Completed`
+
+######### A.6.1.1.5.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: e4e7adc0-7c85-464c-a60c-87dafb800e48 -->
+
+This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1ad29165-0b55-4b7d-a908-c8e097a9d053 -->
+
+This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Completed`.
+
+########## A.6.1.1.5.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: b404798f-056d-4c57-b252-4b30d960b8e3 -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](2fd59b03-9278-4371-a3f1-fe9514ab322b).
+
+######### A.6.1.1.5.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 79851842-32b3-4e42-bbbc-2e4240a7b875 -->
+
+Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 3e55f8cd-3aff-4f45-a213-bb59f869ab84 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 175640b2-a33d-4a0a-af98-8aa895344eca -->
+
+The subtrees for archived Invocations and Instances of the Prime Transformation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8a61c3ea-fe8d-41a5-ade2-e338754f0666 -->
+
+The subtrees for failed Invocations of the Prime Transformation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6b3b64ef-26b1-45ee-8596-7c78c243f1ae -->
+
+The subtrees for Instances of the Prime Transformation Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.1.2.2 - Active Instances [Core]  <!-- UUID: e54ec47c-4526-4cc2-9722-43ed3cee7768 -->
+
+The Instances of the Prime Transformation Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 1a8ffef1-7997-452c-9f58-6b8d9af23c04 -->
+
+The Instances of the Prime Transformation Primitive with `Completed` Status are contained herein.
+
+######### A.6.1.1.5.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 2fd59b03-9278-4371-a3f1-fe9514ab322b -->
+
+The documents herein contain the Instance Configuration Document for the Single Prime Transformation Primitive Instance.
+
+########## A.6.1.1.5.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: ff8bd343-f602-4a9c-a5b6-2048496d4ec8 -->
+
+The documents herein define the parameters of the Single Instance of the Prime Transformation Primitive.
+
+########### A.6.1.1.5.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: 3275f4de-18d6-4fca-8023-d6f2e3fb4f01 -->
+
+Launch Agent 4 is a Prime Agent.
+
+########### A.6.1.1.5.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 65c00572-3f2f-41fa-892d-e568ef1cf7ba -->
+
+The documents herein define the custom parameters of the Single Instance of the Prime Transformation Primitive, if any.
+
+########## A.6.1.1.5.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 91999490-cd47-4523-aa5b-f71216472a3c -->
+
+Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further operational process is needed post-deployment.
+
+########## A.6.1.1.5.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: e70d36bc-8e5e-44b4-ab3b-492308ab7196 -->
+
+The documents herein contain data relevant to the Single Instance of the Prime Transformation Primitive.
+
+########### A.6.1.1.5.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: c0cc5f1c-0cc5-44c8-bf92-d28b371e05b0 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: aa23e483-3205-4843-92c9-5906b244e662 -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 9e54e190-a5f0-466e-945b-a9075fbc20b1 -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 685248fb-8b9c-44d0-8ba3-ada4ada84e06 -->
+
+Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
+
+####### A.6.1.1.5.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: ad55a2b2-7b47-401f-967e-f89e601e567c -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s instance of the Executor Transformation Primitive. See [A.2.4 - Executor Transformation Primitive](2f249be5-8edb-41e4-b429-734e1ba2cbc7).
+
+######## A.6.1.1.5.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7b3f85c4-e618-4071-b07f-5c771a3bc873 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Executor Transformation Primitive.
+
+######### A.6.1.1.5.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: 7e92d813-a224-495a-b2c7-ad83304b977c -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9f5d64-6e5b-466e-a4c0-a194ec24161f -->
+
+This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 8f2c269a-20d6-4d3c-82e8-1a98123d663b -->
+
+This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1a4b9edf-b153-4f7f-be3a-27a87ef58185 -->
+
+Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 15635343-8607-45d0-a675-e5486ca08c7b -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 84461fee-fe8d-4008-8bb1-0e72f22e0921 -->
+
+The subtrees for archived Invocations and Instances of the Executor Transformation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 5b36399c-c01b-445a-ad21-f4f057575621 -->
+
+The subtrees for failed Invocations of the Executor Transformation Primitive are stored here.
+
+########### A.6.1.1.5.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 87d42440-89ee-4d33-8f3e-8a9cf56b0fc6 -->
+
+The subtrees for Instances of the Executor Transformation Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.1.3.2 - Active Instances [Core]  <!-- UUID: 697d6019-9769-49cb-8394-c74c9c2240f3 -->
+
+The Instances of the Executor Transformation Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 0dfb0a6f-af53-45d5-badb-0383c76f2515 -->
+
+The Instances of the Executor Transformation Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 7ee33331-fa25-4c43-b3e8-de3362118dea -->
+
+Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
+
+####### A.6.1.1.5.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: 29c1a185-926e-42e0-a15c-1aad1dbe9068 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Agent Token Primitive. See [A.2.4 - Agent Token Primitive](2047c361-db28-4952-a70c-83d07b562064).
+
+######## A.6.1.1.5.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: ea5efaa6-992d-4e59-9ebb-4c027ee7aa87 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Agent Token Primitive.
+
+######### A.6.1.1.5.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: 0dbea81d-1a7b-4c83-8817-20ee5aa3e90b -->
+
+`Active`
+
+######### A.6.1.1.5.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: 6a9df4c5-fe51-4bfa-b661-69e313df475c -->
+
+This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Active`.
+
+########## A.6.1.1.5.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: ccaebb1f-f68d-4f07-89a0-a18afea052d4 -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](81d78b70-e460-4588-8e37-d2cf7ec87d32).
+
+######### A.6.1.1.5.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e49543e-ee1f-4a60-9b80-e290e961931d -->
+
+This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5d1fa3e0-cafc-4667-951e-0ea439d13a95 -->
+
+Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 70cf9e11-7eed-4eba-8ef1-47bd21974a5f -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38877b86-ed6e-49fb-ae28-4c0b7f0df215 -->
+
+The subtrees for archived Invocations and Instances of the Agent Token Primitive are stored here.
+
+########### A.6.1.1.5.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c87625a9-a7f2-4302-8104-739664173433 -->
+
+The subtrees for failed Invocations of the Agent Token Primitive are stored here.
+
+########### A.6.1.1.5.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 7b49d757-66c0-4a34-b715-729a64801fca -->
+
+The subtrees for Instances of the Agent Token Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.1.4.2 - Active Instances [Core]  <!-- UUID: df170b7f-303a-4029-8f10-7548dab07f8a -->
+
+The Instances of the Agent Token Primitive with `Active` Status are stored herein.
+
+######### A.6.1.1.5.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 81d78b70-e460-4588-8e37-d2cf7ec87d32 -->
+
+The documents herein contain the Instance Configuration Document for the Single Agent Token Primitive Instance.
+
+########## A.6.1.1.5.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: dcca537a-8364-4306-8f54-0113652e187c -->
+
+The documents herein define the parameters of the Single Instance of the Agent Token Primitive.
+
+########### A.6.1.1.5.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 86cff886-c2dd-447b-b300-7f3ac0334624 -->
+
+The name of Launch Agent 4’s token is Launch Agent 4.
+
+########### A.6.1.1.5.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 65767abc-766f-43e0-88c1-12b9a1855868 -->
+
+The symbol of Launch Agent 4’s token is AGENT4.
+
+########### A.6.1.1.5.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: 19ad3fe9-9161-4ddd-af93-d3fc854d51ed -->
+
+The Genesis Supply of AGENT4 is 10 billion.
+
+########### A.6.1.1.5.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: a954b3b9-4230-448e-b926-e7daaad542c5 -->
+
+The address of AGENT4 will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 2646a808-056e-4907-88bb-b504afe61946 -->
+
+The token Admin will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: e687b86c-f6b8-4f2e-aabf-b7922b2d3f6d -->
+
+Token emissions beyond the Genesis Supply are permanently disabled; this cannot be reverted by Launch Agent 4 Governance. Sky Governance retains the ability to revert where Launch Agent 4 is in violation of Risk Capital requirements and emissions are required by the Risk Framework. See [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
+
+########### A.6.1.1.5.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: c40b84ff-e133-434a-bef9-e12aba5ac87c -->
+
+The documents herein define the custom parameters of the Single Instance of the Agent Token Primitive, if any.
+
+########## A.6.1.1.5.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1cd77356-66a5-449c-a573-71a44a628044 -->
+
+The documents herein define the operational processes for minting and initial distribution of the tokens from the Genesis Supply.
+
+• These processes will be defined in a future iteration of the Launch Agent 4 Artifact.
+
+########## A.6.1.1.5.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 596d5aa9-8116-44a0-aca7-e53b5181e62e -->
+
+The documents herein contain data relevant to the Single Instance of the Agent Token Primitive.
+
+########### A.6.1.1.5.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 6fe2485a-225f-41e3-b791-0b98363df1e8 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 44b64f9f-aa20-4aeb-b2e3-6abda1cfa77d -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: c6ec5fe6-691b-4ac7-a863-2be65a28ea3f -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.1.4.3 - Completed Instances [Core]  <!-- UUID: c0ee9726-7ae8-4176-a3f3-01152a53f0d1 -->
+
+The Instances of the Agent Token Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: ec1f15fa-3059-4fd3-9467-7a796d7050a5 -->
+
+Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
+
+###### A.6.1.1.5.2.2 - Operational Primitives [Core]  <!-- UUID: 91762197-a7e2-4e0c-bce5-4490f23f9667 -->
+
+The documents herein implement the Operational Primitives for Launch Agent 4. See [A.2.4 - A5 - Operational Primitives](0192ec95-9207-480e-8c51-88d2a1da95ad).
+
+####### A.6.1.1.5.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: e0baddbe-f261-4439-8fc0-e03b521c10ad -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Executor Accord Primitive. See [A.2.4 - Executor Accord Primitive](88017877-3ec1-4c43-a035-6bebdf11d9bb).
+
+######## A.6.1.1.5.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 4f398e78-1f12-447d-bb28-71cfc4e9ce4c -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Executor Accord Primitive.
+
+######### A.6.1.1.5.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4bb8c2f6-b020-4f18-aa1e-9ac5962c6fac -->
+
+`Active`
+
+######### A.6.1.1.5.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5db0baf4-141b-4eb9-8d5b-bd5386e6786c -->
+
+This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Active`.
+
+########## A.6.1.1.5.2.2.1.1.2.1 - Ozone Instance Configuration Document Location [Core]  <!-- UUID: e08db2e2-b978-473f-be58-cf4a304bf15c -->
+
+This Instance’s associated Instance Configuration Document is located at [Ozone Instance Configuration Document](7634c378-486d-4d5b-823a-aee5c1c8b3a6).
+
+######### A.6.1.1.5.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 0a0ddb4d-d708-4b2d-b9f2-1c7524fa2038 -->
+
+This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1310aa75-5080-4291-9de9-e4ce0cd7adcc -->
+
+This document contains a Directory of all prospective Instances of the Executor Accord Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5db0baf4-141b-4eb9-8d5b-bd5386e6786c), whereas failed Invocations are Archived in [Hub Data Repository](6c78d193-aa70-45a1-b807-77dcba6b6543).
+
+######### A.6.1.1.5.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6c78d193-aa70-45a1-b807-77dcba6b6543 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8eb2aa7f-71ca-4c91-a0f9-5d433dcf22f3 -->
+
+The subtrees for archived Invocations and Instances of the Executor Accord Primitive are stored here.
+
+########### A.6.1.1.5.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8e1fddae-22a6-4dc9-9e1b-78861747d2ca -->
+
+The subtrees for failed Invocations of the Executor Accord Primitive are stored here.
+
+########### A.6.1.1.5.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4a6fc07c-c28c-499d-93c4-bd469e8b2012 -->
+
+The subtrees for Instances of the Executor Accord Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.2.1.2 - Active Instances [Core]  <!-- UUID: 2fd90ea2-b604-4a06-8c73-888c08365dba -->
+
+The Instances of the Executor Accord Primitive with `Active` Status are stored herein.
+
+######### A.6.1.1.5.2.2.1.2.1 - Ozone Instance Configuration Document [Core]  <!-- UUID: 7634c378-486d-4d5b-823a-aee5c1c8b3a6 -->
+
+The documents herein contain the Instance Configuration Document for the Ozone Executor Accord Primitive Instance.
+
+########## A.6.1.1.5.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: 182988e8-96c8-4c3c-ab19-6b9b88b9532b -->
+
+The documents herein define the parameters of the Ozone Instance of the Executor Accord Primitive.
+
+########### A.6.1.1.5.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: e3e97ee0-1ef7-48dd-acf0-3e1e6a6de47e -->
+
+In the near term Ozone will take on the functions of an Operational Executor Agent, including both Operational GovOps and Operational Facilitator roles.
+
+########### A.6.1.1.5.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 4b5e6287-583b-40c0-8ec4-87675a15f802 -->
+
+The documents herein define the custom parameters of the Ozone Instance of the Executor Accord Primitive, if any.
+
+########## A.6.1.1.5.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 520a274c-6b18-4fb7-953a-8f562c5ca111 -->
+
+The documents herein define the process for the ongoing management of the Ozone Instance of the Executor Accord Primitive.
+
+########## A.6.1.1.5.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 2a655bfa-fbcb-4888-b4df-0d0ec8398a14 -->
+
+The documents herein contain data relevant to the Ozone Instance of the Executor Accord Primitive.
+
+########### A.6.1.1.5.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b7eb3de8-9b56-4e2a-b0c0-5d3f8dddccb7 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0ab58c7d-7bb4-4d33-bd7a-2eca8e80b62a -->
+
+The materials associated with Operational GovOps review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 248099c5-af01-490c-b248-4441accf889f -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.2.1.3 - Completed Instances [Core]  <!-- UUID: 33eff493-0a21-4bb0-899e-f3fab9ef6f27 -->
+
+The Instances of the Executor Accord Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: dfca9a54-ab85-476a-ab49-345ec43a1294 -->
+
+The in progress Invocations of the Executor Accord Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](2fd90ea2-b604-4a06-8c73-888c08365dba).
+
+####### A.6.1.1.5.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: b69559bf-1acb-4f9c-8638-19fb8ef20fc2 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Root Edit Primitive. See [A.2.4 - Root Edit Primitive](78488c6b-d77f-4344-b954-476e415a2c7d).
+
+######## A.6.1.1.5.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: f6e6bc46-aa12-4a74-8433-85ffcfad4917 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Root Edit Primitive.
+
+######### A.6.1.1.5.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: 363d6ab5-1065-4cb5-8326-506a7dc62db6 -->
+
+`Active`
+
+######### A.6.1.1.5.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 0a66c55d-66c6-4fae-819b-c1bce486a03e -->
+
+This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Active`.
+
+########## A.6.1.1.5.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 48d674cd-633b-40b7-ab4f-9ff4028ea1e6 -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](f5cb7958-d3a3-4179-9541-8a603745a5f1).
+
+######### A.6.1.1.5.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 67ec15f0-3610-42e3-bbd4-1d35c5944aa6 -->
+
+This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 155d502c-8c81-47dc-aaa5-0944a565cd8c -->
+
+Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: f5bcf120-3af4-4b17-b63c-1adcf745ce75 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 988302bd-3993-4833-9611-456285591f89 -->
+
+The subtrees for archived Invocations and Instances of the Root Edit Primitive are stored here.
+
+########### A.6.1.1.5.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64ae8942-a1ac-4904-ba13-43ee7334551e -->
+
+The subtrees for failed Invocations of the Root Edit Primitive are stored here.
+
+########### A.6.1.1.5.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 75008710-7942-45ef-87ee-f342f0a571f4 -->
+
+The subtrees for Instances of the Root Edit Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.2.2.2 - Active Instances [Core]  <!-- UUID: 2bc00f12-93cd-4431-8d6c-6a1170ca474c -->
+
+The Instances of the Root Edit Primitive with `Active` Status are stored herein.
+
+######### A.6.1.1.5.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: f5cb7958-d3a3-4179-9541-8a603745a5f1 -->
+
+The documents herein contain the Instance Configuration Document for the Single Root Edit Primitive Instance.
+
+########## A.6.1.1.5.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 5034d53f-d21f-471b-a796-e62893aeab03 -->
+
+The parameters of the Root Edit Primitive are fully specified by the Operational Process Definition in [Operational Process Definition](ef3c8fc4-d958-492b-bee6-d96b5f972720).
+
+########## A.6.1.1.5.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: ef3c8fc4-d958-492b-bee6-d96b5f972720 -->
+
+The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact. Information on Launch Agent 4 governance that is unrelated to the use of the Root Edit Primitive is located at [Governance Information Unrelated To Root Edit Primitive](bdad4ea3-7cf2-40fb-a8ab-4bb8b320e4c9).
+
+########### A.6.1.1.5.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: da6d3815-d49e-47a4-8e62-81b66dbab51f -->
+
+The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in routine or normal conditions (i.e., non-emergency situations).
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: fcb1b51e-8bb3-4a55-8cc0-9bec637086c8 -->
+
+The Root Edit process begins with a AGENT4 token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. A AGENT4 token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Launch Agent 4 Prime” category.
+
+############# A.6.1.1.5.2.2.2.2.1.2.1.1.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: e0020160-9ee8-4f35-90f1-ba375d625689 -->
+
+Until the Powerhouse system supports submitting Artifact Edit Proposals, AGENT4 token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Launch Agent 4 Prime” category. The title of the post must include the text “Launch Agent 4 Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total AGENT4 token supply specified in [Root Edit Proposal Submission](fcb1b51e-8bb3-4a55-8cc0-9bec637086c8).
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: 432c532c-3e3a-41e9-b9dc-88c20d944541 -->
+
+A future iteration of the Launch Agent 4 Artifact will specify guidelines for obtaining specialized review of proposals requiring advanced technical or financial analysis.
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: d21854da-165b-455d-893c-147db514d31c -->
+
+Within seven (7) days of the proposal being submitted, the Operational Facilitator must review the Root Edit Proposal for alignment.
+
+If the proposal is aligned, the Operational Facilitator must respond to the Forum post to announce their finding. In this Forum post, the Operational Facilitator must also confirm that the proposal is feasible for Operational GovOps to operationalize.
+
+If the proposal is misaligned, the Operational Facilitator must respond to the Forum post to announce their finding and provide the reasoning for it.
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: b60fe2f0-2aa6-4f36-9d87-e81c2294abc9 -->
+
+Where their review of the proposal results in a finding of alignment with the Sky Core Atlas and Launch Agent 4 Artifact, the Operational Facilitator next triggers a Snapshot poll to allow token holders to vote on the proposal. The poll is open for three (3) days. A poll must have at least 10% of the circulating token supply participating and must have 50% of votes in favor to be approved.
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: e0a6abf0-6191-4605-afa3-cc0de7b72a05 -->
+
+At the conclusion of the poll, if the proposal is approved, the Operational Facilitator submits the edit to Powerhouse to formally update the Agent Artifact. Regardless of the outcome, the Operational Facilitator updates the Powerhouse System to include the result of the vote, including any pertinent documents.
+
+############# A.6.1.1.5.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: a418eef2-bbfc-43eb-8d79-62c7bb940c3d -->
+
+Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Core Facilitator to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
+
+############ A.6.1.1.5.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: c14e9e4d-2819-46cb-b267-a9b13600192a -->
+
+The Launch Agent 4 Artifact cannot be edited in any way that violates the Sky Core Atlas or its specifications of the Sky Primitives, or in any way that is otherwise misaligned. The Operational Facilitator must enforce this rule through their review of Artifact Edit Proposals.
+
+########### A.6.1.1.5.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2dcc5cd2-5936-4779-8ff6-072ad863756f -->
+
+The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in non-routine conditions.
+
+########### A.6.1.1.5.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d12b8cf2-2668-4466-ac2e-7404fce6c718 -->
+
+The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in emergency situations.
+
+############ A.6.1.1.5.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Emergency Situations [Core]  <!-- UUID: f8b1cf73-d16d-4ca0-aeea-3f95d25245a8 -->
+
+In an Emergency Situation, as defined by the Sky Core Atlas in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](5eafb29e-84a0-4a53-a798-3f958c880225), the Operational Facilitator may allow a Root Edit to occur more quickly than the timeline specified above. Where feasible, the Operational Facilitator should announce the decision to deploy the emergency Root Edit protocol and provide their reasoning via a public Sky Forum post (under the “Launch Agent 4 Prime” category), unless doing so would endanger Launch Agent 4 or its users.
+
+########## A.6.1.1.5.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 8f8ef2ba-1071-40df-98bc-384d1f6782b5 -->
+
+The documents herein contain data relevant to the Single Instance of the Root Edit Primitive.
+
+########### A.6.1.1.5.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b2f9aa29-8e29-4123-8996-12dad34b51e5 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 91cbbea6-33e4-49a4-ab2a-1c01d2b3eed8 -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: efce80bb-4637-4bdf-8ddb-ad412154a521 -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.2.2.3 - Completed Instances [Core]  <!-- UUID: 4d6ec316-b444-4550-a591-006a6b8080cd -->
+
+The Instances of the Root Edit Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: 77be1f27-3cd0-4e3f-a05d-8ce0880f37a7 -->
+
+Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+####### A.6.1.1.5.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: 32cf649f-13f7-41e2-bbe4-347a14532114 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Light Agent Primitive. See [A.2.4 - Light Agent Primitive](44028423-2cd1-40cb-89ac-3f762b602b90).
+
+######## A.6.1.1.5.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: c4b311b3-3f2c-483f-b24a-845ef5c6a6df -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Light Agent Primitive.
+
+######### A.6.1.1.5.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: afc008c0-e6d3-4973-b501-0f9f2db1cfa4 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 848c213e-5478-448c-9c7b-a8ea119823e5 -->
+
+This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 88717821-a8d4-480e-91c6-ba996685746c -->
+
+This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c38da3e3-0dbc-4deb-833f-0a124d55f0f7 -->
+
+This document contains a Directory of all prospective Instances of the Light Agent Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](848c213e-5478-448c-9c7b-a8ea119823e5), whereas failed Invocations are Archived in [Hub Data Repository](19e005fe-f719-407f-b788-5bc13f3ffb11).
+
+######### A.6.1.1.5.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 19e005fe-f719-407f-b788-5bc13f3ffb11 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8dfdbffe-91f9-44c5-8e28-45cbda1cbdfb -->
+
+The subtrees for archived Invocations and Instances of the Light Agent Primitive are stored here.
+
+########### A.6.1.1.5.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a7910404-5064-4d72-946d-2b9cb2f7d944 -->
+
+The subtrees for failed Invocations of the Light Agent Primitive are stored here.
+
+########### A.6.1.1.5.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d9955aca-f64d-41a3-9c5c-16ad98f98956 -->
+
+The subtrees for Instances of the Light Agent Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.2.3.2 - Active Instances [Core]  <!-- UUID: d7b02050-890e-4b86-9bbf-2d4183a97f44 -->
+
+The Instances of the Light Agent Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 5ef59d24-d4c8-445c-8385-08801b24be3a -->
+
+The Instances of the Light Agent Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: 041daa3a-41b4-47fd-8e2b-bb288fd8342b -->
+
+The in progress Invocations of the Light Agent Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](d7b02050-890e-4b86-9bbf-2d4183a97f44).
+
+###### A.6.1.1.5.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: ea7388bc-3689-4b90-80d8-920eb7f25411 -->
+
+The documents herein implement the Ecosystem Upkeep Primitives for Launch Agent 4. See [A.2.4 - A6 - Ecosystem Upkeep Primitives](25673fd2-76cb-4c4d-8ec6-8c489207bcfc).
+
+####### A.6.1.1.5.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 518b0729-7d39-4e94-96ae-4e1dce577b3a -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Distribution Requirement Primitive. See [A.2.4 - Distribution Requirement Primitive](0804ab13-d276-4ad9-a935-dc9f7fc2e350).
+
+######## A.6.1.1.5.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 367db765-3d90-449f-88d7-356eb2e5df6b -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Distribution Requirement Primitive.
+
+######### A.6.1.1.5.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: 6a8a9da7-4c67-4553-84fd-5ad743f50847 -->
+
+`Active`
+
+######### A.6.1.1.5.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 590456d2-baea-411e-bd00-dccbd12387c0 -->
+
+This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Active`.
+
+########## A.6.1.1.5.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 347ce0a4-ad9c-4a54-975b-939c932edbba -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](7ef7b4b1-d8c1-4f9d-bf00-c1cf292b0c02).
+
+######### A.6.1.1.5.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1d7ff736-dd46-4b6f-b5c1-c52e50f34846 -->
+
+This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 14a2006a-764a-4526-8d9f-ff3dfc4591fe -->
+
+Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 2087141c-ab9c-404e-bba8-1a1843350bb5 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8898ed9a-e7fc-403e-a061-8399a6b132b8 -->
+
+The subtrees for archived Invocations and Instances of the Distribution Requirement Primitive are stored here.
+
+########### A.6.1.1.5.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 2ef60c48-9590-4e1f-b00a-48cb9edbcd20 -->
+
+The subtrees for failed Invocations of the Distribution Requirement Primitive are stored here.
+
+########### A.6.1.1.5.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a300b6cf-1826-4b4a-b49a-b9fe4f75ccda -->
+
+The subtrees for Instances of the Distribution Requirement Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.3.1.2 - Active Instances [Core]  <!-- UUID: a27eeee1-ce9a-4b26-9bef-57199b921eda -->
+
+The Instances of the Distribution Requirement Primitive with `Active` Status are stored herein.
+
+######### A.6.1.1.5.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 7ef7b4b1-d8c1-4f9d-bf00-c1cf292b0c02 -->
+
+The documents herein contain the Instance Configuration Document for the Single Distribution Requirement Primitive Instance.
+
+########## A.6.1.1.5.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: c3c06c49-ce92-4eac-b7e9-00783b4c6902 -->
+
+The documents herein define the parameters of the Single Instance of the Distribution Requirement Primitive.
+
+########### A.6.1.1.5.2.3.1.2.1.1.1 - Term [Core]  <!-- UUID: 49fe9982-412f-4da4-b81d-92786d3a7709 -->
+
+Launch Agent 4 will buy back and distribute 0.25% of its total token supply per year.
+
+########### A.6.1.1.5.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: d58f7727-d553-43b9-b513-d4d490abc16f -->
+
+The documents herein define the custom parameters of the Single Instance of the Distribution Requirement Primitive, if any.
+
+########## A.6.1.1.5.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: dfafe9f2-4bc7-450a-b227-008d37b88249 -->
+
+The documents herein define the process for the ongoing management of the Single Instance of the Distribution Requirement Primitive.
+
+########### A.6.1.1.5.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 0fa4e4f4-a123-42d4-9353-997480ee8d14 -->
+
+This document defines the protocol for routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
+
+############ A.6.1.1.5.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: ec192467-881e-4af6-9378-1fa4e36a6c18 -->
+
+The process to buy back and distribute 0.25% of Launch Agent 4’s tokens per year will be specified in future iterations of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fc2e23dd-7ca5-4487-b7ba-283156adab6f -->
+
+The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
+
+########### A.6.1.1.5.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68b9b15-fd96-4e9b-93d6-8feab64f8d7b -->
+
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Distribution Requirement Primitive.
+
+########## A.6.1.1.5.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ba98afe-bd9c-49bb-938e-1475ceddd30b -->
+
+The documents herein contain data relevant to the Single Instance of the Distribution Requirement Primitive.
+
+########### A.6.1.1.5.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 1f1e7bb2-dfa7-4189-84bd-9a6759aec3e7 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 8f8f951d-8768-457d-9c56-3a81b92c395a -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e866803-811d-4220-b336-ebe239402921 -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.3.1.3 - Completed Instances [Core]  <!-- UUID: beeba9d9-39bb-4f36-9447-9456966975eb -->
+
+The Instances of the Distribution Requirement Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: 3c7049bc-3c9f-4088-94bc-0fc242dca76a -->
+
+Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+####### A.6.1.1.5.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: ad5238bd-b200-4f4d-9670-fae8fd1bdb6a -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s instances of the Market Cap Fee Primitive. See [A.2.4 - Market Cap Fee Primitive](a21616f4-1611-4e0b-87b2-efbdff9f6f28).
+
+######## A.6.1.1.5.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: fba527ac-64a7-4f7e-8bf2-411f87d3d9b4 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Market Cap Fee Primitive.
+
+######### A.6.1.1.5.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 11fbb511-f13f-4390-a843-7a436f6438cf -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 6548ed03-6cf2-482e-ab15-0d39f5c2f767 -->
+
+This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: a3b9358d-d4eb-45ba-8ef2-bd8fc7280ccc -->
+
+This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1778b3fa-c238-4094-9143-e949a28532fc -->
+
+This document contains a Directory of all prospective Instances of the Market Cap Fee Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6548ed03-6cf2-482e-ab15-0d39f5c2f767), whereas failed Invocations are Archived in [Hub Data Repository](79d81288-94aa-44e9-85d2-2f5108b5d789).
+
+######### A.6.1.1.5.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 79d81288-94aa-44e9-85d2-2f5108b5d789 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e21337b9-f950-467c-9ee0-7a87b20b5aa4 -->
+
+The subtrees for archived Invocations and Instances of the Market Cap Fee Primitive are stored here.
+
+########### A.6.1.1.5.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 0e499891-704b-46c8-8f0b-9fa05b9a6fe4 -->
+
+The subtrees for failed Invocations of the Market Cap Fee Primitive are stored here.
+
+########### A.6.1.1.5.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 89f2d35e-d04b-47cc-8f75-cba401195668 -->
+
+The subtrees for Instances of the Market Cap Fee Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.3.2.2 - Active Instances [Core]  <!-- UUID: 4cf784c4-9a59-4b24-88bc-d10b5991cdf4 -->
+
+The Instances of the Market Cap Fee Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.3.2.3 - Completed Instances [Core]  <!-- UUID: f8a814a0-8c61-4aee-af6d-919e6aa5aa1e -->
+
+The Instances of the Market Cap Fee Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: 3bad0aba-a4be-4107-809c-b41d364d5278 -->
+
+The in progress Invocations of the Market Cap Fee Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](4cf784c4-9a59-4b24-88bc-d10b5991cdf4).
+
+####### A.6.1.1.5.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 1cec73ac-6b70-48ff-a7ff-1d0f689d602f -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s instance of the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
+
+######## A.6.1.1.5.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: 36f57327-abff-4ac1-890b-c5097c449b02 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Upkeep Rebate Primitive.
+
+######### A.6.1.1.5.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: 28f93080-7f1f-45f1-a9c6-a78cea11cbbd -->
+
+`Active`
+
+######### A.6.1.1.5.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 47f2fe76-ba5f-437e-8110-799c1e3fe7f5 -->
+
+This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Active`.
+
+########## A.6.1.1.5.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 4800d116-8fa3-40b4-ac3b-dce8629d2984 -->
+
+This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](8a327b83-b508-480b-8e97-038c6e35c64f).
+
+######### A.6.1.1.5.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 41b96ba1-f506-498a-803f-d4067053b6ed -->
+
+This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 8850b00e-dd0a-44d7-b64a-7e4ef5cf7d37 -->
+
+Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+######### A.6.1.1.5.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 0daa3c8b-dbce-4c8c-bfd6-30a3d5ae7486 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a8cd1289-22f9-4e01-878b-01a7b0e90a80 -->
+
+The subtrees for archived Invocations and Instances of the Upkeep Rebate Primitive are stored here.
+
+########### A.6.1.1.5.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 49d6d2d2-1052-44d5-a9a9-0935d26f99ff -->
+
+The subtrees for failed Invocations of the Upkeep Rebate Primitive are stored here.
+
+########### A.6.1.1.5.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 28085731-4ac7-4016-807c-652fe1447bb8 -->
+
+The subtrees for Instances of the Upkeep Rebate Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.3.3.2 - Active Instances [Core]  <!-- UUID: c4e5deff-2cf9-492c-af8c-cfbd33327686 -->
+
+The Instances of the Upkeep Rebate Primitive with `Active` Status are stored herein.
+
+######### A.6.1.1.5.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 8a327b83-b508-480b-8e97-038c6e35c64f -->
+
+The documents herein contain the Instance Configuration Document for the Single Upkeep Rebate Primitive Instance.
+
+########## A.6.1.1.5.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 439a27ef-945c-43dc-ab3b-836e5ab6372b -->
+
+Every Prime Agent is entitled to the Upkeep Rebate Primitive for tokens of other Prime Agents that they hold. Because this right automatically applies, there are no parameters.
+
+########## A.6.1.1.5.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1d3eb5ff-4a71-4eff-a1f0-935f434644c1 -->
+
+The documents herein define the process for the ongoing management of the Single Instance of the Upkeep Rebate Primitive.
+
+########### A.6.1.1.5.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 144cfca6-e760-4f34-8ba3-effb1a1b9681 -->
+
+This document defines the protocol for routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
+
+############ A.6.1.1.5.2.3.3.2.1.2.1.1 - Launch Agent 4 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 93599af2-bf73-4598-8b78-dfb74549f90d -->
+
+Launch Agent 4 keeps all tokens of other Agents it holds in its SubProxy account.
+
+############ A.6.1.1.5.2.3.3.2.1.2.1.2 - Launch Agent 4 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: eb954d3d-94d9-46d8-a118-a74e0d9da8c0 -->
+
+When paying Ecosystem Upkeep fees, Launch Agent 4 deducts the rebate from the fees it pays.
+
+############ A.6.1.1.5.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: a8afed5e-3721-40a3-847c-3589a5dfce95 -->
+
+Operational GovOps reviews Launch Agent 4’s calculation of the rebate before executing a return of surplus to token holders. In the event of any issues, Operational GovOps cannot execute the distribution. If Operational GovOps does not execute the distribution, Operational GovOps must post an explanation on the Sky Forum under the “Launch Agent 4 Prime” category and work with Launch Agent 4 to resolve the disagreement. If Operational GovOps and Launch Agent 4 cannot resolve the disagreement, it must be escalated to Core GovOps.
+
+########### A.6.1.1.5.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 025b8abf-69a3-4749-95f3-60a7268983ff -->
+
+The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
+
+########### A.6.1.1.5.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68e712a-cf58-45c0-8065-f81a5f259b18 -->
+
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Upkeep Rebate Primitive.
+
+########## A.6.1.1.5.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: dd6c0d05-79f9-4663-85bb-916d12a29ce1 -->
+
+The documents herein contain data relevant to the Single Instance of the Upkeep Rebate Primitive.
+
+########### A.6.1.1.5.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: df002eaa-d6d5-4b27-9ccb-26193cc65ec5 -->
+
+The materials associated with initial planning of the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 5bf870c7-57bc-40f8-82d4-f6094b484a5b -->
+
+The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
+
+########### A.6.1.1.5.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: d94ae414-18e8-432b-9f17-f58e8cc0cce3 -->
+
+The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
+
+######## A.6.1.1.5.2.3.3.3 - Completed Instances [Core]  <!-- UUID: 0723c247-7b2d-48aa-a1f1-1166aad05319 -->
+
+The Instances of the Upkeep Rebate Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 4e8268eb-b8f4-4d45-bf11-a6c03f262275 -->
+
+Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
+
+###### A.6.1.1.5.2.4 - SkyLink Primitives [Core]  <!-- UUID: e66cbbd1-df57-418d-9699-73d050388fd6 -->
+
+The documents herein implement the SkyLink Primitives for Launch Agent 4. See [A.2.4 - A7 - SkyLink Primitives](7b5d8965-a64c-4c44-b742-607f51f69d8f).
+
+####### A.6.1.1.5.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: 5642de19-bfb3-4d54-9bc9-19b11b60a3c2 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Token SkyLink Primitive. See [A.2.4 - Token SkyLink Primitive](4504d2d4-ee45-4a07-8c5b-9baf20b12e76).
+
+######## A.6.1.1.5.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: 3ce6f8aa-7a27-4701-83cb-d1fc4c41bb28 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Token SkyLink Primitive.
+
+######### A.6.1.1.5.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9d778551-1fd4-4206-a0e0-cb555f6d1e34 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5c2fbcb7-e90b-44a5-854b-1616d9ad45a9 -->
+
+This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: a4ca44ca-4663-4d7d-8640-f173dfad1054 -->
+
+This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3fd9d534-7c71-411b-84ed-afbe997589d0 -->
+
+This document contains a Directory of all prospective Instances of the Token SkyLink Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5c2fbcb7-e90b-44a5-854b-1616d9ad45a9), whereas failed Invocations are Archived in [Hub Data Repository](930899b8-232d-4015-a594-317b682ca460).
+
+######### A.6.1.1.5.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 930899b8-232d-4015-a594-317b682ca460 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: f11e195b-b8ad-43fd-93a1-001b297d0dcf -->
+
+The subtrees for archived Invocations and Instances of the Token SkyLink Primitive are stored here.
+
+########### A.6.1.1.5.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 13a369a4-5eb1-4301-98a1-eff12149501a -->
+
+The subtrees for failed Invocations of the Token SkyLink Primitive are stored here.
+
+########### A.6.1.1.5.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: aea6d389-e1d1-4cd1-bd96-24a29c1b3ecc -->
+
+The subtrees for Instances of the Token SkyLink Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.4.1.2 - Active Instances [Core]  <!-- UUID: e8a2afff-b4b0-4b47-8b7a-32119eca9091 -->
+
+The Instances of the Token SkyLink Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.4.1.3 - Completed Instance [Core]  <!-- UUID: b08f8e0b-5cc8-4b0a-b148-4ef44fa7ae03 -->
+
+The Instances of the Token SkyLink Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: 01dcfdbb-70a4-4986-bf38-28db96dba4c4 -->
+
+The in progress Invocations of the Token SkyLink Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](e8a2afff-b4b0-4b47-8b7a-32119eca9091).
+
+###### A.6.1.1.5.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: 66ca6538-89c2-442e-87c2-9fe2d586b516 -->
+
+The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 4. See [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
+
+####### A.6.1.1.5.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: f055e990-51e6-44c2-8d14-4e8694e62c1d -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s instances of the Accessibility Reward Primitive. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+
+######## A.6.1.1.5.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: f11e8f01-a17f-44e7-aac1-56dbd5e9272e -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Accessibility Reward Primitive.
+
+######### A.6.1.1.5.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 94bbd7ec-e724-41e7-b74a-0e567768f219 -->
+
+`Active`
+
+######### A.6.1.1.5.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6d07d8e0-e37e-47f0-8534-e0c67effd267 -->
+
+This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f3d16b8f-4ac2-41b8-8744-13beb396588e -->
+
+This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e1234baf-b923-4837-a279-96a76208f78d -->
+
+This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6d07d8e0-e37e-47f0-8534-e0c67effd267), whereas failed Invocations are Archived in [Hub Data Repository](27d2b846-1278-4cf6-9a2f-09114d659813).
+
+######### A.6.1.1.5.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 27d2b846-1278-4cf6-9a2f-09114d659813 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d345b6e5-cf01-4c2c-a177-6d4f5549dcff -->
+
+The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+
+########### A.6.1.1.5.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 1cb40bb8-ab91-4fb8-82ba-84e71bd84504 -->
+
+The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+
+########### A.6.1.1.5.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: ce59ab47-8c7a-4893-a3f2-c9eeafac5168 -->
+
+The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.5.1.2 - Active Instances [Core]  <!-- UUID: bbe5be33-f895-48a4-a8de-7d65d83d4321 -->
+
+The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 51861e24-08e4-4828-a5ea-0f0ac08f67db -->
+
+The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 12cf9640-3b5b-4255-b7d9-e84baa973d9f -->
+
+The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](bbe5be33-f895-48a4-a8de-7d65d83d4321).
+
+####### A.6.1.1.5.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: edc5cd33-99a9-4687-b3fe-8c3e07da92e8 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Integration Boost Primitive. See [A.2.4 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
+
+######## A.6.1.1.5.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: f9d5c302-4695-436f-9a06-595c06da2fc9 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Integration Boost Primitive.
+
+######### A.6.1.1.5.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: f6c8017d-81cc-4ad5-ac3c-c68a354f2a61 -->
+
+`Active`
+
+######### A.6.1.1.5.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: bf82c8f9-c7d4-42ac-b590-f28982863ef5 -->
+
+This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: c206ac89-c13e-4fae-886e-3014d0640b05 -->
+
+This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: daad121e-7835-4c61-90fb-eb15f987329e -->
+
+This document contains a Directory of all prospective Instances of the Integration Boost Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](bf82c8f9-c7d4-42ac-b590-f28982863ef5), whereas failed Invocations are Archived in [Hub Data Repository](7b523fb3-f463-4f10-90d6-6dd1211dbc24).
+
+######### A.6.1.1.5.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 7b523fb3-f463-4f10-90d6-6dd1211dbc24 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3aa560cf-c7bd-47f8-b156-e3422c5dfc9b -->
+
+The subtrees for archived Invocations and Instances of the Integration Boost Primitive are stored here.
+
+########### A.6.1.1.5.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64cbff91-cacc-492e-97de-d412bb860190 -->
+
+The subtrees for failed Invocations of the Integration Boost Primitive are stored here.
+
+########### A.6.1.1.5.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d229d7d4-efdf-413c-9d9d-d4af3b43164b -->
+
+The subtrees for Instances of the Integration Boost Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.5.2.2 - Active Instances [Core]  <!-- UUID: 0607bde3-cffa-4597-8ad9-fdb38272a843 -->
+
+The Instances of the Integration Boost Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.5.2.3 - Completed Instances [Core]  <!-- UUID: 4dca2418-b9ea-4bdb-ae27-f34a09c7e761 -->
+
+The Instances of the Integration Boost Primitive with `Completed` Status are contained herein.
+
+######## A.6.1.1.5.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 7fdf50ff-7d49-4ffc-9e2d-c1db6ce4a33a -->
+
+The in progress Invocations of the Integration Boost Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](0607bde3-cffa-4597-8ad9-fdb38272a843).
+
+####### A.6.1.1.5.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 2f0a0b71-759e-4f14-b63d-0286450855fe -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Pioneer Chain Primitive. See [A.2.4 - Pioneer Chain Primitive](4c7be4c6-44b5-407a-94ae-3d7ca7e8039c).
+
+######## A.6.1.1.5.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7e7dc6f6-bfe1-460e-9fb1-35a906f75259 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Pioneer Chain Primitive.
+
+######### A.6.1.1.5.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: c13df592-a35a-4d72-b33e-65c3ee9ba799 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: b0507c60-c43a-4ba2-b2d1-e0dbc4694720 -->
+
+This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 18bcb4c7-6147-4231-a7fc-0d0c43cec037 -->
+
+This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e9e9cbf4-87cb-4e48-bf7c-f1a4caa934fa -->
+
+This document contains a Directory of all prospective Instances of the Pioneer Chain Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](b0507c60-c43a-4ba2-b2d1-e0dbc4694720), whereas failed Invocations are Archived in [Hub Data Repository](be430718-d9f5-4104-bdd0-26e333bd0a13).
+
+######### A.6.1.1.5.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: be430718-d9f5-4104-bdd0-26e333bd0a13 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: cd28b1ad-9837-4db4-bcb5-7b35ee89d7a0 -->
+
+The subtrees for archived Invocations and Instances of the Pioneer Chain Primitive are stored here.
+
+########### A.6.1.1.5.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fd0b30aa-9a67-428f-8414-ed99818c58b0 -->
+
+The subtrees for failed Invocations of the Pioneer Chain Primitive are stored here.
+
+########### A.6.1.1.5.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 20face9e-9216-44e9-b195-7d5fcb4c8465 -->
+
+The subtrees for Instances of the Pioneer Chain Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.5.3.2 - Active Instances [Core]  <!-- UUID: 4fd3fe8d-e5d8-49ce-95b5-15e14e165abf -->
+
+The Instances of the Pioneer Chain Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 504497a1-14b9-4119-b520-bdcf4bedc4f9 -->
+
+The Instances of the Pioneer Chain Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: cafab30a-9a0e-46ba-8eb9-889d85a57bb0 -->
+
+The in progress Invocations of the Pioneer Chain Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](4fd3fe8d-e5d8-49ce-95b5-15e14e165abf).
+
+###### A.6.1.1.5.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: c63a813f-b434-4c81-8826-df78171f61f0 -->
+
+The documents herein implement the Supply Side Stablecoin Primitives for Launch Agent 4. See [A.2.4 - A9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
+
+####### A.6.1.1.5.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 4345f138-7429-4923-98ee-f879d7b97237 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Allocation System Primitive. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
+
+######## A.6.1.1.5.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8d7a3b67-0a82-4580-9a55-b4b400d9d3a8 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Allocation System Primitive.
+
+######### A.6.1.1.5.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 164a3772-f874-4bb7-845e-40565e8b2f7f -->
+
+`Active`
+
+######### A.6.1.1.5.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6578c76c-fd72-49b6-8e46-a43dd48c0dc3 -->
+
+This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: caef9a8f-ae35-4770-94eb-d0778ef89aed -->
+
+This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cee634fa-d1d0-4344-882d-f29628f4fd65 -->
+
+This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6578c76c-fd72-49b6-8e46-a43dd48c0dc3), whereas failed Invocations are Archived in [Hub Data Repository](e2918f2a-3799-4010-a289-ac674e1c4ad6).
+
+######### A.6.1.1.5.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: e2918f2a-3799-4010-a289-ac674e1c4ad6 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ce32b29c-b995-42f6-8786-2f4855177cde -->
+
+The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
+
+########### A.6.1.1.5.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: cf0e8953-075d-41e1-a8d0-dcabf088b1fd -->
+
+The subtrees for failed Invocations of the Allocation System Primitive are stored here.
+
+########### A.6.1.1.5.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f0c371d3-988a-4a6c-aa99-b579c3cfd931 -->
+
+The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 5e72e074-f495-4aa1-969e-095a7aaf9f08 -->
+
+The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
+
+######## A.6.1.1.5.2.6.1.3 - Active Instances [Core]  <!-- UUID: 16b8c2a3-b764-4191-a9d4-325b993f24c6 -->
+
+The Instances of the Allocation System Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 34269206-d912-4d84-8a22-0a3bc211adde -->
+
+The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 6b795255-7537-4de3-a4fd-bc4f5aae345a -->
+
+The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](16b8c2a3-b764-4191-a9d4-325b993f24c6).
+
+####### A.6.1.1.5.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 473d0f9e-a5dc-48ee-84b9-a48cd2b6f215 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
+
+######## A.6.1.1.5.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: 7c5c39de-a531-42a7-8b74-e8e6ffeb2bc3 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Junior Risk Capital Rental Primitive.
+
+######### A.6.1.1.5.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: c3a0f75a-d418-411a-bc8e-ccde6aa938b1 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9e7e17-d7c4-4c72-9d0f-a2b58de3bbe6 -->
+
+This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 51f16355-24cf-463f-9603-154da3fcb1b3 -->
+
+This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b60d8075-b908-4086-9bb0-0d8a609b1dd6 -->
+
+This document contains a Directory of all prospective Instances of the Junior Risk Capital Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5f9e7e17-d7c4-4c72-9d0f-a2b58de3bbe6), whereas failed Invocations are Archived in [Hub Data Repository](a5fea5f5-f6b2-47e4-9ef5-bb23ba08921d).
+
+######### A.6.1.1.5.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a5fea5f5-f6b2-47e4-9ef5-bb23ba08921d -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ecd92a2e-9c67-4fb0-b3cf-3ad63cebf8a5 -->
+
+The subtrees for archived Invocations and Instances of the Junior Risk Capital Rental Primitive are stored here.
+
+########### A.6.1.1.5.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6e6d714e-4700-4aa8-bd61-6e8f012df6d4 -->
+
+The subtrees for failed Invocations of the Junior Risk Capital Rental Primitive are stored here.
+
+########### A.6.1.1.5.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: fd2cdc13-4035-4c91-b17c-7d1d1d5c5b7b -->
+
+The subtrees for Instances of the Junior Risk Capital Rental Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.6.2.2 - Active Instances [Core]  <!-- UUID: b894cf0e-5a3d-4fe2-bb43-668a1f973857 -->
+
+The Instances of the Junior Risk Capital Rental Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 4b2e42f3-064c-4cb8-87a8-96512a581841 -->
+
+The Instances of the Junior Risk Capital Rental Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: b83be319-7f7e-4cf5-ad70-ac59302422e4 -->
+
+The in progress Invocations of the Junior Risk Capital Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b894cf0e-5a3d-4fe2-bb43-668a1f973857).
+
+####### A.6.1.1.5.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: fab6088e-5b4c-4ab4-af33-051920120273 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Asset Liability Management Rental Primitive. See [A.2.4 - Asset Liability Management Rental Primitive](bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c).
+
+######## A.6.1.1.5.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: 804821a4-0344-4642-9575-8bde38f8edef -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Asset Liability Management Rental Primitive.
+
+######### A.6.1.1.5.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: 80b90a60-c898-4700-8c19-c168709b2bb0 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 10f33907-8a83-41ea-8e9c-c4a73882ce79 -->
+
+This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 6759bef4-337e-4e21-8dfe-4152b5618f0d -->
+
+This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 70f39980-940c-4f32-9365-a196fcca7858 -->
+
+This document contains a Directory of all prospective Instances of the Asset Liability Management Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](10f33907-8a83-41ea-8e9c-c4a73882ce79), whereas failed Invocations are Archived in [Hub Data Repository](c4856110-03a4-4f52-b13b-f3e99b8aba4f).
+
+######### A.6.1.1.5.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: c4856110-03a4-4f52-b13b-f3e99b8aba4f -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: b79f57c2-8d27-4147-8b02-9a2794ab9986 -->
+
+The subtrees for archived Invocations and Instances of the Asset Liability Management Rental Primitive are stored here.
+
+########### A.6.1.1.5.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ee5b528-4d53-46fb-b2ed-711c99fca801 -->
+
+The subtrees for failed Invocations of the Asset Liability Management Rental Primitive are stored here.
+
+########### A.6.1.1.5.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 06e80d6f-d630-4fab-99db-cb71211c8f56 -->
+
+The subtrees for Instances of the Asset Liability Management Rental Primitive with `Suspended` Status are stored here.
+
+######## A.6.1.1.5.2.6.3.2 - Active Instances [Core]  <!-- UUID: b1667bfc-be11-4b02-ab99-d39b3f5e510d -->
+
+The Instances of the Asset Liability Management Rental Primitive with `Active` Status are stored herein.
+
+######## A.6.1.1.5.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 9ce2e9b8-8033-4fae-bd6f-9f7b7590ba1b -->
+
+The Instances of the Asset Liability Management Rental Primitive with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 3c1a4517-7097-4964-a687-5dc1de1b00ee -->
+
+The in progress Invocations of the Asset Liability Management Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b1667bfc-be11-4b02-ab99-d39b3f5e510d).
+
+###### A.6.1.1.5.2.7 - Core Governance Primitives [Core]  <!-- UUID: 901fba8d-ac5f-4809-a3d4-e510fc9b74ca -->
+
+The documents herein implement the Core Governance Primitives for Launch Agent 4. See [A.2.4 - A10 - Core Governance Primitives](6fa54611-c744-4b9d-897d-b2a20e9cae5d).
+
+####### A.6.1.1.5.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: 871764eb-5ccb-47fc-8852-0523e989bef6 -->
+
+The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Core Governance Reward Primitive. See [A.2.4 - Core Governance Reward Primitive](b22d1c08-042a-4466-94fe-9d28951e4d4a).
+
+######## A.6.1.1.5.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: e0e1769f-ecbe-4598-a236-318d7b00c929 -->
+
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Core Governance Reward Primitive.
+
+######### A.6.1.1.5.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: a5f4abc0-9d2f-4356-9977-919fcf8ca427 -->
+
+`Inactive`
+
+######### A.6.1.1.5.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 03941fc1-96ff-454d-aa4d-0658057f7b4c -->
+
+This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Active`.
+
+######### A.6.1.1.5.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 05d4383b-1140-49f9-857b-00eec596f248 -->
+
+This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Completed`.
+
+######### A.6.1.1.5.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 77ff1220-f6e0-4b35-ad1c-0224aa5098df -->
+
+This document contains a Directory of all prospective Instances of the Core Governance Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](03941fc1-96ff-454d-aa4d-0658057f7b4c), whereas failed Invocations are Archived in [Hub Data Repository](6f24ea77-43d3-4c4f-84a0-9341114569c9).
+
+######### A.6.1.1.5.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6f24ea77-43d3-4c4f-84a0-9341114569c9 -->
+
+The documents herein contain the Data Repository for the Primitive Hub Document.
+
+########## A.6.1.1.5.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38d8dad5-0503-4d43-9826-a2895e9484cc -->
+
+The subtrees for archived Invocations and Instances of the Core Governance Reward Primitive are stored here.
+
+########### A.6.1.1.5.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: aa94bd40-29d7-4bec-88e6-e54a658947f3 -->
+
+The subtrees for failed Invocations of the Core Governance Reward Primitive are stored here.
+
+########### A.6.1.1.5.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 8cf31f6c-e9cc-4d01-97a3-afd2dae271c8 -->
+
+The subtrees for Instances of the Core Governance Reward Primitive with `Suspended` Status are stored here.
+
+##### A.6.1.1.5.3 - Omni Documents [Core]  <!-- UUID: 239c5dd4-46a1-4936-8e31-f37ea2aa802c -->
+
+The documents herein define Launch Agent 4’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
+
+###### A.6.1.1.5.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: bdad4ea3-7cf2-40fb-a8ab-4bb8b320e4c9 -->
+
+The documents herein specify Launch Agent 4 governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Launch Agent 4 Artifact is specified in the Root Edit Primitive above at [Root Edit Primitive](b69559bf-1acb-4f9c-8638-19fb8ef20fc2).
+
+####### A.6.1.1.5.3.1.1 - Sky Forum [Core]  <!-- UUID: fb92df01-4e93-45ec-8e81-b59d5767ebb7 -->
+
+Launch Agent 4 uses the Sky Forum for governance-related discussion. Posts should use the “Launch Agent 4 Prime” category.
+
+####### A.6.1.1.5.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: ec6dc53f-7398-4242-afc4-81e436541da2 -->
+
+The documents herein specify Launch Agent 4’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+####### A.6.1.1.5.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: e5ac06b5-0f4a-4506-bfa4-a4d18901e1cc -->
+
+The documents herein specify Launch Agent 4’s emergency response protocol in situations solely impacting Launch Agent 4 versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+###### A.6.1.1.5.3.2 - Strategic Intent And Operating Model [Core]  <!-- UUID: b380c021-e579-47a2-ae01-c85340caa135 -->
+
+Launch Agent 4 is an incubation-focused Prime within the Sky Ecosystem. It provides capital, infrastructure, and technical support to early-stage teams building on Sky Primitives. Launch Agent 4’s purpose is to accelerate aligned builders through structured incubation and funding. The subdocuments herein define the operating model, structure, mandate, and operational standards of Launch Agent 4.
+
+####### A.6.1.1.5.3.2.1 - Operating Model [Core]  <!-- UUID: 7d7658f6-31a9-4d73-8d3f-19b87d0e89ec -->
+
+Launch Agent 4 follows a direct-execution model rather than a multi-layered governance system. Key processes include:
+
+• **Incubation Selection:** Projects are sourced, evaluated, and onboarded based on strategic fit, feasibility, and alignment with Sky objectives.
+
+• **Capital Allocation:** All allocations occur through the Launch Agent 4 Incubator Prime, which deploys first-loss or operational capital under predefined parameters.
+
+####### A.6.1.1.5.3.2.2 - Risk and Compliance [Core]  <!-- UUID: d3466d20-01c9-453a-aee0-e7b8f9e17cf0 -->
+
+Launch Agent 4 adheres to the Sky Ecosystem’s standards for risk, transparency, and recourse.
+
+####### A.6.1.1.5.3.2.3 - Ecosystem Accord Alignment [Core]  <!-- UUID: 7f550ce1-dbd5-43dc-8c03-741eb6b9df4a -->
+
+Launch Agent 4 operates in full alignment with the Sky Atlas. All operations, reporting, and capital flows must comply with the standards established by Sky Governance and any applicable Ecosystem Accords.
+
+####### A.6.1.1.5.3.2.4 - First-Loss and Recourse Principles [Core]  <!-- UUID: 909f6c00-369e-4fd1-b052-1e933a17b669 -->
+
+Capital deployed through Launch Agent 4 carries explicit first-loss protection defined by the Incubator Prime. Each funded project must maintain verifiable recourse through token, equity, or revenue participation agreements enforceable by the Prime’s legal wrapper.
+
+####### A.6.1.1.5.3.2.5 - Data and Transparency Standards [Core]  <!-- UUID: c861f5fb-e99b-40ca-b535-291b94b69811 -->
+
+Launch Agent 4 maintains an active dashboard reporting total allocations, active projects, utilization, default rates, and realized yields.
 
 ### A.6.1.2 - List Of Executor Agent Artifacts [Section]  <!-- UUID: df62511d-afe5-42db-8bd4-6452c5a0f464 -->
 
