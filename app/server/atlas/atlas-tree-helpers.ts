@@ -50,7 +50,8 @@ export function getAllButLastTitlePart(s: string) {
 
 /**
  * Sorts child nodes by sort_order and document number.
- * Uses the same logic as `array.sort` in `buildTreeNode` in `atlas-tree-builder.ts`.
+ *
+ * Docs: https://www.notion.so/atlas-axis/Ordering-Of-Atlas-Documents-280f2ff08d73802e8e08d0bd88e081be
  *
  * @param documents - Array of child tree nodes to sort
  * @returns Sorted array of child tree nodes
