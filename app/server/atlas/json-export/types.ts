@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,

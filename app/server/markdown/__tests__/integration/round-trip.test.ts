@@ -173,6 +173,7 @@ function compareRichTextContent(richText1: NotionRichText[], richText2: NotionRi
  * Deep recursive comparison with detailed difference reporting
  * Returns a formatted string showing all differences between two objects
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function deepCompareWithDetails(obj1: unknown, obj2: unknown, path: string = '', verbose: boolean = false): string {
   const differences: string[] = [];
 
