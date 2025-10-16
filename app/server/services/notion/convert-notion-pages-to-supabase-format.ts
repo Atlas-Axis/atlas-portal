@@ -2,7 +2,9 @@ import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
   ChildLists,
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
+  NeededResearchExtraFields,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
@@ -96,6 +98,10 @@ async function convertSingleNotionPageToDatabaseFormat(
   // Extract extra fields for "Scenario Variation" documents
   else if (documentType === 'Scenario Variation') {
     extraFields = extractScenarioVariationExtraFields(notionPage) as unknown as Json;
+  }
+  // Extract extra fields for "Needed Research" documents
+  else if (documentType === 'Needed Research') {
+    extraFields = extractNeededResearchExtraFields(notionPage) as unknown as Json;
   }
 
   // Extract sort order
@@ -392,6 +398,33 @@ function extractScenarioVariationExtraFields(page: PageObjectResponse): Scenario
       }
     } catch (error) {
       console.error(`Error extracting Scenario Variation field "${supabaseFieldName}" from page ${page.id}:`, error);
+    }
+  }
+
+  return extraFields;
+}
+
+/**
+ * Extract Needed Research extra fields from a Notion page
+ */
+function extractNeededResearchExtraFields(page: PageObjectResponse): NeededResearchExtraFields {
+  const extraFields: NeededResearchExtraFields = {
+    needed_research_content: null,
+  };
+
+  // Extract each field using the property mapping
+  for (const [supabaseFieldName, notionPropertyName] of Object.entries(NEEDED_RESEARCH_PROPERTY_MAPPING)) {
+    try {
+      const property = page.properties[notionPropertyName];
+      if (property) {
+        const value = readPlainTextValueFromNotionPageProperty(property);
+        if (value) {
+          const fieldKey = supabaseFieldName as keyof NeededResearchExtraFields;
+          extraFields[fieldKey] = String(value);
+        }
+      }
+    } catch (error) {
+      console.error(`Error extracting Needed Research field "${supabaseFieldName}" from page ${page.id}:`, error);
     }
   }
 

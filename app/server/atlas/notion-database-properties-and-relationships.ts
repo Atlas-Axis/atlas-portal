@@ -177,7 +177,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentNo: 'Doc No',
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
-      content: 'Content',
+      content: null,
     },
     childRelationships: {},
   },
@@ -267,6 +267,11 @@ export interface ScenarioVariationExtraFields {
   scenario_variation_additional_guidance: string | null;
 }
 
+// "Needed Research" documents have some extra fields
+export interface NeededResearchExtraFields {
+  needed_research_content: string | null;
+}
+
 // Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
 export const SCENARIO_PROPERTY_MAPPING: Record<string, string> = {
   scenario_description: 'Description',
@@ -279,4 +284,9 @@ export const SCENARIO_VARIATION_PROPERTY_MAPPING: Record<string, string> = {
   scenario_variation_description: 'Description',
   scenario_variation_finding: 'Finding',
   scenario_variation_additional_guidance: 'Additional Guidance',
+};
+
+// Mapping of Supabase fields to their Notion property names. These fields exist only on "Needed Research" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
+export const NEEDED_RESEARCH_PROPERTY_MAPPING: Record<string, string> = {
+  needed_research_content: 'Content',
 };

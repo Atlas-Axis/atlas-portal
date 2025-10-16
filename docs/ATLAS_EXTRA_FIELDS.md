@@ -14,6 +14,8 @@ Extra fields are:
 
 ## Document Types with Extra Fields
 
+Currently, four Atlas document types have extra fields: Type Specification, Scenario, Scenario Variation, and Needed Research.
+
 ### 1. Type Specification
 
 **Interface**: `TypeSpecificationExtraFields`
@@ -57,6 +59,18 @@ Extra fields are:
 
 **Important**: The `Description` property maps to `scenario_variation_description` in extra_fields, NOT to the `content` field.
 
+### 4. Needed Research
+
+**Interface**: `NeededResearchExtraFields`
+
+| Supabase Field            | Notion Property | Description                                                      |
+| ------------------------- | --------------- | ---------------------------------------------------------------- |
+| `needed_research_content` | Content         | Main content (note: `content` field is null for Needed Research) |
+
+**Mapping**: `NEEDED_RESEARCH_PROPERTY_MAPPING`
+
+**Important**: The `Content` property maps to `needed_research_content` in extra_fields, NOT to the `content` field.
+
 ## How Extra Fields Work
 
 ### Import Process (Notion → Supabase)
@@ -68,10 +82,11 @@ Extra fields are:
    - `extractTypeSpecificationExtraFields()`
    - `extractScenarioExtraFields()`
    - `extractScenarioVariationExtraFields()`
+   - `extractNeededResearchExtraFields()`
 3. **Iteration**: Each function loops over its property mapping to extract values from Notion properties
 4. **Storage**: Extracted fields are stored as a JSONB object in the `extra_fields` column
 
-**Null Content Handling**: For Scenario and Scenario Variation documents, the `content` property mapping is `null`. The extraction logic handles this by defaulting to an empty string.
+**Null Content Handling**: For Scenario, Scenario Variation, and Needed Research documents, the `content` property mapping is `null`. The extraction logic handles this by defaulting to an empty string.
 
 ### Export Process (Supabase → JSON/Markdown)
 
@@ -81,6 +96,7 @@ Extra fields are:
 
 - `app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
   - `pickExtraFields()` function: Extracts extra fields based on document type
+  - `atlasNodeToStandardized()` function: Must spread `...pickExtraFields(node)` in the document type's case
   - Validates presence of expected fields and warns about missing ones
   - Returns a record with all expected keys (null if missing)
 
@@ -226,10 +242,13 @@ To add a new extra field to an existing document type:
 4. Add comparison function in `compare-database-pages.ts`
 5. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
 6. Add case in `pickExtraFields()` in `atlas-node-tree-to-standardized-atlas-node-tree.ts`
-7. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
-8. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
-9. Add to `extraFieldsByDocumentType` in `json-export/types.ts`
-10. Add case in UI components (`page-extra-data.tsx`, `content-tree.tsx`, `sync/page.tsx`)
+7. **Add `...pickExtraFields(node)` spread** in document type's case in `atlasNodeToStandardized()` function
+8. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
+9. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
+10. Add to `extraFieldsByDocumentType` in `json-export/types.ts`
+11. Add validation case in `validate-standardized-atlas-tree.ts`
+12. Add case in UI components (`page-extra-data.tsx`, `content-tree.tsx`, `sync/page.tsx`)
+13. Add unit test in `atlas-node-tree-to-standardized-atlas-node-tree.test.ts`
 
 ## Testing Extra Fields
 

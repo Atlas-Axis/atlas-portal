@@ -4,6 +4,7 @@ import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/atlas-diff';
 import type { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -333,6 +334,8 @@ function getExtraFieldMappingForDocumentType(type: string): Record<string, strin
       return SCENARIO_PROPERTY_MAPPING;
     case 'Scenario Variation':
       return SCENARIO_VARIATION_PROPERTY_MAPPING;
+    case 'Needed Research':
+      return NEEDED_RESEARCH_PROPERTY_MAPPING;
     default:
       return null;
   }

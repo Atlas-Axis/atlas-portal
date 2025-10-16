@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
+  NeededResearchExtraFields,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   ScenarioExtraFields,
@@ -148,7 +150,7 @@ export interface AgentScopeDatabaseDocument extends BaseAtlasDocument {
   needed_research: NeededResearchDocument[];
 }
 
-export interface NeededResearchDocument extends BaseAtlasDocument {
+export interface NeededResearchDocument extends BaseAtlasDocument, Partial<NeededResearchExtraFields> {
   // No children - leaf database
 }
 
@@ -156,4 +158,5 @@ export const extraFieldsByDocumentType: Partial<Record<AtlasDocumentType, string
   'Type Specification': Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING),
   Scenario: Object.keys(SCENARIO_PROPERTY_MAPPING),
   'Scenario Variation': Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING),
+  'Needed Research': Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING),
 };

@@ -1,4 +1,5 @@
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -63,6 +64,9 @@ function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
       break;
     case 'Scenario Variation':
       mapping = SCENARIO_VARIATION_PROPERTY_MAPPING;
+      break;
+    case 'Needed Research':
+      mapping = NEEDED_RESEARCH_PROPERTY_MAPPING;
       break;
     default:
       mapping = null;

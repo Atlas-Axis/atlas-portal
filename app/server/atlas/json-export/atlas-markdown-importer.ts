@@ -36,6 +36,7 @@ import {
   type AtlasDocumentType,
 } from '@/app/server/atlas/constants';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -204,6 +205,7 @@ function extractContentAndExtraFields(
     'Type Specification': TYPE_SPECIFICATION_PROPERTY_MAPPING,
     Scenario: SCENARIO_PROPERTY_MAPPING,
     'Scenario Variation': SCENARIO_VARIATION_PROPERTY_MAPPING,
+    'Needed Research': NEEDED_RESEARCH_PROPERTY_MAPPING,
   };
 
   const mapping = typeToMapping[type];

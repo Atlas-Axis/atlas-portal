@@ -1,7 +1,9 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
+  NeededResearchExtraFields,
   NotionDatabasePropertyKey,
   PROPERTY_MAPPING_NAMES,
   REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
@@ -125,6 +127,40 @@ function compareScenarioVariationExtraFields(
 }
 
 /**
+ * Compares extra fields for "Needed Research" type Atlas documents.
+ * These fields are stored in the `extra_fields` JSONB column in Supabase.
+ */
+function compareNeededResearchExtraFields(
+  notionPage: EnhancedPageObjectResponse,
+  supabasePage: NotionDatabasePage,
+): boolean {
+  // Extract extra fields from Notion page
+  const notionExtraFields: Partial<NeededResearchExtraFields> = {};
+  for (const [supabaseField, notionPropertyName] of Object.entries(NEEDED_RESEARCH_PROPERTY_MAPPING)) {
+    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof NeededResearchExtraFields] = notionValue ? String(notionValue) : null;
+  }
+
+  // Extract extra fields from Supabase page
+  const supabaseExtraFields = (supabasePage.extra_fields as unknown as NeededResearchExtraFields) || {};
+
+  // Compare each field
+  for (const field of Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING) as Array<keyof NeededResearchExtraFields>) {
+    const notionValue = notionExtraFields[field] || null;
+    const supabaseValue = supabaseExtraFields[field] || null;
+
+    if (notionValue !== supabaseValue) {
+      console.log(
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+      );
+      return true; // Has changes
+    }
+  }
+
+  return false; // No changes
+}
+
+/**
  * Compares Supabase (old) and Notion (new) database pages to detect changes.
  * Only compares properties and relationships listed in NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS.
  */
@@ -229,6 +265,12 @@ export function compareDatabasePages({
     // Check extra fields for Scenario Variation documents in Scenarios database
     if (atlasDatabaseName === ATLAS_DATABASES.SCENARIO_VARIATIONS) {
       if (compareScenarioVariationExtraFields(notionPage, supabasePage)) {
+        hasPropertyChanges = true;
+      }
+    }
+    // Check extra fields for Needed Research documents
+    if (atlasDatabaseName === ATLAS_DATABASES.NEEDED_RESEARCH) {
+      if (compareNeededResearchExtraFields(notionPage, supabasePage)) {
         hasPropertyChanges = true;
       }
     }

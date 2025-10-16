@@ -23,6 +23,7 @@
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -107,6 +108,9 @@ function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
       break;
     case 'Scenario Variation':
       allowedKeys = Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING);
+      break;
+    case 'Needed Research':
+      allowedKeys = Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING);
       break;
     default:
       return {};
@@ -300,6 +304,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, []);
       const doc: NeededResearchDocument = {
         ...base,
+        ...pickExtraFields(node),
       };
       return doc;
     }

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -63,6 +64,14 @@ function getExtraFieldsForDocument(page: NotionDatabasePage): {
   if (page.atlas_document_type === 'Scenario Variation') {
     return {
       mapping: SCENARIO_VARIATION_PROPERTY_MAPPING,
+      extraFieldsData: supabaseExtraFields,
+    };
+  }
+
+  // Needed Research documents
+  if (page.atlas_document_type === 'Needed Research') {
+    return {
+      mapping: NEEDED_RESEARCH_PROPERTY_MAPPING,
       extraFieldsData: supabaseExtraFields,
     };
   }

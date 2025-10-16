@@ -6,6 +6,7 @@ import { Button, ButtonGroup } from '@heroui/react';
 import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -41,6 +42,9 @@ function StandardizedExtraData({
       break;
     case 'Scenario Variation':
       labelMapping = SCENARIO_VARIATION_PROPERTY_MAPPING as Record<string, string>;
+      break;
+    case 'Needed Research':
+      labelMapping = NEEDED_RESEARCH_PROPERTY_MAPPING as Record<string, string>;
       break;
     default:
       labelMapping = {};

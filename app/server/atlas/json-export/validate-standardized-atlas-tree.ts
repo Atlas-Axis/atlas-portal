@@ -6,6 +6,7 @@ import {
   extraFieldsByDocumentType,
 } from '@/app/server/atlas/json-export/types';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -231,6 +232,10 @@ function validateNode(
     }
     case 'Type Specification': {
       for (const k of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING)) ensureStringOrNull(k);
+      break;
+    }
+    case 'Needed Research': {
+      for (const k of Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING)) ensureStringOrNull(k);
       break;
     }
     default:

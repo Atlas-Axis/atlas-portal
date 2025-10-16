@@ -9,6 +9,7 @@ import {
   childCollectionNames,
 } from '../json-export/types';
 import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -179,6 +180,8 @@ function getExtraFieldKeysForDocumentType(type: string): string[] {
       return Object.keys(SCENARIO_PROPERTY_MAPPING);
     case 'Scenario Variation':
       return Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING);
+    case 'Needed Research':
+      return Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING);
     default:
       return [];
   }

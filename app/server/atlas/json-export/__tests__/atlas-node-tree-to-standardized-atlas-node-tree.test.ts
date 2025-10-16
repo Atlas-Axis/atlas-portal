@@ -2,23 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import {
+  type NeededResearchExtraFields,
   type ScenarioExtraFields,
   type ScenarioVariationExtraFields,
   type TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { type Json } from '@/app/server/services/supabase/database.types';
 import type { UuidMappings } from '../../load-uuid-mapping';
-
-// Mock loadUuidMappings to avoid hitting Supabase in unit tests
-vi.mock('../../load-uuid-mapping', () => {
-  const mockUUIDMappings: UuidMappings = {
-    notionPageIDsToAtlasUUIDs: new Map<string, string>(),
-    atlasUUIDsToNotionPageIds: new Map<string, string>(),
-  };
-  return {
-    loadUuidMappings: vi.fn().mockResolvedValue(mockUUIDMappings),
-  };
-});
 import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
 import {
   type ActiveDataDocument,
@@ -32,6 +22,17 @@ import {
   extraFieldsByDocumentType,
 } from '../types';
 
+// Mock loadUuidMappings to avoid hitting Supabase in unit tests
+vi.mock('../../load-uuid-mapping', () => {
+  const mockUUIDMappings: UuidMappings = {
+    notionPageIDsToAtlasUUIDs: new Map<string, string>(),
+    atlasUUIDsToNotionPageIds: new Map<string, string>(),
+  };
+  return {
+    loadUuidMappings: vi.fn().mockResolvedValue(mockUUIDMappings),
+  };
+});
+
 const mockUUIDMappings: UuidMappings = {
   atlasUUIDsToNotionPageIds: new Map<string, string>(),
   notionPageIDsToAtlasUUIDs: new Map<string, string>(),
@@ -40,8 +41,7 @@ const mockUUIDMappings: UuidMappings = {
 vi.mock('../../atlas-rich-text-formatter', () => ({
   atlasDatabasePageToMarkdown: vi.fn().mockImplementation(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (node: AtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) =>
-      `# ${(node.generatedDocName) ?? ''}`,
+    (node: AtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) => `# ${node.generatedDocName ?? ''}`,
   ),
 }));
 
@@ -319,6 +319,21 @@ describe('atlasNodeToStandardized', () => {
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SCENARIO_VARIATIONS,
       atlas_document_type: 'Scenario Variation',
+      extra_fields: extra,
+    });
+    const result = atlasNodeToStandardized(node, uuidMappings);
+    for (const key of allKeys) {
+      const got = (result as unknown as Record<string, unknown>)[key as string];
+      expect(got).toBe(`val-${key}`);
+    }
+  });
+
+  it('includes all extra fields for Needed Research documents', () => {
+    const allKeys = (extraFieldsByDocumentType['Needed Research'] ?? []) as (keyof NeededResearchExtraFields)[];
+    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${k}`])) as unknown as Json;
+    const node = makeNode({
+      atlas_database_name: ATLAS_DATABASES.NEEDED_RESEARCH,
+      atlas_document_type: 'Needed Research',
       extra_fields: extra,
     });
     const result = atlasNodeToStandardized(node, uuidMappings);
