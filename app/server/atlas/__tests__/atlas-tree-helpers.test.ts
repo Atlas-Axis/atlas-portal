@@ -283,21 +283,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Annotation',
-          atlas_document_number: '.0.3.10',
+          atlas_document_number: 'Chief Contract - Element Annotation',
           atlas_database_name: 'Annotations',
         },
         {
           sort_order: null,
           atlas_document_type: 'Annotation',
-          atlas_document_number: '.0.3.2',
+          atlas_document_number: 'Ambiguity - Element Annotation',
           atlas_database_name: 'Annotations',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.3.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.3.10');
+      expect(sorted[0].atlas_document_number).toBe('Ambiguity - Element Annotation');
+      expect(sorted[1].atlas_document_number).toBe('Chief Contract - Element Annotation');
     });
 
     it('sorts Annotations by document number (reversed input)', () => {
@@ -305,21 +305,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Annotation',
-          atlas_document_number: '.0.3.2',
+          atlas_document_number: 'Ambiguity - Element Annotation',
           atlas_database_name: 'Annotations',
         },
         {
           sort_order: null,
           atlas_document_type: 'Annotation',
-          atlas_document_number: '.0.3.10',
+          atlas_document_number: 'Chief Contract - Element Annotation',
           atlas_database_name: 'Annotations',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.3.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.3.10');
+      expect(sorted[0].atlas_document_number).toBe('Ambiguity - Element Annotation');
+      expect(sorted[1].atlas_document_number).toBe('Chief Contract - Element Annotation');
     });
 
     it('sorts Tenets by document number', () => {
@@ -327,21 +327,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Action Tenet',
-          atlas_document_number: '.0.4.10',
+          atlas_document_number: 'Clear Error',
           atlas_database_name: 'Tenets',
         },
         {
           sort_order: null,
           atlas_document_type: 'Action Tenet',
-          atlas_document_number: '.0.4.2',
+          atlas_document_number: 'ACs Must Go Beyond Mere Technical Compliance With Rules',
           atlas_database_name: 'Tenets',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.4.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.4.10');
+      expect(sorted[0].atlas_document_number).toBe('ACs Must Go Beyond Mere Technical Compliance With Rules');
+      expect(sorted[1].atlas_document_number).toBe('Clear Error');
     });
 
     it('sorts Tenets by document number (reversed input)', () => {
@@ -349,21 +349,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Action Tenet',
-          atlas_document_number: '.0.4.2',
+          atlas_document_number: 'ACs Must Go Beyond Mere Technical Compliance With Rules',
           atlas_database_name: 'Tenets',
         },
         {
           sort_order: null,
           atlas_document_type: 'Action Tenet',
-          atlas_document_number: '.0.4.10',
+          atlas_document_number: 'Clear Error',
           atlas_database_name: 'Tenets',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.4.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.4.10');
+      expect(sorted[0].atlas_document_number).toBe('ACs Must Go Beyond Mere Technical Compliance With Rules');
+      expect(sorted[1].atlas_document_number).toBe('Clear Error');
     });
 
     it('sorts Active Data by document number', () => {
@@ -371,21 +371,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Active Data',
-          atlas_document_number: '.0.6.10',
+          atlas_document_number: 'A.2.11 - Lawyer Registry Current Approved Legal Counsels',
           atlas_database_name: 'Active Data',
         },
         {
           sort_order: null,
           atlas_document_type: 'Active Data',
-          atlas_document_number: '.0.6.2',
+          atlas_document_number: 'A.2.10 - Dispute Resolutions',
           atlas_database_name: 'Active Data',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.6.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.6.10');
+      expect(sorted[0].atlas_document_number).toBe('A.2.10 - Dispute Resolutions');
+      expect(sorted[1].atlas_document_number).toBe('A.2.11 - Lawyer Registry Current Approved Legal Counsels');
     });
 
     it('sorts Active Data by document number (reversed input)', () => {
@@ -393,21 +393,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Active Data',
-          atlas_document_number: '.0.6.2',
+          atlas_document_number: 'A.2.10 - Dispute Resolutions',
           atlas_database_name: 'Active Data',
         },
         {
           sort_order: null,
           atlas_document_type: 'Active Data',
-          atlas_document_number: '.0.6.10',
+          atlas_document_number: 'A.2.11 - Lawyer Registry Current Approved Legal Counsels',
           atlas_database_name: 'Active Data',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.0.6.2');
-      expect(sorted[1].atlas_document_number).toBe('.0.6.10');
+      expect(sorted[0].atlas_document_number).toBe('A.2.10 - Dispute Resolutions');
+      expect(sorted[1].atlas_document_number).toBe('A.2.11 - Lawyer Registry Current Approved Legal Counsels');
     });
 
     it('sorts Scenarios by document number', () => {
@@ -415,21 +415,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Scenario',
-          atlas_document_number: '.1.10',
+          atlas_document_number: 'Extended Leave Of Absence',
           atlas_database_name: 'Scenarios',
         },
         {
           sort_order: null,
           atlas_document_type: 'Scenario',
-          atlas_document_number: '.1.2',
+          atlas_document_number: 'Alternating Between Two Roles In Separate Time Intervals',
           atlas_database_name: 'Scenarios',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.1.2');
-      expect(sorted[1].atlas_document_number).toBe('.1.10');
+      expect(sorted[0].atlas_document_number).toBe('Alternating Between Two Roles In Separate Time Intervals');
+      expect(sorted[1].atlas_document_number).toBe('Extended Leave Of Absence');
     });
 
     it('sorts Scenarios by document number (reversed input)', () => {
@@ -437,21 +437,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Scenario',
-          atlas_document_number: '.1.2',
+          atlas_document_number: 'Alternating Between Two Roles In Separate Time Intervals',
           atlas_database_name: 'Scenarios',
         },
         {
           sort_order: null,
           atlas_document_type: 'Scenario',
-          atlas_document_number: '.1.10',
+          atlas_document_number: 'Extended Leave Of Absence',
           atlas_database_name: 'Scenarios',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      expect(sorted[0].atlas_document_number).toBe('.1.2');
-      expect(sorted[1].atlas_document_number).toBe('.1.10');
+      expect(sorted[0].atlas_document_number).toBe('Alternating Between Two Roles In Separate Time Intervals');
+      expect(sorted[1].atlas_document_number).toBe('Extended Leave Of Absence');
     });
 
     it('sorts Scenario Variations by document number', () => {
@@ -459,22 +459,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Scenario Variation',
-          atlas_document_number: '.var10',
+          atlas_document_number: 'Resignation Notice Not Received - var. 1',
           atlas_database_name: 'Scenario Variations',
         },
         {
           sort_order: null,
           atlas_document_type: 'Scenario Variation',
-          atlas_document_number: '.var2',
+          atlas_document_number: 'Alternating Between Two Roles In Separate Time Intervals - var. 1',
           atlas_database_name: 'Scenario Variations',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      // Natural ordering: var2 comes before var10 (2 < 10 numerically)
-      expect(sorted[0].atlas_document_number).toBe('.var2');
-      expect(sorted[1].atlas_document_number).toBe('.var10');
+      expect(sorted[0].atlas_document_number).toBe('Alternating Between Two Roles In Separate Time Intervals - var. 1');
+      expect(sorted[1].atlas_document_number).toBe('Resignation Notice Not Received - var. 1');
     });
 
     it('sorts Scenario Variations by document number (reversed input)', () => {
@@ -482,13 +481,13 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Scenario Variation',
-          atlas_document_number: '.var2',
+          atlas_document_number: 'Alternating Between Two Roles In Separate Time Intervals - var. 1',
           atlas_database_name: 'Scenario Variations',
         },
         {
           sort_order: null,
           atlas_document_type: 'Scenario Variation',
-          atlas_document_number: '.var10',
+          atlas_document_number: 'Resignation Notice Not Received - var. 1',
           atlas_database_name: 'Scenario Variations',
         },
       ];
@@ -496,9 +495,8 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // Should produce the same sorted order regardless of input order
-      // Natural ordering: var2 comes before var10 (2 < 10 numerically)
-      expect(sorted[0].atlas_document_number).toBe('.var2');
-      expect(sorted[1].atlas_document_number).toBe('.var10');
+      expect(sorted[0].atlas_document_number).toBe('Alternating Between Two Roles In Separate Time Intervals - var. 1');
+      expect(sorted[1].atlas_document_number).toBe('Resignation Notice Not Received - var. 1');
     });
 
     it('sorts Needed Research by document number', () => {
@@ -506,22 +504,21 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Needed Research',
-          atlas_document_number: 'NR-10',
+          atlas_document_number: 'Conflicting Atlas Edit Proposals',
           atlas_database_name: 'Needed Research',
         },
         {
           sort_order: null,
           atlas_document_type: 'Needed Research',
-          atlas_document_number: 'NR-2',
+          atlas_document_number: 'AD Budget Management',
           atlas_database_name: 'Needed Research',
         },
       ];
 
       const sorted = sortAtlasDocuments(documents);
 
-      // Natural ordering: NR-2 comes before NR-10 (2 < 10 numerically)
-      expect(sorted[0].atlas_document_number).toBe('NR-2');
-      expect(sorted[1].atlas_document_number).toBe('NR-10');
+      expect(sorted[0].atlas_document_number).toBe('AD Budget Management');
+      expect(sorted[1].atlas_document_number).toBe('Conflicting Atlas Edit Proposals');
     });
 
     it('sorts Needed Research by document number (reversed input)', () => {
@@ -529,13 +526,13 @@ describe('sortAtlasDocuments', () => {
         {
           sort_order: null,
           atlas_document_type: 'Needed Research',
-          atlas_document_number: 'NR-2',
+          atlas_document_number: 'AD Budget Management',
           atlas_database_name: 'Needed Research',
         },
         {
           sort_order: null,
           atlas_document_type: 'Needed Research',
-          atlas_document_number: 'NR-10',
+          atlas_document_number: 'Conflicting Atlas Edit Proposals',
           atlas_database_name: 'Needed Research',
         },
       ];
@@ -543,9 +540,8 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // Should produce the same sorted order regardless of input order
-      // Natural ordering: NR-2 comes before NR-10 (2 < 10 numerically)
-      expect(sorted[0].atlas_document_number).toBe('NR-2');
-      expect(sorted[1].atlas_document_number).toBe('NR-10');
+      expect(sorted[0].atlas_document_number).toBe('AD Budget Management');
+      expect(sorted[1].atlas_document_number).toBe('Conflicting Atlas Edit Proposals');
     });
   });
 
