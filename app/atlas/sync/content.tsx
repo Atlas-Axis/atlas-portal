@@ -1,6 +1,8 @@
 'use client';
 
 import { Alert } from '@heroui/alert';
+import { Checkbox } from '@heroui/checkbox';
+import { Divider } from '@heroui/divider';
 import { Card, CardBody, CardHeader } from '@heroui/react';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
@@ -55,8 +57,10 @@ export function Content({ result }: { result: AtlasDiffResult }) {
   return (
     <Card className="container mx-auto max-w-7xl p-6">
       <CardHeader>
-        <h1 className="mb-12 text-3xl font-bold">Atlas Sync - Markdown to Notion</h1>
+        <h1 className="text-3xl font-bold">Atlas Sync - Markdown to Notion</h1>
       </CardHeader>
+
+      <Divider className="my-4" />
 
       {!hasChanges && (
         <Alert variant="faded" color="success" className="mb-6 max-w-lg">
@@ -180,86 +184,89 @@ function ChangeCard({
   };
 
   return (
-    <Card className={`border-l-4 ${colorConfig.border}`} radius="none" shadow="none">
-      <CardBody className="flex flex-col gap-2">
-        {/* Document title in Atlas style */}
-        <div className="flex items-center gap-2 text-base font-semibold">
-          <span>
-            {doc.doc_no} - {doc.name}
-          </span>
-          <TypeChip type={doc.type} />
-        </div>
+    <div className="flex items-center gap-3">
+      <Checkbox size="lg" defaultSelected className="mt-1" />
+      <Card className={`flex-1 border-l-4 ${colorConfig.border}`} radius="none" shadow="none">
+        <CardBody className="flex flex-col gap-2">
+          {/* Document title in Atlas style */}
+          <div className="flex items-center gap-2 text-base font-semibold">
+            <span>
+              {doc.doc_no} - {doc.name}
+            </span>
+            <TypeChip type={doc.type} />
+          </div>
 
-        {/* Show old and new values for changes */}
-        {change.changeType === 'changed' && change.oldValues && change.newValues && (
-          <FieldChanges oldDoc={change.oldValues} newDoc={change.newValues} />
-        )}
+          {/* Show old and new values for changes */}
+          {change.changeType === 'changed' && change.oldValues && change.newValues && (
+            <FieldChanges oldDoc={change.oldValues} newDoc={change.newValues} />
+          )}
 
-        {/* Show parent change details */}
-        {change.changeType === 'parent_changed' && (
-          <div className={`mt-2 rounded p-3 ${colors.parent_changed.background} `}>
-            <div className="mb-1 text-sm font-semibold">Parent Changed</div>
-            <div className="space-y-1 text-xs">
-              <div>
-                <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no}
+          {/* Show parent change details */}
+          {change.changeType === 'parent_changed' && (
+            <div className={`mt-2 rounded p-3 ${colors.parent_changed.background} `}>
+              <div className="mb-1 text-sm font-semibold">Parent Changed</div>
+              <div className="space-y-1 text-xs">
+                <div>
+                  <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no}
+                </div>
+                <div>
+                  <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
+                </div>
+                <div>
+                  <span className="font-medium">Old parent:</span>{' '}
+                  {change.oldAncestry && change.oldAncestry.length > 0
+                    ? formatDocReference(change.oldAncestry[0])
+                    : 'root'}
+                </div>
+                <div>
+                  <span className="font-medium">New parent:</span>{' '}
+                  {change.newAncestry && change.newAncestry.length > 0
+                    ? formatDocReference(change.newAncestry[0])
+                    : 'root'}
+                </div>
               </div>
-              <div>
+            </div>
+          )}
+
+          {/* Show sibling order change details */}
+          {change.changeType === 'sibling_order_changed' && (
+            <div className={`mt-2 rounded p-3 ${colors.sibling_order_changed.background} `}>
+              <div className="mb-1 text-sm font-semibold">Sibling Order Changed</div>
+              <div className="text-xs">
+                <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no} →{' '}
                 <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
               </div>
-              <div>
-                <span className="font-medium">Old parent:</span>{' '}
-                {change.oldAncestry && change.oldAncestry.length > 0
-                  ? formatDocReference(change.oldAncestry[0])
-                  : 'root'}
-              </div>
-              <div>
-                <span className="font-medium">New parent:</span>{' '}
-                {change.newAncestry && change.newAncestry.length > 0
-                  ? formatDocReference(change.newAncestry[0])
-                  : 'root'}
+            </div>
+          )}
+
+          {/* Show content and extra fields for added documents */}
+          {change.changeType === 'added' && change.newValues && (
+            <div className="mt-2">
+              {change.newAncestry && change.newAncestry.length > 0 && (
+                <div className="mb-2 text-xs">
+                  <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
+                </div>
+              )}
+              <div className={`rounded p-3 ${colors.added.background} `}>
+                <DocumentContent doc={change.newValues} />
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Show sibling order change details */}
-        {change.changeType === 'sibling_order_changed' && (
-          <div className={`mt-2 rounded p-3 ${colors.sibling_order_changed.background} `}>
-            <div className="mb-1 text-sm font-semibold">Sibling Order Changed</div>
-            <div className="text-xs">
-              <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no} →{' '}
-              <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
+          {/* Show content and extra fields for deleted documents */}
+          {change.changeType === 'deleted' && change.oldValues && (
+            <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
+              {change.oldAncestry && change.oldAncestry.length > 0 && (
+                <div className="mb-2 text-xs">
+                  <span className="font-medium">Parent:</span> {formatDocReference(change.oldAncestry[0])}
+                </div>
+              )}
+              <DocumentContent doc={change.oldValues} />
             </div>
-          </div>
-        )}
-
-        {/* Show content and extra fields for added documents */}
-        {change.changeType === 'added' && change.newValues && (
-          <div className="mt-2">
-            {change.newAncestry && change.newAncestry.length > 0 && (
-              <div className="mb-2 text-xs">
-                <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
-              </div>
-            )}
-            <div className={`rounded p-3 ${colors.added.background} `}>
-              <DocumentContent doc={change.newValues} />
-            </div>
-          </div>
-        )}
-
-        {/* Show content and extra fields for deleted documents */}
-        {change.changeType === 'deleted' && change.oldValues && (
-          <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
-            {change.oldAncestry && change.oldAncestry.length > 0 && (
-              <div className="mb-2 text-xs">
-                <span className="font-medium">Parent:</span> {formatDocReference(change.oldAncestry[0])}
-              </div>
-            )}
-            <DocumentContent doc={change.oldValues} />
-          </div>
-        )}
-      </CardBody>
-    </Card>
+          )}
+        </CardBody>
+      </Card>
+    </div>
   );
 }
 
