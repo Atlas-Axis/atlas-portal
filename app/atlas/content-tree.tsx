@@ -262,12 +262,14 @@ function renderTreeNode({
   const nodeContent = (
     <>
       {!isRootNode && (
-        <a className={styles.nodeTitle} href={docNumber ? `#${docNumber}` : undefined}>
-          {docNumber} - {docName}
+        <div className={styles.nodeTitle}>
+          <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
+            {docNumber} - {docName}
+          </a>
           <span className={styles.typeChipSpacing}>
             <TypeChip type={docType} />
           </span>
-        </a>
+        </div>
       )}
 
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
