@@ -180,7 +180,7 @@ function ChangeCard({
   };
 
   return (
-    <Card className={`border-l-4 ${colorConfig.border}`} radius="sm" shadow="sm">
+    <Card className={`border-l-4 ${colorConfig.border}`} radius="none" shadow="none">
       <CardBody className="flex flex-col gap-2">
         {/* Document title in Atlas style */}
         <div className="flex items-center gap-2 text-base font-semibold">

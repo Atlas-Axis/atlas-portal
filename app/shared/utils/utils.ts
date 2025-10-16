@@ -1,3 +1,6 @@
+import clsx, { ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
@@ -46,3 +49,7 @@ export const formatUtcTimestamp = (date: Date = new Date()): string => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
