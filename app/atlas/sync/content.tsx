@@ -83,7 +83,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           title="Changed Documents"
           changes={changes.changed}
           changeType="changed"
-          emptyMessage="No documents changed"
+          emptyMessage="No document content changes"
           uuidToDocMap={newIdsToDocuments}
         />
 
@@ -134,6 +134,7 @@ function ChangeSection({
   const colorConfig = colors[changeType];
 
   if (changes.length === 0) {
+    return null;
     return (
       <div className="mb-3">
         <h2
@@ -143,17 +144,17 @@ function ChangeSection({
         >
           {title}
         </h2>
-        <p className="text-gray-400 italic">{emptyMessage}</p>
+        <p className="text-sm text-gray-300 italic">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
     <div className="my-9">
-      <h2 className="mb-4 text-2xl font-semibold">
+      <h2 className="my-3 mb-6 rounded-md bg-slate-100 p-3 text-2xl font-semibold">
         {title} ({changes.length})
       </h2>
-      <div className="space-y-4">
+      <div>
         {changes.map((change, index) => (
           <ChangeCard key={`${change.uuid}-${index}`} change={change} uuidToDocMap={uuidToDocMap} />
         ))}
@@ -172,8 +173,6 @@ function ChangeCard({
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
 
-  const colorConfig = colors[change.changeType];
-
   // Format UUID as document reference
   const formatDocReference = (uuid: string) => {
     const refDoc = uuidToDocMap.get(uuid);
@@ -186,8 +185,8 @@ function ChangeCard({
   return (
     <div className="flex items-center gap-3">
       <Checkbox size="lg" defaultSelected className="mt-1" />
-      <Card className={`flex-1 border-l-4 ${colorConfig.border}`} radius="none" shadow="none">
-        <CardBody className="flex flex-col gap-2">
+      <Card className="flex-1" radius="none" shadow="none">
+        <CardBody className="flex flex-col gap-0">
           {/* Document title in Atlas style */}
           <div className="flex items-center gap-2 text-base font-semibold">
             <span>
@@ -242,26 +241,28 @@ function ChangeCard({
           {/* Show content and extra fields for added documents */}
           {change.changeType === 'added' && change.newValues && (
             <div className="mt-2">
-              {change.newAncestry && change.newAncestry.length > 0 && (
-                <div className="mb-2 text-xs">
-                  <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
-                </div>
-              )}
               <div className={`rounded p-3 ${colors.added.background} `}>
                 <DocumentContent doc={change.newValues} />
               </div>
+              {change.newAncestry && change.newAncestry.length > 0 && (
+                <div className="mt-2 flex justify-end text-xs text-slate-400">
+                  <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
+                </div>
+              )}
             </div>
           )}
 
           {/* Show content and extra fields for deleted documents */}
           {change.changeType === 'deleted' && change.oldValues && (
-            <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
+            <div className="mt-2">
+              <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
+                <DocumentContent doc={change.oldValues} />
+              </div>
               {change.oldAncestry && change.oldAncestry.length > 0 && (
-                <div className="mb-2 text-xs">
+                <div className="mt-2 flex justify-end text-xs text-slate-400">
                   <span className="font-medium">Parent:</span> {formatDocReference(change.oldAncestry[0])}
                 </div>
               )}
-              <DocumentContent doc={change.oldValues} />
             </div>
           )}
         </CardBody>
