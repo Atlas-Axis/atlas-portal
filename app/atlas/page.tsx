@@ -6,7 +6,8 @@ import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import AtlasPagePrerendered from './atlas-page-prerendered';
 
 export const dynamic = 'force-static';
-export const revalidate = 60 * 60 * 12; // 12 hours
+// TODO: Remove this:
+export const revalidate = 43200; // 12 hours (60 * 60 * 12)
 
 console.log('/atlas is being prerendered');
 
