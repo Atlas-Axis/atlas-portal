@@ -7,7 +7,7 @@ export interface NotionDatabasePropertyMapping {
   atlasDocumentNo: string; // A property name representing the formal document ID, e.g. "A.3.1.1"
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
   atlasDocumentType: string; // A property name representing the type of document, e.g. "Core", "Section"...
-  content: string; // A property name representing the main content or body of the document
+  content: string | null; // A property name representing the main content or body of the document, or null if content is stored in extra_fields instead
   sortOrder?: string; // A property name representing the manually set order of the document within its parent or section
 }
 
@@ -152,7 +152,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentNo: 'Doc No (or Temp Name)',
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
-      content: 'Description',
+      content: null,
     },
     childRelationships: {
       [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
@@ -165,7 +165,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       atlasDocumentNo: 'Doc No',
       atlasDocumentName: 'Name',
       atlasDocumentType: 'Type',
-      content: 'Description',
+      content: null,
     },
     childRelationships: {
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
@@ -201,6 +201,7 @@ function reverseNotionDatabasePropertyMapping(
 
 // Precompute reversed mappings for all databases
 // Usage example: REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[ATLAS_DATABASES.SCOPES]
+// TODO: This doesn't work when a property is null (because object keys can't be null) - fix this!
 export const REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS: Record<
   AtlasDatabaseName,
   Record<string, keyof NotionDatabasePropertyMapping>
@@ -234,6 +235,7 @@ export type ChildLists = { [K in ChildListFieldName]: string[] };
 
 // "Type Specification" documents have some extra fields
 export interface TypeSpecificationExtraFields {
+  type_specification_components: string | null;
   type_specification_doc_identifier_rules: string | null;
   type_specification_additional_logic: string | null;
   type_specification_type_category: string | null;
@@ -243,6 +245,7 @@ export interface TypeSpecificationExtraFields {
 
 // Mapping of Supabase fields to their Notion property names. These fields exist only on "Type Specification" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
 export const TYPE_SPECIFICATION_PROPERTY_MAPPING: Record<keyof TypeSpecificationExtraFields, string> = {
+  type_specification_components: 'Components',
   type_specification_doc_identifier_rules: 'Doc Identifier Rules',
   type_specification_additional_logic: 'Additional Logic',
   type_specification_type_category: 'Type Category',
@@ -252,24 +255,28 @@ export const TYPE_SPECIFICATION_PROPERTY_MAPPING: Record<keyof TypeSpecification
 
 // "Scenario" documents have some extra fields
 export interface ScenarioExtraFields {
+  scenario_description: string | null;
   scenario_finding: string | null;
   scenario_additional_guidance: string | null;
 }
 
 // "Scenario Variation" documents have some extra fields
 export interface ScenarioVariationExtraFields {
+  scenario_variation_description: string | null;
   scenario_variation_finding: string | null;
   scenario_variation_additional_guidance: string | null;
 }
 
 // Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
 export const SCENARIO_PROPERTY_MAPPING: Record<string, string> = {
+  scenario_description: 'Description',
   scenario_finding: 'Finding',
   scenario_additional_guidance: 'Additional Guidance',
 };
 
 // Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario Variation" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
 export const SCENARIO_VARIATION_PROPERTY_MAPPING: Record<string, string> = {
+  scenario_variation_description: 'Description',
   scenario_variation_finding: 'Finding',
   scenario_variation_additional_guidance: 'Additional Guidance',
 };

@@ -308,7 +308,7 @@ function extractPropertyValueFromSupabase(
   notionPropertyName: string,
   atlasDatabaseName: AtlasDatabaseName,
 ): string | number | null {
-  const reversedNotionDatabasePropertyMapping = REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[atlasDatabaseName];
+  const reversedNotionDatabasePropertyMapping = REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[atlasDatabaseName]; // TODO: This doesn't work when a property is null (because object keys can't be null) - fix this!
   const mappedPropertyName = reversedNotionDatabasePropertyMapping[notionPropertyName];
   if (!mappedPropertyName) {
     console.warn(

@@ -12,12 +12,12 @@ import {
   TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { Json } from '../supabase/database.types';
 import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
-import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 
 // Local type for future relationship extraction usage
 type Relationships = Record<string, string[]>;
@@ -62,8 +62,11 @@ async function convertSingleNotionPageToDatabaseFormat(
   // Extract page title
   const pageTitle = extractRichTextPlainText(notionPage, databaseConfig.properties.atlasDocumentName);
 
-  // Extract content
-  const content = extractRichTextPlainText(notionPage, databaseConfig.properties.content);
+  // Extract content - handle null mapping by defaulting to empty string
+  const contentPropertyName = databaseConfig.properties.content;
+  const content = contentPropertyName
+    ? extractRichTextPlainText(notionPage, contentPropertyName)
+    : { plainText: '', richText: [] };
 
   // Extract canonical document title
   const canonicalDocumentTitle = readPlainTextValueFromNotionPageProperty(
@@ -315,6 +318,7 @@ function extractTypeSpecificationExtraFields(page: PageObjectResponse): TypeSpec
     type_specification_type_category: null,
     type_specification_type_name: null,
     type_specification_type_overview: null,
+    type_specification_components: null,
   };
 
   // Extract each field using the property mapping
@@ -343,6 +347,7 @@ function extractScenarioExtraFields(page: PageObjectResponse): ScenarioExtraFiel
   const extraFields: ScenarioExtraFields = {
     scenario_additional_guidance: null,
     scenario_finding: null,
+    scenario_description: null,
   };
 
   // Extract each field using the property mapping
@@ -371,6 +376,7 @@ function extractScenarioVariationExtraFields(page: PageObjectResponse): Scenario
   const extraFields: ScenarioVariationExtraFields = {
     scenario_variation_additional_guidance: null,
     scenario_variation_finding: null,
+    scenario_variation_description: null,
   };
 
   // Extract each field using the property mapping

@@ -46,9 +46,7 @@ function StandardizedExtraData({
       labelMapping = {};
   }
 
-  const rows = extraKeys
-    .map((key) => ({ key, label: labelMapping[key] || key, value: record[key] }))
-    .filter(({ value }) => value !== null && value !== undefined && value !== '');
+  const rows = extraKeys.map((key) => ({ key, label: labelMapping[key] || key, value: record[key] }));
 
   if (rows.length === 0) {
     return null;
@@ -60,7 +58,7 @@ function StandardizedExtraData({
         {rows.map(({ key, label, value }) => (
           <div key={key} className="mb-1">
             <p className="font-semibold text-slate-700">{label}:</p>{' '}
-            <p>{Array.isArray(value) ? value.join(', ') : String(value)}</p>
+            <p>{Array.isArray(value) ? value.join(', ') : String(value || '-')}</p>
           </div>
         ))}
       </div>
