@@ -233,6 +233,10 @@ export type ChildListFieldName = {
 
 export type ChildLists = { [K in ChildListFieldName]: string[] };
 
+/**
+ * TODO: Move the following interfaces and mappings to a shared file, since they are used in the client and server too
+ */
+
 // "Type Specification" documents have some extra fields
 export interface TypeSpecificationExtraFields {
   type_specification_components: string | null;
