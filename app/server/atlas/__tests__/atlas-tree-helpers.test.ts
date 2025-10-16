@@ -24,13 +24,12 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // When sort_order is the same, compareDocNumbers is used
-      // The comparison uses localeCompare for non-numeric segments after splitting by "."
-      // So "4 - A10 - ..." comes before "4 - A2 - ..." (lexicographic ordering)
+      // Natural ordering: A2 comes before A10 (2 < 10 numerically)
       expect(sorted[0].atlas_document_number).toBe(
-        'A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition',
+        'A.1.4 - A2 - Alignment Conservers - Powers And Constraints - ACs Must Safeguard The Spirit Of The Atlas',
       );
       expect(sorted[1].atlas_document_number).toBe(
-        'A.1.4 - A2 - Alignment Conservers - Powers And Constraints - ACs Must Safeguard The Spirit Of The Atlas',
+        'A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition',
       );
     });
 
@@ -56,11 +55,12 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // Should produce the same sorted order regardless of input order
+      // Natural ordering: A2 comes before A10 (2 < 10 numerically)
       expect(sorted[0].atlas_document_number).toBe(
-        'A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition',
+        'A.1.4 - A2 - Alignment Conservers - Powers And Constraints - ACs Must Safeguard The Spirit Of The Atlas',
       );
       expect(sorted[1].atlas_document_number).toBe(
-        'A.1.4 - A2 - Alignment Conservers - Powers And Constraints - ACs Must Safeguard The Spirit Of The Atlas',
+        'A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition',
       );
     });
 
@@ -112,6 +112,7 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // null (treated as 0) should come before 1
+      // TODO: Verify that this is the expected behavior
       expect(sorted[0].sort_order).toBe(null);
       expect(sorted[0].atlas_document_number).toContain('A2');
       expect(sorted[1].sort_order).toBe(1);
@@ -471,9 +472,9 @@ describe('sortAtlasDocuments', () => {
 
       const sorted = sortAtlasDocuments(documents);
 
-      // Uses localeCompare for non-numeric segments, so "var10" < "var2" lexicographically
-      expect(sorted[0].atlas_document_number).toBe('.var10');
-      expect(sorted[1].atlas_document_number).toBe('.var2');
+      // Natural ordering: var2 comes before var10 (2 < 10 numerically)
+      expect(sorted[0].atlas_document_number).toBe('.var2');
+      expect(sorted[1].atlas_document_number).toBe('.var10');
     });
 
     it('sorts Scenario Variations by document number (reversed input)', () => {
@@ -495,8 +496,9 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // Should produce the same sorted order regardless of input order
-      expect(sorted[0].atlas_document_number).toBe('.var10');
-      expect(sorted[1].atlas_document_number).toBe('.var2');
+      // Natural ordering: var2 comes before var10 (2 < 10 numerically)
+      expect(sorted[0].atlas_document_number).toBe('.var2');
+      expect(sorted[1].atlas_document_number).toBe('.var10');
     });
 
     it('sorts Needed Research by document number', () => {
@@ -517,9 +519,9 @@ describe('sortAtlasDocuments', () => {
 
       const sorted = sortAtlasDocuments(documents);
 
-      // After stripping "NR", becomes "-10" vs "-2", uses localeCompare: "-10" < "-2"
-      expect(sorted[0].atlas_document_number).toBe('NR-10');
-      expect(sorted[1].atlas_document_number).toBe('NR-2');
+      // Natural ordering: NR-2 comes before NR-10 (2 < 10 numerically)
+      expect(sorted[0].atlas_document_number).toBe('NR-2');
+      expect(sorted[1].atlas_document_number).toBe('NR-10');
     });
 
     it('sorts Needed Research by document number (reversed input)', () => {
@@ -541,8 +543,9 @@ describe('sortAtlasDocuments', () => {
       const sorted = sortAtlasDocuments(documents);
 
       // Should produce the same sorted order regardless of input order
-      expect(sorted[0].atlas_document_number).toBe('NR-10');
-      expect(sorted[1].atlas_document_number).toBe('NR-2');
+      // Natural ordering: NR-2 comes before NR-10 (2 < 10 numerically)
+      expect(sorted[0].atlas_document_number).toBe('NR-2');
+      expect(sorted[1].atlas_document_number).toBe('NR-10');
     });
   });
 
