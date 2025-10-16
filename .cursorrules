@@ -15,6 +15,7 @@
 - If my prompt is ambiguous, please ask me clarifying questions to resolve any confusion. This will help prevent generating incorrect code, even if it means I'll need to put in extra effort to answer your questions.
 - Don't ask for permission to run console commands (tests, etc.), just run them.
 - When you ask me questions, assign numbers to each question so that I can answer them more easily
+- When you finish a refactoring task, do a code review on the changes and fix major issues you may find
 - When you finish any task, run `npx tsx scripts/agent-notification.ts`
 
 # Project Overview
@@ -603,6 +604,7 @@ The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays prese
 5. **Real-World Impact**: Prevents nested docs from appearing under both parent and grandparent.
 
 **Duplicates Policy**
+
 - Needed Research: allowed; log info.
 - Tenets: allowed; log warning.
 - Others: treat as modeling issues; filtering should avoid them.
