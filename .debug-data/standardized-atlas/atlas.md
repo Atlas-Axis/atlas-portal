@@ -516,6 +516,17 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Type Name": The Type Name Component must contain the name of the Document Type
+
+"Type Overview": The Type Overview Component must contain high level information as human-readable text about the type, such as what it is used for and why it is necessary.
+
+"Type Components": If the Type has Components, they must be specified in this Component as a nested object.
+
+"Type Category": This Component must specify whether the Type is an Immutable Document, a Primary Document, a Supporting Document, or a Translation Document.
+
+"Document Identifier Rules": This Component must specify as human-readable text rules related to the Document Identifier for Atlas Documents of this Type, and their locations in the Document Trees.
+
+"Additional Logic": This Component can contain additional logic that applies to all Documents of the Type.
 **Doc Identifier Rules**: Type Specification Documents must follow the Document Identifier rules for Primary Documents.
 **Additional Logic**: The rules specified in Type Specification Documents must be followed for all Atlas Documents.
 **Type Category**: Primary Document
@@ -526,6 +537,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Content": The content Component is very flexible and defines in broad human-readable language the Spirit of the Atlas.
 **Doc Identifier Rules**: Atlas Preamble Documents are located at A.0 or as nested Documents one layer below A.0.
 **Additional Logic**: Atlas Preamble Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all other Atlas Documents.
 **Type Category**: Immutable Document
@@ -536,6 +548,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Content": The content Component is very flexible and defines in broad human-readable language core principles, rules and processes.
 **Doc Identifier Rules**: Scope Documents have the Document Identifiers from A.1 to A.6.
 **Additional Logic**: Scope Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them
 **Type Category**: Immutable Document
@@ -546,6 +559,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Content": The content Component is very flexible and defines in broad human-readable language core principles, rules and processes of the specific focus area of the Scope that the Article covers, and provides the starting point, requirements, boundaries, and in some cases immutable specifications, needed to develop the Adaptive Documents that are nested at lower layers of the Document Trees to maximally fulfill their practical purpose without violating the Spirit of the Atlas.
 **Doc Identifier Rules**: Article Documents have Document Identifiers one layer below the Scope Documents.
 **Additional Logic**: Article Documents are immutable, foundational parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Atlas Documents nested below them.
 **Type Category**: Immutable Document
@@ -556,6 +570,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: “Content": The content Component is very flexible and provides in-depth human-readable language to elaborate on the specific principles, rules, and processes that operationalize the Section’s parent Article.
 **Doc Identifier Rules**: Section Documents have Document Identifiers one layer below the Article Documents.
 **Additional Logic**: Section Documents are immutable parts of the Atlas and their content must be considered when interpreting all principles, rules and processes of Adaptive Documents nested below them.
 **Type Category**: Immutable Document
@@ -566,6 +581,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Content": The content Component is very flexible and defines in human-readable language core principles, rules or processes, or subcomponents thereof.
 **Doc Identifier Rules**: Core Documents follow the Document Identifier Rules of Primary Documents. Core Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Core Documents can have whatever Document Identifier that is useful for their purpose.
 **Additional Logic**: 
 **Type Category**: Primary Document
@@ -576,6 +592,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: 
 **Doc Identifier Rules**: Supporting Root Documents must always be located at the .0 position of its Target Document.
 **Additional Logic**: The Supporting Root Documents have no function other than structurally acting as a directory for nested Supporting Documents in a standardized format. All Immutable Documents and Primary Documents must have a Supporting Root Document attached.
 **Type Category**: Supporting Document
@@ -586,6 +603,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Content": The Content Component should contain all relevant information to understand the intention and reasoning behind the wording and elements of the main Document.
 **Doc Identifier Rules**: Original Context Data Documents must always be located at the .0.1 position of their Target Document, or nested in a subtree of Original Context Data Documents below the .0.1 position.
 **Additional Logic**: The Original Context Data Document should be in a finished form alongside the creation or modification of its Target Document, as it aims to capture the original context and intention of the contents of the Target Document. However, it can and should be modified if new evidence and data comes to light that helps to better describe the original context and intention of the Target Document, or if new perspectives or new external events makes it possible and useful to modify the Original Context Data Document in a way that doesn’t contradict its earlier language.
 **Type Category**: Supporting Document
@@ -596,6 +614,7 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Directory index": This Component should contain a list of the Element Annotation Documents contained within, with keys being the document identifiers and values being their document names.
 **Doc Identifier Rules**: Element Annotation Directory Documents must always be located at the .0.3 position of their Target Document.
 **Additional Logic**: 
 **Type Category**: Supporting Document
@@ -606,6 +625,9 @@ The subdocuments herein are Type Specification Documents defining the standardiz
 
 [See below]
 
+**Components**: "Element": The Element Component should contain the unique word or phrase from the Target Document that is being annotated.
+
+"Annotation": The Annotation Component should concisely disambiguate and bound the semantic meaning of problematic terms in the Target Document. Such terms can be vague, ambiguous or technical jargon specific to the Target Document.
 **Doc Identifier Rules**: Element Annotation Documents must always be located as subdocuments to the Element Annotation Directory Document of their Target Document. Element Annotation documents are located at the .0.3.X position, with X being the incremented number.
 **Additional Logic**: Element Annotation Documents should be updated as necessary to reflect changes in the understanding or interpretation of the Element and/or any related Atlas document, while maintaining consistency with the Target Document. The Element Annotation should not contradict its Target Document or other context data of the Target Document.
 
@@ -618,6 +640,7 @@ The "Name" property of each Element Annotation Document instance must follow a s
 
 [See below]
 
+**Components**: "Directory index": This Component should contain a list of the Facilitator Action Tenets contained within, with keys being the document identifiers and values being their document names.
 **Doc Identifier Rules**: Facilitator Action Tenet Directory Documents must always be located at the .0.4 position of their Target Document.
 **Additional Logic**: 
 **Type Category**: Supporting Document
@@ -628,6 +651,7 @@ The "Name" property of each Element Annotation Document instance must follow a s
 
 [See below]
 
+**Components**: "Content": The Tenet Component specifies the adjudication logic, principle or doctrine that is directly derived from the Target Document. This Component can include policy statements underpinning the adjudication principle. Such policy statements can highlight the values that are served by, or the benefits gained from, adhering to the Tenet. When facing edge cases, these policy statements can help Facilitators to extrapolate from the Tenet's logic to achieve the most suitable outcome.
 **Doc Identifier Rules**: Facilitator Action Tenet Documents must always be located as subdocuments of the Facilitator Action Tenet Directory Document (which latter is located at position .0.4) of their Target Document. Action Tenet documents are located at the .0.4.X position, with X being the incremented number.
 **Additional Logic**: Facilitator Action Tenet Documents are likely to be necessary supplements for interpreting the Immutable Document types, as these tend to have generalized, broad language. The Core Document type has the function of operationalizing the Immutable Documents, and thus its language will tend to be far more specific and concrete. For that reason, Action Tenet Supporting Documents may not be necessary for a particular Core Document. This is not a hard-coded rule, however. The determination of whether an Action Tenet Document is needed for any given Atlas document should always be tailor-made.
 
@@ -642,6 +666,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Directory index": This Component should contain a list of the Facilitator Action Precedents contained within, with keys being the document identifiers and values being their document names.
 **Doc Identifier Rules**: Facilitator Action Precedent Directory Documents must always be located at the .0.5 position below their Target Document.
 **Additional Logic**: A Facilitator Action Precedent Directory Document must be updated whenever a new Facilitator Action Precedent Document is added that meaningfully changes what should be contained in the Directory overview Component.
 **Type Category**: Supporting Document
@@ -652,6 +677,11 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Input": The Input Component must contain a description of the situation or context in which the Facilitator Action takes place. This could include any relevant information, such as the state of governance or the specific issue at hand.
+
+"Output": The Output Component must contain a description of the Facilitator's action and the outcome or decision that resulted from it. This should provide a clear illustration of how the Facilitator responded to the situation.
+
+"Label": The Label Component indicates whether the Facilitator's action is considered aligned or misaligned according to the principles and rules of governance. This judgment is intended to guide future actions and decisions. If the label is misaligned, it must also specify the penalty that is applied to the Facilitator for misalignment. The Label must always be marked as Aligned when it is created by the Facilitator, and further action by Sky Governance can directly modify this later according to the specifications of the Atlas Documents relevant to appealing Facilitator Actions.
 **Doc Identifier Rules**: Facilitator Action Precedent Documents must always be located as subdocuments of the Facilitator Action Precedent Directory Document of their Target Document.
 **Additional Logic**: Facilitator Action Precedent Documents should be created and updated as necessary to reflect changes in governance practices, provide clarity on decision-making processes, and enhance understanding of governance principles and rules. The Precedents should not contradict their Target Document or other Supporting Documents of the Target Document.
 **Type Category**: Supporting Document
@@ -662,6 +692,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Content": The Content Component of Active Data Controller Documents is used to define: 1) the entities who are authorized to modify the child Active Data Documents and 2) the authorized process by which said Active Data Documents are modified. If applicable, the Custom Components format and requirements of the Active Data Documents must be defined as well.
 **Doc Identifier Rules**: Active Data Controller Documents follow the Document Identifier Rules of Primary Documents.  Active Data Controller Documents have Document Identifiers that are 4 layers or deeper in the Document Tree, and cannot contain 0's [zeros]. Within these constraints, Active Data Controller Documents can have whatever Document Identifier that is useful for their purpose.
 **Additional Logic**: Active Data Controller Documents must have an Active Data Directory Document located below it at the .0.6 position. The Active Data Controller Document can reference its Active Data subdocuments for its own logic. This allows Active Data Documents to be self-improving and adaptive at high speeds.
 **Type Category**: Primary Document
@@ -672,6 +703,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: “Directory overview": This Component should contain a brief explanation of overall patterns and themes of the Active Data Documents contained within.
 **Doc Identifier Rules**: Active Data Directory Documents must always be located at the .0.6 position of their Active Data Controller Document or Budget Controller Document.
 **Additional Logic**: An Active Data Directory Document should be updated whenever a new Active Data Document is added that meaningfully changes what should be contained in the Directory overview Component.
 **Type Category**: Supporting Document
@@ -682,6 +714,9 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: “Content”: This component is very flexible and represents in human-readable language the mutable data that is modifiable pursuant to the logic of the parent Active Data Controller.
+
+"Custom Components": If present, the Custom Components of Active Data Documents are defined by their parent Active Data Controller Document. They can contain the variable state that is directly modifiable by processes external to the standard Weekly Governance Cycle or the Monthly Governance Cycle.
 **Doc Identifier Rules**: Active Data Documents must always be located as subdocuments of the Active Data Directory Document of their Active Data Controller Document.
 **Additional Logic**: Active Data Documents can contain arbitrary types of data, including large amounts of data or code. The function and purpose of the contained data depends on the logic specified in the Active Data Controller Document.
 **Type Category**: Supporting Document
@@ -692,6 +727,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: “Content": The Content Component of Budget Controller Documents is used to describe flexible rules of how the Active Data Documents and Budget Documents must behave, and how they can be modified. The Custom Components format and requirements of the Active Data Documents and the Budget Documents must be defined as well.
 **Doc Identifier Rules**: Budget Controller Documents follow the Document Identifier Rules of Primary Documents.
 **Additional Logic**: Budget Controller Documents must have an Active Data Directory Document located below it at the .0.6 position, and a Budget Directory Document located below it at the .0.7 position.
 **Type Category**: Primary Document
@@ -702,6 +738,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Directory overview": This Component should contain a brief explanation of overall patterns and themes of the Budget Documents contained within.
 **Doc Identifier Rules**: Budget Directory Documents must always be located at the .0.7 position of their Budget Controller Document.
 **Additional Logic**: A Budget Directory Document should be updated whenever a new Budget Document is added that meaningfully changes what should be contained in the Directory overview Component.
 **Type Category**: Supporting Document
@@ -712,6 +749,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Custom Components": The Custom Components of Budget Documents are defined by the Budget Controller Document. They contain the variable state that can be directly modified.
 **Doc Identifier Rules**: Budget Documents must always be located as subdocuments of the Budget Directory Document of their Budget Controller Document.
 **Additional Logic**: Budget Documents specify a budget rate expressed as SKY or USDS per unit of time. Additionally, they can contain large amounts of data, or code, and their function and purpose depends on their Budget Controller Document. Budget Documents can be modified directly through processes external to the standard Atlas Edit Proposal process as specified by their Budget Controller Document.
 **Type Category**: Supporting Document
@@ -722,6 +760,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: 
 **Doc Identifier Rules**: Definition Directory Documents must always be located at the .0.0 position of their Target Document.
 **Additional Logic**: Definition Directory Documents only need to be present in Atlas Documents that require definitions for unique terms in their Subdocuments.
 **Type Category**: Supporting Document
@@ -732,6 +771,9 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Term": The Term Component contains the name of the term that is being defined.
+
+"Definition": The Definition Component contains the detailed definition of the term.
 **Doc Identifier Rules**: Definition Documents must always be located as subdocuments of the Definition Directory Document of their Target Document.
 **Additional Logic**: To the extent possible it should be avoided to have the same term defined multiple times in the Atlas, and instead always put a single definition at a location in the Atlas that covers all of its use. The main exception to this principle should be when relatively niche terms are present in two different Scopes.
 **Type Category**: Supporting Document
@@ -742,6 +784,13 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Original Document Type": The Type of the original document that is being translated must be specified in this component.
+
+"Language": The Language Component specifies the language in which the Atlas Document is translated.
+
+"Translated Name": The Translated Name component contains the name of the translated Atlas Document in the new language.
+
+ "Custom": Translation Documents contain Custom Components that mirror the components of the original Document with component name and component data translated to the new language.
 **Doc Identifier Rules**: Translation Documents are located as subdocuments to the Atlas Document they are translating. Their Document Identifier is the same as the Atlas Document they are translating, with an additional suffix that represents the language of the translation. For example, a Spanish translation of A.1 would have the Document Identifier A.1.es.
 **Additional Logic**: Translation Documents should be updated whenever the Atlas Document they are translating is updated to ensure that the translation remains accurate. However, in case of any discrepancies or contradictions, the original English version of the Atlas Document always takes precedence.
 **Type Category**: Accessory Document
@@ -752,6 +801,9 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Original Document Type": The Type of the original document that is being archived must be specified in this component.
+
+"Custom": Archive Documents contain Custom Components that mirror the components of the original Document at the time of the version being archived.
 **Doc Identifier Rules**: Archive Documents are located as subdocuments to the Atlas Document they are archiving. Their Document Identifier is the same as the Atlas Document they are archiving, with an additional suffix 'v' followed by the version number of the document being archived. For example, the third version of A.1 would have the Document Identifier A.1.v3.
 **Additional Logic**: Archive Documents should be created whenever an Atlas Document is updated to ensure that a record of all previous versions is maintained. They are not meant to be modified or deleted once created.
 **Type Category**: Accessory Document
@@ -762,6 +814,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Content": The Content Component must contain summarized information and links to the child documents of the associated Immutable or Primary Document. It must also link to the nearest navigation hubs below its position if its Child Documents do not have Navigation Hubs.
 **Doc Identifier Rules**: Navigation Hub Documents must be located at the .0.0 position of an Immutable or Primary Document.
 **Additional Logic**: Navigation Hubs serve as a guide for users to understand and navigate the main content of the associated Immutable or Primary Document.
 **Type Category**: Supporting Document
@@ -772,6 +825,9 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Content": The Content Component must contain detailed information about the specific topic or section from the Navigation Hub.
+
+"links_to": This Component can provide links to related documents or sections, with keys being the document names and values being their respective identifiers.
 **Doc Identifier Rules**: Focus Hub Documents must be located at the nonzero numerical positions below Navigation Hubs, e.g.: x.0.0.1, x.0.0.2, etc.
 **Additional Logic**: Focus Hubs serve as a detailed guide on specific topics, giving users an in-depth understanding of the subject matter.
 **Type Category**: Supporting Document
@@ -782,6 +838,7 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: "Directory index": This Component should contain a list of the Facilitator Scenarios contained within, with keys being the document identifiers and values being their document names.
 **Doc Identifier Rules**: Facilitator Scenario Directory Documents must always be located at the .1 position below their parent Facilitator Action Tenet Document.
 **Additional Logic**: 
 **Type Category**: Supporting Document
@@ -792,6 +849,13 @@ If the Action Tenet can be anchored to a specific term from the Target Document,
 
 [See below]
 
+**Components**: “Name”: This Component should be an abstract or very brief description of the Scenario, e.g., “Crafter approves pull request authored by Prime Team.” A Scenario’s Name should never be followed by a number unless there are multiple Scenarios with the same Name.
+
+"Description": This Component contains the hypothetical fact pattern that illustrates the application of its parent Facilitator Action Tenet. The fact pattern should be as concrete in its details as possible, so as to be helpful to the Facilitators' decision-making.
+
+"Finding": This Component indicates whether, in this Scenario, the Target Document logic was or was not breached. If the Target Document was not breached, the Finding is "Aligned". If the Target Document was breached, the Finding is "Misaligned".
+
+"Additional Guidance": This Component provides additional context on the specific aspects of the Scenario that were salient to the Aligned or Misaligned finding. It can also provide guidance in terms of how the Facilitators should respond to such a Scenario, i.e.: follow-up actions or means of investigation.
 **Doc Identifier Rules**: Facilitator Scenario Documents must always be located as subdocuments of the Facilitator Scenario Directory Document, which in turn is nested under its parent Facilitator Action Tenet Document, e.g.: A.1.1-1.0.4.1.1.1.
 
 A Scenario’s Name should never be followed by a number unless there are multiple Scenarios with the same Name.
@@ -804,6 +868,11 @@ A Scenario’s Name should never be followed by a number unless there are multip
 
 [See below]
 
+**Components**: "Description": This Component contains the hypothetical fact pattern that illustrates the application of its parent Facilitator Action Tenet. The fact pattern should be as concrete in its details as possible, so as to be helpful to the Facilitators' decision-making.
+
+"Finding": This Component indicates whether, in this Scenario Variation, the Target Document logic was or was not breached. If the Target Document was not breached, the Finding is "Aligned". If the Target Document was breached, the Finding is "Misaligned".
+
+"Additional Guidance": This Component provides additional context on the specific aspects of the Scenario Variation that were salient to the Aligned or Misaligned finding. It can also provide guidance in terms of how the Facilitators should respond to such a Scenario, i.e.: follow-up actions or means of investigation.
 **Doc Identifier Rules**: Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document A.1.1.0.4.1.1.1. would have the following identifier: A.1.1.0.4.1.1.1.var2 .
 **Additional Logic**: 
 **Type Category**: Supporting Document
@@ -818,6 +887,7 @@ Scenario Variations are classified as either Aligned or Misaligned. Aligned Scen
 
 [See below]
 
+**Components**: "Research Prompt": This component contains descriptions of potential problems, unanswered questions or other concerns associated with the Target Document.
 **Doc Identifier Rules**: Unlike other Supporting Documents, the document identifier of Needed Research documents is not derived from the Supporting Root of their Target Document. The “standalone” numbering scheme of Needed Research documents enables them to be linked to more than one Atlas Document, no matter the latter’s location in the Atlas document tree. Needed Research Document Identifiers begin with the prefix “NR-”,  followed by an incremented number.
 **Additional Logic**: Generally, Needed Research Documents are most effective when linked to Primary Documents or Supporting Documents. These Document types have the objective of extrapolating from the abstract logic of their Parent documents to formulate rules and processes that are more concrete and actionable. Therefore, inputs for Needed Research are more appropriately sourced at this deeper level in the Atlas Document tree.
 **Type Category**: Supporting Document
@@ -910,11 +980,11 @@ Given the exceptionally high stakes in cases of potential AC misalignment, Facil
 
 #### NR-1 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 2da58ba2-a172-43bd-b7e7-d3d8e69233bf -->
 
-This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
+**Content**: This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
 
 The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies (including Alignment Conserver misalignment) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence. 
 
-Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
+Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically. What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
 
 Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof (e.g., preponderance of evidence, beyond a reasonable doubt), and the use of experts. 
 
@@ -946,8 +1016,7 @@ See also, [Other Ecosystem Roles  - Phrase Must Be Read In Its Broadest Sense By
 
 ##### A.1.4.5.0.4.1.1.1 - Alternating Between Two Roles In Separate Time Intervals [Scenario]  <!-- UUID: d5e82bc9-9d46-4d1b-a580-dc695d4a3c19 -->
 
-Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. The entity actively occupied these two roles, but alternated between them in separate time intervals.
-
+**Description**: Entity occupied the role of a ranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. The entity actively occupied these two roles, but alternated between them in separate time intervals.
 **Finding**: Misaligned
 **Additional Guidance**: That Entity is alternating between two roles to perform their duties in separate time intervals does not negate the misalignment risk that the Target Document is intended to protect against. They are still formally occupying two roles at once. They still have access to sensitive information and experiences in two roles with different mandates and incentives.
 
@@ -955,8 +1024,7 @@ The Facilitator should derecognize Entity per A.1.4 - A10 - Alignment Conservers
 
 ###### A.1.4.5.0.4.1.1.1.var1 - Alternating Between Two Roles In Separate Time Intervals - var. 1 [Scenario Variation]  <!-- UUID: b7eb5043-6f80-4dcf-8392-fbb3e200cf9e -->
 
-Entity occupied the role of an unranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. Entity actively occupied these two roles, but alternated between them in separate time intervals.
-
+**Description**: Entity occupied the role of an unranked Aligned Delegate. Entity then applied for, and secured, the role of a Facilitator. Entity actively occupied these two roles, but alternated between them in separate time intervals.
 **Finding**: Misaligned
 **Additional Guidance**: An "ecosystem role" need not be compensated or full-time to be regulated by the Target Document. See Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document.
 
@@ -966,8 +1034,7 @@ The Facilitator should derecognize Entity from both AC roles per A.1.4 - A10 - A
 
 ##### A.1.4.5.0.4.1.1.2 - Extended Leave Of Absence [Scenario]  <!-- UUID: b3052722-26f3-4619-8535-99404e78ddae -->
 
-Entity occupied the role of a Facilitator. They took a leave of absence from the Facilitator role and stepped into the role of a Stability Scope Advisor. At the time their behavior was discovered by another Facilitator, the Entity had been performing solely in the role of a Stability Scope Advisor, while remaining on a leave of absence from their Facilitator role.
-
+**Description**: Entity occupied the role of a Facilitator. They took a leave of absence from the Facilitator role and stepped into the role of a Stability Scope Advisor. At the time their behavior was discovered by another Facilitator, the Entity had been performing solely in the role of a Stability Scope Advisor, while remaining on a leave of absence from their Facilitator role.
 **Finding**: Misaligned
 **Additional Guidance**: If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity was on a leave of absence from one role does not negate this risk. A contributor on an extended leave of absence has not formally cut ties with the role. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's Stability Scope Advisor work could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed as a Facilitator. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
 
@@ -977,8 +1044,7 @@ The Facilitator should likely consider derecognizing Entity from the Stability S
 
 ##### A.1.4.5.0.4.1.1.3 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
 
-Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles.
-
+**Description**: Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles.
 **Finding**: Misaligned
 **Additional Guidance**: If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity's second position is in an "on-call" or stand-by position does not negate this risk. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's decision-making in their first role could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed in their second role. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
 
@@ -988,8 +1054,7 @@ No specific logic exists as yet for the adjudication of misalignment on the part
 
 ###### A.1.4.5.0.4.1.1.3.var1 - On-Call Or Standby Role - var. 1 [Scenario Variation]  <!-- UUID: 1b2b438f-e34c-4683-97ef-2227f6c425eb -->
 
-Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles. During its investigation, the Facilitator discovered evidence that, despite the EA having a general policy that "on call" devs are paid only a nominal fee for the bounded time periods they are on call, Entity had been receiving an inordinately large compensation from the EA. When the Facilitator pressed both the EA and Entity for an explanation, none was given.
-
+**Description**: Entity was an Aligned Delegate. Entity then secured a second role with an Ecosystem Actor providing Executive spell crafting services, specifically as an "on call" dev. Entity claims it has never been on active duty in the second role; rather, they have only ever been on "standby" in that role. Thus, Entity argued it did not violate the Target Document despite holding two ecosystem roles. During its investigation, the Facilitator discovered evidence that, despite the EA having a general policy that "on call" devs are paid only a nominal fee for the bounded time periods they are on call, Entity had been receiving an inordinately large compensation from the EA. When the Facilitator pressed both the EA and Entity for an explanation, none was given.
 **Finding**: Misaligned as to Entity.
 **Additional Guidance**: In contrast to the original Scenario, the Facilitator uncovered evidence that indicates Entity was not, as claimed, a mere "on call" dev, but rather was engaged in substantive work to justify the large compensation amount. 
 
@@ -1001,15 +1066,13 @@ The concern remains that, potentially, a bad actor can continue to exploit the e
 
 ##### A.1.4.5.0.4.1.1.4 - Resignation Notice Not Received [Scenario]  <!-- UUID: 5754dde6-7b8f-45d6-a633-c40fd6382ca6 -->
 
-Entity was a full-time team member of a Governance Facilitator. Entity emailed the Facilitator a formal letter of resignation and then transitioned into the role of an AD. The Facilitator did not receive the resignation email and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator’s investigation, Entity provided proof of the resignation email. The email clearly stated an effective date of resignation, which date was prior to Entity's transition into the AD role. Entity also provided proof that all their permissions to the Facilitator team workspace were revoked; and they had no further communications or interactions with the Facilitator team after their intended resignation date.
-
+**Description**: Entity was a full-time team member of a Governance Facilitator. Entity emailed the Facilitator a formal letter of resignation and then transitioned into the role of an AD. The Facilitator did not receive the resignation email and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator’s investigation, Entity provided proof of the resignation email. The email clearly stated an effective date of resignation, which date was prior to Entity's transition into the AD role. Entity also provided proof that all their permissions to the Facilitator team workspace were revoked; and they had no further communications or interactions with the Facilitator team after their intended resignation date.
 **Finding**: Aligned
 **Additional Guidance**: Though the Facilitator incorrectly continued to list Entity as a team member, in actual practice, Entity had cut all ties with the Facilitator team after the intended resignation date. This was proven via the dated resignation email; the revoked permissions; and the lack of communications. Given these facts, the Target Document is not triggered.
 
 ###### A.1.4.5.0.4.1.1.4.var1 - Resignation Notice Not Received - var. 1 [Scenario Variation]  <!-- UUID: b13b099c-c90c-4e1a-9caa-3103c9b333a0 -->
 
-Entity was a part-time team member of a Governance Facilitator. Entity then transitioned into the role of an AD. The Facilitator did not receive any resignation notice from Entity and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator's investigation, Entity claimed it had sent the Facilitator a resignation email, but could not provide actual proof of this. The Governance Facilitator also discovered that Entity still had permissions to the Facilitator team workspace. The team's Discord contained casual, non-work related interactions between Entity and the Facilitator team members even after the date Entity became a formally recognized AD.
-
+**Description**: Entity was a part-time team member of a Governance Facilitator. Entity then transitioned into the role of an AD. The Facilitator did not receive any resignation notice from Entity and continued to list Entity as an active team member on the Facilitator team. During the Governance Facilitator's investigation, Entity claimed it had sent the Facilitator a resignation email, but could not provide actual proof of this. The Governance Facilitator also discovered that Entity still had permissions to the Facilitator team workspace. The team's Discord contained casual, non-work related interactions between Entity and the Facilitator team members even after the date Entity became a formally recognized AD.
 **Finding**: Misaligned
 **Additional Guidance**: Entity was unable to provide any proof that it had formally resigned its first role with the Facilitator team. Merely claiming that a resignation email was sent is not sufficient. Further, unlike the original Scenario, Entity in this Variation continued to have access to the Facilitator team workspace even after the alleged date of resignation. Technically speaking, Entity is still formally occupying two roles with different mandates and incentives. The potential exists for conflict of interest, collusion, etc. The part-time role does not impact this analysis.
 
@@ -1017,8 +1080,7 @@ The Governance Facilitator should derecognize Entity from its AD role per A.1.4 
 
 ##### A.1.4.5.0.4.1.1.5 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
 
-Entity was a volunteer moderator for Sky’s Discord. Without leaving their moderator role, Entity registered and became active as an Aligned Delegate.
-
+**Description**: Entity was a volunteer moderator for Sky’s Discord. Without leaving their moderator role, Entity registered and became active as an Aligned Delegate.
 **Finding**: Aligned
 **Additional Guidance**: ‘Volunteer Discord moderator' is not a role that is formally defined in the Atlas. Therefore, Entity's first position as volunteer Discord moderator does not count as an ecosystem role. The Target Document is not triggered at all in this Scenario.
 
@@ -1038,11 +1100,11 @@ An "ecosystem role" need not be compensated or full-time to be regulated by the 
 
 #### NR-2 - Should Ban Against Occupying Two Ecosystem Roles Apply to All Sky Stakeholder Roles? [Needed Research]  <!-- UUID: 25d8f23b-4d43-43be-aa5a-c48fe372cd7a -->
 
-Given the rationale behind the Target Document [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](9b1d1c2f-ace0-4637-8050-4711ae9f9a8c), the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
+**Content**: Given the rationale behind the Target Document A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time, the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
 
 #### NR-3 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]  <!-- UUID: 4560326b-abab-4147-957f-c5c8ddfa96f1 -->
 
-Should team contributors be subject to the Target Document’s prohibition against occupying two roles? What would be the arguments for and against such a position? 
+**Content**: Should team contributors be subject to the Target Document’s prohibition against occupying two roles? What would be the arguments for and against such a position? 
 
 One argument against this would be that quality contributors are a scarce resource. Further, the decentralized work paradigm encourages having several part-time jobs. 
 
@@ -1078,7 +1140,7 @@ The operational security of the Alignment Conserver roles is key to governance i
 
 #### NR-4 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: e33879c1-93d0-48a6-8f08-ad00a4821bde -->
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
+**Content**: The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -1110,7 +1172,7 @@ By "swiftly,” the Target Document requires Facilitators to take immediate and 
 
 #### NR-5 - Derecognition Procedure [Needed Research]  <!-- UUID: 7b90bfa2-c857-4170-b6cd-2d4adb290aa0 -->
 
-Research specific procedural steps for the derecognition of an AC. The procedure should account for ways in which this process can be streamlined or standardized to ensure swift action. Research should identify potential bottlenecks and suggest ways to eliminate them, such as pre-defined decision-making protocols, clear documentation requirements, and fast-track procedures for urgent cases.
+**Content**: Research specific procedural steps for the derecognition of an AC. The procedure should account for ways in which this process can be streamlined or standardized to ensure swift action. Research should identify potential bottlenecks and suggest ways to eliminate them, such as pre-defined decision-making protocols, clear documentation requirements, and fast-track procedures for urgent cases.
 
 Another point to research involves the concepts of due process or fairness. Specific logic currently active in the Atlas clearly indicates that ACs are held to the highest standards of Universal Alignment. Such a standard would seem to indicate that “fairness” is not an objective in any proceeding involving AC derecognition. What are the arguments for and against this?
 
@@ -1179,7 +1241,7 @@ Any Alignment Conserver misalignment, regardless of its seemingly trivial nature
 
 ###### NR-6 - Defining Threshold For “Very Mild Slippery Slope" Breaches [Needed Research]  <!-- UUID: db47c59f-a822-4213-9305-8c8eb07c41f0 -->
 
-What specific actions or omissions qualify as "very mild slippery slope" breaches? Helpful research can include: developing a set of criteria or a checklist that defines what constitutes a "very mild slippery slope" breach. This could involve an analysis of past or hypothetical incidents, consultations with the Facilitators, etc. Such guidelines are likely needed to help Facilitators reliably determine whether an act should be classified as a 'minor' slippery slope infraction or a more severe act which would merit derecognition.
+**Content**: What specific actions or omissions qualify as "very mild slippery slope" breaches? Helpful research can include: developing a set of criteria or a checklist that defines what constitutes a "very mild slippery slope" breach. This could involve an analysis of past or hypothetical incidents, consultations with the Facilitators, etc. Such guidelines are likely needed to help Facilitators reliably determine whether an act should be classified as a 'minor' slippery slope infraction or a more severe act which would merit derecognition.
 
 ##### A.1.4.9.2.2 - Mandated Derecognition For Severe Breaches [Core]  <!-- UUID: 12044fd7-4cfa-4431-aa03-a9531353c6dd -->
 
@@ -1197,7 +1259,7 @@ To adhere to this commitment, the Core Facilitator must derecognize the AC withi
 
 ###### NR-7 - Defining “Severe Actions Or Violations" And “Governance Attack” [Needed Research]  <!-- UUID: 98d5b899-f012-403d-9c6a-2ffda4ec2961 -->
 
-What specific criteria or actions qualify as "severe" enough to warrant derecognition? Develop clear guidelines that define what constitutes a "severe case" in the context of misaligned actions. This involves identifying key indicators of severity, such as the magnitude of the impact, the intent behind the actions, and the potential or actual harm caused.
+**Content**: What specific criteria or actions qualify as "severe" enough to warrant derecognition? Develop clear guidelines that define what constitutes a "severe case" in the context of misaligned actions. This involves identifying key indicators of severity, such as the magnitude of the impact, the intent behind the actions, and the potential or actual harm caused.
 
 Also needed: What actions or behaviors specifically constitute a "Governance Attack”? Can you propose criteria or frameworks for assessing intent, the scope of actions, and their potential consequences? The research can perhaps explore how different governance models define and respond to attacks and consider psychological, legal, and operational perspectives to support a more fact-driven interpretive approach.
 
@@ -1225,11 +1287,11 @@ In adjudicating potential misalignment of Alignment Conservers, Facilitators are
 
 #### NR-8 - Systematic Basis Of Adjudication, Fact-Finding And Evidence [Needed Research]  <!-- UUID: 279f417e-2fec-473d-ab7c-eaf5b371c598 -->
 
-This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
+**Content**: This need is an extensive Research Track. The central research need that grows out of the Facilitator role has to do with developing systematic principles and protocols to serve as the foundation for adjudicating disputes and controversies, including processes for fact-finding, evidence validation and evaluation, mechanisms for ensuring impartiality and objectivity, an appeals process, etc. 
 
 The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies (including Alignment Conserver misalignment) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence. 
 
-Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
+Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically. What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
 
 Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof (e.g., preponderance of evidence, beyond a reasonable doubt), and the use of experts. 
 
@@ -1261,7 +1323,7 @@ The Active Data is updated as follows:
 
 #### NR-9 - Derecognition Uncertainty Due To Anonymous Actors [Needed Research]  <!-- UUID: 69e4df9f-d2f3-4fd2-9add-e1314a0a5eb3 -->
 
-The Target Document defines the act of derecognition as “permanently removing” an entity from the Alignment Conserver role. In fact, it is not possible to effect such a permanent removal. Given the presence of anonymous/pseudonymous actors in the decentralized “workforce” of the Sky ecosystem, a known identity of an actor can be barred from an AC role; and yet that actor can easily re-enter the system under a different pseudonym or identity. Consider what measures can be implemented to counteract the scenario where derecognized entities reappear under a different guise. A robust reputation system is already planned; by tracking reputation that is earned over a long timescale, a derecognized entity would be barred from quickly regaining a foothold.
+**Content**: The Target Document defines the act of derecognition as “permanently removing” an entity from the Alignment Conserver role. In fact, it is not possible to effect such a permanent removal. Given the presence of anonymous/pseudonymous actors in the decentralized “workforce” of the Sky ecosystem, a known identity of an actor can be barred from an AC role; and yet that actor can easily re-enter the system under a different pseudonym or identity. Consider what measures can be implemented to counteract the scenario where derecognized entities reappear under a different guise. A robust reputation system is already planned; by tracking reputation that is earned over a long timescale, a derecognized entity would be barred from quickly regaining a foothold.
 
 ## A.1.5 - Aligned Delegates [Article]  <!-- UUID: 75f0063c-ad70-49e4-b356-9b76097ced7b -->
 
@@ -1417,7 +1479,7 @@ To arrive at the value of this one-month budget threshold in USDS, see [A.1.5 - 
 
 #### NR-10 - AD Budget Management [Needed Research]  <!-- UUID: 6502ce76-3f29-4f50-a68c-9126feba1fb6 -->
 
-Are there risks that should be considered regarding the potential mismanagement or misuse of the AD budget? The Target Document lists several examples of permissible ways to use the AD budget, which indicates implicitly constraints, or disallowed expenditures. How would compliance with these guidelines be monitored?
+**Content**: Are there risks that should be considered regarding the potential mismanagement or misuse of the AD budget? The Target Document lists several examples of permissible ways to use the AD budget, which indicates implicitly constraints, or disallowed expenditures. How would compliance with these guidelines be monitored?
 
 ### A.1.5.8 - AD Buffer And Loss Of Budget [Section]  <!-- UUID: 907b011d-2f73-4ee1-b4e7-27daaad3aa47 -->
 
@@ -1455,7 +1517,7 @@ The element "whistleblower bounty" is a financial reward allocated to individual
 
 #### NR-11 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 71c826f0-2713-4756-8b5a-1d820383f301 -->
 
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
+**Content**: The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
 
 Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
 
@@ -1503,7 +1565,7 @@ The Target Document’s function is to ensure that SKY holders delegating to the
 
 #### NR-12 - Criteria For AD Voting-Communication Requirement [Needed Research]  <!-- UUID: ea34cf2b-b756-4c55-b317-7e4802b6f9b3 -->
 
-For the purpose of enforcing the Target Document, should there be explicit criteria for Aligned Delegates’ voting-communications? What constitutes an adequate explanation for each vote? How would the Core Facilitator evaluate ADs’ explanations for quality, completeness, etc.? How can the Core Facilitator objectively assess explanations that may vary widely in style and content?
+**Content**: For the purpose of enforcing the Target Document, should there be explicit criteria for Aligned Delegates’ voting-communications? What constitutes an adequate explanation for each vote? How would the Core Facilitator evaluate ADs’ explanations for quality, completeness, etc.? How can the Core Facilitator objectively assess explanations that may vary widely in style and content?
 
 How might ADs’ explanations vary across different types of votes, and should the criteria reflect these differences? Should more complex or high-stakes votes require more detailed explanations than routine or procedural votes?
 
@@ -1571,7 +1633,7 @@ It is important to note that the payment of the whistleblower bounty is dependen
 
 #### NR-13 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 02df546f-0c7b-445f-b06d-c51b44b0b84d -->
 
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
+**Content**: The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
 
 Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
 
@@ -1589,7 +1651,7 @@ Aligned Delegates (ADs) are required to maintain a high level of operational sec
 
 #### NR-14 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: fc6cb4f6-d0da-4696-9e07-9dfccb1ec17e -->
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
+**Content**: The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -1633,7 +1695,7 @@ It is important to note that the payment of the whistleblower bounty is dependen
 
 #### NR-15 - AD Whistleblower Bounty [Needed Research]  <!-- UUID: 6a1ff9bb-7c8a-43d8-b3e8-a0b0ed241058 -->
 
-The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
+**Content**: The element “responsibly provided” in the Target Documents means that whistleblower evidence must have been secured ethically, i.e., publicly available blockchain data. This generally means, no hacking or unauthorized access to systems, or breaches of data protection laws. 
 
 Do challenging gray areas remain? What sort of standards or criteria should be met by whistleblower evidence to be considered responsibly gathered? 
 
@@ -1647,7 +1709,7 @@ What are the expectations placed on Facilitators to verify whistleblower evidenc
 
 #### NR-16 - Operational Security Protocols - Research Track [Needed Research]  <!-- UUID: 60e94138-8a37-4a75-8dec-a7b2ca3fc915 -->
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
+**Content**: The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -1822,7 +1884,7 @@ The Core Facilitator's failure to act promptly in addressing credible evidence o
 
 #### NR-17 - Addressing Misalignment Of Ecosystem Actors Or Other Governance Participants [Needed Research]  <!-- UUID: 9962c7cc-9df2-4c37-89d6-746d004a056d -->
 
-Currently, the Atlas specifies an adjudication process for Alignment Conserver misalignment or breach of operational security. Research is needed to consider a process by which Facilitators investigate and adjudicate suspected misalignment on the part of Ecosystem Actors or other governance participants.
+**Content**: Currently, the Atlas specifies an adjudication process for Alignment Conserver misalignment or breach of operational security. Research is needed to consider a process by which Facilitators investigate and adjudicate suspected misalignment on the part of Ecosystem Actors or other governance participants.
 
 ### A.1.6.11 - Justification For Operational Decisions [Section]  <!-- UUID: 36be7725-ea36-4e37-a363-856a69d6ef2d -->
 
@@ -4616,8 +4678,7 @@ A Weekly Cycle Proposal is considered correctly triggered when the triggering Al
 
 ####### A.1.10.2.1.3.0.4.1.1.1 - Ranked Delegate Triggers Proposal And Loses Ranked Delegate Rank Immediately Thereafter [Scenario]  <!-- UUID: 9079bf46-34b8-4ba5-a856-7f96f2093acb -->
 
-Entity is a Ranked Delegate with at least one (1) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. The Core Facilitator continue to prepare a Governance Poll for the Proposal.
-
+**Description**: Entity is a Ranked Delegate with at least one (1) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. The Core Facilitator continue to prepare a Governance Poll for the Proposal.
 **Finding**: Aligned as to Entity. Aligned as to the Core Facilitator.
 **Additional Guidance**: The fact that Entity lost their Ranked Delegate rank after triggering the Proposal is inconsequential. Entity satisfied the requirement of being a Ranked Delegate with at least one (1) month’s worth of budget in their AD Buffer at the time of triggering the Proposal, and thus the Proposal was properly triggered. The Core Facilitator acted correctly to prepare a Governance Poll for the Proposal in accord with the process definition for the Atlas Edit Weekly Cycle.
 
@@ -4627,8 +4688,7 @@ To deter spurious or misaligned proposals, Ranked Delegates must “stake” the
 
 ####### A.1.10.2.1.3.0.4.2.1.1 - Delay In Payment To Ranked Delegate Triggering Proposal [Scenario]  <!-- UUID: 1ebcda5d-5a10-4e78-ba52-5772df38cc56 -->
 
-Entity is a Ranked Delegate with one (1) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. Three days later, before the Proposal has been voted on, the Core Facilitator distributes compensation to other Aligned Delegates but do not distribute compensation to Entity.
-
+**Description**: Entity is a Ranked Delegate with one (1) month’s worth of budget in their AD Buffer. Entity triggers a Weekly Cycle Proposal. Immediately thereafter, Entity loses their Ranked Delegate rank. Three days later, before the Proposal has been voted on, the Core Facilitator distributes compensation to other Aligned Delegates but do not distribute compensation to Entity.
 **Finding**: Aligned
 **Additional Guidance**: Paying out the AD Buffer would have led to Entity’s AD Buffer dropping below the required threshold of one (1) month’s worth of budget while the Proposal was still unresolved. In this Scenario, the triggering AD cannot receive payout from the AD Buffer until the triggered Proposal is voted on and approved by Sky Governance. Assuming that the Proposal is approved, the Core Facilitator is authorized to disburse the entire contents of the AD Buffer to the triggering AD in the next AD compensation cycle. However, if the Proposal is rejected by the Core Facilitator for misalignment or voted down by Sky Governance, the triggering AD would lose their entire AD Buffer.
 
@@ -5375,7 +5435,7 @@ When conflicting Atlas Edit Proposals are approved within a short period of each
 
 ##### NR-18 - Conflicting Atlas Edit Proposals [Needed Research]  <!-- UUID: ab868a43-3f89-4e9e-b281-6078e655e065 -->
 
-This is an extensive Research Track. Some critical questions to be explored:
+**Content**: This is an extensive Research Track. Some critical questions to be explored:
 
 What criteria should be used to determine when two or more Atlas Edit Proposals are in conflict? Are conflicts strictly based on overlapping content, or do broader thematic or operational conflicts also count?
 
