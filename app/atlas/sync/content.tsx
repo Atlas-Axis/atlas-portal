@@ -88,13 +88,13 @@ export function Content({ result }: { result: AtlasDiffResult }) {
         />
 
         {/* Sibling Order Changed */}
-        <ChangeSection
+        {/* <ChangeSection
           title="Order / Document No Changed"
           changes={changes.sibling_order_changed}
           changeType="sibling_order_changed"
           emptyMessage="No sibling order changes"
           uuidToDocMap={newIdsToDocuments}
-        />
+        /> */}
 
         {/* Parent Changed */}
         <ChangeSection
@@ -113,6 +113,8 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           emptyMessage="No documents deleted"
           uuidToDocMap={originalIdsToDocuments}
         />
+
+        <p className="mt-3 text-slate-500">Note: Sort order changes within the same document are not shown yet.</p>
       </CardBody>
     </Card>
   );
@@ -163,6 +165,18 @@ function ChangeSection({
   );
 }
 
+// Format UUID as document reference
+function formatDocReference(
+  uuid: string,
+  uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>,
+): string {
+  const refDoc = uuidToDocMap.get(uuid);
+  if (refDoc) {
+    return `${refDoc.doc_no} - ${refDoc.name} [${refDoc.type}]`;
+  }
+  return uuid; // Fallback to UUID if not found
+}
+
 function ChangeCard({
   change,
   uuidToDocMap,
@@ -173,18 +187,9 @@ function ChangeCard({
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
 
-  // Format UUID as document reference
-  const formatDocReference = (uuid: string) => {
-    const refDoc = uuidToDocMap.get(uuid);
-    if (refDoc) {
-      return `${refDoc.doc_no} - ${refDoc.name} [${refDoc.type}]`;
-    }
-    return uuid; // Fallback to UUID if not found
-  };
-
   return (
     <div className="flex items-center gap-3">
-      <Checkbox size="lg" defaultSelected className="mt-1" />
+      {change.changeType !== 'sibling_order_changed' && <Checkbox size="lg" defaultSelected className="mt-1" />}
       <Card className="flex-1" radius="none" shadow="none">
         <CardBody className="flex flex-col gap-0">
           {/* Document title in Atlas style */}
@@ -195,7 +200,7 @@ function ChangeCard({
             <TypeChip type={doc.type} />
           </div>
 
-          {/* Show old and new values for changes */}
+          {/* Show inline diff for content changes */}
           {change.changeType === 'changed' && change.oldValues && change.newValues && (
             <FieldChanges oldDoc={change.oldValues} newDoc={change.newValues} />
           )}
@@ -207,13 +212,13 @@ function ChangeCard({
                 <div className="mb-1 text-sm font-semibold">Parent Document</div>
                 <span className="text-red-600">
                   {change.oldAncestry && change.oldAncestry.length > 0
-                    ? formatDocReference(change.oldAncestry[change.oldAncestry.length - 1])
+                    ? formatDocReference(change.oldAncestry[change.oldAncestry.length - 1], uuidToDocMap)
                     : 'root'}
                 </span>
                 <span className="px-2"> → </span>
                 <span className="text-green-600">
                   {change.newAncestry && change.newAncestry.length > 0
-                    ? formatDocReference(change.newAncestry[change.newAncestry.length - 1])
+                    ? formatDocReference(change.newAncestry[change.newAncestry.length - 1], uuidToDocMap)
                     : 'root'}
                 </span>
               </div>
@@ -244,11 +249,7 @@ function ChangeCard({
               <div className={`rounded p-3 ${colors.added.background} `}>
                 <DocumentContent doc={change.newValues} />
               </div>
-              {change.newAncestry && change.newAncestry.length > 0 && (
-                <div className="mt-2 flex justify-end text-xs text-slate-400">
-                  <span className="font-medium">Parent: </span> {formatDocReference(change.newAncestry[0])}
-                </div>
-              )}
+              <ParentDoc change={change} uuidToDocMap={uuidToDocMap} />
             </div>
           )}
 
@@ -258,15 +259,40 @@ function ChangeCard({
               <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
                 <DocumentContent doc={change.oldValues} />
               </div>
-              {change.oldAncestry && change.oldAncestry.length > 0 && (
-                <div className="mt-2 flex justify-end text-xs text-slate-400">
-                  <span className="font-medium">Parent:</span> {formatDocReference(change.oldAncestry[0])}
-                </div>
-              )}
+              <ParentDoc change={change} uuidToDocMap={uuidToDocMap} />
             </div>
           )}
         </CardBody>
       </Card>
+    </div>
+  );
+}
+
+function ParentDoc({
+  change,
+  uuidToDocMap,
+}: {
+  change: AtlasDocumentChange;
+  uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
+}) {
+  const parentDocReferenceFormatted = (ancestry: string[] | undefined) => {
+    if (ancestry && ancestry.length > 0) {
+      const parentUuid = ancestry[ancestry.length - 1];
+      return formatDocReference(parentUuid, uuidToDocMap);
+    }
+    return 'root';
+  };
+
+  return (
+    <div className="mt-2 flex shrink-0 justify-end text-xs text-slate-400">
+      {(change.changeType === 'added' || change.changeType === 'deleted') && (
+        <div>
+          <span className="font-medium">Parent: </span>{' '}
+          {change.changeType === 'added'
+            ? parentDocReferenceFormatted(change.newAncestry)
+            : parentDocReferenceFormatted(change.oldAncestry)}
+        </div>
+      )}
     </div>
   );
 }
