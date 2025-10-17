@@ -89,7 +89,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
 
         {/* Sibling Order Changed */}
         <ChangeSection
-          title="Sibling Order Changed"
+          title="Order / Document No Changed"
           changes={changes.sibling_order_changed}
           changeType="sibling_order_changed"
           emptyMessage="No sibling order changes"
@@ -202,27 +202,27 @@ function ChangeCard({
 
           {/* Show parent change details */}
           {change.changeType === 'parent_changed' && (
-            <div className={`mt-2 rounded p-3 ${colors.parent_changed.background} `}>
-              <div className="mb-1 text-sm font-semibold">Parent Changed</div>
-              <div className="space-y-1 text-xs">
-                <div>
-                  <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no}
-                </div>
-                <div>
-                  <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
-                </div>
-                <div>
-                  <span className="font-medium">Old parent:</span>{' '}
+            <div className={`my-2 mt-2 rounded p-3 ${colors.parent_changed.background} `}>
+              <div className="text-sm">
+                <div className="mb-1 text-sm font-semibold">Parent Document</div>
+                <span className="text-red-600">
                   {change.oldAncestry && change.oldAncestry.length > 0
-                    ? formatDocReference(change.oldAncestry[0])
+                    ? formatDocReference(change.oldAncestry[change.oldAncestry.length - 1])
                     : 'root'}
-                </div>
-                <div>
-                  <span className="font-medium">New parent:</span>{' '}
+                </span>
+                <span className="px-2"> → </span>
+                <span className="text-green-600">
                   {change.newAncestry && change.newAncestry.length > 0
-                    ? formatDocReference(change.newAncestry[0])
+                    ? formatDocReference(change.newAncestry[change.newAncestry.length - 1])
                     : 'root'}
-                </div>
+                </span>
+              </div>
+
+              <div className="mt-2 text-sm">
+                <div className="mb-1 text-sm font-semibold">Doc No</div>
+                <span className="text-red-600">{change.oldValues?.doc_no}</span>
+                <span className="px-2"> → </span>
+                <span className="text-green-600">{change.newValues?.doc_no}</span>
               </div>
             </div>
           )}
@@ -230,10 +230,10 @@ function ChangeCard({
           {/* Show sibling order change details */}
           {change.changeType === 'sibling_order_changed' && (
             <div className={`mt-2 rounded p-3 ${colors.sibling_order_changed.background} `}>
-              <div className="mb-1 text-sm font-semibold">Sibling Order Changed</div>
-              <div className="text-xs">
-                <span className="font-medium">Old doc_no:</span> {change.oldValues?.doc_no} →{' '}
-                <span className="font-medium">New doc_no:</span> {change.newValues?.doc_no}
+              <div className="text-sm">
+                <span className="text-red-600">{change.oldValues?.doc_no}</span>
+                <span className="px-2"> → </span>
+                <span className="text-green-600">{change.newValues?.doc_no}</span>
               </div>
             </div>
           )}
@@ -246,7 +246,7 @@ function ChangeCard({
               </div>
               {change.newAncestry && change.newAncestry.length > 0 && (
                 <div className="mt-2 flex justify-end text-xs text-slate-400">
-                  <span className="font-medium">Parent:</span> {formatDocReference(change.newAncestry[0])}
+                  <span className="font-medium">Parent: </span> {formatDocReference(change.newAncestry[0])}
                 </div>
               )}
             </div>
