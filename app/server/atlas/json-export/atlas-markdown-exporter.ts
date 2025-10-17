@@ -53,6 +53,7 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
   return lines;
 }
 
+// For more info on extra fields, see `docs/ATLAS_EXTRA_FIELDS.md`
 function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
   let mapping: Record<string, string> | null = null;
   switch (doc.type) {
@@ -86,7 +87,15 @@ function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
     }
     const value = raw === null ? '' : typeof raw === 'string' ? raw : String(raw);
     const trimmed = value.trim();
-    out.push(`**${label}**: ${trimmed}`);
+    // Format: **Label**: followed by newline, then value, then blank line after value
+    out.push(`**${label}**:`);
+    out.push('');
+    out.push(trimmed);
+    out.push(''); // Blank line after value
+  }
+  // Remove the trailing blank line (line 39 in formatDocumentRecursive adds the final separator)
+  if (out.length > 0 && out[out.length - 1] === '') {
+    out.pop();
   }
   return out;
 }

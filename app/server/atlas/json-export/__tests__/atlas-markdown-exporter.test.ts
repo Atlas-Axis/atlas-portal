@@ -78,13 +78,19 @@ describe('atlas-markdown-exporter', () => {
     expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000010 -->');
 
     // Extra fields (labels come from TYPE_SPECIFICATION_PROPERTY_MAPPING)
+    // New format: **Label**: followed by newline, then value, then blank line (except last field)
     expect(md).toContain(
-      `**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_doc_identifier_rules}**: Doc ID rules`,
+      `**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_doc_identifier_rules}**:\n\nDoc ID rules\n\n`,
     );
-    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_additional_logic}**: `);
-    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_category}**: Category X`);
-    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_name}**: SpecName`);
-    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_overview}**: Overview here`);
+    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_additional_logic}**:\n\n\n\n`);
+    expect(md).toContain(
+      `**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_category}**:\n\nCategory X\n\n`,
+    );
+    expect(md).toContain(`**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_name}**:\n\nSpecName\n\n`);
+    // Last field doesn't have trailing blank line
+    expect(md).toContain(
+      `**${TYPE_SPECIFICATION_PROPERTY_MAPPING.type_specification_type_overview}**:\n\nOverview here`,
+    );
   });
 
   it('includes extra fields for Scenario', async () => {
@@ -108,8 +114,10 @@ describe('atlas-markdown-exporter', () => {
 
     expect(md).toContain('# A.1.1.4.1 - Scenario Alpha [Scenario]');
     expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000020 -->');
-    expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_finding}**: Key finding`);
-    expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_additional_guidance}**: Some guidance`);
+    // New format: **Label**: followed by newline, then value, then blank line (except last field)
+    expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_finding}**:\n\nKey finding\n\n`);
+    // Last field doesn't have trailing blank line
+    expect(md).toContain(`**${SCENARIO_PROPERTY_MAPPING.scenario_additional_guidance}**:\n\nSome guidance`);
   });
 
   it('includes extra fields for Scenario Variation', async () => {
@@ -132,9 +140,13 @@ describe('atlas-markdown-exporter', () => {
 
     expect(md).toContain('# A.1.1.4.1.var1 - Scenario Alpha - Variant 1 [Scenario Variation]');
     expect(md).toContain('<!-- UUID: 00000000-0000-0000-0000-000000000030 -->');
-    expect(md).toContain(`**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_finding}**: Variant finding`);
+    // New format: **Label**: followed by newline, then value, then blank line (except last field)
     expect(md).toContain(
-      `**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_additional_guidance}**: Variant guidance`,
+      `**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_finding}**:\n\nVariant finding\n\n`,
+    );
+    // Last field doesn't have trailing blank line
+    expect(md).toContain(
+      `**${SCENARIO_VARIATION_PROPERTY_MAPPING.scenario_variation_additional_guidance}**:\n\nVariant guidance`,
     );
   });
 });

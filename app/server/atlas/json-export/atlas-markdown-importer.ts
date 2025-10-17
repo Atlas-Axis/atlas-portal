@@ -221,11 +221,11 @@ function extractContentAndExtraFields(
     labelToFieldKey.set(label, fieldKey);
   }
 
-  // Detect the first line that matches "**Label**: value" with a known label
+  // Detect the first line that matches "**Label**:" with a known label
   const lines = rawLines.slice();
   let firstIdx = -1;
   for (let i = 0; i < lines.length; i++) {
-    const { label } = parseLabeledLine(lines[i]);
+    const label = parseLabeledLine(lines[i]);
     if (label && labelToFieldKey.has(label)) {
       firstIdx = i;
       break;
@@ -263,14 +263,14 @@ function extractContentAndExtraFields(
   };
 
   for (let i = firstIdx; i < lines.length; i++) {
-    const { label, value } = parseLabeledLine(lines[i]);
+    const label = parseLabeledLine(lines[i]);
     if (label && labelToFieldKey.has(label)) {
       // New field starts; flush previous
       flushField();
       currentFieldKey = labelToFieldKey.get(label)!;
-      currentFieldLines = [value ?? ''];
+      currentFieldLines = [];
     } else {
-      // Continuation of current field
+      // Continuation of current field (value content)
       if (currentFieldKey) {
         currentFieldLines.push(lines[i]);
       }
@@ -283,13 +283,13 @@ function extractContentAndExtraFields(
   return { content, extra };
 }
 
-const LABELED_LINE_REGEX = /^\*\*(.+?)\*\*:\s*(.*)$/;
+const LABELED_LINE_REGEX = /^\*\*(.+?)\*\*:\s*$/;
 
-function parseLabeledLine(line: string): { label: string | null; value: string | null } {
+function parseLabeledLine(line: string): string | null {
   const m = line.match(LABELED_LINE_REGEX);
-  if (!m) return { label: null, value: null };
-  const [, rawLabel, rawValue] = m;
-  return { label: rawLabel.trim(), value: (rawValue ?? '').trim() };
+  if (!m) return null;
+  const [, rawLabel] = m;
+  return rawLabel.trim();
 }
 
 function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): AtlasDatabaseName {

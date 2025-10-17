@@ -51,11 +51,25 @@ Article body
 
 \[See below\]
 
-**Doc Identifier Rules**: Rule content
-**Additional Logic**: Logic content
-**Type Category**: Primary Document
-**Type Name**: Type Specification
-**Type Overview**: Overview content
+**Doc Identifier Rules**:
+
+Rule content
+
+**Additional Logic**:
+
+Logic content
+
+**Type Category**:
+
+Primary Document
+
+**Type Name**:
+
+Type Specification
+
+**Type Overview**:
+
+Overview content
     `;
 
     const trees = parseAtlasMarkdown(input);
@@ -86,15 +100,25 @@ Article body
 
 Scenario intro
 
-**Finding**: Scenario finding text
-**Additional Guidance**: Scenario guidance text
+**Finding**:
+
+Scenario finding text
+
+**Additional Guidance**:
+
+Scenario guidance text
 
 ##### A.1.1.0.4.1.1 - Variant [Scenario Variation] <!-- UUID: 00000000-0000-0000-0000-000000000011 -->
 
 Variation intro
 
-**Finding**: Variation finding text
-**Additional Guidance**: Variation guidance text
+**Finding**:
+
+Variation finding text
+
+**Additional Guidance**:
+
+Variation guidance text
     `;
 
     const trees = parseAtlasMarkdown(input);
@@ -176,11 +200,25 @@ Last line
 
 [See below]
 
-**Doc Identifier Rules**: Unlike other Supporting Documents, the document identifier of Needed Research documents is not derived from the Supporting Root of their Target Document. The "standalone" numbering scheme of Needed Research documents enables them to be linked to more than one Atlas Document, no matter the latter's location in the Atlas document tree. Needed Research Document Identifiers begin with the prefix "NR-", followed by an incremented number.
-**Additional Logic**: Generally, Needed Research Documents are most effective when linked to Primary Documents or Supporting Documents. These Document types have the objective of extrapolating from the abstract logic of their Parent documents to formulate rules and processes that are more concrete and actionable. Therefore, inputs for Needed Research are more appropriately sourced at this deeper level in the Atlas Document tree.
-**Type Category**: Supporting Document
-**Type Name**: Needed Research
-**Type Overview**: Needed Research Documents specify potential problems associated with their Target Document. Such problems can include potential gaps or conflicts in logic; questions regarding the operation of the Target Document to which there are currently no answers; etc.
+**Doc Identifier Rules**:
+
+Unlike other Supporting Documents, the document identifier of Needed Research documents is not derived from the Supporting Root of their Target Document. The "standalone" numbering scheme of Needed Research documents enables them to be linked to more than one Atlas Document, no matter the latter's location in the Atlas document tree. Needed Research Document Identifiers begin with the prefix "NR-", followed by an incremented number.
+
+**Additional Logic**:
+
+Generally, Needed Research Documents are most effective when linked to Primary Documents or Supporting Documents. These Document types have the objective of extrapolating from the abstract logic of their Parent documents to formulate rules and processes that are more concrete and actionable. Therefore, inputs for Needed Research are more appropriately sourced at this deeper level in the Atlas Document tree.
+
+**Type Category**:
+
+Supporting Document
+
+**Type Name**:
+
+Needed Research
+
+**Type Overview**:
+
+Needed Research Documents specify potential problems associated with their Target Document. Such problems can include potential gaps or conflicts in logic; questions regarding the operation of the Target Document to which there are currently no answers; etc.
 
 As such, Needed Research documents formalize continuing research into Universal Alignment and enable the adaptive intelligence of the ecosystem to drive the evolution of Sky. Scope Facilitators, Atlas workstream contributors or other ecosystem participants are able to submit Needed Research inputs, which are then progressively processed through the standardized Atlas data integration protocol.
 
@@ -323,8 +361,13 @@ Variation content
 
 Content here
 
-**Doc Identifier Rules**: Has content
-**Type Category**: Primary Document
+**Doc Identifier Rules**:
+
+Has content
+
+**Type Category**:
+
+Primary Document
     `;
 
     const trees = parseAtlasMarkdown(input);
@@ -358,11 +401,16 @@ Content here
 
 Content here
 
-**Doc Identifier Rules**:  
+**Doc Identifier Rules**:
+
 **Additional Logic**:
 
-**Type Category**: Valid
-**Type Name**:  
+**Type Category**:
+
+Valid
+
+**Type Name**:
+
 **Type Overview**:
     `;
 
@@ -388,5 +436,57 @@ Content here
 
     // Only the field with actual content should have a value
     expect(node.type_specification_type_category).toBe('Valid');
+  });
+
+  it('correctly parses extra fields with blank lines after values (exporter format)', () => {
+    // This tests the exact format that the exporter produces:
+    // **Label**: followed by blank line, then value, then blank line (except last field)
+    const input = md`
+##### A.1.2.2.2.4 - Test Type Spec With Spacing [Type Specification] <!-- UUID: 00000000-0000-0000-0000-000000000100 -->
+
+Content before fields
+
+**Doc Identifier Rules**:
+
+First field value
+
+**Additional Logic**:
+
+Second field value
+
+**Type Category**:
+
+Third field value
+
+**Type Name**:
+
+Fourth field value
+
+**Type Overview**:
+
+Last field value (no trailing blank line)
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+    const node = trees[0] as {
+      type: string;
+      content: string;
+      type_specification_doc_identifier_rules?: string;
+      type_specification_additional_logic?: string;
+      type_specification_type_category?: string;
+      type_specification_type_name?: string;
+      type_specification_type_overview?: string;
+    };
+
+    expect(node.type).toBe('Type Specification');
+    expect(node.content.trim()).toBe('Content before fields');
+
+    // All field values should be correctly extracted without leading/trailing blank lines
+    expect(node.type_specification_doc_identifier_rules).toBe('First field value');
+    expect(node.type_specification_additional_logic).toBe('Second field value');
+    expect(node.type_specification_type_category).toBe('Third field value');
+    expect(node.type_specification_type_name).toBe('Fourth field value');
+    expect(node.type_specification_type_overview).toBe('Last field value (no trailing blank line)');
   });
 });

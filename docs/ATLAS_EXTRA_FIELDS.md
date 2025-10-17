@@ -109,17 +109,37 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 **File**: `app/server/atlas/json-export/atlas-markdown-exporter.ts`
 
 - `getExtraFieldsForDocument()` function: Formats extra fields for markdown
-- Iterates over the property mapping to generate `**Label**: value` formatted lines
-- Handles null/undefined values gracefully
+- Iterates over the property mapping to generate formatted fields in the format:
+
+  ```
+  **Label**:
+
+  value
+
+  **Next Label**:
+
+  next value
+  ```
+
+- Each field consists of:
+  - Label line ending with colon: `**Label**:`
+  - Blank line
+  - Value content (may span multiple lines)
+  - Blank line (except after the last field)
+- The last field omits the trailing blank line (the document-level separator is added by `formatDocumentRecursive`)
+- Handles null/undefined values gracefully (outputs empty string)
 
 #### Markdown Import
 
 **File**: `app/server/atlas/json-export/atlas-markdown-importer.ts`
 
 - `extractContentAndExtraFields()` function: Parses markdown back to structured data
-- Detects `**Label**: value` patterns
+- Detects `**Label**:` patterns (colon at end of line with no value on the same line)
+- Values appear on subsequent lines after the label line
+- Automatically trims leading and trailing blank lines from each field's value
 - Separates content from extra fields
 - Initializes all expected fields to empty strings if not found
+- Round-trip compatible: Export → Import preserves all field values correctly
 
 ### Change Detection
 
