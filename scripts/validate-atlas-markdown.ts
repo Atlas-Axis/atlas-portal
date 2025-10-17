@@ -133,7 +133,7 @@ function parseTitleLine(line: string, lineNum: number): { doc: Document | null; 
         issue: {
           line: lineNum,
           severity: 'error',
-          message: 'Invalid title format',
+          message: '📝 Invalid title format',
           found: line,
           expected: '# {DocNo} - {Name} [{Type}]  <!-- UUID: {uuid} -->',
           action: 'Ensure exactly 2 spaces before <!-- and proper formatting',
@@ -145,7 +145,7 @@ function parseTitleLine(line: string, lineNum: number): { doc: Document | null; 
       issue: {
         line: lineNum,
         severity: 'error',
-        message: 'Invalid title format',
+        message: '📝 Invalid title format',
         action: 'Use format: # {DocNo} - {Name} [{Type}]  <!-- UUID: {uuid} -->',
       },
     };
@@ -171,7 +171,7 @@ function parseTitleLine(line: string, lineNum: number): { doc: Document | null; 
       issue: {
         line: lineNum,
         severity: 'error',
-        message: `Invalid document type '${type}'`,
+        message: `🏷️  Invalid document type '${type}'`,
         found: type,
         expected: `One of: ${DOCUMENT_TYPES.join(', ')}`,
         action: 'Use a valid document type',
@@ -199,7 +199,7 @@ function validateHierarchy(docs: Document[]): ValidationIssue[] {
       issues.push({
         line: curr.line,
         severity: 'error',
-        message: `Heading hierarchy error - skipped from level ${prev.level} to level ${curr.level}`,
+        message: `🪜 Heading hierarchy error - skipped from level ${prev.level} to level ${curr.level}`,
         found: `Previous: ${prevHashes} ${prev.docNo} (level ${prev.level})\nCurrent:  ${currHashes} ${curr.docNo} (level ${curr.level})`,
         expected: `Insert a level ${prev.level + 1} heading (${expectedHashes}) between these documents`,
         action: `Add missing level ${prev.level + 1} heading`,
@@ -221,7 +221,7 @@ function validateBlankLines(lines: string[], docs: Document[]): ValidationIssue[
       issues.push({
         line: doc.line + 1,
         severity: 'error',
-        message: 'Missing blank line after title',
+        message: '📄 Missing blank line after title',
         action: 'Add a blank line after the title line',
       });
     }
@@ -264,7 +264,7 @@ function validateExtraFields(lines: string[], docs: Document[]): ValidationIssue
           issues.push({
             line: docStartIdx + i + 2,
             severity: 'error',
-            message: `Unexpected extra field '${fieldName}' for document type '${doc.type}'`,
+            message: `➕ Unexpected extra field '${fieldName}' for document type '${doc.type}'`,
             expected: `Valid fields: ${requiredFields.join(', ')}`,
             action: `Remove this field or check if document type is correct`,
           });
@@ -275,7 +275,7 @@ function validateExtraFields(lines: string[], docs: Document[]): ValidationIssue
           issues.push({
             line: docStartIdx + i + 3,
             severity: 'error',
-            message: `Extra field '${fieldName}' missing blank line after label`,
+            message: `📄 Extra field '${fieldName}' missing blank line after label`,
             found: `**${fieldName}**:\n${docLines[i + 1]}`,
             expected: `**${fieldName}**:\n\n${docLines[i + 1]}`,
             action: 'Add a blank line after the label line',
@@ -292,7 +292,7 @@ function validateExtraFields(lines: string[], docs: Document[]): ValidationIssue
       issues.push({
         line: doc.line,
         severity: 'error',
-        message: `Extra fields in wrong order for '${doc.type}'`,
+        message: `🔢 Extra fields in wrong order for '${doc.type}'`,
         found: `Found: ${actualOrder.join(', ')}`,
         expected: `Expected: ${requiredFields.join(', ')}`,
         action: 'Reorder extra fields to match the required order',
@@ -305,7 +305,7 @@ function validateExtraFields(lines: string[], docs: Document[]): ValidationIssue
         issues.push({
           line: doc.line,
           severity: 'error',
-          message: `Missing required extra field '${field}' for document type '${doc.type}'`,
+          message: `❌ Missing required extra field '${field}' for document type '${doc.type}'`,
           expected: `All fields: ${requiredFields.join(', ')}`,
           action: `Add the missing '${field}' field`,
         });
@@ -325,7 +325,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
       return {
         line: doc.line,
         severity: 'error',
-        message: `Invalid Needed Research document number '${docNo}'`,
+        message: `🔢 Invalid Needed Research document number '${docNo}'`,
         expected: 'NR-{N} where N is a positive integer',
         example: 'NR-1, NR-5, NR-10',
         action: 'Use format NR-{N} for Needed Research documents',
@@ -339,7 +339,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Document number '${docNo}' must start with 'A.'`,
+      message: `🔢 Document number '${docNo}' must start with 'A.'`,
       example: 'A.1, A.1.1, A.1.1.1',
       action: 'Ensure document number starts with A.',
     };
@@ -352,7 +352,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
       return {
         line: doc.line,
         severity: 'error',
-        message: `Document number '${docNo}' invalid for document type '${type}'`,
+        message: `🔢 Document number '${docNo}' invalid for document type '${type}'`,
         reason: `${type} documents cannot contain '.0.' in their document numbers (except inherited A.0)`,
         example: 'A.1.1.1, A.1.1.2.1, A.1.1.2.1.1, A.0.1.1.1',
         action: "Remove the '.0' segment or change document type to appropriate supporting document",
@@ -365,7 +365,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Invalid Annotation document number '${docNo}'`,
+      message: `🔢 Invalid Annotation document number '${docNo}'`,
       expected: '{Target}.0.3.{N}',
       example: 'A.1.12.1.2.0.3.1',
       action: 'Use pattern {Target}.0.3.{N} for Annotations',
@@ -376,7 +376,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Invalid Action Tenet document number '${docNo}'`,
+      message: `🔢 Invalid Action Tenet document number '${docNo}'`,
       expected: '{Target}.0.4.{N}',
       example: 'A.1.4.5.0.4.1',
       action: 'Use pattern {Target}.0.4.{N} for Action Tenets',
@@ -387,7 +387,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Invalid Scenario document number '${docNo}'`,
+      message: `🔢 Invalid Scenario document number '${docNo}'`,
       expected: '{Tenet}.1.{N}',
       example: 'A.1.4.5.0.4.1.1.1',
       action: 'Use pattern {Tenet}.1.{N} for Scenarios',
@@ -398,7 +398,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Invalid Scenario Variation document number '${docNo}'`,
+      message: `🔢 Invalid Scenario Variation document number '${docNo}'`,
       expected: '{Scenario}.var{N}',
       example: 'A.1.4.5.0.4.1.1.1.var1',
       action: 'Use pattern {Scenario}.var{N} for Scenario Variations',
@@ -409,7 +409,7 @@ function validateDocumentNumber(doc: Document): ValidationIssue | null {
     return {
       line: doc.line,
       severity: 'error',
-      message: `Invalid Active Data document number '${docNo}'`,
+      message: `🔢 Invalid Active Data document number '${docNo}'`,
       expected: '{Controller}.0.6.{N}',
       example: 'A.1.1.3.1.0.6.1',
       action: 'Use pattern {Controller}.0.6.{N} for Active Data',
@@ -445,7 +445,7 @@ function validateNesting(docs: Document[]): ValidationIssue[] {
       issues.push({
         line: child.line,
         severity: 'error',
-        message: `Invalid nesting: '${child.type}' cannot be nested under '${parent.type}'`,
+        message: `🌳 Invalid nesting: '${child.type}' cannot be nested under '${parent.type}'`,
         found: `Parent: ${parent.docNo} - ${parent.name} [${parent.type}] (line ${parent.line})\nChild:  ${child.docNo} - ${child.name} [${child.type}] (line ${child.line})`,
         expected: `${parent.type} can only contain: ${allowedChildren.join(', ') || 'no children'}`,
         action: `Move this document or change its type`,
@@ -468,7 +468,7 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
       issues.push({
         line: doc.line,
         severity: 'warning',
-        message: 'UUID is empty',
+        message: '🆔 UUID is empty',
         action: 'Generate a new UUID for this document at https://www.uuidgenerator.net/',
       });
       continue;
@@ -479,7 +479,7 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
       issues.push({
         line: doc.line,
         severity: 'error',
-        message: `UUID '${uuid}' is not a valid UUID format`,
+        message: `🆔 UUID '${uuid}' is not a valid UUID format`,
         expected: '8 hex digits - 4 hex digits - 4 hex digits - 4 hex digits - 12 hex digits',
         example: '8650a584-01f8-45d6-882b-c14eab9879c4',
         action: 'Generate a new UUID at https://www.uuidgenerator.net/',
@@ -493,7 +493,7 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
       issues.push({
         line: doc.line,
         severity: 'error',
-        message: `Duplicate UUID found: ${uuid}`,
+        message: `🆔 Duplicate UUID found: ${uuid}`,
         found: `First occurrence: line ${existing.line} (${existing.docNo} - ${existing.name} [${existing.type}])\nDuplicate at: line ${doc.line} (${doc.docNo} - ${doc.name} [${doc.type}])`,
         action: `Generate a new unique UUID for line ${doc.line}`,
       });
@@ -553,7 +553,7 @@ function validate(content: string): ValidationIssue[] {
 function formatIssue(issue: ValidationIssue): string {
   const lines: string[] = [];
   const isError = issue.severity === 'error';
-  const icon = isError ? '✗' : '⚠';
+  const icon = isError ? '❌' : '⚠️';
   const prefix = isError ? 'ERROR' : 'WARNING';
 
   lines.push(`─────────────────────────────────────────`);
@@ -563,30 +563,30 @@ function formatIssue(issue: ValidationIssue): string {
 
   if (issue.found) {
     lines.push('');
-    lines.push('  ◆ Found:');
+    lines.push('  🔍 Found:');
     issue.found.split('\n').forEach((l) => lines.push(`    ${l}`));
   }
 
   if (issue.expected) {
     lines.push('');
-    lines.push('  ◆ Expected:');
+    lines.push('  ✨ Expected:');
     issue.expected.split('\n').forEach((l) => lines.push(`    ${l}`));
   }
 
   if (issue.reason) {
     lines.push('');
-    lines.push(`  ◆ Reason:`);
+    lines.push(`  💡 Reason:`);
     lines.push(`    ${issue.reason}`);
   }
 
   if (issue.example) {
     lines.push('');
-    lines.push(`  ◆ Example:`);
+    lines.push(`  📋 Example:`);
     lines.push(`    ${issue.example}`);
   }
 
   lines.push('');
-  lines.push(`  → Action: ${issue.action}`);
+  lines.push(`  🔧 Action: ${issue.action}`);
 
   return lines.join('\n');
 }
@@ -595,7 +595,7 @@ function printResults(issues: ValidationIssue[]): void {
   if (issues.length === 0) {
     console.log('');
     console.log('═════════════════════════════════════════');
-    console.log('  ✓ Validation passed - no issues found');
+    console.log('  ✅ Validation passed - no issues found');
     console.log('═════════════════════════════════════════');
     return;
   }
@@ -617,15 +617,15 @@ function printResults(issues: ValidationIssue[]): void {
 
   console.log('');
   console.log('═════════════════════════════════════════');
-  console.log('  VALIDATION SUMMARY');
+  console.log('  📊 VALIDATION SUMMARY');
   console.log('═════════════════════════════════════════');
-  console.log(`  ✗ Errors:   ${errors}`);
-  console.log(`  ⚠ Warnings: ${warnings}`);
+  console.log(`  ❌ Errors:   ${errors}`);
+  console.log(`  ⚠️  Warnings: ${warnings}`);
   console.log('─────────────────────────────────────────');
   if (errors > 0) {
-    console.log('  Status: ✗ FAILED');
+    console.log('  Status: ❌ FAILED');
   } else {
-    console.log('  Status: ⚠ PASSED (warnings only)');
+    console.log('  Status: ✅ PASSED (warnings only)');
   }
   console.log('═════════════════════════════════════════');
 }
