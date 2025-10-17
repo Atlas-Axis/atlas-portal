@@ -383,6 +383,36 @@ When editing the Atlas Markdown:
 
 ## 8. Validation & Common Errors
 
+### Validation Tool
+
+The project includes a command-line validator script that can check Atlas Markdown files for syntax errors and structural issues:
+
+```bash
+npx tsx scripts/validate-atlas-markdown.ts [file-path]
+```
+
+**Examples:**
+
+```bash
+# Validate the default Atlas markdown file
+npx tsx scripts/validate-atlas-markdown.ts
+
+# Validate a specific file
+npx tsx scripts/validate-atlas-markdown.ts atlas.md
+```
+
+The validator checks for:
+
+- Proper title line format (heading, document number, name, type, UUID)
+- Correct heading level progression (no skipped levels)
+- Valid document numbering according to Atlas rules
+- Proper extra fields format and ordering for document types that require them
+- UUID uniqueness and format
+- Correct parent-child relationships based on document types
+- Proper spacing around content and extra fields
+
+**Using the validator is highly recommended** before importing Atlas Markdown files to catch syntax errors early.
+
 ### Critical Syntax Rules
 
 To ensure the parser can correctly process the Atlas Markdown file, follow these rules:

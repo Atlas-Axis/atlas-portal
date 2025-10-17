@@ -599,6 +599,18 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/visualize-hierarchy.ts --ascii
       ```
 
+- **scripts/validate-atlas-markdown.ts**: Validates Atlas Markdown files for syntax errors and structural issues. Checks title line format, heading level progression, document numbering, extra fields, UUID uniqueness, and parent-child relationships.
+  - Examples:
+    - ```bash
+      npx tsx scripts/validate-atlas-markdown.ts
+      ```
+    - ```bash
+      npx tsx scripts/validate-atlas-markdown.ts atlas.md
+      ```
+    - ```bash
+      npx tsx scripts/validate-atlas-markdown.ts --verbose
+      ```
+
 - **scripts/atlas-json/old/filter-blue-json-inactive-docs.ts**: Generic inactive filter for any Blue-style Blue JSON; removes all `inactive: 1` nodes recursively and writes filtered output.
   - Example:
     - ```bash
