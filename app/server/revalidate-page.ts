@@ -52,7 +52,7 @@ export async function revalidatePage(path: string): Promise<{ success: boolean; 
 function getBaseUrl(): string {
   // Production: Use BASE_URL
   if (process.env.BASE_URL) {
-    return `https://${process.env.BASE_URL}`;
+    return process.env.BASE_URL;
   }
 
   throw new Error('Could not determine base URL');
