@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Checkbox } from '@heroui/checkbox';
 import { Divider } from '@heroui/divider';
@@ -17,31 +18,38 @@ import {
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
 
-const colors: { [K in AtlasChangeType]: { background: string; border: string; text: string } } = {
+const colors: {
+  [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
+} = {
   added: {
     background: 'bg-green-50',
     border: 'border-green-500',
     text: 'text-green-800',
+    sectionBackground: 'bg-green-600',
   },
   changed: {
     background: 'bg-blue-50',
     border: 'border-blue-500',
     text: 'text-blue-800',
+    sectionBackground: 'bg-blue-600',
   },
   sibling_order_changed: {
     background: 'bg-yellow-50',
     border: 'border-yellow-500',
     text: 'text-yellow-800',
+    sectionBackground: 'bg-yellow-600',
   },
   parent_changed: {
     background: 'bg-orange-50',
     border: 'border-orange-500',
     text: 'text-orange-800',
+    sectionBackground: 'bg-orange-600',
   },
   deleted: {
     background: 'bg-red-50',
     border: 'border-red-500',
     text: 'text-red-800',
+    sectionBackground: 'bg-red-600',
   },
 };
 
@@ -135,6 +143,17 @@ function ChangeSection({
 }) {
   const colorConfig = colors[changeType];
 
+  // Track checkbox state for each change (only for non-sibling_order_changed items)
+  const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>(() => {
+    const initialState: Record<string, boolean> = {};
+    changes.forEach((change, index) => {
+      if (change.changeType !== 'sibling_order_changed') {
+        initialState[`${change.uuid}-${index}`] = true; // Default to checked
+      }
+    });
+    return initialState;
+  });
+
   if (changes.length === 0) {
     return null;
     return (
@@ -151,14 +170,58 @@ function ChangeSection({
     );
   }
 
+  // Calculate if all checkboxes are checked (for indeterminate state)
+  const checkableChanges = changes.filter((change) => change.changeType !== 'sibling_order_changed');
+  const allChecked =
+    checkableChanges.length > 0 && checkableChanges.every((change, index) => checkboxStates[`${change.uuid}-${index}`]);
+  const someChecked = checkableChanges.some((change, index) => checkboxStates[`${change.uuid}-${index}`]);
+
+  // Toggle all checkboxes
+  const handleToggleAll = () => {
+    const newState: Record<string, boolean> = {};
+    const newValue = !allChecked;
+    changes.forEach((change, index) => {
+      if (change.changeType !== 'sibling_order_changed') {
+        newState[`${change.uuid}-${index}`] = newValue;
+      }
+    });
+    setCheckboxStates(newState);
+  };
+
+  // Toggle individual checkbox
+  const handleToggleCheckbox = (key: string) => {
+    setCheckboxStates((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
   return (
     <div className="my-9">
-      <h2 className="my-3 mb-6 rounded-md bg-slate-100 p-3 text-2xl font-semibold">
-        {title} ({changes.length})
-      </h2>
+      <div
+        className={`-mx-3 my-3 mb-6 flex items-center gap-3 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}
+      >
+        {checkableChanges.length > 0 && (
+          <Checkbox
+            size="md"
+            isSelected={allChecked}
+            isIndeterminate={someChecked && !allChecked}
+            onValueChange={handleToggleAll}
+          />
+        )}
+        <h2 className="text-2xl font-semibold">
+          {title} ({changes.length})
+        </h2>
+      </div>
       <div>
         {changes.map((change, index) => (
-          <ChangeCard key={`${change.uuid}-${index}`} change={change} uuidToDocMap={uuidToDocMap} />
+          <ChangeCard
+            key={`${change.uuid}-${index}`}
+            change={change}
+            uuidToDocMap={uuidToDocMap}
+            isChecked={checkboxStates[`${change.uuid}-${index}`] ?? true}
+            onToggleCheckbox={() => handleToggleCheckbox(`${change.uuid}-${index}`)}
+          />
         ))}
       </div>
     </div>
@@ -180,16 +243,22 @@ function formatDocReference(
 function ChangeCard({
   change,
   uuidToDocMap,
+  isChecked,
+  onToggleCheckbox,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
+  isChecked?: boolean;
+  onToggleCheckbox?: () => void;
 }) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
 
   return (
     <div className="flex items-center gap-3">
-      {change.changeType !== 'sibling_order_changed' && <Checkbox size="lg" defaultSelected className="mt-1" />}
+      {change.changeType !== 'sibling_order_changed' && (
+        <Checkbox size="md" isSelected={isChecked} onValueChange={onToggleCheckbox} className="mt-1" />
+      )}
       <Card className="flex-1" radius="none" shadow="none">
         <CardBody className="flex flex-col gap-0">
           {/* Document title in Atlas style */}
