@@ -5,7 +5,7 @@ export default async function AtlasSyncPage() {
   const result = await diffAtlasScopeTreeLists();
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6">
+    <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6 pb-12">
       <Content result={result} />
     </div>
   );
