@@ -168,6 +168,22 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
     return () => window.removeEventListener('hashchange', updateHash);
   }, []);
 
+  // Handle initial hash on page load
+  useEffect(() => {
+    const initialHash = window.location.hash.slice(1);
+    if (initialHash) {
+      // Extract root scope from document ID (e.g., A.2.9 -> A.2)
+      const rootScopeDocID = initialHash.split('.').slice(0, 2).join('.');
+      // Trigger expansion of the target scope with a small delay to ensure the page is fully loaded
+      setTimeout(() => {
+        dispatchExpandScopeEvent({
+          scopeDocID: rootScopeDocID,
+          targetDocID: initialHash,
+        });
+      }, 100);
+    }
+  }, []);
+
   if (scopeTrees.length === 0) {
     return null;
   }
