@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Checkbox } from '@heroui/checkbox';
 import { Divider } from '@heroui/divider';
-import { Card, CardBody, CardHeader } from '@heroui/react';
+import { Button, Card, CardBody, CardHeader } from '@heroui/react';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
@@ -79,7 +79,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
       <CardBody>
         {/* Added Documents */}
         <ChangeSection
-          title="Added Documents"
+          title="Added"
           changes={changes.added}
           changeType="added"
           emptyMessage="No documents added"
@@ -88,7 +88,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
 
         {/* Changed Documents */}
         <ChangeSection
-          title="Changed Documents"
+          title="Changed"
           changes={changes.changed}
           changeType="changed"
           emptyMessage="No document content changes"
@@ -115,14 +115,22 @@ export function Content({ result }: { result: AtlasDiffResult }) {
 
         {/* Deleted Documents */}
         <ChangeSection
-          title="Deleted Documents"
+          title="Deleted"
           changes={changes.deleted}
           changeType="deleted"
           emptyMessage="No documents deleted"
           uuidToDocMap={originalIdsToDocuments}
         />
 
-        <p className="mt-3 text-slate-500">Note: Sort order changes within the same document are not shown yet.</p>
+        <p className="my-3 text-xs text-slate-400">
+          Note: Sort order changes within the same document are not shown yet.
+        </p>
+
+        <div className="my-6 flex justify-center">
+          <Button size="lg" onPress={() => {}} variant="solid" color="primary">
+            Sync Changes
+          </Button>
+        </div>
       </CardBody>
     </Card>
   );
