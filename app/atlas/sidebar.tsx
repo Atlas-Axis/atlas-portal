@@ -5,6 +5,7 @@ import { Accordion, AccordionItem } from '@heroui/accordion';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
+import { dispatchExpandScopeEvent } from './custom-events';
 
 interface SidebarProps {
   scopeTrees: StandardizedAtlasDocument[];
@@ -74,10 +75,10 @@ function renderSidebarNode({
             // Extract root scope from document ID (e.g., A.2.9 -> A.2)
             const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
             // Trigger expansion of the target scope
-            const event = new CustomEvent('expandScope', {
-              detail: { rootScopeDocID },
+            dispatchExpandScopeEvent({
+              scopeDocID: rootScopeDocID,
+              targetDocID: node.doc_no,
             });
-            window.dispatchEvent(event);
           }
         }}
       >
@@ -109,11 +110,10 @@ function renderSidebarNode({
                 // Extract root scope from document ID (e.g., A.2.9 -> A.2)
                 const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
                 // Trigger expansion of the target scope
-                const event = new CustomEvent('expandScope', {
-                  detail: { scopeId: rootScopeDocID },
+                dispatchExpandScopeEvent({
+                  scopeDocID: rootScopeDocID,
+                  targetDocID: node.doc_no,
                 });
-                window.dispatchEvent(event);
-                window.location.hash = node.doc_no;
               }
             }}
           >

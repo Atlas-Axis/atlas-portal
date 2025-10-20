@@ -17,6 +17,7 @@ import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import styles from './content-tree.module.css';
+import { addExpandScopeListener } from './custom-events';
 import TypeChip from './type-chip';
 
 function StandardizedExtraData({
@@ -395,28 +396,43 @@ export default function ContentTree({
 
   // State to control which accordion items are expanded
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
-    return new Set(scopeKeys);
+    // return new Set(scopeKeys);
+    return new Set([]);
   });
 
   // Listen for expandScope custom events from sidebar
   React.useEffect(() => {
-    const handleExpandScope = (event: CustomEvent) => {
-      const { scopeDocID } = event.detail;
+    const cleanup = addExpandScopeListener((event) => {
+      const { scopeDocID, targetDocID } = event.detail;
 
       // Find the scope that matches the scopeDocID
       const targetScope = scopeTreesWithoutAgents.find((scope) => scope.doc_no === scopeDocID);
       if (targetScope) {
         const targetScopeUuid = targetScope.uuid || '';
 
-        // Expand the target scope after a brief delay to ensure collapse happens first
-        setTimeout(() => {
-          setExpandedKeys(new Set([targetScopeUuid]));
-        }, 50);
-      }
-    };
+        // Check if the target scope is already expanded
+        const isAlreadyExpanded = expandedKeys.has(targetScopeUuid);
 
-    window.addEventListener('expandScope', handleExpandScope as EventListener);
-    return () => window.removeEventListener('expandScope', handleExpandScope as EventListener);
+        if (isAlreadyExpanded) {
+          // If already expanded, just navigate to the target document
+          if (targetDocID) {
+            window.location.hash = targetDocID;
+          }
+        } else {
+          // Close all other accordions and expand only the target scope
+          setExpandedKeys(new Set([targetScopeUuid]));
+
+          // Wait for accordion to expand, then navigate to target document
+          if (targetDocID) {
+            setTimeout(() => {
+              window.location.hash = targetDocID;
+            }, 100);
+          }
+        }
+      }
+    });
+
+    return cleanup;
   }, [scopeTreesWithoutAgents, expandedKeys]);
 
   // Calculate total nodes for debugging
