@@ -1,4 +1,4 @@
-import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/atlas-diff';
+import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 import { Content } from './content';
 
 export default async function AtlasSyncPage() {

@@ -125,7 +125,7 @@ A document can appear in multiple change arrays:
 ### Basic Usage
 
 ```typescript
-import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/atlas-diff';
+import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 
 const result = await diffAtlasScopeTreeLists();
 
