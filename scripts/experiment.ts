@@ -1,7 +1,21 @@
+import type { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 
-const NOTION_DATABASE_ID = '288f2ff08d73804fa179ef76388d6d26';
+const NOTION_DATABASE_ID = '292f2ff08d7380df9acede66fe5a9d89';
+const NESTING_LEVELS = 15;
+
+interface CreatedPage {
+  id: string;
+  depth: number;
+  title: string;
+}
+
+interface NotionError {
+  code?: string;
+  message?: string;
+  body?: unknown;
+}
 
 // #!/usr/bin/env node
 async function main() {
@@ -10,151 +24,115 @@ async function main() {
   // Load environment variables
   loadEnv();
 
+  const now = new Date();
+  const dateTimeString = now.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  });
+
   try {
-    console.log('🚀 Creating a new page in Notion database...');
+    console.log(`🚀 Testing Notion sub-item nesting depth limit (max ${NESTING_LEVELS} levels)...`);
+    console.log(`📅 Test started at: ${dateTimeString}\n`);
 
-    // Create a new page in the database with rich text content
-    const now = new Date();
-    const dateTimeString = now.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
+    let currentDepth = 0;
+    let parentPageId: string | null = null;
+    const createdPages: CreatedPage[] = [];
+
+    // Create nested pages recursively
+    for (let level = 1; level <= NESTING_LEVELS; level++) {
+      try {
+        console.log(`📝 Creating page at depth ${level}...`);
+
+        const pageTitle = `Depth ${level} - ${dateTimeString}`;
+        const properties: CreatePageParameters['properties'] = {
+          Name: {
+            title: [
+              {
+                type: 'text',
+                text: {
+                  content: pageTitle,
+                },
+              },
+            ],
+          },
+        };
+
+        // Add Parent item relationship if there's a parent
+        if (parentPageId) {
+          properties['Parent item'] = {
+            relation: [
+              {
+                id: parentPageId,
+              },
+            ],
+          };
+        }
+
+        const response = await notion('write').pages.create({
+          parent: {
+            database_id: NOTION_DATABASE_ID,
+          },
+          properties,
+        });
+
+        currentDepth = level;
+        createdPages.push({
+          id: response.id,
+          depth: level,
+          title: pageTitle,
+        });
+
+        console.log(`  ✅ Created page at depth ${level}`);
+        if (parentPageId) {
+          console.log(`  🔗 Linked as sub-item of depth ${level - 1} (Parent: ${parentPageId})`);
+        }
+        console.log('');
+
+        // Set this page as the parent for the next iteration
+        parentPageId = response.id;
+
+        // Small delay to avoid rate limiting
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      } catch (createError) {
+        const error = createError as NotionError;
+        console.error(`\n❌ Failed to create page at depth ${level}`);
+        console.error(`Error type: ${error.code ?? 'unknown'}`);
+        console.error(`Error message: ${error.message ?? 'No message'}`);
+
+        if (error.body) {
+          console.error(`Full error body:`, JSON.stringify(error.body, null, 2));
+        }
+
+        console.log(`\n🛑 Maximum nesting depth reached: ${currentDepth} levels`);
+        break;
+      }
+    }
+
+    // Summary
+    console.log('\n' + '='.repeat(60));
+    console.log('📊 TEST SUMMARY');
+    console.log('='.repeat(60));
+    console.log(`✅ Successfully created: ${createdPages.length} pages`);
+    console.log(`🏆 Maximum nesting depth achieved: ${currentDepth} levels`);
+    console.log(`\n📋 Created pages:`);
+
+    createdPages.forEach((page) => {
+      console.log(`  ${page.depth}. ${page.title}`);
+      console.log(`     ID: ${page.id}`);
+      console.log(`     URL: https://www.notion.so/${page.id.replace(/-/g, '')}`);
     });
-
-    const response = await notion('write').pages.create({
-      parent: {
-        database_id: NOTION_DATABASE_ID,
-      },
-      properties: {
-        Name: {
-          title: [
-            {
-              type: 'text',
-              text: {
-                content: `Test ${dateTimeString}`,
-              },
-            },
-          ],
-        },
-        Content: {
-          rich_text: [
-            {
-              type: 'text',
-              text: {
-                content: 'This is a demo page created via the Notion API! 🎉',
-              },
-              annotations: {
-                bold: true,
-                italic: false,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'blue',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n\nThis page demonstrates rich text formatting with multiple styles.',
-              },
-              annotations: {
-                bold: false,
-                italic: true,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'default',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n\nHere are some features:',
-              },
-              annotations: {
-                bold: true,
-                italic: false,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'default',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n• Bold text',
-              },
-              annotations: {
-                bold: true,
-                italic: false,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'default',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n• Italic text',
-              },
-              annotations: {
-                bold: false,
-                italic: true,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'default',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n• Code text',
-              },
-              annotations: {
-                bold: false,
-                italic: false,
-                strikethrough: false,
-                underline: false,
-                code: true,
-                color: 'default',
-              },
-            },
-            {
-              type: 'text',
-              text: {
-                content: '\n• Colored text',
-              },
-              annotations: {
-                bold: false,
-                italic: false,
-                strikethrough: false,
-                underline: false,
-                code: false,
-                color: 'green',
-              },
-            },
-          ],
-        },
-      },
-    });
-
-    console.log('✅ Page created successfully!');
-    console.log(`📄 Page ID: ${response.id}`);
-    console.log(`🔗 Page URL: https://www.notion.so/${response.id}`);
 
     // Log processing time
     const endTime = Date.now();
     const durationSeconds = ((endTime - startTime) / 1000).toFixed(2);
-    console.log(`⏰ Processing time: ${durationSeconds} seconds`);
+    console.log(`\n⏰ Total processing time: ${durationSeconds} seconds`);
   } catch (error) {
-    console.error('Error:', error);
+    console.error('\n❌ Unexpected error:', error);
     process.exit(1);
   }
 }
