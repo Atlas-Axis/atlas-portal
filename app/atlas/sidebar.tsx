@@ -110,10 +110,12 @@ function renderSidebarNode({
                 // Extract root scope from document ID (e.g., A.2.9 -> A.2)
                 const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
                 // Trigger expansion of the target scope
-                dispatchExpandScopeEvent({
-                  scopeDocID: rootScopeDocID,
-                  targetDocID: node.doc_no,
-                });
+                setTimeout(() => {
+                  dispatchExpandScopeEvent({
+                    scopeDocID: rootScopeDocID,
+                    targetDocID: node.doc_no,
+                  });
+                }, 100);
               }
             }}
           >
