@@ -62,6 +62,20 @@ export function Content({ result }: { result: AtlasDiffResult }) {
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleSyncClick = () => {
+    setIsLoading(true);
+    setIsDisabled(true);
+
+    // Simulate loading for 5 seconds
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsDisabled(false);
+    }, 5000);
+  };
+
   return (
     <Card className="container mx-auto max-w-7xl p-6">
       <CardHeader>
@@ -122,12 +136,19 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           uuidToDocMap={originalIdsToDocuments}
         />
 
-        <p className="my-3 text-xs text-slate-400">
+        <p className="my-3 text-xs text-slate-300">
           Note: Sort order changes within the same document are not shown yet.
         </p>
 
         <div className="my-6 flex justify-center">
-          <Button size="lg" onPress={() => {}} variant="solid" color="primary">
+          <Button
+            size="lg"
+            onPress={handleSyncClick}
+            variant="solid"
+            color="primary"
+            isLoading={isLoading}
+            isDisabled={isDisabled}
+          >
             Sync Changes
           </Button>
         </div>
