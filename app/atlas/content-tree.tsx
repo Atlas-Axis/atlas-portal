@@ -78,7 +78,7 @@ interface RenderTreeNodeProps {
   isRootNode?: boolean;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
-  agentDocs?: StandardizedAtlasDocument[];
+  // agentDocs?: StandardizedAtlasDocument[];
 }
 
 function renderSupportingDocumentListInSameType({
@@ -89,7 +89,7 @@ function renderSupportingDocumentListInSameType({
   depth,
   uuidMappings,
   agentsLoading = false,
-  agentDocs,
+  // agentDocs,
 }: {
   label: string;
   documentType: AtlasDocumentType;
@@ -98,7 +98,7 @@ function renderSupportingDocumentListInSameType({
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
-  agentDocs?: StandardizedAtlasDocument[];
+  // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
@@ -118,7 +118,7 @@ function renderSupportingDocumentListInSameType({
                 isRootNode: false,
                 uuidMappings,
                 agentsLoading,
-                agentDocs,
+                // agentDocs,
               })}
             </React.Fragment>
           );
@@ -134,14 +134,14 @@ function renderSupportingDocuments({
   depth,
   uuidMappings,
   agentsLoading = false,
-  agentDocs,
+  // agentDocs,
 }: {
   node: StandardizedAtlasDocument;
   parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
-  agentDocs?: StandardizedAtlasDocument[];
+  // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const nodeId = node.uuid || '';
 
@@ -202,7 +202,7 @@ function renderSupportingDocuments({
             depth,
             uuidMappings,
             agentsLoading,
-            agentDocs,
+            // agentDocs,
           })}
         </div>
       ))}
@@ -217,7 +217,7 @@ function renderTreeNode({
   isRootNode = false,
   uuidMappings,
   agentsLoading = false,
-  agentDocs,
+  // agentDocs,
 }: RenderTreeNodeProps): React.ReactElement {
   // Get node identifiers and metadata based on type
   const nodeId = node.uuid || '';
@@ -238,7 +238,9 @@ function renderTreeNode({
   // For StandardizedAtlasDocument, use the mapped Notion page ID
   const isAgentRootSection = Boolean(notionId && notionId === AGENT_ROOT_SECTION_UUID_FOR_NESTING);
   const shouldShowAgentPlaceholder = isAgentRootSection && agentsLoading;
-  const shouldRenderAgentDocs = isAgentRootSection && !agentsLoading && agentDocs && agentDocs.length > 0;
+  // const shouldRenderAgentDocs = isAgentRootSection && !agentsLoading && agentDocs && agentDocs.length > 0;
+  const agentDocs: StandardizedAtlasDocument[] = []; // IGNORE
+  const shouldRenderAgentDocs = true;
 
   // Get immutable and primary document children based on node type
   type ImmutableDocsContainer = {
@@ -318,7 +320,7 @@ function renderTreeNode({
                   isRootNode: false,
                   uuidMappings,
                   agentsLoading: false,
-                  agentDocs: [],
+                  // agentDocs: [],
                 })}
               </React.Fragment>
             );
@@ -340,7 +342,7 @@ function renderTreeNode({
                   isRootNode: false,
                   uuidMappings,
                   agentsLoading,
-                  agentDocs,
+                  // agentDocs,
                 })}
               </React.Fragment>
             );
@@ -348,7 +350,8 @@ function renderTreeNode({
         </ul>
       )}
 
-      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })}
+      {/* {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })} */}
+      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading })}
     </>
   );
 
@@ -378,12 +381,12 @@ export default function ContentTree({
   scopeTreesWithoutAgents,
   uuidMappings,
   agentsLoading,
-  agentDocs,
+  // agentDocs,
 }: {
   scopeTreesWithoutAgents: StandardizedAtlasDocument[];
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
-  agentDocs?: StandardizedAtlasDocument[];
+  // agentDocs?: StandardizedAtlasDocument[];
 }) {
   // Memoize scopeKeys to prevent unnecessary re-renders
   const scopeKeys = useMemo(
@@ -547,7 +550,7 @@ export default function ContentTree({
               isRootNode: true,
               uuidMappings,
               agentsLoading,
-              agentDocs,
+              // agentDocs,
             })}
           </AccordionItem>
         ))}

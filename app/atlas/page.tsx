@@ -1,4 +1,4 @@
-import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
+// import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
@@ -29,14 +29,15 @@ export default async function Page() {
   );
 
   // Extract agent nodes and convert to StandardizedAtlasDocument for embedding/hydration
-  const flattened = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees: atlas.scopeTrees });
-  const agentNodes = flattened['Agent Scope Database'] || [];
-  const standardizedAgentDocs = agentNodes.map((node) => atlasNodeToStandardized(node, uuidMappings));
+  // const flattened = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees: atlas.scopeTrees });
+  // const agentNodes = flattened['Agent Scope Database'] || [];
+  // const standardizedAgentDocs = agentNodes.map((node) => atlasNodeToStandardized(node, uuidMappings));
 
   return (
     <AtlasPagePrerendered
       standardizedScopeTreesWithoutAgents={standardizedScopeTreesWithoutAgents}
-      standardizedAgentDocs={standardizedAgentDocs}
+      // standardizedAgentDocs={[]}
+      // standardizedAgentDocs={standardizedAgentDocs}
       uuidMappings={uuidMappings}
     />
   );

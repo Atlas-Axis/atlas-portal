@@ -47,7 +47,7 @@ export default function AgentsHydrator({ onAgentsLoaded }: AgentsHydratorProps) 
         // Store UUID mappings in window for use by rendering components
         (window as typeof window & { __atlasUuidMappings?: typeof uuidMappings }).__atlasUuidMappings = uuidMappings;
 
-        // Pass agent docs directly to parent - no tree rebuilding needed
+        // Pass agent docs directly to parent - tree rebuilding needed!
         // The ContentTree will render them at the appropriate location
         onAgentsLoaded(agentDocs);
       } catch (err) {
