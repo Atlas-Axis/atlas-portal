@@ -103,7 +103,7 @@ export function buildAtlasTree(
   const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
     try {
       // Build tree node for orphaned page (with reasonable depth limit to avoid performance issues)
-      return buildTreeNode(orphanedPage, lookupMaps, 0, 10, false, false);
+      return buildTreeNode(orphanedPage, lookupMaps, 0, 50, false, false);
     } catch (conversionError) {
       // If conversion fails, create a minimal AtlasTreeNode
       if (verbose) {
