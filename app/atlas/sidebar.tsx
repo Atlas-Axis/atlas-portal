@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Input } from '@heroui/input';
@@ -200,12 +201,7 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
       >
         <div className="p-4">
           <div className="mb-6 flex items-center gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://makerdao-forum-backup.s3.dualstack.us-east-1.amazonaws.com/original/3X/1/9/19cc0c65340a5e0c48cd777583fa119c4a4dad84.png"
-              alt="Sky Logo"
-              className="h-6 w-6 object-contain"
-            />
+            <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" />
             <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
           </div>
 
