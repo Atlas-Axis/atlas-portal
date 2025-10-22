@@ -1,3 +1,10 @@
+/**
+ * Tests Notion's database sub-item nesting depth limit by creating nested pages.
+ * Creates pages in a database with Parent item relationships to determine the maximum
+ * allowed nesting depth before Notion API returns an error.
+ *
+ * Usage: npx tsx scripts/experiment.ts
+ */
 import type { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
@@ -17,13 +24,13 @@ interface NotionError {
   body?: unknown;
 }
 
-// #!/usr/bin/env node
 async function main() {
   const startTime = Date.now();
 
   // Load environment variables
   loadEnv();
 
+  // Format timestamp for page titles
   const now = new Date();
   const dateTimeString = now.toLocaleString('en-US', {
     year: 'numeric',
@@ -43,11 +50,12 @@ async function main() {
     let parentPageId: string | null = null;
     const createdPages: CreatedPage[] = [];
 
-    // Create nested pages recursively
+    // Create nested pages iteratively, each one a child of the previous
     for (let level = 1; level <= NESTING_LEVELS; level++) {
       try {
         console.log(`📝 Creating page at depth ${level}...`);
 
+        // Build page properties with title
         const pageTitle = `Depth ${level} - ${dateTimeString}`;
         const properties: CreatePageParameters['properties'] = {
           Name: {
@@ -62,7 +70,7 @@ async function main() {
           },
         };
 
-        // Add Parent item relationship if there's a parent
+        // Link to parent page if this isn't the root level
         if (parentPageId) {
           properties['Parent item'] = {
             relation: [
@@ -73,6 +81,7 @@ async function main() {
           };
         }
 
+        // Create the page in Notion
         const response = await notion('write').pages.create({
           parent: {
             database_id: NOTION_DATABASE_ID,
@@ -80,6 +89,7 @@ async function main() {
           properties,
         });
 
+        // Track successful creation
         currentDepth = level;
         createdPages.push({
           id: response.id,
@@ -96,9 +106,10 @@ async function main() {
         // Set this page as the parent for the next iteration
         parentPageId = response.id;
 
-        // Small delay to avoid rate limiting
+        // Avoid rate limiting
         await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (createError) {
+        // Handle nesting depth limit or other errors
         const error = createError as NotionError;
         console.error(`\n❌ Failed to create page at depth ${level}`);
         console.error(`Error type: ${error.code ?? 'unknown'}`);
@@ -113,7 +124,7 @@ async function main() {
       }
     }
 
-    // Summary
+    // Print test results summary
     console.log('\n' + '='.repeat(60));
     console.log('📊 TEST SUMMARY');
     console.log('='.repeat(60));
