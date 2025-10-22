@@ -1,21 +1,28 @@
+/**
+ * Tests updating Notion page relationships by setting a Sub-item relationship.
+ * Demonstrates that Notion allows updating relationships to existing pages,
+ * but enforces nesting depth limits (pages beyond depth 10 cannot be linked).
+ *
+ * Usage: npx tsx scripts/experiment2.ts
+ */
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 
-// Doesn't Work - Nesting level exceeds 10
+// Test case: Nesting level exceeds 10 (fails)
 // const PARENT_NOTION_PAGE_ID = '292f2ff08d73813fa0ebdf4f11519e6d';
 // const CHILD_NOTION_PAGE_ID = '292f2ff08d7381db8995d5e19e9c48d5';
 
-// Works - Nesting level is below 10
+// Test case: Nesting level is below 10 (succeeds)
 const PARENT_NOTION_PAGE_ID = '292f2ff08d73800182c7c70db2169c47';
 const CHILD_NOTION_PAGE_ID = '292f2ff08d7380a2b615c71d91d84052';
 
-// #!/usr/bin/env node
 async function main() {
   const startTime = Date.now();
 
   // Load environment variables
   loadEnv();
 
+  // Format timestamp for logging
   const now = new Date();
   const dateTimeString = now.toLocaleString('en-US', {
     year: 'numeric',
@@ -33,7 +40,7 @@ async function main() {
     console.log(`👉 Parent Page ID: ${PARENT_NOTION_PAGE_ID}`);
     console.log(`👉 Child Page ID: ${CHILD_NOTION_PAGE_ID}\n`);
 
-    // Update the parent page to add the child to its Sub-item relation
+    // Update parent page to link child as a sub-item
     await notion('write').pages.update({
       page_id: PARENT_NOTION_PAGE_ID,
       properties: {
