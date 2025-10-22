@@ -108,7 +108,7 @@ function renderSidebarNode({
               isActive ? 'text-blue-600' : ''
             }`}
             onClick={() => {
-              // Prevent accordion toggle when clicking the title; navigate to hash
+              // When clicking the title, navigate to hash
               if (node.doc_no) {
                 // Extract root scope from document ID (e.g., A.2.9 -> A.2)
                 const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');

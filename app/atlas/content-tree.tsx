@@ -79,6 +79,7 @@ interface RenderTreeNodeProps {
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
   // agentDocs?: StandardizedAtlasDocument[];
+  highlightedDocNumber: string | null;
 }
 
 function renderSupportingDocumentListInSameType({
@@ -89,6 +90,7 @@ function renderSupportingDocumentListInSameType({
   depth,
   uuidMappings,
   agentsLoading = false,
+  highlightedDocNumber = null,
   // agentDocs,
 }: {
   label: string;
@@ -98,6 +100,7 @@ function renderSupportingDocumentListInSameType({
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  highlightedDocNumber?: string | null;
   // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
@@ -118,6 +121,7 @@ function renderSupportingDocumentListInSameType({
                 isRootNode: false,
                 uuidMappings,
                 agentsLoading,
+                highlightedDocNumber,
                 // agentDocs,
               })}
             </React.Fragment>
@@ -134,6 +138,7 @@ function renderSupportingDocuments({
   depth,
   uuidMappings,
   agentsLoading = false,
+  highlightedDocNumber = null,
   // agentDocs,
 }: {
   node: StandardizedAtlasDocument;
@@ -141,6 +146,7 @@ function renderSupportingDocuments({
   depth: number;
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
+  highlightedDocNumber?: string | null;
   // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const nodeId = node.uuid || '';
@@ -202,6 +208,7 @@ function renderSupportingDocuments({
             depth,
             uuidMappings,
             agentsLoading,
+            highlightedDocNumber,
             // agentDocs,
           })}
         </div>
@@ -217,6 +224,7 @@ function renderTreeNode({
   isRootNode = false,
   uuidMappings,
   agentsLoading = false,
+  highlightedDocNumber = null,
   // agentDocs,
 }: RenderTreeNodeProps): React.ReactElement {
   // Get node identifiers and metadata based on type
@@ -262,8 +270,12 @@ function renderTreeNode({
     throw new Error('Maximum tree depth exceeded, possible circular reference');
   }
 
-  const nodeContent = (
-    <>
+  // Check if this node should be highlighted
+  const isHighlighted = highlightedDocNumber && docNumber === highlightedDocNumber;
+
+  // Node's own content (without children) - this is what gets highlighted
+  const nodeOwnContent = (
+    <div className={isHighlighted ? styles.highlightedContent : ''}>
       {!isRootNode && (
         <div className={styles.nodeTitle}>
           <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
@@ -299,7 +311,12 @@ function renderTreeNode({
         )}
         <span>{`Atlas UUID: ${node.uuid}`}</span>
       </div>
+    </div>
+  );
 
+  // Children content (rendered separately, not highlighted)
+  const childrenContent = (
+    <>
       {shouldShowAgentPlaceholder && (
         <div id="agent-section-placeholder" className="mt-4 ml-4 rounded bg-gray-50 px-4 py-3 text-sm text-gray-500">
           Loading agents...
@@ -320,6 +337,7 @@ function renderTreeNode({
                   isRootNode: false,
                   uuidMappings,
                   agentsLoading: false,
+                  highlightedDocNumber,
                   // agentDocs: [],
                 })}
               </React.Fragment>
@@ -342,6 +360,7 @@ function renderTreeNode({
                   isRootNode: false,
                   uuidMappings,
                   agentsLoading,
+                  highlightedDocNumber,
                   // agentDocs,
                 })}
               </React.Fragment>
@@ -351,7 +370,14 @@ function renderTreeNode({
       )}
 
       {/* {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })} */}
-      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading })}
+      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, highlightedDocNumber })}
+    </>
+  );
+
+  const nodeContent = (
+    <>
+      {nodeOwnContent}
+      {childrenContent}
     </>
   );
 
@@ -402,6 +428,51 @@ export default function ContentTree({
     // return new Set(scopeKeys);
     return new Set([]);
   });
+
+  // State to track the currently highlighted document from URL hash
+  const [highlightedDocNumber, setHighlightedDocNumber] = useState<string | null>(null);
+
+  // Listen for hash changes to highlight the target document and expand containing scope
+  React.useEffect(() => {
+    const updateHighlight = () => {
+      const hash = window.location.hash.slice(1); // Remove the '#' prefix
+      setHighlightedDocNumber(hash || null);
+
+      if (hash) {
+        // Find which scope contains this document
+        const findScopeForDoc = (docNumber: string): StandardizedAtlasDocument | null => {
+          for (const scope of scopeTreesWithoutAgents) {
+            // Check if the document number starts with the scope's doc_no
+            if (docNumber.startsWith(scope.doc_no || '')) {
+              return scope;
+            }
+          }
+          return null;
+        };
+
+        const containingScope = findScopeForDoc(hash);
+        if (containingScope && containingScope.uuid) {
+          // Expand the accordion containing this document
+          setExpandedKeys((prev) => new Set([...prev, containingScope.uuid || '']));
+
+          // Wait for accordion to expand and then scroll to the highlighted element
+          setTimeout(() => {
+            const element = document.getElementById(hash);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 150);
+        }
+      }
+    };
+
+    // Set initial highlight
+    updateHighlight();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', updateHighlight);
+    return () => window.removeEventListener('hashchange', updateHighlight);
+  }, [scopeTreesWithoutAgents]);
 
   // Listen for expandScope custom events from sidebar
   React.useEffect(() => {
@@ -550,6 +621,7 @@ export default function ContentTree({
               isRootNode: true,
               uuidMappings,
               agentsLoading,
+              highlightedDocNumber,
               // agentDocs,
             })}
           </AccordionItem>

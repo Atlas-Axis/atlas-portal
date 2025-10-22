@@ -53,11 +53,68 @@ function flattenDocuments(docs: StandardizedAtlasDocument[]): StandardizedAtlasD
 }
 
 /**
- * Truncates text to specified length and adds ellipsis
+ * Truncates text to specified length, trying to include the matching query.
+ * If a match is found, centers the preview around it. Otherwise, shows the beginning.
  */
-function truncateText(text: string, maxLength: number): string {
+function truncateText(text: string, maxLength: number, query?: string): string {
   if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trim() + '...';
+
+  // If no query or query not found, truncate from start
+  if (!query || !query.trim()) {
+    return text.slice(0, maxLength).trim() + '...';
+  }
+
+  const trimmedQuery = query.trim().toLowerCase();
+  const lowerText = text.toLowerCase();
+  const matchIndex = lowerText.indexOf(trimmedQuery);
+
+  // If query not found in text, truncate from start
+  if (matchIndex === -1) {
+    return text.slice(0, maxLength).trim() + '...';
+  }
+
+  // Calculate how much text to show before and after the match
+  const matchLength = trimmedQuery.length;
+  const halfLength = Math.floor((maxLength - matchLength) / 2);
+
+  // Determine start position (try to center the match)
+  let start = Math.max(0, matchIndex - halfLength);
+  let end = start + maxLength;
+
+  // Adjust if we're at the end of the text
+  if (end > text.length) {
+    end = text.length;
+    start = Math.max(0, end - maxLength);
+  }
+
+  // Build the result with ellipses as needed
+  const prefix = start > 0 ? '...' : '';
+  const suffix = end < text.length ? '...' : '';
+  const excerpt = text.slice(start, end).trim();
+
+  return prefix + excerpt + suffix;
+}
+
+/**
+ * Highlights matching text in a string by wrapping matches in a span with bg-yellow-200
+ */
+function highlightText(text: string, query: string): React.ReactNode {
+  if (!query.trim()) return text;
+
+  const trimmedQuery = query.trim();
+  const regex = new RegExp(`(${trimmedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const parts = text.split(regex);
+
+  return parts.map((part, index) => {
+    if (part.toLowerCase() === trimmedQuery.toLowerCase()) {
+      return (
+        <mark key={index} className="bg-yellow-200 font-medium">
+          {part}
+        </mark>
+      );
+    }
+    return part;
+  });
 }
 
 export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose }: SearchModalProps) {
@@ -114,22 +171,20 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
       return;
     }
 
+    // Close modal first
+    onClose();
+
     // Extract root scope from document ID (e.g., A.2.9 -> A.2)
     const rootScopeDocID = docNo.split('.').slice(0, 2).join('.');
 
-    // Close modal
-    onClose();
+    // Trigger expansion of the target scope (same pattern as sidebar leaf nodes)
+    dispatchExpandScopeEvent({
+      scopeDocID: rootScopeDocID,
+      targetDocID: docNo,
+    });
 
-    // Navigate to hash
+    // Navigate to hash (browser will handle scrolling)
     window.location.hash = docNo;
-
-    // Trigger expansion of the target scope
-    setTimeout(() => {
-      dispatchExpandScopeEvent({
-        scopeDocID: rootScopeDocID,
-        targetDocID: docNo,
-      });
-    }, 100);
   };
 
   return (
@@ -202,7 +257,7 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                     <div className="mb-2 flex items-center gap-2">
                       {doc.doc_no && (
                         <span className="inline-block rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-700">
-                          {doc.doc_no}
+                          {highlightText(doc.doc_no, query)}
                         </span>
                       )}
                       <span
@@ -211,8 +266,14 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                         {doc.type}
                       </span>
                     </div>
-                    <div className="mb-1 font-semibold text-slate-900">{doc.name || '<Untitled>'}</div>
-                    {doc.content && <div className="text-sm text-slate-600">{truncateText(doc.content, 150)}</div>}
+                    <div className="mb-1 font-semibold text-slate-900">
+                      {highlightText(doc.name || '<Untitled>', query)}
+                    </div>
+                    {doc.content && (
+                      <div className="text-sm text-slate-600">
+                        {highlightText(truncateText(doc.content, 150, query), query)}
+                      </div>
+                    )}
                   </div>
                 );
               })}
