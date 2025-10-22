@@ -296,9 +296,9 @@ createNestedPages();`;
           <iframe
             key={iframeKey}
             src="https://billowy-spark-eb1.notion.site/ebd/2944c4a7469b808b9ec6eeb59d239049?v=2944c4a7469b804d8f80000ccc396630"
-            className="border-default-200 h-[800px] w-full rounded-xl border-2"
+            className="border-default-200 h-[500px] w-full rounded-xl border-2"
             width="100%"
-            height="800"
+            height="500"
             frameBorder="0"
             allowFullScreen
             title="Notion Database"
