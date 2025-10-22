@@ -5,7 +5,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../notion-database-properties-and-relationships';
 import { buildAtlasJSON } from './atlas-json-exporter';
-import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees } from './types';
+import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees, childCollectionNames } from './types';
 
 export async function buildAtlasMarkdown() {
   // Load Atlas JSON
@@ -107,19 +107,8 @@ function getAllChildren(doc: StandardizedAtlasDocument): StandardizedAtlasDocume
   const docAsRecord = doc as unknown as Record<string, unknown>;
 
   // Check all possible child collection names
-  const possibleCollections = [
-    'articles',
-    'sections_and_primary_docs',
-    'agent_scope_database',
-    'annotations',
-    'tenets',
-    'scenarios',
-    'scenario_variations',
-    'active_data',
-    'needed_research',
-  ];
 
-  for (const collectionName of possibleCollections) {
+  for (const collectionName of childCollectionNames) {
     const collection = docAsRecord[collectionName];
     if (Array.isArray(collection)) {
       children.push(...(collection as StandardizedAtlasDocument[]));
