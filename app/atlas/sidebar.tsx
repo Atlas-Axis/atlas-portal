@@ -2,10 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { Input } from '@heroui/input';
+import { useDisclosure } from '@heroui/react';
+import { Search } from 'lucide-react';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { dispatchExpandScopeEvent } from './custom-events';
+import SearchModal from './search-modal';
 
 interface SidebarProps {
   scopeTrees: StandardizedAtlasDocument[];
@@ -19,6 +23,14 @@ interface RenderSidebarNodeProps {
   uuidMappings: UuidMappings;
 }
 
+/**
+ * Type-safe helper to get child collection from a document
+ */
+function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
+  const value = (node as unknown as Record<string, unknown>)[key];
+  return Array.isArray(value) ? value : [];
+}
+
 function renderSidebarNode({
   node,
   depth = 0,
@@ -26,20 +38,10 @@ function renderSidebarNode({
   uuidMappings,
 }: RenderSidebarNodeProps): React.ReactElement | null {
   // Collect only immutable and primary document children (exclude supporting documents)
-  const scopes = (node as StandardizedAtlasDocument & { scopes?: StandardizedAtlasDocument[] }).scopes || [];
-  const articles = (node as StandardizedAtlasDocument & { articles?: StandardizedAtlasDocument[] }).articles || [];
-  const sectionsAndPrimaryDocs =
-    (
-      node as StandardizedAtlasDocument & {
-        sections_and_primary_docs?: StandardizedAtlasDocument[];
-      }
-    ).sections_and_primary_docs || [];
-  const agentScopeDocs =
-    (
-      node as StandardizedAtlasDocument & {
-        agent_scope_database?: StandardizedAtlasDocument[];
-      }
-    ).agent_scope_database || [];
+  const scopes = getChildCollection(node, 'scopes');
+  const articles = getChildCollection(node, 'articles');
+  const sectionsAndPrimaryDocs = getChildCollection(node, 'sections_and_primary_docs');
+  const agentScopeDocs = getChildCollection(node, 'agent_scope_database');
 
   const allChildren: StandardizedAtlasDocument[] = [
     ...scopes,
@@ -154,6 +156,7 @@ function renderSidebarNode({
 
 export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   const [activeHash, setActiveHash] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     // Set initial hash (remove the '#' prefix)
@@ -189,32 +192,53 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   }
 
   return (
-    <div
-      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50 md:block"
-      role="navigation"
-      aria-label="Atlas navigation"
-    >
-      <div className="p-4">
-        <div className="mb-4 flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://makerdao-forum-backup.s3.dualstack.us-east-1.amazonaws.com/original/3X/1/9/19cc0c65340a5e0c48cd777583fa119c4a4dad84.png"
-            alt="Sky Logo"
-            className="h-6 w-6 object-contain"
-          />
-          <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
-        </div>
-        <div className="space-y-1">
-          {scopeTrees.map((scopeTree) =>
-            renderSidebarNode({
-              node: scopeTree,
-              depth: 0,
-              activeHash,
-              uuidMappings,
-            }),
-          )}
+    <>
+      <div
+        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50 md:block"
+        role="navigation"
+        aria-label="Atlas navigation"
+      >
+        <div className="p-4">
+          <div className="mb-6 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://makerdao-forum-backup.s3.dualstack.us-east-1.amazonaws.com/original/3X/1/9/19cc0c65340a5e0c48cd777583fa119c4a4dad84.png"
+              alt="Sky Logo"
+              className="h-6 w-6 object-contain"
+            />
+            <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
+          </div>
+
+          {/* Search Input Trigger */}
+          <div className="mb-4">
+            <Input
+              placeholder="Search Atlas..."
+              readOnly
+              startContent={<Search className="h-4 w-4 text-slate-400" />}
+              onClick={onOpen}
+              classNames={{
+                inputWrapper:
+                  'cursor-pointer transition-all duration-200 border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-100',
+              }}
+              aria-label="Open search dialog"
+            />
+          </div>
+
+          <div className="space-y-1">
+            {scopeTrees.map((scopeTree) =>
+              renderSidebarNode({
+                node: scopeTree,
+                depth: 0,
+                activeHash,
+                uuidMappings,
+              }),
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Search Modal */}
+      <SearchModal scopeTrees={scopeTrees} uuidMappings={uuidMappings} isOpen={isOpen} onClose={onClose} />
+    </>
   );
 }
