@@ -10,5 +10,6 @@
   "github.copilot.chat.setupTests.enabled": true,
   "github.copilot.chat.startDebugging.enabled": true,
   "chat.mcp.access": "all",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true
 }
