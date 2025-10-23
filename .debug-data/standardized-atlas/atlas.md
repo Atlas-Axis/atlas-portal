@@ -2423,22 +2423,6 @@ Facilitators are required to thoroughly document all aspects of their communicat
 
 The operational security of Sky is reliant on clear, thorough documentation of governance processes. Facilitators must document all operational and governance processes, as well as all interactions with ecosystem stakeholders.
 
-### A.1.6.10 - Governance Scope Responsibility [Section]  <!-- UUID: 2ac0247c-c13c-44fe-8671-af657a5695ba -->
-
-All Facilitators always have responsibility for the Governance Scope.
-
-### A.1.6.11 - Full Scopes Coverage [Section]  <!-- UUID: 3fb0a3f2-eaa2-485d-8a82-eaf20d7d6826 -->
-
-The Governance Facilitators are responsible for ensuring that the Governance, Support, Stability, Protocol and Accessibility Scopes always have an active Facilitator assigned. If the current Scope Facilitator becomes unresponsive or otherwise unable to fulfill their duties, the procedures defined in [ARC - A.1.6 - Facilitators - Interim And Reserve Facilitators](440331ed-9127-4cee-8797-f72e67029518) should be followed. In cases where the Governance Facilitators themselves become unresponsive or otherwise unavailable to fulfill their role, other active Scope Facilitators must assume responsibility over coordinating these procedures.
-
-#### A.1.6.11.0.3.1 - Otherwise Unable To Fulfill Their Duties - Element Annotation [Annotation]  <!-- UUID: c15b5651-1257-4865-a16f-cfec36b022b0 -->
-
-This element refers to situations where the Scope Facilitator is unable to perform their role due to reasons such as illness, conflict of interest, temporary suspension, or any other circumstance that significantly impairs their ability to execute their responsibilities.
-
-#### A.1.6.11.0.3.2 - Unresponsive - Element Annotation [Annotation]  <!-- UUID: 3cbbd4df-35a9-49d2-9ef3-374333f41739 -->
-
-The element “unresponsive" means the failure to communicate, perform duties, or acknowledge requests, without providing a valid reason.
-
 ## A.1.7 - Professional Ecosystem Actors [Article]  <!-- UUID: d6b43720-243e-4610-8c03-cd515ace6247 -->
 
 Professional Ecosystem Actors are external actors that complete work for Sky Ecosystem. This Article defines rules and processes related to Professional Ecosystem Actors.
@@ -5339,9 +5323,9 @@ The Core Facilitator is required to review all Atlas Edit Proposals (AEPs) submi
 
 ###### A.1.11.2.1.7.1 - Procedure For Blocking AEP For Misalignment [Core]  <!-- UUID: 51dc4c3b-94cf-4fbc-bff2-648250a1f1ce -->
 
-An Atlas Edit Proposal can be blocked by the Core Facilitator for misalignment. Unanimity among the Governance Facilitators is not required to block an AEP for misalignment. 
+An Atlas Edit Proposal can be blocked by the Core Facilitator for misalignment. Unanimity among the Core Facilitators is not required to block an AEP for misalignment. 
 
-Where an AEP has been blocked for misalignment, the Core Facilitator must update the AEP status as “Rejected-Misaligned.” 
+Where an AEP has been blocked for misalignment, the Core Facilitator must update the AEP status as “Rejected-Misaligned”. 
 
 Each Core Facilitator should issue a written advisory opinion containing their findings/reasoning either supporting or rejecting the blocking of the AEP.
 
@@ -5582,7 +5566,7 @@ Active Data with the “Alignment Conserver Changes” Update Process pertains t
 
 The triggers of such updates can include, but are not limited to, recognizing a new Alignment Conserver; offboarding an Alignment Conserver at the request of that Alignment Conserver; adding an Alignment Conserver to the list of ACs who have received a formal warning; or derecognizing an Alignment Conserver for misalignment.
 
-The Core Facilitators can modify the pertinent Active Data documents to reflect such changes immediately; they are not required to create a post on Sky Forum.
+The Core Facilitator can modify the pertinent Active Data documents to reflect such changes immediately; they are not required to create a post on Sky Forum.
 
 ##### A.1.12.1.3.0.3.1 - Active Data Controller Document - Element Annotation [Annotation]  <!-- UUID: 0a8d0081-2063-4f50-a085-b9c9c91d0e19 -->
 
@@ -23286,7 +23270,7 @@ The current USDT risk parameters are:
 
 • Liquidation Bonus: 0%
 
-• Reserve Factor: 10%
+• Reserve Factor: 1%
 
 • Supply Cap: 30,000,000 USDT
 
@@ -23454,7 +23438,7 @@ The current USDC risk parameters are:
 
 • Liquidation Bonus: 0%
 
-• Reserve Factor: 10%
+• Reserve Factor: 1%
 
 • Supply Cap: Set by cap automator
 
@@ -24108,7 +24092,7 @@ The current LBTC cap automator parameters are:
 
   ◦ `ttl`: 12 hours
 
-  ◦ `max`: 2,500 LBTC
+  ◦ `max`: 10,000 LBTC
 
 • Borrow cap
 
