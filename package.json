@@ -74,14 +74,5 @@
   "overrides": {
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,css,md,yml,yaml}": [
-      "prettier --write"
-    ]
   }
 }
