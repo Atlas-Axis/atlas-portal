@@ -16,8 +16,8 @@ export default async function Page({ params }: { params: Promise<{ 'notion-page-
 
   return (
     <div>
-      <Link href="/visualize" className="mb-4 inline-block text-indigo-500 hover:underline">
-        ← Back to overview
+      <Link href="#" className="mb-4 inline-block text-indigo-500 hover:underline">
+        {/* <Link href="/visualize" className="mb-4 inline-block text-indigo-500 hover:underline"> */}← Back to overview
       </Link>
       <ContentTree tree={tree} blockIdMap={blockIdMap} />
     </div>

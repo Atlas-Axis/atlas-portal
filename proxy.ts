@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Only apply headers to embed routes
   if (request.nextUrl.pathname.startsWith('/embed/')) {
     // Only apply headers to GET requests (HTML pages), not POST requests (server actions)

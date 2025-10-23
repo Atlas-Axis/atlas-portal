@@ -33,16 +33,15 @@
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.542.0",
     "markdown-it": "^14.1.0",
-    "next": "15.5.3",
+    "next": "16.0.0",
     "notion-to-md": "^3.1.9",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.8.0",
@@ -51,15 +50,16 @@
     "@trigger.dev/build": "4.0.4",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^20",
-    "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.9",
+    "@types/node": "^22",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
     "@types/testing-library__jest-dom": "^5.14.9",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.3",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "^16.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
     "jsdom": "^27.0.0",
     "lint-staged": "^15.5.2",
@@ -68,12 +68,12 @@
     "supabase": "^2.34.3",
     "tailwindcss": "^4",
     "tsx": "^4.20.5",
-    "typescript": "^5",
+    "typescript": "^5.9.0",
     "vitest": "^3.2.4"
   },
   "overrides": {
-    "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.9"
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [

@@ -16,7 +16,8 @@ export default async function Page() {
   const rootBlockLinks = rootBlocks.map((block) => (
     <li key={block.notion_block_id}>
       <Link
-        href={`/visualize/blocks/${block.notion_block_id}`}
+        href="#"
+        // href={`/visualize/blocks/${block.notion_block_id}`}
         className="font-semibold text-indigo-500 hover:underline"
       >
         👉 {block.plain_text_content}

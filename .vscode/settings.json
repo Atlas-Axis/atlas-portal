@@ -9,5 +9,6 @@
   "github.copilot.chat.agent.runTasks": true,
   "github.copilot.chat.setupTests.enabled": true,
   "github.copilot.chat.startDebugging.enabled": true,
-  "chat.mcp.access": "all"
+  "chat.mcp.access": "all",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

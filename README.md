@@ -16,7 +16,7 @@ A Next.js application that enables change tracking for Atlas documents stored in
 
 - **Next.js 15** with App Router, server-side rendering
 - **TypeScript** with strict type-safety
-- **Node.js** (v20.19)
+- **Node.js** (v22)
 
 ### UI & Styling
 
@@ -460,7 +460,7 @@ This project maintains **3 synchronized documentation files** that provide high-
 
 ### Prerequisites
 
-- Node.js (v20.19 or higher)
+- Node.js (v22 or higher)
 - Supabase API keys
 - Notion API key(s)
 - Vercel CLI (logged in, project linked)
