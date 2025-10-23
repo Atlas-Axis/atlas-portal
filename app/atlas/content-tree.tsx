@@ -275,7 +275,7 @@ function renderTreeNode({
 
   // Node's own content (without children) - this is what gets highlighted
   const nodeOwnContent = (
-    <div className={isHighlighted ? styles.highlightedContent : ''}>
+    <div className={isHighlighted ? styles.highlightedContent : ''} id={docNumber || undefined}>
       {!isRootNode && (
         <div className={styles.nodeTitle}>
           <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
@@ -393,11 +393,7 @@ function renderTreeNode({
   }
 
   return (
-    <li
-      key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}
-      className={styles.listItem}
-      id={docNumber || undefined}
-    >
+    <li key={notionKey || docNumber || `node-${nodeId || 'unknown'}`} className={styles.listItem}>
       {nodeContent}
     </li>
   );
