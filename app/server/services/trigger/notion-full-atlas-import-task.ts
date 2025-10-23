@@ -12,7 +12,7 @@ export const notionFullAtlasImportTask = task({
   // Set an optional maxDuration to prevent tasks from running indefinitely
   maxDuration: 60 * 60, // Stop executing after 60 mins of compute
   retry: {
-    maxAttempts: 2,
+    maxAttempts: 1,
     minTimeoutInMs: 1_000,
     maxTimeoutInMs: 30_000,
     factor: 2,

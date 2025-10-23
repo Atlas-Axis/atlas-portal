@@ -182,7 +182,7 @@ const totalChanges =
 
 ## Testing
 
-28 test cases in `app/server/atlas/diff/__tests__/atlas-diff.test.ts`
+28 test cases in `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts`
 
 **Key scenarios tested:**
 
@@ -197,7 +197,7 @@ const totalChanges =
 **Run tests:**
 
 ```bash
-npm run test:run -- app/server/atlas/diff/__tests__/atlas-diff.test.ts
+npm run test:run -- app/server/atlas/diff/__tests__/markdown-supabase-diff.ts
 ```
 
 ## Performance
