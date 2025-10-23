@@ -37,3 +37,9 @@ yarn.lock
 # Vercel
 .vercel/
 
+# Atlas files
+**/atlas.md
+**/atlas.json
+**/atlas.yaml
+
+**/powerhouse-types/**/**.*
