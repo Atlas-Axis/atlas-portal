@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  ...prettier,
+  prettier,
   //   {
   //     extends: [...compat.extends('prettier'), ...compat.extends('plugin:@tanstack/query/recommended')],
   //   },
