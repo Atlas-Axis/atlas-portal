@@ -1,4 +1,5 @@
 // import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
+import type { Metadata } from 'next';
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
@@ -6,6 +7,11 @@ import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import AtlasPagePrerendered from './atlas-page-prerendered';
 
 export const dynamic = 'force-static';
+
+export const metadata: Metadata = {
+  title: 'Sky Atlas',
+  description: '',
+};
 
 console.log('/atlas is being prerendered');
 
