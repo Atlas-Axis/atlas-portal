@@ -440,13 +440,12 @@ const { data } = await supabase()
 
 ### 📋 Core Project Documentation Files
 
-This project maintains **3 synchronized documentation files** that provide high-level project overviews:
+This project maintains **2 synchronized documentation files** that provide high-level project overviews:
 
 - **[README.md](./README.md)** - Human-readable project documentation (this file)
 - **[.cursorrules](./.cursorrules)** - AI agent documentation for Cursor IDE
-- **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - AI agent documentation for GitHub Copilot
 
-⚠️ **Important**: When updating high-level project information, **always update all 3 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
+⚠️ **Important**: When updating high-level project information, **always update all 2 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
 
 ### Docs for Embeddable Notion Pages
 
@@ -455,6 +454,10 @@ This project maintains **3 synchronized documentation files** that provide high-
 ### Atlas Services
 
 - **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
+
+### Atlas Sync
+
+- **[app/atlas/sync/README.md](./app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow that enables pushing Atlas changes from Markdown format back to Notion databases
 
 ## 🚀 Getting Started
 
