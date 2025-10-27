@@ -12,6 +12,25 @@ Extra fields are:
 - Displayed in the UI alongside document content
 - Compared during change detection
 
+## Notion Property Types
+
+All properties in Notion databases have a specific type. For Atlas extra fields:
+
+- **Default**: All extra fields are **Rich Text** unless specified otherwise
+- **Overrides**: The `NOTION_PROPERTY_TYPE_OVERRIDES` constant in `notion-database-properties-and-relationships.ts` defines exceptions, grouped by Atlas database
+- **Document Type Field**: The document type field (`atlasDocumentType`) is **always** a **Select** field across all Atlas databases
+
+### Supported Property Types (Markdown → Notion Sync)
+
+The sync system supports the following Notion property types:
+
+- **rich_text**: Standard text with inline formatting (bold, italic, code, links, etc.) - Default for extra fields
+- **title**: Page title field
+- **select**: Single selection from predefined options
+- **number**: Numeric values
+
+When syncing from Markdown to Notion, the system uses these property types to format the data correctly for the Notion API.
+
 ## Document Types with Extra Fields
 
 Currently, four Atlas document types have extra fields: Type Specification, Scenario, Scenario Variation, and Needed Research.
@@ -20,56 +39,70 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 
 **Interface**: `TypeSpecificationExtraFields`
 
-| Supabase Field                            | Notion Property      | Description                    |
-| ----------------------------------------- | -------------------- | ------------------------------ |
-| `type_specification_doc_identifier_rules` | Doc Identifier Rules | Rules for document identifiers |
-| `type_specification_additional_logic`     | Additional Logic     | Additional logical rules       |
-| `type_specification_type_category`        | Type Category        | Category classification        |
-| `type_specification_type_name`            | Type Name            | Name of the type               |
-| `type_specification_type_overview`        | Type Overview        | Overview description           |
-| `type_specification_components`           | Components           | Component information          |
+| Supabase Field                            | Notion Property      | Property Type | Description                    |
+| ----------------------------------------- | -------------------- | ------------- | ------------------------------ |
+| `type_specification_doc_identifier_rules` | Doc Identifier Rules | Rich Text     | Rules for document identifiers |
+| `type_specification_additional_logic`     | Additional Logic     | Rich Text     | Additional logical rules       |
+| `type_specification_type_category`        | Type Category        | Select        | Category classification        |
+| `type_specification_type_name`            | Type Name            | Rich Text     | Name of the type               |
+| `type_specification_type_overview`        | Type Overview        | Rich Text     | Overview description           |
+| `type_specification_components`           | Components           | Rich Text     | Component information          |
 
 **Mapping**: `TYPE_SPECIFICATION_PROPERTY_MAPPING`
+
+**Property Type Notes**: All extra fields default to Rich Text unless specified in `NOTION_PROPERTY_TYPE_OVERRIDES`. Currently, only `Type Category` uses Select.
 
 ### 2. Scenario
 
 **Interface**: `ScenarioExtraFields`
 
-| Supabase Field                 | Notion Property     | Description                                                    |
-| ------------------------------ | ------------------- | -------------------------------------------------------------- |
-| `scenario_finding`             | Finding             | Finding information                                            |
-| `scenario_additional_guidance` | Additional Guidance | Additional guidance text                                       |
-| `scenario_description`         | Description         | Main description (note: `content` field is null for Scenarios) |
+| Supabase Field                 | Notion Property     | Property Type | Description                                                    |
+| ------------------------------ | ------------------- | ------------- | -------------------------------------------------------------- |
+| `scenario_finding`             | Finding             | Rich Text     | Finding information                                            |
+| `scenario_additional_guidance` | Additional Guidance | Rich Text     | Additional guidance text                                       |
+| `scenario_description`         | Description         | Rich Text     | Main description (note: `content` field is null for Scenarios) |
 
 **Mapping**: `SCENARIO_PROPERTY_MAPPING`
 
+**Database**: `Scenarios`
+
 **Important**: The `Description` property maps to `scenario_description` in extra_fields, NOT to the `content` field.
+
+**Property Type Notes**: All Scenario extra fields use Rich Text property type (no overrides in `NOTION_PROPERTY_TYPE_OVERRIDES` for this database).
 
 ### 3. Scenario Variation
 
 **Interface**: `ScenarioVariationExtraFields`
 
-| Supabase Field                           | Notion Property     | Description                                                              |
-| ---------------------------------------- | ------------------- | ------------------------------------------------------------------------ |
-| `scenario_variation_finding`             | Finding             | Finding information                                                      |
-| `scenario_variation_additional_guidance` | Additional Guidance | Additional guidance text                                                 |
-| `scenario_variation_description`         | Description         | Main description (note: `content` field is null for Scenario Variations) |
+| Supabase Field                           | Notion Property     | Property Type | Description                                                              |
+| ---------------------------------------- | ------------------- | ------------- | ------------------------------------------------------------------------ |
+| `scenario_variation_finding`             | Finding             | Rich Text     | Finding information                                                      |
+| `scenario_variation_additional_guidance` | Additional Guidance | Rich Text     | Additional guidance text                                                 |
+| `scenario_variation_description`         | Description         | Rich Text     | Main description (note: `content` field is null for Scenario Variations) |
 
 **Mapping**: `SCENARIO_VARIATION_PROPERTY_MAPPING`
 
+**Database**: `Scenario Variations`
+
 **Important**: The `Description` property maps to `scenario_variation_description` in extra_fields, NOT to the `content` field.
+
+**Property Type Notes**: All Scenario Variation extra fields use Rich Text property type (no overrides in `NOTION_PROPERTY_TYPE_OVERRIDES` for this database).
 
 ### 4. Needed Research
 
 **Interface**: `NeededResearchExtraFields`
 
-| Supabase Field            | Notion Property | Description                                                      |
-| ------------------------- | --------------- | ---------------------------------------------------------------- |
-| `needed_research_content` | Content         | Main content (note: `content` field is null for Needed Research) |
+| Supabase Field            | Notion Property | Property Type | Description                                                      |
+| ------------------------- | --------------- | ------------- | ---------------------------------------------------------------- |
+| `needed_research_content` | Content         | Rich Text     | Main content (note: `content` field is null for Needed Research) |
 
 **Mapping**: `NEEDED_RESEARCH_PROPERTY_MAPPING`
 
+**Database**: `Needed Research`
+
 **Important**: The `Content` property maps to `needed_research_content` in extra_fields, NOT to the `content` field.
+
+**Property Type Notes**: Needed Research extra fields use Rich Text property type (no overrides in `NOTION_PROPERTY_TYPE_OVERRIDES` for this database).
 
 ## How Extra Fields Work
 
@@ -188,9 +221,10 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 ### Type Definitions & Mappings
 
 - `app/server/atlas/notion-database-properties-and-relationships.ts`
-  - Defines all extra field interfaces
+  - Defines all extra field types (derived from property mappings via `ExtraFieldsFromMapping` utility type)
   - Defines property mappings (Supabase field → Notion property name)
   - Central source of truth for extra fields
+  - The `ExtraFieldsFromMapping<T>` utility type automatically generates type definitions from property mappings, ensuring all fields have `string | null` values
 
 ### Import/Sync
 
@@ -242,22 +276,20 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 
 To add a new extra field to an existing document type:
 
-1. **Update interface** in `notion-database-properties-and-relationships.ts`
-   - Add new field to the appropriate `*ExtraFields` interface
-
-2. **Update property mapping** in `notion-database-properties-and-relationships.ts`
+1. **Update property mapping** in `notion-database-properties-and-relationships.ts`
    - Add mapping entry: `field_name: 'Notion Property Name'`
+   - The type definition will automatically update thanks to `ExtraFieldsFromMapping<T>`
 
-3. **Update extraction function** in `convert-notion-pages-to-supabase-format.ts`
+2. **Update extraction function** in `convert-notion-pages-to-supabase-format.ts`
    - Add field to initialization object (null default)
    - The loop will automatically extract it using the mapping
 
-4. **All other systems automatically adapt** because they iterate over the mappings dynamically
+3. **All other systems automatically adapt** because they iterate over the mappings dynamically
 
 ## Adding Extra Fields to a New Document Type
 
-1. Define interface in `notion-database-properties-and-relationships.ts`
-2. Define property mapping constant
+1. Define property mapping constant in `notion-database-properties-and-relationships.ts` (using `as const`)
+2. Define type using `ExtraFieldsFromMapping<typeof YOUR_PROPERTY_MAPPING>`
 3. Add extraction function in `convert-notion-pages-to-supabase-format.ts`
 4. Add comparison function in `compare-database-pages.ts`
 5. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
