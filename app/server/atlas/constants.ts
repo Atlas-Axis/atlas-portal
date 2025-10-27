@@ -127,12 +127,12 @@ export const AGENT_ROOT_SECTION_UUIDS = new Set<string>([
   '1b4f2ff0-8d73-8082-862b-dcd586862638',
   '1b4f2ff0-8d73-802f-a054-fece4d8731a4',
 ]);
-// These are the mapped Atlas UUIDs of the agent root sections
+// Map Notion UUIDs of agent root sections to Atlas UUIDs
 export const AGENT_ROOT_SECTION_UUIDS_MAPPED = new Map<string, string>([
   ['1b4f2ff0-8d73-8082-862b-dcd586862638', '9fb7f1cc-f60b-4195-892d-5e540f969973'],
   ['1b4f2ff0-8d73-802f-a054-fece4d8731a4', 'df62511d-afe5-42db-8bd4-6452c5a0f464'],
 ]);
-// This is the specific Article page ID under which agent parent section(s) is/are nested; This is not the direct parent of the agent documents, but their common grandparent that they all inherit from.
+// This is the specific Article Notion page ID under which agent parent section(s) is/are nested; This is not the direct parent of the agent documents, but their common grandparent that they all inherit from.
 export const AGENT_ANCESTOR_ARTICLE_ID = '1b4f2ff08d73805aaf66de296b4aed33';
 
 export const ATLAS_GITHUB_HTML_URL =

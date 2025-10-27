@@ -15,13 +15,13 @@ export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): stri
     case 'Needed Research': // ?
     case 'Annotations':
     case 'Scenarios':
-    case 'Active Data':
     case 'Scenario Variations':
       return node.plain_text_name ?? '';
 
-    // Example: atlas_document_number = "A.1.6 - Facilitators - Budgets" → "Budgets"
+    // Example: plain_text_name = "A.1.6 - Facilitators - Budgets" → "Budgets"
     case 'Sections & Primary Docs':
-      return getLastTitlePart(node.atlas_document_number ?? '') ?? '';
+    case 'Active Data':
+      return getLastTitlePart(node.plain_text_name ?? '') ?? '';
 
     default:
       console.warn(`getDocumentTitle: Unhandled atlas_database_name '${node.atlas_database_name}'`);
