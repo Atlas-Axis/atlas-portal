@@ -3,7 +3,8 @@ import { notionFullAtlasImportTask } from './notion-full-atlas-import-task';
 
 export const dailyNotionImportSchedule = schedules.task({
   id: 'daily-notion-import',
-  cron: '0 * * * *', // Hourly at the top of each hour
+  cron: '0 4 * * *', // Daily at 4:00 AM UTC
+  // cron: '0 * * * *', // Hourly at the top of each hour
   run: async (payload) => {
     console.log(`🕐 Daily Atlas import triggered at ${payload.timestamp.toISOString()}`);
 
