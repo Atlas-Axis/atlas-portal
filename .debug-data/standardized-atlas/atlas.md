@@ -1560,25 +1560,7 @@ An unranked, uncompensated Aligned Delegate is nevertheless an 'ecosystem role' 
 
 The Facilitator should derecognize Entity from both AC roles per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
-##### A.1.4.5.0.4.1.1.2 - Extended Leave Of Absence [Scenario]  <!-- UUID: b3052722-26f3-4619-8535-99404e78ddae -->
-
-**Description**:
-
-Entity occupied the role of a Facilitator. They took a leave of absence from the Facilitator role and stepped into the role of a Stability Scope Advisor. At the time their behavior was discovered by another Facilitator, the Entity had been performing solely in the role of a Stability Scope Advisor, while remaining on a leave of absence from their Facilitator role.
-
-**Finding**:
-
-Misaligned
-
-**Additional Guidance**:
-
-If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity was on a leave of absence from one role does not negate this risk. A contributor on an extended leave of absence has not formally cut ties with the role. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's Stability Scope Advisor work could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed as a Facilitator. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
-
-The Facilitator should derecognize Entity from the Facilitator role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
-
-The Facilitator should likely consider derecognizing Entity from the Stability Scope Advisor role. No specific logic exists as yet for the adjudication of misalignment on the part of a Scope Advisor.
-
-##### A.1.4.5.0.4.1.1.3 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
+##### A.1.4.5.0.4.1.1.2 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
 
 **Description**:
 
@@ -1596,7 +1578,7 @@ The Facilitator should derecognize Entity as an AD per A.1.4 - A10 - Alignment C
 
 No specific logic exists as yet for the adjudication of misalignment on the part of an Ecosystem Actor team member.
 
-###### A.1.4.5.0.4.1.1.3.var1 - On-Call Or Standby Role - var. 1 [Scenario Variation]  <!-- UUID: 1b2b438f-e34c-4683-97ef-2227f6c425eb -->
+###### A.1.4.5.0.4.1.1.2.var1 - On-Call Or Standby Role - var. 1 [Scenario Variation]  <!-- UUID: 1b2b438f-e34c-4683-97ef-2227f6c425eb -->
 
 **Description**:
 
@@ -1616,7 +1598,7 @@ Under these circumstances, it is reasonable to extrapolate that derecognition fr
 
 The concern remains that, potentially, a bad actor can continue to exploit the ecosystem, especially if other ecosystem participants are not aware of their questionable history. To mitigate this risk, the Facilitator can include details about the evidence it discovered in its formal derecognition notice, which can impact the reputation score of Entity.
 
-##### A.1.4.5.0.4.1.1.4 - Resignation Notice Not Received [Scenario]  <!-- UUID: 5754dde6-7b8f-45d6-a633-c40fd6382ca6 -->
+##### A.1.4.5.0.4.1.1.3 - Resignation Notice Not Received [Scenario]  <!-- UUID: 5754dde6-7b8f-45d6-a633-c40fd6382ca6 -->
 
 **Description**:
 
@@ -1630,7 +1612,7 @@ Aligned
 
 Though the Facilitator incorrectly continued to list Entity as a team member, in actual practice, Entity had cut all ties with the Facilitator team after the intended resignation date. This was proven via the dated resignation email; the revoked permissions; and the lack of communications. Given these facts, the Target Document is not triggered.
 
-###### A.1.4.5.0.4.1.1.4.var1 - Resignation Notice Not Received - var. 1 [Scenario Variation]  <!-- UUID: b13b099c-c90c-4e1a-9caa-3103c9b333a0 -->
+###### A.1.4.5.0.4.1.1.3.var1 - Resignation Notice Not Received - var. 1 [Scenario Variation]  <!-- UUID: b13b099c-c90c-4e1a-9caa-3103c9b333a0 -->
 
 **Description**:
 
@@ -1646,7 +1628,7 @@ Entity was unable to provide any proof that it had formally resigned its first r
 
 The Core Facilitator should derecognize Entity from its AD role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
 
-##### A.1.4.5.0.4.1.1.5 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
+##### A.1.4.5.0.4.1.1.4 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
 
 **Description**:
 
@@ -2431,6 +2413,22 @@ Professional Ecosystem Actors are external actors that complete work for Sky Eco
 
 Active or Incubating Ecosystem Actors work according to the specifications of the Atlas to receive funding for performing specific projects that benefit the Sky Ecosystem. Such projects can include developing new features; performing data collection or analysis; performing marketing, growth, outreach or educational activities; legal work or government outreach; and other operational activities. Active and Incubating Ecosystem Actors are the only type of actor that is permitted to do work that isn’t strictly defined in, and bounded by, the Atlas.
 
+#### A.1.7.1.1 - Core Council Risk Advisor [Core]  <!-- UUID: d80c8f64-b3f6-430d-bf62-8e50a3783e73 -->
+
+The Core Council Risk Advisor is a specialized role for a designated Professional Ecosystem Actor to provide financial analysis and risk management advice to the Core Council and other relevant parties within Sky.
+
+##### A.1.7.1.1.1 - Core Council Risk Advisor Requirements [Core]  <!-- UUID: 3448e169-b784-4907-9bea-ec8b59d86b50 -->
+
+The Core Council Risk Advisor role must be held by an entity without involvement in any business, political, or governance-related activities that could create a conflict of interest, either directly or indirectly. Additionally, the entity must possess the relevant expertise and professional skills necessary to provide informed and objective input on financial and risk-related issues.
+
+##### A.1.7.1.1.2 - Designated Core Council Risk Advisor [Core]  <!-- UUID: 51b1fe46-2251-4078-a805-e2b40aaaf729 -->
+
+The Core Council Risk Advisor role is held by BA Labs.
+
+###### A.1.7.1.1.2.1 - BA Labs Limited Conflict Of Interests Waiver [Core]  <!-- UUID: a4ff45b4-bc05-4a1f-8413-0718efaf7450 -->
+
+BA Labs is granted a limited waiver to the requirement that the Core Council Risk Advisor must not be involved in other business activities that could result in a conflict of interest. This waiver applies only to BA Labs’ work with Ethena.
+
 ## A.1.8 - Emergency Response System [Article]  <!-- UUID: 1d940c6d-02ce-4c17-8057-cef13c1cc7ad -->
 
 This Article defines a general emergency response protocol for managing emergencies or urgent situations outside of the standard Weekly Governance Cycle and Monthly Governance Cycle.
@@ -2477,7 +2475,7 @@ The members of the Emergency Response Group are:
 • Atlas Axis
 • Steakhouse
 • Blocktower
-• BA Labs
+• Core Council Risk Advisor
 • Maker Growth
 • Dewiz
 • Sidestream
@@ -2922,7 +2920,39 @@ The Core Facilitator must include the module deployment in the Executive Documen
 
 ###### A.1.9.2.3.2.2 - Prime Spells [Core]  <!-- UUID: 8b5181e8-51e2-4d8b-a49a-d88ab42218e7 -->
 
-A future iteration of the Atlas will specify the process for Prime Spells.
+This process will be further specified in a future iteration of the Atlas.
+
+####### A.1.9.2.3.2.2.1 - Interim Deployments [Core]  <!-- UUID: 9b3edbbf-89d1-42da-a9c3-18f858f8471f -->
+
+Prime Agents are allowed to deploy a new Allocation Instance on-chain and allocate capital through it under constrained testing conditions, prior to completing a full risk assessment. Such deployments are termed “Interim Deployments”. Interim Deployments are otherwise subject to the customary requirements of the Sky Core Executive Spell and Prime Proxy Spell process.
+
+######## A.1.9.2.3.2.2.1.1 - Process Definition [Core]  <!-- UUID: db6f880b-17d9-41b0-8940-5afdeda1e7f1 -->
+
+The documents herein define the process for Interim Deployments.
+
+######### A.1.9.2.3.2.2.1.1.1 - Forum Post By Prime Agent [Core]  <!-- UUID: de77dbbc-8ff6-44c7-814c-9ee10ca7a543 -->
+
+The technical implementation of Interim Deployments must successfully complete all required external audits before the Prime can post its Interim Deployment proposal to the Forum.
+
+######### A.1.9.2.3.2.2.1.1.2 - Specification Of Testing Parameters By Core Council Risk Advisor [Core]  <!-- UUID: a93952b9-b9c3-45eb-8169-abd0153d3df4 -->
+
+Once posted to the Forum, the Core Council Risk Advisor must respond on the Forum thread specifying testing parameters that will govern the Interim Deployment, including maximum exposure and rate limits. The Prime must maintain 100% Instance Capital Requirement Ratio for all Interim Deployments.
+
+######### A.1.9.2.3.2.2.1.1.3 - Submission Of Artifact Edit Proposal By Governance Actor [Core]  <!-- UUID: 0c0e09e7-4cbf-4a6f-acfa-0c13c67abca1 -->
+
+Subsequently, the appropriate Governance Actor must submit an Artifact Edit Proposal incorporating the approved testing parameters into the Prime’s Artifact.
+
+######### A.1.9.2.3.2.2.1.1.4 - Artifact Update [Core]  <!-- UUID: 1fc1ba29-9273-4d95-b1a5-bdfc61ebf2ab -->
+
+Upon successful conclusion of the Artifact Edit Poll, the Prime's Agent Artifact is updated with a new Instance Configuration Document codifying the Deployment’s approved interim testing parameters and other basic data.
+
+######### A.1.9.2.3.2.2.1.1.5 - Inclusion Of Interim Deployment In Sky Core Executive Cycle [Core]  <!-- UUID: fe8e5e31-fc3a-4631-894c-890cb6c82d81 -->
+
+The approved Artifact Edit Poll and resulting Instance Configuration Document serve as provenance authorizing the inclusion of the Interim Deployment into the Sky Core Executive Cycle.
+
+######### A.1.9.2.3.2.2.1.1.6 - Completion Of Full Risk Assessment [Core]  <!-- UUID: 14954d6a-0b97-45bf-8734-1e50af8f9ca7 -->
+
+Following the interim deployment, the Prime will work with the Core Council Risk Advisor to complete a full risk assessment. Once the means to calculate an official Capital Requirement Ratio for the deployment has been determined, the Prime can propose a subsequent spell to lift the testing constraints and reduce RRC to the Atlas-calculated value.
 
 #### A.1.9.2.4 - Executive Process Breakdown [Core]  <!-- UUID: 98298ab3-8d08-4c4f-b47b-81242a3e3903 -->
 
@@ -4001,9 +4031,9 @@ To perform this validation, the validator must go to the contract tab on Ethersc
 
 ######## A.1.9.2.4.12.3.1.8 - Spell Validators Must Check Deployed Spell EVM Version [Core]  <!-- UUID: a1773da6-7656-47b7-a31a-a4bd366d0d85 -->
 
-Validators must ensure that the correct EVM version for the Spell contract is displayed on Etherscan. The EVM version is determined by the Solidity compiler version used during compilation but should be displayed as Default. For the Spell to pass validation, Default must be displayed in the `Other Settings` field on Etherscan.
+Validators must ensure that the correct EVM version for the Spell contract is displayed on Etherscan. The EVM version is determined by the Solidity compiler version used during compilation. For the Spell to pass validation, the `Other Settings` field on Etherscan must display either “Default” or the correct default EVM version name for that compiler release (e.g., for Solidity 0.8.16, either “Default” or “London” is acceptable, as London is the default EVM for that compiler version).
 
-To perform this validation the validator must go to the “Contract” tab on Etherscan and review the `Other Settings` field under the contract’s metadata.
+To perform this validation, the validator must go to the “Contract” tab on Etherscan and review the `Other Settings` field under the contract’s metadata.
 
 ######## A.1.9.2.4.12.3.1.9 - Spell Validators Must Perform Basic Spell Code Validation [Core]  <!-- UUID: 46cbc700-20e4-4a57-9508-07a6baa26fca -->
 
@@ -8132,11 +8162,11 @@ The documents herein specify data submission requirements related to the Integra
 
 ######## A.2.3.8.2.2.1.2.1 - Data Verifiability Requirement [Core]  <!-- UUID: 6a2ec8d3-0403-46a9-8c96-3a9c86a59792 -->
 
-Integration Boost Partners must submit net deposit data in such a form that the data can be verified by Sky using on-chain data. In the short term, Ecosystem Actor BA Labs calculates the net deposit data based on on-chain events and makes it available to Operational GovOps through an API endpoint. The API endpoint is [https://info-sky.blockanalitica.com/api/v1/incentivized-pools/](https://info-sky.blockanalitica.com/api/v1/incentivized-pools/) for Integration Boost Partners on Ethereum and [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/) on Solana. In the long term, Operational GovOps assumes responsibility for ensuring that the data submission meets the on-chain verifiability requirement; this is done as part of their review of Invocations of the Integration Boost Primitive.
+Integration Boost Partners must submit net deposit data in such a form that the data can be verified by Sky using on-chain data. In the short term, the Core Council Risk Advisor calculates the net deposit data based on on-chain events and makes it available to Operational GovOps through an API endpoint. The API endpoint is [https://info-sky.blockanalitica.com/api/v1/incentivized-pools/](https://info-sky.blockanalitica.com/api/v1/incentivized-pools/) for Integration Boost Partners on Ethereum and [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/) on Solana. In the long term, Operational GovOps assumes responsibility for ensuring that the data submission meets the on-chain verifiability requirement; this is done as part of their review of Invocations of the Integration Boost Primitive.
 
 ######## A.2.3.8.2.2.1.2.2 - Data Submission Responsible Party [Core]  <!-- UUID: 079abfa8-583a-4a95-a2d6-7fe50a1dd2dd -->
 
-Integration Boost Partners must also identify a responsible party that will submit the net deposit data. In the near term, this is BA Labs. In the long term, this may be the Integration Boost Partner, a third party contractor, or the Prime Agent or Operational GovOps themselves if they agree to do so.
+Integration Boost Partners must also identify a responsible party that will submit the net deposit data. In the near term, this is the Core Council Risk Advisor. In the long term, this may be the Integration Boost Partner, a third party contractor, or the Prime Agent or Operational GovOps themselves if they agree to do so.
 
 ######## A.2.3.8.2.2.1.2.3 - Data Submission Frequency [Core]  <!-- UUID: a26ea73f-ab67-4e02-93cd-b43d22a6e63c -->
 
@@ -9141,15 +9171,55 @@ The documents herein define the process for initial setup and ongoing management
 
 The documents herein define base elements of the Allocation System Primitive.
 
-####### A.2.3.9.1.1.1.1 - Liquidity Layer Parameter Definitions [Core]  <!-- UUID: a8a3e54d-980e-435d-9e08-0e5775af9aa3 -->
+####### A.2.3.9.1.1.1.1 - Direct Sky Exposures [Core]  <!-- UUID: b3fb8653-8503-4a9e-81b2-5e9f49ad6703 -->
+
+Direct Sky Exposures are exposures that are held directly by Sky but implemented through the Allocation System of a Prime Agent. The documents herein define the rules for Direct Sky Exposures.
+
+######## A.2.3.9.1.1.1.1.1 - Designation Process [Core]  <!-- UUID: 3161489a-11bd-4dea-b676-09d0cce45ae9 -->
+
+Direct Sky Exposures are designated directly by Sky Governance via the Atlas Edit Proposal process. Direct Sky Exposures are recorded in [A.2.4 - Current Direct Sky Exposures](1c0410e4-fe36-4a01-8b82-8ea74f67fbec) and must specify the asset that is being designated as a Direct Sky Exposure and the Prime Agent responsible for implementing the Exposure.
+
+######## A.2.3.9.1.1.1.1.2 - Current Direct Sky Exposures [Core]  <!-- UUID: 1c0410e4-fe36-4a01-8b82-8ea74f67fbec -->
+
+The current Direct Sky Exposures are specified in the documents herein.
+
+######### A.2.3.9.1.1.1.1.2.1 - JAAA Direct Exposure Through Grove [Core]  <!-- UUID: 9923b999-56dc-466e-a058-ef4b164ff51c -->
+
+Investments in JAAA on Ethereum Mainnet by Grove are designated as Direct Sky Exposures.
+
+######## A.2.3.9.1.1.1.1.3 - Parameters For Sky Direct Exposures [Core]  <!-- UUID: cbd64e6c-547b-4b8d-a0cb-b605f780aef1 -->
+
+The Core Facilitator sets the following parameters for Sky Direct Exposures in consultation with the Core Council Risk Advisor:
+
+• Rate limits; and
+
+• Aggregate exposure limits.
+
+The Core Facilitator must post the initial values for these parameters and any updates to them to the Sky Forum under the “Sky Core” category. The values for the parameters for Sky Direct Exposures are set by the Core Facilitator and supersede any values for these parameters specified in the Risk Framework.
+
+######### A.2.3.9.1.1.1.1.3.1 - Treatment Of Exposures In Excess Of Aggregate Exposure Limit [Core]  <!-- UUID: 8bd63c6b-b9ad-46e3-beb0-77c4a47bcd6d -->
+
+Any investments in assets that would otherwise qualify as Direct Sky Exposures by a Prime Agent in excess of the aggregate exposure limit are not Direct Sky Exposures and are subject to the customary requirements pursuant to [A.2.6](6f8d5065-d6ff-4add-9a28-eadeffa7ed1a) and [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
+
+######## A.2.3.9.1.1.1.1.4 - Revenue Sharing For Sky Direct Exposures [Core]  <!-- UUID: 07e0f716-ce23-4394-a5f4-bee537713f48 -->
+
+The Prime Agent implementing a Sky Direct Exposure is not liable for any amounts that would otherwise be due to Sky with respect to the Sky Direct Exposure if the yield for the Sky Direct Exposure is less than the Agent Credit Line Borrow Rate. This is implemented as an adjustment to the Monthly Settlement Cycle.
+
+If the yield for the Sky Direct Exposure is greater than or equal to the Agent Credit Line Borrow Rate, then the Prime Agent may retain the difference as compensation for using its Allocation System and the Monthly Settlement Cycle is implemented normally.
+
+######## A.2.3.9.1.1.1.1.5 - No Risk Capital Requirements With Respect To Sky Direct Exposures [Core]  <!-- UUID: b683953e-d9b0-4e15-a405-978ef1854870 -->
+
+Because Sky Direct Exposures are held by Sky rather than the Prime Agent implementing the exposure through its Allocation System, Prime Agents are not required to hold any Risk Capital with respect to Sky Direct Exposures.
+
+####### A.2.3.9.1.1.1.2 - Liquidity Layer Parameter Definitions [Core]  <!-- UUID: a8a3e54d-980e-435d-9e08-0e5775af9aa3 -->
 
 The documents herein define common parameters of implementations of the Allocation System based on the Spark Liquidity Layer, including the Grove Liquidity Layer.
 
-######## A.2.3.9.1.1.1.1.1 - Rate Limiter [Core]  <!-- UUID: a578830d-18f0-451c-8ff0-4a66094650ae -->
+######## A.2.3.9.1.1.1.2.1 - Rate Limiter [Core]  <!-- UUID: a578830d-18f0-451c-8ff0-4a66094650ae -->
 
 Rate Limiter refers to the overall mechanism or system that limits the volume of token movements over time, implemented via the `RateLimits` contracts. The Rate Limiter manages multiple rate limits and enforces constraints on controller operations to prevent rapid asset drainage and mitigate risks from compromised relayers or other attacks. This ensures that the maximum amount of tokens processed within a specific time period stays within safe bounds. The `RateLimits` contracts and their addresses for each chain can be found in the Allocation System Primitive for a Prime, under ALM Contracts.
 
-######## A.2.3.9.1.1.1.1.2 - Rate Limits [Core]  <!-- UUID: 8efb0a11-b798-48eb-af19-f65b38f039b5 -->
+######## A.2.3.9.1.1.1.2.2 - Rate Limits [Core]  <!-- UUID: 8efb0a11-b798-48eb-af19-f65b38f039b5 -->
 
 Rate limits set the maximum allowable amount of tokens that can be processed for specific operations within a given time period. Each rate limit contains the rate limit data: `maxAmount`, `slope`, `lastAmount` and `lastUpdated`.  The current rate limit is calculated using the formula:
 
@@ -9159,37 +9229,37 @@ The rate limit data `maxAmount` and `slope` are configurable parameters that are
 
 Rate limits set caps on the rate of allocation to a given Instance, they do not act as a limit on the total amount that may be allocated to that Instance.
 
-######### A.2.3.9.1.1.1.1.2.1 - MaxAmount [Core]  <!-- UUID: 8b5f1ffd-9dfd-4aa0-8fc2-638a79d9fadb -->
+######### A.2.3.9.1.1.1.2.2.1 - MaxAmount [Core]  <!-- UUID: 8b5f1ffd-9dfd-4aa0-8fc2-638a79d9fadb -->
 
 `maxAmount` sets a hard cap on the level of allocation to an Instance at any given time. It sets the absolute rate limit regardless of how much time has passed since the last allocation. For example, if `maxAmount` is set to 1,000,000 tokens, the rate limit will increase over time at the rate determined by the `slope` until it reaches 1,000,000 tokens, at this point the rate limit will stop increasing, but it will resume increasing once an allocation to the Instance has been made.
 
-######### A.2.3.9.1.1.1.1.2.2 - Slope [Core]  <!-- UUID: ae8674bc-44ac-4b95-b5df-c6322a1d6e9a -->
+######### A.2.3.9.1.1.1.2.2.2 - Slope [Core]  <!-- UUID: ae8674bc-44ac-4b95-b5df-c6322a1d6e9a -->
 
 `slope` is the linear refill rate of a rate limiter’s allowance over time. It defines how quickly the capacity to perform additional inflow or outflow accrues after prior consumption. For example, if the slope is set to 1,000,000 tokens per day (converted to per second for on-chain execution), the rate limit will recover at that rate until it reaches the maxAmount.
 
-######### A.2.3.9.1.1.1.1.2.3 - LastUpdated [Core]  <!-- UUID: 8d0419a4-50c5-4a7b-b68e-84d8c9243694 -->
+######### A.2.3.9.1.1.1.2.2.3 - LastUpdated [Core]  <!-- UUID: 8d0419a4-50c5-4a7b-b68e-84d8c9243694 -->
 
 `lastUpdated` is the timestamp when the rate limit was last updated, serving as the reference point for calculating time-elapsed refills in the formula.
 
-######### A.2.3.9.1.1.1.1.2.4 - LastAmount [Core]  <!-- UUID: 02918cfc-5d10-41bc-bb8a-0be9df76cbac -->
+######### A.2.3.9.1.1.1.2.2.4 - LastAmount [Core]  <!-- UUID: 02918cfc-5d10-41bc-bb8a-0be9df76cbac -->
 
 `lastAmount` is the remaining allowance available at the last update, used to compute the current rate limit by adding accrued capacity.
 
-######## A.2.3.9.1.1.1.1.3 - Inflow Rate Limits [Core]  <!-- UUID: d59a233c-11b9-4140-b15f-51df37475fd8 -->
+######## A.2.3.9.1.1.1.2.3 - Inflow Rate Limits [Core]  <!-- UUID: d59a233c-11b9-4140-b15f-51df37475fd8 -->
 
 Inflow rate limits constrain the rate at which allocated liquidity can increase into a scope. “Inflow” means movements that raise exposure or capital allocated to an Instance or market, such as depositing, minting, or rebalancing into a position.
 
-######## A.2.3.9.1.1.1.1.4 - Outflow Rate Limits [Core]  <!-- UUID: e50fd86a-ffa4-4387-b212-420730a8d171 -->
+######## A.2.3.9.1.1.1.2.4 - Outflow Rate Limits [Core]  <!-- UUID: e50fd86a-ffa4-4387-b212-420730a8d171 -->
 
 Outflow Rate Limits constrain the rate at which allocated liquidity can be withdrawn or exposure reduced from a scope. “Outflow” means movements that lower exposure or capital allocated to an Instance or market, such as withdrawals, redemptions, or unwind operations.
 
 Outflow limits are often configured more permissively to prioritize safety and fast exits. When outflow limits are “unlimited,” the rate limits contract simply does not apply a cap in that direction.
 
-######## A.2.3.9.1.1.1.1.5 - Rate Limit IDs [Core]  <!-- UUID: b95b3bd8-d316-43d5-af56-df38d557aea3 -->
+######## A.2.3.9.1.1.1.2.5 - Rate Limit IDs [Core]  <!-- UUID: b95b3bd8-d316-43d5-af56-df38d557aea3 -->
 
 A `Rate Limit ID` is a bytes32 key that uniquely identifies a rate limit. Rate Limit IDs allow the system to maintain independent allowance state for each relevant transaction.
 
-######## A.2.3.9.1.1.1.1.6 - MaxSlippage [Core]  <!-- UUID: 7c6da187-7d17-42ae-8c64-8d828ee83ea7 -->
+######## A.2.3.9.1.1.1.2.6 - MaxSlippage [Core]  <!-- UUID: 7c6da187-7d17-42ae-8c64-8d828ee83ea7 -->
 
 `maxSlippage` is a configurable parameter that sets the maximum allowed price impact or deviation from expected output when executing trades or liquidity operations in a pool. `maxslippage` is expressed as a decimal and must be a non-zero value. This protects against excessive price impact during volatile market conditions.
 
@@ -9277,9 +9347,11 @@ If the Allocation Instance is successfully approved, the Operational Executor Fa
 
 Once a new Instance is deployed, its data is integrated into risk-capital monitoring systems and its RRC will be officially determined and tracked via the Sky Core RRC Dashboard/API. See [A.2.4 - Sky Core Required Risk Capital (RRC) Dashboard And API](4eac2c9e-2718-4881-a3f1-ed10fb3f4d13). This official RRC figure supersedes the Prime-prepared pro-forma RRC.
 
-####### A.2.3.9.1.1.2.3 - Instance Setup Deployment [Core]  <!-- UUID: 3766cb8c-ab6c-41af-9465-b8dea76d0532 -->
+####### A.2.3.9.1.1.2.3 - Instance Setup Deployments [Core]  <!-- UUID: 3766cb8c-ab6c-41af-9465-b8dea76d0532 -->
 
-The documents herein define how the deployment of an Allocation Instance is executed on-chain.
+The documents herein define how the deployment of an Allocation Instance is executed on-chain. In the short-term, an Allocation Instance may also be deployed using the process for Interim Deployments specified in [A.1.9 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f).
+
+The Prime Agent must subsequently prepare a pro-forma Required Risk Capital estimate, which must be approved by the Core Council Risk Advisor, before the parameters of the Instance can be updated for normal operation.
 
 ######## A.2.3.9.1.1.2.3.1 - Conduit Development And Testing [Core]  <!-- UUID: 6899a722-3d1a-4bd1-80f2-f36be91bbab0 -->
 
@@ -9893,9 +9965,9 @@ Within five (5) calendar days of the end of each month, each Operational Executo
 
 For each Prime Agent, the Initial Calculation must specify whether payments with respect to Demand Side Stablecoin Primitives (see [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)) have already been made by the Operational Executor Agent, and thus should be reimbursed to the Operational Executor Agent instead of being paid to the Prime Agent.
 
-###### A.2.5.1.2.1.2 - Independent Calculation By BA Labs On Behalf Of Core Council [Core]  <!-- UUID: 8be8ae66-2453-4d7d-8880-ffaba36bdb7e -->
+###### A.2.5.1.2.1.2 - Independent Calculation By Core Council Risk Advisor On Behalf Of Core Council [Core]  <!-- UUID: 8be8ae66-2453-4d7d-8880-ffaba36bdb7e -->
 
-Within five (5) calendar days of the posting of each Initial Calculation, BA Labs, on behalf of the Core Council, replies to the Initial Calculation with their own independent calculation of the net amounts due to or from the Prime Agents covered by the Initial Calculation (the “Independent Calculation”). The Independent Calculation must specify whether each amount is an Agreed Amount or a Disputed Amount (see [A.2.6 - Allowed Deviation](2e471685-fec5-4306-8747-a50dbbdd5c70)) and contain reasonable supporting detail. The required contents of the Independent Calculation will be further specified in a future iteration of the Atlas.
+Within five (5) calendar days of the posting of each Initial Calculation, the Core Council Risk Advisor, on behalf of the Core Council, replies to the Initial Calculation with their own independent calculation of the net amounts due to or from the Prime Agents covered by the Initial Calculation (the “Independent Calculation”). The Independent Calculation must specify whether each amount is an Agreed Amount or a Disputed Amount (see [A.2.6 - Allowed Deviation](2e471685-fec5-4306-8747-a50dbbdd5c70)) and contain reasonable supporting detail. The required contents of the Independent Calculation will be further specified in a future iteration of the Atlas.
 
 ####### A.2.5.1.2.1.2.1 - Agreed Amount [Core]  <!-- UUID: 8669ef42-d55b-4be8-839e-646b4ff17e4c -->
 
@@ -9915,11 +9987,11 @@ The current value of the Allowed Deviation is 1%.
 
 ####### A.2.5.1.2.1.2.4 - Missing Initial Calculations [Core]  <!-- UUID: ab9015ed-c53f-4be4-893c-993bce51cf0c -->
 
-If an Operational Executor Agent does not deliver the Initial Calculation as specified in [A.2.6 - Initial Calculation By Operational Executor Agent](5122086f-a067-4898-bcd2-bfba4ca3d795), BA Labs must prepare an Independent Calculation with respect to the Prime Agents covered by such Initial Calculation within ten (10) calendar days of the end of each month. The Independent Calculation must be posted under the “Sky Core” category using the `monthly-settlement-cycle` tag, contain reasonable supporting detail, and specify that no Initial Calculation was posted by the Operational Executor Agent.
+If an Operational Executor Agent does not deliver the Initial Calculation as specified in [A.2.6 - Initial Calculation By Operational Executor Agent](5122086f-a067-4898-bcd2-bfba4ca3d795), the Core Council Risk Advisor must prepare an Independent Calculation with respect to the Prime Agents covered by such Initial Calculation within ten (10) calendar days of the end of each month. The Independent Calculation must be posted under the “Sky Core” category using the `monthly-settlement-cycle` tag, contain reasonable supporting detail, and specify that no Initial Calculation was posted by the Operational Executor Agent.
 
 ###### A.2.5.1.2.1.3 - Resolution Of Differences By Core GovOps Atlas Axis [Core]  <!-- UUID: 9de89bf3-9051-44f1-9ec0-d362ee4d4b38 -->
 
-If there are any Disputed Amounts (see [A.2.6 - Disputed Amount](4ddda7cd-9942-4f60-9555-6b3f16770334)), then Core GovOps Atlas Axis must resolve them. Atlas Axis must work with the relevant Operational Executor Agent, relevant Prime Agents, and BA Labs to reach a mutually acceptable resolution and may consult other parties to the extent it deems advisable.
+If there are any Disputed Amounts (see [A.2.6 - Disputed Amount](4ddda7cd-9942-4f60-9555-6b3f16770334)), then Core GovOps Atlas Axis must resolve them. Atlas Axis must work with the relevant Operational Executor Agent, relevant Prime Agents, and the Core Council Risk Advisor to reach a mutually acceptable resolution and may consult other parties to the extent it deems advisable.
 
 Core GovOps Atlas Axis makes the final decision in resolving differences between the Initial Calculation and the Independent Calculation (the “Final Calculation”). Atlas Axis must post the Final Calculation as a reply to the Independent Calculation within five (5) calendar days of the posting of an Independent Calculation that includes a Disputed Amount. The Final Calculation must specify the Final Amount and contain reasonable supporting detail. The required contents of the Final Calculation will be further specified in a future iteration of the Atlas.
 
@@ -9969,11 +10041,11 @@ The initial Monthly Settlement Cycle conducted in September 2025 will be for the
 
 ####### A.2.5.1.2.1.6.2 - Process For September 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 146d3d9c-7f8a-4dc4-b6b3-349bab4279bb -->
 
-For the initial Monthly Settlement Cycle conducted in September 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Demand Side Stablecoin Primitives (see [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)). The Independent Calculation prepared by BA Labs on behalf of the Core Council will be prepared normally. The calculations related to Demand Side Stablecoin Primitives will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts. The Initial Calculation and the Independent Calculation will be posted to the Sky Forum by September 10, 2025.
+For the initial Monthly Settlement Cycle conducted in September 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Demand Side Stablecoin Primitives (see [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)). The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Demand Side Stablecoin Primitives will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts. The Initial Calculation and the Independent Calculation will be posted to the Sky Forum by September 10, 2025.
 
 ####### A.2.5.1.2.1.6.3 - Process For October 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 8e8ff62f-c6c5-4094-afd1-2cedcf482df6 -->
 
-For the Monthly Settlement Cycle conducted in October 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Spark. The Independent Calculation prepared by BA Labs on behalf of the Core Council will be prepared normally. The calculations related to Spark will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts.
+For the Monthly Settlement Cycle conducted in October 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Spark. The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Spark will be subject to the normal resolution process defined in [A.2.6 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts.
 
 ##### A.2.5.1.2.2 - Implementation Stages [Core]  <!-- UUID: cf1d76c1-fc9f-499d-866f-265276e421f0 -->
 
@@ -10035,7 +10107,7 @@ Third, Adjusted Allocation System Profit is calculated for each Prime for the mo
 
 The Distortion Penalty is a discretionary penalty designed to mitigate the potential misalignment caused by the asymmetric nature of the Simplified Profit And Loss Calculation, where Primes earn profits on Allocation System Instances that earn more than the Agent Credit Line Borrow Rate but do not suffer losses when Instances earn less than the Agent Credit Line Borrow Rate.
 
-The Core Executor Agents, in consultation with the Stability Scope Advisors, may assess a penalty of up to 100% of Total Allocation System Profit (see [A.2.6 - Step 2: Calculate Total Allocation System Profit](1eaa2350-e354-4000-baa6-be250853bddc)) if it determines that a Prime’s decisions were distorted by this incentive structure.
+The Core Executor Agents, in consultation with the Core Council Risk Advisor, may assess a penalty of up to 100% of Total Allocation System Profit (see [A.2.6 - Step 2: Calculate Total Allocation System Profit](1eaa2350-e354-4000-baa6-be250853bddc)) if it determines that a Prime’s decisions were distorted by this incentive structure.
 
 ########## A.2.5.1.2.2.1.1.2.3.2 - Low Yield Actively Stabilizing Collateral Penalty [Core]  <!-- UUID: 631e7c75-375f-4298-9d85-b17cb2eb019f -->
 
@@ -10081,11 +10153,11 @@ The actions specified herein must be completed to achieve Stage 1 implementation
 
 ######## A.2.5.1.2.2.1.3.1 - Reduction Of Prime Allocator Vault Stability Fees [Core]  <!-- UUID: 48ec2b03-0885-45d9-b5f6-22267414f587 -->
 
-The Stability Fees for each Prime Allocator Vault must be reduced to zero so that value is transferred from Primes to Sky Core exclusively through Executive Votes. The Core Executor Agents, in consultation with the Stability Scope Advisors, is directed to use the Stability Parameter Bounded External Access Module to reduce the Stability Fee for each Prime Allocator Vault to zero. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Allocator Vault Parameters](6ab6bd12-93d3-419f-96e2-a7f79bfe1afa).
+The Stability Fees for each Prime Allocator Vault must be reduced to zero so that value is transferred from Primes to Sky Core exclusively through Executive Votes. The Core Executor Agents, in consultation with the Core Council Risk Advisor, is directed to use the Stability Parameter Bounded External Access Module to reduce the Stability Fee for each Prime Allocator Vault to zero. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Allocator Vault Parameters](6ab6bd12-93d3-419f-96e2-a7f79bfe1afa).
 
 ######## A.2.5.1.2.2.1.3.2 - Automation Of Simplified Profit And Loss Calculation [Core]  <!-- UUID: 1782eeb8-8c6f-4b34-beea-7ab140057324 -->
 
-The Stability Scope Advisors must develop tooling to allow the net amount due from each Prime to Sky each month under the Simplified Profit And Loss Calculation to be computed automatically.
+The Core Council Risk Advisor must develop tooling to allow the net amount due from each Prime to Sky each month under the Simplified Profit And Loss Calculation to be computed automatically.
 
 ###### A.2.5.1.2.2.2 - Stage 2 [Core]  <!-- UUID: 74bdfafe-e3c7-4670-a8bd-c337f1ad1e49 -->
 
@@ -10105,7 +10177,7 @@ The actions specified herein must be completed to achieve Stage 2 implementation
 
 ######## A.2.5.1.2.2.2.3.1 - Automation Of Monthly Settlement Cycle Calculation Including Virtual Base Rate [Core]  <!-- UUID: d98d3753-4230-4ad8-a1e7-7b1fd7e3b679 -->
 
-The Stability Scope Advisors must develop automated tooling for calculating the net amount due from each Prime to Sky each month, incorporating the Virtual Base Rate.
+The Core Council Risk Advisor must develop automated tooling for calculating the net amount due from each Prime to Sky each month, incorporating the Virtual Base Rate.
 
 ###### A.2.5.1.2.2.3 - Stage 3 [Core]  <!-- UUID: 1f9811fa-a759-4cd9-b7e1-aa0cc51174ed -->
 
@@ -10129,7 +10201,7 @@ Allocator Vaults must be updated to accrue interest in real time based on the Ba
 
 ######## A.2.5.1.2.2.3.3.2 - Automation Of Monthly Settlement Cycle Based On Base Rate [Core]  <!-- UUID: 50b52e7e-2f79-4a7a-b887-cda85bc77cd7 -->
 
-The Stability Scope Advisors must update the tooling specified in [A.2.6 - Automation Of Monthly Settlement Cycle Calculation Including Virtual Base Rate](d98d3753-4230-4ad8-a1e7-7b1fd7e3b679) to reflect the onchain accrual of the Base Rate.
+The Core Council Risk Advisor must update the tooling specified in [A.2.6 - Automation Of Monthly Settlement Cycle Calculation Including Virtual Base Rate](d98d3753-4230-4ad8-a1e7-7b1fd7e3b679) to reflect the onchain accrual of the Base Rate.
 
 ## A.2.6 - Agent Incubation [Article]  <!-- UUID: bb0c23c6-5123-4c35-ac84-fcb018a72cda -->
 
@@ -11755,49 +11827,23 @@ Before encoding the transfers in the executive vote, the recipient addresses mus
 
 The Stability Scope governs the management of the USDS Stablecoin. The USDS Stablecoin must be a permissionless and useful currency available to anyone. Its stability and risk must be managed to generate as much value for Sky and public good as possible.
 
-## A.3.1 - Scope Improvement [Article]  <!-- UUID: 9a9c6b43-0157-4949-9c43-83cb0d97934c -->
-
-This Article defines critical infrastructure for improving the Stability Scope.
-
-### A.3.1.1 - Scope Improvement [Section]  <!-- UUID: e9203d6b-abbe-4746-aacc-286d91790cf6 -->
-
-To ensure continuous improvement of the Stability Scope, the Stability Facilitators may retain Scope Advisors, experts with relevant domain expertise. The Stability Scope Advisors shall take on projects identified by the Stability Facilitators. The Scope Advisors will serve under the terms and conditions set forth in an agreement to be negotiated by the Stability Facilitators and each Scope Advisor, which agreement shall be publicly disclosed.
-
-#### A.3.1.1.1 - Scope Advisor Requirements [Core]  <!-- UUID: 9d33d2eb-ca31-485c-a19c-d4477f62ea0e -->
-
-Stability Scope Advisors must be Ecosystem Actors who have no involvement in any business, political, or governance-related activities that could create a conflict of interest, either directly or indirectly. Additionally, they must possess the relevant expertise and professional skills necessary to provide informed and objective input on the specific content areas covered by the Stability Scope.
-
-##### A.3.1.1.1.1 - BA Labs Conflict Of Interest Waiver [Core]  <!-- UUID: 7183dd42-61c2-4db6-b941-6de6c87c2555 -->
-
-BA Labs is granted a limited waiver to the rule prohibiting Stability Scope Advisors from engaging in other business activities that could result in a conflict of interest. This waiver applies only to BA Labs’ work with Ethena. This waiver provides Sky with greater transparency and responsiveness in the event of any issue with Ethena. It also allows BA Labs to align Ethena’s risk strategy with Sky.
-
-However, should additional Stability Scope Advisors be appointed, they will be required to assume full responsibility for all risk management activities associated with Ethena.
-
-#### A.3.1.1.2 - Current Scope Advisors [Core]  <!-- UUID: 7f5be434-a034-447b-ab98-b90346aa3d38 -->
-
-The currently active Scope Advisors are:
- 
-BA Labs
-
-ETH Address: 0xDfe08A40054685E205Ed527014899d1EDe49B892
-
-## A.3.2 - Core Stability Parameters [Article]  <!-- UUID: 80f168a3-4a01-40dd-bb57-851f48d58912 -->
+## A.3.1 - Core Stability Parameters [Article]  <!-- UUID: 80f168a3-4a01-40dd-bb57-851f48d58912 -->
 
 This Article defines methodologies and processes for optimizing and aligning the Core Stability Parameters, which are designed to stabilize the USDS Stablecoin.
 
-### A.3.2.1 - Role Of Core Executor Agents [Section]  <!-- UUID: 4162b64d-fff8-4200-9b6c-86284ff06d08 -->
+### A.3.1.1 - Role Of Core Executor Agents [Section]  <!-- UUID: 4162b64d-fff8-4200-9b6c-86284ff06d08 -->
 
 This Section defines the role of the Core Executor Agents in managing the Core Stability Parameters.
 
-#### A.3.2.1.1 - Setting Base Rate [Core]  <!-- UUID: 9ced57db-dfcd-4ca3-ba29-b4803c91bb7c -->
+#### A.3.1.1.1 - Setting Base Rate [Core]  <!-- UUID: 9ced57db-dfcd-4ca3-ba29-b4803c91bb7c -->
 
-The Core Executor Agents, in consultation with the Stability Facilitators and the Stability Scope Advisors, must set the Base Rate to ensure (1) a sufficient level of Cash Stablecoins and (2) price stability of USDS and other Stablecoins produced by the Sky Ecosystem. The subdocuments herein define the process that the Core Executor Agents should follow in setting the Base Rate.
+The Core Executor Agents, in consultation with the Core Council Risk Advisor, must set the Base Rate to ensure (1) a sufficient level of Cash Stablecoins and (2) price stability of USDS and other Stablecoins produced by the Sky Ecosystem. The subdocuments herein define the process that the Core Executor Agents should follow in setting the Base Rate.
 
-##### A.3.2.1.1.1 - Adjustment Process [Core]  <!-- UUID: e152c03d-5891-4962-867d-a0c42fa7539f -->
+##### A.3.1.1.1.1 - Adjustment Process [Core]  <!-- UUID: e152c03d-5891-4962-867d-a0c42fa7539f -->
 
-The Core Executor Agents should modify the Base Rate on a daily basis, as necessary, in consultation with the Stability Facilitators and Stability Scope Advisors. In doing so, the Core Executor Agents should consider the factors specified in the documents herein.
+The Core Executor Agents should modify the Base Rate on a daily basis, as necessary, in consultation with the Core Council Risk Advisor. In doing so, the Core Executor Agents should consider the factors specified in the documents herein.
 
-###### A.3.2.1.1.1.1 - Level Of Actively Stabilizing Collateral [Core]  <!-- UUID: 839bfb33-5ac5-4e10-9521-65e43dd04464 -->
+###### A.3.1.1.1.1.1 - Level Of Actively Stabilizing Collateral [Core]  <!-- UUID: 839bfb33-5ac5-4e10-9521-65e43dd04464 -->
 
 The Core Executor Agents should consider the level of Actively Stabilizing Collateral (see [A.3.4 - Resting Actively Stabilizing Collateral](0e17b35a-c830-4695-b63c-5ef58b249d3f)) using the following non-binding guidelines:
 
@@ -11809,51 +11855,51 @@ The Core Executor Agents should consider the level of Actively Stabilizing Colla
 • If total ASC is between 20% and 22%, consider increasing the Base Rate by approximately 1%; and
 • If total ASC is below 20%, consider increasing the Base Rate by approximately 2%.
 
-###### A.3.2.1.1.1.2 - External Rate Environment [Core]  <!-- UUID: 0a4f2260-5f9a-4f78-a944-20500b153fec -->
+###### A.3.1.1.1.1.2 - External Rate Environment [Core]  <!-- UUID: 0a4f2260-5f9a-4f78-a944-20500b153fec -->
 
 The Core Executor Agents should consider the external interest-rate environment, including the interest rates offered by competitors and funding rates in decentralized finance and traditional finance markets.
 
-####### A.3.2.1.1.1.2.1 - Tools Development [Core]  <!-- UUID: 4feb630b-d694-42d9-9b69-a6da09affa2c -->
+####### A.3.1.1.1.1.2.1 - Tools Development [Core]  <!-- UUID: 4feb630b-d694-42d9-9b69-a6da09affa2c -->
 
 The Core Executor Agents must develop automated tools to monitor the external interest-rate environment to improve the rate-setting process.
 
-###### A.3.2.1.1.1.3 - Other Factors [Core]  <!-- UUID: a985bebe-4fe6-44e9-8025-78c4f099ef57 -->
+###### A.3.1.1.1.1.3 - Other Factors [Core]  <!-- UUID: a985bebe-4fe6-44e9-8025-78c4f099ef57 -->
 
 The Core Executor Agents should consider other factors such as supporting long-term market stability, user stability, system sustainability, and growth. In addition, the Core Executor Agents should consider constraints on Primes, including their cost of capital and reaction time, to avoid creating unnecessary volatility in rates.
 
-#### A.3.2.1.2 - Setting Other Core Stability Parameters [Core]  <!-- UUID: 7c65e6aa-3218-4636-bfee-545988aca7df -->
+#### A.3.1.1.2 - Setting Other Core Stability Parameters [Core]  <!-- UUID: 7c65e6aa-3218-4636-bfee-545988aca7df -->
 
 When setting the Base Rate, the Core Executor Agents must also set all other Core Stability Parameters so that they maintain their specified relationship to the Base Rate. See [A.3.2 - A2 - Core Stability Parameters - Parameters](86c75c9c-3803-48c1-a897-88d2be7aeb0e). The only exception is the Dai Savings Rate, which must be gradually reduced to 0% as specified in [A.3.2 - Core Stability Parameters - Parameters - Dai Savings Rate - Dai Savings Rate Modification](238d8932-633d-44df-a7ed-0ec5a423cc53).
 
-#### A.3.2.1.3 - Implementation Of Rate Changes [Core]  <!-- UUID: 21a34a01-87a8-4753-be83-ea452b5d388d -->
+#### A.3.1.1.3 - Implementation Of Rate Changes [Core]  <!-- UUID: 21a34a01-87a8-4753-be83-ea452b5d388d -->
 
 The smart contracts that implement all of the Core Stability Parameters must be configured to allow the Core Executor Agents to modify the Core Stability Parameters using the Stability Parameter Bounded External Access Module. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a).
 
-### A.3.2.2 - Parameters [Section]  <!-- UUID: 86c75c9c-3803-48c1-a897-88d2be7aeb0e -->
+### A.3.1.2 - Parameters [Section]  <!-- UUID: 86c75c9c-3803-48c1-a897-88d2be7aeb0e -->
 
 This Section defines the Core Stability Parameters.
 
-#### A.3.2.2.1 - Base Rate [Core]  <!-- UUID: 228f9955-6bba-4252-a101-5529e7a300b9 -->
+#### A.3.1.2.1 - Base Rate [Core]  <!-- UUID: 228f9955-6bba-4252-a101-5529e7a300b9 -->
 
 The Base Rate is the key interest rate in the system. It defines all other rates by various spreads. It is expressed as an annual percentage rate.
 
-##### A.3.2.2.1.0.3.1 - Spreads - Element Annotation [Annotation]  <!-- UUID: e7be875c-fa61-42af-8986-ec22aceab0e8 -->
+##### A.3.1.2.1.0.3.1 - Spreads - Element Annotation [Annotation]  <!-- UUID: e7be875c-fa61-42af-8986-ec22aceab0e8 -->
 
 The element refers to the differences added or subtracted from the Base Rate to determine other specific rates.
 
-#### A.3.2.2.2 - Sky Savings Rate [Core]  <!-- UUID: 2674cccb-d779-4868-b83f-8cb86648c88a -->
+#### A.3.1.2.2 - Sky Savings Rate [Core]  <!-- UUID: 2674cccb-d779-4868-b83f-8cb86648c88a -->
 
 The Sky Savings Rate (”SSR”) is the rate USDS holders can earn on their USDS in the Sky Savings Rate smart contracts.
 
-##### A.3.2.2.2.1 - Relationship To Base Rate [Core]  <!-- UUID: d16483ff-b83e-490f-a620-1b58cc679c7f -->
+##### A.3.1.2.2.1 - Relationship To Base Rate [Core]  <!-- UUID: d16483ff-b83e-490f-a620-1b58cc679c7f -->
 
 The Sky Savings Rate is 0.3% below the Base Rate. This difference is equal to the sum of (1) the 0.2% Accessibility Reward Fee (see [A.2.4 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759)) and (2) the 0.1% Sky Spread (see [A.3.3 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da)).
 
-##### A.3.2.2.2.2 - Sky Savings Rate Modification [Core]  <!-- UUID: 1c8bb297-52a6-4774-a76d-e457ae5f5862 -->
+##### A.3.1.2.2.2 - Sky Savings Rate Modification [Core]  <!-- UUID: 1c8bb297-52a6-4774-a76d-e457ae5f5862 -->
 
 The Sky Savings Rate can be modified through either Executive Votes or the Stability Parameter Bounded External Access Module. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a).
 
-###### A.3.2.2.2.2.1 - Sky Savings Rate Stability Parameter Bounded External Access Module Parameters [Core]  <!-- UUID: e3a7ca35-0569-4867-bc64-e732622bda21 -->
+###### A.3.1.2.2.2.1 - Sky Savings Rate Stability Parameter Bounded External Access Module Parameters [Core]  <!-- UUID: e3a7ca35-0569-4867-bc64-e732622bda21 -->
 
 The Stability Parameter Bounded External Access Module parameters for the Sky Savings Rate are:
 • `max` - 3,000 basis points,
@@ -11861,45 +11907,45 @@ The Stability Parameter Bounded External Access Module parameters for the Sky Sa
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-#### A.3.2.2.3 - Agent Rate [Core]  <!-- UUID: 012c953b-c522-4ea3-939b-3282af4e1d7e -->
+#### A.3.1.2.3 - Agent Rate [Core]  <!-- UUID: 012c953b-c522-4ea3-939b-3282af4e1d7e -->
 
 The Agent Rate is the rate that Prime Agents earn on Unrewarded USDS, Dai, and sUSDS balances that they hold.
 
-##### A.3.2.2.3.1 - Relationship To Base Rate [Core]  <!-- UUID: 4e49c66c-3361-48bb-9a18-a0217278488e -->
+##### A.3.1.2.3.1 - Relationship To Base Rate [Core]  <!-- UUID: 4e49c66c-3361-48bb-9a18-a0217278488e -->
 
 The Agent Rate is 0.1% below the Base Rate. This is equal to the Sky Savings Rate plus the 0.2% Accessibility Reward Fee (see [A.2.4 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759)).
 
-##### A.3.2.2.3.2 - Treatment Of USDS and Dai Balances [Core]  <!-- UUID: 3fbca67b-f75d-48f8-9459-3cba592f835b -->
+##### A.3.1.2.3.2 - Treatment Of USDS and Dai Balances [Core]  <!-- UUID: 3fbca67b-f75d-48f8-9459-3cba592f835b -->
 
 Prime Agents receive the full Agent Rate on Unrewarded USDS and Dai balances through the Monthly Settlement Cycle, as specified in [A.3.2 - Core Stability Parameters - Parameters - Agent Rate - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
 
-##### A.3.2.2.3.3 - Treatment Of sUSDS Balances [Core]  <!-- UUID: b1cc2cb1-aff6-4b7a-bb32-bdf56fc7fd2f -->
+##### A.3.1.2.3.3 - Treatment Of sUSDS Balances [Core]  <!-- UUID: b1cc2cb1-aff6-4b7a-bb32-bdf56fc7fd2f -->
 
 Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Accessibility Reward Fee (see [A.2.4 - Fee For USDS and sUSDS Balances](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [A.2.4 - Prime Agent Management Fee](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.2 - Core Stability Parameters - Parameters - Agent Rate - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
 
-##### A.3.2.2.3.4 - Spark [Core]  <!-- UUID: e15caed7-276c-4489-95dc-9ba628566bf4 -->
+##### A.3.1.2.3.4 - Spark [Core]  <!-- UUID: e15caed7-276c-4489-95dc-9ba628566bf4 -->
 
 Spark is entitled to a higher Agent Rate equal to the Base Rate on USDS and sUSDS balances held in Peg Stability Modules. See [A.3.4 - Peg Stability Module](0082c12d-f1a7-46ff-a4aa-5fe42ece1a4d). The Agent Rate earned by Spark is still subject to the limitations set forth in [A.3.2 - Core Stability Parameters - Parameters - Agent Rate - Limitations For Prime Agents Receiving Subsidized Rate](7f6c1ab6-7674-41b0-9522-7e7e5a1cab3d).
 
-##### A.3.2.2.3.5 - Limitations For Prime Agents Receiving Subsidized Rate [Core]  <!-- UUID: 7f6c1ab6-7674-41b0-9522-7e7e5a1cab3d -->
+##### A.3.1.2.3.5 - Limitations For Prime Agents Receiving Subsidized Rate [Core]  <!-- UUID: 7f6c1ab6-7674-41b0-9522-7e7e5a1cab3d -->
 
 If a Prime Agent is borrowing funds from Sky at a Subsidized Rate, as defined in [A.3.2 - Core Stability Parameters - Parameters - Agent Credit Line Borrow Rate - Subsidized Rate](ceceb90b-57d1-43db-9e52-133532c373fd), then the Agent Rate earned by that Prime Agent shall be limited. Specifically, if the standard Agent Rate would exceed the Prime Agent’s Subsidized Rate, the Prime Agent will earn the Subsidized Rate on those balances. The difference between what would have been the standard Agent Rate earnings and the earnings at the Subsidized Rate is effectively retained by Sky. This adjustment is processed as part of the Monthly Settlement Cycle, as specified in [A.3.2 - Core Stability Parameters - Parameters - Agent Rate - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937). If the standard Agent Rate is less than or equal to the Subsidized Rate, the standard Agent Rate applies.
 
-##### A.3.2.2.3.6 - Settlement [Core]  <!-- UUID: eed3d922-7bb8-4cee-97a4-47e902a1c937 -->
+##### A.3.1.2.3.6 - Settlement [Core]  <!-- UUID: eed3d922-7bb8-4cee-97a4-47e902a1c937 -->
 
 Any compensation due to or from Prime Agents so that they earn the Agent Rate on USDS, Dai, and sUSDS balances is paid as part of the Monthly Settlement Cycle. See [A.2.6](6f8d5065-d6ff-4add-9a28-eadeffa7ed1a).
 
-#### A.3.2.2.4 - Dai Savings Rate [Core]  <!-- UUID: d220731b-35db-4803-8a74-1c470a5ad693 -->
+#### A.3.1.2.4 - Dai Savings Rate [Core]  <!-- UUID: d220731b-35db-4803-8a74-1c470a5ad693 -->
 
 The Dai Savings Rate (”DSR”) is the rate Dai holders can earn on their Dai in the Dai Savings Rate smart contracts.
 
-##### A.3.2.2.4.1 - Dai Savings Rate Modification [Core]  <!-- UUID: 238d8932-633d-44df-a7ed-0ec5a423cc53 -->
+##### A.3.1.2.4.1 - Dai Savings Rate Modification [Core]  <!-- UUID: 238d8932-633d-44df-a7ed-0ec5a423cc53 -->
 
 The Dai Savings Rate can be modified through either Executive Votes or the Stability Parameter Bounded External Access Module. See [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module](47b8b035-8abd-42e6-86b8-33f852fa953a). 
 
 The Dai Savings Rate must gradually be reduced to 0% over time.
 
-###### A.3.2.2.4.1.1 - Dai Savings Rate Stability Parameter Bounded External Access Module Parameters [Core]  <!-- UUID: 335dd92b-cbd8-4d98-8d23-1dd57d98487d -->
+###### A.3.1.2.4.1.1 - Dai Savings Rate Stability Parameter Bounded External Access Module Parameters [Core]  <!-- UUID: 335dd92b-cbd8-4d98-8d23-1dd57d98487d -->
 
 The Stability Parameter Bounded External Access Module parameters for the Dai Savings Rate are:
 • `max` - 3,000 basis points,
@@ -11907,229 +11953,239 @@ The Stability Parameter Bounded External Access Module parameters for the Dai Sa
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-#### A.3.2.2.5 - Agent Credit Line Borrow Rate [Core]  <!-- UUID: 6b2b7302-e63b-457e-afeb-daab5ca7a7de -->
+#### A.3.1.2.5 - Agent Credit Line Borrow Rate [Core]  <!-- UUID: 6b2b7302-e63b-457e-afeb-daab5ca7a7de -->
 
 The Agent Credit Line Borrow Rate is the annual percentage rate that Agents must pay to Sky Core to receive USDS liquidity into their respective vaults.
 
-##### A.3.2.2.5.1 - Relationship To Base Rate [Core]  <!-- UUID: 4659cbf0-78c2-469b-8432-883e5c931dd1 -->
+##### A.3.1.2.5.1 - Relationship To Base Rate [Core]  <!-- UUID: 4659cbf0-78c2-469b-8432-883e5c931dd1 -->
 
 The Agent Credit Line Borrow Rate is equal to the Base Rate.
 
-##### A.3.2.2.5.2 - Subsidized Rate [Core]  <!-- UUID: ceceb90b-57d1-43db-9e52-133532c373fd -->
+##### A.3.1.2.5.2 - Subsidized Rate [Core]  <!-- UUID: ceceb90b-57d1-43db-9e52-133532c373fd -->
 
 Prime Agents may temporarily be able to borrow specified amounts from Sky Core at a Subsidized Rate below the Base Rate under the terms of an Ecosystem Accord entered into between Sky and the Prime Agent.
 
-##### A.3.2.2.5.3 - Use Of Funds [Core]  <!-- UUID: b914352c-f270-46e8-991a-468a4b01dc49 -->
+##### A.3.1.2.5.3 - Use Of Funds [Core]  <!-- UUID: b914352c-f270-46e8-991a-468a4b01dc49 -->
 
 Funds borrowed by Agents from Sky at the Agent Credit Line Borrow Rate must be deposited into the Agent’s Allocation Vault and used to invest in Allocation System Instances. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a). These funds may not be transferred to the Agent’s SubProxy account or otherwise outside of the Agent’s designated accounts for its Allocation System Primitive.
 
-##### A.3.2.2.5.4 - Accrued Interest [Core]  <!-- UUID: 9835ebab-59cc-4a2b-b030-3b07b4e9203d -->
+##### A.3.1.2.5.4 - Accrued Interest [Core]  <!-- UUID: 9835ebab-59cc-4a2b-b030-3b07b4e9203d -->
 
 Interest accrues on borrowed funds and is reflected in the Allocation Vault balance. Prime Agents must regularly transfer interest payments to the Allocation Vault to pay down accrued interest, ensuring the Allocation Vault balance returns to the principal amount only. Any accrued but unpaid interest reduces the Prime Agent's available Total Risk Capital. See [A.3.3 - Total Risk Capital Definition](6f6b25d6-f73c-4733-ba37-12a0a411433c).
 
-##### A.3.2.2.5.5 - Prime Agent Credit Rating System [Core]  <!-- UUID: 926fb13d-efdd-4a83-a3dc-db1448a106f5 -->
+##### A.3.1.2.5.5 - Prime Agent Credit Rating System [Core]  <!-- UUID: 926fb13d-efdd-4a83-a3dc-db1448a106f5 -->
 
 After the development of a Prime Agent Credit Rating System, the Agent Credit Line Borrow Rate will vary based on the Credit Rating of each Prime Agent. The Credit Rating for a Prime Agent will take into account factors including the Risk Tolerance Ratio.
 
-### A.3.2.0.3.1 - Methodologies - Element Annotation [Annotation]  <!-- UUID: 2f658a82-a8d2-4bd1-be5c-906e4733400d -->
+### A.3.1.0.3.1 - Methodologies - Element Annotation [Annotation]  <!-- UUID: 2f658a82-a8d2-4bd1-be5c-906e4733400d -->
 
 The element "methodologies" refers to the systematic approaches or frameworks used to achieve the specific objective of optimizing and aligning the Core Stability Parameters.
 
-### A.3.2.0.3.2 - Optimizing And Aligning - Element Annotation [Annotation]  <!-- UUID: fa290d52-16ee-49c7-b05c-0b53f3781d39 -->
+### A.3.1.0.3.2 - Optimizing And Aligning - Element Annotation [Annotation]  <!-- UUID: fa290d52-16ee-49c7-b05c-0b53f3781d39 -->
 
 The element "optimizing" refers to the process of making the Core Stability Parameters as effective as possible in achieving their goal of stabilizing the USDS Stablecoin. The element "aligning" refers to ensuring that these parameters are consistent and work in harmony with the objectives of Sky and with each other to prevent conflicts or discrepancies that could undermine stability.
 
-### A.3.2.0.3.3 - Processes - Element Annotation [Annotation]  <!-- UUID: a740b3eb-9500-4134-b216-6dd97d4363b8 -->
+### A.3.1.0.3.3 - Processes - Element Annotation [Annotation]  <!-- UUID: a740b3eb-9500-4134-b216-6dd97d4363b8 -->
 
 The element "processes" refers to the step-by-step procedures or sequences of actions carried out to implement the methodologies referenced in the Target Document.
 
-### A.3.2.0.3.4 - Stabilize - Element Annotation [Annotation]  <!-- UUID: f90156d0-6dd2-4a0d-9981-b3079368fbc0 -->
+### A.3.1.0.3.4 - Stabilize - Element Annotation [Annotation]  <!-- UUID: f90156d0-6dd2-4a0d-9981-b3079368fbc0 -->
 
 The element "stabilize" refers to the objective of maintaining USDS’s value within a narrow range, preventing significant fluctuations that could lead to volatility. USDS should be worth $1 USD to fulfill its promise of being a Stablecoin.
 
-## A.3.3 - Risk Capital [Article]  <!-- UUID: 55999acf-75fe-4adf-8584-9746ef50d3e4 -->
+## A.3.2 - Risk Capital [Article]  <!-- UUID: 55999acf-75fe-4adf-8584-9746ef50d3e4 -->
 
 Prime Agents who invest capital from Sky’s Collateral Portfolio using the Allocation System Primitive must hold Risk Capital to protect Sky from potential losses on these investments. This Article sets forth the framework governing Risk Capital.
 
-### A.3.3.1 -  Conceptual Framework [Section]  <!-- UUID: ee3a912d-c340-41ee-b33e-45e72f215d49 -->
+### A.3.2.1 -  Conceptual Framework [Section]  <!-- UUID: ee3a912d-c340-41ee-b33e-45e72f215d49 -->
 
 This Section defines the conceptual framework for Risk Capital.
 
-#### A.3.3.1.1 - Required Risk Capital [Core]  <!-- UUID: b6597fb4-d347-44f4-8780-b9a4116c1a36 -->
+#### A.3.2.1.1 - Required Risk Capital [Core]  <!-- UUID: b6597fb4-d347-44f4-8780-b9a4116c1a36 -->
 
 The documents herein define the conceptual framework for determining the Aggregate Required Risk Capital (RRC) that Prime Agents are required to hold to protect Sky from risks on their investments.
 
-##### A.3.3.1.1.1 - Aggregate RRC [Core]  <!-- UUID: 6aed5cc1-9671-4b73-88a9-fdd86ac93ece -->
+##### A.3.2.1.1.1 - Capital Requirement Ratio [Core]  <!-- UUID: 3828778e-0197-4ce9-a836-6770d04f2ea9 -->
+
+The Capital Requirement Ratio (CRR) with respect to one or more Instances is the Required Risk Capital with respect to such Instances divided by the amount of capital from Sky’s Collateral Portfolio invested in such Instances.
+
+Risk Capital requirements in the Risk Framework may be specified either as an amount of RRC or as a CRR. If a CRR is specified, then the RRC is equal to the amount of capital from Sky’s Collateral Portfolio invested in the relevant Instances times the CRR.
+
+For example, if a certain Instance has a CRR of 5% and 100,000,000 USDS is invested in the Instance, then the RRC is 5,000,000 USDS.
+
+CRR may be specified in aggregate (Aggregate CRR), for a particular Instance (Instance CRR), or for a particular type of risk with respect to an Instance (Instance Financial CRR, Instance Smart Contract CRR, or Instance Administrative CRR).
+
+##### A.3.2.1.1.2 - Aggregate RRC [Core]  <!-- UUID: 6aed5cc1-9671-4b73-88a9-fdd86ac93ece -->
 
 The Aggregate RRC that a Prime Agent must maintain is equal to the sum of the Instance Total RRC for each Active Instance of the Allocation System Primitive that the Prime Agent has deployed.
 
-##### A.3.3.1.1.2 - Instance Total RRC [Core]  <!-- UUID: 5fe6b54c-cc68-4f8a-8d1e-5044af941afe -->
+##### A.3.2.1.1.3 - Instance Total RRC [Core]  <!-- UUID: 5fe6b54c-cc68-4f8a-8d1e-5044af941afe -->
 
 The Instance Total RRC for an Instance is equal to the sum of the Instance Financial RRC, Instance Smart Contract Risk RRC, and Instance Administrative Risk RRC for that Instance. See [A.3.3 - Instance Financial RRC](ba1d5c0e-399f-47a6-b5d4-b3f5477d5787), [A.3.3 - Instance Smart Contract RRC](4b4ea578-28b4-481c-9abd-d34c5a4f383c), and [A.3.3 - Instance Administrative RRC](c2b60f0d-6555-463c-9ad3-2a9746be77c5).
 
-###### A.3.3.1.1.2.1 - Incorporation Of Additional Types Of RRC [Core]  <!-- UUID: 4ce93e4b-e842-475b-bf85-d814e7e9d19c -->
+###### A.3.2.1.1.3.1 - Incorporation Of Additional Types Of RRC [Core]  <!-- UUID: 4ce93e4b-e842-475b-bf85-d814e7e9d19c -->
 
 Additional types of RRC reflecting other risk factors, including legal risk and oracle risk, will be incorporated in future iterations of the Risk Framework.
 
-###### A.3.3.1.1.2.2 - Inability To Calculate Types Of RRC [Core]  <!-- UUID: 268af0e9-be3d-458e-9ccd-5a560abc7540 -->
+###### A.3.2.1.1.3.2 - Inability To Calculate Types Of RRC [Core]  <!-- UUID: 268af0e9-be3d-458e-9ccd-5a560abc7540 -->
 
 If Instance Financial RRC, Instance Smart Contract Risk RRC, or Instance Administrative Risk RRC for an Instance cannot be calculated then the Instance Total RRC is 100%.
 
-##### A.3.3.1.1.3 - Instance Financial RRC [Core]  <!-- UUID: ba1d5c0e-399f-47a6-b5d4-b3f5477d5787 -->
+##### A.3.2.1.1.4 - Instance Financial RRC [Core]  <!-- UUID: ba1d5c0e-399f-47a6-b5d4-b3f5477d5787 -->
 
 The documents herein define the conceptual framework for determining the Instance Financial RRC required to protect Sky from financial risk arising from an Instance of the Allocation System Primitive.
 
-###### A.3.3.1.1.3.1 - Introduction [Core]  <!-- UUID: 622580fb-1153-4ef7-8196-4e643f2178b7 -->
+###### A.3.2.1.1.4.1 - Introduction [Core]  <!-- UUID: 622580fb-1153-4ef7-8196-4e643f2178b7 -->
 
 The conceptual framework for financial risk is designed to ensure that Prime Agents hold sufficient capital to cover potential losses on their investments in case of an extreme market event. The Financial Risk Framework is based on the Basel Accords developed by the Committee on Bank Supervision, including Basel II, Basel III, and Basel IV. These frameworks are then adapted to reflect the differences between traditional finance and decentralized finance.
 
-###### A.3.3.1.1.3.2 - Financial Risk Categories [Core]  <!-- UUID: 3d1f35bf-4342-45cd-b151-090b241c7ba1 -->
+###### A.3.2.1.1.4.2 - Financial Risk Categories [Core]  <!-- UUID: 3d1f35bf-4342-45cd-b151-090b241c7ba1 -->
 
 Financial risk can be divided into three categories, as specified in the documents herein. These categories of risk are interrelated, so Instance Financial RRC is not directly associated with these risk categories. Instead, risk models are developed for different asset classes, as specified in [A.3.3 - Financial Risk Models](2af9fa64-ab25-4017-920c-f1c07dff4c06). The development of each of these risk models is informed by considerations regarding how each of the financial risk categories impacts the specific asset.
 
-####### A.3.3.1.1.3.2.1 - Credit Risk [Core]  <!-- UUID: ca07880e-7bc4-4f18-a59a-2b5a8cd4374e -->
+####### A.3.2.1.1.4.2.1 - Credit Risk [Core]  <!-- UUID: ca07880e-7bc4-4f18-a59a-2b5a8cd4374e -->
 
 Credit risk is the risk that a loan or other debt instrument will not be repaid according to agreed terms.
 
-####### A.3.3.1.1.3.2.2 - Market Risk [Core]  <!-- UUID: e0dc140f-8172-497d-8576-ce24a7464e89 -->
+####### A.3.2.1.1.4.2.2 - Market Risk [Core]  <!-- UUID: e0dc140f-8172-497d-8576-ce24a7464e89 -->
 
 Market risk is the risk that a financial asset will decline in value due to market conditions or changes in investor perceptions of the asset.
 
-####### A.3.3.1.1.3.2.3 - Liquidity Risk [Core]  <!-- UUID: 547571b1-83ae-4977-8f39-b136e6d52b9c -->
+####### A.3.2.1.1.4.2.3 - Liquidity Risk [Core]  <!-- UUID: 547571b1-83ae-4977-8f39-b136e6d52b9c -->
 
 Liquidity risk is the risk that an asset cannot be sold quickly enough, or in sufficient quantity, at its fair market value without causing a significant price impact.
 
-###### A.3.3.1.1.3.3 - Financial Risk Models [Core]  <!-- UUID: 2af9fa64-ab25-4017-920c-f1c07dff4c06 -->
+###### A.3.2.1.1.4.3 - Financial Risk Models [Core]  <!-- UUID: 2af9fa64-ab25-4017-920c-f1c07dff4c06 -->
 
 The conceptual framework for financial risk is implemented through asset class specific risk models. The documents herein define the asset classes that risk models exist or are being developed for, including the high level approach and examples of relevant assets.
 
-####### A.3.3.1.1.3.3.1 - Fully Implemented Risk Models [Core]  <!-- UUID: 419a1d00-fbae-4d26-bd47-8f57677d8001 -->
+####### A.3.2.1.1.4.3.1 - Fully Implemented Risk Models [Core]  <!-- UUID: 419a1d00-fbae-4d26-bd47-8f57677d8001 -->
 
 The documents herein define fully implemented asset-class-specific risk models.
 
-######## A.3.3.1.1.3.3.1.1 - Lending Markets [Core]  <!-- UUID: b2c5ee5d-81f6-4066-94b5-e9d1b781cbc9 -->
+######## A.3.2.1.1.4.3.1.1 - Lending Markets [Core]  <!-- UUID: b2c5ee5d-81f6-4066-94b5-e9d1b781cbc9 -->
 
 The model for lending markets focuses on Credit Risk by incorporating asset volatility and liquidity factors. This model can be applied to lending markets such as SparkLend, Aave, Morpho, Fluid, and Maple. The implementation of the model for lending markets is specified in [A.3.3 - Lending Markets](d4e9c9e0-eeab-4399-99a0-5f72ff0d0e43).
 
-######## A.3.3.1.1.3.3.1.2 - Real World Assets [Core]  <!-- UUID: 72076b08-d4f4-4cbf-af6d-379363cade39 -->
+######## A.3.2.1.1.4.3.1.2 - Real World Assets [Core]  <!-- UUID: 72076b08-d4f4-4cbf-af6d-379363cade39 -->
 
 The model for Real World Assets is based on the direct application of existing frameworks to evaluate the risk of tokenized Real World Assets. The implementation of the model for Real World Assets is specified in [A.3.3 - Real World Assets](79c20bfd-f724-482e-8aae-52c962b8268a).
 
-####### A.3.3.1.1.3.3.2 - Pending Risk Models [Core]  <!-- UUID: 81ca88bf-3f6a-4d10-a3e2-d47cf6636d7d -->
+####### A.3.2.1.1.4.3.2 - Pending Risk Models [Core]  <!-- UUID: 81ca88bf-3f6a-4d10-a3e2-d47cf6636d7d -->
 
 The documents herein define pending asset-class-specific risk models.
 
-######## A.3.3.1.1.3.3.2.1 - Perpetual Positions [Core]  <!-- UUID: 8e518098-6a0b-4a31-b726-0739000a51ed -->
+######## A.3.2.1.1.4.3.2.1 - Perpetual Positions [Core]  <!-- UUID: 8e518098-6a0b-4a31-b726-0739000a51ed -->
 
 The model for perpetual positions uses a modified Credit Risk model to evaluate the risk of tokenized delta-neutral positions, such as Ethena and Resolv. The implementation of the model for perpetual positions is specified in [A.3.3 - Perpetual Positions](69fac7fa-6168-4b74-99cc-28b557826556).
 
-######## A.3.3.1.1.3.3.2.2 - Direct Exposures [Core]  <!-- UUID: 38580dc9-dc5b-4842-88a2-7ab6eb3fcb14 -->
+######## A.3.2.1.1.4.3.2.2 - Direct Exposures [Core]  <!-- UUID: 38580dc9-dc5b-4842-88a2-7ab6eb3fcb14 -->
 
 The model for direct exposures combines Market Risk and Liquidity Risk to evaluate the risk of direct asset holdings of volatile cryptoassets, such as ETH, stETH, and WBTC. The implementation of the model for direct exposures is specified in [A.3.3 - Direct Exposures](69d0776b-786c-408b-b76a-860ea60b6b9a).
 
-######## A.3.3.1.1.3.3.2.3 - Bond-Like Instruments [Core]  <!-- UUID: 1d4cd705-2892-4b59-82e8-609c4649652d -->
+######## A.3.2.1.1.4.3.2.3 - Bond-Like Instruments [Core]  <!-- UUID: 1d4cd705-2892-4b59-82e8-609c4649652d -->
 
 The model for bond-like instruments uses a modified Credit Risk model to evaluate the risk of cryptoassets with duration risk, such as Pendle’s PT-tokens. The implementation of the model for bond-like instruments is specified in [A.3.3 - Bond-Like Instruments](da1a154c-6db8-4012-91a7-31ea4e73e95d).
 
-######## A.3.3.1.1.3.3.2.4 - Cash Stablecoins [Core]  <!-- UUID: 0658e6cd-d785-498a-94c4-71cfbc319c24 -->
+######## A.3.2.1.1.4.3.2.4 - Cash Stablecoins [Core]  <!-- UUID: 0658e6cd-d785-498a-94c4-71cfbc319c24 -->
 
 The model for Cash Stablecoins is based on identifying stablecoins, such as USDC and USDT, that do not present significant Market Risk, Credit Risk, or Liquidity Risk. The implementation of the model for Cash Stablecoins is specified in [A.3.3 - Cash Stablecoins](3c0a9e8b-4a0b-4059-87a4-155deaee0486).
 
-##### A.3.3.1.1.4 - Instance Smart Contract RRC [Core]  <!-- UUID: 4b4ea578-28b4-481c-9abd-d34c5a4f383c -->
+##### A.3.2.1.1.5 - Instance Smart Contract RRC [Core]  <!-- UUID: 4b4ea578-28b4-481c-9abd-d34c5a4f383c -->
 
 The documents herein define the conceptual framework for determining the Instance Smart Contract RRC required to protect Sky from smart contract risk arising from an Instance of the Allocation System Primitive.
 
-###### A.3.3.1.1.4.1 - Definition [Core]  <!-- UUID: 8536fbd1-674d-4982-bd50-0bacf0986ce2 -->
+###### A.3.2.1.1.5.1 - Definition [Core]  <!-- UUID: 8536fbd1-674d-4982-bd50-0bacf0986ce2 -->
 
 Smart Contract Risk refers to the risk that an investment through the Allocation System will experience a loss of funds due to a bug or technical exploit. This risk may arise from the protocol invested in or other aspects of the investment such as bridging requirements.
 
-###### A.3.3.1.1.4.2 - Risk Rating [Core]  <!-- UUID: 3cdbe77b-5df8-4ebb-9604-65db818abe69 -->
+###### A.3.2.1.1.5.2 - Risk Rating [Core]  <!-- UUID: 3cdbe77b-5df8-4ebb-9604-65db818abe69 -->
 
 The determination of Smart Contract Risk should initially be based on an evaluation of the risk that the investment could experience losses due to a bug or technical exploit. This determination should take into account factors such as (1) the technical complexity of the code base (e.g. cyclomatic complexity, decision points, number of external calls, lines of code), (2) the number, quality, and recency of audits, and (3) the “Lindiness” of the relevant smart contracts.
 
-###### A.3.3.1.1.4.3 - Required Risk Capital [Core]  <!-- UUID: eee90ace-5ee9-4efe-be26-6d3597d8b4a1 -->
+###### A.3.2.1.1.5.3 - Required Risk Capital [Core]  <!-- UUID: eee90ace-5ee9-4efe-be26-6d3597d8b4a1 -->
 
 The risk of a technical exploit in one protocol is unlikely to be correlated with the risk of a technical exploit in an unrelated protocol. Therefore, the risks from small exposures to even relatively risky protocols are likely to be diversified away. In contrast, very large exposures to even relatively safe protocols can create a risk to a Prime Agent and potentially to Sky itself if there is a technical exploit, especially if multiple Prime Agents have the same exposure. To account for this, the calculation of Instance Smart Contract RRC should take into account the risk rating, the level of exposure of the Prime, and the level of exposure of the Sky Ecosystem.
 
-###### A.3.3.1.1.4.4 - Implementation [Core]  <!-- UUID: 3df9da84-f435-4d8d-a432-daa92d12a12c -->
+###### A.3.2.1.1.5.4 - Implementation [Core]  <!-- UUID: 3df9da84-f435-4d8d-a432-daa92d12a12c -->
 
 The implementation of the calculation of Instance Smart Contract RRC is specified in [A.3.3 - Instance Smart Contract RRC Implementation](e6cfa64f-68c0-4dac-8cec-a5f9bfcb9080).
 
-##### A.3.3.1.1.5 - Instance Administrative RRC [Core]  <!-- UUID: c2b60f0d-6555-463c-9ad3-2a9746be77c5 -->
+##### A.3.2.1.1.6 - Instance Administrative RRC [Core]  <!-- UUID: c2b60f0d-6555-463c-9ad3-2a9746be77c5 -->
 
 The documents herein define the conceptual framework for determining the Instance Administrative RRC required to protect Sky from administrative risk arising from an Instance of the Allocation System Primitive.
 
-###### A.3.3.1.1.5.1 - Definition [Core]  <!-- UUID: 0482b0c5-d78b-4e4a-b6c6-c858368d0b2c -->
+###### A.3.2.1.1.6.1 - Definition [Core]  <!-- UUID: 0482b0c5-d78b-4e4a-b6c6-c858368d0b2c -->
 
 Administrative Risk refers to the risk that an investment through the Allocation System will experience a loss of funds due to abuse of privileged access to a protocol. This risk may arise from a multisig or another actor that has the ability to modify the protocol or access funds without going through a governance process.
 
-###### A.3.3.1.1.5.2 - Risk Rating [Core]  <!-- UUID: 3fe89645-48a9-430d-9ff1-925c361bb56f -->
+###### A.3.2.1.1.6.2 - Risk Rating [Core]  <!-- UUID: 3fe89645-48a9-430d-9ff1-925c361bb56f -->
 
 The determination of Administrative Risk should initially be based on an evaluation of the risk that an investment could experience losses due to an abuse of privileged access. This determination should take into account factors such as (1) the level of privileged access that exists, (2) the security delay that such access is subject to, and (3) the “Lindiness” of the system.
 
-###### A.3.3.1.1.5.3 - Required Risk Capital [Core]  <!-- UUID: bcb97e92-b578-4195-9ea5-a9e6bf2e201b -->
+###### A.3.2.1.1.6.3 - Required Risk Capital [Core]  <!-- UUID: bcb97e92-b578-4195-9ea5-a9e6bf2e201b -->
 
 The risk of an abuse of privileged access in one protocol is unlikely to be correlated with the risk of an abuse of privileged access in an unrelated protocol. Therefore, the risks from small exposures to even relatively risky protocols are likely to be diversified away. In contrast, very large exposures to even relatively safe protocols can create a risk to a Prime Agent and potentially to Sky itself if there is an abuse of privileged access, especially if multiple Prime Agents have the same exposure. To account for this, the calculation of Instance Administrative RRC should take into account the risk rating, the level of exposure of the Prime, and the level of exposure of the Sky Ecosystem.
 
-###### A.3.3.1.1.5.4 - Implementation [Core]  <!-- UUID: ee71508b-9c89-4765-83a5-6e50832549bb -->
+###### A.3.2.1.1.6.4 - Implementation [Core]  <!-- UUID: ee71508b-9c89-4765-83a5-6e50832549bb -->
 
 The implementation of the calculation of Instance Administrative RRC is specified in [A.3.3 - Instance Administrative RRC Calculation](277d6712-25ff-4566-a42b-38d7e860ae76).
 
-#### A.3.3.1.2 - Total Risk Capital [Core]  <!-- UUID: be7589f5-32c0-42d2-8d10-38bceb1de28b -->
+#### A.3.2.1.2 - Total Risk Capital [Core]  <!-- UUID: be7589f5-32c0-42d2-8d10-38bceb1de28b -->
 
 The documents herein define the conceptual framework for types of capital that contribute to a Prime Agent’s Total Risk Capital (TRC). Prime Agents must maintain at all times a level of TRC that exceeds their Aggregate RRC or be subject to penalties.
 
-##### A.3.3.1.2.1 - Total Risk Capital Definition [Core]  <!-- UUID: 6f6b25d6-f73c-4733-ba37-12a0a411433c -->
+##### A.3.2.1.2.1 - Total Risk Capital Definition [Core]  <!-- UUID: 6f6b25d6-f73c-4733-ba37-12a0a411433c -->
 
 Total Risk Capital is capital that is currently eligible, available, and verifiably under the Prime’s control. For capital to be included in a Prime Agent's TRC, it must be currently deployable towards covering its Required Risk Capital obligations. Consequently, in-flight capital (e.g., assets being bridged) does not contribute towards a Prime’s TRC. Similarly, commitments for future capital, such as Ecosystem Accords for renting Prime-External Junior Risk Capital (SEJRC) or Tokenized External Junior Risk Capital (TEJRC) that have been agreed upon by counterparties but are not yet formally codified within the Atlas, cannot contribute towards a Prime’s TRC until such formalization is complete.
 
-##### A.3.3.1.2.2 - Types Of Risk Capital [Core]  <!-- UUID: 24db6047-c829-4d31-ac0e-f81f908186ad -->
+##### A.3.2.1.2.2 - Types Of Risk Capital [Core]  <!-- UUID: 24db6047-c829-4d31-ac0e-f81f908186ad -->
 
 TRC comprises two categories based on loss absorption seniority: Junior Risk Capital (JRC) and Senior Risk Capital (SRC), further divided by source.
 
-###### A.3.3.1.2.2.1 - Junior Risk Capital [Core]  <!-- UUID: 92e51a94-ef70-4a86-9946-36077ebad1e9 -->
+###### A.3.2.1.2.2.1 - Junior Risk Capital [Core]  <!-- UUID: 92e51a94-ef70-4a86-9946-36077ebad1e9 -->
 
 Junior Risk Capital (JRC) is the first capital to absorb losses on investments under the Allocation System. Junior Risk Capital must experience 100% losses before any losses are absorbed by Senior Risk Capital.
 
-####### A.3.3.1.2.2.1.1 - Junior Risk Capital Types [Core]  <!-- UUID: 57b0b226-ae2c-4d47-871d-57e6d3bb1a9f -->
+####### A.3.2.1.2.2.1.1 - Junior Risk Capital Types [Core]  <!-- UUID: 57b0b226-ae2c-4d47-871d-57e6d3bb1a9f -->
 
 The documents herein define the types of Junior Risk Capital.
 
-######## A.3.3.1.2.2.1.1.1 - Internal Junior Risk Capital (IJRC) [Core]  <!-- UUID: 8728abee-0dc5-449b-b4c2-78698da16f10 -->
+######## A.3.2.1.2.2.1.1.1 - Internal Junior Risk Capital (IJRC) [Core]  <!-- UUID: 8728abee-0dc5-449b-b4c2-78698da16f10 -->
 
 Internal Junior Risk Capital is capital owned by the Prime Agent itself. It serves as the foundation for the Prime’s risk capacity: the amount of IJRC directly dictates the maximum External JRC the Prime can source (governed by the External Per Internal ratio) and provides the primary capacity for enabling Senior Risk Capital (via the Senior Per Junior ratio), while also bearing the initial impact of any losses (the Tip JRC mechanism). IJRC must be eligible assets held in the Prime Agent’s designated treasury account (e.g., SubProxy), controlled by the Prime’s root governance.
 
 See [A.3.3 - External Per Internal Ratio](ff374833-920c-40f6-ae6c-a71d33d99b82), [A.3.3 - Senior Per Junior Ratio](fbc9a273-d217-4d52-8b3e-b496580f27a2), and [A.3.3 - JRC Loss Allocation Rules](c201122a-75d2-44fa-b221-4e7c09bf42f2).
 
-######### A.3.3.1.2.2.1.1.1.1 - Types Of Eligible Assets For IJRC [Core]  <!-- UUID: a2df2b73-c1c5-40d6-b87e-43ba24f54870 -->
+######### A.3.2.1.2.2.1.1.1.1 - Types Of Eligible Assets For IJRC [Core]  <!-- UUID: a2df2b73-c1c5-40d6-b87e-43ba24f54870 -->
 
 The documents herein define the types of assets that qualify as Internal Junior Risk Capital.
 
 These types will be specified in a future iteration of the Risk Framework.
 
-######## A.3.3.1.2.2.1.1.2 - Prime-External Junior Risk Capital (SEJRC) [Core]  <!-- UUID: 00f61aa6-7bb4-4c7f-9492-2e2b2b4e78b2 -->
+######## A.3.2.1.2.2.1.1.2 - Prime-External Junior Risk Capital (SEJRC) [Core]  <!-- UUID: 00f61aa6-7bb4-4c7f-9492-2e2b2b4e78b2 -->
 
 SEJRC is JRC rented from another Prime Agent via the [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce). The capital remains in the lender's treasury but counts towards the borrower's JRC amount. SEJRC is represented by a registered Ecosystem Accord signifying that a specified amount of the lending Agent's JRC (held within the lender's treasury) is designated to count towards the borrowing Agent's JRC requirement for the duration and terms specified in the Accord.
 
-######## A.3.3.1.2.2.1.1.3 - Tokenized External Junior Risk Capital (TEJRC) [Core]  <!-- UUID: 6dd3c9c2-414b-4f06-bbc7-944f67e1cd89 -->
+######## A.3.2.1.2.2.1.1.3 - Tokenized External Junior Risk Capital (TEJRC) [Core]  <!-- UUID: 6dd3c9c2-414b-4f06-bbc7-944f67e1cd89 -->
 
 Tokenized External Junior Risk Capital is capital provided by external capital providers depositing sUSDS into the Tokenized External Junior Risk Capital smart contract, from which Primes can encumber funds. The details of this contract will be specified in a future iteration of the Atlas.
 
-####### A.3.3.1.2.2.1.2 - JRC Loss Allocation Rules [Core]  <!-- UUID: c201122a-75d2-44fa-b221-4e7c09bf42f2 -->
+####### A.3.2.1.2.2.1.2 - JRC Loss Allocation Rules [Core]  <!-- UUID: c201122a-75d2-44fa-b221-4e7c09bf42f2 -->
 
 This document defines the conceptual framework for distributing losses within the JRC layer.
 
-######## A.3.3.1.2.2.1.2.1 - Initial Loss Absorption By “Tip JRC” [Core]  <!-- UUID: 6c33bcf5-c29d-48ca-9ee5-e37dcdeb0630 -->
+######## A.3.2.1.2.2.1.2.1 - Initial Loss Absorption By “Tip JRC” [Core]  <!-- UUID: 6c33bcf5-c29d-48ca-9ee5-e37dcdeb0630 -->
 
 The Tip JRC mechanism dictates that losses from a distinct risk event are first absorbed entirely by the Prime Agent's Internal Junior Risk Capital (IJRC), up to a specific threshold amount. This threshold amount is calculated as a percentage of Total JRC and is specified in [A.3.3 - JRC Loss Allocation Parameters](b718459e-57e0-414f-9c99-fbc82685cc0f).
 
 Only losses exceeding this threshold amount trigger absorption by other Junior Risk Capital components - specifically, the remaining IJRC and External Junior Risk Capital. This initial absorption solely by IJRC ensures that Prime Agents are highly incentivized to prevent losses and avoids the need to resolve disputes regarding the allocation of small losses to EJRC providers.
 
-######## A.3.3.1.2.2.1.2.2 - Post-Tip JRC Loss Allocation [Core]  <!-- UUID: 64cc7061-1bdf-4f1d-8300-fafb3743578b -->
+######## A.3.2.1.2.2.1.2.2 - Post-Tip JRC Loss Allocation [Core]  <!-- UUID: 64cc7061-1bdf-4f1d-8300-fafb3743578b -->
 
 If a loss event exceeds the Tip JRC amount, the remaining loss is allocated pro-rata across the rest of the JRC capital. This includes the remaining Internal Junior Risk Capital (Total IJRC minus the Tip amount) and all External Junior Risk Capital (Prime External Junior Risk Capital plus Tokenized External Junior Risk Capital).
 
-######## A.3.3.1.2.2.1.2.3 - Per-Event Basis [Core]  <!-- UUID: ca685840-ab9a-4fa8-8f08-794536b94490 -->
+######## A.3.2.1.2.2.1.2.3 - Per-Event Basis [Core]  <!-- UUID: ca685840-ab9a-4fa8-8f08-794536b94490 -->
 
 The JRC loss allocation rules are applied independently based on the total losses attributed to each distinct risk event. The concept of “per-event basis” is crucial; the classification of a distinct risk event (classifying losses as one large event versus multiple smaller ones) can dictate whether the Tip JRC threshold is breached.
 
@@ -12137,37 +12193,37 @@ Breaching the threshold activates the pro-rata sharing mechanism for any losses 
 
 The operational process for the determination of distinct risk events will be defined in a future iteration of the Atlas.
 
-###### A.3.3.1.2.2.2 - Senior Risk Capital [Core]  <!-- UUID: 6bba2076-5d5b-43fd-82c6-df6a35f67355 -->
+###### A.3.2.1.2.2.2 - Senior Risk Capital [Core]  <!-- UUID: 6bba2076-5d5b-43fd-82c6-df6a35f67355 -->
 
 Senior Risk Capital (SRC) is protected from losses relative to Junior Risk Capital. Senior Risk Capital only begins to absorb losses after Junior Risk Capital has experienced 100% losses and absorbs 100% of losses thereafter.
 
 Senior Risk Capital can be originated from Sky Core on a monthly basis as part of the Monthly Settlement Cycle; Prime Agents can also rent Senior Risk Capital from each other.
 
-####### A.3.3.1.2.2.2.1 - Senior Risk Capital Types [Core]  <!-- UUID: d2e9a92e-dd5d-4a26-8fc6-c5b47a2c06c2 -->
+####### A.3.2.1.2.2.2.1 - Senior Risk Capital Types [Core]  <!-- UUID: d2e9a92e-dd5d-4a26-8fc6-c5b47a2c06c2 -->
 
 The documents herein define the types of Senior Risk Capital.
 
-######## A.3.3.1.2.2.2.1.1 - Internal Senior Risk Capital [Core]  <!-- UUID: 09c20045-4b53-4370-98b8-a1199ccf7007 -->
+######## A.3.2.1.2.2.2.1.1 - Internal Senior Risk Capital [Core]  <!-- UUID: 09c20045-4b53-4370-98b8-a1199ccf7007 -->
 
 Internal Senior Risk Capital (ISRC) is capital provided from Sky Core’s Surplus Buffer. The composition of Internal Senior Risk Capital will be specified in more detail in a future iteration of the Atlas.
 
-######## A.3.3.1.2.2.2.1.2 - External Senior Risk Capital [Core]  <!-- UUID: 2adf8738-09b2-43e2-884c-c4ce6ff601ba -->
+######## A.3.2.1.2.2.2.1.2 - External Senior Risk Capital [Core]  <!-- UUID: 2adf8738-09b2-43e2-884c-c4ce6ff601ba -->
 
 External Senior Risk Capital (ESRC) is capital provided from the srUSDS smart contract, which allow users to provide USDS to Sky Core to serve as senior risk capital in exchange for higher returns. The mechanics of this are specified in [A.3.3 - External Senior Risk Capital And srUSDS System](9fac0f6b-cb2d-4dc2-97d5-72c705303675).
 
-##### A.3.3.1.2.3 - Total Risk Capital Sourcing Ratios [Core]  <!-- UUID: 9e99b084-f15a-4f60-b831-d6c0bd9aec04 -->
+##### A.3.2.1.2.3 - Total Risk Capital Sourcing Ratios [Core]  <!-- UUID: 9e99b084-f15a-4f60-b831-d6c0bd9aec04 -->
 
 The documents herein define the required relationship and constraints between the different types of Total Risk Capital. These ensure that the Prime Agent maintains the appropriate level of Internal Junior Risk Capital relative to its External and Senior capital exposures, ensuring sufficient “skin in the game” with respect to its investments.
 
-###### A.3.3.1.2.3.1 - Definition Of Ratios [Core]  <!-- UUID: e600afc0-6f8e-42a7-9413-9ef2f5cf0ebb -->
+###### A.3.2.1.2.3.1 - Definition Of Ratios [Core]  <!-- UUID: e600afc0-6f8e-42a7-9413-9ef2f5cf0ebb -->
 
 The documents herein define the Total Risk Capital sourcing ratios.
 
-####### A.3.3.1.2.3.1.1 - External Per Internal Ratio [Core]  <!-- UUID: ff374833-920c-40f6-ae6c-a71d33d99b82 -->
+####### A.3.2.1.2.3.1.1 - External Per Internal Ratio [Core]  <!-- UUID: ff374833-920c-40f6-ae6c-a71d33d99b82 -->
 
 The External Per Internal (EPI) ratio determines the maximum amount of External Junior Risk Capital (SEJRC and TEJRC combined) that a Prime Agent can source directly based on its held Internal Junior Risk Capital (IJRC). This acts as the primary constraint ensuring a baseline level of the Prime’s own capital backs its external JRC sourcing. The required External Per Internal ratio is specified in [A.3.3 - External Per Internal (EPI) Ratio Value](3ed32706-c072-42b5-b1e5-187bddf8dc37).
 
-####### A.3.3.1.2.3.1.2 - Senior Per Junior Ratio [Core]  <!-- UUID: fbc9a273-d217-4d52-8b3e-b496580f27a2 -->
+####### A.3.2.1.2.3.1.2 - Senior Per Junior Ratio [Core]  <!-- UUID: fbc9a273-d217-4d52-8b3e-b496580f27a2 -->
 
 The Senior Per Junior (SPJ) ratio defines the effectiveness of each type of Junior Risk Capital (IJRC, SEJRC, TEJRC) in supporting Senior Risk Capital (SRC). Specifically, it quantifies how many units of SRC (whether Originated or Rented) can be activated or "enabled" per unit of a given JRC type.
 
@@ -12175,13 +12231,13 @@ A Prime Agent's overall “SPJ capacity” is calculated by summing the potentia
 
 Since SRC only absorbs losses after JRC is depleted,  the SPJ enablement mechanism validates that sufficient JRC backing exists, allowing enabled SRC to be counted as part of the Prime Agent's total eligible Risk Capital. Therefore, a Prime Agent might hold a certain amount of OSRC or rented SRC, but only the portion that is successfully "enabled" by its JRC according to the SPJ ratios is accounted by the system as eligible capital contributing towards the Prime’s satisfaction of its Required Risk Capital. The required ratio of Senior Per Junior is specified in [A.3.3 - Senior Per Junior (SPJ) Ratio Values](8578e240-3fe8-41c0-8b2c-15ec9a7181ab).
 
-######## A.3.3.1.2.3.1.2.1 - Alternative Use Of SPJ Capacity To Source External Junior Risk Capital [Core]  <!-- UUID: 03029174-91b4-4974-af1e-52438556a70b -->
+######## A.3.2.1.2.3.1.2.1 - Alternative Use Of SPJ Capacity To Source External Junior Risk Capital [Core]  <!-- UUID: 03029174-91b4-4974-af1e-52438556a70b -->
 
 A Prime Agent may optionally choose to deploy all or some portion of its calculated SPJ capacity not to enable Senior Risk Capital, but instead to source additional External Junior Risk Capital. This provides a secondary mechanism to increase the total JRC potentially beyond the amount initially constrained by the EPI ratio applied solely to IJRC.
 
 Crucially, the EJRC tranche acquired through utilizing SPJ capacity is permanently accounted for as having an SPJ ratio of zero (0). It contributes to the JRC buffer but provides no capacity itself for enabling SRC in any subsequent calculations. This contrasts with EJRC sourced normally via the EPI ratio, which retains its standard SPJ capacity.
 
-###### A.3.3.1.2.3.2 - Interaction Between Ratios And SPJ Capacity [Core]  <!-- UUID: e19dc42d-10d4-46d1-81e7-081f2f3e79f9 -->
+###### A.3.2.1.2.3.2 - Interaction Between Ratios And SPJ Capacity [Core]  <!-- UUID: e19dc42d-10d4-46d1-81e7-081f2f3e79f9 -->
 
 The sourcing of External Junior Risk Capital and enablement of Senior Risk Capital involves a sequential application of the Risk Capital sourcing ratios in conjunction with the Prime Agent’s deployment of its SPJ capacity.
 
@@ -12190,31 +12246,31 @@ Second, the total SPJ capacity is calculated from the Prime Agent’s resulting 
 
 Finally, this total calculated SPJ capacity can be allocated by the Prime Agent to enable SRC (standard use), and/or to source additional, non-SPJ-bearing EJRC using the mechanism described under [A.3.3 - Alternative Use Of SPJ Capacity To Source External Junior Risk Capital](03029174-91b4-4974-af1e-52438556a70b). Any specific portion of the total SPJ capacity allocated towards sourcing EJRC cannot simultaneously be allocated towards enabling SRC.
 
-### A.3.3.2 - Implementation [Section]  <!-- UUID: e8ca3c08-3daf-4b36-bd5e-02b3eea0935a -->
+### A.3.2.2 - Implementation [Section]  <!-- UUID: e8ca3c08-3daf-4b36-bd5e-02b3eea0935a -->
 
 This Section defines the current implementation of the Risk Capital framework.
 
-#### A.3.3.2.1 - Required Risk Capital Calculation Implementation [Core]  <!-- UUID: d10b1c92-b839-45f1-995d-a23381fd6068 -->
+#### A.3.2.2.1 - Required Risk Capital Calculation Implementation [Core]  <!-- UUID: d10b1c92-b839-45f1-995d-a23381fd6068 -->
 
 The documents herein define the implementation of the Risk Framework for calculating required Total Instance RRC.
 
-##### A.3.3.2.1.1 - Instance Financial RRC Implementation [Core]  <!-- UUID: aada206c-84bd-41e7-880d-1304889f4896 -->
+##### A.3.2.2.1.1 - Instance Financial RRC Implementation [Core]  <!-- UUID: aada206c-84bd-41e7-880d-1304889f4896 -->
 
 The documents herein define the implementation of the Risk Framework for calculating Instance Financial RRC.
 
-###### A.3.3.2.1.1.1 - Asset Class Specific Implementation [Core]  <!-- UUID: 8b6a6ecd-da74-4be5-bcb8-96215f473c08 -->
+###### A.3.2.2.1.1.1 - Asset Class Specific Implementation [Core]  <!-- UUID: 8b6a6ecd-da74-4be5-bcb8-96215f473c08 -->
 
 The documents herein define the calculation of Instance Financial RRC for specific asset classes.
 
-####### A.3.3.2.1.1.1.1 - Lending Markets [Core]  <!-- UUID: d4e9c9e0-eeab-4399-99a0-5f72ff0d0e43 -->
+####### A.3.2.2.1.1.1.1 - Lending Markets [Core]  <!-- UUID: d4e9c9e0-eeab-4399-99a0-5f72ff0d0e43 -->
 
 The documents herein define the calculation of Instance Financial RRC for lending markets.
 
-######## A.3.3.2.1.1.1.1.1 - Process For Calculating Instance Financial RRC [Core]  <!-- UUID: 0442fb55-5abb-4fa8-8f50-9a6f0bf6b86f -->
+######## A.3.2.2.1.1.1.1.1 - Process For Calculating Instance Financial RRC [Core]  <!-- UUID: 0442fb55-5abb-4fa8-8f50-9a6f0bf6b86f -->
 
 The documents herein define the process for calculating Instance Financial RRC for lending markets.
 
-######### A.3.3.2.1.1.1.1.1.1 - Calculate Probability Of Default [Core]  <!-- UUID: 6766c25f-3e67-41e0-8b66-5af444c40572 -->
+######### A.3.2.2.1.1.1.1.1.1 - Calculate Probability Of Default [Core]  <!-- UUID: 6766c25f-3e67-41e0-8b66-5af444c40572 -->
 
 The first step is calculating the Probability Of Default $PD$. $PD$ is calculated using the following formula:
 
@@ -12226,7 +12282,7 @@ Here $N$ is the normal cumulative probability distribution function.
 
 The parameters of this formula are specified in the subdocuments herein.
 
-########## A.3.3.2.1.1.1.1.1.1.1 - Leverage Adjusted Drift To Risk Ratio [Core]  <!-- UUID: 0fcaf411-74e1-4b99-be50-40eb36bd6566 -->
+########## A.3.2.2.1.1.1.1.1.1.1 - Leverage Adjusted Drift To Risk Ratio [Core]  <!-- UUID: 0fcaf411-74e1-4b99-be50-40eb36bd6566 -->
 
 The Leverage Adjusted Drift To Risk Ratio $a$ is calculated as follows:
 
@@ -12234,7 +12290,7 @@ $$
 a = \frac{\sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j) + \rho_{UD} \sigma_U \sigma_D - \sigma_U^2}{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.2 - Distance To Default [Core]  <!-- UUID: b449741c-0144-406e-9d18-eabb050bcba0 -->
+########## A.3.2.2.1.1.1.1.1.1.2 - Distance To Default [Core]  <!-- UUID: b449741c-0144-406e-9d18-eabb050bcba0 -->
 
 The Distance To Default $d_1$ is calculated using the following formula:
 
@@ -12242,7 +12298,7 @@ $$
 d_1 = \frac{\ln\left( \frac{\sum_{i=1}^n \text{LT}_i V_0^i}{\sum_{j=1}^m D_0^j} \right) + \left( \sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j) + \rho_{UD} \sigma_U \sigma_D - \sigma_U^2 \right) T}{\sqrt{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D} \sqrt{T}}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.3 - Downward Adjusted Distance To Default [Core]  <!-- UUID: 6eedb98a-0238-421a-9f8d-613859ddfcef -->
+########## A.3.2.2.1.1.1.1.1.1.3 - Downward Adjusted Distance To Default [Core]  <!-- UUID: 6eedb98a-0238-421a-9f8d-613859ddfcef -->
 
 The Downward Adjusted Distance To Default $d_2$ is calculated using the following formula:
 
@@ -12250,7 +12306,7 @@ $$
 d_2 = \frac{\ln\left( \frac{\sum_{i=1}^n \text{LT}_i V_0^i}{\sum_{j=1}^m D_0^j} \right) - \left( \sum_{i=1}^n w_U^i (r_c^i + r_s^i) - \sum_{j=1}^m w_D^j (r_d^j + r_s^j)+ \rho_{UD} \sigma_U \sigma_D - \sigma_U^2 \right) T}{\sqrt{\sigma_U^2 + \sigma_D^2 - 2 \rho_{UD} \sigma_U \sigma_D} \sqrt{T}}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.4 - Total Variance Of Underlying Asset Portfolio [Core]  <!-- UUID: d7f84a30-53f6-425c-afba-3ffc59e03e0f -->
+########## A.3.2.2.1.1.1.1.1.1.4 - Total Variance Of Underlying Asset Portfolio [Core]  <!-- UUID: d7f84a30-53f6-425c-afba-3ffc59e03e0f -->
 
 The Total Variance Of Underlying Asset Portfolio $\sigma_U^2$ is calculated using the following formula:
 
@@ -12258,7 +12314,7 @@ $$
 \sigma_U^2 = \sum_{i,k=1}^n w_U^i w_U^k \sigma_V^i \sigma_V^k \rho_{V,ik}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.5 - Total Variance Of Debt Portfolio [Core]  <!-- UUID: 1db43b96-d2eb-4563-87ad-d5046c21b66c -->
+########## A.3.2.2.1.1.1.1.1.1.5 - Total Variance Of Debt Portfolio [Core]  <!-- UUID: 1db43b96-d2eb-4563-87ad-d5046c21b66c -->
 
 The Total Variance Of Debt Portfolio $\sigma_D^2$ is calculated using the following formula:
 
@@ -12266,7 +12322,7 @@ $$
 \sigma_D^2 = \sum_{j,l=1}^m w_D^j w_D^l \sigma_D^j \sigma_D^l \rho_{D,jl}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.6 - Correlation Between Asset Portfolio And Debt Portfolio [Core]  <!-- UUID: ae1dbcb9-828d-40c0-8ad8-96b3072dad4e -->
+########## A.3.2.2.1.1.1.1.1.1.6 - Correlation Between Asset Portfolio And Debt Portfolio [Core]  <!-- UUID: ae1dbcb9-828d-40c0-8ad8-96b3072dad4e -->
 
 The Correlation Between Asset Portfolio And Debt Portfolio $\rho_{UD}$ is calculated using the following formula:
 
@@ -12274,7 +12330,7 @@ $$
 \rho_{UD} = \frac{\sum_{i=1}^n \sum_{j=1}^m w_U^i w_D^j \sigma_V^i \sigma_D^j \rho_{VD,ij}}{\sqrt{\sigma_U^2 \sigma_D^2}}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.7 - Weight Of Asset In Underlying Asset Portfolio [Core]  <!-- UUID: c614e705-59c8-40bd-aa15-c8d61c0ead4f -->
+########## A.3.2.2.1.1.1.1.1.1.7 - Weight Of Asset In Underlying Asset Portfolio [Core]  <!-- UUID: c614e705-59c8-40bd-aa15-c8d61c0ead4f -->
 
 The weight of asset $i$ in the underlying asset portfolio $w_U^i$ is calculated using the following formula:
 
@@ -12282,7 +12338,7 @@ $$
 w_U^i = \frac{\text{LT}_i V_0^i}{\sum_{k=1}^n \text{LT}_k V_0^k}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.8 - Weight Of Debt Instrument In Debt Portfolio [Core]  <!-- UUID: c5605290-8c64-4ed0-8fab-f2824488c4c9 -->
+########## A.3.2.2.1.1.1.1.1.1.8 - Weight Of Debt Instrument In Debt Portfolio [Core]  <!-- UUID: c5605290-8c64-4ed0-8fab-f2824488c4c9 -->
 
 The weight of debt instrument $j$ in the debt portfolio $w_D^j$ is calculated using the following formula:
 
@@ -12290,43 +12346,43 @@ $$
 w_D^j = \frac{D_0^j}{\sum_{l=1}^m D_0^l}
 $$
 
-########## A.3.3.2.1.1.1.1.1.1.9 - Return On Asset [Core]  <!-- UUID: 9f322c61-92d7-4ff5-aa9b-523e124c8748 -->
+########## A.3.2.2.1.1.1.1.1.1.9 - Return On Asset [Core]  <!-- UUID: 9f322c61-92d7-4ff5-aa9b-523e124c8748 -->
 
 The Return On Asset $r_c^i$ of an asset $i$ is the yield earned for supplying the asset in the lending market.
 
-########## A.3.3.2.1.1.1.1.1.1.10 - Asset Yield [Core]  <!-- UUID: e0fea8fd-3925-463b-ab0d-3ff9fee1298d -->
+########## A.3.2.2.1.1.1.1.1.1.10 - Asset Yield [Core]  <!-- UUID: e0fea8fd-3925-463b-ab0d-3ff9fee1298d -->
 
 The Asset Yield $r_s^i$ of an asset $i$ is the income yield of the asset and would include any dividends or interest paid by the asset and/or asset issuer, including staking rewards for yield-bearing assets.
 
-########## A.3.3.2.1.1.1.1.1.1.11 - Cost Of Debt [Core]  <!-- UUID: 5051029f-8e9c-4234-9951-c6a95fc0cddb -->
+########## A.3.2.2.1.1.1.1.1.1.11 - Cost Of Debt [Core]  <!-- UUID: 5051029f-8e9c-4234-9951-c6a95fc0cddb -->
 
 The Cost Of Debt $r_d^j$ of a debt instrument $j$ is the interest rate on the debt.
 
-########## A.3.3.2.1.1.1.1.1.1.12 - Debt Yield [Core]  <!-- UUID: 022a0b3b-18db-4440-9868-be62ad2f6d47 -->
+########## A.3.2.2.1.1.1.1.1.1.12 - Debt Yield [Core]  <!-- UUID: 022a0b3b-18db-4440-9868-be62ad2f6d47 -->
 
 The Debt Yield $r_s^j$ of a debt instrument $j$ is the income yield on the debt asset. It includes any dividends or interest paid by the debt asset and/or debt asset issuer, including staking rewards for yield-bearing debt assets.
 
-########## A.3.3.2.1.1.1.1.1.1.13 - Correlation Coefficient [Core]  <!-- UUID: 0663022c-c7bf-49db-800c-c186e9819455 -->
+########## A.3.2.2.1.1.1.1.1.1.13 - Correlation Coefficient [Core]  <!-- UUID: 0663022c-c7bf-49db-800c-c186e9819455 -->
 
 The correlation coefficient $\rho$ between two instruments is the correlation of block-weighted log returns of those assets over the last 365 days. In the documents herein, the correlation coefficient is followed by subscripts indicating the relevant instruments. For example, $\rho_{UD}$ is the correlation between the underlying asset portfolio $U$ and the debt portfolio $D$ as specified in [A.3.3 - Correlation Between Asset Portfolio And Debt Portfolio](ae1dbcb9-828d-40c0-8ad8-96b3072dad4e). The subscript may begin with $V$ or $D$ to indicate whether the relevant instruments are part of the asset portfolio or debt portfolio. For example, $\rho_{VD,ij}$ is the correlation coefficient between the asset $i$ and the debt instrument $j$.
 
-########## A.3.3.2.1.1.1.1.1.1.14 - Liquidation Threshold [Core]  <!-- UUID: ce774017-be30-4482-8df7-361875cb771d -->
+########## A.3.2.2.1.1.1.1.1.1.14 - Liquidation Threshold [Core]  <!-- UUID: ce774017-be30-4482-8df7-361875cb771d -->
 
 The Liquidation Threshold $LT_i$ is the value of the debt as a percentage of the collateral value at which the lender may liquidate the collateral to satisfy the debt.
 
-########## A.3.3.2.1.1.1.1.1.1.15 - Asset Value [Core]  <!-- UUID: 63b212be-2bde-43b3-ba61-7ebf9c442137 -->
+########## A.3.2.2.1.1.1.1.1.1.15 - Asset Value [Core]  <!-- UUID: 63b212be-2bde-43b3-ba61-7ebf9c442137 -->
 
 The Asset Value $V_0^i$ of an asset $i$ is the market value of that asset.
 
-########## A.3.3.2.1.1.1.1.1.1.16 - Debt Value [Core]  <!-- UUID: 65032e2b-5da8-4fed-b893-20b18e13383b -->
+########## A.3.2.2.1.1.1.1.1.1.16 - Debt Value [Core]  <!-- UUID: 65032e2b-5da8-4fed-b893-20b18e13383b -->
 
 The Debt Value $D_0^i$ of a debt instrument is the notional value of the debt.
 
-########## A.3.3.2.1.1.1.1.1.1.17 - Time Horizon [Core]  <!-- UUID: 9dc1abf3-365b-4ed5-b4aa-fdbb9024e0e2 -->
+########## A.3.2.2.1.1.1.1.1.1.17 - Time Horizon [Core]  <!-- UUID: 9dc1abf3-365b-4ed5-b4aa-fdbb9024e0e2 -->
 
 The Time Horizon $T$ is the time horizon in years over which the Probability Of Default is being estimated. The value of the $T$ parameter is `1`.
 
-######### A.3.3.2.1.1.1.1.1.2 - Calculate Loss Given Default [Core]  <!-- UUID: c9bd4928-d054-4e89-9a98-720c439b0db3 -->
+######### A.3.2.2.1.1.1.1.1.2 - Calculate Loss Given Default [Core]  <!-- UUID: c9bd4928-d054-4e89-9a98-720c439b0db3 -->
 
 The second step is calculating the Loss Given Default $LGD$. $LGD$ is calculated using the following formula:
 
@@ -12338,19 +12394,19 @@ Here $min$ is the mathematical minimum function that returns the lower of the tw
 
 The parameters of this formula are specified in the subdocuments herein. All of these parameters should be specified as decimal numbers. For example, 3% should be specified as `0.03`.
 
-########## A.3.3.2.1.1.1.1.1.2.1 - Liquidation Penalty [Core]  <!-- UUID: bce9331b-04ca-4c50-9783-098739fc72c8 -->
+########## A.3.2.2.1.1.1.1.1.2.1 - Liquidation Penalty [Core]  <!-- UUID: bce9331b-04ca-4c50-9783-098739fc72c8 -->
 
 The Liquidation Penalty $LP$ is the contractually agreed upon liquidation penalty if the asset is liquidated to satisfy the debt.
 
-########## A.3.3.2.1.1.1.1.1.2.2 - Slippage [Core]  <!-- UUID: f2612a0d-6bf8-470b-b5b6-884567e1317b -->
+########## A.3.2.2.1.1.1.1.1.2.2 - Slippage [Core]  <!-- UUID: f2612a0d-6bf8-470b-b5b6-884567e1317b -->
 
 The Slippage $S$ is the estimated slippage for liquidating the entire position in one block. The estimated slippage should not exceed 25%.
 
-########## A.3.3.2.1.1.1.1.1.2.3 - Liquidation Threshold [Core]  <!-- UUID: f1d3990a-f398-454f-82ed-272052d1ad08 -->
+########## A.3.2.2.1.1.1.1.1.2.3 - Liquidation Threshold [Core]  <!-- UUID: f1d3990a-f398-454f-82ed-272052d1ad08 -->
 
 The Liquidation Threshold $LT$ is the value of the debt as a percentage of the collateral value at which the lender may liquidate the collateral to satisfy the debt.
 
-######### A.3.3.2.1.1.1.1.1.3 - Calculate Asset Correlation Coefficient [Core]  <!-- UUID: bbf43294-09c2-413a-b0a4-745cb72d1cd8 -->
+######### A.3.2.2.1.1.1.1.1.3 - Calculate Asset Correlation Coefficient [Core]  <!-- UUID: bbf43294-09c2-413a-b0a4-745cb72d1cd8 -->
 
 The third step is to calculate the Asset Correlation Coefficient $R$. $R$ is calculated as follows:
 
@@ -12362,19 +12418,19 @@ Here $e$ is the base of the natural logarithm.
 
 The parameters of this formula are specified in the subdocuments herein.
 
-########## A.3.3.2.1.1.1.1.1.3.1 - Lower Bound [Core]  <!-- UUID: 68c5da4f-9c4e-4206-a582-99be9833481f -->
+########## A.3.2.2.1.1.1.1.1.3.1 - Lower Bound [Core]  <!-- UUID: 68c5da4f-9c4e-4206-a582-99be9833481f -->
 
 The Lower Bound $a$ is an estimate of the correlation between assets during “calm” periods. It is set of `0.13`.
 
-########## A.3.3.2.1.1.1.1.1.3.2 - Upper Bound [Core]  <!-- UUID: 71136e6a-d0f5-443b-b834-40d39234e707 -->
+########## A.3.2.2.1.1.1.1.1.3.2 - Upper Bound [Core]  <!-- UUID: 71136e6a-d0f5-443b-b834-40d39234e707 -->
 
 The Upper Bound $b$ is an estimate of the correlation between assets during “stressful” market environments. It is set to `0.33`.
 
-########## A.3.3.2.1.1.1.1.1.3.3 - Sensitivity Coefficient [Core]  <!-- UUID: 3b7924b2-1236-43cb-b0f0-ebe06f573b78 -->
+########## A.3.2.2.1.1.1.1.1.3.3 - Sensitivity Coefficient [Core]  <!-- UUID: 3b7924b2-1236-43cb-b0f0-ebe06f573b78 -->
 
 The Sensitivity Factor `K` is a tuning parameter indicating how quickly the correlations transition between $a$ and $b$. It is set to `10`.
 
-######### A.3.3.2.1.1.1.1.1.4 - Calculate Capital Requirement Without Buffers [Core]  <!-- UUID: 152bc5d8-7642-424c-b5fc-9242479f705e -->
+######### A.3.2.2.1.1.1.1.1.4 - Calculate Capital Requirement Without Buffers [Core]  <!-- UUID: 152bc5d8-7642-424c-b5fc-9242479f705e -->
 
 The fourth step is to calculate the Capital Requirement Without Buffers $K$. $K$ is calculated as follows:
 
@@ -12384,7 +12440,7 @@ $$
 
 Here $N$ is the cumulative normal probability distribution function and $N^{-1}$ is the inverse cumulative normal probability distribution function.
 
-######### A.3.3.2.1.1.1.1.1.5 - Calculate Required Risk Capital [Core]  <!-- UUID: fc471b5a-6741-4f50-aa69-302a34479526 -->
+######### A.3.2.2.1.1.1.1.1.5 - Calculate Required Risk Capital [Core]  <!-- UUID: fc471b5a-6741-4f50-aa69-302a34479526 -->
 
 The final step is to calculate the Instance Financial RRC $RRC$. $RRC$ is calculated as follows:
 
@@ -12394,19 +12450,19 @@ $$
 
 The parameters of this formula are specified in the subdocuments herein.
 
-########## A.3.3.2.1.1.1.1.1.5.1 - Capital Ratio [Core]  <!-- UUID: 4a1d377d-eb0e-481a-a447-9ff3630b8787 -->
+########## A.3.2.2.1.1.1.1.1.5.1 - Capital Ratio [Core]  <!-- UUID: 4a1d377d-eb0e-481a-a447-9ff3630b8787 -->
 
 The Capital Ratio $CR$ is the capital ratio without additional buffers. It is set to `8.75%`.
 
-########## A.3.3.2.1.1.1.1.1.5.2 - Exposure At Default [Core]  <!-- UUID: 49ed449e-6caf-4b70-9b9f-eef294f80c0e -->
+########## A.3.2.2.1.1.1.1.1.5.2 - Exposure At Default [Core]  <!-- UUID: 49ed449e-6caf-4b70-9b9f-eef294f80c0e -->
 
 The Exposure At Default $EAD$ is the total amount of funds from the Allocation System that have been deployed into the decentralized lending protocol.
 
-########## A.3.3.2.1.1.1.1.1.5.3 - Effective Capital Ratio [Core]  <!-- UUID: 3b4c7006-0bb1-4885-9c57-e97abf3d59e9 -->
+########## A.3.2.2.1.1.1.1.1.5.3 - Effective Capital Ratio [Core]  <!-- UUID: 3b4c7006-0bb1-4885-9c57-e97abf3d59e9 -->
 
 The Effective Capital Ratio $ECR$ is the capital ratio included additional capital buffers established by Sky Governance as part of the Risk Framework. There are currently no additional capital buffers so the $ECR$ is equal to the $CR$, which is `8.75%`.
 
-######## A.3.3.2.1.1.1.1.2 - Covered Protocols [Core]  <!-- UUID: 881a9eee-1d05-4394-b0eb-cad2f9c1b181 -->
+######## A.3.2.2.1.1.1.1.2 - Covered Protocols [Core]  <!-- UUID: 881a9eee-1d05-4394-b0eb-cad2f9c1b181 -->
 
 The calculation of Instance Financial RRC for lending markets is applicable to the following protocols:
 
@@ -12416,17 +12472,17 @@ The calculation of Instance Financial RRC for lending markets is applicable to t
 • Morpho
 • Maple
 
-The application by a Prime Agent of the Risk Framework for lending markets to any protocols not listed above must be approved by the Core Executor Agents. The Core Executor Agents shall consult with the Stability Scope Advisors and the Stability Facilitators in making this determination. Any such approval must be posted to the Sky Forum under the category for the Prime Agent.
+The application by a Prime Agent of the Risk Framework for lending markets to any protocols not listed above must be approved by the Core Executor Agents. The Core Executor Agents shall consult with the Core Council Risk Advisor in making this determination. Any such approval must be posted to the Sky Forum under the category for the Prime Agent.
 
-######## A.3.3.2.1.1.1.1.3 - Exceptions [Core]  <!-- UUID: 21cd7356-14c9-42f1-adc0-883655ad4795 -->
+######## A.3.2.2.1.1.1.1.3 - Exceptions [Core]  <!-- UUID: 21cd7356-14c9-42f1-adc0-883655ad4795 -->
 
 The documents herein define exceptions to the calculation of Instance Financial RRC for specific lending protocols.
 
-######### A.3.3.2.1.1.1.1.3.1 - Maple [Core]  <!-- UUID: d3000c93-d5d5-4a9e-b8c7-484aa3d16633 -->
+######### A.3.2.2.1.1.1.1.3.1 - Maple [Core]  <!-- UUID: d3000c93-d5d5-4a9e-b8c7-484aa3d16633 -->
 
 Because Maple accepts Native BTC and Native SOL as collateral, alternative Slippage parameters should be used for these collaterals. See [A.3.3 - Slippage](f2612a0d-6bf8-470b-b5b6-884567e1317b). The alternative Slippage parameters to be used are specified in the documents herein.
 
-########## A.3.3.2.1.1.1.1.3.1.1 - Native BTC Slippage Parameters [Core]  <!-- UUID: e04ff702-9b21-45be-bc2a-52e0fd655c28 -->
+########## A.3.2.2.1.1.1.1.3.1.1 - Native BTC Slippage Parameters [Core]  <!-- UUID: e04ff702-9b21-45be-bc2a-52e0fd655c28 -->
 
 The Slippage for a Native BTC exposure is calculated as half the Slippage for an ETH exposure of the same USD amount:
 
@@ -12436,7 +12492,7 @@ $$
 
 For example, if the Slippage for a $40M ETH exposure is 2% then the Slippage for a $40M Native BTC exposure would be 1%.
 
-########## A.3.3.2.1.1.1.1.3.1.2 - Native SOL Slippage Parameters [Core]  <!-- UUID: 986fe3f7-3784-472b-9214-935646bb0ed9 -->
+########## A.3.2.2.1.1.1.1.3.1.2 - Native SOL Slippage Parameters [Core]  <!-- UUID: 986fe3f7-3784-472b-9214-935646bb0ed9 -->
 
 The Slippage for a Native SOL exposure is calculated as double the Slippage for an ETH exposure of the same USD amount:
 
@@ -12446,19 +12502,19 @@ $$
 
 For example, if the Slippage for a $40M ETH exposure is 2% then the Slippage for a $40M Native SOL exposure would be 4%.
 
-######### A.3.3.2.1.1.1.1.3.2 - Fluid [Core]  <!-- UUID: ef7403c9-8663-4759-b5aa-9496eca1f475 -->
+######### A.3.2.2.1.1.1.1.3.2 - Fluid [Core]  <!-- UUID: ef7403c9-8663-4759-b5aa-9496eca1f475 -->
 
-The Instance Financial RRC Ratio for Fluid is 3% of the amount of funds supplied to Fluid that are borrowed.
+The Instance Financial CRR for Fluid is 3% of the amount of funds supplied to Fluid that are borrowed.
 
-######### A.3.3.2.1.1.1.1.3.3 - Ethena-Related Assets [Core]  <!-- UUID: e831249e-f81a-496a-b9b9-17229c2683dd -->
+######### A.3.2.2.1.1.1.1.3.3 - Ethena-Related Assets [Core]  <!-- UUID: e831249e-f81a-496a-b9b9-17229c2683dd -->
 
 The portion of exposure to lending markets that is backed by Ethena-related assets is not subject to the standard Instance Financial RRC calculation. Instead, an alternative calculation method applies: the Instance Financial RRC Ratio for indirect Ethena exposure through lending markets should be applied for this portion. See [A.3.3 - Near-Term Treatment](92727d50-1ca0-48a9-93a0-0e504e845654). This portion of exposure is calculated based on the proportional debt amount backed by Ethena-related assets, weighted by the collateral amount times liquidation threshold.
 
-######### A.3.3.2.1.1.1.1.3.4 - Aave And SparkLend [Core]  <!-- UUID: 5ac25db9-6567-4b83-88a2-59e295db6ed8 -->
+######### A.3.2.2.1.1.1.1.3.4 - Aave And SparkLend [Core]  <!-- UUID: 5ac25db9-6567-4b83-88a2-59e295db6ed8 -->
 
 Because Aave and SparkLend liquidate a maximum of 50% of a user’s position, the Slippage parameter for Aave and SparkLend should be the estimated slippage for liquidating half of the position in one block. See [A.3.3 - Slippage](f2612a0d-6bf8-470b-b5b6-884567e1317b).
 
-######## A.3.3.2.1.1.1.1.4 - Reference Implementation [Core]  <!-- UUID: e96da090-34ff-4445-a1d3-22cc69be2e51 -->
+######## A.3.2.2.1.1.1.1.4 - Reference Implementation [Core]  <!-- UUID: e96da090-34ff-4445-a1d3-22cc69be2e51 -->
 
 A reference implementation of the calculation of Instance Financial RRC for lending markets is included herein.
 
@@ -12638,53 +12694,53 @@ if __name__ == "__main__":
     print(f"Estimated Required Risk Capital (RRC): ${rrc:,.2f}")
 `
 
-####### A.3.3.2.1.1.1.2 - Perpetual Positions [Core]  <!-- UUID: 69fac7fa-6168-4b74-99cc-28b557826556 -->
+####### A.3.2.2.1.1.1.2 - Perpetual Positions [Core]  <!-- UUID: 69fac7fa-6168-4b74-99cc-28b557826556 -->
 
 The implementation of the model for perpetual positions will be specified in a future iteration of the Atlas. The near-term treatment of these assets are specified in the subdocuments herein.
 
-######## A.3.3.2.1.1.1.2.1 - Near-Term Treatment [Core]  <!-- UUID: 92727d50-1ca0-48a9-93a0-0e504e845654 -->
+######## A.3.2.2.1.1.1.2.1 - Near-Term Treatment [Core]  <!-- UUID: 92727d50-1ca0-48a9-93a0-0e504e845654 -->
 
 In the near term pending development of the implementation of the model for perpetual positions, the Instance Financial RRC Ratios specified in the documents herein will apply.
 
-######### A.3.3.2.1.1.1.2.1.1 - Ethena [Core]  <!-- UUID: f999239e-8676-4772-b201-2e00920b2bfb -->
+######### A.3.2.2.1.1.1.2.1.1 - Ethena [Core]  <!-- UUID: f999239e-8676-4772-b201-2e00920b2bfb -->
 
 The near-term treatment for Ethena is specified in the documents herein.
 
-########## A.3.3.2.1.1.1.2.1.1.1 - Ethena Required Risk Capital [Core]  <!-- UUID: 7ce05a43-e3ec-4c54-a11e-30e56526cfdd -->
+########## A.3.2.2.1.1.1.2.1.1.1 - Ethena Capital Requirement Ratio [Core]  <!-- UUID: 7ce05a43-e3ec-4c54-a11e-30e56526cfdd -->
 
-Ethena Exposures consist of Direct Ethena Exposures (see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)), Indirect Ethena Exposures (see [A.3.3 - Indirect Ethena Exposures](d549b42d-a62e-4a5c-98a8-0ddc72aa6a67)), and Pendle Ethena Exposures (see [A.3.3 - Pendle Ethena Exposures](4094c159-9132-454a-81be-361a461b5098)). The Instance Financial RRC for Ethena Exposures is specified in the documents herein.
+Ethena Exposures consist of Direct Ethena Exposures (see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)), Indirect Ethena Exposures (see [A.3.3 - Indirect Ethena Exposures](d549b42d-a62e-4a5c-98a8-0ddc72aa6a67)), and Pendle Ethena Exposures (see [A.3.3 - Pendle Ethena Exposures](4094c159-9132-454a-81be-361a461b5098)). The Instance Financial CRR for Ethena Exposures is specified in the documents herein.
 
-########### A.3.3.2.1.1.1.2.1.1.1.1 - Direct Ethena Exposures [Core]  <!-- UUID: e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb -->
+########### A.3.2.2.1.1.1.2.1.1.1.1 - Direct Ethena Exposures [Core]  <!-- UUID: e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb -->
 
-Direct Ethena Exposures are exposures from directly holding USDe and sUSDe. Direct Ethena Exposures have a 3% Instance Financial RRC Ratio.
+Direct Ethena Exposures are exposures from directly holding USDe and sUSDe. Direct Ethena Exposures have a 3% Instance Financial CRR.
 
-########### A.3.3.2.1.1.1.2.1.1.1.2 - Indirect Ethena Exposures [Core]  <!-- UUID: d549b42d-a62e-4a5c-98a8-0ddc72aa6a67 -->
+########### A.3.2.2.1.1.1.2.1.1.1.2 - Indirect Ethena Exposures [Core]  <!-- UUID: d549b42d-a62e-4a5c-98a8-0ddc72aa6a67 -->
 
-Indirect Ethena Exposures are exposures from lending against Ethena related assets through lending markets. Indirect Ethena Exposures have Instance Financial RRC as specified in the documents herein.
+Indirect Ethena Exposures are exposures from lending against Ethena related assets through lending markets. Indirect Ethena Exposures have Instance Financial CRR as specified in the documents herein.
 
-For Indirect Ethena Exposure through lending markets, only the portion of the exposure to the lending market that is backed by Ethena related assets is subject to the Instance Financial RRC Ratio specified in the documents herein. The Instance Financial RRC Ratio for the remaining portion of the exposure is calculated based on the nature of the assets backing the exposure.
+For Indirect Ethena Exposure through lending markets, only the portion of the exposure to the lending market that is backed by Ethena related assets is subject to the Instance Financial CRR specified in the documents herein. The Instance Financial CRR for the remaining portion of the exposure is calculated based on the nature of the assets backing the exposure.
 
-############ A.3.3.2.1.1.1.2.1.1.1.2.1 - Lending Ethena Related Assets Against Ethena Related Collateral [Core]  <!-- UUID: cfa615fb-9927-4059-873a-7c824a517835 -->
+############ A.3.2.2.1.1.1.2.1.1.1.2.1 - Lending Ethena Related Assets Against Ethena Related Collateral [Core]  <!-- UUID: cfa615fb-9927-4059-873a-7c824a517835 -->
 
-For Ethena related assets lent against Ethena related collateral (e.g. lending USDe or sUSDe against PT-USDe or PT-sUSDe), the Instance Financial RRC Ratio is 3%.
+For Ethena related assets lent against Ethena related collateral (e.g. lending USDe or sUSDe against PT-USDe or PT-sUSDe), the Instance Financial CRR is 3%.
 
-############ A.3.3.2.1.1.1.2.1.1.1.2.2 - Lending Non-Ethena Related Assets Against Ethena Related Collateral [Core]  <!-- UUID: dadc95a6-c8ef-4abb-b9a5-d51bf2c0bf29 -->
+############ A.3.2.2.1.1.1.2.1.1.1.2.2 - Lending Non-Ethena Related Assets Against Ethena Related Collateral [Core]  <!-- UUID: dadc95a6-c8ef-4abb-b9a5-d51bf2c0bf29 -->
 
-For non-Ethena related assets lent against Ethena related collateral (e.g. lending USDC against PT-USDe or PT-sUSDe), the Instance Financial RRC Ratio is 4%.
+For non-Ethena related assets lent against Ethena related collateral (e.g. lending USDC against PT-USDe or PT-sUSDe), the Instance Financial CRR is 4%.
 
-########## A.3.3.2.1.1.1.2.1.1.2 - Ethena Aggregate Exposure Limits [Core]  <!-- UUID: 31757562-7f99-4d4e-b4e6-a7b0028e5d4d -->
+########## A.3.2.2.1.1.1.2.1.1.2 - Ethena Aggregate Exposure Limits [Core]  <!-- UUID: 31757562-7f99-4d4e-b4e6-a7b0028e5d4d -->
 
 The documents herein define aggregate exposure limits applicable to Ethena.
 
-########### A.3.3.2.1.1.1.2.1.1.2.1 - Ethena Aggregate Exposure [Core]  <!-- UUID: 642b6bee-9702-4339-bda3-3a35d025bbcc -->
+########### A.3.2.2.1.1.1.2.1.1.2.1 - Ethena Aggregate Exposure [Core]  <!-- UUID: 642b6bee-9702-4339-bda3-3a35d025bbcc -->
 
-Ethena Aggregate Exposure is the sum of Ethena Exposures (see [A.3.3 - Ethena Required Risk Capital](7ce05a43-e3ec-4c54-a11e-30e56526cfdd)) across all Prime Agents in the Sky Ecosystem.
+Ethena Aggregate Exposure is the sum of Ethena Exposures (see [A.3.3 - Ethena Capital Requirement Ratio](7ce05a43-e3ec-4c54-a11e-30e56526cfdd)) across all Prime Agents in the Sky Ecosystem.
 
-########### A.3.3.2.1.1.1.2.1.1.2.2 - Ethena Aggregate Exposure Limit [Core]  <!-- UUID: 176c8562-848c-4868-8490-8e64da24adcd -->
+########### A.3.2.2.1.1.1.2.1.1.2.2 - Ethena Aggregate Exposure Limit [Core]  <!-- UUID: 176c8562-848c-4868-8490-8e64da24adcd -->
 
 The Ethena Aggregate Exposure Limit is 1,300,000,000 USDS.
 
-########### A.3.3.2.1.1.1.2.1.1.2.3 - Ethena Exposure Limit [Core]  <!-- UUID: 8e120edf-c87b-4d99-8f2a-65fb49bcc3b7 -->
+########### A.3.2.2.1.1.1.2.1.1.2.3 - Ethena Exposure Limit [Core]  <!-- UUID: 8e120edf-c87b-4d99-8f2a-65fb49bcc3b7 -->
 
 The Ethena Exposure Limit for each Agent is:
 
@@ -12694,88 +12750,88 @@ The Ethena Exposure Limit for each Agent is:
 
 • All other Prime Agents - Zero
 
-########### A.3.3.2.1.1.1.2.1.1.2.4 - Prohibition On Investments That Would Cause Ethena Exposure Limit To Be Exceeded [Core]  <!-- UUID: 50854ba8-c788-4df5-9c70-b6f070a28bfd -->
+########### A.3.2.2.1.1.1.2.1.1.2.4 - Prohibition On Investments That Would Cause Ethena Exposure Limit To Be Exceeded [Core]  <!-- UUID: 50854ba8-c788-4df5-9c70-b6f070a28bfd -->
 
 No Prime Agent may make an investment in Ethena Exposures that would cause its Ethena Exposures to exceed its Ethena Exposure Limit.
 
-########### A.3.3.2.1.1.1.2.1.1.2.5 - Sale Of Investments When Ethena Exposure Limit Is Exceeded [Core]  <!-- UUID: 81e64445-f74c-4d61-8322-b2d30d3582f1 -->
+########### A.3.2.2.1.1.1.2.1.1.2.5 - Sale Of Investments When Ethena Exposure Limit Is Exceeded [Core]  <!-- UUID: 81e64445-f74c-4d61-8322-b2d30d3582f1 -->
 
 If a Prime Agent’s Ethena Exposures exceed its Ethena Exposure Limit, then the Core Council may direct the Agent to sell Ethena Exposures to reduce its Ethena Exposures below its Ethena Exposure Limit.
 
-######### A.3.3.2.1.1.1.2.1.2 - Superstate [Core]  <!-- UUID: 465472b5-acc2-4a8e-9a42-543e16854e71 -->
+######### A.3.2.2.1.1.1.2.1.2 - Superstate [Core]  <!-- UUID: 465472b5-acc2-4a8e-9a42-543e16854e71 -->
 
 The near-term treatment for Superstate is specified in the documents herein.
 
-########## A.3.3.2.1.1.1.2.1.2.1 - Superstate Required Risk Capital [Core]  <!-- UUID: ffca1065-7f92-4815-8a65-52bdbc82c558 -->
+########## A.3.2.2.1.1.1.2.1.2.1 - Superstate Capital Requirement Ratio [Core]  <!-- UUID: ffca1065-7f92-4815-8a65-52bdbc82c558 -->
 
-Superstate Exposures are exposures from holding USCC. Superstate Exposures have a 4.5% Instance Financial RRC Ratio.
+Superstate Exposures are exposures from holding USCC. Superstate Exposures have a 4.5% Instance Financial CRR.
 
-########## A.3.3.2.1.1.1.2.1.2.2 - Superstate Aggregate Exposure Limits [Core]  <!-- UUID: f5348df6-6161-454d-a8d4-bd02d2acc354 -->
+########## A.3.2.2.1.1.1.2.1.2.2 - Superstate Aggregate Exposure Limits [Core]  <!-- UUID: f5348df6-6161-454d-a8d4-bd02d2acc354 -->
 
 The documents herein define aggregate exposure limits applicable to Superstate Exposures.
 
-########### A.3.3.2.1.1.1.2.1.2.2.1 - Superstate Aggregate Exposure [Core]  <!-- UUID: 6cf2221f-214c-4bc2-8de1-b0d6adb2a327 -->
+########### A.3.2.2.1.1.1.2.1.2.2.1 - Superstate Aggregate Exposure [Core]  <!-- UUID: 6cf2221f-214c-4bc2-8de1-b0d6adb2a327 -->
 
-Superstate Aggregate Exposure is the sum of Superstate Exposures (see [A.3.3 - Superstate Required Risk Capital](ffca1065-7f92-4815-8a65-52bdbc82c558)) across all Prime Agents in the Sky Ecosystem.
+Superstate Aggregate Exposure is the sum of Superstate Exposures (see [A.3.3 - Superstate Capital Requirement Ratio](ffca1065-7f92-4815-8a65-52bdbc82c558)) across all Prime Agents in the Sky Ecosystem.
 
-########### A.3.3.2.1.1.1.2.1.2.2.2 - Superstate Aggregate Exposure Limit [Core]  <!-- UUID: ea606bf7-6dbf-41d2-a993-79b66c56b7c2 -->
+########### A.3.2.2.1.1.1.2.1.2.2.2 - Superstate Aggregate Exposure Limit [Core]  <!-- UUID: ea606bf7-6dbf-41d2-a993-79b66c56b7c2 -->
 
 The Superstate Aggregate Exposure Limit is 500,000,000 USDS.
 
-########### A.3.3.2.1.1.1.2.1.2.2.3 - Prohibition On Investments That Would Cause Superstate Aggregate Exposure Limit To Be Exceeded [Core]  <!-- UUID: a75e7eea-7567-4f5c-aba4-6d41fb6732dd -->
+########### A.3.2.2.1.1.1.2.1.2.2.3 - Prohibition On Investments That Would Cause Superstate Aggregate Exposure Limit To Be Exceeded [Core]  <!-- UUID: a75e7eea-7567-4f5c-aba4-6d41fb6732dd -->
 
 No Prime Agent may make an investment in Superstate Exposures that would cause the Superstate Aggregate Exposure to exceed the Superstate Aggregate Exposure Limit.
 
-########### A.3.3.2.1.1.1.2.1.2.2.4 - Sale Of Investments When Superstate Aggregate Exposure Limit Is Exceeded [Core]  <!-- UUID: ee3016e5-521a-4f86-a684-aa66bd102c8f -->
+########### A.3.2.2.1.1.1.2.1.2.2.4 - Sale Of Investments When Superstate Aggregate Exposure Limit Is Exceeded [Core]  <!-- UUID: ee3016e5-521a-4f86-a684-aa66bd102c8f -->
 
 If the Superstate Aggregate Exposure exceeds the Superstate Aggregate Exposure Limit, then the Core Council may direct Prime Agents to sell Superstate Exposures to reduce the Superstate Aggregate Exposure below the Superstate Aggregate Exposure Limit.
 
-########## A.3.3.2.1.1.1.2.1.2.3 - Superstate Deployment Limits [Core]  <!-- UUID: d0b3b345-23c1-4cb0-9d16-aa7b44ff7294 -->
+########## A.3.2.2.1.1.1.2.1.2.3 - Superstate Deployment Limits [Core]  <!-- UUID: d0b3b345-23c1-4cb0-9d16-aa7b44ff7294 -->
 
 The documents herein define the deployment limits applicable to Superstate Exposures.
 
-########### A.3.3.2.1.1.1.2.1.2.3.1 - Superstate Initial Deployment Limit [Core]  <!-- UUID: 3fd57a2e-3e2a-41c1-a9f7-cfbe58799837 -->
+########### A.3.2.2.1.1.1.2.1.2.3.1 - Superstate Initial Deployment Limit [Core]  <!-- UUID: 3fd57a2e-3e2a-41c1-a9f7-cfbe58799837 -->
 
 The Initial Deployment is the first deployment of capital by a Prime Agent into Superstate Exposures. The Initial Deployment may not exceed 20,000,000 USDS.
 
-########### A.3.3.2.1.1.1.2.1.2.3.2 - Superstate Subsequent Deployment Limits [Core]  <!-- UUID: e36d7537-95f8-4156-955f-bc74d37935d8 -->
+########### A.3.2.2.1.1.1.2.1.2.3.2 - Superstate Subsequent Deployment Limits [Core]  <!-- UUID: e36d7537-95f8-4156-955f-bc74d37935d8 -->
 
-Subsequent Deployments are deployments of capital by a Prime Agent into Superstate Exposures after its Initial Deployment (see [A.3.3 - Superstate Initial Deployment Limit](3fd57a2e-3e2a-41c1-a9f7-cfbe58799837)). Each Subsequent Deployment may not exceed 50,000,000 USDS and requires approval from BA Labs on behalf of the Core Council.
+Subsequent Deployments are deployments of capital by a Prime Agent into Superstate Exposures after its Initial Deployment (see [A.3.3 - Superstate Initial Deployment Limit](3fd57a2e-3e2a-41c1-a9f7-cfbe58799837)). Each Subsequent Deployment may not exceed 50,000,000 USDS and requires approval from the Core Council Risk Advisor on behalf of the Core Council.
 
-####### A.3.3.2.1.1.1.3 - Direct Exposures [Core]  <!-- UUID: 69d0776b-786c-408b-b76a-860ea60b6b9a -->
+####### A.3.2.2.1.1.1.3 - Direct Exposures [Core]  <!-- UUID: 69d0776b-786c-408b-b76a-860ea60b6b9a -->
 
 The implementation of the model for direct exposures will be specified in a future iteration of the Atlas. The near-term treatment of these assets are specified in the subdocuments herein.
 
-######## A.3.3.2.1.1.1.3.1 - Near-Term Treatment [Core]  <!-- UUID: f4d20c04-8a62-43b1-b806-7559e8182bfb -->
+######## A.3.2.2.1.1.1.3.1 - Near-Term Treatment [Core]  <!-- UUID: f4d20c04-8a62-43b1-b806-7559e8182bfb -->
 
-In the near term pending development of the implementation of the model for direct exposures, a 25% Instance Financial RRC Ratio will be applied to all direct exposures. In the near term, direct exposures will be considered to be any assets held idle in a wallet controlled by a Prime Agent.
+In the near term pending development of the implementation of the model for direct exposures, a 25% Instance Financial CRR will be applied to all direct exposures. In the near term, direct exposures will be considered to be any assets held idle in a wallet controlled by a Prime Agent.
 
-####### A.3.3.2.1.1.1.4 - Bond-Like Instruments [Core]  <!-- UUID: da1a154c-6db8-4012-91a7-31ea4e73e95d -->
+####### A.3.2.2.1.1.1.4 - Bond-Like Instruments [Core]  <!-- UUID: da1a154c-6db8-4012-91a7-31ea4e73e95d -->
 
 The implementation of the model for bond-like instruments will be specified in a future iteration of the Atlas. The near-term treatment of these assets are specified in the subdocuments herein.
 
-######## A.3.3.2.1.1.1.4.1 - Near-Term Treatment [Core]  <!-- UUID: a479643e-fbd3-4c9b-aba0-40f4657a8011 -->
+######## A.3.2.2.1.1.1.4.1 - Near-Term Treatment [Core]  <!-- UUID: a479643e-fbd3-4c9b-aba0-40f4657a8011 -->
 
 In the near term pending development of the implementation of the model for bond-like exposures, the following Instance Financial RRC Ratios will apply:
     
-◦ PT-USDS - 0% Instance Financial RRC Ratio 
-◦ All other bond-like exposures - 4% Instance Financial RRC Ratio
+◦ PT-USDS - 0% Instance Financial CRR 
+◦ All other bond-like exposures - 4% Instance Financial CRR
 
 In the near term, only Pendle PT tokens will be eligible for investment under this provision.
 
-####### A.3.3.2.1.1.1.5 - Real World Assets [Core]  <!-- UUID: 79c20bfd-f724-482e-8aae-52c962b8268a -->
+####### A.3.2.2.1.1.1.5 - Real World Assets [Core]  <!-- UUID: 79c20bfd-f724-482e-8aae-52c962b8268a -->
 
 The documents herein define the calculation of Instance Financial RRC for Real World Assets.
 
-######## A.3.3.2.1.1.1.5.1 - Methodology [Core]  <!-- UUID: b95825a2-9293-434d-bc06-459fee6aecde -->
+######## A.3.2.2.1.1.1.5.1 - Methodology [Core]  <!-- UUID: b95825a2-9293-434d-bc06-459fee6aecde -->
 
 The documents herein define common methodologies that are applicable to the entirety of the process for calculating Instance Financial RRC for Real World Assets.
 
-######### A.3.3.2.1.1.1.5.1.1 - Basis In Basel Framework [Core]  <!-- UUID: 95695429-cc27-403d-ad12-4ecf89203637 -->
+######### A.3.2.2.1.1.1.5.1.1 - Basis In Basel Framework [Core]  <!-- UUID: 95695429-cc27-403d-ad12-4ecf89203637 -->
 
 The process for calculating Instance Financial RRC for Real World Assets is based on the Basel Framework developed by the Basel Committee on Bank Supervision. See [https://www.bis.org/basel_framework/index.htm](https://www.bis.org/basel_framework/index.htm).
 
-######### A.3.3.2.1.1.1.5.1.2 - Citations To Basel Framework [Core]  <!-- UUID: 0c97534b-d4f4-4a42-854c-b39993c95f02 -->
+######### A.3.2.2.1.1.1.5.1.2 - Citations To Basel Framework [Core]  <!-- UUID: 0c97534b-d4f4-4a42-854c-b39993c95f02 -->
 
 Citations are made throughout the process for calculating Instance Financial RRC for Real World Assets to relevant provisions from the Basel Framework.
 
@@ -12785,15 +12841,15 @@ When reference is made to a range of documents, a hyphen may be used. For exampl
 
 Similarly, discrete sets of documents may be referenced using a comma. For example, `CRE40-41, 45` refers to Credit Risk Standards, Chapters 40 to 41 and 45.
 
-######### A.3.3.2.1.1.1.5.1.3 - Banking Book [Core]  <!-- UUID: 96a9c07c-6a3e-4a03-87a9-d6c72ffac340 -->
+######### A.3.2.2.1.1.1.5.1.3 - Banking Book [Core]  <!-- UUID: 96a9c07c-6a3e-4a03-87a9-d6c72ffac340 -->
 
 In the process for calculating Instance Financial RRC for Real World Assets, all exposures are treated as if they were part of the banking book.
 
-######## A.3.3.2.1.1.1.5.2 - Process For Calculating Instance Financial RRC [Core]  <!-- UUID: 58cc9f0b-0d88-4027-bae4-a33cb839e748 -->
+######## A.3.2.2.1.1.1.5.2 - Process For Calculating Instance Financial RRC [Core]  <!-- UUID: 58cc9f0b-0d88-4027-bae4-a33cb839e748 -->
 
 The documents herein define the process for calculating Instance Financial RRC for Real World Assets.
 
-######### A.3.3.2.1.1.1.5.2.1 - Identify Exposure Types [Core]  <!-- UUID: dbc4c20e-faa4-429d-8289-f38318d443f1 -->
+######### A.3.2.2.1.1.1.5.2.1 - Identify Exposure Types [Core]  <!-- UUID: dbc4c20e-faa4-429d-8289-f38318d443f1 -->
 
 The first step is identifying the Exposure Type that an exposure fits under. The Exposure Types are:
     
@@ -12805,15 +12861,15 @@ The first step is identifying the Exposure Type that an exposure fits under. The
 ◦ Commodities (see `MAR21.13`)    
 ◦ Foreign Exchange (see `MAR21.14`)
 
-######### A.3.3.2.1.1.1.5.2.2 - Calculate Exposure At Default Including Credit Risk Mitigation [Core]  <!-- UUID: db4ae988-b240-4506-b040-4712afc76fb2 -->
+######### A.3.2.2.1.1.1.5.2.2 - Calculate Exposure At Default Including Credit Risk Mitigation [Core]  <!-- UUID: db4ae988-b240-4506-b040-4712afc76fb2 -->
 
 The second step is calculating the Exposure at Default including Credit Risk Mitigation as specified in the documents herein.
 
-########## A.3.3.2.1.1.1.5.2.2.1 - Calculation Of Exposure At Default [Core]  <!-- UUID: ec8879e3-71b8-450d-985f-b1edf14f8b4d -->
+########## A.3.2.2.1.1.1.5.2.2.1 - Calculation Of Exposure At Default [Core]  <!-- UUID: ec8879e3-71b8-450d-985f-b1edf14f8b4d -->
 
 Exposure At Default is calculated as specified in the documents herein.
 
-########### A.3.3.2.1.1.1.5.2.2.1.1 - Exposure At Default Equal To Book Value [Core]  <!-- UUID: 9e047432-7a9f-4dc0-8172-4085c603d9ba -->
+########### A.3.2.2.1.1.1.5.2.2.1.1 - Exposure At Default Equal To Book Value [Core]  <!-- UUID: 9e047432-7a9f-4dc0-8172-4085c603d9ba -->
 
 For the following Exposure Types, Exposure At Default is equal to book value:
     
@@ -12824,21 +12880,21 @@ For the following Exposure Types, Exposure At Default is equal to book value:
 ◦ Commodities    
 ◦ Foreign Exchange
 
-########### A.3.3.2.1.1.1.5.2.2.1.2 - Exposure At Default Equal To Book Value Multiplied By Credit Conversion Factor [Core]  <!-- UUID: 9868d6c9-17ec-44da-8898-b59a1ae579e0 -->
+########### A.3.2.2.1.1.1.5.2.2.1.2 - Exposure At Default Equal To Book Value Multiplied By Credit Conversion Factor [Core]  <!-- UUID: 9868d6c9-17ec-44da-8898-b59a1ae579e0 -->
 
 For the following Exposure Types, Exposure At Default is equal to book value multiplied by the Credit Conversion Factor (see `CRE51`):
     
 ◦ Off-Balance Sheet Items
 
-########## A.3.3.2.1.1.1.5.2.2.2 - Adjustment For Credit Risk Mitigation [Core]  <!-- UUID: da454ffd-494a-4806-acb5-93653b1b8b11 -->
+########## A.3.2.2.1.1.1.5.2.2.2 - Adjustment For Credit Risk Mitigation [Core]  <!-- UUID: da454ffd-494a-4806-acb5-93653b1b8b11 -->
 
 The Exposure At Default calculated in [A.3.3 - Calculation Of Exposure At Default](ec8879e3-71b8-450d-985f-b1edf14f8b4d) is then adjusted for Credit Risk Mitigation (see `CRE22`) to arrive at an adjusted Exposure At Default used for the remainder of the calculations.
 
-######### A.3.3.2.1.1.1.5.2.3 - Determine Risk Weights [Core]  <!-- UUID: a1ff2a3d-7131-425c-80c5-a887a4259f12 -->
+######### A.3.2.2.1.1.1.5.2.3 - Determine Risk Weights [Core]  <!-- UUID: a1ff2a3d-7131-425c-80c5-a887a4259f12 -->
 
 The third step is calculating the Risk Weights as specified in the documents herein.
 
-########## A.3.3.2.1.1.1.5.2.3.1 - On-Balance Sheet Or Off-Balance Sheet Items [Core]  <!-- UUID: 0144ae72-c945-4f62-998c-e533a5f32858 -->
+########## A.3.2.2.1.1.1.5.2.3.1 - On-Balance Sheet Or Off-Balance Sheet Items [Core]  <!-- UUID: 0144ae72-c945-4f62-998c-e533a5f32858 -->
 
 Credit Risk for On-Balance Sheet or Off-Balance Sheet Items is calculated based on the relevant provisions in the Basel Framework as follows:  
   
@@ -12868,18 +12924,18 @@ Credit Risk for On-Balance Sheet or Off-Balance Sheet Items is calculated based 
 | Both issuing and confirming banks of short-term self-liquidating trade letters of credit arising from the movement of goods | `CRE20.99` |  
 | Commitments that are unconditionally cancellable at any time by the bank without prior notice | `CRE20.100` |
 
-########## A.3.3.2.1.1.1.5.2.3.2 - Securitization Tranches [Core]  <!-- UUID: 5f70b7dd-4a76-4204-9bd6-9e6ce2864f82 -->
+########## A.3.2.2.1.1.1.5.2.3.2 - Securitization Tranches [Core]  <!-- UUID: 5f70b7dd-4a76-4204-9bd6-9e6ce2864f82 -->
 
 Risk Weights for Securitization Tranches (see `CRE40-41, 45`) are calculated as follows:
     
 ◦ If the Securitization Tranche is rated, then the Securitisation - External Ratings Based Approach should be applied (see `CRE42`).    
 ◦ If the Securitization Tranche is not rated, then the Securitisation - Standard Approach should be applied (see `CRE41`).
 
-########## A.3.3.2.1.1.1.5.2.3.3 - Derivatives Or Securities Financing Transactions [Core]  <!-- UUID: 3622ac1e-4ed9-41ba-ba91-0396e1b30b67 -->
+########## A.3.2.2.1.1.1.5.2.3.3 - Derivatives Or Securities Financing Transactions [Core]  <!-- UUID: 3622ac1e-4ed9-41ba-ba91-0396e1b30b67 -->
 
 Counterparty Credit Risk for Derivatives or Securities Financing Transactions is calculated based on the relevant provisions in the Basel Framework (see `CRE50-52`). In addition, if the instrument is an Over The Counter derivative, Credit Valuation Adjustment capital is applied as well (see `MAR50`).
 
-########## A.3.3.2.1.1.1.5.2.3.4 - Funds / Collective Investment Undertakings / Exchange Traded Funds [Core]  <!-- UUID: 56ef98fa-582e-4c60-87f2-34400bad72fe -->
+########## A.3.2.2.1.1.1.5.2.3.4 - Funds / Collective Investment Undertakings / Exchange Traded Funds [Core]  <!-- UUID: 56ef98fa-582e-4c60-87f2-34400bad72fe -->
 
 Risk Weights for Funds / Collective Investment Undertakings / Exchange Traded Funds (see `CRE60`) are calculated as follows:
     
@@ -12887,93 +12943,93 @@ Risk Weights for Funds / Collective Investment Undertakings / Exchange Traded Fu
 ◦ If look-through is not feasible but the mandate information is available, apply the Mandate Based Approach (see `CRE60.6-7`)    
 ◦ If look-through is not feasible and the mandate information is not available, apply the fallback conservative approach (see `CRE60.8`)
 
-########## A.3.3.2.1.1.1.5.2.3.5 - Commodities [Core]  <!-- UUID: 75db9d5b-c245-4574-8705-2cd5d4dde0b1 -->
+########## A.3.2.2.1.1.1.5.2.3.5 - Commodities [Core]  <!-- UUID: 75db9d5b-c245-4574-8705-2cd5d4dde0b1 -->
 
 Market Risk for Commodities is calculated based on the relevant provisions in the Basel Framework (see `MAR21.13`).
 
-########## A.3.3.2.1.1.1.5.2.3.6 - Foreign Exchange [Core]  <!-- UUID: 11b18384-63d6-478c-bc14-9f1ec495c1cb -->
+########## A.3.2.2.1.1.1.5.2.3.6 - Foreign Exchange [Core]  <!-- UUID: 11b18384-63d6-478c-bc14-9f1ec495c1cb -->
 
 Market Risk for Foreign Exchange is calculated based on the relevant provisions in the Basel Framework (see `MAR21.14`).
 
-######### A.3.3.2.1.1.1.5.2.4 - Aggregate Risk Weighted Assets [Core]  <!-- UUID: cb6e24c8-5e69-41ae-b600-4d9a7261f172 -->
+######### A.3.2.2.1.1.1.5.2.4 - Aggregate Risk Weighted Assets [Core]  <!-- UUID: cb6e24c8-5e69-41ae-b600-4d9a7261f172 -->
 
 The fourth step is calculating Aggregate Risk Weighted Assets (”RWA”).
 
-########## A.3.3.2.1.1.1.5.2.4.1 - Calculate Risk Weighted Assets [Core]  <!-- UUID: 34a37582-aa59-4c04-92d6-3cc758e9e92e -->
+########## A.3.2.2.1.1.1.5.2.4.1 - Calculate Risk Weighted Assets [Core]  <!-- UUID: 34a37582-aa59-4c04-92d6-3cc758e9e92e -->
 
 Credit RWA, Market RWA, Counterparty Credit Risk RWA, and Credit Valuation Adjustment RWA are calculated by multiplying the Exposure At Default (see [A.3.3 - Calculate Exposure At Default Including Credit Risk Mitigation](db4ae988-b240-4506-b040-4712afc76fb2)) by the applicable Risk Weights (see [A.3.3 - Determine Risk Weights](a1ff2a3d-7131-425c-80c5-a887a4259f12)).
 
-########## A.3.3.2.1.1.1.5.2.4.2 - Calculate Aggregate Risk Weighted Assets [Core]  <!-- UUID: fabb3382-d2eb-4cba-9e54-3fd5b83ea47c -->
+########## A.3.2.2.1.1.1.5.2.4.2 - Calculate Aggregate Risk Weighted Assets [Core]  <!-- UUID: fabb3382-d2eb-4cba-9e54-3fd5b83ea47c -->
 
 Aggregate RWA is calculated as the sum of (1) Credit RWA, (2) Market RWA, (3) Counterparty Credit RWA, and (4) Credit Valuation Adjustment RWA.
 
-######### A.3.3.2.1.1.1.5.2.5 - Apply Leverage Adjustment [Core]  <!-- UUID: 6047795b-9a0e-4410-b794-76083388281e -->
+######### A.3.2.2.1.1.1.5.2.5 - Apply Leverage Adjustment [Core]  <!-- UUID: 6047795b-9a0e-4410-b794-76083388281e -->
 
 The fifth step is to adjust the Aggregate RWA specified in [A.3.3 - Aggregate Risk Weighted Assets](cb6e24c8-5e69-41ae-b600-4d9a7261f172) for leverage (see `CRE99.128-133`)
 
-######### A.3.3.2.1.1.1.5.2.6 - Determine Required Risk Capital [Core]  <!-- UUID: 70013695-3823-407a-9603-b38795ba9899 -->
+######### A.3.2.2.1.1.1.5.2.6 - Determine Required Risk Capital [Core]  <!-- UUID: 70013695-3823-407a-9603-b38795ba9899 -->
 
 The final step is to multiply the adjusted Aggregate RWA specified in [A.3.3 - Apply Leverage Adjustment](6047795b-9a0e-4410-b794-76083388281e) by an 8% capital ratio to arrive at Instance Financial RRC.
 
-######## A.3.3.2.1.1.1.5.3 - Exceptions [Core]  <!-- UUID: 748f6364-f63b-4601-8f43-345ae3398224 -->
+######## A.3.2.2.1.1.1.5.3 - Exceptions [Core]  <!-- UUID: 748f6364-f63b-4601-8f43-345ae3398224 -->
 
 The documents herein define exceptions to the calculation of Instance Financial RRC for specific Real World Assets. These exceptions will be removed in a future iteration of the Atlas.
 
-######### A.3.3.2.1.1.1.5.3.1 - Instance Financial RRC Ratios For Specific Assets [Core]  <!-- UUID: 672d377f-067e-4742-a987-b2c6258f9c99 -->
+######### A.3.2.2.1.1.1.5.3.1 - Instance Financial CRRs For Specific Assets [Core]  <!-- UUID: 672d377f-067e-4742-a987-b2c6258f9c99 -->
 
-The following Instance Financial RRC Ratios apply to specific assets:
+The following Instance Financial CRR apply to specific assets:
     
-◦ BUIDL, JTRSY on Ethereum Mainnet, and USTB - 0% Instance Financial RRC Ratio    
-◦ JTRSY on Avalanche - 0.5% Instance Financial RRC Ratio    
-◦ JAAA on Ethereum Mainnet - 1.6% Instance Financial RRC Ratio    
-◦ JAAA on Avalanche - 2.1% Instance Financial RRC Ratio
+◦ BUIDL, JTRSY on Ethereum Mainnet, and USTB - 0% Instance Financial CRR    
+◦ JTRSY on Avalanche - 0.5% Instance Financial CRR    
+◦ JAAA on Ethereum Mainnet - 1.6% Instance Financial CRR    
+◦ JAAA on Avalanche - 2.1% Instance Financial CRR
 
-########## A.3.3.2.1.1.1.5.3.1.1 - Additional Restrictions On Investments In JTRSY And JAAA On Avalanche [Core]  <!-- UUID: 66506235-0e6c-4fa9-8e22-5eb4f19cb330 -->
+########## A.3.2.2.1.1.1.5.3.1.1 - Additional Restrictions On Investments In JTRSY And JAAA On Avalanche [Core]  <!-- UUID: 66506235-0e6c-4fa9-8e22-5eb4f19cb330 -->
 
 Investments in JTRSY and JAAA on Avalanche are subject to the following additional restrictions:
     
 ◦ The initial deployment of capital into JTRSY and JAAA on Avalanche may not exceed 20 million USDS in total;    
 ◦ Each additional deployment of capital into JTRSY or JAAA must be approved by the Stability Scope Advisors;    
-◦ Until audits of Centrifuge v3 are approved by the Protocol Security Workstream Lead, the Prime must be below a 90% Risk Tolerance Ratio on a pro forma basis assuming that each additional deployment of capital into JTRSY and JAAA requires 100% Instance Total RRC; and    
+◦ Until audits of Centrifuge v3 are approved by the Protocol Security Workstream Lead, the Prime must be below a 90% Risk Tolerance Ratio on a pro forma basis assuming that each additional deployment of capital into JTRSY and JAAA requires 100% Instance Total CRR; and    
 ◦ Total investments in JTRSY and JAAA on Avalanche may not exceed 250 million USDS.
 
-######### A.3.3.2.1.1.1.5.3.2 - Restrictions On Investments On Plume [Core]  <!-- UUID: c5d70220-4797-4df9-8977-4998d4a57888 -->
+######### A.3.2.2.1.1.1.5.3.2 - Restrictions On Investments On Plume [Core]  <!-- UUID: c5d70220-4797-4df9-8977-4998d4a57888 -->
 
 Investments on Plume are subject to the following restrictions:
 
-• Assets other than RWAs on Plume or being bridged to Plume require 100% Instance Total RRC; and
+• Assets other than RWAs on Plume or being bridged to Plume require 100% Instance Total CRR; and
 
 • Total investments on Plume may not exceed 125 million USDS.
 
-####### A.3.3.2.1.1.1.6 - Cash Stablecoins [Core]  <!-- UUID: 3c0a9e8b-4a0b-4059-87a4-155deaee0486 -->
+####### A.3.2.2.1.1.1.6 - Cash Stablecoins [Core]  <!-- UUID: 3c0a9e8b-4a0b-4059-87a4-155deaee0486 -->
 
 The implementation of the model for Cash Stablecoins will be specified in a future iteration of the Atlas. The near-term treatment of these assets are specified in the subdocuments herein.
 
-######## A.3.3.2.1.1.1.6.1 - Near-Term Treatment [Core]  <!-- UUID: 8aee612b-fe36-4c6b-adee-2e0762579a40 -->
+######## A.3.2.2.1.1.1.6.1 - Near-Term Treatment [Core]  <!-- UUID: 8aee612b-fe36-4c6b-adee-2e0762579a40 -->
 
-In the near term pending development of the implementation of the model for Cash Stablecoins, a 0% Instance Financial RRC will be applied to Cash Stablecoins. In the near term, only USDS, sUSDS, Dai, sDai, USDC, USDT, and pyUSD (either held directly or through decentralized exchanges such as Curve) will be eligible for investment under this provision.
+In the near term pending development of the implementation of the model for Cash Stablecoins, a 0% Instance Financial CRR will be applied to Cash Stablecoins. In the near term, only USDS, sUSDS, Dai, sDai, USDC, USDT, and pyUSD (either held directly or through decentralized exchanges such as Curve) will be eligible for investment under this provision.
 
-##### A.3.3.2.1.2 - Instance Smart Contract RRC Implementation [Core]  <!-- UUID: e6cfa64f-68c0-4dac-8cec-a5f9bfcb9080 -->
+##### A.3.2.2.1.2 - Instance Smart Contract RRC Implementation [Core]  <!-- UUID: e6cfa64f-68c0-4dac-8cec-a5f9bfcb9080 -->
 
 The documents herein define the implementation of the Risk Framework for calculating Instance Smart Contract RRC.
 
-###### A.3.3.2.1.2.1 - Defining Relevant Smart Contracts [Core]  <!-- UUID: 162cfc93-77bd-4878-a8be-370d8862d792 -->
+###### A.3.2.2.1.2.1 - Defining Relevant Smart Contracts [Core]  <!-- UUID: 162cfc93-77bd-4878-a8be-370d8862d792 -->
 
 The first step in calculating Instance Smart Contract RRC with respect to an Allocation System opportunity is to identify the set of relevant smart contracts for the opportunity.
 
-####### A.3.3.2.1.2.1.1 - Identifying Exposure Contracts [Core]  <!-- UUID: 87a91c14-92b1-4d14-a90a-a02086a05066 -->
+####### A.3.2.2.1.2.1.1 - Identifying Exposure Contracts [Core]  <!-- UUID: 87a91c14-92b1-4d14-a90a-a02086a05066 -->
 
 First, all relevant smart contracts must be identified. Relevant smart contracts are those that are critical for the project being invested in, including core business logic, vaults, token contracts, and proxy implementations.
 
-######## A.3.3.2.1.2.1.1.1 - Reliance On External Sources [Core]  <!-- UUID: fa41a412-b81d-4eba-93a9-95fec2a842c5 -->
+######## A.3.2.2.1.2.1.1.1 - Reliance On External Sources [Core]  <!-- UUID: fa41a412-b81d-4eba-93a9-95fec2a842c5 -->
 
 External sources such as third party data providers, security consultants, and project documentation may be used to help identify relevant smart contracts. However, the Prime Agent deploying funds from the Collateral Portfolio into the opportunity retains overall responsibility for the reasonableness of identifying the relevant smart contracts.
 
-####### A.3.3.2.1.2.1.2 - Locating Verified Code [Core]  <!-- UUID: b4e430a3-e848-4ef1-9b3a-6da724060674 -->
+####### A.3.2.2.1.2.1.2 - Locating Verified Code [Core]  <!-- UUID: b4e430a3-e848-4ef1-9b3a-6da724060674 -->
 
 Second, the source code for each relevant contract must be obtained. The source code should be obtained for the deployed version of the contract using an appropriate block explorer (e.g. Etherscan for Ethereum Mainnet or L2s). The source code should include any dependencies or inherited library contracts that are part of the live system.
 
-###### A.3.3.2.1.2.2 - Smart Contract Risk Rating Calculation [Core]  <!-- UUID: 00fd9362-f606-49bc-a425-9c96008be238 -->
+###### A.3.2.2.1.2.2 - Smart Contract Risk Rating Calculation [Core]  <!-- UUID: 00fd9362-f606-49bc-a425-9c96008be238 -->
 
 The second step in calculating the Instance Smart Contract RRC with respect to an Allocation System opportunity is to calculate the Smart Contract Risk Rating $SCRR$ for the covered smart contracts identified in [A.3.3 - Defining Relevant Smart Contracts](162cfc93-77bd-4878-a8be-370d8862d792). The $SCRR$ is calculated as follows:
 
@@ -12984,15 +13040,15 @@ $$
 Here $min$ is the mathematical minimum function that returns the lesser of the specified parameters.
 The parameters of this formula are specified in the subdocuments herein.
 
-####### A.3.3.2.1.2.2.1 - Smart Contract Risk Rating Cap [Core]  <!-- UUID: b824c6ec-940b-4921-89f0-aca89b54e86a -->
+####### A.3.2.2.1.2.2.1 - Smart Contract Risk Rating Cap [Core]  <!-- UUID: b824c6ec-940b-4921-89f0-aca89b54e86a -->
 
 The Smart Contract Risk Rating Cap $\text{CAP}$ is a temporary cap on the Smart Contract Risk Rating. The value of the $CAP$ is `30`.
 
-####### A.3.3.2.1.2.2.2 - Starting Rate [Core]  <!-- UUID: 51fc7445-8602-451d-87af-64f35abd7833 -->
+####### A.3.2.2.1.2.2.2 - Starting Rate [Core]  <!-- UUID: 51fc7445-8602-451d-87af-64f35abd7833 -->
 
 The Starting Rate $SR$ is an arbitrary starting risk rating for protocols. The value of the $SR$ is `25`.
 
-####### A.3.3.2.1.2.2.3 - Code Complexity Rating [Core]  <!-- UUID: 295e4d3b-8c8a-4f74-879f-88060bb07803 -->
+####### A.3.2.2.1.2.2.3 - Code Complexity Rating [Core]  <!-- UUID: 295e4d3b-8c8a-4f74-879f-88060bb07803 -->
 
 The Code Complexity Rate $CCR$ is a measure of the complexity of the code of the smart contracts used by the protocol. The $CCR$ is calculated as follows:
 
@@ -13004,15 +13060,15 @@ Here the $min$ function is the mathematical minimum function that returns the le
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######## A.3.3.2.1.2.2.3.1 - Code Complexity Rating Maximum [Core]  <!-- UUID: d41b80e2-97fc-4227-bcda-51f4d5fac7a6 -->
+######## A.3.2.2.1.2.2.3.1 - Code Complexity Rating Maximum [Core]  <!-- UUID: d41b80e2-97fc-4227-bcda-51f4d5fac7a6 -->
 
 The Code Complexity Rating Maximum $\text{CCRMax}$ is the maximum Code Complexity Rating for a protocol. The $\text{CCRMax}$ is set to `75`.
 
-######## A.3.3.2.1.2.2.3.2 - Code Complexity Rating Upper Bound [Core]  <!-- UUID: 1632947d-b197-4478-9122-0c0e1acc8c7a -->
+######## A.3.2.2.1.2.2.3.2 - Code Complexity Rating Upper Bound [Core]  <!-- UUID: 1632947d-b197-4478-9122-0c0e1acc8c7a -->
 
 The Code Complexity Rating Upper Bound $\text{CCRUpperBound}$ is an arbitrary factor to normalize the Raw Code Complexity Rating. The $\text{CCRUpperBound}$ is set to `8,500`.
 
-######## A.3.3.2.1.2.2.3.3 - Raw Code Complexity Rating [Core]  <!-- UUID: ce3f2e96-b643-4de7-bfb9-cb0aee678635 -->
+######## A.3.2.2.1.2.2.3.3 - Raw Code Complexity Rating [Core]  <!-- UUID: ce3f2e96-b643-4de7-bfb9-cb0aee678635 -->
 
 The Raw Code Complexity Rating $\text{RawCCR}$ is an unnormalized measure of the complexity of the code of the smart contracts that implement the protocol. The $\text{RawCCR}$ is calculated as follows:
 
@@ -13022,51 +13078,51 @@ $$
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######### A.3.3.2.1.2.2.3.3.1 - Total Cyclomatic Complexity [Core]  <!-- UUID: 935d13f6-c66c-4020-85e3-831525776629 -->
+######### A.3.2.2.1.2.2.3.3.1 - Total Cyclomatic Complexity [Core]  <!-- UUID: 935d13f6-c66c-4020-85e3-831525776629 -->
 
 Cyclomatic complexity measures the number of independent execution paths through a unit of code. The total cyclomatic complexity score is the sum of the cyclomatic complexity of each of the covered smart contracts.
 
-######### A.3.3.2.1.2.2.3.3.2 - Cyclomatic Complexity Weight [Core]  <!-- UUID: 9bd7b778-eeb2-4704-81cf-1135240924a0 -->
+######### A.3.2.2.1.2.2.3.3.2 - Cyclomatic Complexity Weight [Core]  <!-- UUID: 9bd7b778-eeb2-4704-81cf-1135240924a0 -->
 
 The Cyclomatic Complexity Weight $\text{CCweight}$ is a weighting factor indicating the relative importance of the Total Cyclomatic Complexity versus other factors. It is set to `1`.
 
-######### A.3.3.2.1.2.2.3.3.3 - Total Decision Points [Core]  <!-- UUID: e62098b2-f2ef-4604-9041-c7e0c8356ed3 -->
+######### A.3.2.2.1.2.2.3.3.3 - Total Decision Points [Core]  <!-- UUID: e62098b2-f2ef-4604-9041-c7e0c8356ed3 -->
 
 Decision points measure the number of branching points where conditional logic is applied. The Total Decision Points are the total number of Decision Points in all functions in the covered smart contracts.
 
-######### A.3.3.2.1.2.2.3.3.4 - Decision Points Weight [Core]  <!-- UUID: 3c4d6fc5-2c37-4094-9a06-681fded786bc -->
+######### A.3.2.2.1.2.2.3.3.4 - Decision Points Weight [Core]  <!-- UUID: 3c4d6fc5-2c37-4094-9a06-681fded786bc -->
 
 The Decision Points Weight $\text{DPweight}$ is a weighting factor indicating the relative importance of the Total Decision Points versus other factors. It is set to `0.5`.
 
-######### A.3.3.2.1.2.2.3.3.5 - Total External Calls [Core]  <!-- UUID: 028431ff-5b02-4f42-9224-6b53ff8756c8 -->
+######### A.3.2.2.1.2.2.3.3.5 - Total External Calls [Core]  <!-- UUID: 028431ff-5b02-4f42-9224-6b53ff8756c8 -->
 
 Total External Calls is the count of all external calls (e.g. `call`, `delegatecall`) made in the covered smart contracts.
 
-######### A.3.3.2.1.2.2.3.3.6 - External Calls Weight [Core]  <!-- UUID: 3088abe3-4206-431a-9408-9672cc45d61a -->
+######### A.3.2.2.1.2.2.3.3.6 - External Calls Weight [Core]  <!-- UUID: 3088abe3-4206-431a-9408-9672cc45d61a -->
 
 The External Calls Weight $\text{ECweight}$ is a weighting factor indicating the relative importance of the Total External Calls versus other factors. It is set to `1.5`.
 
-######### A.3.3.2.1.2.2.3.3.7 - Inheritance Depth [Core]  <!-- UUID: bc711432-efd9-4724-8244-d9469fcd193e -->
+######### A.3.2.2.1.2.2.3.3.7 - Inheritance Depth [Core]  <!-- UUID: bc711432-efd9-4724-8244-d9469fcd193e -->
 
 Inheritance Depth is the maximum number of inheritance levels in any contract in the covered contracts.
 
-######### A.3.3.2.1.2.2.3.3.8 - Inheritance Depth Weight [Core]  <!-- UUID: b519469f-3f2b-40dc-96b5-69f5e81d9fe6 -->
+######### A.3.2.2.1.2.2.3.3.8 - Inheritance Depth Weight [Core]  <!-- UUID: b519469f-3f2b-40dc-96b5-69f5e81d9fe6 -->
 
 The Inheritance Depth Weight $\text{IDweight}$ is a weighting factor indicating the relative importance of the Inheritance Depth versus other factors. It is set to `5`.
 
-######### A.3.3.2.1.2.2.3.3.9 - Code Size [Core]  <!-- UUID: 32c32e11-baf0-4bce-a865-5de19a3e5d09 -->
+######### A.3.2.2.1.2.2.3.3.9 - Code Size [Core]  <!-- UUID: 32c32e11-baf0-4bce-a865-5de19a3e5d09 -->
 
 Code Size is the total number of lines of code in the covered contracts, excluding tests and documentation.
 
-######### A.3.3.2.1.2.2.3.3.10 - Code Size Factor [Core]  <!-- UUID: a30c8bc7-2686-46ac-952e-9c1f71c96aa0 -->
+######### A.3.2.2.1.2.2.3.3.10 - Code Size Factor [Core]  <!-- UUID: a30c8bc7-2686-46ac-952e-9c1f71c96aa0 -->
 
 The Code Size Factory is an arbitrary factor to normalize the Code Size relative to other parameters. It is set to `1,000`.
 
-######### A.3.3.2.1.2.2.3.3.11 - Code Size Weight [Core]  <!-- UUID: 21656714-b6f6-4ba5-b99a-ea3ac6f2ff89 -->
+######### A.3.2.2.1.2.2.3.3.11 - Code Size Weight [Core]  <!-- UUID: 21656714-b6f6-4ba5-b99a-ea3ac6f2ff89 -->
 
 The Code Size Weight $\text{CSweight}$ is a weighting factor indicating the relative importance of the Code Size versus other factors. It is set to `1`.
 
-####### A.3.3.2.1.2.2.4 - Lindy Adjustment Factor [Core]  <!-- UUID: 227eff62-f2aa-4e49-91ad-1321261ed299 -->
+####### A.3.2.2.1.2.2.4 - Lindy Adjustment Factor [Core]  <!-- UUID: 227eff62-f2aa-4e49-91ad-1321261ed299 -->
 
 The Lindy Adjustment Factor $\text{LAF}$ is a measure of the “Lindiness” of the smart contracts and is based on the idea that vulnerable smart contracts with large TVL for a significant period of time would have already been hacked. Therefore, protocols with a greater time integrated TVL are safer, all other things equal, than protocols with a lower time integrated TVL. The $\text{LAF}$ is calculated as follows:
 
@@ -13078,15 +13134,15 @@ Here $max$ is the mathematical maximum function that returns the greater of the 
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######## A.3.3.2.1.2.2.4.1 - Decay Factor [Core]  <!-- UUID: 7f109cc0-ee8d-48b6-8fbf-6e363004edfb -->
+######## A.3.2.2.1.2.2.4.1 - Decay Factor [Core]  <!-- UUID: 7f109cc0-ee8d-48b6-8fbf-6e363004edfb -->
 
 The Decay Factor $lambda$ is a tuning parameter that represents an estimate of how quickly the risk of a set of smart contracts decreases as its effective age increases. The value of $lambda$ is set to `0.1`.
 
-######## A.3.3.2.1.2.2.4.2 - Maximum Age [Core]  <!-- UUID: 891eab12-0c47-4b87-b867-3cba6ca7db4e -->
+######## A.3.2.2.1.2.2.4.2 - Maximum Age [Core]  <!-- UUID: 891eab12-0c47-4b87-b867-3cba6ca7db4e -->
 
 The Maximum Age $\text{max}$ is the effective age, in months, at which the risk of a set of smart contracts has decayed to zero. The value of $\text{max}$ is set to `60`.
 
-######## A.3.3.2.1.2.2.4.3 - Effective Age [Core]  <!-- UUID: a8db99b2-f072-4132-9ee2-c8ebcc2b3609 -->
+######## A.3.2.2.1.2.2.4.3 - Effective Age [Core]  <!-- UUID: a8db99b2-f072-4132-9ee2-c8ebcc2b3609 -->
 
 The Effective Age $\text{AGEeff}$ is the age of the contracts adjusted for the TVL of the contracts. The $\text{AGEeff}$ is calculated as follows:
 
@@ -13098,19 +13154,19 @@ Here $ln$ is the natural logarithm.
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######### A.3.3.2.1.2.2.4.3.1 - Contract Age [Core]  <!-- UUID: 8ee9538a-0655-4600-8436-1cc610bcdb1b -->
+######### A.3.2.2.1.2.2.4.3.1 - Contract Age [Core]  <!-- UUID: 8ee9538a-0655-4600-8436-1cc610bcdb1b -->
 
 The contract age $\text{CA}$ is the average age, in months, of each of the relevant contracts. The age of each relevant contract should be measured based on the time elapsed between the date the contract was deployed and the date of calculation.
 
-######### A.3.3.2.1.2.2.4.3.2 - Geometric Mean Total Value Locked [Core]  <!-- UUID: bec61312-6a70-4881-8a52-4a7fa75dbf07 -->
+######### A.3.2.2.1.2.2.4.3.2 - Geometric Mean Total Value Locked [Core]  <!-- UUID: bec61312-6a70-4881-8a52-4a7fa75dbf07 -->
 
 The Geometric Mean Total Value Locked $\text{gmTVL}$ is the geometric mean of the daily TVL over the contract age.
 
-######### A.3.3.2.1.2.2.4.3.3 - Total Value Locked Threshold [Core]  <!-- UUID: c7939b23-39e1-4299-9beb-700857b8f90e -->
+######### A.3.2.2.1.2.2.4.3.3 - Total Value Locked Threshold [Core]  <!-- UUID: c7939b23-39e1-4299-9beb-700857b8f90e -->
 
 The Total Value Locked Threshold $\text{TVLthreshold}$ is a factor used to normalize the Geometric mean Total Value Locked. The $\text{TVLthreshold}$ is set to `100,000,000`.
 
-####### A.3.3.2.1.2.2.5 - Audit Factor [Core]  <!-- UUID: 0016d78c-66e7-447f-9691-eaff8ea68d6d -->
+####### A.3.2.2.1.2.2.5 - Audit Factor [Core]  <!-- UUID: 0016d78c-66e7-447f-9691-eaff8ea68d6d -->
 
 The Audit Factor $AF$ is a measure of the extent to which the Base Risk is reduced by audits. The $AF$ is calculated as:
 
@@ -13122,7 +13178,7 @@ The audit from each audit firm with the highest product of Effective Audit Value
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######## A.3.3.2.1.2.2.5.1 - Effective Audit Value [Core]  <!-- UUID: ade75eba-ac08-465c-a8a1-4ccaf5b99109 -->
+######## A.3.2.2.1.2.2.5.1 - Effective Audit Value [Core]  <!-- UUID: ade75eba-ac08-465c-a8a1-4ccaf5b99109 -->
 
 The Effective Audit Value $\text{effAuditValue}$ measures the effectiveness of a single audit in reducing the risk of a set of smart contracts and is a function of the percent of the code covered by the audit and the reputation of the audit firm. The $\text{effAuditValue}$ is calculated as:
 
@@ -13132,7 +13188,7 @@ $$
 
 The parameters of this formula are specified in the subdocuments herein.
 
-######### A.3.3.2.1.2.2.5.1.1 - Coverage [Core]  <!-- UUID: 096c574f-7194-4b4d-aa5b-e5da7c6c87f2 -->
+######### A.3.2.2.1.2.2.5.1.1 - Coverage [Core]  <!-- UUID: 096c574f-7194-4b4d-aa5b-e5da7c6c87f2 -->
 
 The Coverage $\text{coverage}$ is a measure of the percent of a set of smart contracts that were covered in the scope of an audit. The $\text{coverage}$ is calculated as:
 
@@ -13142,37 +13198,37 @@ $$
 
 The parameters of this formula are specified in the subdocuments herein.
 
-########## A.3.3.2.1.2.2.5.1.1.1 - Lines Of Code Covered [Core]  <!-- UUID: 428022f5-039e-418b-831d-7f816afb2cf3 -->
+########## A.3.2.2.1.2.2.5.1.1.1 - Lines Of Code Covered [Core]  <!-- UUID: 428022f5-039e-418b-831d-7f816afb2cf3 -->
 
 The Lines Of Code Covered $\text{LinesOfCodeCovered}$ is the number of lines of code of the relevant contracts that were within the scope of the audit, excluding documentation and tests.
 
-########## A.3.3.2.1.2.2.5.1.1.2 - Total Lines Of Code [Core]  <!-- UUID: baaf78d3-7182-459e-83a0-6494eb43f048 -->
+########## A.3.2.2.1.2.2.5.1.1.2 - Total Lines Of Code [Core]  <!-- UUID: baaf78d3-7182-459e-83a0-6494eb43f048 -->
 
 The Total Lines Of Code $\text{TotalLinesOfCode}$ is the total number of lines of code of the relevant contracts, excluding documentation and tests.
 
-######### A.3.3.2.1.2.2.5.1.2 - Effectiveness Coefficient [Core]  <!-- UUID: d281c572-ff98-43ba-a01d-e54657b50ab9 -->
+######### A.3.2.2.1.2.2.5.1.2 - Effectiveness Coefficient [Core]  <!-- UUID: d281c572-ff98-43ba-a01d-e54657b50ab9 -->
 
 The Effectiveness Coefficient $\text{effectivenessCoefficient}$ is a measure of the effectiveness of the particular audit firm and is estimated based on the tier of the audit firm.
 
-########## A.3.3.2.1.2.2.5.1.2.1 - Audit Firm Tiers [Core]  <!-- UUID: 97eee131-b5d6-4246-8631-fb077616b671 -->
+########## A.3.2.2.1.2.2.5.1.2.1 - Audit Firm Tiers [Core]  <!-- UUID: 97eee131-b5d6-4246-8631-fb077616b671 -->
 
 Audit firms are divided into two tiers: top-tier and mid-tier.
 
-########### A.3.3.2.1.2.2.5.1.2.1.1 - Top-Tier Effectiveness Coefficient [Core]  <!-- UUID: b4a13cfc-1fef-47da-a350-6e81346203f4 -->
+########### A.3.2.2.1.2.2.5.1.2.1.1 - Top-Tier Effectiveness Coefficient [Core]  <!-- UUID: b4a13cfc-1fef-47da-a350-6e81346203f4 -->
 
 The Effectiveness Coefficient of a top-tier audit firm is set to `0.8`.
 
-########### A.3.3.2.1.2.2.5.1.2.1.2 - Mid-Tier Effectiveness Coefficient [Core]  <!-- UUID: 18e07645-44c3-4175-8941-d7010233288a -->
+########### A.3.2.2.1.2.2.5.1.2.1.2 - Mid-Tier Effectiveness Coefficient [Core]  <!-- UUID: 18e07645-44c3-4175-8941-d7010233288a -->
 
 The Effectiveness Coefficient of a mid-tier audit firm is set to `0.5`.
 
-########## A.3.3.2.1.2.2.5.1.2.2 - Audit Firms By Tier [Core]  <!-- UUID: 5b542b65-2ef1-49e9-8995-122373f1b312 -->
+########## A.3.2.2.1.2.2.5.1.2.2 - Audit Firms By Tier [Core]  <!-- UUID: 5b542b65-2ef1-49e9-8995-122373f1b312 -->
 
 The subdocuments herein categorize specific audit firms into the top-tier and mid-tier categories. Audits from firms other than the ones specified herein may not be included in the calculation of the Audit Adjustment Factor.
 
 The Protocol Security Workstream Lead must review this categorization on a regular basis and update it as necessary.
 
-########### A.3.3.2.1.2.2.5.1.2.2.1 - List Of Top-Tier Audit Firms [Core]  <!-- UUID: 6ada67c6-0cf1-4456-b280-57e8ae7edc13 -->
+########### A.3.2.2.1.2.2.5.1.2.2.1 - List Of Top-Tier Audit Firms [Core]  <!-- UUID: 6ada67c6-0cf1-4456-b280-57e8ae7edc13 -->
 
 The top-tier audit firms are:
 
@@ -13181,7 +13237,7 @@ The top-tier audit firms are:
 • ConsenSys Diligence
 • Trail Of Bits
 
-########### A.3.3.2.1.2.2.5.1.2.2.2 - List Of Mid-Tier Audit Firms [Core]  <!-- UUID: dea3a182-4b89-4fda-9eed-232562e5f057 -->
+########### A.3.2.2.1.2.2.5.1.2.2.2 - List Of Mid-Tier Audit Firms [Core]  <!-- UUID: dea3a182-4b89-4fda-9eed-232562e5f057 -->
 
 The mid-tier audit firms are:
 
@@ -13218,7 +13274,7 @@ The mid-tier audit firms are:
 • Sherlock
 • 0xMacro
 
-######## A.3.3.2.1.2.2.5.2 - Decay Factor [Core]  <!-- UUID: 7ccfae3d-59ae-433e-adba-7822ae335755 -->
+######## A.3.2.2.1.2.2.5.2 - Decay Factor [Core]  <!-- UUID: 7ccfae3d-59ae-433e-adba-7822ae335755 -->
 
 The Decay Factor $decayFactor$ is a parameter indicating how rapidly the effectiveness of audits in reducing risk decreases over time. The $decayFactor$ is calculated as follows:
 
@@ -13228,51 +13284,51 @@ $$
 
 The parameter of this formula is specified in the subdocument herein.
 
-######### A.3.3.2.1.2.2.5.2.1 - Audit Age [Core]  <!-- UUID: 792084a1-d844-4774-b909-0cf0bc40df7c -->
+######### A.3.2.2.1.2.2.5.2.1 - Audit Age [Core]  <!-- UUID: 792084a1-d844-4774-b909-0cf0bc40df7c -->
 
 The Audit Age $auditAge$ is the age, in years, of the audit. The age of the audit should be measured based on the time elapsed between the date the audit report was issued and the date of calculation.
 
-###### A.3.3.2.1.2.3 - Smart Contract Risk Required Risk Capital Calculation [Core]  <!-- UUID: b2c8867b-0da0-4765-a927-9a530a0ccf24 -->
+###### A.3.2.2.1.2.3 - Smart Contract Risk Required Risk Capital Calculation [Core]  <!-- UUID: b2c8867b-0da0-4765-a927-9a530a0ccf24 -->
 
 The third step in calculating the Instance Smart Contract RRC with respect to an Allocation System opportunity is to calculate the Instance Smart Contract RRC as a function of the Smart Contract Risk Rating.
 
-####### A.3.3.2.1.2.3.1 - Calculation Of Instance Smart Contract RRC Percentage Based on Risk Category [Core]  <!-- UUID: 01f9d3be-2e3e-4bd0-9f34-1000165405c5 -->
+####### A.3.2.2.1.2.3.1 - Calculation Of Instance Smart Contract CRR Based on Risk Category [Core]  <!-- UUID: 01f9d3be-2e3e-4bd0-9f34-1000165405c5 -->
 
-The methodology used to calculate the Instance Smart Contract RRC as a percentage of the exposure depends on the Risk Rating $r$ of the protocol as specified in the documents herein.
+The methodology used to calculate the Instance Smart Contract CRR as a percentage of the exposure depends on the Risk Rating $r$ of the protocol as specified in the documents herein.
 
-######## A.3.3.2.1.2.3.1.1 - Low Risk Protocols [Core]  <!-- UUID: 80701bc2-5b75-4205-841e-7799c2be2c33 -->
+######## A.3.2.2.1.2.3.1.1 - Low Risk Protocols [Core]  <!-- UUID: 80701bc2-5b75-4205-841e-7799c2be2c33 -->
 
 Low risk protocols are ones with a Risk Rating between less than or equal to `25`. The methodology for low risk protocols is specified in the documents herein.
 
-######### A.3.3.2.1.2.3.1.1.1 - Calculate F1 Parameter [Core]  <!-- UUID: 4f841792-cffb-4817-939a-454ce4f262f0 -->
+######### A.3.2.2.1.2.3.1.1.1 - Calculate F1 Parameter [Core]  <!-- UUID: 4f841792-cffb-4817-939a-454ce4f262f0 -->
 
 For low risk protocols, the F1 parameter $f_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
 
-######### A.3.3.2.1.2.3.1.1.2 - Calculate Required Capital Percentage Using Piecewise Function With F1 Thresholds [Core]  <!-- UUID: e7be59bb-a72c-4ca8-afeb-da78f1afd44e -->
+######### A.3.2.2.1.2.3.1.1.2 - Calculate Capital Requirement Ratio Using Piecewise Function With F1 Thresholds [Core]  <!-- UUID: e7be59bb-a72c-4ca8-afeb-da78f1afd44e -->
 
-The Required Capital Percentage should then be calculated by inputting the F1 parameter calculated in [A.3.3 - Calculate F1 Parameter](4f841792-cffb-4817-939a-454ce4f262f0) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F1 thresholds specified in [A.3.3 - Kink Threshold](c28b47a8-951b-4ca4-8501-bbd6d2279b74).
+The Capital Requirement Ratio should then be calculated by inputting the F1 parameter calculated in [A.3.3 - Calculate F1 Parameter](4f841792-cffb-4817-939a-454ce4f262f0) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F1 thresholds specified in [A.3.3 - Kink Threshold](c28b47a8-951b-4ca4-8501-bbd6d2279b74).
 
-######## A.3.3.2.1.2.3.1.2 - Medium Risk Protocols [Core]  <!-- UUID: 8500fc58-7cd8-4573-b64d-bf7bd445745e -->
+######## A.3.2.2.1.2.3.1.2 - Medium Risk Protocols [Core]  <!-- UUID: 8500fc58-7cd8-4573-b64d-bf7bd445745e -->
 
 Medium risk protocols are ones with a Risk Rating greater than `25` but less than or equal to `50`. The methodology for medium risk protocols is specified in the documents herein.
 
-######### A.3.3.2.1.2.3.1.2.1 - Calculate F1 Parameter [Core]  <!-- UUID: fb47383f-e7f9-412b-893d-86e4c7b83def -->
+######### A.3.2.2.1.2.3.1.2.1 - Calculate F1 Parameter [Core]  <!-- UUID: fb47383f-e7f9-412b-893d-86e4c7b83def -->
 
 For medium risk protocols, the F1 parameter $f_{1}$ should first be calculated using the methodology specified in [A.3.3 - F1 Function](443bcf99-b015-44d3-99c9-42fd611710fe).
 
-######### A.3.3.2.1.2.3.1.2.2 - Calculate F2 Parameter [Core]  <!-- UUID: 3f2622e3-dce6-44ef-9bc5-2853413abbe8 -->
+######### A.3.2.2.1.2.3.1.2.2 - Calculate F2 Parameter [Core]  <!-- UUID: 3f2622e3-dce6-44ef-9bc5-2853413abbe8 -->
 
 The F2 parameter $f_{2}$ should then be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
 
-######### A.3.3.2.1.2.3.1.2.3 - Calculate Required Capital Percentage Using F1 Piecewise Function [Core]  <!-- UUID: 15290d29-ea87-4d07-a25e-84a6c34c6c87 -->
+######### A.3.2.2.1.2.3.1.2.3 - Calculate Capital Requirement Ratio Using F1 Piecewise Function [Core]  <!-- UUID: 15290d29-ea87-4d07-a25e-84a6c34c6c87 -->
 
-The Required Capital Percentage using the F1 Piecewise Function should then be calculated by inputting the F1 parameter calculated in [A.3.3 - Calculate F1 Parameter](fb47383f-e7f9-412b-893d-86e4c7b83def) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F1 thresholds specified in [A.3.3 - Kink Threshold](c28b47a8-951b-4ca4-8501-bbd6d2279b74).
+The Capital Requirement Ratio using the F1 Piecewise Function should then be calculated by inputting the F1 parameter calculated in [A.3.3 - Calculate F1 Parameter](fb47383f-e7f9-412b-893d-86e4c7b83def) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F1 thresholds specified in [A.3.3 - Kink Threshold](c28b47a8-951b-4ca4-8501-bbd6d2279b74).
 
-######### A.3.3.2.1.2.3.1.2.4 - Calculate Required Capital Percentage Using F2 Piecewise Function [Core]  <!-- UUID: ac7e97eb-a780-4986-8f4d-0f9c5a0831a4 -->
+######### A.3.2.2.1.2.3.1.2.4 - Calculate Capital Requirement Ratio Using F2 Piecewise Function [Core]  <!-- UUID: ac7e97eb-a780-4986-8f4d-0f9c5a0831a4 -->
 
-The Required Capital Percentage using the F2 Piecewise Function should then be calculated by inputting the F2 parameter calculated in [A.3.3 - Calculate F2 Parameter](3f2622e3-dce6-44ef-9bc5-2853413abbe8) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F2 thresholds specified in [A.3.3 - Maximum Threshold](df77d6b1-b08a-45c9-8fc2-74268918b0b0).
+The Capital Requirement Ratio using the F2 Piecewise Function should then be calculated by inputting the F2 parameter calculated in [A.3.3 - Calculate F2 Parameter](3f2622e3-dce6-44ef-9bc5-2853413abbe8) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F2 thresholds specified in [A.3.3 - Maximum Threshold](df77d6b1-b08a-45c9-8fc2-74268918b0b0).
 
-######### A.3.3.2.1.2.3.1.2.5 - Calculate Blended Average Required Capital Percentage [Core]  <!-- UUID: 95ee7840-66b0-4db9-80f7-c1f641bf0f17 -->
+######### A.3.2.2.1.2.3.1.2.5 - Calculate Blended Average Required Capital Percentage [Core]  <!-- UUID: 95ee7840-66b0-4db9-80f7-c1f641bf0f17 -->
 
 The final Required Capital Percentage $x$ should be calculated as a weighted average of the F1 Required Capital Percentage and the F2 Required Capital Percentage as follows:
 
@@ -13282,11 +13338,11 @@ $$
 
 The parameters of this formula are defined in the subdocuments herein.
 
-########## A.3.3.2.1.2.3.1.2.5.1 - Constant Factor [Core]  <!-- UUID: 303c0d7f-42a7-4b9e-8afd-26e4d54e2f56 -->
+########## A.3.2.2.1.2.3.1.2.5.1 - Constant Factor [Core]  <!-- UUID: 303c0d7f-42a7-4b9e-8afd-26e4d54e2f56 -->
 
 The constant factor $b$ is set to `0.15`.
 
-########## A.3.3.2.1.2.3.1.2.5.2 - Alpha [Core]  <!-- UUID: b753da3d-ce30-4a66-8da6-16f563cee120 -->
+########## A.3.2.2.1.2.3.1.2.5.2 - Alpha [Core]  <!-- UUID: b753da3d-ce30-4a66-8da6-16f563cee120 -->
 
 Alpha $\alpha$ is a weighting factor indicating how close the Risk Rating is to the threshold for a High Risk Protocol versus the threshold for a Low Risk Protocol. It is calculated as:
 
@@ -13296,71 +13352,71 @@ $$
 
 Here $r$ is the Risk Rating of the protocol.
 
-########## A.3.3.2.1.2.3.1.2.5.3 - F1 Required Capital Percentage [Core]  <!-- UUID: 04abc79f-ad0f-49d9-91d4-1a94271e1979 -->
+########## A.3.2.2.1.2.3.1.2.5.3 - F1 Capital Requirement Ratio [Core]  <!-- UUID: 04abc79f-ad0f-49d9-91d4-1a94271e1979 -->
 
-The F1 Required Capital Percentage $f_1$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F1 Piecewise Function](15290d29-ea87-4d07-a25e-84a6c34c6c87).
+The F1 Capital Requirement Ratio $f_1$ is the figure calculated as the output of [A.3.3 - Calculate Capital Requirement Ratio Using F1 Piecewise Function](15290d29-ea87-4d07-a25e-84a6c34c6c87).
 
-########## A.3.3.2.1.2.3.1.2.5.4 - F2 Required Capital Percentage [Core]  <!-- UUID: 44f6339f-988c-494b-9f0f-37460d11ac56 -->
+########## A.3.2.2.1.2.3.1.2.5.4 - F2 Capital Requirement Ratio [Core]  <!-- UUID: 44f6339f-988c-494b-9f0f-37460d11ac56 -->
 
-The F2 Required Capital Percentage $f_2$ is the figure calculated as the output of [A.3.3 - Calculate Required Capital Percentage Using F2 Piecewise Function](ac7e97eb-a780-4986-8f4d-0f9c5a0831a4).
+The F2 Capital Requirement Ratio $f_2$ is the figure calculated as the output of [A.3.3 - Calculate Capital Requirement Ratio Using F2 Piecewise Function](ac7e97eb-a780-4986-8f4d-0f9c5a0831a4).
 
-######## A.3.3.2.1.2.3.1.3 - High Risk Protocols [Core]  <!-- UUID: 5dc03a3c-aac9-4a32-bcf6-16077d21e4fd -->
+######## A.3.2.2.1.2.3.1.3 - High Risk Protocols [Core]  <!-- UUID: 5dc03a3c-aac9-4a32-bcf6-16077d21e4fd -->
 
 High risk protocols are ones with a Risk Rating greater than `50` but less than or equal to `75`. The methodology for high risk protocols is specified in the documents herein.
 
-######### A.3.3.2.1.2.3.1.3.1 - Calculate F2 Parameter [Core]  <!-- UUID: 234dea0c-e4db-49ea-8dff-30bd7652f6c2 -->
+######### A.3.2.2.1.2.3.1.3.1 - Calculate F2 Parameter [Core]  <!-- UUID: 234dea0c-e4db-49ea-8dff-30bd7652f6c2 -->
 
 For high risk protocols, the F2 parameter $f_{2}$ should first be calculated using the methodology specified in [A.3.3 - F2 Function](3286915a-7d81-4eb4-a238-bc7ded8e2634).
 
-######### A.3.3.2.1.2.3.1.3.2 - Calculate Required Capital Percentage Using Piecewise Function With F2 Thresholds [Core]  <!-- UUID: 456c0a8f-348a-477b-8550-eea23e9fd4a5 -->
+######### A.3.2.2.1.2.3.1.3.2 - Calculate Capital Requirement Ratio Using Piecewise Function With F2 Thresholds [Core]  <!-- UUID: 456c0a8f-348a-477b-8550-eea23e9fd4a5 -->
 
-The Required Capital Percentage should then be calculated by inputting the F2 parameter calculated in [A.3.3 - Calculate F2 Parameter](234dea0c-e4db-49ea-8dff-30bd7652f6c2) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F2 thresholds specified in [A.3.3 - Maximum Threshold](df77d6b1-b08a-45c9-8fc2-74268918b0b0).
+The Capital Requirement Ratio should then be calculated by inputting the F2 parameter calculated in [A.3.3 - Calculate F2 Parameter](234dea0c-e4db-49ea-8dff-30bd7652f6c2) into the Piecewise Function specified in [A.3.3 - Piecewise Function](7441253c-0030-4b8e-ac91-65046761aab6) using the F2 thresholds specified in [A.3.3 - Maximum Threshold](df77d6b1-b08a-45c9-8fc2-74268918b0b0).
 
-######## A.3.3.2.1.2.3.1.4 - Extreme Risk Protocols [Core]  <!-- UUID: 8c73b3c0-04e2-491d-bd52-367c3590e992 -->
+######## A.3.2.2.1.2.3.1.4 - Extreme Risk Protocols [Core]  <!-- UUID: 8c73b3c0-04e2-491d-bd52-367c3590e992 -->
 
 Extreme risk protocols are ones with a Risk Rating greater than `75`. The methodology for extreme risk protocols is specified in the documents herein.
 
-######### A.3.3.2.1.2.3.1.4.1 - Maximum Required Risk Capital Percentage [Core]  <!-- UUID: a5a0fab2-d380-41eb-b7d0-ba534cefa0ae -->
+######### A.3.2.2.1.2.3.1.4.1 - Maximum Capital Requirement Ratio [Core]  <!-- UUID: a5a0fab2-d380-41eb-b7d0-ba534cefa0ae -->
 
-For extreme risk protocols, the required capital percentage is automatically set to 100%.
+For extreme risk protocols, the Capital Requirement Ratio is automatically set to 100%.
 
-####### A.3.3.2.1.2.3.2 - Calculation Of Instance Smart Contract RRC Value [Core]  <!-- UUID: 6905f51d-374e-4bf7-b43c-059073d2d68c -->
+####### A.3.2.2.1.2.3.2 - Calculation Of Instance Smart Contract CRR Value [Core]  <!-- UUID: 6905f51d-374e-4bf7-b43c-059073d2d68c -->
 
-The Instance Smart Contract RRC is equal to the product of (1) the Instance Smart Contract RRC Percentage calculated from [A.3.3 - Calculation Of Instance Smart Contract RRC Percentage Based on Risk Category](01f9d3be-2e3e-4bd0-9f34-1000165405c5) and (2) the exposure to the Allocation System opportunity.
+The Instance Smart Contract CRR is equal to the product of (1) the Instance Smart Contract CRR calculated from [A.3.3 - Calculation Of Instance Smart Contract CRR Based on Risk Category](01f9d3be-2e3e-4bd0-9f34-1000165405c5) and (2) the exposure to the Allocation System opportunity.
 
-####### A.3.3.2.1.2.3.3 - Inputs To Instance Smart Contract RRC Calculations [Core]  <!-- UUID: b634443b-ee03-4b53-a924-049fa971bfef -->
+####### A.3.2.2.1.2.3.3 - Inputs To Instance Smart Contract CRR Calculations [Core]  <!-- UUID: b634443b-ee03-4b53-a924-049fa971bfef -->
 
-The documents herein define functions and parameters that are used in multiple parts of the methodology for calculating the Instance Smart Contract RRC based on the Smart Contract Risk Rating specified in [A.3.3 - Calculation Of Instance Smart Contract RRC Percentage Based on Risk Category](01f9d3be-2e3e-4bd0-9f34-1000165405c5).
+The documents herein define functions and parameters that are used in multiple parts of the methodology for calculating the Instance Smart Contract CRR based on the Smart Contract Risk Rating specified in [A.3.3 - Calculation Of Instance Smart Contract CRR Based on Risk Category](01f9d3be-2e3e-4bd0-9f34-1000165405c5).
 
-######## A.3.3.2.1.2.3.3.1 - Piecewise Function [Core]  <!-- UUID: 7441253c-0030-4b8e-ac91-65046761aab6 -->
+######## A.3.2.2.1.2.3.3.1 - Piecewise Function [Core]  <!-- UUID: 7441253c-0030-4b8e-ac91-65046761aab6 -->
 
-The Piecewise Function $RCC(x)$ calculates a percentage risk capital requirement based on an input $x$ and is defined as follows:
+The Piecewise Function $CRR(x)$ calculates a percentage risk capital requirement based on an input $x$ and is defined as follows:
 
 $$
-\text{RCC}(x) =\begin{cases}a & \text{if } x \le x_{\text{start}}, \\[8pt]b \times \dfrac{x - x_{\text{start}}}{x_{\text{kink}} - x_{\text{start}}} & \text{if } x_{\text{start}} < x \le x_{\text{kink}}, \\[8pt]b \;+\; c \;\dfrac{x - x_{\text{kink}}}{x_{\text{max}} - x_{\text{kink}}}& \text{if } x_{\text{kink}} < x < x_{\text{max}}, \\[8pt]d& \text{if } x \ge x_{\text{max}}.\end{cases}
+\text{CRR}(x) =\begin{cases}a & \text{if } x \le x_{\text{start}}, \\[8pt]b \times \dfrac{x - x_{\text{start}}}{x_{\text{kink}} - x_{\text{start}}} & \text{if } x_{\text{start}} < x \le x_{\text{kink}}, \\[8pt]b \;+\; c \;\dfrac{x - x_{\text{kink}}}{x_{\text{max}} - x_{\text{kink}}}& \text{if } x_{\text{kink}} < x < x_{\text{max}}, \\[8pt]d& \text{if } x \ge x_{\text{max}}.\end{cases}
 $$
 
-######### A.3.3.2.1.2.3.3.1.1 - Low Risk Parameter [Core]  <!-- UUID: d6fda10f-7eff-4703-a2b4-29bbcd2241e1 -->
+######### A.3.2.2.1.2.3.3.1.1 - Low Risk Parameter [Core]  <!-- UUID: d6fda10f-7eff-4703-a2b4-29bbcd2241e1 -->
 
 The low risk parameter $a$ is the output of the piecewise function when the input is at or below the starting threshold. The $a$ parameter is set to `0`.
 
-######### A.3.3.2.1.2.3.3.1.2 - Medium Risk Parameter [Core]  <!-- UUID: 5efe5b7e-cd77-43ea-9499-549e0f46a5d1 -->
+######### A.3.2.2.1.2.3.3.1.2 - Medium Risk Parameter [Core]  <!-- UUID: 5efe5b7e-cd77-43ea-9499-549e0f46a5d1 -->
 
 The medium risk parameter $b$ is the output of the piecewise function when the input is equal to the kink threshold. The $b$ parameter is set to `0.25`.
 
-######### A.3.3.2.1.2.3.3.1.3 - High Risk Parameter [Core]  <!-- UUID: 2262dbd9-d59b-490f-9ff6-b28057bbb6ce -->
+######### A.3.2.2.1.2.3.3.1.3 - High Risk Parameter [Core]  <!-- UUID: 2262dbd9-d59b-490f-9ff6-b28057bbb6ce -->
 
 The high risk parameter $c$ is the incremental value above the $b$ parameter that the piecewise function will output when the input is equal to the maximum threshold. The $c$ parameter is set to `0.75`.
 
-######### A.3.3.2.1.2.3.3.1.4 - Extreme Risk Parameter [Core]  <!-- UUID: a2ed34be-4bb3-44ae-b92c-4bf4384abc8b -->
+######### A.3.2.2.1.2.3.3.1.4 - Extreme Risk Parameter [Core]  <!-- UUID: a2ed34be-4bb3-44ae-b92c-4bf4384abc8b -->
 
 The extreme risk parameter $d$ is the output of the piecewise function when the input is equal to or greater than the maximum threshold. The $d$ parameter is set to `1`.
 
-######### A.3.3.2.1.2.3.3.1.5 - Thresholds [Core]  <!-- UUID: 0fc529dd-d4f7-43d3-a618-d41fd8a8c42f -->
+######### A.3.2.2.1.2.3.3.1.5 - Thresholds [Core]  <!-- UUID: 0fc529dd-d4f7-43d3-a618-d41fd8a8c42f -->
 
 The documents herein define the thresholds for the piecewise function.
 
-########## A.3.3.2.1.2.3.3.1.5.1 - Starting Threshold [Core]  <!-- UUID: bbda61eb-828d-486a-8bba-df1f517ad0b5 -->
+########## A.3.2.2.1.2.3.3.1.5.1 - Starting Threshold [Core]  <!-- UUID: bbda61eb-828d-486a-8bba-df1f517ad0b5 -->
 
 The Starting Threshold $x_{\text{start}}$ is calculated as follows:
 
@@ -13372,7 +13428,7 @@ Here $r$ is the Risk Rating.
 
 The parameters of this formula are defined in [A.3.3 - Threshold Parameters](654528b9-d7c8-4cee-9261-d5a745ea231e).
 
-########## A.3.3.2.1.2.3.3.1.5.2 - Maximum Threshold [Core]  <!-- UUID: df77d6b1-b08a-45c9-8fc2-74268918b0b0 -->
+########## A.3.2.2.1.2.3.3.1.5.2 - Maximum Threshold [Core]  <!-- UUID: df77d6b1-b08a-45c9-8fc2-74268918b0b0 -->
 
 The Maximum Threshold $x_{\text{max}}$ is calculated as follows:
 
@@ -13384,7 +13440,7 @@ Here $r$ is the Risk Rating.
 
 The parameters of this formula are defined in [A.3.3 - Threshold Parameters](654528b9-d7c8-4cee-9261-d5a745ea231e).
 
-########## A.3.3.2.1.2.3.3.1.5.3 - Kink Threshold [Core]  <!-- UUID: c28b47a8-951b-4ca4-8501-bbd6d2279b74 -->
+########## A.3.2.2.1.2.3.3.1.5.3 - Kink Threshold [Core]  <!-- UUID: c28b47a8-951b-4ca4-8501-bbd6d2279b74 -->
 
 The Kink Threshold $x_{\text{kink}}$ is calculated as follows:
 
@@ -13396,79 +13452,79 @@ Here $r$ is the Risk Rating.
 
 The parameters of this formula are defined in [A.3.3 - Threshold Parameters](654528b9-d7c8-4cee-9261-d5a745ea231e).
 
-########## A.3.3.2.1.2.3.3.1.5.4 - Threshold Parameters [Core]  <!-- UUID: 654528b9-d7c8-4cee-9261-d5a745ea231e -->
+########## A.3.2.2.1.2.3.3.1.5.4 - Threshold Parameters [Core]  <!-- UUID: 654528b9-d7c8-4cee-9261-d5a745ea231e -->
 
 The documents herein define inputs that are used to calculate the Starting Threshold, Maximum Threshold, and Kink Threshold. These parameters differ depending on whether the piecewise function is invoked with F1 threshold parameters or F2 threshold parameters.
 
-########### A.3.3.2.1.2.3.3.1.5.4.1 - F1 Threshold Parameters [Core]  <!-- UUID: f022c0b5-e19d-4fff-aa14-c34c686a7629 -->
+########### A.3.2.2.1.2.3.3.1.5.4.1 - F1 Threshold Parameters [Core]  <!-- UUID: f022c0b5-e19d-4fff-aa14-c34c686a7629 -->
 
 The documents herein define the F1 threshold parameters.
 
-############ A.3.3.2.1.2.3.3.1.5.4.1.1 - Rating Point Scaling Coefficient [Core]  <!-- UUID: c2c18ff3-1186-4dd9-84b4-ace189d6cda4 -->
+############ A.3.2.2.1.2.3.3.1.5.4.1.1 - Rating Point Scaling Coefficient [Core]  <!-- UUID: c2c18ff3-1186-4dd9-84b4-ace189d6cda4 -->
 
 The value of the Rating Point Scaling Coefficient $i$ is `0.01`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.1.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 26fc2a85-86c4-4b75-b561-357d1fcc6115 -->
+############ A.3.2.2.1.2.3.3.1.5.4.1.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 26fc2a85-86c4-4b75-b561-357d1fcc6115 -->
 
 The value of the Reference Inflection Risk Rating $r_i$ is `50`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.1.3 - Maximum Interval Width [Core]  <!-- UUID: 4f28bafe-6366-40ce-a3df-b796421af66c -->
+############ A.3.2.2.1.2.3.3.1.5.4.1.3 - Maximum Interval Width [Core]  <!-- UUID: 4f28bafe-6366-40ce-a3df-b796421af66c -->
 
 The value of the Maximum Interval Width $i_{max}$ is `0.50`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.1.4 - Kink Location Fraction [Core]  <!-- UUID: 648567a4-b457-46a0-b9da-7a1586c0735e -->
+############ A.3.2.2.1.2.3.3.1.5.4.1.4 - Kink Location Fraction [Core]  <!-- UUID: 648567a4-b457-46a0-b9da-7a1586c0735e -->
 
 The value of the Kink Location Fraction $i_{kink}$ is `0.75`.
 
-########### A.3.3.2.1.2.3.3.1.5.4.2 - F2 Threshold Parameters [Core]  <!-- UUID: a7250cdc-5bf8-48c0-a79f-beb774de8196 -->
+########### A.3.2.2.1.2.3.3.1.5.4.2 - F2 Threshold Parameters [Core]  <!-- UUID: a7250cdc-5bf8-48c0-a79f-beb774de8196 -->
 
 The documents herein define the F2 threshold parameters.
 
-############ A.3.3.2.1.2.3.3.1.5.4.2.1 - Rating Point Scaling Coefficient [Core]  <!-- UUID: c7650bb7-11b0-4ab1-a163-09f948b740a1 -->
+############ A.3.2.2.1.2.3.3.1.5.4.2.1 - Rating Point Scaling Coefficient [Core]  <!-- UUID: c7650bb7-11b0-4ab1-a163-09f948b740a1 -->
 
 The value of the Rating Point Scaling Coefficient $i$ is `0.02`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.2.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 9cee8e99-7d32-4eaa-a559-c364c428f7e1 -->
+############ A.3.2.2.1.2.3.3.1.5.4.2.2 - Reference Inflection Risk Rating [Core]  <!-- UUID: 9cee8e99-7d32-4eaa-a559-c364c428f7e1 -->
 
 The value of the Reference Inflection Risk Rating $r_i$ is `75`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.2.3 - Maximum Interval Width [Core]  <!-- UUID: e746474b-16ae-4472-b382-f431060a72ec -->
+############ A.3.2.2.1.2.3.3.1.5.4.2.3 - Maximum Interval Width [Core]  <!-- UUID: e746474b-16ae-4472-b382-f431060a72ec -->
 
 The value of the Maximum Interval Width $i_{max}$ is `0.50`.
 
-############ A.3.3.2.1.2.3.3.1.5.4.2.4 - Kink Location Fraction [Core]  <!-- UUID: 0e04acfb-336b-499a-bbec-e332a82685fd -->
+############ A.3.2.2.1.2.3.3.1.5.4.2.4 - Kink Location Fraction [Core]  <!-- UUID: 0e04acfb-336b-499a-bbec-e332a82685fd -->
 
 The value of the Kink Location Fraction $i_{kink}$ is `0.75`.
 
-######## A.3.3.2.1.2.3.3.2 - F1 And F2 Functions [Core]  <!-- UUID: 3f150022-5449-42cf-b673-fd6ca037f624 -->
+######## A.3.2.2.1.2.3.3.2 - F1 And F2 Functions [Core]  <!-- UUID: 3f150022-5449-42cf-b673-fd6ca037f624 -->
 
 The documents herein define the F1 and F2 functions.
 
-######### A.3.3.2.1.2.3.3.2.1 - Variable Definitions [Core]  <!-- UUID: 7f919121-af12-4adb-904a-8ee88a70e98a -->
+######### A.3.2.2.1.2.3.3.2.1 - Variable Definitions [Core]  <!-- UUID: 7f919121-af12-4adb-904a-8ee88a70e98a -->
 
 The documents herein define variables used in the F1 and F2 functions.
 
-########## A.3.3.2.1.2.3.3.2.1.1 - Internal Exposure [Core]  <!-- UUID: 23cebf79-75ee-49d5-8244-a3e67add3b89 -->
+########## A.3.2.2.1.2.3.3.2.1.1 - Internal Exposure [Core]  <!-- UUID: 23cebf79-75ee-49d5-8244-a3e67add3b89 -->
 
 The Internal Exposure $e_{\text{int}}$ is the Agent’s allocation to the protocol.
 
-########## A.3.3.2.1.2.3.3.2.1.2 - Total Exposure [Core]  <!-- UUID: ca513c78-e517-4d95-9d5e-d9485cbaee7a -->
+########## A.3.2.2.1.2.3.3.2.1.2 - Total Exposure [Core]  <!-- UUID: ca513c78-e517-4d95-9d5e-d9485cbaee7a -->
 
 The Total Exposure $e_{\text{tot}}$ is the Sky Ecosystem’s aggregate allocation to the protocol.
 
-########## A.3.3.2.1.2.3.3.2.1.3 - Internal Liquid Surplus [Core]  <!-- UUID: 291fabbc-2121-4439-8129-f9eb9d9ec863 -->
+########## A.3.2.2.1.2.3.3.2.1.3 - Internal Liquid Surplus [Core]  <!-- UUID: 291fabbc-2121-4439-8129-f9eb9d9ec863 -->
 
 The Internal Liquid Surplus $s_{\text{liq}}$ is equal to the Total Risk Capital of the Agent.
 
-########## A.3.3.2.1.2.3.3.2.1.4 - Exposure Beyond Surplus [Core]  <!-- UUID: 6e3f511e-c4bc-479b-b34a-56c42863da2e -->
+########## A.3.2.2.1.2.3.3.2.1.4 - Exposure Beyond Surplus [Core]  <!-- UUID: 6e3f511e-c4bc-479b-b34a-56c42863da2e -->
 
 The Exposure Beyond Surplus $E_{\text{beyond}}$ is the difference between the Sky Ecosystem’s aggregate allocation to the protocol and aggregate internal liquid surplus of all Agents.
 
-########## A.3.3.2.1.2.3.3.2.1.5 - Total Collateral [Core]  <!-- UUID: 567dd86e-9df5-4dd5-94a9-dcb2d3d4a1e9 -->
+########## A.3.2.2.1.2.3.3.2.1.5 - Total Collateral [Core]  <!-- UUID: 567dd86e-9df5-4dd5-94a9-dcb2d3d4a1e9 -->
 
 The Total Collateral $C_{\text{tot}}$ is the total USDS and Dai debt in the system.
 
-######### A.3.3.2.1.2.3.3.2.2 - F1 Function [Core]  <!-- UUID: 443bcf99-b015-44d3-99c9-42fd611710fe -->
+######### A.3.2.2.1.2.3.3.2.2 - F1 Function [Core]  <!-- UUID: 443bcf99-b015-44d3-99c9-42fd611710fe -->
 
 The F1 parameter $f_{1}$ is calculated as follows:
 
@@ -13478,7 +13534,7 @@ $$
 
 The parameters of this function are defined in [A.3.3 - Variable Definitions](7f919121-af12-4adb-904a-8ee88a70e98a).
 
-######### A.3.3.2.1.2.3.3.2.3 - F2 Function [Core]  <!-- UUID: 3286915a-7d81-4eb4-a238-bc7ded8e2634 -->
+######### A.3.2.2.1.2.3.3.2.3 - F2 Function [Core]  <!-- UUID: 3286915a-7d81-4eb4-a238-bc7ded8e2634 -->
 
 The F2 parameter $f_2$ is calculated as follows:
 
@@ -13490,7 +13546,7 @@ Here $\alpha$ is equal to `0.1`.
 
 The parameters of this function are defined in [A.3.3 - Variable Definitions](7f919121-af12-4adb-904a-8ee88a70e98a).
 
-####### A.3.3.2.1.2.3.4 - Reference Implementation [Core]  <!-- UUID: 35ec7382-0613-4e74-b5ba-d86c647b1d73 -->
+####### A.3.2.2.1.2.3.4 - Reference Implementation [Core]  <!-- UUID: 35ec7382-0613-4e74-b5ba-d86c647b1d73 -->
 
 The document herein contains a reference implementation of the calculation of Instance Smart Contract RRC based on the Smart Contract Risk Rating.
 
@@ -13612,23 +13668,23 @@ def calculate_rrc_coverage(
     return coverage_fraction
 `
 
-###### A.3.3.2.1.2.4 - Exceptions [Core]  <!-- UUID: 3de7a183-3871-49e0-89b0-1363db621dc0 -->
+###### A.3.2.2.1.2.4 - Exceptions [Core]  <!-- UUID: 3de7a183-3871-49e0-89b0-1363db621dc0 -->
 
-The documents herein define exceptions to the calculation of Instance Smart Contract RRC for specific asset classes or protocols.
+The documents herein define exceptions to the calculation of Instance Smart Contract CRR for specific asset classes or protocols.
 
-####### A.3.3.2.1.2.4.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 52c23a24-aedf-4a1e-abf3-23b819ec9fc5 -->
+####### A.3.2.2.1.2.4.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 52c23a24-aedf-4a1e-abf3-23b819ec9fc5 -->
 
-In the short term, investments in BUIDL, JTRSY, USTB, and JAAA have Instance Smart Contract RRC and Instance Administrative RRC of zero.
+In the short term, investments in BUIDL, JTRSY, USTB, and JAAA have Instance Smart Contract CRR and Instance Administrative CRR of zero.
 
-####### A.3.3.2.1.2.4.2 - Legal Recourse Assets [Core]  <!-- UUID: 717b33c3-708e-4acf-acb4-7be5d5039a2f -->
+####### A.3.2.2.1.2.4.2 - Legal Recourse Assets [Core]  <!-- UUID: 717b33c3-708e-4acf-acb4-7be5d5039a2f -->
 
 The exposure for investments in Legal Recourse Assets is calculated as specified in the documents herein.
 
-######## A.3.3.2.1.2.4.2.1 - Definition [Core]  <!-- UUID: 48216554-13d2-460d-b7c5-539167946528 -->
+######## A.3.2.2.1.2.4.2.1 - Definition [Core]  <!-- UUID: 48216554-13d2-460d-b7c5-539167946528 -->
 
 Legal Recourse Assets (”LRAs”) are Real World Assets where legal recourse can be used to recover the assets even if the smart contract is technically hacked or exploited.
 
-######## A.3.3.2.1.2.4.2.2 - Exposure Calculation [Core]  <!-- UUID: 522e7dc2-9f9d-40f8-a24f-21a688099f15 -->
+######## A.3.2.2.1.2.4.2.2 - Exposure Calculation [Core]  <!-- UUID: 522e7dc2-9f9d-40f8-a24f-21a688099f15 -->
 
 The exposure for investments in Legal Recourse Assets is calculated according to the following formula:
 
@@ -13636,7 +13692,7 @@ The exposure for investments in Legal Recourse Assets is calculated according to
 
 The parameters of this formula are defined in the documents herein.
 
-######### A.3.3.2.1.2.4.2.2.1 - Equivalent Loss [Core]  <!-- UUID: dbe94efe-061f-4821-9494-aea27a8c80bf -->
+######### A.3.2.2.1.2.4.2.2.1 - Equivalent Loss [Core]  <!-- UUID: dbe94efe-061f-4821-9494-aea27a8c80bf -->
 
 Equivalent Loss is an estimate of the loss that the holder of a Legal Recourse Asset would experience if they had to use legal recourse to recover the assets, based on a combination of expected time to recovery and litigation financing costs. It is calculated according to the following formula:
 
@@ -13644,43 +13700,43 @@ Equivalent Loss is an estimate of the loss that the holder of a Legal Recourse A
 
 The parameters of this formula are defined in the documents herein.
 
-########## A.3.3.2.1.2.4.2.2.1.1 - Raw Exposure [Core]  <!-- UUID: 60833a59-f7f8-45db-92c0-a3bc71ea5375 -->
+########## A.3.2.2.1.2.4.2.2.1.1 - Raw Exposure [Core]  <!-- UUID: 60833a59-f7f8-45db-92c0-a3bc71ea5375 -->
 
 Raw Exposure is specified in [A.3.3 - Raw Exposure](87fe863b-801d-4415-a3d2-8b4fb977b6c2).
 
-########## A.3.3.2.1.2.4.2.2.1.2 - Expected Frozen Duration [Core]  <!-- UUID: 1e07154c-2a3f-40ff-b96b-476558bc0002 -->
+########## A.3.2.2.1.2.4.2.2.1.2 - Expected Frozen Duration [Core]  <!-- UUID: 1e07154c-2a3f-40ff-b96b-476558bc0002 -->
 
 Expected Frozen Duration is the estimated time, in years or fractions thereof, that the Legal Recourse Asset would remain frozen after a hack or technical exploit before the holder would be able to recover the underlying assets through legal recourse. The value of the Expected Frozen Duration is 0.5.
 
-########## A.3.3.2.1.2.4.2.2.1.3 - Litigation Financing Costs [Core]  <!-- UUID: 061ee579-9c4f-4f59-b5cf-401ff4c11f72 -->
+########## A.3.2.2.1.2.4.2.2.1.3 - Litigation Financing Costs [Core]  <!-- UUID: 061ee579-9c4f-4f59-b5cf-401ff4c11f72 -->
 
 Litigation Financing Costs are the annual costs of borrowing against the right to receive the future recovery of the assets underlying the Legal Recourse Asset through legal recourse. The value of the Litigation Financing Costs is 20%.
 
-######### A.3.3.2.1.2.4.2.2.2 - Effective Age [Core]  <!-- UUID: c06bbc44-09c0-43f9-b443-39c2802a4a78 -->
+######### A.3.2.2.1.2.4.2.2.2 - Effective Age [Core]  <!-- UUID: c06bbc44-09c0-43f9-b443-39c2802a4a78 -->
 
 The Effective Age is calculated as specified in [A.3.3 - Effective Age](a8db99b2-f072-4132-9ee2-c8ebcc2b3609) except that the Effective Age cannot exceed one (1) year.
 
-######### A.3.3.2.1.2.4.2.2.3 - Raw Exposure [Core]  <!-- UUID: 87fe863b-801d-4415-a3d2-8b4fb977b6c2 -->
+######### A.3.2.2.1.2.4.2.2.3 - Raw Exposure [Core]  <!-- UUID: 87fe863b-801d-4415-a3d2-8b4fb977b6c2 -->
 
 The Raw Exposure is the total exposure to the particular Allocation System opportunity.
 
-####### A.3.3.2.1.2.4.3 - Ethena [Core]  <!-- UUID: 4d4f4c60-4941-41c8-8164-c1f35c4574c8 -->
+####### A.3.2.2.1.2.4.3 - Ethena [Core]  <!-- UUID: 4d4f4c60-4941-41c8-8164-c1f35c4574c8 -->
 
-In the short term, Direct Ethena Exposures (see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+In the short term, Direct Ethena Exposures (see [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
 
-####### A.3.3.2.1.2.4.4 - Superstate [Core]  <!-- UUID: d129279e-73a5-4f55-9cc8-3950a05c3fc1 -->
+####### A.3.2.2.1.2.4.4 - Superstate [Core]  <!-- UUID: d129279e-73a5-4f55-9cc8-3950a05c3fc1 -->
 
-In the short term, Superstate Exposures (see [A.3.3 - Superstate Required Risk Capital](ffca1065-7f92-4815-8a65-52bdbc82c558)) automatically have Instance Smart Contract RRC and Instance Administrative RRC of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
+In the short term, Superstate Exposures (see [A.3.3 - Superstate Capital Requirement Ratio](ffca1065-7f92-4815-8a65-52bdbc82c558)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [ARC - A.3.3 - Long Term Application To Real World Assets](f1839c9b-3080-4740-8696-0f6c00959c21).
 
-####### A.3.3.2.1.2.4.5 - Fluid [Core]  <!-- UUID: 442c47ef-0fef-4d10-9b5c-12b163795cdd -->
+####### A.3.2.2.1.2.4.5 - Fluid [Core]  <!-- UUID: 442c47ef-0fef-4d10-9b5c-12b163795cdd -->
 
 The Smart Contract Risk Rating for Fluid is `25`.
 
-##### A.3.3.2.1.3 - Instance Administrative RRC Calculation [Core]  <!-- UUID: 277d6712-25ff-4566-a42b-38d7e860ae76 -->
+##### A.3.2.2.1.3 - Instance Administrative RRC Calculation [Core]  <!-- UUID: 277d6712-25ff-4566-a42b-38d7e860ae76 -->
 
 The documents herein define the implementation of the Risk Framework for calculating Instance Administrative RRC.
 
-###### A.3.3.2.1.3.1 - Administrative Risk Rating Calculation [Core]  <!-- UUID: a9dfd122-2862-4759-aba7-482f86428ca7 -->
+###### A.3.2.2.1.3.1 - Administrative Risk Rating Calculation [Core]  <!-- UUID: a9dfd122-2862-4759-aba7-482f86428ca7 -->
 
 The first step in calculating the Instance Administrative RRC with respect to an Allocation System opportunity is to calculate the Administrative Risk Rating $\text{ARR}$ for the protocol being invested in. The $\text{ARR}$ is calculated as follows:
 
@@ -13692,89 +13748,89 @@ Here $min$ is the mathematical minimum function that returns the lesser of the s
 
 The parameters of this formula are specified in the subdocuments herein.
 
-####### A.3.3.2.1.3.1.1 - Administrative Risk Rating Cap [Core]  <!-- UUID: 7e359ea6-e846-4977-b3db-87fc1db64c0f -->
+####### A.3.2.2.1.3.1.1 - Administrative Risk Rating Cap [Core]  <!-- UUID: 7e359ea6-e846-4977-b3db-87fc1db64c0f -->
 
 The Administrative Risk Rating Cap $\text{CAP}$ is a temporary cap on the Administrative Risk Rating. The value of the $\text{CAP}$ is `30`.
 
-####### A.3.3.2.1.3.1.2 - Starting Rating [Core]  <!-- UUID: 368786cb-da80-4d48-a2e8-52d14fb6320c -->
+####### A.3.2.2.1.3.1.2 - Starting Rating [Core]  <!-- UUID: 368786cb-da80-4d48-a2e8-52d14fb6320c -->
 
 The Starting Rate $\text{SR}$ is an initial risk rating for Administrative Risk before taking into account the Delay Factor and Lindy Adjustment Factor. It is a function of the type of backdoor access that exists to the protocol, as specified in the documents herein.
 
-######## A.3.3.2.1.3.1.2.1 - No Backdoor [Core]  <!-- UUID: 0d40ea83-8eef-4bea-b1ca-5700fb4536bc -->
+######## A.3.2.2.1.3.1.2.1 - No Backdoor [Core]  <!-- UUID: 0d40ea83-8eef-4bea-b1ca-5700fb4536bc -->
 
 A protocol with no backdoor access allows no privileged access to the relevant smart contracts by a whitelisted set of users. The Starting Rate for a protocol with no backdoor access is `0`.
 
-######## A.3.3.2.1.3.1.2.2 - Limited Backdoor [Core]  <!-- UUID: ef31a379-c7ea-43c6-9a68-0f6083fcfeaf -->
+######## A.3.2.2.1.3.1.2.2 - Limited Backdoor [Core]  <!-- UUID: ef31a379-c7ea-43c6-9a68-0f6083fcfeaf -->
 
 A protocol with limited backdoor access allows a set of privileged users to materially modify the terms of the smart contracts (e.g. freezing the transfer of funds) but does not allow root backdoor access as specified in [A.3.3 - Root Backdoor](7d203683-a16c-479c-8425-2fed3b4c2375). The Starting Rate for a protocol with limited backdoor access is `50`.
 
-######## A.3.3.2.1.3.1.2.3 - Root Backdoor [Core]  <!-- UUID: 7d203683-a16c-479c-8425-2fed3b4c2375 -->
+######## A.3.2.2.1.3.1.2.3 - Root Backdoor [Core]  <!-- UUID: 7d203683-a16c-479c-8425-2fed3b4c2375 -->
 
 A protocol with root backdoor access allows a set of privileged users to make arbitrary changes to the terms of the smart contracts, including transferring user funds. The Starting Rate for a protocol with root backdoor access is `100`.
 
-####### A.3.3.2.1.3.1.3 - Delay Factor [Core]  <!-- UUID: 52511026-55f4-4848-95a2-53db048d906c -->
+####### A.3.2.2.1.3.1.3 - Delay Factor [Core]  <!-- UUID: 52511026-55f4-4848-95a2-53db048d906c -->
 
 The Delay Adjustment Factor $\text{DF}$ is a factor indicating the extent to which the risk associated with backdoor access is mitigated by a security delay between the time that a change using backdoor access is approved and the time that such a change becomes effective. This delay gives users time to raise issues or withdraw funds in the event of malicious or undesirable use of backdoor access.
 
 The Delay Factor is `1` if there is no security delay and `0` if the security delay is 48 hours or greater. For security delays between 0 hours and 48 hours, the Delay Factor is linearly reduced for each hour of security delay. So a security delay of 24 hours would result in a Delay Factor of `0.5`.
 
-####### A.3.3.2.1.3.1.4 - Lindy Adjustment Factor [Core]  <!-- UUID: 1d676660-675c-40a4-8319-23671c55491b -->
+####### A.3.2.2.1.3.1.4 - Lindy Adjustment Factor [Core]  <!-- UUID: 1d676660-675c-40a4-8319-23671c55491b -->
 
 The Lindy Adjustment Factor $\text{LAF}$ is calculated using the same methodology specified in [A.3.3 - Lindy Adjustment Factor](227eff62-f2aa-4e49-91ad-1321261ed299).
 
-###### A.3.3.2.1.3.2 - Instance Administrative RRC Calculation [Core]  <!-- UUID: d5546d38-3aba-4161-a991-1e74ef637fbc -->
+###### A.3.2.2.1.3.2 - Instance Administrative RRC Calculation [Core]  <!-- UUID: d5546d38-3aba-4161-a991-1e74ef637fbc -->
 
 The second step in calculating the Instance Administrative RRC with respect to an Allocation System opportunity is to calculate the Instance Administrative RRC as a function of the Administrative Risk Rating. This is done using the same methodology as specified in [A.3.3 - Smart Contract Risk Required Risk Capital Calculation](b2c8867b-0da0-4765-a927-9a530a0ccf24).
 
-###### A.3.3.2.1.3.3 - Exceptions [Core]  <!-- UUID: 5ecb7c62-29bb-4135-a5c6-dbfb0999c996 -->
+###### A.3.2.2.1.3.3 - Exceptions [Core]  <!-- UUID: 5ecb7c62-29bb-4135-a5c6-dbfb0999c996 -->
 
-The documents herein define exceptions to the calculation of Instance Administrative RRC for specific asset classes or protocols.
+The documents herein define exceptions to the calculation of Instance Administrative CRR for specific asset classes or protocols.
 
-####### A.3.3.2.1.3.3.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 095464ba-2301-4bb6-b342-e840bdd3c018 -->
+####### A.3.2.2.1.3.3.1 - BUIDL, JTRSY, USTB, And JAAA [Core]  <!-- UUID: 095464ba-2301-4bb6-b342-e840bdd3c018 -->
 
-The Administrative RRC for BUIDL, JTRSY, USTB, and JAAA is calculated as specified in [A.3.3 - BUIDL, JTRSY, USTB, And JAAA](52c23a24-aedf-4a1e-abf3-23b819ec9fc5).
+The Administrative CRR for BUIDL, JTRSY, USTB, and JAAA is calculated as specified in [A.3.3 - BUIDL, JTRSY, USTB, And JAAA](52c23a24-aedf-4a1e-abf3-23b819ec9fc5).
 
-####### A.3.3.2.1.3.3.2 - Legal Recourse Assets [Core]  <!-- UUID: e5cf1f62-b8e7-405d-9e3e-46e2e4cbcfd1 -->
+####### A.3.2.2.1.3.3.2 - Legal Recourse Assets [Core]  <!-- UUID: e5cf1f62-b8e7-405d-9e3e-46e2e4cbcfd1 -->
 
 The exposure for investments in Legal Recourse Assets is calculated as specified in [A.3.3 - Legal Recourse Assets](717b33c3-708e-4acf-acb4-7be5d5039a2f).
 
-####### A.3.3.2.1.3.3.3 - Ethena [Core]  <!-- UUID: 2397551e-9704-435e-b815-0384429be224 -->
+####### A.3.2.2.1.3.3.3 - Ethena [Core]  <!-- UUID: 2397551e-9704-435e-b815-0384429be224 -->
 
-The Administrative RRC for Ethena is calculated as specified in [A.3.3 - Ethena](4d4f4c60-4941-41c8-8164-c1f35c4574c8).
+The Administrative CRR for Ethena is calculated as specified in [A.3.3 - Ethena](4d4f4c60-4941-41c8-8164-c1f35c4574c8).
 
-####### A.3.3.2.1.3.3.4 - Superstate [Core]  <!-- UUID: 92c06f19-21a3-4aea-9503-db685b3fd7f9 -->
+####### A.3.2.2.1.3.3.4 - Superstate [Core]  <!-- UUID: 92c06f19-21a3-4aea-9503-db685b3fd7f9 -->
 
-The Administrative RRC for Superstate is calculated as specified in [A.3.3 - Superstate](d129279e-73a5-4f55-9cc8-3950a05c3fc1).
+The Administrative CRR for Superstate is calculated as specified in [A.3.3 - Superstate](d129279e-73a5-4f55-9cc8-3950a05c3fc1).
 
-####### A.3.3.2.1.3.3.5 - Fluid [Core]  <!-- UUID: 6bbbfa59-7988-4d34-bd75-05402d8ac6f8 -->
+####### A.3.2.2.1.3.3.5 - Fluid [Core]  <!-- UUID: 6bbbfa59-7988-4d34-bd75-05402d8ac6f8 -->
 
 The Administrative Risk Rating for Fluid is `25`.
 
-#### A.3.3.2.2 - Core Risk Capital Parameters [Core]  <!-- UUID: 15276567-bf61-4c27-8aa2-2f27da831a48 -->
+#### A.3.2.2.2 - Core Risk Capital Parameters [Core]  <!-- UUID: 15276567-bf61-4c27-8aa2-2f27da831a48 -->
 
 The documents herein define the core risk capital parameters.
 
-##### A.3.3.2.2.1 - JRC Loss Allocation Parameters [Core]  <!-- UUID: b718459e-57e0-414f-9c99-fbc82685cc0f -->
+##### A.3.2.2.2.1 - JRC Loss Allocation Parameters [Core]  <!-- UUID: b718459e-57e0-414f-9c99-fbc82685cc0f -->
 
 This document specifies the JRC loss allocation parameters.
 
-###### A.3.3.2.2.1.1 - Tip Junior Risk Capital Percentage [Core]  <!-- UUID: 73f2410b-3579-4c68-ae36-e4a4713a6e4b -->
+###### A.3.2.2.2.1.1 - Tip Junior Risk Capital Percentage [Core]  <!-- UUID: 73f2410b-3579-4c68-ae36-e4a4713a6e4b -->
 
 The Tip JRC amount is **10%** of the Prime Agent's Total Junior Risk Capital (IJRC + SEJRC + TEJRC).
 
 For example, if a Prime Agent has $20 million of Internal Junior Risk Capital and $20 million of Prime External Junior Risk Capital, the Tip Junior Risk Capital would be $4 million.
 
-##### A.3.3.2.2.2 - Risk Capital Composition Structural Ratios [Core]  <!-- UUID: c8b80b82-abe9-43d0-96bb-bfc82c83feb4 -->
+##### A.3.2.2.2.2 - Risk Capital Composition Structural Ratios [Core]  <!-- UUID: c8b80b82-abe9-43d0-96bb-bfc82c83feb4 -->
 
 This document specifies the values of the Risk Capital sourcing ratios defined in [A.3.3 - Total Risk Capital Sourcing Ratios](9e99b084-f15a-4f60-b831-d6c0bd9aec04).
 
-###### A.3.3.2.2.2.1 - External Per Internal (EPI) Ratio Value [Core]  <!-- UUID: 3ed32706-c072-42b5-b1e5-187bddf8dc37 -->
+###### A.3.2.2.2.2.1 - External Per Internal (EPI) Ratio Value [Core]  <!-- UUID: 3ed32706-c072-42b5-b1e5-187bddf8dc37 -->
 
 The External Per Internal (EPI) ratio is **1.00**. For example, if a Prime Agent has $20 million of Internal Junior Risk Capital, the EPI ratio enables it to source $20 million of External Junior Risk Capital.
 
 This EPI ratio governs the initial mechanism for sourcing EJRC (SEJRC + TEJRC) and is based purely on the Prime’s IJRC; Primes can source EJRC via this initial mechanism up to a maximum amount equal to their IJRC holdings. However, additional EJRC may potentially be acquired via the alternative use of SPJ capacity, as described in [A.3.3 - Alternative Use Of SPJ Capacity To Source External Junior Risk Capital](03029174-91b4-4974-af1e-52438556a70b).
 
-###### A.3.3.2.2.2.2 - Senior Per Junior (SPJ) Ratio Values [Core]  <!-- UUID: 8578e240-3fe8-41c0-8b2c-15ec9a7181ab -->
+###### A.3.2.2.2.2.2 - Senior Per Junior (SPJ) Ratio Values [Core]  <!-- UUID: 8578e240-3fe8-41c0-8b2c-15ec9a7181ab -->
 
 The SPJ ratio varies by the JRC type used for enablement:
 
@@ -13785,35 +13841,35 @@ The SPJ ratio varies by the JRC type used for enablement:
 
 For example, if a Prime Agent has $20 million of Internal Junior Risk Capital, $10 million of Prime External Junior Risk Capital, and $10 million of Tokenized External Junior Risk Capital, then it would be able to count or “enable” $32.5 million of Senior Capital towards its required Risk Capital.
 
-#### A.3.3.2.3 - Junior Risk Capital System Implementation [Core]  <!-- UUID: 2c7c0297-28d5-4954-be87-ffc24d70cef5 -->
+#### A.3.2.2.3 - Junior Risk Capital System Implementation [Core]  <!-- UUID: 2c7c0297-28d5-4954-be87-ffc24d70cef5 -->
 
 The documents herein define operational requirements and protocols for the implementation of the Junior Risk Capital system in the Risk Framework.
 
-##### A.3.3.2.3.1 - Prime External JRC Rental System Implementation [Core]  <!-- UUID: d47ffd80-c463-49b3-b4a9-60bb6d2b114e -->
+##### A.3.2.2.3.1 - Prime External JRC Rental System Implementation [Core]  <!-- UUID: d47ffd80-c463-49b3-b4a9-60bb6d2b114e -->
 
 The implementation of the SEJRC rental system is defined as a Sky Primitive, specifically, the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
 
-##### A.3.3.2.3.2 - Tokenized External JRC System Implementation [Core]  <!-- UUID: 025c8a59-3c2e-4b33-a635-bb84b6ac6496 -->
+##### A.3.2.2.3.2 - Tokenized External JRC System Implementation [Core]  <!-- UUID: 025c8a59-3c2e-4b33-a635-bb84b6ac6496 -->
 
 This document will be further developed in a future iteration of the Atlas.
 
-#### A.3.3.2.4 - Senior Risk Capital System Implementation [Core]  <!-- UUID: 6d2be0c6-37fe-42ba-a4a8-a18dd17b0bc1 -->
+#### A.3.2.2.4 - Senior Risk Capital System Implementation [Core]  <!-- UUID: 6d2be0c6-37fe-42ba-a4a8-a18dd17b0bc1 -->
 
 The documents herein define operational requirements and protocols for the implementation of the Senior Risk Capital system in the Risk Framework.
 
-##### A.3.3.2.4.1 - Sourcing Of Internal Senior Risk Capital [Core]  <!-- UUID: 70888f64-f53f-488a-b138-b3b2ab2300b0 -->
+##### A.3.2.2.4.1 - Sourcing Of Internal Senior Risk Capital [Core]  <!-- UUID: 70888f64-f53f-488a-b138-b3b2ab2300b0 -->
 
 ISRC is sourced from the various surplus buffers, which are themselves funded via the Treasury Management Function. See [A.2.5 - Treasury Management - Treasury Management - Allocation Steps](7932c8f3-ce44-49ea-adc4-f6391c621c6e).
 
-##### A.3.3.2.4.2 - External Senior Risk Capital And srUSDS System [Core]  <!-- UUID: 9fac0f6b-cb2d-4dc2-97d5-72c705303675 -->
+##### A.3.2.2.4.2 - External Senior Risk Capital And srUSDS System [Core]  <!-- UUID: 9fac0f6b-cb2d-4dc2-97d5-72c705303675 -->
 
 The documents herein define rules and infrastructure pertaining to the sourcing of External Senior Risk Capital (ESRC). ESRC is capital provided by external investors to be invested as Senior Risk Capital of Prime Agents.
 
-###### A.3.3.2.4.2.1 - srUSDS Contract [Core]  <!-- UUID: 30e9de3a-d67f-4b89-a777-a9781aab9b1a -->
+###### A.3.2.2.4.2.1 - srUSDS Contract [Core]  <!-- UUID: 30e9de3a-d67f-4b89-a777-a9781aab9b1a -->
 
 srUSDS is the tokenized form of External Senior Risk Capital. Users can deposit USDS into the srUSDS contract to provide External Senior Risk Capital to the SRC system, making it available for origination by Prime Agents. See [A.3.3 - Senior Risk Capital (SRC) Origination Process](b74e61f5-3793-406d-a0e5-f8f0e4d3ac2f). srUSDS holders can potentially earn higher yields in exchange for the risk that the External Senior Risk Capital will suffer losses.
 
-###### A.3.3.2.4.2.2 - Deposit And Redemption Queues [Core]  <!-- UUID: 38a99586-4a13-4ce3-8b2f-cee025e0c390 -->
+###### A.3.2.2.4.2.2 - Deposit And Redemption Queues [Core]  <!-- UUID: 38a99586-4a13-4ce3-8b2f-cee025e0c390 -->
 
 The srUSDS contract utilizes distinct queues for managing conversions. Users can add USDS to the deposit queue for conversion into srUSDS; or add srUSDS to the redemption queue for conversion back into USDS at any point during the month.
 
@@ -13821,7 +13877,7 @@ Assets placed in either queue can be withdrawn by the user at any time before th
 
 At the Monthly Settlement Cycle, all assets remaining in the queues are processed: queued USDS is converted into srUSDS, and queued srUSDS is converted into USDS based on the prevailing Conversion Rate. See [A.3.3 - Conversion Rate](2220b1b5-f2f6-4325-9bb5-43cca84e184c).
 
-###### A.3.3.2.4.2.3 - Conversion Rate [Core]  <!-- UUID: 2220b1b5-f2f6-4325-9bb5-43cca84e184c -->
+###### A.3.2.2.4.2.3 - Conversion Rate [Core]  <!-- UUID: 2220b1b5-f2f6-4325-9bb5-43cca84e184c -->
 
 The conversion rate represents the amount of USDS redeemable per unit of srUSDS. This rate increases or decreases over time, reflecting the net return earned by the ESRC pool. The rate is updated at the conclusion of each Monthly Settlement Cycle based on the performance of the ESRC pool during the preceding month, according to the following standard compounding formula:
 
@@ -13829,11 +13885,11 @@ The conversion rate represents the amount of USDS redeemable per unit of srUSDS.
 
 The parameters of this formula are defined in the documents herein.
 
-####### A.3.3.2.4.2.3.1 - Previous Conversion Rate [Core]  <!-- UUID: 7074ce0f-5a30-40cf-804f-7621233ac9db -->
+####### A.3.2.2.4.2.3.1 - Previous Conversion Rate [Core]  <!-- UUID: 7074ce0f-5a30-40cf-804f-7621233ac9db -->
 
 `Previous Conversion Rate` is the conversion rate (USDS per srUSDS) that was in effect at the beginning of the concluded monthly cycle. The initial conversion rate between srUSDS and USDS is 1:1.
 
-####### A.3.3.2.4.2.3.2 - Monthly srUSDS Yield [Core]  <!-- UUID: cb9bb5b1-50a7-49d8-8ff6-27269061f87e -->
+####### A.3.2.2.4.2.3.2 - Monthly srUSDS Yield [Core]  <!-- UUID: cb9bb5b1-50a7-49d8-8ff6-27269061f87e -->
 
 `Monthly srUSDS Yield` represents the net percentage return earned solely by the ESRC pool during the concluded monthly cycle, distributable to srUSDS holders via the conversion rate adjustment. It directly reflects the risk-adjusted performance of the capital deployed and is calculated as:
 
@@ -13841,169 +13897,169 @@ The parameters of this formula are defined in the documents herein.
 
 The Sky Spread and ESRC Earnings Fee are defined in [A.3.3 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da) and [A.3.3 - ESRC Earnings Fee](559f6fb6-daf6-41b2-9882-53a91aaf132f), respectively.
 
-####### A.3.3.2.4.2.3.3 - Sources Of Revenue To Sky [Core]  <!-- UUID: 2e3dcac8-d641-49b7-94e9-6947f0a413ca -->
+####### A.3.2.2.4.2.3.3 - Sources Of Revenue To Sky [Core]  <!-- UUID: 2e3dcac8-d641-49b7-94e9-6947f0a413ca -->
 
 Sky earns revenue from facilitating ESRC from two sources. These sources are included in the formula and defined in the subdocuments below.
 
-######## A.3.3.2.4.2.3.3.1 - Sky Spread [Core]  <!-- UUID: c160f99c-c3d8-41e9-a3d1-cde514b7a2da -->
+######## A.3.2.2.4.2.3.3.1 - Sky Spread [Core]  <!-- UUID: c160f99c-c3d8-41e9-a3d1-cde514b7a2da -->
 
 Sky takes a spread equal to the Sky Spread on all ESRC balances. The Sky Spread is the difference between (1) the rate at which Prime Agents borrow from Sky and (2) the Sky Savings Rate plus the Accessibility Reward Fee.
 
-######## A.3.3.2.4.2.3.3.2 - ESRC Earnings Fee [Core]  <!-- UUID: 559f6fb6-daf6-41b2-9882-53a91aaf132f -->
+######## A.3.2.2.4.2.3.3.2 - ESRC Earnings Fee [Core]  <!-- UUID: 559f6fb6-daf6-41b2-9882-53a91aaf132f -->
 
 Sky takes a 5% fee on the net interest earnings generated from the ESRC portion of originated SRC before these earnings are distributed to srUSDS holders via the conversion rate adjustment.
 
-###### A.3.3.2.4.2.4 - srUSDS Accessibility Reward [Core]  <!-- UUID: 626f0f67-1df9-41e8-a4a6-230aa1ccc824 -->
+###### A.3.2.2.4.2.4 - srUSDS Accessibility Reward [Core]  <!-- UUID: 626f0f67-1df9-41e8-a4a6-230aa1ccc824 -->
 
 Prime Agents and third-party partners that drive srUSDS usage are entitled to a srUSDS Accessibility Reward similar to the Accessibility Reward paid on USDS balances. The srUSDS Accessibility Reward Fee is the same as the Accessibility Reward Fee on USDS. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
-##### A.3.3.2.4.3 - Senior Risk Capital (SRC) Origination Process [Core]  <!-- UUID: b74e61f5-3793-406d-a0e5-f8f0e4d3ac2f -->
+##### A.3.2.2.4.3 - Senior Risk Capital (SRC) Origination Process [Core]  <!-- UUID: b74e61f5-3793-406d-a0e5-f8f0e4d3ac2f -->
 
 This document defines the operational details of the recurring monthly process allowing Prime Agents to originate Senior Risk Capital (Originated Senior Risk Capital or OSRC) from the Total Senior Risk Capital (TSRC) pool. The process involves determining the available TSRC supply, a bidding phase, an allocation auction, and settlement aligned with the Monthly Settlement Cycle.
 
-###### A.3.3.2.4.3.1 - Process Timing and Schedule [Core]  <!-- UUID: d06b1c1a-7613-4361-a155-f62f68ec30a1 -->
+###### A.3.2.2.4.3.1 - Process Timing and Schedule [Core]  <!-- UUID: d06b1c1a-7613-4361-a155-f62f68ec30a1 -->
 
 The SRC origination process operates monthly, synchronized with the Monthly Settlement Cycle. The bidding window occurs during the current month for SRC that is usable in the next month; the bidding window closes before settlement processing begins. Additional operational details, including timelines, will be specified in a future iteration of the Atlas.
 
-###### A.3.3.2.4.3.2 - Available Total Senior Risk Capital Pool Determination [Core]  <!-- UUID: 48a3a23c-2e2f-48b8-bcca-6c99d1c2b6ca -->
+###### A.3.2.2.4.3.2 - Available Total Senior Risk Capital Pool Determination [Core]  <!-- UUID: 48a3a23c-2e2f-48b8-bcca-6c99d1c2b6ca -->
 
 Total Senior Risk Capital (TSRC) is the amount of Senior Risk Capital that is available each Monthly Settlement Cycle for Primes to originate and thus turn into Originated Senior Risk Capital (OSRC) through the monthly origination process. TSRC is the sum of designated Internal Senior Risk Capital (ISRC) from Sky surplus buffers and available External Senior Risk Capital (ESRC) from the srUSDS contract. Prior to each monthly bidding window, the TSRC is calculated and publicly announced. Additional operational details will be defined in a future iteration of the Atlas.
 
-###### A.3.3.2.4.3.3 - Bidding Process [Core]  <!-- UUID: 33ef06d4-6ee3-4302-943d-1b932d8c88b4 -->
+###### A.3.2.2.4.3.3 - Bidding Process [Core]  <!-- UUID: 33ef06d4-6ee3-4302-943d-1b932d8c88b4 -->
 
 Participating Prime Agents submit bids via the Powerhouse interface during the defined bidding window. Each bid must specify: (1) The quantity of SRC the Prime seeks to originate, and (2) The maximum price the Prime is willing to pay (expressed in basis points above the Base Rate) for using the OSRC during the upcoming monthly period. Additional operational details will be specified in a future iteration of the Atlas.
 
-###### A.3.3.2.4.3.4 - Allocation & Clearing Price Determination [Core]  <!-- UUID: 0234bb0c-4686-40bc-94e5-13cd8bcd0db7 -->
+###### A.3.2.2.4.3.4 - Allocation & Clearing Price Determination [Core]  <!-- UUID: 0234bb0c-4686-40bc-94e5-13cd8bcd0db7 -->
 
 Bids are ranked descending by price. TSRC is allocated sequentially to the highest bids until the pool is exhausted or all bids are filled. The price of the lowest successful bid that receives an allocation (even partial) sets the uniform clearing price for the month. All winning bidders pay this clearing price per unit of OSRC allocated, regardless of their original bid price. Additional operational details will be specified in a future iteration of the Atlas.
 
-###### A.3.3.2.4.3.5 - Settlement Of Origination [Core]  <!-- UUID: fff0112a-58dd-4041-97f9-7baf113b4e70 -->
+###### A.3.2.2.4.3.5 - Settlement Of Origination [Core]  <!-- UUID: fff0112a-58dd-4041-97f9-7baf113b4e70 -->
 
 During the Monthly Settlement Cycle following allocation, the cost (Allocated OSRC Quantity * Clearing Price) is deducted from each winning Prime Agent’s operational account. Concurrently, the allocated OSRC amount is credited to the Prime Agent’s Risk Capital account as OSRC for the upcoming monthly period.
 
-###### A.3.3.2.4.3.6 - OSRC Duration and Renewal [Core]  <!-- UUID: b63d43f9-cea7-42ee-bfea-5098e55fa68f -->
+###### A.3.2.2.4.3.6 - OSRC Duration and Renewal [Core]  <!-- UUID: b63d43f9-cea7-42ee-bfea-5098e55fa68f -->
 
 OSRC is valid only for the single monthly period following the settlement cycle in which it was originated. Renewal requires successful participation in the next monthly origination process; there is no automatic rollover.
 
-##### A.3.3.2.4.4 - Originated Senior Risk Capital (OSRC) Rental Implementation [Core]  <!-- UUID: 268b4b1f-9a19-42f8-b7c6-d8dc01e32517 -->
+##### A.3.2.2.4.4 - Originated Senior Risk Capital (OSRC) Rental Implementation [Core]  <!-- UUID: 268b4b1f-9a19-42f8-b7c6-d8dc01e32517 -->
 
 The operational process for inter-Prime Agent OSRC risk-capital rentals is defined herein. SEJRC rentals are facilitated through the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
 
-###### A.3.3.2.4.4.1 - Ecosystem Accord Requirements [Core]  <!-- UUID: 0664a5cc-22c9-4d9e-adcf-55ce8c1afc20 -->
+###### A.3.2.2.4.4.1 - Ecosystem Accord Requirements [Core]  <!-- UUID: 0664a5cc-22c9-4d9e-adcf-55ce8c1afc20 -->
 
 Rental of Originated Senior Risk Capital (OSRC) requires a registered Ecosystem Accord specifying: Amount, Duration, and Price/Terms. As the system permits sub-renting (allowing a Prime to rent out OSRC it has previously rented), the Accord must explicitly state if the borrower is granted this permission. In regards to Duration, the Ecosystem Accord must specify the rental period, which cannot extend beyond the end of the current Monthly Settlement Cycle. Primes may agree on any Duration within this limit.
 
 Standardized Ecosystem Accord templates will be provided in a future iteration of the Atlas.
 
-###### A.3.3.2.4.4.2 - SRC Accounting & Enablement [Core]  <!-- UUID: dab711a4-e932-4e2e-bed5-3f459f89cde6 -->
+###### A.3.2.2.4.4.2 - SRC Accounting & Enablement [Core]  <!-- UUID: dab711a4-e932-4e2e-bed5-3f459f89cde6 -->
 
 A registered OSRC-rental Ecosystem Accord effectively transfers the claim on the specified amount of the lender’s OSRC to the borrower for the duration of the agreement. The borrowing Prime Agent must possess sufficient Junior Risk Capital (IJRC, SEJRC, TEJRC) and corresponding Senior Per Junior (SPJ) capacity to enable the rented OSRC, such that it counts towards their own Risk Capital requirements. Rented OSRC that is not successfully enabled by the borrower pursuant to the SPJ ratio does not contribute to their Risk Capital calculation.
 
-##### A.3.3.2.4.5 - Short Term Transitionary Measures [Core]  <!-- UUID: d33ac81e-bab1-4969-b46d-e605da2afae3 -->
+##### A.3.2.2.4.5 - Short Term Transitionary Measures [Core]  <!-- UUID: d33ac81e-bab1-4969-b46d-e605da2afae3 -->
 
 As an interim measure, prior to the implementation of the Senior Risk Capital System, Sky Core may provide Senior Risk Capital to Prime Agents under Ecosystem Accords between Sky Core and the respective Prime Agents. The terms of such Ecosystem Accords shall be documented under [A.2.10](104c3543-ce94-4a2f-9968-57f1ee858085).
 
-#### A.3.3.2.5 - Risk Capital Update Process [Core]  <!-- UUID: d92f0d3b-e6d5-47d4-b6f1-203ef9326ea6 -->
+#### A.3.2.2.5 - Risk Capital Update Process [Core]  <!-- UUID: d92f0d3b-e6d5-47d4-b6f1-203ef9326ea6 -->
 
 The documents herein define the process for updating Risk Capital requirements.
 
-##### A.3.3.2.5.1 - Schedule For Updating Parameters [Core]  <!-- UUID: f969dee1-774b-4201-97ae-c9fb91960a18 -->
+##### A.3.2.2.5.1 - Schedule For Updating Parameters [Core]  <!-- UUID: f969dee1-774b-4201-97ae-c9fb91960a18 -->
 
 The documents herein define the requirements for updating inputs to the calculation of Risk Capital requirements.
 
-###### A.3.3.2.5.1.1 - Real Time Updates [Core]  <!-- UUID: 23083399-43b0-4bc2-adf8-4e97a9ae494d -->
+###### A.3.2.2.5.1.1 - Real Time Updates [Core]  <!-- UUID: 23083399-43b0-4bc2-adf8-4e97a9ae494d -->
 
 Inputs into Risk Capital calculations that are based on market or other external variables should be updated in real time or immediately after the underlying data is updated, if the underlying data is only updated periodically.
 
-####### A.3.3.2.5.1.1.1 - Responsibility For Cost Of Real Time Updates [Core]  <!-- UUID: 4c76f9d0-f354-4fba-bf99-2be97b77d234 -->
+####### A.3.2.2.5.1.1.1 - Responsibility For Cost Of Real Time Updates [Core]  <!-- UUID: 4c76f9d0-f354-4fba-bf99-2be97b77d234 -->
 
 Prime Agents may develop data feeds that update the Atlas with their data at their expense. Alternatively, the Operational Executor Agent that has an Executor Accord with the Prime Agent may perform this as part of the services it provides to the Prime Agent. In this case, the Operational Executor Agent may charge whatever fees for this service the parties mutually agree on.
 
-######## A.3.3.2.5.1.1.1.1 - Near Term Real Time Updates By BA Labs [Core]  <!-- UUID: 31095e6f-6f05-4d0f-83f6-49ef92e1b6ec -->
+######## A.3.2.2.5.1.1.1.1 - Near Term Real Time Updates By Core Council Risk Advisor [Core]  <!-- UUID: 31095e6f-6f05-4d0f-83f6-49ef92e1b6ec -->
 
-In the near term, BA Labs will provide real time data regarding major lending markets. BA Labs will be compensated for this work as part of its existing relationship with Sky Core and Spark.
+In the near term, the Core Council Risk Advisor will provide real time data regarding major lending markets. The Core Council Risk Advisor will be compensated for this work as part of its existing relationship with Sky Core and Spark.
 
-###### A.3.3.2.5.1.2 - Non-Real Time Updates [Core]  <!-- UUID: 7cdc17d9-6199-42bb-8ff9-f7ffce126d3a -->
+###### A.3.2.2.5.1.2 - Non-Real Time Updates [Core]  <!-- UUID: 7cdc17d9-6199-42bb-8ff9-f7ffce126d3a -->
 
 In the near term, Prime Agents may update calculations that are based on market or other external variables less frequently than real time. If they do so, Operational GovOps must apply a buffer to each variable that is not updated in real time to account for the fact that the variable may change in a way that increases Required Risk Capital between update frequencies.
 
-##### A.3.3.2.5.2 - Data Maintenance And Integrity [Core]  <!-- UUID: d105b84d-c1f6-4460-892c-0971942f8905 -->
+##### A.3.2.2.5.2 - Data Maintenance And Integrity [Core]  <!-- UUID: d105b84d-c1f6-4460-892c-0971942f8905 -->
 
 The documents herein define processes to maintain and ensure the integrity of data that is used as an input to Risk Capital calculations.
 
-###### A.3.3.2.5.2.1 - Responsibility For Data Updates [Core]  <!-- UUID: ecd07bcd-8a9f-4a3d-b7b0-393f6b5143f7 -->
+###### A.3.2.2.5.2.1 - Responsibility For Data Updates [Core]  <!-- UUID: ecd07bcd-8a9f-4a3d-b7b0-393f6b5143f7 -->
 
 The Prime Agent may assume responsibility for updating the inputs to the Risk Capital calculations itself, either directly or through one of its agents, or may contract with Operational GovOps to perform that function.
 
-###### A.3.3.2.5.2.2 - Verification Of Data Updates [Core]  <!-- UUID: b80bdd00-c88b-4186-84de-b6c770b915e0 -->
+###### A.3.2.2.5.2.2 - Verification Of Data Updates [Core]  <!-- UUID: b80bdd00-c88b-4186-84de-b6c770b915e0 -->
 
 If Operational GovOps does not perform the data updates, it must verify their accuracy.
 
-###### A.3.3.2.5.2.3 - Penalties For Late Data Updates [Core]  <!-- UUID: b6dd98ee-5156-496c-95f3-a6ad0f2eff3b -->
+###### A.3.2.2.5.2.3 - Penalties For Late Data Updates [Core]  <!-- UUID: b6dd98ee-5156-496c-95f3-a6ad0f2eff3b -->
 
 In the near term, Operational GovOps must reduce exposure to any Asset Allocation Conduit if the Prime Agent responsible for that Conduit fails to provide the timely information necessary to calculate the required Risk Capital. In the future, a system of monetary penalties must be developed to compensate Sky for the risk posed by late data submission.
 
-#### A.3.3.2.6 - Process For Adjusting Risk Capital [Core]  <!-- UUID: b24ee088-0096-47b0-9e27-4c9e9aeb2d9b -->
+#### A.3.2.2.6 - Process For Adjusting Risk Capital [Core]  <!-- UUID: b24ee088-0096-47b0-9e27-4c9e9aeb2d9b -->
 
 The documents herein define how changes to the calculation of Required Risk Capital or Total Risk Capital should be handled.
 
-##### A.3.3.2.6.1 - Updates Due To Changed Market Parameters [Core]  <!-- UUID: 86134cd1-f754-4637-8796-f239ec00e434 -->
+##### A.3.2.2.6.1 - Updates Due To Changed Market Parameters [Core]  <!-- UUID: 86134cd1-f754-4637-8796-f239ec00e434 -->
 
 The documents herein define the process for handling changes to Required Risk Capital requirements due to changes in market or other external variables.
 
-###### A.3.3.2.6.1.1 - Immediate Update To Required Risk Capital For Changes In Market Or External Variables [Core]  <!-- UUID: 0932bccb-4d3e-4be8-afbf-649227a60435 -->
+###### A.3.2.2.6.1.1 - Immediate Update To Required Risk Capital For Changes In Market Or External Variables [Core]  <!-- UUID: 0932bccb-4d3e-4be8-afbf-649227a60435 -->
 
 To the extent that a market or external variable changes in a way that increases the Aggregate Required Risk Capital, the Prime Agent is immediately responsible for supplying additional Total Risk Capital, as necessary, and is subject to penalties for any period in which this Total Risk Capital is not provided. It is the responsibility of the Prime Agent to maintain sufficient capital so that they remain well capitalized in the face of changes to market conditions.
 
-##### A.3.3.2.6.2 - Updates Due To Changed Methodology Or Governance Parameters [Core]  <!-- UUID: 088cba75-a83b-4f85-8923-d98c36ff8714 -->
+##### A.3.2.2.6.2 - Updates Due To Changed Methodology Or Governance Parameters [Core]  <!-- UUID: 088cba75-a83b-4f85-8923-d98c36ff8714 -->
 
 The documents herein define the process for adjusting the calculation of Required Risk Capital or Total Risk Capital whenever Sky Governance modifies the underlying methodology/parameters governing Risk Capital calculations.
 
-###### A.3.3.2.6.2.1 - Phased Update To Risk Capital For Changes In Methodology Or Governance Parameters [Core]  <!-- UUID: 0f4b2490-bb15-480d-b719-be2bfec69c85 -->
+###### A.3.2.2.6.2.1 - Phased Update To Risk Capital For Changes In Methodology Or Governance Parameters [Core]  <!-- UUID: 0f4b2490-bb15-480d-b719-be2bfec69c85 -->
 
 To the extent that a change to the implementation of the Risk Capital framework or a parameter set by Sky Governance changes the Required Risk Capital or Total Risk Capital, the change will phase in over time. The Prime Agent must provide 50% of the additional Total Risk Capital necessary to comply with the change within seven (7) calendar days of the change, and the remaining 50% on a pro rata basis over the following twenty one (21) calendar days.
 
-###### A.3.3.2.6.2.2 - No Penalties For Changes In Methodology Or Governance Parameters In Near Term [Core]  <!-- UUID: e083b732-237d-461b-92a4-fe91ea636e3f -->
+###### A.3.2.2.6.2.2 - No Penalties For Changes In Methodology Or Governance Parameters In Near Term [Core]  <!-- UUID: e083b732-237d-461b-92a4-fe91ea636e3f -->
 
 In the near term as the Risk Capital implementation continues to be developed, Prime Agents will not be subject to penalties for failing to supply the incremental capital required by changes to the Risk Capital implementation. However, Operational GovOps must reduce the exposure to Allocation Conduits managed by the Prime Agent to bring it back into compliance with capital requirements if the Prime Agent does not work in good faith to provide the additional capital on the timeline specified above.
 
-#### A.3.3.2.7 - Monitoring And Penalty Mechanisms [Core]  <!-- UUID: 50035dc9-4cab-4141-a5d8-a8a4e6870a56 -->
+#### A.3.2.2.7 - Monitoring And Penalty Mechanisms [Core]  <!-- UUID: 50035dc9-4cab-4141-a5d8-a8a4e6870a56 -->
 
 The documents herein define monitoring and penalty mechanisms.
 
-##### A.3.3.2.7.1 - Monitoring As Part Of Settlement Cycle [Core]  <!-- UUID: 3fa1e746-ea64-49f0-92e3-f914e8b92b16 -->
+##### A.3.2.2.7.1 - Monitoring As Part Of Settlement Cycle [Core]  <!-- UUID: 3fa1e746-ea64-49f0-92e3-f914e8b92b16 -->
 
 Core GovOps reviews the calculation of Risk Capital by each Prime Agent as part of the Settlement Cycle. In the event that it detects that Risk Capital requirements were violated, it applies the penalty mechanisms specified in [A.3.3 - Penalty Mechanisms](b8ee2d12-c94b-4d22-b55e-d2b6e6d94ad0).
 
-##### A.3.3.2.7.2 - Penalty Mechanisms [Core]  <!-- UUID: b8ee2d12-c94b-4d22-b55e-d2b6e6d94ad0 -->
+##### A.3.2.2.7.2 - Penalty Mechanisms [Core]  <!-- UUID: b8ee2d12-c94b-4d22-b55e-d2b6e6d94ad0 -->
 
 The documents herein specify the penalty mechanisms that exist to incentivize Prime Agents and Operational Agents to ensure that sufficient capital is always held against investments by Prime Agents and to protect Sky from risks due to insufficient capital.
 
-###### A.3.3.2.7.2.1 - Penalty Mechanisms For Prime Agents [Core]  <!-- UUID: 58d81b6e-148e-464f-b6ff-1cbbdb173fde -->
+###### A.3.2.2.7.2.1 - Penalty Mechanisms For Prime Agents [Core]  <!-- UUID: 58d81b6e-148e-464f-b6ff-1cbbdb173fde -->
 
 The documents herein specify the penalty mechanisms for Prime Agents for breaches of the Risk Capital requirements.
 
-####### A.3.3.2.7.2.1.1 - Financial Penalties For Breach Of Capital Requirements [Core]  <!-- UUID: 3327c009-1d96-46c2-8094-9ca2149427e0 -->
+####### A.3.2.2.7.2.1.1 - Financial Penalties For Breach Of Capital Requirements [Core]  <!-- UUID: 3327c009-1d96-46c2-8094-9ca2149427e0 -->
 
 The documents herein define the financial penalties for breaches of Risk Capital requirements.
 
-######## A.3.3.2.7.2.1.1.1 - Risk Tolerance Ratio [Core]  <!-- UUID: 5435f680-aaaa-461a-bcae-4056bb8964d9 -->
+######## A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio [Core]  <!-- UUID: 5435f680-aaaa-461a-bcae-4056bb8964d9 -->
 
 The Risk Tolerance Ratio for a Prime Agent is the ratio of its Aggregate Required Risk Capital to its Total Risk Capital.
 
-######## A.3.3.2.7.2.1.1.2 - Severity Of Breaches [Core]  <!-- UUID: cf1bcb59-c72a-4b17-ae4b-e80beb881f57 -->
+######## A.3.2.2.7.2.1.1.2 - Severity Of Breaches [Core]  <!-- UUID: cf1bcb59-c72a-4b17-ae4b-e80beb881f57 -->
 
 The financial penalties for breaches of Risk Capital requirements depend on whether the breaches are Low Severity or High Severity. The documents herein define Low Severity and High Severity Breaches. The financial penalties associated with High Severity Breaches and Low Severity Breaches are defined in [A.3.3 - Financial Penalties For Low Severity Breaches](f4bef3da-45a1-4575-9e38-78f2a1f95a3d) and [A.3.3 - Financial Penalties For High Severity Breaches](970c1ce7-dc45-4c02-bad4-80c9f2e32eab), respectively.
 
-######### A.3.3.2.7.2.1.1.2.1 - Low Severity Breach Definition [Core]  <!-- UUID: 1981fd65-a9a5-4e5a-a9f8-aa8e85342d7c -->
+######### A.3.2.2.7.2.1.1.2.1 - Low Severity Breach Definition [Core]  <!-- UUID: 1981fd65-a9a5-4e5a-a9f8-aa8e85342d7c -->
 
 A Low Severity Breach is one in which the Risk Tolerance Ratio is greater than or equal to 100% but less than 103%.
 
-######### A.3.3.2.7.2.1.1.2.2 - High Severity Breach Definition [Core]  <!-- UUID: 363e2bb5-47e2-4eb8-950d-eafd0f1392c7 -->
+######### A.3.2.2.7.2.1.1.2.2 - High Severity Breach Definition [Core]  <!-- UUID: 363e2bb5-47e2-4eb8-950d-eafd0f1392c7 -->
 
 A High Severity Breach is one in which the Risk Tolerance Ratio is greater than 103%.
 
-######## A.3.3.2.7.2.1.1.3 - Length Of Breaches [Core]  <!-- UUID: 9e689143-99a7-4cae-a6fc-1b1c31da4ff6 -->
+######## A.3.2.2.7.2.1.1.3 - Length Of Breaches [Core]  <!-- UUID: 9e689143-99a7-4cae-a6fc-1b1c31da4ff6 -->
 
 The length of a breach refers to the duration measured between its defined start and end points, which depend on the specific aspect of the breach being considered.
 
@@ -14011,47 +14067,47 @@ If a breach is initially a Low Severity Breach and subsequently becomes a High S
 
 Likewise, if a breach is initially a High Severity Breach and subsequently becomes a Low Severity Breach, then (1) the length of the High Severity Breach is the duration from when it became a High Severity Breach until it became a Low Severity Breach; and (2) the length of the Low Severity Breach is the duration from when it became a Low Severity Breach until that low-severity period concludes (e.g., upon final resolution of the breach or a transition to a different severity level).
 
-######## A.3.3.2.7.2.1.1.4 - Financial Penalties For Low Severity Breaches [Core]  <!-- UUID: f4bef3da-45a1-4575-9e38-78f2a1f95a3d -->
+######## A.3.2.2.7.2.1.1.4 - Financial Penalties For Low Severity Breaches [Core]  <!-- UUID: f4bef3da-45a1-4575-9e38-78f2a1f95a3d -->
 
 The documents herein define the financial penalties for Low Severity Breaches.
 
-######### A.3.3.2.7.2.1.1.4.1 - Financial Penalties For First 30 Minutes [Core]  <!-- UUID: 32750a35-acf3-4248-a5f0-6787a7fc0cd7 -->
+######### A.3.2.2.7.2.1.1.4.1 - Financial Penalties For First 30 Minutes [Core]  <!-- UUID: 32750a35-acf3-4248-a5f0-6787a7fc0cd7 -->
 
 For the first 30 minutes of a Low Severity Breach, the financial penalty is equal to a 500% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######### A.3.3.2.7.2.1.1.4.2 - Financial Penalties For Subsequent 30 Minutes [Core]  <!-- UUID: 4f7e6e09-b0ca-477f-af42-a42d08ae04b7 -->
+######### A.3.2.2.7.2.1.1.4.2 - Financial Penalties For Subsequent 30 Minutes [Core]  <!-- UUID: 4f7e6e09-b0ca-477f-af42-a42d08ae04b7 -->
 
 For the next 30 minutes of a Low Severity Breach after the expiration of the duration specified in [A.3.3 - Financial Penalties For First 30 Minutes](32750a35-acf3-4248-a5f0-6787a7fc0cd7), the financial penalty is equal to a 1,000% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######### A.3.3.2.7.2.1.1.4.3 - Financial Penalties After 60 Minutes [Core]  <!-- UUID: 9da86bfb-9df0-4ea7-8e39-56dfc5ef04d9 -->
+######### A.3.2.2.7.2.1.1.4.3 - Financial Penalties After 60 Minutes [Core]  <!-- UUID: 9da86bfb-9df0-4ea7-8e39-56dfc5ef04d9 -->
 
 After the first 60 minutes of a Low Severity Breach, the financial penalty is equal to a 1,500% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######## A.3.3.2.7.2.1.1.5 - Financial Penalties For High Severity Breaches [Core]  <!-- UUID: 970c1ce7-dc45-4c02-bad4-80c9f2e32eab -->
+######## A.3.2.2.7.2.1.1.5 - Financial Penalties For High Severity Breaches [Core]  <!-- UUID: 970c1ce7-dc45-4c02-bad4-80c9f2e32eab -->
 
 The documents herein define the financial penalties for High Severity Breaches.
 
-######### A.3.3.2.7.2.1.1.5.1 - Financial Penalties For First 15 Minutes [Core]  <!-- UUID: b9bfd816-925e-4403-a4c2-fda647a2c59a -->
+######### A.3.2.2.7.2.1.1.5.1 - Financial Penalties For First 15 Minutes [Core]  <!-- UUID: b9bfd816-925e-4403-a4c2-fda647a2c59a -->
 
 For the first 15 minutes of a High Severity Breach, the financial penalty is equal to a 1,500% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######### A.3.3.2.7.2.1.1.5.2 - Financial Penalties For Subsequent 15 Minutes [Core]  <!-- UUID: 7d3dc8ba-d12c-4583-91eb-9a6d29dffd8d -->
+######### A.3.2.2.7.2.1.1.5.2 - Financial Penalties For Subsequent 15 Minutes [Core]  <!-- UUID: 7d3dc8ba-d12c-4583-91eb-9a6d29dffd8d -->
 
 For the next 15 minutes of a High Severity Breach after the expiration of the duration specified in [A.3.3 - Financial Penalties For First 15 Minutes](b9bfd816-925e-4403-a4c2-fda647a2c59a), the financial penalty is equal to a 2,000% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######### A.3.3.2.7.2.1.1.5.3 - Financial Penalties For Subsequent 30 Minutes [Core]  <!-- UUID: 8151947c-c6e7-4551-8cb9-1cfb6e82f6d0 -->
+######### A.3.2.2.7.2.1.1.5.3 - Financial Penalties For Subsequent 30 Minutes [Core]  <!-- UUID: 8151947c-c6e7-4551-8cb9-1cfb6e82f6d0 -->
 
 For the next 30 minutes of a High Severity Breach after the expiration of the duration specified in [A.3.3 - Financial Penalties For Subsequent 15 Minutes](7d3dc8ba-d12c-4583-91eb-9a6d29dffd8d), the financial penalty is equal to a 2,500% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######### A.3.3.2.7.2.1.1.5.4 - Financial Penalties After 60 Minutes [Core]  <!-- UUID: 7f70143b-ddc4-4ad1-b5e1-410fa5ba96e5 -->
+######### A.3.2.2.7.2.1.1.5.4 - Financial Penalties After 60 Minutes [Core]  <!-- UUID: 7f70143b-ddc4-4ad1-b5e1-410fa5ba96e5 -->
 
 After the first 60 minutes of a High Severity Breach, the financial penalty is equal to a 3,000% annual percentage yield on the difference between Aggregate Required Risk Capital and Total Risk Capital.
 
-######## A.3.3.2.7.2.1.1.6 - Collection Of Penalties [Core]  <!-- UUID: 92bc8eae-deaa-45f2-85f4-1c010d2b5daa -->
+######## A.3.2.2.7.2.1.1.6 - Collection Of Penalties [Core]  <!-- UUID: 92bc8eae-deaa-45f2-85f4-1c010d2b5daa -->
 
 Penalties are calculated by the Core Executor Agents as part of the Monthly Settlement Cycle. See [A.2.6](6f8d5065-d6ff-4add-9a28-eadeffa7ed1a). Once calculated, penalties are transferred from the Prime Agent’s SubProxy Account to Sky by Sky Governance.
 
-######### A.3.3.2.7.2.1.1.6.1 - Alternative Enforcement Mechanisms [Core]  <!-- UUID: 8067694d-e7a2-46ed-8e35-50f0ecde79c7 -->
+######### A.3.2.2.7.2.1.1.6.1 - Alternative Enforcement Mechanisms [Core]  <!-- UUID: 8067694d-e7a2-46ed-8e35-50f0ecde79c7 -->
 
 In the event that the Prime Agent’s Total Risk Capital is less than its Required Risk Capital at the time of the Monthly Settlement Cycle, or the collection of the penalty would cause the Prime Agent’s Total Risk Capital to fall below its Required Risk Capital, then Sky may exercise the alternative enforcement mechanism described below.
 
@@ -14059,75 +14115,75 @@ In this instance Sky, at its discretion, may issue additional tokens of the Prim
 
 Alternatively, Sky may convert the penalty into a debt owed by the Prime Agent to Sky Core at terms mutually agreed between Sky Core and the Prime Agent.
 
-######## A.3.3.2.7.2.1.1.7 - Short-Term Exemption [Core]  <!-- UUID: 829e886b-0d00-488a-bb27-27f12dae9b3b -->
+######## A.3.2.2.7.2.1.1.7 - Short-Term Exemption [Core]  <!-- UUID: 829e886b-0d00-488a-bb27-27f12dae9b3b -->
 
 While the Risk Framework undergoes refinement, penalties for any Prime Agent breaches of Required Risk Capital will be calculated by Core GovOps once the infrastructure is in place to do so. This calculation serves the purposes of system monitoring, data gathering, and framework calibration. However, throughout this interim phase, such calculated penalties will not be formally assessed against Prime Agents, and consequently, Prime Agents will not be required to make payment for these penalties. Notwithstanding this temporary exemption from penalty payment, Prime Agents are expected to maintain a Risk Tolerance Ratio of less than or equal to 90%. See [A.3.3 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
 
-####### A.3.3.2.7.2.1.2 - Additional Token Issuance For Breach Of Capital Requirements [Core]  <!-- UUID: 2e1a8489-5849-4030-9ed8-8b9a0b09d483 -->
+####### A.3.2.2.7.2.1.2 - Additional Token Issuance For Breach Of Capital Requirements [Core]  <!-- UUID: 2e1a8489-5849-4030-9ed8-8b9a0b09d483 -->
 
 In the event that financial penalties are not sufficient to address the shortfall because payment of the penalties would exacerbate an existing capital shortfall, Core GovOps may require the Prime Agent to issue additional tokens and sell them to the extent it deems necessary. Operational GovOps will assist Core GovOps in executing any such transaction. Future iterations of the Risk Capital framework will specify a more detailed methodology for required token issuance.
 
-####### A.3.3.2.7.2.1.3 - Restrictions On Investments For Breach Of Capital Requirement [Core]  <!-- UUID: 291f2548-a473-42f2-b5be-8fad854d8df3 -->
+####### A.3.2.2.7.2.1.3 - Restrictions On Investments For Breach Of Capital Requirement [Core]  <!-- UUID: 291f2548-a473-42f2-b5be-8fad854d8df3 -->
 
 Core GovOps may impose whatever restrictions it deems necessary on the usage of the Allocation System Primitive by the Prime Agent, including limiting the Prime Agent’s exposure to certain Instances (conduits) or prohibiting the Prime Agent from using certain Instances. These restrictions may extend for a period of time that Core GovOps deems fit.
 
-####### A.3.3.2.7.2.1.4 - Conservatorship For Breach Of Capital Requirements [Core]  <!-- UUID: 5c3dd35a-0c67-44c2-b51b-d40bc865af85 -->
+####### A.3.2.2.7.2.1.4 - Conservatorship For Breach Of Capital Requirements [Core]  <!-- UUID: 5c3dd35a-0c67-44c2-b51b-d40bc865af85 -->
 
 In the event that less extreme measures are not adequate to address the capital shortfall, Core GovOps may seek to put the Prime Agent into conservatorship, in which case Sky Core Facilitators take direct control of the Prime Agent to maximize value for Sky and other Prime Agent stakeholders. Seeking to put a Prime Agent into conservatorship requires immediate escalation to Sky Core Governance and requires an expedited Executive Vote as specified in [A.1.8 - Emergency Response System - Emergency Response Process - Known And Uncontentious Remedies](3f5f79fa-698c-42db-a941-ead5a5d0aa48).
 
-###### A.3.3.2.7.2.2 - Penalty Mechanisms For Operational Executor Agents [Core]  <!-- UUID: a56f0e2a-2e3e-45a5-8aac-c7708ff4e20d -->
+###### A.3.2.2.7.2.2 - Penalty Mechanisms For Operational Executor Agents [Core]  <!-- UUID: a56f0e2a-2e3e-45a5-8aac-c7708ff4e20d -->
 
 The documents herein specify the penalty mechanisms for Operational Executor Agents for breaches of Risk Capital requirements.
 
-####### A.3.3.2.7.2.2.1 - Financial Penalties For Operational Executor Agents [Core]  <!-- UUID: 134f7d3e-fee1-4d9d-aef8-1e5a9b390d21 -->
+####### A.3.2.2.7.2.2.1 - Financial Penalties For Operational Executor Agents [Core]  <!-- UUID: 134f7d3e-fee1-4d9d-aef8-1e5a9b390d21 -->
 
 In the near term there are no penalties for Operational Executor Agents for failure of the Prime Agents they supervise to maintain appropriate levels of capital. In future iterations of the Risk Framework, Operational Executor Agents will be required to put up collateral and act as “insurers” of all activities by the Prime Agents they supervise with regard to the Sky Primitives. At that point Core GovOps will be able to seize this collateral in the event of failure to obtain compensation for breaches of the Risk Capital requirement by the Prime Agent.
 
-####### A.3.3.2.7.2.2.2 - Termination Of Executor Accord [Core]  <!-- UUID: 782d49c6-e4db-4d4a-be29-3f005cd654c1 -->
+####### A.3.2.2.7.2.2.2 - Termination Of Executor Accord [Core]  <!-- UUID: 782d49c6-e4db-4d4a-be29-3f005cd654c1 -->
 
 In the event that Core GovOps determines that the Operational Executor Agent is not appropriately supervising the activities of the Prime Agent, Core GovOps may terminate the respective Executor Accord. This requires an immediate escalation to Sky Governance and requires an expedited Executive Vote as specified in [A.1.8 - Emergency Response System - Emergency Response Process - Known And Uncontentious Remedies](3f5f79fa-698c-42db-a941-ead5a5d0aa48). Core GovOps must arrange for another Operational Executor Agent to stand in until the Prime Agent can Invoke the Executor Accord Primitive to enter into a new Executor Accord. The Prime Agent must suspend all operations until a new Executor Accord is voted on and formally integrated into the Agent’s Artifact.
 
-###### A.3.3.2.7.2.3 - Escalation To Sky Governance [Core]  <!-- UUID: 7ff23236-91c4-4c5c-b462-d4427b03bfd4 -->
+###### A.3.2.2.7.2.3 - Escalation To Sky Governance [Core]  <!-- UUID: 7ff23236-91c4-4c5c-b462-d4427b03bfd4 -->
 
 The documents herein specify measures for escalating situations directly to Sky Governance in the event that they cannot be resolved by Core GovOps.
 
-####### A.3.3.2.7.2.3.1 - Triggers For Escalation [Core]  <!-- UUID: 36978109-324d-40da-be44-f05809c1544a -->
+####### A.3.2.2.7.2.3.1 - Triggers For Escalation [Core]  <!-- UUID: 36978109-324d-40da-be44-f05809c1544a -->
 
 In the event of a disagreement regarding the penalties for a violation of Risk Capital requirements, either party may escalate the matter to Sky Governance. In addition, the extraordinary remedies of Prime Agent Conservatorship and Executor Accord Termination must always be escalated to a Sky Governance Executive Vote.
 
-####### A.3.3.2.7.2.3.2 - Sky Governance Process [Core]  <!-- UUID: 1ccb4063-facc-42d6-a71e-21fe29e84519 -->
+####### A.3.2.2.7.2.3.2 - Sky Governance Process [Core]  <!-- UUID: 1ccb4063-facc-42d6-a71e-21fe29e84519 -->
 
 Once a matter has been escalated to Sky Governance, the Sky Core Facilitators may request any information they deem necessary from Core GovOps, Operational GovOps, and the Prime Agent. Sky Governance then acts through a Governance Poll to determine its resolution of the matter.
 
-### A.3.3.3 - Pendle Ethena Exposures [Core]  <!-- UUID: 4094c159-9132-454a-81be-361a461b5098 -->
+### A.3.2.3 - Pendle Ethena Exposures [Core]  <!-- UUID: 4094c159-9132-454a-81be-361a461b5098 -->
 
-Pendle Ethena Exposures are exposures from directly holding PT-USDe or PT-sUSDe. The Instance Financial RRC for Pendle Ethena Exposures is specified in the documents herein.
+Pendle Ethena Exposures are exposures from directly holding PT-USDe or PT-sUSDe. The Instance Financial CRR for Pendle Ethena Exposures is specified in the documents herein.
 
-#### A.3.3.3.1 - Maturity Greater Than Six Months [Core]  <!-- UUID: ee9246d9-7500-4cd6-a934-0d2312d9e2a6 -->
+#### A.3.2.3.1 - Maturity Greater Than Six Months [Core]  <!-- UUID: ee9246d9-7500-4cd6-a934-0d2312d9e2a6 -->
 
-Pendle Ethena Exposures with more than six (6) months to maturity require 100% Instance Total RRC.
+Pendle Ethena Exposures with more than six (6) months to maturity require 100% Instance Total CRR.
 
-#### A.3.3.3.2 - Maturity Less Than Or Equal To Six Months [Core]  <!-- UUID: 6ed19cc0-5447-4df9-a9c1-45c8730f5f44 -->
+#### A.3.2.3.2 - Maturity Less Than Or Equal To Six Months [Core]  <!-- UUID: 6ed19cc0-5447-4df9-a9c1-45c8730f5f44 -->
 
-Pendle Ethena Exposures with less than or equal to six (6) months to maturity have Instance Financial RRC calculated as follows:
+Pendle Ethena Exposures with less than or equal to six (6) months to maturity have Instance Financial CRR calculated as follows:
 
-`Instance Financial RRC = initialValue - ((currentTime - startTime) * decayRatePerSecond)`
+`Instance Financial CRR = initialValue - ((currentTime - startTime) * decayRatePerSecond)`
 
 The parameters of this formula are defined in the documents herein.
 
-##### A.3.3.3.2.1 - Initial Value [Core]  <!-- UUID: 5d2d2430-2fd5-4418-a688-e8f091eb44b9 -->
+##### A.3.2.3.2.1 - Initial Value [Core]  <!-- UUID: 5d2d2430-2fd5-4418-a688-e8f091eb44b9 -->
 
-The Initial Value `initialValue` is the Instance Financial RRC when the PT has exactly six (6) months to maturity. The `initialValue` is 10%.
+The Initial Value `initialValue` is the Instance Financial CRR when the PT has exactly six (6) months to maturity. The `initialValue` is 10%.
 
-##### A.3.3.3.2.2 - Current Time [Core]  <!-- UUID: 340be283-72fe-4b51-9d75-d7f3c28fdab2 -->
+##### A.3.2.3.2.2 - Current Time [Core]  <!-- UUID: 340be283-72fe-4b51-9d75-d7f3c28fdab2 -->
 
 The Current Time `currentTime` is the timestamp of the current Ethereum block.
 
-##### A.3.3.3.2.3 - Start Time [Core]  <!-- UUID: 461eef24-5b4d-44b2-8281-a8c86bc4bc40 -->
+##### A.3.2.3.2.3 - Start Time [Core]  <!-- UUID: 461eef24-5b4d-44b2-8281-a8c86bc4bc40 -->
 
 The Start Time `startTime` is the timestamp of the block exactly six (6) months before the expiration timestamp of the PT.
 
-##### A.3.3.3.2.4 - Decay Rate Per Second [Core]  <!-- UUID: cda560ff-5b25-44e1-bad4-e6ccfefdf7eb -->
+##### A.3.2.3.2.4 - Decay Rate Per Second [Core]  <!-- UUID: cda560ff-5b25-44e1-bad4-e6ccfefdf7eb -->
 
 The Decay Rate Per Second `decayRatePerSecond` is calculated as follows:
 
@@ -14135,109 +14191,109 @@ The Decay Rate Per Second `decayRatePerSecond` is calculated as follows:
 
 The parameters of this formula are defined in the documents herein.
 
-###### A.3.3.3.2.4.1 - Total Decay [Core]  <!-- UUID: c5530d25-b8ef-4ebe-9b38-7b2a29014ff3 -->
+###### A.3.2.3.2.4.1 - Total Decay [Core]  <!-- UUID: c5530d25-b8ef-4ebe-9b38-7b2a29014ff3 -->
 
 The Total Decay `totalDecay` is equal to the Initial Value minus the Final Value.
 
-####### A.3.3.3.2.4.1.1 - Final Value [Core]  <!-- UUID: 900ecd08-64b7-4f37-8539-f4e822f11d98 -->
+####### A.3.2.3.2.4.1.1 - Final Value [Core]  <!-- UUID: 900ecd08-64b7-4f37-8539-f4e822f11d98 -->
 
-The Final Value is the Instance Financial RRC when the PT is at maturity. Since the PT is convertible into the underlying asset at this point it is equal to the Instance Financial RRC for Direct Ethena Exposures specified in [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb).
+The Final Value is the Instance Financial CRR when the PT is at maturity. Since the PT is convertible into the underlying asset at this point it is equal to the Instance Financial CRR for Direct Ethena Exposures specified in [A.3.3 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb).
 
-###### A.3.3.3.2.4.2 - Total Duration [Core]  <!-- UUID: 0e21a4c4-cd66-4ace-9dcd-6015fc9e4966 -->
+###### A.3.2.3.2.4.2 - Total Duration [Core]  <!-- UUID: 0e21a4c4-cd66-4ace-9dcd-6015fc9e4966 -->
 
 The Total Duration `totalDuration` is equal to the Expiration Time minus the Start Time.
 
-####### A.3.3.3.2.4.2.1 - Expiration Time [Core]  <!-- UUID: 537db44c-1b07-49bd-8b26-0174e3a2f34a -->
+####### A.3.2.3.2.4.2.1 - Expiration Time [Core]  <!-- UUID: 537db44c-1b07-49bd-8b26-0174e3a2f34a -->
 
 The Expiration Time is the expiration timestamp of the PT.
 
-#### A.3.3.3.3 - Concentration Limit [Core]  <!-- UUID: 6f850537-5e8a-4e57-95c8-f57a099ed8f3 -->
+#### A.3.2.3.3 - Concentration Limit [Core]  <!-- UUID: 6f850537-5e8a-4e57-95c8-f57a099ed8f3 -->
 
-Any investments made by Prime Agents in Pendle Ethena Exposures in excess of 20% of their total Allocation System Investments require 100% Instance Total RRC.
+Any investments made by Prime Agents in Pendle Ethena Exposures in excess of 20% of their total Allocation System Investments require 100% Instance Total CRR.
 
-## A.3.4 - Asset Liability Management [Article]  <!-- UUID: 6478afd5-7c3f-4bed-a2b7-9f8ee402bb64 -->
+## A.3.3 - Asset Liability Management [Article]  <!-- UUID: 6478afd5-7c3f-4bed-a2b7-9f8ee402bb64 -->
 
 The Asset Liability Management framework establishes universal rules for Prime Agents deploying Sky’s Collateral Portfolio to maintain the stability of the USDS peg through highly liquid assets. The Asset Liability Management framework governs collateral allocation across all Agents, via the Allocation System Primitive, and replaces Sky Core’s historical Asset Liability Management mechanisms which will be offboarded entirely or transitioned to Prime Agents.
 
-### A.3.4.1 - Conceptual Framework [Section]  <!-- UUID: dbdb3a38-4438-44a0-af77-9518ada97301 -->
+### A.3.3.1 - Conceptual Framework [Section]  <!-- UUID: dbdb3a38-4438-44a0-af77-9518ada97301 -->
 
 This section defines the conceptual framework for Asset Liability Management.
 
-#### A.3.4.1.1 - Minimum Actively Stabilizing Collateral [Core]  <!-- UUID: de00cd5a-91ab-4c04-8ce1-8aa3b7f3c82b -->
+#### A.3.3.1.1 - Minimum Actively Stabilizing Collateral [Core]  <!-- UUID: de00cd5a-91ab-4c04-8ce1-8aa3b7f3c82b -->
 
 The “Sky Collateral Portfolio” consists of all assets backing USDS, whether deployed by Prime Agents or Sky Core. The Asset Liability Management framework is based on ensuring that a certain percentage of Sky Collateral Portfolio is invested in Actively Stabilizing Collateral, highly liquid market making non-USDS assets that trade for close to 1 USD per USDS. In this way, if there is ever downward pressure on the price of USDS these assets can be used to buy USDS to maintain the peg.
 
-#### A.3.4.1.2 - Minimum Demand Absorption Buffer [Core]  <!-- UUID: 00592be0-8d84-4d3f-8c36-1454b18c27ec -->
+#### A.3.3.1.2 - Minimum Demand Absorption Buffer [Core]  <!-- UUID: 00592be0-8d84-4d3f-8c36-1454b18c27ec -->
 
 The Asset Liability Management also ensures that a certain percentage of the Sky Collateral Portfolio is invested in a Demand Absorption Buffer, highly liquid market making USDS assets that trade for close to 1 USD per USDS. In this way, if there is ever upward pressure on the price of USDS these assets can be used to sell USDS to maintain the peg.
 
-#### A.3.4.1.3 - Application To Prime Agents [Core]  <!-- UUID: 810270db-2436-411b-94e4-afbc66492531 -->
+#### A.3.3.1.3 - Application To Prime Agents [Core]  <!-- UUID: 810270db-2436-411b-94e4-afbc66492531 -->
 
 Each Prime Agent investing a portion of the Sky Collateral Portfolio must maintain, with respect to its portion of same, the percentage of Actively Stabilizing Collateral and Demand Absorption Buffer specified in [A.3.4 - Minimum Actively Stabilizing Collateral](475fe222-9e4a-4e9d-9be6-a7a424ce02f8). By ensuring that every Prime Agent maintains these levels, Sky as a whole remains compliant with the required thresholds of Actively Stabilizing Collateral and Demand Absorption Buffer.
 
-##### A.3.4.1.3.1 - Agent Collateral Portfolio [Core]  <!-- UUID: 64e1390f-68a1-43ec-87a8-8ae7b990f7ec -->
+##### A.3.3.1.3.1 - Agent Collateral Portfolio [Core]  <!-- UUID: 64e1390f-68a1-43ec-87a8-8ae7b990f7ec -->
 
 An Agent Collateral Portfolio is defined as the total amount of capital that the Prime Agent has deployed from Sky through the Allocation System Primitive, excluding any portion of that capital held in USDS. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
 
-##### A.3.4.1.3.2 - Actively Stabilizing Collateral [Core]  <!-- UUID: c825a54b-8696-452c-b963-cbe999f61bad -->
+##### A.3.3.1.3.2 - Actively Stabilizing Collateral [Core]  <!-- UUID: c825a54b-8696-452c-b963-cbe999f61bad -->
 
 Actively Stabilizing Collateral is collateral that actively supports the peg of USDS by market-making and providing buy support at a price close to 1 USD per USDS. The implementation of the Asset Liability Management framework specifies the downside spread that is allowed for collateral to qualify as Actively Stabilizing Collateral. See [A.3.4 - A2 - Implementation](bf1a1991-1c2b-457c-b1ca-6147049e93c5).
 
-##### A.3.4.1.3.3 - Demand Absorption Buffer [Core]  <!-- UUID: 1a4a64fc-240b-4671-a333-3b35dc1e1e2f -->
+##### A.3.3.1.3.3 - Demand Absorption Buffer [Core]  <!-- UUID: 1a4a64fc-240b-4671-a333-3b35dc1e1e2f -->
 
 The Demand Absorption Buffer is USDS that actively supports the peg of USDS by market-making and providing sell support at a price close to 1 USD per USDS. The implementation of the Asset Liability Management framework specifies the upside spread that is allowed for USDS to qualify toward the Demand Absorption Buffer. See [A.3.4 - A2 - Implementation](bf1a1991-1c2b-457c-b1ca-6147049e93c5).
 
-#### A.3.4.1.4 - Application To Sky Core [Core]  <!-- UUID: 6e050b66-0bc8-43f1-b32d-2220c9df466b -->
+#### A.3.3.1.4 - Application To Sky Core [Core]  <!-- UUID: 6e050b66-0bc8-43f1-b32d-2220c9df466b -->
 
 While its legacy ALM infrastructure is being transferred to Prime Agents, Sky Core manages the portion of the Sky Collateral Portfolio not deployed by Prime Agents (“Sky Core Collateral Portfolio”). During this transitional period, Sky Core must maintain, with respect to the Sky Core Collateral Portfolio, the same percentage of Actively Stabilizing Collateral and Demand Absorption Buffer required of Prime Agents. The required percentages are specified in [A.3.4 - Minimum Actively Stabilizing Collateral](475fe222-9e4a-4e9d-9be6-a7a424ce02f8). This requirement remains in effect only until all legacy ALM infrastructure has been fully transitioned to Prime Agents.
 
-#### A.3.4.1.5 - Peg Defense Event [Core]  <!-- UUID: 60d8fa49-f7cc-4b2e-b54a-cdd19b1e0a09 -->
+#### A.3.3.1.5 - Peg Defense Event [Core]  <!-- UUID: 60d8fa49-f7cc-4b2e-b54a-cdd19b1e0a09 -->
 
 In addition to the requirement for Prime Agents to hold a certain percentage of their Collateral Portfolio in Actively Stabilizing Collateral and the Demand Absorption Buffer, Prime Agents have special responsibilities in extraordinary situations where the stability of the peg is threatened. The definition of these events and the obligations for Prime Agents are specified in the implementation of the framework. See [A.3.4 - A2 - Implementation](bf1a1991-1c2b-457c-b1ca-6147049e93c5).
 
-#### A.3.4.1.6 - Asset Liability Management Rental [Core]  <!-- UUID: 1a7f0b6c-4ec2-4a5f-bb43-deab9305aab6 -->
+#### A.3.3.1.6 - Asset Liability Management Rental [Core]  <!-- UUID: 1a7f0b6c-4ec2-4a5f-bb43-deab9305aab6 -->
 
 To allow the Asset Liability Management obligation of Prime Agents to be satisfied in the most efficient way possible, Prime Agents may enter into Asset Liability Management Rentals between each other, as specified in the Asset Liability Management Rental Primitive. This allows one Prime Agent to hold a greater amount of Actively Stabilizing Collateral to offset another Prime Agent holding a lesser amount. Thus, the overall level of Actively Stabilizing Collateral is unaffected but the Actively Stabilizing Collateral can be held by a Prime Agent that is able to more efficiently hold it.
 
-##### A.3.4.1.6.1 - All Asset Liability Management Obligations Are Rented Together [Core]  <!-- UUID: d2895e10-71cf-416e-8c9c-3f3a9ff80d10 -->
+##### A.3.3.1.6.1 - All Asset Liability Management Obligations Are Rented Together [Core]  <!-- UUID: d2895e10-71cf-416e-8c9c-3f3a9ff80d10 -->
 
 When Asset Liability Management obligations are rented, the associated obligations with regard to Actively Stabilizing Collateral, Demand Absorption Buffer, and Peg Defense Events are all transferred together.
 
-### A.3.4.2 - Implementation [Section]  <!-- UUID: bf1a1991-1c2b-457c-b1ca-6147049e93c5 -->
+### A.3.3.2 - Implementation [Section]  <!-- UUID: bf1a1991-1c2b-457c-b1ca-6147049e93c5 -->
 
 This Section defines the current implementation of the Asset Liability Management framework.
 
-#### A.3.4.2.1 - Definitions [Core]  <!-- UUID: d6c1d594-eb4a-4a81-b643-977c5c995d7a -->
+#### A.3.3.2.1 - Definitions [Core]  <!-- UUID: d6c1d594-eb4a-4a81-b643-977c5c995d7a -->
 
 The documents herein define terms used through the implementation of the Asset Liability Management framework.
 
-##### A.3.4.2.1.1 - Peg Stability Module [Core]  <!-- UUID: 0082c12d-f1a7-46ff-a4aa-5fe42ece1a4d -->
+##### A.3.3.2.1.1 - Peg Stability Module [Core]  <!-- UUID: 0082c12d-f1a7-46ff-a4aa-5fe42ece1a4d -->
 
 A Peg Stability Module (”PSM”) allows users to swap a given collateral type directly for Dai or USDS at a fixed rate, rather than borrowing Dai or USDS. The PSM contract was designed with Stablecoin collateral in mind, allowing users to swap other Stablecoins for Dai or USDS at a fixed rate to aid with keeping Dai or USDS pegged to one (1) USD.
 
 A PSM operates similarly to a regular vault type with a zero Stability Fee and a liquidation ratio of 100% that can only be accessed through a user-facing smart contract containing the relevant swap functions. Unlike regular vaults, users of the PSM do not retain ownership of the asset and borrow Dai or USDS. Instead, PSM users swap the asset directly for Dai or USDS.
 
-##### A.3.4.2.1.2 - Low Risk Real World Assets [Core]  <!-- UUID: 590c645c-8045-4053-9ab1-ea718b62f770 -->
+##### A.3.3.2.1.2 - Low Risk Real World Assets [Core]  <!-- UUID: 590c645c-8045-4053-9ab1-ea718b62f770 -->
 
 Low Risk RWAs (”LRR”) are safe, short-term treasury strategies of less than one (1) year duration.
 
-##### A.3.4.2.1.3 - Cash Stablecoins [Core]  <!-- UUID: 066a4d9f-13ed-4ac3-a55a-df7bf3429649 -->
+##### A.3.3.2.1.3 - Cash Stablecoins [Core]  <!-- UUID: 066a4d9f-13ed-4ac3-a55a-df7bf3429649 -->
 
 Cash Stablecoins are defined as USDC, USDT, and pyUSD.
 
-#### A.3.4.2.2 - Minimum Actively Stabilizing Collateral [Core]  <!-- UUID: 475fe222-9e4a-4e9d-9be6-a7a424ce02f8 -->
+#### A.3.3.2.2 - Minimum Actively Stabilizing Collateral [Core]  <!-- UUID: 475fe222-9e4a-4e9d-9be6-a7a424ce02f8 -->
 
 Prime Agents must maintain at least 25% of their Collateral Portfolio in Actively Stabilizing Collateral.
 
-##### A.3.4.2.2.1 - Actively Stabilizing Collateral [Core]  <!-- UUID: 62495dee-8d2a-45d4-87c4-01150e3db3c8 -->
+##### A.3.3.2.2.1 - Actively Stabilizing Collateral [Core]  <!-- UUID: 62495dee-8d2a-45d4-87c4-01150e3db3c8 -->
 
 Actively Stabilizing Collateral is the sum of (1) Resting Actively Stabilizing Collateral and (2) Latent Actively Stabilizing Collateral.
 
-###### A.3.4.2.2.1.1 - Resting Actively Stabilizing Collateral [Core]  <!-- UUID: 0e17b35a-c830-4695-b63c-5ef58b249d3f -->
+###### A.3.3.2.2.1.1 - Resting Actively Stabilizing Collateral [Core]  <!-- UUID: 0e17b35a-c830-4695-b63c-5ef58b249d3f -->
 
 Resting Actively Stabilizing Collateral must provide buy support at a price of at least 0.999 USD per USDS (10bps downside spread). Resting Actively Stabilizing Collateral includes Cash Stablecoins in PSMs or decentralized exchanges (e.g., Curve), other stablecoins, crypto assets, or off-chain Real World Asset (RWA) loans to market makers, provided they meet the specified redemption price and transparency requirements.
 
-####### A.3.4.2.2.1.1.1 - Resting Actively Stabilizing Collateral Calculations [Core]  <!-- UUID: 4e8cd2d1-4c74-49fd-b3fe-f8b6ccc1a79f -->
+####### A.3.3.2.2.1.1.1 - Resting Actively Stabilizing Collateral Calculations [Core]  <!-- UUID: 4e8cd2d1-4c74-49fd-b3fe-f8b6ccc1a79f -->
 
 Resting Actively Stabilizing Collateral is currently calculated as the sum of:
     
@@ -14247,7 +14303,7 @@ Resting Actively Stabilizing Collateral is currently calculated as the sum of:
 4. USDC in GUNI 0.01%; and    
 5. USDC in GUNI 0.05%.
 
-###### A.3.4.2.2.1.2 - Latent Actively Stabilizing Collateral [Core]  <!-- UUID: 300d45c5-96b4-47ad-9471-8122534d9bc4 -->
+###### A.3.3.2.2.1.2 - Latent Actively Stabilizing Collateral [Core]  <!-- UUID: 300d45c5-96b4-47ad-9471-8122534d9bc4 -->
 
 Latent Actively Stabilizing Collateral consists of Cash Stablecoins that do not qualify as Resting Actively Stabilizing Collateral but can be converted to Resting Actively Stabilizing Collateral. Latent Actively Stabilizing Collateral may include Cash Stablecoins deposited into lending protocols, Cash Stablecoins used to provide liquidity to decentralized exchanges, or liquid staking derivatives of cash stablecoins.
 Assets must satisfy the following requirements to qualify as Latent Actively Stabilizing Collateral:
@@ -14256,7 +14312,7 @@ Assets must satisfy the following requirements to qualify as Latent Actively Sta
 2. The assets must be able to be converted into Resting Actively Stabilizing Collateral within 15 minutes under normal market conditions; and    
 3. The process to convert the assets into Resting Actively Stabilizing Collateral must be fully automated and triggered automatically when ASC falls below specified levels.
 
-####### A.3.4.2.2.1.2.1 - Latent Actively Stabilizing Collateral Calculations [Core]  <!-- UUID: 35ce6b38-9fc1-456e-93da-10ab1468a8bf -->
+####### A.3.3.2.2.1.2.1 - Latent Actively Stabilizing Collateral Calculations [Core]  <!-- UUID: 35ce6b38-9fc1-456e-93da-10ab1468a8bf -->
 
 Latent Actively Stabilizing Collateral is currently calculated as the sum of:
     
@@ -14267,131 +14323,131 @@ Latent Actively Stabilizing Collateral is currently calculated as the sum of:
 5. Cash Stablecoins in Morpho; and    
 6. Cash Stablecoins in a Prime ALM Proxy.
 
-The Core Executor Agents, in consultation with the Stability Scope Advisors, may impose limitations on the size of exposures to these protocols or to specific pools within these protocols that qualify as Latent Actively Stabilizing Collateral in order to prevent excessive risk to Sky.
+The Core Executor Agents, in consultation with the Core Council Risk Advisor, may impose limitations on the size of exposures to these protocols or to specific pools within these protocols that qualify as Latent Actively Stabilizing Collateral in order to prevent excessive risk to Sky.
 
-####### A.3.4.2.2.1.2.2 - Maximum Latent Actively Stabilizing Collateral [Core]  <!-- UUID: 5e300cdb-b221-4b6f-9c4a-11502133a1f9 -->
+####### A.3.3.2.2.1.2.2 - Maximum Latent Actively Stabilizing Collateral [Core]  <!-- UUID: 5e300cdb-b221-4b6f-9c4a-11502133a1f9 -->
 
 Latent Actively Stabilizing Collateral may not exceed 25% of Actively Stabilizing Collateral.
 
-##### A.3.4.2.2.2 - Penalties For Failing To Satisfy Actively Stabilizing Collateral Requirement [Core]  <!-- UUID: 51de8003-cdf3-4f86-93a1-1cc3424f299e -->
+##### A.3.3.2.2.2 - Penalties For Failing To Satisfy Actively Stabilizing Collateral Requirement [Core]  <!-- UUID: 51de8003-cdf3-4f86-93a1-1cc3424f299e -->
 
 If a Prime Agent does not maintain the Minimum Actively Stabilizing Collateral, it will continuously be penalized at a rate of 200% APY on the missing Actively Stabilizing Collateral. This penalty is calculated retroactively per second and settled monthly during the Settlement Cycle.
 
-#### A.3.4.2.3 - Minimum Demand Absorption Buffer [Core]  <!-- UUID: 1e129119-a2ce-4978-b235-c50f2a1c5e2e -->
+#### A.3.3.2.3 - Minimum Demand Absorption Buffer [Core]  <!-- UUID: 1e129119-a2ce-4978-b235-c50f2a1c5e2e -->
 
 Every Prime Agent must maintain a Demand Absorption Buffer equal to 25% of their required Actively Stabilizing Collateral.
 
-##### A.3.4.2.3.1 - Demand Absorption Buffer [Core]  <!-- UUID: 104c90df-9236-41bc-a6ee-a6db3e8ef097 -->
+##### A.3.3.2.3.1 - Demand Absorption Buffer [Core]  <!-- UUID: 104c90df-9236-41bc-a6ee-a6db3e8ef097 -->
 
 To further stabilize USDS during periods of excess supply, Prime Agents must maintain a Demand Absorption Buffer (DAB), a subset of ASC consisting of USDS that is for sale for at most 1.001 USD per USDS. The Demand Absorption Buffer includes USDS or DAI in PSMs. The Demand Absorption Buffer can also be fulfilled by autonomous systems that generate USDS dynamically through the allocation as needed.
 
-##### A.3.4.2.3.2 - Penalties For Failing To Satisfy Demand Absorption Buffer Requirement [Core]  <!-- UUID: eabe411c-6325-4732-8615-8fb9f2037945 -->
+##### A.3.3.2.3.2 - Penalties For Failing To Satisfy Demand Absorption Buffer Requirement [Core]  <!-- UUID: eabe411c-6325-4732-8615-8fb9f2037945 -->
 
 Penalties for failing to maintain the Minimum Demand Absorption Buffer will be specified in a future iteration of the Asset Liability Management framework.
 
-#### A.3.4.2.4 - Peg Defense Event [Core]  <!-- UUID: a61c1baa-db78-4106-b61a-62c6920a1a12 -->
+#### A.3.3.2.4 - Peg Defense Event [Core]  <!-- UUID: a61c1baa-db78-4106-b61a-62c6920a1a12 -->
 
 The documents herein specify the obligations of Prime Agents during a Peg Defense Event.
 
-##### A.3.4.2.4.1 - Peg Defense Event Definition [Core]  <!-- UUID: cc9b27bc-7c4e-46fd-a57c-d857875079dd -->
+##### A.3.3.2.4.1 - Peg Defense Event Definition [Core]  <!-- UUID: cc9b27bc-7c4e-46fd-a57c-d857875079dd -->
 
 A Peg Defense Event is a situation where the average price of USDS on DEXes that are connected via LayerZero falls below 0.999 USD per USDS.
 
-###### A.3.4.2.4.1.1 - Peg Defense Event Alert Tool [Core]  <!-- UUID: f2c381b3-96db-4f04-9817-6b69cdca8622 -->
+###### A.3.3.2.4.1.1 - Peg Defense Event Alert Tool [Core]  <!-- UUID: f2c381b3-96db-4f04-9817-6b69cdca8622 -->
 
-BA Labs, in consultation with Core GovOps, will develop a tool that calculates the average price of USDS on DEXes that are connected via LayerZero in real time. This tool must be made available to all Prime Agents and functionality must be developed that notifies Sky and Prime Agents in real time when a Peg Defense Event has been triggered.
+The Core Council Risk Advisor, in consultation with Core GovOps, will develop a tool that calculates the average price of USDS on DEXes that are connected via LayerZero in real time. This tool must be made available to all Prime Agents and functionality must be developed that notifies Sky and Prime Agents in real time when a Peg Defense Event has been triggered.
 
-##### A.3.4.2.4.2 - Peg Defense Obligations [Core]  <!-- UUID: 816e01d2-76a7-45ea-a770-22e4d3bc1247 -->
+##### A.3.3.2.4.2 - Peg Defense Obligations [Core]  <!-- UUID: 816e01d2-76a7-45ea-a770-22e4d3bc1247 -->
 
 In a Peg Defense Event, all Prime Agents must immediately begin to buy USDS at a rate of at least 6.25% of their Actively Stabilizing Collateral requirement every 6 hours.
 
-###### A.3.4.2.4.2.1 - Alternatives For Satisfying Peg Defense Obligations [Core]  <!-- UUID: 58c006ae-d7a7-4e23-929a-18b2bdfe62a5 -->
+###### A.3.3.2.4.2.1 - Alternatives For Satisfying Peg Defense Obligations [Core]  <!-- UUID: 58c006ae-d7a7-4e23-929a-18b2bdfe62a5 -->
 
 Peg Defense can be performed through a combination of (1) selling other types of collateral for USDS, or (2) by using USDS, or generating new USDS via the Allocation System, that is then used as collateral to borrow other types of assets (e.g. USDC or USDT on Aave) and buy USDS with it.
 
-##### A.3.4.2.4.3 - Penalties For Failure To Satisfy Peg Defense Obligations [Core]  <!-- UUID: 438697e3-7c67-4fc4-b174-df4d2fee176f -->
+##### A.3.3.2.4.3 - Penalties For Failure To Satisfy Peg Defense Obligations [Core]  <!-- UUID: 438697e3-7c67-4fc4-b174-df4d2fee176f -->
 
 If an Agent fails to fulfill the Peg Defense Obligations, then a penalty of 20 bps on all missing buy volume is applied, calculated in finished blocks of 6 hours from when the Peg Defense Event begins, and settled retroactively as part of the Settlement Cycle.
 
-#### A.3.4.2.5 - Asset Liability Management Rental [Core]  <!-- UUID: debeb71c-2689-4033-b3ab-51cd4018fed3 -->
+#### A.3.3.2.5 - Asset Liability Management Rental [Core]  <!-- UUID: debeb71c-2689-4033-b3ab-51cd4018fed3 -->
 
 The implementation of Asset Liability Management Rentals is specified in [A.2.4 - Asset Liability Management Rental Primitive](bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c).
 
-#### A.3.4.2.6 - Sky Core Asset Liability Management Rules [Core]  <!-- UUID: 8135523a-dd5f-482d-b522-ec4227746eaf -->
+#### A.3.3.2.6 - Sky Core Asset Liability Management Rules [Core]  <!-- UUID: 8135523a-dd5f-482d-b522-ec4227746eaf -->
 
 Pursuant to [A.3.4 - Application To Sky Core](6e050b66-0bc8-43f1-b32d-2220c9df466b), Sky Core manages the Sky Core Collateral Portfolio through a simple set of Asset Liability Management rules. These rules allocate excess capital beyond what is needed in the PSMs into Low Risk Real World Assets, and draw on those Low Risk Real World Assets to replenish the PSMs when the balance in the PSMs fall too low.
 
-##### A.3.4.2.6.1 - Excess Assets In Peg Stability Modules [Core]  <!-- UUID: f3afefb3-730f-44da-9226-df0e88552971 -->
+##### A.3.3.2.6.1 - Excess Assets In Peg Stability Modules [Core]  <!-- UUID: f3afefb3-730f-44da-9226-df0e88552971 -->
 
 If more than 30% of the Sky Core Collateral Portfolio is in PSMs, then any excess above the 30% mark must be allocated towards Low Risk Real World Assets.
 
-##### A.3.4.2.6.2 - Lack Of Assets In Peg Stability Modules [Core]  <!-- UUID: 68f039ab-045b-42b8-b28c-22101598a1d0 -->
+##### A.3.3.2.6.2 - Lack Of Assets In Peg Stability Modules [Core]  <!-- UUID: 68f039ab-045b-42b8-b28c-22101598a1d0 -->
 
 If less than 20% of the Sky Core Collateral Portfolio is in PSMs, then Low Risk Real World Assets must be sold off to return the PSM exposure to 25%.
 
-##### A.3.4.2.6.3 - Optimizations [Core]  <!-- UUID: f42e9ee2-25c5-43d8-8ea9-c512d179c9ab -->
+##### A.3.3.2.6.3 - Optimizations [Core]  <!-- UUID: f42e9ee2-25c5-43d8-8ea9-c512d179c9ab -->
 
 Core GovOps can use the Operational Weekly Governance Cycle to modify the Sky Core Asset Liability Management Rules in order to make them more efficient or more resilient. This modification can involve changing any of the logic defined in [A.3.4 - Sky Core Asset Liability Management Rules](8135523a-dd5f-482d-b522-ec4227746eaf).
 
-#### A.3.4.2.7 - Legacy Mechanisms [Core]  <!-- UUID: da716553-ad32-4292-b11d-74b66f0683b8 -->
+#### A.3.3.2.7 - Legacy Mechanisms [Core]  <!-- UUID: da716553-ad32-4292-b11d-74b66f0683b8 -->
 
 The documents herein outline Sky Core’s legacy ALM mechanisms. Given the launch of Prime Agents, these legacy mechanisms will be either offboarded entirely or transitioned to Prime Agents.
 
-##### A.3.4.2.7.1 - Peg Stability Module [Core]  <!-- UUID: 29de21b4-0603-435e-8149-170f0ae2866a -->
+##### A.3.3.2.7.1 - Peg Stability Module [Core]  <!-- UUID: 29de21b4-0603-435e-8149-170f0ae2866a -->
 
 The documents herein outline the legacy Peg Stability Module which supported Dai and USDS peg stability under Sky Core management. Going forward, the PSM will be transitioned to Grove.
 
-###### A.3.4.2.7.1.1 - Lite Peg Stability Module [Core]  <!-- UUID: 39473e1a-63f8-433b-a850-08f53b2dcf02 -->
+###### A.3.3.2.7.1.1 - Lite Peg Stability Module [Core]  <!-- UUID: 39473e1a-63f8-433b-a850-08f53b2dcf02 -->
 
 Control of the Lite PSM is being transitioned to Grove. Until this transition is complete, the Lite PSM continues to be controlled by Sky Core, subject to the requirements specified in [A.3.4 - Sky Core Asset Liability Management Rules](8135523a-dd5f-482d-b522-ec4227746eaf). Post-transition, Grove will manage the Lite PSM as an ASC asset pursuant to the rules defined in this Article.
 
-####### A.3.4.2.7.1.1.1 - Lite Peg Stability Module Parameter Definitions [Core]  <!-- UUID: 9196786a-18b6-4dea-b4e2-852090371dd7 -->
+####### A.3.3.2.7.1.1.1 - Lite Peg Stability Module Parameter Definitions [Core]  <!-- UUID: 9196786a-18b6-4dea-b4e2-852090371dd7 -->
 
 The subdocuments herein define the parameters of the Lite Peg Stability Module.
 
-######## A.3.4.2.7.1.1.1.1 - Lite Peg Stability Module Toll / Fee In Definition [Core]  <!-- UUID: 12714156-5543-4443-b733-d213db62cecb -->
+######## A.3.3.2.7.1.1.1.1 - Lite Peg Stability Module Toll / Fee In Definition [Core]  <!-- UUID: 12714156-5543-4443-b733-d213db62cecb -->
 
 `tin` is a percentage fee applied when trading the collateral asset into the PSM in exchange for Dai**.**
 
-######## A.3.4.2.7.1.1.1.2 - Lite Peg Stability Module Toll / Fee Out Definition [Core]  <!-- UUID: a39b4df8-c022-4bfb-9339-e4d3f38715ec -->
+######## A.3.3.2.7.1.1.1.2 - Lite Peg Stability Module Toll / Fee Out Definition [Core]  <!-- UUID: a39b4df8-c022-4bfb-9339-e4d3f38715ec -->
 
 `tout` is the percentage fee applied when trading Dai into the PSM in exchange for the collateral asset.
 
-######## A.3.4.2.7.1.1.1.3 - Lite Peg Stability Module Maximum Debt Ceiling Definition [Core]  <!-- UUID: c1805ee8-626e-4aec-9a88-21377579aa3d -->
+######## A.3.3.2.7.1.1.1.3 - Lite Peg Stability Module Maximum Debt Ceiling Definition [Core]  <!-- UUID: c1805ee8-626e-4aec-9a88-21377579aa3d -->
 
 DC-IAM `line` is the maximum amount of debt the LitePSM can accrue.
 
-######### A.3.4.2.7.1.1.1.3.0.3.1 - Debt Ceiling - Element Annotation [Annotation]  <!-- UUID: 3b015982-458b-4412-8469-cbcdb4a0b481 -->
+######### A.3.3.2.7.1.1.1.3.0.3.1 - Debt Ceiling - Element Annotation [Annotation]  <!-- UUID: 3b015982-458b-4412-8469-cbcdb4a0b481 -->
 
 The element “Debt Ceiling” refers to the maximum amount that can be borrowed against assets in a vault. Although a PSM has a zero Stability Fee and a liquidation ratio of 100%, it is still a vault and swaps of a collateral asset for Dai represent issuance of Dai that is backed by that collateral asset. The Debt Ceiling serves to limit the exposure the PSM can incur to that collateral asset.
 
-######## A.3.4.2.7.1.1.1.4 - Lite Peg Stability Module Target Available Debt Definition [Core]  <!-- UUID: 7d56c67d-d358-4641-aa27-ada5066c0579 -->
+######## A.3.3.2.7.1.1.1.4 - Lite Peg Stability Module Target Available Debt Definition [Core]  <!-- UUID: 7d56c67d-d358-4641-aa27-ada5066c0579 -->
 
 DC-IAM `gap` is the target gap between the debt usage and the Debt Ceiling.
 
-######## A.3.4.2.7.1.1.1.5 - Lite Peg Stability Module Ceiling Increase Cooldown Definition [Core]  <!-- UUID: 51e64b05-ddb8-4ce3-9307-1f2f8dc51a5f -->
+######## A.3.3.2.7.1.1.1.5 - Lite Peg Stability Module Ceiling Increase Cooldown Definition [Core]  <!-- UUID: 51e64b05-ddb8-4ce3-9307-1f2f8dc51a5f -->
 
 DC-IAM `ttl` is the minimum time requirement before it is possible to increase the debt ceiling, expressed in seconds.
 
-######### A.3.4.2.7.1.1.1.5.0.3.1 - Debt Ceiling - Element Annotation [Annotation]  <!-- UUID: f1a64ee3-d89c-4c5e-9559-10bbf4977297 -->
+######### A.3.3.2.7.1.1.1.5.0.3.1 - Debt Ceiling - Element Annotation [Annotation]  <!-- UUID: f1a64ee3-d89c-4c5e-9559-10bbf4977297 -->
 
 The element “Debt Ceiling” refers to the maximum amount that can be borrowed against assets in a vault. Although a PSM has a zero Stability Fee and a liquidation ratio of 100%, it is still a vault and swaps of a collateral asset for Dai represent issuance of Dai that is backed by that collateral asset. The Debt Ceiling serves to limit the exposure the PSM can incur to that collateral asset.
 
-######## A.3.4.2.7.1.1.1.6 - Lite Peg Stability Module Buffer Definition [Core]  <!-- UUID: 71776219-5425-4eaf-89fe-7dea283d5a7d -->
+######## A.3.3.2.7.1.1.1.6 - Lite Peg Stability Module Buffer Definition [Core]  <!-- UUID: 71776219-5425-4eaf-89fe-7dea283d5a7d -->
 
 `buf` is a fixed-sized amount of pre-minted Dai which LitePSM is designed to maintain in most situations. Note, however, that when a user calls `buyGem`, the amount of Dai available can be temporarily larger than `buf`.
 
-######### A.3.4.2.7.1.1.1.6.0.3.1 - BuyGem - Element Annotation [Annotation]  <!-- UUID: 41d9ae0a-c3a6-4a24-ae6a-b2ee841fb03d -->
+######### A.3.3.2.7.1.1.1.6.0.3.1 - BuyGem - Element Annotation [Annotation]  <!-- UUID: 41d9ae0a-c3a6-4a24-ae6a-b2ee841fb03d -->
 
 `buyGem` is a function that can be called on the LitePSM smart contract to buy a collateral asset in exchange for Dai. “Gem” here is Daiwanese for the collateral token.
 
 The Lite Peg Stability Module maintains a pool of pre-minted Dai and Stablecoins to minimize transaction costs in swapping. The `buf` parameter is the amount of pre-minted Dai the LitePSM is designed to maintain in most instances. However, when a user calls `buyGem` and buys the collateral asset in exchange for Dai, the amount of Dai can temporarily exceed the `buf` parameter.
 
-######## A.3.4.2.7.1.1.1.7 - Lite Peg Stability Module Authorized Parties Definition [Core]  <!-- UUID: 12d3a162-9615-4bc0-ae09-57e0cd3af222 -->
+######## A.3.3.2.7.1.1.1.7 - Lite Peg Stability Module Authorized Parties Definition [Core]  <!-- UUID: 12d3a162-9615-4bc0-ae09-57e0cd3af222 -->
 
 Authorized Parties are actors who are authorized by Sky Governance to use the Lite Peg Stability Module without paying swap fees.
 
-####### A.3.4.2.7.1.1.2 - Lite Peg Stability Module Parameter Values [Core]  <!-- UUID: 8694e11a-6acd-43f1-90fd-67eb7e7d98d6 -->
+####### A.3.3.2.7.1.1.2 - Lite Peg Stability Module Parameter Values [Core]  <!-- UUID: 8694e11a-6acd-43f1-90fd-67eb7e7d98d6 -->
 
 The current values of the Lite Peg Stability Module parameters are:
 
@@ -14403,39 +14459,39 @@ The current values of the Lite Peg Stability Module parameters are:
 • `buf`: 400,000,000
 • Authorized Parties: None
 
-####### A.3.4.2.7.1.1.3 - Lite Peg Stability Module Parameter Modification [Core]  <!-- UUID: bf561ea8-ab09-4ff5-a84d-2e92bcff997b -->
+####### A.3.3.2.7.1.1.3 - Lite Peg Stability Module Parameter Modification [Core]  <!-- UUID: bf561ea8-ab09-4ff5-a84d-2e92bcff997b -->
 
-The Sky Core Stability Facilitators, in consultation with the Sky Core Stability Scope Advisors, may recommend changes to any of the parameters specified in the subdocuments of [A.3.4 - Lite Peg Stability Module Parameter Definitions](9196786a-18b6-4dea-b4e2-852090371dd7). These changes will be subject to an Executive Vote through the Operational Weekly Governance Cycle.
+The Sky Core Stability Facilitators, in consultation with the Core Council Risk Advisor, may recommend changes to any of the parameters specified in the subdocuments of [A.3.4 - Lite Peg Stability Module Parameter Definitions](9196786a-18b6-4dea-b4e2-852090371dd7). These changes will be subject to an Executive Vote through the Operational Weekly Governance Cycle.
 
-##### A.3.4.2.7.2 - Real World Assets [Core]  <!-- UUID: bea66a32-4cf2-4de9-9a7e-3c94c293fc3c -->
+##### A.3.3.2.7.2 - Real World Assets [Core]  <!-- UUID: bea66a32-4cf2-4de9-9a7e-3c94c293fc3c -->
 
 The documents herein define legacy mechanisms related to Real World Assets.
 
-###### A.3.4.2.7.2.1 - Andromeda [Core]  <!-- UUID: 1b153f9f-7c70-4ae1-b76c-ef12f87532c6 -->
+###### A.3.3.2.7.2.1 - Andromeda [Core]  <!-- UUID: 1b153f9f-7c70-4ae1-b76c-ef12f87532c6 -->
 
 Historically, Andromeda balanced Sky Core’s Cash Stablecoin liquidity by allocating excess into low-risk treasury strategies and replenishing shortages. Control of the Andromeda RWA Arranged Structure is currently being transitioned to Grove. Until the transition to Grove is complete, Andromeda continues to be controlled by Sky Core, subject to the requirements defined in [A.3.4 - Sky Core Asset Liability Management Rules](8135523a-dd5f-482d-b522-ec4227746eaf). Post-transition, Grove will manage Andromeda as a non-ASC asset within its Collateral Portfolio, subject to JRC requirements. Andromeda is not currently operational and its debt ceiling has been reduced to zero.
 
-###### A.3.4.2.7.2.2 - Other RWA Offboarding [Core]  <!-- UUID: ca876157-5518-4bf3-9e87-7c4a07a13d36 -->
+###### A.3.3.2.7.2.2 - Other RWA Offboarding [Core]  <!-- UUID: ca876157-5518-4bf3-9e87-7c4a07a13d36 -->
 
 Other than Andromeda, all old RWA exposure that was added before Endgame must stay for as long as necessary, and optimized for yield if possible. When it is possible, the Stability Facilitators should take action to wind down and offboard all such Legacy RWA. Governance actions related to optimizations, wind down and offboardings can be done directly in Executive Votes with no prior Governance Poll needed.
 
-## A.3.5 - Real World Assets [Article]  <!-- UUID: edd96df7-4058-4a74-a6e5-827df31e5fdd -->
+## A.3.4 - Real World Assets [Article]  <!-- UUID: edd96df7-4058-4a74-a6e5-827df31e5fdd -->
 
 This Article governs the secure management of Real World Assets (RWA), which serve as collateral for the USDS Stablecoin. RWAs are enforced through legal recourse by Arranged Structures and present unique risks that this Article must address.
 
-### A.3.5.1 - Arranged Structures [Section]  <!-- UUID: 1df6a6c4-4f2e-451b-af0d-5c9eccc8762d -->
+### A.3.4.1 - Arranged Structures [Section]  <!-- UUID: 1df6a6c4-4f2e-451b-af0d-5c9eccc8762d -->
 
 Arranged Structures are special legal structures set up by Ecosystem Actors to secure Real World Assets to help stabilize the Sky Ecosystem. Each Arranged Structure has a Conduit system which is owned by an Agent and automatically connected to all Agents; the Conduit allows them to send and receive USDS or other assets.
 
-### A.3.5.2 - Agent Owner For Arranged Structures [Section]  <!-- UUID: 2f1ab584-bb48-4588-a4ff-a4ff0e728c89 -->
+### A.3.4.2 - Agent Owner For Arranged Structures [Section]  <!-- UUID: 2f1ab584-bb48-4588-a4ff-a4ff0e728c89 -->
 
 Arranged Structures must have an Agent owner. The Agent owner assigns instructions to the Arranged Structure on behalf of Sky, and determines if and how other Agents can access the Conduit of the Arranged Structure.
 
-### A.3.5.3 - Arrangers [Section]  <!-- UUID: 12c9e05d-b47f-456f-aff9-ddece22cec62 -->
+### A.3.4.3 - Arrangers [Section]  <!-- UUID: 12c9e05d-b47f-456f-aff9-ddece22cec62 -->
 
 This Section defines procedures related to Arrangers, Ecosystem Actors that assist in the design and operation of Arranged Structures. Every Arranged Structure must have a designated Arranger responsible for conducting ongoing reporting. All aspects of this relationship, including the Arranger's duties, must be defined in this Section.
 
-#### A.3.5.3.1 - Introduction [Core]  <!-- UUID: 4b110433-bf28-4c9a-b709-e2deaac9212e -->
+#### A.3.4.3.1 - Introduction [Core]  <!-- UUID: 4b110433-bf28-4c9a-b709-e2deaac9212e -->
 
 Arrangers are Ecosystem Actors who specialize in sourcing, negotiating, structuring, and reporting on Real World Assets, as well as maintaining and monitoring the underlying Arranged Structures used by the Sky Protocol. The Arrangers manage a restricted function on the Arranged Structure Conduit that allows them to send assets onwards to the predetermined blockchain account of the Arranged Structure.
 
@@ -14445,17 +14501,17 @@ After the Arranged Structures are established and assets are allocated, Arranger
 
 Arrangers are directly approved by SKY voters, and all LRA collateral exposure must be structured by an approved Arranger.
 
-#### A.3.5.3.2 - Onboarding And Offboarding of Arrangers [Core]  <!-- UUID: 769c492c-2282-4466-8d24-0a530f724a0c -->
+#### A.3.4.3.2 - Onboarding And Offboarding of Arrangers [Core]  <!-- UUID: 769c492c-2282-4466-8d24-0a530f724a0c -->
 
 When they deem it necessary, the Stability Facilitators may initiate a Governance Poll to onboard or offboard Arrangers. The list of current active Arrangers is maintained in [A.3.5 - Real World Assets - Arrangers - List Of Active Arrangers](b8791aaa-84b7-4012-8a4f-053595ec232a).
 
-##### A.3.5.3.2.1 - List Of Active Arrangers [Core]  <!-- UUID: b8791aaa-84b7-4012-8a4f-053595ec232a -->
+##### A.3.4.3.2.1 - List Of Active Arrangers [Core]  <!-- UUID: b8791aaa-84b7-4012-8a4f-053595ec232a -->
 
 List of current active Arrangers:
 
 • No current active Arrangers.
 
-#### A.3.5.3.3 - Reporting And Stress Test Requirements [Core]  <!-- UUID: a904881f-b235-4236-8439-deea105f06d0 -->
+#### A.3.4.3.3 - Reporting And Stress Test Requirements [Core]  <!-- UUID: a904881f-b235-4236-8439-deea105f06d0 -->
 
 Arrangers must publish monthly reporting on each Arranged Structure they have arranged. 
 
@@ -14469,7 +14525,7 @@ To be considered compliant, Arrangers’ monthly reports must satisfy the requir
 
 • [A.3.5 - Real World Assets - Arrangers - Access To Accounts](47eedd39-5bb9-492f-a4aa-9405bb5d196f)
 
-##### A.3.5.3.3.1 - Monthly Arranger Report Requirements [Core]  <!-- UUID: 7b902bb1-68b4-477d-a575-29aaa02e9e7b -->
+##### A.3.4.3.3.1 - Monthly Arranger Report Requirements [Core]  <!-- UUID: 7b902bb1-68b4-477d-a575-29aaa02e9e7b -->
 
 The following information must be included in the monthly Arranger report. Each item must be reported for at least the start and end date of the reporting period. If these dates fall on days when markets are closed, the first business day after the start date and the last business day before the end date may be used instead.
 
@@ -14497,7 +14553,7 @@ The following information must be included in the monthly Arranger report. Each 
 
 The Stability Facilitator must publicly confirm on the Sky Forum that they have reviewed the original account documentation and verified that it supports the Arranger’s summary.
 
-##### A.3.5.3.3.2 - Access To Accounts [Core]  <!-- UUID: 47eedd39-5bb9-492f-a4aa-9405bb5d196f -->
+##### A.3.4.3.3.2 - Access To Accounts [Core]  <!-- UUID: 47eedd39-5bb9-492f-a4aa-9405bb5d196f -->
 
 As an alternative to the requirements set out in [A.3.5 - Real World Assets - Arrangers - Monthly Arranger Report Requirements](7b902bb1-68b4-477d-a575-29aaa02e9e7b), the Arranger can provide the following information through public read-only access to all accounts:
 
@@ -14509,41 +14565,41 @@ As an alternative to the requirements set out in [A.3.5 - Real World Assets - Ar
 
 In addition, Makerburn.com ([https://makerburn.com/#/](https://makerburn.com/#/)), Daistats.com ([https://daistats.com/#/](https://daistats.com/#/)), or another dashboard must be publicly available to summarize USDS inflows and outflows from the Sky vault.
 
-### A.3.5.4 - Agent Owner Can Change Arrangers [Section]  <!-- UUID: cb2098b0-9970-4a5b-b835-eaa4f0e2ea6f -->
+### A.3.4.4 - Agent Owner Can Change Arrangers [Section]  <!-- UUID: cb2098b0-9970-4a5b-b835-eaa4f0e2ea6f -->
 
 The Agent owner of the Arranged Structure can change the blockchain account of the Arranged Structure and change the Arranger.
 
-### A.3.5.5 - Perpetual Yield Strategies [Section]  <!-- UUID: 87ec737c-7c0d-4d94-a760-a1ad9935179b -->
+### A.3.4.5 - Perpetual Yield Strategies [Section]  <!-- UUID: 87ec737c-7c0d-4d94-a760-a1ad9935179b -->
 
 The subdocuments herein define perpetual yield strategies and exposure targets that can be implemented by the Stability Facilitators.
 
-#### A.3.5.5.1 - Implemented By Stability Facilitator [Core]  <!-- UUID: a337def8-2baf-491b-9635-4beaa628b77f -->
+#### A.3.4.5.1 - Implemented By Stability Facilitator [Core]  <!-- UUID: a337def8-2baf-491b-9635-4beaa628b77f -->
 
 The Stability Facilitators can implement various perpetual yield strategies, including on-chain and off-chain mechanisms, that enable the Sky Protocol to take advantage of high risk-adjusted return on perpetual yield strategies in the crypto markets. 
 
 Exposure targets specified in this document override requirements defined by other Articles of the Stability Scope.
 
-#### A.3.5.5.2 - Perpetual Exposure [Core]  <!-- UUID: 64841755-24d5-4464-850f-6b504b1c6022 -->
+#### A.3.4.5.2 - Perpetual Exposure [Core]  <!-- UUID: 64841755-24d5-4464-850f-6b504b1c6022 -->
 
 The subdocuments herein define Perpetual Exposure parameters and the associated governance processes.
 
-##### A.3.5.5.2.1 - Perpetual Exposure Direct Accumulation [Core]  <!-- UUID: 6b70f984-1b30-40e8-9644-c49151b36caa -->
+##### A.3.4.5.2.1 - Perpetual Exposure Direct Accumulation [Core]  <!-- UUID: 6b70f984-1b30-40e8-9644-c49151b36caa -->
 
 The Stability Facilitators can trigger Executive Votes that instruct Arranged Structures to set up mechanisms that allow them to take direct exposure to Ethena sUSDe, or use legal rails to get direct exposure through custodians.
 
-## A.3.6 - Surplus Buffer and Smart Burn Engine [Article]  <!-- UUID: 3eb6f099-2736-4f62-9cb8-096a8fcca757 -->
+## A.3.5 - Surplus Buffer and Smart Burn Engine [Article]  <!-- UUID: 3eb6f099-2736-4f62-9cb8-096a8fcca757 -->
 
 This Article defines key economic parameters relating to Sky Protocol Surplus, including the Surplus Buffer and Smart Burn Engine.
 
-### A.3.6.1 - Surplus Buffer [Section]  <!-- UUID: 9782cdc5-c274-45c2-bf4a-690f22c6a294 -->
+### A.3.5.1 - Surplus Buffer [Section]  <!-- UUID: 9782cdc5-c274-45c2-bf4a-690f22c6a294 -->
 
 The Surplus Buffer is the difference between Sky’s assets and liabilities. Protocol revenue increases the Surplus Buffer and expenses decrease the Surplus Buffer.
 
-#### A.3.6.1.1 - Current Implementation [Core]  <!-- UUID: b747f341-927a-4673-817d-5e895acc9eb8 -->
+#### A.3.5.1.1 - Current Implementation [Core]  <!-- UUID: b747f341-927a-4673-817d-5e895acc9eb8 -->
 
 The current implementation of the Surplus Buffer is the Vow contract deployed on the Ethereum Mainnet at `0xA950524441892A31ebddF91d3cEEFa04Bf454466`.
 
-##### A.3.6.1.1.1 - Current Value [Core]  <!-- UUID: 52fa11b0-7167-47c3-9678-e879dc981127 -->
+##### A.3.5.1.1.1 - Current Value [Core]  <!-- UUID: 52fa11b0-7167-47c3-9678-e879dc981127 -->
 
 The current value of the Surplus Buffer can be calculated using the Vat contract, Sky’s central accounting contract, located on the Ethereum Mainnet at `0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B`. The current value of the Surplus Buffer is the difference between:
 
@@ -14551,9 +14607,10 @@ The current value of the Surplus Buffer can be calculated using the Vat contract
 
 2. The liabilities of the Vow contract obtained by calling the `sin` function on the Vat contract with the address of the Vow contract.
 
-### A.3.6.2 - Surplus Buffer Splitter Parameters [Section]  <!-- UUID: d1fc0016-a573-4e00-b81e-2d8effc10c6c -->
+### A.3.5.2 - Surplus Buffer Splitter Parameters [Section]  <!-- UUID: d1fc0016-a573-4e00-b81e-2d8effc10c6c -->
 
 The current Surplus Buffer Splitter parameters are:
+
 • vow.hump: 1 million USDS (Threshold of Surplus buffer for Splitter to activate)
 • vow.bump: 10,000 USDS
 • splitter.hop: 2,160 seconds
@@ -14561,61 +14618,59 @@ The current Surplus Buffer Splitter parameters are:
 • 75% of Splitter allocation is set to reward SKY stakers
 • burn (the percentage of the vow.bump to be moved to the underlying flapper): 25% (WAD/4). Flapper must maintain its legacy values.
 
-The Splitter, and other buyback and staking rewards parameters must be set to ensure a SKY buyback of 100,000 USDS per day, and Staking Rewards of 300,000 USDS per day. If necessary this requirement overrides other conflicting Atlas Documents
+#### A.3.5.2.1 - Modification [Core]  <!-- UUID: 37a81752-6adf-4b15-a352-f3b0d266e86c -->
 
-#### A.3.6.2.1 - Modification [Core]  <!-- UUID: 37a81752-6adf-4b15-a352-f3b0d266e86c -->
+The parameters of the Surplus Buffer Splitter can be modified pursuant to the Operational Weekly Cycle. The Core Facilitator, in consultation with the Core Council Risk Advisor, can propose changes to the `bump` and `hop` parameters directly via an Executive Vote without requiring a Governance Poll. Changes to other parameters require a Governance Poll followed by an Executive Vote.
 
-The parameters of the Surplus Buffer Splitter can be modified pursuant to the Operational Weekly Cycle. The Core Facilitator, in consultation with the Stability Scope Advisors, can propose changes to the `bump` and `hop` parameters directly via an Executive Vote without requiring a Governance Poll. Changes to other parameters require a Governance Poll followed by an Executive Vote.
-
-## A.3.7 - SKY Backstop [Article]  <!-- UUID: 4d8b0d82-97da-4041-b185-4b98c2779cbe -->
+## A.3.6 - SKY Backstop [Article]  <!-- UUID: 4d8b0d82-97da-4041-b185-4b98c2779cbe -->
 
 This Article governs the SKY Backstop. If the USDS Stablecoin becomes undercollateralized, the Sky Protocol will automatically generate and sell SKY to recapitalize the system. The period when the recapitalization mechanism is actively minting and selling SKY to close the shortfall is termed a “SKY Backstop Event.”
 
-### A.3.7.1 - Emission Rate [Section]  <!-- UUID: 463b58c0-79fa-4e50-85e6-20560f3da9a3 -->
+### A.3.6.1 - Emission Rate [Section]  <!-- UUID: 463b58c0-79fa-4e50-85e6-20560f3da9a3 -->
 
 An emissions rate for the SKY backstop function that prevents risk of sudden failure must be defined. This must be continuously assessed and improved to maximize stability of the system in worst case scenarios.
 
-#### A.3.7.1.1 - Limitless [Core]  <!-- UUID: 193d8b40-bb67-4f22-b452-845e63481737 -->
+#### A.3.6.1.1 - Limitless [Core]  <!-- UUID: 193d8b40-bb67-4f22-b452-845e63481737 -->
 
 The SKY Backstop is temporarily limitless.
 
-### A.3.7.2 - Maximum Level Of Emission [Section]  <!-- UUID: 0e898ec0-e618-4deb-a7cb-f5ca47c00e71 -->
+### A.3.6.2 - Maximum Level Of Emission [Section]  <!-- UUID: 0e898ec0-e618-4deb-a7cb-f5ca47c00e71 -->
 
 A maximum level of SKY emission per undercollateralization event must be defined. This must be continuously assessed and improved to maximize stability of the system in worst-case scenarios.
 
-### A.3.7.3 - Override Mechanism [Section]  <!-- UUID: ed24e054-5c3f-4fc5-9992-d19462a47052 -->
+### A.3.6.3 - Override Mechanism [Section]  <!-- UUID: ed24e054-5c3f-4fc5-9992-d19462a47052 -->
 
 The Protocol must include an override mechanism that allows Sky Governance to continue emitting SKY beyond the maximum level. This Section must specify research processes and principles to guide when and how the override mechanism can be safely used.
 
-### A.3.7.4 - Halt Mechanism [Section]  <!-- UUID: 28f36566-e26e-4b51-bf68-f6ddd584c172 -->
+### A.3.6.4 - Halt Mechanism [Section]  <!-- UUID: 28f36566-e26e-4b51-bf68-f6ddd584c172 -->
 
 The Protocol must contain a SKY backstop halt mechanism that immediately halts the backstop event in case of severe risk of total failure.
 
-### A.3.7.5 - Mitigate Worst Case Scenario [Section]  <!-- UUID: 1008d9c7-98be-4fde-9473-5a5441160a20 -->
+### A.3.6.5 - Mitigate Worst Case Scenario [Section]  <!-- UUID: 1008d9c7-98be-4fde-9473-5a5441160a20 -->
 
 In case the backstop limit is reached and not overridden, or in case the backstop is halted during the event, the USDS target price receives a haircut to settle the remaining bad debt of the system. This Section must define elements and infrastructure to address this worst-case scenario, including research concerning ways to mitigate damage.
 
-### A.3.7.6 - Relation To Genesis Capital Backstop [Section]  <!-- UUID: 5e795fa2-77d7-4f2a-8494-545d4bb2d955 -->
+### A.3.6.6 - Relation To Genesis Capital Backstop [Section]  <!-- UUID: 5e795fa2-77d7-4f2a-8494-545d4bb2d955 -->
 
 The Genesis Capital Backstop may not be invoked unless a “SKY Backstop Event” is in progress and the price of SKY is zero.
 
-## A.3.8 - Measures For Endgame Transition [Article]  <!-- UUID: 94ed62af-6e69-4831-938a-69963e6c0a1f -->
+## A.3.7 - Measures For Endgame Transition [Article]  <!-- UUID: 94ed62af-6e69-4831-938a-69963e6c0a1f -->
 
 This Article defines temporary measures for implementing the Stability Scope during the transition to the Endgame State.
 
-### A.3.8.1 - Measures For Endgame Transition [Section]  <!-- UUID: 92b5164c-2a55-4947-bb8a-9b05ca5ed8c8 -->
+### A.3.7.1 - Measures For Endgame Transition [Section]  <!-- UUID: 92b5164c-2a55-4947-bb8a-9b05ca5ed8c8 -->
 
 This Section defines temporary measures to give effect to the Stability Scope during the Endgame transition.
 
-#### A.3.8.1.1 - Native Vault Engine [Core]  <!-- UUID: 950c138e-c5f6-4ff9-92c0-35a3e1ef0ad3 -->
+#### A.3.7.1.1 - Native Vault Engine [Core]  <!-- UUID: 950c138e-c5f6-4ff9-92c0-35a3e1ef0ad3 -->
 
-The Sky Core Vaults are gradually being deprecated over time to incentivize users to migrate to SparkLend and other borrowing platforms offered by Prime Agents (see [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Stability Fee](0257a420-e92e-4942-b794-a559f299365f)). During the transition period, the Core Vaults will have a limited set of collateral types and risk parameters that Core GovOps, in consultation with BA Labs, must implement according to the following subdocuments.
+The Sky Core Vaults are gradually being deprecated over time to incentivize users to migrate to SparkLend and other borrowing platforms offered by Prime Agents (see [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Stability Fee](0257a420-e92e-4942-b794-a559f299365f)). During the transition period, the Core Vaults will have a limited set of collateral types and risk parameters that Core GovOps, in consultation with the Core Council Risk Advisor, must implement according to the following subdocuments.
 
-##### A.3.8.1.1.1 - Vault Types [Core]  <!-- UUID: 64971463-0650-4462-b9c4-1eecb704fa1a -->
+##### A.3.7.1.1.1 - Vault Types [Core]  <!-- UUID: 64971463-0650-4462-b9c4-1eecb704fa1a -->
 
 The collateral types of the Native Vault Engine and their parameters are defined in the subdocuments herein.
 
-###### A.3.8.1.1.1.1 - ETH-A [Core]  <!-- UUID: f97321f8-c677-4a6c-aa87-8f9a93f8acd3 -->
+###### A.3.7.1.1.1.1 - ETH-A [Core]  <!-- UUID: f97321f8-c677-4a6c-aa87-8f9a93f8acd3 -->
 
 Current ETH-A parameters are:
 
@@ -14649,7 +14704,7 @@ Current ETH-A parameters are:
 
 • `dust`: 7,500 Dai
 
-###### A.3.8.1.1.1.2 - ETH-B [Core]  <!-- UUID: 87fd7fd2-495f-452f-abed-4a887ba02c7c -->
+###### A.3.7.1.1.1.2 - ETH-B [Core]  <!-- UUID: 87fd7fd2-495f-452f-abed-4a887ba02c7c -->
 
 Current ETH-B parameters are:
 
@@ -14683,7 +14738,7 @@ Current ETH-B parameters are:
 
 • `dust`: 25,000 Dai
 
-###### A.3.8.1.1.1.3 - ETH-C [Core]  <!-- UUID: 896ce563-a4f1-4a9d-ad23-fc5840ea2f28 -->
+###### A.3.7.1.1.1.3 - ETH-C [Core]  <!-- UUID: 896ce563-a4f1-4a9d-ad23-fc5840ea2f28 -->
 
 Current ETH-C parameters are:
 
@@ -14717,7 +14772,7 @@ Current ETH-C parameters are:
 
 • `dust`: 3,500 Dai
 
-###### A.3.8.1.1.1.4 - WSTETH-A [Core]  <!-- UUID: 1dbc84b7-a17e-40af-aef5-63a9b78e85b3 -->
+###### A.3.7.1.1.1.4 - WSTETH-A [Core]  <!-- UUID: 1dbc84b7-a17e-40af-aef5-63a9b78e85b3 -->
 
 Current WSTETH-A parameters are:
 
@@ -14751,7 +14806,7 @@ Current WSTETH-A parameters are:
 
 • `dust`: 7,500 Dai
 
-###### A.3.8.1.1.1.5 - WSTETH-B [Core]  <!-- UUID: cfb76935-bcd4-4973-967c-7625c1524e58 -->
+###### A.3.7.1.1.1.5 - WSTETH-B [Core]  <!-- UUID: cfb76935-bcd4-4973-967c-7625c1524e58 -->
 
 Current WSTETH-B parameters are:
 
@@ -14785,7 +14840,7 @@ Current WSTETH-B parameters are:
 
 • `dust`: 3,500 Dai
 
-###### A.3.8.1.1.1.6 - WBTC-A [Core]  <!-- UUID: dba74f38-58f3-432a-b14b-bf5bc95ac5ed -->
+###### A.3.7.1.1.1.6 - WBTC-A [Core]  <!-- UUID: dba74f38-58f3-432a-b14b-bf5bc95ac5ed -->
 
 Current WBTC-A parameters are:
 
@@ -14819,7 +14874,7 @@ Current WBTC-A parameters are:
 
 • `dust`: 7,500 Dai
 
-###### A.3.8.1.1.1.7 - WBTC-B [Core]  <!-- UUID: 307ba340-c3d3-42c8-8121-e98c5de607d0 -->
+###### A.3.7.1.1.1.7 - WBTC-B [Core]  <!-- UUID: 307ba340-c3d3-42c8-8121-e98c5de607d0 -->
 
 Current WBTC-B parameters are:
 
@@ -14853,7 +14908,7 @@ Current WBTC-B parameters are:
 
 • `dust`: 25,000 Dai
 
-###### A.3.8.1.1.1.8 - WBTC-C [Core]  <!-- UUID: 2f42fd1f-a79b-4208-ac07-bbfa9a447c18 -->
+###### A.3.7.1.1.1.8 - WBTC-C [Core]  <!-- UUID: 2f42fd1f-a79b-4208-ac07-bbfa9a447c18 -->
 
 Current WBTC-C parameters are:
 
@@ -14887,25 +14942,25 @@ Current WBTC-C parameters are:
 
 • `dust`: 3,500 Dai
 
-##### A.3.8.1.1.2 - Risk Parameter Definitions [Core]  <!-- UUID: 8eb26d06-d2b3-493f-a79f-e3509326ddc6 -->
+##### A.3.7.1.1.2 - Risk Parameter Definitions [Core]  <!-- UUID: 8eb26d06-d2b3-493f-a79f-e3509326ddc6 -->
 
 The Native Vault Engine risk parameters are defined in the subdocuments herein.
 
-###### A.3.8.1.1.2.1 - Liquidation Ratio [Core]  <!-- UUID: 9ce4d08e-aa5b-4cab-884e-7a53e937bdb8 -->
+###### A.3.7.1.1.2.1 - Liquidation Ratio [Core]  <!-- UUID: 9ce4d08e-aa5b-4cab-884e-7a53e937bdb8 -->
 
 The Liquidation Ratio parameter limits the maximum amount of Dai debt that a vault user can draw from their vault given the value of their collateral locked in that vault. In practice, it expresses the minimum collateral in percentage terms that can support a given Dai debt. If the ratio of a Vault user's collateral to their debt drops below this value, their vault can be liquidated. Each vault type has its own Liquidation Ratio. The Liquidation Ratio for each vault type is expressed as a percentage value of the collateral that must be present in the vault to support its debt.
 
 Changes to the Liquidation Ratio are subject to the Operational Weekly Cycle, requiring a Governance Poll followed by an Executive Vote.
 
-###### A.3.8.1.1.2.2 - Debt Ceiling Limit [Core]  <!-- UUID: b490d4d0-8eb8-4dc6-9ef3-c85d357f1f4b -->
+###### A.3.7.1.1.2.2 - Debt Ceiling Limit [Core]  <!-- UUID: b490d4d0-8eb8-4dc6-9ef3-c85d357f1f4b -->
 
-The Debt Ceiling Limit is numerically provided and acts as an upper limit. Core GovOps, in consultation with BA Labs, can propose changes within this limit. 
+The Debt Ceiling Limit is numerically provided and acts as an upper limit. Core GovOps, in consultation with the Core Council Risk Advisor, can propose changes within this limit. 
 
 Debt Ceiling Limit = Unlimited is defined as large enough to avoid being reached in the near future. 
 
 The DC-IAM methodology contained in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Debt Ceiling Instant Access Module (DC-IAM)](93c9f662-4e0d-477e-8fc9-e3726877e842) acts as a risk mitigation tool. It limits the rate at which exposure can increase in a short period of time in the event of an unexpected emergency.
 
-###### A.3.8.1.1.2.3 - Stability Fee [Core]  <!-- UUID: 0257a420-e92e-4942-b794-a559f299365f -->
+###### A.3.7.1.1.2.3 - Stability Fee [Core]  <!-- UUID: 0257a420-e92e-4942-b794-a559f299365f -->
 
 The Stability Fee parameter is an annual percentage fee charged on the Dai generated on Vaults. It is expressed as an annual percentage yield but it is charged on a per-block basis in Dai. The Dai from this fee is minted, added to the Dai debt for the vault, and then transferred into the Surplus Buffer which is under the control of Sky Governance. Each vault type has its own Stability Fee that can be adjusted independently.
 
@@ -14913,147 +14968,147 @@ The Stability Fees can be modified through either Executive Votes or the Stabili
 
 The Stability Fees must be gradually increased over time to incentivize users to migrate to SparkLend and other borrowing platforms offered by Prime Agents.
 
-###### A.3.8.1.1.2.4 - Debt Ceiling Instant Access Module (DC-IAM) [Core]  <!-- UUID: 93c9f662-4e0d-477e-8fc9-e3726877e842 -->
+###### A.3.7.1.1.2.4 - Debt Ceiling Instant Access Module (DC-IAM) [Core]  <!-- UUID: 93c9f662-4e0d-477e-8fc9-e3726877e842 -->
 
 The DC-IAM allows any user to adjust the Debt Ceiling of a supported vault type according to the rules defined in the DC-IAM smart contract logic and parameters set by the Stability Facilitators. The DC-IAM holds three parameters that can be set by Sky Governance for each vault type, (i) Maximum Debt Ceiling (`line`), (ii) Target Available Debt (`gap`), and (iii) Ceiling Increase Cooldown (`ttl`).
 
-####### A.3.8.1.1.2.4.1 - Maximum Debt Ceiling (line) [Core]  <!-- UUID: 6ba18f25-dae8-4fa5-929e-3c7071b70107 -->
+####### A.3.7.1.1.2.4.1 - Maximum Debt Ceiling (line) [Core]  <!-- UUID: 6ba18f25-dae8-4fa5-929e-3c7071b70107 -->
 
 The `line` parameter refers to the maximum value for the Debt Ceiling that the DC-IAM will allow in the given vault type. When using the DC-IAM to manage the Debt Ceiling of a vault type, the `line` parameter essentially replaces the Debt Ceiling parameter for that vault type. Rather than Sky Governance setting the Debt Ceiling directly, they will need to set the Maximum Debt Ceiling `line` in the DC-IAM. The `line` parameter is defined in Dai.
 
 The Maximum Debt Ceiling is defined in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Debt Ceiling Limit](b490d4d0-8eb8-4dc6-9ef3-c85d357f1f4b) and is currently unlimited.
 
-####### A.3.8.1.1.2.4.2 - Target Available Debt (gap) [Core]  <!-- UUID: 07353080-4346-4ffd-bfc8-913cac78776a -->
+####### A.3.7.1.1.2.4.2 - Target Available Debt (gap) [Core]  <!-- UUID: 07353080-4346-4ffd-bfc8-913cac78776a -->
 
 The `gap` parameter controls how much of a gap the DC-IAM aims to maintain between the current debt usage and the Debt Ceiling of the vault type. The higher this value, the more risk there is from large collateral drops in very short amounts of time. The smaller this value, the more vault use is negatively affected. The `gap` parameter is defined in Dai.
 
-####### A.3.8.1.1.2.4.3 - Ceiling Increase Cooldown (ttl) [Core]  <!-- UUID: a5ae79ad-9460-41a3-8dbf-65605f54b79b -->
+####### A.3.7.1.1.2.4.3 - Ceiling Increase Cooldown (ttl) [Core]  <!-- UUID: a5ae79ad-9460-41a3-8dbf-65605f54b79b -->
 
 The Ceiling Increase Cooldown (`ttl`) parameter controls how frequently the Debt Ceiling can be increased by the DC-IAM. If a user attempts to use the DC-IAM to increase the Debt Ceiling of a vault type before this time expires, the transaction will fail to execute and the Debt Ceiling will remain unchanged. The `ttl` parameter in combination with the `gap` parameter enforces a maximum rate at which debt usage can increase over time using a given vault type. These parameters should be set such that the maximum increase over time can accommodate all reasonable usage of the vault type in question. The `ttl` parameter is defined in seconds.
 
-###### A.3.8.1.1.2.5 - Auction Parameters [Core]  <!-- UUID: 5774fd7c-ecd9-46ea-b33d-77ea9c6de4f3 -->
+###### A.3.7.1.1.2.5 - Auction Parameters [Core]  <!-- UUID: 5774fd7c-ecd9-46ea-b33d-77ea9c6de4f3 -->
 
-A clear justification and analysis must be provided to validate any proposed changes to the parameters specified in this document. Before these changes are added to an Executive Vote, Core GovOps, in consultation with BA Labs, must obtain approval through a Governance Poll. However, in an emergency, Core GovOps, in consultation with BA Labs, has the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. The parameters contained herein must be regularly monitored and updated if needed.
+A clear justification and analysis must be provided to validate any proposed changes to the parameters specified in this document. Before these changes are added to an Executive Vote, Core GovOps, in consultation with the Core Council Risk Advisor, must obtain approval through a Governance Poll. However, in an emergency, Core GovOps, in consultation with the Core Council Risk Advisor, has the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. The parameters contained herein must be regularly monitored and updated if needed.
 
-####### A.3.8.1.1.2.5.1 - Auction Price Function (calc) [Core]  <!-- UUID: fc7341c8-5a58-4be4-be8c-201f858e3861 -->
+####### A.3.7.1.1.2.5.1 - Auction Price Function (calc) [Core]  <!-- UUID: fc7341c8-5a58-4be4-be8c-201f858e3861 -->
 
 The Auction Price Function is the mathematical function that determines how the collateral price changes over time during a collateral auction. Collateral auctions use a falling price auction, where the price starts high and decreases according to the function defined in this parameter. 
 
 The Exponential Stair Step function contains two key parameters, `cut` and `step`, defined in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Auction Price Function (cut)](1ff3ceac-abd0-4195-9a60-a4aaf48c3d31) and [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Auction Price Function (step)](4b46633c-4d6c-4a9c-9be0-93d242ce9db9), respectively.
 
-######## A.3.8.1.1.2.5.1.1 - Auction Price Function (cut) [Core]  <!-- UUID: 1ff3ceac-abd0-4195-9a60-a4aaf48c3d31 -->
+######## A.3.7.1.1.2.5.1.1 - Auction Price Function (cut) [Core]  <!-- UUID: 1ff3ceac-abd0-4195-9a60-a4aaf48c3d31 -->
 
 The `cut` parameter controls the ‘depth’ of each step in the function. A smaller `cut` means a smoother line; a large one means more pronounced steps. The `cut` parameter is defined as a multiplicative factor. For example, 0.99 equated to a 1% price drop.
 
-######## A.3.8.1.1.2.5.1.2 - Auction Price Function (step) [Core]  <!-- UUID: 4b46633c-4d6c-4a9c-9be0-93d242ce9db9 -->
+######## A.3.7.1.1.2.5.1.2 - Auction Price Function (step) [Core]  <!-- UUID: 4b46633c-4d6c-4a9c-9be0-93d242ce9db9 -->
 
 The `step` parameter controls the length of time between price drops. A smaller step means a smoother line; a large one means more pronounced steps. The `step` parameter is defined in seconds.
 
-####### A.3.8.1.1.2.5.2 - Auction Price Multiplier (buf) [Core]  <!-- UUID: 2bcdc1c9-6e43-4059-8a46-0a68c17f487d -->
+####### A.3.7.1.1.2.5.2 - Auction Price Multiplier (buf) [Core]  <!-- UUID: 2bcdc1c9-6e43-4059-8a46-0a68c17f487d -->
 
 The `buf` parameter is a multiplier that is applied to the starting price of a collateral auction. Each vault type has its own Auction Price Multiplier that can be adjusted by Sky Governance separately. This multiplier is intended to be greater than 1.0x because Liquidations 2.0 uses falling price auctions. This means that it is generally preferable for the auction price to begin above the market price and then fall to the correct value over some amount of time. The `buf` parameter is defined as a multiplicative factor.
 
-####### A.3.8.1.1.2.5.3 - Max Auction Drawdown (cusp) [Core]  <!-- UUID: fc472dd5-3c2a-4335-ad2f-4988dbeb1c89 -->
+####### A.3.7.1.1.2.5.3 - Max Auction Drawdown (cusp) [Core]  <!-- UUID: fc472dd5-3c2a-4335-ad2f-4988dbeb1c89 -->
 
 The Max Auction Drawdown is the maximum percentage drop in collateral price during a collateral auction before the auction is reset. 'Collateral price' in this context refers to the collateral auction price rather than the collateral market price.
 
 The Max Auction Drawdown parameter overlaps with the Max Auction Duration parameter in that an auction will need to be reset once either maximum is exceeded.
 
-####### A.3.8.1.1.2.5.4 - Max Auction Duration (tail) [Core]  <!-- UUID: cd5a3cb9-e658-4bc5-8f82-b4dab52f32d9 -->
+####### A.3.7.1.1.2.5.4 - Max Auction Duration (tail) [Core]  <!-- UUID: cd5a3cb9-e658-4bc5-8f82-b4dab52f32d9 -->
 
 The Max Auction Duration parameter sets the maximum time that can elapse before an auction needs to reset for a particular vault type. Expressed in seconds, this parameter determines when an auction can no longer settle and must be reset.
 
 The Max Auction Duration parameter overlaps with the Max Auction Drawdown parameter in that an auction will need to be reset once either maximum is exceeded.
 
-####### A.3.8.1.1.2.5.5 - Proportional Kick Incentive (chip) [Core]  <!-- UUID: e92d5797-9d72-455b-95a3-7fca9bb68071 -->
+####### A.3.7.1.1.2.5.5 - Proportional Kick Incentive (chip) [Core]  <!-- UUID: e92d5797-9d72-455b-95a3-7fca9bb68071 -->
 
 The Proportional Kick Incentive parameter represents a reward in Dai paid to the keepers that trigger collateral liquidation auctions in the Sky Protocol. The Proportional Kick Incentive is set as a percentage and represents a portion of Dai based on the debt of the vault that is being liquidated. The Dai is rewarded for each liquidation auction at the point the auction is triggered. Each vault type has its own Proportional Kick Incentive that may be adjusted separately by Sky Governance.
 
-####### A.3.8.1.1.2.5.6 - Flat Kick Incentive (tip) [Core]  <!-- UUID: e883adc9-b624-438b-8a4b-981ffe741478 -->
+####### A.3.7.1.1.2.5.6 - Flat Kick Incentive (tip) [Core]  <!-- UUID: e883adc9-b624-438b-8a4b-981ffe741478 -->
 
 The Flat Kick Incentive parameter represents a reward in Dai paid to the keepers that trigger collateral liquidation auctions in the Sky Protocol. The Flat Kick Incentive is a fixed amount of Dai that is rewarded for each liquidation auction at the point the auction is triggered. Each vault type has its own Flat Kick Incentive that may be adjusted separately by Sky Governance.
 
-####### A.3.8.1.1.2.5.7 - Liquidation Penalty (chop) [Core]  <!-- UUID: 7f2f2eba-1933-4974-8436-54372d3188b1 -->
+####### A.3.7.1.1.2.5.7 - Liquidation Penalty (chop) [Core]  <!-- UUID: 7f2f2eba-1933-4974-8436-54372d3188b1 -->
 
 The Liquidation Penalty parameter controls the fee vault owners must pay when their position is liquidated due to insufficient collateral. For a vault holder to receive any collateral back from the liquidations process, the debt and Liquidation Penalty must be covered by the collateral auction. Each vault type has its own Liquidation Penalty that can be adjusted by Sky Governance.
 
-####### A.3.8.1.1.2.5.8 - Local Liquidation Limit (hole) [Core]  <!-- UUID: 5d10220e-0541-4537-82d2-d853fa65ec97 -->
+####### A.3.7.1.1.2.5.8 - Local Liquidation Limit (hole) [Core]  <!-- UUID: 5d10220e-0541-4537-82d2-d853fa65ec97 -->
 
 The Local Liquidation Limit sets the maximum amount of Dai debt for which collateral auctions can be active at any one time within a particular vault type. When the total Dai value of auctions exceeds this maximum for a particular vault type, no more collateral can be auctioned using that vault type until others are completed. Each vault type has a separate Local Liquidation Limit.
 
-###### A.3.8.1.1.2.6 - Debt Floor (dust) [Core]  <!-- UUID: d6e0c32d-aea2-4bc7-9ec3-97d54bdbd9a7 -->
+###### A.3.7.1.1.2.6 - Debt Floor (dust) [Core]  <!-- UUID: d6e0c32d-aea2-4bc7-9ec3-97d54bdbd9a7 -->
 
 The Debt Floor parameter controls the minimum amount of Dai that can be minted using a specific vault type for an individual vault. If a user tries to mint Dai and the amount of Dai minted would not put the vault's amount of Dai minted above its Debt Floor, the transaction will fail and no DAi will be minted. Likewise, if a user attempts to pay back debt such that their debt will equal less than the Debt Floor and greater than zero, the transaction will fail and no Dai will be paid back. Each vault type has its own Debt Floor that can be adjusted by Sky Governance.
 
-##### A.3.8.1.1.3 - Collateral Offboarding [Core]  <!-- UUID: 05f29c65-4d92-43b3-aacb-3dd75b9f6794 -->
+##### A.3.7.1.1.3 - Collateral Offboarding [Core]  <!-- UUID: 05f29c65-4d92-43b3-aacb-3dd75b9f6794 -->
 
 The processes for offboarding Native Vault Engine collateral are defined in the subdocuments herein.
 
-###### A.3.8.1.1.3.1 - Offboarding Low Usage Collateral [Core]  <!-- UUID: 2c7a4db9-497e-4ed5-b91b-9543af3d58b3 -->
+###### A.3.7.1.1.3.1 - Offboarding Low Usage Collateral [Core]  <!-- UUID: 2c7a4db9-497e-4ed5-b91b-9543af3d58b3 -->
 
 To protect the Protocol from unnecessary complexity, the Stability Facilitators must offboard collateral types specified in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Vault Types](64971463-0650-4462-b9c4-1eecb704fa1a)   if they fall below a total debt of 20 million.
 
-###### A.3.8.1.1.3.2 - Offboarding WBTC Collateral [Core]  <!-- UUID: f6762223-29f3-46c1-8fa4-a5c27636772d -->
+###### A.3.7.1.1.3.2 - Offboarding WBTC Collateral [Core]  <!-- UUID: f6762223-29f3-46c1-8fa4-a5c27636772d -->
 
 WBTC-A, WBTC-B and WBTC-C are defined in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Vault Types](64971463-0650-4462-b9c4-1eecb704fa1a) only for the purpose of Stability Fee consistency. These are otherwise not considered Native Vault Engine collateral and should be offboarded according to [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Offboarding Other Collateral](fe6595fc-173a-4d75-83ca-9f29dbbb63a3).
 
-###### A.3.8.1.1.3.3 - Offboarding Other Collateral [Core]  <!-- UUID: fe6595fc-173a-4d75-83ca-9f29dbbb63a3 -->
+###### A.3.7.1.1.3.3 - Offboarding Other Collateral [Core]  <!-- UUID: fe6595fc-173a-4d75-83ca-9f29dbbb63a3 -->
 
 All other collateral types should be offboarded when the Stability Facilitators deem it appropriate and when new mechanisms are in place to take over the roles previously covered by the offboarded collateral.
 
-###### A.3.8.1.1.3.4 - Collateral Offboarding Process [Core]  <!-- UUID: 9f87ff7a-d3a8-4999-ae20-b4c0773c732c -->
+###### A.3.7.1.1.3.4 - Collateral Offboarding Process [Core]  <!-- UUID: 9f87ff7a-d3a8-4999-ae20-b4c0773c732c -->
 
-The Stability Facilitators, in consultation with the Stability Scope Advisors, must use the Operational Weekly Cycle to offboard Native Vault Engine collateral pursuant to [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Collateral Offboarding](05f29c65-4d92-43b3-aacb-3dd75b9f6794) and its subdocuments.
+The Stability Facilitators, in consultation with the Core Council Risk Advisor, must use the Operational Weekly Cycle to offboard Native Vault Engine collateral pursuant to [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Collateral Offboarding](05f29c65-4d92-43b3-aacb-3dd75b9f6794) and its subdocuments.
 
-##### A.3.8.1.1.4 - Oracles [Core]  <!-- UUID: a38e05bf-0820-4916-a71c-cff4f54e45df -->
+##### A.3.7.1.1.4 - Oracles [Core]  <!-- UUID: a38e05bf-0820-4916-a71c-cff4f54e45df -->
 
 The Native Vault Engine collateral types of ETH, STETH, WBTC will specifically use the Chronicle v3 oracle solution, until at least January 1st 2026. The Native Vault Engine collateral types must be migrated to the new version of the Chronicle v3 oracle when it is feasible to do so.
 
 Other oracle solutions, including diversified oracles, will only be considered until January 1st, 2026, and only if there are unresolvable security concerns with the Chronicle v3 oracles.
 
-##### A.3.8.1.1.5 - Updates [Core]  <!-- UUID: 2107f160-751d-4fea-abc0-f0bef76a30d5 -->
+##### A.3.7.1.1.5 - Updates [Core]  <!-- UUID: 2107f160-751d-4fea-abc0-f0bef76a30d5 -->
 
-If not otherwise specified, Core GovOps, in consultation with BA Labs, has the ability to modify any of the parameters defined in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Risk Parameter Definitions](8eb26d06-d2b3-493f-a79f-e3509326ddc6) for any of the Vault Types in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Vault Types](64971463-0650-4462-b9c4-1eecb704fa1a). As a general rule, the modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll. Exceptions to this general rule must be clearly stated in the relevant Atlas document.
+If not otherwise specified, Core GovOps, in consultation with the Core Council Risk Advisor, has the ability to modify any of the parameters defined in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Risk Parameter Definitions](8eb26d06-d2b3-493f-a79f-e3509326ddc6) for any of the Vault Types in [A.3.9 - Measures For Endgame Transition - Native Vault Engine - Vault Types](64971463-0650-4462-b9c4-1eecb704fa1a). As a general rule, the modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll. Exceptions to this general rule must be clearly stated in the relevant Atlas document.
 
-#### A.3.8.1.2 - Stability Parameter Bounded External Access Module [Core]  <!-- UUID: 47b8b035-8abd-42e6-86b8-33f852fa953a -->
+#### A.3.7.1.2 - Stability Parameter Bounded External Access Module [Core]  <!-- UUID: 47b8b035-8abd-42e6-86b8-33f852fa953a -->
 
 The Stability Parameter Bounded External Access Module (SP-BEAM) enables designated, Governance-whitelisted operators to adjust the Stability Fees of supported vault types, the Dai Savings Rate (DSR), and the Sky Savings Rate (SSR). Adjustments are governed by the SP-BEAM smart contract logic and specific parameters set by Sky Governance. SP-BEAM holds four parameters that can be set for each vault type or savings rate: (i) `min`, (ii) `max`, (iii) `step`, and (iv) `tau`.
 
-##### A.3.8.1.2.1 - Definitions [Core]  <!-- UUID: b113ca06-9a25-4abf-81f1-53f419ffe2d2 -->
+##### A.3.7.1.2.1 - Definitions [Core]  <!-- UUID: b113ca06-9a25-4abf-81f1-53f419ffe2d2 -->
 
 The documents herein define the parameters of the Stability Parameter Bounded External Access Module.
 
-###### A.3.8.1.2.1.1 - Min Definition [Core]  <!-- UUID: 1896350c-5f87-4be5-b32f-f1114dc2c271 -->
+###### A.3.7.1.2.1.1 - Min Definition [Core]  <!-- UUID: 1896350c-5f87-4be5-b32f-f1114dc2c271 -->
 
 The `min` parameter defines the minimum value for rates in basis points that can be set using the Stability Parameter Bounded External Access Module. Each rate parameter added to the SP-BEAM has a specific `min`.
 
-###### A.3.8.1.2.1.2 - Max Definition [Core]  <!-- UUID: 67747090-8545-49b4-95e8-673af9836aa5 -->
+###### A.3.7.1.2.1.2 - Max Definition [Core]  <!-- UUID: 67747090-8545-49b4-95e8-673af9836aa5 -->
 
 The `max` parameter defines the maximum value for rates in basis points that can be set using the Stability Parameter Bounded External Access Module. Each rate parameter added to the SP-BEAM has a specific `max`.
 
-####### A.3.8.1.2.1.2.1 - Max Technical Upper Limit [Core]  <!-- UUID: 4e2910c0-fd52-4e18-97e0-2fbd35569070 -->
+####### A.3.7.1.2.1.2.1 - Max Technical Upper Limit [Core]  <!-- UUID: 4e2910c0-fd52-4e18-97e0-2fbd35569070 -->
 
 Although the `max` parameter can be set higher, the SP-BEAM cannot be used to set a rate higher than 50% (5,000 basis points) due to technical limitations. Attempts to use the SP-BEAM in this manner will revert. To avoid confusion, `max` should not be set to a value higher than 50% (5,000 basis points).
 
-###### A.3.8.1.2.1.3 - Step Definition [Core]  <!-- UUID: bcfac0d1-3d17-46e1-bf88-5a7937816d53 -->
+###### A.3.7.1.2.1.3 - Step Definition [Core]  <!-- UUID: bcfac0d1-3d17-46e1-bf88-5a7937816d53 -->
 
 The `step` parameter limits how much the rates can be increased or decreased in a single transaction in basis points, bound by the `tau` parameter. Each rate parameter added to the SP-BEAM has a specific `step`.
 
-###### A.3.8.1.2.1.4 - Tau Definition [Core]  <!-- UUID: 8747effa-1080-4066-89da-4c25121a02ba -->
+###### A.3.7.1.2.1.4 - Tau Definition [Core]  <!-- UUID: 8747effa-1080-4066-89da-4c25121a02ba -->
 
 The `tau` parameter defines the minimum time interval, in seconds, that must elapse between consecutive uses or operations of the Stability Parameter Bounded External Access Module.
 
 An SP-BEAM operation may adjust one or more parameters. Once an SP-BEAM operation is executed, the `tau` duration must expire before any subsequent SP-BEAM operation can be performed.
 
-####### A.3.8.1.2.1.4.1 - Tau Current Value [Core]  <!-- UUID: dd9472e5-9796-4aff-a2b1-7a847e008c9b -->
+####### A.3.7.1.2.1.4.1 - Tau Current Value [Core]  <!-- UUID: dd9472e5-9796-4aff-a2b1-7a847e008c9b -->
 
 The `tau` is currently set to 57,600 seconds (16 hours).
 
-##### A.3.8.1.2.2 - Native Vault Parameters [Core]  <!-- UUID: 968d4388-a655-42ee-bab0-08e6583d1980 -->
+##### A.3.7.1.2.2 - Native Vault Parameters [Core]  <!-- UUID: 968d4388-a655-42ee-bab0-08e6583d1980 -->
 
 The Stability Parameter Bounded External Access Module parameters for the Native Vaults are defined in the subdocuments herein. When new vaults are added to the protocol, they must also be added to the SP-BEAM. Unless specified otherwise within the relevant subdocument herein, the SP-BEAM parameters for any newly added Native Vault type shall default to match the parameters defined herein for the ETH-A vault type.
 
-###### A.3.8.1.2.2.1 - ETH-A Parameters [Core]  <!-- UUID: c9cd99f2-9c40-4b06-94a1-630a26116bce -->
+###### A.3.7.1.2.2.1 - ETH-A Parameters [Core]  <!-- UUID: c9cd99f2-9c40-4b06-94a1-630a26116bce -->
 
 The Stability Parameter Bounded External Access Module parameters for the ETH-A Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15061,7 +15116,7 @@ The Stability Parameter Bounded External Access Module parameters for the ETH-A 
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.2 - ETH-B Parameters [Core]  <!-- UUID: 6f28d962-1e40-4753-ab39-865795b349f4 -->
+###### A.3.7.1.2.2.2 - ETH-B Parameters [Core]  <!-- UUID: 6f28d962-1e40-4753-ab39-865795b349f4 -->
 
 The Stability Parameter Bounded External Access Module parameters for the ETH-B Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15069,7 +15124,7 @@ The Stability Parameter Bounded External Access Module parameters for the ETH-B 
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.3 - ETH-C Parameters [Core]  <!-- UUID: 748db209-f31e-444b-b134-55a8826a5d7a -->
+###### A.3.7.1.2.2.3 - ETH-C Parameters [Core]  <!-- UUID: 748db209-f31e-444b-b134-55a8826a5d7a -->
 
 The Stability Parameter Bounded External Access Module parameters for the ETH-C Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15077,7 +15132,7 @@ The Stability Parameter Bounded External Access Module parameters for the ETH-C 
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.4 - WSTETH-A Parameters [Core]  <!-- UUID: e134990f-7d06-46e3-a2c3-2277bb65e45c -->
+###### A.3.7.1.2.2.4 - WSTETH-A Parameters [Core]  <!-- UUID: e134990f-7d06-46e3-a2c3-2277bb65e45c -->
 
 The Stability Parameter Bounded External Access Module parameters for the WSTETH-A Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15085,7 +15140,7 @@ The Stability Parameter Bounded External Access Module parameters for the WSTETH
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.5 - WSTETH-B Parameters [Core]  <!-- UUID: f27c3fa3-dcd6-4ba8-9d74-426807ac010c -->
+###### A.3.7.1.2.2.5 - WSTETH-B Parameters [Core]  <!-- UUID: f27c3fa3-dcd6-4ba8-9d74-426807ac010c -->
 
 The Stability Parameter Bounded External Access Module parameters for the WSTETH-B Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15093,7 +15148,7 @@ The Stability Parameter Bounded External Access Module parameters for the WSTETH
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.6 - WBTC-A Parameters [Core]  <!-- UUID: e0ead8d6-7d1d-48f0-addb-702e21ef5a9e -->
+###### A.3.7.1.2.2.6 - WBTC-A Parameters [Core]  <!-- UUID: e0ead8d6-7d1d-48f0-addb-702e21ef5a9e -->
 
 The Stability Parameter Bounded External Access Module parameters for the WBTC-A Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15101,7 +15156,7 @@ The Stability Parameter Bounded External Access Module parameters for the WBTC-A
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.7 - WBTC-B Parameters [Core]  <!-- UUID: dba279e1-bb04-4574-a45b-87788be40a78 -->
+###### A.3.7.1.2.2.7 - WBTC-B Parameters [Core]  <!-- UUID: dba279e1-bb04-4574-a45b-87788be40a78 -->
 
 The Stability Parameter Bounded External Access Module parameters for the WBTC-B Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15109,7 +15164,7 @@ The Stability Parameter Bounded External Access Module parameters for the WBTC-B
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.2.8 - WBTC-C Parameters [Core]  <!-- UUID: 74ccae87-580f-492b-b260-fa3ef6613979 -->
+###### A.3.7.1.2.2.8 - WBTC-C Parameters [Core]  <!-- UUID: 74ccae87-580f-492b-b260-fa3ef6613979 -->
 
 The Stability Parameter Bounded External Access Module parameters for the WBTC-C Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15117,11 +15172,11 @@ The Stability Parameter Bounded External Access Module parameters for the WBTC-C
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-##### A.3.8.1.2.3 - Allocator Vault Parameters [Core]  <!-- UUID: 6ab6bd12-93d3-419f-96e2-a7f79bfe1afa -->
+##### A.3.7.1.2.3 - Allocator Vault Parameters [Core]  <!-- UUID: 6ab6bd12-93d3-419f-96e2-a7f79bfe1afa -->
 
 The Stability Parameter Bounded External Access Module parameters for the Allocator Vaults are defined in the subdocuments herein. When new Allocator Vaults are added, they must also be added to the SP-BEAM. Unless specified otherwise within the relevant subdocument herein, the SP-BEAM parameters for any newly added Allocator Vault type shall default to match the parameters defined herein for the ALLOCATOR-SPARK-A vault type.
 
-###### A.3.8.1.2.3.1 - ALLOCATOR-SPARK-A Parameters [Core]  <!-- UUID: 3f6791ef-1f90-45b2-96db-0c85aa2035a1 -->
+###### A.3.7.1.2.3.1 - ALLOCATOR-SPARK-A Parameters [Core]  <!-- UUID: 3f6791ef-1f90-45b2-96db-0c85aa2035a1 -->
 
 The Stability Parameter Bounded External Access Module parameters for the ALLOCATOR-SPARK-A Allocator Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15129,7 +15184,7 @@ The Stability Parameter Bounded External Access Module parameters for the ALLOCA
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.3.2 - ALLOCATOR-NOVA-A Parameters [Core]  <!-- UUID: 092b62b9-b9b8-4322-8b39-5c32ad420be3 -->
+###### A.3.7.1.2.3.2 - ALLOCATOR-NOVA-A Parameters [Core]  <!-- UUID: 092b62b9-b9b8-4322-8b39-5c32ad420be3 -->
 
 The Stability Parameter Bounded External Access Module parameters for the ALLOCATOR-NOVA-A Allocator Vault are as follows
 • `max` - 3,000 basis points,
@@ -15137,7 +15192,7 @@ The Stability Parameter Bounded External Access Module parameters for the ALLOCA
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-###### A.3.8.1.2.3.3 - ALLOCATOR-BLOOM-A Parameters [Core]  <!-- UUID: 1cca9f9f-1a60-4de6-8ec2-694b87d3ee91 -->
+###### A.3.7.1.2.3.3 - ALLOCATOR-BLOOM-A Parameters [Core]  <!-- UUID: 1cca9f9f-1a60-4de6-8ec2-694b87d3ee91 -->
 
 The Stability Parameter Bounded External Access Module parameters for the ALLOCATOR-BLOOM-A Allocator Vault are as follows:
 • `max` - 3,000 basis points,
@@ -15145,88 +15200,88 @@ The Stability Parameter Bounded External Access Module parameters for the ALLOCA
 • `step` - 400 basis points,
 • `tau` - Globally defined in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Definitions - Tau Definition - Tau Current Value](dd9472e5-9796-4aff-a2b1-7a847e008c9b).
 
-##### A.3.8.1.2.4 - Parameter Adjustments [Core]  <!-- UUID: 2d4aa875-b7ea-49c3-9506-479f0b5d157c -->
+##### A.3.7.1.2.4 - Parameter Adjustments [Core]  <!-- UUID: 2d4aa875-b7ea-49c3-9506-479f0b5d157c -->
 
-All Stability Parameter Bounded External Access Module parameters can be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+All Stability Parameter Bounded External Access Module parameters can be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-##### A.3.8.1.2.5 - Operators [Core]  <!-- UUID: 91f8b696-2c6b-4234-9126-2576a385882d -->
+##### A.3.7.1.2.5 - Operators [Core]  <!-- UUID: 91f8b696-2c6b-4234-9126-2576a385882d -->
 
 The Stability Parameter Bounded External Access Module (SP-BEAM) Operator is a whitelisted entity that can directly alter the current parameters of vault types or savings rates that have been added to the SP-BEAM. Changes to rates are limited by the `max`, `min`, `step`, and `tau` parameters. Operators can be added or removed by an Executive Vote.
 
-###### A.3.8.1.2.5.1 - Operator Multisig [Core]  <!-- UUID: f0cc7297-8ab9-4255-9365-d9ba87764f13 -->
+###### A.3.7.1.2.5.1 - Operator Multisig [Core]  <!-- UUID: f0cc7297-8ab9-4255-9365-d9ba87764f13 -->
 
 The Operator Multisig is the Operator of the Stability Parameter Bounded External Access Module and is controlled by Core Executor Agent Atlas Axis.
 
-####### A.3.8.1.2.5.1.1 - Operator Multisig Address [Core]  <!-- UUID: 793d4595-9f1f-4387-a3a6-b9c7b20266c3 -->
+####### A.3.7.1.2.5.1.1 - Operator Multisig Address [Core]  <!-- UUID: 793d4595-9f1f-4387-a3a6-b9c7b20266c3 -->
 
 The address of the Operator Multisig on the Ethereum Mainnet is `0xe1c6f81D0c3CD570A77813b81AA064c5fff80309`.
 
-####### A.3.8.1.2.5.1.2 - Operator Multisig Required Number Of Signers [Core]  <!-- UUID: 591ac4d7-5699-4a81-8b4a-d10c8d8c3457 -->
+####### A.3.7.1.2.5.1.2 - Operator Multisig Required Number Of Signers [Core]  <!-- UUID: 591ac4d7-5699-4a81-8b4a-d10c8d8c3457 -->
 
 The Operator Multisig currently has a 2/3 signing requirement.
 
-####### A.3.8.1.2.5.1.3 - Operator Multisig Signers [Core]  <!-- UUID: 154be1f7-3e96-417a-b125-f978c47e2301 -->
+####### A.3.7.1.2.5.1.3 - Operator Multisig Signers [Core]  <!-- UUID: 154be1f7-3e96-417a-b125-f978c47e2301 -->
 
 The signers of the Operator Multisig are three (3) addresses controlled by Core Executor Agent Atlas Axis.
 
-####### A.3.8.1.2.5.1.4 - Operator Multisig Usage Standards [Core]  <!-- UUID: 9e2f39aa-0568-46a3-ad5c-898eba6e50c0 -->
+####### A.3.7.1.2.5.1.4 - Operator Multisig Usage Standards [Core]  <!-- UUID: 9e2f39aa-0568-46a3-ad5c-898eba6e50c0 -->
 
 The signers of the Operator Multisig must use the multisig to operate the Stability Parameter Bounded External Access Module in accordance with the instructions specified in [A.3.9 - Measures For Endgame Transition - Stability Parameter Bounded External Access Module - Update Process](823aa477-5400-40e5-881f-acb9cf724c21).
 
-####### A.3.8.1.2.5.1.5 - Operator Multisig Modification [Core]  <!-- UUID: 24b8a5d0-b2b0-4bdf-94cf-f873d7468d48 -->
+####### A.3.7.1.2.5.1.5 - Operator Multisig Modification [Core]  <!-- UUID: 24b8a5d0-b2b0-4bdf-94cf-f873d7468d48 -->
 
 Core Executor Agent Atlas Axis can change the signers of the Operator Multisig at any time, so long as there are at least three (3) signers and at least a majority of signers are required to execute transactions.
 
-###### A.3.8.1.2.5.2 - Operator Update Process [Core]  <!-- UUID: ae2b5d27-b666-4796-8791-b59d151daf41 -->
+###### A.3.7.1.2.5.2 - Operator Update Process [Core]  <!-- UUID: ae2b5d27-b666-4796-8791-b59d151daf41 -->
 
-Stability Parameter Bounded External Access Module Operators can be modified by the Stability Facilitators, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+Stability Parameter Bounded External Access Module Operators can be modified by the Stability Facilitators, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-##### A.3.8.1.2.6 - Update Process [Core]  <!-- UUID: 823aa477-5400-40e5-881f-acb9cf724c21 -->
+##### A.3.7.1.2.6 - Update Process [Core]  <!-- UUID: 823aa477-5400-40e5-881f-acb9cf724c21 -->
 
-The rates set by the Stability Parameter Bounded External Access Module (SP-BEAM) are managed by the SP-BEAM Operators. The SP-BEAM Operators' use of this authority must wholly adhere to instructions provided by the Stability Scope Advisors.
+The rates set by the Stability Parameter Bounded External Access Module (SP-BEAM) are managed by the SP-BEAM Operators. The SP-BEAM Operators' use of this authority must wholly adhere to instructions provided by the Core Council Risk Advisor.
 
-###### A.3.8.1.2.6.1 - Request By Stability Scope Advisors [Core]  <!-- UUID: 0f718693-f764-48e5-8b0c-ad36389ba3a0 -->
+###### A.3.7.1.2.6.1 - Request By Core Council Risk Advisor [Core]  <!-- UUID: 0f718693-f764-48e5-8b0c-ad36389ba3a0 -->
 
-Any requests to change rates set by the SP-BEAM must be posted to the Sky Forum by the Stability Scope Advisor that is recommending the change.
+Any requests to change rates set by the SP-BEAM must be posted to the Sky Forum by the Core Council Risk Advisor that is recommending the change.
 
-###### A.3.8.1.2.6.2 - Operator Execution [Core]  <!-- UUID: c49357ad-4961-497b-9449-662922cb70a7 -->
+###### A.3.7.1.2.6.2 - Operator Execution [Core]  <!-- UUID: c49357ad-4961-497b-9449-662922cb70a7 -->
 
-Once a rate change request has been posted to the Sky Forum by the Stability Scope Advisors, the SP-BEAM Operators must prepare and execute the proposed changes in a timely manner. Preparation can include the creation of transaction simulations to verify inputs.
+Once a rate change request has been posted to the Sky Forum by the Core Council Risk Advisor, the SP-BEAM Operators must prepare and execute the proposed changes in a timely manner. Preparation can include the creation of transaction simulations to verify inputs.
 
-###### A.3.8.1.2.6.3 - Public Communication [Core]  <!-- UUID: 30a9cafe-92cc-4c9b-af94-c341915a1dfc -->
+###### A.3.7.1.2.6.3 - Public Communication [Core]  <!-- UUID: 30a9cafe-92cc-4c9b-af94-c341915a1dfc -->
 
 Once a change in rates set by the SP-BEAM has been executed, the execution must be publicly communicated to the Sky Ecosystem. This communication may take the form of either (1) a Forum post or (2) inclusion of the execution in an informational dashboard that allows community members to see each rate change executed by the SP-BEAM.
 
-#### A.3.8.1.3 - Keepers [Core]  <!-- UUID: f2bba617-0bc5-4983-8885-4ab686ae4fc7 -->
+#### A.3.7.1.3 - Keepers [Core]  <!-- UUID: f2bba617-0bc5-4983-8885-4ab686ae4fc7 -->
 
 Keeper networks provide critical services for the back-end systems of Sky, enhancing protocol security and efficiency. There are multiple providers of keeper networks in the Sky Ecosystem, decentralizing the keepers and ensuring redundancy. The subdocuments herein specify ongoing payment streams to compensate the different providers of keeper networks.
 
-##### A.3.8.1.3.1 - Gelato Network [Core]  <!-- UUID: 5b8d24b1-04dc-4071-9479-672ba3a712b5 -->
+##### A.3.7.1.3.1 - Gelato Network [Core]  <!-- UUID: 5b8d24b1-04dc-4071-9479-672ba3a712b5 -->
 
 Gelato Network
 
 Budget: 1,500 USDS per day
 Stream Duration: 3 years (start date 29 May 2023).
 
-##### A.3.8.1.3.2 - Keep3r Network [Core]  <!-- UUID: 9d61059b-26b2-431f-984f-29d57fcd99c5 -->
+##### A.3.7.1.3.2 - Keep3r Network [Core]  <!-- UUID: 9d61059b-26b2-431f-984f-29d57fcd99c5 -->
 
 Keep3r Network
 
 Budget: 1,500 USDS per day
 Stream Duration: 3 years (start date 29 May 2023).
 
-##### A.3.8.1.3.3 - Chainlink Automation [Core]  <!-- UUID: af29fc28-e4d4-4921-98e5-9468f06068ec -->
+##### A.3.7.1.3.3 - Chainlink Automation [Core]  <!-- UUID: af29fc28-e4d4-4921-98e5-9468f06068ec -->
 
 Chainlink Automation
 
 Budget: 1,500 USDS per day
 Stream Duration: 3 years (start date 29 May 2023).
 
-#### A.3.8.1.4 - Offboarding Process [Core]  <!-- UUID: 3da8a0fd-952c-4f80-b674-f60c9a293cb9 -->
+#### A.3.7.1.4 - Offboarding Process [Core]  <!-- UUID: 3da8a0fd-952c-4f80-b674-f60c9a293cb9 -->
 
 The subdocuments herein define the process by which Sky vault users should be notified about collateral offboarding.
 
-##### A.3.8.1.4.1 - Legacy Context [Core]  <!-- UUID: 6e08fc61-dc0d-4f18-8f4d-faa75f7dc59a -->
+##### A.3.7.1.4.1 - Legacy Context [Core]  <!-- UUID: 6e08fc61-dc0d-4f18-8f4d-faa75f7dc59a -->
 
 Periodically, collateral and vault types (ilks) are re-evaluated, which sometimes results in an offboarding of that collateral or vault type. 
 
@@ -15236,7 +15291,7 @@ Even with liquidation penalties set to 0%, the forced unwinding of levered posit
 
 This Section defines procedures concerning the dissemination of information about upcoming collateral offboarding on a best-effort basis. The objective is to minimize the number of users who are unaware of the offboarding prior to getting their positions liquidated.
 
-###### A.3.8.1.4.1.1 - Legacy Context Specific Goals [Core]  <!-- UUID: dd7c5813-2026-4d1c-9bc8-33cf8fbee15a -->
+###### A.3.7.1.4.1.1 - Legacy Context Specific Goals [Core]  <!-- UUID: dd7c5813-2026-4d1c-9bc8-33cf8fbee15a -->
 
 Specific Goals:
 
@@ -15248,11 +15303,11 @@ Specific Goals:
 
 4. Provide a method to bypass these requirements in the event a collateral is being offboarded due to serious security or solvency concerns.
 
-##### A.3.8.1.4.2 - Technical Process [Core]  <!-- UUID: 305e2bd6-a594-4aec-8713-adbe7bc87120 -->
+##### A.3.7.1.4.2 - Technical Process [Core]  <!-- UUID: 305e2bd6-a594-4aec-8713-adbe7bc87120 -->
 
 The subdocuments herein specify actions to be taken by specific actors within Sky when offboarding a vault type.
 
-###### A.3.8.1.4.2.1 - Immediate Actions [Core]  <!-- UUID: 200a9e67-ed5d-4d60-b826-860a2a247dcc -->
+###### A.3.7.1.4.2.1 - Immediate Actions [Core]  <!-- UUID: 200a9e67-ed5d-4d60-b826-860a2a247dcc -->
 
 Upon approval by Sky Governance to offboard a permissionless collateral type or vault type, the following actions are taken as soon as is practicable:
 
@@ -15264,11 +15319,11 @@ Upon approval by Sky Governance to offboard a permissionless collateral type or 
 
 • Once the second public announcements have been made, set the liquidation penalty to 0%.
 
-###### A.3.8.1.4.2.2 - Following Actions [Core]  <!-- UUID: e0891d48-c684-4372-96e8-988aba8cccee -->
+###### A.3.7.1.4.2.2 - Following Actions [Core]  <!-- UUID: e0891d48-c684-4372-96e8-988aba8cccee -->
 
 Parameter changes designed to offboard users, such as changes to the liquidation ratio or stability fee, can only be implemented once 14 calendar days have passed following a second public announcement.
 
-##### A.3.8.1.4.3 - Communication Channels And Media Assets [Active Data Controller]  <!-- UUID: 9d418790-3081-43b4-a6f6-1c49ff5b4be8 -->
+##### A.3.7.1.4.3 - Communication Channels And Media Assets [Active Data Controller]  <!-- UUID: 9d418790-3081-43b4-a6f6-1c49ff5b4be8 -->
 
 The process for adding, removing, and modifying communication channels and media assets, and the order of announcement publication, are defined as Active Data in [A.3.9 - Communication Channels And Media Assets Listing](9ac8a70b-8b6a-4825-a5e0-5e9019e50bc4).
 
@@ -15278,7 +15333,7 @@ The Active Data is updated as follows:
 
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.3.8.1.4.3.0.6.1 - Communication Channels And Media Assets Listing [Active Data]  <!-- UUID: 9ac8a70b-8b6a-4825-a5e0-5e9019e50bc4 -->
+###### A.3.7.1.4.3.0.6.1 - Communication Channels And Media Assets Listing [Active Data]  <!-- UUID: 9ac8a70b-8b6a-4825-a5e0-5e9019e50bc4 -->
 
 The following channels should be used for initial and second public announcements of collateral offboarding. The order of announcement publication is as follows:
 
@@ -15302,11 +15357,11 @@ Additionally, outreach may be done to cover more channels not listed here. These
 
 Unless otherwise noted in [A.3.9 - Measures For Endgame Transition - Offboarding Process](3da8a0fd-952c-4f80-b674-f60c9a293cb9) and its subdocuments, Core GovOps will take the lead in coordinating channels announcements.
 
-##### A.3.8.1.4.4 - Expedited Offboarding [Core]  <!-- UUID: f9894690-fb43-431c-84ae-c6f5886745e9 -->
+##### A.3.7.1.4.4 - Expedited Offboarding [Core]  <!-- UUID: f9894690-fb43-431c-84ae-c6f5886745e9 -->
 
 The subdocuments herein define an expedited offboarding process in the event a collateral type needs to be removed quickly due to security or solvency concerns.
 
-###### A.3.8.1.4.4.1 - Requirements [Core]  <!-- UUID: 5f2109db-6680-478b-b72a-45f30065b626 -->
+###### A.3.7.1.4.4.1 - Requirements [Core]  <!-- UUID: 5f2109db-6680-478b-b72a-45f30065b626 -->
 
 When a collateral type threatens the security or solvency of the Sky Protocol, an expedited offboarding is in order. Expedited offboardings override the timeline specified in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](305e2bd6-a594-4aec-8713-adbe7bc87120) and allow the immediate modification of all relevant parameters.
 
@@ -15316,35 +15371,35 @@ Expedited offboardings must proceed pursuant to the following requirements:
 
 • The Offboarding Proposal must explicitly reference this Atlas document.
 
-###### A.3.8.1.4.4.2 - Announcements [Core]  <!-- UUID: b83a3a8b-a5ab-4eed-abf0-31842ebbfa29 -->
+###### A.3.7.1.4.4.2 - Announcements [Core]  <!-- UUID: b83a3a8b-a5ab-4eed-abf0-31842ebbfa29 -->
 
 The public announcements defined in [A.3.9 - Measures For Endgame Transition - Offboarding Process - Technical Process](305e2bd6-a594-4aec-8713-adbe7bc87120) must still be carried out. However, the timing of these announcements no longer constrains the modification of parameters. These announcements must also state that the offboarding is being expedited and explain the reasons for this accelerated process.
 
-#### A.3.8.1.5 - Genesis Capital Backstop [Core]  <!-- UUID: a9965d58-8cda-49fc-8a7f-f8cc2e0d6b98 -->
+#### A.3.7.1.5 - Genesis Capital Backstop [Core]  <!-- UUID: a9965d58-8cda-49fc-8a7f-f8cc2e0d6b98 -->
 
 If a “SKY Backstop Event” is in progress and the SKY price equals zero, the Sky Protocol must apply a pro‑rata haircut across each Genesis Agent’s Genesis Capital, implemented as a transfer of eligible assets from each Agent to the Sky Surplus Buffer. The haircut must be sized exactly to restore the Surplus Buffer to zero.
 
-##### A.3.8.1.5.1 - Implementation [Core]  <!-- UUID: 4381df75-0d4f-4f17-a263-f796cc33be27 -->
+##### A.3.7.1.5.1 - Implementation [Core]  <!-- UUID: 4381df75-0d4f-4f17-a263-f796cc33be27 -->
 
 In the near term, transfers are made through Executive Votes and may be made through Emergency Spells (see [A.1.9 - A5 - Sky Core Governance Security - Emergency Spells](b8266c11-3a84-4bbe-abe2-de9474f74ffd)) as part of the Emergency Response System (see [A.1.8 - A1 - Emergency Response System - Emergency Response](20dcf582-8862-48b3-9ca9-c3703871bd14)).
 
 A solution must be developed to allow these transfers to be accomplished on an automated basis without waiting for the GSM Pause Delay (see [A.1.9 - A3 - Sky Core Governance Security - Governance Security Delay Requirements](c5f0e955-0441-42e0-a6fc-eab875bba568)).
 
-##### A.3.8.1.5.2 - Post Backstop Settlement [Core]  <!-- UUID: 1edfed11-0234-4d15-b52b-37d7493565cd -->
+##### A.3.7.1.5.2 - Post Backstop Settlement [Core]  <!-- UUID: 1edfed11-0234-4d15-b52b-37d7493565cd -->
 
 If the haircut restores the Surplus Buffer to zero (i.e., the deficit is fully cleared), Sky will distribute 24 billion SKY to Genesis Agents, in proportion to the amount each Agent lost in the haircut.
 
 If, after the haircut, the Surplus Buffer remains below zero (i.e., the deficit could not be fully cleared), Sky will adjust the USDS target price below $1 to the extent necessary to settle the remaining deficit; Sky will then distribute 24 billion SKY to USDS holders via an airdrop.
 
-##### A.3.8.1.5.3 - Genesis Agent Capital Shortfalls [Core]  <!-- UUID: 81bacfed-5cc9-4980-bf71-1e5edcbdadba -->
+##### A.3.7.1.5.3 - Genesis Agent Capital Shortfalls [Core]  <!-- UUID: 81bacfed-5cc9-4980-bf71-1e5edcbdadba -->
 
 Transfers of capital from Genesis Agents may cause capital shortfalls for Genesis Agents under the Risk Framework (see [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4)). Sky will work in good faith with such Agents to waive penalties for a reasonable period of time to allow the Agents to rebuild their capital.
 
-##### A.3.8.1.5.4 - Relation To SKY Backstop [Core]  <!-- UUID: 3b7324cd-8246-4eed-9da9-56599dcac5b4 -->
+##### A.3.7.1.5.4 - Relation To SKY Backstop [Core]  <!-- UUID: 3b7324cd-8246-4eed-9da9-56599dcac5b4 -->
 
 The Genesis Capital Backstop may not be invoked unless a “SKY Backstop Event” is in progress and the price of SKY equals zero.
 
-##### A.3.8.1.5.5 - Genesis Agents [Core]  <!-- UUID: 8952aac5-24fb-4da1-ae10-49f86d30aecd -->
+##### A.3.7.1.5.5 - Genesis Agents [Core]  <!-- UUID: 8952aac5-24fb-4da1-ae10-49f86d30aecd -->
 
 Genesis Agents are Agents that receive capital contributions from Sky, including, without limitation:
     
@@ -15353,7 +15408,7 @@ Genesis Agents are Agents that receive capital contributions from Sky, including
 ◦ Keel    
 ◦ Launch Agent 3
 
-##### A.3.8.1.5.6 - Genesis Capital [Core]  <!-- UUID: 18f3de06-064b-4b08-a855-4720240e37f5 -->
+##### A.3.7.1.5.6 - Genesis Capital [Core]  <!-- UUID: 18f3de06-064b-4b08-a855-4720240e37f5 -->
 
 The Genesis Capital of an Agent is the lesser of (1) the amount of capital contributed by Sky to the Agent and (2) the total capital of the Agent.
 
@@ -15464,9 +15519,9 @@ SKY Staking must be launched with the following parameters for borrowing against
     ◦ LSSKY → USDS (`0x38E4254bD82ED5Ee97CD1C4278FAae748d998865`)
     ◦ LSSKY → SPK (`0x99cBC0e4E6427F6939536eD24d1275B95ff77404`)   
 ◦ `Fee`: 0    
-◦ DC-IAM `line`: Set at discretion of Stability Facilitators in consultation with Stability Scope Advisors    
-◦ DC-IAM `gap`: Set at discretion of Stability Facilitators in consultation with Stability Scope Advisors    
-◦ DC-IAM `ttl`: Set at discretion of Stability Facilitators in consultation with Stability Scope Advisors    
+◦ DC-IAM `line`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
+◦ DC-IAM `gap`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
+◦ DC-IAM `ttl`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
 ◦ Only existing LSE-MKR-A users with drawn debt are allowed to migrate debt to LSEV2-SKY-A initially    
 ◦ `Dust`: 30,000    
 ◦ `Duty`: 20%    
@@ -15634,7 +15689,7 @@ To achieve this normalization, the quantity of SKY token rewards to be distribut
     
 2. Determine SKY Token Quantity: Divide the Target Reward Value (from step 1) by the Current Market Price of SKY (determined at the time of the Executive Vote).
 
-The Core Facilitator, on the recommendation of the Stability Scope Advisors, may maintain the quantity of SKY token rewards to be distributed for a normalization period at its current level if they conclude that:
+The Core Facilitator, on the recommendation of the Core Council Risk Advisor, may maintain the quantity of SKY token rewards to be distributed for a normalization period at its current level if they conclude that:
     
 ◦ the difference between the effective yield provided by SKY Tokens Rewards and the SSR is not material;
     
@@ -15642,7 +15697,7 @@ The Core Facilitator, on the recommendation of the Stability Scope Advisors, may
     
 ◦ adjusting the quantity of SKY Token Rewards is otherwise inadvisable.
 
-The recommendation of the Stability Scope Advisors must be posted to the Sky Forum.
+The recommendation of the Core Council Risk Advisor must be posted to the Sky Forum.
 
 ## A.4.4 - SKY Staking Mechanism [Article]  <!-- UUID: b8891a30-f255-4694-895c-4399df916da3 -->
 
@@ -15888,7 +15943,7 @@ The parameters of this formula are specified in the documents herein.
 
 ###### A.4.4.1.2.2.2 - Parameters Modification [Core]  <!-- UUID: a63c529d-890f-4955-89b3-e671e5eb5ff7 -->
 
-The parameters specified in [A.4.4 - Parameters Definition](b9a9d09d-57c5-42cd-994f-f5689996f635) that are set by governance may be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+The parameters specified in [A.4.4 - Parameters Definition](b9a9d09d-57c5-42cd-994f-f5689996f635) that are set by governance may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
 ##### A.4.4.1.2.3 - stUSDS Holders’ Risk Bearing [Core]  <!-- UUID: 60a37c03-9122-4ef6-9669-2466c335224c -->
 
@@ -15934,7 +15989,7 @@ The current value of the `Slope 1` parameter is 12.575%.
 
 ######### A.4.4.1.2.5.1.1.4.2 - Slope 1 Modification [Core]  <!-- UUID: 5ea82a74-73e3-4f35-83ef-02d7af0cf58b -->
 
-The `Slope 1` parameter may be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+The `Slope 1` parameter may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
 ######## A.4.4.1.2.5.1.1.5 - Slope 2 [Core]  <!-- UUID: fb127571-4e01-4deb-b4cf-8fad2f7c9b71 -->
 
@@ -15946,7 +16001,7 @@ The current value of the `Slope 2` parameter is 12.575%.
 
 ######### A.4.4.1.2.5.1.1.5.2 - Slope 2 Modification [Core]  <!-- UUID: 4446f92c-bb70-4f94-bcf7-d44749ed87b7 -->
 
-The `Slope 2` parameter may be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+The `Slope 2` parameter may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
 ######### A.4.4.1.2.5.1.1.5.3 - Slope 2 Methodology [Core]  <!-- UUID: dbc8ec1b-c9cb-40c1-8ccd-bd7478c42466 -->
 
@@ -16016,7 +16071,7 @@ The liquidation parameters for SKY-backed loans funded via stUSDS are:
 
 ###### A.4.4.1.2.6.1 - Modification Of stUSDS Risk Parameters [Core]  <!-- UUID: 1aa35c85-6a96-4921-a6f0-87a58f3d57d6 -->
 
-Except as specified in [A.4.4 - Modification Of stUSDS Auction Parameters](0296f17f-b615-4f93-9505-94bd78c24324), the Core Executor Agents, in consultation with the Stability Scope Advisors, have the ability to modify any of the parameters defined in [A.4.4 - stUSDS Risk Parameters](fac38a01-4c67-4810-af22-3e7b2d855567). The modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll.
+Except as specified in [A.4.4 - Modification Of stUSDS Auction Parameters](0296f17f-b615-4f93-9505-94bd78c24324), the Core Executor Agents, in consultation with the Core Council Risk Advisor, have the ability to modify any of the parameters defined in [A.4.4 - stUSDS Risk Parameters](fac38a01-4c67-4810-af22-3e7b2d855567). The modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll.
 
 ####### A.4.4.1.2.6.1.1 - Modification Of stUSDS Auction Parameters [Core]  <!-- UUID: 0296f17f-b615-4f93-9505-94bd78c24324 -->
 
@@ -16094,7 +16149,7 @@ The stUSDS BEAM parameters for the `duty` stUSDS parameter are as follows:
 
 ###### A.4.4.1.2.8.3 - Parameter Adjustments [Core]  <!-- UUID: 91152a4b-6f97-4b8a-831a-0f85c16a78ab -->
 
-All stUSDS BEAM parameters can be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+All stUSDS BEAM parameters can be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
 ####### A.4.4.1.2.8.3.1 - Operators [Core]  <!-- UUID: 8fd15f15-c8cd-480d-86b7-cad524cfa9f1 -->
 
@@ -16126,7 +16181,7 @@ Core Executor Agent Atlas Axis can change the signers of the Operator Multisig a
 
 ######## A.4.4.1.2.8.3.1.2 - Operator Hot Wallet [Core]  <!-- UUID: bddf50ca-02ef-4991-abb0-53e09831ee6f -->
 
-The Operator Hot Wallet is a hot wallet controlled by a bot that will update stUSDS parameters on an automated basis as specified in [A.4.4 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f). The wallet is controlled by Ecosystem Actor TechOps Services under the supervision of Core Executor Agent Atlas Axis in consultation with the Stability Scope Advisors. The addition of the Hot Wallet as an Operator of the stUSDS BEAM is authorized to proceed directly to an Executive Vote without a prior Governance Poll.
+The Operator Hot Wallet is a hot wallet controlled by a bot that will update stUSDS parameters on an automated basis as specified in [A.4.4 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f). The wallet is controlled by Ecosystem Actor TechOps Services under the supervision of Core Executor Agent Atlas Axis in consultation with the Core Council Risk Advisor. The addition of the Hot Wallet as an Operator of the stUSDS BEAM is authorized to proceed directly to an Executive Vote without a prior Governance Poll.
 
 ######### A.4.4.1.2.8.3.1.2.1 - Operator Hot Wallet Address [Core]  <!-- UUID: bc29e096-972c-4bcc-b589-dad148374d33 -->
 
@@ -16143,7 +16198,7 @@ These changes are authorized to proceed directly to an Executive Vote without a 
 
 ######## A.4.4.1.2.8.3.1.3 - Operator Update Process [Core]  <!-- UUID: 64d7e377-9870-4563-a073-768bb7d259a4 -->
 
-stUSDS BEAM Operators can be modified by the Core Executor Agents, in consultation with the Stability Scope Advisors. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+stUSDS BEAM Operators can be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
 ####### A.4.4.1.2.8.3.2 - Update Process [Core]  <!-- UUID: 7e58f5eb-c339-4f04-aca8-681e9acd0752 -->
 
@@ -16160,15 +16215,15 @@ The initial parameters set by the stUSDS BEAM in the Executive Vote deploying st
 
 ######## A.4.4.1.2.8.3.2.2 - Manual Parameter Updates By Operator Multisig [Core]  <!-- UUID: 944c2573-1184-4d6b-bbe9-0b84c11956cf -->
 
-Initially, the stUSDS parameters set by the stUSDS BEAM are managed by the Operator Multisig based on instructions provided by the Stability Scope Advisors.
+Initially, the stUSDS parameters set by the stUSDS BEAM are managed by the Operator Multisig based on instructions provided by the Core Council Risk Advisor.
 
-######### A.4.4.1.2.8.3.2.2.1 - Request By Stability Scope Advisors [Core]  <!-- UUID: cfd01132-42f2-46c9-867c-bd9aa62bf78a -->
+######### A.4.4.1.2.8.3.2.2.1 - Request By Core Council Risk Advisor [Core]  <!-- UUID: cfd01132-42f2-46c9-867c-bd9aa62bf78a -->
 
-Any requests to change stUSDS parameters set by the stUSDS BEAM must be posted to the Sky Forum by the Stability Scope Advisor recommending the change. Once Utilization is below 100% the Stability Scope Advisors should begin recommending changes based on the methodology specified in [A.4.4 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) but may deviate from the values resulting from this methodology if they determine that other values are advisable to support the growth of stUSDS and the interests of the Sky Protocol.
+Any requests to change stUSDS parameters set by the stUSDS BEAM must be posted to the Sky Forum by the Core Council Risk Advisor recommending the change. Once Utilization is below 100% the Core Council Risk Advisor should begin recommending changes based on the methodology specified in [A.4.4 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) but may deviate from the values resulting from this methodology if they determine that other values are advisable to support the growth of stUSDS and the interests of the Sky Protocol.
 
 ######### A.4.4.1.2.8.3.2.2.2 - Operator Execution [Core]  <!-- UUID: 420d6ca3-405a-41be-ba0f-cdc52746477c -->
 
-Once a request to change stUSDS parameters has been posted to the Sky Forum by the Stability Scope Advisors, the stUSDS BEAM Operators must prepare and execute the proposed changes in a timely manner. Preparation can include the creation of transaction simulations to verify inputs.
+Once a request to change stUSDS parameters has been posted to the Sky Forum by the Core Council Risk Advisor, the stUSDS BEAM Operators must prepare and execute the proposed changes in a timely manner. Preparation can include the creation of transaction simulations to verify inputs.
 
 ######### A.4.4.1.2.8.3.2.2.3 - Public Communication [Core]  <!-- UUID: 7318d160-e182-4276-bdf9-7dfc86ca77a5 -->
 
@@ -16184,7 +16239,7 @@ The documents herein define the methodology that should be used for determining 
 
 ######## A.4.4.1.2.8.3.3.1 - Short Term Process [Core]  <!-- UUID: c296a253-f737-4d17-bea0-4b1dab903096 -->
 
-Initially when stUSDS parameters are set manually by the Operator Multisig (see [A.4.4 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf)), the Stability Scope Advisors may deviate from the long term process specified in [A.4.4 - Long Term Process](b349277c-4e61-474a-85bd-18802324a3a6) in their best judgment based on the guidelines specified herein.
+Initially when stUSDS parameters are set manually by the Operator Multisig (see [A.4.4 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf)), the Core Council Risk Advisor may deviate from the long term process specified in [A.4.4 - Long Term Process](b349277c-4e61-474a-85bd-18802324a3a6) in their best judgment based on the guidelines specified herein.
 
 ######### A.4.4.1.2.8.3.3.1.1 - Initial Supply Rate [Core]  <!-- UUID: c4523493-97ba-4f57-ae2f-d407ab6e0f98 -->
 
@@ -16220,7 +16275,7 @@ The `duty` must be calculated as specified in [A.4.4 - Rate Setting Formula](05e
 
 ########## A.4.4.1.2.8.3.3.2.2.3 - Cap Calculation [Core]  <!-- UUID: f5dafbc7-96b2-48e8-8b06-d66714d8b8a6 -->
 
-The Stability Scope Advisors must calculate the maximum amount that users can deposit into the stUSDS contract (`cap`) as specified in the documents herein.
+The Core Council Risk Advisor must calculate the maximum amount that users can deposit into the stUSDS contract (`cap`) as specified in the documents herein.
 
 ########### A.4.4.1.2.8.3.3.2.2.3.1 - Short Term Calculation [Core]  <!-- UUID: 21c4b33d-8644-4c1c-88e2-65f1243abd56 -->
 
@@ -16234,7 +16289,7 @@ In the long term, the `cap` must be gradually increased when Utilization is abov
 
 ########## A.4.4.1.2.8.3.3.2.2.4 - Line Calculation [Core]  <!-- UUID: ee92fe50-b3c1-4d44-9d99-8efc671cc67e -->
 
-The Stability Scope Advisors must calculate the maximum amount that users can borrow against their staked SKY (`line`) as specified in the documents herein.
+The Core Council Risk Advisor must calculate the maximum amount that users can borrow against their staked SKY (`line`) as specified in the documents herein.
 
 ########### A.4.4.1.2.8.3.3.2.2.4.1 - Short Term Calculation [Core]  <!-- UUID: be4d269c-7064-4886-bdd5-8a8ff9d4abe2 -->
 
@@ -16267,7 +16322,7 @@ The `cap` parameter represents one of the potential inputs for the SKY-Backed 
 
 ####### A.4.4.1.2.9.1.2 - Modification [Core]  <!-- UUID: 0d86a609-e432-4312-8989-4e6c1eb9be83 -->
 
-The Core Facilitator, in consultation with BA Labs, has the ability to modify the `cap` parameter. The modification of said parameter is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a prior Governance Poll.
+The Core Facilitator, in consultation with the Core Council Risk Advisor, has the ability to modify the `cap` parameter. The modification of said parameter is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a prior Governance Poll.
 
 ####### A.4.4.1.2.9.1.3 - Current Value [Core]  <!-- UUID: 161ee404-89b3-43a1-80a9-f387f73c0f6f -->
 
@@ -17792,7 +17847,7 @@ The Data Submission Responsible Actor calculates the net deposits based on on-ch
 
 ########### A.6.1.1.1.2.5.2.2.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 0a654b1c-9dfe-4ddb-ab79-c3912d2a24bc -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor.
 
 ########### A.6.1.1.1.2.5.2.2.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 41925f82-cd71-4abe-92ea-6ab5f660a23b -->
 
@@ -22976,7 +23031,7 @@ The Interest Rate Model (”IRM”) is defined by four main parameters:
 
 The Base Rate, Slope 1, and Slope 2 parameters are further defined in: [Base Rate Definition](9372deb9-5115-4010-bf72-34023b846525); [Slope 1 Definition](c16b2b24-d663-4877-8bb3-cbd32e977360); and [Slope 2 Definition](56bc7808-5ef8-42af-ba17-708b995194cc). 
 
-All markets except Dai use this IRM. The IRM for Dai is independent of utilization and is defined as a spread over the Sky Savings Rate set forth in [A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate](2674cccb-d779-4868-b83f-8cb86648c88a). The spread is determined by the Stability Facilitators, in consultation with the Stability Scope Advisors.
+All markets except Dai use this IRM. The IRM for Dai is independent of utilization and is defined as a spread over the Sky Savings Rate set forth in [A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate](2674cccb-d779-4868-b83f-8cb86648c88a). The spread is determined by the Stability Facilitators, in consultation with the Core Council Risk Advisor.
 
 ########## A.6.1.1.1.3.2.1.1.1.4 - LTV Definition [Core]  <!-- UUID: 586478a3-51cb-4a2e-8bb1-b96e6520fdcc -->
 
@@ -23012,7 +23067,7 @@ The optimal utilization represents the desired target utilization of the borrowi
 
 ########## A.6.1.1.1.3.2.1.1.1.12 - Isolated Debt Ceiling Definition [Core]  <!-- UUID: ccb5b20f-8fe0-487c-9d61-d038c87e04f0 -->
 
-The isolated debt ceiling represents the maximum amount that can be borrowed against designated isolated assets, as determined by the Stability Facilitators in consultation with the Stability Scope Advisors. Only Stablecoins may be borrowed against isolated assets.
+The isolated debt ceiling represents the maximum amount that can be borrowed against designated isolated assets, as determined by the Stability Facilitators in consultation with the Core Council Risk Advisor. Only Stablecoins may be borrowed against isolated assets.
 
 ########## A.6.1.1.1.3.2.1.1.1.13 - Base Rate Definition [Core]  <!-- UUID: 9372deb9-5115-4010-bf72-34023b846525 -->
 
@@ -23166,7 +23221,7 @@ The current Dai risk parameters are:
 
 • Flash Loan Enabled: Yes
 
-The Dai Borrow Rate is set through the Interest Rate Model as a spread over the Sky Savings Rate. The spread is set directly by the Stability Facilitators in consultation with the Stability Scope Advisors.
+The Dai Borrow Rate is set through the Interest Rate Model as a spread over the Sky Savings Rate. The spread is set directly by the Stability Facilitators in consultation with the Core Council Risk Advisor.
 
 ########## A.6.1.1.1.3.2.1.1.2.3 - USDS Risk Parameters [Core]  <!-- UUID: d9a146b8-f101-4cd6-916c-85142bb8deec -->
 
@@ -23210,7 +23265,7 @@ The current USDS risk parameters are:
 
 • Flash Loan Enabled: Yes. 
 
-The USDS Borrow Rate is set through the Interest Rate Model as a spread over the Sky Savings Rate. The spread is set directly by the Stability Facilitators in consultation with the Stability Scope Advisors.
+The USDS Borrow Rate is set through the Interest Rate Model as a spread over the Sky Savings Rate. The spread is set directly by the Stability Facilitators in consultation with the Core Council Risk Advisor.
 
 ########## A.6.1.1.1.3.2.1.1.2.4 - WETH Risk Parameters [Core]  <!-- UUID: b1a1fb8a-29d7-4bbd-8204-25c74263c25d -->
 
@@ -24202,7 +24257,7 @@ The documents herein define the process for the ongoing management of SparkLend.
 
 ######### A.6.1.1.1.3.2.1.2.1 - SparkLend Risk Parameters Modification [Core]  <!-- UUID: 6029a425-ad81-46c5-866d-94e2ff663873 -->
 
-The modification of SparkLend parameters is temporarily controlled by Sky Core, but will be transitioned to Spark in the future. Currently, the Stability Facilitators, in consultation with the Stability Scope Advisors and Phoenix Labs, may recommend changes to any of the parameters specified in the subdocuments of [SparkLend Risk Parameters Definitions](667abf8c-64a3-4029-b218-e7a6e7000bbd) or [SparkLend Risk Parameters Cap Automator Parameter Definitions](e6bc54e6-91df-4095-a032-0e1128c2cab7).
+The modification of SparkLend parameters is temporarily controlled by Sky Core, but will be transitioned to Spark in the future. Currently, the Stability Facilitators, in consultation with the Core Council Risk Advisor and Phoenix Labs, may recommend changes to any of the parameters specified in the subdocuments of [SparkLend Risk Parameters Definitions](667abf8c-64a3-4029-b218-e7a6e7000bbd) or [SparkLend Risk Parameters Cap Automator Parameter Definitions](e6bc54e6-91df-4095-a032-0e1128c2cab7).
 
 As a general rule, the modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll. 
 
@@ -24213,7 +24268,7 @@ Changes to the parameters defined in the following documents are exceptions to t
 
 ######### A.6.1.1.1.3.2.1.2.2 - Collateral Onboarding/Offboarding [Core]  <!-- UUID: 1a1f4bef-d19d-42ff-8ac4-746498df9fbc -->
 
-The onboarding/offboarding of SparkLend collateral is temporarily controlled by Sky Core, but will be transitioned to Spark in the future. Currently, it is implemented by the Stability Facilitators, in consultation with the Stability Scope Advisors and Phoenix Labs, through the Operational Weekly Cycle.
+The onboarding/offboarding of SparkLend collateral is temporarily controlled by Sky Core, but will be transitioned to Spark in the future. Currently, it is implemented by the Stability Facilitators, in consultation with the Core Council Risk Advisor and Phoenix Labs, through the Operational Weekly Cycle.
 
 ######### A.6.1.1.1.3.2.1.2.3 - Spark Protocol-Aave Revenue Share [Core]  <!-- UUID: a9529f7f-c2fa-4d56-a2b1-0a75e78fd135 -->
 
@@ -25677,11 +25732,11 @@ This Instance’s associated Instance Configuration Document is located at [Ethe
 
 ############ A.6.1.1.3.2.6.1.1.2.1.4.3 - Ethereum Mainnet - Ethena PT-USDe Instance Configuration Document Location [Core]  <!-- UUID: 39fdf5a1-92e9-40de-a1f4-23732d6bbb1a -->
 
-This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena PT-USDe Instance Configuration Document](https://www.notion.so/28ef2ff08d7380609d3fd57910fdb3ee).
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena PT-USDe Instance Configuration Document](e3f9abf3-0cd0-46cc-8295-175c1bc8afbd).
 
 ############ A.6.1.1.3.2.6.1.1.2.1.4.4 - Ethereum Mainnet - Ethena PT-sUSDe Instance Configuration Document Location [Core]  <!-- UUID: 46eb0e66-2594-4bb6-8e2b-0651a6ce39c8 -->
 
-This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena PT-sUSDe Instance Configuration Document](https://www.notion.so/28ef2ff08d7380e58911c344bda0cb76).
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena PT-sUSDe Instance Configuration Document](ba45e20f-b6df-4836-94ea-b4f2f062e658).
 
 ######### A.6.1.1.3.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70ddaca1-07ca-402f-bf3b-cfab52a8f360 -->
 
@@ -27445,556 +27500,931 @@ Grove has formally agreed to the DAO Resolutions recorded herein.
 
 On October 16, 2025, Grove agreed to a DAO Resolution authorizing Grove Foundation and Bamboo Grove Ltd to onboard to FalconX. See [https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola](https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola).
 
-#### A.6.1.1.4 - Keel [Core]  <!-- UUID: bc6aed17-2969-4d04-9af6-c7bf3e4497e6 -->
+####### A.6.1.1.3.3.6.2 - Onboard With Ethena [Core]  <!-- UUID: 9629b16e-4f11-49bc-80be-6c85d711716c -->
+
+On October 23, 2025, Grove agreed to a DAO Resolution authorizing Bamboo Grove to onboard with Ethena. See [https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q](https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q). The DAO Resolution makes reference to a Deed Poll that is approved as part of the DAO Resolution. See [https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24](https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24).
+
+#### A.6.1.1.4 - Ethereum Mainnet - Ethena sUSDe Instance Configuration Document [Core]  <!-- UUID: 5847fff3-ff82-4c01-ac24-7f06fac8c2a4 -->
+
+The documents herein contain the Instance Configuration Document for the Ethena sUSDe Instance.
+
+##### A.6.1.1.4.1 - RRC Framework Full Implementation [Core]  <!-- UUID: 54635681-871e-4c36-8090-b55a760219ca -->
+
+**`Pending`**
+
+##### A.6.1.1.4.2 - Parameters [Core]  <!-- UUID: b483ba5f-7570-4ab4-82e6-f8296553f3e4 -->
+
+The documents herein define the parameters of the Ethena sUSDe Instance of the Allocation System Primitive.
+
+###### A.6.1.1.4.2.1 - Instance Identifiers [Core]  <!-- UUID: a544cec4-f067-477c-8cc5-f74e59d56d45 -->
+
+The documents herein define the Instance identifiers.
+
+####### A.6.1.1.4.2.1.1 - Network [Core]  <!-- UUID: f68d33ff-4092-46aa-92e2-e592b8f84c14 -->
+
+Ethereum Mainnet
+
+####### A.6.1.1.4.2.1.2 - Target Protocol  [Core]  <!-- UUID: b31f534a-7268-4500-be69-abc662541b55 -->
+
+Ethena Protocol
+
+####### A.6.1.1.4.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 0f400550-8477-490d-bdd2-17cb3f808be1 -->
+
+USDe
+
+####### A.6.1.1.4.2.1.4 - Token [Core]  <!-- UUID: c4f40f7e-84da-4cc1-8a45-9eeb27e92255 -->
+
+sUSDe
+
+###### A.6.1.1.4.2.2 - Contract Addresses [Core]  <!-- UUID: 83e0f89d-08df-476a-bbb1-4566f69fafd4 -->
+
+The documents herein define the Instance contract addresses.
+
+####### A.6.1.1.4.2.2.1 - Token Address [Core]  <!-- UUID: 002874e2-43a6-4daa-8e02-1b6f9291d02f -->
+
+`0x9D39A5DE30e57443BfF2A8307A4256c8797A3497`
+
+####### A.6.1.1.4.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: be355bce-80b5-4e9d-a78f-ee5b87aa7117 -->
+
+`0x4c9EDD5852cd905f086C759E8383e09bff1E68B3`
+
+####### A.6.1.1.4.2.2.3 - EthenaMinter [Core]  <!-- UUID: 368f88e3-5570-4a60-b15b-f4ee23519caa -->
+
+`0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3`
+
+###### A.6.1.1.4.2.3 - Rate Limit IDs [Core]  <!-- UUID: 5ecd37de-d09e-438c-838a-9070c42c2802 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow will be specified in a future iteration of the Grove Artifact.
+
+###### A.6.1.1.4.2.4 - Rate Limits [Core]  <!-- UUID: cd0d2be7-92af-47e1-af84-efd52c36d4d9 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow/outflow are defined in the subdocuments herein.
+
+####### A.6.1.1.4.2.4.1 - Inflow Rate Limits [Core]  <!-- UUID: d25089f6-ed8a-4af9-adb1-9830e0daf0bc -->
+
+The inflow rate limits are:
+• `maxAmount`: 250,000,000
+• `slope`: 100,000,000 per day
+
+####### A.6.1.1.4.2.4.2 - Outflow Rate Limits [Core]  <!-- UUID: d33504c7-812f-43fb-b825-fc23aa177a3e -->
+
+The outflow rate limits are:
+• `maxAmount`: unlimited
+• `slope`: unlimited
+
+###### A.6.1.1.4.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 12935140-ad9b-42b4-a2e2-b84573e8ec0b -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+##### A.6.1.1.4.3 - Instance-specific Operational Processes [Core]  <!-- UUID: e1e9bdd9-5301-4efb-80d8-ffc0b29a6ec1 -->
+
+For operational processes defining the operations performed to manage the Ethena Instance, including rate limiting, role-based access control, and minting of USDe functionality see Instance-specific Operational Processes. For detailed logic specific for this instance see [Initiate A sUSDe Cooldown Period](2e467f99-83b9-48a0-adf5-9cc5c538fb23), [Cool Down sUSDe Shares](8f029eaf-a208-4f7c-8f00-d34b1e15ca08), [Unstake sUSDe And Return It To ALM Proxy](bf0523c1-7c37-4073-b565-202c5497825c) and [Emergency Procedure To Withdraw Ethena Balances](8d926497-9fe7-4189-83c8-10f649ff0b1d).
+
+###### A.6.1.1.4.3.1 - Initiate A sUSDe Cooldown Period [Core]  <!-- UUID: 2e467f99-83b9-48a0-adf5-9cc5c538fb23 -->
+
+The documents herein define the process for an operator to initiate a sUSDe Cooldown period.
+
+####### A.6.1.1.4.3.1.1 - Relayer Role [Core]  <!-- UUID: fc7b35c1-185a-41b1-83df-8d8e04349864 -->
+
+The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `cooldownAssetsSUSDe`. Also, they must ensure the contract `isActive` i.e. can process the request.
+
+`function cooldownAssetsSUSDe(uint256 usdeAmount) 
+        external 
+        onlyRole(RELAYER) 
+        isActive`
+
+####### A.6.1.1.4.3.1.2 - Enforce Rate Limit [Core]  <!-- UUID: c9040dc5-3f47-4e47-861c-6ddac774ecb6 -->
+
+The operator must enforce a rate limit on how much sUSDe can be cooled down.
+
+`rateLimited(LIMIT_SUSDE_COOLDOWN, usdeAmount)`
+
+####### A.6.1.1.4.3.1.3 - Encode Function [Core]  <!-- UUID: 3c9e6628-3441-4d53-aed1-6dc973d8f8cc -->
+
+The operator must use `proxy.doCall()` to make a call to the `susde` contract, invoking the `cooldownAssets` function with the specified amount of sUSDe. They must encode the function using `abi.encodeCall`.
+
+`{
+    proxy.doCall(
+        address(susde),
+        abi.encodeCall(susde.cooldownAssets, (usdeAmount))
+    );
+}`
+
+###### A.6.1.1.4.3.2 - Cool Down sUSDe Shares [Core]  <!-- UUID: 8f029eaf-a208-4f7c-8f00-d34b1e15ca08 -->
+
+The documents herein define the process for an operator to cool down sUSDe shares.
+
+####### A.6.1.1.4.3.2.1 - Relayer Role [Core]  <!-- UUID: ba771f78-163f-4ec6-990d-ec8cc25e0393 -->
+
+The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `cooldownSharesSUSDe`. Also, they must ensure the contract `isActive` i.e. can process the request.
+
+`function cooldownSharesSUSDe(uint256 susdeAmount) 
+        external 
+        onlyRole(RELAYER) 
+        isActive`
+
+####### A.6.1.1.4.3.2.2 - Encode Function [Core]  <!-- UUID: 038cb6fe-4040-4f3a-b1a8-9c6f2f3a4f72 -->
+
+The operator must use `proxy.doCall()` to make a call to the `susde` contract, initiating the `cooldown` on the specified amount of sUSDe shares. They must encode the function using `abi.encodeCall`.
+
+######## A.6.1.1.4.3.2.2.1 - Decode For Underlying Shares [Core]  <!-- UUID: 9e6e0eef-e29c-4e99-ad36-36c4eeac37ea -->
+
+The operator must decode the result returned by the `cooldownShares` function into a `uint256` value, representing the amount of shares that were actually cooled down (`cooldownAmount`).
+
+`{
+    cooldownAmount = abi.decode(
+        proxy.doCall(
+            address(susde),
+            abi.encodeCall(susde.cooldownShares, (susdeAmount))
+        ),
+        (uint256)
+    );`
+
+####### A.6.1.1.4.3.2.3 - Decrease RateLimit [Core]  <!-- UUID: 42943bad-504a-4b59-9164-d6cc2acf6a95 -->
+
+The operator must decrease the `RateLimit`, effectively reducing the available `cooldown` limit, based on the `cooldownAmount`.
+
+`rateLimits.triggerRateLimitDecrease(LIMIT_SUSDE_COOLDOWN, cooldownAmount);
+}`
+
+###### A.6.1.1.4.3.3 - Unstake sUSDe And Return It To ALM Proxy [Core]  <!-- UUID: bf0523c1-7c37-4073-b565-202c5497825c -->
+
+The documents herein define the process for an operator to unstake sUSDe and return it to the ALM Proxy.
+
+####### A.6.1.1.4.3.3.1 - Relayer Role [Core]  <!-- UUID: 1f19cb45-1934-4e2e-8d07-0d4b78e7188c -->
+
+The operator must ensure they are working as a `RELAYER`. Only the `RELAYER` role is allowed to `unstakeSUSDe`. Also, they must ensure the contract `isActive` i.e. can process the request.
+
+`function unstakeSUSDe() 
+        external 
+        onlyRole(RELAYER) 
+        isActive`
+
+####### A.6.1.1.4.3.3.2 - Encode Function [Core]  <!-- UUID: 516ca684-b183-4d57-9feb-97a7a9b58e42 -->
+
+The operator must use `proxy.doCall()` to make a call to the `susde` contract to invoke the `unstake` function, which unstakes sUSDe and sends the resulting tokens back to the `proxy` address (i.e. ALM Proxy). They must encode the function using `abi.encodeCall`.
+
+`{
+    proxy.doCall(
+        address(susde),
+        abi.encodeCall(susde.unstake, (address(proxy)))
+    );
+}`
+
+###### A.6.1.1.4.3.4 - Emergency Procedure To Withdraw Ethena Balances [Core]  <!-- UUID: 8d926497-9fe7-4189-83c8-10f649ff0b1d -->
+
+In order to withdraw all Ethena balances, the operator must execute the following actions:
+
+####### A.6.1.1.4.3.4.1 - sUSDe Cooldown Action [Core]  <!-- UUID: bc67845f-f3e8-45d3-b17b-93b669072f77 -->
+
+The operator must start the cooldown for sUSDe using the following action:
+
+`mainnetController.cooldownSharesSUSDe(susde.balanceOf(address(proxy))
+`
+For more detailed instructions on the code to execute this, see [Cool Down sUSDe Shares](8f029eaf-a208-4f7c-8f00-d34b1e15ca08).
+
+####### A.6.1.1.4.3.4.2 - sUSDe Unstake Action [Core]  <!-- UUID: 44ee472f-41a4-45c4-bce3-34615132e5d2 -->
+
+The operator must unstake sUSDe using the following action:
+
+`mainnetController.unstakeSUSDe()
+`
+For more detailed instructions on the code to execute this, see [Unstake sUSDe And Return It To ALM Proxy](bf0523c1-7c37-4073-b565-202c5497825c).
+
+#### A.6.1.1.5 - Ethereum Mainnet - Ethena PT-USDe Instance Configuration Document [Core]  <!-- UUID: e3f9abf3-0cd0-46cc-8295-175c1bc8afbd -->
+
+The documents herein contain the Instance Configuration Document for the Ethena PT-USDe Instance.
+
+##### A.6.1.1.5.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 65922d1d-0866-480a-9e56-5c47f2ed24c0 -->
+
+**`Pending`**
+
+##### A.6.1.1.5.2 - Parameters [Core]  <!-- UUID: f96e5493-ce45-496c-a9c0-833962329075 -->
+
+The documents herein define the parameters of the Ethena PT-USDe Instance of the Allocation System Primitive.
+
+###### A.6.1.1.5.2.1 - Instance Identifiers [Core]  <!-- UUID: 5882a708-164c-49c4-8348-1bc2f81066a4 -->
+
+The documents herein define the Instance identifiers.
+
+####### A.6.1.1.5.2.1.1 - Network [Core]  <!-- UUID: 7ff517b4-069c-4f73-adc8-028756a8e3f3 -->
+
+Ethereum Mainnet
+
+####### A.6.1.1.5.2.1.2 - Target Protocol  [Core]  <!-- UUID: 0d4e39d3-5b1a-44ad-aba5-4171bf22e370 -->
+
+Ethena
+
+####### A.6.1.1.5.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: f716ae3f-7c95-4ccc-8280-2e62a8a121d1 -->
+
+USDC
+
+####### A.6.1.1.5.2.1.4 - Token [Core]  <!-- UUID: 34447618-cb6c-4d05-874e-68e2d8c5ea95 -->
+
+PT-USDe
+
+###### A.6.1.1.5.2.2 - Contract Addresses [Core]  <!-- UUID: bb7c88fe-0f4f-4384-a9ca-a6a974e460c6 -->
+
+The documents herein define the Instance contract addresses.
+
+####### A.6.1.1.5.2.2.1 - Token Address [Core]  <!-- UUID: 9008b149-de3d-429d-824f-48524063d657 -->
+
+`0x4c9EDD5852cd905f086C759E8383e09bff1E68B3`
+
+####### A.6.1.1.5.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: dd7eaa92-d40a-4ffc-9359-ce7d8a9f01fe -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+####### A.6.1.1.5.2.2.3 - Broker Address [Core]  <!-- UUID: 88303bee-82c3-4d78-8b31-e319c760ee31 -->
+
+`0xD94F9ef3395BBE41C1f05ced3C9a7dc520D08036`
+
+###### A.6.1.1.5.2.3 - Rate Limit IDs [Core]  <!-- UUID: 93e8e5e9-2e38-45ff-b325-7ff52f73017d -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+####### A.6.1.1.5.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 7e3cf2f7-1371-426e-881a-99878625cd2e -->
+
+The inflow RateLimitID is: `0x098ad67dc41c1a5892ec3ef5fd411198dc11962475e9ef2e0362e6cb7f5a2174`.
+
+####### A.6.1.1.5.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 49a086b0-0d77-4d9a-b899-9b1177181b4b -->
+
+The outflow RateLimitID is: `0x6dd53d41cd67732ec6166a0927bd9c2da9e20940bd174778b44787531d32d42e`.
+
+###### A.6.1.1.5.2.4 - Rate Limits [Core]  <!-- UUID: c13e1a1b-4104-4964-a901-4c7bcb19c868 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow/outflow are defined in the subdocuments herein.
+
+####### A.6.1.1.5.2.4.1 - Deposit Rate Limits (via FalconX) [Core]  <!-- UUID: 7a93740b-d794-4ca9-aece-6c7db42bebf2 -->
+
+The deposit rate limits are:
+• `maxAmount`: 50 million USDC
+• `slope`: 50 million USDC
+
+####### A.6.1.1.5.2.4.2 - Withdrawal Rate Limits (via FalconX) [Core]  <!-- UUID: e198f465-0b25-4f45-860f-66eacc575f9f -->
+
+The withdrawal rate limits are:
+• `maxAmount`: 50 million USDC
+• `slope`: 50 million USDC
+
+####### A.6.1.1.5.2.4.3 - Redemption Rate Limits (via Pendle Protocol) [Core]  <!-- UUID: 9dce58c1-0c6d-44f4-8145-c4243e8c02a9 -->
+
+The redemption rate limits are:
+• `maxAmount`: Unlimited
+• `slope`: Unlimited
+
+###### A.6.1.1.5.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: a0fbf90a-75dc-4ee7-a4a6-e9a39314f8b3 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+##### A.6.1.1.5.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 64fc397b-a8e4-425a-814f-d22570dfadc7 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+#### A.6.1.1.6 - Ethereum Mainnet - Ethena PT-sUSDe Instance Configuration Document [Core]  <!-- UUID: ba45e20f-b6df-4836-94ea-b4f2f062e658 -->
+
+The documents herein contain the Instance Configuration Document for the Ethena PT-sUSDe Instance.
+
+##### A.6.1.1.6.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: c0a78c43-bbd6-4735-b1b9-15772514223b -->
+
+**`Pending`**
+
+##### A.6.1.1.6.2 - Parameters [Core]  <!-- UUID: 5799c20d-bed8-4e81-bffb-5ec49e95d303 -->
+
+The documents herein define the parameters of the Ethena PT-sUSDe Instance of the Allocation System Primitive.
+
+###### A.6.1.1.6.2.1 - Instance Identifiers [Core]  <!-- UUID: 6b772ff5-77a0-4f96-8ce7-896c4a221e31 -->
+
+The documents herein define the Instance identifiers.
+
+####### A.6.1.1.6.2.1.1 - Network [Core]  <!-- UUID: 88cf47cb-a94e-475e-9fb8-1b9f2540ba9a -->
+
+Ethereum Mainnet
+
+####### A.6.1.1.6.2.1.2 - Target Protocol  [Core]  <!-- UUID: 6dbd0693-3ebd-4175-82ef-991f085b6942 -->
+
+Ethena
+
+####### A.6.1.1.6.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 3246daa1-29ee-447e-ad83-b5b7f8f8a931 -->
+
+USDC
+
+####### A.6.1.1.6.2.1.4 - Token [Core]  <!-- UUID: dd3b11cd-ca9d-4c7b-9769-9624c3085954 -->
+
+PT-sUSDe
+
+####### A.6.1.1.6.2.1.5 - Broker [Core]  <!-- UUID: fc28e9fd-a4db-4963-8935-f2b05dd2a8bd -->
+
+FalconX
+
+###### A.6.1.1.6.2.2 - Contract Addresses [Core]  <!-- UUID: 46e15661-6ee9-4ac6-88ad-d07d7f7fa6a4 -->
+
+The documents herein define the Instance contract addresses.
+
+####### A.6.1.1.6.2.2.1 - Token Address [Core]  <!-- UUID: 3b108b97-6f88-4d96-a55a-38c39191281e -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+####### A.6.1.1.6.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 914e6bcf-a73b-4c80-bfa8-04dbd58a7805 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+####### A.6.1.1.6.2.2.3 - Broker Address [Core]  <!-- UUID: 4d4d42ae-76e3-4de8-87a0-14ce30a4ebe5 -->
+
+`0xD94F9ef3395BBE41C1f05ced3C9a7dc520D08036`
+
+###### A.6.1.1.6.2.3 - Rate Limit IDs [Core]  <!-- UUID: 3af5241e-5b72-4466-9e69-dccb8a8d203b -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow will be specified in a future iteration of the Grove Artifact.
+
+####### A.6.1.1.6.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 230f8de3-d642-460c-bbff-4e75f110e584 -->
+
+The inflow RateLimitID is: `0x098ad67dc41c1a5892ec3ef5fd411198dc11962475e9ef2e0362e6cb7f5a2174`.
+
+####### A.6.1.1.6.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 39d3f488-0d5a-4207-a010-64a5bc6cd8db -->
+
+The outflow RateLimitID is: `0x027191d7c552bd41037422747bcde7caca7d1f6afc5ea9b85f8a47432c70be67`.
+
+###### A.6.1.1.6.2.4 - Rate Limits [Core]  <!-- UUID: df99c910-17a9-4374-989e-906bd81d621a -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow/outflow are defined in the subdocuments herein.
+
+####### A.6.1.1.6.2.4.1 - Deposit Rate Limits (via FalconX) [Core]  <!-- UUID: e66a0529-5419-46ef-8b9c-e6f6c255c3e3 -->
+
+The deposit rate limits are:
+• `maxAmount`: 50 million USDC
+• `slope`: 50 million USDC
+
+####### A.6.1.1.6.2.4.2 - Withdrawal Rate Limits (via FalconX) [Core]  <!-- UUID: c3fa15e7-7193-4e4d-9463-9dc6001f3d75 -->
+
+The withdrawal rate limits are:
+• `maxAmount`: 50 million USDC
+• `slope`: 50 million USDC
+
+####### A.6.1.1.6.2.4.3 - Redemption Rate Limits (via Pendle Protocol) [Core]  <!-- UUID: 5d0649b9-c4ce-4a8a-bd2c-c6c0cc3de322 -->
+
+The redemption rate limits are:
+• `maxAmount`: Unlimited
+• `slope`: Unlimited
+
+###### A.6.1.1.6.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 917cd220-0d0e-4c34-82a5-acb1a0013bf6 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+##### A.6.1.1.6.3 - Instance-specific Operational Processes [Core]  <!-- UUID: ab1c8923-2cf6-4825-b380-a17db876e3a9 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+#### A.6.1.1.7 - Keel [Core]  <!-- UUID: bc6aed17-2969-4d04-9af6-c7bf3e4497e6 -->
 
 The documents herein specify all of the logic for Keel, including Keel’s strategy and how it uses the Sky Primitives to operationalize this strategy.
 
-##### A.6.1.1.4.1 - Introduction [Core]  <!-- UUID: 9cbee6c7-8bc4-4b0c-a3cd-0f7f4944114e -->
+##### A.6.1.1.7.1 - Introduction [Core]  <!-- UUID: 9cbee6c7-8bc4-4b0c-a3cd-0f7f4944114e -->
 
 Keel is an Agent dedicated to expanding access to USDS, sUSDS, and other Sky benefits with an initial focus on the Solana ecosystem. Keel leverages strategic incentives and partnerships to foster adoption, deliver the Sky Savings Rate, and bring USDS liquidity to new markets. Keel also identifies and executes allocation opportunities to generate excess returns on assets in Sky’s collateral portfolio. Keel plans to develop a user-facing DeFi hub as well as other products that align naturally with Keel’s existing capabilities, including borrowing and lending solutions.
 
-##### A.6.1.1.4.2 - Sky Primitives [Core]  <!-- UUID: 0d415ab8-7a66-4d82-98a4-67696a120650 -->
+##### A.6.1.1.7.2 - Sky Primitives [Core]  <!-- UUID: 0d415ab8-7a66-4d82-98a4-67696a120650 -->
 
 The documents herein implement the Sky Primitives for Keel. See [A.2.4](fcde2604-a138-4c1b-9d9a-14895835c907).
 
-###### A.6.1.1.4.2.1 - Genesis Primitives [Core]  <!-- UUID: 80c991f4-7714-4706-95ab-50b0edd2f181 -->
+###### A.6.1.1.7.2.1 - Genesis Primitives [Core]  <!-- UUID: 80c991f4-7714-4706-95ab-50b0edd2f181 -->
 
 The documents herein implement the Genesis Primitives for Keel. See [A.2.4 - A4 - Genesis Primitives](3d5e3668-8333-4908-adcc-5784cfe7f6b5).
 
-####### A.6.1.1.4.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: b439ba28-c334-4211-bdc7-bb3f62158e49 -->
+####### A.6.1.1.7.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: b439ba28-c334-4211-bdc7-bb3f62158e49 -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Agent Creation Primitive. See [A.2.4 - Agent Creation Primitive](82b95f6d-4883-4f08-ac3a-9d8189013fbe).
 
-######## A.6.1.1.4.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: b001c1e5-89c6-4141-bc59-b4e7b86d5f47 -->
+######## A.6.1.1.7.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: b001c1e5-89c6-4141-bc59-b4e7b86d5f47 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Agent Creation Primitive.
 
-######### A.6.1.1.4.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: c6ee2c59-96cd-464c-9c38-7b177739ab25 -->
+######### A.6.1.1.7.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: c6ee2c59-96cd-464c-9c38-7b177739ab25 -->
 
 `Completed`
 
-######### A.6.1.1.4.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: d25c9d88-d80f-4692-a8c4-23d5773c4db4 -->
+######### A.6.1.1.7.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: d25c9d88-d80f-4692-a8c4-23d5773c4db4 -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 4498f995-ee6c-47ee-9ab2-5c268b44cfd9 -->
+######### A.6.1.1.7.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 4498f995-ee6c-47ee-9ab2-5c268b44cfd9 -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.4.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 91d4bf72-2fa7-4fdc-9e7b-f7960e1406a4 -->
+########## A.6.1.1.7.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 91d4bf72-2fa7-4fdc-9e7b-f7960e1406a4 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](66669635-acd1-4c2d-b75e-b9f05dfdf9bf).
 
-######### A.6.1.1.4.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5dc11d90-b6cb-4e32-8e37-ec7ce4afc470 -->
+######### A.6.1.1.7.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5dc11d90-b6cb-4e32-8e37-ec7ce4afc470 -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6b3495db-ce51-4042-ab8b-6cf288bf7e21 -->
+######### A.6.1.1.7.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6b3495db-ce51-4042-ab8b-6cf288bf7e21 -->
 
 The document herein contains the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d397b88b-ddde-4e66-b58b-c4168157a539 -->
+########## A.6.1.1.7.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d397b88b-ddde-4e66-b58b-c4168157a539 -->
 
 The subtrees for archived Invocations and Instances of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 77479534-34de-4154-be5c-7b6f9fab8bd9 -->
+########### A.6.1.1.7.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 77479534-34de-4154-be5c-7b6f9fab8bd9 -->
 
 The subtrees for failed Invocations of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a8c87f52-ad5a-43ad-a9e8-7b087193d8d4 -->
+########### A.6.1.1.7.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a8c87f52-ad5a-43ad-a9e8-7b087193d8d4 -->
 
 The subtrees for Instances of the Agent Creation Primitive with Suspended Status are stored here.
 
-######## A.6.1.1.4.2.1.1.2 - Active Instances [Core]  <!-- UUID: e67cd345-759d-4bd3-b264-a81971bf1921 -->
+######## A.6.1.1.7.2.1.1.2 - Active Instances [Core]  <!-- UUID: e67cd345-759d-4bd3-b264-a81971bf1921 -->
 
 The Instances of the Agent Creation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 0b9ec93a-58c8-48cf-b88f-ebbbc3a4333b -->
+######## A.6.1.1.7.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 0b9ec93a-58c8-48cf-b88f-ebbbc3a4333b -->
 
 The Instances of the Agent Creation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.4.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 66669635-acd1-4c2d-b75e-b9f05dfdf9bf -->
+######### A.6.1.1.7.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 66669635-acd1-4c2d-b75e-b9f05dfdf9bf -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Creation Primitive Instance.
 
-########## A.6.1.1.4.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: baa172cb-2f8d-4606-b988-1280a665f53b -->
+########## A.6.1.1.7.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: baa172cb-2f8d-4606-b988-1280a665f53b -->
 
 The documents herein define the parameters of the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.4.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 678770b0-a7fd-4b38-beee-f985504bc5b0 -->
+########### A.6.1.1.7.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 678770b0-a7fd-4b38-beee-f985504bc5b0 -->
 
 The name of the Agent is Keel.
 
-########### A.6.1.1.4.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 2d5f052a-e32a-472c-884f-4fd8746e0459 -->
+########### A.6.1.1.7.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 2d5f052a-e32a-472c-884f-4fd8746e0459 -->
 
 The address of Keel's SubProxy Account on the Ethereum Mainnet is `0x355CD90Ecb1b409Fdf8b64c4473C3B858dA2c310`.
 
-########### A.6.1.1.4.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: 79ef290b-94c8-420b-9e05-dbfa4156c5b4 -->
+########### A.6.1.1.7.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: 79ef290b-94c8-420b-9e05-dbfa4156c5b4 -->
 
 The address of Keel’s Genesis Account will be specified in a future iteration of the Keel Artifact.
 
-########### A.6.1.1.4.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 7cd2fee6-4606-41e1-8566-fc5d1442a2cd -->
+########### A.6.1.1.7.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 7cd2fee6-4606-41e1-8566-fc5d1442a2cd -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Creation Primitive, if any.
 
-########## A.6.1.1.4.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: ad622a38-8b5f-4dca-991c-8d0fb79c965c -->
+########## A.6.1.1.7.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: ad622a38-8b5f-4dca-991c-8d0fb79c965c -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.4.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: 89b627cc-8223-4faa-bb56-370731f1ee9f -->
+########## A.6.1.1.7.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: 89b627cc-8223-4faa-bb56-370731f1ee9f -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.4.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 9bacd440-487f-49f7-b0ca-fbd8367e9298 -->
+########### A.6.1.1.7.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 9bacd440-487f-49f7-b0ca-fbd8367e9298 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d8938b72-36af-4dce-91bc-4a8b67d20493 -->
+########### A.6.1.1.7.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d8938b72-36af-4dce-91bc-4a8b67d20493 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: f79736e7-1c24-43fe-9645-605791e87942 -->
+########### A.6.1.1.7.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: f79736e7-1c24-43fe-9645-605791e87942 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e46ba795-34db-4fb0-ba67-3dc178a4b47e -->
+######## A.6.1.1.7.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e46ba795-34db-4fb0-ba67-3dc178a4b47e -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.4.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 564fff56-3cd6-4929-b6d6-f2ea53c7dd7f -->
+####### A.6.1.1.7.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 564fff56-3cd6-4929-b6d6-f2ea53c7dd7f -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Prime Transformation Primitive. See [A.2.4 - Prime Transformation Primitive](81411106-fd6d-4f9c-b3ae-7af7b5e62482).
 
-######## A.6.1.1.4.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: ddfade4a-7dba-49ad-8feb-c19dfb56e378 -->
+######## A.6.1.1.7.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: ddfade4a-7dba-49ad-8feb-c19dfb56e378 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Prime Transformation Primitive.
 
-######### A.6.1.1.4.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: ce33e597-a6e9-45e6-800a-f83af4bfb8b6 -->
+######### A.6.1.1.7.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: ce33e597-a6e9-45e6-800a-f83af4bfb8b6 -->
 
 `Completed`
 
-######### A.6.1.1.4.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 77c9f65c-b1f6-48fa-abd2-49bf900473d7 -->
+######### A.6.1.1.7.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 77c9f65c-b1f6-48fa-abd2-49bf900473d7 -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70d3ad1c-6625-4c99-87ce-c1044bd8d459 -->
+######### A.6.1.1.7.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70d3ad1c-6625-4c99-87ce-c1044bd8d459 -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.4.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 655dca13-6e80-4267-8555-303053aa6956 -->
+########## A.6.1.1.7.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 655dca13-6e80-4267-8555-303053aa6956 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](c664d698-17af-4635-9e13-c0393f416b2d).
 
-######### A.6.1.1.4.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 120e7afd-9bfd-4532-9ded-fca199e41517 -->
+######### A.6.1.1.7.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 120e7afd-9bfd-4532-9ded-fca199e41517 -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: bd76b4e7-543b-458f-bd8c-c6a8d687f28a -->
+######### A.6.1.1.7.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: bd76b4e7-543b-458f-bd8c-c6a8d687f28a -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3036b076-251d-4434-b195-b1ed7923767c -->
+########## A.6.1.1.7.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3036b076-251d-4434-b195-b1ed7923767c -->
 
 The subtrees for archived Invocations and Instances of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6c4e4296-f5ad-446b-a15f-51dc081f99be -->
+########### A.6.1.1.7.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6c4e4296-f5ad-446b-a15f-51dc081f99be -->
 
 The subtrees for failed Invocations of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b270e04d-49ba-43a2-a2c6-dd2d9bd053bc -->
+########### A.6.1.1.7.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b270e04d-49ba-43a2-a2c6-dd2d9bd053bc -->
 
 The subtrees for Instances of the Prime Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.1.2.2 - Active Instances [Core]  <!-- UUID: cd02e662-ac90-474e-93cd-4366cec2aa65 -->
+######## A.6.1.1.7.2.1.2.2 - Active Instances [Core]  <!-- UUID: cd02e662-ac90-474e-93cd-4366cec2aa65 -->
 
 The Instances of the Prime Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 63bcf409-d7f5-4e5a-9e65-970df317653f -->
+######## A.6.1.1.7.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 63bcf409-d7f5-4e5a-9e65-970df317653f -->
 
 The Instances of the Prime Transformation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.4.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: c664d698-17af-4635-9e13-c0393f416b2d -->
+######### A.6.1.1.7.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: c664d698-17af-4635-9e13-c0393f416b2d -->
 
 The documents herein contain the Instance Configuration Document for the Single Prime Transformation Primitive Instance.
 
-########## A.6.1.1.4.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: 83b76fe8-a186-4be4-8a8b-2929c9a99ac4 -->
+########## A.6.1.1.7.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: 83b76fe8-a186-4be4-8a8b-2929c9a99ac4 -->
 
 The documents herein define the parameters of the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.4.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: 84a5adbb-10cc-4bda-9e94-8facfdb114e6 -->
+########### A.6.1.1.7.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: 84a5adbb-10cc-4bda-9e94-8facfdb114e6 -->
 
 Keel is a Prime Agent.
 
-########### A.6.1.1.4.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: ec58c072-add1-442f-abab-c5eefb8b19d5 -->
+########### A.6.1.1.7.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: ec58c072-add1-442f-abab-c5eefb8b19d5 -->
 
 The documents herein define the custom parameters of the Single Instance of the Prime Transformation Primitive, if any.
 
-########## A.6.1.1.4.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 8c8258a2-768f-4da1-b400-66ed0e25ac0a -->
+########## A.6.1.1.7.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 8c8258a2-768f-4da1-b400-66ed0e25ac0a -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.4.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: af920dd4-90f5-41fa-9547-049c35ed84e8 -->
+########## A.6.1.1.7.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: af920dd4-90f5-41fa-9547-049c35ed84e8 -->
 
 The documents herein contain data relevant to the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.4.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 10d9a22e-22ff-4f1c-8ce9-4b907b3748f5 -->
+########### A.6.1.1.7.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 10d9a22e-22ff-4f1c-8ce9-4b907b3748f5 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 7ab8edc0-14e5-40e1-8bf6-80ef2eb86549 -->
+########### A.6.1.1.7.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 7ab8edc0-14e5-40e1-8bf6-80ef2eb86549 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 795f3788-68ae-48c0-8fe3-c33b9bb81dc7 -->
+########### A.6.1.1.7.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 795f3788-68ae-48c0-8fe3-c33b9bb81dc7 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 83b6ac05-69c2-43a5-b7f4-c24e02671c0d -->
+######## A.6.1.1.7.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 83b6ac05-69c2-43a5-b7f4-c24e02671c0d -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.4.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: 56a1e9a7-9754-4354-952d-a6fb2605c7b4 -->
+####### A.6.1.1.7.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: 56a1e9a7-9754-4354-952d-a6fb2605c7b4 -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Executor Transformation Primitive. See [A.2.4 - Executor Transformation Primitive](2f249be5-8edb-41e4-b429-734e1ba2cbc7).
 
-######## A.6.1.1.4.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: 14e5e6ce-f8ba-4a83-a013-27c821cae118 -->
+######## A.6.1.1.7.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: 14e5e6ce-f8ba-4a83-a013-27c821cae118 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Executor Transformation Primitive.
 
-######### A.6.1.1.4.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: 0608173d-703f-47a1-b66e-0fde1faee269 -->
+######### A.6.1.1.7.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: 0608173d-703f-47a1-b66e-0fde1faee269 -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 3a99c1c6-03a5-4136-8195-0fe20ac0a637 -->
+######### A.6.1.1.7.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 3a99c1c6-03a5-4136-8195-0fe20ac0a637 -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 773eee8d-8581-4dec-a917-d7238f9d5480 -->
+######### A.6.1.1.7.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 773eee8d-8581-4dec-a917-d7238f9d5480 -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f3844b2e-d070-493f-acbd-7bb582314ed3 -->
+######### A.6.1.1.7.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f3844b2e-d070-493f-acbd-7bb582314ed3 -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 4860f54a-803e-4cfb-a7cd-8af5a159af0e -->
+######### A.6.1.1.7.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 4860f54a-803e-4cfb-a7cd-8af5a159af0e -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 4015cc5b-9843-44f6-805f-9938c47ea372 -->
+########## A.6.1.1.7.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 4015cc5b-9843-44f6-805f-9938c47ea372 -->
 
 The subtrees for archived Invocations and Instances of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: b8060ecb-32c7-4a12-a439-158e6fe636ab -->
+########### A.6.1.1.7.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: b8060ecb-32c7-4a12-a439-158e6fe636ab -->
 
 The subtrees for failed Invocations of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.4.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 21078bf0-ff3a-42a7-9219-acd7ca8ad35e -->
+########### A.6.1.1.7.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 21078bf0-ff3a-42a7-9219-acd7ca8ad35e -->
 
 The subtrees for Instances of the Executor Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.1.3.2 - Active Instances [Core]  <!-- UUID: 9611f413-a11b-4c5b-bdf5-4c861c52cb59 -->
+######## A.6.1.1.7.2.1.3.2 - Active Instances [Core]  <!-- UUID: 9611f413-a11b-4c5b-bdf5-4c861c52cb59 -->
 
 The Instances of the Executor Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 073a2259-36d6-473a-910a-0e0a8122254d -->
+######## A.6.1.1.7.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 073a2259-36d6-473a-910a-0e0a8122254d -->
 
 The Instances of the Executor Transformation Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.4.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 8b270217-b3fb-4a6f-84f5-65e1073781cd -->
+######## A.6.1.1.7.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 8b270217-b3fb-4a6f-84f5-65e1073781cd -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.4.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: 7c41668c-38c2-401b-8905-51d66b3574ff -->
+####### A.6.1.1.7.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: 7c41668c-38c2-401b-8905-51d66b3574ff -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Agent Token Primitive. See [A.2.4 - Agent Token Primitive](2047c361-db28-4952-a70c-83d07b562064).
 
-######## A.6.1.1.4.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: e3469208-9d4f-4862-a82f-16222cb7235e -->
+######## A.6.1.1.7.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: e3469208-9d4f-4862-a82f-16222cb7235e -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Agent Token Primitive.
 
-######### A.6.1.1.4.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: c3443c18-3cf1-4b02-8675-e1e404b06f37 -->
+######### A.6.1.1.7.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: c3443c18-3cf1-4b02-8675-e1e404b06f37 -->
 
 `Active`
 
-######### A.6.1.1.4.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: 982226bb-b1d0-436f-ab86-9edd0880eb7c -->
+######### A.6.1.1.7.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: 982226bb-b1d0-436f-ab86-9edd0880eb7c -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: b6ae5829-82aa-43a4-96e1-15ede7b76c07 -->
+########## A.6.1.1.7.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: b6ae5829-82aa-43a4-96e1-15ede7b76c07 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](d212a592-0f0f-401b-b358-17cd453fcab2).
 
-######### A.6.1.1.4.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: fe0883fb-4758-44c9-8aa2-591e68f814b2 -->
+######### A.6.1.1.7.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: fe0883fb-4758-44c9-8aa2-591e68f814b2 -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 53fa54ce-8d6a-4cc4-901b-80f87540e4a9 -->
+######### A.6.1.1.7.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 53fa54ce-8d6a-4cc4-901b-80f87540e4a9 -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 1e00fec2-9ad0-48e7-aab2-e941e3cc1862 -->
+######### A.6.1.1.7.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 1e00fec2-9ad0-48e7-aab2-e941e3cc1862 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 7cfb3a25-424d-415f-be14-b68a6c2e94a4 -->
+########## A.6.1.1.7.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 7cfb3a25-424d-415f-be14-b68a6c2e94a4 -->
 
 The subtrees for archived Invocations and Instances of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.4.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 376ffc51-a5ee-43cc-b993-d045ee5588a1 -->
+########### A.6.1.1.7.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 376ffc51-a5ee-43cc-b993-d045ee5588a1 -->
 
 The subtrees for failed Invocations of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.4.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 0a97b894-190f-433a-ae34-76236acdd144 -->
+########### A.6.1.1.7.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 0a97b894-190f-433a-ae34-76236acdd144 -->
 
 The subtrees for Instances of the Agent Token Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.1.4.2 - Active Instances [Core]  <!-- UUID: 26f17849-a6a4-46c2-b128-d4eefa67db5b -->
+######## A.6.1.1.7.2.1.4.2 - Active Instances [Core]  <!-- UUID: 26f17849-a6a4-46c2-b128-d4eefa67db5b -->
 
 The Instances of the Agent Token Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: d212a592-0f0f-401b-b358-17cd453fcab2 -->
+######### A.6.1.1.7.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: d212a592-0f0f-401b-b358-17cd453fcab2 -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Token Primitive Instance.
 
-########## A.6.1.1.4.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: a391467e-c3ad-4e80-b1ce-f6d041001cdc -->
+########## A.6.1.1.7.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: a391467e-c3ad-4e80-b1ce-f6d041001cdc -->
 
 The documents herein define the parameters of the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.4.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 60029c9c-4fcd-4bbe-b918-9e7bcb5dfdbb -->
+########### A.6.1.1.7.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 60029c9c-4fcd-4bbe-b918-9e7bcb5dfdbb -->
 
 The name of Keel’s token is Keel.
 
-########### A.6.1.1.4.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 41c58fff-ec4b-4bd1-bcb7-7bec6c9141b5 -->
+########### A.6.1.1.7.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 41c58fff-ec4b-4bd1-bcb7-7bec6c9141b5 -->
 
 The symbol of Keel’s token is KEEL.
 
-########### A.6.1.1.4.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: ffb7392d-e4ab-40fd-a886-104140ef3a64 -->
+########### A.6.1.1.7.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: ffb7392d-e4ab-40fd-a886-104140ef3a64 -->
 
 The Genesis Supply of KEEL will be specified in a future iteration of the Keel Artifact.
 
-########### A.6.1.1.4.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: c3a2a1c7-7e09-49f6-9789-8fb62412b9ad -->
+########### A.6.1.1.7.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: c3a2a1c7-7e09-49f6-9789-8fb62412b9ad -->
 
 The address of KEEL will be specified in a future iteration of the Keel Artifact.
 
-########### A.6.1.1.4.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 603c0bd3-547b-46e5-b96c-ea9d48b06e48 -->
+########### A.6.1.1.7.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 603c0bd3-547b-46e5-b96c-ea9d48b06e48 -->
 
 The token Admin will be specified in a future iteration of the Keel Artifact.
 
-########### A.6.1.1.4.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: 1ba562b8-3d43-46f8-bc21-5021dc7b9fed -->
+########### A.6.1.1.7.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: 1ba562b8-3d43-46f8-bc21-5021dc7b9fed -->
 
 Token emissions beyond the Genesis Supply are permanently disabled; this cannot be reverted by Keel Governance. Sky Governance retains the ability to revert where Keel is in violation of Risk Capital requirements and emissions are required by the Risk Framework. See [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
 
-########### A.6.1.1.4.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: cccb3c25-8862-412a-bad3-69b535cbfe5d -->
+########### A.6.1.1.7.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: cccb3c25-8862-412a-bad3-69b535cbfe5d -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Token Primitive, if any.
 
-########## A.6.1.1.4.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1eaa59a7-4c50-4ace-ba78-956b8a4d9219 -->
+########## A.6.1.1.7.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1eaa59a7-4c50-4ace-ba78-956b8a4d9219 -->
 
 The documents herein define the operational processes for minting and initial distribution of the tokens from the Genesis Supply. 
 - These processes will be defined in a future iteration of the Keel Artifact.
 
-########## A.6.1.1.4.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 50d5319f-6c7f-4318-83a2-2bc2eb87a134 -->
+########## A.6.1.1.7.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 50d5319f-6c7f-4318-83a2-2bc2eb87a134 -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.4.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 79139c7c-5234-4a41-a6f7-0112216a4a9c -->
+########### A.6.1.1.7.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 79139c7c-5234-4a41-a6f7-0112216a4a9c -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: b49a061d-1a47-4841-91d8-753e82488288 -->
+########### A.6.1.1.7.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: b49a061d-1a47-4841-91d8-753e82488288 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: ae670617-6780-426c-b2ef-2037d12f4669 -->
+########### A.6.1.1.7.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: ae670617-6780-426c-b2ef-2037d12f4669 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.1.4.3 - Completed Instances [Core]  <!-- UUID: 9494bb11-ec12-4029-89bd-40228e6ea9de -->
+######## A.6.1.1.7.2.1.4.3 - Completed Instances [Core]  <!-- UUID: 9494bb11-ec12-4029-89bd-40228e6ea9de -->
 
 The Instances of the Agent Token Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.4.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: 7a08825e-c44f-456e-9301-7f701e53d213 -->
+######## A.6.1.1.7.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: 7a08825e-c44f-456e-9301-7f701e53d213 -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.4.2.2 - Operational Primitives [Core]  <!-- UUID: bbd36575-5a71-4b3e-aec2-564edb0f0303 -->
+###### A.6.1.1.7.2.2 - Operational Primitives [Core]  <!-- UUID: bbd36575-5a71-4b3e-aec2-564edb0f0303 -->
 
 The documents herein implement the Operational Primitives for Keel. See [A.2.4 - A5 - Operational Primitives](0192ec95-9207-480e-8c51-88d2a1da95ad).
 
-####### A.6.1.1.4.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: c75806c5-436f-4fd6-9367-e0bc9c5a3ee6 -->
+####### A.6.1.1.7.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: c75806c5-436f-4fd6-9367-e0bc9c5a3ee6 -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Executor Accord Primitive. See [A.2.4 - Executor Accord Primitive](88017877-3ec1-4c43-a035-6bebdf11d9bb).
 
-######## A.6.1.1.4.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 51000f60-cf06-4f87-8e86-45573952645e -->
+######## A.6.1.1.7.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 51000f60-cf06-4f87-8e86-45573952645e -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Executor Accord Primitive.
 
-######### A.6.1.1.4.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4fe13ac1-d80f-468d-87c9-fd766a9f5934 -->
+######### A.6.1.1.7.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4fe13ac1-d80f-468d-87c9-fd766a9f5934 -->
 
 `Active`
 
-######### A.6.1.1.4.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 67640351-2db1-4252-a1cb-5c28aa02a56e -->
+######### A.6.1.1.7.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 67640351-2db1-4252-a1cb-5c28aa02a56e -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.2.1.1.2.1 - Amatsu Instance Configuration Document Location [Core]  <!-- UUID: 680f4740-3ddb-49ee-a12b-0eaf44a6d04f -->
+########## A.6.1.1.7.2.2.1.1.2.1 - Amatsu Instance Configuration Document Location [Core]  <!-- UUID: 680f4740-3ddb-49ee-a12b-0eaf44a6d04f -->
 
 This Instance’s associated Instance Configuration Document is located at [Amatsu Instance Configuration Document](4e46f093-0dea-4d7f-9b61-52815cc65803).
 
-######### A.6.1.1.4.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 16cd554f-daae-476c-8938-aacf1dba4be6 -->
+######### A.6.1.1.7.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 16cd554f-daae-476c-8938-aacf1dba4be6 -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 66568c73-c92f-4bac-8b7d-bd653782b39e -->
+######### A.6.1.1.7.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 66568c73-c92f-4bac-8b7d-bd653782b39e -->
 
 This document contains a Directory of all prospective Instances of the Executor Accord Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](e1eb3283-ac9c-490e-bd36-850dd8bd71bd), whereas failed Invocations are Archived in [Hub Data Repository](55586d0c-04d0-47dc-8ea1-3296a877f3e0).
 
-######### A.6.1.1.4.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 55586d0c-04d0-47dc-8ea1-3296a877f3e0 -->
+######### A.6.1.1.7.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 55586d0c-04d0-47dc-8ea1-3296a877f3e0 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e79d1a63-abb5-4f3e-a41f-7c1c1bff68bc -->
+########## A.6.1.1.7.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e79d1a63-abb5-4f3e-a41f-7c1c1bff68bc -->
 
 The subtrees for archived Invocations and Instances of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.4.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 92a64b7d-cef8-4b8f-a5fc-beca030d6fb5 -->
+########### A.6.1.1.7.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 92a64b7d-cef8-4b8f-a5fc-beca030d6fb5 -->
 
 The subtrees for failed Invocations of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.4.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a370a8e3-5df9-4d17-9275-e16e9d7f35f8 -->
+########### A.6.1.1.7.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a370a8e3-5df9-4d17-9275-e16e9d7f35f8 -->
 
 The subtrees for Instances of the Executor Accord Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.2.1.2 - Active Instances [Core]  <!-- UUID: e1eb3283-ac9c-490e-bd36-850dd8bd71bd -->
+######## A.6.1.1.7.2.2.1.2 - Active Instances [Core]  <!-- UUID: e1eb3283-ac9c-490e-bd36-850dd8bd71bd -->
 
 The Instances of the Executor Accord Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.2.1.2.1 - Amatsu Instance Configuration Document [Core]  <!-- UUID: 4e46f093-0dea-4d7f-9b61-52815cc65803 -->
+######### A.6.1.1.7.2.2.1.2.1 - Amatsu Instance Configuration Document [Core]  <!-- UUID: 4e46f093-0dea-4d7f-9b61-52815cc65803 -->
 
 The documents herein contain the Instance Configuration Document for the Amatsu Executor Accord Primitive Instance.
 
-########## A.6.1.1.4.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: 90a3d4c7-b094-4a1f-85f4-3165deef201f -->
+########## A.6.1.1.7.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: 90a3d4c7-b094-4a1f-85f4-3165deef201f -->
 
 The documents herein define the parameters of the Amatsu Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.4.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: ceb1e104-908d-451c-bc18-b1df694b1caf -->
+########### A.6.1.1.7.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: ceb1e104-908d-451c-bc18-b1df694b1caf -->
 
 In the near term Amatsu will take on the functions of an Operational Executor Agent, including both Operational GovOps and Operational Facilitator roles.
 
-########### A.6.1.1.4.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 9b6b68f4-be11-4c3e-b426-909ac66a2467 -->
+########### A.6.1.1.7.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 9b6b68f4-be11-4c3e-b426-909ac66a2467 -->
 
 The documents herein define the custom parameters of the Amatsu Instance of the Executor Accord Primitive, if any.
 
-########## A.6.1.1.4.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 9f515d3f-fef3-47ea-82c5-e553e2ef313e -->
+########## A.6.1.1.7.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 9f515d3f-fef3-47ea-82c5-e553e2ef313e -->
 
 The documents herein define the process for the ongoing management of the Amatsu Instance of the Executor Accord Primitive.
 
-########## A.6.1.1.4.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 9ecf7a1f-9059-4d5b-a61e-8eb659064054 -->
+########## A.6.1.1.7.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 9ecf7a1f-9059-4d5b-a61e-8eb659064054 -->
 
 The documents herein contain data relevant to the Amatsu Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.4.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 6f47f192-3277-4e40-89d9-73edee5f465c -->
+########### A.6.1.1.7.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 6f47f192-3277-4e40-89d9-73edee5f465c -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 969849ad-170b-4fad-972a-e37880e91b86 -->
+########### A.6.1.1.7.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 969849ad-170b-4fad-972a-e37880e91b86 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 66ac9ca7-833a-457a-8d2b-e8c3fb968412 -->
+########### A.6.1.1.7.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 66ac9ca7-833a-457a-8d2b-e8c3fb968412 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.2.1.3 - Completed Instances [Core]  <!-- UUID: ecc18c15-e6f8-4a6f-9a6a-04fa32e3541c -->
+######## A.6.1.1.7.2.2.1.3 - Completed Instances [Core]  <!-- UUID: ecc18c15-e6f8-4a6f-9a6a-04fa32e3541c -->
 
 The Instances of the Executor Accord Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: ef14c4d5-3862-49f7-be15-a1dac7581dc3 -->
+######## A.6.1.1.7.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: ef14c4d5-3862-49f7-be15-a1dac7581dc3 -->
 
 The in progress Invocations of the Executor Accord Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](e1eb3283-ac9c-490e-bd36-850dd8bd71bd).
 
-####### A.6.1.1.4.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: 3d02dcbc-6a31-4f63-b464-c8c3ecebb744 -->
+####### A.6.1.1.7.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: 3d02dcbc-6a31-4f63-b464-c8c3ecebb744 -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Root Edit Primitive. See [A.2.4 - Root Edit Primitive](78488c6b-d77f-4344-b954-476e415a2c7d).
 
-######## A.6.1.1.4.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: d32ff849-fe1d-4a99-ac1d-18e58eeca32f -->
+######## A.6.1.1.7.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: d32ff849-fe1d-4a99-ac1d-18e58eeca32f -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Root Edit Primitive.
 
-######### A.6.1.1.4.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: 20f48216-ac88-48df-818f-45656c0f499c -->
+######### A.6.1.1.7.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: 20f48216-ac88-48df-818f-45656c0f499c -->
 
 `Active`
 
-######### A.6.1.1.4.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 396dc450-748d-4047-9a8e-790dd6663f32 -->
+######### A.6.1.1.7.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 396dc450-748d-4047-9a8e-790dd6663f32 -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 750a46d2-14ce-4509-8386-66703aebedca -->
+########## A.6.1.1.7.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 750a46d2-14ce-4509-8386-66703aebedca -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](58822854-8549-427b-9548-48388ab3be4e).
 
-######### A.6.1.1.4.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 268ed732-c908-4cdc-93b4-0682643a8b44 -->
+######### A.6.1.1.7.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 268ed732-c908-4cdc-93b4-0682643a8b44 -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 6e444033-afe3-4d6e-9a2f-29d9cc503135 -->
+######### A.6.1.1.7.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 6e444033-afe3-4d6e-9a2f-29d9cc503135 -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 23116311-532d-45f7-a8b1-874d959d26fa -->
+######### A.6.1.1.7.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 23116311-532d-45f7-a8b1-874d959d26fa -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e8e41a2a-da41-4ddc-b2bd-15e7ce3f2b77 -->
+########## A.6.1.1.7.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e8e41a2a-da41-4ddc-b2bd-15e7ce3f2b77 -->
 
 The subtrees for archived Invocations and Instances of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.4.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 161f3a43-e825-4200-a798-e6364a718ad2 -->
+########### A.6.1.1.7.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 161f3a43-e825-4200-a798-e6364a718ad2 -->
 
 The subtrees for failed Invocations of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.4.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: bcbe25d7-b9d4-41ab-b913-d90336dd6863 -->
+########### A.6.1.1.7.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: bcbe25d7-b9d4-41ab-b913-d90336dd6863 -->
 
 The subtrees for Instances of the Root Edit Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.2.2.2 - Active Instances [Core]  <!-- UUID: 9ae94a26-915d-4a99-b469-c3cea7f3c6c8 -->
+######## A.6.1.1.7.2.2.2.2 - Active Instances [Core]  <!-- UUID: 9ae94a26-915d-4a99-b469-c3cea7f3c6c8 -->
 
 The Instances of the Root Edit Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 58822854-8549-427b-9548-48388ab3be4e -->
+######### A.6.1.1.7.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 58822854-8549-427b-9548-48388ab3be4e -->
 
 The documents herein contain the Instance Configuration Document for the Single Root Edit Primitive Instance.
 
-########## A.6.1.1.4.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 008ab1e2-e2e6-488e-a9e8-1a66b8d55f85 -->
+########## A.6.1.1.7.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 008ab1e2-e2e6-488e-a9e8-1a66b8d55f85 -->
 
 The parameters of the Root Edit Primitive are fully specified by the Operational Process Definition in [Operational Process Definition](53987e91-b86c-42be-bb4b-20af084d622d).
 
-########## A.6.1.1.4.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 53987e91-b86c-42be-bb4b-20af084d622d -->
+########## A.6.1.1.7.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 53987e91-b86c-42be-bb4b-20af084d622d -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Keel Agent Artifact. Information on Keel governance that is unrelated to the use of the Root Edit Primitive is located at [Governance Information Unrelated To Root Edit Primitive](1889a2a0-7378-487a-a278-aabe3177efff).
 
-########### A.6.1.1.4.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: eaba3101-2ef6-441d-853e-909a920140fa -->
+########### A.6.1.1.7.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: eaba3101-2ef6-441d-853e-909a920140fa -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Keel Agent Artifact in routine or normal conditions (i.e., non-emergency situations).
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: 98f59541-8896-4e64-8e99-2b25e7791bf0 -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: 98f59541-8896-4e64-8e99-2b25e7791bf0 -->
 
 The Root Edit process begins with a KEEL token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. A KEEL token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Keel Prime” category.
 
-############# A.6.1.1.4.2.2.2.2.1.2.1.1.1 - Root Edit Proposal Submission Requirements Exception [Core]  <!-- UUID: b3c428c6-d73f-4ed3-a876-dcc130e23ab4 -->
+############# A.6.1.1.7.2.2.2.2.1.2.1.1.1 - Root Edit Proposal Submission Requirements Exception [Core]  <!-- UUID: b3c428c6-d73f-4ed3-a876-dcc130e23ab4 -->
 
 For proposals that solely entail a buyback or a grant of KEEL tokens, the requirement that KEEL token holders must hold at least 1% of the circulating token supply to submit a proposal is waived. However, all other procedural requirements within the Root Edit process continue to apply.
 
-############# A.6.1.1.4.2.2.2.2.1.2.1.1.2 - Short-Term Transitionary Measures [Core]  <!-- UUID: d4c3c15b-7cdc-4c57-9bf0-53bbfd95e52c -->
+############# A.6.1.1.7.2.2.2.2.1.2.1.1.2 - Short-Term Transitionary Measures [Core]  <!-- UUID: d4c3c15b-7cdc-4c57-9bf0-53bbfd95e52c -->
 
 Until the Powerhouse system supports submitting Artifact Edit Proposals, KEEL token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Keel Prime” category. The title of the post must include the text “Keel Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total KEEL token supply specified in [Root Edit Proposal Submission](98f59541-8896-4e64-8e99-2b25e7791bf0).
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: b9858413-c2da-4e8f-9945-b03acb0b64f6 -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: b9858413-c2da-4e8f-9945-b03acb0b64f6 -->
 
 A future iteration of the Keel Artifact will specify guidelines for obtaining specialized review of proposals requiring advanced technical or financial analysis.
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: 5caf90a5-60dc-4698-9ef7-70aba1c38efe -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: 5caf90a5-60dc-4698-9ef7-70aba1c38efe -->
 
 Within seven (7) days of the proposal being submitted, the Operational Facilitator must review the Root Edit Proposal for alignment. 
 
@@ -28002,1877 +28432,1877 @@ If the proposal is aligned, the Operational Facilitator must respond to the Foru
 
 If the proposal is misaligned, the Operational Facilitator must respond to the Forum post to announce their finding and provide the reasoning for it.
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: 45218edd-29a1-44a3-af7b-7f048a7d04f6 -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: 45218edd-29a1-44a3-af7b-7f048a7d04f6 -->
 
 Where their review of the proposal results in a finding of alignment with the Sky Core Atlas and Keel Artifact, the Operational Facilitator next triggers a Snapshot poll to allow token holders to vote on the proposal. The poll is open for three (3) days. A poll must have at least 10% of the circulating token supply participating and must have more than 50% of votes cast, excluding abstentions, in favor to be approved.
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: 293c49b9-48f4-433c-820f-4915696f742f -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: 293c49b9-48f4-433c-820f-4915696f742f -->
 
 At the conclusion of the poll, if the proposal is approved, the Operational Facilitator submits the edit to Powerhouse to formally update the Agent Artifact. Regardless of the outcome, the Operational Facilitator updates the Powerhouse System to include the result of the vote, including any pertinent documents.
 
-############# A.6.1.1.4.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: d76d266f-50b3-4100-b198-c9d403ad50fd -->
+############# A.6.1.1.7.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: d76d266f-50b3-4100-b198-c9d403ad50fd -->
 
 Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Governance Facilitators to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
 
-############ A.6.1.1.4.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: e86acb47-775f-4f02-8cef-26eac82dd358 -->
+############ A.6.1.1.7.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: e86acb47-775f-4f02-8cef-26eac82dd358 -->
 
 The Keel Artifact cannot be edited in any way that violates the Sky Core Atlas or its specifications of the Sky Primitives, or in any way that is otherwise misaligned. The Operational Facilitator must enforce this rule through their review of Artifact Edit Proposals.
 
-########### A.6.1.1.4.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 58df0ed3-38f4-489b-8e3b-762731f598b2 -->
+########### A.6.1.1.7.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 58df0ed3-38f4-489b-8e3b-762731f598b2 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Keel Agent Artifact in non-routine conditions.
 
-########### A.6.1.1.4.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 28ae6634-9099-4971-8175-31a5bcd0bedb -->
+########### A.6.1.1.7.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 28ae6634-9099-4971-8175-31a5bcd0bedb -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Keel Agent Artifact in urgent or emergency situations.
 
-############ A.6.1.1.4.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Urgent and Emergency Situations [Core]  <!-- UUID: a7d50d59-36a3-4301-a1c7-6ac5da584d06 -->
+############ A.6.1.1.7.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Urgent and Emergency Situations [Core]  <!-- UUID: a7d50d59-36a3-4301-a1c7-6ac5da584d06 -->
 
 In an Urgent or Emergency Situation, as defined by the Sky Core Atlas in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](5eafb29e-84a0-4a53-a798-3f958c880225), the Operational Facilitator may allow a Root Edit to occur more quickly than the timeline specified above. Where feasible, the Operational Facilitator should announce the decision to deploy the emergency Root Edit protocol and provide their reasoning via a public Sky Forum post (under the “Keel Prime” category), unless doing so would endanger Keel or its users.
 
-########## A.6.1.1.4.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 9f496f47-3f57-443c-ac5e-a44e08d4aa4c -->
+########## A.6.1.1.7.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 9f496f47-3f57-443c-ac5e-a44e08d4aa4c -->
 
 The documents herein contain data relevant to the Single Instance of the Root Edit Primitive.
 
-########### A.6.1.1.4.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 2e6ea01e-ec36-4150-a096-6ba0143dc800 -->
+########### A.6.1.1.7.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 2e6ea01e-ec36-4150-a096-6ba0143dc800 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 360ae2a4-679c-4ee5-829a-6d01f0713602 -->
+########### A.6.1.1.7.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 360ae2a4-679c-4ee5-829a-6d01f0713602 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 79fe6be0-e7ce-4349-8c63-4579d2f17295 -->
+########### A.6.1.1.7.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 79fe6be0-e7ce-4349-8c63-4579d2f17295 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.2.2.3 - Completed Instances [Core]  <!-- UUID: a5a2c272-8442-4caa-9423-5eb4e0c9a97d -->
+######## A.6.1.1.7.2.2.2.3 - Completed Instances [Core]  <!-- UUID: a5a2c272-8442-4caa-9423-5eb4e0c9a97d -->
 
 The Instances of the Root Edit Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.4.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: d76c3889-78be-451a-9dbd-438b22ad4e63 -->
+######## A.6.1.1.7.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: d76c3889-78be-451a-9dbd-438b22ad4e63 -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.4.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: 1c45537d-f720-4462-8cc8-675d08618c2a -->
+####### A.6.1.1.7.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: 1c45537d-f720-4462-8cc8-675d08618c2a -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Light Agent Primitive. See [A.2.4 - Light Agent Primitive](44028423-2cd1-40cb-89ac-3f762b602b90).
 
-######## A.6.1.1.4.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: 34688a2f-3a17-404a-b985-8ff8479c13f8 -->
+######## A.6.1.1.7.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: 34688a2f-3a17-404a-b985-8ff8479c13f8 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Light Agent Primitive.
 
-######### A.6.1.1.4.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: 39b36112-08f2-470f-ba9d-d32c94f2d2f1 -->
+######### A.6.1.1.7.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: 39b36112-08f2-470f-ba9d-d32c94f2d2f1 -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: e196d802-de22-410a-963a-c9d8359e9644 -->
+######### A.6.1.1.7.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: e196d802-de22-410a-963a-c9d8359e9644 -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 00433aa2-6d23-4a5e-8e2e-06177e41d097 -->
+######### A.6.1.1.7.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 00433aa2-6d23-4a5e-8e2e-06177e41d097 -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 0f0a7685-546c-486c-bb70-3a6e70464428 -->
+######### A.6.1.1.7.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 0f0a7685-546c-486c-bb70-3a6e70464428 -->
 
 This document contains a Directory of all prospective Instances of the Light Agent Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](7acfe8a6-80a2-4074-a6d0-fad968c95d1c), whereas failed Invocations are Archived in [Hub Data Repository](e62355b7-d4e4-4c7f-b877-acdfa2d81f29).
 
-######### A.6.1.1.4.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: e62355b7-d4e4-4c7f-b877-acdfa2d81f29 -->
+######### A.6.1.1.7.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: e62355b7-d4e4-4c7f-b877-acdfa2d81f29 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d966a7e3-5ba0-4f69-ba60-d62ed5f05883 -->
+########## A.6.1.1.7.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d966a7e3-5ba0-4f69-ba60-d62ed5f05883 -->
 
 The subtrees for archived Invocations and Instances of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.4.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 5abb2a17-1eb4-4db4-8272-d4bb81bded88 -->
+########### A.6.1.1.7.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 5abb2a17-1eb4-4db4-8272-d4bb81bded88 -->
 
 The subtrees for failed Invocations of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.4.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 81c7ec71-da63-465e-a0fb-56b8a9be44a8 -->
+########### A.6.1.1.7.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 81c7ec71-da63-465e-a0fb-56b8a9be44a8 -->
 
 The subtrees for Instances of the Light Agent Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.2.3.2 - Active Instances [Core]  <!-- UUID: 7acfe8a6-80a2-4074-a6d0-fad968c95d1c -->
+######## A.6.1.1.7.2.2.3.2 - Active Instances [Core]  <!-- UUID: 7acfe8a6-80a2-4074-a6d0-fad968c95d1c -->
 
 The Instances of the Light Agent Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 1cf924ff-7eab-4d1d-8287-f8158925dc19 -->
+######## A.6.1.1.7.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 1cf924ff-7eab-4d1d-8287-f8158925dc19 -->
 
 The Instances of the Light Agent Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.4.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: a039d046-24d2-4857-a59a-081143d10d61 -->
+######## A.6.1.1.7.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: a039d046-24d2-4857-a59a-081143d10d61 -->
 
 The in progress Invocations of the Light Agent Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](7acfe8a6-80a2-4074-a6d0-fad968c95d1c).
 
-###### A.6.1.1.4.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: ae5cc5d4-a105-4f67-9e38-fd9b947c57a2 -->
+###### A.6.1.1.7.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: ae5cc5d4-a105-4f67-9e38-fd9b947c57a2 -->
 
 The documents herein implement the Ecosystem Upkeep Primitives for Keel. See [A.2.4 - A6 - Ecosystem Upkeep Primitives](25673fd2-76cb-4c4d-8ec6-8c489207bcfc).
 
-####### A.6.1.1.4.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 0300c5b6-3f31-411f-b64c-707a35a55205 -->
+####### A.6.1.1.7.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 0300c5b6-3f31-411f-b64c-707a35a55205 -->
 
 The documents herein contain all data and specifications for Keel’s Instance of the Distribution Requirement Primitive. See [A.2.4 - Distribution Requirement Primitive](0804ab13-d276-4ad9-a935-dc9f7fc2e350).
 
-######## A.6.1.1.4.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 16c06503-ed5a-4dbc-aa30-9417ca0840ad -->
+######## A.6.1.1.7.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 16c06503-ed5a-4dbc-aa30-9417ca0840ad -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Distribution Requirement Primitive.
 
-######### A.6.1.1.4.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: 067c779a-34c6-4843-96b9-17f868f062de -->
+######### A.6.1.1.7.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: 067c779a-34c6-4843-96b9-17f868f062de -->
 
 `Active`
 
-######### A.6.1.1.4.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 52fa55fc-0d16-4ace-a6f4-6bee82057a55 -->
+######### A.6.1.1.7.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 52fa55fc-0d16-4ace-a6f4-6bee82057a55 -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 94da1bd6-eafb-46ed-831f-33a764ac5fda -->
+########## A.6.1.1.7.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 94da1bd6-eafb-46ed-831f-33a764ac5fda -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](4037530e-66ee-4672-871f-601aef420e3f).
 
-######### A.6.1.1.4.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 9b2d0fed-1be9-478a-8c07-ef80b891b8d4 -->
+######### A.6.1.1.7.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 9b2d0fed-1be9-478a-8c07-ef80b891b8d4 -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 689500ec-52c9-4b49-90df-7e75cbfb820b -->
+######### A.6.1.1.7.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 689500ec-52c9-4b49-90df-7e75cbfb820b -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 97827d06-62bb-460d-838c-30a9140cf520 -->
+######### A.6.1.1.7.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 97827d06-62bb-460d-838c-30a9140cf520 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8e6b7896-76da-470d-b3b0-c3ca34e3cd96 -->
+########## A.6.1.1.7.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8e6b7896-76da-470d-b3b0-c3ca34e3cd96 -->
 
 The subtrees for archived Invocations and Instances of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.4.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6e4c12a1-1318-4d56-80c0-f82a658b0416 -->
+########### A.6.1.1.7.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6e4c12a1-1318-4d56-80c0-f82a658b0416 -->
 
 The subtrees for failed Invocations of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.4.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2787b09c-d682-4386-9cf7-12a84b7744dc -->
+########### A.6.1.1.7.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2787b09c-d682-4386-9cf7-12a84b7744dc -->
 
 The subtrees for Instances of the Distribution Requirement Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.3.1.2 - Active Instances [Core]  <!-- UUID: c75d2427-3bfe-4e20-b33f-799f4af8e4b6 -->
+######## A.6.1.1.7.2.3.1.2 - Active Instances [Core]  <!-- UUID: c75d2427-3bfe-4e20-b33f-799f4af8e4b6 -->
 
 The Instances of the Distribution Requirement Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 4037530e-66ee-4672-871f-601aef420e3f -->
+######### A.6.1.1.7.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 4037530e-66ee-4672-871f-601aef420e3f -->
 
 The documents herein contain the Instance Configuration Document for the Single Distribution Requirement Primitive Instance.
 
-########## A.6.1.1.4.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: d7c2fe73-d620-4953-8f25-708a3cc53111 -->
+########## A.6.1.1.7.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: d7c2fe73-d620-4953-8f25-708a3cc53111 -->
 
 The documents herein define the parameters of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.4.2.3.1.2.1.1.1 - Terms [Core]  <!-- UUID: 3ef3d779-a66e-44f3-9192-6c3a5a5ca971 -->
+########### A.6.1.1.7.2.3.1.2.1.1.1 - Terms [Core]  <!-- UUID: 3ef3d779-a66e-44f3-9192-6c3a5a5ca971 -->
 
 Launch Agent 2 will buy back and distribute 0.25% of its total token supply per year.
 
-########### A.6.1.1.4.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: f9ff9c94-1a3d-4bc6-b2a4-40f9af76b0ac -->
+########### A.6.1.1.7.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: f9ff9c94-1a3d-4bc6-b2a4-40f9af76b0ac -->
 
 The documents herein define the custom parameters of the Single Instance of the Distribution Requirement Primitive, if any.
 
-########## A.6.1.1.4.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 0461ccfd-4791-459f-b79d-c1377c0eaea9 -->
+########## A.6.1.1.7.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 0461ccfd-4791-459f-b79d-c1377c0eaea9 -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.4.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 770597e2-1c0d-4084-878f-045f7b90933a -->
+########### A.6.1.1.7.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 770597e2-1c0d-4084-878f-045f7b90933a -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-############ A.6.1.1.4.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: f8f8cbf6-75e0-4dbb-b617-f44bc8cc9d8d -->
+############ A.6.1.1.7.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: f8f8cbf6-75e0-4dbb-b617-f44bc8cc9d8d -->
 
 The process to buy back and distribute 0.25% of Launch Agent 2’s tokens per year will be specified in future iterations of the Launch Agent 2 Artifact.
 
-########### A.6.1.1.4.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 7080e7d9-2c7e-4cf8-ad5a-4e3bf65b6d10 -->
+########### A.6.1.1.7.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 7080e7d9-2c7e-4cf8-ad5a-4e3bf65b6d10 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########### A.6.1.1.4.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: de07d443-13f5-4d86-8eea-bb218ee2b8e7 -->
+########### A.6.1.1.7.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: de07d443-13f5-4d86-8eea-bb218ee2b8e7 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########## A.6.1.1.4.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 1b71dd32-0f52-4f13-89ca-97d64932cd56 -->
+########## A.6.1.1.7.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 1b71dd32-0f52-4f13-89ca-97d64932cd56 -->
 
 The documents herein contain data relevant to the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.4.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: ea840f1f-dda7-42c5-80fe-f774657831e3 -->
+########### A.6.1.1.7.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: ea840f1f-dda7-42c5-80fe-f774657831e3 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 86e71f93-690a-478c-9c87-000c3572b4df -->
+########### A.6.1.1.7.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 86e71f93-690a-478c-9c87-000c3572b4df -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 27bd4d7c-d6bb-43e8-96ef-7471798fa071 -->
+########### A.6.1.1.7.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 27bd4d7c-d6bb-43e8-96ef-7471798fa071 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.3.1.3 - Completed Instances [Core]  <!-- UUID: 5cbe0c56-1105-4ce8-a16a-499b409fbf6c -->
+######## A.6.1.1.7.2.3.1.3 - Completed Instances [Core]  <!-- UUID: 5cbe0c56-1105-4ce8-a16a-499b409fbf6c -->
 
 The Instances of the Distribution Requirement Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: ff19abdc-12c9-45cf-aa80-04ed0a7d71d4 -->
+######## A.6.1.1.7.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: ff19abdc-12c9-45cf-aa80-04ed0a7d71d4 -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.4.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: f87ddb13-cc78-492d-ad85-e645c93b93fc -->
+####### A.6.1.1.7.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: f87ddb13-cc78-492d-ad85-e645c93b93fc -->
 
 The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Market Cap Fee Primitive. See [A.2.4 - Market Cap Fee Primitive](a21616f4-1611-4e0b-87b2-efbdff9f6f28).
 
-######## A.6.1.1.4.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: 8ed7cb64-d660-4451-a999-54a6f24e0fe2 -->
+######## A.6.1.1.7.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: 8ed7cb64-d660-4451-a999-54a6f24e0fe2 -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Market Cap Fee Primitive.
 
-######### A.6.1.1.4.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 6b0c2885-919e-4c5e-8c05-9c12a5fdbcf1 -->
+######### A.6.1.1.7.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 6b0c2885-919e-4c5e-8c05-9c12a5fdbcf1 -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 38fad5bf-55c5-4bc7-9393-a76744149f23 -->
+######### A.6.1.1.7.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 38fad5bf-55c5-4bc7-9393-a76744149f23 -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 6751ae2b-a328-49e2-a02b-2e9f7e2d6a1a -->
+######### A.6.1.1.7.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 6751ae2b-a328-49e2-a02b-2e9f7e2d6a1a -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 27f7f243-59e6-4bcc-9c1b-6841eb68f855 -->
+######### A.6.1.1.7.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 27f7f243-59e6-4bcc-9c1b-6841eb68f855 -->
 
 This document contains a Directory of all prospective Instances of the Market Cap Fee Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](b66ee6f0-f06d-439e-8a8d-74c8c8502c2c), whereas failed Invocations are Archived in [Hub Data Repository](62ae3afe-10af-433e-a296-1a0f2c9056ea).
 
-######### A.6.1.1.4.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 62ae3afe-10af-433e-a296-1a0f2c9056ea -->
+######### A.6.1.1.7.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 62ae3afe-10af-433e-a296-1a0f2c9056ea -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 20036e2c-e71f-4695-aa96-5719c9758174 -->
+########## A.6.1.1.7.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 20036e2c-e71f-4695-aa96-5719c9758174 -->
 
 The subtrees for archived Invocations and Instances of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.4.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fa7606fd-f06f-4325-929a-9cbef0690648 -->
+########### A.6.1.1.7.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fa7606fd-f06f-4325-929a-9cbef0690648 -->
 
 The subtrees for failed Invocations of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.4.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b0bad26d-9c04-4a3c-a8a7-377b45300d50 -->
+########### A.6.1.1.7.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b0bad26d-9c04-4a3c-a8a7-377b45300d50 -->
 
 The subtrees for Instances of the Market Cap Fee Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.3.2.2 - Active Instances [Core]  <!-- UUID: b66ee6f0-f06d-439e-8a8d-74c8c8502c2c -->
+######## A.6.1.1.7.2.3.2.2 - Active Instances [Core]  <!-- UUID: b66ee6f0-f06d-439e-8a8d-74c8c8502c2c -->
 
 The Instances of the Market Cap Fee Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.3.2.3 - Completed Instances [Core]  <!-- UUID: a7169b7f-ea7b-4724-90be-44e168e93858 -->
+######## A.6.1.1.7.2.3.2.3 - Completed Instances [Core]  <!-- UUID: a7169b7f-ea7b-4724-90be-44e168e93858 -->
 
 The Instances of the Market Cap Fee Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: 4b460a66-21a1-4e95-b38a-d03994f7dc98 -->
+######## A.6.1.1.7.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: 4b460a66-21a1-4e95-b38a-d03994f7dc98 -->
 
 The in progress Invocations of the Market Cap Fee Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b66ee6f0-f06d-439e-8a8d-74c8c8502c2c).
 
-####### A.6.1.1.4.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 354f14b7-2263-45f6-8f27-9897b25d65df -->
+####### A.6.1.1.7.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 354f14b7-2263-45f6-8f27-9897b25d65df -->
 
 The documents herein contain all data and specifications for Launch Agent 2’s Instance of the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
 
-######## A.6.1.1.4.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: b8dba4a4-069a-466a-843c-61f676c3be7e -->
+######## A.6.1.1.7.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: b8dba4a4-069a-466a-843c-61f676c3be7e -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Upkeep Rebate Primitive.
 
-######### A.6.1.1.4.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: f3c3f998-4abc-4c15-95bd-905a9dcf1897 -->
+######### A.6.1.1.7.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: f3c3f998-4abc-4c15-95bd-905a9dcf1897 -->
 
 `Active`
 
-######### A.6.1.1.4.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: a439f8d8-dab3-4e55-8f6c-a218c069d65a -->
+######### A.6.1.1.7.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: a439f8d8-dab3-4e55-8f6c-a218c069d65a -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 55f5e89c-6629-49c4-8ada-6ab8befc0467 -->
+########## A.6.1.1.7.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 55f5e89c-6629-49c4-8ada-6ab8befc0467 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](b55f18e1-1a73-455f-8990-640273d8faa4).
 
-######### A.6.1.1.4.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 3293ffde-7260-42ec-9685-b06a58e821d9 -->
+######### A.6.1.1.7.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 3293ffde-7260-42ec-9685-b06a58e821d9 -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e2022311-1bd9-4ec4-9bd9-ee901f455ac4 -->
+######### A.6.1.1.7.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e2022311-1bd9-4ec4-9bd9-ee901f455ac4 -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.4.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 4df83f84-5ebf-4495-b044-9c8d760a0236 -->
+######### A.6.1.1.7.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 4df83f84-5ebf-4495-b044-9c8d760a0236 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 16fc76ed-7b13-4fb7-9720-8d616c170f05 -->
+########## A.6.1.1.7.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 16fc76ed-7b13-4fb7-9720-8d616c170f05 -->
 
 The subtrees for archived Invocations and Instances of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.4.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 3ffb7952-1a5d-40fe-b0fe-289ca1e93bca -->
+########### A.6.1.1.7.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 3ffb7952-1a5d-40fe-b0fe-289ca1e93bca -->
 
 The subtrees for failed Invocations of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.4.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f5f81875-29fd-4120-8210-32a545ab938e -->
+########### A.6.1.1.7.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f5f81875-29fd-4120-8210-32a545ab938e -->
 
 The subtrees for Instances of the Upkeep Rebate Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.3.3.2 - Active Instances [Core]  <!-- UUID: 81a59fe8-9a9c-4cc9-ae8f-2d9d70f39196 -->
+######## A.6.1.1.7.2.3.3.2 - Active Instances [Core]  <!-- UUID: 81a59fe8-9a9c-4cc9-ae8f-2d9d70f39196 -->
 
 The Instances of the Upkeep Rebate Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: b55f18e1-1a73-455f-8990-640273d8faa4 -->
+######### A.6.1.1.7.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: b55f18e1-1a73-455f-8990-640273d8faa4 -->
 
 The documents herein contain the Instance Configuration Document for the Single Upkeep Rebate Primitive Instance.
 
-########## A.6.1.1.4.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 0e875626-6f3b-49ae-a47f-2a7471a1da14 -->
+########## A.6.1.1.7.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 0e875626-6f3b-49ae-a47f-2a7471a1da14 -->
 
 Every Prime Agent is entitled to the Upkeep Rebate Primitive for tokens of other Prime Agents that they hold. Because this right automatically applies, there are no parameters.
 
-########## A.6.1.1.4.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 120312e3-ee20-4dc4-bdc2-b3fdfda415e8 -->
+########## A.6.1.1.7.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 120312e3-ee20-4dc4-bdc2-b3fdfda415e8 -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.4.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: f9d8a156-1a7f-4c8a-bb1b-f19b8070aafc -->
+########### A.6.1.1.7.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: f9d8a156-1a7f-4c8a-bb1b-f19b8070aafc -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-############ A.6.1.1.4.2.3.3.2.1.2.1.1 - Launch Agent 2 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 06cd14d5-0f55-4ac0-8d9d-f9060e0fcc1b -->
+############ A.6.1.1.7.2.3.3.2.1.2.1.1 - Launch Agent 2 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 06cd14d5-0f55-4ac0-8d9d-f9060e0fcc1b -->
 
 Launch Agent 2 keeps all tokens of other Agents it holds in its SubProxy account.
 
-############ A.6.1.1.4.2.3.3.2.1.2.1.2 - Launch Agent 2 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: 20ccbfff-9058-47e5-a2d5-893d5bf783b6 -->
+############ A.6.1.1.7.2.3.3.2.1.2.1.2 - Launch Agent 2 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: 20ccbfff-9058-47e5-a2d5-893d5bf783b6 -->
 
 When paying Ecosystem Upkeep fees, Launch Agent 2 deducts the rebate from the fees it pays.
 
-############ A.6.1.1.4.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: 77ad2a49-8fa6-499b-bd26-b9fdef57fded -->
+############ A.6.1.1.7.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: 77ad2a49-8fa6-499b-bd26-b9fdef57fded -->
 
 Operational GovOps reviews Launch Agent 2’s calculation of the rebate before executing a return of surplus to token holders. In the event of any issues, Operational GovOps cannot execute the distribution. If Operational GovOps does not execute the distribution, Operational GovOps must post an explanation on the Sky Forum under the “Launch Agent 2 Prime” category and work with Launch Agent 2 to resolve the disagreement. If Operational GovOps and Launch Agent 2 cannot resolve the disagreement, it must be escalated to Core GovOps
 
-########### A.6.1.1.4.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 4fb94d9f-fc15-4823-bab7-fb35f1247bb7 -->
+########### A.6.1.1.7.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 4fb94d9f-fc15-4823-bab7-fb35f1247bb7 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########### A.6.1.1.4.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 86a386f4-db23-4c09-b165-a0ae6d3168c9 -->
+########### A.6.1.1.7.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 86a386f4-db23-4c09-b165-a0ae6d3168c9 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########## A.6.1.1.4.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: 68cfcc8f-3c24-4d02-a25b-a4a93857d9ca -->
+########## A.6.1.1.7.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: 68cfcc8f-3c24-4d02-a25b-a4a93857d9ca -->
 
 The documents herein contain data relevant to the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.4.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 725ad94b-e5d5-4aad-a205-5a4508c9fe79 -->
+########### A.6.1.1.7.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 725ad94b-e5d5-4aad-a205-5a4508c9fe79 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0c0ef0b1-2d54-49f2-9ba6-c47fd5e56af1 -->
+########### A.6.1.1.7.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0c0ef0b1-2d54-49f2-9ba6-c47fd5e56af1 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: ca265d73-1cc0-43d3-806f-dd03219c5dec -->
+########### A.6.1.1.7.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: ca265d73-1cc0-43d3-806f-dd03219c5dec -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.4.2.3.3.3 - Completed Instances [Core]  <!-- UUID: 92404db0-53f0-4042-8daa-2950f01807be -->
+######## A.6.1.1.7.2.3.3.3 - Completed Instances [Core]  <!-- UUID: 92404db0-53f0-4042-8daa-2950f01807be -->
 
 The Instances of the Upkeep Rebate Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.4.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 21b6e826-f126-4234-9baa-3a1e8a822e99 -->
+######## A.6.1.1.7.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 21b6e826-f126-4234-9baa-3a1e8a822e99 -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.4.2.4 - SkyLink Primitives [Core]  <!-- UUID: c81714a3-e1c6-423a-bf54-6456fcb88112 -->
+###### A.6.1.1.7.2.4 - SkyLink Primitives [Core]  <!-- UUID: c81714a3-e1c6-423a-bf54-6456fcb88112 -->
 
 The documents herein implement the SkyLink Primitives for Launch Agent 2. See [A.2.4 - A7 - SkyLink Primitives](7b5d8965-a64c-4c44-b742-607f51f69d8f).
 
-####### A.6.1.1.4.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: 016fd32e-a2db-45d0-8893-739bdacf1c2f -->
+####### A.6.1.1.7.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: 016fd32e-a2db-45d0-8893-739bdacf1c2f -->
 
 The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Token SkyLink Primitive. See [A.2.4 - Token SkyLink Primitive](4504d2d4-ee45-4a07-8c5b-9baf20b12e76).
 
-######## A.6.1.1.4.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: b9c869ff-73ed-4b30-bc1a-33c6875524aa -->
+######## A.6.1.1.7.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: b9c869ff-73ed-4b30-bc1a-33c6875524aa -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Token SkyLink Primitive.
 
-######### A.6.1.1.4.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4dc84081-55f8-4ab0-aecf-f02c90bfb969 -->
+######### A.6.1.1.7.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4dc84081-55f8-4ab0-aecf-f02c90bfb969 -->
 
 `Active`
 
-######### A.6.1.1.4.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 9e793e15-c1b3-41e9-a9ea-5cdd034aa27f -->
+######### A.6.1.1.7.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 9e793e15-c1b3-41e9-a9ea-5cdd034aa27f -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 58fe24db-b9bd-48d3-bd6e-c4663788cf0d -->
+######### A.6.1.1.7.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 58fe24db-b9bd-48d3-bd6e-c4663788cf0d -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e5f55c8d-f3f6-4f59-b49c-18b4085df50e -->
+######### A.6.1.1.7.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e5f55c8d-f3f6-4f59-b49c-18b4085df50e -->
 
 This document contains a Directory of all prospective Instances of the Token SkyLink Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](38756877-b767-4a71-9f38-630a96b50f5a), whereas failed Invocations are Archived in [Hub Data Repository](99d73511-9bec-4479-a451-8196ce3ea877).
 
-######### A.6.1.1.4.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 99d73511-9bec-4479-a451-8196ce3ea877 -->
+######### A.6.1.1.7.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 99d73511-9bec-4479-a451-8196ce3ea877 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9721d168-d3fd-429f-bc94-79fab9315753 -->
+########## A.6.1.1.7.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9721d168-d3fd-429f-bc94-79fab9315753 -->
 
 The subtrees for archived Invocations and Instances of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.4.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6a3fa465-3dd8-4c94-bf6c-c7ff94ed5fd7 -->
+########### A.6.1.1.7.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6a3fa465-3dd8-4c94-bf6c-c7ff94ed5fd7 -->
 
 The subtrees for failed Invocations of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.4.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b8e84189-0ccd-4a83-b726-915bb519b11c -->
+########### A.6.1.1.7.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b8e84189-0ccd-4a83-b726-915bb519b11c -->
 
 The subtrees for Instances of the Token SkyLink Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.4.1.2 - Active Instances [Core]  <!-- UUID: 38756877-b767-4a71-9f38-630a96b50f5a -->
+######## A.6.1.1.7.2.4.1.2 - Active Instances [Core]  <!-- UUID: 38756877-b767-4a71-9f38-630a96b50f5a -->
 
 The Instances of the Token SkyLink Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.4.1.3 - Completed Instances [Core]  <!-- UUID: 90dac12f-9fa3-45d2-b444-a644ca747d0a -->
+######## A.6.1.1.7.2.4.1.3 - Completed Instances [Core]  <!-- UUID: 90dac12f-9fa3-45d2-b444-a644ca747d0a -->
 
 The Instances of the Token SkyLink Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: b42701f2-b0d5-4901-a458-fe0042558c64 -->
+######## A.6.1.1.7.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: b42701f2-b0d5-4901-a458-fe0042558c64 -->
 
 The in progress Invocations of the Token SkyLink Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](38756877-b767-4a71-9f38-630a96b50f5a).
 
-###### A.6.1.1.4.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: e72378f0-3ee3-452b-8af3-a7ef31f619fe -->
+###### A.6.1.1.7.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: e72378f0-3ee3-452b-8af3-a7ef31f619fe -->
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 2. See [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.4.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: 9ec308ad-b010-4f2d-ac33-eb56f1236493 -->
+####### A.6.1.1.7.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: 9ec308ad-b010-4f2d-ac33-eb56f1236493 -->
 
 The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Accessibility Reward Primitive. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
-######## A.6.1.1.4.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: b6b85415-c331-41b9-847e-4c5173528ca8 -->
+######## A.6.1.1.7.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: b6b85415-c331-41b9-847e-4c5173528ca8 -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Accessibility Reward Primitive.
 
-######### A.6.1.1.4.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9e1fc932-ba41-43fb-a63f-c3011020669f -->
+######### A.6.1.1.7.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9e1fc932-ba41-43fb-a63f-c3011020669f -->
 
 `Active`
 
-######### A.6.1.1.4.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: cc24f926-2163-46e6-a480-8d6365911553 -->
+######### A.6.1.1.7.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: cc24f926-2163-46e6-a480-8d6365911553 -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e800a1b-d86b-43f7-a227-a7ba94d264ef -->
+######### A.6.1.1.7.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e800a1b-d86b-43f7-a227-a7ba94d264ef -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 63d5ec68-45da-4146-b672-6b7bae2e9c21 -->
+######### A.6.1.1.7.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 63d5ec68-45da-4146-b672-6b7bae2e9c21 -->
 
 This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](4da74767-8e45-420c-9477-89b810654ab4), whereas failed Invocations are Archived in [Hub Data Repository](4cc7dd10-6321-4c82-a504-a5021c79fe5f).
 
-######### A.6.1.1.4.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 4cc7dd10-6321-4c82-a504-a5021c79fe5f -->
+######### A.6.1.1.7.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 4cc7dd10-6321-4c82-a504-a5021c79fe5f -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 785e9f1a-fa79-416e-b71f-27604fc0f63d -->
+########## A.6.1.1.7.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 785e9f1a-fa79-416e-b71f-27604fc0f63d -->
 
 The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.4.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c3c58b55-7d46-4dfe-927b-e571311f61c7 -->
+########### A.6.1.1.7.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c3c58b55-7d46-4dfe-927b-e571311f61c7 -->
 
 The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.4.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 72e1da1a-4b11-4920-b28a-2b1a8d070e79 -->
+########### A.6.1.1.7.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 72e1da1a-4b11-4920-b28a-2b1a8d070e79 -->
 
 The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.5.1.2 - Active Instances [Core]  <!-- UUID: 4da74767-8e45-420c-9477-89b810654ab4 -->
+######## A.6.1.1.7.2.5.1.2 - Active Instances [Core]  <!-- UUID: 4da74767-8e45-420c-9477-89b810654ab4 -->
 
 The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 15a011c4-a0bb-4fd4-bf9d-ff8b5ebc74a6 -->
+######## A.6.1.1.7.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 15a011c4-a0bb-4fd4-bf9d-ff8b5ebc74a6 -->
 
 The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 8aa73f62-1589-4f34-a14b-c95a4701eebc -->
+######## A.6.1.1.7.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 8aa73f62-1589-4f34-a14b-c95a4701eebc -->
 
 The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](4da74767-8e45-420c-9477-89b810654ab4).
 
-####### A.6.1.1.4.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 6319e8b0-577c-4d08-92af-8332fde7e553 -->
+####### A.6.1.1.7.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 6319e8b0-577c-4d08-92af-8332fde7e553 -->
 
 The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Integration Boost Primitive. See [A.2.4 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
 
-######## A.6.1.1.4.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: 18b58761-8afa-44e0-824d-32d4c85b429e -->
+######## A.6.1.1.7.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: 18b58761-8afa-44e0-824d-32d4c85b429e -->
 
 The documents herein organize all base information relevant to Launch Agent 2’s usage of the Integration Boost Primitive.
 
-######### A.6.1.1.4.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: 8a49aa6e-8451-4773-82b9-17c59d3a8931 -->
+######### A.6.1.1.7.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: 8a49aa6e-8451-4773-82b9-17c59d3a8931 -->
 
 `Active`
 
-######### A.6.1.1.4.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: bc7296ae-4bfb-4318-87fb-44869a7932c1 -->
+######### A.6.1.1.7.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: bc7296ae-4bfb-4318-87fb-44869a7932c1 -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Active`.
 
-########## A.6.1.1.4.2.5.2.1.2.1 - Kamino Instance Configuration Document Location [Core]  <!-- UUID: 538f7325-dcab-49e9-a369-add9f5930586 -->
+########## A.6.1.1.7.2.5.2.1.2.1 - Kamino Instance Configuration Document Location [Core]  <!-- UUID: 538f7325-dcab-49e9-a369-add9f5930586 -->
 
 This Instance’s associated Instance Configuration Document is located at [Kamino Instance Configuration Document](bff45812-80f3-4e46-9428-74a374bef2fc).
 
-########## A.6.1.1.4.2.5.2.1.2.2 - Drift Instance Configuration Document Location [Core]  <!-- UUID: 40262564-35e3-4637-a384-9d38658fd981 -->
+########## A.6.1.1.7.2.5.2.1.2.2 - Drift Instance Configuration Document Location [Core]  <!-- UUID: 40262564-35e3-4637-a384-9d38658fd981 -->
 
 This Instance’s associated Instance Configuration Document is located at [Drift Instance Configuration Document](25114297-6807-418a-a8e2-1e08daeb711d).
 
-########## A.6.1.1.4.2.5.2.1.2.3 - Save Instance Configuration Document Location [Core]  <!-- UUID: 4c4d2ef7-9aa4-4eb9-8339-0aa0865ee5ee -->
+########## A.6.1.1.7.2.5.2.1.2.3 - Save Instance Configuration Document Location [Core]  <!-- UUID: 4c4d2ef7-9aa4-4eb9-8339-0aa0865ee5ee -->
 
 This Instance’s associated Instance Configuration Document is located at [Save Instance Configuration Document](1cdf853f-2d68-4ced-b143-1f3f2f7bbe70).
 
-########## A.6.1.1.4.2.5.2.1.2.4 - Lifinity Instance Configuration Document Location [Core]  <!-- UUID: cd0c2ad5-34ec-4a4e-8af3-55c656ccdfc9 -->
+########## A.6.1.1.7.2.5.2.1.2.4 - Lifinity Instance Configuration Document Location [Core]  <!-- UUID: cd0c2ad5-34ec-4a4e-8af3-55c656ccdfc9 -->
 
 This Instance’s associated Instance Configuration Document is located at [Lifinity Instance Configuration Document](fbaeaf7e-92a4-4dd3-b65c-5cac02f0e831).
 
-######### A.6.1.1.4.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 18ae39d9-bf60-40de-ad6a-97d0b111e678 -->
+######### A.6.1.1.7.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 18ae39d9-bf60-40de-ad6a-97d0b111e678 -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.4.2.5.2.1.3.1 - MarginFi Instance Configuration Document Location [Core]  <!-- UUID: 402d52cd-aa0b-4982-9672-743726b197d2 -->
+########## A.6.1.1.7.2.5.2.1.3.1 - MarginFi Instance Configuration Document Location [Core]  <!-- UUID: 402d52cd-aa0b-4982-9672-743726b197d2 -->
 
 This Instance’s associated Instance Configuration Document is located at [MarginFi Instance Configuration Document](86236277-2125-46f3-82a8-737956898288).
 
-######### A.6.1.1.4.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3d481afc-bf97-4354-9305-3c6948001f3b -->
+######### A.6.1.1.7.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3d481afc-bf97-4354-9305-3c6948001f3b -->
 
 This document contains a Directory of all prospective Instances of the Integration Boost Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](a53d1d40-f944-4cf2-9941-8e6f0ec77a72), whereas failed Invocations are Archived in [Hub Data Repository](a26de8b6-230f-402f-8de0-3a6439161ffb).
 
-######### A.6.1.1.4.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a26de8b6-230f-402f-8de0-3a6439161ffb -->
+######### A.6.1.1.7.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a26de8b6-230f-402f-8de0-3a6439161ffb -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d7f4e888-fe3b-412f-9623-163470390a37 -->
+########## A.6.1.1.7.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d7f4e888-fe3b-412f-9623-163470390a37 -->
 
 The subtrees for archived Invocations and Instances of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.4.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a4295b57-9276-4a82-b8cb-11e8e122d558 -->
+########### A.6.1.1.7.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a4295b57-9276-4a82-b8cb-11e8e122d558 -->
 
 The subtrees for failed Invocations of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.4.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b48fc045-1754-4a89-83cf-6d76fbe056bb -->
+########### A.6.1.1.7.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: b48fc045-1754-4a89-83cf-6d76fbe056bb -->
 
 The subtrees for Instances of the Integration Boost Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.5.2.2 - Active Instances [Core]  <!-- UUID: a53d1d40-f944-4cf2-9941-8e6f0ec77a72 -->
+######## A.6.1.1.7.2.5.2.2 - Active Instances [Core]  <!-- UUID: a53d1d40-f944-4cf2-9941-8e6f0ec77a72 -->
 
 The Instances of the Integration Boost Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.4.2.5.2.2.1 - Kamino Instance Configuration Document [Core]  <!-- UUID: bff45812-80f3-4e46-9428-74a374bef2fc -->
+######### A.6.1.1.7.2.5.2.2.1 - Kamino Instance Configuration Document [Core]  <!-- UUID: bff45812-80f3-4e46-9428-74a374bef2fc -->
 
 The documents herein contain the Instance Configuration Document for the Kamino Integration Boost Primitive Instance.
 
-########## A.6.1.1.4.2.5.2.2.1.1 - Parameters [Core]  <!-- UUID: 6df9c015-0a57-48d2-9bdd-08fbf42b83c9 -->
+########## A.6.1.1.7.2.5.2.2.1.1 - Parameters [Core]  <!-- UUID: 6df9c015-0a57-48d2-9bdd-08fbf42b83c9 -->
 
 The documents herein define the parameters of the Kamino Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.1.1.1 - Integration Partner Name [Core]  <!-- UUID: d86968f4-a54b-40e1-9e82-e513a7a69a58 -->
+########### A.6.1.1.7.2.5.2.2.1.1.1 - Integration Partner Name [Core]  <!-- UUID: d86968f4-a54b-40e1-9e82-e513a7a69a58 -->
 
 The partner for the Kamino Integration Boost is Kamino.
 
-########### A.6.1.1.4.2.5.2.2.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: aa03c0ef-76b9-42b7-a8c0-c48b8392fab5 -->
+########### A.6.1.1.7.2.5.2.2.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: aa03c0ef-76b9-42b7-a8c0-c48b8392fab5 -->
 
 The reward address for the Kamino Integration Boost is `AU4GkzA4G9rRX3hS8QCNTiVGAtt5MNUAfK5L5Q57BAC4` on Solana.
 
-########### A.6.1.1.4.2.5.2.2.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: bfca608d-73b2-429d-a51c-d8adb412fef7 -->
+########### A.6.1.1.7.2.5.2.2.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: bfca608d-73b2-429d-a51c-d8adb412fef7 -->
 
 The Kamino Integration Boost is on Solana blockchain.
 
-########### A.6.1.1.4.2.5.2.2.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: f90e64f7-84c9-41b5-b5eb-ed9e890ccd5f -->
+########### A.6.1.1.7.2.5.2.2.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: f90e64f7-84c9-41b5-b5eb-ed9e890ccd5f -->
 
 The payment cadence for the Kamino Integration Boost is weekly.
 
-########### A.6.1.1.4.2.5.2.2.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 40834c20-539b-4295-8327-7f6b997f562f -->
+########### A.6.1.1.7.2.5.2.2.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 40834c20-539b-4295-8327-7f6b997f562f -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/).
 
-########### A.6.1.1.4.2.5.2.2.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 93b3b2a9-a105-4470-b827-96b56ae4e1d5 -->
+########### A.6.1.1.7.2.5.2.2.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 93b3b2a9-a105-4470-b827-96b56ae4e1d5 -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor.
 
-########### A.6.1.1.4.2.5.2.2.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: ef715b84-a864-4e01-8615-0d7668c8155b -->
+########### A.6.1.1.7.2.5.2.2.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: ef715b84-a864-4e01-8615-0d7668c8155b -->
 
 The Integration Boost is calculated based on per block values for USDS in Kamino and the Sky Savings Rate.
 
-########### A.6.1.1.4.2.5.2.2.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 8c2f1229-9472-4833-8e8b-9d686c5e1ec4 -->
+########### A.6.1.1.7.2.5.2.2.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 8c2f1229-9472-4833-8e8b-9d686c5e1ec4 -->
 
 The documents herein define the custom parameters of the Kamino Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.4.2.5.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: ba61357d-b348-4bf0-907a-389fed4db441 -->
+########## A.6.1.1.7.2.5.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: ba61357d-b348-4bf0-907a-389fed4db441 -->
 
 The documents herein define the process for the ongoing management of the Kamino Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: ee4adbeb-b6eb-42cc-8aca-4c0dfa34b7b0 -->
+########### A.6.1.1.7.2.5.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: ee4adbeb-b6eb-42cc-8aca-4c0dfa34b7b0 -->
 
 This document defines the protocol for routine ongoing management of the Kamino Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 2 Artifact, a version of the full process definition customized to Launch Agent 2 will be included herein.
 
-############ A.6.1.1.4.2.5.2.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 3872c2ee-5465-4ce1-8c34-3800e61fd674 -->
+############ A.6.1.1.7.2.5.2.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 3872c2ee-5465-4ce1-8c34-3800e61fd674 -->
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.4.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: c30f58b3-2431-428f-92ff-2519457e2c4d -->
+########### A.6.1.1.7.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: c30f58b3-2431-428f-92ff-2519457e2c4d -->
 
 The documents herein define the protocol for non-routine ongoing management of the Kamino Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: c7fc42f8-ba5f-4d71-9dec-af1a54fd1438 -->
+########### A.6.1.1.7.2.5.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: c7fc42f8-ba5f-4d71-9dec-af1a54fd1438 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Kamino Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.4.2.5.2.2.1.3 - Data Repository [Core]  <!-- UUID: bd0755f7-5787-4c4c-9d81-88e6b8573f6a -->
+########## A.6.1.1.7.2.5.2.2.1.3 - Data Repository [Core]  <!-- UUID: bd0755f7-5787-4c4c-9d81-88e6b8573f6a -->
 
 The documents herein contain data relevant to the Kamino Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 0886e43d-3f0e-4fbc-bb39-b21934477638 -->
+########### A.6.1.1.7.2.5.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 0886e43d-3f0e-4fbc-bb39-b21934477638 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: e00ea6ea-daab-4f81-a4c4-9e9c1a245495 -->
+########### A.6.1.1.7.2.5.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: e00ea6ea-daab-4f81-a4c4-9e9c1a245495 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 0f24b8c3-c3ae-43e4-a649-9a7df4de6fde -->
+########### A.6.1.1.7.2.5.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 0f24b8c3-c3ae-43e4-a649-9a7df4de6fde -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: f02b9ea5-ceae-42dd-8ca0-9565f7148efb -->
+########### A.6.1.1.7.2.5.2.2.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: f02b9ea5-ceae-42dd-8ca0-9565f7148efb -->
 
 The Integration Boost payments for the Kamino Instance of the Integration Boost Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.4.2.5.2.2.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 0abca082-24c3-425d-a02f-631766a438d1 -->
+############ A.6.1.1.7.2.5.2.2.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 0abca082-24c3-425d-a02f-631766a438d1 -->
 
 The Integration Boost Payments are:
 
-######### A.6.1.1.4.2.5.2.2.2 - Drift Instance Configuration Document [Core]  <!-- UUID: 25114297-6807-418a-a8e2-1e08daeb711d -->
+######### A.6.1.1.7.2.5.2.2.2 - Drift Instance Configuration Document [Core]  <!-- UUID: 25114297-6807-418a-a8e2-1e08daeb711d -->
 
 The documents herein contain the Instance Configuration Document for the Drift Integration Boost Primitive Instance.
 
-########## A.6.1.1.4.2.5.2.2.2.1 - Parameters [Core]  <!-- UUID: aa1660a7-2153-4c19-b541-21e0c99da42c -->
+########## A.6.1.1.7.2.5.2.2.2.1 - Parameters [Core]  <!-- UUID: aa1660a7-2153-4c19-b541-21e0c99da42c -->
 
 The documents herein define the parameters of the Drift Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.2.1.1 - Integration Partner Name [Core]  <!-- UUID: ce435a87-211f-45df-ac38-66c816796fe9 -->
+########### A.6.1.1.7.2.5.2.2.2.1.1 - Integration Partner Name [Core]  <!-- UUID: ce435a87-211f-45df-ac38-66c816796fe9 -->
 
 The partner for the Drift Integration Boost is Drift.
 
-########### A.6.1.1.4.2.5.2.2.2.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 8eb58c56-1b4f-4deb-9a44-0578c876ec4a -->
+########### A.6.1.1.7.2.5.2.2.2.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 8eb58c56-1b4f-4deb-9a44-0578c876ec4a -->
 
 The reward address for the Drift Integration Boost is `5hMjmxexWu954pX9gB9jkHxMqdjpxArQS2XdvkaevRax` on Solana.
 
-########### A.6.1.1.4.2.5.2.2.2.1.3 - Integration Partner Chain [Core]  <!-- UUID: dcde5fe3-2b4d-463c-99c4-166a238b7cf2 -->
+########### A.6.1.1.7.2.5.2.2.2.1.3 - Integration Partner Chain [Core]  <!-- UUID: dcde5fe3-2b4d-463c-99c4-166a238b7cf2 -->
 
 The Drift Integration Boost is on Solana blockchain.
 
-########### A.6.1.1.4.2.5.2.2.2.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 35b1e1da-1e21-4f29-97c9-c7e99377b750 -->
+########### A.6.1.1.7.2.5.2.2.2.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 35b1e1da-1e21-4f29-97c9-c7e99377b750 -->
 
 The payment cadence for the Drift Integration Boost is weekly.
 
-########### A.6.1.1.4.2.5.2.2.2.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 59d8afd5-abf0-4c59-be6e-cccbbe18da12 -->
+########### A.6.1.1.7.2.5.2.2.2.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 59d8afd5-abf0-4c59-be6e-cccbbe18da12 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/).
 
-########### A.6.1.1.4.2.5.2.2.2.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 2bf87576-4df5-4d01-ba0b-6f132782813d -->
+########### A.6.1.1.7.2.5.2.2.2.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 2bf87576-4df5-4d01-ba0b-6f132782813d -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor.
 
-########### A.6.1.1.4.2.5.2.2.2.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 71951f16-8f4e-49db-b98c-9d1799a1b869 -->
+########### A.6.1.1.7.2.5.2.2.2.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 71951f16-8f4e-49db-b98c-9d1799a1b869 -->
 
 The Integration Boost is calculated based on per block values for USDS in Drift and the Sky Savings Rate.
 
-########### A.6.1.1.4.2.5.2.2.2.1.8 - Custom Instance Parameters [Core]  <!-- UUID: e53ba12e-957c-48f8-b508-7190d07b4778 -->
+########### A.6.1.1.7.2.5.2.2.2.1.8 - Custom Instance Parameters [Core]  <!-- UUID: e53ba12e-957c-48f8-b508-7190d07b4778 -->
 
 The documents herein define the custom parameters of the Drift Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.4.2.5.2.2.2.2 - Operational Process Definition [Core]  <!-- UUID: 313e0ae3-1981-4d0e-93d6-8a4719c3d8db -->
+########## A.6.1.1.7.2.5.2.2.2.2 - Operational Process Definition [Core]  <!-- UUID: 313e0ae3-1981-4d0e-93d6-8a4719c3d8db -->
 
 The documents herein define the process for the ongoing management of the Drift Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: e329ad9b-8788-4261-82e3-891cf51ca6f2 -->
+########### A.6.1.1.7.2.5.2.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: e329ad9b-8788-4261-82e3-891cf51ca6f2 -->
 
 This document defines the protocol for routine ongoing management of the Drift Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 2 Artifact, a version of the full process definition customized to Launch Agent 2 will be included herein.
 
-############ A.6.1.1.4.2.5.2.2.2.2.1.1 - Agent Customizations [Core]  <!-- UUID: 072498cd-35c7-4e12-a2f7-3c6462257ed3 -->
+############ A.6.1.1.7.2.5.2.2.2.2.1.1 - Agent Customizations [Core]  <!-- UUID: 072498cd-35c7-4e12-a2f7-3c6462257ed3 -->
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.4.2.5.2.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 97aa301f-1b42-45fa-915a-3d3e0dcb55ee -->
+########### A.6.1.1.7.2.5.2.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 97aa301f-1b42-45fa-915a-3d3e0dcb55ee -->
 
 The documents herein define the protocol for non-routine ongoing management of the Drift Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: e3d0dc30-cf9e-4101-8729-b0039cd03e1d -->
+########### A.6.1.1.7.2.5.2.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: e3d0dc30-cf9e-4101-8729-b0039cd03e1d -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Drift Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.4.2.5.2.2.2.3 - Data Repository [Core]  <!-- UUID: 1cbe8086-9c91-4e07-9310-79591f81430a -->
+########## A.6.1.1.7.2.5.2.2.2.3 - Data Repository [Core]  <!-- UUID: 1cbe8086-9c91-4e07-9310-79591f81430a -->
 
 The documents herein contain data relevant to the Drift Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.2.3.1 - Initial Planning [Core]  <!-- UUID: cb8de39f-11d4-462d-80e4-12bd793697f1 -->
+########### A.6.1.1.7.2.5.2.2.2.3.1 - Initial Planning [Core]  <!-- UUID: cb8de39f-11d4-462d-80e4-12bd793697f1 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.2.3.2 - Operational GovOps Review [Core]  <!-- UUID: fdac7f0f-b7b3-45cd-be4f-51ba5755e097 -->
+########### A.6.1.1.7.2.5.2.2.2.3.2 - Operational GovOps Review [Core]  <!-- UUID: fdac7f0f-b7b3-45cd-be4f-51ba5755e097 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.2.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: fd38b098-1cee-4b81-9128-49f319a85624 -->
+########### A.6.1.1.7.2.5.2.2.2.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: fd38b098-1cee-4b81-9128-49f319a85624 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.2.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: de885def-4e9c-4116-9a16-899f0d45340f -->
+########### A.6.1.1.7.2.5.2.2.2.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: de885def-4e9c-4116-9a16-899f0d45340f -->
 
 The Integration Boost payments for the Drift Instance of the Integration Boost Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.4.2.5.2.2.2.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 1016d28e-fab4-4893-8e8f-846bed7e207d -->
+############ A.6.1.1.7.2.5.2.2.2.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 1016d28e-fab4-4893-8e8f-846bed7e207d -->
 
 The Integration Boost Payments are:
 
-######### A.6.1.1.4.2.5.2.2.3 - Save Instance Configuration Document [Core]  <!-- UUID: 1cdf853f-2d68-4ced-b143-1f3f2f7bbe70 -->
+######### A.6.1.1.7.2.5.2.2.3 - Save Instance Configuration Document [Core]  <!-- UUID: 1cdf853f-2d68-4ced-b143-1f3f2f7bbe70 -->
 
 The documents herein contain the Instance Configuration Document for the Save Integration Boost Primitive Instance.
 
-########## A.6.1.1.4.2.5.2.2.3.1 - Parameters [Core]  <!-- UUID: 0666e496-d967-42f0-9ec6-465fce5cc6ea -->
+########## A.6.1.1.7.2.5.2.2.3.1 - Parameters [Core]  <!-- UUID: 0666e496-d967-42f0-9ec6-465fce5cc6ea -->
 
 The documents herein define the parameters of the Save Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.3.1.1 - Integration Partner Name [Core]  <!-- UUID: e247f4cc-b5fb-4202-a2c7-2eeb4b6476a9 -->
+########### A.6.1.1.7.2.5.2.2.3.1.1 - Integration Partner Name [Core]  <!-- UUID: e247f4cc-b5fb-4202-a2c7-2eeb4b6476a9 -->
 
 The partner for the Save Integration Boost is Save.
 
-########### A.6.1.1.4.2.5.2.2.3.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 9b3239d4-c331-45d2-ba53-2280ebaf7626 -->
+########### A.6.1.1.7.2.5.2.2.3.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 9b3239d4-c331-45d2-ba53-2280ebaf7626 -->
 
 The reward address for the Save Integration Boost is  `5QbRL9MU5QakL5Fx2He9YaiUzB3TQpVAUBR2ARKN1NrM` on Solana.
 
-########### A.6.1.1.4.2.5.2.2.3.1.3 - Integration Partner Chain [Core]  <!-- UUID: c31ef8da-0d27-42f8-a6e7-cdd72fb89e15 -->
+########### A.6.1.1.7.2.5.2.2.3.1.3 - Integration Partner Chain [Core]  <!-- UUID: c31ef8da-0d27-42f8-a6e7-cdd72fb89e15 -->
 
 The Save Integration Boost is on Solana blockchain.
 
-########### A.6.1.1.4.2.5.2.2.3.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 89cf27b7-ef63-4671-8a21-2a5c19064418 -->
+########### A.6.1.1.7.2.5.2.2.3.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 89cf27b7-ef63-4671-8a21-2a5c19064418 -->
 
 The payment cadence for the Save Integration Boost is weekly.
 
-########### A.6.1.1.4.2.5.2.2.3.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: e6dd6579-2a26-4e85-b1fd-7887a8a387e0 -->
+########### A.6.1.1.7.2.5.2.2.3.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: e6dd6579-2a26-4e85-b1fd-7887a8a387e0 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/). The data for Save is available through the API endpoint under Solend, the previous name Save operated under.
 
-########### A.6.1.1.4.2.5.2.2.3.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 5cf367ae-6302-488e-89d9-8d05fd447725 -->
+########### A.6.1.1.7.2.5.2.2.3.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 5cf367ae-6302-488e-89d9-8d05fd447725 -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor.
 
-########### A.6.1.1.4.2.5.2.2.3.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 9c58cd0d-d637-4c26-8cec-bb5c8f4fcdbd -->
+########### A.6.1.1.7.2.5.2.2.3.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 9c58cd0d-d637-4c26-8cec-bb5c8f4fcdbd -->
 
 The Integration Boost is calculated based on per block values for USDS in Save and the Sky Savings Rate.
 
-########### A.6.1.1.4.2.5.2.2.3.1.8 - Custom Instance Parameters [Core]  <!-- UUID: c5c5aa96-d72b-4ae9-b48b-f4068f9f772c -->
+########### A.6.1.1.7.2.5.2.2.3.1.8 - Custom Instance Parameters [Core]  <!-- UUID: c5c5aa96-d72b-4ae9-b48b-f4068f9f772c -->
 
 The documents herein define the custom parameters of the Save Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.4.2.5.2.2.3.2 - Operational Process Definition [Core]  <!-- UUID: 1f098ea0-1d9e-4207-bbb1-217e14308d87 -->
+########## A.6.1.1.7.2.5.2.2.3.2 - Operational Process Definition [Core]  <!-- UUID: 1f098ea0-1d9e-4207-bbb1-217e14308d87 -->
 
 The documents herein define the process for the ongoing management of the Save Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.3.2.1 - Routine Protocol [Core]  <!-- UUID: 0e669131-758f-4ab1-8835-4532cf22c29a -->
+########### A.6.1.1.7.2.5.2.2.3.2.1 - Routine Protocol [Core]  <!-- UUID: 0e669131-758f-4ab1-8835-4532cf22c29a -->
 
 This document defines the protocol for routine ongoing management of the Save Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 2 Artifact, a version of the full process definition customized to Launch Agent 2 will be included herein.
 
-############ A.6.1.1.4.2.5.2.2.3.2.1.1 - Agent Customizations [Core]  <!-- UUID: e5ffb0b8-fd9d-4932-b8fa-1ebcc2cbb0d2 -->
+############ A.6.1.1.7.2.5.2.2.3.2.1.1 - Agent Customizations [Core]  <!-- UUID: e5ffb0b8-fd9d-4932-b8fa-1ebcc2cbb0d2 -->
 
 The Launch Agent 2 Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.4.2.5.2.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6e865551-6993-4193-9d2b-9aa3f7517e3e -->
+########### A.6.1.1.7.2.5.2.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6e865551-6993-4193-9d2b-9aa3f7517e3e -->
 
 The documents herein define the protocol for non-routine ongoing management of the Save Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.3.2.3 - Emergency Protocol [Core]  <!-- UUID: 071ccf78-e331-4457-a6ef-25bf3ca3f75a -->
+########### A.6.1.1.7.2.5.2.2.3.2.3 - Emergency Protocol [Core]  <!-- UUID: 071ccf78-e331-4457-a6ef-25bf3ca3f75a -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Save Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.4.2.5.2.2.3.3 - Data Repository [Core]  <!-- UUID: 6263e82f-b2f0-4d02-9e5e-d62bd615bce8 -->
+########## A.6.1.1.7.2.5.2.2.3.3 - Data Repository [Core]  <!-- UUID: 6263e82f-b2f0-4d02-9e5e-d62bd615bce8 -->
 
 The documents herein contain data relevant to the Save Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.3.3.1 - Initial Planning [Core]  <!-- UUID: d1d06d85-c679-4a6f-ab24-cd10e4de1361 -->
+########### A.6.1.1.7.2.5.2.2.3.3.1 - Initial Planning [Core]  <!-- UUID: d1d06d85-c679-4a6f-ab24-cd10e4de1361 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.3.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0e3774ea-7b40-4188-a467-ba54faacfd59 -->
+########### A.6.1.1.7.2.5.2.2.3.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0e3774ea-7b40-4188-a467-ba54faacfd59 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.3.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 7e0fc33a-f01c-4bd1-bfae-96bfda6a7986 -->
+########### A.6.1.1.7.2.5.2.2.3.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 7e0fc33a-f01c-4bd1-bfae-96bfda6a7986 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.3.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 5c116971-2a07-4074-9a41-422e18f5eaec -->
+########### A.6.1.1.7.2.5.2.2.3.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 5c116971-2a07-4074-9a41-422e18f5eaec -->
 
 The Integration Boost payments for the Save Instance of the Integration Boost Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.4.2.5.2.2.3.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 52237195-bbb7-4b4e-a13a-536f639bd0d0 -->
+############ A.6.1.1.7.2.5.2.2.3.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 52237195-bbb7-4b4e-a13a-536f639bd0d0 -->
 
 The Integration Boost Payments are:
 
-######### A.6.1.1.4.2.5.2.2.4 - Lifinity Instance Configuration Document [Core]  <!-- UUID: fbaeaf7e-92a4-4dd3-b65c-5cac02f0e831 -->
+######### A.6.1.1.7.2.5.2.2.4 - Lifinity Instance Configuration Document [Core]  <!-- UUID: fbaeaf7e-92a4-4dd3-b65c-5cac02f0e831 -->
 
 The documents herein contain the Instance Configuration Document for the Lifinity Integration Boost Primitive Instance.
 
-########## A.6.1.1.4.2.5.2.2.4.1 - Parameters [Core]  <!-- UUID: 02b34736-8bb3-4998-aad4-d059b6574313 -->
+########## A.6.1.1.7.2.5.2.2.4.1 - Parameters [Core]  <!-- UUID: 02b34736-8bb3-4998-aad4-d059b6574313 -->
 
 The documents herein define the parameters of the Lifinity Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.4.1.1 - Integration Partner Name [Core]  <!-- UUID: 877e9999-2210-4d33-ae34-6f443b8a1e79 -->
+########### A.6.1.1.7.2.5.2.2.4.1.1 - Integration Partner Name [Core]  <!-- UUID: 877e9999-2210-4d33-ae34-6f443b8a1e79 -->
 
 The partner for the Lifinity Integration Boost is Lifinity.
 
-########### A.6.1.1.4.2.5.2.2.4.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 3a3bc406-cd62-4b77-b905-938cca0a6be0 -->
+########### A.6.1.1.7.2.5.2.2.4.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 3a3bc406-cd62-4b77-b905-938cca0a6be0 -->
 
 The reward address for the Lifinity Integration Boost is `71hhezkHQ2dhmPySsHVCCkLggfWzPFEBdfEjbn4NCXMG` on Solana.
 
-########### A.6.1.1.4.2.5.2.2.4.1.3 - Integration Partner Chain [Core]  <!-- UUID: 8cbc89e4-5287-4fb1-88b4-3c5c09d9d345 -->
+########### A.6.1.1.7.2.5.2.2.4.1.3 - Integration Partner Chain [Core]  <!-- UUID: 8cbc89e4-5287-4fb1-88b4-3c5c09d9d345 -->
 
 The Lifinity Integration Boost is on Solana blockchain.
 
-########### A.6.1.1.4.2.5.2.2.4.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 16f59a39-f9d9-49d3-b7e6-7a77eb5c0a2c -->
+########### A.6.1.1.7.2.5.2.2.4.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 16f59a39-f9d9-49d3-b7e6-7a77eb5c0a2c -->
 
 The payment cadence for the Lifinity Integration Boost is weekly.
 
-########### A.6.1.1.4.2.5.2.2.4.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: faf426ea-f52c-4262-ac80-6e3ef4dc4c08 -->
+########### A.6.1.1.7.2.5.2.2.4.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: faf426ea-f52c-4262-ac80-6e3ef4dc4c08 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/).
 
-########### A.6.1.1.4.2.5.2.2.4.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 94bc2f19-0cbd-4afe-8c5d-d909092fb31d -->
+########### A.6.1.1.7.2.5.2.2.4.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 94bc2f19-0cbd-4afe-8c5d-d909092fb31d -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor..
 
-########### A.6.1.1.4.2.5.2.2.4.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 492bb423-8995-4e93-9bba-d063410bed8e -->
+########### A.6.1.1.7.2.5.2.2.4.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 492bb423-8995-4e93-9bba-d063410bed8e -->
 
 The Integration Boost is calculated based on per block values for USDS in Lifinity and the Sky Savings Rate.
 
-########### A.6.1.1.4.2.5.2.2.4.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 25a5f4b3-ef5e-455a-8f3d-27ed798ce5a2 -->
+########### A.6.1.1.7.2.5.2.2.4.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 25a5f4b3-ef5e-455a-8f3d-27ed798ce5a2 -->
 
 The documents herein define the custom parameters of the Lifinity Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.4.2.5.2.2.4.2 - Operational Process Definition [Core]  <!-- UUID: b066ba5b-d067-42c6-bfa5-ab84c696e020 -->
+########## A.6.1.1.7.2.5.2.2.4.2 - Operational Process Definition [Core]  <!-- UUID: b066ba5b-d067-42c6-bfa5-ab84c696e020 -->
 
 The documents herein define the process for the ongoing management of the Lifinity Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.4.2.1 - Routine Protocol [Core]  <!-- UUID: e7eb4307-efd2-4112-9bed-e9f5e85f565b -->
+########### A.6.1.1.7.2.5.2.2.4.2.1 - Routine Protocol [Core]  <!-- UUID: e7eb4307-efd2-4112-9bed-e9f5e85f565b -->
 
 This document defines the protocol for routine ongoing management of the Lifinity Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Keel Artifact, a version of the full process definition customized to Keel will be included herein.
 
-############ A.6.1.1.4.2.5.2.2.4.2.1.1 - Agent Customizations [Core]  <!-- UUID: 917307b6-ec3f-4b5f-b517-3f561c2cfe9a -->
+############ A.6.1.1.7.2.5.2.2.4.2.1.1 - Agent Customizations [Core]  <!-- UUID: 917307b6-ec3f-4b5f-b517-3f561c2cfe9a -->
 
 The Keel Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.4.2.5.2.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6bbaef28-382b-4c2c-8a9a-020de7727c86 -->
+########### A.6.1.1.7.2.5.2.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 6bbaef28-382b-4c2c-8a9a-020de7727c86 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Lifinity Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.4.2.3 - Emergency Protocol [Core]  <!-- UUID: 2685b9a3-e827-44b0-82e9-d7750396fecc -->
+########### A.6.1.1.7.2.5.2.2.4.2.3 - Emergency Protocol [Core]  <!-- UUID: 2685b9a3-e827-44b0-82e9-d7750396fecc -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Lifinity Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.4.2.5.2.2.4.3 - Data Repository [Core]  <!-- UUID: 24b453d1-6f31-4ab2-bdca-a5493229b62f -->
+########## A.6.1.1.7.2.5.2.2.4.3 - Data Repository [Core]  <!-- UUID: 24b453d1-6f31-4ab2-bdca-a5493229b62f -->
 
 The documents herein contain data relevant to the Lifinity Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.2.4.3.1 - Initial Planning [Core]  <!-- UUID: 4de91f25-bb65-4bc4-94b2-e9d58fbf9733 -->
+########### A.6.1.1.7.2.5.2.2.4.3.1 - Initial Planning [Core]  <!-- UUID: 4de91f25-bb65-4bc4-94b2-e9d58fbf9733 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.4.3.2 - Operational GovOps Review [Core]  <!-- UUID: 2a2ac512-32ec-4ee1-85a5-5cae060bc2ca -->
+########### A.6.1.1.7.2.5.2.2.4.3.2 - Operational GovOps Review [Core]  <!-- UUID: 2a2ac512-32ec-4ee1-85a5-5cae060bc2ca -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.4.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 780b5dbf-5b27-4d12-940d-2b2d324fcf2c -->
+########### A.6.1.1.7.2.5.2.2.4.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 780b5dbf-5b27-4d12-940d-2b2d324fcf2c -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.2.4.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: b2077965-9350-4699-be85-847934f1d7b0 -->
+########### A.6.1.1.7.2.5.2.2.4.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: b2077965-9350-4699-be85-847934f1d7b0 -->
 
 The Integration Boost payments for the Lifinity Instance of the Integration Boost Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.4.2.5.2.2.4.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 4c94d227-1244-4926-be0b-d6cf87cd91b3 -->
+############ A.6.1.1.7.2.5.2.2.4.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 4c94d227-1244-4926-be0b-d6cf87cd91b3 -->
 
 The Integration Boost Payments are:
 
-######## A.6.1.1.4.2.5.2.3 - Completed Instances [Core]  <!-- UUID: cb3d56e6-8284-4292-9cfe-df8c23c04bf0 -->
+######## A.6.1.1.7.2.5.2.3 - Completed Instances [Core]  <!-- UUID: cb3d56e6-8284-4292-9cfe-df8c23c04bf0 -->
 
 The Instances of the Integration Boost Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.4.2.5.2.3.1 - MarginFi Instance Configuration Document [Core]  <!-- UUID: 86236277-2125-46f3-82a8-737956898288 -->
+######### A.6.1.1.7.2.5.2.3.1 - MarginFi Instance Configuration Document [Core]  <!-- UUID: 86236277-2125-46f3-82a8-737956898288 -->
 
 The documents herein contain the Instance Configuration Document for the MarginFi Integration Boost Primitive Instance.
 
-########## A.6.1.1.4.2.5.2.3.1.1 - Parameters [Core]  <!-- UUID: 99f6f4f6-40c5-4b3d-bc80-8bf7361479a0 -->
+########## A.6.1.1.7.2.5.2.3.1.1 - Parameters [Core]  <!-- UUID: 99f6f4f6-40c5-4b3d-bc80-8bf7361479a0 -->
 
 The documents herein define the parameters of the MarginFi Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.3.1.1.1 - Integration Partner Name [Core]  <!-- UUID: 075a138e-889a-428a-bdd7-d1ccedecbfd7 -->
+########### A.6.1.1.7.2.5.2.3.1.1.1 - Integration Partner Name [Core]  <!-- UUID: 075a138e-889a-428a-bdd7-d1ccedecbfd7 -->
 
 The partner for the MarginFi Integration Boost is MarginFi.
 
-########### A.6.1.1.4.2.5.2.3.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 951107cb-8087-4a47-8b6c-5c50793b8796 -->
+########### A.6.1.1.7.2.5.2.3.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: 951107cb-8087-4a47-8b6c-5c50793b8796 -->
 
 The reward address for the MarginFi Integration Boost is `AZtUUe9GvTFq9kfseu9jxTioSgdSfjgmZfGQBmhVpTj1 `on Solana.
 
-########### A.6.1.1.4.2.5.2.3.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: 10f6ab13-0f78-4017-8ce2-b8443032b3be -->
+########### A.6.1.1.7.2.5.2.3.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: 10f6ab13-0f78-4017-8ce2-b8443032b3be -->
 
 The MarginFi Integration Boost is on Solana blockchain.
 
-########### A.6.1.1.4.2.5.2.3.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 17608de3-6224-4cc6-886d-ab5817178b6e -->
+########### A.6.1.1.7.2.5.2.3.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 17608de3-6224-4cc6-886d-ab5817178b6e -->
 
 The payment cadence for the MarginFi Integration Boost is weekly.
 
-########### A.6.1.1.4.2.5.2.3.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 4164892e-41a3-4295-a35b-c0130859a378 -->
+########### A.6.1.1.7.2.5.2.3.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 4164892e-41a3-4295-a35b-c0130859a378 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/solana-incentives/](https://info-sky.blockanalitica.com/api/v1/solana-incentives/).
 
-########### A.6.1.1.4.2.5.2.3.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: f9e0a68d-89a4-4c57-8da5-4912be9688fd -->
+########### A.6.1.1.7.2.5.2.3.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: f9e0a68d-89a4-4c57-8da5-4912be9688fd -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is the Core Council Risk Advisor.
 
-########### A.6.1.1.4.2.5.2.3.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 8bc6de1d-c9ee-43a5-9e1f-9307b4de9ee1 -->
+########### A.6.1.1.7.2.5.2.3.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 8bc6de1d-c9ee-43a5-9e1f-9307b4de9ee1 -->
 
 The Integration Boost is calculated based on per block values for USDS in MarginFi and the Sky Savings Rate.
 
-########### A.6.1.1.4.2.5.2.3.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 3160b0a5-3822-49f9-b962-70b33baa0e2c -->
+########### A.6.1.1.7.2.5.2.3.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 3160b0a5-3822-49f9-b962-70b33baa0e2c -->
 
 The documents herein define the custom parameters of the MarginFi Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.4.2.5.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 9ed9898f-a226-49f3-94d9-9279fa5eb143 -->
+########## A.6.1.1.7.2.5.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 9ed9898f-a226-49f3-94d9-9279fa5eb143 -->
 
 The documents herein define the process for the ongoing management of the MarginFi Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.3.1.2.1 - Routine Protocol [Core]  <!-- UUID: a367b919-e9bb-4a9e-9dbd-b3a0f520201b -->
+########### A.6.1.1.7.2.5.2.3.1.2.1 - Routine Protocol [Core]  <!-- UUID: a367b919-e9bb-4a9e-9dbd-b3a0f520201b -->
 
 This document defines the protocol for routine ongoing management of the MarginFi Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Keel Artifact, a version of the full process definition customized to Keel will be included herein.
 
-############ A.6.1.1.4.2.5.2.3.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9e8e1663-b7cf-4492-8e6d-b66f80b28ab4 -->
+############ A.6.1.1.7.2.5.2.3.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9e8e1663-b7cf-4492-8e6d-b66f80b28ab4 -->
 
 The Keel Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.4.2.5.2.3.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 9a62f3b7-bef9-4002-865a-9d59dd19fb23 -->
+########### A.6.1.1.7.2.5.2.3.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 9a62f3b7-bef9-4002-865a-9d59dd19fb23 -->
 
 The documents herein define the protocol for non-routine ongoing management of the MarginFi Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.3.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d4c759f6-c8cc-4bc3-84b3-76a1a1a9492e -->
+########### A.6.1.1.7.2.5.2.3.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d4c759f6-c8cc-4bc3-84b3-76a1a1a9492e -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the MarginFi Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.4.2.5.2.3.1.3 - Data Repository [Core]  <!-- UUID: a7f0ef1a-f643-4370-a2e6-d8d0c7db44d7 -->
+########## A.6.1.1.7.2.5.2.3.1.3 - Data Repository [Core]  <!-- UUID: a7f0ef1a-f643-4370-a2e6-d8d0c7db44d7 -->
 
 The documents herein contain data relevant to the MarginFi Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.4.2.5.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 5d022265-732d-471f-960c-ad352469f71e -->
+########### A.6.1.1.7.2.5.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 5d022265-732d-471f-960c-ad352469f71e -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d7fe3f68-dc0b-4494-8563-44e2f8e684a3 -->
+########### A.6.1.1.7.2.5.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d7fe3f68-dc0b-4494-8563-44e2f8e684a3 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 3aaf2998-6729-4ccf-848d-5dbc8d8e68ae -->
+########### A.6.1.1.7.2.5.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 3aaf2998-6729-4ccf-848d-5dbc8d8e68ae -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.2.3.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 61c17003-e1b0-46a8-8b67-0b120a0cdd5b -->
+########### A.6.1.1.7.2.5.2.3.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 61c17003-e1b0-46a8-8b67-0b120a0cdd5b -->
 
 The Integration Boost payments for the MarginFi Instance of the Integration Boost Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.4.2.5.2.3.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: bc103251-76b5-4969-b17f-520474e01a14 -->
+############ A.6.1.1.7.2.5.2.3.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: bc103251-76b5-4969-b17f-520474e01a14 -->
 
 The Integration Boost Payments are:
 
-######## A.6.1.1.4.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 4d86b12e-7abe-4707-afa6-3694fdb09e32 -->
+######## A.6.1.1.7.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 4d86b12e-7abe-4707-afa6-3694fdb09e32 -->
 
 The in progress Invocations of the Integration Boost Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](a53d1d40-f944-4cf2-9941-8e6f0ec77a72).
 
-####### A.6.1.1.4.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 8744a0ac-6d59-407d-a192-7ce4ce257420 -->
+####### A.6.1.1.7.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 8744a0ac-6d59-407d-a192-7ce4ce257420 -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Pioneer Chain Primitive. See [A.2.4 - Pioneer Chain Primitive](4c7be4c6-44b5-407a-94ae-3d7ca7e8039c).
 
-######## A.6.1.1.4.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: 9502a517-1323-4f1a-9038-8314b4704ff1 -->
+######## A.6.1.1.7.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: 9502a517-1323-4f1a-9038-8314b4704ff1 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Pioneer Chain Primitive.
 
-######### A.6.1.1.4.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: 5bf76475-f22b-4929-ac3c-7792a567fa49 -->
+######### A.6.1.1.7.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: 5bf76475-f22b-4929-ac3c-7792a567fa49 -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 0596e4e7-880f-42ce-96b8-00e8482837fb -->
+######### A.6.1.1.7.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 0596e4e7-880f-42ce-96b8-00e8482837fb -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: e7dd62af-a742-4518-97a6-70b885ad67f6 -->
+######### A.6.1.1.7.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: e7dd62af-a742-4518-97a6-70b885ad67f6 -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 6b836e0a-37cd-4e54-9479-1cf54ee4088c -->
+######### A.6.1.1.7.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 6b836e0a-37cd-4e54-9479-1cf54ee4088c -->
 
 This document contains a Directory of all prospective Instances of the Pioneer Chain Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](5d043c09-1d78-456d-b356-c72a13fe46c8), whereas failed Invocations are Archived in [Hub Data Repository](e32e87d5-bbaf-4bde-9bbd-332e2465a44a).
 
-######### A.6.1.1.4.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: e32e87d5-bbaf-4bde-9bbd-332e2465a44a -->
+######### A.6.1.1.7.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: e32e87d5-bbaf-4bde-9bbd-332e2465a44a -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 6bd42489-8672-49d0-923b-57c6ea782fe2 -->
+########## A.6.1.1.7.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 6bd42489-8672-49d0-923b-57c6ea782fe2 -->
 
 The subtrees for archived Invocations and Instances of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.4.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7cd4dd2e-693a-4879-ba88-158a95c6b428 -->
+########### A.6.1.1.7.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7cd4dd2e-693a-4879-ba88-158a95c6b428 -->
 
 The subtrees for failed Invocations of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.4.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4289b0d8-f587-4abf-8905-8c5df520c854 -->
+########### A.6.1.1.7.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4289b0d8-f587-4abf-8905-8c5df520c854 -->
 
 The subtrees for Instances of the Pioneer Chain Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.5.3.2 - Active Instances [Core]  <!-- UUID: 5d043c09-1d78-456d-b356-c72a13fe46c8 -->
+######## A.6.1.1.7.2.5.3.2 - Active Instances [Core]  <!-- UUID: 5d043c09-1d78-456d-b356-c72a13fe46c8 -->
 
 The Instances of the Pioneer Chain Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 4ddfaa41-e902-4d6a-a915-6d999c502a34 -->
+######## A.6.1.1.7.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 4ddfaa41-e902-4d6a-a915-6d999c502a34 -->
 
 The Instances of the Pioneer Chain Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: 079d3d3d-2549-4216-bc56-84af879ef929 -->
+######## A.6.1.1.7.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: 079d3d3d-2549-4216-bc56-84af879ef929 -->
 
 The in progress Invocations of the Pioneer Chain Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](5d043c09-1d78-456d-b356-c72a13fe46c8).
 
-###### A.6.1.1.4.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: 23e77e03-5726-4def-86a8-7ae41c7c9b51 -->
+###### A.6.1.1.7.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: 23e77e03-5726-4def-86a8-7ae41c7c9b51 -->
 
 The documents herein implement the Supply Side Stablecoin Primitives for Keel. See [A.2.4 - A9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
 
-####### A.6.1.1.4.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 8bbe0130-2676-47b2-a3d3-0de74fc0deb2 -->
+####### A.6.1.1.7.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 8bbe0130-2676-47b2-a3d3-0de74fc0deb2 -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Allocation System Primitive. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
 
-######## A.6.1.1.4.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: c44e39b7-1705-4dbb-b204-faaa1e63002d -->
+######## A.6.1.1.7.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: c44e39b7-1705-4dbb-b204-faaa1e63002d -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Allocation System Primitive.
 
-######### A.6.1.1.4.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 2f9369bc-0edc-430b-a4c9-812f9ac589df -->
+######### A.6.1.1.7.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 2f9369bc-0edc-430b-a4c9-812f9ac589df -->
 
 `Active`
 
-######### A.6.1.1.4.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 42035630-8859-4db9-a666-e37ef45a5692 -->
+######### A.6.1.1.7.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 42035630-8859-4db9-a666-e37ef45a5692 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f9335826-937e-4b89-bd48-5397949ec3fe -->
+######### A.6.1.1.7.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f9335826-937e-4b89-bd48-5397949ec3fe -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 9ed1b497-816a-4836-a499-08399b08a752 -->
+######### A.6.1.1.7.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 9ed1b497-816a-4836-a499-08399b08a752 -->
 
 This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](b151562b-44c4-4ca7-93ad-6ffa351e128d), whereas failed Invocations are Archived in [Hub Data Repository](b625c52c-d461-4ba8-9d28-af015abd5da5).
 
-######### A.6.1.1.4.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: b625c52c-d461-4ba8-9d28-af015abd5da5 -->
+######### A.6.1.1.7.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: b625c52c-d461-4ba8-9d28-af015abd5da5 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a083f74f-8633-497e-9fa8-5bfda4600112 -->
+########## A.6.1.1.7.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a083f74f-8633-497e-9fa8-5bfda4600112 -->
 
 The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.4.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: e865b2b1-6fc3-4153-9165-16c55bf1609c -->
+########### A.6.1.1.7.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: e865b2b1-6fc3-4153-9165-16c55bf1609c -->
 
 The subtrees for failed Invocations of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.4.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 01872171-b777-4723-a630-a3cfd229d1ac -->
+########### A.6.1.1.7.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 01872171-b777-4723-a630-a3cfd229d1ac -->
 
 The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: ce04eb97-1bde-4c90-a96e-d6a32890a4ec -->
+######## A.6.1.1.7.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: ce04eb97-1bde-4c90-a96e-d6a32890a4ec -->
 
 The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
 
-######## A.6.1.1.4.2.6.1.3 - Active Instances [Core]  <!-- UUID: b151562b-44c4-4ca7-93ad-6ffa351e128d -->
+######## A.6.1.1.7.2.6.1.3 - Active Instances [Core]  <!-- UUID: b151562b-44c4-4ca7-93ad-6ffa351e128d -->
 
 The Instances of the Allocation System Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 0f9a9229-0540-415c-8998-79793adebbb8 -->
+######## A.6.1.1.7.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 0f9a9229-0540-415c-8998-79793adebbb8 -->
 
 The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 733a8b9a-df49-49e8-9f5c-3633453e5dc7 -->
+######## A.6.1.1.7.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 733a8b9a-df49-49e8-9f5c-3633453e5dc7 -->
 
 The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b151562b-44c4-4ca7-93ad-6ffa351e128d).
 
-####### A.6.1.1.4.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: af316389-e11d-4205-a14e-bb3c230ba2b5 -->
+####### A.6.1.1.7.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: af316389-e11d-4205-a14e-bb3c230ba2b5 -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
 
-######## A.6.1.1.4.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: fcf3b78f-e91e-45f2-bd4d-14c1a3a97c1f -->
+######## A.6.1.1.7.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: fcf3b78f-e91e-45f2-bd4d-14c1a3a97c1f -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Junior Risk Capital Rental Primitive.
 
-######### A.6.1.1.4.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: 45fe1729-7481-4215-8399-dd9718e37abf -->
+######### A.6.1.1.7.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: 45fe1729-7481-4215-8399-dd9718e37abf -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 9264bed6-21a2-4e39-8546-0ab157380740 -->
+######### A.6.1.1.7.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 9264bed6-21a2-4e39-8546-0ab157380740 -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7585f2d5-a12a-4526-9dbd-88fb210dd4aa -->
+######### A.6.1.1.7.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7585f2d5-a12a-4526-9dbd-88fb210dd4aa -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 23138f00-8867-4b18-81fa-713007909f8f -->
+######### A.6.1.1.7.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 23138f00-8867-4b18-81fa-713007909f8f -->
 
 This document contains a Directory of all prospective Instances of the Junior Risk Capital Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](ee196317-63fc-4f69-a985-2a4f5a5be4e5), whereas failed Invocations are Archived in [Hub Data Repository](74b8a03c-e123-4517-9c60-f445fc958174).
 
-######### A.6.1.1.4.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 74b8a03c-e123-4517-9c60-f445fc958174 -->
+######### A.6.1.1.7.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 74b8a03c-e123-4517-9c60-f445fc958174 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 67e1b1e7-eb74-4b14-a125-0e9245266878 -->
+########## A.6.1.1.7.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 67e1b1e7-eb74-4b14-a125-0e9245266878 -->
 
 The subtrees for archived Invocations and Instances of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.4.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 45ecc8cb-5ae7-4ea3-9edf-d1ac8ce2b860 -->
+########### A.6.1.1.7.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 45ecc8cb-5ae7-4ea3-9edf-d1ac8ce2b860 -->
 
 The subtrees for failed Invocations of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.4.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 50cf8700-8938-4dce-b7b5-4dfc3bd92836 -->
+########### A.6.1.1.7.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 50cf8700-8938-4dce-b7b5-4dfc3bd92836 -->
 
 The subtrees for Instances of the Junior Risk Capital Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.6.2.2 - Active Instances [Core]  <!-- UUID: ee196317-63fc-4f69-a985-2a4f5a5be4e5 -->
+######## A.6.1.1.7.2.6.2.2 - Active Instances [Core]  <!-- UUID: ee196317-63fc-4f69-a985-2a4f5a5be4e5 -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 14b1b9d8-c60a-4cb5-a06b-a059f354bcec -->
+######## A.6.1.1.7.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 14b1b9d8-c60a-4cb5-a06b-a059f354bcec -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: 2b4b1b5a-e6a7-4743-9263-0fa8872d2f68 -->
+######## A.6.1.1.7.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: 2b4b1b5a-e6a7-4743-9263-0fa8872d2f68 -->
 
 The in progress Invocations of the Junior Risk Capital Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](ee196317-63fc-4f69-a985-2a4f5a5be4e5).
 
-####### A.6.1.1.4.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: d12e1955-a592-4cf8-8b98-24ccfb431409 -->
+####### A.6.1.1.7.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: d12e1955-a592-4cf8-8b98-24ccfb431409 -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Asset Liability Management Rental Primitive. See [A.2.4 - Asset Liability Management Rental Primitive](bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c).
 
-######## A.6.1.1.4.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: df75861d-ff07-4d63-9d39-f43bfb2b5b75 -->
+######## A.6.1.1.7.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: df75861d-ff07-4d63-9d39-f43bfb2b5b75 -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Asset Liability Management Rental Primitive.
 
-######### A.6.1.1.4.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: 029950f2-bacc-4941-9ebe-b7c6770dbb1b -->
+######### A.6.1.1.7.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: 029950f2-bacc-4941-9ebe-b7c6770dbb1b -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 7b21f5bd-68dd-4cf6-8048-cb5eef547b47 -->
+######### A.6.1.1.7.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 7b21f5bd-68dd-4cf6-8048-cb5eef547b47 -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 793d20ec-54b7-4f18-9da5-5ecc864eec06 -->
+######### A.6.1.1.7.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 793d20ec-54b7-4f18-9da5-5ecc864eec06 -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: d0c0850d-9f45-4d6c-bc22-b191a41d1e2a -->
+######### A.6.1.1.7.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: d0c0850d-9f45-4d6c-bc22-b191a41d1e2a -->
 
 This document contains a Directory of all prospective Instances of the Asset Liability Management Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](537fef57-4e7f-49d7-ac58-b23ed98aff7c), whereas failed Invocations are Archived in [Hub Data Repository](ce1d1572-7f0f-45d2-9f08-2eaae70c7b61).
 
-######### A.6.1.1.4.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: ce1d1572-7f0f-45d2-9f08-2eaae70c7b61 -->
+######### A.6.1.1.7.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: ce1d1572-7f0f-45d2-9f08-2eaae70c7b61 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: b315b2ed-16b0-4abd-ad83-693c3252fbdc -->
+########## A.6.1.1.7.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: b315b2ed-16b0-4abd-ad83-693c3252fbdc -->
 
 The subtrees for archived Invocations and Instances of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.4.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8f99b878-ab18-44f3-aaeb-43fb443b7798 -->
+########### A.6.1.1.7.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8f99b878-ab18-44f3-aaeb-43fb443b7798 -->
 
 The subtrees for failed Invocations of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.4.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 93503a72-77c3-4701-b545-3c0f3700ecd2 -->
+########### A.6.1.1.7.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 93503a72-77c3-4701-b545-3c0f3700ecd2 -->
 
 The subtrees for Instances of the Asset Liability Management Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.6.3.2 - Active Instances [Core]  <!-- UUID: 537fef57-4e7f-49d7-ac58-b23ed98aff7c -->
+######## A.6.1.1.7.2.6.3.2 - Active Instances [Core]  <!-- UUID: 537fef57-4e7f-49d7-ac58-b23ed98aff7c -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 2b2af026-ff7e-476b-aa1a-e77eb1fc667a -->
+######## A.6.1.1.7.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 2b2af026-ff7e-476b-aa1a-e77eb1fc667a -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 9663607e-e54c-49fb-941f-a1fa5d91542b -->
+######## A.6.1.1.7.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 9663607e-e54c-49fb-941f-a1fa5d91542b -->
 
 The in progress Invocations of the Asset Liability Management Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](537fef57-4e7f-49d7-ac58-b23ed98aff7c).
 
-###### A.6.1.1.4.2.7 - Core Governance Primitives [Core]  <!-- UUID: a99ec5d3-25e3-4391-8914-3ee55203218f -->
+###### A.6.1.1.7.2.7 - Core Governance Primitives [Core]  <!-- UUID: a99ec5d3-25e3-4391-8914-3ee55203218f -->
 
 The documents herein implement the Core Governance Primitives for Keel. See [A.2.4 - A10 - Core Governance Primitives](6fa54611-c744-4b9d-897d-b2a20e9cae5d).
 
-####### A.6.1.1.4.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: a3d5bf7f-19fd-47d8-8815-6eb03b9bee1d -->
+####### A.6.1.1.7.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: a3d5bf7f-19fd-47d8-8815-6eb03b9bee1d -->
 
 The documents herein contain all data and specifications for Keel’s Instances of the Core Governance Reward Primitive. See [A.2.4 - Core Governance Reward Primitive](b22d1c08-042a-4466-94fe-9d28951e4d4a).
 
-######## A.6.1.1.4.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: 0841bc09-e502-4a45-a5fc-e30d793a423f -->
+######## A.6.1.1.7.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: 0841bc09-e502-4a45-a5fc-e30d793a423f -->
 
 The documents herein organize all base information relevant to Keel’s usage of the Core Governance Reward Primitive.
 
-######### A.6.1.1.4.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: 2aa1d719-9af8-47db-a190-d43677ef0e28 -->
+######### A.6.1.1.7.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: 2aa1d719-9af8-47db-a190-d43677ef0e28 -->
 
 `Inactive`
 
-######### A.6.1.1.4.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 11bc952d-781a-439b-9760-83a007fb9dd2 -->
+######### A.6.1.1.7.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 11bc952d-781a-439b-9760-83a007fb9dd2 -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Active`.
 
-######### A.6.1.1.4.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: fc74cce7-ae3b-4ab8-8d4d-cc0f7636c523 -->
+######### A.6.1.1.7.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: fc74cce7-ae3b-4ab8-8d4d-cc0f7636c523 -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.4.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 66c63d9c-6bb6-44b7-a754-29a15475e4c0 -->
+######### A.6.1.1.7.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 66c63d9c-6bb6-44b7-a754-29a15475e4c0 -->
 
 This document contains a Directory of all prospective Instances of the Core Governance Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances](0b4cc335-c2ed-4b7f-8cb5-eeb1bab394b8), whereas failed Invocations are Archived in [Hub Data Repository](3ab2001f-f1eb-4249-852c-96604a85e987).
 
-######### A.6.1.1.4.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 3ab2001f-f1eb-4249-852c-96604a85e987 -->
+######### A.6.1.1.7.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 3ab2001f-f1eb-4249-852c-96604a85e987 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.4.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 5e66b56a-fe9d-4d4c-94c6-2d919171e924 -->
+########## A.6.1.1.7.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 5e66b56a-fe9d-4d4c-94c6-2d919171e924 -->
 
 The subtrees for archived Invocations and Instances of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.4.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6794a591-d126-42b6-ba59-c61c3c7e9486 -->
+########### A.6.1.1.7.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6794a591-d126-42b6-ba59-c61c3c7e9486 -->
 
 The subtrees for failed Invocations of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.4.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: c84bc632-6972-443a-a02c-f2b45a3678ac -->
+########### A.6.1.1.7.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: c84bc632-6972-443a-a02c-f2b45a3678ac -->
 
 The subtrees for Instances of the Core Governance Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.4.2.7.1.2 - Active Instances [Core]  <!-- UUID: 0b4cc335-c2ed-4b7f-8cb5-eeb1bab394b8 -->
+######## A.6.1.1.7.2.7.1.2 - Active Instances [Core]  <!-- UUID: 0b4cc335-c2ed-4b7f-8cb5-eeb1bab394b8 -->
 
 The Instances of the Core Governance Reward Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.4.2.7.1.3 - Completed Instances [Core]  <!-- UUID: d4d144fb-eaf6-40ab-90c2-e86dc9494a42 -->
+######## A.6.1.1.7.2.7.1.3 - Completed Instances [Core]  <!-- UUID: d4d144fb-eaf6-40ab-90c2-e86dc9494a42 -->
 
 The Instances of the Core Governance Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.4.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: 6a200f7a-611d-4969-8046-6b5b88f6979a -->
+######## A.6.1.1.7.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: 6a200f7a-611d-4969-8046-6b5b88f6979a -->
 
 The in progress Invocations of the Core Governance Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](0b4cc335-c2ed-4b7f-8cb5-eeb1bab394b8).
 
-##### A.6.1.1.4.3 - Omni Documents [Core]  <!-- UUID: bafbbf28-95dc-41a4-9c55-f3befde4e991 -->
+##### A.6.1.1.7.3 - Omni Documents [Core]  <!-- UUID: bafbbf28-95dc-41a4-9c55-f3befde4e991 -->
 
 The documents herein define Launch Agent 2’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
 
-###### A.6.1.1.4.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: 1889a2a0-7378-487a-a278-aabe3177efff -->
+###### A.6.1.1.7.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: 1889a2a0-7378-487a-a278-aabe3177efff -->
 
 The documents herein specify Launch Agent 2 governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Launch Agent 2 Artifact is specified in the Root Edit Primitive above at [Root Edit Primitive](3d02dcbc-6a31-4f63-b464-c8c3ecebb744).
 
-####### A.6.1.1.4.3.1.1 - Sky Forum [Core]  <!-- UUID: 63fec69d-a4df-42c3-bb5f-b959e711df56 -->
+####### A.6.1.1.7.3.1.1 - Sky Forum [Core]  <!-- UUID: 63fec69d-a4df-42c3-bb5f-b959e711df56 -->
 
 Launch Agent 2 uses the Sky Forum for governance-related discussion. Posts should use the “Launch Agent 2 Prime” category.
 
-####### A.6.1.1.4.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 8613cc87-2809-4716-8c91-93ff0345f7a8 -->
+####### A.6.1.1.7.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 8613cc87-2809-4716-8c91-93ff0345f7a8 -->
 
 The documents herein specify Keel’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Keel Artifact.
 
-####### A.6.1.1.4.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: ef98d5b6-3542-4b2f-a926-a0648713fa70 -->
+####### A.6.1.1.7.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: ef98d5b6-3542-4b2f-a926-a0648713fa70 -->
 
 The documents herein specify Keel’s emergency response protocol in situations solely impacting Keel versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Keel Artifact.
 
-###### A.6.1.1.4.3.2 - Use Of Idle Funds [Core]  <!-- UUID: 41ad175e-48c8-4caf-8cb7-638f90ff0ad6 -->
+###### A.6.1.1.7.3.2 - Use Of Idle Funds [Core]  <!-- UUID: 41ad175e-48c8-4caf-8cb7-638f90ff0ad6 -->
 
 In the short term prior to Launch Agent 2's implementation of the Allocation System Primitive, Keel may invest idle funds in low-risk decentralized finance opportunities, including providing liquidity to established lending protocols on Solana. These deployments will be subject to the approval of Operational GovOps.
 
-###### A.6.1.1.4.3.3 - Ecosystem Accords [Core]  <!-- UUID: e2db688f-a6f1-476a-b7da-dd67d94da35b -->
+###### A.6.1.1.7.3.3 - Ecosystem Accords [Core]  <!-- UUID: e2db688f-a6f1-476a-b7da-dd67d94da35b -->
 
 Keel has formally agreed to the Ecosystem Accords herein.
 
-####### A.6.1.1.4.3.3.1 - Ecosystem Accord 3 [Core]  <!-- UUID: 962d4b79-2dea-4b86-a72f-8a460189327f -->
+####### A.6.1.1.7.3.3.1 - Ecosystem Accord 3 [Core]  <!-- UUID: 962d4b79-2dea-4b86-a72f-8a460189327f -->
 
 Keel engaged in terms of agreement with Sky in Ecosystem Accord 3, located in [A.2.10 - Ecosystem Accord 3: Sky And Keel](63a88b08-e6cd-48bf-9cec-64ce7e42ae0e).
 
-#### A.6.1.1.5 - Launch Agent 3 [Core]  <!-- UUID: c88439b5-f456-4e51-8825-42e0ba83546f -->
+#### A.6.1.1.8 - Launch Agent 3 [Core]  <!-- UUID: c88439b5-f456-4e51-8825-42e0ba83546f -->
 
 The documents herein specify all of the logic for Launch Agent 3, including Launch Agent 3’s strategy and how it uses the Sky Primitives to operationalize this strategy.
 
-##### A.6.1.1.5.1 - Introduction [Core]  <!-- UUID: a09ca807-8649-45d0-8e80-62baeb042995 -->
+##### A.6.1.1.8.1 - Introduction [Core]  <!-- UUID: a09ca807-8649-45d0-8e80-62baeb042995 -->
 
 Launch Agent 3 is an Agent specializing in creating accessible and user-friendly DeFi interfaces. It operates the Launch Agent 3 Frontend user interface. 
 
 Launch Agent 3 Frontend is a non-custodial web application serving as a gateway to the Sky Protocol. Through its AI-powered interface, Launch Agent 3 Frontend makes digital asset interactions intuitive and accessible for users of all experience levels—all while ensuring users maintain complete control of their assets. Launch Agent 3 Frontend never takes custody of users' private keys or assets; users retain full responsibility for managing their private keys and digital wallet access.
 
-##### A.6.1.1.5.2 - Sky Primitives [Core]  <!-- UUID: 614f046c-829b-4330-a462-adff2245b36d -->
+##### A.6.1.1.8.2 - Sky Primitives [Core]  <!-- UUID: 614f046c-829b-4330-a462-adff2245b36d -->
 
 The documents herein implement the Sky Primitives for Launch Agent 3. See [A.2.4](fcde2604-a138-4c1b-9d9a-14895835c907).
 
-###### A.6.1.1.5.2.1 - Genesis Primitives [Core]  <!-- UUID: f08231e6-caa9-490d-9d7f-4f65f9076084 -->
+###### A.6.1.1.8.2.1 - Genesis Primitives [Core]  <!-- UUID: f08231e6-caa9-490d-9d7f-4f65f9076084 -->
 
 The documents herein implement the Genesis Primitives for Launch Agent 3. See [A.2.4 - A4 - Genesis Primitives](3d5e3668-8333-4908-adcc-5784cfe7f6b5).
 
-####### A.6.1.1.5.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: 301c4673-0279-49e8-9c3b-e810e8223234 -->
+####### A.6.1.1.8.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: 301c4673-0279-49e8-9c3b-e810e8223234 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instance of the Agent Creation Primitive. See [A.2.4 - Agent Creation Primitive](82b95f6d-4883-4f08-ac3a-9d8189013fbe).
 
-######## A.6.1.1.5.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: df8efa45-85c4-4c66-b984-a5ddfc3f3522 -->
+######## A.6.1.1.8.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: df8efa45-85c4-4c66-b984-a5ddfc3f3522 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Agent Creation Primitive.
 
-######### A.6.1.1.5.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: 487d9253-c2ac-44be-a3b4-7474ba38fddd -->
+######### A.6.1.1.8.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: 487d9253-c2ac-44be-a3b4-7474ba38fddd -->
 
 `Completed`
 
-######### A.6.1.1.5.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 0f377ebd-60bd-45ad-9996-a2adc324e2cf -->
+######### A.6.1.1.8.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 0f377ebd-60bd-45ad-9996-a2adc324e2cf -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: a36c4c17-6870-4458-8f38-7a966871b085 -->
+######### A.6.1.1.8.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: a36c4c17-6870-4458-8f38-7a966871b085 -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.5.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 385addb0-9ee7-4cc0-8fb1-22d6d229198b -->
+########## A.6.1.1.8.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 385addb0-9ee7-4cc0-8fb1-22d6d229198b -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](b53a6744-c772-47bf-9bc3-26ffb933a6d6).
 
-######### A.6.1.1.5.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 462d376c-2f8d-497a-beb2-af3e96895733 -->
+######### A.6.1.1.8.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 462d376c-2f8d-497a-beb2-af3e96895733 -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: c2ab6cb7-f482-4993-b9ba-760cf06a7730 -->
+######### A.6.1.1.8.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: c2ab6cb7-f482-4993-b9ba-760cf06a7730 -->
 
 The document herein contains the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 90432b91-3439-4dee-8005-43af1cf2572a -->
+########## A.6.1.1.8.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 90432b91-3439-4dee-8005-43af1cf2572a -->
 
 The subtrees for archived Invocations and Instances of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 0d52617d-d303-4133-9523-0638d65be070 -->
+########### A.6.1.1.8.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 0d52617d-d303-4133-9523-0638d65be070 -->
 
 The subtrees for failed Invocations of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: aa957ab8-fa9a-4ce0-bb47-e34350f16027 -->
+########### A.6.1.1.8.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: aa957ab8-fa9a-4ce0-bb47-e34350f16027 -->
 
 The subtrees for Instances of the Agent Creation Primitive with Suspended Status are stored here.
 
-######## A.6.1.1.5.2.1.1.2 - Active Instances [Core]  <!-- UUID: 0334421f-a3a0-4016-94fd-5cb0fc026b25 -->
+######## A.6.1.1.8.2.1.1.2 - Active Instances [Core]  <!-- UUID: 0334421f-a3a0-4016-94fd-5cb0fc026b25 -->
 
 The Instances of the Agent Creation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 87ad87f5-5441-4003-8029-b7ce10442119 -->
+######## A.6.1.1.8.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 87ad87f5-5441-4003-8029-b7ce10442119 -->
 
 The Instances of the Agent Creation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.5.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: b53a6744-c772-47bf-9bc3-26ffb933a6d6 -->
+######### A.6.1.1.8.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: b53a6744-c772-47bf-9bc3-26ffb933a6d6 -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Creation Primitive Instance.
 
-########## A.6.1.1.5.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: b34cf681-4d8d-406d-997d-a805c2a9911c -->
+########## A.6.1.1.8.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: b34cf681-4d8d-406d-997d-a805c2a9911c -->
 
 The documents herein define the parameters of the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.5.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 46d00c31-8877-4db8-981a-659276a86938 -->
+########### A.6.1.1.8.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 46d00c31-8877-4db8-981a-659276a86938 -->
 
 The name of the Agent is Launch Agent 3.
 
-########### A.6.1.1.5.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: daed1676-6039-459e-9136-5e31617d756b -->
+########### A.6.1.1.8.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: daed1676-6039-459e-9136-5e31617d756b -->
 
 The address of Launch Agent 3’s SubProxy Account will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: 082cb114-b47e-4371-afe5-d7bcba70704a -->
+########### A.6.1.1.8.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: 082cb114-b47e-4371-afe5-d7bcba70704a -->
 
 The address of Launch Agent 3’s Genesis Account will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 7b71508d-de87-4c7b-a09a-7168d1d04f81 -->
+########### A.6.1.1.8.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 7b71508d-de87-4c7b-a09a-7168d1d04f81 -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Creation Primitive, if any.
 
-########## A.6.1.1.5.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: c38b8c86-828d-4d31-9ce6-0ba8d8694f1f -->
+########## A.6.1.1.8.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: c38b8c86-828d-4d31-9ce6-0ba8d8694f1f -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.5.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: 638682f2-1973-4c77-afc2-b745b950fbf4 -->
+########## A.6.1.1.8.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: 638682f2-1973-4c77-afc2-b745b950fbf4 -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.5.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: d6d7788a-4702-4e7f-8bd0-0e1bdb535e79 -->
+########### A.6.1.1.8.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: d6d7788a-4702-4e7f-8bd0-0e1bdb535e79 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: efc466bf-6681-4c38-ac6a-281d4c1593be -->
+########### A.6.1.1.8.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: efc466bf-6681-4c38-ac6a-281d4c1593be -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 587c4557-6622-49af-b64b-9fd48dbc85b1 -->
+########### A.6.1.1.8.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 587c4557-6622-49af-b64b-9fd48dbc85b1 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 58ddd7d7-28af-4ca3-ac6a-f5d2105f9e79 -->
+######## A.6.1.1.8.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 58ddd7d7-28af-4ca3-ac6a-f5d2105f9e79 -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.5.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 4da364d5-3b83-4858-a820-12d4980f6977 -->
+####### A.6.1.1.8.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 4da364d5-3b83-4858-a820-12d4980f6977 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s instance of the Prime Transformation Primitive. See [A.2.4 - Prime Transformation Primitive](81411106-fd6d-4f9c-b3ae-7af7b5e62482).
 
-######## A.6.1.1.5.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: f4d35d37-831f-4eee-b18f-d9a3d266655e -->
+######## A.6.1.1.8.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: f4d35d37-831f-4eee-b18f-d9a3d266655e -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Prime Transformation Primitive.
 
-######### A.6.1.1.5.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: 8d69ca15-79c9-4351-b185-a7cd40c4ad71 -->
+######### A.6.1.1.8.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: 8d69ca15-79c9-4351-b185-a7cd40c4ad71 -->
 
 `Completed`
 
-######### A.6.1.1.5.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 190a4493-15a5-4656-9151-b0b9407e03ff -->
+######### A.6.1.1.8.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 190a4493-15a5-4656-9151-b0b9407e03ff -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 67062ef3-c534-4ca3-a852-db5529f7e0f4 -->
+######### A.6.1.1.8.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 67062ef3-c534-4ca3-a852-db5529f7e0f4 -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.5.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 1f0cc3ff-862b-4a44-9603-1f7368e963dc -->
+########## A.6.1.1.8.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 1f0cc3ff-862b-4a44-9603-1f7368e963dc -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](61e2585d-2ef1-43f5-af89-9f68a66dea12).
 
-######### A.6.1.1.5.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 78abc4a4-9a0f-4ee4-b716-db593325bd34 -->
+######### A.6.1.1.8.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 78abc4a4-9a0f-4ee4-b716-db593325bd34 -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: c67c2fad-a4d9-43ce-b6a0-94ab916b8ece -->
+######### A.6.1.1.8.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: c67c2fad-a4d9-43ce-b6a0-94ab916b8ece -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: f4a6295d-6cca-48b9-b692-03fc742e00be -->
+########## A.6.1.1.8.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: f4a6295d-6cca-48b9-b692-03fc742e00be -->
 
 The subtrees for archived Invocations and Instances of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ae8a7b5-d386-47e1-aa51-d80c8d781cfb -->
+########### A.6.1.1.8.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ae8a7b5-d386-47e1-aa51-d80c8d781cfb -->
 
 The subtrees for failed Invocations of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 0eb68a5c-3785-4085-8385-b052711f903c -->
+########### A.6.1.1.8.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 0eb68a5c-3785-4085-8385-b052711f903c -->
 
 The subtrees for Instances of the Prime Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.1.2.2 - Active Instances [Core]  <!-- UUID: e8a80c86-33b0-4c9e-9331-5916e9355b28 -->
+######## A.6.1.1.8.2.1.2.2 - Active Instances [Core]  <!-- UUID: e8a80c86-33b0-4c9e-9331-5916e9355b28 -->
 
 The Instances of the Prime Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 2bd4f3c4-9d79-4acf-afa9-7fbb2160ef58 -->
+######## A.6.1.1.8.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 2bd4f3c4-9d79-4acf-afa9-7fbb2160ef58 -->
 
 The Instances of the Prime Transformation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.5.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 61e2585d-2ef1-43f5-af89-9f68a66dea12 -->
+######### A.6.1.1.8.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 61e2585d-2ef1-43f5-af89-9f68a66dea12 -->
 
 The documents herein contain the Instance Configuration Document for the Single Prime Transformation Primitive Instance.
 
-########## A.6.1.1.5.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: 2d442b0e-6f55-4a41-9599-e494a4da5cc1 -->
+########## A.6.1.1.8.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: 2d442b0e-6f55-4a41-9599-e494a4da5cc1 -->
 
 The documents herein define the parameters of the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.5.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: afa9a16f-e776-40f1-8e34-923ae661517a -->
+########### A.6.1.1.8.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: afa9a16f-e776-40f1-8e34-923ae661517a -->
 
 Launch Agent 3 is a Prime Agent.
 
-########### A.6.1.1.5.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: de857100-9b4b-4fcd-942c-a3b67a5f9a45 -->
+########### A.6.1.1.8.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: de857100-9b4b-4fcd-942c-a3b67a5f9a45 -->
 
 The documents herein define the custom parameters of the Single Instance of the Prime Transformation Primitive, if any.
 
-########## A.6.1.1.5.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: d8eca741-b371-4e0a-b2f5-f10663683efa -->
+########## A.6.1.1.8.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: d8eca741-b371-4e0a-b2f5-f10663683efa -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.5.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: 6f45d32b-f377-480c-b67f-a1d7b2d09ba8 -->
+########## A.6.1.1.8.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: 6f45d32b-f377-480c-b67f-a1d7b2d09ba8 -->
 
 The documents herein contain data relevant to the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.5.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 70203ad1-71b6-4a80-97a4-d18227cd736e -->
+########### A.6.1.1.8.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: 70203ad1-71b6-4a80-97a4-d18227cd736e -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 84e3ba93-7ba4-4f52-b54e-5ea6e73da623 -->
+########### A.6.1.1.8.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 84e3ba93-7ba4-4f52-b54e-5ea6e73da623 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 102b2492-34f9-4f2f-8f42-593aa8871129 -->
+########### A.6.1.1.8.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 102b2492-34f9-4f2f-8f42-593aa8871129 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 42f47668-ba50-430e-ac11-245eef79e712 -->
+######## A.6.1.1.8.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 42f47668-ba50-430e-ac11-245eef79e712 -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.5.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: 4e2edd9e-61c2-4be1-8cb3-f2be5e1587f3 -->
+####### A.6.1.1.8.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: 4e2edd9e-61c2-4be1-8cb3-f2be5e1587f3 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s instance of the Executor Transformation Primitive. See [A.2.4 - Executor Transformation Primitive](2f249be5-8edb-41e4-b429-734e1ba2cbc7).
 
-######## A.6.1.1.5.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: f60f5f5f-3aa8-49de-85fb-95841bb73bdb -->
+######## A.6.1.1.8.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: f60f5f5f-3aa8-49de-85fb-95841bb73bdb -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Executor Transformation Primitive.
 
-######### A.6.1.1.5.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: b1246162-614d-42b8-b648-474ba79b22aa -->
+######### A.6.1.1.8.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: b1246162-614d-42b8-b648-474ba79b22aa -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 33335844-6cd7-4135-9134-bc1ebbd06690 -->
+######### A.6.1.1.8.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 33335844-6cd7-4135-9134-bc1ebbd06690 -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: dddd885e-2600-4947-8c0a-8082e4121753 -->
+######### A.6.1.1.8.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: dddd885e-2600-4947-8c0a-8082e4121753 -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 09e544ef-8565-49d2-8dd6-e1b0aa53cb21 -->
+######### A.6.1.1.8.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 09e544ef-8565-49d2-8dd6-e1b0aa53cb21 -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: fecb494b-fbc2-467d-88df-df2a8a0e0786 -->
+######### A.6.1.1.8.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: fecb494b-fbc2-467d-88df-df2a8a0e0786 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 838893af-76a9-4d49-94d4-51f7e82fa537 -->
+########## A.6.1.1.8.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 838893af-76a9-4d49-94d4-51f7e82fa537 -->
 
 The subtrees for archived Invocations and Instances of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 4f338613-eee5-40c7-bcb4-7dd32e81008d -->
+########### A.6.1.1.8.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 4f338613-eee5-40c7-bcb4-7dd32e81008d -->
 
 The subtrees for failed Invocations of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.5.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: e526b717-2105-41c5-9686-4387d7ef3b24 -->
+########### A.6.1.1.8.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: e526b717-2105-41c5-9686-4387d7ef3b24 -->
 
 The subtrees for Instances of the Executor Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.1.3.2 - Active Instances [Core]  <!-- UUID: 661072a0-b9cd-4ac9-b1d0-cc0f5626dd6d -->
+######## A.6.1.1.8.2.1.3.2 - Active Instances [Core]  <!-- UUID: 661072a0-b9cd-4ac9-b1d0-cc0f5626dd6d -->
 
 The Instances of the Executor Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 08f562a1-4694-45a4-91b8-008876a413ff -->
+######## A.6.1.1.8.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 08f562a1-4694-45a4-91b8-008876a413ff -->
 
 The Instances of the Executor Transformation Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 3218078d-249f-4d41-ae72-c53ac02ab033 -->
+######## A.6.1.1.8.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 3218078d-249f-4d41-ae72-c53ac02ab033 -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.5.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: a4708a14-1030-4935-a4a5-103826d9d4a5 -->
+####### A.6.1.1.8.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: a4708a14-1030-4935-a4a5-103826d9d4a5 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instance of the Agent Token Primitive. See [A.2.4 - Agent Token Primitive](2047c361-db28-4952-a70c-83d07b562064).
 
-######## A.6.1.1.5.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: ffa68419-fc61-4b60-a4d5-7c1ca4aace6d -->
+######## A.6.1.1.8.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: ffa68419-fc61-4b60-a4d5-7c1ca4aace6d -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Agent Token Primitive.
 
-######### A.6.1.1.5.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: 3ac79f75-348c-4329-ba78-53b4882662cc -->
+######### A.6.1.1.8.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: 3ac79f75-348c-4329-ba78-53b4882662cc -->
 
 `Active`
 
-######### A.6.1.1.5.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: e1785e8c-71e2-4646-867d-bcca3e4704a7 -->
+######### A.6.1.1.8.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: e1785e8c-71e2-4646-867d-bcca3e4704a7 -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 5402a5c2-0b48-4ebd-9689-ab990578a72c -->
+########## A.6.1.1.8.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 5402a5c2-0b48-4ebd-9689-ab990578a72c -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](6e4d6787-4bd7-485f-b378-6dc83dc860cc).
 
-######### A.6.1.1.5.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: 42ff09a3-7286-419f-a64c-fd69e480300b -->
+######### A.6.1.1.8.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: 42ff09a3-7286-419f-a64c-fd69e480300b -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f6b2bff2-c924-45f9-ae70-32e25fd621fc -->
+######### A.6.1.1.8.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f6b2bff2-c924-45f9-ae70-32e25fd621fc -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 4e57c90f-df6f-41e6-ba60-129e515967b5 -->
+######### A.6.1.1.8.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 4e57c90f-df6f-41e6-ba60-129e515967b5 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: feb8e6d3-298d-4f4f-ba31-1113cc2a9e24 -->
+########## A.6.1.1.8.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: feb8e6d3-298d-4f4f-ba31-1113cc2a9e24 -->
 
 The subtrees for archived Invocations and Instances of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.5.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fa96fe93-4825-4d52-9050-05e922e44682 -->
+########### A.6.1.1.8.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fa96fe93-4825-4d52-9050-05e922e44682 -->
 
 The subtrees for failed Invocations of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.5.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4fa6c164-ab33-49c3-9a94-d044d6a9e551 -->
+########### A.6.1.1.8.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4fa6c164-ab33-49c3-9a94-d044d6a9e551 -->
 
 The subtrees for Instances of the Agent Token Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.1.4.2 - Active Instances [Core]  <!-- UUID: 67fce1f3-961f-479c-b0f9-ccb03a260b83 -->
+######## A.6.1.1.8.2.1.4.2 - Active Instances [Core]  <!-- UUID: 67fce1f3-961f-479c-b0f9-ccb03a260b83 -->
 
 The Instances of the Agent Token Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 6e4d6787-4bd7-485f-b378-6dc83dc860cc -->
+######### A.6.1.1.8.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 6e4d6787-4bd7-485f-b378-6dc83dc860cc -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Token Primitive Instance.
 
-########## A.6.1.1.5.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: 50b46486-6b4c-494a-90dc-e077e77564eb -->
+########## A.6.1.1.8.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: 50b46486-6b4c-494a-90dc-e077e77564eb -->
 
 The documents herein define the parameters of the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.5.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 1b5f18b6-ca5f-4c2a-be90-a8e270643e9b -->
+########### A.6.1.1.8.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 1b5f18b6-ca5f-4c2a-be90-a8e270643e9b -->
 
 The name of Launch Agent 3’s token is Launch Agent 3.
 
-########### A.6.1.1.5.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 8eb04812-6fe7-43dc-a461-afa09b992cc8 -->
+########### A.6.1.1.8.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 8eb04812-6fe7-43dc-a461-afa09b992cc8 -->
 
 The symbol of Launch Agent 3’s token is AGENT3.
 
-########### A.6.1.1.5.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: bc80a5e5-4ef7-4255-9e97-848c9cbbeb36 -->
+########### A.6.1.1.8.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: bc80a5e5-4ef7-4255-9e97-848c9cbbeb36 -->
 
 The Genesis Supply of AGENT3 will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: b2270863-75e9-42f6-8c25-749a0f83dcb5 -->
+########### A.6.1.1.8.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: b2270863-75e9-42f6-8c25-749a0f83dcb5 -->
 
 The address of AGENT3 will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 1f692794-fc64-4cf8-86a7-fabc865eb428 -->
+########### A.6.1.1.8.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 1f692794-fc64-4cf8-86a7-fabc865eb428 -->
 
 The token Admin will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: f56670f9-5a43-4b47-b94a-99026f8d87c0 -->
+########### A.6.1.1.8.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: f56670f9-5a43-4b47-b94a-99026f8d87c0 -->
 
 Token emissions beyond the Genesis Supply are permanently disabled; this cannot be reverted by Launch Agent 3 Governance. Sky Governance retains the ability to revert where Launch Agent 3 is in violation of Risk Capital requirements and emissions are required by the Risk Framework. See [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
 
-########### A.6.1.1.5.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: 65437b13-60b3-4e22-ab0c-c6e5b29756a0 -->
+########### A.6.1.1.8.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: 65437b13-60b3-4e22-ab0c-c6e5b29756a0 -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Token Primitive, if any.
 
-########## A.6.1.1.5.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 652b94ef-66e3-40fe-ba80-4ce5c3d27f03 -->
+########## A.6.1.1.8.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 652b94ef-66e3-40fe-ba80-4ce5c3d27f03 -->
 
 The documents herein define the operational processes for minting and initial distribution of the tokens from the Genesis Supply.
 - These processes will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########## A.6.1.1.5.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 5f286327-f846-432a-98d5-31b8ecff7a8c -->
+########## A.6.1.1.8.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 5f286327-f846-432a-98d5-31b8ecff7a8c -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.5.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 05259bea-0f5e-4afc-8279-fbd98516d7ac -->
+########### A.6.1.1.8.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 05259bea-0f5e-4afc-8279-fbd98516d7ac -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: b146e772-2d00-456b-8ba7-536ea733c34a -->
+########### A.6.1.1.8.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: b146e772-2d00-456b-8ba7-536ea733c34a -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: a66316d6-e4be-4ff5-b894-4c8fa3d1285c -->
+########### A.6.1.1.8.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: a66316d6-e4be-4ff5-b894-4c8fa3d1285c -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.1.4.3 - Completed Instances [Core]  <!-- UUID: ba6be9cd-0812-4098-89f3-2e813948a3f8 -->
+######## A.6.1.1.8.2.1.4.3 - Completed Instances [Core]  <!-- UUID: ba6be9cd-0812-4098-89f3-2e813948a3f8 -->
 
 The Instances of the Agent Token Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: 24237950-dcfc-4ca7-932f-c808bc521a10 -->
+######## A.6.1.1.8.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: 24237950-dcfc-4ca7-932f-c808bc521a10 -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.5.2.2 - Operational Primitives [Core]  <!-- UUID: b0336f9e-09fd-415f-a86d-57220811dc80 -->
+###### A.6.1.1.8.2.2 - Operational Primitives [Core]  <!-- UUID: b0336f9e-09fd-415f-a86d-57220811dc80 -->
 
 The documents herein implement the Operational Primitives for Launch Agent 3. See [A.2.4 - A5 - Operational Primitives](0192ec95-9207-480e-8c51-88d2a1da95ad).
 
-####### A.6.1.1.5.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: bb6c188b-ae69-4573-8104-44f9577427a1 -->
+####### A.6.1.1.8.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: bb6c188b-ae69-4573-8104-44f9577427a1 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Executor Accord Primitive. See [A.2.4 - Executor Accord Primitive](88017877-3ec1-4c43-a035-6bebdf11d9bb).
 
-######## A.6.1.1.5.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8f799c9e-618c-407f-a4a1-899f32d13d52 -->
+######## A.6.1.1.8.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8f799c9e-618c-407f-a4a1-899f32d13d52 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Executor Accord Primitive.
 
-######### A.6.1.1.5.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 3018b2d6-65e3-41af-90ae-f4275e862e13 -->
+######### A.6.1.1.8.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 3018b2d6-65e3-41af-90ae-f4275e862e13 -->
 
 `Active`
 
-######### A.6.1.1.5.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: d9493bdc-074e-4a87-af74-5e7826b541be -->
+######### A.6.1.1.8.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: d9493bdc-074e-4a87-af74-5e7826b541be -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.2.1.1.2.1 - Amatsu Instance Configuration Document Location [Core]  <!-- UUID: e396aca8-3823-452e-8bdd-21b0e0e54083 -->
+########## A.6.1.1.8.2.2.1.1.2.1 - Amatsu Instance Configuration Document Location [Core]  <!-- UUID: e396aca8-3823-452e-8bdd-21b0e0e54083 -->
 
 This Instance’s associated Instance Configuration Document is located at [Amatsu Instance Configuration Document](ff142a80-adb5-49da-87d8-62aabdb36b10).
 
-######### A.6.1.1.5.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f1f78b17-7c65-4d8c-9066-315c25ed8f2d -->
+######### A.6.1.1.8.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f1f78b17-7c65-4d8c-9066-315c25ed8f2d -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 9b42623e-e6fb-4c18-a291-d5ed18634e39 -->
+######### A.6.1.1.8.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 9b42623e-e6fb-4c18-a291-d5ed18634e39 -->
 
 This document contains a Directory of all prospective Instances of the Executor Accord Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](d9493bdc-074e-4a87-af74-5e7826b541be), whereas failed Invocations are Archived in [Hub Data Repository](c2daebbe-e96d-4201-a5df-725b9ef64780).
 
-######### A.6.1.1.5.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: c2daebbe-e96d-4201-a5df-725b9ef64780 -->
+######### A.6.1.1.8.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: c2daebbe-e96d-4201-a5df-725b9ef64780 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3d2a4d73-e717-4276-a608-13a92cd5b33c -->
+########## A.6.1.1.8.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3d2a4d73-e717-4276-a608-13a92cd5b33c -->
 
 The subtrees for archived Invocations and Instances of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.5.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 85735314-b04b-48f5-b5cd-f1c9f8ff3614 -->
+########### A.6.1.1.8.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 85735314-b04b-48f5-b5cd-f1c9f8ff3614 -->
 
 The subtrees for failed Invocations of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.5.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2250b3d8-6d7f-4454-80a7-3a2beba3cb37 -->
+########### A.6.1.1.8.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2250b3d8-6d7f-4454-80a7-3a2beba3cb37 -->
 
 The subtrees for Instances of the Executor Accord Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.2.1.2 - Active Instances [Core]  <!-- UUID: 830ba0df-d50e-4d8f-bef4-a8febf06d276 -->
+######## A.6.1.1.8.2.2.1.2 - Active Instances [Core]  <!-- UUID: 830ba0df-d50e-4d8f-bef4-a8febf06d276 -->
 
 The Instances of the Executor Accord Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.2.1.2.1 - Amatsu Instance Configuration Document [Core]  <!-- UUID: ff142a80-adb5-49da-87d8-62aabdb36b10 -->
+######### A.6.1.1.8.2.2.1.2.1 - Amatsu Instance Configuration Document [Core]  <!-- UUID: ff142a80-adb5-49da-87d8-62aabdb36b10 -->
 
 The documents herein contain the Instance Configuration Document for the Amatsu Executor Accord Primitive Instance.
 
-########## A.6.1.1.5.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: cdcae493-a9b6-4b08-8b03-6f4c7c76eb25 -->
+########## A.6.1.1.8.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: cdcae493-a9b6-4b08-8b03-6f4c7c76eb25 -->
 
 The documents herein define the parameters of the Amatsu Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.5.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: 82200234-6b7c-4299-a552-66ceac3be5e6 -->
+########### A.6.1.1.8.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: 82200234-6b7c-4299-a552-66ceac3be5e6 -->
 
 In the near term Amatsu will take on the functions of an Operational Executor Agent, including both Operational GovOps and Operational Facilitator roles.
 
-########### A.6.1.1.5.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 822596a6-882f-416f-bc13-4986b1bf4052 -->
+########### A.6.1.1.8.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 822596a6-882f-416f-bc13-4986b1bf4052 -->
 
 The documents herein define the custom parameters of the Amatsu Instance of the Executor Accord Primitive, if any.
 
-########## A.6.1.1.5.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 27e3f4f9-6433-4cd5-b4db-7f67b3fb6cdf -->
+########## A.6.1.1.8.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 27e3f4f9-6433-4cd5-b4db-7f67b3fb6cdf -->
 
 The documents herein define the process for the ongoing management of the Amatsu Instance of the Executor Accord Primitive.
 
-########## A.6.1.1.5.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 5120e81d-c44f-47ec-a19a-dff5d4abf152 -->
+########## A.6.1.1.8.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 5120e81d-c44f-47ec-a19a-dff5d4abf152 -->
 
 The documents herein contain data relevant to the Amatsu Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.5.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 0f2d0ae7-1aa7-4692-9f36-dd00b119885e -->
+########### A.6.1.1.8.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 0f2d0ae7-1aa7-4692-9f36-dd00b119885e -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0bb80f80-c2c0-43f1-8783-b2a2bdbcc09b -->
+########### A.6.1.1.8.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0bb80f80-c2c0-43f1-8783-b2a2bdbcc09b -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 659ad2e7-f1af-4bd4-b5c1-8624ba7f169e -->
+########### A.6.1.1.8.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 659ad2e7-f1af-4bd4-b5c1-8624ba7f169e -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.2.1.3 - Completed Instances [Core]  <!-- UUID: 03bf33b4-f74d-4b40-a1a0-e34e19b30318 -->
+######## A.6.1.1.8.2.2.1.3 - Completed Instances [Core]  <!-- UUID: 03bf33b4-f74d-4b40-a1a0-e34e19b30318 -->
 
 The Instances of the Executor Accord Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: a25a57e2-64b9-4e78-89d6-c2d68b388348 -->
+######## A.6.1.1.8.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: a25a57e2-64b9-4e78-89d6-c2d68b388348 -->
 
 The in progress Invocations of the Executor Accord Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](830ba0df-d50e-4d8f-bef4-a8febf06d276).
 
-####### A.6.1.1.5.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: 24517c43-dec9-44ec-bc03-e76671dc2e74 -->
+####### A.6.1.1.8.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: 24517c43-dec9-44ec-bc03-e76671dc2e74 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instance of the Root Edit Primitive. See [A.2.4 - Root Edit Primitive](78488c6b-d77f-4344-b954-476e415a2c7d).
 
-######## A.6.1.1.5.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: 787f01b6-0503-49aa-8dd1-f08ad222a5c9 -->
+######## A.6.1.1.8.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: 787f01b6-0503-49aa-8dd1-f08ad222a5c9 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Root Edit Primitive.
 
-######### A.6.1.1.5.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: a70572a2-e643-49a1-afa2-3b25c5118c92 -->
+######### A.6.1.1.8.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: a70572a2-e643-49a1-afa2-3b25c5118c92 -->
 
 `Active`
 
-######### A.6.1.1.5.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 0a03859b-466d-43bf-905d-fd6410fecc19 -->
+######### A.6.1.1.8.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 0a03859b-466d-43bf-905d-fd6410fecc19 -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 318fedce-fb39-450e-986a-4e0886b33dc5 -->
+########## A.6.1.1.8.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 318fedce-fb39-450e-986a-4e0886b33dc5 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](5c13949f-831a-4574-8942-ceaa4da11b9d).
 
-######### A.6.1.1.5.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: e5d7b405-1839-472b-8b3d-fd30818e17fb -->
+######### A.6.1.1.8.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: e5d7b405-1839-472b-8b3d-fd30818e17fb -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b754f376-5aef-4631-bf68-fb34dc02ac62 -->
+######### A.6.1.1.8.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b754f376-5aef-4631-bf68-fb34dc02ac62 -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: e2d6993d-f8e2-4e39-9e30-6693eddb5643 -->
+######### A.6.1.1.8.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: e2d6993d-f8e2-4e39-9e30-6693eddb5643 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 7af6212a-d0e0-4148-8d06-f825a97289ec -->
+########## A.6.1.1.8.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 7af6212a-d0e0-4148-8d06-f825a97289ec -->
 
 The subtrees for archived Invocations and Instances of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.5.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ac66a16-2aa3-4909-bf50-168e118bb5ba -->
+########### A.6.1.1.8.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ac66a16-2aa3-4909-bf50-168e118bb5ba -->
 
 The subtrees for failed Invocations of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.5.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 19493456-a088-49db-b65a-34ce5928b750 -->
+########### A.6.1.1.8.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 19493456-a088-49db-b65a-34ce5928b750 -->
 
 The subtrees for Instances of the Root Edit Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.2.2.2 - Active Instances [Core]  <!-- UUID: ab9a8ca8-5bcf-4846-8740-12ea03ee8158 -->
+######## A.6.1.1.8.2.2.2.2 - Active Instances [Core]  <!-- UUID: ab9a8ca8-5bcf-4846-8740-12ea03ee8158 -->
 
 The Instances of the Root Edit Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 5c13949f-831a-4574-8942-ceaa4da11b9d -->
+######### A.6.1.1.8.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 5c13949f-831a-4574-8942-ceaa4da11b9d -->
 
 The documents herein contain the Instance Configuration Document for the Single Root Edit Primitive Instance.
 
-########## A.6.1.1.5.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 9d5d586e-1840-49f3-9716-20d661f023ce -->
+########## A.6.1.1.8.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 9d5d586e-1840-49f3-9716-20d661f023ce -->
 
 The parameters of the Root Edit Primitive are fully specified by the Operational Process Definition in [Operational Process Definition](010ed495-c693-4d27-8c18-aa24b64e2715).
 
-########## A.6.1.1.5.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 010ed495-c693-4d27-8c18-aa24b64e2715 -->
+########## A.6.1.1.8.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 010ed495-c693-4d27-8c18-aa24b64e2715 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 3 Agent Artifact. Information on Launch Agent 3 governance that is unrelated to the use of the Root Edit Primitive is located at [Governance Information Unrelated To Root Edit Primitive](70804058-8a1b-45ee-bf21-b09a5daefdb9).
 
-########### A.6.1.1.5.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 759db362-3e1b-4ee8-b07e-9c61f7818154 -->
+########### A.6.1.1.8.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 759db362-3e1b-4ee8-b07e-9c61f7818154 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 3 Agent Artifact in routine or normal conditions (i.e., non-emergency situations).
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: f57f157c-c260-4671-8150-01acabcd286d -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: f57f157c-c260-4671-8150-01acabcd286d -->
 
 The Root Edit process begins with an AGENT3 token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. An AGENT3 token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Launch Agent 3 Prime” category.
 
-############# A.6.1.1.5.2.2.2.2.1.2.1.1.1 - Root Edit Proposal Submission Requirements Exception [Core]  <!-- UUID: 502d08e5-d705-4443-bb71-f29580847d74 -->
+############# A.6.1.1.8.2.2.2.2.1.2.1.1.1 - Root Edit Proposal Submission Requirements Exception [Core]  <!-- UUID: 502d08e5-d705-4443-bb71-f29580847d74 -->
 
 For proposals that solely entail a buyback or a grant of AGENT3 tokens, the requirement that AGENT3 token holders must hold at least 1% of the circulating token supply to submit a proposal is waived. However, all other procedural requirements within the Root Edit process continue to apply.
 
-############# A.6.1.1.5.2.2.2.2.1.2.1.1.2 - Short-Term Transitionary Measures [Core]  <!-- UUID: f88fc097-7e41-41d7-aac9-992a9a11919f -->
+############# A.6.1.1.8.2.2.2.2.1.2.1.1.2 - Short-Term Transitionary Measures [Core]  <!-- UUID: f88fc097-7e41-41d7-aac9-992a9a11919f -->
 
 Until the Powerhouse system supports submitting Artifact Edit Proposals, AGENT3 token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Launch Agent 3 Prime” category. The title of the post must include the text “Launch Agent 3 Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total AGENT3 token supply specified in [Root Edit Proposal Submission](f57f157c-c260-4671-8150-01acabcd286d).
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: 451079fe-fd11-4fef-ae51-6cb533a644c5 -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: 451079fe-fd11-4fef-ae51-6cb533a644c5 -->
 
 A future iteration of the Launch Agent 3 Artifact will specify guidelines for obtaining specialized review of proposals requiring advanced technical or financial analysis.
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: 76b51e97-ff82-4f52-8c24-7b75d629bb4a -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: 76b51e97-ff82-4f52-8c24-7b75d629bb4a -->
 
 Within seven (7) days of the proposal being submitted, the Operational Facilitator must review the Root Edit Proposal for alignment. 
 
@@ -29880,499 +30310,499 @@ If the proposal is aligned, the Operational Facilitator must respond to the Foru
 
 If the proposal is misaligned, the Operational Facilitator must respond to the Forum post to announce their finding and provide the reasoning for it.
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: 836b9942-8fdf-46df-bf38-f5adf87eb390 -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: 836b9942-8fdf-46df-bf38-f5adf87eb390 -->
 
 Where their review of the proposal results in a finding of alignment with the Sky Core Atlas and Launch Agent 3 Artifact, the Operational Facilitator next triggers a Snapshot poll to allow token holders to vote on the proposal. The poll is open for three (3) days. A poll must have at least 10% of the circulating token supply participating and must have more than 50% of votes cast, excluding abstentions, in favor to be approved.
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: b91f0f85-680d-4eeb-9a2e-7e0e245e4c6d -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: b91f0f85-680d-4eeb-9a2e-7e0e245e4c6d -->
 
 At the conclusion of the poll, if the proposal is approved, the Operational Facilitator submits the edit to Powerhouse to formally update the Agent Artifact. Regardless of the outcome, the Operational Facilitator updates the Powerhouse System to include the result of the vote, including any pertinent documents.
 
-############# A.6.1.1.5.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: 1adf5e90-53a8-4036-9964-11430891137e -->
+############# A.6.1.1.8.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: 1adf5e90-53a8-4036-9964-11430891137e -->
 
 Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Governance Facilitators to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
 
-############ A.6.1.1.5.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: f3e8ecec-cb08-4682-9218-d13f567fc00e -->
+############ A.6.1.1.8.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: f3e8ecec-cb08-4682-9218-d13f567fc00e -->
 
 The Launch Agent 3 Artifact cannot be edited in any way that violates the Sky Core Atlas or its specifications of the Sky Primitives, or in any way that is otherwise misaligned. The Operational Facilitator must enforce this rule through their review of Artifact Edit Proposals.
 
-########### A.6.1.1.5.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: e5477d87-ecc4-4eab-9e11-fe8d76791048 -->
+########### A.6.1.1.8.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: e5477d87-ecc4-4eab-9e11-fe8d76791048 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 3 Agent Artifact in non-routine conditions.
 
-########### A.6.1.1.5.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 368ff139-9c2c-4b41-955e-e374996ad274 -->
+########### A.6.1.1.8.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 368ff139-9c2c-4b41-955e-e374996ad274 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 3 Agent Artifact in urgent or emergency situations.
 
-############ A.6.1.1.5.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Urgent and Emergency Situations [Core]  <!-- UUID: 5edc65d7-8023-4c03-b399-958c5f8869ff -->
+############ A.6.1.1.8.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Urgent and Emergency Situations [Core]  <!-- UUID: 5edc65d7-8023-4c03-b399-958c5f8869ff -->
 
 In an Urgent or Emergency Situation, as defined by the Sky Core Atlas in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](5eafb29e-84a0-4a53-a798-3f958c880225), the Operational Facilitator may allow a Root Edit to occur more quickly than the timeline specified above. Where feasible, the Operational Facilitator should announce the decision to deploy the emergency Root Edit protocol and provide their reasoning via a public Sky Forum post (under the “Launch Agent 3 Prime” category), unless doing so would endanger Launch Agent 3 or its users.
 
-########## A.6.1.1.5.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 6f533a79-4263-4b1b-9d47-9ab9e670f0f0 -->
+########## A.6.1.1.8.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 6f533a79-4263-4b1b-9d47-9ab9e670f0f0 -->
 
 The documents herein contain data relevant to the Single Instance of the Root Edit Primitive.
 
-########### A.6.1.1.5.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 112386b9-0c60-4224-8d39-a43b2805f351 -->
+########### A.6.1.1.8.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 112386b9-0c60-4224-8d39-a43b2805f351 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d9ebdf09-8d8e-4b14-a3f3-08a0d7579e92 -->
+########### A.6.1.1.8.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: d9ebdf09-8d8e-4b14-a3f3-08a0d7579e92 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 91159367-dcf2-4c55-ae77-0ca91da4fb91 -->
+########### A.6.1.1.8.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 91159367-dcf2-4c55-ae77-0ca91da4fb91 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.2.2.3 - Completed Instances [Core]  <!-- UUID: 6840069f-a930-42ad-8fad-8224876da285 -->
+######## A.6.1.1.8.2.2.2.3 - Completed Instances [Core]  <!-- UUID: 6840069f-a930-42ad-8fad-8224876da285 -->
 
 The Instances of the Root Edit Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: 492351ef-6e00-450c-8689-e7dd0c171a55 -->
+######## A.6.1.1.8.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: 492351ef-6e00-450c-8689-e7dd0c171a55 -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.5.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: ceb79469-e43e-4640-9507-5d1d4eaea3cb -->
+####### A.6.1.1.8.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: ceb79469-e43e-4640-9507-5d1d4eaea3cb -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Light Agent Primitive. See [A.2.4 - Light Agent Primitive](44028423-2cd1-40cb-89ac-3f762b602b90).
 
-######## A.6.1.1.5.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: 04e7dd63-49ab-42dd-b195-1e309d7295c9 -->
+######## A.6.1.1.8.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: 04e7dd63-49ab-42dd-b195-1e309d7295c9 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Light Agent Primitive.
 
-######### A.6.1.1.5.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: 1db03594-b529-4330-a4d9-536178be4303 -->
+######### A.6.1.1.8.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: 1db03594-b529-4330-a4d9-536178be4303 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 66f80060-6404-4cde-8059-ee8f220f952b -->
+######### A.6.1.1.8.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 66f80060-6404-4cde-8059-ee8f220f952b -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7802509b-d232-4e04-b658-1f34621112a0 -->
+######### A.6.1.1.8.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7802509b-d232-4e04-b658-1f34621112a0 -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 8f764154-a5d2-4cd6-ba54-537dbe785f6c -->
+######### A.6.1.1.8.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 8f764154-a5d2-4cd6-ba54-537dbe785f6c -->
 
 This document contains a Directory of all prospective Instances of the Light Agent Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](66f80060-6404-4cde-8059-ee8f220f952b), whereas failed Invocations are Archived in [Hub Data Repository](7561a59b-425a-405d-ba35-1892a282dd2b).
 
-######### A.6.1.1.5.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 7561a59b-425a-405d-ba35-1892a282dd2b -->
+######### A.6.1.1.8.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 7561a59b-425a-405d-ba35-1892a282dd2b -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 52ce096b-fba4-40ef-9164-a5ec944c59ad -->
+########## A.6.1.1.8.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 52ce096b-fba4-40ef-9164-a5ec944c59ad -->
 
 The subtrees for archived Invocations and Instances of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.5.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 4bfb3a1c-ac80-4a42-8760-0e83dd562fed -->
+########### A.6.1.1.8.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 4bfb3a1c-ac80-4a42-8760-0e83dd562fed -->
 
 The subtrees for failed Invocations of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.5.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 5c197fb1-5da3-414e-aa18-17eaf2f1701f -->
+########### A.6.1.1.8.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 5c197fb1-5da3-414e-aa18-17eaf2f1701f -->
 
 The subtrees for Instances of the Light Agent Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.2.3.2 - Active Instances [Core]  <!-- UUID: 1a09ba55-2b66-40e7-83d0-7ff144d2575b -->
+######## A.6.1.1.8.2.2.3.2 - Active Instances [Core]  <!-- UUID: 1a09ba55-2b66-40e7-83d0-7ff144d2575b -->
 
 The Instances of the Light Agent Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 2546a8ae-ca91-4190-96e3-b06f160d073c -->
+######## A.6.1.1.8.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 2546a8ae-ca91-4190-96e3-b06f160d073c -->
 
 The Instances of the Light Agent Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: fe73fbe5-570b-4388-8934-ab6605d89dd5 -->
+######## A.6.1.1.8.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: fe73fbe5-570b-4388-8934-ab6605d89dd5 -->
 
 The in progress Invocations of the Light Agent Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](1a09ba55-2b66-40e7-83d0-7ff144d2575b).
 
-###### A.6.1.1.5.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: 833c1933-d81e-4653-af2c-aa03aac70883 -->
+###### A.6.1.1.8.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: 833c1933-d81e-4653-af2c-aa03aac70883 -->
 
 The documents herein implement the Ecosystem Upkeep Primitives for Launch Agent 3. See [A.2.4 - A6 - Ecosystem Upkeep Primitives](25673fd2-76cb-4c4d-8ec6-8c489207bcfc).
 
-####### A.6.1.1.5.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: c6ef4a5c-d6f4-42d6-8800-6b7a40e64f50 -->
+####### A.6.1.1.8.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: c6ef4a5c-d6f4-42d6-8800-6b7a40e64f50 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instance of the Distribution Requirement Primitive. See [A.2.4 - Distribution Requirement Primitive](0804ab13-d276-4ad9-a935-dc9f7fc2e350).
 
-######## A.6.1.1.5.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 9beebf8b-dfd4-40b4-8de1-f5a3f4a60824 -->
+######## A.6.1.1.8.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 9beebf8b-dfd4-40b4-8de1-f5a3f4a60824 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Distribution Requirement Primitive.
 
-######### A.6.1.1.5.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: dbb03eb2-d193-4193-93c7-1d874b9995f3 -->
+######### A.6.1.1.8.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: dbb03eb2-d193-4193-93c7-1d874b9995f3 -->
 
 `Active`
 
-######### A.6.1.1.5.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: a5e68fe6-a420-4960-ac74-b02c01366315 -->
+######### A.6.1.1.8.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: a5e68fe6-a420-4960-ac74-b02c01366315 -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: c0ea44a4-98d9-427c-a570-6f94574bbf94 -->
+########## A.6.1.1.8.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: c0ea44a4-98d9-427c-a570-6f94574bbf94 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](2426a22f-8760-412f-bf21-e69c72787a9b).
 
-######### A.6.1.1.5.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f2c07b3e-d18d-4443-8b73-386a2d5c370b -->
+######### A.6.1.1.8.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f2c07b3e-d18d-4443-8b73-386a2d5c370b -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cf55b39f-204e-49b0-82fd-df87a22fd23f -->
+######### A.6.1.1.8.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cf55b39f-204e-49b0-82fd-df87a22fd23f -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: cc9f3e40-bcec-49c9-a0ff-5d204c40b890 -->
+######### A.6.1.1.8.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: cc9f3e40-bcec-49c9-a0ff-5d204c40b890 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9bd4f238-f94c-4532-8001-c80d3f74febf -->
+########## A.6.1.1.8.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9bd4f238-f94c-4532-8001-c80d3f74febf -->
 
 The subtrees for archived Invocations and Instances of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.5.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 250cba14-19c6-4211-af5b-33f0b78cc3f8 -->
+########### A.6.1.1.8.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 250cba14-19c6-4211-af5b-33f0b78cc3f8 -->
 
 The subtrees for failed Invocations of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.5.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2118c398-b73f-401a-b71f-55d1fca06b29 -->
+########### A.6.1.1.8.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 2118c398-b73f-401a-b71f-55d1fca06b29 -->
 
 The subtrees for Instances of the Distribution Requirement Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.3.1.2 - Active Instances [Core]  <!-- UUID: 4359d5d0-a404-4004-8cff-d552338df2f0 -->
+######## A.6.1.1.8.2.3.1.2 - Active Instances [Core]  <!-- UUID: 4359d5d0-a404-4004-8cff-d552338df2f0 -->
 
 The Instances of the Distribution Requirement Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 2426a22f-8760-412f-bf21-e69c72787a9b -->
+######### A.6.1.1.8.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 2426a22f-8760-412f-bf21-e69c72787a9b -->
 
 The documents herein contain the Instance Configuration Document for the Single Distribution Requirement Primitive Instance.
 
-########## A.6.1.1.5.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: 734f47d3-adf3-46a0-972c-f8d37a8d009e -->
+########## A.6.1.1.8.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: 734f47d3-adf3-46a0-972c-f8d37a8d009e -->
 
 The documents herein define the parameters of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.5.2.3.1.2.1.1.1 - Terms [Core]  <!-- UUID: 69b65ee6-746a-4d78-8d60-ec40ca2bb6b4 -->
+########### A.6.1.1.8.2.3.1.2.1.1.1 - Terms [Core]  <!-- UUID: 69b65ee6-746a-4d78-8d60-ec40ca2bb6b4 -->
 
 Launch Agent 3 will buy back and distribute 0.25% of its total token supply per year.
 
-########### A.6.1.1.5.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 61232bcd-4510-4ed1-8ede-14d744329c27 -->
+########### A.6.1.1.8.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 61232bcd-4510-4ed1-8ede-14d744329c27 -->
 
 The documents herein define the custom parameters of the Single Instance of the Distribution Requirement Primitive, if any.
 
-########## A.6.1.1.5.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 8c10d49d-6238-4cdb-b62e-32bb080b7b0b -->
+########## A.6.1.1.8.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 8c10d49d-6238-4cdb-b62e-32bb080b7b0b -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.5.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 6ca26507-85f1-4169-a2a2-156046847257 -->
+########### A.6.1.1.8.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 6ca26507-85f1-4169-a2a2-156046847257 -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-############ A.6.1.1.5.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: e2db4ada-d8af-4481-963b-8ed8adfbd18d -->
+############ A.6.1.1.8.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: e2db4ada-d8af-4481-963b-8ed8adfbd18d -->
 
 The process to buy back and distribute 0.25% of Launch Agent 3’s tokens per year will be specified in future iterations of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: df35e2e9-116d-4a1c-95d7-1e4b8acdd1c3 -->
+########### A.6.1.1.8.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: df35e2e9-116d-4a1c-95d7-1e4b8acdd1c3 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########### A.6.1.1.5.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 85815a3a-08b9-4917-b8a5-6c87f5dcd391 -->
+########### A.6.1.1.8.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 85815a3a-08b9-4917-b8a5-6c87f5dcd391 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########## A.6.1.1.5.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 26c81439-ed26-4d69-bd32-cc486058fb6f -->
+########## A.6.1.1.8.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 26c81439-ed26-4d69-bd32-cc486058fb6f -->
 
 The documents herein contain data relevant to the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.5.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 1285deb9-39ff-400c-a82c-2ec2e7b4d216 -->
+########### A.6.1.1.8.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 1285deb9-39ff-400c-a82c-2ec2e7b4d216 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: db3e6b81-f383-4269-8cab-e94e47abc891 -->
+########### A.6.1.1.8.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: db3e6b81-f383-4269-8cab-e94e47abc891 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: e877196c-33d9-48dd-b188-fe5c70c68d00 -->
+########### A.6.1.1.8.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: e877196c-33d9-48dd-b188-fe5c70c68d00 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.3.1.3 - Completed Instances [Core]  <!-- UUID: ce66e2db-bbb6-4f33-9b3b-cc3b913f6459 -->
+######## A.6.1.1.8.2.3.1.3 - Completed Instances [Core]  <!-- UUID: ce66e2db-bbb6-4f33-9b3b-cc3b913f6459 -->
 
 The Instances of the Distribution Requirement Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: c67cbd36-a096-41fb-a210-8547a733a724 -->
+######## A.6.1.1.8.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: c67cbd36-a096-41fb-a210-8547a733a724 -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.5.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: 73c34ab2-f346-4c19-8bfa-c96b8c528a54 -->
+####### A.6.1.1.8.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: 73c34ab2-f346-4c19-8bfa-c96b8c528a54 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s instances of the Market Cap Fee Primitive. See [A.2.4 - Market Cap Fee Primitive](a21616f4-1611-4e0b-87b2-efbdff9f6f28).
 
-######## A.6.1.1.5.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: f7130548-974b-4c23-a3f6-677cb75250bc -->
+######## A.6.1.1.8.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: f7130548-974b-4c23-a3f6-677cb75250bc -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Market Cap Fee Primitive.
 
-######### A.6.1.1.5.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 0e6e03a7-cb5f-432e-b599-01e783b0c179 -->
+######### A.6.1.1.8.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 0e6e03a7-cb5f-432e-b599-01e783b0c179 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: fe230947-a16b-4182-b55e-70c91c0921df -->
+######### A.6.1.1.8.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: fe230947-a16b-4182-b55e-70c91c0921df -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 8eb939db-8edf-4705-8c9f-6f5af367d502 -->
+######### A.6.1.1.8.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 8eb939db-8edf-4705-8c9f-6f5af367d502 -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: edea3177-ecd8-4724-8a52-12f59230a88c -->
+######### A.6.1.1.8.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: edea3177-ecd8-4724-8a52-12f59230a88c -->
 
 This document contains a Directory of all prospective Instances of the Market Cap Fee Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](fe230947-a16b-4182-b55e-70c91c0921df), whereas failed Invocations are Archived in [Hub Data Repository](a12c0c41-0ab3-4374-ba6f-080ea1674372).
 
-######### A.6.1.1.5.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a12c0c41-0ab3-4374-ba6f-080ea1674372 -->
+######### A.6.1.1.8.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a12c0c41-0ab3-4374-ba6f-080ea1674372 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 960c84bc-0896-4620-8f35-75a8fc34a79d -->
+########## A.6.1.1.8.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 960c84bc-0896-4620-8f35-75a8fc34a79d -->
 
 The subtrees for archived Invocations and Instances of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.5.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: aa55c505-f553-4fc4-b9f6-17452189a9be -->
+########### A.6.1.1.8.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: aa55c505-f553-4fc4-b9f6-17452189a9be -->
 
 The subtrees for failed Invocations of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.5.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 63c12925-2060-4831-add2-f9e2e7bb2dd3 -->
+########### A.6.1.1.8.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 63c12925-2060-4831-add2-f9e2e7bb2dd3 -->
 
 The subtrees for Instances of the Market Cap Fee Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.3.2.2 - Active Instances [Core]  <!-- UUID: 5d842184-835e-4c42-8135-a0604e10a900 -->
+######## A.6.1.1.8.2.3.2.2 - Active Instances [Core]  <!-- UUID: 5d842184-835e-4c42-8135-a0604e10a900 -->
 
 The Instances of the Market Cap Fee Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.3.2.3 - Completed Instances [Core]  <!-- UUID: ae454b0c-57e4-490a-a539-8bb1def0b990 -->
+######## A.6.1.1.8.2.3.2.3 - Completed Instances [Core]  <!-- UUID: ae454b0c-57e4-490a-a539-8bb1def0b990 -->
 
 The Instances of the Market Cap Fee Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: f268809f-d225-4a25-b0e4-9a45fbf376d0 -->
+######## A.6.1.1.8.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: f268809f-d225-4a25-b0e4-9a45fbf376d0 -->
 
 The in progress Invocations of the Market Cap Fee Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](5d842184-835e-4c42-8135-a0604e10a900).
 
-####### A.6.1.1.5.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: dec47cc6-dce7-4256-bd23-6b659ae8bc25 -->
+####### A.6.1.1.8.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: dec47cc6-dce7-4256-bd23-6b659ae8bc25 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s instance of the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
 
-######## A.6.1.1.5.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: 6952060d-f1dd-4d86-b2f8-f07090174d1d -->
+######## A.6.1.1.8.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: 6952060d-f1dd-4d86-b2f8-f07090174d1d -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Upkeep Rebate Primitive.
 
-######### A.6.1.1.5.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: aec5c887-c2d2-43ee-b00e-e77716b7bb30 -->
+######### A.6.1.1.8.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: aec5c887-c2d2-43ee-b00e-e77716b7bb30 -->
 
 `Active`
 
-######### A.6.1.1.5.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 89236086-3786-47bb-8b97-6a0ee5013c46 -->
+######### A.6.1.1.8.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 89236086-3786-47bb-8b97-6a0ee5013c46 -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 1fe328fd-2a73-45ea-b80a-f5ce76728ae1 -->
+########## A.6.1.1.8.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 1fe328fd-2a73-45ea-b80a-f5ce76728ae1 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](f1ecc666-e14f-4828-977b-b24be78b1825).
 
-######### A.6.1.1.5.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 883dcda6-bd15-4c39-9229-b0252e9556f8 -->
+######### A.6.1.1.8.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 883dcda6-bd15-4c39-9229-b0252e9556f8 -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 16c7d73e-df4d-401a-b8c7-aa5fe7df23f2 -->
+######### A.6.1.1.8.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 16c7d73e-df4d-401a-b8c7-aa5fe7df23f2 -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.5.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: dd6c0fe7-480e-492c-b24b-287ebde1fdfe -->
+######### A.6.1.1.8.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: dd6c0fe7-480e-492c-b24b-287ebde1fdfe -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d9c92153-6411-4b40-9871-615e408cf738 -->
+########## A.6.1.1.8.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d9c92153-6411-4b40-9871-615e408cf738 -->
 
 The subtrees for archived Invocations and Instances of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.5.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: ceb96633-4d3f-4818-bebb-e99243b7b061 -->
+########### A.6.1.1.8.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: ceb96633-4d3f-4818-bebb-e99243b7b061 -->
 
 The subtrees for failed Invocations of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.5.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 793bcfab-0f87-4c09-b4f5-0f131075604b -->
+########### A.6.1.1.8.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 793bcfab-0f87-4c09-b4f5-0f131075604b -->
 
 The subtrees for Instances of the Upkeep Rebate Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.3.3.2 - Active Instances [Core]  <!-- UUID: 6c2bb4eb-e052-4cb8-a249-d65201b4828e -->
+######## A.6.1.1.8.2.3.3.2 - Active Instances [Core]  <!-- UUID: 6c2bb4eb-e052-4cb8-a249-d65201b4828e -->
 
 The Instances of the Upkeep Rebate Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: f1ecc666-e14f-4828-977b-b24be78b1825 -->
+######### A.6.1.1.8.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: f1ecc666-e14f-4828-977b-b24be78b1825 -->
 
 The documents herein contain the Instance Configuration Document for the Single Upkeep Rebate Primitive Instance.
 
-########## A.6.1.1.5.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 0e8a5c2f-ef1b-4c4f-aa4a-ed1659d80663 -->
+########## A.6.1.1.8.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 0e8a5c2f-ef1b-4c4f-aa4a-ed1659d80663 -->
 
 Every Prime Agent is entitled to the Upkeep Rebate Primitive for tokens of other Prime Agents that they hold. Because this right automatically applies, there are no parameters.
 
-########## A.6.1.1.5.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: b7be1c16-a7e1-4d22-a697-d30cd1d2bb86 -->
+########## A.6.1.1.8.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: b7be1c16-a7e1-4d22-a697-d30cd1d2bb86 -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.5.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 717bb9de-7df5-4fec-8e59-d5d7fde0ac7d -->
+########### A.6.1.1.8.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 717bb9de-7df5-4fec-8e59-d5d7fde0ac7d -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-############ A.6.1.1.5.2.3.3.2.1.2.1.1 - Launch Agent 3 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 0d37e672-8a82-433c-a5c7-f88ff248cb6a -->
+############ A.6.1.1.8.2.3.3.2.1.2.1.1 - Launch Agent 3 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 0d37e672-8a82-433c-a5c7-f88ff248cb6a -->
 
 Launch Agent 3 keeps all tokens of other Agents it holds in its SubProxy account.
 
-############ A.6.1.1.5.2.3.3.2.1.2.1.2 - Launch Agent 3 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: d2a0b2dd-353f-46b1-ae2c-1791ce2a0b77 -->
+############ A.6.1.1.8.2.3.3.2.1.2.1.2 - Launch Agent 3 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: d2a0b2dd-353f-46b1-ae2c-1791ce2a0b77 -->
 
 When paying Ecosystem Upkeep fees, Launch Agent 3 deducts the rebate from the fees it pays.
 
-############ A.6.1.1.5.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: 911e4409-146c-49e6-9f5c-5abdc58d97d3 -->
+############ A.6.1.1.8.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: 911e4409-146c-49e6-9f5c-5abdc58d97d3 -->
 
 Operational GovOps reviews Launch Agent 3’s calculation of the rebate before executing a return of surplus to token holders. In the event of any issues, Operational GovOps cannot execute the distribution. If Operational GovOps does not execute the distribution, Operational GovOps must post an explanation on the Sky Forum under the “Launch Agent 3 Prime” category and work with Launch Agent 3 to resolve the disagreement. If Operational GovOps and Launch Agent 3 cannot resolve the disagreement, it must be escalated to Core GovOps.
 
-########### A.6.1.1.5.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 299fa3a2-ce38-4697-b876-faaa5e5ca3a9 -->
+########### A.6.1.1.8.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 299fa3a2-ce38-4697-b876-faaa5e5ca3a9 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########### A.6.1.1.5.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: c9eac99e-4444-478a-a0bf-cc5139413bf0 -->
+########### A.6.1.1.8.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: c9eac99e-4444-478a-a0bf-cc5139413bf0 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########## A.6.1.1.5.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: 2bc4f7e9-e9a2-465e-b6da-1032ce4a6f42 -->
+########## A.6.1.1.8.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: 2bc4f7e9-e9a2-465e-b6da-1032ce4a6f42 -->
 
 The documents herein contain data relevant to the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.5.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: a7718626-05e0-4c62-86ae-62ff9f2fc785 -->
+########### A.6.1.1.8.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: a7718626-05e0-4c62-86ae-62ff9f2fc785 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0e9c8eb9-ab4e-4240-9ea9-a2c810ea3698 -->
+########### A.6.1.1.8.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0e9c8eb9-ab4e-4240-9ea9-a2c810ea3698 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 89f2904b-d250-4643-a84a-083b54a572e0 -->
+########### A.6.1.1.8.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 89f2904b-d250-4643-a84a-083b54a572e0 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.5.2.3.3.3 - Completed Instances [Core]  <!-- UUID: aff0590c-e76d-4734-a139-ef7a67d9a619 -->
+######## A.6.1.1.8.2.3.3.3 - Completed Instances [Core]  <!-- UUID: aff0590c-e76d-4734-a139-ef7a67d9a619 -->
 
 The Instances of the Upkeep Rebate Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 986814bc-13cc-4e9d-b1ba-f664863ad05e -->
+######## A.6.1.1.8.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 986814bc-13cc-4e9d-b1ba-f664863ad05e -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.5.2.4 - SkyLink Primitives [Core]  <!-- UUID: 23b316a2-8a07-4295-808f-f787fea871de -->
+###### A.6.1.1.8.2.4 - SkyLink Primitives [Core]  <!-- UUID: 23b316a2-8a07-4295-808f-f787fea871de -->
 
 The documents herein implement the SkyLink Primitives for Launch Agent 3. See [A.2.4 - A7 - SkyLink Primitives](7b5d8965-a64c-4c44-b742-607f51f69d8f).
 
-####### A.6.1.1.5.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: ddeb2ecf-ea5c-4087-a44d-0a69de3033f7 -->
+####### A.6.1.1.8.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: ddeb2ecf-ea5c-4087-a44d-0a69de3033f7 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Token SkyLink Primitive. See [A.2.4 - Token SkyLink Primitive](4504d2d4-ee45-4a07-8c5b-9baf20b12e76).
 
-######## A.6.1.1.5.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: 052c7deb-75d9-4be2-aa45-cb3a59d14bd5 -->
+######## A.6.1.1.8.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: 052c7deb-75d9-4be2-aa45-cb3a59d14bd5 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Token SkyLink Primitive.
 
-######### A.6.1.1.5.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: e8c65465-9db4-48a7-be8e-5e9616779056 -->
+######### A.6.1.1.8.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: e8c65465-9db4-48a7-be8e-5e9616779056 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: a5aa1884-66a2-4fd0-b35d-f4291f0726f7 -->
+######### A.6.1.1.8.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: a5aa1884-66a2-4fd0-b35d-f4291f0726f7 -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7f0e42ad-c54c-4023-9055-57288d0eeb3f -->
+######### A.6.1.1.8.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7f0e42ad-c54c-4023-9055-57288d0eeb3f -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 75c0efb2-0428-4764-9bfd-fdccca850048 -->
+######### A.6.1.1.8.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 75c0efb2-0428-4764-9bfd-fdccca850048 -->
 
 This document contains a Directory of all prospective Instances of the Token SkyLink Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](a5aa1884-66a2-4fd0-b35d-f4291f0726f7), whereas failed Invocations are Archived in [Hub Data Repository](1707675b-308e-4ac1-8e29-129b76ed430d).
 
-######### A.6.1.1.5.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 1707675b-308e-4ac1-8e29-129b76ed430d -->
+######### A.6.1.1.8.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 1707675b-308e-4ac1-8e29-129b76ed430d -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 18356d1b-545d-4819-a71e-b6d4e8c1ef81 -->
+########## A.6.1.1.8.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 18356d1b-545d-4819-a71e-b6d4e8c1ef81 -->
 
 The subtrees for archived Invocations and Instances of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.5.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a168df08-8c61-4b31-a05b-2a36a3abf2ed -->
+########### A.6.1.1.8.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a168df08-8c61-4b31-a05b-2a36a3abf2ed -->
 
 The subtrees for failed Invocations of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.5.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: cd2f777f-1c0b-4d1d-a603-ecc6ae1cd0e8 -->
+########### A.6.1.1.8.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: cd2f777f-1c0b-4d1d-a603-ecc6ae1cd0e8 -->
 
 The subtrees for Instances of the Token SkyLink Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.4.1.2 - Active Instances [Core]  <!-- UUID: e9afe0ee-b765-49e0-9268-636b386c8733 -->
+######## A.6.1.1.8.2.4.1.2 - Active Instances [Core]  <!-- UUID: e9afe0ee-b765-49e0-9268-636b386c8733 -->
 
 The Instances of the Token SkyLink Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.4.1.3 - Completed Instances [Core]  <!-- UUID: a8e875d3-39f8-4040-a6f3-fe411e6d5d4e -->
+######## A.6.1.1.8.2.4.1.3 - Completed Instances [Core]  <!-- UUID: a8e875d3-39f8-4040-a6f3-fe411e6d5d4e -->
 
 The Instances of the Token SkyLink Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: 6947125b-804c-45a1-a730-9f1acc9daa13 -->
+######## A.6.1.1.8.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: 6947125b-804c-45a1-a730-9f1acc9daa13 -->
 
 The in progress Invocations of the Token SkyLink Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](e9afe0ee-b765-49e0-9268-636b386c8733).
 
-###### A.6.1.1.5.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: 6a390014-e5c9-4656-bdf8-587264a141cd -->
+###### A.6.1.1.8.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: 6a390014-e5c9-4656-bdf8-587264a141cd -->
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 3. See [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.5.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: d8e61fc3-18a2-4952-8e5b-43cfb94b0bab -->
+####### A.6.1.1.8.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: d8e61fc3-18a2-4952-8e5b-43cfb94b0bab -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s instances of the Accessibility Reward Primitive. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
-######## A.6.1.1.5.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: 10b6c6e8-edee-4a77-a6c4-bbb05db8b364 -->
+######## A.6.1.1.8.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: 10b6c6e8-edee-4a77-a6c4-bbb05db8b364 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Accessibility Reward Primitive.
 
-######### A.6.1.1.5.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 03230dbb-8896-40b3-b5c3-d3c4ee729606 -->
+######### A.6.1.1.8.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 03230dbb-8896-40b3-b5c3-d3c4ee729606 -->
 
 `Active`
 
-######### A.6.1.1.5.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: c6275b51-9ee0-49df-a4ea-33a24cd2c752 -->
+######### A.6.1.1.8.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: c6275b51-9ee0-49df-a4ea-33a24cd2c752 -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.5.1.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document Location [Core]  <!-- UUID: ab7ff4b8-7e62-4a36-8573-581c86293e50 -->
+########## A.6.1.1.8.2.5.1.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document Location [Core]  <!-- UUID: ab7ff4b8-7e62-4a36-8573-581c86293e50 -->
 
 This Instance’s associated Instance Configuration Document is located at [Launch Agent 3 Frontend App Instance Configuration Document](b52f88c6-427b-45f6-8e1c-81fa27e522c8).
 
-########## A.6.1.1.5.2.5.1.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document Location [Core]  <!-- UUID: 43fbf9b3-7cf6-46f3-a900-c3ef9d193d02 -->
+########## A.6.1.1.8.2.5.1.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document Location [Core]  <!-- UUID: 43fbf9b3-7cf6-46f3-a900-c3ef9d193d02 -->
 
 This Instance’s associated Instance Configuration Document is located at [Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document](5aada153-29f6-4304-b56e-9d425dc978a4).
 
-########## A.6.1.1.5.2.5.1.1.2.3 - Summer.fi Instance Configuration Document Location [Core]  <!-- UUID: 0e6a80cb-041c-4dc1-a22b-91fda88ecd92 -->
+########## A.6.1.1.8.2.5.1.1.2.3 - Summer.fi Instance Configuration Document Location [Core]  <!-- UUID: 0e6a80cb-041c-4dc1-a22b-91fda88ecd92 -->
 
 This Instance’s associated Instance Configuration Document is located at [Summer.fi Instance Configuration Document](fd9c7ace-e72c-4ffb-a74e-7106a0dde80b).
 
-########## A.6.1.1.5.2.5.1.1.2.4 - DeFi Saver Instance Configuration Document Location [Core]  <!-- UUID: a8442e7e-67ee-43a2-b0b6-6e18db4bbb41 -->
+########## A.6.1.1.8.2.5.1.1.2.4 - DeFi Saver Instance Configuration Document Location [Core]  <!-- UUID: a8442e7e-67ee-43a2-b0b6-6e18db4bbb41 -->
 
 This Instance’s associated Instance Configuration Document is located at [DeFi Saver Instance Configuration Document](9907bb75-f389-42bb-8fe4-e03ff3039c46).
 
-########## A.6.1.1.5.2.5.1.1.2.5 - CoW Swap Instance Configuration Document Location [Core]  <!-- UUID: 5341fdbc-78fc-4e15-8b06-d446a3dac8d8 -->
+########## A.6.1.1.8.2.5.1.1.2.5 - CoW Swap Instance Configuration Document Location [Core]  <!-- UUID: 5341fdbc-78fc-4e15-8b06-d446a3dac8d8 -->
 
 This Instance’s associated Instance Configuration Document is located at [CoW Swap Instance Configuration Document](80f22d64-0ccf-4bb2-8da4-d170a95d2161).
 
-########## A.6.1.1.5.2.5.1.1.2.6 - ParaSwap Instance Configuration Document Location [Core]  <!-- UUID: ecc841f1-0bd8-4453-b97d-33a05fbbafba -->
+########## A.6.1.1.8.2.5.1.1.2.6 - ParaSwap Instance Configuration Document Location [Core]  <!-- UUID: ecc841f1-0bd8-4453-b97d-33a05fbbafba -->
 
 This Instance’s associated Instance Configuration Document is located at [ParaSwap Instance Configuration Document](d3f7f0e6-b912-4464-be3f-20b0c600bcfa).
 
-########## A.6.1.1.5.2.5.1.1.2.7 - Yearn (Gimme) Instance Configuration Document Location [Core]  <!-- UUID: a1e42939-5c28-4e1c-8940-150f979b4e47 -->
+########## A.6.1.1.8.2.5.1.1.2.7 - Yearn (Gimme) Instance Configuration Document Location [Core]  <!-- UUID: a1e42939-5c28-4e1c-8940-150f979b4e47 -->
 
 This Instance’s associated Instance Configuration Document is located at [Yearn (Gimme) Instance Configuration Document](f36ce752-38d1-4dd4-8a51-dd18f2151756).
 
-########## A.6.1.1.5.2.5.1.1.2.8 - MOM Instance Configuration Document Location [Core]  <!-- UUID: c2fccf99-2f21-42df-bfea-e857110d386e -->
+########## A.6.1.1.8.2.5.1.1.2.8 - MOM Instance Configuration Document Location [Core]  <!-- UUID: c2fccf99-2f21-42df-bfea-e857110d386e -->
 
 This Instance’s associated Instance Configuration Document is located at [MOM Instance Configuration Document](ee4f9b64-aeb7-4813-b187-996e8172fea1).
 
-######### A.6.1.1.5.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 3c43db85-3995-4c95-a85c-e72786a28501 -->
+######### A.6.1.1.8.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 3c43db85-3995-4c95-a85c-e72786a28501 -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 95beed80-4199-4c08-82bd-0ae7827c98b0 -->
+######### A.6.1.1.8.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 95beed80-4199-4c08-82bd-0ae7827c98b0 -->
 
 This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](c6275b51-9ee0-49df-a4ea-33a24cd2c752),; whereas failed Invocations are Archived in [Hub Data Repository](86d7913a-b8d0-42a8-a6b7-02c190e74373).
 
-########## A.6.1.1.5.2.5.1.1.4.1 - MetaMask [Core]  <!-- UUID: 91c685ab-75fb-4bd4-ad68-b9a26afc1962 -->
+########## A.6.1.1.8.2.5.1.1.4.1 - MetaMask [Core]  <!-- UUID: 91c685ab-75fb-4bd4-ad68-b9a26afc1962 -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -30380,7 +30810,7 @@ Invocation Status: `Planning`
 
 Instance Configuration Document Location: [MetaMask Instance Configuration Document](d43ec3dd-96bf-419f-8387-f85615e6bcc5).
 
-########## A.6.1.1.5.2.5.1.1.4.2 - InstaDapp [Core]  <!-- UUID: 915e98d4-8cec-4598-8906-d9cff11ac5aa -->
+########## A.6.1.1.8.2.5.1.1.4.2 - InstaDapp [Core]  <!-- UUID: 915e98d4-8cec-4598-8906-d9cff11ac5aa -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -30388,7 +30818,7 @@ Invocation Status: `Planning
 `
 Instance Configuration Document Location: [InstaDapp Instance Configuration Document](e870392a-2552-41ca-a148-4be47d34bac7).
 
-########## A.6.1.1.5.2.5.1.1.4.3 - Gnosis Protocol [Core]  <!-- UUID: d901f747-bd11-4359-b7d3-05752098586e -->
+########## A.6.1.1.8.2.5.1.1.4.3 - Gnosis Protocol [Core]  <!-- UUID: d901f747-bd11-4359-b7d3-05752098586e -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -30396,7 +30826,7 @@ Invocation Status: `Planning
 `
 Instance Configuration Document Location: [Gnosis Protocol Instance Configuration Document](34cde6e0-89a1-44a4-9ce1-58873b83c63b).
 
-########## A.6.1.1.5.2.5.1.1.4.4 - Piku.co [Core]  <!-- UUID: befc9c75-0263-443d-b662-fe667a645d79 -->
+########## A.6.1.1.8.2.5.1.1.4.4 - Piku.co [Core]  <!-- UUID: befc9c75-0263-443d-b662-fe667a645d79 -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -30404,7 +30834,7 @@ Invocation Status: `Planning
 `
 Instance Configuration Document Location: [Piku.co Instance Configuration Document](bc145261-ff5d-4937-abbd-0719390ff124).
 
-########## A.6.1.1.5.2.5.1.1.4.5 - Lazy Summer Protocol [Core]  <!-- UUID: 3485ade3-1cb3-4792-aec4-e3b3fd20d63e -->
+########## A.6.1.1.8.2.5.1.1.4.5 - Lazy Summer Protocol [Core]  <!-- UUID: 3485ade3-1cb3-4792-aec4-e3b3fd20d63e -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -30412,87 +30842,87 @@ Invocation Status: `Planning
 `
 Instance Configuration Document Location: [Lazy Summer Protocol Instance Configuration Document](022ab7d1-05c3-422f-815c-0605f7f83f02).
 
-######### A.6.1.1.5.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 86d7913a-b8d0-42a8-a6b7-02c190e74373 -->
+######### A.6.1.1.8.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 86d7913a-b8d0-42a8-a6b7-02c190e74373 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d2f66b3d-7903-47e7-8f71-3aaa79407c20 -->
+########## A.6.1.1.8.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d2f66b3d-7903-47e7-8f71-3aaa79407c20 -->
 
 The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.5.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9e28ce11-cd68-4c1a-b872-eae49dc4887e -->
+########### A.6.1.1.8.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9e28ce11-cd68-4c1a-b872-eae49dc4887e -->
 
 The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.5.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6e3010db-596c-478b-9aed-8fb4222a53d1 -->
+########### A.6.1.1.8.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6e3010db-596c-478b-9aed-8fb4222a53d1 -->
 
 The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.5.1.2 - Active Instances [Core]  <!-- UUID: cb0709e4-c51d-45cc-b385-0c20a0bf4b25 -->
+######## A.6.1.1.8.2.5.1.2 - Active Instances [Core]  <!-- UUID: cb0709e4-c51d-45cc-b385-0c20a0bf4b25 -->
 
 The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.5.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document [Core]  <!-- UUID: b52f88c6-427b-45f6-8e1c-81fa27e522c8 -->
+######### A.6.1.1.8.2.5.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document [Core]  <!-- UUID: b52f88c6-427b-45f6-8e1c-81fa27e522c8 -->
 
 The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend App Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.1.1 - Parameters [Core]  <!-- UUID: 5455497f-bfb3-49a0-a788-0b7db4da799b -->
+########## A.6.1.1.8.2.5.1.2.1.1 - Parameters [Core]  <!-- UUID: 5455497f-bfb3-49a0-a788-0b7db4da799b -->
 
 The documents herein define the parameters of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.1.1.1 - Reward Code [Core]  <!-- UUID: fcff71ae-93ff-49f7-aa39-a97077a921c6 -->
+########### A.6.1.1.8.2.5.1.2.1.1.1 - Reward Code [Core]  <!-- UUID: fcff71ae-93ff-49f7-aa39-a97077a921c6 -->
 
 `1`.
 
-########### A.6.1.1.5.2.5.1.2.1.1.2 - Tracking Methodology [Core]  <!-- UUID: f79a1c05-b4f7-4b11-b9be-1e4f7d72f34f -->
+########### A.6.1.1.8.2.5.1.2.1.1.2 - Tracking Methodology [Core]  <!-- UUID: f79a1c05-b4f7-4b11-b9be-1e4f7d72f34f -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.1.1.3 - Custom Instance Parameters [Core]  <!-- UUID: e5ff6cc4-c1d2-4184-a266-010104a6a28f -->
+########### A.6.1.1.8.2.5.1.2.1.1.3 - Custom Instance Parameters [Core]  <!-- UUID: e5ff6cc4-c1d2-4184-a266-010104a6a28f -->
 
 The documents herein define the custom parameters of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: cb266ef8-782b-4bef-af06-be12b727b280 -->
+########## A.6.1.1.8.2.5.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: cb266ef8-782b-4bef-af06-be12b727b280 -->
 
 The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: bd3b25ac-90b8-49f0-ac29-bb51a2290820 -->
+########### A.6.1.1.8.2.5.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: bd3b25ac-90b8-49f0-ac29-bb51a2290820 -->
 
 This document defines the protocol for routine ongoing management of the Launch Agent 3 Frontend App Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: b803a685-e88f-48d9-92e9-7e9e3c574b36 -->
+############ A.6.1.1.8.2.5.1.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: b803a685-e88f-48d9-92e9-7e9e3c574b36 -->
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: eff49ccd-5874-41d9-aff0-3e3e2a348336 -->
+########### A.6.1.1.8.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: eff49ccd-5874-41d9-aff0-3e3e2a348336 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend App Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d7296a92-3a38-42c3-938c-5327725b0fbb -->
+########### A.6.1.1.8.2.5.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d7296a92-3a38-42c3-938c-5327725b0fbb -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend App Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ef496cf-201e-4a98-9f7e-e61ad7eebfd6 -->
+########## A.6.1.1.8.2.5.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ef496cf-201e-4a98-9f7e-e61ad7eebfd6 -->
 
 The documents herein contain data relevant to the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: c4fead38-31dc-4a6a-8d98-5f28b1a46f7a -->
+########### A.6.1.1.8.2.5.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: c4fead38-31dc-4a6a-8d98-5f28b1a46f7a -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 919d7b43-51e1-4d53-93c6-ff84a633542b -->
+########### A.6.1.1.8.2.5.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 919d7b43-51e1-4d53-93c6-ff84a633542b -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 8bb175ef-0165-417c-9222-f4ed8df23b3f -->
+########### A.6.1.1.8.2.5.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 8bb175ef-0165-417c-9222-f4ed8df23b3f -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.1.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 8ece0051-0eee-427f-b2ea-1abfd52b80cd -->
+########### A.6.1.1.8.2.5.1.2.1.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 8ece0051-0eee-427f-b2ea-1abfd52b80cd -->
 
 The Accessibility Reward payments for the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30500,71 +30930,71 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.1.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 09282f1f-f4fa-40b6-9073-6adc42f31569 -->
+############ A.6.1.1.8.2.5.1.2.1.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 09282f1f-f4fa-40b6-9073-6adc42f31569 -->
 
 The Accessibility Reward Payments are:
 
-######### A.6.1.1.5.2.5.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document [Core]  <!-- UUID: 5aada153-29f6-4304-b56e-9d425dc978a4 -->
+######### A.6.1.1.8.2.5.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document [Core]  <!-- UUID: 5aada153-29f6-4304-b56e-9d425dc978a4 -->
 
 The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend Open Source Widgets Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.2.1 - Parameters [Core]  <!-- UUID: 159c7e99-c884-4496-aa9b-b7721be4849a -->
+########## A.6.1.1.8.2.5.1.2.2.1 - Parameters [Core]  <!-- UUID: 159c7e99-c884-4496-aa9b-b7721be4849a -->
 
 The documents herein define the parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.2.1.1 - Reward Code [Core]  <!-- UUID: 9a774d02-8882-4363-87b9-2efebc8142f8 -->
+########### A.6.1.1.8.2.5.1.2.2.1.1 - Reward Code [Core]  <!-- UUID: 9a774d02-8882-4363-87b9-2efebc8142f8 -->
 
 `0`.
 
-########### A.6.1.1.5.2.5.1.2.2.1.2 - Tracking Methodology [Core]  <!-- UUID: 31579503-9b6d-408e-ad44-28cf411c22f5 -->
+########### A.6.1.1.8.2.5.1.2.2.1.2 - Tracking Methodology [Core]  <!-- UUID: 31579503-9b6d-408e-ad44-28cf411c22f5 -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.2.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 79e22741-ef2b-4b8e-b97c-acead4550deb -->
+########### A.6.1.1.8.2.5.1.2.2.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 79e22741-ef2b-4b8e-b97c-acead4550deb -->
 
 The documents herein define the custom parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.2.2 - Operational Process Definition [Core]  <!-- UUID: 4f94c1ee-d908-412a-b4c9-2f59e5bd4e67 -->
+########## A.6.1.1.8.2.5.1.2.2.2 - Operational Process Definition [Core]  <!-- UUID: 4f94c1ee-d908-412a-b4c9-2f59e5bd4e67 -->
 
 The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: 461e8506-cc90-4c8d-9927-153ee996c432 -->
+########### A.6.1.1.8.2.5.1.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: 461e8506-cc90-4c8d-9927-153ee996c432 -->
 
 This document defines the protocol for routine ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.2.2.1.1 - Agent Customizations [Core]  <!-- UUID: 5524ef1f-2b23-457a-b1fc-89773f56a7f3 -->
+############ A.6.1.1.8.2.5.1.2.2.2.1.1 - Agent Customizations [Core]  <!-- UUID: 5524ef1f-2b23-457a-b1fc-89773f56a7f3 -->
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2ff3ed8b-6466-4a3d-87e0-040fb8940859 -->
+########### A.6.1.1.8.2.5.1.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2ff3ed8b-6466-4a3d-87e0-040fb8940859 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: 45f2cc2c-e96d-455f-808e-e188e5aece34 -->
+########### A.6.1.1.8.2.5.1.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: 45f2cc2c-e96d-455f-808e-e188e5aece34 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.2.3 - Data Repository [Core]  <!-- UUID: b198cdd7-92c2-4ff5-9f10-b0d315ed5f00 -->
+########## A.6.1.1.8.2.5.1.2.2.3 - Data Repository [Core]  <!-- UUID: b198cdd7-92c2-4ff5-9f10-b0d315ed5f00 -->
 
 The documents herein contain data relevant to the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.2.3.1 - Initial Planning [Core]  <!-- UUID: 8578558a-5bd3-4256-a8f6-0e14da879257 -->
+########### A.6.1.1.8.2.5.1.2.2.3.1 - Initial Planning [Core]  <!-- UUID: 8578558a-5bd3-4256-a8f6-0e14da879257 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.2.3.2 - Operational GovOps Review [Core]  <!-- UUID: f3de12e6-9ca6-4969-95a4-50b6c6b928b3 -->
+########### A.6.1.1.8.2.5.1.2.2.3.2 - Operational GovOps Review [Core]  <!-- UUID: f3de12e6-9ca6-4969-95a4-50b6c6b928b3 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.2.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 09c5171b-5fe5-4a37-ad78-0e4be7b4c0f9 -->
+########### A.6.1.1.8.2.5.1.2.2.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 09c5171b-5fe5-4a37-ad78-0e4be7b4c0f9 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.2.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: d96439a8-df0d-4ba9-973e-896fac953fad -->
+########### A.6.1.1.8.2.5.1.2.2.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: d96439a8-df0d-4ba9-973e-896fac953fad -->
 
 The Accessibility Reward payments for the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30572,71 +31002,71 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.2.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: ad573b24-befc-49f9-be30-6c65f8986c61 -->
+############ A.6.1.1.8.2.5.1.2.2.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: ad573b24-befc-49f9-be30-6c65f8986c61 -->
 
 The Accessibility Reward Payments are:
 
-######### A.6.1.1.5.2.5.1.2.3 - Summer.fi Instance Configuration Document [Core]  <!-- UUID: fd9c7ace-e72c-4ffb-a74e-7106a0dde80b -->
+######### A.6.1.1.8.2.5.1.2.3 - Summer.fi Instance Configuration Document [Core]  <!-- UUID: fd9c7ace-e72c-4ffb-a74e-7106a0dde80b -->
 
 The documents herein contain the Instance Configuration Document for the Summer.fi Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.3.1 - Parameters [Core]  <!-- UUID: a2cbe867-bc51-4a3c-82b6-d921e2b0a4fc -->
+########## A.6.1.1.8.2.5.1.2.3.1 - Parameters [Core]  <!-- UUID: a2cbe867-bc51-4a3c-82b6-d921e2b0a4fc -->
 
 The documents herein define the parameters of the Summer.fi Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.3.1.1 - Reward Code [Core]  <!-- UUID: 1e8b16e7-b10e-4da7-936d-5cffbac57571 -->
+########### A.6.1.1.8.2.5.1.2.3.1.1 - Reward Code [Core]  <!-- UUID: 1e8b16e7-b10e-4da7-936d-5cffbac57571 -->
 
 `1001`.
 
-########### A.6.1.1.5.2.5.1.2.3.1.2 - Tracking Methodology [Core]  <!-- UUID: 8abb90c2-c62d-4dbd-96b5-d4e447a3bc4d -->
+########### A.6.1.1.8.2.5.1.2.3.1.2 - Tracking Methodology [Core]  <!-- UUID: 8abb90c2-c62d-4dbd-96b5-d4e447a3bc4d -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.3.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 80314c99-0e54-4449-88a0-828e86da92c5 -->
+########### A.6.1.1.8.2.5.1.2.3.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 80314c99-0e54-4449-88a0-828e86da92c5 -->
 
 The documents herein define the custom parameters of the Summer.fi Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.3.2 - Operational Process Definition [Core]  <!-- UUID: 7d73baad-0128-460d-b3b3-6b18ba86e755 -->
+########## A.6.1.1.8.2.5.1.2.3.2 - Operational Process Definition [Core]  <!-- UUID: 7d73baad-0128-460d-b3b3-6b18ba86e755 -->
 
 The documents herein define the process for the ongoing management of the Summer.fi Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.3.2.1 - Routine Protocol [Core]  <!-- UUID: de64fb0f-e867-495f-9e43-c197072e1c3d -->
+########### A.6.1.1.8.2.5.1.2.3.2.1 - Routine Protocol [Core]  <!-- UUID: de64fb0f-e867-495f-9e43-c197072e1c3d -->
 
 This document defines the protocol for routine ongoing management of the Summer.fi Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.3.2.1.1 - Agent Customizations [Core]  <!-- UUID: 216473d9-6f63-45ff-aa7b-a6bec64dd6dc -->
+############ A.6.1.1.8.2.5.1.2.3.2.1.1 - Agent Customizations [Core]  <!-- UUID: 216473d9-6f63-45ff-aa7b-a6bec64dd6dc -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 47306338-2f28-4c95-b0d3-843744e04165 -->
+########### A.6.1.1.8.2.5.1.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 47306338-2f28-4c95-b0d3-843744e04165 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Summer.fi Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.3.2.3 - Emergency Protocol [Core]  <!-- UUID: 41233dc2-c7d4-4cd4-9e23-cebbbbfaa9ce -->
+########### A.6.1.1.8.2.5.1.2.3.2.3 - Emergency Protocol [Core]  <!-- UUID: 41233dc2-c7d4-4cd4-9e23-cebbbbfaa9ce -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Summer.fi Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.3.3 - Data Repository [Core]  <!-- UUID: 72bc2ff0-df12-4156-8300-5c6a09badccf -->
+########## A.6.1.1.8.2.5.1.2.3.3 - Data Repository [Core]  <!-- UUID: 72bc2ff0-df12-4156-8300-5c6a09badccf -->
 
 The documents herein contain data relevant to the Summer.fi Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.3.3.1 - Initial Planning [Core]  <!-- UUID: dabb169a-e7d5-44c2-9ed8-f0936aa9c22a -->
+########### A.6.1.1.8.2.5.1.2.3.3.1 - Initial Planning [Core]  <!-- UUID: dabb169a-e7d5-44c2-9ed8-f0936aa9c22a -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.3.3.2 - Operational GovOps Review [Core]  <!-- UUID: cc50de8e-ac63-4254-bb24-8a4247b8d2b5 -->
+########### A.6.1.1.8.2.5.1.2.3.3.2 - Operational GovOps Review [Core]  <!-- UUID: cc50de8e-ac63-4254-bb24-8a4247b8d2b5 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.3.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: bff7bad8-b9c9-4fb7-ae9c-08137f427f36 -->
+########### A.6.1.1.8.2.5.1.2.3.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: bff7bad8-b9c9-4fb7-ae9c-08137f427f36 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.3.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7cc02e97-e849-4f19-81bc-2fc85ccd2361 -->
+########### A.6.1.1.8.2.5.1.2.3.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7cc02e97-e849-4f19-81bc-2fc85ccd2361 -->
 
 The Accessibility Reward payments for the Summer.fi Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30644,11 +31074,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.3.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 289e8b48-d1ae-43d0-a9a5-b66672caacde -->
+############ A.6.1.1.8.2.5.1.2.3.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 289e8b48-d1ae-43d0-a9a5-b66672caacde -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.3.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 73fc6f80-ac05-423f-ac58-e22dbfa8de3f -->
+########### A.6.1.1.8.2.5.1.2.3.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 73fc6f80-ac05-423f-ac58-e22dbfa8de3f -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -30656,7 +31086,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.3.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 1b25a9fd-1bb0-4425-b9a1-372f737d3a45 -->
+############ A.6.1.1.8.2.5.1.2.3.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 1b25a9fd-1bb0-4425-b9a1-372f737d3a45 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -30666,71 +31096,71 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.3.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: cc82491d-cabb-42dd-a63a-4b3c23ee55f0 -->
+############ A.6.1.1.8.2.5.1.2.3.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: cc82491d-cabb-42dd-a63a-4b3c23ee55f0 -->
 
 Summer.fi - `0xC7b548AD9Cf38721810246C079b2d8083aba8909`
 
-######### A.6.1.1.5.2.5.1.2.4 - DeFi Saver Instance Configuration Document [Core]  <!-- UUID: 9907bb75-f389-42bb-8fe4-e03ff3039c46 -->
+######### A.6.1.1.8.2.5.1.2.4 - DeFi Saver Instance Configuration Document [Core]  <!-- UUID: 9907bb75-f389-42bb-8fe4-e03ff3039c46 -->
 
 The documents herein contain the Instance Configuration Document for the DeFi Saver Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.4.1 - Parameters [Core]  <!-- UUID: a7b36acb-01b2-42a3-8014-d567a82ab81e -->
+########## A.6.1.1.8.2.5.1.2.4.1 - Parameters [Core]  <!-- UUID: a7b36acb-01b2-42a3-8014-d567a82ab81e -->
 
 The documents herein define the parameters of the DeFi Saver Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.4.1.1 - Reward Code [Core]  <!-- UUID: b8b563d3-7b0c-4a35-adb7-4c6f120c7f26 -->
+########### A.6.1.1.8.2.5.1.2.4.1.1 - Reward Code [Core]  <!-- UUID: b8b563d3-7b0c-4a35-adb7-4c6f120c7f26 -->
 
 `1002`.
 
-########### A.6.1.1.5.2.5.1.2.4.1.2 - Tracking Methodology [Core]  <!-- UUID: be4e3d61-e28e-48d9-bc04-413ee57859ad -->
+########### A.6.1.1.8.2.5.1.2.4.1.2 - Tracking Methodology [Core]  <!-- UUID: be4e3d61-e28e-48d9-bc04-413ee57859ad -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.4.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 613151ab-cddd-426e-b4b4-4a7a659efd0c -->
+########### A.6.1.1.8.2.5.1.2.4.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 613151ab-cddd-426e-b4b4-4a7a659efd0c -->
 
 The documents herein define the custom parameters of the DeFi Saver Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.4.2 - Operational Process Definition [Core]  <!-- UUID: 352fd637-e23d-4598-998f-a1949f006002 -->
+########## A.6.1.1.8.2.5.1.2.4.2 - Operational Process Definition [Core]  <!-- UUID: 352fd637-e23d-4598-998f-a1949f006002 -->
 
 The documents herein define the process for the ongoing management of the DeFi Saver Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.4.2.1 - Routine Protocol [Core]  <!-- UUID: 2e0cdaa7-5d3a-42c2-808d-220c4823c0e2 -->
+########### A.6.1.1.8.2.5.1.2.4.2.1 - Routine Protocol [Core]  <!-- UUID: 2e0cdaa7-5d3a-42c2-808d-220c4823c0e2 -->
 
 This document defines the protocol for routine ongoing management of the DeFi Saver Instance. This Instance inherits the base class of operational logic defined in This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.4.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9cef88a9-952f-460b-92c3-d6bb90974972 -->
+############ A.6.1.1.8.2.5.1.2.4.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9cef88a9-952f-460b-92c3-d6bb90974972 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: a1f81f47-953d-4fde-8406-48ef1f4bf55a -->
+########### A.6.1.1.8.2.5.1.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: a1f81f47-953d-4fde-8406-48ef1f4bf55a -->
 
 The documents herein define the protocol for non-routine ongoing management of the DeFi Saver Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.4.2.3 - Emergency Protocol [Core]  <!-- UUID: 8a8a1d60-594e-4042-8252-612d9603dab4 -->
+########### A.6.1.1.8.2.5.1.2.4.2.3 - Emergency Protocol [Core]  <!-- UUID: 8a8a1d60-594e-4042-8252-612d9603dab4 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the DeFi Saver Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.4.3 - Data Repository [Core]  <!-- UUID: 7b55a0f5-cd48-4a95-a637-6cbf10a66ec5 -->
+########## A.6.1.1.8.2.5.1.2.4.3 - Data Repository [Core]  <!-- UUID: 7b55a0f5-cd48-4a95-a637-6cbf10a66ec5 -->
 
 The documents herein contain data relevant to the DeFi Saver Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.4.3.1 - Initial Planning [Core]  <!-- UUID: 3117ffa8-81bb-4fc3-ab15-2e2a41de26fa -->
+########### A.6.1.1.8.2.5.1.2.4.3.1 - Initial Planning [Core]  <!-- UUID: 3117ffa8-81bb-4fc3-ab15-2e2a41de26fa -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.4.3.2 - Operational GovOps Review [Core]  <!-- UUID: e4cdcd58-9f16-4efe-9671-a0b667267004 -->
+########### A.6.1.1.8.2.5.1.2.4.3.2 - Operational GovOps Review [Core]  <!-- UUID: e4cdcd58-9f16-4efe-9671-a0b667267004 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.4.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 63a206b3-3bae-4c14-ac3c-e658b912b238 -->
+########### A.6.1.1.8.2.5.1.2.4.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 63a206b3-3bae-4c14-ac3c-e658b912b238 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.4.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 0f9d7876-d376-4f85-840d-c3cbb96872d3 -->
+########### A.6.1.1.8.2.5.1.2.4.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 0f9d7876-d376-4f85-840d-c3cbb96872d3 -->
 
 The Accessibility Reward payments for the DeFi Saver Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30738,11 +31168,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.4.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 731c96eb-57a2-434c-852c-2c7f461efb46 -->
+############ A.6.1.1.8.2.5.1.2.4.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 731c96eb-57a2-434c-852c-2c7f461efb46 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.4.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: e2a262ce-e59a-421c-ab32-803fe41802c4 -->
+########### A.6.1.1.8.2.5.1.2.4.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: e2a262ce-e59a-421c-ab32-803fe41802c4 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -30750,7 +31180,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.4.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 8fc2657e-fb6b-4d43-988c-6f47b71052f1 -->
+############ A.6.1.1.8.2.5.1.2.4.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 8fc2657e-fb6b-4d43-988c-6f47b71052f1 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -30760,71 +31190,71 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.4.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: da35cd2c-4113-4656-a5f5-5b804b5f894f -->
+############ A.6.1.1.8.2.5.1.2.4.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: da35cd2c-4113-4656-a5f5-5b804b5f894f -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.2.5 - CoW Swap Instance Configuration Document [Core]  <!-- UUID: 80f22d64-0ccf-4bb2-8da4-d170a95d2161 -->
+######### A.6.1.1.8.2.5.1.2.5 - CoW Swap Instance Configuration Document [Core]  <!-- UUID: 80f22d64-0ccf-4bb2-8da4-d170a95d2161 -->
 
 The documents herein contain the Instance Configuration Document for the CoW Swap Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.5.1 - Parameters [Core]  <!-- UUID: 014a4af6-2df3-47fe-b0e4-c1238f3ce18b -->
+########## A.6.1.1.8.2.5.1.2.5.1 - Parameters [Core]  <!-- UUID: 014a4af6-2df3-47fe-b0e4-c1238f3ce18b -->
 
 The documents herein define the parameters of the CoW Swap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.5.1.1 - Reward Code [Core]  <!-- UUID: 3df72746-229c-4b32-bafa-802df1b04401 -->
+########### A.6.1.1.8.2.5.1.2.5.1.1 - Reward Code [Core]  <!-- UUID: 3df72746-229c-4b32-bafa-802df1b04401 -->
 
 `1003`.
 
-########### A.6.1.1.5.2.5.1.2.5.1.2 - Tracking Methodology [Core]  <!-- UUID: fc6cd905-6f53-4e3a-9ac8-14ca46fef6af -->
+########### A.6.1.1.8.2.5.1.2.5.1.2 - Tracking Methodology [Core]  <!-- UUID: fc6cd905-6f53-4e3a-9ac8-14ca46fef6af -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet CoW Swap Tracking Methodology](1b5cc0ee-0ee8-467e-ab49-33c06ad417dc). Specifically, on-chain Settlement Events on the CoW Swap settlement contract ([https://etherscan.io/address/0x9008D19f58AAbD9eD0D60971565AA8510560ab41](https://etherscan.io/address/0x9008D19f58AAbD9eD0D60971565AA8510560ab41)) are checked for where they coincide perfectly with USDS deposit transactions into sUSDS.
 
-########### A.6.1.1.5.2.5.1.2.5.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 947cf303-80e9-4b9f-9403-a9634d876d76 -->
+########### A.6.1.1.8.2.5.1.2.5.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 947cf303-80e9-4b9f-9403-a9634d876d76 -->
 
 The documents herein define the custom parameters of the CoW Swap Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.5.2 - Operational Process Definition [Core]  <!-- UUID: 6c37960a-a6e0-44af-b2fd-148853d0655f -->
+########## A.6.1.1.8.2.5.1.2.5.2 - Operational Process Definition [Core]  <!-- UUID: 6c37960a-a6e0-44af-b2fd-148853d0655f -->
 
 The documents herein define the process for the ongoing management of the CoW Swap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.5.2.1 - Routine Protocol [Core]  <!-- UUID: c6e84f25-85fe-412e-808a-235e713d4ec2 -->
+########### A.6.1.1.8.2.5.1.2.5.2.1 - Routine Protocol [Core]  <!-- UUID: c6e84f25-85fe-412e-808a-235e713d4ec2 -->
 
 This document defines the protocol for routine ongoing management of the CoW Swap Instance. This Instance inherits the base class of operational logic defined in This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.5.2.1.1 - Agent Customizations [Core]  <!-- UUID: 1d1a2365-7cf2-409e-9637-5d7f9e6c0752 -->
+############ A.6.1.1.8.2.5.1.2.5.2.1.1 - Agent Customizations [Core]  <!-- UUID: 1d1a2365-7cf2-409e-9637-5d7f9e6c0752 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.5.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8f48dd88-d114-4c6f-9b01-a8c7468808b8 -->
+########### A.6.1.1.8.2.5.1.2.5.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8f48dd88-d114-4c6f-9b01-a8c7468808b8 -->
 
 The documents herein define the protocol for non-routine ongoing management of the CoW Swap Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.5.2.3 - Emergency Protocol [Core]  <!-- UUID: 61d2a0ea-09d1-4ad3-a668-66ebd5593c2f -->
+########### A.6.1.1.8.2.5.1.2.5.2.3 - Emergency Protocol [Core]  <!-- UUID: 61d2a0ea-09d1-4ad3-a668-66ebd5593c2f -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the CoW Swap Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.5.3 - Data Repository [Core]  <!-- UUID: 67188304-6a6e-421a-92b9-bf995cd49e49 -->
+########## A.6.1.1.8.2.5.1.2.5.3 - Data Repository [Core]  <!-- UUID: 67188304-6a6e-421a-92b9-bf995cd49e49 -->
 
 The documents herein contain data relevant to the CoW Swap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.5.3.1 - Initial Planning [Core]  <!-- UUID: d0dcbfc1-826f-4f68-ac22-f356f2b3d3f4 -->
+########### A.6.1.1.8.2.5.1.2.5.3.1 - Initial Planning [Core]  <!-- UUID: d0dcbfc1-826f-4f68-ac22-f356f2b3d3f4 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.5.3.2 - Operational GovOps Review [Core]  <!-- UUID: 7b5a94d3-1bdd-4b06-823e-c31199717e29 -->
+########### A.6.1.1.8.2.5.1.2.5.3.2 - Operational GovOps Review [Core]  <!-- UUID: 7b5a94d3-1bdd-4b06-823e-c31199717e29 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.5.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 4a803925-4c83-44a8-9530-4b0f30b6d928 -->
+########### A.6.1.1.8.2.5.1.2.5.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 4a803925-4c83-44a8-9530-4b0f30b6d928 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.5.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: dc323489-6f9b-4f0d-a5c6-3c74729cef7c -->
+########### A.6.1.1.8.2.5.1.2.5.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: dc323489-6f9b-4f0d-a5c6-3c74729cef7c -->
 
 The Accessibility Reward payments for the CoW Swap Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30832,11 +31262,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.5.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 655886dc-7ca2-45cd-be2c-7be8421961c7 -->
+############ A.6.1.1.8.2.5.1.2.5.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 655886dc-7ca2-45cd-be2c-7be8421961c7 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.5.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 84df5c1e-86b7-431d-bb0e-8708f99a572e -->
+########### A.6.1.1.8.2.5.1.2.5.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 84df5c1e-86b7-431d-bb0e-8708f99a572e -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -30844,7 +31274,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.5.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 88f6d49f-9473-46c2-a030-d3f74f2d1377 -->
+############ A.6.1.1.8.2.5.1.2.5.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 88f6d49f-9473-46c2-a030-d3f74f2d1377 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -30854,71 +31284,71 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.5.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 910f8a42-b56c-4617-890a-d135b196b168 -->
+############ A.6.1.1.8.2.5.1.2.5.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 910f8a42-b56c-4617-890a-d135b196b168 -->
 
 CoW Swap - `0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669`
 
-######### A.6.1.1.5.2.5.1.2.6 - ParaSwap Instance Configuration Document [Core]  <!-- UUID: d3f7f0e6-b912-4464-be3f-20b0c600bcfa -->
+######### A.6.1.1.8.2.5.1.2.6 - ParaSwap Instance Configuration Document [Core]  <!-- UUID: d3f7f0e6-b912-4464-be3f-20b0c600bcfa -->
 
 The documents herein contain the Instance Configuration Document for the ParaSwap Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.6.1 - Parameters [Core]  <!-- UUID: 0dbc09fd-557b-4434-a3ac-2ac66da6acb4 -->
+########## A.6.1.1.8.2.5.1.2.6.1 - Parameters [Core]  <!-- UUID: 0dbc09fd-557b-4434-a3ac-2ac66da6acb4 -->
 
 The documents herein define the parameters of the ParaSwap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.6.1.1 - Reward Code [Core]  <!-- UUID: 6940bdf3-78db-4565-8195-1c2fea444c8a -->
+########### A.6.1.1.8.2.5.1.2.6.1.1 - Reward Code [Core]  <!-- UUID: 6940bdf3-78db-4565-8195-1c2fea444c8a -->
 
 `1004`.
 
-########### A.6.1.1.5.2.5.1.2.6.1.2 - Tracking Methodology [Core]  <!-- UUID: df5554b7-1b06-43bb-a112-4768192a73cf -->
+########### A.6.1.1.8.2.5.1.2.6.1.2 - Tracking Methodology [Core]  <!-- UUID: df5554b7-1b06-43bb-a112-4768192a73cf -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.6.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 78a7d271-f5d2-4692-8831-7bf98ea754ac -->
+########### A.6.1.1.8.2.5.1.2.6.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 78a7d271-f5d2-4692-8831-7bf98ea754ac -->
 
 The documents herein define the custom parameters of the ParaSwap Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.6.2 - Operational Process Definition [Core]  <!-- UUID: 576943c0-8301-4372-bc8d-4620cf94bb05 -->
+########## A.6.1.1.8.2.5.1.2.6.2 - Operational Process Definition [Core]  <!-- UUID: 576943c0-8301-4372-bc8d-4620cf94bb05 -->
 
 The documents herein define the process for the ongoing management of the ParaSwap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.6.2.1 - Routine Protocol [Core]  <!-- UUID: bf955649-4ac2-45e2-8376-052e884698e4 -->
+########### A.6.1.1.8.2.5.1.2.6.2.1 - Routine Protocol [Core]  <!-- UUID: bf955649-4ac2-45e2-8376-052e884698e4 -->
 
 This document defines the protocol for routine ongoing management of the ParaSwap Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.6.2.1.1 - Agent Customizations [Core]  <!-- UUID: 200fb6db-3425-4bf5-adde-b9d3bcff412d -->
+############ A.6.1.1.8.2.5.1.2.6.2.1.1 - Agent Customizations [Core]  <!-- UUID: 200fb6db-3425-4bf5-adde-b9d3bcff412d -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.6.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 0d81e6c2-4586-4aa1-9a1b-c8ce66a05fd1 -->
+########### A.6.1.1.8.2.5.1.2.6.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 0d81e6c2-4586-4aa1-9a1b-c8ce66a05fd1 -->
 
 The documents herein define the protocol for non-routine ongoing management of the ParaSwap Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.6.2.3 - Emergency Protocol [Core]  <!-- UUID: b5583385-2432-40f3-a110-6790c7520754 -->
+########### A.6.1.1.8.2.5.1.2.6.2.3 - Emergency Protocol [Core]  <!-- UUID: b5583385-2432-40f3-a110-6790c7520754 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the ParaSwap Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.6.3 - Data Repository [Core]  <!-- UUID: 4a18e7da-c6b5-4850-825d-9e7aaf406795 -->
+########## A.6.1.1.8.2.5.1.2.6.3 - Data Repository [Core]  <!-- UUID: 4a18e7da-c6b5-4850-825d-9e7aaf406795 -->
 
 The documents herein contain data relevant to the ParaSwap Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.6.3.1 - Initial Planning [Core]  <!-- UUID: 32dfe611-a223-40af-9100-70688fa0f162 -->
+########### A.6.1.1.8.2.5.1.2.6.3.1 - Initial Planning [Core]  <!-- UUID: 32dfe611-a223-40af-9100-70688fa0f162 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.6.3.2 - Operational GovOps Review [Core]  <!-- UUID: 20e0c61c-70c8-4d68-b90e-ce664ca5097a -->
+########### A.6.1.1.8.2.5.1.2.6.3.2 - Operational GovOps Review [Core]  <!-- UUID: 20e0c61c-70c8-4d68-b90e-ce664ca5097a -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.6.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 993a4e87-14d0-4d98-9477-446d4bbbfe12 -->
+########### A.6.1.1.8.2.5.1.2.6.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 993a4e87-14d0-4d98-9477-446d4bbbfe12 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.6.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 3ea87681-b351-462c-b375-6fb60c817755 -->
+########### A.6.1.1.8.2.5.1.2.6.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 3ea87681-b351-462c-b375-6fb60c817755 -->
 
 The Accessibility Reward payments for the ParaSwap Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -30926,11 +31356,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.6.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 4588c98b-1c51-4f8c-8cc5-baab631950ef -->
+############ A.6.1.1.8.2.5.1.2.6.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 4588c98b-1c51-4f8c-8cc5-baab631950ef -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.6.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 81bafe53-8c66-43ec-82fd-5848b9d64555 -->
+########### A.6.1.1.8.2.5.1.2.6.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 81bafe53-8c66-43ec-82fd-5848b9d64555 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -30938,7 +31368,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.6.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 3306dbf8-6c7c-4cfe-b98d-08105282272e -->
+############ A.6.1.1.8.2.5.1.2.6.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 3306dbf8-6c7c-4cfe-b98d-08105282272e -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -30948,71 +31378,71 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.6.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 8088e4e4-a594-448c-a3cb-752b907b4f3c -->
+############ A.6.1.1.8.2.5.1.2.6.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 8088e4e4-a594-448c-a3cb-752b907b4f3c -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.2.7 - Yearn (Gimme) Instance Configuration Document [Core]  <!-- UUID: f36ce752-38d1-4dd4-8a51-dd18f2151756 -->
+######### A.6.1.1.8.2.5.1.2.7 - Yearn (Gimme) Instance Configuration Document [Core]  <!-- UUID: f36ce752-38d1-4dd4-8a51-dd18f2151756 -->
 
 The documents herein contain the Instance Configuration Document for the Yearn (Gimme) Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.7.1 - Parameters [Core]  <!-- UUID: 49866e74-c131-4e4d-9165-325bba89cd48 -->
+########## A.6.1.1.8.2.5.1.2.7.1 - Parameters [Core]  <!-- UUID: 49866e74-c131-4e4d-9165-325bba89cd48 -->
 
 The documents herein define the parameters of the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.7.1.1 - Reward Code [Core]  <!-- UUID: 30bcc1e7-0c26-4e67-b823-1fd1203c7370 -->
+########### A.6.1.1.8.2.5.1.2.7.1.1 - Reward Code [Core]  <!-- UUID: 30bcc1e7-0c26-4e67-b823-1fd1203c7370 -->
 
 `1007`.
 
-########### A.6.1.1.5.2.5.1.2.7.1.2 - Tracking Methodology [Core]  <!-- UUID: 43ede046-4e45-4bf8-895b-d5823965eeae -->
+########### A.6.1.1.8.2.5.1.2.7.1.2 - Tracking Methodology [Core]  <!-- UUID: 43ede046-4e45-4bf8-895b-d5823965eeae -->
 
 This Instance uses the Tracking Methodology specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2).
 
-########### A.6.1.1.5.2.5.1.2.7.1.3 - Custom Instance Parameters [Core]  <!-- UUID: f1a4510d-f38c-499c-bc07-405a8ca6816d -->
+########### A.6.1.1.8.2.5.1.2.7.1.3 - Custom Instance Parameters [Core]  <!-- UUID: f1a4510d-f38c-499c-bc07-405a8ca6816d -->
 
 The documents herein define the custom parameters of the Yearn (Gimme) Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.7.2 - Operational Process Definition [Core]  <!-- UUID: a3796610-b310-4dac-872b-21ce3bd835e7 -->
+########## A.6.1.1.8.2.5.1.2.7.2 - Operational Process Definition [Core]  <!-- UUID: a3796610-b310-4dac-872b-21ce3bd835e7 -->
 
 The documents herein define the process for the ongoing management of the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.7.2.1 - Routine Protocol [Core]  <!-- UUID: 1c93fd6d-5cff-46e7-86e5-0af4f6c83b4b -->
+########### A.6.1.1.8.2.5.1.2.7.2.1 - Routine Protocol [Core]  <!-- UUID: 1c93fd6d-5cff-46e7-86e5-0af4f6c83b4b -->
 
 This document defines the protocol for routine ongoing management of the Yearn (Gimme) Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.7.2.1.1 - Agent Customizations [Core]  <!-- UUID: d341791b-eec0-46a8-ada5-f6142ff49034 -->
+############ A.6.1.1.8.2.5.1.2.7.2.1.1 - Agent Customizations [Core]  <!-- UUID: d341791b-eec0-46a8-ada5-f6142ff49034 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.7.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8998657a-ed5e-4610-b1bc-171f715a5d48 -->
+########### A.6.1.1.8.2.5.1.2.7.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8998657a-ed5e-4610-b1bc-171f715a5d48 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Yearn (Gimme) Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.7.2.3 - Emergency Protocol [Core]  <!-- UUID: 8146f803-ddf9-4f85-81d3-84666b3f259c -->
+########### A.6.1.1.8.2.5.1.2.7.2.3 - Emergency Protocol [Core]  <!-- UUID: 8146f803-ddf9-4f85-81d3-84666b3f259c -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Yearn (Gimme) Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.7.3 - Data Repository [Core]  <!-- UUID: e2cf9382-81d0-4f38-a9bc-8b7c647805fb -->
+########## A.6.1.1.8.2.5.1.2.7.3 - Data Repository [Core]  <!-- UUID: e2cf9382-81d0-4f38-a9bc-8b7c647805fb -->
 
 The documents herein contain data relevant to the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.7.3.1 - Initial Planning [Core]  <!-- UUID: 2a400f84-7251-41ed-a8ce-c3d091c90ad6 -->
+########### A.6.1.1.8.2.5.1.2.7.3.1 - Initial Planning [Core]  <!-- UUID: 2a400f84-7251-41ed-a8ce-c3d091c90ad6 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.7.3.2 - Operational GovOps Review [Core]  <!-- UUID: 3bdf7ecb-accd-4b70-b956-a5e05cb60668 -->
+########### A.6.1.1.8.2.5.1.2.7.3.2 - Operational GovOps Review [Core]  <!-- UUID: 3bdf7ecb-accd-4b70-b956-a5e05cb60668 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.7.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 1816152b-22ea-4a5a-822f-88da78afe8cf -->
+########### A.6.1.1.8.2.5.1.2.7.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 1816152b-22ea-4a5a-822f-88da78afe8cf -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.7.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 30be45d8-cd38-4c52-b4d0-ed7225c97b9a -->
+########### A.6.1.1.8.2.5.1.2.7.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 30be45d8-cd38-4c52-b4d0-ed7225c97b9a -->
 
 The Accessibility Reward payments for the Yearn (Gimme) Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31020,11 +31450,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.7.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 707956cc-62f8-4620-a95f-b45ebf263218 -->
+############ A.6.1.1.8.2.5.1.2.7.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 707956cc-62f8-4620-a95f-b45ebf263218 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.7.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 690e54dd-c88a-422e-a06d-e6812035fc1c -->
+########### A.6.1.1.8.2.5.1.2.7.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 690e54dd-c88a-422e-a06d-e6812035fc1c -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31032,7 +31462,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.7.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 034c4a3d-46fc-46b4-afd0-1187bc29ea07 -->
+############ A.6.1.1.8.2.5.1.2.7.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 034c4a3d-46fc-46b4-afd0-1187bc29ea07 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31042,71 +31472,71 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.7.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: be1b9146-9d66-4ab1-a47d-724d0220f5ef -->
+############ A.6.1.1.8.2.5.1.2.7.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: be1b9146-9d66-4ab1-a47d-724d0220f5ef -->
 
 Yearn (Gimme) - `0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52`
 
-######### A.6.1.1.5.2.5.1.2.8 - MOM Instance Configuration Document [Core]  <!-- UUID: ee4f9b64-aeb7-4813-b187-996e8172fea1 -->
+######### A.6.1.1.8.2.5.1.2.8 - MOM Instance Configuration Document [Core]  <!-- UUID: ee4f9b64-aeb7-4813-b187-996e8172fea1 -->
 
 The documents herein contain the Instance Configuration Document for the MOM Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.2.8.1 - Parameters [Core]  <!-- UUID: 8adfffaf-011e-4762-9b44-3e35f0f6adaa -->
+########## A.6.1.1.8.2.5.1.2.8.1 - Parameters [Core]  <!-- UUID: 8adfffaf-011e-4762-9b44-3e35f0f6adaa -->
 
 The documents herein define the parameters of the MOM Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.8.1.1 - Reward Code [Core]  <!-- UUID: d87d51bb-8476-48b7-a8af-795917bb6f0d -->
+########### A.6.1.1.8.2.5.1.2.8.1.1 - Reward Code [Core]  <!-- UUID: d87d51bb-8476-48b7-a8af-795917bb6f0d -->
 
 `1015`.
 
-########### A.6.1.1.5.2.5.1.2.8.1.2 - Tracking Methodology [Core]  <!-- UUID: 0ed5b976-e929-4a38-9f45-6eda54d4cc6c -->
+########### A.6.1.1.8.2.5.1.2.8.1.2 - Tracking Methodology [Core]  <!-- UUID: 0ed5b976-e929-4a38-9f45-6eda54d4cc6c -->
 
 This Instance uses the Tracking Methodologies specified in [A.2.4 - Ethereum Mainnet General Tracking Methodology](87fd6861-ba8a-4bde-945e-ee9ad37ae3e2) and [A.2.4 - Base Tracking Methodology](f710bddf-dc1d-483c-9503-483574cb6333).
 
-########### A.6.1.1.5.2.5.1.2.8.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 4c40a025-6ff0-4ee7-9a33-d4c03b68f332 -->
+########### A.6.1.1.8.2.5.1.2.8.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 4c40a025-6ff0-4ee7-9a33-d4c03b68f332 -->
 
 The documents herein define the custom parameters of the MOM Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.2.8.2 - Operational Process Definition [Core]  <!-- UUID: 3c170bd2-4a9e-4461-bf81-d33fd253dfc9 -->
+########## A.6.1.1.8.2.5.1.2.8.2 - Operational Process Definition [Core]  <!-- UUID: 3c170bd2-4a9e-4461-bf81-d33fd253dfc9 -->
 
 The documents herein define the process for the ongoing management of the MOM Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.8.2.1 - Routine Protocol [Core]  <!-- UUID: 4b22e820-db7b-4f76-8b82-6f60b21ca1d9 -->
+########### A.6.1.1.8.2.5.1.2.8.2.1 - Routine Protocol [Core]  <!-- UUID: 4b22e820-db7b-4f76-8b82-6f60b21ca1d9 -->
 
 This document defines the protocol for routine ongoing management of the MOM Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.2.8.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9bbe0d8a-a65b-4da4-bdd0-8206c564f090 -->
+############ A.6.1.1.8.2.5.1.2.8.2.1.1 - Agent Customizations [Core]  <!-- UUID: 9bbe0d8a-a65b-4da4-bdd0-8206c564f090 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.2.8.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 940153fc-b44e-4421-82de-2d196fe1b505 -->
+########### A.6.1.1.8.2.5.1.2.8.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 940153fc-b44e-4421-82de-2d196fe1b505 -->
 
 The documents herein define the protocol for non-routine ongoing management of the MOM Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.8.2.3 - Emergency Protocol [Core]  <!-- UUID: 0d0e6b23-5f44-4f0f-98a1-a4c82780c3d7 -->
+########### A.6.1.1.8.2.5.1.2.8.2.3 - Emergency Protocol [Core]  <!-- UUID: 0d0e6b23-5f44-4f0f-98a1-a4c82780c3d7 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the MOM Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.2.8.3 - Data Repository [Core]  <!-- UUID: 6c8b1217-db6e-4952-bccf-a5635a3a0119 -->
+########## A.6.1.1.8.2.5.1.2.8.3 - Data Repository [Core]  <!-- UUID: 6c8b1217-db6e-4952-bccf-a5635a3a0119 -->
 
 The documents herein contain data relevant to the MOM Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.2.8.3.1 - Initial Planning [Core]  <!-- UUID: bea56b80-5d46-4a44-81a5-0df050a5255b -->
+########### A.6.1.1.8.2.5.1.2.8.3.1 - Initial Planning [Core]  <!-- UUID: bea56b80-5d46-4a44-81a5-0df050a5255b -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.8.3.2 - Operational GovOps Review [Core]  <!-- UUID: 16f6bff2-ed77-4e02-806d-5fe7941f94ce -->
+########### A.6.1.1.8.2.5.1.2.8.3.2 - Operational GovOps Review [Core]  <!-- UUID: 16f6bff2-ed77-4e02-806d-5fe7941f94ce -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.8.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: df961d91-acfd-45de-8fd6-f17237d34eb8 -->
+########### A.6.1.1.8.2.5.1.2.8.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: df961d91-acfd-45de-8fd6-f17237d34eb8 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.2.8.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: e1961614-467f-40b0-9e7a-f67e2a70cc97 -->
+########### A.6.1.1.8.2.5.1.2.8.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: e1961614-467f-40b0-9e7a-f67e2a70cc97 -->
 
 The Accessibility Reward payments for the MOM Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31114,11 +31544,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.8.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 8520b41b-cf03-493b-a6ce-9314983f38b3 -->
+############ A.6.1.1.8.2.5.1.2.8.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 8520b41b-cf03-493b-a6ce-9314983f38b3 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.2.8.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 74b0e9af-0a6d-4cfc-988a-5621713772fc -->
+########### A.6.1.1.8.2.5.1.2.8.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 74b0e9af-0a6d-4cfc-988a-5621713772fc -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31126,7 +31556,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.2.8.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: fc1a5e0b-0909-48d1-adc4-77e51a900050 -->
+############ A.6.1.1.8.2.5.1.2.8.3.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: fc1a5e0b-0909-48d1-adc4-77e51a900050 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31136,83 +31566,83 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.2.8.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 4fc18aff-0fd6-41ea-a5e8-92ea54861c99 -->
+############ A.6.1.1.8.2.5.1.2.8.3.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 4fc18aff-0fd6-41ea-a5e8-92ea54861c99 -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######## A.6.1.1.5.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 44389e6f-b48e-4426-a6c8-110ec76ebea1 -->
+######## A.6.1.1.8.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 44389e6f-b48e-4426-a6c8-110ec76ebea1 -->
 
 The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 05362fab-8fc5-487c-af2e-b6ebf6f4445e -->
+######## A.6.1.1.8.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 05362fab-8fc5-487c-af2e-b6ebf6f4445e -->
 
 The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](cb0709e4-c51d-45cc-b385-0c20a0bf4b25).
 
-######### A.6.1.1.5.2.5.1.4.1 - MetaMask Instance Configuration Document [Core]  <!-- UUID: d43ec3dd-96bf-419f-8387-f85615e6bcc5 -->
+######### A.6.1.1.8.2.5.1.4.1 - MetaMask Instance Configuration Document [Core]  <!-- UUID: d43ec3dd-96bf-419f-8387-f85615e6bcc5 -->
 
 The documents herein contain the Instance Configuration Document for the MetaMask Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.4.1.1 - Invocation Status [Core]  <!-- UUID: 650a20a0-362c-431b-bd56-ef13386c3aec -->
+########## A.6.1.1.8.2.5.1.4.1.1 - Invocation Status [Core]  <!-- UUID: 650a20a0-362c-431b-bd56-ef13386c3aec -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.1.4.1.2 - Parameters [Core]  <!-- UUID: f46ff617-d495-402f-a3dc-f4822a018b19 -->
+########## A.6.1.1.8.2.5.1.4.1.2 - Parameters [Core]  <!-- UUID: f46ff617-d495-402f-a3dc-f4822a018b19 -->
 
 The documents herein define the parameters of the MetaMask Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.1.2.1 - Reward Code [Core]  <!-- UUID: c3f4fb9f-9af6-495d-8261-04bd19c8c552 -->
+########### A.6.1.1.8.2.5.1.4.1.2.1 - Reward Code [Core]  <!-- UUID: c3f4fb9f-9af6-495d-8261-04bd19c8c552 -->
 
 `1005`.
 
-########### A.6.1.1.5.2.5.1.4.1.2.2 - Tracking Methodology [Core]  <!-- UUID: 98906b92-72db-4f7e-ac79-053a92728025 -->
+########### A.6.1.1.8.2.5.1.4.1.2.2 - Tracking Methodology [Core]  <!-- UUID: 98906b92-72db-4f7e-ac79-053a92728025 -->
 
 This parameter will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.5.1.4.1.2.3 - Custom Instance Parameters [Core]  <!-- UUID: fc5ec9c3-fad3-455d-8cb8-8be082ea388e -->
+########### A.6.1.1.8.2.5.1.4.1.2.3 - Custom Instance Parameters [Core]  <!-- UUID: fc5ec9c3-fad3-455d-8cb8-8be082ea388e -->
 
 The documents herein define the custom parameters of the MetaMask Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.4.1.3 - Operational Process Definition [Core]  <!-- UUID: 81e97a1c-9bf1-4038-be0e-4eece0a2f88b -->
+########## A.6.1.1.8.2.5.1.4.1.3 - Operational Process Definition [Core]  <!-- UUID: 81e97a1c-9bf1-4038-be0e-4eece0a2f88b -->
 
 The documents herein define the process for the ongoing management of the MetaMask Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.1.3.1 - Routine Protocol [Core]  <!-- UUID: 02c6ffc8-5fdc-4a1f-8037-a6a1aeb5e51c -->
+########### A.6.1.1.8.2.5.1.4.1.3.1 - Routine Protocol [Core]  <!-- UUID: 02c6ffc8-5fdc-4a1f-8037-a6a1aeb5e51c -->
 
 This document defines the protocol for routine ongoing management of the MetaMask Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.4.1.3.1.1 - Agent Customizations [Core]  <!-- UUID: e739cfa7-90c6-49f2-9b03-ea4744e7f2e9 -->
+############ A.6.1.1.8.2.5.1.4.1.3.1.1 - Agent Customizations [Core]  <!-- UUID: e739cfa7-90c6-49f2-9b03-ea4744e7f2e9 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 167f2753-e45f-4d55-b182-2c17c4f1e2c5 -->
+########### A.6.1.1.8.2.5.1.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 167f2753-e45f-4d55-b182-2c17c4f1e2c5 -->
 
 The documents herein define the protocol for non-routine ongoing management of the MetaMask Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.1.3.3 - Emergency Protocol [Core]  <!-- UUID: 6c02ae31-2313-46ff-9232-2875186e0255 -->
+########### A.6.1.1.8.2.5.1.4.1.3.3 - Emergency Protocol [Core]  <!-- UUID: 6c02ae31-2313-46ff-9232-2875186e0255 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the MetaMask Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.4.1.4 - Data Repository [Core]  <!-- UUID: a4a10d71-42f8-49f3-9eeb-dda2ceb1332a -->
+########## A.6.1.1.8.2.5.1.4.1.4 - Data Repository [Core]  <!-- UUID: a4a10d71-42f8-49f3-9eeb-dda2ceb1332a -->
 
 The documents herein contain data relevant to the MetaMask Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.1.4.1 - Initial Planning [Core]  <!-- UUID: 177f02ea-cde5-4d68-b7de-c3cef1a47f32 -->
+########### A.6.1.1.8.2.5.1.4.1.4.1 - Initial Planning [Core]  <!-- UUID: 177f02ea-cde5-4d68-b7de-c3cef1a47f32 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.1.4.2 - Operational GovOps Review [Core]  <!-- UUID: 2cc897a5-eb49-4766-9489-3cdca7c74196 -->
+########### A.6.1.1.8.2.5.1.4.1.4.2 - Operational GovOps Review [Core]  <!-- UUID: 2cc897a5-eb49-4766-9489-3cdca7c74196 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.1.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: a7582742-03a8-4095-b394-6fe1b62f912a -->
+########### A.6.1.1.8.2.5.1.4.1.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: a7582742-03a8-4095-b394-6fe1b62f912a -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.1.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 6296fedf-c2f4-4cdc-a16f-a2b0e8bd19bc -->
+########### A.6.1.1.8.2.5.1.4.1.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 6296fedf-c2f4-4cdc-a16f-a2b0e8bd19bc -->
 
 The Accessibility Reward payments for the MetaMask Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31220,11 +31650,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.1.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 20376e25-f067-400e-be73-dc2552766c47 -->
+############ A.6.1.1.8.2.5.1.4.1.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 20376e25-f067-400e-be73-dc2552766c47 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.4.1.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: ded05ed5-e470-4cbc-b3f0-c7d8cd928584 -->
+########### A.6.1.1.8.2.5.1.4.1.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: ded05ed5-e470-4cbc-b3f0-c7d8cd928584 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31232,7 +31662,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.1.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: aa0ea344-4e89-4b6e-8c32-afc5c19cf8d0 -->
+############ A.6.1.1.8.2.5.1.4.1.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: aa0ea344-4e89-4b6e-8c32-afc5c19cf8d0 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31242,75 +31672,75 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.4.1.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: b537c8e2-92b6-4d2f-88ff-337acb1e8357 -->
+############ A.6.1.1.8.2.5.1.4.1.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: b537c8e2-92b6-4d2f-88ff-337acb1e8357 -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.4.2 - InstaDapp Instance Configuration Document [Core]  <!-- UUID: e870392a-2552-41ca-a148-4be47d34bac7 -->
+######### A.6.1.1.8.2.5.1.4.2 - InstaDapp Instance Configuration Document [Core]  <!-- UUID: e870392a-2552-41ca-a148-4be47d34bac7 -->
 
 The documents herein contain the Instance Configuration Document for the InstaDapp Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.4.2.1 - Invocation Status [Core]  <!-- UUID: 2f8dec26-fa98-454d-b035-284359de4fe3 -->
+########## A.6.1.1.8.2.5.1.4.2.1 - Invocation Status [Core]  <!-- UUID: 2f8dec26-fa98-454d-b035-284359de4fe3 -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.1.4.2.2 - Parameters [Core]  <!-- UUID: 58b69a0b-a8f3-40cd-bc36-154aa61d8f0c -->
+########## A.6.1.1.8.2.5.1.4.2.2 - Parameters [Core]  <!-- UUID: 58b69a0b-a8f3-40cd-bc36-154aa61d8f0c -->
 
 The documents herein define the parameters of the InstaDapp Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.2.2.1 - Reward Code [Core]  <!-- UUID: d57c7da4-c5dd-4e11-b5a3-d08aafdaa65f -->
+########### A.6.1.1.8.2.5.1.4.2.2.1 - Reward Code [Core]  <!-- UUID: d57c7da4-c5dd-4e11-b5a3-d08aafdaa65f -->
 
 `1006`.
 
-########### A.6.1.1.5.2.5.1.4.2.2.2 - Tracking Methodology [Core]  <!-- UUID: 1dcac5c2-21ec-4714-bf77-f861a851aec4 -->
+########### A.6.1.1.8.2.5.1.4.2.2.2 - Tracking Methodology [Core]  <!-- UUID: 1dcac5c2-21ec-4714-bf77-f861a851aec4 -->
 
 This parameter will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.5.1.4.2.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 5c7380f4-bb98-4dcc-81de-0f02d4e71bbc -->
+########### A.6.1.1.8.2.5.1.4.2.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 5c7380f4-bb98-4dcc-81de-0f02d4e71bbc -->
 
 The documents herein define the custom parameters of the InstaDapp Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.4.2.3 - Operational Process Definition [Core]  <!-- UUID: 64113652-22f2-487b-b170-675ed1e25741 -->
+########## A.6.1.1.8.2.5.1.4.2.3 - Operational Process Definition [Core]  <!-- UUID: 64113652-22f2-487b-b170-675ed1e25741 -->
 
 The documents herein define the process for the ongoing management of the InstaDapp Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.2.3.1 - Routine Protocol [Core]  <!-- UUID: c458078b-ffba-428e-950a-9c20a64967d4 -->
+########### A.6.1.1.8.2.5.1.4.2.3.1 - Routine Protocol [Core]  <!-- UUID: c458078b-ffba-428e-950a-9c20a64967d4 -->
 
 This document defines the protocol for routine ongoing management of the InstaDapp Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.4.2.3.1.1 - Agent Customizations [Core]  <!-- UUID: ae59d85f-0a27-461d-a2ef-4b10dd597fee -->
+############ A.6.1.1.8.2.5.1.4.2.3.1.1 - Agent Customizations [Core]  <!-- UUID: ae59d85f-0a27-461d-a2ef-4b10dd597fee -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.4.2.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 7a34becd-4afd-405c-bfb2-a367568c516f -->
+########### A.6.1.1.8.2.5.1.4.2.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 7a34becd-4afd-405c-bfb2-a367568c516f -->
 
 The documents herein define the protocol for non-routine ongoing management of the InstaDapp Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.2.3.3 - Emergency Protocol [Core]  <!-- UUID: 060f50d5-e37f-430a-a103-a06c6b880c63 -->
+########### A.6.1.1.8.2.5.1.4.2.3.3 - Emergency Protocol [Core]  <!-- UUID: 060f50d5-e37f-430a-a103-a06c6b880c63 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the InstaDapp Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.4.2.4 - Data Repository [Core]  <!-- UUID: 0d530623-4cf8-4046-ac19-5a2095a805d2 -->
+########## A.6.1.1.8.2.5.1.4.2.4 - Data Repository [Core]  <!-- UUID: 0d530623-4cf8-4046-ac19-5a2095a805d2 -->
 
 The documents herein contain data relevant to the InstaDapp Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.2.4.1 - Initial Planning [Core]  <!-- UUID: f51aa574-e8c8-4e15-bfba-76082d40ac91 -->
+########### A.6.1.1.8.2.5.1.4.2.4.1 - Initial Planning [Core]  <!-- UUID: f51aa574-e8c8-4e15-bfba-76082d40ac91 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.2.4.2 - Operational GovOps Review [Core]  <!-- UUID: d35d512a-2c81-4491-b966-6803b68f9834 -->
+########### A.6.1.1.8.2.5.1.4.2.4.2 - Operational GovOps Review [Core]  <!-- UUID: d35d512a-2c81-4491-b966-6803b68f9834 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.2.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 57a3bfd7-83e2-4033-9dc0-d64274973784 -->
+########### A.6.1.1.8.2.5.1.4.2.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 57a3bfd7-83e2-4033-9dc0-d64274973784 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.2.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 38f84680-46ff-400b-baeb-62a0684d2aa7 -->
+########### A.6.1.1.8.2.5.1.4.2.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 38f84680-46ff-400b-baeb-62a0684d2aa7 -->
 
 The Accessibility Reward payments for the InstaDapp Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31318,11 +31748,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.2.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: a75fa6c5-8d93-43fe-acad-dfb07e226668 -->
+############ A.6.1.1.8.2.5.1.4.2.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: a75fa6c5-8d93-43fe-acad-dfb07e226668 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.4.2.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 28b69d1f-44d3-4b97-8aff-809513145245 -->
+########### A.6.1.1.8.2.5.1.4.2.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 28b69d1f-44d3-4b97-8aff-809513145245 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31330,7 +31760,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.2.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 1d995038-ec86-4f39-a02c-21ee651dd3cc -->
+############ A.6.1.1.8.2.5.1.4.2.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 1d995038-ec86-4f39-a02c-21ee651dd3cc -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31340,75 +31770,75 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.4.2.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 1438c4e7-e15b-443c-b9c6-dcdde63920c6 -->
+############ A.6.1.1.8.2.5.1.4.2.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 1438c4e7-e15b-443c-b9c6-dcdde63920c6 -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.4.3 - Gnosis Protocol Instance Configuration Document [Core]  <!-- UUID: 34cde6e0-89a1-44a4-9ce1-58873b83c63b -->
+######### A.6.1.1.8.2.5.1.4.3 - Gnosis Protocol Instance Configuration Document [Core]  <!-- UUID: 34cde6e0-89a1-44a4-9ce1-58873b83c63b -->
 
 The documents herein contain the Instance Configuration Document for the Gnosis Protocol Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.4.3.1 - Invocation Status [Core]  <!-- UUID: ec6a6561-a5e3-4ec6-8ecf-b8053c98149b -->
+########## A.6.1.1.8.2.5.1.4.3.1 - Invocation Status [Core]  <!-- UUID: ec6a6561-a5e3-4ec6-8ecf-b8053c98149b -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.1.4.3.2 - Parameters [Core]  <!-- UUID: a8cf666e-2fb6-4830-bc53-5005e0111408 -->
+########## A.6.1.1.8.2.5.1.4.3.2 - Parameters [Core]  <!-- UUID: a8cf666e-2fb6-4830-bc53-5005e0111408 -->
 
 The documents herein define the parameters of the Gnosis Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.3.2.1 - Reward Code [Core]  <!-- UUID: 96af997a-cd62-41f4-9e32-c5a9dd243f37 -->
+########### A.6.1.1.8.2.5.1.4.3.2.1 - Reward Code [Core]  <!-- UUID: 96af997a-cd62-41f4-9e32-c5a9dd243f37 -->
 
 `1050`.
 
-########### A.6.1.1.5.2.5.1.4.3.2.2 - Tracking Methodology [Core]  <!-- UUID: 07ec38da-a0ca-468e-83b7-2059ad5e4016 -->
+########### A.6.1.1.8.2.5.1.4.3.2.2 - Tracking Methodology [Core]  <!-- UUID: 07ec38da-a0ca-468e-83b7-2059ad5e4016 -->
 
 This parameter will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.5.1.4.3.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 6fc01270-3033-45b4-8e88-79751b36448c -->
+########### A.6.1.1.8.2.5.1.4.3.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 6fc01270-3033-45b4-8e88-79751b36448c -->
 
 The documents herein define the custom parameters of the Gnosis Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.4.3.3 - Operational Process Definition [Core]  <!-- UUID: fac720c6-f7d2-410c-80bb-8b68c77cdd7c -->
+########## A.6.1.1.8.2.5.1.4.3.3 - Operational Process Definition [Core]  <!-- UUID: fac720c6-f7d2-410c-80bb-8b68c77cdd7c -->
 
 The documents herein define the process for the ongoing management of the Gnosis Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.3.3.1 - Routine Protocol [Core]  <!-- UUID: 34d65ab5-5a03-42a6-848d-ace67c5e9ab0 -->
+########### A.6.1.1.8.2.5.1.4.3.3.1 - Routine Protocol [Core]  <!-- UUID: 34d65ab5-5a03-42a6-848d-ace67c5e9ab0 -->
 
 This document defines the protocol for routine ongoing management of the Gnosis Protocol Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.4.3.3.1.1 - Agent Customizations [Core]  <!-- UUID: 423d68eb-6fdd-44f4-9bd0-885b44abdd6d -->
+############ A.6.1.1.8.2.5.1.4.3.3.1.1 - Agent Customizations [Core]  <!-- UUID: 423d68eb-6fdd-44f4-9bd0-885b44abdd6d -->
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.4.3.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 9b770474-14bd-4846-8813-4df2bfa77a8f -->
+########### A.6.1.1.8.2.5.1.4.3.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 9b770474-14bd-4846-8813-4df2bfa77a8f -->
 
 The documents herein define the protocol for non-routine ongoing management of the Gnosis Protocol Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.3.3.3 - Emergency Protocol [Core]  <!-- UUID: 06e37d7d-f130-4b78-b207-32769d75c9db -->
+########### A.6.1.1.8.2.5.1.4.3.3.3 - Emergency Protocol [Core]  <!-- UUID: 06e37d7d-f130-4b78-b207-32769d75c9db -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Gnosis Protocol Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.4.3.4 - Data Repository [Core]  <!-- UUID: 1bd8546a-db64-46e5-9271-efc314b0a374 -->
+########## A.6.1.1.8.2.5.1.4.3.4 - Data Repository [Core]  <!-- UUID: 1bd8546a-db64-46e5-9271-efc314b0a374 -->
 
 The documents herein contain data relevant to the Gnosis Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.3.4.1 - Initial Planning [Core]  <!-- UUID: c2db568d-6c90-4a62-8fb9-33cfb504fc1d -->
+########### A.6.1.1.8.2.5.1.4.3.4.1 - Initial Planning [Core]  <!-- UUID: c2db568d-6c90-4a62-8fb9-33cfb504fc1d -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.3.4.2 - Operational GovOps Review [Core]  <!-- UUID: 446804db-4495-4621-a504-e3575e5be34b -->
+########### A.6.1.1.8.2.5.1.4.3.4.2 - Operational GovOps Review [Core]  <!-- UUID: 446804db-4495-4621-a504-e3575e5be34b -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.3.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 711781c6-57a9-4813-9e4d-263f9a70384a -->
+########### A.6.1.1.8.2.5.1.4.3.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 711781c6-57a9-4813-9e4d-263f9a70384a -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.3.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 32c6b23b-8c5f-4798-97e2-84248365365d -->
+########### A.6.1.1.8.2.5.1.4.3.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 32c6b23b-8c5f-4798-97e2-84248365365d -->
 
 The Accessibility Reward payments for the Gnosis Protocol Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31416,11 +31846,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.3.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 3dd71633-a629-47af-b806-f7930f1332da -->
+############ A.6.1.1.8.2.5.1.4.3.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 3dd71633-a629-47af-b806-f7930f1332da -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.4.3.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: efbea98b-9063-4706-a467-050eb2594339 -->
+########### A.6.1.1.8.2.5.1.4.3.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: efbea98b-9063-4706-a467-050eb2594339 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31428,7 +31858,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.3.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 985b10b4-837a-48c6-884b-80de88e2462a -->
+############ A.6.1.1.8.2.5.1.4.3.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 985b10b4-837a-48c6-884b-80de88e2462a -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31438,75 +31868,75 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.4.3.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 802462c0-d9d1-42fa-8729-54135634f7f5 -->
+############ A.6.1.1.8.2.5.1.4.3.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 802462c0-d9d1-42fa-8729-54135634f7f5 -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.4.4 - Piku.co Instance Configuration Document [Core]  <!-- UUID: bc145261-ff5d-4937-abbd-0719390ff124 -->
+######### A.6.1.1.8.2.5.1.4.4 - Piku.co Instance Configuration Document [Core]  <!-- UUID: bc145261-ff5d-4937-abbd-0719390ff124 -->
 
 The documents herein contain the Instance Configuration Document for the Piku.co Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.4.4.1 - Invocation Status [Core]  <!-- UUID: 76e70fba-b3a1-40dc-8625-6ba5c6447444 -->
+########## A.6.1.1.8.2.5.1.4.4.1 - Invocation Status [Core]  <!-- UUID: 76e70fba-b3a1-40dc-8625-6ba5c6447444 -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.1.4.4.2 - Parameters [Core]  <!-- UUID: 79da10fb-e6c0-491f-8e18-80edc9e642ad -->
+########## A.6.1.1.8.2.5.1.4.4.2 - Parameters [Core]  <!-- UUID: 79da10fb-e6c0-491f-8e18-80edc9e642ad -->
 
 The documents herein define the parameters of the Piku.co Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.4.2.1 - Reward Code [Core]  <!-- UUID: e2a11959-ddcf-4b85-b093-92e2924f2d85 -->
+########### A.6.1.1.8.2.5.1.4.4.2.1 - Reward Code [Core]  <!-- UUID: e2a11959-ddcf-4b85-b093-92e2924f2d85 -->
 
 `1010`.
 
-########### A.6.1.1.5.2.5.1.4.4.2.2 - Tracking Methodology [Core]  <!-- UUID: 2785cf23-1be4-4c83-b50e-be57a30c1a79 -->
+########### A.6.1.1.8.2.5.1.4.4.2.2 - Tracking Methodology [Core]  <!-- UUID: 2785cf23-1be4-4c83-b50e-be57a30c1a79 -->
 
 This parameter will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.5.1.4.4.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 0f252ad2-ea66-49a4-9ff5-10d9bb222532 -->
+########### A.6.1.1.8.2.5.1.4.4.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 0f252ad2-ea66-49a4-9ff5-10d9bb222532 -->
 
 The documents herein define the custom parameters of the Piku.co Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.4.4.3 - Operational Process Definition [Core]  <!-- UUID: 78aaaa71-7843-4910-aefe-6ba166cbbb0d -->
+########## A.6.1.1.8.2.5.1.4.4.3 - Operational Process Definition [Core]  <!-- UUID: 78aaaa71-7843-4910-aefe-6ba166cbbb0d -->
 
 The documents herein define the process for the ongoing management of the Piku.co Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.4.3.1 - Routine Protocol [Core]  <!-- UUID: a08670ae-0bc5-4424-9b65-38db64441e8d -->
+########### A.6.1.1.8.2.5.1.4.4.3.1 - Routine Protocol [Core]  <!-- UUID: a08670ae-0bc5-4424-9b65-38db64441e8d -->
 
 This document defines the protocol for routine ongoing management of the Piku.co Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.4.4.3.1.1 - Agent Customizations [Core]  <!-- UUID: af262fdb-d5ac-4a53-9ca5-47e0448f7ff4 -->
+############ A.6.1.1.8.2.5.1.4.4.3.1.1 - Agent Customizations [Core]  <!-- UUID: af262fdb-d5ac-4a53-9ca5-47e0448f7ff4 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.4.4.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 4eee5be9-976e-4899-8444-a73c41a952e7 -->
+########### A.6.1.1.8.2.5.1.4.4.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 4eee5be9-976e-4899-8444-a73c41a952e7 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Piku.co Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.4.3.3 - Emergency Protocol [Core]  <!-- UUID: 316c7704-f588-430a-bc71-6a0730810e54 -->
+########### A.6.1.1.8.2.5.1.4.4.3.3 - Emergency Protocol [Core]  <!-- UUID: 316c7704-f588-430a-bc71-6a0730810e54 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Piku.co Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.4.4.4 - Data Repository [Core]  <!-- UUID: 07bcf5db-08bd-4091-9416-38e2561e992b -->
+########## A.6.1.1.8.2.5.1.4.4.4 - Data Repository [Core]  <!-- UUID: 07bcf5db-08bd-4091-9416-38e2561e992b -->
 
 The documents herein contain data relevant to the Piku.co Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.4.4.1 - Initial Planning [Core]  <!-- UUID: 3fa947ef-d8e4-4315-bccb-b4a1b6e760ca -->
+########### A.6.1.1.8.2.5.1.4.4.4.1 - Initial Planning [Core]  <!-- UUID: 3fa947ef-d8e4-4315-bccb-b4a1b6e760ca -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.4.4.2 - Operational GovOps Review [Core]  <!-- UUID: 8dd619da-bb48-4efc-8a68-c21754a11372 -->
+########### A.6.1.1.8.2.5.1.4.4.4.2 - Operational GovOps Review [Core]  <!-- UUID: 8dd619da-bb48-4efc-8a68-c21754a11372 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.4.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 7ccfd0ad-4d2c-441f-afbf-dd6f7b5d4293 -->
+########### A.6.1.1.8.2.5.1.4.4.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 7ccfd0ad-4d2c-441f-afbf-dd6f7b5d4293 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.4.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: a1f69b33-8bd2-4c68-b4d5-6b8d34ed763e -->
+########### A.6.1.1.8.2.5.1.4.4.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: a1f69b33-8bd2-4c68-b4d5-6b8d34ed763e -->
 
 The Accessibility Reward payments for the Piku.co Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31514,11 +31944,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.4.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: e05bf544-6a9c-42f5-9135-01a41887a75f -->
+############ A.6.1.1.8.2.5.1.4.4.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: e05bf544-6a9c-42f5-9135-01a41887a75f -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.4.4.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 55ab7dfa-57e5-49d2-9dc3-05b0bfe14d04 -->
+########### A.6.1.1.8.2.5.1.4.4.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 55ab7dfa-57e5-49d2-9dc3-05b0bfe14d04 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31526,7 +31956,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.4.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: e0517981-c05e-4f31-b8e0-51a690853132 -->
+############ A.6.1.1.8.2.5.1.4.4.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: e0517981-c05e-4f31-b8e0-51a690853132 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31536,75 +31966,75 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.4.4.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 49aa9d18-aa7e-464d-a965-f56fd014c02f -->
+############ A.6.1.1.8.2.5.1.4.4.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: 49aa9d18-aa7e-464d-a965-f56fd014c02f -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-######### A.6.1.1.5.2.5.1.4.5 - Lazy Summer Protocol Instance Configuration Document [Core]  <!-- UUID: 022ab7d1-05c3-422f-815c-0605f7f83f02 -->
+######### A.6.1.1.8.2.5.1.4.5 - Lazy Summer Protocol Instance Configuration Document [Core]  <!-- UUID: 022ab7d1-05c3-422f-815c-0605f7f83f02 -->
 
 The documents herein contain the Instance Configuration Document for the Lazy Summer Protocol Accessibility Reward Primitive Instance.
 
-########## A.6.1.1.5.2.5.1.4.5.1 - Invocation Status [Core]  <!-- UUID: 33ddd322-7ec0-4d7f-8b53-a78f6479d4ca -->
+########## A.6.1.1.8.2.5.1.4.5.1 - Invocation Status [Core]  <!-- UUID: 33ddd322-7ec0-4d7f-8b53-a78f6479d4ca -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.1.4.5.2 - Parameters [Core]  <!-- UUID: 8c536779-676d-47e0-8ae9-f0c459a04d2e -->
+########## A.6.1.1.8.2.5.1.4.5.2 - Parameters [Core]  <!-- UUID: 8c536779-676d-47e0-8ae9-f0c459a04d2e -->
 
 The documents herein define the parameters of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.5.2.1 - Reward Code [Core]  <!-- UUID: ee4af219-fad3-4987-ba88-7b1e35a7d7de -->
+########### A.6.1.1.8.2.5.1.4.5.2.1 - Reward Code [Core]  <!-- UUID: ee4af219-fad3-4987-ba88-7b1e35a7d7de -->
 
 `1016`.
 
-########### A.6.1.1.5.2.5.1.4.5.2.2 - Tracking Methodology [Core]  <!-- UUID: 9d2d053d-6ae2-4a9d-b5eb-e1b3457e1524 -->
+########### A.6.1.1.8.2.5.1.4.5.2.2 - Tracking Methodology [Core]  <!-- UUID: 9d2d053d-6ae2-4a9d-b5eb-e1b3457e1524 -->
 
 This parameter will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-########### A.6.1.1.5.2.5.1.4.5.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 00cd6bb6-4342-4856-a706-7c9f1434cb42 -->
+########### A.6.1.1.8.2.5.1.4.5.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 00cd6bb6-4342-4856-a706-7c9f1434cb42 -->
 
 The documents herein define the custom parameters of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive, if any.
 
-########## A.6.1.1.5.2.5.1.4.5.3 - Operational Process Definition [Core]  <!-- UUID: fe61a44f-ed67-432a-bc7d-c349ccf2ecab -->
+########## A.6.1.1.8.2.5.1.4.5.3 - Operational Process Definition [Core]  <!-- UUID: fe61a44f-ed67-432a-bc7d-c349ccf2ecab -->
 
 The documents herein define the process for the ongoing management of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.5.3.1 - Routine Protocol [Core]  <!-- UUID: d085cb25-fc4a-41e2-92ed-26cba7585978 -->
+########### A.6.1.1.8.2.5.1.4.5.3.1 - Routine Protocol [Core]  <!-- UUID: d085cb25-fc4a-41e2-92ed-26cba7585978 -->
 
 This document defines the protocol for routine ongoing management of the Lazy Summer Protocol Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](3af0e156-b5c0-493b-bd6f-80185072b7b1), subject to the qualifications specified in [A.2.4 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2).
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.1.4.5.3.1.1 - Agent Customizations [Core]  <!-- UUID: 338ba44b-e31f-49b7-bb7a-1a0bcf19dbab -->
+############ A.6.1.1.8.2.5.1.4.5.3.1.1 - Agent Customizations [Core]  <!-- UUID: 338ba44b-e31f-49b7-bb7a-1a0bcf19dbab -->
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.1.4.5.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 45119527-f6d5-46ab-b86b-3b1eb038cba3 -->
+########### A.6.1.1.8.2.5.1.4.5.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 45119527-f6d5-46ab-b86b-3b1eb038cba3 -->
 
 The documents herein define the protocol for non-routine ongoing management of the Lazy Summer Protocol Instance of this Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.5.3.3 - Emergency Protocol [Core]  <!-- UUID: 165aad80-51a8-48ec-acb8-0ae06a3709c3 -->
+########### A.6.1.1.8.2.5.1.4.5.3.3 - Emergency Protocol [Core]  <!-- UUID: 165aad80-51a8-48ec-acb8-0ae06a3709c3 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Lazy Summer Protocol Instance of this Accessibility Reward Primitive.
 
-########## A.6.1.1.5.2.5.1.4.5.4 - Data Repository [Core]  <!-- UUID: 04b7677e-dd54-434d-818a-2c5583c23b9c -->
+########## A.6.1.1.8.2.5.1.4.5.4 - Data Repository [Core]  <!-- UUID: 04b7677e-dd54-434d-818a-2c5583c23b9c -->
 
 The documents herein contain data relevant to the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
 
-########### A.6.1.1.5.2.5.1.4.5.4.1 - Initial Planning [Core]  <!-- UUID: ea3a21c2-0a2b-45ea-bd02-bb65b3c64f2b -->
+########### A.6.1.1.8.2.5.1.4.5.4.1 - Initial Planning [Core]  <!-- UUID: ea3a21c2-0a2b-45ea-bd02-bb65b3c64f2b -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.5.4.2 - Operational GovOps Review [Core]  <!-- UUID: 35a430f6-acc0-4262-8b13-857f26363b55 -->
+########### A.6.1.1.8.2.5.1.4.5.4.2 - Operational GovOps Review [Core]  <!-- UUID: 35a430f6-acc0-4262-8b13-857f26363b55 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.5.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 4468c565-8eb6-46e8-a1b0-2a8c958fbae0 -->
+########### A.6.1.1.8.2.5.1.4.5.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 4468c565-8eb6-46e8-a1b0-2a8c958fbae0 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.1.4.5.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7fda1aa2-f693-4362-a301-06258831aebb -->
+########### A.6.1.1.8.2.5.1.4.5.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7fda1aa2-f693-4362-a301-06258831aebb -->
 
 The Accessibility Reward payments for the Lazy Summer Protocol Instance of the Accessibility Reward Primitive are defined as Active Data.
 
@@ -31612,11 +32042,11 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.5.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 1597416e-188f-4f62-82a0-0be1d7daef20 -->
+############ A.6.1.1.8.2.5.1.4.5.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 1597416e-188f-4f62-82a0-0be1d7daef20 -->
 
 The Accessibility Reward Payments are:
 
-########### A.6.1.1.5.2.5.1.4.5.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 034f992e-bca4-4d38-ae9d-1f6ae2f0c048 -->
+########### A.6.1.1.8.2.5.1.4.5.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 034f992e-bca4-4d38-ae9d-1f6ae2f0c048 -->
 
 This Document records information pertaining to Launch Agent 3’s payments to the Third Party Partner associated with this Instance. This information is defined as Active Data.
 
@@ -31624,7 +32054,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.1.4.5.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 4d23c261-473d-4c8c-8914-9495e1840165 -->
+############ A.6.1.1.8.2.5.1.4.5.4.5.0.6.1 - Payment Details Per Reward Period [Active Data]  <!-- UUID: 4d23c261-473d-4c8c-8914-9495e1840165 -->
 
 The payment details consist of a table where each entry represents a single payment. Each entry has the following fields:
 - Reward Period
@@ -31634,39 +32064,39 @@ The payment details consist of a table where each entry represents a single paym
 - Transaction Hash
 - Transaction Date
 
-############ A.6.1.1.5.2.5.1.4.5.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: e1c26bc8-3578-40d7-9f33-8d0e6a24c5e5 -->
+############ A.6.1.1.8.2.5.1.4.5.4.5.0.6.2 - Third Party Partner Payment Addresses [Active Data]  <!-- UUID: e1c26bc8-3578-40d7-9f33-8d0e6a24c5e5 -->
 
 The payment address of this Third Party Partner will be defined in a future iteration of the Launch Agent 3 Artifact.
 
-####### A.6.1.1.5.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 460cd7ec-5947-4f16-bc6e-de5db7c7a139 -->
+####### A.6.1.1.8.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 460cd7ec-5947-4f16-bc6e-de5db7c7a139 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Integration Boost Primitive. See [A.2.4 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
 
-######## A.6.1.1.5.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: 4d0912c0-d103-43b2-a6bd-c764b83436ec -->
+######## A.6.1.1.8.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: 4d0912c0-d103-43b2-a6bd-c764b83436ec -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Integration Boost Primitive.
 
-######### A.6.1.1.5.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: e5199f4b-1c36-45c6-b555-51221ea2d09d -->
+######### A.6.1.1.8.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: e5199f4b-1c36-45c6-b555-51221ea2d09d -->
 
 `Active`
 
-######### A.6.1.1.5.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 5c4c9ad3-b437-463c-8a2d-c87be9da1a0b -->
+######### A.6.1.1.8.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 5c4c9ad3-b437-463c-8a2d-c87be9da1a0b -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Active`.
 
-########## A.6.1.1.5.2.5.2.1.2.1 - Euler Instance Configuration Document [Core]  <!-- UUID: 3a05c10f-9e73-4599-91ae-ed0d48fa9fc6 -->
+########## A.6.1.1.8.2.5.2.1.2.1 - Euler Instance Configuration Document [Core]  <!-- UUID: 3a05c10f-9e73-4599-91ae-ed0d48fa9fc6 -->
 
 This Instance’s associated Instance Configuration Document is located at [Euler Instance Configuration Document](af548686-1935-4f20-b099-0d5238f388a6).
 
-######### A.6.1.1.5.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: d9541cd3-07a3-41c7-99ee-c486d4271567 -->
+######### A.6.1.1.8.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: d9541cd3-07a3-41c7-99ee-c486d4271567 -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 2a9c16c1-c8e4-40eb-96a0-f908ee506a8c -->
+######### A.6.1.1.8.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 2a9c16c1-c8e4-40eb-96a0-f908ee506a8c -->
 
 This document contains a Directory of all prospective Instances of the Integration Boost Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5c4c9ad3-b437-463c-8a2d-c87be9da1a0b), whereas failed Invocations are Archived in [Hub Data Repository](eea53dfc-ac8a-456b-8775-c9a80052670b).
 
-########## A.6.1.1.5.2.5.2.1.4.1 - Compound [Core]  <!-- UUID: a0d67712-7f2e-4b40-9b07-d3e8173dbb9b -->
+########## A.6.1.1.8.2.5.2.1.4.1 - Compound [Core]  <!-- UUID: a0d67712-7f2e-4b40-9b07-d3e8173dbb9b -->
 
 The Invocation Status and Instance Configuration Document location of this prospective Instance are specified below:
 
@@ -31674,107 +32104,107 @@ Invocation Status: `Planning`
 
 Instance Configuration Document Location: [Compound Instance Configuration Document](0f02f958-70e7-477c-9ad4-386ad01cb2f4).
 
-######### A.6.1.1.5.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: eea53dfc-ac8a-456b-8775-c9a80052670b -->
+######### A.6.1.1.8.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: eea53dfc-ac8a-456b-8775-c9a80052670b -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38990d57-558c-4efd-95c8-846190693dce -->
+########## A.6.1.1.8.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38990d57-558c-4efd-95c8-846190693dce -->
 
 The subtrees for archived Invocations and Instances of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.5.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: df61a722-0030-4edd-9bec-5be8af796083 -->
+########### A.6.1.1.8.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: df61a722-0030-4edd-9bec-5be8af796083 -->
 
 The subtrees for failed Invocations of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.5.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 24c1bfcf-3525-4ba8-86d8-266435c603f0 -->
+########### A.6.1.1.8.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 24c1bfcf-3525-4ba8-86d8-266435c603f0 -->
 
 The subtrees for Instances of the Integration Boost Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.5.2.2 - Active Instances [Core]  <!-- UUID: 29a952d3-7b87-4aa1-b30f-aed5ed3ff3bd -->
+######## A.6.1.1.8.2.5.2.2 - Active Instances [Core]  <!-- UUID: 29a952d3-7b87-4aa1-b30f-aed5ed3ff3bd -->
 
 The Instances of the Integration Boost Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.5.2.5.2.2.1 - Euler Instance Configuration Document [Core]  <!-- UUID: af548686-1935-4f20-b099-0d5238f388a6 -->
+######### A.6.1.1.8.2.5.2.2.1 - Euler Instance Configuration Document [Core]  <!-- UUID: af548686-1935-4f20-b099-0d5238f388a6 -->
 
 The documents herein contain the Instance Configuration Document for the Euler Integration Boost Primitive Instance.
 
-########## A.6.1.1.5.2.5.2.2.1.1 - Parameters [Core]  <!-- UUID: a0d70867-be02-4ef6-89c2-40cf796b6696 -->
+########## A.6.1.1.8.2.5.2.2.1.1 - Parameters [Core]  <!-- UUID: a0d70867-be02-4ef6-89c2-40cf796b6696 -->
 
 The documents herein define the parameters of the Euler Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.2.1.1.1 - Integration Partner Name [Core]  <!-- UUID: fc909b71-8944-425f-aba8-6a5c05eb84cd -->
+########### A.6.1.1.8.2.5.2.2.1.1.1 - Integration Partner Name [Core]  <!-- UUID: fc909b71-8944-425f-aba8-6a5c05eb84cd -->
 
 The partner for the Euler Integration Boost is Euler.
 
-########### A.6.1.1.5.2.5.2.2.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: f052604f-63f5-46ce-8fab-606122e66122 -->
+########### A.6.1.1.8.2.5.2.2.1.1.2 - Integration Partner Reward Address [Core]  <!-- UUID: f052604f-63f5-46ce-8fab-606122e66122 -->
 
 The reward address for the Euler Integration Boost is `0x33C71422B3E20ef2472Bc9aa9252220CAeAF207e` on Base.
 
-########### A.6.1.1.5.2.5.2.2.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: 6f530a97-134f-498f-a662-dd54baef5376 -->
+########### A.6.1.1.8.2.5.2.2.1.1.3 - Integration Partner Chain [Core]  <!-- UUID: 6f530a97-134f-498f-a662-dd54baef5376 -->
 
 The Euler Integration Boost is on Base blockchain.
 
-########### A.6.1.1.5.2.5.2.2.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 05c3cbb8-2f47-4dac-9b42-307d0313ad58 -->
+########### A.6.1.1.8.2.5.2.2.1.1.4 - Integration Boost Cadence [Core]  <!-- UUID: 05c3cbb8-2f47-4dac-9b42-307d0313ad58 -->
 
 The payment cadence for the Euler Integration Boost is weekly.
 
-########### A.6.1.1.5.2.5.2.2.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: f82e8ec9-565c-4d5e-9121-c66086d4bb73 -->
+########### A.6.1.1.8.2.5.2.2.1.1.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: f82e8ec9-565c-4d5e-9121-c66086d4bb73 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/incentivized-pools/](https://info-sky.blockanalitica.com/api/v1/incentivized-pools/).
 
-########### A.6.1.1.5.2.5.2.2.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: ff5a96bc-61f4-4be7-bacd-9a34dd59cbe8 -->
+########### A.6.1.1.8.2.5.2.2.1.1.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: ff5a96bc-61f4-4be7-bacd-9a34dd59cbe8 -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is Core Council Risk Advisor.
 
-########### A.6.1.1.5.2.5.2.2.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: cc7b38a2-0465-461b-a10d-484a5ad192b3 -->
+########### A.6.1.1.8.2.5.2.2.1.1.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: cc7b38a2-0465-461b-a10d-484a5ad192b3 -->
 
 The Integration Boost is calculated based on per block values for USDS in Euler and the Sky Savings Rate.
 
-########### A.6.1.1.5.2.5.2.2.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 0aee1540-84c6-415e-b297-bfa085b65188 -->
+########### A.6.1.1.8.2.5.2.2.1.1.8 - Custom Instance Parameters [Core]  <!-- UUID: 0aee1540-84c6-415e-b297-bfa085b65188 -->
 
 The documents herein define the custom parameters of the Euler Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.5.2.5.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 568b6e28-10dc-42aa-81cd-9bc7a6e17a57 -->
+########## A.6.1.1.8.2.5.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 568b6e28-10dc-42aa-81cd-9bc7a6e17a57 -->
 
 The documents herein define the process for the ongoing management of the Euler Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 6fe71ca8-3c28-408e-8b11-3c2fcfcc5778 -->
+########### A.6.1.1.8.2.5.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 6fe71ca8-3c28-408e-8b11-3c2fcfcc5778 -->
 
 This document defines the protocol for routine ongoing management of the Euler Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.2.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 4f83666c-ef2e-4527-aeb7-79576b60b221 -->
+############ A.6.1.1.8.2.5.2.2.1.2.1.1 - Agent Customizations [Core]  <!-- UUID: 4f83666c-ef2e-4527-aeb7-79576b60b221 -->
 
 The Prime Agent may define Instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fa57673c-3d0f-426a-b7c2-3954db4e3b8a -->
+########### A.6.1.1.8.2.5.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fa57673c-3d0f-426a-b7c2-3954db4e3b8a -->
 
 The documents herein define the protocol for non-routine ongoing management of the Euler Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 07b055a7-cf21-4789-9890-bc3d937de558 -->
+########### A.6.1.1.8.2.5.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 07b055a7-cf21-4789-9890-bc3d937de558 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Euler Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.5.2.5.2.2.1.3 - Data Repository [Core]  <!-- UUID: cb71b9fa-f990-41b1-8650-a37c16e0ef74 -->
+########## A.6.1.1.8.2.5.2.2.1.3 - Data Repository [Core]  <!-- UUID: cb71b9fa-f990-41b1-8650-a37c16e0ef74 -->
 
 The documents herein contain data relevant to the Euler Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: abc0866d-8e3f-4bad-879d-6f82cee2b028 -->
+########### A.6.1.1.8.2.5.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: abc0866d-8e3f-4bad-879d-6f82cee2b028 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: ec81388d-8320-47c6-8e13-2dbd5ad95dbe -->
+########### A.6.1.1.8.2.5.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: ec81388d-8320-47c6-8e13-2dbd5ad95dbe -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 81cff123-b17c-4208-9348-fcf2aaf99c4b -->
+########### A.6.1.1.8.2.5.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 81cff123-b17c-4208-9348-fcf2aaf99c4b -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.2.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 1f3904b0-28b7-48e2-8cc7-ed67f4b90b68 -->
+########### A.6.1.1.8.2.5.2.2.1.3.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 1f3904b0-28b7-48e2-8cc7-ed67f4b90b68 -->
 
 The Integration Boost payments for the Euler Instance of the Integration Boost Primitive are defined as Active Data. 
 
@@ -31782,103 +32212,103 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.2.2.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 358530ef-9012-4e7f-8dc4-192930c180d0 -->
+############ A.6.1.1.8.2.5.2.2.1.3.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: 358530ef-9012-4e7f-8dc4-192930c180d0 -->
 
 The Integration Boost Payments are:
 
-######## A.6.1.1.5.2.5.2.3 - Completed Instances [Core]  <!-- UUID: 1f90bc85-18f4-46d1-b13c-e49682361c3e -->
+######## A.6.1.1.8.2.5.2.3 - Completed Instances [Core]  <!-- UUID: 1f90bc85-18f4-46d1-b13c-e49682361c3e -->
 
 The Instances of the Integration Boost Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.5.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 77018376-b8b2-4a4f-b9c9-e3fc6838be62 -->
+######## A.6.1.1.8.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 77018376-b8b2-4a4f-b9c9-e3fc6838be62 -->
 
 The in progress Invocations of the Integration Boost Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](29a952d3-7b87-4aa1-b30f-aed5ed3ff3bd).
 
-######### A.6.1.1.5.2.5.2.4.1 - Compound Instance Configuration Document [Core]  <!-- UUID: 0f02f958-70e7-477c-9ad4-386ad01cb2f4 -->
+######### A.6.1.1.8.2.5.2.4.1 - Compound Instance Configuration Document [Core]  <!-- UUID: 0f02f958-70e7-477c-9ad4-386ad01cb2f4 -->
 
 The documents herein contain the Instance Configuration Document for the Compound Integration Boost Primitive Instance.
 
-########## A.6.1.1.5.2.5.2.4.1.1 - Invocation Status [Core]  <!-- UUID: 12313a2b-f15e-47ef-84c1-a170dcb777db -->
+########## A.6.1.1.8.2.5.2.4.1.1 - Invocation Status [Core]  <!-- UUID: 12313a2b-f15e-47ef-84c1-a170dcb777db -->
 
 `Planning`
 
-########## A.6.1.1.5.2.5.2.4.1.2 - Parameters [Core]  <!-- UUID: 8976aeab-15f0-44a3-8e94-145cc998be81 -->
+########## A.6.1.1.8.2.5.2.4.1.2 - Parameters [Core]  <!-- UUID: 8976aeab-15f0-44a3-8e94-145cc998be81 -->
 
 The documents herein define the parameters of the Compound Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.4.1.2.1 - Integration Partner Name [Core]  <!-- UUID: 31dc4b4c-075d-49ce-bb6a-dfccc5a4fceb -->
+########### A.6.1.1.8.2.5.2.4.1.2.1 - Integration Partner Name [Core]  <!-- UUID: 31dc4b4c-075d-49ce-bb6a-dfccc5a4fceb -->
 
 The partner for the Compound Integration Boost is Compound.
 
-########### A.6.1.1.5.2.5.2.4.1.2.2 - Integration Partner Reward Address [Core]  <!-- UUID: 8fa189a2-6b3f-4af7-9cb5-c24353732ebc -->
+########### A.6.1.1.8.2.5.2.4.1.2.2 - Integration Partner Reward Address [Core]  <!-- UUID: 8fa189a2-6b3f-4af7-9cb5-c24353732ebc -->
 
 The reward address for the Compound Integration Boost is `0xD66241b84dC4d6ccD4aA072A9da22b4B218FC1b0` on Base.
 
-########### A.6.1.1.5.2.5.2.4.1.2.3 - Integration Partner Chain [Core]  <!-- UUID: 4251b3fc-52fa-4c98-9c27-e596406efdfd -->
+########### A.6.1.1.8.2.5.2.4.1.2.3 - Integration Partner Chain [Core]  <!-- UUID: 4251b3fc-52fa-4c98-9c27-e596406efdfd -->
 
 The Compound Integration Boost is on Base blockchain.
 
-########### A.6.1.1.5.2.5.2.4.1.2.4 - Integration Boost Cadence [Core]  <!-- UUID: 779345d7-e6fe-4363-afde-0b42384294be -->
+########### A.6.1.1.8.2.5.2.4.1.2.4 - Integration Boost Cadence [Core]  <!-- UUID: 779345d7-e6fe-4363-afde-0b42384294be -->
 
 The payment cadence for the Compound Integration Boost is weekly.
 
-########### A.6.1.1.5.2.5.2.4.1.2.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 1174bee1-fca4-403e-bfee-36704e00b3c2 -->
+########### A.6.1.1.8.2.5.2.4.1.2.5 - Integration Boost Data Submission Format [Core]  <!-- UUID: 1174bee1-fca4-403e-bfee-36704e00b3c2 -->
 
 The Data Submission Responsible Actor calculates the net deposits based on on-chain events and makes the data available through an API endpoint located at [https://info-sky.blockanalitica.com/api/v1/incentivized-pools/](https://info-sky.blockanalitica.com/api/v1/incentivized-pools/).
 
-########### A.6.1.1.5.2.5.2.4.1.2.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 45a70053-e0a3-4188-a40b-f6b64ffde9e6 -->
+########### A.6.1.1.8.2.5.2.4.1.2.6 - Integration Boost Data Submission Responsible Actor [Core]  <!-- UUID: 45a70053-e0a3-4188-a40b-f6b64ffde9e6 -->
 
-The Data Submission Responsible Actor is BA Labs.
+The Data Submission Responsible Actor is The Data Submission Responsible Actor is.
 
-########### A.6.1.1.5.2.5.2.4.1.2.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 7f1d30e9-7eaf-45e1-89a5-603f239a11ff -->
+########### A.6.1.1.8.2.5.2.4.1.2.7 - Integration Boost Savings Rate Adjustment Strategy [Core]  <!-- UUID: 7f1d30e9-7eaf-45e1-89a5-603f239a11ff -->
 
 The Integration Boost is calculated based on per block values for USDS in Compound and the Sky Savings Rate.
 
-########### A.6.1.1.5.2.5.2.4.1.2.8 - Custom Instance Parameters [Core]  <!-- UUID: 8b64b909-3db0-4c6e-afea-f822433509a7 -->
+########### A.6.1.1.8.2.5.2.4.1.2.8 - Custom Instance Parameters [Core]  <!-- UUID: 8b64b909-3db0-4c6e-afea-f822433509a7 -->
 
 The documents herein define the custom parameters of the Compound Instance of the Integration Boost Primitive, if any.
 
-########## A.6.1.1.5.2.5.2.4.1.3 - Operational Process Definition [Core]  <!-- UUID: d6e0908f-7b85-4a0f-acac-233489f70164 -->
+########## A.6.1.1.8.2.5.2.4.1.3 - Operational Process Definition [Core]  <!-- UUID: d6e0908f-7b85-4a0f-acac-233489f70164 -->
 
 The documents herein define the process for the ongoing management of the Compound Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.4.1.3.1 - Routine Protocol [Core]  <!-- UUID: 9ad35e12-7bd0-46c8-a753-4a341ab880a2 -->
+########### A.6.1.1.8.2.5.2.4.1.3.1 - Routine Protocol [Core]  <!-- UUID: 9ad35e12-7bd0-46c8-a753-4a341ab880a2 -->
 
 This document defines the protocol for routine ongoing management of the Compound Instance. This Instance inherits the base class of operational logic defined in [A.2.4 - Instance Ongoing Management Protocol](805381e5-89e7-4fb9-bda7-a97e84b531ba), subject to the qualifications specified in [A.2.4 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5). 
 
 Modifications to the base operational logic automatically propagate to this Instance. In future iterations of the Launch Agent 3 Artifact, a version of the full process definition customized to Launch Agent 3 will be included herein.
 
-############ A.6.1.1.5.2.5.2.4.1.3.1.1 - Agent Customizations [Core]  <!-- UUID: f1e42734-b704-4067-bedb-684bca8a1773 -->
+############ A.6.1.1.8.2.5.2.4.1.3.1.1 - Agent Customizations [Core]  <!-- UUID: f1e42734-b704-4067-bedb-684bca8a1773 -->
 
 The Prime Agent may define instance-specific customization of the routine protocol to extend the baseline functionality defined in the Sky Core Atlas. This can include custom routines or processes layered on top of the inherited Sky Core logic. Any extensions must remain fully aligned with the requirements specified in the Sky Core Atlas. This document defines those customizations, if any.
 
 [No customization presently.]
 
-########### A.6.1.1.5.2.5.2.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 3aab09cc-2cdb-4afa-82db-230aae80437d -->
+########### A.6.1.1.8.2.5.2.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 3aab09cc-2cdb-4afa-82db-230aae80437d -->
 
 The documents herein define the protocol for non-routine ongoing management of the Compound Instance of this Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.4.1.3.3 - Emergency Protocol [Core]  <!-- UUID: 22f14eff-37fd-4bc0-92c5-6d079ee8724b -->
+########### A.6.1.1.8.2.5.2.4.1.3.3 - Emergency Protocol [Core]  <!-- UUID: 22f14eff-37fd-4bc0-92c5-6d079ee8724b -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Compound Instance of this Integration Boost Primitive.
 
-########## A.6.1.1.5.2.5.2.4.1.4 - Data Repository [Core]  <!-- UUID: ab31a239-9f46-491f-ab8c-b1954bbdb20f -->
+########## A.6.1.1.8.2.5.2.4.1.4 - Data Repository [Core]  <!-- UUID: ab31a239-9f46-491f-ab8c-b1954bbdb20f -->
 
 The documents herein contain data relevant to the Compound Instance of the Integration Boost Primitive.
 
-########### A.6.1.1.5.2.5.2.4.1.4.1 - Initial Planning [Core]  <!-- UUID: eecefb67-7692-48f7-9f5b-b4bfde253fac -->
+########### A.6.1.1.8.2.5.2.4.1.4.1 - Initial Planning [Core]  <!-- UUID: eecefb67-7692-48f7-9f5b-b4bfde253fac -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.4.1.4.2 - Operational GovOps Review [Core]  <!-- UUID: 28bf469c-af5c-4014-8947-035def7c4077 -->
+########### A.6.1.1.8.2.5.2.4.1.4.2 - Operational GovOps Review [Core]  <!-- UUID: 28bf469c-af5c-4014-8947-035def7c4077 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.4.1.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 6543a665-e415-4b54-9c0b-5af10c14f5ce -->
+########### A.6.1.1.8.2.5.2.4.1.4.3 - Artifact Edit Proposal [Core]  <!-- UUID: 6543a665-e415-4b54-9c0b-5af10c14f5ce -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.5.2.5.2.4.1.4.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 55b46793-6543-4002-a1d7-9cc33ef46ab6 -->
+########### A.6.1.1.8.2.5.2.4.1.4.4 - Integration Boost Payments [Active Data Controller]  <!-- UUID: 55b46793-6543-4002-a1d7-9cc33ef46ab6 -->
 
 The Integration Boost payments for the Compound Instance of the Integration Boost Primitive are defined as Active Data.
  
@@ -31886,307 +32316,307 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-############ A.6.1.1.5.2.5.2.4.1.4.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: afe3fba8-14b9-47b7-bd71-20be58c47f29 -->
+############ A.6.1.1.8.2.5.2.4.1.4.4.0.6.1 - List Of Integration Boost Payments [Active Data]  <!-- UUID: afe3fba8-14b9-47b7-bd71-20be58c47f29 -->
 
 The Integration Boost Payments are:
 
-####### A.6.1.1.5.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: d096b01c-84a2-44a5-9af6-8888a825e0d4 -->
+####### A.6.1.1.8.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: d096b01c-84a2-44a5-9af6-8888a825e0d4 -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Pioneer Chain Primitive. See [A.2.4 - Pioneer Chain Primitive](4c7be4c6-44b5-407a-94ae-3d7ca7e8039c).
 
-######## A.6.1.1.5.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: a5890268-5a4c-4b8c-890a-6db09c71aced -->
+######## A.6.1.1.8.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: a5890268-5a4c-4b8c-890a-6db09c71aced -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Pioneer Chain Primitive.
 
-######### A.6.1.1.5.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: 91ae0bcc-bd80-4de1-bbd7-e875d150563a -->
+######### A.6.1.1.8.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: 91ae0bcc-bd80-4de1-bbd7-e875d150563a -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5aa36020-011e-457b-8605-95988a244606 -->
+######### A.6.1.1.8.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5aa36020-011e-457b-8605-95988a244606 -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: f7c6c056-bbb0-4dae-9457-4bb4592966a7 -->
+######### A.6.1.1.8.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: f7c6c056-bbb0-4dae-9457-4bb4592966a7 -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5dde47de-0f14-4cba-aae8-89c5f16a2303 -->
+######### A.6.1.1.8.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5dde47de-0f14-4cba-aae8-89c5f16a2303 -->
 
 This document contains a Directory of all prospective Instances of the Pioneer Chain Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5aa36020-011e-457b-8605-95988a244606), whereas failed Invocations are Archived in [Hub Data Repository](352eb7b1-b4bf-405d-970c-d937ffb65ae3).
 
-######### A.6.1.1.5.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 352eb7b1-b4bf-405d-970c-d937ffb65ae3 -->
+######### A.6.1.1.8.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 352eb7b1-b4bf-405d-970c-d937ffb65ae3 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 6808eba8-aea7-497f-9ca1-3fa360a6ad46 -->
+########## A.6.1.1.8.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 6808eba8-aea7-497f-9ca1-3fa360a6ad46 -->
 
 The subtrees for archived Invocations and Instances of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.5.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c5a4fb59-8b70-42ef-a43d-c78d6bdb70b6 -->
+########### A.6.1.1.8.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c5a4fb59-8b70-42ef-a43d-c78d6bdb70b6 -->
 
 The subtrees for failed Invocations of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.5.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 55bf90c4-007c-4cd8-8a37-60659a0404bb -->
+########### A.6.1.1.8.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 55bf90c4-007c-4cd8-8a37-60659a0404bb -->
 
 The subtrees for Instances of the Pioneer Chain Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.5.3.2 - Active Instances [Core]  <!-- UUID: 204539dc-c8b2-46d2-a6c1-14552870b6e3 -->
+######## A.6.1.1.8.2.5.3.2 - Active Instances [Core]  <!-- UUID: 204539dc-c8b2-46d2-a6c1-14552870b6e3 -->
 
 The Instances of the Pioneer Chain Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 0e546189-6559-4d2b-b4d1-bdd86e2ab499 -->
+######## A.6.1.1.8.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 0e546189-6559-4d2b-b4d1-bdd86e2ab499 -->
 
 The Instances of the Pioneer Chain Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: 6787cd76-9666-4fb4-9b2c-120ad771afb8 -->
+######## A.6.1.1.8.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: 6787cd76-9666-4fb4-9b2c-120ad771afb8 -->
 
 The in progress Invocations of the Pioneer Chain Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](204539dc-c8b2-46d2-a6c1-14552870b6e3).
 
-###### A.6.1.1.5.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: b58a8d96-b6df-416e-b81f-2898d82924b4 -->
+###### A.6.1.1.8.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: b58a8d96-b6df-416e-b81f-2898d82924b4 -->
 
 The documents herein implement the Supply Side Stablecoin Primitives for Launch Agent 3. See [A.2.4 - A9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
 
-####### A.6.1.1.5.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 24b63123-f30f-4dc3-aefa-74b4351c4baa -->
+####### A.6.1.1.8.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 24b63123-f30f-4dc3-aefa-74b4351c4baa -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Allocation System Primitive. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
 
-######## A.6.1.1.5.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 72950044-a7ba-44bf-9910-1e655bfbbb76 -->
+######## A.6.1.1.8.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 72950044-a7ba-44bf-9910-1e655bfbbb76 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Allocation System Primitive.
 
-######### A.6.1.1.5.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 757a827f-c736-4ac5-8eaf-993567dee621 -->
+######### A.6.1.1.8.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 757a827f-c736-4ac5-8eaf-993567dee621 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 05bc1cbc-57a1-462e-8618-b401636ac835 -->
+######### A.6.1.1.8.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 05bc1cbc-57a1-462e-8618-b401636ac835 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 04c05a8f-cb70-4cb3-85e7-ceaa94c75c34 -->
+######### A.6.1.1.8.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 04c05a8f-cb70-4cb3-85e7-ceaa94c75c34 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b74ad51a-a372-4706-9084-d22c00318955 -->
+######### A.6.1.1.8.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b74ad51a-a372-4706-9084-d22c00318955 -->
 
 This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](05bc1cbc-57a1-462e-8618-b401636ac835), whereas failed Invocations are Archived in [Hub Data Repository](b5d982d8-9d61-480b-a6c0-a90b7bbc8221).
 
-######### A.6.1.1.5.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: b5d982d8-9d61-480b-a6c0-a90b7bbc8221 -->
+######### A.6.1.1.8.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: b5d982d8-9d61-480b-a6c0-a90b7bbc8221 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a8aa5d01-48ae-4ade-8a3c-ed42fb40a2b2 -->
+########## A.6.1.1.8.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a8aa5d01-48ae-4ade-8a3c-ed42fb40a2b2 -->
 
 The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.5.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 21cab16e-58b3-4111-bdff-188d4cf8095e -->
+########### A.6.1.1.8.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 21cab16e-58b3-4111-bdff-188d4cf8095e -->
 
 The subtrees for failed Invocations of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.5.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 560787c2-e593-4d69-aba0-d1708fb92a1a -->
+########### A.6.1.1.8.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 560787c2-e593-4d69-aba0-d1708fb92a1a -->
 
 The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: fcfbc136-69fe-48aa-986e-b0cc5eea9590 -->
+######## A.6.1.1.8.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: fcfbc136-69fe-48aa-986e-b0cc5eea9590 -->
 
 The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
 
-######## A.6.1.1.5.2.6.1.3 - Active Instances [Core]  <!-- UUID: d9c177ad-b1c8-4af7-a537-b6a36bf29dc4 -->
+######## A.6.1.1.8.2.6.1.3 - Active Instances [Core]  <!-- UUID: d9c177ad-b1c8-4af7-a537-b6a36bf29dc4 -->
 
 The Instances of the Allocation System Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 953249d4-609a-4e03-b069-bbbcd2d1c88e -->
+######## A.6.1.1.8.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 953249d4-609a-4e03-b069-bbbcd2d1c88e -->
 
 The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: c95c1adc-dd0a-4ddb-b992-3948f1e000c2 -->
+######## A.6.1.1.8.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: c95c1adc-dd0a-4ddb-b992-3948f1e000c2 -->
 
 The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](d9c177ad-b1c8-4af7-a537-b6a36bf29dc4).
 
-####### A.6.1.1.5.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 09144d1a-2cda-4805-b50d-b3da4f09d48b -->
+####### A.6.1.1.8.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 09144d1a-2cda-4805-b50d-b3da4f09d48b -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
 
-######## A.6.1.1.5.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: 16bf9c06-af9f-4853-bf8b-5246ada6e580 -->
+######## A.6.1.1.8.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: 16bf9c06-af9f-4853-bf8b-5246ada6e580 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Junior Risk Capital Rental Primitive.
 
-######### A.6.1.1.5.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: 84c95412-5704-480d-bf68-7dcffb78cf21 -->
+######### A.6.1.1.8.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: 84c95412-5704-480d-bf68-7dcffb78cf21 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 1c446878-ac5e-46a5-956c-346dfb288381 -->
+######### A.6.1.1.8.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 1c446878-ac5e-46a5-956c-346dfb288381 -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 30d04fa4-801d-468a-b7ea-2b0ffb54c18b -->
+######### A.6.1.1.8.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 30d04fa4-801d-468a-b7ea-2b0ffb54c18b -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f0296ab8-bf0c-465a-955e-2566580cc810 -->
+######### A.6.1.1.8.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: f0296ab8-bf0c-465a-955e-2566580cc810 -->
 
 This document contains a Directory of all prospective Instances of the Junior Risk Capital Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](1c446878-ac5e-46a5-956c-346dfb288381), whereas failed Invocations are Archived in [Hub Data Repository](f3e94987-31d6-47c9-8809-fc90d1f401cd).
 
-######### A.6.1.1.5.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: f3e94987-31d6-47c9-8809-fc90d1f401cd -->
+######### A.6.1.1.8.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: f3e94987-31d6-47c9-8809-fc90d1f401cd -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ebbef9e3-ab93-4a98-90d3-57663fac9134 -->
+########## A.6.1.1.8.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ebbef9e3-ab93-4a98-90d3-57663fac9134 -->
 
 The subtrees for archived Invocations and Instances of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.5.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7b34c64e-fda4-40d0-84cd-891c86e8de1c -->
+########### A.6.1.1.8.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7b34c64e-fda4-40d0-84cd-891c86e8de1c -->
 
 The subtrees for failed Invocations of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.5.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 90c24d4a-39b0-40a3-af07-7cd353440b7e -->
+########### A.6.1.1.8.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 90c24d4a-39b0-40a3-af07-7cd353440b7e -->
 
 The subtrees for Instances of the Junior Risk Capital Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.6.2.2 - Active Instances [Core]  <!-- UUID: 44cbe0d7-fb84-4958-9bd7-29f931e09629 -->
+######## A.6.1.1.8.2.6.2.2 - Active Instances [Core]  <!-- UUID: 44cbe0d7-fb84-4958-9bd7-29f931e09629 -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 759df9b0-3bac-426e-b08d-3a5fb98d1cb9 -->
+######## A.6.1.1.8.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 759df9b0-3bac-426e-b08d-3a5fb98d1cb9 -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: 08ab0db0-8a0f-45b5-8579-8c4984a69fd1 -->
+######## A.6.1.1.8.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: 08ab0db0-8a0f-45b5-8579-8c4984a69fd1 -->
 
 The in progress Invocations of the Junior Risk Capital Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](44cbe0d7-fb84-4958-9bd7-29f931e09629).
 
-####### A.6.1.1.5.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: c2f8c143-52a9-41a5-be4a-05c07ca64f6b -->
+####### A.6.1.1.8.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: c2f8c143-52a9-41a5-be4a-05c07ca64f6b -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Asset Liability Management Rental Primitive. See [A.2.4 - Asset Liability Management Rental Primitive](bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c).
 
-######## A.6.1.1.5.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: 23300804-de11-4f5d-a28f-bc7995b36165 -->
+######## A.6.1.1.8.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: 23300804-de11-4f5d-a28f-bc7995b36165 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Asset Liability Management Rental Primitive.
 
-######### A.6.1.1.5.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: d57f7f80-a04b-45be-a9e1-3ce55fdf7b03 -->
+######### A.6.1.1.8.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: d57f7f80-a04b-45be-a9e1-3ce55fdf7b03 -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5a9f343e-4513-4ded-ab34-6f76690943d1 -->
+######### A.6.1.1.8.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5a9f343e-4513-4ded-ab34-6f76690943d1 -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: b537b35c-d9a5-4c64-88ab-d2bc54793ecb -->
+######### A.6.1.1.8.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: b537b35c-d9a5-4c64-88ab-d2bc54793ecb -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 92a1b7cd-9f42-4238-b388-d09d2eab1b61 -->
+######### A.6.1.1.8.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 92a1b7cd-9f42-4238-b388-d09d2eab1b61 -->
 
 This document contains a Directory of all prospective Instances of the Asset Liability Management Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5a9f343e-4513-4ded-ab34-6f76690943d1), whereas failed Invocations are Archived in [Hub Data Repository](ca4d7aa2-daae-4806-aeb8-fa2ff48d5a1c).
 
-######### A.6.1.1.5.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: ca4d7aa2-daae-4806-aeb8-fa2ff48d5a1c -->
+######### A.6.1.1.8.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: ca4d7aa2-daae-4806-aeb8-fa2ff48d5a1c -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9916eb6a-e91a-4fcd-b7fe-09728e5d9229 -->
+########## A.6.1.1.8.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 9916eb6a-e91a-4fcd-b7fe-09728e5d9229 -->
 
 The subtrees for archived Invocations and Instances of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.5.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 402c4b86-0fdc-4234-b3c9-81436bdfb5ac -->
+########### A.6.1.1.8.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 402c4b86-0fdc-4234-b3c9-81436bdfb5ac -->
 
 The subtrees for failed Invocations of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.5.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: df448d70-9b59-41e9-b4a7-475c2ad37b8c -->
+########### A.6.1.1.8.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: df448d70-9b59-41e9-b4a7-475c2ad37b8c -->
 
 The subtrees for Instances of the Asset Liability Management Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.6.3.2 - Active Instances [Core]  <!-- UUID: afc7b951-c066-4a6e-8b54-cf706a75c09f -->
+######## A.6.1.1.8.2.6.3.2 - Active Instances [Core]  <!-- UUID: afc7b951-c066-4a6e-8b54-cf706a75c09f -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 662e5da6-5275-4649-991a-1121f4f9773e -->
+######## A.6.1.1.8.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 662e5da6-5275-4649-991a-1121f4f9773e -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 2827ce37-f144-4111-8fd4-2908beeade5a -->
+######## A.6.1.1.8.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 2827ce37-f144-4111-8fd4-2908beeade5a -->
 
 The in progress Invocations of the Asset Liability Management Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](afc7b951-c066-4a6e-8b54-cf706a75c09f).
 
-###### A.6.1.1.5.2.7 - Core Governance Primitives [Core]  <!-- UUID: 095cc4f1-a097-4157-8e81-06031208c39f -->
+###### A.6.1.1.8.2.7 - Core Governance Primitives [Core]  <!-- UUID: 095cc4f1-a097-4157-8e81-06031208c39f -->
 
 The documents herein implement the Core Governance Primitives for Launch Agent 3. See [A.2.4 - A10 - Core Governance Primitives](6fa54611-c744-4b9d-897d-b2a20e9cae5d).
 
-####### A.6.1.1.5.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: 79b5a43d-1abe-4945-9f7d-7fa8a5ac182e -->
+####### A.6.1.1.8.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: 79b5a43d-1abe-4945-9f7d-7fa8a5ac182e -->
 
 The documents herein contain all data and specifications for Launch Agent 3’s Instances of the Core Governance Reward Primitive. See [A.2.4 - Core Governance Reward Primitive](b22d1c08-042a-4466-94fe-9d28951e4d4a).
 
-######## A.6.1.1.5.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: 58a4cf93-5c1c-4fec-8c5b-2c1c6f167c72 -->
+######## A.6.1.1.8.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: 58a4cf93-5c1c-4fec-8c5b-2c1c6f167c72 -->
 
 The documents herein organize all base information relevant to Launch Agent 3’s usage of the Core Governance Reward Primitive.
 
-######### A.6.1.1.5.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: 3c76baaa-df7f-464e-80ed-6b48eefbea7f -->
+######### A.6.1.1.8.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: 3c76baaa-df7f-464e-80ed-6b48eefbea7f -->
 
 `Inactive`
 
-######### A.6.1.1.5.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 93f4f2d8-68ae-4b33-98a6-e9d9fa764cd0 -->
+######### A.6.1.1.8.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 93f4f2d8-68ae-4b33-98a6-e9d9fa764cd0 -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: ed1c95ef-c156-473d-9c9e-b78c84bc2feb -->
+######### A.6.1.1.8.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: ed1c95ef-c156-473d-9c9e-b78c84bc2feb -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 30c32b90-6471-49f7-ab7b-956ece318a8e -->
+######### A.6.1.1.8.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 30c32b90-6471-49f7-ab7b-956ece318a8e -->
 
 This document contains a Directory of all prospective Instances of the Core Governance Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](93f4f2d8-68ae-4b33-98a6-e9d9fa764cd0), whereas failed Invocations are Archived in [Hub Data Repository](766df1ab-660b-4066-982a-7e99c21c93ec).
 
-######### A.6.1.1.5.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 766df1ab-660b-4066-982a-7e99c21c93ec -->
+######### A.6.1.1.8.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 766df1ab-660b-4066-982a-7e99c21c93ec -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 1afa6e50-af3a-4014-bd38-c53b4b1287e7 -->
+########## A.6.1.1.8.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 1afa6e50-af3a-4014-bd38-c53b4b1287e7 -->
 
 The subtrees for archived Invocations and Instances of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.5.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 3b9b1819-7645-4d38-9766-05d21d6403ad -->
+########### A.6.1.1.8.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 3b9b1819-7645-4d38-9766-05d21d6403ad -->
 
 The subtrees for failed Invocations of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.5.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 8cea9dc7-d1b5-4a26-89fb-675dc896bdb0 -->
+########### A.6.1.1.8.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 8cea9dc7-d1b5-4a26-89fb-675dc896bdb0 -->
 
 The subtrees for Instances of the Core Governance Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.7.1.2 - Active Instances [Core]  <!-- UUID: 2e2b5ba1-329c-4654-9628-5e5bc50da4d7 -->
+######## A.6.1.1.8.2.7.1.2 - Active Instances [Core]  <!-- UUID: 2e2b5ba1-329c-4654-9628-5e5bc50da4d7 -->
 
 The Instances of the Core Governance Reward Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.5.2.7.1.3 - Completed Instances [Core]  <!-- UUID: 81228652-c70b-42db-bed4-8fbe4c35695f -->
+######## A.6.1.1.8.2.7.1.3 - Completed Instances [Core]  <!-- UUID: 81228652-c70b-42db-bed4-8fbe4c35695f -->
 
 The Instances of the Core Governance Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.5.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: cd5aeba6-3ba5-4f8e-9246-18319f6986b3 -->
+######## A.6.1.1.8.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: cd5aeba6-3ba5-4f8e-9246-18319f6986b3 -->
 
 The in progress Invocations of the Core Governance Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](2e2b5ba1-329c-4654-9628-5e5bc50da4d7).
 
-##### A.6.1.1.5.3 - Omni Documents [Core]  <!-- UUID: 12153a95-5be4-4f5e-8d04-d3046ad9b7bc -->
+##### A.6.1.1.8.3 - Omni Documents [Core]  <!-- UUID: 12153a95-5be4-4f5e-8d04-d3046ad9b7bc -->
 
 The documents herein define Launch Agent 3’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
 
-###### A.6.1.1.5.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: 70804058-8a1b-45ee-bf21-b09a5daefdb9 -->
+###### A.6.1.1.8.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: 70804058-8a1b-45ee-bf21-b09a5daefdb9 -->
 
 The documents herein specify Launch Agent 3 governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Launch Agent 3 Artifact is specified in the Root Edit Primitive above at [Root Edit Primitive](24517c43-dec9-44ec-bc03-e76671dc2e74).
 
-####### A.6.1.1.5.3.1.1 - Sky Forum [Core]  <!-- UUID: 0d482d6a-f140-4798-bf9c-a0c6cb5a2aa5 -->
+####### A.6.1.1.8.3.1.1 - Sky Forum [Core]  <!-- UUID: 0d482d6a-f140-4798-bf9c-a0c6cb5a2aa5 -->
 
 Launch Agent 3 uses the Sky Forum for governance-related discussion. Posts should use the “Launch Agent 3 Prime” category.
 
-####### A.6.1.1.5.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 31f5b013-30a1-4135-8e04-4e9b7ee6a794 -->
+####### A.6.1.1.8.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 31f5b013-30a1-4135-8e04-4e9b7ee6a794 -->
 
 The documents herein specify Launch Agent 3’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-####### A.6.1.1.5.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: dedeb7e0-af9d-41ef-aec2-cdfb8b3fc437 -->
+####### A.6.1.1.8.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: dedeb7e0-af9d-41ef-aec2-cdfb8b3fc437 -->
 
 The documents herein specify Launch Agent 3’s emergency response protocol in situations solely impacting Launch Agent 3 versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 3 Artifact.
 
-###### A.6.1.1.5.3.2 - Sky Primitives Strategy [Core]  <!-- UUID: 8bc018e0-e343-424e-9089-6a813d168dff -->
+###### A.6.1.1.8.3.2 - Sky Primitives Strategy [Core]  <!-- UUID: 8bc018e0-e343-424e-9089-6a813d168dff -->
 
 The documents herein define Launch Agent 3’s strategic intent with respect to certain Sky Primitives.
 
-####### A.6.1.1.5.3.2.1 - Accessibility Reward Strategy [Core]  <!-- UUID: 825f23f7-739b-4a76-8e23-540b11f1854c -->
+####### A.6.1.1.8.3.2.1 - Accessibility Reward Strategy [Core]  <!-- UUID: 825f23f7-739b-4a76-8e23-540b11f1854c -->
 
 Launch Agent 3’s strategy with respect to the Accessibility Reward Primitive is to encourage the broad adoption of USDS by bridging into new communities and DeFi platforms, thereby earning and distributing Accessibility Rewards for USDS balances facilitated through its frontend. Prospective partners should demonstrate strong alignment with Launch Agent 3’s mission, and offer clear pathways to engage new user bases and support the sustainable growth of USDS across diverse ecosystems.
 
@@ -32196,7 +32626,7 @@ The guiding criteria are as follows:
 - **Community Benefit**: Proposed partnerships should deliver tangible rewards or advantages that resonate with Sky’s user base. 
 - **Scalability & Compliance: **Potential integrations should have the capacity to handle increased demand and adhere to the risk management guidelines described in the Atlas.
 
-####### A.6.1.1.5.3.2.2 - Integration Boost Strategy [Core]  <!-- UUID: 8b587f01-c678-4f6d-ba37-a0765f5657b0 -->
+####### A.6.1.1.8.3.2.2 - Integration Boost Strategy [Core]  <!-- UUID: 8b587f01-c678-4f6d-ba37-a0765f5657b0 -->
 
 Launch Agent 3’s strategy with respect to the Integration Boost Primitive is to deliver a “Sky Savings Rate” (or similar program) to USDS users across selected DeFi platforms. This approach aims to extend the reach of USDS by tapping into fresh communities and expanding its overall market presence.  New collaborations should exhibit compatibility with Launch Agent 3’s accessibility ethos, showcase steady on-chain activity, and present clear opportunities to onboard broader user segments into the Launch Agent 3 ecosystem.
 
@@ -32205,7 +32635,7 @@ The guiding criteria are as follows:
 - **Aligned Incentives:** Collaborations should offer meaningful yield enhancements that support the broader Sky mission.
 - **Growth Potential:** Partners must show clear prospects for sustainable scaling, ensuring that users can benefit from ongoing improvements.
 
-####### A.6.1.1.5.3.2.3 - Core Governance Reward Strategy [Core]  <!-- UUID: 276d8421-4f07-4ac5-812d-88909b5a9ecd -->
+####### A.6.1.1.8.3.2.3 - Core Governance Reward Strategy [Core]  <!-- UUID: 276d8421-4f07-4ac5-812d-88909b5a9ecd -->
 
 Launch Agent 3’s strategy with respect to the Core Governance Reward Primitive is to provide continuous, secure, and user-friendly governance frontend hosting for SKY holders, ensuring critical decision-making processes remain accessible and reliable over time.
 
@@ -32213,553 +32643,553 @@ The guiding criteria are as follows:
 - **Security & Reliability: **The Prime Agent will uphold robust security measures and maintain high availability to prevent disruptions or unauthorized access.
 - **Governance Framework Alignment:** Any updates to the frontend should integrate smoothly with Launch Agent 3’s existing governance mechanisms, preserving uninterrupted voting and proposal workflows.
 
-#### A.6.1.1.6 - Launch Agent 4 [Core]  <!-- UUID: f558e673-cbab-4696-8ca1-3af9b90fe5d4 -->
+#### A.6.1.1.9 - Launch Agent 4 [Core]  <!-- UUID: f558e673-cbab-4696-8ca1-3af9b90fe5d4 -->
 
 The documents herein specify all of the logic for Launch Agent 4, including Launch Agent 4’s strategy and how it uses the Sky Primitives to operationalize this strategy.
 
-##### A.6.1.1.6.1 - Introduction [Core]  <!-- UUID: e395a323-3c53-4154-a7e6-d54c363f56f2 -->
+##### A.6.1.1.9.1 - Introduction [Core]  <!-- UUID: e395a323-3c53-4154-a7e6-d54c363f56f2 -->
 
 Launch Agent 4 is an ‘incubator’ Agent operationalizing a turnkey solution for the Sky Ecosystem’s development and deployment of Prime and Halo Agents. This will give Agent founders a streamlined pathway to establish, build, operationalize, fundraise, and launch new Agents. The overall goal of the Launch Agent 4 Agent is to produce Agents for the Sky Ecosystem at scale, supporting cohorts of new Agent founders through leveraging rich content, workstreams and turnkey services for legal, risk, tech, and operational requirements.
 
-##### A.6.1.1.6.2 - Sky Primitives [Core]  <!-- UUID: de2892b7-087c-49ee-8b85-e3753987d38e -->
+##### A.6.1.1.9.2 - Sky Primitives [Core]  <!-- UUID: de2892b7-087c-49ee-8b85-e3753987d38e -->
 
 The documents herein implement the Sky Primitives for Launch Agent 4. See [A.2.4](fcde2604-a138-4c1b-9d9a-14895835c907).
 
-###### A.6.1.1.6.2.1 - Genesis Primitives [Core]  <!-- UUID: d5354d3f-8281-49e2-9ff6-c36091afa18a -->
+###### A.6.1.1.9.2.1 - Genesis Primitives [Core]  <!-- UUID: d5354d3f-8281-49e2-9ff6-c36091afa18a -->
 
 The documents herein implement the Genesis Primitives for Launch Agent 4. See [A.2.4 - A4 - Genesis Primitives](3d5e3668-8333-4908-adcc-5784cfe7f6b5).
 
-####### A.6.1.1.6.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: de89dc5f-7351-4ea0-bc7b-4a6eb25d6a4d -->
+####### A.6.1.1.9.2.1.1 - Agent Creation Primitive [Core]  <!-- UUID: de89dc5f-7351-4ea0-bc7b-4a6eb25d6a4d -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Agent Creation Primitive. See [A.2.4 - Agent Creation Primitive](82b95f6d-4883-4f08-ac3a-9d8189013fbe).
 
-######## A.6.1.1.6.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: 38ef6c16-11fb-400f-ba72-88e7f50fc1e8 -->
+######## A.6.1.1.9.2.1.1.1 - Primitive Hub Document [Core]  <!-- UUID: 38ef6c16-11fb-400f-ba72-88e7f50fc1e8 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Agent Creation Primitive.
 
-######### A.6.1.1.6.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: d812fe0d-1128-4824-b0df-ea61ba23a624 -->
+######### A.6.1.1.9.2.1.1.1.1 - Global Activation Status [Core]  <!-- UUID: d812fe0d-1128-4824-b0df-ea61ba23a624 -->
 
 `Completed`
 
-######### A.6.1.1.6.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6229b346-ecd5-474a-bfd4-e22066a365f0 -->
+######### A.6.1.1.9.2.1.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6229b346-ecd5-474a-bfd4-e22066a365f0 -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7c3e364b-84e7-4b47-9b5a-54978a127f97 -->
+######### A.6.1.1.9.2.1.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7c3e364b-84e7-4b47-9b5a-54978a127f97 -->
 
 This document contains a Directory of all Instances of the Agent Creation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.6.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: a1b0f1ed-1e3e-47ff-9690-afb6bfd22192 -->
+########## A.6.1.1.9.2.1.1.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: a1b0f1ed-1e3e-47ff-9690-afb6bfd22192 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](9d67690d-87df-4fcf-bac0-0b2bcf75bf12).
 
-######### A.6.1.1.6.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c9952aea-58df-4a2e-a706-8f342a6d525c -->
+######### A.6.1.1.9.2.1.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c9952aea-58df-4a2e-a706-8f342a6d525c -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: d8bb6ab7-07b3-4224-9612-5c10b1a4cab2 -->
+######### A.6.1.1.9.2.1.1.1.5 - Hub Data Repository [Core]  <!-- UUID: d8bb6ab7-07b3-4224-9612-5c10b1a4cab2 -->
 
 The document herein contains the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 2d301483-65e6-4501-828f-67012966cbae -->
+########## A.6.1.1.9.2.1.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 2d301483-65e6-4501-828f-67012966cbae -->
 
 The subtrees for archived Invocations and Instances of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7c5074c6-0cf3-4f96-bd35-ecd14d4a8cf5 -->
+########### A.6.1.1.9.2.1.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 7c5074c6-0cf3-4f96-bd35-ecd14d4a8cf5 -->
 
 The subtrees for failed Invocations of the Agent Creation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 637cb4d7-f5d1-4181-bd60-d54f8893a4bd -->
+########### A.6.1.1.9.2.1.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 637cb4d7-f5d1-4181-bd60-d54f8893a4bd -->
 
 The subtrees for Instances of the Agent Creation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.1.1.2 - Active Instances [Core]  <!-- UUID: 5f6b104e-2310-45d4-ba62-92d3a9a5ed0b -->
+######## A.6.1.1.9.2.1.1.2 - Active Instances [Core]  <!-- UUID: 5f6b104e-2310-45d4-ba62-92d3a9a5ed0b -->
 
 The Instances of the Agent Creation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 31bafd0d-b417-4759-88af-7589f9a32518 -->
+######## A.6.1.1.9.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 31bafd0d-b417-4759-88af-7589f9a32518 -->
 
 The Instances of the Agent Creation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.6.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 9d67690d-87df-4fcf-bac0-0b2bcf75bf12 -->
+######### A.6.1.1.9.2.1.1.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 9d67690d-87df-4fcf-bac0-0b2bcf75bf12 -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Creation Primitive Instance.
 
-########## A.6.1.1.6.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: 151d3bb0-77bb-4aeb-8bcb-be120968400b -->
+########## A.6.1.1.9.2.1.1.3.1.1 - Parameters [Core]  <!-- UUID: 151d3bb0-77bb-4aeb-8bcb-be120968400b -->
 
 The documents herein define the parameters of the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.6.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 05cdc5d1-c73e-4ccd-abe0-dd0a58d0c65c -->
+########### A.6.1.1.9.2.1.1.3.1.1.1 - Name [Core]  <!-- UUID: 05cdc5d1-c73e-4ccd-abe0-dd0a58d0c65c -->
 
 The name of the Agent is Launch Agent 4.
 
-########### A.6.1.1.6.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 510817f8-7ce6-4b32-b598-186610760525 -->
+########### A.6.1.1.9.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 510817f8-7ce6-4b32-b598-186610760525 -->
 
 The address of Launch Agent 4’s SubProxy Account will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-########### A.6.1.1.6.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: d77522ec-0987-474d-87b3-9377f107c9b6 -->
+########### A.6.1.1.9.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: d77522ec-0987-474d-87b3-9377f107c9b6 -->
 
 The address of Launch Agent 4’s Genesis Account will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-########### A.6.1.1.6.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 6b501d73-1151-46a1-9994-1e51d25729da -->
+########### A.6.1.1.9.2.1.1.3.1.1.4 - Custom Instance Parameters [Core]  <!-- UUID: 6b501d73-1151-46a1-9994-1e51d25729da -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Creation Primitive, if any.
 
-########## A.6.1.1.6.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 8171b404-5ea7-47ed-869d-8bd94f6e9e86 -->
+########## A.6.1.1.9.2.1.1.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 8171b404-5ea7-47ed-869d-8bd94f6e9e86 -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.6.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: fab9e798-14f5-4105-8dec-1e49eacc2b36 -->
+########## A.6.1.1.9.2.1.1.3.1.3 - Data Repository [Core]  <!-- UUID: fab9e798-14f5-4105-8dec-1e49eacc2b36 -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Creation Primitive.
 
-########### A.6.1.1.6.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: a5498802-b2d9-46d2-9a2e-30e546ba6110 -->
+########### A.6.1.1.9.2.1.1.3.1.3.1 - Initial Planning [Core]  <!-- UUID: a5498802-b2d9-46d2-9a2e-30e546ba6110 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: a09fca08-e196-49b1-99e2-21e5c01a59cb -->
+########### A.6.1.1.9.2.1.1.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: a09fca08-e196-49b1-99e2-21e5c01a59cb -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e5c5930-3805-47c2-8c11-b05b8c5bdddc -->
+########### A.6.1.1.9.2.1.1.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e5c5930-3805-47c2-8c11-b05b8c5bdddc -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3731f5d8-ff05-4c80-9f3f-2b056b6b9b38 -->
+######## A.6.1.1.9.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3731f5d8-ff05-4c80-9f3f-2b056b6b9b38 -->
 
 Because the Agent Creation Primitive is deployed solely for the one-time creation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.6.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 5c7d376d-ebb0-4477-8d96-129d362e7799 -->
+####### A.6.1.1.9.2.1.2 - Prime Transformation Primitive [Core]  <!-- UUID: 5c7d376d-ebb0-4477-8d96-129d362e7799 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s instance of the Prime Transformation Primitive. See [A.2.4 - Prime Transformation Primitive](81411106-fd6d-4f9c-b3ae-7af7b5e62482).
 
-######## A.6.1.1.6.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: b9e7cf68-feff-4a8b-9126-bc44bf3e7283 -->
+######## A.6.1.1.9.2.1.2.1 - Primitive Hub Document [Core]  <!-- UUID: b9e7cf68-feff-4a8b-9126-bc44bf3e7283 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Prime Transformation Primitive.
 
-######### A.6.1.1.6.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: 32f5e8a7-fdce-4e77-b032-4c1670ecb9da -->
+######### A.6.1.1.9.2.1.2.1.1 - Global Activation Status [Core]  <!-- UUID: 32f5e8a7-fdce-4e77-b032-4c1670ecb9da -->
 
 `Completed`
 
-######### A.6.1.1.6.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: e4e7adc0-7c85-464c-a60c-87dafb800e48 -->
+######### A.6.1.1.9.2.1.2.1.2 - Active Instances Directory [Core]  <!-- UUID: e4e7adc0-7c85-464c-a60c-87dafb800e48 -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1ad29165-0b55-4b7d-a908-c8e097a9d053 -->
+######### A.6.1.1.9.2.1.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1ad29165-0b55-4b7d-a908-c8e097a9d053 -->
 
 This document contains a Directory of all Instances of the Prime Transformation Primitive with Instance status of `Completed`.
 
-########## A.6.1.1.6.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: b404798f-056d-4c57-b252-4b30d960b8e3 -->
+########## A.6.1.1.9.2.1.2.1.3.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: b404798f-056d-4c57-b252-4b30d960b8e3 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](2fd59b03-9278-4371-a3f1-fe9514ab322b).
 
-######### A.6.1.1.6.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 79851842-32b3-4e42-bbbc-2e4240a7b875 -->
+######### A.6.1.1.9.2.1.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 79851842-32b3-4e42-bbbc-2e4240a7b875 -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 3e55f8cd-3aff-4f45-a213-bb59f869ab84 -->
+######### A.6.1.1.9.2.1.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 3e55f8cd-3aff-4f45-a213-bb59f869ab84 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 175640b2-a33d-4a0a-af98-8aa895344eca -->
+########## A.6.1.1.9.2.1.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 175640b2-a33d-4a0a-af98-8aa895344eca -->
 
 The subtrees for archived Invocations and Instances of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8a61c3ea-fe8d-41a5-ade2-e338754f0666 -->
+########### A.6.1.1.9.2.1.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8a61c3ea-fe8d-41a5-ade2-e338754f0666 -->
 
 The subtrees for failed Invocations of the Prime Transformation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6b3b64ef-26b1-45ee-8596-7c78c243f1ae -->
+########### A.6.1.1.9.2.1.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6b3b64ef-26b1-45ee-8596-7c78c243f1ae -->
 
 The subtrees for Instances of the Prime Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.1.2.2 - Active Instances [Core]  <!-- UUID: e54ec47c-4526-4cc2-9722-43ed3cee7768 -->
+######## A.6.1.1.9.2.1.2.2 - Active Instances [Core]  <!-- UUID: e54ec47c-4526-4cc2-9722-43ed3cee7768 -->
 
 The Instances of the Prime Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 1a8ffef1-7997-452c-9f58-6b8d9af23c04 -->
+######## A.6.1.1.9.2.1.2.3 - Completed Instances [Core]  <!-- UUID: 1a8ffef1-7997-452c-9f58-6b8d9af23c04 -->
 
 The Instances of the Prime Transformation Primitive with `Completed` Status are contained herein.
 
-######### A.6.1.1.6.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 2fd59b03-9278-4371-a3f1-fe9514ab322b -->
+######### A.6.1.1.9.2.1.2.3.1 - Single Instance Configuration Document [Core]  <!-- UUID: 2fd59b03-9278-4371-a3f1-fe9514ab322b -->
 
 The documents herein contain the Instance Configuration Document for the Single Prime Transformation Primitive Instance.
 
-########## A.6.1.1.6.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: ff8bd343-f602-4a9c-a5b6-2048496d4ec8 -->
+########## A.6.1.1.9.2.1.2.3.1.1 - Parameters [Core]  <!-- UUID: ff8bd343-f602-4a9c-a5b6-2048496d4ec8 -->
 
 The documents herein define the parameters of the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.6.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: 3275f4de-18d6-4fca-8023-d6f2e3fb4f01 -->
+########### A.6.1.1.9.2.1.2.3.1.1.1 - Agent Type [Core]  <!-- UUID: 3275f4de-18d6-4fca-8023-d6f2e3fb4f01 -->
 
 Launch Agent 4 is a Prime Agent.
 
-########### A.6.1.1.6.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 65c00572-3f2f-41fa-892d-e568ef1cf7ba -->
+########### A.6.1.1.9.2.1.2.3.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 65c00572-3f2f-41fa-892d-e568ef1cf7ba -->
 
 The documents herein define the custom parameters of the Single Instance of the Prime Transformation Primitive, if any.
 
-########## A.6.1.1.6.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 91999490-cd47-4523-aa5b-f71216472a3c -->
+########## A.6.1.1.9.2.1.2.3.1.2 - Operational Process Definition [Core]  <!-- UUID: 91999490-cd47-4523-aa5b-f71216472a3c -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further operational process is needed post-deployment.
 
-########## A.6.1.1.6.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: e70d36bc-8e5e-44b4-ab3b-492308ab7196 -->
+########## A.6.1.1.9.2.1.2.3.1.3 - Data Repository [Core]  <!-- UUID: e70d36bc-8e5e-44b4-ab3b-492308ab7196 -->
 
 The documents herein contain data relevant to the Single Instance of the Prime Transformation Primitive.
 
-########### A.6.1.1.6.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: c0cc5f1c-0cc5-44c8-bf92-d28b371e05b0 -->
+########### A.6.1.1.9.2.1.2.3.1.3.1 - Initial Planning [Core]  <!-- UUID: c0cc5f1c-0cc5-44c8-bf92-d28b371e05b0 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: aa23e483-3205-4843-92c9-5906b244e662 -->
+########### A.6.1.1.9.2.1.2.3.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: aa23e483-3205-4843-92c9-5906b244e662 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 9e54e190-a5f0-466e-945b-a9075fbc20b1 -->
+########### A.6.1.1.9.2.1.2.3.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 9e54e190-a5f0-466e-945b-a9075fbc20b1 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 685248fb-8b9c-44d0-8ba3-ada4ada84e06 -->
+######## A.6.1.1.9.2.1.2.4 - In Progress Invocations [Core]  <!-- UUID: 685248fb-8b9c-44d0-8ba3-ada4ada84e06 -->
 
 Because the Prime Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.6.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: ad55a2b2-7b47-401f-967e-f89e601e567c -->
+####### A.6.1.1.9.2.1.3 - Executor Transformation Primitive [Core]  <!-- UUID: ad55a2b2-7b47-401f-967e-f89e601e567c -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s instance of the Executor Transformation Primitive. See [A.2.4 - Executor Transformation Primitive](2f249be5-8edb-41e4-b429-734e1ba2cbc7).
 
-######## A.6.1.1.6.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7b3f85c4-e618-4071-b07f-5c771a3bc873 -->
+######## A.6.1.1.9.2.1.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7b3f85c4-e618-4071-b07f-5c771a3bc873 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Executor Transformation Primitive.
 
-######### A.6.1.1.6.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: 7e92d813-a224-495a-b2c7-ad83304b977c -->
+######### A.6.1.1.9.2.1.3.1.1 - Global Activation Status [Core]  <!-- UUID: 7e92d813-a224-495a-b2c7-ad83304b977c -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9f5d64-6e5b-466e-a4c0-a194ec24161f -->
+######### A.6.1.1.9.2.1.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9f5d64-6e5b-466e-a4c0-a194ec24161f -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 8f2c269a-20d6-4d3c-82e8-1a98123d663b -->
+######### A.6.1.1.9.2.1.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 8f2c269a-20d6-4d3c-82e8-1a98123d663b -->
 
 This document contains a Directory of all Instances of the Executor Transformation Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1a4b9edf-b153-4f7f-be3a-27a87ef58185 -->
+######### A.6.1.1.9.2.1.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1a4b9edf-b153-4f7f-be3a-27a87ef58185 -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 15635343-8607-45d0-a675-e5486ca08c7b -->
+######### A.6.1.1.9.2.1.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 15635343-8607-45d0-a675-e5486ca08c7b -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 84461fee-fe8d-4008-8bb1-0e72f22e0921 -->
+########## A.6.1.1.9.2.1.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 84461fee-fe8d-4008-8bb1-0e72f22e0921 -->
 
 The subtrees for archived Invocations and Instances of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 5b36399c-c01b-445a-ad21-f4f057575621 -->
+########### A.6.1.1.9.2.1.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 5b36399c-c01b-445a-ad21-f4f057575621 -->
 
 The subtrees for failed Invocations of the Executor Transformation Primitive are stored here.
 
-########### A.6.1.1.6.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 87d42440-89ee-4d33-8f3e-8a9cf56b0fc6 -->
+########### A.6.1.1.9.2.1.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 87d42440-89ee-4d33-8f3e-8a9cf56b0fc6 -->
 
 The subtrees for Instances of the Executor Transformation Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.1.3.2 - Active Instances [Core]  <!-- UUID: 697d6019-9769-49cb-8394-c74c9c2240f3 -->
+######## A.6.1.1.9.2.1.3.2 - Active Instances [Core]  <!-- UUID: 697d6019-9769-49cb-8394-c74c9c2240f3 -->
 
 The Instances of the Executor Transformation Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 0dfb0a6f-af53-45d5-badb-0383c76f2515 -->
+######## A.6.1.1.9.2.1.3.3 - Completed Instances [Core]  <!-- UUID: 0dfb0a6f-af53-45d5-badb-0383c76f2515 -->
 
 The Instances of the Executor Transformation Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 7ee33331-fa25-4c43-b3e8-de3362118dea -->
+######## A.6.1.1.9.2.1.3.4 - In Progress Invocations [Core]  <!-- UUID: 7ee33331-fa25-4c43-b3e8-de3362118dea -->
 
 Because the Executor Transformation Primitive is deployed solely for the one-time transformation of the Agent, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.6.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: 29c1a185-926e-42e0-a15c-1aad1dbe9068 -->
+####### A.6.1.1.9.2.1.4 - Agent Token Primitive [Core]  <!-- UUID: 29c1a185-926e-42e0-a15c-1aad1dbe9068 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Agent Token Primitive. See [A.2.4 - Agent Token Primitive](2047c361-db28-4952-a70c-83d07b562064).
 
-######## A.6.1.1.6.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: ea5efaa6-992d-4e59-9ebb-4c027ee7aa87 -->
+######## A.6.1.1.9.2.1.4.1 - Primitive Hub Document [Core]  <!-- UUID: ea5efaa6-992d-4e59-9ebb-4c027ee7aa87 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Agent Token Primitive.
 
-######### A.6.1.1.6.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: 0dbea81d-1a7b-4c83-8817-20ee5aa3e90b -->
+######### A.6.1.1.9.2.1.4.1.1 - Global Activation Status [Core]  <!-- UUID: 0dbea81d-1a7b-4c83-8817-20ee5aa3e90b -->
 
 `Active`
 
-######### A.6.1.1.6.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: 6a9df4c5-fe51-4bfa-b661-69e313df475c -->
+######### A.6.1.1.9.2.1.4.1.2 - Active Instances Directory [Core]  <!-- UUID: 6a9df4c5-fe51-4bfa-b661-69e313df475c -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Active`.
 
-########## A.6.1.1.6.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: ccaebb1f-f68d-4f07-89a0-a18afea052d4 -->
+########## A.6.1.1.9.2.1.4.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: ccaebb1f-f68d-4f07-89a0-a18afea052d4 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](81d78b70-e460-4588-8e37-d2cf7ec87d32).
 
-######### A.6.1.1.6.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e49543e-ee1f-4a60-9b80-e290e961931d -->
+######### A.6.1.1.9.2.1.4.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e49543e-ee1f-4a60-9b80-e290e961931d -->
 
 This document contains a Directory of all Instances of the Agent Token Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5d1fa3e0-cafc-4667-951e-0ea439d13a95 -->
+######### A.6.1.1.9.2.1.4.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 5d1fa3e0-cafc-4667-951e-0ea439d13a95 -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 70cf9e11-7eed-4eba-8ef1-47bd21974a5f -->
+######### A.6.1.1.9.2.1.4.1.5 - Hub Data Repository [Core]  <!-- UUID: 70cf9e11-7eed-4eba-8ef1-47bd21974a5f -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38877b86-ed6e-49fb-ae28-4c0b7f0df215 -->
+########## A.6.1.1.9.2.1.4.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38877b86-ed6e-49fb-ae28-4c0b7f0df215 -->
 
 The subtrees for archived Invocations and Instances of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.6.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c87625a9-a7f2-4302-8104-739664173433 -->
+########### A.6.1.1.9.2.1.4.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c87625a9-a7f2-4302-8104-739664173433 -->
 
 The subtrees for failed Invocations of the Agent Token Primitive are stored here.
 
-########### A.6.1.1.6.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 7b49d757-66c0-4a34-b715-729a64801fca -->
+########### A.6.1.1.9.2.1.4.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 7b49d757-66c0-4a34-b715-729a64801fca -->
 
 The subtrees for Instances of the Agent Token Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.1.4.2 - Active Instances [Core]  <!-- UUID: df170b7f-303a-4029-8f10-7548dab07f8a -->
+######## A.6.1.1.9.2.1.4.2 - Active Instances [Core]  <!-- UUID: df170b7f-303a-4029-8f10-7548dab07f8a -->
 
 The Instances of the Agent Token Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.6.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 81d78b70-e460-4588-8e37-d2cf7ec87d32 -->
+######### A.6.1.1.9.2.1.4.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 81d78b70-e460-4588-8e37-d2cf7ec87d32 -->
 
 The documents herein contain the Instance Configuration Document for the Single Agent Token Primitive Instance.
 
-########## A.6.1.1.6.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: dcca537a-8364-4306-8f54-0113652e187c -->
+########## A.6.1.1.9.2.1.4.2.1.1 - Parameters [Core]  <!-- UUID: dcca537a-8364-4306-8f54-0113652e187c -->
 
 The documents herein define the parameters of the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.6.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 86cff886-c2dd-447b-b300-7f3ac0334624 -->
+########### A.6.1.1.9.2.1.4.2.1.1.1 - Token Name [Core]  <!-- UUID: 86cff886-c2dd-447b-b300-7f3ac0334624 -->
 
 The name of Launch Agent 4’s token is Launch Agent 4.
 
-########### A.6.1.1.6.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 65767abc-766f-43e0-88c1-12b9a1855868 -->
+########### A.6.1.1.9.2.1.4.2.1.1.2 - Token Symbol [Core]  <!-- UUID: 65767abc-766f-43e0-88c1-12b9a1855868 -->
 
 The symbol of Launch Agent 4’s token is AGENT4.
 
-########### A.6.1.1.6.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: 19ad3fe9-9161-4ddd-af93-d3fc854d51ed -->
+########### A.6.1.1.9.2.1.4.2.1.1.3 - Genesis Supply [Core]  <!-- UUID: 19ad3fe9-9161-4ddd-af93-d3fc854d51ed -->
 
 The Genesis Supply of AGENT4 is 10 billion.
 
-########### A.6.1.1.6.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: a954b3b9-4230-448e-b926-e7daaad542c5 -->
+########### A.6.1.1.9.2.1.4.2.1.1.4 - Token Address [Core]  <!-- UUID: a954b3b9-4230-448e-b926-e7daaad542c5 -->
 
 The address of AGENT4 will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-########### A.6.1.1.6.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 2646a808-056e-4907-88bb-b504afe61946 -->
+########### A.6.1.1.9.2.1.4.2.1.1.5 - Token Admin [Core]  <!-- UUID: 2646a808-056e-4907-88bb-b504afe61946 -->
 
 The token Admin will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-########### A.6.1.1.6.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: e687b86c-f6b8-4f2e-aabf-b7922b2d3f6d -->
+########### A.6.1.1.9.2.1.4.2.1.1.6 - Token Emissions [Core]  <!-- UUID: e687b86c-f6b8-4f2e-aabf-b7922b2d3f6d -->
 
 Token emissions beyond the Genesis Supply are permanently disabled; this cannot be reverted by Launch Agent 4 Governance. Sky Governance retains the ability to revert where Launch Agent 4 is in violation of Risk Capital requirements and emissions are required by the Risk Framework. See [A.3.3](55999acf-75fe-4adf-8584-9746ef50d3e4).
 
-########### A.6.1.1.6.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: c40b84ff-e133-434a-bef9-e12aba5ac87c -->
+########### A.6.1.1.9.2.1.4.2.1.1.7 - Custom Instance Parameters [Core]  <!-- UUID: c40b84ff-e133-434a-bef9-e12aba5ac87c -->
 
 The documents herein define the custom parameters of the Single Instance of the Agent Token Primitive, if any.
 
-########## A.6.1.1.6.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1cd77356-66a5-449c-a573-71a44a628044 -->
+########## A.6.1.1.9.2.1.4.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1cd77356-66a5-449c-a573-71a44a628044 -->
 
 The documents herein define the operational processes for minting and initial distribution of the tokens from the Genesis Supply.
 
 • These processes will be defined in a future iteration of the Launch Agent 4 Artifact.
 
-########## A.6.1.1.6.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 596d5aa9-8116-44a0-aca7-e53b5181e62e -->
+########## A.6.1.1.9.2.1.4.2.1.3 - Data Repository [Core]  <!-- UUID: 596d5aa9-8116-44a0-aca7-e53b5181e62e -->
 
 The documents herein contain data relevant to the Single Instance of the Agent Token Primitive.
 
-########### A.6.1.1.6.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 6fe2485a-225f-41e3-b791-0b98363df1e8 -->
+########### A.6.1.1.9.2.1.4.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 6fe2485a-225f-41e3-b791-0b98363df1e8 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 44b64f9f-aa20-4aeb-b2e3-6abda1cfa77d -->
+########### A.6.1.1.9.2.1.4.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 44b64f9f-aa20-4aeb-b2e3-6abda1cfa77d -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: c6ec5fe6-691b-4ac7-a863-2be65a28ea3f -->
+########### A.6.1.1.9.2.1.4.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: c6ec5fe6-691b-4ac7-a863-2be65a28ea3f -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.1.4.3 - Completed Instances [Core]  <!-- UUID: c0ee9726-7ae8-4176-a3f3-01152a53f0d1 -->
+######## A.6.1.1.9.2.1.4.3 - Completed Instances [Core]  <!-- UUID: c0ee9726-7ae8-4176-a3f3-01152a53f0d1 -->
 
 The Instances of the Agent Token Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: ec1f15fa-3059-4fd3-9467-7a796d7050a5 -->
+######## A.6.1.1.9.2.1.4.4 - In Progress Invocations [Core]  <!-- UUID: ec1f15fa-3059-4fd3-9467-7a796d7050a5 -->
 
 Because the Agent Token Primitive is Invoked solely for the one-time deployment of the Agent’s token, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.6.2.2 - Operational Primitives [Core]  <!-- UUID: 91762197-a7e2-4e0c-bce5-4490f23f9667 -->
+###### A.6.1.1.9.2.2 - Operational Primitives [Core]  <!-- UUID: 91762197-a7e2-4e0c-bce5-4490f23f9667 -->
 
 The documents herein implement the Operational Primitives for Launch Agent 4. See [A.2.4 - A5 - Operational Primitives](0192ec95-9207-480e-8c51-88d2a1da95ad).
 
-####### A.6.1.1.6.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: e0baddbe-f261-4439-8fc0-e03b521c10ad -->
+####### A.6.1.1.9.2.2.1 - Executor Accord Primitive [Core]  <!-- UUID: e0baddbe-f261-4439-8fc0-e03b521c10ad -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Executor Accord Primitive. See [A.2.4 - Executor Accord Primitive](88017877-3ec1-4c43-a035-6bebdf11d9bb).
 
-######## A.6.1.1.6.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 4f398e78-1f12-447d-bb28-71cfc4e9ce4c -->
+######## A.6.1.1.9.2.2.1.1 - Primitive Hub Document [Core]  <!-- UUID: 4f398e78-1f12-447d-bb28-71cfc4e9ce4c -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Executor Accord Primitive.
 
-######### A.6.1.1.6.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4bb8c2f6-b020-4f18-aa1e-9ac5962c6fac -->
+######### A.6.1.1.9.2.2.1.1.1 - Global Activation Status [Core]  <!-- UUID: 4bb8c2f6-b020-4f18-aa1e-9ac5962c6fac -->
 
 `Active`
 
-######### A.6.1.1.6.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5db0baf4-141b-4eb9-8d5b-bd5386e6786c -->
+######### A.6.1.1.9.2.2.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5db0baf4-141b-4eb9-8d5b-bd5386e6786c -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Active`.
 
-########## A.6.1.1.6.2.2.1.1.2.1 - Ozone Instance Configuration Document Location [Core]  <!-- UUID: e08db2e2-b978-473f-be58-cf4a304bf15c -->
+########## A.6.1.1.9.2.2.1.1.2.1 - Ozone Instance Configuration Document Location [Core]  <!-- UUID: e08db2e2-b978-473f-be58-cf4a304bf15c -->
 
 This Instance’s associated Instance Configuration Document is located at [Ozone Instance Configuration Document](7634c378-486d-4d5b-823a-aee5c1c8b3a6).
 
-######### A.6.1.1.6.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 0a0ddb4d-d708-4b2d-b9f2-1c7524fa2038 -->
+######### A.6.1.1.9.2.2.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 0a0ddb4d-d708-4b2d-b9f2-1c7524fa2038 -->
 
 This document contains a Directory of all Instances of the Executor Accord Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1310aa75-5080-4291-9de9-e4ce0cd7adcc -->
+######### A.6.1.1.9.2.2.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1310aa75-5080-4291-9de9-e4ce0cd7adcc -->
 
 This document contains a Directory of all prospective Instances of the Executor Accord Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5db0baf4-141b-4eb9-8d5b-bd5386e6786c), whereas failed Invocations are Archived in [Hub Data Repository](6c78d193-aa70-45a1-b807-77dcba6b6543).
 
-######### A.6.1.1.6.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6c78d193-aa70-45a1-b807-77dcba6b6543 -->
+######### A.6.1.1.9.2.2.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6c78d193-aa70-45a1-b807-77dcba6b6543 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8eb2aa7f-71ca-4c91-a0f9-5d433dcf22f3 -->
+########## A.6.1.1.9.2.2.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8eb2aa7f-71ca-4c91-a0f9-5d433dcf22f3 -->
 
 The subtrees for archived Invocations and Instances of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.6.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8e1fddae-22a6-4dc9-9e1b-78861747d2ca -->
+########### A.6.1.1.9.2.2.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 8e1fddae-22a6-4dc9-9e1b-78861747d2ca -->
 
 The subtrees for failed Invocations of the Executor Accord Primitive are stored here.
 
-########### A.6.1.1.6.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4a6fc07c-c28c-499d-93c4-bd469e8b2012 -->
+########### A.6.1.1.9.2.2.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 4a6fc07c-c28c-499d-93c4-bd469e8b2012 -->
 
 The subtrees for Instances of the Executor Accord Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.2.1.2 - Active Instances [Core]  <!-- UUID: 2fd90ea2-b604-4a06-8c73-888c08365dba -->
+######## A.6.1.1.9.2.2.1.2 - Active Instances [Core]  <!-- UUID: 2fd90ea2-b604-4a06-8c73-888c08365dba -->
 
 The Instances of the Executor Accord Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.6.2.2.1.2.1 - Ozone Instance Configuration Document [Core]  <!-- UUID: 7634c378-486d-4d5b-823a-aee5c1c8b3a6 -->
+######### A.6.1.1.9.2.2.1.2.1 - Ozone Instance Configuration Document [Core]  <!-- UUID: 7634c378-486d-4d5b-823a-aee5c1c8b3a6 -->
 
 The documents herein contain the Instance Configuration Document for the Ozone Executor Accord Primitive Instance.
 
-########## A.6.1.1.6.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: 182988e8-96c8-4c3c-ab19-6b9b88b9532b -->
+########## A.6.1.1.9.2.2.1.2.1.1 - Parameters [Core]  <!-- UUID: 182988e8-96c8-4c3c-ab19-6b9b88b9532b -->
 
 The documents herein define the parameters of the Ozone Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.6.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: e3e97ee0-1ef7-48dd-acf0-3e1e6a6de47e -->
+########### A.6.1.1.9.2.2.1.2.1.1.1 - Operational Executor Agent [Core]  <!-- UUID: e3e97ee0-1ef7-48dd-acf0-3e1e6a6de47e -->
 
 In the near term Ozone will take on the functions of an Operational Executor Agent, including both Operational GovOps and Operational Facilitator roles.
 
-########### A.6.1.1.6.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 4b5e6287-583b-40c0-8ec4-87675a15f802 -->
+########### A.6.1.1.9.2.2.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: 4b5e6287-583b-40c0-8ec4-87675a15f802 -->
 
 The documents herein define the custom parameters of the Ozone Instance of the Executor Accord Primitive, if any.
 
-########## A.6.1.1.6.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 520a274c-6b18-4fb7-953a-8f562c5ca111 -->
+########## A.6.1.1.9.2.2.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 520a274c-6b18-4fb7-953a-8f562c5ca111 -->
 
 The documents herein define the process for the ongoing management of the Ozone Instance of the Executor Accord Primitive.
 
-########## A.6.1.1.6.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 2a655bfa-fbcb-4888-b4df-0d0ec8398a14 -->
+########## A.6.1.1.9.2.2.1.2.1.3 - Data Repository [Core]  <!-- UUID: 2a655bfa-fbcb-4888-b4df-0d0ec8398a14 -->
 
 The documents herein contain data relevant to the Ozone Instance of the Executor Accord Primitive.
 
-########### A.6.1.1.6.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b7eb3de8-9b56-4e2a-b0c0-5d3f8dddccb7 -->
+########### A.6.1.1.9.2.2.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b7eb3de8-9b56-4e2a-b0c0-5d3f8dddccb7 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0ab58c7d-7bb4-4d33-bd7a-2eca8e80b62a -->
+########### A.6.1.1.9.2.2.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 0ab58c7d-7bb4-4d33-bd7a-2eca8e80b62a -->
 
 The materials associated with Operational GovOps review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 248099c5-af01-490c-b248-4441accf889f -->
+########### A.6.1.1.9.2.2.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 248099c5-af01-490c-b248-4441accf889f -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.2.1.3 - Completed Instances [Core]  <!-- UUID: 33eff493-0a21-4bb0-899e-f3fab9ef6f27 -->
+######## A.6.1.1.9.2.2.1.3 - Completed Instances [Core]  <!-- UUID: 33eff493-0a21-4bb0-899e-f3fab9ef6f27 -->
 
 The Instances of the Executor Accord Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: dfca9a54-ab85-476a-ab49-345ec43a1294 -->
+######## A.6.1.1.9.2.2.1.4 - In Progress Invocations [Core]  <!-- UUID: dfca9a54-ab85-476a-ab49-345ec43a1294 -->
 
 The in progress Invocations of the Executor Accord Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](2fd90ea2-b604-4a06-8c73-888c08365dba).
 
-####### A.6.1.1.6.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: b69559bf-1acb-4f9c-8638-19fb8ef20fc2 -->
+####### A.6.1.1.9.2.2.2 - Root Edit Primitive [Core]  <!-- UUID: b69559bf-1acb-4f9c-8638-19fb8ef20fc2 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Root Edit Primitive. See [A.2.4 - Root Edit Primitive](78488c6b-d77f-4344-b954-476e415a2c7d).
 
-######## A.6.1.1.6.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: f6e6bc46-aa12-4a74-8433-85ffcfad4917 -->
+######## A.6.1.1.9.2.2.2.1 - Primitive Hub Document [Core]  <!-- UUID: f6e6bc46-aa12-4a74-8433-85ffcfad4917 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Root Edit Primitive.
 
-######### A.6.1.1.6.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: 363d6ab5-1065-4cb5-8326-506a7dc62db6 -->
+######### A.6.1.1.9.2.2.2.1.1 - Global Activation Status [Core]  <!-- UUID: 363d6ab5-1065-4cb5-8326-506a7dc62db6 -->
 
 `Active`
 
-######### A.6.1.1.6.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 0a66c55d-66c6-4fae-819b-c1bce486a03e -->
+######### A.6.1.1.9.2.2.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 0a66c55d-66c6-4fae-819b-c1bce486a03e -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Active`.
 
-########## A.6.1.1.6.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 48d674cd-633b-40b7-ab4f-9ff4028ea1e6 -->
+########## A.6.1.1.9.2.2.2.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 48d674cd-633b-40b7-ab4f-9ff4028ea1e6 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](f5cb7958-d3a3-4179-9541-8a603745a5f1).
 
-######### A.6.1.1.6.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 67ec15f0-3610-42e3-bbd4-1d35c5944aa6 -->
+######### A.6.1.1.9.2.2.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 67ec15f0-3610-42e3-bbd4-1d35c5944aa6 -->
 
 This document contains a Directory of all Instances of the Root Edit Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 155d502c-8c81-47dc-aaa5-0944a565cd8c -->
+######### A.6.1.1.9.2.2.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 155d502c-8c81-47dc-aaa5-0944a565cd8c -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: f5bcf120-3af4-4b17-b63c-1adcf745ce75 -->
+######### A.6.1.1.9.2.2.2.1.5 - Hub Data Repository [Core]  <!-- UUID: f5bcf120-3af4-4b17-b63c-1adcf745ce75 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 988302bd-3993-4833-9611-456285591f89 -->
+########## A.6.1.1.9.2.2.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 988302bd-3993-4833-9611-456285591f89 -->
 
 The subtrees for archived Invocations and Instances of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.6.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64ae8942-a1ac-4904-ba13-43ee7334551e -->
+########### A.6.1.1.9.2.2.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64ae8942-a1ac-4904-ba13-43ee7334551e -->
 
 The subtrees for failed Invocations of the Root Edit Primitive are stored here.
 
-########### A.6.1.1.6.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 75008710-7942-45ef-87ee-f342f0a571f4 -->
+########### A.6.1.1.9.2.2.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 75008710-7942-45ef-87ee-f342f0a571f4 -->
 
 The subtrees for Instances of the Root Edit Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.2.2.2 - Active Instances [Core]  <!-- UUID: 2bc00f12-93cd-4431-8d6c-6a1170ca474c -->
+######## A.6.1.1.9.2.2.2.2 - Active Instances [Core]  <!-- UUID: 2bc00f12-93cd-4431-8d6c-6a1170ca474c -->
 
 The Instances of the Root Edit Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.6.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: f5cb7958-d3a3-4179-9541-8a603745a5f1 -->
+######### A.6.1.1.9.2.2.2.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: f5cb7958-d3a3-4179-9541-8a603745a5f1 -->
 
 The documents herein contain the Instance Configuration Document for the Single Root Edit Primitive Instance.
 
-########## A.6.1.1.6.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 5034d53f-d21f-471b-a796-e62893aeab03 -->
+########## A.6.1.1.9.2.2.2.2.1.1 - Parameters [Core]  <!-- UUID: 5034d53f-d21f-471b-a796-e62893aeab03 -->
 
 The parameters of the Root Edit Primitive are fully specified by the Operational Process Definition in [Operational Process Definition](ef3c8fc4-d958-492b-bee6-d96b5f972720).
 
-########## A.6.1.1.6.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: ef3c8fc4-d958-492b-bee6-d96b5f972720 -->
+########## A.6.1.1.9.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: ef3c8fc4-d958-492b-bee6-d96b5f972720 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact. Information on Launch Agent 4 governance that is unrelated to the use of the Root Edit Primitive is located at [Governance Information Unrelated To Root Edit Primitive](bdad4ea3-7cf2-40fb-a8ab-4bb8b320e4c9).
 
-########### A.6.1.1.6.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: da6d3815-d49e-47a4-8e62-81b66dbab51f -->
+########### A.6.1.1.9.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: da6d3815-d49e-47a4-8e62-81b66dbab51f -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in routine or normal conditions (i.e., non-emergency situations).
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: fcb1b51e-8bb3-4a55-8cc0-9bec637086c8 -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.1 - Root Edit Proposal Submission [Core]  <!-- UUID: fcb1b51e-8bb3-4a55-8cc0-9bec637086c8 -->
 
 The Root Edit process begins with a AGENT4 token holder submitting a proposal through the Powerhouse system containing a draft Artifact Edit Proposal. A AGENT4 token holder must hold at least 1% of the circulating token supply to submit a proposal. The proposal must also be posted on the Sky Forum under the “Launch Agent 4 Prime” category.
 
-############# A.6.1.1.6.2.2.2.2.1.2.1.1.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: e0020160-9ee8-4f35-90f1-ba375d625689 -->
+############# A.6.1.1.9.2.2.2.2.1.2.1.1.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: e0020160-9ee8-4f35-90f1-ba375d625689 -->
 
 Until the Powerhouse system supports submitting Artifact Edit Proposals, AGENT4 token holders may submit Artifact Edit Proposals by posting them to the Sky Forum under the “Launch Agent 4 Prime” category. The title of the post must include the text “Launch Agent 4 Artifact Edit Proposal”. The post must include cryptographic proof that the author controls an account holding the required percentage of the total AGENT4 token supply specified in [Root Edit Proposal Submission](fcb1b51e-8bb3-4a55-8cc0-9bec637086c8).
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: 432c532c-3e3a-41e9-b9dc-88c20d944541 -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.2 - Root Edit Expert Advisor Review [Core]  <!-- UUID: 432c532c-3e3a-41e9-b9dc-88c20d944541 -->
 
 A future iteration of the Launch Agent 4 Artifact will specify guidelines for obtaining specialized review of proposals requiring advanced technical or financial analysis.
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: d21854da-165b-455d-893c-147db514d31c -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.3 - Root Edit Proposal Review By Operational Facilitator [Core]  <!-- UUID: d21854da-165b-455d-893c-147db514d31c -->
 
 Within seven (7) days of the proposal being submitted, the Operational Facilitator must review the Root Edit Proposal for alignment.
 
@@ -32767,843 +33197,843 @@ If the proposal is aligned, the Operational Facilitator must respond to the Foru
 
 If the proposal is misaligned, the Operational Facilitator must respond to the Forum post to announce their finding and provide the reasoning for it.
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: b60fe2f0-2aa6-4f36-9d87-e81c2294abc9 -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.4 - Root Edit Token Holder Vote [Core]  <!-- UUID: b60fe2f0-2aa6-4f36-9d87-e81c2294abc9 -->
 
 Where their review of the proposal results in a finding of alignment with the Sky Core Atlas and Launch Agent 4 Artifact, the Operational Facilitator next triggers a Snapshot poll to allow token holders to vote on the proposal. The poll is open for three (3) days. A poll must have at least 10% of the circulating token supply participating and must have 50% of votes in favor to be approved.
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: e0a6abf0-6191-4605-afa3-cc0de7b72a05 -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.5 - Root Edit Artifact Update [Core]  <!-- UUID: e0a6abf0-6191-4605-afa3-cc0de7b72a05 -->
 
 At the conclusion of the poll, if the proposal is approved, the Operational Facilitator submits the edit to Powerhouse to formally update the Agent Artifact. Regardless of the outcome, the Operational Facilitator updates the Powerhouse System to include the result of the vote, including any pertinent documents.
 
-############# A.6.1.1.6.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: a418eef2-bbfc-43eb-8d79-62c7bb940c3d -->
+############# A.6.1.1.9.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: a418eef2-bbfc-43eb-8d79-62c7bb940c3d -->
 
 Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Core Facilitator to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
 
-############ A.6.1.1.6.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: c14e9e4d-2819-46cb-b267-a9b13600192a -->
+############ A.6.1.1.9.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: c14e9e4d-2819-46cb-b267-a9b13600192a -->
 
 The Launch Agent 4 Artifact cannot be edited in any way that violates the Sky Core Atlas or its specifications of the Sky Primitives, or in any way that is otherwise misaligned. The Operational Facilitator must enforce this rule through their review of Artifact Edit Proposals.
 
-########### A.6.1.1.6.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2dcc5cd2-5936-4779-8ff6-072ad863756f -->
+########### A.6.1.1.9.2.2.2.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2dcc5cd2-5936-4779-8ff6-072ad863756f -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in non-routine conditions.
 
-########### A.6.1.1.6.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d12b8cf2-2668-4466-ac2e-7404fce6c718 -->
+########### A.6.1.1.9.2.2.2.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d12b8cf2-2668-4466-ac2e-7404fce6c718 -->
 
 The documents herein define the process for using the Root Edit Primitive to update the Launch Agent 4 Agent Artifact in emergency situations.
 
-############ A.6.1.1.6.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Emergency Situations [Core]  <!-- UUID: f8b1cf73-d16d-4ca0-aeea-3f95d25245a8 -->
+############ A.6.1.1.9.2.2.2.2.1.2.3.1 - Root Edit Voting Process in Emergency Situations [Core]  <!-- UUID: f8b1cf73-d16d-4ca0-aeea-3f95d25245a8 -->
 
 In an Emergency Situation, as defined by the Sky Core Atlas in [A.1.8 - Emergency Response System - Emergency Response - Definition Of Emergency Situations](5eafb29e-84a0-4a53-a798-3f958c880225), the Operational Facilitator may allow a Root Edit to occur more quickly than the timeline specified above. Where feasible, the Operational Facilitator should announce the decision to deploy the emergency Root Edit protocol and provide their reasoning via a public Sky Forum post (under the “Launch Agent 4 Prime” category), unless doing so would endanger Launch Agent 4 or its users.
 
-########## A.6.1.1.6.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 8f8ef2ba-1071-40df-98bc-384d1f6782b5 -->
+########## A.6.1.1.9.2.2.2.2.1.3 - Data Repository [Core]  <!-- UUID: 8f8ef2ba-1071-40df-98bc-384d1f6782b5 -->
 
 The documents herein contain data relevant to the Single Instance of the Root Edit Primitive.
 
-########### A.6.1.1.6.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b2f9aa29-8e29-4123-8996-12dad34b51e5 -->
+########### A.6.1.1.9.2.2.2.2.1.3.1 - Initial Planning [Core]  <!-- UUID: b2f9aa29-8e29-4123-8996-12dad34b51e5 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 91cbbea6-33e4-49a4-ab2a-1c01d2b3eed8 -->
+########### A.6.1.1.9.2.2.2.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 91cbbea6-33e4-49a4-ab2a-1c01d2b3eed8 -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: efce80bb-4637-4bdf-8ddb-ad412154a521 -->
+########### A.6.1.1.9.2.2.2.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: efce80bb-4637-4bdf-8ddb-ad412154a521 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.2.2.3 - Completed Instances [Core]  <!-- UUID: 4d6ec316-b444-4550-a591-006a6b8080cd -->
+######## A.6.1.1.9.2.2.2.3 - Completed Instances [Core]  <!-- UUID: 4d6ec316-b444-4550-a591-006a6b8080cd -->
 
 The Instances of the Root Edit Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: 77be1f27-3cd0-4e3f-a05d-8ce0880f37a7 -->
+######## A.6.1.1.9.2.2.2.4 - In Progress Invocations [Core]  <!-- UUID: 77be1f27-3cd0-4e3f-a05d-8ce0880f37a7 -->
 
 Because the Root Edit Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.6.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: 32cf649f-13f7-41e2-bbe4-347a14532114 -->
+####### A.6.1.1.9.2.2.3 - Light Agent Primitive [Core]  <!-- UUID: 32cf649f-13f7-41e2-bbe4-347a14532114 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Light Agent Primitive. See [A.2.4 - Light Agent Primitive](44028423-2cd1-40cb-89ac-3f762b602b90).
 
-######## A.6.1.1.6.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: c4b311b3-3f2c-483f-b24a-845ef5c6a6df -->
+######## A.6.1.1.9.2.2.3.1 - Primitive Hub Document [Core]  <!-- UUID: c4b311b3-3f2c-483f-b24a-845ef5c6a6df -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Light Agent Primitive.
 
-######### A.6.1.1.6.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: afc008c0-e6d3-4973-b501-0f9f2db1cfa4 -->
+######### A.6.1.1.9.2.2.3.1.1 - Global Activation Status [Core]  <!-- UUID: afc008c0-e6d3-4973-b501-0f9f2db1cfa4 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 848c213e-5478-448c-9c7b-a8ea119823e5 -->
+######### A.6.1.1.9.2.2.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 848c213e-5478-448c-9c7b-a8ea119823e5 -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 88717821-a8d4-480e-91c6-ba996685746c -->
+######### A.6.1.1.9.2.2.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 88717821-a8d4-480e-91c6-ba996685746c -->
 
 This document contains a Directory of all Instances of the Light Agent Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c38da3e3-0dbc-4deb-833f-0a124d55f0f7 -->
+######### A.6.1.1.9.2.2.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c38da3e3-0dbc-4deb-833f-0a124d55f0f7 -->
 
 This document contains a Directory of all prospective Instances of the Light Agent Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](848c213e-5478-448c-9c7b-a8ea119823e5), whereas failed Invocations are Archived in [Hub Data Repository](19e005fe-f719-407f-b788-5bc13f3ffb11).
 
-######### A.6.1.1.6.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 19e005fe-f719-407f-b788-5bc13f3ffb11 -->
+######### A.6.1.1.9.2.2.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 19e005fe-f719-407f-b788-5bc13f3ffb11 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8dfdbffe-91f9-44c5-8e28-45cbda1cbdfb -->
+########## A.6.1.1.9.2.2.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8dfdbffe-91f9-44c5-8e28-45cbda1cbdfb -->
 
 The subtrees for archived Invocations and Instances of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.6.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a7910404-5064-4d72-946d-2b9cb2f7d944 -->
+########### A.6.1.1.9.2.2.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: a7910404-5064-4d72-946d-2b9cb2f7d944 -->
 
 The subtrees for failed Invocations of the Light Agent Primitive are stored here.
 
-########### A.6.1.1.6.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d9955aca-f64d-41a3-9c5c-16ad98f98956 -->
+########### A.6.1.1.9.2.2.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d9955aca-f64d-41a3-9c5c-16ad98f98956 -->
 
 The subtrees for Instances of the Light Agent Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.2.3.2 - Active Instances [Core]  <!-- UUID: d7b02050-890e-4b86-9bbf-2d4183a97f44 -->
+######## A.6.1.1.9.2.2.3.2 - Active Instances [Core]  <!-- UUID: d7b02050-890e-4b86-9bbf-2d4183a97f44 -->
 
 The Instances of the Light Agent Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 5ef59d24-d4c8-445c-8385-08801b24be3a -->
+######## A.6.1.1.9.2.2.3.3 - Completed Instances [Core]  <!-- UUID: 5ef59d24-d4c8-445c-8385-08801b24be3a -->
 
 The Instances of the Light Agent Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: 041daa3a-41b4-47fd-8e2b-bb288fd8342b -->
+######## A.6.1.1.9.2.2.3.4 - In Progress Invocations [Core]  <!-- UUID: 041daa3a-41b4-47fd-8e2b-bb288fd8342b -->
 
 The in progress Invocations of the Light Agent Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](d7b02050-890e-4b86-9bbf-2d4183a97f44).
 
-###### A.6.1.1.6.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: ea7388bc-3689-4b90-80d8-920eb7f25411 -->
+###### A.6.1.1.9.2.3 - Ecosystem Upkeep Primitives [Core]  <!-- UUID: ea7388bc-3689-4b90-80d8-920eb7f25411 -->
 
 The documents herein implement the Ecosystem Upkeep Primitives for Launch Agent 4. See [A.2.4 - A6 - Ecosystem Upkeep Primitives](25673fd2-76cb-4c4d-8ec6-8c489207bcfc).
 
-####### A.6.1.1.6.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 518b0729-7d39-4e94-96ae-4e1dce577b3a -->
+####### A.6.1.1.9.2.3.1 - Distribution Requirement Primitive [Core]  <!-- UUID: 518b0729-7d39-4e94-96ae-4e1dce577b3a -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instance of the Distribution Requirement Primitive. See [A.2.4 - Distribution Requirement Primitive](0804ab13-d276-4ad9-a935-dc9f7fc2e350).
 
-######## A.6.1.1.6.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 367db765-3d90-449f-88d7-356eb2e5df6b -->
+######## A.6.1.1.9.2.3.1.1 - Primitive Hub Document [Core]  <!-- UUID: 367db765-3d90-449f-88d7-356eb2e5df6b -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Distribution Requirement Primitive.
 
-######### A.6.1.1.6.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: 6a8a9da7-4c67-4553-84fd-5ad743f50847 -->
+######### A.6.1.1.9.2.3.1.1.1 - Global Activation Status [Core]  <!-- UUID: 6a8a9da7-4c67-4553-84fd-5ad743f50847 -->
 
 `Active`
 
-######### A.6.1.1.6.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 590456d2-baea-411e-bd00-dccbd12387c0 -->
+######### A.6.1.1.9.2.3.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 590456d2-baea-411e-bd00-dccbd12387c0 -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Active`.
 
-########## A.6.1.1.6.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 347ce0a4-ad9c-4a54-975b-939c932edbba -->
+########## A.6.1.1.9.2.3.1.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 347ce0a4-ad9c-4a54-975b-939c932edbba -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](7ef7b4b1-d8c1-4f9d-bf00-c1cf292b0c02).
 
-######### A.6.1.1.6.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1d7ff736-dd46-4b6f-b5c1-c52e50f34846 -->
+######### A.6.1.1.9.2.3.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 1d7ff736-dd46-4b6f-b5c1-c52e50f34846 -->
 
 This document contains a Directory of all Instances of the Distribution Requirement Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 14a2006a-764a-4526-8d9f-ff3dfc4591fe -->
+######### A.6.1.1.9.2.3.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 14a2006a-764a-4526-8d9f-ff3dfc4591fe -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 2087141c-ab9c-404e-bba8-1a1843350bb5 -->
+######### A.6.1.1.9.2.3.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 2087141c-ab9c-404e-bba8-1a1843350bb5 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8898ed9a-e7fc-403e-a061-8399a6b132b8 -->
+########## A.6.1.1.9.2.3.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 8898ed9a-e7fc-403e-a061-8399a6b132b8 -->
 
 The subtrees for archived Invocations and Instances of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.6.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 2ef60c48-9590-4e1f-b00a-48cb9edbcd20 -->
+########### A.6.1.1.9.2.3.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 2ef60c48-9590-4e1f-b00a-48cb9edbcd20 -->
 
 The subtrees for failed Invocations of the Distribution Requirement Primitive are stored here.
 
-########### A.6.1.1.6.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a300b6cf-1826-4b4a-b49a-b9fe4f75ccda -->
+########### A.6.1.1.9.2.3.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a300b6cf-1826-4b4a-b49a-b9fe4f75ccda -->
 
 The subtrees for Instances of the Distribution Requirement Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.3.1.2 - Active Instances [Core]  <!-- UUID: a27eeee1-ce9a-4b26-9bef-57199b921eda -->
+######## A.6.1.1.9.2.3.1.2 - Active Instances [Core]  <!-- UUID: a27eeee1-ce9a-4b26-9bef-57199b921eda -->
 
 The Instances of the Distribution Requirement Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.6.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 7ef7b4b1-d8c1-4f9d-bf00-c1cf292b0c02 -->
+######### A.6.1.1.9.2.3.1.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 7ef7b4b1-d8c1-4f9d-bf00-c1cf292b0c02 -->
 
 The documents herein contain the Instance Configuration Document for the Single Distribution Requirement Primitive Instance.
 
-########## A.6.1.1.6.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: c3c06c49-ce92-4eac-b7e9-00783b4c6902 -->
+########## A.6.1.1.9.2.3.1.2.1.1 - Parameters [Core]  <!-- UUID: c3c06c49-ce92-4eac-b7e9-00783b4c6902 -->
 
 The documents herein define the parameters of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.6.2.3.1.2.1.1.1 - Term [Core]  <!-- UUID: 49fe9982-412f-4da4-b81d-92786d3a7709 -->
+########### A.6.1.1.9.2.3.1.2.1.1.1 - Term [Core]  <!-- UUID: 49fe9982-412f-4da4-b81d-92786d3a7709 -->
 
 Launch Agent 4 will buy back and distribute 0.25% of its total token supply per year.
 
-########### A.6.1.1.6.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: d58f7727-d553-43b9-b513-d4d490abc16f -->
+########### A.6.1.1.9.2.3.1.2.1.1.2 - Custom Instance Parameters [Core]  <!-- UUID: d58f7727-d553-43b9-b513-d4d490abc16f -->
 
 The documents herein define the custom parameters of the Single Instance of the Distribution Requirement Primitive, if any.
 
-########## A.6.1.1.6.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: dfafe9f2-4bc7-450a-b227-008d37b88249 -->
+########## A.6.1.1.9.2.3.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: dfafe9f2-4bc7-450a-b227-008d37b88249 -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.6.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 0fa4e4f4-a123-42d4-9353-997480ee8d14 -->
+########### A.6.1.1.9.2.3.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 0fa4e4f4-a123-42d4-9353-997480ee8d14 -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-############ A.6.1.1.6.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: ec192467-881e-4af6-9378-1fa4e36a6c18 -->
+############ A.6.1.1.9.2.3.1.2.1.2.1.1 - Process Definition For Buy Back And Distribution Obligation [Core]  <!-- UUID: ec192467-881e-4af6-9378-1fa4e36a6c18 -->
 
 The process to buy back and distribute 0.25% of Launch Agent 4’s tokens per year will be specified in future iterations of the Launch Agent 4 Artifact.
 
-########### A.6.1.1.6.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fc2e23dd-7ca5-4487-b7ba-283156adab6f -->
+########### A.6.1.1.9.2.3.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: fc2e23dd-7ca5-4487-b7ba-283156adab6f -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########### A.6.1.1.6.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68b9b15-fd96-4e9b-93d6-8feab64f8d7b -->
+########### A.6.1.1.9.2.3.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68b9b15-fd96-4e9b-93d6-8feab64f8d7b -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Distribution Requirement Primitive.
 
-########## A.6.1.1.6.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ba98afe-bd9c-49bb-938e-1475ceddd30b -->
+########## A.6.1.1.9.2.3.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ba98afe-bd9c-49bb-938e-1475ceddd30b -->
 
 The documents herein contain data relevant to the Single Instance of the Distribution Requirement Primitive.
 
-########### A.6.1.1.6.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 1f1e7bb2-dfa7-4189-84bd-9a6759aec3e7 -->
+########### A.6.1.1.9.2.3.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 1f1e7bb2-dfa7-4189-84bd-9a6759aec3e7 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 8f8f951d-8768-457d-9c56-3a81b92c395a -->
+########### A.6.1.1.9.2.3.1.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 8f8f951d-8768-457d-9c56-3a81b92c395a -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e866803-811d-4220-b336-ebe239402921 -->
+########### A.6.1.1.9.2.3.1.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: 2e866803-811d-4220-b336-ebe239402921 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.3.1.3 - Completed Instances [Core]  <!-- UUID: beeba9d9-39bb-4f36-9447-9456966975eb -->
+######## A.6.1.1.9.2.3.1.3 - Completed Instances [Core]  <!-- UUID: beeba9d9-39bb-4f36-9447-9456966975eb -->
 
 The Instances of the Distribution Requirement Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: 3c7049bc-3c9f-4088-94bc-0fc242dca76a -->
+######## A.6.1.1.9.2.3.1.4 - In Progress Invocations [Core]  <!-- UUID: 3c7049bc-3c9f-4088-94bc-0fc242dca76a -->
 
 Because the Distribution Requirement Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-####### A.6.1.1.6.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: ad5238bd-b200-4f4d-9670-fae8fd1bdb6a -->
+####### A.6.1.1.9.2.3.2 - Market Cap Fee Primitive [Core]  <!-- UUID: ad5238bd-b200-4f4d-9670-fae8fd1bdb6a -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s instances of the Market Cap Fee Primitive. See [A.2.4 - Market Cap Fee Primitive](a21616f4-1611-4e0b-87b2-efbdff9f6f28).
 
-######## A.6.1.1.6.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: fba527ac-64a7-4f7e-8bf2-411f87d3d9b4 -->
+######## A.6.1.1.9.2.3.2.1 - Primitive Hub Document [Core]  <!-- UUID: fba527ac-64a7-4f7e-8bf2-411f87d3d9b4 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Market Cap Fee Primitive.
 
-######### A.6.1.1.6.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 11fbb511-f13f-4390-a843-7a436f6438cf -->
+######### A.6.1.1.9.2.3.2.1.1 - Global Activation Status [Core]  <!-- UUID: 11fbb511-f13f-4390-a843-7a436f6438cf -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 6548ed03-6cf2-482e-ab15-0d39f5c2f767 -->
+######### A.6.1.1.9.2.3.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 6548ed03-6cf2-482e-ab15-0d39f5c2f767 -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: a3b9358d-d4eb-45ba-8ef2-bd8fc7280ccc -->
+######### A.6.1.1.9.2.3.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: a3b9358d-d4eb-45ba-8ef2-bd8fc7280ccc -->
 
 This document contains a Directory of all Instances of the Market Cap Fee Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1778b3fa-c238-4094-9143-e949a28532fc -->
+######### A.6.1.1.9.2.3.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1778b3fa-c238-4094-9143-e949a28532fc -->
 
 This document contains a Directory of all prospective Instances of the Market Cap Fee Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6548ed03-6cf2-482e-ab15-0d39f5c2f767), whereas failed Invocations are Archived in [Hub Data Repository](79d81288-94aa-44e9-85d2-2f5108b5d789).
 
-######### A.6.1.1.6.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 79d81288-94aa-44e9-85d2-2f5108b5d789 -->
+######### A.6.1.1.9.2.3.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 79d81288-94aa-44e9-85d2-2f5108b5d789 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e21337b9-f950-467c-9ee0-7a87b20b5aa4 -->
+########## A.6.1.1.9.2.3.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: e21337b9-f950-467c-9ee0-7a87b20b5aa4 -->
 
 The subtrees for archived Invocations and Instances of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.6.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 0e499891-704b-46c8-8f0b-9fa05b9a6fe4 -->
+########### A.6.1.1.9.2.3.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 0e499891-704b-46c8-8f0b-9fa05b9a6fe4 -->
 
 The subtrees for failed Invocations of the Market Cap Fee Primitive are stored here.
 
-########### A.6.1.1.6.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 89f2d35e-d04b-47cc-8f75-cba401195668 -->
+########### A.6.1.1.9.2.3.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 89f2d35e-d04b-47cc-8f75-cba401195668 -->
 
 The subtrees for Instances of the Market Cap Fee Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.3.2.2 - Active Instances [Core]  <!-- UUID: 4cf784c4-9a59-4b24-88bc-d10b5991cdf4 -->
+######## A.6.1.1.9.2.3.2.2 - Active Instances [Core]  <!-- UUID: 4cf784c4-9a59-4b24-88bc-d10b5991cdf4 -->
 
 The Instances of the Market Cap Fee Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.3.2.3 - Completed Instances [Core]  <!-- UUID: f8a814a0-8c61-4aee-af6d-919e6aa5aa1e -->
+######## A.6.1.1.9.2.3.2.3 - Completed Instances [Core]  <!-- UUID: f8a814a0-8c61-4aee-af6d-919e6aa5aa1e -->
 
 The Instances of the Market Cap Fee Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: 3bad0aba-a4be-4107-809c-b41d364d5278 -->
+######## A.6.1.1.9.2.3.2.4 - In Progress Invocations [Core]  <!-- UUID: 3bad0aba-a4be-4107-809c-b41d364d5278 -->
 
 The in progress Invocations of the Market Cap Fee Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](4cf784c4-9a59-4b24-88bc-d10b5991cdf4).
 
-####### A.6.1.1.6.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 1cec73ac-6b70-48ff-a7ff-1d0f689d602f -->
+####### A.6.1.1.9.2.3.3 - Upkeep Rebate Primitive [Core]  <!-- UUID: 1cec73ac-6b70-48ff-a7ff-1d0f689d602f -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s instance of the Upkeep Rebate Primitive. See [A.2.4 - Upkeep Rebate Primitive](569e1c2b-0e69-43e7-8491-06cc5f7d2988).
 
-######## A.6.1.1.6.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: 36f57327-abff-4ac1-890b-c5097c449b02 -->
+######## A.6.1.1.9.2.3.3.1 - Primitive Hub Document [Core]  <!-- UUID: 36f57327-abff-4ac1-890b-c5097c449b02 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Upkeep Rebate Primitive.
 
-######### A.6.1.1.6.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: 28f93080-7f1f-45f1-a9c6-a78cea11cbbd -->
+######### A.6.1.1.9.2.3.3.1.1 - Global Activation Status [Core]  <!-- UUID: 28f93080-7f1f-45f1-a9c6-a78cea11cbbd -->
 
 `Active`
 
-######### A.6.1.1.6.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 47f2fe76-ba5f-437e-8110-799c1e3fe7f5 -->
+######### A.6.1.1.9.2.3.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 47f2fe76-ba5f-437e-8110-799c1e3fe7f5 -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Active`.
 
-########## A.6.1.1.6.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 4800d116-8fa3-40b4-ac3b-dce8629d2984 -->
+########## A.6.1.1.9.2.3.3.1.2.1 - Single Instance Configuration Document Location [Core]  <!-- UUID: 4800d116-8fa3-40b4-ac3b-dce8629d2984 -->
 
 This Instance’s associated Instance Configuration Document is located at [Single Instance Configuration Document](8a327b83-b508-480b-8e97-038c6e35c64f).
 
-######### A.6.1.1.6.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 41b96ba1-f506-498a-803f-d4067053b6ed -->
+######### A.6.1.1.9.2.3.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 41b96ba1-f506-498a-803f-d4067053b6ed -->
 
 This document contains a Directory of all Instances of the Upkeep Rebate Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 8850b00e-dd0a-44d7-b64a-7e4ef5cf7d37 -->
+######### A.6.1.1.9.2.3.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 8850b00e-dd0a-44d7-b64a-7e4ef5cf7d37 -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-######### A.6.1.1.6.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 0daa3c8b-dbce-4c8c-bfd6-30a3d5ae7486 -->
+######### A.6.1.1.9.2.3.3.1.5 - Hub Data Repository [Core]  <!-- UUID: 0daa3c8b-dbce-4c8c-bfd6-30a3d5ae7486 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a8cd1289-22f9-4e01-878b-01a7b0e90a80 -->
+########## A.6.1.1.9.2.3.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a8cd1289-22f9-4e01-878b-01a7b0e90a80 -->
 
 The subtrees for archived Invocations and Instances of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.6.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 49d6d2d2-1052-44d5-a9a9-0935d26f99ff -->
+########### A.6.1.1.9.2.3.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 49d6d2d2-1052-44d5-a9a9-0935d26f99ff -->
 
 The subtrees for failed Invocations of the Upkeep Rebate Primitive are stored here.
 
-########### A.6.1.1.6.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 28085731-4ac7-4016-807c-652fe1447bb8 -->
+########### A.6.1.1.9.2.3.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 28085731-4ac7-4016-807c-652fe1447bb8 -->
 
 The subtrees for Instances of the Upkeep Rebate Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.3.3.2 - Active Instances [Core]  <!-- UUID: c4e5deff-2cf9-492c-af8c-cfbd33327686 -->
+######## A.6.1.1.9.2.3.3.2 - Active Instances [Core]  <!-- UUID: c4e5deff-2cf9-492c-af8c-cfbd33327686 -->
 
 The Instances of the Upkeep Rebate Primitive with `Active` Status are stored herein.
 
-######### A.6.1.1.6.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 8a327b83-b508-480b-8e97-038c6e35c64f -->
+######### A.6.1.1.9.2.3.3.2.1 - Single Instance Configuration Document [Core]  <!-- UUID: 8a327b83-b508-480b-8e97-038c6e35c64f -->
 
 The documents herein contain the Instance Configuration Document for the Single Upkeep Rebate Primitive Instance.
 
-########## A.6.1.1.6.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 439a27ef-945c-43dc-ab3b-836e5ab6372b -->
+########## A.6.1.1.9.2.3.3.2.1.1 - Parameters [Core]  <!-- UUID: 439a27ef-945c-43dc-ab3b-836e5ab6372b -->
 
 Every Prime Agent is entitled to the Upkeep Rebate Primitive for tokens of other Prime Agents that they hold. Because this right automatically applies, there are no parameters.
 
-########## A.6.1.1.6.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1d3eb5ff-4a71-4eff-a1f0-935f434644c1 -->
+########## A.6.1.1.9.2.3.3.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 1d3eb5ff-4a71-4eff-a1f0-935f434644c1 -->
 
 The documents herein define the process for the ongoing management of the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.6.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 144cfca6-e760-4f34-8ba3-effb1a1b9681 -->
+########### A.6.1.1.9.2.3.3.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: 144cfca6-e760-4f34-8ba3-effb1a1b9681 -->
 
 This document defines the protocol for routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-############ A.6.1.1.6.2.3.3.2.1.2.1.1 - Launch Agent 4 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 93599af2-bf73-4598-8b78-dfb74549f90d -->
+############ A.6.1.1.9.2.3.3.2.1.2.1.1 - Launch Agent 4 Holds Tokens Of Other Agents In Its SubProxy Account [Core]  <!-- UUID: 93599af2-bf73-4598-8b78-dfb74549f90d -->
 
 Launch Agent 4 keeps all tokens of other Agents it holds in its SubProxy account.
 
-############ A.6.1.1.6.2.3.3.2.1.2.1.2 - Launch Agent 4 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: eb954d3d-94d9-46d8-a118-a74e0d9da8c0 -->
+############ A.6.1.1.9.2.3.3.2.1.2.1.2 - Launch Agent 4 Deducts Rebate From Ecosystem Upkeep Fees [Core]  <!-- UUID: eb954d3d-94d9-46d8-a118-a74e0d9da8c0 -->
 
 When paying Ecosystem Upkeep fees, Launch Agent 4 deducts the rebate from the fees it pays.
 
-############ A.6.1.1.6.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: a8afed5e-3721-40a3-847c-3589a5dfce95 -->
+############ A.6.1.1.9.2.3.3.2.1.2.1.3 - Operational GovOps Reviews Rebate [Core]  <!-- UUID: a8afed5e-3721-40a3-847c-3589a5dfce95 -->
 
 Operational GovOps reviews Launch Agent 4’s calculation of the rebate before executing a return of surplus to token holders. In the event of any issues, Operational GovOps cannot execute the distribution. If Operational GovOps does not execute the distribution, Operational GovOps must post an explanation on the Sky Forum under the “Launch Agent 4 Prime” category and work with Launch Agent 4 to resolve the disagreement. If Operational GovOps and Launch Agent 4 cannot resolve the disagreement, it must be escalated to Core GovOps.
 
-########### A.6.1.1.6.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 025b8abf-69a3-4749-95f3-60a7268983ff -->
+########### A.6.1.1.9.2.3.3.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 025b8abf-69a3-4749-95f3-60a7268983ff -->
 
 The documents herein define the protocol for non-routine ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########### A.6.1.1.6.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68e712a-cf58-45c0-8065-f81a5f259b18 -->
+########### A.6.1.1.9.2.3.3.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: e68e712a-cf58-45c0-8065-f81a5f259b18 -->
 
 The documents herein define the protocol for handling emergency situations in the ongoing management of the Single Instance of this Upkeep Rebate Primitive.
 
-########## A.6.1.1.6.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: dd6c0d05-79f9-4663-85bb-916d12a29ce1 -->
+########## A.6.1.1.9.2.3.3.2.1.3 - Data Repository [Core]  <!-- UUID: dd6c0d05-79f9-4663-85bb-916d12a29ce1 -->
 
 The documents herein contain data relevant to the Single Instance of the Upkeep Rebate Primitive.
 
-########### A.6.1.1.6.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: df002eaa-d6d5-4b27-9ccb-26193cc65ec5 -->
+########### A.6.1.1.9.2.3.3.2.1.3.1 - Initial Planning [Core]  <!-- UUID: df002eaa-d6d5-4b27-9ccb-26193cc65ec5 -->
 
 The materials associated with initial planning of the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 5bf870c7-57bc-40f8-82d4-f6094b484a5b -->
+########### A.6.1.1.9.2.3.3.2.1.3.2 - Operational GovOps Review [Core]  <!-- UUID: 5bf870c7-57bc-40f8-82d4-f6094b484a5b -->
 
 The materials associated with Operational GovOps Review during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.6.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: d94ae414-18e8-432b-9f17-f58e8cc0cce3 -->
+########### A.6.1.1.9.2.3.3.2.1.3.3 - Artifact Edit Proposal [Core]  <!-- UUID: d94ae414-18e8-432b-9f17-f58e8cc0cce3 -->
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-######## A.6.1.1.6.2.3.3.3 - Completed Instances [Core]  <!-- UUID: 0723c247-7b2d-48aa-a1f1-1166aad05319 -->
+######## A.6.1.1.9.2.3.3.3 - Completed Instances [Core]  <!-- UUID: 0723c247-7b2d-48aa-a1f1-1166aad05319 -->
 
 The Instances of the Upkeep Rebate Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 4e8268eb-b8f4-4d45-bf11-a6c03f262275 -->
+######## A.6.1.1.9.2.3.3.4 - In Progress Invocations [Core]  <!-- UUID: 4e8268eb-b8f4-4d45-bf11-a6c03f262275 -->
 
 Because the Upkeep Rebate Primitive is deployed only once, no further Instances of the Primitive can be Invoked.
 
-###### A.6.1.1.6.2.4 - SkyLink Primitives [Core]  <!-- UUID: e66cbbd1-df57-418d-9699-73d050388fd6 -->
+###### A.6.1.1.9.2.4 - SkyLink Primitives [Core]  <!-- UUID: e66cbbd1-df57-418d-9699-73d050388fd6 -->
 
 The documents herein implement the SkyLink Primitives for Launch Agent 4. See [A.2.4 - A7 - SkyLink Primitives](7b5d8965-a64c-4c44-b742-607f51f69d8f).
 
-####### A.6.1.1.6.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: 5642de19-bfb3-4d54-9bc9-19b11b60a3c2 -->
+####### A.6.1.1.9.2.4.1 - Token SkyLink Primitive [Core]  <!-- UUID: 5642de19-bfb3-4d54-9bc9-19b11b60a3c2 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Token SkyLink Primitive. See [A.2.4 - Token SkyLink Primitive](4504d2d4-ee45-4a07-8c5b-9baf20b12e76).
 
-######## A.6.1.1.6.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: 3ce6f8aa-7a27-4701-83cb-d1fc4c41bb28 -->
+######## A.6.1.1.9.2.4.1.1 - Primitive Hub Document [Core]  <!-- UUID: 3ce6f8aa-7a27-4701-83cb-d1fc4c41bb28 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Token SkyLink Primitive.
 
-######### A.6.1.1.6.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9d778551-1fd4-4206-a0e0-cb555f6d1e34 -->
+######### A.6.1.1.9.2.4.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9d778551-1fd4-4206-a0e0-cb555f6d1e34 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5c2fbcb7-e90b-44a5-854b-1616d9ad45a9 -->
+######### A.6.1.1.9.2.4.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 5c2fbcb7-e90b-44a5-854b-1616d9ad45a9 -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: a4ca44ca-4663-4d7d-8640-f173dfad1054 -->
+######### A.6.1.1.9.2.4.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: a4ca44ca-4663-4d7d-8640-f173dfad1054 -->
 
 This document contains a Directory of all Instances of the Token SkyLink Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3fd9d534-7c71-411b-84ed-afbe997589d0 -->
+######### A.6.1.1.9.2.4.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 3fd9d534-7c71-411b-84ed-afbe997589d0 -->
 
 This document contains a Directory of all prospective Instances of the Token SkyLink Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5c2fbcb7-e90b-44a5-854b-1616d9ad45a9), whereas failed Invocations are Archived in [Hub Data Repository](930899b8-232d-4015-a594-317b682ca460).
 
-######### A.6.1.1.6.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 930899b8-232d-4015-a594-317b682ca460 -->
+######### A.6.1.1.9.2.4.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 930899b8-232d-4015-a594-317b682ca460 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: f11e195b-b8ad-43fd-93a1-001b297d0dcf -->
+########## A.6.1.1.9.2.4.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: f11e195b-b8ad-43fd-93a1-001b297d0dcf -->
 
 The subtrees for archived Invocations and Instances of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.6.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 13a369a4-5eb1-4301-98a1-eff12149501a -->
+########### A.6.1.1.9.2.4.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 13a369a4-5eb1-4301-98a1-eff12149501a -->
 
 The subtrees for failed Invocations of the Token SkyLink Primitive are stored here.
 
-########### A.6.1.1.6.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: aea6d389-e1d1-4cd1-bd96-24a29c1b3ecc -->
+########### A.6.1.1.9.2.4.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: aea6d389-e1d1-4cd1-bd96-24a29c1b3ecc -->
 
 The subtrees for Instances of the Token SkyLink Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.4.1.2 - Active Instances [Core]  <!-- UUID: e8a2afff-b4b0-4b47-8b7a-32119eca9091 -->
+######## A.6.1.1.9.2.4.1.2 - Active Instances [Core]  <!-- UUID: e8a2afff-b4b0-4b47-8b7a-32119eca9091 -->
 
 The Instances of the Token SkyLink Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.4.1.3 - Completed Instances [Core]  <!-- UUID: b08f8e0b-5cc8-4b0a-b148-4ef44fa7ae03 -->
+######## A.6.1.1.9.2.4.1.3 - Completed Instances [Core]  <!-- UUID: b08f8e0b-5cc8-4b0a-b148-4ef44fa7ae03 -->
 
 The Instances of the Token SkyLink Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: 01dcfdbb-70a4-4986-bf38-28db96dba4c4 -->
+######## A.6.1.1.9.2.4.1.4 - In Progress Invocations [Core]  <!-- UUID: 01dcfdbb-70a4-4986-bf38-28db96dba4c4 -->
 
 The in progress Invocations of the Token SkyLink Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](e8a2afff-b4b0-4b47-8b7a-32119eca9091).
 
-###### A.6.1.1.6.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: 66ca6538-89c2-442e-87c2-9fe2d586b516 -->
+###### A.6.1.1.9.2.5 - Demand Side Stablecoin Primitives [Core]  <!-- UUID: 66ca6538-89c2-442e-87c2-9fe2d586b516 -->
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 4. See [A.2.4 - A8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.6.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: f055e990-51e6-44c2-8d14-4e8694e62c1d -->
+####### A.6.1.1.9.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: f055e990-51e6-44c2-8d14-4e8694e62c1d -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s instances of the Accessibility Reward Primitive. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
-######## A.6.1.1.6.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: f11e8f01-a17f-44e7-aac1-56dbd5e9272e -->
+######## A.6.1.1.9.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: f11e8f01-a17f-44e7-aac1-56dbd5e9272e -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Accessibility Reward Primitive.
 
-######### A.6.1.1.6.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 94bbd7ec-e724-41e7-b74a-0e567768f219 -->
+######### A.6.1.1.9.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 94bbd7ec-e724-41e7-b74a-0e567768f219 -->
 
 `Active`
 
-######### A.6.1.1.6.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6d07d8e0-e37e-47f0-8534-e0c67effd267 -->
+######### A.6.1.1.9.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6d07d8e0-e37e-47f0-8534-e0c67effd267 -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f3d16b8f-4ac2-41b8-8744-13beb396588e -->
+######### A.6.1.1.9.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f3d16b8f-4ac2-41b8-8744-13beb396588e -->
 
 This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e1234baf-b923-4837-a279-96a76208f78d -->
+######### A.6.1.1.9.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e1234baf-b923-4837-a279-96a76208f78d -->
 
 This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6d07d8e0-e37e-47f0-8534-e0c67effd267), whereas failed Invocations are Archived in [Hub Data Repository](27d2b846-1278-4cf6-9a2f-09114d659813).
 
-######### A.6.1.1.6.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 27d2b846-1278-4cf6-9a2f-09114d659813 -->
+######### A.6.1.1.9.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 27d2b846-1278-4cf6-9a2f-09114d659813 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d345b6e5-cf01-4c2c-a177-6d4f5549dcff -->
+########## A.6.1.1.9.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d345b6e5-cf01-4c2c-a177-6d4f5549dcff -->
 
 The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.6.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 1cb40bb8-ab91-4fb8-82ba-84e71bd84504 -->
+########### A.6.1.1.9.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 1cb40bb8-ab91-4fb8-82ba-84e71bd84504 -->
 
 The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
 
-########### A.6.1.1.6.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: ce59ab47-8c7a-4893-a3f2-c9eeafac5168 -->
+########### A.6.1.1.9.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: ce59ab47-8c7a-4893-a3f2-c9eeafac5168 -->
 
 The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.5.1.2 - Active Instances [Core]  <!-- UUID: bbe5be33-f895-48a4-a8de-7d65d83d4321 -->
+######## A.6.1.1.9.2.5.1.2 - Active Instances [Core]  <!-- UUID: bbe5be33-f895-48a4-a8de-7d65d83d4321 -->
 
 The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 51861e24-08e4-4828-a5ea-0f0ac08f67db -->
+######## A.6.1.1.9.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 51861e24-08e4-4828-a5ea-0f0ac08f67db -->
 
 The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 12cf9640-3b5b-4255-b7d9-e84baa973d9f -->
+######## A.6.1.1.9.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 12cf9640-3b5b-4255-b7d9-e84baa973d9f -->
 
 The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](bbe5be33-f895-48a4-a8de-7d65d83d4321).
 
-####### A.6.1.1.6.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: edc5cd33-99a9-4687-b3fe-8c3e07da92e8 -->
+####### A.6.1.1.9.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: edc5cd33-99a9-4687-b3fe-8c3e07da92e8 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Integration Boost Primitive. See [A.2.4 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
 
-######## A.6.1.1.6.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: f9d5c302-4695-436f-9a06-595c06da2fc9 -->
+######## A.6.1.1.9.2.5.2.1 - Primitive Hub Document [Core]  <!-- UUID: f9d5c302-4695-436f-9a06-595c06da2fc9 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Integration Boost Primitive.
 
-######### A.6.1.1.6.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: f6c8017d-81cc-4ad5-ac3c-c68a354f2a61 -->
+######### A.6.1.1.9.2.5.2.1.1 - Global Activation Status [Core]  <!-- UUID: f6c8017d-81cc-4ad5-ac3c-c68a354f2a61 -->
 
 `Active`
 
-######### A.6.1.1.6.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: bf82c8f9-c7d4-42ac-b590-f28982863ef5 -->
+######### A.6.1.1.9.2.5.2.1.2 - Active Instances Directory [Core]  <!-- UUID: bf82c8f9-c7d4-42ac-b590-f28982863ef5 -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: c206ac89-c13e-4fae-886e-3014d0640b05 -->
+######### A.6.1.1.9.2.5.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: c206ac89-c13e-4fae-886e-3014d0640b05 -->
 
 This document contains a Directory of all Instances of the Integration Boost Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: daad121e-7835-4c61-90fb-eb15f987329e -->
+######### A.6.1.1.9.2.5.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: daad121e-7835-4c61-90fb-eb15f987329e -->
 
 This document contains a Directory of all prospective Instances of the Integration Boost Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](bf82c8f9-c7d4-42ac-b590-f28982863ef5), whereas failed Invocations are Archived in [Hub Data Repository](7b523fb3-f463-4f10-90d6-6dd1211dbc24).
 
-######### A.6.1.1.6.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 7b523fb3-f463-4f10-90d6-6dd1211dbc24 -->
+######### A.6.1.1.9.2.5.2.1.5 - Hub Data Repository [Core]  <!-- UUID: 7b523fb3-f463-4f10-90d6-6dd1211dbc24 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3aa560cf-c7bd-47f8-b156-e3422c5dfc9b -->
+########## A.6.1.1.9.2.5.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3aa560cf-c7bd-47f8-b156-e3422c5dfc9b -->
 
 The subtrees for archived Invocations and Instances of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.6.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64cbff91-cacc-492e-97de-d412bb860190 -->
+########### A.6.1.1.9.2.5.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 64cbff91-cacc-492e-97de-d412bb860190 -->
 
 The subtrees for failed Invocations of the Integration Boost Primitive are stored here.
 
-########### A.6.1.1.6.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d229d7d4-efdf-413c-9d9d-d4af3b43164b -->
+########### A.6.1.1.9.2.5.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d229d7d4-efdf-413c-9d9d-d4af3b43164b -->
 
 The subtrees for Instances of the Integration Boost Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.5.2.2 - Active Instances [Core]  <!-- UUID: 0607bde3-cffa-4597-8ad9-fdb38272a843 -->
+######## A.6.1.1.9.2.5.2.2 - Active Instances [Core]  <!-- UUID: 0607bde3-cffa-4597-8ad9-fdb38272a843 -->
 
 The Instances of the Integration Boost Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.5.2.3 - Completed Instances [Core]  <!-- UUID: 4dca2418-b9ea-4bdb-ae27-f34a09c7e761 -->
+######## A.6.1.1.9.2.5.2.3 - Completed Instances [Core]  <!-- UUID: 4dca2418-b9ea-4bdb-ae27-f34a09c7e761 -->
 
 The Instances of the Integration Boost Primitive with `Completed` Status are contained herein.
 
-######## A.6.1.1.6.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 7fdf50ff-7d49-4ffc-9e2d-c1db6ce4a33a -->
+######## A.6.1.1.9.2.5.2.4 - In Progress Invocations [Core]  <!-- UUID: 7fdf50ff-7d49-4ffc-9e2d-c1db6ce4a33a -->
 
 The in progress Invocations of the Integration Boost Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](0607bde3-cffa-4597-8ad9-fdb38272a843).
 
-####### A.6.1.1.6.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 2f0a0b71-759e-4f14-b63d-0286450855fe -->
+####### A.6.1.1.9.2.5.3 - Pioneer Chain Primitive [Core]  <!-- UUID: 2f0a0b71-759e-4f14-b63d-0286450855fe -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Pioneer Chain Primitive. See [A.2.4 - Pioneer Chain Primitive](4c7be4c6-44b5-407a-94ae-3d7ca7e8039c).
 
-######## A.6.1.1.6.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7e7dc6f6-bfe1-460e-9fb1-35a906f75259 -->
+######## A.6.1.1.9.2.5.3.1 - Primitive Hub Document [Core]  <!-- UUID: 7e7dc6f6-bfe1-460e-9fb1-35a906f75259 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Pioneer Chain Primitive.
 
-######### A.6.1.1.6.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: c13df592-a35a-4d72-b33e-65c3ee9ba799 -->
+######### A.6.1.1.9.2.5.3.1.1 - Global Activation Status [Core]  <!-- UUID: c13df592-a35a-4d72-b33e-65c3ee9ba799 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: b0507c60-c43a-4ba2-b2d1-e0dbc4694720 -->
+######### A.6.1.1.9.2.5.3.1.2 - Active Instances Directory [Core]  <!-- UUID: b0507c60-c43a-4ba2-b2d1-e0dbc4694720 -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 18bcb4c7-6147-4231-a7fc-0d0c43cec037 -->
+######### A.6.1.1.9.2.5.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 18bcb4c7-6147-4231-a7fc-0d0c43cec037 -->
 
 This document contains a Directory of all Instances of the Pioneer Chain Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e9e9cbf4-87cb-4e48-bf7c-f1a4caa934fa -->
+######### A.6.1.1.9.2.5.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e9e9cbf4-87cb-4e48-bf7c-f1a4caa934fa -->
 
 This document contains a Directory of all prospective Instances of the Pioneer Chain Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](b0507c60-c43a-4ba2-b2d1-e0dbc4694720), whereas failed Invocations are Archived in [Hub Data Repository](be430718-d9f5-4104-bdd0-26e333bd0a13).
 
-######### A.6.1.1.6.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: be430718-d9f5-4104-bdd0-26e333bd0a13 -->
+######### A.6.1.1.9.2.5.3.1.5 - Hub Data Repository [Core]  <!-- UUID: be430718-d9f5-4104-bdd0-26e333bd0a13 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: cd28b1ad-9837-4db4-bcb5-7b35ee89d7a0 -->
+########## A.6.1.1.9.2.5.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: cd28b1ad-9837-4db4-bcb5-7b35ee89d7a0 -->
 
 The subtrees for archived Invocations and Instances of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.6.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fd0b30aa-9a67-428f-8414-ed99818c58b0 -->
+########### A.6.1.1.9.2.5.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: fd0b30aa-9a67-428f-8414-ed99818c58b0 -->
 
 The subtrees for failed Invocations of the Pioneer Chain Primitive are stored here.
 
-########### A.6.1.1.6.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 20face9e-9216-44e9-b195-7d5fcb4c8465 -->
+########### A.6.1.1.9.2.5.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 20face9e-9216-44e9-b195-7d5fcb4c8465 -->
 
 The subtrees for Instances of the Pioneer Chain Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.5.3.2 - Active Instances [Core]  <!-- UUID: 4fd3fe8d-e5d8-49ce-95b5-15e14e165abf -->
+######## A.6.1.1.9.2.5.3.2 - Active Instances [Core]  <!-- UUID: 4fd3fe8d-e5d8-49ce-95b5-15e14e165abf -->
 
 The Instances of the Pioneer Chain Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 504497a1-14b9-4119-b520-bdcf4bedc4f9 -->
+######## A.6.1.1.9.2.5.3.3 - Completed Instances [Core]  <!-- UUID: 504497a1-14b9-4119-b520-bdcf4bedc4f9 -->
 
 The Instances of the Pioneer Chain Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: cafab30a-9a0e-46ba-8eb9-889d85a57bb0 -->
+######## A.6.1.1.9.2.5.3.4 - In Progress Invocations [Core]  <!-- UUID: cafab30a-9a0e-46ba-8eb9-889d85a57bb0 -->
 
 The in progress Invocations of the Pioneer Chain Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](4fd3fe8d-e5d8-49ce-95b5-15e14e165abf).
 
-###### A.6.1.1.6.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: c63a813f-b434-4c81-8826-df78171f61f0 -->
+###### A.6.1.1.9.2.6 - Supply Side Stablecoin Primitives [Core]  <!-- UUID: c63a813f-b434-4c81-8826-df78171f61f0 -->
 
 The documents herein implement the Supply Side Stablecoin Primitives for Launch Agent 4. See [A.2.4 - A9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
 
-####### A.6.1.1.6.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 4345f138-7429-4923-98ee-f879d7b97237 -->
+####### A.6.1.1.9.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 4345f138-7429-4923-98ee-f879d7b97237 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Allocation System Primitive. See [A.2.4 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
 
-######## A.6.1.1.6.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8d7a3b67-0a82-4580-9a55-b4b400d9d3a8 -->
+######## A.6.1.1.9.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8d7a3b67-0a82-4580-9a55-b4b400d9d3a8 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Allocation System Primitive.
 
-######### A.6.1.1.6.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 164a3772-f874-4bb7-845e-40565e8b2f7f -->
+######### A.6.1.1.9.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 164a3772-f874-4bb7-845e-40565e8b2f7f -->
 
 `Active`
 
-######### A.6.1.1.6.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6578c76c-fd72-49b6-8e46-a43dd48c0dc3 -->
+######### A.6.1.1.9.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6578c76c-fd72-49b6-8e46-a43dd48c0dc3 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: caef9a8f-ae35-4770-94eb-d0778ef89aed -->
+######### A.6.1.1.9.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: caef9a8f-ae35-4770-94eb-d0778ef89aed -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cee634fa-d1d0-4344-882d-f29628f4fd65 -->
+######### A.6.1.1.9.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cee634fa-d1d0-4344-882d-f29628f4fd65 -->
 
 This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](6578c76c-fd72-49b6-8e46-a43dd48c0dc3), whereas failed Invocations are Archived in [Hub Data Repository](e2918f2a-3799-4010-a289-ac674e1c4ad6).
 
-######### A.6.1.1.6.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: e2918f2a-3799-4010-a289-ac674e1c4ad6 -->
+######### A.6.1.1.9.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: e2918f2a-3799-4010-a289-ac674e1c4ad6 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ce32b29c-b995-42f6-8786-2f4855177cde -->
+########## A.6.1.1.9.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ce32b29c-b995-42f6-8786-2f4855177cde -->
 
 The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.6.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: cf0e8953-075d-41e1-a8d0-dcabf088b1fd -->
+########### A.6.1.1.9.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: cf0e8953-075d-41e1-a8d0-dcabf088b1fd -->
 
 The subtrees for failed Invocations of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.6.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f0c371d3-988a-4a6c-aa99-b579c3cfd931 -->
+########### A.6.1.1.9.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f0c371d3-988a-4a6c-aa99-b579c3cfd931 -->
 
 The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 5e72e074-f495-4aa1-969e-095a7aaf9f08 -->
+######## A.6.1.1.9.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 5e72e074-f495-4aa1-969e-095a7aaf9f08 -->
 
 The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
 
-######## A.6.1.1.6.2.6.1.3 - Active Instances [Core]  <!-- UUID: 16b8c2a3-b764-4191-a9d4-325b993f24c6 -->
+######## A.6.1.1.9.2.6.1.3 - Active Instances [Core]  <!-- UUID: 16b8c2a3-b764-4191-a9d4-325b993f24c6 -->
 
 The Instances of the Allocation System Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 34269206-d912-4d84-8a22-0a3bc211adde -->
+######## A.6.1.1.9.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 34269206-d912-4d84-8a22-0a3bc211adde -->
 
 The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 6b795255-7537-4de3-a4fd-bc4f5aae345a -->
+######## A.6.1.1.9.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 6b795255-7537-4de3-a4fd-bc4f5aae345a -->
 
 The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](16b8c2a3-b764-4191-a9d4-325b993f24c6).
 
-####### A.6.1.1.6.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 473d0f9e-a5dc-48ee-84b9-a48cd2b6f215 -->
+####### A.6.1.1.9.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 473d0f9e-a5dc-48ee-84b9-a48cd2b6f215 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Junior Risk Capital Rental Primitive. See [A.2.4 - Junior Risk Capital Rental Primitive](d8086dc0-7e77-4c6b-98c7-5fc41337a1ce).
 
-######## A.6.1.1.6.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: 7c5c39de-a531-42a7-8b74-e8e6ffeb2bc3 -->
+######## A.6.1.1.9.2.6.2.1 - Primitive Hub Document [Core]  <!-- UUID: 7c5c39de-a531-42a7-8b74-e8e6ffeb2bc3 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Junior Risk Capital Rental Primitive.
 
-######### A.6.1.1.6.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: c3a0f75a-d418-411a-bc8e-ccde6aa938b1 -->
+######### A.6.1.1.9.2.6.2.1.1 - Global Activation Status [Core]  <!-- UUID: c3a0f75a-d418-411a-bc8e-ccde6aa938b1 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9e7e17-d7c4-4c72-9d0f-a2b58de3bbe6 -->
+######### A.6.1.1.9.2.6.2.1.2 - Active Instances Directory [Core]  <!-- UUID: 5f9e7e17-d7c4-4c72-9d0f-a2b58de3bbe6 -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 51f16355-24cf-463f-9603-154da3fcb1b3 -->
+######### A.6.1.1.9.2.6.2.1.3 - Completed Instances Directory [Core]  <!-- UUID: 51f16355-24cf-463f-9603-154da3fcb1b3 -->
 
 This document contains a Directory of all Instances of the Junior Risk Capital Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b60d8075-b908-4086-9bb0-0d8a609b1dd6 -->
+######### A.6.1.1.9.2.6.2.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: b60d8075-b908-4086-9bb0-0d8a609b1dd6 -->
 
 This document contains a Directory of all prospective Instances of the Junior Risk Capital Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](5f9e7e17-d7c4-4c72-9d0f-a2b58de3bbe6), whereas failed Invocations are Archived in [Hub Data Repository](a5fea5f5-f6b2-47e4-9ef5-bb23ba08921d).
 
-######### A.6.1.1.6.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a5fea5f5-f6b2-47e4-9ef5-bb23ba08921d -->
+######### A.6.1.1.9.2.6.2.1.5 - Hub Data Repository [Core]  <!-- UUID: a5fea5f5-f6b2-47e4-9ef5-bb23ba08921d -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ecd92a2e-9c67-4fb0-b3cf-3ad63cebf8a5 -->
+########## A.6.1.1.9.2.6.2.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ecd92a2e-9c67-4fb0-b3cf-3ad63cebf8a5 -->
 
 The subtrees for archived Invocations and Instances of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.6.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6e6d714e-4700-4aa8-bd61-6e8f012df6d4 -->
+########### A.6.1.1.9.2.6.2.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 6e6d714e-4700-4aa8-bd61-6e8f012df6d4 -->
 
 The subtrees for failed Invocations of the Junior Risk Capital Rental Primitive are stored here.
 
-########### A.6.1.1.6.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: fd2cdc13-4035-4c91-b17c-7d1d1d5c5b7b -->
+########### A.6.1.1.9.2.6.2.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: fd2cdc13-4035-4c91-b17c-7d1d1d5c5b7b -->
 
 The subtrees for Instances of the Junior Risk Capital Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.6.2.2 - Active Instances [Core]  <!-- UUID: b894cf0e-5a3d-4fe2-bb43-668a1f973857 -->
+######## A.6.1.1.9.2.6.2.2 - Active Instances [Core]  <!-- UUID: b894cf0e-5a3d-4fe2-bb43-668a1f973857 -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 4b2e42f3-064c-4cb8-87a8-96512a581841 -->
+######## A.6.1.1.9.2.6.2.3 - Completed Instances [Core]  <!-- UUID: 4b2e42f3-064c-4cb8-87a8-96512a581841 -->
 
 The Instances of the Junior Risk Capital Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: b83be319-7f7e-4cf5-ad70-ac59302422e4 -->
+######## A.6.1.1.9.2.6.2.4 - In Progress Invocations [Core]  <!-- UUID: b83be319-7f7e-4cf5-ad70-ac59302422e4 -->
 
 The in progress Invocations of the Junior Risk Capital Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b894cf0e-5a3d-4fe2-bb43-668a1f973857).
 
-####### A.6.1.1.6.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: fab6088e-5b4c-4ab4-af33-051920120273 -->
+####### A.6.1.1.9.2.6.3 - Asset Liability Management Rental Primitive [Core]  <!-- UUID: fab6088e-5b4c-4ab4-af33-051920120273 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Asset Liability Management Rental Primitive. See [A.2.4 - Asset Liability Management Rental Primitive](bd1f1ce5-6c31-42fc-a2aa-694acf5eb08c).
 
-######## A.6.1.1.6.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: 804821a4-0344-4642-9575-8bde38f8edef -->
+######## A.6.1.1.9.2.6.3.1 - Primitive Hub Document [Core]  <!-- UUID: 804821a4-0344-4642-9575-8bde38f8edef -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Asset Liability Management Rental Primitive.
 
-######### A.6.1.1.6.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: 80b90a60-c898-4700-8c19-c168709b2bb0 -->
+######### A.6.1.1.9.2.6.3.1.1 - Global Activation Status [Core]  <!-- UUID: 80b90a60-c898-4700-8c19-c168709b2bb0 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 10f33907-8a83-41ea-8e9c-c4a73882ce79 -->
+######### A.6.1.1.9.2.6.3.1.2 - Active Instances Directory [Core]  <!-- UUID: 10f33907-8a83-41ea-8e9c-c4a73882ce79 -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 6759bef4-337e-4e21-8dfe-4152b5618f0d -->
+######### A.6.1.1.9.2.6.3.1.3 - Completed Instances Directory [Core]  <!-- UUID: 6759bef4-337e-4e21-8dfe-4152b5618f0d -->
 
 This document contains a Directory of all Instances of the Asset Liability Management Rental Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 70f39980-940c-4f32-9365-a196fcca7858 -->
+######### A.6.1.1.9.2.6.3.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 70f39980-940c-4f32-9365-a196fcca7858 -->
 
 This document contains a Directory of all prospective Instances of the Asset Liability Management Rental Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](10f33907-8a83-41ea-8e9c-c4a73882ce79), whereas failed Invocations are Archived in [Hub Data Repository](c4856110-03a4-4f52-b13b-f3e99b8aba4f).
 
-######### A.6.1.1.6.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: c4856110-03a4-4f52-b13b-f3e99b8aba4f -->
+######### A.6.1.1.9.2.6.3.1.5 - Hub Data Repository [Core]  <!-- UUID: c4856110-03a4-4f52-b13b-f3e99b8aba4f -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: b79f57c2-8d27-4147-8b02-9a2794ab9986 -->
+########## A.6.1.1.9.2.6.3.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: b79f57c2-8d27-4147-8b02-9a2794ab9986 -->
 
 The subtrees for archived Invocations and Instances of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.6.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ee5b528-4d53-46fb-b2ed-711c99fca801 -->
+########### A.6.1.1.9.2.6.3.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9ee5b528-4d53-46fb-b2ed-711c99fca801 -->
 
 The subtrees for failed Invocations of the Asset Liability Management Rental Primitive are stored here.
 
-########### A.6.1.1.6.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 06e80d6f-d630-4fab-99db-cb71211c8f56 -->
+########### A.6.1.1.9.2.6.3.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 06e80d6f-d630-4fab-99db-cb71211c8f56 -->
 
 The subtrees for Instances of the Asset Liability Management Rental Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.6.3.2 - Active Instances [Core]  <!-- UUID: b1667bfc-be11-4b02-ab99-d39b3f5e510d -->
+######## A.6.1.1.9.2.6.3.2 - Active Instances [Core]  <!-- UUID: b1667bfc-be11-4b02-ab99-d39b3f5e510d -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 9ce2e9b8-8033-4fae-bd6f-9f7b7590ba1b -->
+######## A.6.1.1.9.2.6.3.3 - Completed Instances [Core]  <!-- UUID: 9ce2e9b8-8033-4fae-bd6f-9f7b7590ba1b -->
 
 The Instances of the Asset Liability Management Rental Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 3c1a4517-7097-4964-a687-5dc1de1b00ee -->
+######## A.6.1.1.9.2.6.3.4 - In Progress Invocations [Core]  <!-- UUID: 3c1a4517-7097-4964-a687-5dc1de1b00ee -->
 
 The in progress Invocations of the Asset Liability Management Rental Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](b1667bfc-be11-4b02-ab99-d39b3f5e510d).
 
-###### A.6.1.1.6.2.7 - Core Governance Primitives [Core]  <!-- UUID: 901fba8d-ac5f-4809-a3d4-e510fc9b74ca -->
+###### A.6.1.1.9.2.7 - Core Governance Primitives [Core]  <!-- UUID: 901fba8d-ac5f-4809-a3d4-e510fc9b74ca -->
 
 The documents herein implement the Core Governance Primitives for Launch Agent 4. See [A.2.4 - A10 - Core Governance Primitives](6fa54611-c744-4b9d-897d-b2a20e9cae5d).
 
-####### A.6.1.1.6.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: 871764eb-5ccb-47fc-8852-0523e989bef6 -->
+####### A.6.1.1.9.2.7.1 - Core Governance Reward Primitive [Core]  <!-- UUID: 871764eb-5ccb-47fc-8852-0523e989bef6 -->
 
 The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Core Governance Reward Primitive. See [A.2.4 - Core Governance Reward Primitive](b22d1c08-042a-4466-94fe-9d28951e4d4a).
 
-######## A.6.1.1.6.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: e0e1769f-ecbe-4598-a236-318d7b00c929 -->
+######## A.6.1.1.9.2.7.1.1 - Primitive Hub Document [Core]  <!-- UUID: e0e1769f-ecbe-4598-a236-318d7b00c929 -->
 
 The documents herein organize all base information relevant to Launch Agent 4’s usage of the Core Governance Reward Primitive.
 
-######### A.6.1.1.6.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: a5f4abc0-9d2f-4356-9977-919fcf8ca427 -->
+######### A.6.1.1.9.2.7.1.1.1 - Global Activation Status [Core]  <!-- UUID: a5f4abc0-9d2f-4356-9977-919fcf8ca427 -->
 
 `Inactive`
 
-######### A.6.1.1.6.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 03941fc1-96ff-454d-aa4d-0658057f7b4c -->
+######### A.6.1.1.9.2.7.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 03941fc1-96ff-454d-aa4d-0658057f7b4c -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Active`.
 
-######### A.6.1.1.6.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 05d4383b-1140-49f9-857b-00eec596f248 -->
+######### A.6.1.1.9.2.7.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 05d4383b-1140-49f9-857b-00eec596f248 -->
 
 This document contains a Directory of all Instances of the Core Governance Reward Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.6.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 77ff1220-f6e0-4b35-ad1c-0224aa5098df -->
+######### A.6.1.1.9.2.7.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 77ff1220-f6e0-4b35-ad1c-0224aa5098df -->
 
 This document contains a Directory of all prospective Instances of the Core Governance Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [Active Instances Directory](03941fc1-96ff-454d-aa4d-0658057f7b4c), whereas failed Invocations are Archived in [Hub Data Repository](6f24ea77-43d3-4c4f-84a0-9341114569c9).
 
-######### A.6.1.1.6.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6f24ea77-43d3-4c4f-84a0-9341114569c9 -->
+######### A.6.1.1.9.2.7.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 6f24ea77-43d3-4c4f-84a0-9341114569c9 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.6.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38d8dad5-0503-4d43-9826-a2895e9484cc -->
+########## A.6.1.1.9.2.7.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 38d8dad5-0503-4d43-9826-a2895e9484cc -->
 
 The subtrees for archived Invocations and Instances of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.6.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: aa94bd40-29d7-4bec-88e6-e54a658947f3 -->
+########### A.6.1.1.9.2.7.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: aa94bd40-29d7-4bec-88e6-e54a658947f3 -->
 
 The subtrees for failed Invocations of the Core Governance Reward Primitive are stored here.
 
-########### A.6.1.1.6.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 8cf31f6c-e9cc-4d01-97a3-afd2dae271c8 -->
+########### A.6.1.1.9.2.7.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 8cf31f6c-e9cc-4d01-97a3-afd2dae271c8 -->
 
 The subtrees for Instances of the Core Governance Reward Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.6.2.7.1.2 - Active Instances [Core]  <!-- UUID: 1627c920-e582-446c-b6a0-39f7a528f28a -->
+######## A.6.1.1.9.2.7.1.2 - Active Instances [Core]  <!-- UUID: 1627c920-e582-446c-b6a0-39f7a528f28a -->
 
 The Instances of the Core Governance Reward Primitive with `Active` Status are stored herein.
 
-######## A.6.1.1.6.2.7.1.3 - Completed Instances [Core]  <!-- UUID: e14a0186-9557-4b1f-b4c1-eddeb88e7e34 -->
+######## A.6.1.1.9.2.7.1.3 - Completed Instances [Core]  <!-- UUID: e14a0186-9557-4b1f-b4c1-eddeb88e7e34 -->
 
 The Instances of the Core Governance Reward Primitive with `Completed` Status are stored herein.
 
-######## A.6.1.1.6.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: 18f93603-5951-4d2e-9527-f88d81c408a3 -->
+######## A.6.1.1.9.2.7.1.4 - In Progress Invocations [Core]  <!-- UUID: 18f93603-5951-4d2e-9527-f88d81c408a3 -->
 
 The in progress Invocations of the Core Governance Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [Active Instances](1627c920-e582-446c-b6a0-39f7a528f28a).
 
-##### A.6.1.1.6.3 - Omni Documents [Core]  <!-- UUID: 239c5dd4-46a1-4936-8e31-f37ea2aa802c -->
+##### A.6.1.1.9.3 - Omni Documents [Core]  <!-- UUID: 239c5dd4-46a1-4936-8e31-f37ea2aa802c -->
 
 The documents herein define Launch Agent 4’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
 
-###### A.6.1.1.6.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: bdad4ea3-7cf2-40fb-a8ab-4bb8b320e4c9 -->
+###### A.6.1.1.9.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: bdad4ea3-7cf2-40fb-a8ab-4bb8b320e4c9 -->
 
 The documents herein specify Launch Agent 4 governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Launch Agent 4 Artifact is specified in the Root Edit Primitive above at [Root Edit Primitive](b69559bf-1acb-4f9c-8638-19fb8ef20fc2).
 
-####### A.6.1.1.6.3.1.1 - Sky Forum [Core]  <!-- UUID: fb92df01-4e93-45ec-8e81-b59d5767ebb7 -->
+####### A.6.1.1.9.3.1.1 - Sky Forum [Core]  <!-- UUID: fb92df01-4e93-45ec-8e81-b59d5767ebb7 -->
 
 Launch Agent 4 uses the Sky Forum for governance-related discussion. Posts should use the “Launch Agent 4 Prime” category.
 
-####### A.6.1.1.6.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: ec6dc53f-7398-4242-afc4-81e436541da2 -->
+####### A.6.1.1.9.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: ec6dc53f-7398-4242-afc4-81e436541da2 -->
 
 The documents herein specify Launch Agent 4’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-####### A.6.1.1.6.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: e5ac06b5-0f4a-4506-bfa4-a4d18901e1cc -->
+####### A.6.1.1.9.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: e5ac06b5-0f4a-4506-bfa4-a4d18901e1cc -->
 
 The documents herein specify Launch Agent 4’s emergency response protocol in situations solely impacting Launch Agent 4 versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Launch Agent 4 Artifact.
 
-###### A.6.1.1.6.3.2 - Strategic Intent And Operating Model [Core]  <!-- UUID: b380c021-e579-47a2-ae01-c85340caa135 -->
+###### A.6.1.1.9.3.2 - Strategic Intent And Operating Model [Core]  <!-- UUID: b380c021-e579-47a2-ae01-c85340caa135 -->
 
 Launch Agent 4 is an incubation-focused Prime within the Sky Ecosystem. It provides capital, infrastructure, and technical support to early-stage teams building on Sky Primitives. Launch Agent 4’s purpose is to accelerate aligned builders through structured incubation and funding. The subdocuments herein define the operating model, structure, mandate, and operational standards of Launch Agent 4.
 
-####### A.6.1.1.6.3.2.1 - Operating Model [Core]  <!-- UUID: 7d7658f6-31a9-4d73-8d3f-19b87d0e89ec -->
+####### A.6.1.1.9.3.2.1 - Operating Model [Core]  <!-- UUID: 7d7658f6-31a9-4d73-8d3f-19b87d0e89ec -->
 
 Launch Agent 4 follows a direct-execution model rather than a multi-layered governance system. Key processes include:
 
@@ -33611,19 +34041,19 @@ Launch Agent 4 follows a direct-execution model rather than a multi-layered gove
 
 • **Capital Allocation:** All allocations occur through the Launch Agent 4 Incubator Prime, which deploys first-loss or operational capital under predefined parameters.
 
-####### A.6.1.1.6.3.2.2 - Risk and Compliance [Core]  <!-- UUID: d3466d20-01c9-453a-aee0-e7b8f9e17cf0 -->
+####### A.6.1.1.9.3.2.2 - Risk and Compliance [Core]  <!-- UUID: d3466d20-01c9-453a-aee0-e7b8f9e17cf0 -->
 
 Launch Agent 4 adheres to the Sky Ecosystem’s standards for risk, transparency, and recourse.
 
-####### A.6.1.1.6.3.2.3 - Ecosystem Accord Alignment [Core]  <!-- UUID: 7f550ce1-dbd5-43dc-8c03-741eb6b9df4a -->
+####### A.6.1.1.9.3.2.3 - Ecosystem Accord Alignment [Core]  <!-- UUID: 7f550ce1-dbd5-43dc-8c03-741eb6b9df4a -->
 
 Launch Agent 4 operates in full alignment with the Sky Atlas. All operations, reporting, and capital flows must comply with the standards established by Sky Governance and any applicable Ecosystem Accords.
 
-####### A.6.1.1.6.3.2.4 - First-Loss and Recourse Principles [Core]  <!-- UUID: 909f6c00-369e-4fd1-b052-1e933a17b669 -->
+####### A.6.1.1.9.3.2.4 - First-Loss and Recourse Principles [Core]  <!-- UUID: 909f6c00-369e-4fd1-b052-1e933a17b669 -->
 
 Capital deployed through Launch Agent 4 carries explicit first-loss protection defined by the Incubator Prime. Each funded project must maintain verifiable recourse through token, equity, or revenue participation agreements enforceable by the Prime’s legal wrapper.
 
-####### A.6.1.1.6.3.2.5 - Data and Transparency Standards [Core]  <!-- UUID: c861f5fb-e99b-40ca-b535-291b94b69811 -->
+####### A.6.1.1.9.3.2.5 - Data and Transparency Standards [Core]  <!-- UUID: c861f5fb-e99b-40ca-b535-291b94b69811 -->
 
 Launch Agent 4 maintains an active dashboard reporting total allocations, active projects, utilization, default rates, and realized yields.
 
