@@ -79,6 +79,16 @@ interface StackItem {
   depth: number;
 }
 
+/**
+ * Main entry point: Parse Atlas Markdown into a structured tree of standardized Atlas documents.
+ *
+ * Algorithm overview:
+ * 1. Scan line-by-line: title lines start new documents, other lines are content
+ * 2. Use heading depth (number of #'s) to maintain a stack for parent-child relationships
+ * 3. Disambiguate document database using type and ancestry (Core/ADC check agent roots)
+ * 4. Insert children into correct typed collections based on parent→child database mappings
+ * 5. Extract structured extra fields for specific types (Type Spec, Scenario, etc.)
+ */
 export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTrees {
   // High-level: convert a single Markdown string into an in-memory tree of standardized Atlas documents
   const lines = markdown.split(/\r?\n/);
@@ -92,6 +102,10 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
   // Precompute mapping from parent DB to the allowed child collection name for each child DB
   const dbToChild: DatabaseToChildCollections = buildDatabaseChildCollectionLookup();
 
+  /**
+   * Finalize the current document: extract structured extra fields (if applicable),
+   * normalize content separators, and attach them to the node.
+   */
   const flushCurrent = () => {
     if (!currentItem) return;
     // Trim trailing blank lines
@@ -116,8 +130,9 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
     // New document starts; finalize previous
     flushCurrent();
 
-    // Determine database from type and ancestry
+    // Determine database from type and ancestry (Core/ADC: check if under agent root sections or not)
     const database = mapTypeToDatabase(header.type, stack);
+
     // Create a node shape consistent with the resolved database (correct child collections present)
     const node = createNodeForDatabase(
       {
@@ -131,14 +146,16 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
 
     const item: StackItem = { node, database, uuid: header.uuid, depth: header.depth };
 
-    // Re-stack to proper parent level
+    // Pop stack to find the correct parent: remove items at same or deeper depth
     while (stack.length > 0 && stack[stack.length - 1].depth >= header.depth) {
       stack.pop();
     }
 
     if (stack.length === 0) {
+      // This is a root-level Scope document
       rootScopes.push(item.node);
     } else {
+      // Attach as child to parent using the appropriate typed collection name
       const parent = stack[stack.length - 1];
       const collection = getChildCollectionName(parent.database, database, dbToChild);
       if (!collection) {
@@ -174,6 +191,18 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
   return rootScopes;
 }
 
+/**
+ * Parse a title line in Atlas Markdown format.
+ *
+ * Expected format: `#### A.1.2 - Name [Type]  <!-- UUID: x-y-z -->`
+ * - Number of `#` symbols indicates depth (more `#` = deeper in tree)
+ * - Document number (e.g., "A.1.2")
+ * - Name
+ * - Atlas document type in brackets
+ * - UUID in HTML comment
+ *
+ * Returns null if the line doesn't match the expected format.
+ */
 function parseHeaderLine(line: string): ParsedHeader | null {
   const matches = line.match(HEADER_REGEX);
   if (!matches) return null;
@@ -184,7 +213,10 @@ function parseHeaderLine(line: string): ParsedHeader | null {
   return { depth, docNo, name, type, uuid };
 }
 
-// Normalize separators: remove all leading/trailing blank lines, preserve internal spacing exactly
+/**
+ * Normalize content separators: remove all leading/trailing blank lines,
+ * but preserve internal spacing exactly as authored.
+ */
 function normalizeContentSeparators(lines: string[]): string {
   let start = 0;
   while (start < lines.length && lines[start].trim() === '') start++;
@@ -196,6 +228,17 @@ function normalizeContentSeparators(lines: string[]): string {
 
 type ExtraMap = Partial<Record<string, string | null>>;
 
+/**
+ * Extract content and structured extra fields from document body lines.
+ *
+ * Only certain document types have structured extra fields (Type Specification,
+ * Scenario, Scenario Variation, Needed Research). For these types:
+ * - Content ends at the first recognized labeled line like `**Label**:`
+ * - All following labeled lines and their values become extra fields
+ * - All expected fields are initialized to empty strings even if not present
+ *
+ * For other types, returns all lines as content with no extra fields.
+ */
 function extractContentAndExtraFields(
   type: AtlasDocumentType,
   rawLines: string[],
@@ -285,6 +328,10 @@ function extractContentAndExtraFields(
 
 const LABELED_LINE_REGEX = /^\*\*(.+?)\*\*:\s*$/;
 
+/**
+ * Parse a labeled line in the format `**Label**:`
+ * Returns the label text if matched, null otherwise.
+ */
 function parseLabeledLine(line: string): string | null {
   const m = line.match(LABELED_LINE_REGEX);
   if (!m) return null;
@@ -292,6 +339,22 @@ function parseLabeledLine(line: string): string | null {
   return rawLabel.trim();
 }
 
+/**
+ * Map an Atlas document type to its Atlas database name.
+ *
+ * Most types map directly to a specific database (e.g., Scope→Scopes, Article→Articles).
+ *
+ * CRITICAL DISAMBIGUATION: Core and Active Data Controller can belong to either:
+ * - "Sections & Primary Docs"
+ * - "Agent Scope Database" (if any ancestor UUID matches a known agent root section)
+ *
+ * This ancestry check is essential because Core documents appear in both databases
+ * but must be routed correctly based on their hierarchical context.
+ *
+ * @param type - The Atlas document type from the title line
+ * @param ancestors - Stack of parent documents to check ancestry
+ * @returns The Atlas database name where this document belongs
+ */
 function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): AtlasDatabaseName {
   switch (type) {
     case 'Scope':
@@ -332,6 +395,15 @@ function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): Atl
   }
 }
 
+/**
+ * Build lookup table: for each parent database, map child database names to
+ * the correct typed child collection name.
+ *
+ * Example: When a "Sections & Primary Docs" parent has an "Annotation" child,
+ * the child must be inserted into the parent's "Annotations" collection.
+ *
+ * This precomputed lookup enables fast O(1) resolution during tree building.
+ */
 function buildDatabaseChildCollectionLookup(): DatabaseToChildCollections {
   const out = {} as DatabaseToChildCollections;
   (Object.keys(allowedChildCollectionNamesPerDatabase) as AtlasDatabaseName[]).forEach((parentDb) => {
@@ -358,6 +430,12 @@ function buildDatabaseChildCollectionLookup(): DatabaseToChildCollections {
   return out;
 }
 
+/**
+ * Get the child collection name for inserting a child document into its parent.
+ *
+ * Uses the precomputed lookup to find which typed collection field
+ * (e.g., "articles", "sections_and_primary_docs") should receive the child.
+ */
 function getChildCollectionName(
   parentDb: AtlasDatabaseName,
   childDb: AtlasDatabaseName,
@@ -367,6 +445,11 @@ function getChildCollectionName(
   return byChild ? byChild[childDb] : undefined;
 }
 
+/**
+ * Insert a child document into its parent's appropriate typed collection.
+ *
+ * Ensures the collection array exists before pushing.
+ */
 function pushChildIntoCollection(
   parent: StandardizedAtlasDocument,
   collection: ChildCollectionName,
@@ -379,6 +462,18 @@ function pushChildIntoCollection(
   p[collection]!.push(child);
 }
 
+/**
+ * Create a document node with the correct shape for its Atlas database.
+ *
+ * Each database type has specific child collection fields:
+ * - Scopes: articles[]
+ * - Articles: sections_and_primary_docs[], annotations[], needed_research[]
+ * - Sections & Primary Docs: sections_and_primary_docs[], annotations[], tenets[], active_data[], needed_research[]
+ * - Agent Scope Database: agent_scope_database[], annotations[], tenets[], active_data[], needed_research[]
+ * - And so on...
+ *
+ * This ensures type safety and correct structure for the standardized Atlas tree.
+ */
 function createNodeForDatabase(
   base: { type: AtlasDocumentType; doc_no: string; name: string; uuid: string | null },
   database: AtlasDatabaseName,
