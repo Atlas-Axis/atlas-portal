@@ -30,6 +30,10 @@ export const PROPERTY_MAPPING_NAMES = {
  * - Current Doc No (or Temp Name): "A.3.1 - A1 - Scope Improvement"
  * - Name: "Scope Improvement"
  * - Formal Doc ID: "A.3.1.1"
+ *
+ * TODO: Simplify the property mappings
+ *  - atlasFullDocumentTitle and atlasDocumentName are always the same
+ *  - atlasDocumentNo doesn't seem to be used at all - Use AI to process all code usages and update docs
  */
 export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   AtlasDatabaseName,
@@ -94,7 +98,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   [ATLAS_DATABASES.AGENTS]: {
     properties: {
       atlasFullDocumentTitle: 'Document Name', // title
-      atlasDocumentNo: 'Formal Doc ID', // rich_text
+      atlasDocumentNo: 'Formal Doc ID', // rich_text // TODO: Is this field used at all?
       atlasDocumentName: 'Document Name', // title
       atlasDocumentType: 'Doc Type', // select
       content: 'Content', // rich_text

@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Checkbox } from '@heroui/checkbox';
 import { Divider } from '@heroui/divider';
-import { Button, Card, CardBody, CardHeader } from '@heroui/react';
+import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import type { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import { type SerializedUuidMappings, deserializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -17,6 +18,7 @@ import {
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
+import { SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
 
 const colors: {
   [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
@@ -53,7 +55,23 @@ const colors: {
   },
 };
 
-export function Content({ result }: { result: AtlasDiffResult }) {
+interface SyncState {
+  isRunning: boolean;
+  stopRequested: boolean;
+  currentPhase: SyncPhase;
+  progress: { total: number; completed: number };
+  currentDocument: string | null;
+  logs: SyncLogEntry[];
+  completed: boolean;
+}
+
+export function Content({
+  result,
+  serializedMappings,
+}: {
+  result: AtlasDiffResult;
+  serializedMappings: SerializedUuidMappings;
+}) {
   const { changes, originalIdsToDocuments, newIdsToDocuments } = result;
   const hasChanges =
     changes.added.length > 0 ||
@@ -62,18 +80,77 @@ export function Content({ result }: { result: AtlasDiffResult }) {
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  // Deserialize UUID mappings once (passed from server component)
+  const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
 
-  const handleSyncClick = () => {
-    setIsLoading(true);
-    setIsDisabled(true);
+  const [syncState, setSyncState] = useState<SyncState>({
+    isRunning: false,
+    stopRequested: false,
+    currentPhase: 'idle',
+    progress: { total: 0, completed: 0 },
+    currentDocument: null,
+    logs: [],
+    completed: false,
+  });
 
-    // Simulate loading for 5 seconds
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsDisabled(false);
-    }, 5000);
+  // Use ref for stop flag so it can be read by sync function without re-rendering
+  const syncOptionsRef = useRef({ stopRequested: false });
+
+  const handleSyncClick = async () => {
+    setSyncState({
+      isRunning: true,
+      stopRequested: false,
+      currentPhase: 'content',
+      progress: { total: changes.changed.length + changes.added.length + changes.deleted.length, completed: 0 },
+      currentDocument: null,
+      logs: [],
+      completed: false,
+    });
+
+    syncOptionsRef.current.stopRequested = false;
+
+    try {
+      const syncResult = await syncChangesToNotion(result, syncOptionsRef.current, uuidMappings, (progress) => {
+        setSyncState((prev) => ({
+          ...prev,
+          currentPhase: progress.phase,
+          progress: { total: progress.totalCount, completed: progress.completedCount },
+          currentDocument: progress.currentDocumentLabel,
+        }));
+      });
+
+      setSyncState((prev) => ({
+        ...prev,
+        isRunning: false,
+        currentPhase: 'idle',
+        logs: syncResult.logs,
+        completed: true,
+      }));
+    } catch (error) {
+      const err = error as Error;
+      setSyncState((prev) => ({
+        ...prev,
+        isRunning: false,
+        currentPhase: 'idle',
+        logs: [
+          ...prev.logs,
+          {
+            timestamp: new Date(),
+            message: `Sync failed: ${err.message}`,
+            type: 'error',
+          },
+        ],
+        completed: true,
+      }));
+    }
+  };
+
+  const handleStopClick = () => {
+    syncOptionsRef.current.stopRequested = true;
+    setSyncState((prev) => ({
+      ...prev,
+      stopRequested: true,
+    }));
   };
 
   return (
@@ -140,21 +217,117 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           Note: Sort order changes within the same document are not shown yet.
         </p>
 
-        <div className="my-6 flex justify-center">
-          <Button
-            size="lg"
-            onPress={handleSyncClick}
-            variant="solid"
-            color="primary"
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-          >
-            Sync Changes
-          </Button>
+        {/* Sync Controls and Progress */}
+        <div className="my-6">
+          {/* Sync Button */}
+          <div className="flex justify-center gap-3">
+            <Button
+              size="lg"
+              onPress={handleSyncClick}
+              variant="solid"
+              color="primary"
+              isLoading={syncState.isRunning}
+              isDisabled={syncState.isRunning || !hasChanges}
+            >
+              Sync Changes to Notion
+            </Button>
+            {syncState.isRunning && !syncState.stopRequested && (
+              <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
+                Stop
+              </Button>
+            )}
+          </div>
+
+          {/* Progress Display */}
+          {(syncState.isRunning || syncState.completed) && (
+            <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+              {/* Phase and Progress */}
+              <div className="mb-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">Sync Progress:</span>
+                    <PhaseChip phase={syncState.currentPhase} />
+                    {syncState.stopRequested && (
+                      <Chip color="warning" size="sm">
+                        Stopping...
+                      </Chip>
+                    )}
+                  </div>
+                  <span className="text-sm text-gray-600">
+                    {syncState.progress.completed} / {syncState.progress.total}
+                  </span>
+                </div>
+                <Progress
+                  value={
+                    syncState.progress.total > 0 ? (syncState.progress.completed / syncState.progress.total) * 100 : 0
+                  }
+                  color={syncState.completed ? 'success' : 'primary'}
+                  className="max-w-full"
+                />
+              </div>
+
+              {/* Current Document */}
+              {syncState.currentDocument && (
+                <div className="mb-4 text-sm text-gray-700">
+                  <span className="font-medium">Processing:</span> {syncState.currentDocument}
+                </div>
+              )}
+
+              {/* Logs */}
+              {syncState.logs.length > 0 && (
+                <div className="mt-4">
+                  <div className="mb-2 font-semibold">Log:</div>
+                  <div className="max-h-96 overflow-y-auto rounded border border-gray-200 bg-gray-50 p-3">
+                    {syncState.logs.map((log, idx) => (
+                      <div key={idx} className={cn('mb-1 font-mono text-xs', getLogColorClass(log.type))}>
+                        <span className="text-gray-500">[{log.timestamp.toLocaleTimeString()}]</span> {log.message}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </CardBody>
     </Card>
   );
+}
+
+function PhaseChip({ phase }: { phase: SyncPhase }) {
+  const phaseLabels: Record<SyncPhase, string> = {
+    content: 'Content Changes',
+    additions: 'Additions',
+    deletions: 'Deletions',
+    idle: 'Idle',
+  };
+
+  const phaseColors: Record<SyncPhase, 'primary' | 'success' | 'warning' | 'danger' | 'default'> = {
+    content: 'primary',
+    additions: 'success',
+    deletions: 'danger',
+    idle: 'default',
+  };
+
+  return (
+    <Chip size="sm" color={phaseColors[phase]}>
+      {phaseLabels[phase]}
+    </Chip>
+  );
+}
+
+function getLogColorClass(type: SyncLogEntry['type']): string {
+  switch (type) {
+    case 'success':
+      return 'text-green-700';
+    case 'error':
+      return 'text-red-700';
+    case 'warning':
+      return 'text-yellow-700';
+    case 'info':
+    default:
+      return 'text-gray-700';
+  }
 }
 
 function ChangeSection({
@@ -172,7 +345,8 @@ function ChangeSection({
 }) {
   const colorConfig = colors[changeType];
 
-  // Track checkbox state for each change (only for non-sibling_order_changed items)
+  // Track checkbox state for each change (default to checked for user convenience)
+  // Sibling order changes are excluded as they're not synced yet
   const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>(() => {
     const initialState: Record<string, boolean> = {};
     changes.forEach((change, index) => {
@@ -421,6 +595,7 @@ function FieldChanges({
   }
 
   // Compare extra fields based on document type
+  // Extra fields are specific to Type Specification, Scenario, Scenario Variation, and Needed Research
   const extraFieldMapping = getExtraFieldMappingForDocumentType(oldDoc.type);
   if (extraFieldMapping) {
     const oldDocRecord = oldDoc as unknown as Record<string, unknown>;
@@ -505,12 +680,13 @@ function formatFieldValue(value: unknown): string {
 
 /**
  * Display document content and extra fields in Atlas style.
+ * Used for showing added/deleted documents in the diff UI.
  */
 function DocumentContent({ doc }: { doc: { type: string; content: string } }) {
   const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
   const docRecord = doc as unknown as Record<string, unknown>;
 
-  // Format content as HTML like in content-tree
+  // Format markdown content as HTML for display (consistent with Atlas viewer)
   const formattedContent = markdownToHTML(doc.content);
 
   return (
