@@ -10,6 +10,9 @@
     },
     "supabase": {
       "url": "https://mcp.supabase.com/mcp?project_ref=kvxffffzfsnosaqmofut"
+    },
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/atlas-axis/atlas-axis-notion-sync"
     }
   }
 }
