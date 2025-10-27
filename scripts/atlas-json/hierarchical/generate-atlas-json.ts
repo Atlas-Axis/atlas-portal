@@ -212,7 +212,7 @@ async function main() {
       // Return a minimal document for counting purposes
       return {
         type: orphanedNode.atlas_document_type,
-        doc_no: orphanedNode.generatedDocID ?? orphanedNode.atlas_document_number ?? '',
+        doc_no: orphanedNode.generatedDocID ?? '',
         name: orphanedNode.generatedDocName ?? orphanedNode.plain_text_name ?? '',
         uuid: orphanedNode.notion_page_id ?? null,
         content: orphanedNode.plain_text_content ?? '',
