@@ -158,9 +158,7 @@ export function buildAtlasTree(
  */
 function generateNormalizedDocumentNames(lookupMaps: AtlasLookupMaps): void {
   for (const treeNode of lookupMaps.nodeMapByPageId.values()) {
-    treeNode.generatedDocName = getDocumentTitle(treeNode);
-    // TODO: Enable trimming again in the near future to fix data in Notion. Disabled for now to avoid overwhelming the diff in the beginning.
-    // treeNode.generatedDocName = getDocumentTitle(treeNode).trim();
+    treeNode.generatedDocName = getDocumentTitle(treeNode).trim();
   }
 }
 

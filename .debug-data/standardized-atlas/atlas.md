@@ -3272,7 +3272,7 @@ Once a technical issue has been categorized as an instance of a mistake, bug or 
 
 Once a technical issue has been classified and evidence supporting its existence is collected, an entity needs to be designated as the handling party for resolving the issue. This party will typically be the Core Facilitators. However, if there is a non-trivial chance that the Core Facilitators will ignore or downplay the issue, another entity should serve as the handling party.
 
-####### A.1.9.2.4.7.3.4 - Publicly Reporting the Issue  [Core]  <!-- UUID: b9cfe356-2909-4f1b-99c9-0a4c98f826d4 -->
+####### A.1.9.2.4.7.3.4 - Publicly Reporting the Issue [Core]  <!-- UUID: b9cfe356-2909-4f1b-99c9-0a4c98f826d4 -->
 
 Discovered issues must be reported publicly unless doing so poses a threat to the security of the Sky Protocol. Technical issues that are currently or likely to become, actively exploitable must not be discussed in a public manner, as this poses a threat to the security of the Sky Protocol.
 
@@ -4077,7 +4077,7 @@ Validators should ensure that the Solidity compiler version used in the deployed
 
 While the Spell should use the correct version to pass validation, this is not considered a strict requirement.
 
-####### A.1.9.2.4.12.3.3 - Additional Community Developed Spell Validation Checks  [Core]  <!-- UUID: 56b1cc27-a9e3-4099-8f1f-648da7d1c56b -->
+####### A.1.9.2.4.12.3.3 - Additional Community Developed Spell Validation Checks [Core]  <!-- UUID: 56b1cc27-a9e3-4099-8f1f-648da7d1c56b -->
 
 The community has developed additional checks to enhance the Spell validation process. These checks are outlined in the subdocuments.
 
@@ -5642,7 +5642,7 @@ A SKY holder who believes that an Agent Artifact conflicts with the Sky Core Atl
 
 Once a Notice of Potential Conflict is posted on the Sky Forum, Sky Core Facilitators must review the merits of the claim. The Sky Core Facilitators have the discretion to conduct an investigation and collect more information as needed to assess the potential conflict.
 
-##### A.1.13.1.5.2 - Sky Core Facilitator Determination  [Core]  <!-- UUID: 5ab97ecc-bf4f-4511-af73-da307b9ff951 -->
+##### A.1.13.1.5.2 - Sky Core Facilitator Determination [Core]  <!-- UUID: 5ab97ecc-bf4f-4511-af73-da307b9ff951 -->
 
 Following their review of the Notice of Potential Conflict, the Sky Core Facilitators must issue a formal determination about whether a conflict exists. If the Sky Core Facilitators determine that a conflict exists, they must issue an “Intent to Suspend” notice relating to the particular part of the Agent Artifact they consider to be in conflict. If the Sky Core Facilitators determine that no conflict exists, they must post this determination and their reasoning in response to the Notice of Potential Conflict on the Sky Forum.
 
@@ -6094,7 +6094,7 @@ Aligned Delegates are eligible to receive budgets through this funding process. 
 
 This Article governs the Sky Primitives. A Sky Primitive is a standardized interface that allows Agents to connect to, and leverage, Sky Protocol’s permissioned infrastructure. This Article defines each of the Sky Primitives available for Prime Agents to use to expand the Sky Ecosystem. Each Prime Agent strategy is unique, so each may combine the Sky Primitives differently.
 
-### A.2.3.1 - Primitives In General  [Section]  <!-- UUID: df611e97-f99d-4244-8573-e706fbd1dfbc -->
+### A.2.3.1 - Primitives In General [Section]  <!-- UUID: df611e97-f99d-4244-8573-e706fbd1dfbc -->
 
 The documents herein define general principles relating to Agent Artifact evolution, enumerate the currently available Sky Primitives, and prescribe the procedures by which Agents can activate, invoke and deploy the Primitives.
 
@@ -6284,7 +6284,7 @@ A Prime Agent that has a Globally Active Primitive may freely create (assuming t
 
 The documents herein define the process by which an Agent may Invoke instances of Sky Primitives. If the Invocation is valid, the Agent Artifact is upgraded and the Agent gains the Primitives’ specific functionality.
 
-##### A.2.3.1.4.1 - Invocation Status  [Core]  <!-- UUID: 83ac15ef-30e5-4958-95f4-a7bc2de10e97 -->
+##### A.2.3.1.4.1 - Invocation Status [Core]  <!-- UUID: 83ac15ef-30e5-4958-95f4-a7bc2de10e97 -->
 
 The documents herein define the Statuses assigned to an Invocation that is in progress.
 
@@ -6300,7 +6300,7 @@ The actual submission and handling of these data inputs occurs exclusively throu
 
 Once the Agent has provided all required inputs to the relevant Primitive(s), the proposed Artifact Update undergoes review / validation by designated actors such as Operational Executor Facilitators. The identity and responsibilities of these actors are detailed in subsequent documents of this Article.
 
-##### A.2.3.1.4.4 - Token Holder Vote  [Core]  <!-- UUID: a06c8e7a-e20f-459a-99e3-a62a5c0c4fd1 -->
+##### A.2.3.1.4.4 - Token Holder Vote [Core]  <!-- UUID: a06c8e7a-e20f-459a-99e3-a62a5c0c4fd1 -->
 
 After the Primitive inputs have been validated, Agent token holders vote on whether to upgrade the Artifact with the Primitive(s).
 
@@ -6520,7 +6520,7 @@ The Agent Creation Primitive must specify the Agent’s Name and provide a brief
 
 The Agent Creation Primitive must specify the SubProxy address of the Agent. This field is populated by Core GovOps. The SubProxy is an account that serves as the Agent’s treasury. The SubProxy Account is controlled by Sky Governance.
 
-###### A.2.3.4.1.2.4 - Agent Genesis Account  [Core]  <!-- UUID: 761966db-e9db-41f8-a9fe-cf8b0c1a7d26 -->
+###### A.2.3.4.1.2.4 - Agent Genesis Account [Core]  <!-- UUID: 761966db-e9db-41f8-a9fe-cf8b0c1a7d26 -->
 
 The Agent Creation Primitive must designate the Genesis Account.  This field is populated by Core GovOps. The Genesis account initially controls 100% of the tokens of the Agent. The Genesis Account is initially controlled by the Agent Founder.
 
@@ -6712,11 +6712,11 @@ The documents herein define the process for setting up an Instance of the Root E
 
 The Agent must use the Powerhouse interface to specify the process by which Root Edits occur. See [A.1.14 - Artifact Edit Processes](2be8d2f0-bf02-4aa1-ad37-afb7a811a3b8).
 
-####### A.2.3.5.2.1.1.2 - Validation  [Core]  <!-- UUID: 2a466974-af55-4d3f-84a5-7ac840ffb620 -->
+####### A.2.3.5.2.1.1.2 - Validation [Core]  <!-- UUID: 2a466974-af55-4d3f-84a5-7ac840ffb620 -->
 
 Core GovOps validates the Agent’s inputs.
 
-####### A.2.3.5.2.1.1.3 - Official Update Of Artifact  [Core]  <!-- UUID: 3a95c852-efc0-43aa-b4fe-358332aaaf74 -->
+####### A.2.3.5.2.1.1.3 - Official Update Of Artifact [Core]  <!-- UUID: 3a95c852-efc0-43aa-b4fe-358332aaaf74 -->
 
 After successful validation, the Root Edit Primitive is considered successfully Invoked. The Agent Artifact is officially upgraded to reflect a Root Edit Primitive Instance, with a Status of `Active`.
 
@@ -6937,7 +6937,7 @@ If the Token SkyLink Invocation is successfully approved, the Operational Execut
 
 The documents herein define how the deployment of an Instance of the Token SkyLink Primitive is executed on-chain.
 
-######## A.2.3.7.1.1.1.3.1 - Token SkyLink Setup Bridge Deployment And Initial Audit  [Core]  <!-- UUID: af88c454-2171-41ce-a8e8-1d6c40d4e209 -->
+######## A.2.3.7.1.1.1.3.1 - Token SkyLink Setup Bridge Deployment And Initial Audit [Core]  <!-- UUID: af88c454-2171-41ce-a8e8-1d6c40d4e209 -->
 
 The Prime Agent, through Operational GovOps, deploys the Token SkyLink contract on the target chain. The Prime Agent shares the Token SkyLink contract’s final address with the audit firm for verification. Operational GovOps confirms that the bridge contract address and references match the updated Prime Agent Artifact. The audit firm completes and updates the bridging audit registry with the results of the audit. The output of this step is a deployed bridge contract with audit results uploaded to the bridging audit registry.
 
@@ -6945,7 +6945,7 @@ The Prime Agent, through Operational GovOps, deploys the Token SkyLink contract 
 
 Core GovOps formalizes the audit results with a Sky Core Executive Vote to fully activate bridging functionality. Operational GovOps updates the Prime Agent Reimbursement Module to begin counting any bridged tokens toward the incremental reward. The output of this step is fully enabled bridging on the target chain with the Prime Agent Reimbursement Module updated to track bridging based rewards.
 
-###### A.2.3.7.1.1.2 - Token SkyLink Ongoing Management  [Core]  <!-- UUID: d7adf706-c9cc-4408-9668-cec0fdc90be8 -->
+###### A.2.3.7.1.1.2 - Token SkyLink Ongoing Management [Core]  <!-- UUID: d7adf706-c9cc-4408-9668-cec0fdc90be8 -->
 
 The documents herein define the process for managing an Instance of the Token SkyLink Primitive.
 
@@ -9387,7 +9387,7 @@ Prior to the full operational deployment of the Powerhouse system, Prime Agents 
 
 The Sky Core RRC Dashboard is located at [https://sphere.blockanalitica.com/rrc](https://sphere.blockanalitica.com/rrc). The Sky Core RRC API is located at [https://sphere-api.blockanalitica.com/rrc/](https://sphere-api.blockanalitica.com/rrc/).
 
-########## A.2.3.9.1.1.3.2.1.1.1 - Role and Functionality of the RRC Dashboard and API  [Core]  <!-- UUID: f7da0f56-00f5-4bcf-bd31-b77c284c7992 -->
+########## A.2.3.9.1.1.3.2.1.1.1 - Role and Functionality of the RRC Dashboard and API [Core]  <!-- UUID: f7da0f56-00f5-4bcf-bd31-b77c284c7992 -->
 
 The RRC Dashboard provides a user interface for Prime Agents to view their official RRC figures. The RRC API allows Prime Agents to programmatically access this same data for integration into their internal TRC management systems. Both the Dashboard and API provide the following key information:
     
@@ -9592,7 +9592,7 @@ The Prime Agent Artifact must specify the address of the Prime Agent’s Core Al
 
 The Prime Agent Artifact must specify the address of the Prime Agent’s Core Allocation Buffer.
 
-###### A.2.3.9.1.2.4 - Allocation System Core Security Parameters  [Core]  <!-- UUID: 9c5e2e23-7756-4856-951b-0bcbecaa867d -->
+###### A.2.3.9.1.2.4 - Allocation System Core Security Parameters [Core]  <!-- UUID: 9c5e2e23-7756-4856-951b-0bcbecaa867d -->
 
 The Prime Agent Artifact must specify the rate limiters for the Allocation Vault and Core Allocation Buffer, including the address and parameters for each.
 
@@ -9672,7 +9672,7 @@ The documents herein define each of the components of the Income of the Sky Prot
 
 Stability Fees are the fees that Sky Core charges Prime Agents to borrow from Sky. See [A.3.2 - Core Stability Parameters - Parameters - Base Rate](228f9955-6bba-4252-a101-5529e7a300b9). Sky Core’s legacy ALM infrastructure is currently being transferred to Prime Agents; during this transition period and until this transfer is fully complete, income generated from the Sky Core Collateral Portfolio contributes to net revenue. See [A.3.4 - Application To Sky Core](6e050b66-0bc8-43f1-b32d-2220c9df466b).
 
-####### A.2.4.1.2.1.2.2 - Internal Senior Risk Capital Income  [Core]  <!-- UUID: 02b5422a-093d-4e21-86ff-5cfcd5af8ed5 -->
+####### A.2.4.1.2.1.2.2 - Internal Senior Risk Capital Income [Core]  <!-- UUID: 02b5422a-093d-4e21-86ff-5cfcd5af8ed5 -->
 
 Internal Senior Risk Capital income is the revenue attributed to Sky from the total payments made by Primes for Originated Senior Risk Capital (OSRC). ISRC itself comprises surplus capital allocated from designated buffers funded by the Sky Treasury Management Function. While Primes pay a single clearing price for their OSRC based on the monthly Origination Process, the total revenue received by Sky is subsequently allocated proportionally, with the portion corresponding to ISRC's share of the Total Senior Risk Capital (TSRC) pool designated as ISRC Income. See [A.2.5 - Treasury Management - Treasury Management - Sourcing Of Internal Senior Risk Capital From Surplus Buffers](ac7a6636-acbc-40c9-abc1-4543c0beb300).
 
@@ -9700,7 +9700,7 @@ The Sky Savings Rate is the interest expense paid to sUSDS holders on their bala
 
 The Integration Boost provides the equivalent of the Sky Savings Rate to users of decentralized finance protocols who hold USDS balances. See [A.2.4 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
 
-####### A.2.4.1.2.1.3.3 - Accessibility Rewards  [Core]  <!-- UUID: 2177f303-a0a7-4807-b815-d17aa76a264e -->
+####### A.2.4.1.2.1.3.3 - Accessibility Rewards [Core]  <!-- UUID: 2177f303-a0a7-4807-b815-d17aa76a264e -->
 
 The Accessibility Reward is paid to Prime Agents and third-party partners that drive adoption of USDS. See [A.2.4 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
@@ -9766,7 +9766,7 @@ In periods of high profitability, funds build up in the High Activity Staking Re
 
 To qualify as High Activity Stakers, SKY stakers must satisfy two criteria as specified in the documents herein.
 
-####### A.2.4.1.2.3.4.1 - High Activity Stakers Must Stake Through Compliant Governance Accessibility Frontend  [Core]  <!-- UUID: 38ff7f6d-de6b-429c-bed7-d1be1f256d37 -->
+####### A.2.4.1.2.3.4.1 - High Activity Stakers Must Stake Through Compliant Governance Accessibility Frontend [Core]  <!-- UUID: 38ff7f6d-de6b-429c-bed7-d1be1f256d37 -->
 
 High Activity Stakers must stake through Governance Accessibility frontends that comply with security and information standards specified in the Atlas.
 
@@ -9913,7 +9913,7 @@ All USDS in the Standard Activity Staking Rewards Buffer is used for Internal Se
 
 All USDS in the Smart Burn Buffer is used for Internal Senior Risk Capital.
 
-##### A.2.4.1.3.4 - USDS In Stability Capital Buffer Above Target  [Core]  <!-- UUID: b601b750-476d-4d3d-a9f8-7bd1c5a9541a -->
+##### A.2.4.1.3.4 - USDS In Stability Capital Buffer Above Target [Core]  <!-- UUID: b601b750-476d-4d3d-a9f8-7bd1c5a9541a -->
 
 All USDS in the Stability Capital Buffer above the Stability Capital Buffer Target is used for Internal Senior Risk Capital. Since this capital is already above the optimal target to absorb risk it can be redirected to a more efficient use.
 
@@ -11997,7 +11997,7 @@ The element "stabilize" refers to the objective of maintaining USDS’s value wi
 
 Prime Agents who invest capital from Sky’s Collateral Portfolio using the Allocation System Primitive must hold Risk Capital to protect Sky from potential losses on these investments. This Article sets forth the framework governing Risk Capital.
 
-### A.3.2.1 -  Conceptual Framework [Section]  <!-- UUID: ee3a912d-c340-41ee-b33e-45e72f215d49 -->
+### A.3.2.1 - Conceptual Framework [Section]  <!-- UUID: ee3a912d-c340-41ee-b33e-45e72f215d49 -->
 
 This Section defines the conceptual framework for Risk Capital.
 
@@ -16367,7 +16367,7 @@ The short-term staking rewards parameters are:
 
 Borrowing against staked MKR is currently supported and funded directly by Sky. This functionality will be phased out as specified in [A.4.1 - Core Tokens - SKY - MKR To SKY Upgrade](6bb8b5b2-a2a8-4728-bddb-28bf054de9b6). The documents herein define the risk parameters for MKR-backed borrowing during this interim period.
 
-###### A.4.4.1.3.4.1 - MKR-Backed Borrowing Parameters  [Core]  <!-- UUID: c2c12de4-f481-440f-8180-0a3091fbc99f -->
+###### A.4.4.1.3.4.1 - MKR-Backed Borrowing Parameters [Core]  <!-- UUID: c2c12de4-f481-440f-8180-0a3091fbc99f -->
 
 The current risk parameters for MKR-backed borrowing funded directly by Sky are:
     
@@ -16397,7 +16397,7 @@ When Sky invests capital in Agents, the tokens Sky receives in exchange are dist
 
 This Article defines maintenance or housekeeping mechanisms and contracts used to administer the Sky Ecosystem.
 
-### A.4.6.1 -  Token Transfers To Sky [Section]  <!-- UUID: 490bc47f-f3fe-4d88-8cc3-be034973fa61 -->
+### A.4.6.1 - Token Transfers To Sky [Section]  <!-- UUID: 490bc47f-f3fe-4d88-8cc3-be034973fa61 -->
 
 This Section defines standard procedures for sending tokens to Sky.
 
@@ -26585,7 +26585,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-############## A.6.1.1.3.2.6.1.3.1.1.1.2.1.2 - Target Protocol  [Core]  <!-- UUID: ec81f2d8-5050-4b1b-9acf-bb25574c71c7 -->
+############## A.6.1.1.3.2.6.1.3.1.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: ec81f2d8-5050-4b1b-9acf-bb25574c71c7 -->
 
 Centrifuge
 
@@ -26657,7 +26657,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-############## A.6.1.1.3.2.6.1.3.1.1.2.2.1.2 - Target Protocol  [Core]  <!-- UUID: 38eee5f5-3e8a-4519-9370-cfe95d807c69 -->
+############## A.6.1.1.3.2.6.1.3.1.1.2.2.1.2 - Target Protocol [Core]  <!-- UUID: 38eee5f5-3e8a-4519-9370-cfe95d807c69 -->
 
 Centrifuge
 
@@ -26733,7 +26733,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-############## A.6.1.1.3.2.6.1.3.1.2.1.2.1.2 - Target Protocol  [Core]  <!-- UUID: c58fffd4-4905-4749-a7fa-55b69f0f44f3 -->
+############## A.6.1.1.3.2.6.1.3.1.2.1.2.1.2 - Target Protocol [Core]  <!-- UUID: c58fffd4-4905-4749-a7fa-55b69f0f44f3 -->
 
 Blackrock
 
@@ -26809,7 +26809,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-############## A.6.1.1.3.2.6.1.3.1.3.1.2.1.2 - Target Protocol  [Core]  <!-- UUID: 02307043-77c0-40d5-bec0-cc969dc2eb1e -->
+############## A.6.1.1.3.2.6.1.3.1.3.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 02307043-77c0-40d5-bec0-cc969dc2eb1e -->
 
 Superstate
 
@@ -26885,7 +26885,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-############## A.6.1.1.3.2.6.1.3.1.4.1.2.1.2 - Target Protocol  [Core]  <!-- UUID: 6f33f060-c24e-4c24-b6f8-7882bb19f7c0 -->
+############## A.6.1.1.3.2.6.1.3.1.4.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 6f33f060-c24e-4c24-b6f8-7882bb19f7c0 -->
 
 Ethena Protocol
 
@@ -27087,7 +27087,7 @@ The documents herein define the Instance identifiers.
 
 Avalanche
 
-############## A.6.1.1.3.2.6.1.3.2.1.1.2.1.2 - Target Protocol  [Core]  <!-- UUID: e916d986-41b1-4f76-ab3f-3bd0f233adc1 -->
+############## A.6.1.1.3.2.6.1.3.2.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: e916d986-41b1-4f76-ab3f-3bd0f233adc1 -->
 
 Centrifuge
 
@@ -27159,7 +27159,7 @@ The documents herein define the Instance identifiers.
 
 Avalanche
 
-############## A.6.1.1.3.2.6.1.3.2.1.2.2.1.2 - Target Protocol  [Core]  <!-- UUID: 9acb96f8-cdf9-42a3-97b0-7300353a5919 -->
+############## A.6.1.1.3.2.6.1.3.2.1.2.2.1.2 - Target Protocol [Core]  <!-- UUID: 9acb96f8-cdf9-42a3-97b0-7300353a5919 -->
 
 Centrifuge
 
@@ -27492,7 +27492,7 @@ Grove engaged in terms of agreement with the Spark Agent in Ecosystem Accord 1, 
 
 Grove engaged in terms of agreement with Sky, Moonbow and the Spark Agent in Ecosystem Accord 2, located in [A.2.10 - Ecosystem Accord 2: Grove And Spark - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
-###### A.6.1.1.3.3.6 - DAO Resolutions  [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
+###### A.6.1.1.3.3.6 - DAO Resolutions [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
 
 Grove has formally agreed to the DAO Resolutions recorded herein.
 
@@ -27524,7 +27524,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-####### A.6.1.1.4.2.1.2 - Target Protocol  [Core]  <!-- UUID: b31f534a-7268-4500-be69-abc662541b55 -->
+####### A.6.1.1.4.2.1.2 - Target Protocol [Core]  <!-- UUID: b31f534a-7268-4500-be69-abc662541b55 -->
 
 Ethena Protocol
 
@@ -27711,7 +27711,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-####### A.6.1.1.5.2.1.2 - Target Protocol  [Core]  <!-- UUID: 0d4e39d3-5b1a-44ad-aba5-4171bf22e370 -->
+####### A.6.1.1.5.2.1.2 - Target Protocol [Core]  <!-- UUID: 0d4e39d3-5b1a-44ad-aba5-4171bf22e370 -->
 
 Ethena
 
@@ -27801,7 +27801,7 @@ The documents herein define the Instance identifiers.
 
 Ethereum Mainnet
 
-####### A.6.1.1.6.2.1.2 - Target Protocol  [Core]  <!-- UUID: 6dbd0693-3ebd-4175-82ef-991f085b6942 -->
+####### A.6.1.1.6.2.1.2 - Target Protocol [Core]  <!-- UUID: 6dbd0693-3ebd-4175-82ef-991f085b6942 -->
 
 Ethena
 
