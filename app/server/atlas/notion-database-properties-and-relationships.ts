@@ -240,9 +240,10 @@ export type ChildLists = { [K in ChildListFieldName]: string[] };
 /**
  * Generic utility type to convert property mapping to extra fields interface.
  * All extra fields have string | null values.
+ * The -readonly modifier ensures fields are mutable.
  */
 type ExtraFieldsFromMapping<T extends Record<string, string>> = {
-  [K in keyof T]: string | null;
+  -readonly [K in keyof T]: string | null;
 };
 
 /**
