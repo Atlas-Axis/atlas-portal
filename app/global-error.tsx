@@ -1,9 +1,10 @@
 'use client';
 
 // import NextError from 'next/error';
+import Error from 'next/error';
 import { Inter } from 'next/font/google';
-import { useEffect, useState } from 'react';
-// import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
+import * as Sentry from '@sentry/nextjs';
 // import { Analytics } from '@vercel/analytics/react';
 import { Frown } from 'lucide-react';
 
@@ -14,14 +15,11 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [errorLogId, setErrorLogId] = useState<string | null>(null);
+export default function GlobalError({ error }: { error: Error & { digest?: string; message?: string } }) {
   useEffect(() => {
     console.error(error);
-    // TODO: Add Sentry error logging
-    // const sentryErrorLogId = Sentry.captureException(error);
-    // setErrorLogId(sentryErrorLogId);
+    // Log the error to Sentry
+    Sentry.captureException(error);
   }, [error]);
 
   return (
@@ -45,12 +43,6 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
           <p className="mb-4">
             We apologize for the inconvenience. We logged the error details and will investigate the issue.
           </p>
-
-          {errorLogId && (
-            <p className="mt-4 text-sm text-gray-300">
-              Error ID: <span className="font-mono">{errorLogId}</span>
-            </p>
-          )}
         </div>
         {/* <NextError statusCode={0} title={'😞'} /> */}
         {/* <Analytics />
