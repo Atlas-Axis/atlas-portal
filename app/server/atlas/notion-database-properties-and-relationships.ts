@@ -40,6 +40,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   {
     properties: NotionDatabasePropertyMapping;
     childRelationships: Partial<Record<AtlasDatabaseName, string>>;
+    parentRelationships: Partial<Record<AtlasDatabaseName, string>>; // The name of the relationship property in this database that links to the parent database. There may be more than one parent relationships.
     parentPropertyName?: string;
     // subItemsPropertyName?: string;
   }
@@ -56,6 +57,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.ARTICLES]: 'Articles',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {},
   },
   [ATLAS_DATABASES.ARTICLES]: {
     properties: {
@@ -73,6 +75,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       // [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
       // TODO: Tenets + Scenarios + Annotations? - Atlas PH importer does relationship mapping to these too
+    },
+    parentRelationships: {
+      [ATLAS_DATABASES.SCOPES]: 'Parent Scope',
     },
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
@@ -92,6 +97,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
       // Extra in PH importer: "Files & media"
     },
+    parentRelationships: {
+      [ATLAS_DATABASES.ARTICLES]: 'Parent Article',
+    },
     parentPropertyName: 'Parent Doc',
     // subItemsPropertyName: 'Subdocs',
   },
@@ -110,6 +118,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.AGENTS]: 'Sub-item',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {
+      // TODO: We are not syncing parent relationships for Agent Scope Database documents at the moment because the relationships in Notion are not defined - we should add this later!
+    },
     parentPropertyName: 'Parent item',
     // subItemsPropertyName: 'Sub-item',
   },
@@ -124,6 +135,11 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     childRelationships: {
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {
+      [ATLAS_DATABASES.ARTICLES]: 'Target Article',
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section / Primary Doc',
+      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
+    },
   },
   [ATLAS_DATABASES.TENETS]: {
     properties: {
@@ -137,6 +153,11 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {
+      // [ATLAS_DATABASES.ARTICLES]: '', // TODO: Remove this relationship and the corresponding relationship in the Articles mapping?
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section/Primary Doc',
+      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
+    },
   },
   [ATLAS_DATABASES.ACTIVE_DATA]: {
     properties: {
@@ -148,6 +169,10 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
+    },
+    parentRelationships: {
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section / Primary Doc',
+      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
     },
   },
   [ATLAS_DATABASES.SCENARIOS]: {
@@ -162,6 +187,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {
+      [ATLAS_DATABASES.TENETS]: 'Targeted Action Tenet',
+    },
   },
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
     properties: {
@@ -174,6 +202,9 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     childRelationships: {
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
+    parentRelationships: {
+      [ATLAS_DATABASES.SCENARIOS]: 'Original Scenario',
+    },
   },
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
     properties: {
@@ -184,6 +215,17 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       content: null,
     },
     childRelationships: {},
+    parentRelationships: {
+      [ATLAS_DATABASES.SCOPES]: 'Scopes',
+      [ATLAS_DATABASES.ARTICLES]: 'Articles',
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
+      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
+      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
+      [ATLAS_DATABASES.TENETS]: 'Tenets',
+      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
+      [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
+      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
+    },
   },
 } as const;
 
