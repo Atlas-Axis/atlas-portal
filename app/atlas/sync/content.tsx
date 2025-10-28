@@ -65,6 +65,9 @@ interface SyncState {
   completed: boolean;
 }
 
+/**
+ * Note: Structural changes (parent_changed, sibling_order_changed) are not shown yet - will be enabled later!
+ */
 export function Content({
   result,
   serializedMappings,
@@ -101,7 +104,15 @@ export function Content({
       isRunning: true,
       stopRequested: false,
       currentPhase: 'content',
-      progress: { total: changes.changed.length + changes.added.length + changes.deleted.length, completed: 0 },
+      progress: {
+        total:
+          changes.changed.length +
+          changes.added.length +
+          changes.deleted.length +
+          changes.sibling_order_changed.length +
+          changes.parent_changed.length,
+        completed: 0,
+      },
       currentDocument: null,
       logs: [],
       completed: false,
@@ -187,13 +198,13 @@ export function Content({
         />
 
         {/* Sibling Order Changed */}
-        {/* <ChangeSection
+        <ChangeSection
           title="Order / Document No Changed"
           changes={changes.sibling_order_changed}
           changeType="sibling_order_changed"
           emptyMessage="No sibling order changes"
           uuidToDocMap={newIdsToDocuments}
-        /> */}
+        />
 
         {/* Parent Changed */}
         <ChangeSection
@@ -213,9 +224,7 @@ export function Content({
           uuidToDocMap={originalIdsToDocuments}
         />
 
-        <p className="my-3 text-xs text-slate-300">
-          Note: Sort order changes within the same document are not shown yet.
-        </p>
+        <p className="my-3 text-xs text-slate-300">Limitations: Moved documents are not shown yet.</p>
 
         {/* Sync Controls and Progress */}
         <div className="my-6">
