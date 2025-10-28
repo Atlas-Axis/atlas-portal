@@ -99,6 +99,7 @@ function formatNotionProperty(
  * - number: Numeric values
  *
  * Current limitations:
+ * - Document number (doc_no) not synced
  * - Sort order not synced (only affects "Sections & Primary Docs" database)
  */
 export function buildNotionProperties(
@@ -126,13 +127,13 @@ export function buildNotionProperties(
     allowEmptyForDocumentName,
   )!;
 
-  // Document number (rich_text)
-  const documentNoPropertyType = typeOverrides[config.properties.atlasDocumentNo] || 'rich_text';
-  properties[config.properties.atlasDocumentNo] = formatNotionProperty(
-    doc.doc_no || '',
-    documentNoPropertyType,
-    uuidMappings,
-  )!;
+  // Document number (rich_text) - NOT SYNCED (commented out for now)
+  // const documentNoPropertyType = typeOverrides[config.properties.atlasDocumentNo] || 'rich_text';
+  // properties[config.properties.atlasDocumentNo] = formatNotionProperty(
+  //   doc.doc_no || '',
+  //   documentNoPropertyType,
+  //   uuidMappings,
+  // )!;
 
   // Document type (select) - always a select field in Notion
   properties[config.properties.atlasDocumentType] = {

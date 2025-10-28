@@ -42,7 +42,8 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Content'] as any).rich_text[0].text.content).toBe('Section content');
 
-      // Note: Doc No is not currently synced (see TODO in implementation)
+      // Document number is not currently synced (commented out in implementation)
+      // expect((properties['Doc No'] as any).rich_text[0].text.content).toBe('A.1.2');
     });
 
     it('builds basic properties for Scope document', () => {
@@ -69,7 +70,8 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Content'] as any).rich_text[0].text.content).toBe('Scope content');
 
-      // Note: Doc No is not currently synced (see TODO in implementation)
+      // Document number is not currently synced (commented out in implementation)
+      // expect((properties['Doc No'] as any).rich_text[0].text.content).toBe('A.1');
     });
 
     it('builds extra fields for Type Specification document', () => {

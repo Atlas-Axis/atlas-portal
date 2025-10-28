@@ -183,15 +183,17 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 
 ### Current Version
 
-- **No structural changes**: Parent moves and reordering are not synced yet
+- **No moved document detection**: Structural changes (parent_changed, sibling_order_changed) are detected but not yet synced - will be implemented in a future iteration
 - **No batch operations**: Pages are processed one at a time
-- **No background processing**: Progress stopps on page refresh
+- **No background processing**: Progress stops on page refresh
 - **No undo/rollback**: Operations cannot be reversed
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
+- **Document number not synced**: The doc_no field is not currently synced to Notion
 - **Sort order not synced**: The sort_order field ("No.") in "Sections & Primary Docs" database is not currently synced
 
 ### Future Enhancements
 
+- Sync doc_no field (currently not synced)
 - Log all changes made through the Notion API during sync to get an audit log
 - Sync sort_order ("No.") field for "Sections & Primary Docs" database (currently not synced)
 - User-selectable Markdown file path (will default to GitHub Atlas Markdown in production)

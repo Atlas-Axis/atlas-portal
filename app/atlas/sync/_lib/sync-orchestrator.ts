@@ -84,8 +84,9 @@ export async function syncChangesToNotion(
   // Extract changes and document lookup maps from diff result
   const { changes, newIdsToDocuments } = diffResult;
 
-  // Calculate total changes to process (excluding structural changes which aren't synced yet)
-  const totalChangesToProcess = changes.changed.length + changes.added.length + changes.deleted.length; // TODO: Add parent_changed and sibling_order_changed
+  // Calculate total changes to process
+  // Note: Structural changes (parent_changed, sibling_order_changed) will be implemented in a future iteration
+  const totalChangesToProcess = changes.changed.length + changes.added.length + changes.deleted.length;
 
   addLog(`Starting sync: ${totalChangesToProcess} total changes`, 'info');
 
