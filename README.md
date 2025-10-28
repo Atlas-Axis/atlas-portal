@@ -236,6 +236,8 @@ Scopes
 "Needed Research" documents may be nested under any other document type
 ```
 
+This hierarchy is respected by the Markdown→Notion sync engine, which creates pages in hierarchical order (parents before children) to ensure proper relationship establishment.
+
 See Atlas Document Numbering rules: **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
 
 **Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:

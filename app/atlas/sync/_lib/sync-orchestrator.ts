@@ -1,4 +1,5 @@
 import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   SyncActionResult,
@@ -6,6 +7,7 @@ import {
   deleteNotionPage,
   updateNotionPageContent,
 } from '../_actions/sync-actions';
+import { getAncestryDepth, getDatabaseHierarchyLevel, getDatabaseNameFromDocument } from './atlas-database-mapper';
 
 export type SyncPhase = 'content' | 'additions' | 'deletions' | 'idle';
 
@@ -143,10 +145,13 @@ export async function syncChangesToNotion(
 
   // Phase 2: Process additions (validate parents first)
   if (changes.added.length > 0 && !options.stopRequested) {
-    addLog(`Phase 2: Processing ${changes.added.length} additions`, 'info');
+    // Sort additions by hierarchy level and depth to ensure parents are created before children
+    const sortedAdditions = sortAdditionsByHierarchy(changes.added, newIdsToDocuments);
+
+    addLog(`Phase 2: Processing ${sortedAdditions.length} additions (sorted by hierarchy)`, 'info');
     updateProgress('additions', null);
 
-    for (const change of changes.added) {
+    for (const change of sortedAdditions) {
       if (options.stopRequested) {
         result.stopRequested = true;
         addLog('Stop requested, skipping remaining additions', 'warning');
@@ -235,6 +240,69 @@ export async function syncChangesToNotion(
   updateProgress('idle', null);
 
   return result;
+}
+
+/**
+ * Sorts additions by Atlas database hierarchy and nesting depth.
+ * This ensures that parent pages are created before their children, preventing
+ * relationship errors when both parent and child are being created.
+ *
+ * Sorting rules:
+ * 1. Group by Atlas database name (derived from document type + ancestry)
+ * 2. Sort groups by database hierarchy level (Scopes=0, Articles=1, etc.)
+ * 3. Within each group, sort by nesting depth (parents before children)
+ * 4. Maintain original order for documents at same database + same depth
+ *
+ * @param additions Array of addition changes to sort
+ * @param uuidToDocumentMap Map of UUIDs to document objects for database derivation
+ */
+export function sortAdditionsByHierarchy(
+  additions: AtlasDocumentChange[],
+  uuidToDocumentMap: Map<string, BaseAtlasDocument>,
+): AtlasDocumentChange[] {
+  // Create array with sorting metadata
+  const withMetadata = additions.map((change, originalIndex) => {
+    const doc = change.newValues;
+    if (!doc) {
+      throw new Error(`Document not found for addition change: ${JSON.stringify(change)}`);
+    }
+
+    const databaseName = getDatabaseNameFromDocument(doc.type, change.newAncestry);
+    const depth = getAncestryDepth(change.newAncestry);
+
+    // For Needed Research, derive parent database to get correct hierarchy level
+    let parentDatabaseName;
+    if (databaseName === 'Needed Research' && change.newAncestry && change.newAncestry.length > 0) {
+      const parentId = change.newAncestry[change.newAncestry.length - 1];
+      const parentDoc = uuidToDocumentMap.get(parentId);
+      if (parentDoc) {
+        const parentAncestry = change.newAncestry.slice(0, -1);
+        parentDatabaseName = getDatabaseNameFromDocument(parentDoc.type, parentAncestry);
+      } else {
+        throw new Error(`Parent document not found for new Needed Research document: ${JSON.stringify(change)}`);
+      }
+    }
+
+    const hierarchyLevel = getDatabaseHierarchyLevel(databaseName, parentDatabaseName);
+
+    return { change, databaseName, hierarchyLevel, depth, originalIndex };
+  });
+
+  // Sort by: hierarchy level (asc), then depth (asc), then original order
+  withMetadata.sort((a, b) => {
+    // First by hierarchy level (lower = higher in hierarchy)
+    if (a.hierarchyLevel !== b.hierarchyLevel) {
+      return a.hierarchyLevel - b.hierarchyLevel;
+    }
+    // Then by depth (lower = closer to root)
+    if (a.depth !== b.depth) {
+      return a.depth - b.depth;
+    }
+    // Finally by original order (stable sort)
+    return a.originalIndex - b.originalIndex;
+  });
+
+  return withMetadata.map((item) => item.change);
 }
 
 /**

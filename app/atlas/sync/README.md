@@ -32,16 +32,27 @@ All detected changes are displayed in a visual diff format with:
 When you click "Sync Changes to Notion", the system processes changes in a specific order for safety:
 
 1. **Content Changes** (safest - no relationship changes)
-2. **Additions** (validates parent pages exist first)
+2. **Additions** (validates parent pages exist first, sorted by hierarchy)
 3. **Deletions** (validates no children exist first)
 
-**Note**: Structural changes (parent_changed, sibling_order_changed) are **not synced** to avoid relationship potential conflicts for now, but will be implemented later.
+**Hierarchical Sorting for Additions**: New pages are sorted by Atlas database hierarchy level and nesting depth before creation. This ensures that parent pages are created before their children, preventing relationship errors when both parent and child are being added simultaneously. For example:
+
+- Scope pages are created first (level 0)
+- Then Article pages (level 1)
+- Then Section pages (level 2)
+- Within each database, root-level pages are created before nested pages
+
+**Note**: Structural changes (parent_changed, sibling_order_changed) are **not synced** yet. These will be implemented in a future iteration to handle moved documents.
 
 ## Safety Features
 
-### Parent Validation for internally nested databases
+### Parent Validation
 
-Before creating a new page in an internally nested database, the system:
+Before creating a new page, the system validates that parent pages exist:
+
+#### Internal Parent Validation (same-database)
+
+For internally nested databases (Sections & Primary Docs, Agent Scope Database):
 
 1. Checks if a relationship parent is specified in the document's ancestry
 2. **Filters to same-database parents only**: Internal parent relationships only exist within the same Notion database
@@ -54,6 +65,18 @@ Before creating a new page in an internally nested database, the system:
    - This is perfectly valid - includes cross-database children and root items
 
 Note: The Notion API `parent` is always set to the database ID. Parent validation only checks the relationship parent (via "Parent Doc" or "Parent item" properties) when a same-database parent is found in the ancestry.
+
+#### Inter-Database Parent Validation (cross-database)
+
+For inter-database relationships (e.g., Article → Section, Section → Annotation):
+
+1. Identifies the immediate parent from the document's ancestry
+2. Determines if the parent is in a different database
+3. **If a cross-database parent IS found**: Validates that the parent page exists using Notion API
+   - If parent doesn't exist, skips creation and returns a warning
+   - Sets the relationship property to link child to parent (e.g., "Parent Article" property on Section)
+4. **Only immediate parent relationships are set**, not relationships to all ancestors
+   - Notion automatically updates the reverse relationship (parent's child array)
 
 ### Child Validation (Deletions)
 
@@ -190,6 +213,8 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
 - **Document number not synced**: The doc_no field is not currently synced to Notion
 - **Sort order not synced**: The sort_order field ("No.") in "Sections & Primary Docs" database is not currently synced
+- **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
+- When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion.
 
 ### Future Enhancements
 
@@ -201,6 +226,7 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - Batch Notion API operations for better performance
 - Automatic conflict resolution
 - Automated sync triggers on Markdown file changes in GitHub
+- Handle the case when a document doesn't have a parent document and it's not a Scope document
 
 ## Implementation Notes
 

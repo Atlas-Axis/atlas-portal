@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -10,6 +11,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
+import { getDatabaseNameFromDocument } from './atlas-database-mapper';
 
 /**
  * Helper functions for formatting Notion property values
@@ -253,6 +255,81 @@ export function addParentPageRelationshipProperty(
       relation: [{ id: parentPageId }],
     };
   }
+
+  return properties;
+}
+
+/**
+ * Builds relationship properties for inter-database relationships.
+ * Sets the parent page relationship when the parent is in a different database.
+ *
+ * Example: When creating a Section under an Article, this sets the "Parent Article"
+ * relationship property on the Section page.
+ *
+ * Limitation: When a non-Scope document doesn't have a parent, its parent relationship change will not be synced to Notion.
+ *
+ * @param ancestry The ancestry array (parent UUIDs from immediate parent to root)
+ * @param childDatabaseName The database name of the child document being created
+ * @param uuidToDocumentMap Map of UUIDs to document objects for deriving parent database
+ * @returns Object with relationship properties to merge into page properties, or empty object if no inter-database parent
+ */
+export function addInterDatabaseRelationshipProperties(
+  ancestry: string[] | undefined,
+  childDatabaseName: AtlasDatabaseName,
+  uuidToDocumentMap: Map<string, BaseAtlasDocument>,
+): Record<string, unknown> {
+  const properties: Record<string, unknown> = {};
+
+  if (!ancestry || ancestry.length === 0) {
+    // Only log error for non-root databases (not Scopes)
+    if (childDatabaseName !== 'Scopes') {
+      // const message = 'No ancestry provided for inter-database relationship properties for child database';
+      // console.error(message, { childDatabaseName, ancestry });
+      // Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, ancestry } });
+
+      throw new Error('No ancestry provided for inter-database relationship properties for child database');
+    }
+    return properties;
+  }
+
+  // Get the immediate parent UUID (last element in ancestry array)
+  const parentId = ancestry[ancestry.length - 1];
+
+  // Get parent document to determine its database
+  const parentDoc = uuidToDocumentMap.get(parentId);
+  if (!parentDoc) {
+    // Parent document not found - invalid reference
+    const message = 'Parent document not found for inter-database relationship properties for child database';
+    console.error(message, { childDatabaseName, parentId, ancestry });
+    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentId, ancestry } });
+    return properties;
+  }
+
+  // Derive parent's database name from its type and ancestry
+  // Get parent's ancestry (all ancestors except the last one which is the parent itself)
+  const parentAncestry = ancestry.slice(0, -1);
+  const parentDatabaseName = getDatabaseNameFromDocument(parentDoc.type, parentAncestry);
+
+  // Only set relationship if parent is in a different database (cross-database relationship)
+  if (parentDatabaseName === childDatabaseName) {
+    // Same database - internal hierarchy handled by addParentPageRelationshipProperty
+    return properties;
+  }
+
+  // Look up the relationship property name on the child's database
+  const childConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[childDatabaseName];
+  const relationshipPropertyName = childConfig.parentRelationships[parentDatabaseName];
+
+  if (!relationshipPropertyName) {
+    // No relationship defined between these databases
+    throw new Error('No relationship defined between databases');
+  }
+
+  // Set the relationship property
+  // When we set the child→parent relationship, Notion automatically updates the reverse relationship
+  properties[relationshipPropertyName] = {
+    relation: [{ id: parentId }],
+  };
 
   return properties;
 }

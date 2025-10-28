@@ -227,16 +227,16 @@ describe('sync-actions', () => {
 
   describe('createNotionDatabasePage', () => {
     it('creates page with database parent (no ancestry)', async () => {
-      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      const dbId = 'ebdb403a44bd4d169ec8f9330e955247'; // Scopes (root-level database)
       mockNotionClient.addMockDatabase(dbId, {});
 
       const change: AtlasDocumentChange = {
         uuid: 'new-page',
         changeType: 'added',
         newValues: {
-          type: 'Section',
-          doc_no: 'A.1.2',
-          name: 'New Section',
+          type: 'Scope',
+          doc_no: 'A.1',
+          name: 'New Scope',
           uuid: 'new-page',
           content: 'Content',
           last_modified: '',
@@ -495,6 +495,133 @@ describe('sync-actions', () => {
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing page UUID');
     });
+  });
+
+  describe('inter-database relationships', () => {
+    it('creates page with inter-database parent relationship (Section under Article)', async () => {
+      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      mockNotionClient.addMockDatabase(dbId, {});
+      mockNotionClient.addMockPage('article-parent', {}); // Article parent exists in Notion
+
+      const change: AtlasDocumentChange = {
+        uuid: 'new-section',
+        changeType: 'added',
+        newValues: {
+          type: 'Section',
+          doc_no: 'A.1.1',
+          name: 'New Section',
+          uuid: 'new-section',
+          content: 'Section content',
+          last_modified: '',
+        },
+        newAncestry: ['article-parent'], // Parent is an Article (different database)
+      };
+
+      const docMap = createDocMap(change);
+      docMap.set('article-parent', {
+        type: 'Article',
+        doc_no: 'A.1',
+        name: 'Parent Article',
+        uuid: 'article-parent',
+        content: '',
+        last_modified: '',
+      });
+
+      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+
+      expect(result.success).toBe(true);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
+      expect(mockNotionClient.getCallCount('pages.create')).toBe(1);
+
+      // Verify relationship property was set
+      const createCall = mockNotionClient.getLastCall('pages.create');
+      const properties = (createCall?.args as { properties: Record<string, unknown> }).properties;
+      // The relationship property on Sections database for parent Articles is "Parent Article"
+      expect(properties['Parent Article']).toEqual({
+        relation: [{ id: 'article-parent' }],
+      });
+    });
+
+    it('creates page with inter-database parent relationship (Annotation under Section)', async () => {
+      const dbId = 'e147e8835a2143c38264e86b1d9b24fc'; // Annotations
+      mockNotionClient.addMockDatabase(dbId, {});
+      mockNotionClient.addMockPage('section-parent', {}); // Section parent exists in Notion
+
+      const change: AtlasDocumentChange = {
+        uuid: 'new-annotation',
+        changeType: 'added',
+        newValues: {
+          type: 'Annotation',
+          doc_no: 'A.1.1.0.3.1',
+          name: 'New Annotation',
+          uuid: 'new-annotation',
+          content: 'Annotation content',
+          last_modified: '',
+        },
+        newAncestry: ['section-parent'], // Parent is a Section (different database)
+      };
+
+      const docMap = createDocMap(change);
+      docMap.set('section-parent', {
+        type: 'Section',
+        doc_no: 'A.1.1',
+        name: 'Parent Section',
+        uuid: 'section-parent',
+        content: '',
+        last_modified: '',
+      });
+
+      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+
+      expect(result.success).toBe(true);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
+      expect(mockNotionClient.getCallCount('pages.create')).toBe(1);
+
+      // Verify relationship property was set
+      const createCall = mockNotionClient.getLastCall('pages.create');
+      const properties = (createCall?.args as { properties: Record<string, unknown> }).properties;
+      // The relationship property on Annotations database for parent Sections & Primary Docs is "Parent Section / Primary Doc"
+      expect(properties['Parent Section / Primary Doc']).toEqual({
+        relation: [{ id: 'section-parent' }],
+      });
+    });
+
+    it('skips creation if inter-database parent does not exist', async () => {
+      const change: AtlasDocumentChange = {
+        uuid: 'new-section',
+        changeType: 'added',
+        newValues: {
+          type: 'Section',
+          doc_no: 'A.1.1',
+          name: 'New Section',
+          uuid: 'new-section',
+          content: 'Section content',
+          last_modified: '',
+        },
+        newAncestry: ['nonexistent-article'],
+      };
+
+      const docMap = createDocMap(change);
+      docMap.set('nonexistent-article', {
+        type: 'Article',
+        doc_no: 'A.1',
+        name: 'Nonexistent Article',
+        uuid: 'nonexistent-article',
+        content: '',
+        last_modified: '',
+      });
+
+      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+
+      expect(result.success).toBe(false);
+      expect(result.reason).toBe('parent_not_found');
+      expect(result.error).toContain('Inter-database parent page');
+      expect(mockNotionClient.getCallCount('pages.create')).toBe(0);
+    });
+
+    // Note: Test for mixed internal+inter-database relationships omitted
+    // The existing tests cover internal relationships (sets parent relationship for internally nested database)
+    // and inter-database relationships (Section under Article, Annotation under Section) separately
   });
 
   describe('validatePageExists', () => {

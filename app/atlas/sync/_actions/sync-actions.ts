@@ -11,7 +11,11 @@ import {
   getInternalParentPageIdFromAncestry,
   getNotionDatabaseIdForDatabaseName,
 } from '../_lib/atlas-database-mapper';
-import { addParentPageRelationshipProperty, buildNotionProperties } from '../_lib/notion-property-builder';
+import {
+  addInterDatabaseRelationshipProperties,
+  addParentPageRelationshipProperty,
+  buildNotionProperties,
+} from '../_lib/notion-property-builder';
 
 export interface SyncActionResult {
   success: boolean;
@@ -121,6 +125,48 @@ export async function createNotionDatabasePage(
       const relationshipProps = addParentPageRelationshipProperty(parentPageId, databaseName);
       Object.assign(properties, relationshipProps);
     }
+
+    // Add relationship properties for inter-database relationships
+    // This sets relationships when parent is in a different database (e.g., Article → Section)
+    const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
+      change.newAncestry,
+      databaseName,
+      newIdsToDocuments,
+    );
+
+    // Validate inter-database parent exists (if one was found)
+    // Extract parent ID from the relationship properties to validate
+    const interDbParentIds: string[] = [];
+    for (const propValue of Object.values(interDbRelationshipProps)) {
+      const relationProp = propValue as { relation?: Array<{ id: string }> };
+      if (relationProp.relation && Array.isArray(relationProp.relation)) {
+        interDbParentIds.push(...relationProp.relation.map((r) => r.id));
+      } else {
+        throw new Error('Invalid relationship property');
+      }
+    }
+
+    // If more than one inter-database parent exists, throw an error
+    if (interDbParentIds.length > 1) {
+      throw new Error(
+        `Multiple inter-database parents found for database "${databaseName}": ${JSON.stringify(interDbParentIds)}`,
+      );
+    }
+
+    // Validate all inter-database parents exist
+    for (const interDbParentId of interDbParentIds) {
+      const parentExists = await validatePageExists(interDbParentId);
+      if (!parentExists) {
+        return {
+          success: false,
+          reason: 'parent_not_found',
+          error: `Inter-database parent page ${interDbParentId} does not exist`,
+        };
+      }
+    }
+
+    // Merge inter-database relationship properties
+    Object.assign(properties, interDbRelationshipProps);
 
     // Create the page (parent is always the database ID, never a page ID)
     const notionClient = notion('write');

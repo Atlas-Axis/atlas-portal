@@ -127,3 +127,63 @@ export function getInternalParentPageIdFromAncestry(
   // Parent is in the same database - return it for relationship property
   return potentialParentId;
 }
+
+/**
+ * Gets the hierarchy level for an Atlas database based on the Atlas Database Hierarchy.
+ * Lower numbers indicate higher position in the hierarchy (Scopes = 0, Scenario Variations = 5).
+ *
+ * Hierarchy from README.md:
+ * - Level 0: Scopes
+ * - Level 1: Articles
+ * - Level 2: Sections & Primary Docs, Agent Scope Database
+ * - Level 3: Annotations, Tenets, Active Data
+ * - Level 4: Scenarios
+ * - Level 5: Scenario Variations
+ * - Needed Research: Special case - uses parent's level + 1
+ *
+ * @param databaseName The Atlas database name
+ * @param parentDatabaseName Optional parent database name (required for Needed Research)
+ */
+export function getDatabaseHierarchyLevel(
+  databaseName: AtlasDatabaseName,
+  parentDatabaseName?: AtlasDatabaseName,
+): number {
+  // Needed Research can be nested under any document type, so use parent's level + 1
+  if (databaseName === 'Needed Research') {
+    if (parentDatabaseName) {
+      return getDatabaseHierarchyLevel(parentDatabaseName) + 1;
+    }
+    // If no parent, treat as lowest position (for safety)
+    return 6;
+  }
+
+  // Standard hierarchy levels
+  const hierarchyLevels: Record<AtlasDatabaseName, number> = {
+    Scopes: 0,
+    Articles: 1,
+    'Sections & Primary Docs': 2,
+    'Agent Scope Database': 2,
+    Annotations: 3,
+    Tenets: 3,
+    'Active Data': 3,
+    Scenarios: 4,
+    'Scenario Variations': 5,
+    'Needed Research': 6, // Fallback if no parent provided
+  };
+
+  if (!(databaseName in hierarchyLevels)) {
+    throw new Error(`No hierarchy level found for database: ${databaseName}`);
+  }
+
+  return hierarchyLevels[databaseName];
+}
+
+/**
+ * Gets the nesting depth from an ancestry array.
+ * Returns 0 for root-level documents (no ancestry), 1 for direct children, etc.
+ *
+ * @param ancestry The ancestry array (parent UUIDs from immediate parent to root)
+ */
+export function getAncestryDepth(ancestry: string[] | undefined): number {
+  return ancestry?.length ?? 0;
+}
