@@ -215,6 +215,7 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - **Sort order not synced**: The sort_order field ("No.") in "Sections & Primary Docs" database is not currently synced
 - **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
 - When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion.
+- Inter-database parent relationships for documents in Agent Scope Database don't have parent relationships in Notion, even though it should be defined. These are skipped during the sync
 
 ### Future Enhancements
 
@@ -227,6 +228,7 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - Automatic conflict resolution
 - Automated sync triggers on Markdown file changes in GitHub
 - Handle the case when a document doesn't have a parent document and it's not a Scope document
+- Fix inter-database parent relationships for documents in Agent Scope Database. Currently, they don't have parent relationships in Notion, even though it should be defined
 
 ## Implementation Notes
 

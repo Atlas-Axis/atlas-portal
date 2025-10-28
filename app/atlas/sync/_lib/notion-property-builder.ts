@@ -292,6 +292,11 @@ export function addInterDatabaseRelationshipProperties(
     return properties;
   }
 
+  // Workaround: Agent documents' parent relationships are not synced to Notion, so we skip them for now
+  if (childDatabaseName === 'Agent Scope Database') {
+    return properties;
+  }
+
   // Get the immediate parent UUID (last element in ancestry array)
   const parentId = ancestry[ancestry.length - 1];
 

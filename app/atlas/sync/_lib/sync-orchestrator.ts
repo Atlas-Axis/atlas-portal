@@ -87,10 +87,14 @@ export async function syncChangesToNotion(
   const { changes, newIdsToDocuments } = diffResult;
 
   // Calculate total changes to process
-  // Note: Structural changes (parent_changed, sibling_order_changed) will be implemented in a future iteration
-  const totalChangesToProcess = changes.changed.length + changes.added.length + changes.deleted.length;
+  const totalChangesToProcess =
+    changes.changed.length +
+    changes.added.length +
+    changes.deleted.length +
+    changes.parent_changed.length +
+    changes.sibling_order_changed.length;
 
-  addLog(`Starting sync: ${totalChangesToProcess} total changes`, 'info');
+  addLog(`Starting sync: ${totalChangesToProcess} total changes to process`, 'info');
 
   let completedCount = 0;
 
@@ -228,6 +232,9 @@ export async function syncChangesToNotion(
       }
     }
   }
+
+  // TODO: Phase 4: Process parent changes
+  // TODO: Phase 5: Process sibling order changes
 
   result.totalProcessed = completedCount;
 
