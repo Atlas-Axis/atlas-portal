@@ -1,0 +1,102 @@
+/**
+ * Notion Nesting Bug Fix - Override Logic
+ *
+ * Applies manual parent-child relationship mappings to fix incorrect Notion relationships.
+ * Moves child IDs from incorrect parent arrays to correct parent arrays during import.
+ *
+ * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
+ */
+import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { NotionNestingBugMapping } from '../supabase/notion-nesting-bug-mappings';
+
+/**
+ * Apply nesting bug overrides to database pages
+ * This function modifies the child_*_ids arrays to move children from their current parent to the correct parent
+ */
+export function applyNestingOverrides(
+  pages: NotionDatabasePage[],
+  mappings: NotionNestingBugMapping[],
+  atlasDatabaseName: AtlasDatabaseName,
+): NotionDatabasePage[] {
+  // Filter mappings for the current database
+  const relevantMappings = mappings.filter((m) => m.atlas_database_name === atlasDatabaseName);
+
+  if (relevantMappings.length === 0) {
+    console.log(`No nesting overrides found for database "${atlasDatabaseName}". Returning pages unchanged.`);
+    return pages;
+  }
+
+  // Determine which child array field to modify based on database name
+  const childArrayField = getChildArrayField(atlasDatabaseName);
+  if (!childArrayField) {
+    return pages;
+  }
+
+  console.log(`⧟ Applying ${relevantMappings.length} nesting overrides for database "${atlasDatabaseName}"...`);
+
+  // Create a mutable copy of pages for modifications
+  const modifiedPages = pages.map((page) => ({ ...page }));
+
+  // Apply each mapping
+  for (const mapping of relevantMappings) {
+    const childId = mapping.child_notion_page_id;
+    const newParentId = mapping.parent_notion_page_id;
+
+    // Find the child page to verify it exists
+    const childPage = modifiedPages.find((p) => p.notion_page_id === childId);
+    if (!childPage) {
+      console.warn(`Child page ${childId} not found in pages array. Skipping mapping.`);
+      continue;
+    }
+
+    // Find the new parent page
+    const newParentPage = modifiedPages.find((p) => p.notion_page_id === newParentId);
+    if (!newParentPage) {
+      console.warn(`Parent page ${newParentId} not found in pages array. Skipping mapping.`);
+      continue;
+    }
+
+    // Find the current parent (the page that currently has this child in its array)
+    const currentParentPage = modifiedPages.find((p) => {
+      const childArray = p[childArrayField] as string[] | undefined;
+      return childArray && childArray.includes(childId);
+    });
+
+    // Remove child from current parent if found
+    if (currentParentPage) {
+      const childArray = currentParentPage[childArrayField] as string[];
+      currentParentPage[childArrayField] = childArray.filter((id) => id !== childId);
+      console.log(`  ✓ Removed ${childId} from current parent ${currentParentPage.notion_page_id}`);
+    }
+
+    // Add child to new parent
+    const newParentChildArray = (newParentPage[childArrayField] as string[]) || [];
+    if (!newParentChildArray.includes(childId)) {
+      newParentPage[childArrayField] = [...newParentChildArray, childId];
+      console.log(`  ✓ Added ${childId} to new parent ${newParentId}`);
+    } else {
+      console.log(`  ℹ Child ${childId} already in new parent ${newParentId}`);
+    }
+  }
+
+  console.log(`✅ Applied ${relevantMappings.length} nesting overrides`);
+
+  return modifiedPages;
+}
+
+/**
+ * Get the appropriate child array field name based on Atlas database name
+ */
+function getChildArrayField(
+  atlasDatabaseName: AtlasDatabaseName,
+): 'child_section_and_primary_doc_ids' | 'child_agent_scope_ids' | null {
+  switch (atlasDatabaseName) {
+    case 'Sections & Primary Docs':
+      return 'child_section_and_primary_doc_ids';
+    case 'Agent Scope Database':
+      return 'child_agent_scope_ids';
+    default:
+      return null;
+  }
+}

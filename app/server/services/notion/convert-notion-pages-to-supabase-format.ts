@@ -1,4 +1,5 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import { databaseSupportsInternalNesting } from '@/app/atlas/sync/_lib/atlas-database-mapper';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
   ChildLists,
@@ -17,6 +18,8 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { Json } from '../supabase/database.types';
+import { NotionNestingBugMapping } from '../supabase/notion-nesting-bug-mappings';
+import { applyNestingOverrides } from './apply-nesting-overrides';
 import { extractRichTextPlainText } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -30,9 +33,11 @@ type Relationships = Record<string, string[]>;
 export async function convertNotionPagesToDatabaseFormat({
   notionPages,
   atlasDatabaseName,
+  nestingMappings,
 }: {
   notionPages: EnhancedPageObjectResponse[];
   atlasDatabaseName: AtlasDatabaseName;
+  nestingMappings: NotionNestingBugMapping[];
 }): Promise<NotionDatabasePage[]> {
   console.log(`🔄 Converting ${notionPages.length} Notion pages to database format...`);
 
@@ -49,6 +54,12 @@ export async function convertNotionPagesToDatabaseFormat({
   }
 
   if (DEBUG_LOGGING()) console.log(`Converted ${databasePages.length} pages to database format`);
+
+  // Apply nesting overrides if this database supports internal nesting and mappings exist
+  if (databaseSupportsInternalNesting(atlasDatabaseName) && nestingMappings.length > 0) {
+    const pagesWithOverrides = applyNestingOverrides(databasePages, nestingMappings, atlasDatabaseName);
+    return pagesWithOverrides;
+  }
 
   return databasePages;
 }

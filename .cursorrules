@@ -454,10 +454,9 @@ await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).t
 
 # Additional Documentation
 
-## Core Documentation Files
-
 - **[README.md](../README.md)** - Project overview and getting started guide (coming soon)
 - **[docs/NOTION_EMBEDS.md](../docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
+- **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
 
 ## Atlas Services
 

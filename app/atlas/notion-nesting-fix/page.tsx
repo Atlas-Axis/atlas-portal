@@ -1,19 +1,46 @@
+/**
+ * Notion Nesting Bug Fix - UI Page
+ *
+ * Server component that loads existing mappings and document names, then passes them to the client component.
+ * Provides a UI for manually defining correct parent-child relationships to fix Notion nesting bugs.
+ *
+ * @see {@link file://../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
+ */
 import type { Metadata } from 'next';
+import { loadNotionNestingFixMappings } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { Content } from './content';
 
 export const metadata: Metadata = {
   title: 'Notion Nesting Fix - Atlas',
   description: 'Fix Notion nesting issues in Atlas documents',
 };
-
-/**
- * This page provides a tool to fix parent relationship issues for deeply nested documents in Notion, caused by a Notion bug.
- * This page lets the user define ID mappings to overwrite the parent relationships for documents defined in the mapping.
- */
 export default async function NotionNestingFixPage() {
+  // Load existing mappings
+  const mappings = await loadNotionNestingFixMappings();
+
+  // Load document names for all pages from the current view
+  const { data: pages, error } = await supabase()
+    .from('notion_database_pages_current')
+    .select('notion_page_id, plain_text_name');
+
+  if (error) {
+    console.error('Error loading document names:', error);
+  }
+
+  // Create lookup map: UUID → document name
+  const documentLookup = new Map<string, string>();
+  if (pages) {
+    for (const page of pages) {
+      if (page.notion_page_id && page.plain_text_name) {
+        documentLookup.set(page.notion_page_id, page.plain_text_name);
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6 pb-12">
-      <Content />
+      <Content initialMappings={mappings} documentLookup={Object.fromEntries(documentLookup)} />
     </div>
   );
 }
