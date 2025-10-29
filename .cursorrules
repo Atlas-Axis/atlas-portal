@@ -33,7 +33,7 @@ This Next.js application enables change tracking for Atlas documents stored in N
 
 ## Framework & Runtime
 
-- Next.js 15 with App Router, server-side rendering
+- Next.js 16 with App Router, server-side rendering
 - TypeScript with strict type-safety
 - Node.js (v22)
 

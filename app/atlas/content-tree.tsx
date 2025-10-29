@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { Button, ButtonGroup } from '@heroui/react';
 import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import {
@@ -410,12 +409,6 @@ export default function ContentTree({
   agentsLoading?: boolean;
   // agentDocs?: StandardizedAtlasDocument[];
 }) {
-  // Memoize scopeKeys to prevent unnecessary re-renders
-  const scopeKeys = useMemo(
-    () => scopeTreesWithoutAgents.map((scopes) => scopes.uuid || ''),
-    [scopeTreesWithoutAgents],
-  );
-
   // Create a map to track which parent each page is rendered under
   const parentTrackingMap = new Map<string, string>();
 
@@ -543,40 +536,12 @@ export default function ContentTree({
 
   console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
 
-  // Function to expand all accordions
-  const expandAll = () => {
-    setExpandedKeys(new Set(scopeKeys));
-  };
-
-  // Function to collapse all accordions
-  const collapseAll = () => {
-    setExpandedKeys(new Set());
-  };
-
   if (scopeTreesWithoutAgents.length === 0) {
     return <div>No Scopes found in Atlas</div>;
   }
 
   return (
     <div className={styles.containerMain}>
-      <div className="flex items-center gap-6">
-        {/* Expand/Collapse All Buttons */}
-        <div className="mb-2 flex w-full justify-end">
-          <div className="flex flex-col items-end gap-2">
-            <ButtonGroup>
-              <Button onPress={expandAll} variant="flat" size="sm">
-                Expand All
-              </Button>
-              <Button onPress={collapseAll} variant="flat" size="sm">
-                Collapse All
-              </Button>
-            </ButtonGroup>
-
-            <div className="text-xs text-slate-500">Click on a scope to expand/collapse its contents.</div>
-          </div>
-        </div>
-      </div>
-
       <Accordion
         disableAnimation={true}
         selectionMode="multiple"
