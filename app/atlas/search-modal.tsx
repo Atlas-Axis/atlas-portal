@@ -140,10 +140,9 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
     return results.slice(0, 50);
   }, [query, allDocuments]);
 
-  // Focus input when modal opens and handle keyboard navigation
+  // Focus input when modal opens
   useEffect(() => {
     if (isOpen) {
-      setQuery('');
       // Small delay to ensure modal animation completes
       setTimeout(() => {
         const input = document.querySelector('[data-search-modal-input]') as HTMLInputElement;
@@ -171,20 +170,15 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
       return;
     }
 
-    // Close modal first
+    // Reset query and close modal
+    setQuery('');
     onClose();
 
-    // Extract root scope from document ID (e.g., A.2.9 -> A.2)
-    const rootScopeDocID = docNo.split('.').slice(0, 2).join('.');
-
-    // Trigger expansion of the target scope (same pattern as sidebar leaf nodes)
+    // Trigger expansion and navigation to the target document
+    // The custom event will handle both expansion and hash update
     dispatchExpandScopeEvent({
-      scopeDocID: rootScopeDocID,
       targetDocID: docNo,
     });
-
-    // Navigate to hash (browser will handle scrolling)
-    window.location.hash = docNo;
   };
 
   return (

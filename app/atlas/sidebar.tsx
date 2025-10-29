@@ -76,11 +76,8 @@ function renderSidebarNode({
         href={node.doc_no ? `#${node.doc_no}` : undefined}
         onClick={() => {
           if (node.doc_no) {
-            // Extract root scope from document ID (e.g., A.2.9 -> A.2)
-            const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
-            // Trigger expansion of the target scope
+            // Trigger expansion and navigation to the target document
             dispatchExpandScopeEvent({
-              scopeDocID: rootScopeDocID,
               targetDocID: node.doc_no,
             });
           }
@@ -111,15 +108,10 @@ function renderSidebarNode({
             onClick={() => {
               // When clicking the title, navigate to hash
               if (node.doc_no) {
-                // Extract root scope from document ID (e.g., A.2.9 -> A.2)
-                const rootScopeDocID = node.doc_no.split('.').slice(0, 2).join('.');
-                // Trigger expansion of the target scope
-                setTimeout(() => {
-                  dispatchExpandScopeEvent({
-                    scopeDocID: rootScopeDocID,
-                    targetDocID: node.doc_no,
-                  });
-                }, 100);
+                // Trigger expansion and navigation to the target document
+                dispatchExpandScopeEvent({
+                  targetDocID: node.doc_no,
+                });
               }
             }}
           >
@@ -177,15 +169,10 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   useEffect(() => {
     const initialHash = window.location.hash.slice(1);
     if (initialHash) {
-      // Extract root scope from document ID (e.g., A.2.9 -> A.2)
-      const rootScopeDocID = initialHash.split('.').slice(0, 2).join('.');
-      // Trigger expansion of the target scope with a small delay to ensure the page is fully loaded
-      setTimeout(() => {
-        dispatchExpandScopeEvent({
-          scopeDocID: rootScopeDocID,
-          targetDocID: initialHash,
-        });
-      }, 100);
+      // Trigger expansion and navigation to the target document (content tree has debouncing)
+      dispatchExpandScopeEvent({
+        targetDocID: initialHash,
+      });
     }
   }, []);
 

@@ -5,10 +5,6 @@
   font-weight: 600;
 }
 
-.typeChipSpacing {
-  margin-left: 0.5rem;
-}
-
 .nodeContent {
   font-size: var(--text-sm);
   font-weight: 500;
@@ -109,5 +105,4 @@
   display: flex;
   cursor: pointer;
   align-items: center;
-  gap: 0.5rem;
 }

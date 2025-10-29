@@ -12,6 +12,8 @@ export default function TypeChip({ type }: { type: AtlasDocumentType }) {
   }
 
   return (
-    <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${colorClass}`}>{color}</span>
+    <span className={`ml-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${colorClass}`}>
+      {color}
+    </span>
   );
 }

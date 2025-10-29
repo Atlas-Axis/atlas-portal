@@ -91,12 +91,17 @@ function ListItem({ item, uuidMappings }: ListItemProps) {
 
   const handleTitleClick = () => {
     if (docId) {
-      window.location.hash = docId;
+      // Use history.pushState to update hash without triggering browser's native scroll
+      // This prevents double-scrolling when navigating
+      const newUrl = `${window.location.pathname}${window.location.search}#${docId}`;
+      window.history.pushState(null, '', newUrl);
+      // Manually trigger hashchange event for any listeners
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
     }
   };
 
   return (
-    <div className="flex items-start space-x-3 py-3" id={docId || undefined}>
+    <div className="flex items-start space-x-3 py-3" data-doc-id={docId || undefined}>
       <div className="min-w-0 flex-1">
         <div className="space-y-2">
           <div className="flex items-center">

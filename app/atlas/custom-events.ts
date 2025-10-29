@@ -7,8 +7,6 @@
  * Used by sidebar to request content-tree to expand a path to a document and navigate to it
  */
 export interface ExpandScopeEventDetail {
-  /** The root scope document ID (e.g., "A.2") that should be expanded (optional if targetDocID is provided) */
-  scopeDocID: string;
   /** The target document ID (e.g., "A.2.9.3") to navigate to - will auto-expand full path (Scope → Article → Section) */
   targetDocID: string;
 }
