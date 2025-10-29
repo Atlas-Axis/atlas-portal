@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
+import { Button, cn } from '@heroui/react';
+import { useClipboard } from '@heroui/use-clipboard';
+import { Link2 } from 'lucide-react';
 import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import {
@@ -410,7 +413,16 @@ function renderTreeNode({
   const nodeOwnContent = (
     <div className={isHighlighted ? styles.highlightedContent : ''} id={docNumber || undefined}>
       {!isRootNode && (
-        <div className={styles.nodeTitle}>
+        <div className={`${styles.nodeTitle} relative`}>
+          <div
+            className={cn('absolute top-0 -left-6', {
+              '-left-9': isHighlighted,
+              '-left-6': !isHighlighted,
+            })}
+          >
+            <CopyToClipboardButton text={`${window.location.origin}${window.location.pathname}#${docNumber}`} />
+          </div>
+
           <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
             {docNumber} - {docName}
           </a>
@@ -519,7 +531,10 @@ function renderTreeNode({
           key={nodeId}
           aria-label={`${docNumber} - ${docName}`}
           title={
-            <div className={`${styles.nodeTitle}`}>
+            <div className={`${styles.nodeTitle} relative`}>
+              <div className="absolute top-0 -left-8">
+                <CopyToClipboardButton text={`${window.location.origin}${window.location.pathname}#${docNumber}`} />
+              </div>
               <a
                 href={docNumber ? `#${docNumber}` : undefined}
                 className={styles.nodeTitle}
@@ -765,7 +780,7 @@ export default function ContentTree({
         disableAnimation={true}
         selectionMode="multiple"
         variant="splitted"
-        className="max-w-full space-y-6 overflow-x-hidden"
+        className="max-w-full space-y-6"
         selectedKeys={expandedKeys}
         onSelectionChange={(keys) => {
           if (typeof keys === 'string') {
@@ -781,7 +796,12 @@ export default function ContentTree({
             id={scopeTree.doc_no || undefined}
             aria-label={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
             title={
-              <div className={`${styles.accordionTitle} text-xl font-semibold text-gray-900`}>
+              <div className={`${styles.accordionTitle} relative text-xl font-semibold text-gray-900`}>
+                <div className="absolute top-0.5 -left-8">
+                  <CopyToClipboardButton
+                    text={`${window.location.origin}${window.location.pathname}#${scopeTree.doc_no}`}
+                  />
+                </div>
                 <span>
                   {scopeTree.doc_no} - {scopeTree.name}
                 </span>
@@ -814,4 +834,26 @@ export default function ContentTree({
   );
 }
 
-// (AtlasTreeNode duplicate logging removed; StandardizedAtlasDocument does not use Notion page IDs here)
+function CopyToClipboardButton({ text }: { text: string }) {
+  const { copied, copy } = useClipboard({ timeout: 3000 });
+
+  return (
+    <div className="flex items-center gap-1">
+      <Button
+        variant="light"
+        isIconOnly
+        size="sm"
+        onPress={() => copy(text)}
+        className="h-6 w-6 min-w-6"
+        title="Copy link to clipboard"
+      >
+        <Link2 className="" size={12} />
+      </Button>
+      {copied && (
+        <span className="absolute top-0 -left-8 rounded-md bg-white px-2 py-1 text-xs font-semibold whitespace-nowrap text-green-600">
+          COPIED!
+        </span>
+      )}
+    </div>
+  );
+}
