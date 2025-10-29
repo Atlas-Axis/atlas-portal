@@ -4,3 +4,16 @@
   font-weight: 600;
   transition: color 0.2s ease;
 }
+
+.formattedContent p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.formattedContent p:first-child {
+  margin-top: 0;
+}
+
+.formattedContent p:last-child {
+  margin-bottom: 0;
+}
