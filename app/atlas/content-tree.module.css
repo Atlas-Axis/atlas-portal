@@ -5,10 +5,6 @@
   font-weight: 600;
 }
 
-.nodeTitle:hover {
-  text-decoration: underline;
-}
-
 .typeChipSpacing {
   margin-left: 0.5rem;
 }
@@ -85,6 +81,7 @@
 }
 
 .highlightedContent {
+  color: rgba(99, 102, 241);
   background-color: rgba(99, 102, 241, 0.08);
   border-left: 3px solid rgb(99, 102, 241);
   border-radius: 0.375rem;

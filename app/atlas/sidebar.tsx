@@ -4,11 +4,12 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { Input } from '@heroui/input';
-import { useDisclosure } from '@heroui/react';
-import { Search } from 'lucide-react';
+import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from '@heroui/react';
+import { Download, Search, Settings } from 'lucide-react';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
+import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
 import { dispatchExpandScopeEvent } from './custom-events';
 import SearchModal from './search-modal';
 
@@ -195,11 +196,11 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   return (
     <>
       <div
-        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50 md:block"
+        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 md:flex"
         role="navigation"
         aria-label="Atlas navigation"
       >
-        <div className="p-4">
+        <div className="grow p-4">
           <div className="mb-6 flex items-center gap-3">
             <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" />
             <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
@@ -231,10 +232,114 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
             )}
           </div>
         </div>
+
+        <div className="flex w-full flex-col gap-2 p-4">
+          <DownloadAtlasButton />
+          <SettingsDropdown />
+        </div>
       </div>
 
       {/* Search Modal */}
       <SearchModal scopeTrees={scopeTrees} uuidMappings={uuidMappings} isOpen={isOpen} onClose={onClose} />
     </>
+  );
+}
+
+function DownloadAtlasButton() {
+  return (
+    <Dropdown backdrop="blur">
+      <DropdownTrigger>
+        <Button
+          variant="bordered"
+          className="w-full"
+          startContent={<Download className="text-default-500" size={16} />}
+        >
+          Download Atlas
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu aria-label="Static Actions" className="w-full">
+        <DropdownItem key="download-markdown" className="w-full">
+          <Button
+            variant="light"
+            as="a"
+            href="/api/atlas.md"
+            target="_blank"
+            startContent={<Download className="text-default-500" size={16} />}
+          >
+            Download as Markdown
+          </Button>
+        </DropdownItem>
+        <DropdownItem key="download-json" className="w-full">
+          <Button
+            variant="light"
+            as="a"
+            href="/api/atlas.json"
+            target="_blank"
+            startContent={<Download className="text-default-500" size={16} />}
+          >
+            Download as JSON
+          </Button>
+        </DropdownItem>
+        <DropdownItem key="download-yaml" className="w-full">
+          <Button
+            variant="light"
+            as="a"
+            href="/api/atlas.yaml"
+            target="_blank"
+            startContent={<Download className="text-default-500" size={16} />}
+          >
+            Download as YAML
+          </Button>
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+}
+
+function SettingsDropdown() {
+  // Initialize state from localStorage
+  const [showUUIDs, setShowUUIDs] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const stored = localStorage.getItem(SHOW_UUIDS_STORAGE_KEY);
+      return stored === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  // Save to localStorage whenever showUUIDs changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(SHOW_UUIDS_STORAGE_KEY, String(showUUIDs));
+      // Dispatch custom event to notify other components in same window
+      window.dispatchEvent(new Event(LOCAL_STORAGE_CHANGED_EVENT));
+    } catch (error) {
+      // Handle localStorage errors (e.g., quota exceeded, private browsing)
+      console.error('Failed to save showUUIDs setting to localStorage:', error);
+    }
+  }, [showUUIDs]);
+
+  return (
+    <Dropdown backdrop="blur">
+      <DropdownTrigger>
+        <Button variant="light" className="w-full" startContent={<Settings className="text-default-500" size={16} />}>
+          Settings
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu aria-label="Settings Menu" className="w-full">
+        <DropdownItem key="show-uuids" className="w-full" textValue="Show UUIDs">
+          <Checkbox
+            isSelected={showUUIDs}
+            onValueChange={setShowUUIDs}
+            classNames={{
+              base: 'w-full max-w-full ',
+            }}
+          >
+            <span className="text-sm">Show UUIDs</span>
+          </Checkbox>
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }

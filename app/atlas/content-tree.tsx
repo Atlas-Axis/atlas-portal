@@ -15,9 +15,82 @@ import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
+import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
 import styles from './content-tree.module.css';
 import { addExpandScopeListener } from './custom-events';
 import TypeChip from './type-chip';
+
+/**
+ * Type-safe helper to get child collection from a document
+ */
+function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
+  const value = (node as unknown as Record<string, unknown>)[key];
+  return Array.isArray(value) ? value : [];
+}
+
+/**
+ * Recursive helper to find the path of UUIDs from root to a target document.
+ * Returns an array of UUIDs representing the path through collapsible nodes (Scope, Article, Section).
+ *
+ * @param targetDocNumber - The document number to search for (e.g., "A.2.3.21")
+ * @param node - The current node being examined
+ * @param currentPath - Accumulated path of UUIDs from root to current node
+ * @returns Array of UUIDs forming the path to the target, or null if not found
+ */
+function findPathInTree(
+  targetDocNumber: string,
+  node: StandardizedAtlasDocument,
+  currentPath: string[],
+): string[] | null {
+  // Add current node's UUID to path if it's a collapsible type (Scope, Article, Section)
+  const isCollapsible = node.type === 'Scope' || node.type === 'Article' || node.type === 'Section';
+  const newPath = isCollapsible && node.uuid ? [...currentPath, node.uuid] : currentPath;
+
+  // Check if this is the target
+  if (node.doc_no === targetDocNumber) {
+    return newPath;
+  }
+
+  // Search in children
+  const children: StandardizedAtlasDocument[] = [
+    ...getChildCollection(node, 'scopes'),
+    ...getChildCollection(node, 'articles'),
+    ...getChildCollection(node, 'sections_and_primary_docs'),
+    ...getChildCollection(node, 'agent_scope_database'),
+    ...getChildCollection(node, 'annotations'),
+    ...getChildCollection(node, 'tenets'),
+    ...getChildCollection(node, 'scenarios'),
+    ...getChildCollection(node, 'scenario_variations'),
+    ...getChildCollection(node, 'active_data'),
+    ...getChildCollection(node, 'needed_research'),
+  ];
+
+  for (const child of children) {
+    const result = findPathInTree(targetDocNumber, child, newPath);
+    if (result) {
+      return result;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Finds the path of collapsible node UUIDs from root to a target document.
+ *
+ * @param targetDocNumber - The document number to find (e.g., "A.2.3.21")
+ * @param trees - Array of root scope trees to search
+ * @returns Array of UUIDs forming the path to expand, or null if not found
+ */
+function findPathToDocument(targetDocNumber: string, trees: StandardizedAtlasDocument[]): string[] | null {
+  for (const tree of trees) {
+    const result = findPathInTree(targetDocNumber, tree, []);
+    if (result) {
+      return result;
+    }
+  }
+  return null;
+}
 
 function StandardizedExtraData({
   node,
@@ -79,6 +152,9 @@ interface RenderTreeNodeProps {
   agentsLoading?: boolean;
   // agentDocs?: StandardizedAtlasDocument[];
   highlightedDocNumber: string | null;
+  expandedKeys: Set<string>;
+  onToggleExpanded: (uuid: string) => void;
+  showUUIDs: boolean;
 }
 
 function renderSupportingDocumentListInSameType({
@@ -90,6 +166,9 @@ function renderSupportingDocumentListInSameType({
   uuidMappings,
   agentsLoading = false,
   highlightedDocNumber = null,
+  expandedKeys,
+  onToggleExpanded,
+  showUUIDs,
   // agentDocs,
 }: {
   label: string;
@@ -100,6 +179,9 @@ function renderSupportingDocumentListInSameType({
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
   highlightedDocNumber?: string | null;
+  expandedKeys: Set<string>;
+  onToggleExpanded: (uuid: string) => void;
+  showUUIDs: boolean;
   // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
@@ -121,6 +203,9 @@ function renderSupportingDocumentListInSameType({
                 uuidMappings,
                 agentsLoading,
                 highlightedDocNumber,
+                expandedKeys,
+                onToggleExpanded,
+                showUUIDs,
                 // agentDocs,
               })}
             </React.Fragment>
@@ -138,6 +223,9 @@ function renderSupportingDocuments({
   uuidMappings,
   agentsLoading = false,
   highlightedDocNumber = null,
+  expandedKeys,
+  onToggleExpanded,
+  showUUIDs,
   // agentDocs,
 }: {
   node: StandardizedAtlasDocument;
@@ -146,6 +234,9 @@ function renderSupportingDocuments({
   uuidMappings: UuidMappings;
   agentsLoading?: boolean;
   highlightedDocNumber?: string | null;
+  expandedKeys: Set<string>;
+  onToggleExpanded: (uuid: string) => void;
+  showUUIDs: boolean;
   // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const nodeId = node.uuid || '';
@@ -208,6 +299,9 @@ function renderSupportingDocuments({
             uuidMappings,
             agentsLoading,
             highlightedDocNumber,
+            expandedKeys,
+            onToggleExpanded,
+            showUUIDs,
             // agentDocs,
           })}
         </div>
@@ -224,6 +318,9 @@ function renderTreeNode({
   uuidMappings,
   agentsLoading = false,
   highlightedDocNumber = null,
+  expandedKeys,
+  onToggleExpanded,
+  showUUIDs,
   // agentDocs,
 }: RenderTreeNodeProps): React.ReactElement {
   // Get node identifiers and metadata based on type
@@ -245,9 +342,9 @@ function renderTreeNode({
   // For StandardizedAtlasDocument, use the mapped Notion page ID
   const isAgentRootSection = Boolean(notionId && notionId === AGENT_ROOT_SECTION_UUID_FOR_NESTING);
   const shouldShowAgentPlaceholder = isAgentRootSection && agentsLoading;
-  // const shouldRenderAgentDocs = isAgentRootSection && !agentsLoading && agentDocs && agentDocs.length > 0;
-  const agentDocs: StandardizedAtlasDocument[] = []; // IGNORE
-  const shouldRenderAgentDocs = true;
+  // Note: Agent docs are currently disabled - this logic is prepared for future use
+  const agentDocs: StandardizedAtlasDocument[] = [];
+  const shouldRenderAgentDocs = false;
 
   // Get immutable and primary document children based on node type
   type ImmutableDocsContainer = {
@@ -272,7 +369,44 @@ function renderTreeNode({
   // Check if this node should be highlighted
   const isHighlighted = highlightedDocNumber && docNumber === highlightedDocNumber;
 
-  // Node's own content (without children) - this is what gets highlighted
+  // Check if this node type should be collapsible (Article or Section with children)
+  const isCollapsibleType =
+    (docType === 'Article' || docType === 'Section') && immutableAndPrimaryDocumentPages.length > 0;
+  const isExpanded = nodeId && expandedKeys.has(nodeId);
+
+  // Node's content (the body, not the title) - used inside accordion or standalone
+  const nodeBodyContent = (
+    <>
+      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
+        <CustomHTML html={formattedContent} />
+      </div>
+
+      <StandardizedExtraData node={node} className={styles.nodeContent} />
+
+      {showUUIDs && (
+        <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
+          {notionId ? (
+            <>
+              <a
+                href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.notionLinkAnchor}
+              >
+                {`Notion ID: ${uuidToNoHyphens(notionId)}`}
+              </a>
+              <span className="mx-2">•</span>
+            </>
+          ) : (
+            <span className="text-gray-400">No Notion ID</span>
+          )}
+          <span>{`Atlas UUID: ${node.uuid}`}</span>
+        </div>
+      )}
+    </>
+  );
+
+  // For non-collapsible types, render title + body together
   const nodeOwnContent = (
     <div className={isHighlighted ? styles.highlightedContent : ''} id={docNumber || undefined}>
       {!isRootNode && (
@@ -285,31 +419,7 @@ function renderTreeNode({
           </span>
         </div>
       )}
-
-      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
-        <CustomHTML html={formattedContent} />
-      </div>
-
-      <StandardizedExtraData node={node} className={styles.nodeContent} />
-
-      <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
-        {notionId ? (
-          <>
-            <a
-              href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.notionLinkAnchor}
-            >
-              {`Notion ID: ${uuidToNoHyphens(notionId)}`}
-            </a>
-            <span className="mx-2">•</span>
-          </>
-        ) : (
-          <span className="text-gray-400">No Notion ID</span>
-        )}
-        <span>{`Atlas UUID: ${node.uuid}`}</span>
-      </div>
+      {nodeBodyContent}
     </div>
   );
 
@@ -324,7 +434,7 @@ function renderTreeNode({
 
       {shouldRenderAgentDocs && (
         <ul className={styles.immutableDocsList}>
-          {agentDocs!.map((agentDoc, idx) => {
+          {agentDocs.map((agentDoc, idx) => {
             const agentNotionId = agentDoc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(agentDoc.uuid) : null;
             const key = agentNotionId || `agent-${idx}`;
             return (
@@ -337,6 +447,9 @@ function renderTreeNode({
                   uuidMappings,
                   agentsLoading: false,
                   highlightedDocNumber,
+                  expandedKeys,
+                  onToggleExpanded,
+                  showUUIDs,
                   // agentDocs: [],
                 })}
               </React.Fragment>
@@ -360,6 +473,9 @@ function renderTreeNode({
                   uuidMappings,
                   agentsLoading,
                   highlightedDocNumber,
+                  expandedKeys,
+                  onToggleExpanded,
+                  showUUIDs,
                   // agentDocs,
                 })}
               </React.Fragment>
@@ -369,11 +485,72 @@ function renderTreeNode({
       )}
 
       {/* {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })} */}
-      {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, highlightedDocNumber })}
+      {renderSupportingDocuments({
+        node,
+        parentTrackingMap,
+        depth,
+        uuidMappings,
+        agentsLoading,
+        highlightedDocNumber,
+        expandedKeys,
+        onToggleExpanded,
+        showUUIDs,
+      })}
     </>
   );
 
-  const nodeContent = (
+  // For collapsible types (Article/Section with children), wrap in an Accordion
+  const nodeContent = isCollapsibleType ? (
+    <div id={docNumber || undefined}>
+      <Accordion
+        disableAnimation={true}
+        selectionMode="multiple"
+        variant="light"
+        className="px-0"
+        selectedKeys={isExpanded ? [nodeId] : []}
+        onSelectionChange={(_keys) => {
+          if (nodeId) {
+            // Toggle expansion
+            onToggleExpanded(nodeId);
+          }
+        }}
+      >
+        <AccordionItem
+          key={nodeId}
+          aria-label={`${docNumber} - ${docName}`}
+          title={
+            <div className={`${styles.nodeTitle}`}>
+              <a
+                href={docNumber ? `#${docNumber}` : undefined}
+                className={styles.nodeTitle}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  // Prevent accordion toggle when clicking the link
+                  e.stopPropagation();
+                }}
+              >
+                {docNumber} - {docName}
+              </a>
+              <span className={styles.typeChipSpacing}>
+                <TypeChip type={docType} />
+              </span>
+            </div>
+          }
+          classNames={{
+            base: 'px-0 mb-3',
+            trigger: `px-2 py-2 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
+            content: 'px-0 pt-2 pb-0',
+            indicator: 'text-slate-600',
+            title: 'w-full',
+          }}
+        >
+          {/* Node's body content (inside accordion) */}
+          {nodeBodyContent}
+          {/* Children */}
+          {childrenContent}
+        </AccordionItem>
+      </Accordion>
+    </div>
+  ) : (
     <>
       {nodeOwnContent}
       {childrenContent}
@@ -413,42 +590,77 @@ export default function ContentTree({
   const parentTrackingMap = new Map<string, string>();
 
   // State to control which accordion items are expanded
+  // Keys are UUIDs for Scope/Article/Section documents
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
-    // return new Set(scopeKeys);
     return new Set([]);
   });
 
   // State to track the currently highlighted document from URL hash
   const [highlightedDocNumber, setHighlightedDocNumber] = useState<string | null>(null);
 
-  // Listen for hash changes to highlight the target document and expand containing scope
+  // State to control whether UUIDs are shown (read from localStorage)
+  const [showUUIDs, setShowUUIDs] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const stored = localStorage.getItem(SHOW_UUIDS_STORAGE_KEY);
+      return stored === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  // Listen for localStorage changes to update showUUIDs without page reload
+  React.useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === SHOW_UUIDS_STORAGE_KEY) {
+        setShowUUIDs(e.newValue === 'true');
+      }
+    };
+
+    // Listen for storage events (fired when localStorage changes in other tabs/windows)
+    window.addEventListener('storage', handleStorageChange);
+
+    // Also listen for custom-emitted events for same-window updates
+    const handleCustomStorageChange = () => {
+      try {
+        const stored = localStorage.getItem(SHOW_UUIDS_STORAGE_KEY);
+        setShowUUIDs(stored === 'true');
+      } catch {
+        // Ignore errors
+      }
+    };
+
+    // Listen for custom event fired when localStorage changes in same window
+    window.addEventListener(LOCAL_STORAGE_CHANGED_EVENT, handleCustomStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener(LOCAL_STORAGE_CHANGED_EVENT, handleCustomStorageChange);
+    };
+  }, []);
+
+  // Listen for hash changes to highlight the target document and expand the path to it
   React.useEffect(() => {
     const updateHighlight = () => {
       const hash = window.location.hash.slice(1); // Remove the '#' prefix
       setHighlightedDocNumber(hash || null);
 
       if (hash) {
-        // Find which scope contains this document
-        const findScopeForDoc = (docNumber: string): StandardizedAtlasDocument | null => {
-          for (const scope of scopeTreesWithoutAgents) {
-            // Check if the document number starts with the scope's doc_no
-            if (docNumber.startsWith(scope.doc_no || '')) {
-              return scope;
-            }
-          }
-          return null;
-        };
+        // Find the full path to the target document
+        const path = findPathToDocument(hash, scopeTreesWithoutAgents);
+        if (path && path.length > 0) {
+          // Expand all nodes in the path (merge with existing expanded keys to preserve user interactions)
+          setExpandedKeys((prev) => {
+            const newSet = new Set(prev);
+            path.forEach((uuid) => newSet.add(uuid));
+            return newSet;
+          });
 
-        const containingScope = findScopeForDoc(hash);
-        if (containingScope && containingScope.uuid) {
-          // Expand the accordion containing this document
-          setExpandedKeys((prev) => new Set([...prev, containingScope.uuid || '']));
-
-          // Wait for accordion to expand and then scroll to the highlighted element
+          // Wait for accordions to expand and then scroll to the highlighted element
           setTimeout(() => {
             const element = document.getElementById(hash);
             if (element) {
-              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           }, 150);
         }
@@ -468,35 +680,29 @@ export default function ContentTree({
     const cleanup = addExpandScopeListener((event) => {
       const { scopeDocID, targetDocID } = event.detail;
 
-      // Find the scope that matches the scopeDocID
-      const targetScope = scopeTreesWithoutAgents.find((scope) => scope.doc_no === scopeDocID);
-      if (targetScope) {
-        const targetScopeUuid = targetScope.uuid || '';
+      if (targetDocID) {
+        // Find the full path to the target document
+        const path = findPathToDocument(targetDocID, scopeTreesWithoutAgents);
+        if (path && path.length > 0) {
+          // Replace expanded keys with only the path to the target (focused navigation)
+          setExpandedKeys(new Set(path));
 
-        // Check if the target scope is already expanded
-        const isAlreadyExpanded = expandedKeys.has(targetScopeUuid);
-
-        if (isAlreadyExpanded) {
-          // If already expanded, just navigate to the target document
-          if (targetDocID) {
+          // Wait for accordions to expand, then navigate to target document
+          setTimeout(() => {
             window.location.hash = targetDocID;
-          }
-        } else {
-          // Close all other accordions and expand only the target scope
-          setExpandedKeys(new Set([targetScopeUuid]));
-
-          // Wait for accordion to expand, then navigate to target document
-          if (targetDocID) {
-            setTimeout(() => {
-              window.location.hash = targetDocID;
-            }, 100);
-          }
+          }, 100);
+        }
+      } else if (scopeDocID) {
+        // If only scopeDocID is provided, find and expand that scope
+        const path = findPathToDocument(scopeDocID, scopeTreesWithoutAgents);
+        if (path && path.length > 0) {
+          setExpandedKeys(new Set(path));
         }
       }
     });
 
     return cleanup;
-  }, [scopeTreesWithoutAgents, expandedKeys]);
+  }, [scopeTreesWithoutAgents]);
 
   // Calculate total nodes for debugging
   // TODO: Use a page-id map instead for efficiency
@@ -535,6 +741,19 @@ export default function ContentTree({
   }, 0);
 
   console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
+
+  // Handler to toggle expansion of Article/Section nodes
+  const handleToggleExpanded = (uuid: string) => {
+    setExpandedKeys((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(uuid)) {
+        newSet.delete(uuid);
+      } else {
+        newSet.add(uuid);
+      }
+      return newSet;
+    });
+  };
 
   if (scopeTreesWithoutAgents.length === 0) {
     return <div>No Scopes found in Atlas</div>;
@@ -583,6 +802,9 @@ export default function ContentTree({
               uuidMappings,
               agentsLoading,
               highlightedDocNumber,
+              expandedKeys,
+              onToggleExpanded: handleToggleExpanded,
+              showUUIDs,
               // agentDocs,
             })}
           </AccordionItem>
