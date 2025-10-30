@@ -1,0 +1,1 @@
+Review the Git log from the last week and prepare a clear, detailed work log for my manager, emphasizing the main tasks completed. Keep it simple and easy to understand for someone without a technical background.
