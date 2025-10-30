@@ -338,255 +338,237 @@ function renderSupportingDocuments({
 /**
  *
  */
-const TreeNode = React.memo(
-  function TreeNode({
-    node,
-    depth = 0,
-    isRootNode = false,
-    uuidMappings,
-    uuidToDocNoMap,
-    isHighlighted,
-    getIsHighlighted,
-    isExpanded,
-    getIsExpanded,
-    onToggleExpanded,
-    showUUIDs,
-  }: RenderTreeNodeProps): React.ReactElement {
-    // Get node identifiers and metadata based on type
-    const nodeId = node.uuid || '';
-    const docNumber = node.doc_no;
-    const docName = node.name;
-    const docType = node.type;
+function TreeNode({
+  node,
+  depth = 0,
+  isRootNode = false,
+  uuidMappings,
+  uuidToDocNoMap,
+  isHighlighted,
+  getIsHighlighted,
+  isExpanded,
+  getIsExpanded,
+  onToggleExpanded,
+  showUUIDs,
+}: RenderTreeNodeProps): React.ReactElement {
+  // Get node identifiers and metadata based on type
+  const nodeId = node.uuid || '';
+  const docNumber = node.doc_no;
+  const docName = node.name;
+  const docType = node.type;
 
-    // Get Notion page ID for links
-    let notionId: string | null = null;
-    if (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
-      notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
-    }
+  // Get Notion page ID for links
+  let notionId: string | null = null;
+  if (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
+    notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
+  }
 
-    // Format content based on type, converting UUID links to document number anchors
-    const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
+  // Format content based on type, converting UUID links to document number anchors
+  const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
 
-    // Get immutable and primary document children based on node type
-    type ImmutableDocsContainer = {
-      scopes?: StandardizedAtlasDocument[];
-      articles?: StandardizedAtlasDocument[];
-      sections_and_primary_docs?: StandardizedAtlasDocument[];
-      agent_scope_database?: StandardizedAtlasDocument[];
-    };
-    const docWithImmutable = node as StandardizedAtlasDocument & ImmutableDocsContainer;
+  // Get immutable and primary document children based on node type
+  type ImmutableDocsContainer = {
+    scopes?: StandardizedAtlasDocument[];
+    articles?: StandardizedAtlasDocument[];
+    sections_and_primary_docs?: StandardizedAtlasDocument[];
+    agent_scope_database?: StandardizedAtlasDocument[];
+  };
+  const docWithImmutable = node as StandardizedAtlasDocument & ImmutableDocsContainer;
 
-    const immutableAndPrimaryDocumentPages: StandardizedAtlasDocument[] = [
-      ...(docWithImmutable.scopes || []),
-      ...(docWithImmutable.articles || []),
-      ...(docWithImmutable.sections_and_primary_docs || []),
-      ...(docWithImmutable.agent_scope_database || []),
-    ];
+  const immutableAndPrimaryDocumentPages: StandardizedAtlasDocument[] = [
+    ...(docWithImmutable.scopes || []),
+    ...(docWithImmutable.articles || []),
+    ...(docWithImmutable.sections_and_primary_docs || []),
+    ...(docWithImmutable.agent_scope_database || []),
+  ];
 
-    if (depth > 50) {
-      throw new Error('Maximum tree depth exceeded, possible circular reference');
-    }
+  if (depth > 50) {
+    throw new Error('Maximum tree depth exceeded, possible circular reference');
+  }
 
-    // Check if this node type should be collapsible (Article or Section with children)
-    const isCollapsibleType =
-      (docType === 'Article' || docType === 'Section') && immutableAndPrimaryDocumentPages.length > 0;
+  // Check if this node type should be collapsible (Article or Section with children)
+  const isCollapsibleType =
+    (docType === 'Article' || docType === 'Section') && immutableAndPrimaryDocumentPages.length > 0;
 
-    // Node's content (the body, not the title) - used inside accordion or standalone
-    const nodeBodyContent = (
-      <>
-        <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
-          <CustomHTML html={formattedContent} />
-        </div>
+  // Memoize the selectedKeys Set to avoid creating new instances on every render
+  const selectedKeys = React.useMemo(() => {
+    return isExpanded ? new Set([nodeId]) : new Set<string>();
+  }, [isExpanded, nodeId]);
 
-        <StandardizedExtraData node={node} className={styles.nodeContent} />
-
-        {showUUIDs && (
-          <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
-            {notionId ? (
-              <>
-                <a
-                  href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.notionLinkAnchor}
-                >
-                  {`Notion ID: ${uuidToNoHyphens(notionId)}`}
-                </a>
-                <span className="mx-2">•</span>
-              </>
-            ) : (
-              <span className="text-gray-400">No Notion ID</span>
-            )}
-            <span>{`Atlas UUID: ${node.uuid}`}</span>
-          </div>
-        )}
-      </>
-    );
-
-    // For non-collapsible types, render title + body together
-    const nodeOwnContent = (
-      <div className={isHighlighted ? styles.highlightedContent : ''} data-doc-id={docNumber || undefined}>
-        {!isRootNode && (
-          <div className={`${styles.nodeTitle} flex items-center`}>
-            <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
-              {docNumber} - {docName}
-            </a>
-            <CopyToClipboardButton
-              text={
-                typeof window !== 'undefined'
-                  ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                  : `#${docNumber}`
-              }
-            />
-            <TypeChip type={docType} />
-          </div>
-        )}
-        {nodeBodyContent}
+  // Node's content (the body, not the title) - used inside accordion or standalone
+  const nodeBodyContent = (
+    <>
+      <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
+        <CustomHTML html={formattedContent} />
       </div>
-    );
 
-    // Children content (rendered separately, not highlighted)
-    const childrenContent = (
-      <>
-        {immutableAndPrimaryDocumentPages.length > 0 && (
-          <ul className={styles.immutableDocsList}>
-            {immutableAndPrimaryDocumentPages.map((child, idx) => {
-              const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
-              const key = childNotionId || `child-${idx}`;
-              return (
-                <TreeNode
-                  key={key}
-                  node={child}
-                  depth={depth + 1}
-                  isRootNode={false}
-                  uuidMappings={uuidMappings}
-                  uuidToDocNoMap={uuidToDocNoMap}
-                  isHighlighted={getIsHighlighted(child.doc_no || '')}
-                  getIsHighlighted={getIsHighlighted}
-                  isExpanded={getIsExpanded(child.uuid || '')}
-                  getIsExpanded={getIsExpanded}
-                  onToggleExpanded={onToggleExpanded}
-                  showUUIDs={showUUIDs}
-                />
-              );
-            })}
-          </ul>
-        )}
+      <StandardizedExtraData node={node} className={styles.nodeContent} />
 
-        {renderSupportingDocuments({
-          node,
-          depth,
-          uuidMappings,
-          uuidToDocNoMap,
-          getIsHighlighted,
-          getIsExpanded,
-          onToggleExpanded,
-          showUUIDs,
-        })}
-      </>
-    );
+      {showUUIDs && (
+        <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
+          {notionId ? (
+            <>
+              <a
+                href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.notionLinkAnchor}
+              >
+                {`Notion ID: ${uuidToNoHyphens(notionId)}`}
+              </a>
+              <span className="mx-2">•</span>
+            </>
+          ) : (
+            <span className="text-gray-400">No Notion ID</span>
+          )}
+          <span>{`Atlas UUID: ${node.uuid}`}</span>
+        </div>
+      )}
+    </>
+  );
 
-    // For collapsible types (Article/Section with children), wrap in an Accordion
-    const nodeContent = isCollapsibleType ? (
-      <div data-doc-id={docNumber || undefined}>
-        <Accordion
-          disableAnimation={true}
-          selectionMode="multiple"
-          variant="light"
-          className="px-0"
-          selectedKeys={isExpanded ? [nodeId] : []}
-          onSelectionChange={(_keys) => {
-            if (nodeId) {
-              // Toggle expansion
+  // For non-collapsible types, render title + body together
+  const nodeOwnContent = (
+    <div className={isHighlighted ? styles.highlightedContent : ''} data-doc-id={docNumber || undefined}>
+      {!isRootNode && (
+        <div className={`${styles.nodeTitle} flex items-center`}>
+          <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
+            {docNumber} - {docName}
+          </a>
+          <CopyToClipboardButton
+            text={
+              typeof window !== 'undefined'
+                ? `${window.location.origin}${window.location.pathname}#${docNumber}`
+                : `#${docNumber}`
+            }
+          />
+          <TypeChip type={docType} />
+        </div>
+      )}
+      {nodeBodyContent}
+    </div>
+  );
+
+  // Children content (rendered separately, not highlighted)
+  const childrenContent = (
+    <>
+      {immutableAndPrimaryDocumentPages.length > 0 && (
+        <ul className={styles.immutableDocsList}>
+          {immutableAndPrimaryDocumentPages.map((child, idx) => {
+            const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
+            const key = childNotionId || `child-${idx}`;
+            return (
+              <TreeNode
+                key={key}
+                node={child}
+                depth={depth + 1}
+                isRootNode={false}
+                uuidMappings={uuidMappings}
+                uuidToDocNoMap={uuidToDocNoMap}
+                isHighlighted={getIsHighlighted(child.doc_no || '')}
+                getIsHighlighted={getIsHighlighted}
+                isExpanded={getIsExpanded(child.uuid || '')}
+                getIsExpanded={getIsExpanded}
+                onToggleExpanded={onToggleExpanded}
+                showUUIDs={showUUIDs}
+              />
+            );
+          })}
+        </ul>
+      )}
+
+      {renderSupportingDocuments({
+        node,
+        depth,
+        uuidMappings,
+        uuidToDocNoMap,
+        getIsHighlighted,
+        getIsExpanded,
+        onToggleExpanded,
+        showUUIDs,
+      })}
+    </>
+  );
+
+  // For collapsible types (Article/Section with children), wrap in an Accordion
+  const nodeContent = isCollapsibleType ? (
+    <div data-doc-id={docNumber || undefined}>
+      <Accordion
+        disableAnimation={true}
+        selectionMode="multiple"
+        variant="light"
+        className="px-0"
+        selectedKeys={selectedKeys}
+        onSelectionChange={(keys) => {
+          if (nodeId) {
+            // The Accordion tells us if this item should be expanded based on the new selection
+            const shouldBeExpanded = keys === 'all' || (keys instanceof Set && keys.has(nodeId));
+            const currentlyExpanded = isExpanded;
+
+            // Only toggle if the state is actually changing
+            if (shouldBeExpanded !== currentlyExpanded) {
               onToggleExpanded(nodeId);
             }
+          }
+        }}
+      >
+        <AccordionItem
+          key={nodeId}
+          aria-label={`${docNumber} - ${docName}`}
+          title={
+            // <div className={styles.nodeTitle}>
+            <div className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}>
+              {docNumber} - {docName}
+              <CopyToClipboardButton
+                text={
+                  typeof window !== 'undefined'
+                    ? `${window.location.origin}${window.location.pathname}#${docNumber}`
+                    : `#${docNumber}`
+                }
+              />
+              <TypeChip type={docType} />
+            </div>
+            // </div>
+          }
+          classNames={{
+            base: 'px-0 mb-3',
+            trigger: `px-0 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
+            content: 'px-0 pt-2 pb-0',
+            indicator: 'text-slate-600',
+            title: 'w-full',
           }}
         >
-          <AccordionItem
-            key={nodeId}
-            aria-label={`${docNumber} - ${docName}`}
-            title={
-              <a
-                href={docNumber ? `#${docNumber}` : undefined}
-                className={styles.nodeTitle}
-                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                  // Prevent accordion toggle when clicking the link
-                  e.stopPropagation();
-                }}
-              >
-                <div className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}>
-                  {docNumber} - {docName}
-                  <CopyToClipboardButton
-                    text={
-                      typeof window !== 'undefined'
-                        ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                        : `#${docNumber}`
-                    }
-                  />
-                  <TypeChip type={docType} />
-                </div>
-              </a>
-            }
-            classNames={{
-              base: 'px-0 mb-3',
-              trigger: `px-0 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
-              content: 'px-0 pt-2 pb-0',
-              indicator: 'text-slate-600',
-              title: 'w-full',
-            }}
-          >
-            {/* Node's body content (inside accordion) */}
-            {nodeBodyContent}
-            {/* Children */}
-            {childrenContent}
-          </AccordionItem>
-        </Accordion>
-      </div>
-    ) : (
-      <>
-        {nodeOwnContent}
-        {childrenContent}
-      </>
-    );
+          {/* Node's body content (inside accordion) */}
+          {nodeBodyContent}
+          {/* Children */}
+          {childrenContent}
+        </AccordionItem>
+      </Accordion>
+    </div>
+  ) : (
+    <>
+      {nodeOwnContent}
+      {childrenContent}
+    </>
+  );
 
-    // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
-    const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
+  // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
+  const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
 
-    if (isRootNode) {
-      return (
-        <div className={styles.rootTitle} key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}>
-          {nodeContent}
-        </div>
-      );
-    }
-
+  if (isRootNode) {
     return (
-      <li key={notionKey || docNumber || `node-${nodeId || 'unknown'}`} className={styles.listItem}>
+      <div className={styles.rootTitle} key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}>
         {nodeContent}
-      </li>
+      </div>
     );
-  },
-  (prevProps, nextProps) => {
-    // Custom comparison function for memo optimization
-    // Only re-render if these specific props change
-    //
-    // Note: We must check getIsHighlighted because when highlightedDocNumber changes,
-    // deeply nested nodes need their ancestors to re-render to pass down the new function,
-    // allowing children to compute correct isHighlighted values.
-    //
-    // We do NOT check getIsExpanded because:
-    // - Each node already has its own isExpanded boolean (checked above)
-    // - Only nodes whose expansion state changed will re-render
-    // - Including getIsExpanded would cause ALL nodes to re-render on any expand/collapse
-    return (
-      prevProps.node === nextProps.node &&
-      prevProps.isHighlighted === nextProps.isHighlighted &&
-      prevProps.isExpanded === nextProps.isExpanded &&
-      prevProps.showUUIDs === nextProps.showUUIDs &&
-      prevProps.getIsHighlighted === nextProps.getIsHighlighted
-    );
-  },
-);
+  }
+
+  return (
+    <li key={notionKey || docNumber || `node-${nodeId || 'unknown'}`} className={styles.listItem}>
+      {nodeContent}
+    </li>
+  );
+}
 
 export default function ContentTree({
   scopeTreesWithoutAgents,
