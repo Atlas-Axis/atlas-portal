@@ -449,30 +449,30 @@ const TreeNode = React.memo(
             key={nodeId}
             aria-label={`${docNumber} - ${docName}`}
             title={
-              <div className={`${styles.nodeTitle} flex items-center gap-0.5`}>
-                <a
-                  href={docNumber ? `#${docNumber}` : undefined}
-                  className={styles.nodeTitle}
-                  onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    // Prevent accordion toggle when clicking the link
-                    e.stopPropagation();
-                  }}
-                >
+              <a
+                href={docNumber ? `#${docNumber}` : undefined}
+                className={styles.nodeTitle}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  // Prevent accordion toggle when clicking the link
+                  e.stopPropagation();
+                }}
+              >
+                <div className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}>
                   {docNumber} - {docName}
-                </a>
-                <CopyToClipboardButton
-                  text={
-                    typeof window !== 'undefined'
-                      ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                      : `#${docNumber}`
-                  }
-                />
-                <TypeChip type={docType} />
-              </div>
+                  <CopyToClipboardButton
+                    text={
+                      typeof window !== 'undefined'
+                        ? `${window.location.origin}${window.location.pathname}#${docNumber}`
+                        : `#${docNumber}`
+                    }
+                  />
+                  <TypeChip type={docType} />
+                </div>
+              </a>
             }
             classNames={{
               base: 'px-0 mb-3',
-              trigger: `px-2 py-2 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
+              trigger: `px-0 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
               content: 'px-0 pt-2 pb-0',
               indicator: 'text-slate-600',
               title: 'w-full',
