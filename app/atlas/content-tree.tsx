@@ -385,15 +385,12 @@ function TreeNode({
     throw new Error('Maximum tree depth exceeded, possible circular reference');
   }
 
-  // All document types are collapsible (regardless of whether they have children)
-  const isCollapsibleType = true;
-
   // Memoize the selectedKeys Set to avoid creating new instances on every render
   const selectedKeys = React.useMemo(() => {
     return isExpanded ? new Set([nodeId]) : new Set<string>();
   }, [isExpanded, nodeId]);
 
-  // Node's content (the body, not the title) - used inside accordion or standalone
+  // Node's body content (the node's own content)
   const nodeBodyContent = (
     <>
       <div className={`${styles.nodeContent} ${isRootNode ? styles.nodeContentRoot : ''}`}>
@@ -425,29 +422,7 @@ function TreeNode({
     </>
   );
 
-  // For non-collapsible types, render title + body together
-  const nodeOwnContent = (
-    <div className={isHighlighted ? styles.highlightedContent : ''} data-doc-id={docNumber || undefined}>
-      {!isRootNode && (
-        <div className={`${styles.nodeTitle} flex items-center`}>
-          <a href={docNumber ? `#${docNumber}` : undefined} className={styles.nodeTitle}>
-            {docNumber} - {docName}
-          </a>
-          <CopyToClipboardButton
-            text={
-              typeof window !== 'undefined'
-                ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                : `#${docNumber}`
-            }
-          />
-          <TypeChip type={docType} />
-        </div>
-      )}
-      {nodeBodyContent}
-    </div>
-  );
-
-  // Children content (rendered separately, not highlighted)
+  // Children content (immutable/primary and supporting documents)
   const childrenContent = (
     <>
       {immutableAndPrimaryDocumentPages.length > 0 && (
@@ -488,8 +463,8 @@ function TreeNode({
     </>
   );
 
-  // For collapsible types (Article/Section with children), wrap in an Accordion
-  const nodeContent = isCollapsibleType ? (
+  // All document types are collapsible - render with Accordion
+  const nodeContent = (
     <div data-doc-id={docNumber || undefined}>
       <Accordion
         disableAnimation={true}
@@ -514,7 +489,6 @@ function TreeNode({
           key={nodeId}
           aria-label={`${docNumber} - ${docName}`}
           title={
-            // <div className={styles.nodeTitle}>
             <div className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}>
               {docNumber} - {docName}
               <CopyToClipboardButton
@@ -526,7 +500,6 @@ function TreeNode({
               />
               <TypeChip type={docType} />
             </div>
-            // </div>
           }
           classNames={{
             base: 'px-0 mb-3',
@@ -536,18 +509,11 @@ function TreeNode({
             title: 'w-full',
           }}
         >
-          {/* Node's body content (inside accordion) */}
           {nodeBodyContent}
-          {/* Children */}
           {childrenContent}
         </AccordionItem>
       </Accordion>
     </div>
-  ) : (
-    <>
-      {nodeOwnContent}
-      {childrenContent}
-    </>
   );
 
   // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
@@ -576,7 +542,7 @@ export default function ContentTree({
   uuidMappings: UuidMappings;
 }) {
   // State to control which accordion items are expanded
-  // Keys are UUIDs for Scope/Article/Section documents
+  // Keys are UUIDs for all document types
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
     return new Set([]);
   });
