@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { useClipboard } from '@heroui/use-clipboard';
 import { Link2 } from 'lucide-react';
-import { AGENT_ROOT_SECTION_UUID_FOR_NESTING, AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDocumentType } from '@/app/server/atlas/constants';
 import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
@@ -134,14 +134,13 @@ function StandardizedExtraData({
 
 interface RenderTreeNodeProps {
   node: StandardizedAtlasDocument;
-  parentTrackingMap: Map<string, string>;
   depth?: number;
   isRootNode?: boolean;
   uuidMappings: UuidMappings;
-  agentsLoading?: boolean;
-  // agentDocs?: StandardizedAtlasDocument[];
-  highlightedDocNumber: string | null;
-  expandedKeys: Set<string>;
+  isHighlighted: boolean;
+  getIsHighlighted: (docNumber: string) => boolean;
+  isExpanded: boolean;
+  getIsExpanded: (uuid: string) => boolean;
   onToggleExpanded: (uuid: string) => void;
   showUUIDs: boolean;
 }
@@ -150,28 +149,22 @@ function renderSupportingDocumentListInSameType({
   label,
   documentType,
   documents,
-  parentTrackingMap,
   depth,
   uuidMappings,
-  agentsLoading = false,
-  highlightedDocNumber = null,
-  expandedKeys,
+  getIsHighlighted,
+  getIsExpanded,
   onToggleExpanded,
   showUUIDs,
-  // agentDocs,
 }: {
   label: string;
   documentType: AtlasDocumentType;
   documents: StandardizedAtlasDocument[];
-  parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
-  agentsLoading?: boolean;
-  highlightedDocNumber?: string | null;
-  expandedKeys: Set<string>;
+  getIsHighlighted: (docNumber: string) => boolean;
+  getIsExpanded: (uuid: string) => boolean;
   onToggleExpanded: (uuid: string) => void;
   showUUIDs: boolean;
-  // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
@@ -186,13 +179,13 @@ function renderSupportingDocumentListInSameType({
             <TreeNode
               key={key}
               node={child}
-              parentTrackingMap={parentTrackingMap}
               depth={depth + 1}
               isRootNode={false}
               uuidMappings={uuidMappings}
-              agentsLoading={agentsLoading}
-              highlightedDocNumber={highlightedDocNumber}
-              expandedKeys={expandedKeys}
+              isHighlighted={getIsHighlighted(child.doc_no || '')}
+              getIsHighlighted={getIsHighlighted}
+              isExpanded={getIsExpanded(child.uuid || '')}
+              getIsExpanded={getIsExpanded}
               onToggleExpanded={onToggleExpanded}
               showUUIDs={showUUIDs}
             />
@@ -205,26 +198,20 @@ function renderSupportingDocumentListInSameType({
 
 function renderSupportingDocuments({
   node,
-  parentTrackingMap,
   depth,
   uuidMappings,
-  agentsLoading = false,
-  highlightedDocNumber = null,
-  expandedKeys,
+  getIsHighlighted,
+  getIsExpanded,
   onToggleExpanded,
   showUUIDs,
-  // agentDocs,
 }: {
   node: StandardizedAtlasDocument;
-  parentTrackingMap: Map<string, string>;
   depth: number;
   uuidMappings: UuidMappings;
-  agentsLoading?: boolean;
-  highlightedDocNumber?: string | null;
-  expandedKeys: Set<string>;
+  getIsHighlighted: (docNumber: string) => boolean;
+  getIsExpanded: (uuid: string) => boolean;
   onToggleExpanded: (uuid: string) => void;
   showUUIDs: boolean;
-  // agentDocs?: StandardizedAtlasDocument[];
 }) {
   const nodeId = node.uuid || '';
 
@@ -281,15 +268,12 @@ function renderSupportingDocuments({
             label,
             documentType,
             documents,
-            parentTrackingMap,
             depth,
             uuidMappings,
-            agentsLoading,
-            highlightedDocNumber,
-            expandedKeys,
+            getIsHighlighted,
+            getIsExpanded,
             onToggleExpanded,
             showUUIDs,
-            // agentDocs,
           })}
         </div>
       ))}
@@ -303,16 +287,15 @@ function renderSupportingDocuments({
 const TreeNode = React.memo(
   function TreeNode({
     node,
-    parentTrackingMap,
     depth = 0,
     isRootNode = false,
     uuidMappings,
-    agentsLoading = false,
-    highlightedDocNumber = null,
-    expandedKeys,
+    isHighlighted,
+    getIsHighlighted,
+    isExpanded,
+    getIsExpanded,
     onToggleExpanded,
     showUUIDs,
-    // agentDocs,
   }: RenderTreeNodeProps): React.ReactElement {
     // Get node identifiers and metadata based on type
     const nodeId = node.uuid || '';
@@ -320,7 +303,7 @@ const TreeNode = React.memo(
     const docName = node.name;
     const docType = node.type;
 
-    // Get Notion page ID for links and root agent section detection
+    // Get Notion page ID for links
     let notionId: string | null = null;
     if (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
       notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
@@ -328,14 +311,6 @@ const TreeNode = React.memo(
 
     // Format content based on type
     const formattedContent = markdownToHTML(node.content);
-
-    // Check if this is the agent root section
-    // For StandardizedAtlasDocument, use the mapped Notion page ID
-    const isAgentRootSection = Boolean(notionId && notionId === AGENT_ROOT_SECTION_UUID_FOR_NESTING);
-    const shouldShowAgentPlaceholder = isAgentRootSection && agentsLoading;
-    // Note: Agent docs are currently disabled - this logic is prepared for future use
-    const agentDocs: StandardizedAtlasDocument[] = [];
-    const shouldRenderAgentDocs = false;
 
     // Get immutable and primary document children based on node type
     type ImmutableDocsContainer = {
@@ -350,20 +325,16 @@ const TreeNode = React.memo(
       ...(docWithImmutable.scopes || []),
       ...(docWithImmutable.articles || []),
       ...(docWithImmutable.sections_and_primary_docs || []),
-      ...(shouldShowAgentPlaceholder ? [] : docWithImmutable.agent_scope_database || []),
+      ...(docWithImmutable.agent_scope_database || []),
     ];
 
     if (depth > 50) {
       throw new Error('Maximum tree depth exceeded, possible circular reference');
     }
 
-    // Check if this node should be highlighted
-    const isHighlighted = highlightedDocNumber && docNumber === highlightedDocNumber;
-
     // Check if this node type should be collapsible (Article or Section with children)
     const isCollapsibleType =
       (docType === 'Article' || docType === 'Section') && immutableAndPrimaryDocumentPages.length > 0;
-    const isExpanded = nodeId && expandedKeys.has(nodeId);
 
     // Node's content (the body, not the title) - used inside accordion or standalone
     const nodeBodyContent = (
@@ -422,36 +393,6 @@ const TreeNode = React.memo(
     // Children content (rendered separately, not highlighted)
     const childrenContent = (
       <>
-        {shouldShowAgentPlaceholder && (
-          <div id="agent-section-placeholder" className="mt-4 ml-4 rounded bg-gray-50 px-4 py-3 text-sm text-gray-500">
-            Loading agents...
-          </div>
-        )}
-
-        {shouldRenderAgentDocs && (
-          <ul className={styles.immutableDocsList}>
-            {agentDocs.map((agentDoc, idx) => {
-              const agentNotionId = agentDoc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(agentDoc.uuid) : null;
-              const key = agentNotionId || `agent-${idx}`;
-              return (
-                <TreeNode
-                  key={key}
-                  node={agentDoc}
-                  parentTrackingMap={parentTrackingMap}
-                  depth={depth + 1}
-                  isRootNode={false}
-                  uuidMappings={uuidMappings}
-                  agentsLoading={false}
-                  highlightedDocNumber={highlightedDocNumber}
-                  expandedKeys={expandedKeys}
-                  onToggleExpanded={onToggleExpanded}
-                  showUUIDs={showUUIDs}
-                />
-              );
-            })}
-          </ul>
-        )}
-
         {immutableAndPrimaryDocumentPages.length > 0 && (
           <ul className={styles.immutableDocsList}>
             {immutableAndPrimaryDocumentPages.map((child, idx) => {
@@ -461,13 +402,13 @@ const TreeNode = React.memo(
                 <TreeNode
                   key={key}
                   node={child}
-                  parentTrackingMap={parentTrackingMap}
                   depth={depth + 1}
                   isRootNode={false}
                   uuidMappings={uuidMappings}
-                  agentsLoading={agentsLoading}
-                  highlightedDocNumber={highlightedDocNumber}
-                  expandedKeys={expandedKeys}
+                  isHighlighted={getIsHighlighted(child.doc_no || '')}
+                  getIsHighlighted={getIsHighlighted}
+                  isExpanded={getIsExpanded(child.uuid || '')}
+                  getIsExpanded={getIsExpanded}
                   onToggleExpanded={onToggleExpanded}
                   showUUIDs={showUUIDs}
                 />
@@ -476,15 +417,12 @@ const TreeNode = React.memo(
           </ul>
         )}
 
-        {/* {renderSupportingDocuments({ node, parentTrackingMap, depth, uuidMappings, agentsLoading, agentDocs })} */}
         {renderSupportingDocuments({
           node,
-          parentTrackingMap,
           depth,
           uuidMappings,
-          agentsLoading,
-          highlightedDocNumber,
-          expandedKeys,
+          getIsHighlighted,
+          getIsExpanded,
           onToggleExpanded,
           showUUIDs,
         })}
@@ -576,9 +514,10 @@ const TreeNode = React.memo(
     // Only re-render if these specific props change
     return (
       prevProps.node === nextProps.node &&
-      prevProps.highlightedDocNumber === nextProps.highlightedDocNumber &&
-      prevProps.expandedKeys === nextProps.expandedKeys &&
-      prevProps.showUUIDs === nextProps.showUUIDs
+      prevProps.isHighlighted === nextProps.isHighlighted &&
+      prevProps.isExpanded === nextProps.isExpanded &&
+      prevProps.showUUIDs === nextProps.showUUIDs &&
+      prevProps.getIsHighlighted === nextProps.getIsHighlighted
     );
   },
 );
@@ -586,17 +525,10 @@ const TreeNode = React.memo(
 export default function ContentTree({
   scopeTreesWithoutAgents,
   uuidMappings,
-  agentsLoading,
-  // agentDocs,
 }: {
   scopeTreesWithoutAgents: StandardizedAtlasDocument[];
   uuidMappings: UuidMappings;
-  agentsLoading?: boolean;
-  // agentDocs?: StandardizedAtlasDocument[];
 }) {
-  // Create a map to track which parent each page is rendered under
-  const parentTrackingMap = new Map<string, string>();
-
   // State to control which accordion items are expanded
   // Keys are UUIDs for Scope/Article/Section documents
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
@@ -619,11 +551,7 @@ export default function ContentTree({
 
   // Build path lookup map once on mount for O(1) lookups (memoized)
   const pathLookupMap = React.useMemo(() => {
-    const startTime = performance.now();
-    const map = createPathLookupMap(scopeTreesWithoutAgents);
-    const endTime = performance.now();
-    console.log(`🗺️ Built path lookup map with ${map.size} entries in ${(endTime - startTime).toFixed(2)}ms`);
-    return map;
+    return createPathLookupMap(scopeTreesWithoutAgents);
   }, [scopeTreesWithoutAgents]);
 
   // Listen for localStorage changes to update showUUIDs without page reload
@@ -759,45 +687,10 @@ export default function ContentTree({
     };
   }, [pathLookupMap]);
 
-  // Calculate total nodes for debugging
-  const totalNodes = scopeTreesWithoutAgents.reduce((count, tree) => {
-    let nodeCount = 0;
-    const countNodes = (
-      node: StandardizedAtlasDocument & {
-        scopes?: StandardizedAtlasDocument[];
-        articles?: StandardizedAtlasDocument[];
-        sections_and_primary_docs?: StandardizedAtlasDocument[];
-        agent_scope_database?: StandardizedAtlasDocument[];
-        annotations?: StandardizedAtlasDocument[];
-        tenets?: StandardizedAtlasDocument[];
-        scenarios?: StandardizedAtlasDocument[];
-        scenario_variations?: StandardizedAtlasDocument[];
-        active_data?: StandardizedAtlasDocument[];
-        needed_research?: StandardizedAtlasDocument[];
-      },
-    ): void => {
-      nodeCount++;
-      [
-        ...(node.scopes || []),
-        ...(node.articles || []),
-        ...(node.sections_and_primary_docs || []),
-        ...(node.agent_scope_database || []),
-        ...(node.annotations || []),
-        ...(node.tenets || []),
-        ...(node.scenarios || []),
-        ...(node.scenario_variations || []),
-        ...(node.active_data || []),
-        ...(node.needed_research || []),
-      ].forEach(countNodes);
-    };
-    countNodes(tree as StandardizedAtlasDocument);
-    return count + nodeCount;
-  }, 0);
-
-  console.log(`🗺️ Rendering Atlas content tree with ${totalNodes} total nodes`);
+  console.log('Rendering ContentTree');
 
   // Handler to toggle expansion of Article/Section nodes
-  const handleToggleExpanded = (uuid: string) => {
+  const handleToggleExpanded = React.useCallback((uuid: string) => {
     setExpandedKeys((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(uuid)) {
@@ -807,7 +700,27 @@ export default function ContentTree({
       }
       return newSet;
     });
-  };
+  }, []);
+
+  // Function to check if a node is expanded
+  const getIsExpanded = React.useCallback(
+    (uuid: string) => {
+      return expandedKeys.has(uuid);
+    },
+    [expandedKeys],
+  );
+
+  // Function to check if a node is highlighted
+  const getIsHighlighted = React.useCallback(
+    (docNumber: string) => {
+      // Don't match empty strings
+      if (!docNumber || !highlightedDocNumber) {
+        return false;
+      }
+      return highlightedDocNumber === docNumber;
+    },
+    [highlightedDocNumber],
+  );
 
   if (scopeTreesWithoutAgents.length === 0) {
     return <div>No Scopes found in Atlas</div>;
@@ -857,13 +770,13 @@ export default function ContentTree({
           >
             <TreeNode
               node={scopeTree}
-              parentTrackingMap={parentTrackingMap}
               depth={0}
               isRootNode={true}
               uuidMappings={uuidMappings}
-              agentsLoading={agentsLoading}
-              highlightedDocNumber={highlightedDocNumber}
-              expandedKeys={expandedKeys}
+              isHighlighted={getIsHighlighted(scopeTree.doc_no || '')}
+              getIsHighlighted={getIsHighlighted}
+              isExpanded={getIsExpanded(scopeTree.uuid || '')}
+              getIsExpanded={getIsExpanded}
               onToggleExpanded={handleToggleExpanded}
               showUUIDs={showUUIDs}
             />
