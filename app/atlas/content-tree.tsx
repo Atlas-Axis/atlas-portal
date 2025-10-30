@@ -2,16 +2,8 @@
 
 import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { useClipboard } from '@heroui/use-clipboard';
-import { Link2 } from 'lucide-react';
 import { AtlasDocumentType } from '@/app/server/atlas/constants';
-import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
-import {
-  NEEDED_RESEARCH_PROPERTY_MAPPING,
-  SCENARIO_PROPERTY_MAPPING,
-  SCENARIO_VARIATION_PROPERTY_MAPPING,
-  TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
@@ -19,164 +11,11 @@ import { CustomHTML } from '../components/custom-html';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
 import styles from './content-tree.module.css';
+import { CopyToClipboardButton } from './copy-to-clipboard-button';
 import { addExpandScopeListener } from './custom-events';
+import { StandardizedExtraData } from './standardized-extra-data';
+import { createPathLookupMap, createUuidToDocNoMap } from './tree-utils';
 import TypeChip from './type-chip';
-
-/**
- * Type-safe helper to get child collection from a document
- */
-function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
-  const value = (node as unknown as Record<string, unknown>)[key];
-  return Array.isArray(value) ? value : [];
-}
-
-/**
- * Builds a lookup map from document number to the path of collapsible UUIDs needed to reach it.
- * This is built once and cached for O(1) lookups instead of O(n) tree traversals.
- *
- * @param node - The current node being examined
- * @param currentPath - Accumulated path of UUIDs from root to current node
- * @param map - The map being built (doc_no -> path of UUIDs)
- */
-function buildPathLookupMap(node: StandardizedAtlasDocument, currentPath: string[], map: Map<string, string[]>): void {
-  // Add current node's UUID to path (all document types are collapsible)
-  const newPath = node.uuid ? [...currentPath, node.uuid] : currentPath;
-
-  // Store the path for this document
-  if (node.doc_no) {
-    map.set(node.doc_no, newPath);
-  }
-
-  // Recursively process all children
-  const children: StandardizedAtlasDocument[] = [
-    ...getChildCollection(node, 'scopes'),
-    ...getChildCollection(node, 'articles'),
-    ...getChildCollection(node, 'sections_and_primary_docs'),
-    ...getChildCollection(node, 'agent_scope_database'),
-    ...getChildCollection(node, 'annotations'),
-    ...getChildCollection(node, 'tenets'),
-    ...getChildCollection(node, 'scenarios'),
-    ...getChildCollection(node, 'scenario_variations'),
-    ...getChildCollection(node, 'active_data'),
-    ...getChildCollection(node, 'needed_research'),
-  ];
-
-  for (const child of children) {
-    buildPathLookupMap(child, newPath, map);
-  }
-}
-
-/**
- * Creates a lookup map for all documents in the trees.
- *
- * @param trees - Array of root scope trees
- * @returns Map from document number to path of collapsible UUIDs
- */
-function createPathLookupMap(trees: StandardizedAtlasDocument[]): Map<string, string[]> {
-  const map = new Map<string, string[]>();
-  for (const tree of trees) {
-    buildPathLookupMap(tree, [], map);
-  }
-  return map;
-}
-
-/**
- * Recursively builds a lookup map from UUID to document number.
- * This is used for converting internal links from UUIDs to document numbers.
- *
- * @param node - The current node being examined
- * @param map - The map being built (uuid -> doc_no)
- */
-function buildUuidToDocNoMap(node: StandardizedAtlasDocument, map: Map<string, string>): void {
-  // Store UUID -> doc_no mapping if both exist
-  if (node.uuid && node.doc_no) {
-    map.set(node.uuid, node.doc_no);
-  }
-
-  // Recursively process all children
-  const children: StandardizedAtlasDocument[] = [
-    ...getChildCollection(node, 'scopes'),
-    ...getChildCollection(node, 'articles'),
-    ...getChildCollection(node, 'sections_and_primary_docs'),
-    ...getChildCollection(node, 'agent_scope_database'),
-    ...getChildCollection(node, 'annotations'),
-    ...getChildCollection(node, 'tenets'),
-    ...getChildCollection(node, 'scenarios'),
-    ...getChildCollection(node, 'scenario_variations'),
-    ...getChildCollection(node, 'active_data'),
-    ...getChildCollection(node, 'needed_research'),
-  ];
-
-  for (const child of children) {
-    buildUuidToDocNoMap(child, map);
-  }
-}
-
-/**
- * Creates a UUID to document number lookup map for all documents in the trees.
- * Used for converting internal links from UUIDs to document number anchors.
- *
- * @param trees - Array of root scope trees
- * @returns Map from UUID to document number
- */
-function createUuidToDocNoMap(trees: StandardizedAtlasDocument[]): Map<string, string> {
-  const map = new Map<string, string>();
-  for (const tree of trees) {
-    buildUuidToDocNoMap(tree, map);
-  }
-  return map;
-}
-
-function StandardizedExtraData({
-  node,
-  className,
-}: {
-  node: StandardizedAtlasDocument;
-  className?: string;
-}): React.ReactElement | null {
-  const extraKeys = extraFieldsByDocumentType[node.type] || [];
-  if (extraKeys.length === 0) {
-    return null;
-  }
-
-  const record = node as unknown as Record<string, string | number | boolean | string[] | null | undefined>;
-  let labelMapping: Record<string, string> = {};
-  switch (node.type) {
-    case 'Type Specification':
-      labelMapping = TYPE_SPECIFICATION_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Scenario':
-      labelMapping = SCENARIO_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Scenario Variation':
-      labelMapping = SCENARIO_VARIATION_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Needed Research':
-      labelMapping = NEEDED_RESEARCH_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    default:
-      labelMapping = {};
-  }
-
-  const rows = extraKeys.map((key) => ({ key, label: labelMapping[key] || key, value: record[key] }));
-
-  if (rows.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className={className}>
-      <div className="mt-2 text-sm text-slate-600">
-        {rows.map(({ key, label, value }) => (
-          <div key={key} className="mb-1">
-            <p className="font-semibold text-slate-700">{label}:</p>{' '}
-            <p>{Array.isArray(value) ? value.join(', ') : String(value || '-')}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 interface RenderTreeNodeProps {
   node: StandardizedAtlasDocument;
@@ -801,40 +640,6 @@ export default function ContentTree({
           </AccordionItem>
         ))}
       </Accordion>
-    </div>
-  );
-}
-
-function CopyToClipboardButton({ text }: { text: string }) {
-  const { copied, copy } = useClipboard({ timeout: 3000 });
-
-  return (
-    <div className="relative flex items-center gap-1">
-      <span
-        role="button"
-        tabIndex={0}
-        onClick={(e) => {
-          // Prevent accordion toggle when clicking the copy button
-          e.stopPropagation();
-          copy(text);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopPropagation();
-            copy(text);
-          }
-        }}
-        className="inline-flex h-6 w-6 min-w-6 cursor-pointer items-center justify-center rounded-md hover:bg-gray-200 active:bg-gray-300"
-        title="Copy link to clipboard"
-      >
-        <Link2 className="text-default-400" size={12} />
-      </span>
-      {copied && (
-        <span className="absolute top-0 left-8 rounded-md bg-white px-2 py-1 text-xs font-semibold whitespace-nowrap text-green-600 shadow-md">
-          COPIED!
-        </span>
-      )}
     </div>
   );
 }
