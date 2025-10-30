@@ -39,9 +39,8 @@ function getChildCollection(node: StandardizedAtlasDocument, key: string): Stand
  * @param map - The map being built (doc_no -> path of UUIDs)
  */
 function buildPathLookupMap(node: StandardizedAtlasDocument, currentPath: string[], map: Map<string, string[]>): void {
-  // Add current node's UUID to path if it's a collapsible type (Scope, Article, Section)
-  const isCollapsible = node.type === 'Scope' || node.type === 'Article' || node.type === 'Section';
-  const newPath = isCollapsible && node.uuid ? [...currentPath, node.uuid] : currentPath;
+  // Add current node's UUID to path (all document types are collapsible)
+  const newPath = node.uuid ? [...currentPath, node.uuid] : currentPath;
 
   // Store the path for this document
   if (node.doc_no) {
@@ -386,9 +385,8 @@ function TreeNode({
     throw new Error('Maximum tree depth exceeded, possible circular reference');
   }
 
-  // Check if this node type should be collapsible (Article or Section with children)
-  const isCollapsibleType =
-    (docType === 'Article' || docType === 'Section') && immutableAndPrimaryDocumentPages.length > 0;
+  // All document types are collapsible (regardless of whether they have children)
+  const isCollapsibleType = true;
 
   // Memoize the selectedKeys Set to avoid creating new instances on every render
   const selectedKeys = React.useMemo(() => {
