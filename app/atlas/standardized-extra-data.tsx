@@ -9,6 +9,26 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 
+type ExtraFieldValue = string | number | boolean | string[] | null | undefined;
+
+/**
+ * Get the appropriate label mapping for a document type's extra fields.
+ */
+function getLabelMapping(documentType: StandardizedAtlasDocument['type']): Record<string, string> {
+  switch (documentType) {
+    case 'Type Specification':
+      return TYPE_SPECIFICATION_PROPERTY_MAPPING as Record<string, string>;
+    case 'Scenario':
+      return SCENARIO_PROPERTY_MAPPING as Record<string, string>;
+    case 'Scenario Variation':
+      return SCENARIO_VARIATION_PROPERTY_MAPPING as Record<string, string>;
+    case 'Needed Research':
+      return NEEDED_RESEARCH_PROPERTY_MAPPING as Record<string, string>;
+    default:
+      return {};
+  }
+}
+
 /**
  * Renders extra fields for document types that have them (Type Specification, Scenario, Scenario Variation, Needed Research).
  * Displays each field as a label-value pair.
@@ -25,24 +45,8 @@ export function StandardizedExtraData({
     return null;
   }
 
-  const record = node as unknown as Record<string, string | number | boolean | string[] | null | undefined>;
-  let labelMapping: Record<string, string> = {};
-  switch (node.type) {
-    case 'Type Specification':
-      labelMapping = TYPE_SPECIFICATION_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Scenario':
-      labelMapping = SCENARIO_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Scenario Variation':
-      labelMapping = SCENARIO_VARIATION_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    case 'Needed Research':
-      labelMapping = NEEDED_RESEARCH_PROPERTY_MAPPING as Record<string, string>;
-      break;
-    default:
-      labelMapping = {};
-  }
+  const labelMapping = getLabelMapping(node.type);
+  const record = node as unknown as Record<string, ExtraFieldValue>;
 
   const rows = extraKeys.map((key) => ({ key, label: labelMapping[key] || key, value: record[key] }));
 

@@ -31,6 +31,47 @@ interface RenderTreeNodeProps {
   showUUIDs: boolean;
 }
 
+/**
+ * Supporting documents that can be attached to a node
+ */
+type SupportingDocsContainer = {
+  annotations?: StandardizedAtlasDocument[];
+  tenets?: StandardizedAtlasDocument[];
+  scenarios?: StandardizedAtlasDocument[];
+  scenario_variations?: StandardizedAtlasDocument[];
+  active_data?: StandardizedAtlasDocument[];
+  needed_research?: StandardizedAtlasDocument[];
+};
+
+/**
+ * Immutable and primary documents that form the main document hierarchy
+ */
+type ImmutableDocsContainer = {
+  scopes?: StandardizedAtlasDocument[];
+  articles?: StandardizedAtlasDocument[];
+  sections_and_primary_docs?: StandardizedAtlasDocument[];
+  agent_scope_database?: StandardizedAtlasDocument[];
+};
+
+/**
+ * Shared props for rendering functions
+ */
+interface RenderDocumentsSharedProps {
+  depth: number;
+  uuidMappings: UuidMappings;
+  uuidToDocNoMap: Map<string, string>;
+  getIsHighlighted: (docNumber: string) => boolean;
+  getIsExpanded: (uuid: string) => boolean;
+  onToggleExpanded: (uuid: string) => void;
+  showUUIDs: boolean;
+}
+
+interface RenderSupportingDocumentListProps extends RenderDocumentsSharedProps {
+  label: string;
+  documentType: AtlasDocumentType;
+  documents: StandardizedAtlasDocument[];
+}
+
 function renderSupportingDocumentListInSameType({
   label,
   documentType,
@@ -42,18 +83,7 @@ function renderSupportingDocumentListInSameType({
   getIsExpanded,
   onToggleExpanded,
   showUUIDs,
-}: {
-  label: string;
-  documentType: AtlasDocumentType;
-  documents: StandardizedAtlasDocument[];
-  depth: number;
-  uuidMappings: UuidMappings;
-  uuidToDocNoMap: Map<string, string>;
-  getIsHighlighted: (docNumber: string) => boolean;
-  getIsExpanded: (uuid: string) => boolean;
-  onToggleExpanded: (uuid: string) => void;
-  showUUIDs: boolean;
-}) {
+}: RenderSupportingDocumentListProps) {
   const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
 
   return (
@@ -85,6 +115,10 @@ function renderSupportingDocumentListInSameType({
   );
 }
 
+interface RenderSupportingDocumentsProps extends RenderDocumentsSharedProps {
+  node: StandardizedAtlasDocument;
+}
+
 function renderSupportingDocuments({
   node,
   depth,
@@ -94,37 +128,13 @@ function renderSupportingDocuments({
   getIsExpanded,
   onToggleExpanded,
   showUUIDs,
-}: {
-  node: StandardizedAtlasDocument;
-  depth: number;
-  uuidMappings: UuidMappings;
-  uuidToDocNoMap: Map<string, string>;
-  getIsHighlighted: (docNumber: string) => boolean;
-  getIsExpanded: (uuid: string) => boolean;
-  onToggleExpanded: (uuid: string) => void;
-  showUUIDs: boolean;
-}) {
+}: RenderSupportingDocumentsProps): React.ReactElement | null {
   const nodeId = node.uuid || '';
 
-  // Get supporting documents based on node type
-  let supportingDocumentLabels: {
-    label: string;
-    documentType: AtlasDocumentType;
-    documents: StandardizedAtlasDocument[];
-  }[] = [];
-
-  // For StandardizedAtlasDocument, get from child collections
-  type SupportingDocsContainer = {
-    annotations?: StandardizedAtlasDocument[];
-    tenets?: StandardizedAtlasDocument[];
-    scenarios?: StandardizedAtlasDocument[];
-    scenario_variations?: StandardizedAtlasDocument[];
-    active_data?: StandardizedAtlasDocument[];
-    needed_research?: StandardizedAtlasDocument[];
-  };
+  // Get supporting documents from child collections
   const docWithSupporting = node as StandardizedAtlasDocument & SupportingDocsContainer;
 
-  supportingDocumentLabels = [
+  const supportingDocumentLabels = [
     { label: 'Annotations', documentType: 'Annotation' as const, documents: docWithSupporting.annotations || [] },
     { label: 'Tenets', documentType: 'Action Tenet' as const, documents: docWithSupporting.tenets || [] },
     { label: 'Scenarios', documentType: 'Scenario' as const, documents: docWithSupporting.scenarios || [] },
@@ -196,21 +206,15 @@ function TreeNode({
   const docType = node.type;
 
   // Get Notion page ID for links
-  let notionId: string | null = null;
-  if (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds) {
-    notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
-  }
+  const notionId: string | null =
+    node.uuid && uuidMappings.atlasUUIDsToNotionPageIds
+      ? uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null
+      : null;
 
   // Format content based on type, converting UUID links to document number anchors
   const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
 
   // Get immutable and primary document children based on node type
-  type ImmutableDocsContainer = {
-    scopes?: StandardizedAtlasDocument[];
-    articles?: StandardizedAtlasDocument[];
-    sections_and_primary_docs?: StandardizedAtlasDocument[];
-    agent_scope_database?: StandardizedAtlasDocument[];
-  };
   const docWithImmutable = node as StandardizedAtlasDocument & ImmutableDocsContainer;
 
   const immutableAndPrimaryDocumentPages: StandardizedAtlasDocument[] = [

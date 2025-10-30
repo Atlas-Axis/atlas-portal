@@ -1,10 +1,14 @@
-import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 
 /**
- * Type-safe helper to get child collection from a document
+ * Type-safe helper to get child collection from a document.
+ * Uses proper typing with ChildCollectionName to avoid unsafe casts.
  */
-export function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
-  const value = (node as unknown as Record<string, unknown>)[key];
+export function getChildCollection(
+  node: StandardizedAtlasDocument,
+  key: ChildCollectionName,
+): StandardizedAtlasDocument[] {
+  const value = node[key as keyof StandardizedAtlasDocument];
   return Array.isArray(value) ? value : [];
 }
 
