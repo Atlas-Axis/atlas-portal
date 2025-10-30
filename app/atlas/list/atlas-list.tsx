@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -8,6 +9,24 @@ import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../../components/custom-html';
 
+/**
+ * Creates a UUID to document number lookup map for all documents.
+ * Used for converting internal links from UUIDs to document number anchors.
+ */
+function createUuidToDocNoMap(atlasPagesPerDatabase: Record<string, StandardizedAtlasDocument[]>): Map<string, string> {
+  const map = new Map<string, string>();
+
+  for (const pages of Object.values(atlasPagesPerDatabase)) {
+    for (const page of pages) {
+      if (page.uuid && page.doc_no) {
+        map.set(page.uuid, page.doc_no);
+      }
+    }
+  }
+
+  return map;
+}
+
 interface AtlasListClientProps {
   atlasPagesPerDatabase: Record<string, StandardizedAtlasDocument[]>;
   uuidMappings: UuidMappings;
@@ -15,6 +34,11 @@ interface AtlasListClientProps {
 
 export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: AtlasListClientProps) {
   const databaseNames = Object.keys(atlasPagesPerDatabase);
+
+  // Build UUID to document number map once on mount for converting internal links (memoized)
+  const uuidToDocNoMap = React.useMemo(() => {
+    return createUuidToDocNoMap(atlasPagesPerDatabase);
+  }, [atlasPagesPerDatabase]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-3 sm:p-6">
@@ -52,6 +76,7 @@ export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: Atlas
                         }
                         item={page}
                         uuidMappings={uuidMappings}
+                        uuidToDocNoMap={uuidToDocNoMap}
                       />
                     ))}
                   </div>
@@ -70,9 +95,10 @@ export default function AtlasList({ atlasPagesPerDatabase, uuidMappings }: Atlas
 interface ListItemProps {
   item: StandardizedAtlasDocument;
   uuidMappings: UuidMappings;
+  uuidToDocNoMap: Map<string, string>;
 }
 
-function ListItem({ item, uuidMappings }: ListItemProps) {
+function ListItem({ item, uuidMappings, uuidToDocNoMap }: ListItemProps) {
   // Extract fields from StandardizedAtlasDocument
   const docNumber = item.doc_no;
   const docType = item.type;
@@ -85,8 +111,8 @@ function ListItem({ item, uuidMappings }: ListItemProps) {
     notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(item.uuid) || null;
   }
 
-  // Format content
-  const formattedContent = markdownToHTML(item.content);
+  // Format content, converting UUID links to document number anchors
+  const formattedContent = markdownToHTML(item.content, uuidToDocNoMap);
   const hasContent = formattedContent.trim().length > 0;
 
   const handleTitleClick = () => {

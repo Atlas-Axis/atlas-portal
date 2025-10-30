@@ -81,6 +81,53 @@ function createPathLookupMap(trees: StandardizedAtlasDocument[]): Map<string, st
   return map;
 }
 
+/**
+ * Recursively builds a lookup map from UUID to document number.
+ * This is used for converting internal links from UUIDs to document numbers.
+ *
+ * @param node - The current node being examined
+ * @param map - The map being built (uuid -> doc_no)
+ */
+function buildUuidToDocNoMap(node: StandardizedAtlasDocument, map: Map<string, string>): void {
+  // Store UUID -> doc_no mapping if both exist
+  if (node.uuid && node.doc_no) {
+    map.set(node.uuid, node.doc_no);
+  }
+
+  // Recursively process all children
+  const children: StandardizedAtlasDocument[] = [
+    ...getChildCollection(node, 'scopes'),
+    ...getChildCollection(node, 'articles'),
+    ...getChildCollection(node, 'sections_and_primary_docs'),
+    ...getChildCollection(node, 'agent_scope_database'),
+    ...getChildCollection(node, 'annotations'),
+    ...getChildCollection(node, 'tenets'),
+    ...getChildCollection(node, 'scenarios'),
+    ...getChildCollection(node, 'scenario_variations'),
+    ...getChildCollection(node, 'active_data'),
+    ...getChildCollection(node, 'needed_research'),
+  ];
+
+  for (const child of children) {
+    buildUuidToDocNoMap(child, map);
+  }
+}
+
+/**
+ * Creates a UUID to document number lookup map for all documents in the trees.
+ * Used for converting internal links from UUIDs to document number anchors.
+ *
+ * @param trees - Array of root scope trees
+ * @returns Map from UUID to document number
+ */
+function createUuidToDocNoMap(trees: StandardizedAtlasDocument[]): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const tree of trees) {
+    buildUuidToDocNoMap(tree, map);
+  }
+  return map;
+}
+
 function StandardizedExtraData({
   node,
   className,
@@ -137,6 +184,7 @@ interface RenderTreeNodeProps {
   depth?: number;
   isRootNode?: boolean;
   uuidMappings: UuidMappings;
+  uuidToDocNoMap: Map<string, string>;
   isHighlighted: boolean;
   getIsHighlighted: (docNumber: string) => boolean;
   isExpanded: boolean;
@@ -151,6 +199,7 @@ function renderSupportingDocumentListInSameType({
   documents,
   depth,
   uuidMappings,
+  uuidToDocNoMap,
   getIsHighlighted,
   getIsExpanded,
   onToggleExpanded,
@@ -161,6 +210,7 @@ function renderSupportingDocumentListInSameType({
   documents: StandardizedAtlasDocument[];
   depth: number;
   uuidMappings: UuidMappings;
+  uuidToDocNoMap: Map<string, string>;
   getIsHighlighted: (docNumber: string) => boolean;
   getIsExpanded: (uuid: string) => boolean;
   onToggleExpanded: (uuid: string) => void;
@@ -182,6 +232,7 @@ function renderSupportingDocumentListInSameType({
               depth={depth + 1}
               isRootNode={false}
               uuidMappings={uuidMappings}
+              uuidToDocNoMap={uuidToDocNoMap}
               isHighlighted={getIsHighlighted(child.doc_no || '')}
               getIsHighlighted={getIsHighlighted}
               isExpanded={getIsExpanded(child.uuid || '')}
@@ -200,6 +251,7 @@ function renderSupportingDocuments({
   node,
   depth,
   uuidMappings,
+  uuidToDocNoMap,
   getIsHighlighted,
   getIsExpanded,
   onToggleExpanded,
@@ -208,6 +260,7 @@ function renderSupportingDocuments({
   node: StandardizedAtlasDocument;
   depth: number;
   uuidMappings: UuidMappings;
+  uuidToDocNoMap: Map<string, string>;
   getIsHighlighted: (docNumber: string) => boolean;
   getIsExpanded: (uuid: string) => boolean;
   onToggleExpanded: (uuid: string) => void;
@@ -270,6 +323,7 @@ function renderSupportingDocuments({
             documents,
             depth,
             uuidMappings,
+            uuidToDocNoMap,
             getIsHighlighted,
             getIsExpanded,
             onToggleExpanded,
@@ -290,6 +344,7 @@ const TreeNode = React.memo(
     depth = 0,
     isRootNode = false,
     uuidMappings,
+    uuidToDocNoMap,
     isHighlighted,
     getIsHighlighted,
     isExpanded,
@@ -309,8 +364,8 @@ const TreeNode = React.memo(
       notionId = uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null;
     }
 
-    // Format content based on type
-    const formattedContent = markdownToHTML(node.content);
+    // Format content based on type, converting UUID links to document number anchors
+    const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
 
     // Get immutable and primary document children based on node type
     type ImmutableDocsContainer = {
@@ -405,6 +460,7 @@ const TreeNode = React.memo(
                   depth={depth + 1}
                   isRootNode={false}
                   uuidMappings={uuidMappings}
+                  uuidToDocNoMap={uuidToDocNoMap}
                   isHighlighted={getIsHighlighted(child.doc_no || '')}
                   getIsHighlighted={getIsHighlighted}
                   isExpanded={getIsExpanded(child.uuid || '')}
@@ -421,6 +477,7 @@ const TreeNode = React.memo(
           node,
           depth,
           uuidMappings,
+          uuidToDocNoMap,
           getIsHighlighted,
           getIsExpanded,
           onToggleExpanded,
@@ -561,6 +618,11 @@ export default function ContentTree({
   // Build path lookup map once on mount for O(1) lookups (memoized)
   const pathLookupMap = React.useMemo(() => {
     return createPathLookupMap(scopeTreesWithoutAgents);
+  }, [scopeTreesWithoutAgents]);
+
+  // Build UUID to document number map once on mount for converting internal links (memoized)
+  const uuidToDocNoMap = React.useMemo(() => {
+    return createUuidToDocNoMap(scopeTreesWithoutAgents);
   }, [scopeTreesWithoutAgents]);
 
   // Listen for localStorage changes to update showUUIDs without page reload
@@ -782,6 +844,7 @@ export default function ContentTree({
               depth={0}
               isRootNode={true}
               uuidMappings={uuidMappings}
+              uuidToDocNoMap={uuidToDocNoMap}
               isHighlighted={getIsHighlighted(scopeTree.doc_no || '')}
               getIsHighlighted={getIsHighlighted}
               isExpanded={getIsExpanded(scopeTree.uuid || '')}
