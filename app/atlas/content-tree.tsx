@@ -512,6 +512,15 @@ const TreeNode = React.memo(
   (prevProps, nextProps) => {
     // Custom comparison function for memo optimization
     // Only re-render if these specific props change
+    //
+    // Note: We must check getIsHighlighted because when highlightedDocNumber changes,
+    // deeply nested nodes need their ancestors to re-render to pass down the new function,
+    // allowing children to compute correct isHighlighted values.
+    //
+    // We do NOT check getIsExpanded because:
+    // - Each node already has its own isExpanded boolean (checked above)
+    // - Only nodes whose expansion state changed will re-render
+    // - Including getIsExpanded would cause ALL nodes to re-render on any expand/collapse
     return (
       prevProps.node === nextProps.node &&
       prevProps.isHighlighted === nextProps.isHighlighted &&
