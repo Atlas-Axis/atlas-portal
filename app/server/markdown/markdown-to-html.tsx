@@ -3,21 +3,15 @@ import type Renderer from 'markdown-it/lib/renderer.mjs';
 import type Token from 'markdown-it/lib/token.mjs';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
-const md = markdownit();
-
 /**
  * Custom link renderer that converts UUID hrefs to document number anchors
  * @param uuidToDocNoMap - Map for UUID to document number conversion
+ * @param defaultRender - The default link_open renderer
  */
 function createLinkRenderer(
   uuidToDocNoMap: Map<string, string>,
+  defaultRender: (tokens: Token[], idx: number, options: object, env: unknown, self: Renderer) => string,
 ): (tokens: Token[], idx: number, options: object, env: unknown, self: Renderer) => string {
-  const defaultRender =
-    md.renderer.rules.link_open ||
-    function (tokens, idx, options, _env, self) {
-      return self.renderToken(tokens, idx, options);
-    };
-
   return function (tokens: Token[], idx: number, options: object, env: unknown, self: Renderer) {
     const token = tokens[idx];
     const hrefIndex = token.attrIndex('href');
@@ -48,12 +42,23 @@ function createLinkRenderer(
  *                         If not provided, UUID links will remain unchanged.
  */
 export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, string>) => {
+  // Safeguard against extremely large content that could cause performance issues
+  if (markdown.length > 1000000) {
+    console.warn('Markdown content exceeds 1MB, truncating for safety');
+    markdown = markdown.slice(0, 1000000) + '\n\n[Content truncated due to size...]';
+  }
+
+  // Create a new markdown-it instance for each call to avoid global state issues
+  const md = markdownit();
+
   // Configure custom link renderer if UUID map is provided
   if (uuidToDocNoMap) {
-    md.renderer.rules.link_open = createLinkRenderer(uuidToDocNoMap);
-  } else {
-    // Reset to default renderer if no map provided
-    delete md.renderer.rules.link_open;
+    const defaultRender =
+      md.renderer.rules.link_open ||
+      function (tokens, idx, options, _env, self) {
+        return self.renderToken(tokens, idx, options);
+      };
+    md.renderer.rules.link_open = createLinkRenderer(uuidToDocNoMap, defaultRender);
   }
 
   // First, convert markdown to HTML using markdown-it
