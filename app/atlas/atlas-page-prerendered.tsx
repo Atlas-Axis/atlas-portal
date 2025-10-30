@@ -21,11 +21,7 @@ export default function AtlasPagePrerendered({
     <div className="min-h-screen overflow-x-hidden bg-white">
       <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       <div className="min-w-0 p-6 md:ml-80">
-        <ContentTree
-          scopeTreesWithoutAgents={scopeTreesWithoutAgents}
-          uuidMappings={uuidMappings}
-          agentsLoading={false}
-        />
+        <ContentTree scopeTreesWithoutAgents={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       </div>
     </div>
   );
