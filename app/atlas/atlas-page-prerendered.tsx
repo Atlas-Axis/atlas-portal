@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { type UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
+import MobileTopBar from './mobile-top-bar';
 import Sidebar from './sidebar';
 
 interface AtlasPagePrerenderedProps {
@@ -19,8 +20,9 @@ export default function AtlasPagePrerendered({
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white">
+      <MobileTopBar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
-      <div className="min-w-0 p-6 md:ml-80">
+      <div className="min-w-0 p-6 pt-20 sm:ml-80 sm:pt-6">
         <ContentTree scopeTreesWithoutAgents={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       </div>
     </div>

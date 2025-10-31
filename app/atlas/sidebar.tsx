@@ -3,15 +3,15 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { Input } from '@heroui/input';
-import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from '@heroui/react';
-import { Download, Search, Settings } from 'lucide-react';
+import { useDisclosure } from '@heroui/react';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
-import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
 import { dispatchExpandScopeEvent } from './custom-events';
+import DownloadAtlasButton from './download-atlas-button';
 import SearchModal from './search-modal';
+import SearchTrigger from './search-trigger';
+import SettingsDropdown from './settings-dropdown';
 
 interface SidebarProps {
   scopeTrees: StandardizedAtlasDocument[];
@@ -26,10 +26,10 @@ interface RenderSidebarNodeProps {
 }
 
 /**
- * Type-safe helper to get child collection from a document
+ * Type-safe helper to get child collection from a document.
  */
 function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
-  const value = (node as unknown as Record<string, unknown>)[key];
+  const value = node[key as keyof StandardizedAtlasDocument];
   return Array.isArray(value) ? value : [];
 }
 
@@ -203,34 +203,19 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   return (
     <>
       <div
-        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 md:flex"
+        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex"
         role="navigation"
         aria-label="Atlas navigation"
       >
         <div className="grow p-4">
           <div className="mb-6 flex items-center gap-3">
-            <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" />
+            <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" priority />
             <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
           </div>
 
           {/* Search Input Trigger */}
           <div className="mb-4">
-            <Input
-              placeholder="Search Atlas..."
-              readOnly
-              startContent={<Search className="h-4 w-4 text-slate-400" />}
-              endContent={
-                <kbd className="hidden rounded bg-slate-100 px-2 py-1 text-xs text-slate-500 sm:inline-block">
-                  {isMac ? '⌘' : 'Ctrl+'}F
-                </kbd>
-              }
-              onClick={onOpen}
-              classNames={{
-                inputWrapper:
-                  'cursor-pointer transition-all duration-200 border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-100',
-              }}
-              aria-label="Open search dialog (CMD+F or Ctrl+F)"
-            />
+            <SearchTrigger onOpen={onOpen} isMac={isMac} />
           </div>
 
           <div className="space-y-1">
@@ -254,104 +239,5 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
       {/* Search Modal */}
       <SearchModal scopeTrees={scopeTrees} uuidMappings={uuidMappings} isOpen={isOpen} onClose={onClose} />
     </>
-  );
-}
-
-function DownloadAtlasButton() {
-  return (
-    <Dropdown backdrop="blur">
-      <DropdownTrigger>
-        <Button
-          variant="bordered"
-          className="w-full"
-          startContent={<Download className="text-default-500" size={16} />}
-        >
-          Download Atlas
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions" className="w-full">
-        <DropdownItem key="download-markdown" className="w-full">
-          <Button
-            variant="light"
-            as="a"
-            href="/api/atlas.md"
-            target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
-          >
-            Download as Markdown
-          </Button>
-        </DropdownItem>
-        <DropdownItem key="download-json" className="w-full">
-          <Button
-            variant="light"
-            as="a"
-            href="/api/atlas.json"
-            target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
-          >
-            Download as JSON
-          </Button>
-        </DropdownItem>
-        <DropdownItem key="download-yaml" className="w-full">
-          <Button
-            variant="light"
-            as="a"
-            href="/api/atlas.yaml"
-            target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
-          >
-            Download as YAML
-          </Button>
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  );
-}
-
-function SettingsDropdown() {
-  // Initialize state from localStorage
-  const [showUUIDs, setShowUUIDs] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    try {
-      const stored = localStorage.getItem(SHOW_UUIDS_STORAGE_KEY);
-      return stored === 'true';
-    } catch {
-      return false;
-    }
-  });
-
-  // Save to localStorage whenever showUUIDs changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(SHOW_UUIDS_STORAGE_KEY, String(showUUIDs));
-      // Dispatch custom event to notify other components in same window
-      window.dispatchEvent(new Event(LOCAL_STORAGE_CHANGED_EVENT));
-    } catch (error) {
-      // Handle localStorage errors (e.g., quota exceeded, private browsing)
-      console.error('Failed to save showUUIDs setting to localStorage:', error);
-    }
-  }, [showUUIDs]);
-
-  return (
-    <Dropdown backdrop="blur">
-      <DropdownTrigger>
-        <Button variant="light" className="w-full" startContent={<Settings className="text-default-500" size={16} />}>
-          Settings
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label="Settings Menu" className="w-full">
-        <DropdownItem key="show-uuids" className="w-full" textValue="Show UUIDs">
-          <Checkbox
-            isSelected={showUUIDs}
-            onValueChange={setShowUUIDs}
-            classNames={{
-              base: 'w-full max-w-full ',
-            }}
-          >
-            <span className="text-sm">Show UUIDs</span>
-          </Checkbox>
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
   );
 }
