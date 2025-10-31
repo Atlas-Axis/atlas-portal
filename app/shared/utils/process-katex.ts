@@ -7,6 +7,11 @@ import katex from 'katex';
  * - Display math: $$...$$
  * - Inline math: $...$
  *
+ * Smart delimiter detection:
+ * - Dollar signs followed by digits (e.g., $50, $1,000) are NOT treated as math (money amounts)
+ * - Dollar signs followed by letters or symbols are treated as math (e.g., $x$, $\alpha$)
+ * - <br> tags within math expressions are removed and replaced with spaces
+ *
  * @param html - HTML string that may contain math expressions
  * @returns HTML string with math expressions replaced by KaTeX-rendered HTML
  *
@@ -15,6 +20,10 @@ import katex from 'katex';
  * const input = '<p>The equation $x = 5$ is simple.</p>';
  * const output = processKaTeXInHTML(input);
  * // Returns: '<p>The equation <span class="katex">...</span> is simple.</p>'
+ *
+ * const money = '<p>Price: $50</p>';
+ * const output2 = processKaTeXInHTML(money);
+ * // Returns: '<p>Price: $50</p>' (unchanged - not treated as math)
  * ```
  */
 export function processKaTeXInHTML(html: string): string {
@@ -40,7 +49,9 @@ export function processKaTeXInHTML(html: string): string {
   });
 
   // Process inline math ($...$)
-  processed = processed.replace(/\$([^$]+)\$/g, (match, mathContent: string) => {
+  // Use negative lookahead (?!\d) to avoid matching dollar signs followed by digits (money amounts)
+  // This prevents "$50" or "$1,000" from being treated as math
+  processed = processed.replace(/\$(?!\d)([^$]+)\$/g, (match, mathContent: string) => {
     try {
       return katex.renderToString(mathContent.trim(), {
         throwOnError: false,

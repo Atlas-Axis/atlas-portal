@@ -208,7 +208,8 @@ export async function generateAtlasGithubJson(): Promise<AtlasCategoryJson[]> {
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(allRows, null, 2), 'utf8');
-  if (DEBUG_LOGGING()) console.log(`Wrote ${allRows.length} documents (${allRows.length} categories) to ${OUTPUT_FILE}`);
+  if (DEBUG_LOGGING())
+    console.log(`Wrote ${allRows.length} documents (${allRows.length} categories) to ${OUTPUT_FILE}`);
   return allRows;
 }
 

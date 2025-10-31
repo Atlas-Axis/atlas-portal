@@ -194,16 +194,27 @@ $$</p>
       const input = '<p>Value 1: $1,000; Value 2: $50</p>';
       const output = processKaTeXInHTML(input);
 
-      // Dollar signs with commas or following spaces should not be treated as math
-      // Note: Current implementation WILL convert these since our regex is simple
-      // This test documents the current behavior - money amounts will be rendered as math
-      expect(output).toContain('<span class="katex">');
+      // Dollar signs followed by digits should NOT be treated as math (money amounts)
+      expect(output).not.toContain('<span class="katex">');
+      // Money amounts should remain unchanged
+      expect(output).toContain('$1,000');
+      expect(output).toContain('$50');
+      // The original HTML structure should be preserved
+      expect(output).toBe(input);
+    });
 
-      // TODO: Future enhancement - add smarter delimiter detection to avoid this
-      // Possible solutions:
-      // 1. Require whitespace before opening $ and after closing $
-      // 2. Exclude $ followed by digits and commas
-      // 3. Support escape sequences like \$
+    it('still converts valid math expressions that contain numbers', () => {
+      const input = '<p>The equation $x = 5$ is simple, and $y + 10 = z$ too.</p>';
+      const output = processKaTeXInHTML(input);
+
+      // Math expressions with variables and numbers should still be converted
+      expect(output).toContain('<span class="katex">');
+      // Should not contain the original dollar-delimited expressions
+      expect(output).not.toContain('$x = 5$');
+      expect(output).not.toContain('$y + 10 = z$');
+      // Should have converted both expressions
+      const katexCount = (output.match(/<span class="katex">/g) || []).length;
+      expect(katexCount).toBe(2);
     });
   });
 
