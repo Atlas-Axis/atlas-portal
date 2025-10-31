@@ -38,13 +38,6 @@
   text-decoration: underline;
 }
 
-.immutableDocsList {
-  margin-top: 0.25rem;
-  margin-left: 1rem;
-  border-left: 1px solid rgb(229 231 235);
-  padding-left: 1rem;
-}
-
 .supportingDocsContainer {
   margin-top: 1rem;
   margin-left: 2rem;

@@ -269,7 +269,7 @@ function TreeNode({
   const childrenContent = (
     <>
       {immutableAndPrimaryDocumentPages.length > 0 && (
-        <ul className={styles.immutableDocsList}>
+        <ul className="mt-1 border-l border-gray-200 sm:pl-4">
           {immutableAndPrimaryDocumentPages.map((child, idx) => {
             const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
             const key = childNotionId || `child-${idx}`;
