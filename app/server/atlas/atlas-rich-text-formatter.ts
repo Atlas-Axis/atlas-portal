@@ -19,6 +19,7 @@ export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | Atlas
   return '';
 }
 
+// TODO: This is not used anywhere, and should be removed
 export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTreeNode>(
   page: T,
   uuidMappings: UuidMappings,
