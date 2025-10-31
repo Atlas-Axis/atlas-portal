@@ -152,6 +152,12 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   const [activeHash, setActiveHash] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Detect platform for keyboard shortcut display (lazy initialization)
+  const [isMac] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  });
+
   useEffect(() => {
     // Set initial hash (remove the '#' prefix)
     const updateHash = () => {
@@ -164,6 +170,20 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
     window.addEventListener('hashchange', updateHash);
     return () => window.removeEventListener('hashchange', updateHash);
   }, []);
+
+  // Handle CMD+F / Ctrl+F keyboard shortcut to open search
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check for CMD+F (Mac) or Ctrl+F (Windows/Linux)
+      if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
+        event.preventDefault(); // Prevent browser's default find
+        onOpen();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onOpen]);
 
   // Handle initial hash on page load
   useEffect(() => {
@@ -199,12 +219,17 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
               placeholder="Search Atlas..."
               readOnly
               startContent={<Search className="h-4 w-4 text-slate-400" />}
+              endContent={
+                <kbd className="hidden rounded bg-slate-100 px-2 py-1 text-xs text-slate-500 sm:inline-block">
+                  {isMac ? '⌘' : 'Ctrl+'}F
+                </kbd>
+              }
               onClick={onOpen}
               classNames={{
                 inputWrapper:
                   'cursor-pointer transition-all duration-200 border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-100',
               }}
-              aria-label="Open search dialog"
+              aria-label="Open search dialog (CMD+F or Ctrl+F)"
             />
           </div>
 
