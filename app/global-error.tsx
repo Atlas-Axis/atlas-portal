@@ -5,7 +5,7 @@ import Error from 'next/error';
 import { Inter } from 'next/font/google';
 import { useEffect } from 'react';
 import * as Sentry from '@sentry/nextjs';
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 import { Frown } from 'lucide-react';
 
 // import { AxiomWebVitals } from 'next-axiom';
@@ -45,8 +45,7 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
           </p>
         </div>
         {/* <NextError statusCode={0} title={'😞'} /> */}
-        {/* <Analytics />
-        <AxiomWebVitals />; */}
+        <Analytics />
       </body>
     </html>
   );
