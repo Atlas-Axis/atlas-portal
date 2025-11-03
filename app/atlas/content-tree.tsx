@@ -306,7 +306,21 @@ function TreeNode({
     </>
   );
 
-  // All document types are collapsible - render with Accordion
+  // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
+  const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
+
+  // Root nodes are already wrapped in an Accordion by ContentTree
+  // Only render the body content and children without another accordion wrapper
+  if (isRootNode) {
+    return (
+      <div className={styles.rootTitle} key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}>
+        {nodeBodyContent}
+        {childrenContent}
+      </div>
+    );
+  }
+
+  // Non-root nodes are collapsible - render with Accordion
   const nodeContent = (
     <div data-doc-id={docNumber || undefined}>
       <Accordion
@@ -358,17 +372,6 @@ function TreeNode({
       </Accordion>
     </div>
   );
-
-  // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
-  const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
-
-  if (isRootNode) {
-    return (
-      <div className={styles.rootTitle} key={notionKey || docNumber || `node-${nodeId || 'unknown'}`}>
-        {nodeContent}
-      </div>
-    );
-  }
 
   return (
     <li key={notionKey || docNumber || `node-${nodeId || 'unknown'}`} className={styles.listItem}>
