@@ -35,6 +35,20 @@ export const isValidUUID = (uuid: string): boolean => {
 };
 
 /**
+ * Normalizes a UUID to always return the hyphenated format
+ * @param uuid - UUID in either format (with or without hyphens)
+ * @returns UUID with hyphens (e.g., "25ef7584-64c5-80f6-a11a-eab7080d03b1")
+ * @throws Error if the UUID format is invalid
+ */
+export const normalizeUUID = (uuid: string): string => {
+  // If already in valid hyphen format, return as-is
+  if (isValidUUID(uuid)) return uuid;
+
+  // Otherwise, convert from no-hyphen format
+  return uuidToHyphens(uuid);
+};
+
+/**
  * Formats a Date object as a human-readable UTC timestamp
  * @param date - Date object to format (defaults to current time)
  * @returns Formatted string in "YYYY-MM-DD HH:MM:SS UTC" format
