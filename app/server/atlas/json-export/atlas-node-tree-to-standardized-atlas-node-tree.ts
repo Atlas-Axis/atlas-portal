@@ -86,7 +86,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
 
   return {
     type: node.atlas_document_type,
-    doc_no: node.generatedDocID ?? node.atlas_document_number ?? '',
+    doc_no: node.generatedDocID ?? '',
     name: node.generatedDocName ?? '',
     uuid: atlasUUID,
     last_modified: '',
