@@ -27,7 +27,7 @@ export async function GET() {
 
     // Generate filename with current date
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-    const filename = `atlas-supabase-${currentDate}.yaml`;
+    const filename = `atlas-${currentDate}.yaml`;
 
     return new NextResponse(yamlContent, {
       status: 200,

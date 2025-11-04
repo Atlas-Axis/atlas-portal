@@ -27,6 +27,17 @@ export default function DownloadAtlasButton() {
             Download as Markdown
           </Button>
         </DropdownItem>
+        <DropdownItem key="download-markdown-split" className="w-full">
+          <Button
+            variant="light"
+            as="a"
+            href="/api/atlas.md?split-by-scope"
+            target="_blank"
+            startContent={<Download className="text-default-500" size={16} />}
+          >
+            Download as Markdown - Split by Scope
+          </Button>
+        </DropdownItem>
         <DropdownItem key="download-json" className="w-full">
           <Button
             variant="light"

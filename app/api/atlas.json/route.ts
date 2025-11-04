@@ -7,7 +7,7 @@ export async function GET() {
 
     // Generate filename with current date
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-    const filename = `atlas-supabase-${currentDate}.json`;
+    const filename = `atlas-${currentDate}.json`;
 
     return new NextResponse(JSON.stringify(atlasJSON, null, 2), {
       status: 200,

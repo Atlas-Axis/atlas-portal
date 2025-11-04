@@ -7,7 +7,7 @@ import {
 import { buildAtlasJSON } from './atlas-json-exporter';
 import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees, childCollectionNames } from './types';
 
-export async function buildAtlasMarkdown() {
+export async function buildAtlasMarkdown(): Promise<string> {
   // Load Atlas JSON
   const standardizedTrees: StandardizedAtlasScopeTrees = await buildAtlasJSON();
 
@@ -19,6 +19,35 @@ export async function buildAtlasMarkdown() {
   }
 
   return lines.join('\n');
+}
+
+export async function buildAtlasMarkdownsPerScope(): Promise<Record<string, string>> {
+  // Load Atlas JSON
+  const standardizedTrees: StandardizedAtlasScopeTrees = await buildAtlasJSON();
+
+  // Create a map of sanitized scope names to their markdown content
+  const markdownsByScope: Record<string, string> = {};
+
+  for (const scopeDoc of standardizedTrees) {
+    // Generate markdown for this scope tree
+    const lines = formatDocumentRecursive(scopeDoc, 0);
+    const markdownContent = lines.join('\n');
+
+    // Create a sanitized filename from the scope's doc_no and name
+    // Example: "A.2 - The Support Scope" -> "A.2 - The Support Scope"
+    const scopeTitle = `${scopeDoc.doc_no} - ${scopeDoc.name}`;
+    const sanitizedName = sanitizeScopeName(scopeTitle);
+
+    markdownsByScope[sanitizedName] = markdownContent;
+  }
+
+  return markdownsByScope;
+}
+
+function sanitizeScopeName(name: string): string {
+  // Replace invalid filesystem characters while preserving readability
+  // Invalid characters: / \ : * ? " < > |
+  return name.replace(/[/\\:*?"<>|]/g, '_');
 }
 
 function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number): string[] {
