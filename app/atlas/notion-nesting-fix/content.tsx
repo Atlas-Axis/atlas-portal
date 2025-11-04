@@ -5,6 +5,7 @@ import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { Plus, Save, Trash2 } from 'lucide-react';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
+import { isValidUUID } from '@/app/shared/utils/utils';
 import { saveMappingsAction } from './_actions/nesting-fix-actions';
 
 /**
@@ -27,7 +28,6 @@ interface MappingWithId extends NotionNestingBugMapping {
 
 const DATABASES_WITH_NESTING: AtlasDatabaseName[] = ['Sections & Primary Docs', 'Agent Scope Database'];
 
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export function Content({ initialMappings, documentLookup }: ContentProps) {
   const [mappings, setMappings] = useState<MappingWithId[]>(
     initialMappings.map((m, i) => ({ ...m, id: `${i}-${Date.now()}` })),
@@ -37,10 +37,6 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
 
   const getDocumentName = (uuid: string): string => {
     return documentLookup[uuid] || 'Unknown document';
-  };
-
-  const isValidUUID = (uuid: string): boolean => {
-    return UUID_REGEX.test(uuid);
   };
 
   const hasCircularDependency = (childId: string, parentId: string): boolean => {
