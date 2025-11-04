@@ -34,8 +34,9 @@ import { AtlasTreeNode } from './atlas-tree-types';
  * const result = buildAtlasTree(atlasData, { uuidMappings });
  * // Document numbers are automatically assigned to all nodes in result.scopeTrees
  *
- * // Access document numbers via atlasUUIDsToGeneratedDocIDs map
- * console.log(result.atlasUUIDsToGeneratedDocIDs.get('some-atlas-uuid')); // "A.1.2.3"
+ * // Access document numbers and names via UUID maps
+ * console.log(result.atlasUUIDsToGeneratedDocNumbers.get('some-atlas-uuid')); // "A.1.2.3"
+ * console.log(result.atlasUUIDsToDocNames.get('some-atlas-uuid')); // "Document Name"
  * ```
  */
 export function assignDocumentNumbersToTreesRecursively(scopeTrees: AtlasTreeNode[]): Map<string, string> {

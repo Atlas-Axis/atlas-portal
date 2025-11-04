@@ -92,10 +92,30 @@ export const atlasTreeNodeRelationshipNames: AtlasTreeNodeRelationship[] = [
 ];
 
 /**
+ * Represents a node that appears under multiple parent nodes in the tree.
+ */
+export interface DuplicatedNodeEntry {
+  /** The ID of the parent node where this node appears */
+  parentId: string;
+  /** The tree node that appears in multiple locations */
+  node: AtlasTreeNode;
+}
+
+/**
+ * Maps from Atlas UUIDs to document metadata (numbers and names).
+ */
+export interface AtlasUUIDToDocNoAndDocNameMaps {
+  /** Map from Atlas UUID to document number (`node.generatedDocID` field) */
+  atlasUUIDsToGeneratedDocNumbers: Map<string, string>;
+  /** Map from Atlas UUID to document name (`node.generatedDocName` field) */
+  atlasUUIDsToDocNames: Map<string, string>;
+}
+
+/**
  * Result of building the Atlas tree structure.
  * Contains the tree roots and any orphaned documents that couldn't be connected.
  */
-export interface AtlasTreeResult {
+export interface AtlasTreeResult extends AtlasUUIDToDocNoAndDocNameMaps {
   /** Array of root Scope trees, one for each top-level Scope document */
   scopeTrees: AtlasTreeNode[];
   /** Documents that exist in the database but are not connected to any root tree */
@@ -105,9 +125,7 @@ export interface AtlasTreeResult {
   /** Any errors encountered during tree construction */
   errors: TreeConstructionError[];
   /** List of nodes that appear in multiple locations with their parent relationships */
-  duplicatedNodes: { parentId: string; node: AtlasTreeNode }[];
-  /** Map from Atlas UUID to document number (`node.generatedDocID` field) */
-  atlasUUIDsToGeneratedDocIDs: Map<string, string>;
+  duplicatedNodes: DuplicatedNodeEntry[];
 }
 
 /**
@@ -147,7 +165,7 @@ export interface AtlasLookupMaps {
  * Configuration options for tree construction.
  */
 export interface TreeConstructionOptions {
-  /** UUID mappings for generating atlasUUIDsToGeneratedDocIDs map */
+  /** UUID mappings for generating Atlas UUID maps (document numbers and names) */
   uuidMappings: UuidMappings;
   /** Whether to log detailed construction information */
   verbose?: boolean;

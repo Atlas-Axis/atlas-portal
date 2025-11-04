@@ -83,7 +83,7 @@ Core function that builds the tree structure. Document numbers are always assign
 
 **Options:**
 
-- `uuidMappings: UuidMappings` - UUID mappings for generating atlasUUIDsToGeneratedDocIDs map (required)
+- `uuidMappings: UuidMappings` - UUID mappings for generating Atlas UUID maps (document numbers and names) (required)
 - `verbose?: boolean` - Whether to log detailed construction information
 - `maxDepth?: number` - Maximum tree depth to prevent infinite recursion (default: 50)
 - `reportMissingChildNodes?: boolean` - Whether to report missing child nodes as errors
@@ -97,7 +97,8 @@ Core function that builds the tree structure. Document numbers are always assign
 - `orphanedNodesAsTreeNodes`: Orphaned nodes as AtlasTreeNode format
 - `errors`: Array of construction errors
 - `duplicatedNodes`: List of nodes appearing in multiple locations
-- `atlasUUIDsToGeneratedDocIDs`: Map from Atlas UUID to generated document ID
+- `atlasUUIDsToGeneratedDocNumbers`: Map from Atlas UUID to generated document number
+- `atlasUUIDsToDocNames`: Map from Atlas UUID to generated document name
 
 ### Tree Traversal
 
@@ -134,6 +135,66 @@ Assigns document numbers to all nodes in the tree structures. This function is a
 #### `getDocumentTitle(treeNode)`
 
 Rewrites Notion document titles for 'Sections & Primary Docs' and 'Agent Scope Database' documents by only keeping the last part of the title after the last `-` separator
+
+## Rich Text Mention Updates
+
+During tree construction, the system automatically updates Rich Text mention objects in the `json_content` fields of all Atlas documents. This feature corrects outdated or incorrect document numbers that Notion stores in mention `plain_text` fields.
+
+### Why This Is Necessary
+
+When Atlas documents reference other documents using Notion's mention feature, Notion stores both:
+
+1. The actual Notion page ID (in `mention.page.id`) - always correct
+2. A display text (in `plain_text`) - often outdated or incorrect
+
+The display text can become stale when documents are renumbered or reorganized, but the page ID remains valid. To ensure consistency, the system:
+
+1. Extracts the Notion page ID from each mention object
+2. Looks up the corresponding Atlas UUID via the UUID mapping table
+3. Retrieves the current document number from the `atlasUUIDsToGeneratedDocNumbers` map
+4. Retrieves the current document name from the `atlasUUIDsToDocNames` map
+5. Updates the `plain_text` field with the format: `"{number} - {name}"` (e.g., `"A.0.1 - General Provisions"`)
+
+### Handling Missing Mappings
+
+If a mention references a document that:
+
+- Has no UUID mapping, or
+- Has no assigned document number
+
+The system replaces the `plain_text` with `"[Unknown]"` and logs a warning for investigation.
+
+If the document name is not available but the document number exists, only the document number is used (e.g., `"A.0.1"`).
+
+### Example
+
+Original mention object from Notion:
+
+```json
+{
+  "type": "mention",
+  "plain_text": "A.2.4", // Outdated number only!
+  "mention": {
+    "type": "page",
+    "page": { "id": "1b2f2ff0-8d73-8095-bb8f-ed052141f936" }
+  }
+}
+```
+
+After processing:
+
+```json
+{
+  "type": "mention",
+  "plain_text": "A.1.3 - General Provisions", // Corrected with number and name!
+  "mention": {
+    "type": "page",
+    "page": { "id": "1b2f2ff0-8d73-8095-bb8f-ed052141f936" }
+  }
+}
+```
+
+This happens automatically in Step 8 of `buildAtlasTree()`, after document numbers are assigned and the UUID-to-document-number map is generated.
 
 ### Error Handling
 

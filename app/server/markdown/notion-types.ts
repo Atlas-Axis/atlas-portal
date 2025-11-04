@@ -12,13 +12,44 @@ export type NotionAnnotations = {
   color?: string;
 };
 
+export type NotionMention =
+  | {
+      type: 'page';
+      page: {
+        id: string;
+      };
+    }
+  | {
+      type: 'database';
+      database: {
+        id: string;
+      };
+    }
+  | {
+      type: 'user';
+      user: {
+        id: string;
+      };
+    }
+  | {
+      type: 'date';
+      date: {
+        start: string;
+        end?: string | null;
+      };
+    }
+  | {
+      type: 'link_preview' | 'template_mention' | 'link_mention' | 'custom_emoji';
+      [key: string]: unknown;
+    };
+
 export type NotionRichText = {
   type: 'text' | 'mention' | 'equation' | string;
   plain_text?: string;
   href?: string | null;
   annotations?: NotionAnnotations;
   text?: { content: string; link?: { url: string } | null };
-  mention?: unknown;
+  mention?: NotionMention;
   equation?: { expression: string };
 };
 

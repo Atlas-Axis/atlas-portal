@@ -1295,4 +1295,139 @@ describe('Document Numbering', () => {
       expect(parentIds).toEqual(['section-1', 'section-2', 'section-3']);
     });
   });
+
+  describe('Atlas UUID Maps', () => {
+    it('should generate atlasUUIDsToDocNames map correctly', () => {
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+        child_article_ids: ['article-1'],
+      });
+
+      const article = makeBasePage('Article', {
+        notion_page_id: 'article-1',
+        atlas_database_name: 'Articles',
+        plain_text_name: 'Test Article',
+        child_section_and_primary_doc_ids: ['section-1'],
+      });
+
+      const section = makeBasePage('Section', {
+        notion_page_id: 'section-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Test Section',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [article],
+        'Sections & Primary Docs': [section],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Set up UUID mappings
+      const uuidMappings = createMockUuidMappings();
+      uuidMappings.notionPageIDsToAtlasUUIDs.set('scope-1', 'atlas-uuid-scope-1');
+      uuidMappings.notionPageIDsToAtlasUUIDs.set('article-1', 'atlas-uuid-article-1');
+      uuidMappings.notionPageIDsToAtlasUUIDs.set('section-1', 'atlas-uuid-section-1');
+
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+
+      // Verify atlasUUIDsToGeneratedDocNumbers map is populated
+      // Note: Scope numbering starts at 0, so first scope is A.0
+      expect(result.atlasUUIDsToGeneratedDocNumbers.get('atlas-uuid-scope-1')).toBe('A.0');
+      expect(result.atlasUUIDsToGeneratedDocNumbers.get('atlas-uuid-article-1')).toBe('A.0.1');
+      expect(result.atlasUUIDsToGeneratedDocNumbers.get('atlas-uuid-section-1')).toBe('A.0.1.1');
+
+      // Verify atlasUUIDsToDocNames map is populated
+      // Note: Document names are from plain_text_name, not normalized
+      expect(result.atlasUUIDsToDocNames.get('atlas-uuid-scope-1')).toBe('Test Scope');
+      expect(result.atlasUUIDsToDocNames.get('atlas-uuid-article-1')).toBe('Test Article');
+      expect(result.atlasUUIDsToDocNames.get('atlas-uuid-section-1')).toBe('Test Section');
+    });
+
+    it('should handle orphaned nodes in UUID maps', () => {
+      // Create a scope and an orphaned section (section not referenced by any parent)
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+      });
+
+      const orphanedSection = makeBasePage('Section', {
+        notion_page_id: 'orphaned-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Orphaned Section',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [],
+        'Sections & Primary Docs': [orphanedSection],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Set up UUID mappings
+      const uuidMappings = createMockUuidMappings();
+      uuidMappings.notionPageIDsToAtlasUUIDs.set('scope-1', 'atlas-uuid-scope-1');
+      uuidMappings.notionPageIDsToAtlasUUIDs.set('orphaned-1', 'atlas-uuid-orphaned-1');
+
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+
+      // Verify scope is in the tree
+      expect(result.scopeTrees).toHaveLength(1);
+      expect(result.atlasUUIDsToGeneratedDocNumbers.get('atlas-uuid-scope-1')).toBe('A.0');
+      expect(result.atlasUUIDsToDocNames.get('atlas-uuid-scope-1')).toBe('Test Scope');
+
+      // Verify orphaned node is tracked separately
+      expect(result.orphanedNodesAsTreeNodes).toHaveLength(1);
+
+      // Orphaned nodes don't get document numbers assigned (generatedDocID is undefined)
+      // but they still get document names (generatedDocName is set during name generation)
+      expect(result.atlasUUIDsToGeneratedDocNumbers.has('atlas-uuid-orphaned-1')).toBe(false);
+      expect(result.atlasUUIDsToDocNames.get('atlas-uuid-orphaned-1')).toBe('Orphaned Section');
+    });
+
+    it('should not include nodes without UUID mappings', () => {
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [],
+        'Sections & Primary Docs': [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Empty UUID mappings - no mapping for scope-1
+      const uuidMappings = createMockUuidMappings();
+
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+
+      // Maps should be empty since there's no UUID mapping
+      expect(result.atlasUUIDsToGeneratedDocNumbers.size).toBe(0);
+      expect(result.atlasUUIDsToDocNames.size).toBe(0);
+    });
+  });
 });
