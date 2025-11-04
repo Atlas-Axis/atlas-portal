@@ -5,7 +5,7 @@ import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { Plus, Save, Trash2 } from 'lucide-react';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
-import { isValidUUID } from '@/app/shared/utils/utils';
+import { isValidUUID, normalizeUUID } from '@/app/shared/utils/utils';
 import { saveMappingsAction } from './_actions/nesting-fix-actions';
 
 /**
@@ -73,6 +73,21 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
 
   const updateMapping = (id: string, field: 'child_notion_page_id' | 'parent_notion_page_id', value: string) => {
     setMappings(mappings.map((m) => (m.id === id ? { ...m, [field]: value } : m)));
+  };
+
+  const handleUuidBlur = (id: string, field: 'child_notion_page_id' | 'parent_notion_page_id', value: string) => {
+    // Skip empty values
+    if (!value.trim()) return;
+
+    try {
+      // Normalize the UUID to hyphenated format
+      const normalized = normalizeUUID(value.trim());
+      // Update the mapping with normalized value
+      updateMapping(id, field, normalized);
+    } catch (error) {
+      // If normalization fails, leave the value as-is for validation to catch
+      console.warn(`Failed to normalize UUID: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   };
 
   const deleteMapping = (id: string) => {
@@ -191,6 +206,7 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
                               placeholder="Child UUID"
                               value={mapping.child_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'child_notion_page_id', e.target.value)}
+                              onBlur={(e) => handleUuidBlur(mapping.id, 'child_notion_page_id', e.target.value)}
                               classNames={{
                                 input: 'font-mono text-xs',
                               }}
@@ -208,6 +224,7 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
                               placeholder="Parent UUID"
                               value={mapping.parent_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'parent_notion_page_id', e.target.value)}
+                              onBlur={(e) => handleUuidBlur(mapping.id, 'parent_notion_page_id', e.target.value)}
                               classNames={{
                                 input: 'font-mono text-xs',
                               }}
