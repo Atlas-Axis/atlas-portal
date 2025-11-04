@@ -5,6 +5,7 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { assignDocumentNumbersToTreesRecursively } from '../atlas-tree-numbering';
 import { AtlasTreeNode } from '../atlas-tree-types';
+import { UuidMappings } from '../load-uuid-mapping';
 
 /**
  * Unit tests for Atlas Document Numbering System
@@ -59,13 +60,23 @@ function makeBasePage(
 }
 
 /**
+ * Helper function to create mock UUID mappings for tests
+ */
+function createMockUuidMappings(): UuidMappings {
+  return {
+    notionPageIDsToAtlasUUIDs: new Map(),
+    atlasUUIDsToNotionPageIds: new Map(),
+  };
+}
+
+/**
  * Helper function to build tree and assign document numbers
  */
 function buildTreeWithNumbering(pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>): {
   scopeTrees: AtlasTreeNode[];
   docNumbers: Map<string, string>;
 } {
-  const result = buildAtlasTree(pagesByDatabase, { assignDocumentNumbers: false });
+  const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
   const docNumbers = assignDocumentNumbersToTreesRecursively(result.scopeTrees);
   return { scopeTrees: result.scopeTrees, docNumbers };
 }

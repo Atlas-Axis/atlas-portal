@@ -4,6 +4,7 @@ import path from 'path';
 import { buildAtlasTreeWithValidation } from '@/app/server/atlas/atlas-tree-system';
 import type { TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-types';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { loadEnv } from './utils/load-env';
 
 async function main() {
@@ -13,11 +14,13 @@ async function main() {
   loadEnv();
 
   try {
-    // Load Atlas data
+    // Load Atlas data and UUID mappings
     const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+    const uuidMappings = await loadUuidMappings();
 
     // Configure options
     const options: TreeConstructionOptions = {
+      uuidMappings,
       reportMissingChildNodes: false,
       reportOrphanedNodes: true,
     };

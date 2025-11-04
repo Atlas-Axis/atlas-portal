@@ -30,11 +30,12 @@ import { AtlasTreeNode } from './atlas-tree-types';
  *
  * @example
  * ```typescript
- * const result = buildAtlasTree(atlasData, { assignDocumentNumbers: false });
- * const docNumbers = getDocumentTitle(result.scopeTrees);
+ * const uuidMappings = await loadUuidMappings();
+ * const result = buildAtlasTree(atlasData, { uuidMappings });
+ * // Document numbers are automatically assigned to all nodes in result.scopeTrees
  *
- * // Access document numbers
- * console.log(docNumbers.get('some-page-id')); // "A.1.2.3"
+ * // Access document numbers via atlasUUIDsToGeneratedDocIDs map
+ * console.log(result.atlasUUIDsToGeneratedDocIDs.get('some-atlas-uuid')); // "A.1.2.3"
  * ```
  */
 export function assignDocumentNumbersToTreesRecursively(scopeTrees: AtlasTreeNode[]): Map<string, string> {

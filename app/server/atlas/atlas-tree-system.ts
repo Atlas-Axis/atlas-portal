@@ -10,12 +10,14 @@
  * ```typescript
  * import { buildAtlasTree, getDocumentTitle } from './atlas-tree-system';
  * import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+ * import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
  *
  * // Load Atlas data
  * const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+ * const uuidMappings = await loadUuidMappings();
  *
  * // Build tree structure with document numbering
- * const result = buildAtlasTree(atlasData, { assignDocumentNumbers: true });
+ * const result = buildAtlasTree(atlasData, { uuidMappings });
  *
  * // Access the tree structure
  * console.log(`Built ${result.scopeTrees.length} scope trees`);
@@ -49,8 +51,9 @@ import { AtlasTreeNode, AtlasTreeResult, TreeConstructionOptions } from './atlas
  *
  * @example
  * ```typescript
+ * const uuidMappings = await loadUuidMappings();
  * const result = await buildAtlasTreeWithValidation(atlasData, {
- *   assignDocumentNumbers: true,
+ *   uuidMappings,
  *   verbose: true,
  *   maxDepth: 100
  * });
@@ -62,7 +65,7 @@ import { AtlasTreeNode, AtlasTreeResult, TreeConstructionOptions } from './atlas
  */
 export async function buildAtlasTreeWithValidation(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
-  options: TreeConstructionOptions & { validateIntegrity?: boolean } = {},
+  options: TreeConstructionOptions & { validateIntegrity?: boolean },
 ): Promise<
   AtlasTreeResult & {
     validationSummary: ReturnType<typeof createValidationSummary>;

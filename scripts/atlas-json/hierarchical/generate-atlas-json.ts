@@ -138,6 +138,7 @@ async function main() {
 
   // Configure options
   const options: TreeConstructionOptions = {
+    uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   };

@@ -31,14 +31,16 @@ The new system provides:
 
 ```typescript
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
+import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { buildAtlasTreeWithValidation } from './atlas-tree-system';
 
 // Load Atlas data
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+const uuidMappings = await loadUuidMappings();
 
 // Build tree structure with document numbering and validation
 const result = await buildAtlasTreeWithValidation(atlasData, {
-  assignDocumentNumbers: true,
+  uuidMappings,
   verbose: true,
   validateIntegrity: true,
 });
@@ -77,13 +79,25 @@ High-level function that builds the tree structure with comprehensive validation
 
 #### `buildAtlasTree(pagesByDatabase, options)`
 
-Core function that builds the tree structure.
+Core function that builds the tree structure. Document numbers are always assigned during tree construction.
 
 **Options:**
 
-- `assignDocumentNumbers?: boolean` - Whether to assign document numbers during construction
+- `uuidMappings: UuidMappings` - UUID mappings for generating atlasUUIDsToGeneratedDocIDs map (required)
 - `verbose?: boolean` - Whether to log detailed construction information
 - `maxDepth?: number` - Maximum tree depth to prevent infinite recursion (default: 50)
+- `reportMissingChildNodes?: boolean` - Whether to report missing child nodes as errors
+- `reportOrphanedNodes?: boolean` - Whether to report orphaned nodes in detail
+- `reportDuplicatedNodes?: boolean` - Whether to report duplicated nodes
+
+**Returns:**
+
+- `scopeTrees`: Array of root scope trees with document numbers assigned
+- `orphanedNodes`: Array of orphaned documents
+- `orphanedNodesAsTreeNodes`: Orphaned nodes as AtlasTreeNode format
+- `errors`: Array of construction errors
+- `duplicatedNodes`: List of nodes appearing in multiple locations
+- `atlasUUIDsToGeneratedDocIDs`: Map from Atlas UUID to generated document ID
 
 ### Tree Traversal
 
@@ -111,7 +125,7 @@ Gets the total number of nodes in the tree.
 
 #### `assignDocumentNumbersToTreesRecursively(scopeTrees)`
 
-Assigns document numbers to all nodes in the tree structures.
+Assigns document numbers to all nodes in the tree structures. This function is automatically called by `buildAtlasTree` during tree construction, so you typically don't need to call it directly.
 
 **Returns:** Map of page ID to generated document number
 
@@ -208,7 +222,10 @@ const docNumbers = generateDocumentNumbers(pagesByDatabase);
 
 // New system
 import { buildAtlasTreeWithValidation } from './atlas-tree-system';
-const result = await buildAtlasTreeWithValidation(pagesByDatabase, { assignDocumentNumbers: true });
+import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+
+const uuidMappings = await loadUuidMappings();
+const result = await buildAtlasTreeWithValidation(pagesByDatabase, { uuidMappings });
 const docNumbers = result.documentNumbers; // Note: All the pages inside `result` have their `generatedDocNumber` fields populated, recursively
 ```
 

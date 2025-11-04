@@ -1,6 +1,7 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
+import { UuidMappings } from './load-uuid-mapping';
 
 /**
  * Represents a node in the Atlas document tree structure.
@@ -105,6 +106,8 @@ export interface AtlasTreeResult {
   errors: TreeConstructionError[];
   /** List of nodes that appear in multiple locations with their parent relationships */
   duplicatedNodes: { parentId: string; node: AtlasTreeNode }[];
+  /** Map from Atlas UUID to document number (`node.generatedDocID` field) */
+  atlasUUIDsToGeneratedDocIDs: Map<string, string>;
 }
 
 /**
@@ -144,8 +147,8 @@ export interface AtlasLookupMaps {
  * Configuration options for tree construction.
  */
 export interface TreeConstructionOptions {
-  /** Whether to assign document numbers during tree construction */
-  assignDocumentNumbers?: boolean;
+  /** UUID mappings for generating atlasUUIDsToGeneratedDocIDs map */
+  uuidMappings: UuidMappings;
   /** Whether to log detailed construction information */
   verbose?: boolean;
   /** Maximum tree depth to prevent infinite recursion */

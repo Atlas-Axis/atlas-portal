@@ -11,6 +11,7 @@ import {
   TreeConstructionError,
   TreeConstructionOptions,
 } from './atlas-tree-types';
+import { UuidMappings } from './load-uuid-mapping';
 
 /**
  * Builds the Atlas document tree structure from Supabase data.
@@ -29,7 +30,8 @@ import {
  * @example
  * ```typescript
  * const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
- * const result = buildAtlasTree(atlasData, { assignDocumentNumbers: true });
+ * const uuidMappings = await loadUuidMappings();
+ * const result = buildAtlasTree(atlasData, { uuidMappings });
  *
  * // Access the first scope tree
  * const firstScope = result.scopeTrees[0];
@@ -43,9 +45,9 @@ import {
  */
 export function buildAtlasTree(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
-  options: TreeConstructionOptions = {},
+  options: TreeConstructionOptions,
 ): AtlasTreeResult {
-  const { assignDocumentNumbers = true, verbose = true, maxDepth = 50, reportMissingChildNodes = false } = options;
+  const { uuidMappings, verbose = true, maxDepth = 50, reportMissingChildNodes = false } = options;
 
   if (verbose) {
     console.log('🌳 Building Atlas tree structure...');
@@ -127,12 +129,13 @@ export function buildAtlasTree(
     }
   });
 
-  // Step 6: Assign document numbers if requested
-  if (assignDocumentNumbers) {
-    assignDocumentNumbersToTreesRecursively(scopeTrees);
-  }
+  // Step 6: Assign document numbers
+  assignDocumentNumbersToTreesRecursively(scopeTrees);
 
-  // Step 7: Generate duplicated nodes from parent tracking
+  // Step 7: Generate atlasUUIDsToGeneratedDocIDs map
+  const atlasUUIDsToGeneratedDocIDs = generateAtlasUUIDsToDocIDsMap(scopeTrees, orphanedNodesAsTreeNodes, uuidMappings);
+
+  // Step 8: Generate duplicated nodes from parent tracking
   const duplicatedNodes = generateDuplicatedNodeList(lookupMaps);
 
   if (verbose) {
@@ -145,6 +148,7 @@ export function buildAtlasTree(
     orphanedNodesAsTreeNodes,
     errors,
     duplicatedNodes,
+    atlasUUIDsToGeneratedDocIDs,
   };
 }
 
@@ -520,6 +524,65 @@ function findOrphanedNodes(
   }
 
   return orphanedNodes;
+}
+
+/**
+ * Generates a map from Atlas UUID to generated document ID (generatedDocID).
+ * Traverses all nodes in scope trees and orphaned nodes, and creates entries for nodes with defined generatedDocID.
+ *
+ * @param scopeTrees - Array of root scope trees
+ * @param orphanedNodesAsTreeNodes - Array of orphaned nodes as tree nodes
+ * @param uuidMappings - UUID mappings to convert notion_page_id to atlas_document_uuid
+ * @returns Map from atlas_document_uuid to generatedDocID
+ */
+function generateAtlasUUIDsToDocIDsMap(
+  scopeTrees: AtlasTreeNode[],
+  orphanedNodesAsTreeNodes: AtlasTreeNode[],
+  uuidMappings: UuidMappings,
+): Map<string, string> {
+  const atlasUUIDsToDocIDs = new Map<string, string>();
+
+  function processNode(node: AtlasTreeNode) {
+    // Only add nodes with defined generatedDocID
+    if (node.generatedDocID) {
+      const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id);
+      if (atlasUUID) {
+        atlasUUIDsToDocIDs.set(atlasUUID, node.generatedDocID);
+      }
+    }
+
+    // Recursively process all child arrays
+    const childArrays = [
+      node.scopes,
+      node.articles,
+      node.sectionsAndPrimaryDocs,
+      node.annotations,
+      node.tenets,
+      node.scenarios,
+      node.scenarioVariations,
+      node.activeData,
+      node.agentScopeDocs,
+      node.neededResearch,
+    ];
+
+    for (const children of childArrays) {
+      for (const child of children) {
+        processNode(child);
+      }
+    }
+  }
+
+  // Process all scope trees
+  for (const scopeTree of scopeTrees) {
+    processNode(scopeTree);
+  }
+
+  // Process all orphaned nodes
+  for (const orphanedNode of orphanedNodesAsTreeNodes) {
+    processNode(orphanedNode);
+  }
+
+  return atlasUUIDsToDocIDs;
 }
 
 /**

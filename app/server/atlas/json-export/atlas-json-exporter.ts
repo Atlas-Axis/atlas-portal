@@ -9,8 +9,12 @@ export async function buildAtlasJSON() {
   // Load Atlas data
   const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
+  // Load UUID mappings
+  const uuidMappings = await loadUuidMappings();
+
   // Configure options
   const options: TreeConstructionOptions = {
+    uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   };
@@ -19,8 +23,6 @@ export async function buildAtlasJSON() {
   const result = buildAtlasTree(atlasData, options);
   const scopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
-
-  const uuidMappings = await loadUuidMappings();
 
   // Convert Scope trees to standardized JSON format
   const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((scopeNode) =>

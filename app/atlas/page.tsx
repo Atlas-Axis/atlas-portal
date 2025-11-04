@@ -24,7 +24,7 @@ export default async function Page() {
 
   // Build the Atlas tree structure with validation
   const atlas = buildAtlasTree(atlasPagesPerDatabase, {
-    assignDocumentNumbers: true,
+    uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   });

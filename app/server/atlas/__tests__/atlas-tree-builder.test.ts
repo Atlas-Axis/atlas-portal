@@ -4,6 +4,7 @@ import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constan
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
+import { UuidMappings } from '../load-uuid-mapping';
 
 /**
  * See Atlas document number generation rules in `docs/ATLAS_DOCUMENT_NUMBERING_RULES.md`
@@ -47,6 +48,16 @@ function makeBasePage(
   };
 }
 
+/**
+ * Helper function to create mock UUID mappings for tests
+ */
+function createMockUuidMappings(): UuidMappings {
+  return {
+    notionPageIDsToAtlasUUIDs: new Map(),
+    atlasUUIDsToNotionPageIds: new Map(),
+  };
+}
+
 describe('Atlas Tree Builder', () => {
   let pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>;
 
@@ -75,7 +86,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
@@ -117,7 +128,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].articles).toHaveLength(2);
@@ -151,7 +162,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(2);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
@@ -184,7 +195,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.orphanedNodes).toHaveLength(1);
@@ -219,7 +230,9 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      expect(() => buildAtlasTree(pagesByDatabase)).toThrow('Circular reference detected');
+      expect(() => buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() })).toThrow(
+        'Circular reference detected',
+      );
     });
 
     it('should handle missing child documents gracefully', () => {
@@ -246,7 +259,10 @@ describe('Atlas Tree Builder', () => {
       // Should not throw, but should log error
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const result = buildAtlasTree(pagesByDatabase, { reportMissingChildNodes: true });
+      const result = buildAtlasTree(pagesByDatabase, {
+        uuidMappings: createMockUuidMappings(),
+        reportMissingChildNodes: true,
+      });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].articles).toHaveLength(0);
@@ -282,7 +298,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { assignDocumentNumbers: true });
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
       expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
@@ -366,7 +382,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [research],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].articles).toHaveLength(1);
       expect(result.scopeTrees[0].annotations).toHaveLength(1);
@@ -451,7 +467,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 2 direct Core children, not 4
       expect(result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0].sectionsAndPrimaryDocs).toHaveLength(2);
@@ -531,7 +547,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Parent Core should only have 2 direct children (not 3)
       const parentCoreNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -617,7 +633,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Navigate through the tree to verify correct filtering at each level
       const level1Node = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -694,7 +710,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Agent root should only have 2 direct children
       const agentRootNode = result.scopeTrees[0].agentScopeDocs[0];
@@ -769,7 +785,7 @@ describe('filterDirectChildren', () => {
       // Should not throw error due to circular reference protection
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify tree structure is correct despite complex ancestry
       const coreANode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -857,7 +873,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify the section only has one direct child (core-l1)
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -955,7 +971,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase);
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 3 direct children of mixed types
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -1013,7 +1029,7 @@ describe('Tree Traversal', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase);
+    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
     scopeTree = result.scopeTrees[0];
   });
 
@@ -1056,7 +1072,7 @@ describe('Tree Traversal', () => {
         'Agent Scope Database': [],
         'Needed Research': [],
       },
-      { assignDocumentNumbers: true },
+      { uuidMappings: createMockUuidMappings() },
     );
 
     const foundNode = findNodeByDocumentID(result.scopeTrees[0], 'A.0.1');
@@ -1098,7 +1114,7 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase, { assignDocumentNumbers: true });
+    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
@@ -1130,7 +1146,7 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase, { assignDocumentNumbers: true });
+    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[1].generatedDocID).toBe('A.1');
@@ -1191,7 +1207,7 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { verbose: false });
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
 
       // Should detect the duplication - tracks ALL parent relationships (2 parents = 2 entries)
       expect(result.duplicatedNodes).toHaveLength(2);
@@ -1267,7 +1283,7 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { verbose: false });
+      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
 
       // Should detect all duplications - tracks ALL parent relationships (3 parents = 3 entries)
       expect(result.duplicatedNodes).toHaveLength(3);

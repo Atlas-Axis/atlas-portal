@@ -19,7 +19,7 @@ export default async function AtlasListPage() {
 
   // Build the Atlas tree structure with validation
   const { scopeTrees } = buildAtlasTree(atlasPagesPerDatabase, {
-    assignDocumentNumbers: true,
+    uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   });
