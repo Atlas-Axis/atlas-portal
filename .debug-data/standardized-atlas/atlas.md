@@ -6108,11 +6108,11 @@ The Scopes establish various specialized processes, including those for submitti
 
 ##### A.2.1.1.2.0.3.1 - Monitoring And Ensuring - Element Annotation [Annotation]  <!-- UUID: f51addb2-fba3-476f-b3e4-1c5b4b9013fc -->
 
-This element refers to the ongoing responsibility of Support Facilitators to monitor the progress of routine governance processes, check for compliance with the rules, and confirm that all necessary documentation and approvals are in place.
+This element refers to the ongoing responsibility of Core GovOps to monitor the progress of routine governance processes, check for compliance with the rules, and confirm that all necessary documentation and approvals are in place.
 
 ##### A.2.1.1.2.0.3.2 - Properly Notified - Element Annotation [Annotation]  <!-- UUID: df31f503-1238-4380-9a0e-25e2ef7c81d0 -->
 
-This element means that the Support Facilitators have been informed in accordance with the prescribed procedures, including the timing, method, and content of the notification, as required by the relevant Scope.
+This element means that Core GovOps have been informed in accordance with the prescribed procedures, including the timing, method, and content of the notification, as required by the relevant Scope.
 
 #### A.2.1.1.3 - Designation Of Governance Process Support Ecosystem Actors [Core]  <!-- UUID: d537c3df-287c-45a5-aa69-2b4242b2259f -->
 
@@ -6146,7 +6146,7 @@ The Core Facilitator can initiate direct funding through monthly Executive Votes
 
 ###### A.2.2.1.1.1.0.4.1 - Key Atlas Contributors [Action Tenet]  <!-- UUID: 969b5bf3-f982-4fc2-a29e-704b1d9962a9 -->
 
-Key Atlas contributors are individuals or teams that play a crucial role in the development of the Atlas. Relevant workstreams can include community building, research, data collection, data processing, data review, drafting, peer review, etc. The Support Facilitators, in consultation with Atlas Axis or other relevant Ecosystem Actors, will distribute funding based on criteria such as the scope of the contribution, its impact on the Atlas, and the quality of the work produced.
+Key Atlas contributors are individuals or teams that play a crucial role in the development of the Atlas. Relevant workstreams can include community building, research, data collection, data processing, data review, drafting, peer review, etc. The Core Facilitator, in consultation with Atlas Axis or other relevant Ecosystem Actors, will distribute funding based on criteria such as the scope of the contribution, its impact on the Atlas, and the quality of the work produced.
 
 ##### A.2.2.1.1.2 - Direct Funding Cap [Core]  <!-- UUID: 086bc45a-e3f8-46e4-b574-6f432dfd2306 -->
 
@@ -9255,12 +9255,10 @@ Sky Direct Exposures are designated by the Core Facilitator in consultation with
 
 ######## A.2.3.9.1.1.1.1.2 - Current Sky Direct Exposures [Active Data Controller]  <!-- UUID: 1c0410e4-fe36-4a01-8b82-8ea74f67fbec -->
 
-The list of current Sky Direct Exposures is defined as Active Data in A.2.4 - List Of Current Sky Direct Exposures.
+The list of current Sky Direct Exposures is defined as Active Data in [A.2.4 - List Of Current Sky Direct Exposures](5f368e33-7a82-4244-a9ba-f285193ec043). 
 
 The Active Data is updated as follows:
-
 • The Responsible Party is the Core Facilitator.
-
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
 ######## A.2.3.9.1.1.1.1.3 - Parameters For Sky Direct Exposures [Core]  <!-- UUID: cbd64e6c-547b-4b8d-a0cb-b605f780aef1 -->
@@ -26012,6 +26010,34 @@ This Instance’s associated Instance Configuration Document is located at [Ethe
 
 This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Ethena PT-sUSDe Instance Configuration Document](ba45e20f-b6df-4836-94ea-b4f2f062e658).
 
+########### A.6.1.1.2.2.6.1.1.2.1.5 - Aave [Core]  <!-- UUID: 23bbcb38-c473-4ccf-83c5-59fe292bb13c -->
+
+The Ethereum Mainnet Instances Directory of the Aave Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.1.5.1 - Ethereum Mainnet - Aave Core v3 USDC Instance Configuration Document Location [Core]  <!-- UUID: 7115f3e1-549f-458b-990a-756b679ce2b0 -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Aave Core v3 USDC Instance Configuration Document](https://www.notion.so/29cf2ff08d73807aa68dd290c35f286f).
+
+############ A.6.1.1.2.2.6.1.1.2.1.5.2 - Ethereum Mainnet - Aave Core v3 RLUSD Instance Configuration Document Location [Core]  <!-- UUID: 6149518b-ccd9-48ad-85f2-3a57c8d2bb6d -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Aave Core v3 RLUSD Instance Configuration Document](https://www.notion.so/29cf2ff08d7380dd9de5f8f4bbb4a5ef).
+
+############ A.6.1.1.2.2.6.1.1.2.1.5.3 - Ethereum Mainnet - Aave Horizon USDC Instance Configuration Document Location [Core]  <!-- UUID: f7cb82e7-bb79-4e0a-9c92-652f8d24fcad -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Aave Horizon USDC Instance Configuration Document](https://www.notion.so/29cf2ff08d73807cae92d29808e8b865).
+
+############ A.6.1.1.2.2.6.1.1.2.1.5.4 - Ethereum Mainnet - Aave Horizon RLUSD Instance Configuration Document Location [Core]  <!-- UUID: dbe0fa43-026b-467f-8108-879f4fe94e3b -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Aave Horizon RLUSD Instance Configuration Document](https://www.notion.so/29cf2ff08d7380e28fdcc1d6d4e7e9fd).
+
+########### A.6.1.1.2.2.6.1.1.2.1.6 - Curve [Core]  <!-- UUID: 74f2556f-fb78-45f3-95d7-f360b9982d09 -->
+
+The Ethereum Mainnet Instances Directory of the Curve Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.1.6.1 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document Location [Core]  <!-- UUID: 654eac37-dbe6-4bf1-a300-e04645c0652a -->
+
+This Instance’s associated Instance Configuration Document is located at [Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document](https://www.notion.so/29cf2ff08d7380c6ad86f5e0c217ef30).
+
 ######### A.6.1.1.2.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70ddaca1-07ca-402f-bf3b-cfab52a8f360 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
@@ -30669,7 +30695,7 @@ At the conclusion of the poll, if the proposal is approved, the Operational Faci
 
 ############# A.6.1.1.4.2.2.2.2.1.2.1.5.1 - Short-Term Transitionary Measures [Core]  <!-- UUID: 1adf5e90-53a8-4036-9964-11430891137e -->
 
-Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Governance Facilitators to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
+Until the Powerhouse system supports updating Agent Artifacts, the Operational Facilitator works with the Core Facilitator to update the Atlas GitHub repository located at [https://github.com/sky-ecosystem/next-gen-atlas/pulls](https://github.com/sky-ecosystem/next-gen-atlas/pulls) to reflect proposals approved by Prime Governance.
 
 ############ A.6.1.1.4.2.2.2.2.1.2.1.6 - Artifact Edit Restrictions [Core]  <!-- UUID: f3e8ecec-cb08-4682-9218-d13f567fc00e -->
 
