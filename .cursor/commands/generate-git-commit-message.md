@@ -1,3 +1,3 @@
-Generate a Git commit message from the changes made in this thread.
+Generate a Git commit message from the changes for the new feature, work, or bug fix we have accomplished.
 Keep it short and compact.
-Include the reason for the changes too if this was a feature change or bug fix or major change.
+Include the reason for the changes too and a compact high level summary
