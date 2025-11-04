@@ -1,14 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { Input } from '@heroui/input';
 import { Search } from 'lucide-react';
 
 interface SearchTriggerProps {
   onOpen: () => void;
-  isMac: boolean;
 }
 
-export default function SearchTrigger({ onOpen, isMac }: SearchTriggerProps) {
+export default function SearchTrigger({ onOpen }: SearchTriggerProps) {
+  // Detect platform for keyboard shortcut display (lazy initialization)
+  const [isMac] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  });
+
   return (
     <div onClick={onOpen} className="cursor-pointer">
       <Input
@@ -16,7 +22,10 @@ export default function SearchTrigger({ onOpen, isMac }: SearchTriggerProps) {
         readOnly
         startContent={<Search className="h-4 w-4 text-slate-400" />}
         endContent={
-          <kbd className="hidden rounded bg-slate-100 px-2 py-1 text-xs text-slate-500 sm:inline-block">
+          <kbd
+            className="hidden rounded bg-slate-100 px-2 py-1 text-xs text-slate-500 sm:inline-block"
+            suppressHydrationWarning
+          >
             {isMac ? '⌘' : 'Ctrl+'}F
           </kbd>
         }

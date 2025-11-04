@@ -152,12 +152,6 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   const [activeHash, setActiveHash] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // Detect platform for keyboard shortcut display (lazy initialization)
-  const [isMac] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  });
-
   useEffect(() => {
     // Set initial hash (remove the '#' prefix)
     const updateHash = () => {
@@ -215,7 +209,7 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
 
           {/* Search Input Trigger */}
           <div className="mb-4">
-            <SearchTrigger onOpen={onOpen} isMac={isMac} />
+            <SearchTrigger onOpen={onOpen} />
           </div>
 
           <div className="space-y-1">
