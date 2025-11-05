@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { type Json } from '@/app/server/services/supabase/database.types';
+import type { UuidMappings } from '../../load-uuid-mapping';
+import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
 import {
   type NeededResearchExtraFields,
   type ScenarioExtraFields,
   type ScenarioVariationExtraFields,
   type TypeSpecificationExtraFields,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
-import { type Json } from '@/app/server/services/supabase/database.types';
-import type { UuidMappings } from '../../load-uuid-mapping';
-import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
+} from '../types';
 import {
   type ActiveDataDocument,
   type AgentScopeDatabaseDocument,
