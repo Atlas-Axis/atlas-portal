@@ -16,7 +16,9 @@ import {
   TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { Json } from '@/app/server/services/supabase/database.types';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
+import { extractRichTextFromProperty } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
@@ -39,8 +41,11 @@ function compareTypeSpecificationExtraFields(
   // Extract extra fields from Notion page
   const notionExtraFields: Partial<TypeSpecificationExtraFields> = {};
   for (const [supabaseField, notionPropertyName] of Object.entries(TYPE_SPECIFICATION_PROPERTY_MAPPING)) {
-    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof TypeSpecificationExtraFields] = notionValue ? String(notionValue) : null;
+    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof TypeSpecificationExtraFields] = {
+      plain_text: plainText,
+      rich_text: richText as Json[] | null,
+    };
   }
 
   // Extract extra fields from Supabase page
@@ -48,12 +53,18 @@ function compareTypeSpecificationExtraFields(
 
   // Compare each field
   for (const field of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING) as Array<keyof TypeSpecificationExtraFields>) {
-    const notionValue = notionExtraFields[field] || null;
-    const supabaseValue = supabaseExtraFields[field] || null;
+    const notionValue = notionExtraFields[field];
+    const supabaseValue = supabaseExtraFields[field];
 
-    if (notionValue !== supabaseValue) {
+    // Compare both plain_text and rich_text
+    const notionPlainText = notionValue?.plain_text || null;
+    const supabasePlainText = supabaseValue?.plain_text || null;
+    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
+    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
+
+    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
       console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
       );
       return true; // Has changes
     }
@@ -69,8 +80,11 @@ function compareScenarioExtraFields(notionPage: EnhancedPageObjectResponse, supa
   // Extract extra fields from Notion page
   const notionExtraFields: Partial<ScenarioExtraFields> = {};
   for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_PROPERTY_MAPPING)) {
-    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof ScenarioExtraFields] = notionValue ? String(notionValue) : null;
+    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof ScenarioExtraFields] = {
+      plain_text: plainText,
+      rich_text: richText as Json[] | null,
+    };
   }
 
   // Extract extra fields from Supabase page
@@ -78,12 +92,18 @@ function compareScenarioExtraFields(notionPage: EnhancedPageObjectResponse, supa
 
   // Compare each field
   for (const field of Object.keys(SCENARIO_PROPERTY_MAPPING) as Array<keyof ScenarioExtraFields>) {
-    const notionValue = notionExtraFields[field] || null;
-    const supabaseValue = supabaseExtraFields[field] || null;
+    const notionValue = notionExtraFields[field];
+    const supabaseValue = supabaseExtraFields[field];
 
-    if (notionValue !== supabaseValue) {
+    // Compare both plain_text and rich_text
+    const notionPlainText = notionValue?.plain_text || null;
+    const supabasePlainText = supabaseValue?.plain_text || null;
+    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
+    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
+
+    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
       console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
       );
       return true; // Has changes
     }
@@ -103,8 +123,11 @@ function compareScenarioVariationExtraFields(
   // Extract extra fields from Notion page
   const notionExtraFields: Partial<ScenarioVariationExtraFields> = {};
   for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_VARIATION_PROPERTY_MAPPING)) {
-    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof ScenarioVariationExtraFields] = notionValue ? String(notionValue) : null;
+    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof ScenarioVariationExtraFields] = {
+      plain_text: plainText,
+      rich_text: richText as Json[] | null,
+    };
   }
 
   // Extract extra fields from Supabase page
@@ -112,12 +135,18 @@ function compareScenarioVariationExtraFields(
 
   // Compare each field
   for (const field of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING) as Array<keyof ScenarioVariationExtraFields>) {
-    const notionValue = notionExtraFields[field] || null;
-    const supabaseValue = supabaseExtraFields[field] || null;
+    const notionValue = notionExtraFields[field];
+    const supabaseValue = supabaseExtraFields[field];
 
-    if (notionValue !== supabaseValue) {
+    // Compare both plain_text and rich_text
+    const notionPlainText = notionValue?.plain_text || null;
+    const supabasePlainText = supabaseValue?.plain_text || null;
+    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
+    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
+
+    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
       console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
       );
       return true; // Has changes
     }
@@ -137,8 +166,11 @@ function compareNeededResearchExtraFields(
   // Extract extra fields from Notion page
   const notionExtraFields: Partial<NeededResearchExtraFields> = {};
   for (const [supabaseField, notionPropertyName] of Object.entries(NEEDED_RESEARCH_PROPERTY_MAPPING)) {
-    const notionValue = extractNotionPropertyValue(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof NeededResearchExtraFields] = notionValue ? String(notionValue) : null;
+    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField as keyof NeededResearchExtraFields] = {
+      plain_text: plainText,
+      rich_text: richText as Json[] | null,
+    };
   }
 
   // Extract extra fields from Supabase page
@@ -146,12 +178,18 @@ function compareNeededResearchExtraFields(
 
   // Compare each field
   for (const field of Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING) as Array<keyof NeededResearchExtraFields>) {
-    const notionValue = notionExtraFields[field] || null;
-    const supabaseValue = supabaseExtraFields[field] || null;
+    const notionValue = notionExtraFields[field];
+    const supabaseValue = supabaseExtraFields[field];
 
-    if (notionValue !== supabaseValue) {
+    // Compare both plain_text and rich_text
+    const notionPlainText = notionValue?.plain_text || null;
+    const supabasePlainText = supabaseValue?.plain_text || null;
+    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
+    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
+
+    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
       console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion: "${notionValue}", Supabase: "${supabaseValue}")`,
+        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
       );
       return true; // Has changes
     }

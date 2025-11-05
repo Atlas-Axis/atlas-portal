@@ -35,6 +35,11 @@ export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTree
 }
 
 function convertRichTextToMarkdown(richText: RichTextItemResponse[], uuidMappings: UuidMappings): string {
+  // Handle non-array or null/undefined inputs
+  if (!richText || !Array.isArray(richText)) {
+    return '';
+  }
+
   // For table content, we need to avoid escaping pipe characters and underscores
   // This is a simplified approach that detects table-like patterns and handles them specially
   const plainText = richText.map((rt) => rt.plain_text || '').join('');

@@ -1,14 +1,23 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
-  NeededResearchExtraFields,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
-  ScenarioExtraFields,
-  ScenarioVariationExtraFields,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-  TypeSpecificationExtraFields,
 } from '../notion-database-properties-and-relationships';
+
+/**
+ * Extra field types for JSON export (string-only versions).
+ * These are converted from the Supabase rich text structure to markdown strings.
+ */
+type ExtraFieldsAsStrings<T extends Record<string, string>> = {
+  [K in keyof T]?: string | null;
+};
+
+export type TypeSpecificationExtraFields = ExtraFieldsAsStrings<typeof TYPE_SPECIFICATION_PROPERTY_MAPPING>;
+export type ScenarioExtraFields = ExtraFieldsAsStrings<typeof SCENARIO_PROPERTY_MAPPING>;
+export type ScenarioVariationExtraFields = ExtraFieldsAsStrings<typeof SCENARIO_VARIATION_PROPERTY_MAPPING>;
+export type NeededResearchExtraFields = ExtraFieldsAsStrings<typeof NEEDED_RESEARCH_PROPERTY_MAPPING>;
 
 /**
  * A simplified, standardized representation of an Atlas document used for downstream processing.

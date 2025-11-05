@@ -17,7 +17,7 @@ import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { Json } from '../supabase/database.types';
-import { extractRichTextPlainText } from './extract-page-title';
+import { extractRichTextFromProperty } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
 
@@ -62,12 +62,12 @@ async function convertSingleNotionPageToDatabaseFormat(
   databaseConfig: (typeof NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS)[AtlasDatabaseName],
 ): Promise<NotionDatabasePage> {
   // Extract page title
-  const pageTitle = extractRichTextPlainText(notionPage, databaseConfig.properties.atlasDocumentName);
+  const pageTitle = extractRichTextFromProperty(notionPage, databaseConfig.properties.atlasDocumentName);
 
   // Extract content - handle null mapping by defaulting to empty string
   const contentPropertyName = databaseConfig.properties.content;
   const content = contentPropertyName
-    ? extractRichTextPlainText(notionPage, contentPropertyName)
+    ? extractRichTextFromProperty(notionPage, contentPropertyName)
     : { plainText: '', richText: [] };
 
   // Extract canonical document title
@@ -319,25 +319,23 @@ function extractRelationships(
  */
 function extractTypeSpecificationExtraFields(page: PageObjectResponse): TypeSpecificationExtraFields {
   const extraFields: TypeSpecificationExtraFields = {
-    type_specification_doc_identifier_rules: null,
-    type_specification_additional_logic: null,
-    type_specification_type_category: null,
-    type_specification_type_name: null,
-    type_specification_type_overview: null,
-    type_specification_components: null,
+    type_specification_doc_identifier_rules: { plain_text: null, rich_text: null },
+    type_specification_additional_logic: { plain_text: null, rich_text: null },
+    type_specification_type_category: { plain_text: null, rich_text: null },
+    type_specification_type_name: { plain_text: null, rich_text: null },
+    type_specification_type_overview: { plain_text: null, rich_text: null },
+    type_specification_components: { plain_text: null, rich_text: null },
   };
 
   // Extract each field using the property mapping
   for (const [supabaseFieldName, notionPropertyName] of Object.entries(TYPE_SPECIFICATION_PROPERTY_MAPPING)) {
     try {
-      const property = page.properties[notionPropertyName];
-      if (property) {
-        const value = readPlainTextValueFromNotionPageProperty(property);
-        if (value) {
-          const fieldKey = supabaseFieldName as keyof TypeSpecificationExtraFields;
-          extraFields[fieldKey] = String(value);
-        }
-      }
+      const { plainText, richText } = extractRichTextFromProperty(page, notionPropertyName);
+      const fieldKey = supabaseFieldName as keyof TypeSpecificationExtraFields;
+      extraFields[fieldKey] = {
+        plain_text: plainText,
+        rich_text: richText as Json[] | null,
+      };
     } catch (error) {
       console.error(`Error extracting Type Specification field "${supabaseFieldName}" from page ${page.id}:`, error);
     }
@@ -351,22 +349,20 @@ function extractTypeSpecificationExtraFields(page: PageObjectResponse): TypeSpec
  */
 function extractScenarioExtraFields(page: PageObjectResponse): ScenarioExtraFields {
   const extraFields: ScenarioExtraFields = {
-    scenario_additional_guidance: null,
-    scenario_finding: null,
-    scenario_description: null,
+    scenario_additional_guidance: { plain_text: null, rich_text: null },
+    scenario_finding: { plain_text: null, rich_text: null },
+    scenario_description: { plain_text: null, rich_text: null },
   };
 
   // Extract each field using the property mapping
   for (const [supabaseFieldName, notionPropertyName] of Object.entries(SCENARIO_PROPERTY_MAPPING)) {
     try {
-      const property = page.properties[notionPropertyName];
-      if (property) {
-        const value = readPlainTextValueFromNotionPageProperty(property);
-        if (value) {
-          const fieldKey = supabaseFieldName as keyof ScenarioExtraFields;
-          extraFields[fieldKey] = String(value);
-        }
-      }
+      const { plainText, richText } = extractRichTextFromProperty(page, notionPropertyName);
+      const fieldKey = supabaseFieldName as keyof ScenarioExtraFields;
+      extraFields[fieldKey] = {
+        plain_text: plainText,
+        rich_text: richText as Json[] | null,
+      };
     } catch (error) {
       console.error(`Error extracting Scenario field "${supabaseFieldName}" from page ${page.id}:`, error);
     }
@@ -380,22 +376,20 @@ function extractScenarioExtraFields(page: PageObjectResponse): ScenarioExtraFiel
  */
 function extractScenarioVariationExtraFields(page: PageObjectResponse): ScenarioVariationExtraFields {
   const extraFields: ScenarioVariationExtraFields = {
-    scenario_variation_additional_guidance: null,
-    scenario_variation_finding: null,
-    scenario_variation_description: null,
+    scenario_variation_additional_guidance: { plain_text: null, rich_text: null },
+    scenario_variation_finding: { plain_text: null, rich_text: null },
+    scenario_variation_description: { plain_text: null, rich_text: null },
   };
 
   // Extract each field using the property mapping
   for (const [supabaseFieldName, notionPropertyName] of Object.entries(SCENARIO_VARIATION_PROPERTY_MAPPING)) {
     try {
-      const property = page.properties[notionPropertyName];
-      if (property) {
-        const value = readPlainTextValueFromNotionPageProperty(property);
-        if (value) {
-          const fieldKey = supabaseFieldName as keyof ScenarioVariationExtraFields;
-          extraFields[fieldKey] = String(value);
-        }
-      }
+      const { plainText, richText } = extractRichTextFromProperty(page, notionPropertyName);
+      const fieldKey = supabaseFieldName as keyof ScenarioVariationExtraFields;
+      extraFields[fieldKey] = {
+        plain_text: plainText,
+        rich_text: richText as Json[] | null,
+      };
     } catch (error) {
       console.error(`Error extracting Scenario Variation field "${supabaseFieldName}" from page ${page.id}:`, error);
     }
@@ -409,20 +403,18 @@ function extractScenarioVariationExtraFields(page: PageObjectResponse): Scenario
  */
 function extractNeededResearchExtraFields(page: PageObjectResponse): NeededResearchExtraFields {
   const extraFields: NeededResearchExtraFields = {
-    needed_research_content: null,
+    needed_research_content: { plain_text: null, rich_text: null },
   };
 
   // Extract each field using the property mapping
   for (const [supabaseFieldName, notionPropertyName] of Object.entries(NEEDED_RESEARCH_PROPERTY_MAPPING)) {
     try {
-      const property = page.properties[notionPropertyName];
-      if (property) {
-        const value = readPlainTextValueFromNotionPageProperty(property);
-        if (value) {
-          const fieldKey = supabaseFieldName as keyof NeededResearchExtraFields;
-          extraFields[fieldKey] = String(value);
-        }
-      }
+      const { plainText, richText } = extractRichTextFromProperty(page, notionPropertyName);
+      const fieldKey = supabaseFieldName as keyof NeededResearchExtraFields;
+      extraFields[fieldKey] = {
+        plain_text: plainText,
+        rich_text: richText as Json[] | null,
+      };
     } catch (error) {
       console.error(`Error extracting Needed Research field "${supabaseFieldName}" from page ${page.id}:`, error);
     }

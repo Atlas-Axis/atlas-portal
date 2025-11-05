@@ -213,7 +213,10 @@ describe('atlasNodeToStandardized', () => {
       tenets: [tenet],
       activeData: [ad],
       neededResearch: [nr],
-      extra_fields: { type_specification_type_name: 'T', unknown_prop: 'x' },
+      extra_fields: {
+        type_specification_type_name: { plain_text: 'T', rich_text: null },
+        unknown_prop: 'x',
+      },
     });
     const result = atlasNodeToStandardized(typeSpec, uuidMappings) as SectionsAndPrimaryDocsDocument;
     expect(result.sections_and_primary_docs).toHaveLength(1);
@@ -257,7 +260,10 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario',
       scenarioVariations: [sv],
       neededResearch: [nr],
-      extra_fields: { scenario_finding: 'S', unknown: 1 },
+      extra_fields: {
+        scenario_finding: { plain_text: 'S', rich_text: null },
+        unknown: 1,
+      },
     });
     const result = atlasNodeToStandardized(scen, uuidMappings) as ScenariosDocument;
     expect(result.scenario_variations).toHaveLength(1);
@@ -275,7 +281,10 @@ describe('atlasNodeToStandardized', () => {
       atlas_database_name: ATLAS_DATABASES.SCENARIO_VARIATIONS,
       atlas_document_type: 'Scenario Variation',
       neededResearch: [nr],
-      extra_fields: { scenario_variation_finding: 'SV', bogus: true },
+      extra_fields: {
+        scenario_variation_finding: { plain_text: 'SV', rich_text: null },
+        bogus: true,
+      },
     });
     const result = atlasNodeToStandardized(sv, uuidMappings) as ScenarioVariationsDocument;
     expect(result.needed_research).toHaveLength(1);
@@ -285,7 +294,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Type Specification documents', () => {
     const allKeys = (extraFieldsByDocumentType['Type Specification'] ?? []) as (keyof TypeSpecificationExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${k}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${k}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
       atlas_document_type: 'Type Specification',
@@ -300,7 +311,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Scenario documents', () => {
     const allKeys = (extraFieldsByDocumentType['Scenario'] ?? []) as (keyof ScenarioExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${k}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${k}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SCENARIOS,
       atlas_document_type: 'Scenario',
@@ -315,7 +328,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Scenario Variation documents', () => {
     const allKeys = (extraFieldsByDocumentType['Scenario Variation'] ?? []) as (keyof ScenarioVariationExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${k}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${k}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SCENARIO_VARIATIONS,
       atlas_document_type: 'Scenario Variation',
@@ -330,7 +345,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Needed Research documents', () => {
     const allKeys = (extraFieldsByDocumentType['Needed Research'] ?? []) as (keyof NeededResearchExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${k}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${k}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.NEEDED_RESEARCH,
       atlas_document_type: 'Needed Research',
@@ -431,7 +448,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Type Specification documents', () => {
     const allKeys = (extraFieldsByDocumentType['Type Specification'] ?? []) as (keyof TypeSpecificationExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${String(k)}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${String(k)}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
       atlas_document_type: 'Type Specification',
@@ -446,7 +465,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Scenario documents', () => {
     const allKeys = (extraFieldsByDocumentType['Scenario'] ?? []) as (keyof ScenarioExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${String(k)}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${String(k)}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SCENARIOS,
       atlas_document_type: 'Scenario',
@@ -461,7 +482,9 @@ describe('atlasNodeToStandardized', () => {
 
   it('includes all extra fields for Scenario Variation documents', () => {
     const allKeys = (extraFieldsByDocumentType['Scenario Variation'] ?? []) as (keyof ScenarioVariationExtraFields)[];
-    const extra = Object.fromEntries(allKeys.map((k) => [k, `val-${String(k)}`])) as unknown as Json;
+    const extra = Object.fromEntries(
+      allKeys.map((k) => [k, { plain_text: `val-${String(k)}`, rich_text: null }]),
+    ) as unknown as Json;
     const node = makeNode({
       atlas_database_name: ATLAS_DATABASES.SCENARIO_VARIATIONS,
       atlas_document_type: 'Scenario Variation',

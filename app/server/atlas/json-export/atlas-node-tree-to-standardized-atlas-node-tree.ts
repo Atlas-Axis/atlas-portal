@@ -20,6 +20,7 @@
  * const standardized: StandardizedAtlasDocument = atlasNodeToStandardized(rootNode);
  * ```
  */
+import { RichTextItemResponse } from '@notionhq/client';
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { AGENT_ROOT_SECTION_UUIDS, type AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
@@ -28,6 +29,7 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
+import { convertNotionRichTextToMarkdown } from '@/app/server/markdown/rich-text-to-markdown';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
 import { UuidMappings } from '../load-uuid-mapping';
@@ -45,6 +47,40 @@ import {
   type StandardizedAtlasDocument,
   type TenetsDocument,
 } from './types';
+
+/**
+ * Converts an extra field value to markdown string.
+ * Handles the new rich text structure: { plain_text, rich_text }.
+ */
+function convertExtraFieldToMarkdown(
+  fieldValue: { plain_text: string | null; rich_text: RichTextItemResponse[] | null } | string | null,
+  uuidMappings: UuidMappings,
+): string {
+  // Handle null or undefined
+  if (!fieldValue) {
+    return '';
+  }
+
+  // Handle legacy string format (for backward compatibility during transition)
+  if (typeof fieldValue === 'string') {
+    return fieldValue;
+  }
+
+  // Handle new structure with rich_text
+  if (typeof fieldValue === 'object' && 'plain_text' in fieldValue) {
+    const richText = fieldValue.rich_text;
+
+    // If rich_text exists and is an array, convert to markdown
+    if (richText && Array.isArray(richText) && richText.length > 0) {
+      return convertNotionRichTextToMarkdown(richText as RichTextItemResponse[], uuidMappings);
+    }
+
+    // Otherwise, return plain text
+    return fieldValue.plain_text || '';
+  }
+
+  return '';
+}
 
 // Validation helper to check allowed child databases per Atlas hierarchy rules
 function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasDatabaseName[]): void {
@@ -97,7 +133,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
 
 // Helper: deterministically pick extra_fields for a node based on database
 // Optionally require a specific document type to include fields
-function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
+function pickExtraFields(node: AtlasTreeNode, uuidMappings: UuidMappings): Record<string, unknown> {
   let allowedKeys: string[] = [];
   switch (node.atlas_document_type) {
     case 'Type Specification':
@@ -125,8 +161,24 @@ function pickExtraFields(node: AtlasTreeNode): Record<string, unknown> {
     return nullFilled;
   }
 
-  const extra = node.extra_fields as Record<string, unknown>;
-  const result = Object.fromEntries(allowedKeys.map((key) => [key, key in extra ? extra[key] : null]));
+  const extra = node.extra_fields as Record<
+    string,
+    { plain_text: string | null; rich_text: RichTextItemResponse[] | null } | string | null
+  >;
+
+  // Extract and convert each field to markdown string
+  const result = Object.fromEntries(
+    allowedKeys.map((key) => {
+      if (key in extra) {
+        const fieldValue = extra[key];
+        // Convert rich text structure to markdown string
+        const markdownValue = convertExtraFieldToMarkdown(fieldValue, uuidMappings);
+        return [key, markdownValue || null];
+      }
+      return [key, null];
+    }),
+  );
+
   const missingKeys = allowedKeys.filter((k) => !(k in extra));
   if (missingKeys.length > 0) {
     console.warn(
@@ -196,7 +248,7 @@ export function atlasNodeToStandardized(
       ]);
       const doc: SectionsAndPrimaryDocsDocument = {
         ...base,
-        ...pickExtraFields(node),
+        ...pickExtraFields(node, uuidMappings),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
           (c) => atlasNodeToStandardized(c, uuidMappings) as SectionsAndPrimaryDocsDocument,
         ),
@@ -245,7 +297,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Scenario Variations', 'Needed Research']); // TODO: Add needed_research
       const doc: ScenariosDocument = {
         ...base,
-        ...pickExtraFields(node),
+        ...pickExtraFields(node, uuidMappings),
         scenario_variations: node.scenarioVariations.map(
           (c) => atlasNodeToStandardized(c, uuidMappings) as ScenarioVariationsDocument,
         ),
@@ -261,7 +313,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
       const doc: ScenarioVariationsDocument = {
         ...base,
-        ...pickExtraFields(node),
+        ...pickExtraFields(node, uuidMappings),
         needed_research: node.neededResearch.map(
           (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
         ),
@@ -304,7 +356,7 @@ export function atlasNodeToStandardized(
       validateChildDatabases(node, []);
       const doc: NeededResearchDocument = {
         ...base,
-        ...pickExtraFields(node),
+        ...pickExtraFields(node, uuidMappings),
       };
       return doc;
     }

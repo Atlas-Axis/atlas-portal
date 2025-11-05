@@ -1,4 +1,4 @@
-import { Tables } from '@/app/server/services/supabase/database.types';
+import { Json, Tables } from '@/app/server/services/supabase/database.types';
 import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
 
 export interface NotionDatabasePropertyMapping {
@@ -285,11 +285,15 @@ export type ChildLists = { [K in ChildListFieldName]: string[] };
 
 /**
  * Generic utility type to convert property mapping to extra fields interface.
- * All extra fields have string | null values.
+ * All extra fields store both plain text and rich text JSON arrays.
+ * For properties without formatting (select, number), rich_text is null.
  * The -readonly modifier ensures fields are mutable.
  */
 type ExtraFieldsFromMapping<T extends Record<string, string>> = {
-  -readonly [K in keyof T]: string | null;
+  -readonly [K in keyof T]: {
+    plain_text: string | null;
+    rich_text: Json[] | null;
+  };
 };
 
 /**

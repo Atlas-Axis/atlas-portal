@@ -7,8 +7,9 @@
 Extra fields are:
 
 - Stored in the `extra_fields` JSONB column in Supabase's `notion_database_pages` table
+- Each field stores both plain text and rich text JSON (similar to `json_content`)
 - Imported from specific Notion database page properties during sync
-- Exported to JSON and Markdown formats
+- Exported to JSON and Markdown formats with proper formatting support
 - Displayed in the UI alongside document content
 - Compared during change detection
 
@@ -116,8 +117,29 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
    - `extractScenarioExtraFields()`
    - `extractScenarioVariationExtraFields()`
    - `extractNeededResearchExtraFields()`
-3. **Iteration**: Each function loops over its property mapping to extract values from Notion properties
-4. **Storage**: Extracted fields are stored as a JSONB object in the `extra_fields` column
+3. **Rich Text Extraction**: Each function uses `extractRichTextFromProperty()` helper to extract both plain text and rich text JSON arrays
+4. **Storage Structure**: Each field is stored as an object with two properties:
+   - `plain_text`: String representation (for quick display and comparison)
+   - `rich_text`: Rich text JSON array (for preserving formatting, links, etc.)
+5. **Property Type Handling**:
+   - **Rich Text properties**: Both `plain_text` and `rich_text` are populated
+   - **Select/Number properties**: Only `plain_text` is populated, `rich_text` is `null`
+6. **Storage**: Extracted fields are stored as a JSONB object in the `extra_fields` column
+
+**Storage Format Example**:
+
+```json
+{
+  "type_specification_type_name": {
+    "plain_text": "Example Type",
+    "rich_text": [{ "type": "text", "text": { "content": "Example Type" } }]
+  },
+  "type_specification_type_category": {
+    "plain_text": "Category A",
+    "rich_text": null
+  }
+}
+```
 
 **Null Content Handling**: For Scenario, Scenario Variation, and Needed Research documents, the `content` property mapping is `null`. The extraction logic handles this by defaulting to an empty string.
 
@@ -128,14 +150,20 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 **Files**:
 
 - `app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
-  - `pickExtraFields()` function: Extracts extra fields based on document type
-  - `atlasNodeToStandardized()` function: Must spread `...pickExtraFields(node)` in the document type's case
+  - `convertExtraFieldToMarkdown()` helper: Converts rich text structure to markdown strings
+    - Handles both `plain_text` and `rich_text` properties
+    - Uses `convertNotionRichTextToMarkdown()` for rich text arrays
+    - Falls back to plain text for Select/Number fields
+  - `pickExtraFields()` function: Extracts and converts extra fields to markdown strings
+    - Iterates over property mappings for document type
+    - Calls `convertExtraFieldToMarkdown()` for each field
+    - Returns a record with markdown string values (null if missing)
+  - `atlasNodeToStandardized()` function: Spreads `...pickExtraFields(node, uuidMappings)` in document type's case
   - Validates presence of expected fields and warns about missing ones
-  - Returns a record with all expected keys (null if missing)
 
 - `app/server/atlas/json-export/types.ts`
   - `extraFieldsByDocumentType` constant: Maps document types to their extra field keys
-  - Document interfaces extend `BaseAtlasDocument` with extra field properties
+  - Document interfaces extend `BaseAtlasDocument` with extra field properties (as strings in JSON export)
 
 #### Markdown Export
 
@@ -182,7 +210,10 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
   - `compareTypeSpecificationExtraFields()`: Compares Type Specification fields
   - `compareScenarioExtraFields()`: Compares Scenario fields
   - `compareScenarioVariationExtraFields()`: Compares Scenario Variation fields
-  - Each function extracts fields from both Notion and Supabase, then compares field-by-field
+  - `compareNeededResearchExtraFields()`: Compares Needed Research fields
+  - Each function extracts rich text structure from Notion using `extractRichTextFromProperty()`
+  - Compares both `plain_text` and `rich_text` (using JSON stringification for rich text arrays)
+  - Detects changes in either plain text content or formatting
 
 - `app/server/atlas/diff/atlas-diff.ts`
   - `getExtraFieldKeysForDocumentType()`: Returns extra field keys by type
@@ -278,13 +309,17 @@ To add a new extra field to an existing document type:
 
 1. **Update property mapping** in `notion-database-properties-and-relationships.ts`
    - Add mapping entry: `field_name: 'Notion Property Name'`
+   - Add property type override if not Rich Text (Select, Number, etc.)
    - The type definition will automatically update thanks to `ExtraFieldsFromMapping<T>`
 
 2. **Update extraction function** in `convert-notion-pages-to-supabase-format.ts`
-   - Add field to initialization object (null default)
-   - The loop will automatically extract it using the mapping
+   - Add field to initialization object: `field_name: { plain_text: null, rich_text: null }`
+   - The loop will automatically extract it using `extractRichTextFromProperty()`
 
 3. **All other systems automatically adapt** because they iterate over the mappings dynamically
+   - Change detection compares both plain_text and rich_text
+   - Export converts rich_text to markdown strings
+   - UI displays markdown-formatted content
 
 ## Adding Extra Fields to a New Document Type
 
