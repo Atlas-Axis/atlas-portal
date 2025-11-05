@@ -5,8 +5,14 @@ import { Input } from '@heroui/input';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { Search } from 'lucide-react';
 import type { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
-import { childCollectionNames } from '@/app/server/atlas/json-export/types';
+import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import {
+  NEEDED_RESEARCH_PROPERTY_MAPPING,
+  SCENARIO_PROPERTY_MAPPING,
+  SCENARIO_VARIATION_PROPERTY_MAPPING,
+  TYPE_SPECIFICATION_PROPERTY_MAPPING,
+} from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { dispatchExpandScopeEvent } from './custom-events';
 
@@ -18,6 +24,16 @@ interface SearchModalProps {
 }
 
 /**
+ * Result type that includes the document and information about which field matched
+ */
+interface SearchResult {
+  doc: StandardizedAtlasDocument;
+  matchedField?: 'doc_no' | 'name' | 'content' | string; // string for extra field keys
+  matchedFieldLabel?: string; // Human-readable label for extra fields
+  matchedFieldValue?: string; // Value of the matched extra field
+}
+
+/**
  * Type guard to check if a property exists on an object
  */
 function hasChildCollection(
@@ -25,6 +41,24 @@ function hasChildCollection(
   collectionName: ChildCollectionName,
 ): doc is StandardizedAtlasDocument & Record<ChildCollectionName, StandardizedAtlasDocument[]> {
   return collectionName in doc && Array.isArray((doc as unknown as Record<string, unknown>)[collectionName]);
+}
+
+/**
+ * Get the property mapping for a document type to convert field keys to human-readable labels
+ */
+function getPropertyMappingForDocumentType(docType: string): Record<string, string> | null {
+  switch (docType) {
+    case 'Type Specification':
+      return TYPE_SPECIFICATION_PROPERTY_MAPPING as unknown as Record<string, string>;
+    case 'Scenario':
+      return SCENARIO_PROPERTY_MAPPING as unknown as Record<string, string>;
+    case 'Scenario Variation':
+      return SCENARIO_VARIATION_PROPERTY_MAPPING as unknown as Record<string, string>;
+    case 'Needed Research':
+      return NEEDED_RESEARCH_PROPERTY_MAPPING as unknown as Record<string, string>;
+    default:
+      return null;
+  }
 }
 
 /**
@@ -126,18 +160,53 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
   // Flatten all documents once on mount
   const allDocuments = useMemo(() => flattenDocuments(scopeTrees), [scopeTrees]);
 
-  // Filter documents based on search query
-  const filteredDocuments = useMemo(() => {
+  // Filter documents based on search query and return results with matched field info
+  const filteredDocuments = useMemo((): SearchResult[] => {
     const trimmedQuery = query.trim().toLowerCase();
     if (!trimmedQuery) return [];
 
-    const results = allDocuments.filter((doc) => {
+    const results: SearchResult[] = [];
+
+    for (const doc of allDocuments) {
       const docNo = (doc.doc_no || '').toLowerCase();
       const name = (doc.name || '').toLowerCase();
       const content = (doc.content || '').toLowerCase();
 
-      return docNo.includes(trimmedQuery) || name.includes(trimmedQuery) || content.includes(trimmedQuery);
-    });
+      // Check standard fields first (prioritize in order)
+      if (docNo.includes(trimmedQuery)) {
+        results.push({ doc, matchedField: 'doc_no' });
+        continue;
+      }
+      if (name.includes(trimmedQuery)) {
+        results.push({ doc, matchedField: 'name' });
+        continue;
+      }
+      if (content.includes(trimmedQuery)) {
+        results.push({ doc, matchedField: 'content' });
+        continue;
+      }
+
+      // Check extra fields if this document type has them
+      const extraFieldKeys = extraFieldsByDocumentType[doc.type];
+      if (extraFieldKeys && extraFieldKeys.length > 0) {
+        const propertyMapping = getPropertyMappingForDocumentType(doc.type);
+
+        // Check each extra field value
+        for (const fieldKey of extraFieldKeys) {
+          const fieldValue = (doc as unknown as Record<string, unknown>)[fieldKey];
+          if (typeof fieldValue === 'string' && fieldValue.toLowerCase().includes(trimmedQuery)) {
+            const label = propertyMapping?.[fieldKey] || fieldKey;
+            results.push({
+              doc,
+              matchedField: fieldKey,
+              matchedFieldLabel: label,
+              matchedFieldValue: fieldValue,
+            });
+            break; // Only show first matching extra field
+          }
+        }
+      }
+    }
 
     // Limit to top 50 results for performance
     return results.slice(0, 50);
@@ -166,10 +235,10 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  const handleResultClick = (doc: StandardizedAtlasDocument) => {
-    const docNo = doc.doc_no;
+  const handleResultClick = (result: SearchResult) => {
+    const docNo = result.doc.doc_no;
     if (!docNo) {
-      console.warn('Cannot navigate to document without doc_no:', doc);
+      console.warn('Cannot navigate to document without doc_no:', result.doc);
       return;
     }
 
@@ -232,20 +301,36 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                   ? '50+ results (showing first 50)'
                   : `${filteredDocuments.length} result${filteredDocuments.length === 1 ? '' : 's'}`}
               </p>
-              {filteredDocuments.map((doc, idx) => {
+              {filteredDocuments.map((result, idx) => {
+                const { doc } = result;
                 const notionId = doc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(doc.uuid) : null;
                 const key = notionId || doc.doc_no || `result-${idx}`;
+
+                // Determine what content to show in preview
+                let previewContent = '';
+                let previewLabel = '';
+
+                if (result.matchedField === 'content' && doc.content) {
+                  previewContent = doc.content;
+                } else if (result.matchedFieldValue && result.matchedFieldLabel) {
+                  // Show the matched extra field
+                  previewContent = result.matchedFieldValue;
+                  previewLabel = result.matchedFieldLabel;
+                } else if (doc.content) {
+                  // Fallback to content if available
+                  previewContent = doc.content;
+                }
 
                 return (
                   <div
                     key={key}
                     role="button"
                     tabIndex={0}
-                    onClick={() => handleResultClick(doc)}
+                    onClick={() => handleResultClick(result)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        handleResultClick(doc);
+                        handleResultClick(result);
                       }
                     }}
                     className="cursor-pointer rounded-lg bg-slate-100 p-3 transition-all hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none"
@@ -266,9 +351,10 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                     <div className="mb-1 font-semibold text-slate-900">
                       {highlightText(doc.name || '<Untitled>', query)}
                     </div>
-                    {doc.content && (
+                    {previewContent && (
                       <div className="text-sm text-slate-600">
-                        {highlightText(truncateText(doc.content, 150, query), query)}
+                        {previewLabel && <span className="font-medium text-slate-700">{previewLabel}: </span>}
+                        {highlightText(truncateText(previewContent, 150, query), query)}
                       </div>
                     )}
                   </div>
