@@ -8,6 +8,7 @@ import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { isValidUUID, normalizeUUID } from '@/app/shared/utils/utils';
 import { saveMappingsAction } from './_actions/nesting-fix-actions';
+import { HierarchyOverview } from './hierarchy-overview';
 
 /**
  * Notion Nesting Bug Fix - UI Content
@@ -306,6 +307,8 @@ export function Content({ initialMappings }: ContentProps) {
             Save All Mappings
           </Button>
         </div>
+
+        <HierarchyOverview mappings={initialMappings} />
       </CardBody>
     </Card>
   );
