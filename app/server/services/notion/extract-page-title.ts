@@ -41,9 +41,9 @@ export function extractRichTextFromProperty(
     }
 
     // Handle select properties (no rich text formatting)
-    if ('select' in property && property.select) {
+    if ('select' in property) {
       return {
-        plainText: property.select.name,
+        plainText: property.select?.name ?? null,
         richText: null, // Select properties don't have rich text formatting
       };
     }

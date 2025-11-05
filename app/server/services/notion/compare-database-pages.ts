@@ -1,19 +1,15 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
-  NeededResearchExtraFields,
   NotionDatabasePropertyKey,
   PROPERTY_MAPPING_NAMES,
   REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   SUPABASE_CHILD_DATABASE_NAME_MAP,
-  ScenarioExtraFields,
-  ScenarioVariationExtraFields,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-  TypeSpecificationExtraFields,
 } from '@/app/server/atlas/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
@@ -31,171 +27,93 @@ export interface DatabasePageChanges {
 }
 
 /**
- * Compares extra fields for "Type Specification" type Atlas documents in Sections & Primary Docs database.
- * These fields are stored in the `extra_fields` JSONB column in Supabase.
+ * Generic helper to compare extra fields between Notion and Supabase pages.
+ * Handles backward compatibility with old string-based storage format.
+ *
+ * @param notionPage - The Notion page object
+ * @param supabasePage - The Supabase page object
+ * @param propertyMapping - Mapping of Supabase field names to Notion property names
+ * @returns true if any field has changed, false otherwise
+ */
+function compareExtraFields(
+  notionPage: EnhancedPageObjectResponse,
+  supabasePage: NotionDatabasePage,
+  propertyMapping: Record<string, string>,
+): boolean {
+  // Extract extra fields from Notion page
+  const notionExtraFields: Record<string, { plain_text: string | null; rich_text: Json[] | null }> = {};
+  for (const [supabaseField, notionPropertyName] of Object.entries(propertyMapping)) {
+    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
+    notionExtraFields[supabaseField] = {
+      plain_text: plainText,
+      rich_text: richText as Json[] | null,
+    };
+  }
+
+  // Extract extra fields from Supabase page
+  const supabaseExtraFields = (supabasePage.extra_fields as Record<string, unknown>) || {};
+
+  // Compare each field
+  for (const field of Object.keys(propertyMapping)) {
+    const notionValue = notionExtraFields[field];
+    const supabaseRawValue = supabaseExtraFields[field];
+
+    // Handle backward compatibility: old data may be plain strings instead of {plain_text, rich_text}
+    const supabaseValue =
+      typeof supabaseRawValue === 'string' ? { plain_text: supabaseRawValue, rich_text: null } : supabaseRawValue;
+
+    // Compare plain_text only (rich_text JSON structure comparison is too fragile)
+    // The plain_text contains the actual content, which is what matters for change detection
+    const notionPlainText = notionValue?.plain_text ?? null;
+    const supabasePlainText = (supabaseValue as { plain_text?: string | null })?.plain_text ?? null;
+
+    if (notionPlainText !== supabasePlainText) {
+      console.log(`‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field}`);
+      console.log(
+        `  Plain text changed: "${notionPlainText?.slice(0, 100)}..." → "${supabasePlainText?.slice(0, 100)}..."`,
+      );
+      return true; // Has changes
+    }
+  }
+
+  return false; // No changes
+}
+
+/**
+ * Compares extra fields for "Type Specification" type Atlas documents.
  */
 function compareTypeSpecificationExtraFields(
   notionPage: EnhancedPageObjectResponse,
   supabasePage: NotionDatabasePage,
 ): boolean {
-  // Extract extra fields from Notion page
-  const notionExtraFields: Partial<TypeSpecificationExtraFields> = {};
-  for (const [supabaseField, notionPropertyName] of Object.entries(TYPE_SPECIFICATION_PROPERTY_MAPPING)) {
-    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof TypeSpecificationExtraFields] = {
-      plain_text: plainText,
-      rich_text: richText as Json[] | null,
-    };
-  }
-
-  // Extract extra fields from Supabase page
-  const supabaseExtraFields = (supabasePage.extra_fields as unknown as TypeSpecificationExtraFields) || {};
-
-  // Compare each field
-  for (const field of Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING) as Array<keyof TypeSpecificationExtraFields>) {
-    const notionValue = notionExtraFields[field];
-    const supabaseValue = supabaseExtraFields[field];
-
-    // Compare both plain_text and rich_text
-    const notionPlainText = notionValue?.plain_text || null;
-    const supabasePlainText = supabaseValue?.plain_text || null;
-    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
-    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
-
-    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
-      console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
-      );
-      return true; // Has changes
-    }
-  }
-
-  return false; // No changes
+  return compareExtraFields(notionPage, supabasePage, TYPE_SPECIFICATION_PROPERTY_MAPPING);
 }
+
 /**
- * Compares extra fields for "Scenario" type Atlas documents in Scenarios database.
- * These fields are stored in the `extra_fields` JSONB column in Supabase.
+ * Compares extra fields for "Scenario" type Atlas documents.
  */
 function compareScenarioExtraFields(notionPage: EnhancedPageObjectResponse, supabasePage: NotionDatabasePage): boolean {
-  // Extract extra fields from Notion page
-  const notionExtraFields: Partial<ScenarioExtraFields> = {};
-  for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_PROPERTY_MAPPING)) {
-    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof ScenarioExtraFields] = {
-      plain_text: plainText,
-      rich_text: richText as Json[] | null,
-    };
-  }
-
-  // Extract extra fields from Supabase page
-  const supabaseExtraFields = (supabasePage.extra_fields as unknown as ScenarioExtraFields) || {};
-
-  // Compare each field
-  for (const field of Object.keys(SCENARIO_PROPERTY_MAPPING) as Array<keyof ScenarioExtraFields>) {
-    const notionValue = notionExtraFields[field];
-    const supabaseValue = supabaseExtraFields[field];
-
-    // Compare both plain_text and rich_text
-    const notionPlainText = notionValue?.plain_text || null;
-    const supabasePlainText = supabaseValue?.plain_text || null;
-    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
-    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
-
-    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
-      console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
-      );
-      return true; // Has changes
-    }
-  }
-
-  return false; // No changes
+  return compareExtraFields(notionPage, supabasePage, SCENARIO_PROPERTY_MAPPING);
 }
 
 /**
- * Compares extra fields for "Scenario Variation" type Atlas documents in Scenarios database.
- * These fields are stored in the `extra_fields` JSONB column in Supabase.
+ * Compares extra fields for "Scenario Variation" type Atlas documents.
  */
 function compareScenarioVariationExtraFields(
   notionPage: EnhancedPageObjectResponse,
   supabasePage: NotionDatabasePage,
 ): boolean {
-  // Extract extra fields from Notion page
-  const notionExtraFields: Partial<ScenarioVariationExtraFields> = {};
-  for (const [supabaseField, notionPropertyName] of Object.entries(SCENARIO_VARIATION_PROPERTY_MAPPING)) {
-    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof ScenarioVariationExtraFields] = {
-      plain_text: plainText,
-      rich_text: richText as Json[] | null,
-    };
-  }
-
-  // Extract extra fields from Supabase page
-  const supabaseExtraFields = (supabasePage.extra_fields as unknown as ScenarioVariationExtraFields) || {};
-
-  // Compare each field
-  for (const field of Object.keys(SCENARIO_VARIATION_PROPERTY_MAPPING) as Array<keyof ScenarioVariationExtraFields>) {
-    const notionValue = notionExtraFields[field];
-    const supabaseValue = supabaseExtraFields[field];
-
-    // Compare both plain_text and rich_text
-    const notionPlainText = notionValue?.plain_text || null;
-    const supabasePlainText = supabaseValue?.plain_text || null;
-    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
-    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
-
-    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
-      console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
-      );
-      return true; // Has changes
-    }
-  }
-
-  return false; // No changes
+  return compareExtraFields(notionPage, supabasePage, SCENARIO_VARIATION_PROPERTY_MAPPING);
 }
 
 /**
  * Compares extra fields for "Needed Research" type Atlas documents.
- * These fields are stored in the `extra_fields` JSONB column in Supabase.
  */
 function compareNeededResearchExtraFields(
   notionPage: EnhancedPageObjectResponse,
   supabasePage: NotionDatabasePage,
 ): boolean {
-  // Extract extra fields from Notion page
-  const notionExtraFields: Partial<NeededResearchExtraFields> = {};
-  for (const [supabaseField, notionPropertyName] of Object.entries(NEEDED_RESEARCH_PROPERTY_MAPPING)) {
-    const { plainText, richText } = extractRichTextFromProperty(notionPage, notionPropertyName);
-    notionExtraFields[supabaseField as keyof NeededResearchExtraFields] = {
-      plain_text: plainText,
-      rich_text: richText as Json[] | null,
-    };
-  }
-
-  // Extract extra fields from Supabase page
-  const supabaseExtraFields = (supabasePage.extra_fields as unknown as NeededResearchExtraFields) || {};
-
-  // Compare each field
-  for (const field of Object.keys(NEEDED_RESEARCH_PROPERTY_MAPPING) as Array<keyof NeededResearchExtraFields>) {
-    const notionValue = notionExtraFields[field];
-    const supabaseValue = supabaseExtraFields[field];
-
-    // Compare both plain_text and rich_text
-    const notionPlainText = notionValue?.plain_text || null;
-    const supabasePlainText = supabaseValue?.plain_text || null;
-    const notionRichText = JSON.stringify(notionValue?.rich_text || null);
-    const supabaseRichText = JSON.stringify(supabaseValue?.rich_text || null);
-
-    if (notionPlainText !== supabasePlainText || notionRichText !== supabaseRichText) {
-      console.log(
-        `‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field} (Notion plain_text: "${notionPlainText}", Supabase plain_text: "${supabasePlainText}")`,
-      );
-      return true; // Has changes
-    }
-  }
-
-  return false; // No changes
+  return compareExtraFields(notionPage, supabasePage, NEEDED_RESEARCH_PROPERTY_MAPPING);
 }
 
 /**
@@ -288,26 +206,23 @@ export function compareDatabasePages({
       }
     }
 
-    // Check extra fields for Type Specification documents in Sections & Primary Docs
-    if (atlasDatabaseName === ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS) {
+    // Check extra fields based on document type
+    // Only compare extra fields for document types that actually have them
+    const documentType = extractNotionPropertyValue(notionPage, databaseConfig.properties.atlasDocumentType);
+
+    if (documentType === 'Type Specification') {
       if (compareTypeSpecificationExtraFields(notionPage, supabasePage)) {
         hasPropertyChanges = true;
       }
-    }
-    // Check extra fields for Scenario documents in Scenarios database
-    if (atlasDatabaseName === ATLAS_DATABASES.SCENARIOS) {
+    } else if (documentType === 'Scenario') {
       if (compareScenarioExtraFields(notionPage, supabasePage)) {
         hasPropertyChanges = true;
       }
-    }
-    // Check extra fields for Scenario Variation documents in Scenarios database
-    if (atlasDatabaseName === ATLAS_DATABASES.SCENARIO_VARIATIONS) {
+    } else if (documentType === 'Scenario Variation') {
       if (compareScenarioVariationExtraFields(notionPage, supabasePage)) {
         hasPropertyChanges = true;
       }
-    }
-    // Check extra fields for Needed Research documents
-    if (atlasDatabaseName === ATLAS_DATABASES.NEEDED_RESEARCH) {
+    } else if (documentType === 'Needed Research') {
       if (compareNeededResearchExtraFields(notionPage, supabasePage)) {
         hasPropertyChanges = true;
       }
