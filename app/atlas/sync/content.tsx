@@ -86,6 +86,21 @@ export function Content({
   // Deserialize UUID mappings once (passed from server component)
   const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
 
+  // Create UUID to document number map for markdown link conversion
+  // Prefer new documents (for added/changed), fallback to original (for deleted)
+  const uuidToDocNoMap = useMemo(() => {
+    const map = new Map<string, string>();
+    // Add original documents first
+    originalIdsToDocuments.forEach((doc, uuid) => {
+      map.set(uuid, doc.doc_no);
+    });
+    // Override with new documents (so we use latest doc numbers)
+    newIdsToDocuments.forEach((doc, uuid) => {
+      map.set(uuid, doc.doc_no);
+    });
+    return map;
+  }, [originalIdsToDocuments, newIdsToDocuments]);
+
   const [syncState, setSyncState] = useState<SyncState>({
     isRunning: false,
     stopRequested: false,
@@ -186,6 +201,7 @@ export function Content({
           changeType="added"
           emptyMessage="No documents added"
           uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
         />
 
         {/* Changed Documents */}
@@ -195,6 +211,7 @@ export function Content({
           changeType="changed"
           emptyMessage="No document content changes"
           uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
         />
 
         {/* Sibling Order Changed */}
@@ -204,6 +221,7 @@ export function Content({
           changeType="sibling_order_changed"
           emptyMessage="No sibling order changes"
           uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
         />
 
         {/* Parent Changed */}
@@ -213,6 +231,7 @@ export function Content({
           changeType="parent_changed"
           emptyMessage="No parent changes"
           uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
         />
 
         {/* Deleted Documents */}
@@ -222,6 +241,7 @@ export function Content({
           changeType="deleted"
           emptyMessage="No documents deleted"
           uuidToDocMap={originalIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
         />
 
         <p className="my-3 text-xs text-slate-300">Limitations: Moved documents are not shown yet.</p>
@@ -345,12 +365,14 @@ function ChangeSection({
   changeType,
   emptyMessage,
   uuidToDocMap,
+  uuidToDocNoMap,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
   changeType: AtlasChangeType;
   emptyMessage: string;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
+  uuidToDocNoMap: Map<string, string>;
 }) {
   const colorConfig = colors[changeType];
 
@@ -431,6 +453,7 @@ function ChangeSection({
             key={`${change.uuid}-${index}`}
             change={change}
             uuidToDocMap={uuidToDocMap}
+            uuidToDocNoMap={uuidToDocNoMap}
             isChecked={checkboxStates[`${change.uuid}-${index}`] ?? true}
             onToggleCheckbox={() => handleToggleCheckbox(`${change.uuid}-${index}`)}
           />
@@ -455,11 +478,13 @@ function formatDocReference(
 function ChangeCard({
   change,
   uuidToDocMap,
+  uuidToDocNoMap,
   isChecked,
   onToggleCheckbox,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
+  uuidToDocNoMap: Map<string, string>;
   isChecked?: boolean;
   onToggleCheckbox?: () => void;
 }) {
@@ -528,7 +553,7 @@ function ChangeCard({
           {change.changeType === 'added' && change.newValues && (
             <div className="mt-2">
               <div className={`rounded p-3 ${colors.added.background} `}>
-                <DocumentContent doc={change.newValues} />
+                <DocumentContent doc={change.newValues} uuidToDocNoMap={uuidToDocNoMap} />
               </div>
               <ParentDoc change={change} uuidToDocMap={uuidToDocMap} />
             </div>
@@ -538,7 +563,7 @@ function ChangeCard({
           {change.changeType === 'deleted' && change.oldValues && (
             <div className="mt-2">
               <div className={`mt-2 rounded p-3 ${colors.deleted.background} `}>
-                <DocumentContent doc={change.oldValues} />
+                <DocumentContent doc={change.oldValues} uuidToDocNoMap={uuidToDocNoMap} />
               </div>
               <ParentDoc change={change} uuidToDocMap={uuidToDocMap} />
             </div>
@@ -691,12 +716,18 @@ function formatFieldValue(value: unknown): string {
  * Display document content and extra fields in Atlas style.
  * Used for showing added/deleted documents in the diff UI.
  */
-function DocumentContent({ doc }: { doc: { type: string; content: string } }) {
+function DocumentContent({
+  doc,
+  uuidToDocNoMap,
+}: {
+  doc: { type: string; content: string };
+  uuidToDocNoMap: Map<string, string>;
+}) {
   const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
   const docRecord = doc as unknown as Record<string, unknown>;
 
   // Format markdown content as HTML for display (consistent with Atlas viewer)
-  const formattedContent = markdownToHTML(doc.content);
+  const formattedContent = markdownToHTML(doc.content, uuidToDocNoMap);
 
   return (
     <div className="space-y-3">
@@ -713,10 +744,27 @@ function DocumentContent({ doc }: { doc: { type: string; content: string } }) {
           {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
             const fieldValue = docRecord[fieldKey];
             if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
+              // Format field value with markdown support
+              let formattedValue: React.ReactNode;
+
+              if (Array.isArray(fieldValue)) {
+                // For arrays, join with comma and format as markdown
+                const joinedValue = fieldValue.join(', ');
+                const html = markdownToHTML(joinedValue, uuidToDocNoMap);
+                formattedValue = <CustomHTML html={html} />;
+              } else if (typeof fieldValue === 'string') {
+                // For strings, format as markdown
+                const html = markdownToHTML(fieldValue, uuidToDocNoMap);
+                formattedValue = <CustomHTML html={html} />;
+              } else {
+                // For numbers and booleans, convert to string
+                formattedValue = String(fieldValue);
+              }
+
               return (
                 <div key={fieldKey} className="mb-1">
                   <p className="font-semibold text-slate-700">{displayName}:</p>
-                  <p>{Array.isArray(fieldValue) ? fieldValue.join(', ') : String(fieldValue)}</p>
+                  <div>{formattedValue}</div>
                 </div>
               );
             }
