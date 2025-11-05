@@ -41,6 +41,12 @@ describe('markdownToHTML', () => {
       // Should preserve the underscores in code
       expect(output).toContain('n_items');
       expect(output).toContain('sum_total');
+
+      // Should render as HTML with <pre> and <code> tags
+      expect(output).toContain('<pre>');
+      expect(output).toContain('<code');
+      expect(output).toContain('</code>');
+      expect(output).toContain('</pre>');
     });
 
     it('should not parse underscores as italics inside inline code', () => {
@@ -52,6 +58,9 @@ describe('markdownToHTML', () => {
 
       // Should preserve the inline code
       expect(output).toContain('snake_case_variable');
+
+      // Should render as HTML with <code> tag
+      expect(output).toContain('<code>snake_case_variable</code>');
     });
 
     it('should still parse underscores as italics in regular text', () => {
@@ -145,6 +154,62 @@ describe('markdownToHTML', () => {
       expect(output).toContain('sum_total');
       expect(output).toContain('a_1');
       expect(output).toContain('b_2');
+
+      // Should render as HTML with <pre> and <code> tags
+      expect(output).toContain('<pre>');
+      expect(output).toContain('<code');
+      expect(output).toContain('</code>');
+      expect(output).toContain('</pre>');
+    });
+  });
+
+  describe('code rendering as HTML', () => {
+    it('should render inline code with proper HTML tags', () => {
+      const input = 'The function `myFunction()` returns a value.';
+      const output = markdownToHTML(input);
+
+      expect(output).toContain('<code>myFunction()</code>');
+      expect(output).toContain('<p>');
+    });
+
+    it('should render code blocks with proper HTML structure', () => {
+      const input = '```\nfunction test() {\n  return true;\n}\n```';
+      const output = markdownToHTML(input);
+
+      expect(output).toContain('<pre>');
+      expect(output).toContain('<code');
+      expect(output).toContain('function test()');
+      expect(output).toContain('return true;');
+      expect(output).toContain('</code>');
+      expect(output).toContain('</pre>');
+    });
+
+    it('should render code blocks with language specification', () => {
+      const input = '```javascript\nconst x = 42;\n```';
+      const output = markdownToHTML(input);
+
+      expect(output).toContain('<pre>');
+      expect(output).toContain('<code');
+      expect(output).toContain('const x = 42;');
+      expect(output).toContain('</code>');
+      expect(output).toContain('</pre>');
+    });
+
+    it('should render multiple inline code elements', () => {
+      const input = 'Compare `foo` with `bar` and `baz`.';
+      const output = markdownToHTML(input);
+
+      expect(output).toContain('<code>foo</code>');
+      expect(output).toContain('<code>bar</code>');
+      expect(output).toContain('<code>baz</code>');
+    });
+
+    it('should render empty inline code', () => {
+      const input = 'Empty code: ``';
+      const output = markdownToHTML(input);
+
+      // markdown-it may render empty code differently, but it should at least process it
+      expect(output).toContain('Empty code:');
     });
   });
 

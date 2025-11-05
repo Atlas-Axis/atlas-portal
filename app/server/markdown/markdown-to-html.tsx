@@ -35,8 +35,11 @@ function createLinkRenderer(
 }
 
 /**
- * Protects math expressions and code blocks from markdown processing by replacing them with placeholders.
- * This prevents markdown-it from parsing underscores, asterisks, etc. as formatting within these protected regions.
+ * Protects math expressions from markdown processing by replacing them with placeholders.
+ * This prevents markdown-it from parsing underscores, asterisks, etc. as formatting within math expressions.
+ *
+ * Note: Code blocks and inline code are NOT protected here because markdown-it naturally handles them correctly
+ * without parsing their content as markdown formatting.
  *
  * Uses unique placeholders with Unicode characters that won't be parsed as markdown formatting.
  *
@@ -48,7 +51,7 @@ function protectSpecialContent(markdown: string): { protected: string; placehold
   let counter = 0;
   let protectedText = markdown;
 
-  // Protect display math ($$...$$) first
+  // Protect display math ($$...$$) - entire expression including delimiters
   // Use [\s\S]*? to match any content including empty (not +? which requires at least one char)
   protectedText = protectedText.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
     // Use Unicode characters that won't be parsed as markdown
@@ -57,26 +60,16 @@ function protectSpecialContent(markdown: string): { protected: string; placehold
     return placeholder;
   });
 
-  // Protect inline math ($...$) - but not dollar signs followed by digits (money amounts)
+  // Protect inline math ($...$) - entire expression including delimiters
+  // But not dollar signs followed by digits (money amounts)
   protectedText = protectedText.replace(/\$(?!\d)([^$]+?)\$/g, (match) => {
     const placeholder = `\u{FFFD}PROTECTEDINLINEMATH${counter++}\u{FFFD}`;
     placeholders.set(placeholder, match);
     return placeholder;
   });
 
-  // Protect code blocks (```...```)
-  protectedText = protectedText.replace(/```[\s\S]*?```/g, (match) => {
-    const placeholder = `\u{FFFD}PROTECTEDCODEBLOCK${counter++}\u{FFFD}`;
-    placeholders.set(placeholder, match);
-    return placeholder;
-  });
-
-  // Protect inline code (`...`)
-  protectedText = protectedText.replace(/`[^`]+?`/g, (match) => {
-    const placeholder = `\u{FFFD}PROTECTEDINLINECODE${counter++}\u{FFFD}`;
-    placeholders.set(placeholder, match);
-    return placeholder;
-  });
+  // Note: Code blocks (```...```) and inline code (`...`) are NOT protected here
+  // because markdown-it already handles them correctly and doesn't parse markdown inside them.
 
   return { protected: protectedText, placeholders };
 }
@@ -106,9 +99,11 @@ function restoreProtectedContent(text: string, placeholders: Map<string, string>
  * Converts markdown to HTML and preserves line breaks by converting newlines to <br> tags.
  * This handles non-standard markdown patterns like Unicode bullet lists (•).
  *
- * Protects math expressions ($$...$$ and $...$) and code blocks (```...``` and `...`)
- * from markdown processing to prevent underscores, asterisks, and other special characters
- * from being interpreted as formatting.
+ * Protects math expressions ($$...$$ and $...$) from markdown processing to prevent underscores,
+ * asterisks, and other special characters from being interpreted as formatting.
+ *
+ * Note: Code blocks and inline code are naturally protected by markdown-it and don't require
+ * special handling.
  *
  * @param markdown - The markdown string to convert
  * @param uuidToDocNoMap - Optional map of UUIDs to document numbers for converting internal links.
@@ -121,7 +116,7 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
     markdown = markdown.slice(0, 1000000) + '\n\n[Content truncated due to size...]';
   }
 
-  // Step 1: Protect math expressions and code blocks from markdown processing
+  // Step 1: Protect math expressions from markdown processing
   const { protected: protectedMarkdown, placeholders } = protectSpecialContent(markdown);
 
   // Create a new markdown-it instance for each call to avoid global state issues
