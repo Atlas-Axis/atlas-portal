@@ -226,17 +226,23 @@ export type Database = {
       notion_nesting_bug_mapping: {
         Row: {
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          child_label: string | null;
           child_notion_page_id: string;
+          parent_label: string | null;
           parent_notion_page_id: string;
         };
         Insert: {
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
+          child_label?: string | null;
           child_notion_page_id: string;
+          parent_label?: string | null;
           parent_notion_page_id: string;
         };
         Update: {
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
+          child_label?: string | null;
           child_notion_page_id?: string;
+          parent_label?: string | null;
           parent_notion_page_id?: string;
         };
         Relationships: [];

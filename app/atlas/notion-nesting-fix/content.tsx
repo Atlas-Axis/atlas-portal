@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { Plus, Save, Trash2 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { isValidUUID, normalizeUUID } from '@/app/shared/utils/utils';
@@ -12,14 +13,13 @@ import { saveMappingsAction } from './_actions/nesting-fix-actions';
  * Notion Nesting Bug Fix - UI Content
  *
  * Client component for managing parent-child relationship mappings. Grouped by database,
- * shows document names from lookup, validates UUIDs and circular dependencies.
+ * allows users to add custom labels for documents, validates UUIDs and circular dependencies.
  *
  * @see {@link file://../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
 
 interface ContentProps {
   initialMappings: NotionNestingBugMapping[];
-  documentLookup: Record<string, string>;
 }
 
 interface MappingWithId extends NotionNestingBugMapping {
@@ -28,16 +28,12 @@ interface MappingWithId extends NotionNestingBugMapping {
 
 const DATABASES_WITH_NESTING: AtlasDatabaseName[] = ['Sections & Primary Docs', 'Agent Scope Database'];
 
-export function Content({ initialMappings, documentLookup }: ContentProps) {
+export function Content({ initialMappings }: ContentProps) {
   const [mappings, setMappings] = useState<MappingWithId[]>(
     initialMappings.map((m, i) => ({ ...m, id: `${i}-${Date.now()}` })),
   );
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const getDocumentName = (uuid: string): string => {
-    return documentLookup[uuid] || 'Unknown document';
-  };
 
   const hasCircularDependency = (childId: string, parentId: string): boolean => {
     // Check if parentId would create a cycle by being a descendant of childId
@@ -67,11 +63,17 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
       child_notion_page_id: '',
       parent_notion_page_id: '',
       atlas_database_name: database,
+      child_label: '',
+      parent_label: '',
     };
     setMappings([...mappings, newMapping]);
   };
 
-  const updateMapping = (id: string, field: 'child_notion_page_id' | 'parent_notion_page_id', value: string) => {
+  const updateMapping = (
+    id: string,
+    field: 'child_notion_page_id' | 'parent_notion_page_id' | 'child_label' | 'parent_label',
+    value: string,
+  ) => {
     setMappings(mappings.map((m) => (m.id === id ? { ...m, [field]: value } : m)));
   };
 
@@ -195,14 +197,33 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
                       <CardBody className="gap-4 p-4">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           <div>
-                            <label className="mb-1 block text-xs font-medium text-slate-600">Child Document</label>
-                            <p className="mb-2 text-sm font-medium text-slate-800">
-                              {mapping.child_notion_page_id
-                                ? getDocumentName(mapping.child_notion_page_id)
-                                : 'Enter child UUID'}
-                            </p>
+                            <div className="mb-1 flex items-center gap-2">
+                              <label className="text-xs font-medium text-slate-600">Child Document</label>
+                              {mapping.child_notion_page_id && isValidUUID(mapping.child_notion_page_id) && (
+                                <a
+                                  href={`https://www.notion.so/${mapping.child_notion_page_id.replace(/-/g, '')}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 transition-colors hover:text-blue-800"
+                                  title="Open in Notion"
+                                >
+                                  <ExternalLink size={14} />
+                                </a>
+                              )}
+                            </div>
                             <Input
                               size="sm"
+                              label="Label"
+                              value={mapping.child_label || ''}
+                              onChange={(e) => updateMapping(mapping.id, 'child_label', e.target.value)}
+                              classNames={{
+                                input: 'text-sm font-medium',
+                              }}
+                              className="mb-2"
+                            />
+                            <Input
+                              size="sm"
+                              label="Notion page ID"
                               placeholder="Child UUID"
                               value={mapping.child_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'child_notion_page_id', e.target.value)}
@@ -213,14 +234,33 @@ export function Content({ initialMappings, documentLookup }: ContentProps) {
                             />
                           </div>
                           <div>
-                            <label className="mb-1 block text-xs font-medium text-slate-600">Parent Document</label>
-                            <p className="mb-2 text-sm font-medium text-slate-800">
-                              {mapping.parent_notion_page_id
-                                ? getDocumentName(mapping.parent_notion_page_id)
-                                : 'Enter parent UUID'}
-                            </p>
+                            <div className="mb-1 flex items-center gap-2">
+                              <label className="text-xs font-medium text-slate-600">Parent Document</label>
+                              {mapping.parent_notion_page_id && isValidUUID(mapping.parent_notion_page_id) && (
+                                <a
+                                  href={`https://www.notion.so/${mapping.parent_notion_page_id.replace(/-/g, '')}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 transition-colors hover:text-blue-800"
+                                  title="Open in Notion"
+                                >
+                                  <ExternalLink size={14} />
+                                </a>
+                              )}
+                            </div>
                             <Input
                               size="sm"
+                              label="Label"
+                              value={mapping.parent_label || ''}
+                              onChange={(e) => updateMapping(mapping.id, 'parent_label', e.target.value)}
+                              classNames={{
+                                input: 'text-sm font-medium',
+                              }}
+                              className="mb-2"
+                            />
+                            <Input
+                              size="sm"
+                              label="Notion page ID"
                               placeholder="Parent UUID"
                               value={mapping.parent_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'parent_notion_page_id', e.target.value)}
