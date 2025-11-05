@@ -2,10 +2,11 @@
  * Notion Nesting Bug Fix - Override Logic
  *
  * Applies manual parent-child relationship mappings to fix incorrect Notion relationships.
- * Moves child IDs from incorrect parent arrays to correct parent arrays during import.
+ * Moves child IDs from incorrect parent arrays to correct parent arrays during tree building.
  *
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
+import { databaseSupportsInternalNesting } from '@/app/atlas/sync/_lib/atlas-database-mapper';
 import { AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionNestingBugMapping } from '../supabase/notion-nesting-bug-mappings';
@@ -19,11 +20,15 @@ export function applyNestingOverrides(
   mappings: NotionNestingBugMapping[],
   atlasDatabaseName: AtlasDatabaseName,
 ): NotionDatabasePage[] {
+  // Only apply overrides to databases that support internal nesting
+  if (!databaseSupportsInternalNesting(atlasDatabaseName)) {
+    return pages;
+  }
+
   // Filter mappings for the current database
   const relevantMappings = mappings.filter((m) => m.atlas_database_name === atlasDatabaseName);
 
   if (relevantMappings.length === 0) {
-    console.log(`No nesting overrides found for database "${atlasDatabaseName}". Returning pages unchanged.`);
     return pages;
   }
 
@@ -59,25 +64,32 @@ export function applyNestingOverrides(
 
     // Find the current parent (the page that currently has this child in its array)
     const currentParentPage = modifiedPages.find((p) => {
-      const childArray = p[childArrayField] as string[] | undefined;
-      return childArray && childArray.includes(childId);
+      const childArray = p[childArrayField];
+      return Array.isArray(childArray) && childArray.includes(childId);
     });
 
     // Remove child from current parent if found
     if (currentParentPage) {
-      const childArray = currentParentPage[childArrayField] as string[];
-      currentParentPage[childArrayField] = childArray.filter((id) => id !== childId);
-      console.log(`  ✓ Removed ${childId} from current parent ${currentParentPage.notion_page_id}`);
+      const childArray = currentParentPage[childArrayField];
+      if (Array.isArray(childArray)) {
+        currentParentPage[childArrayField] = childArray.filter((id) => id !== childId);
+        console.log(`  ✓ Removed ${childId} from current parent ${currentParentPage.notion_page_id}`);
+      }
     }
 
     // Add child to new parent
-    const newParentChildArray = (newParentPage[childArrayField] as string[]) || [];
-    if (!newParentChildArray.includes(childId)) {
-      newParentPage[childArrayField] = [...newParentChildArray, childId];
+    const newParentChildArray = newParentPage[childArrayField];
+    const existingArray = Array.isArray(newParentChildArray) ? newParentChildArray : [];
+    if (!existingArray.includes(childId)) {
+      newParentPage[childArrayField] = [...existingArray, childId];
       console.log(`  ✓ Added ${childId} to new parent ${newParentId}`);
     } else {
       console.log(`  ℹ Child ${childId} already in new parent ${newParentId}`);
     }
+
+    // Update the child's parent_notion_page_id to reflect the new parent
+    childPage.parent_notion_page_id = newParentId;
+    console.log(`  ✓ Updated ${childId} parent_notion_page_id to ${newParentId}`);
   }
 
   console.log(`✅ Applied ${relevantMappings.length} nesting overrides`);

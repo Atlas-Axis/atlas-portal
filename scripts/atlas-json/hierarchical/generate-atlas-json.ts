@@ -144,7 +144,7 @@ async function main() {
   };
 
   // Build tree structure with document numbering and validation
-  const result = buildAtlasTree(atlasData, options);
+  const result = await buildAtlasTree(atlasData, options);
   const originalScopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 

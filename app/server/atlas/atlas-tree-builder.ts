@@ -2,6 +2,8 @@ import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionRichText } from '@/app/server/markdown/notion-types';
+import { applyNestingOverrides } from '@/app/server/services/notion/apply-nesting-overrides';
+import { loadNotionNestingFixMappings } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { getDocumentTitle, sortAtlasDocuments } from './atlas-tree-helpers';
 import { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 import {
@@ -57,24 +59,41 @@ import { UuidMappings } from './load-uuid-mapping';
  * });
  * ```
  */
-export function buildAtlasTree(
+export async function buildAtlasTree(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
   options: TreeConstructionOptions,
-): AtlasTreeResult {
+): Promise<AtlasTreeResult> {
   const { uuidMappings, verbose = true, maxDepth = 50, reportMissingChildNodes = false } = options;
 
   if (verbose) {
     console.log('🌳 Building Atlas tree structure...');
   }
 
+  // Load nesting fix mappings from Supabase
+  const nestingMappings = await loadNotionNestingFixMappings();
+
+  if (nestingMappings.length > 0 && verbose) {
+    console.log(`🔧 Loaded ${nestingMappings.length} nesting fix mapping(s) to apply during tree building`);
+  }
+
+  // Apply nesting overrides to pages in-memory before building tree
+  const pagesByDatabaseWithOverrides: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {};
+
+  (Object.keys(pagesByDatabase) as AtlasDatabaseName[]).forEach((dbName) => {
+    const pages = pagesByDatabase[dbName];
+    if (pages) {
+      pagesByDatabaseWithOverrides[dbName] = applyNestingOverrides(pages, nestingMappings, dbName);
+    }
+  });
+
   // Step 1: Create lookup maps for efficient O(1) access
-  const lookupMaps = createLookupMaps(pagesByDatabase);
+  const lookupMaps = createLookupMaps(pagesByDatabaseWithOverrides);
 
   // Step 2: Normalize document names for all nodes
   generateNormalizedDocumentNames(lookupMaps);
 
   // Step 3: Find root Scope documents
-  const scopePages = pagesByDatabase[ATLAS_DATABASES.SCOPES] || [];
+  const scopePages = pagesByDatabaseWithOverrides[ATLAS_DATABASES.SCOPES] || [];
   const unsortedRootScopes = scopePages.filter((page) => page.parent_notion_page_id === null);
 
   if (unsortedRootScopes.length === 0) {
@@ -113,7 +132,7 @@ export function buildAtlasTree(
   }
 
   // Step 5: Find orphaned nodes (nodes not connected to any root tree)
-  const orphanedNodes = findOrphanedNodes(pagesByDatabase, lookupMaps, scopeTrees);
+  const orphanedNodes = findOrphanedNodes(pagesByDatabaseWithOverrides, lookupMaps, scopeTrees);
 
   // Step 5b: Convert orphaned nodes to AtlasTreeNode format
   const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {

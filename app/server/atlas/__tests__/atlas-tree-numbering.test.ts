@@ -1,11 +1,16 @@
 // @vitest-environment node
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { assignDocumentNumbersToTreesRecursively } from '../atlas-tree-numbering';
 import { AtlasTreeNode } from '../atlas-tree-types';
 import { UuidMappings } from '../load-uuid-mapping';
+
+// Mock the Supabase nesting mappings loader
+vi.mock('@/app/server/services/supabase/notion-nesting-bug-mappings', () => ({
+  loadNotionNestingFixMappings: vi.fn().mockResolvedValue([]),
+}));
 
 /**
  * Unit tests for Atlas Document Numbering System
@@ -72,11 +77,13 @@ function createMockUuidMappings(): UuidMappings {
 /**
  * Helper function to build tree and assign document numbers
  */
-function buildTreeWithNumbering(pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>): {
+async function buildTreeWithNumbering(
+  pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
+): Promise<{
   scopeTrees: AtlasTreeNode[];
   docNumbers: Map<string, string>;
-} {
-  const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+}> {
+  const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
   const docNumbers = assignDocumentNumbersToTreesRecursively(result.scopeTrees);
   return { scopeTrees: result.scopeTrees, docNumbers };
 }
@@ -89,7 +96,7 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Basic Document Type Numbering', () => {
-    it('should number Scope documents sequentially starting at A.0', () => {
+    it('should number Scope documents sequentially starting at A.0', async () => {
       const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -124,14 +131,14 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('scope-1')).toBe('A.0');
       expect(docNumbers.get('scope-2')).toBe('A.1');
       expect(docNumbers.get('scope-3')).toBe('A.2');
     });
 
-    it('should number Article documents under Scope starting at 1', () => {
+    it('should number Article documents under Scope starting at 1', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -170,7 +177,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('scope-1')).toBe('A.0');
       expect(docNumbers.get('article-1')).toBe('A.0.1');
@@ -178,7 +185,7 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('article-3')).toBe('A.0.3');
     });
 
-    it('should number Section documents under Article starting at 1', () => {
+    it('should number Section documents under Article starting at 1', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -218,13 +225,13 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('section-1')).toBe('A.0.1.1');
       expect(docNumbers.get('section-2')).toBe('A.0.1.2');
     });
 
-    it('should number Primary documents under Section sequentially (Core, Active Data Controller, Type Specification)', () => {
+    it('should number Primary documents under Section sequentially (Core, Active Data Controller, Type Specification)', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -280,7 +287,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
       expect(docNumbers.get('adc-1')).toBe('A.0.1.1.2');
@@ -289,7 +296,7 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Supporting Document Numbering', () => {
-    it('should number Annotations with .0.3 segment', () => {
+    it('should number Annotations with .0.3 segment', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -336,13 +343,13 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('annotation-1')).toBe('A.0.1.1.0.3.1');
       expect(docNumbers.get('annotation-2')).toBe('A.0.1.1.0.3.2');
     });
 
-    it('should number Tenets with .0.4 segment', () => {
+    it('should number Tenets with .0.4 segment', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -389,13 +396,13 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('tenet-1')).toBe('A.0.1.1.0.4.1');
       expect(docNumbers.get('tenet-2')).toBe('A.0.1.1.0.4.2');
     });
 
-    it('should number Scenarios under Tenets with .1.X suffix', () => {
+    it('should number Scenarios under Tenets with .1.X suffix', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -435,14 +442,14 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('tenet-1')).toBe('A.0.0.4.1');
       expect(docNumbers.get('scenario-1')).toBe('A.0.0.4.1.1.1');
       expect(docNumbers.get('scenario-2')).toBe('A.0.0.4.1.1.2');
     });
 
-    it('should number Scenario Variations with .varX suffix', () => {
+    it('should number Scenario Variations with .varX suffix', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -482,14 +489,14 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('scenario-1')).toBe('A.0.1.1');
       expect(docNumbers.get('variation-1')).toBe('A.0.1.1.var1');
       expect(docNumbers.get('variation-2')).toBe('A.0.1.1.var2');
     });
 
-    it('should number Active Data with .0.6 segment', () => {
+    it('should number Active Data with .0.6 segment', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -536,7 +543,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('adc-1')).toBe('A.0.1.1');
       expect(docNumbers.get('active-data-1')).toBe('A.0.1.1.0.6.1');
@@ -545,7 +552,7 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Global and Special Numbering', () => {
-    it('should number Needed Research with global numbering (NR-1, NR-2)', () => {
+    it('should number Needed Research with global numbering (NR-1, NR-2)', async () => {
       const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -591,14 +598,14 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [research1, research2, research3],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('research-1')).toBe('NR-1');
       expect(docNumbers.get('research-2')).toBe('NR-2');
       expect(docNumbers.get('research-3')).toBe('NR-3');
     });
 
-    it('should maintain global Needed Research counter across multiple scopes', () => {
+    it('should maintain global Needed Research counter across multiple scopes', async () => {
       const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -650,7 +657,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [research1, research2, research3, research4],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       // Should increment globally across all scopes
       expect(docNumbers.get('research-1')).toBe('NR-1');
@@ -661,7 +668,7 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Complete Hierarchy Integration Tests', () => {
-    it('should handle complete Atlas hierarchy with all document types', () => {
+    it('should handle complete Atlas hierarchy with all document types', async () => {
       // Build a comprehensive hierarchy
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
@@ -761,7 +768,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [research],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       // Verify the complete hierarchy
       expect(docNumbers.get('scope-1')).toBe('A.0');
@@ -780,7 +787,7 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Nested Core Document Numbering', () => {
-    it('should handle nested Core documents correctly', () => {
+    it('should handle nested Core documents correctly', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -845,7 +852,7 @@ describe('Atlas Document Numbering System', () => {
         'Needed Research': [],
       };
 
-      const { docNumbers } = buildTreeWithNumbering(pagesByDatabase);
+      const { docNumbers } = await buildTreeWithNumbering(pagesByDatabase);
 
       expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
       expect(docNumbers.get('core-2')).toBe('A.0.1.1.1.1');

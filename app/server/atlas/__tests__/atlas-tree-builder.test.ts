@@ -6,6 +6,11 @@ import { buildAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
 import { UuidMappings } from '../load-uuid-mapping';
 
+// Mock the nesting fix mappings loader
+vi.mock('@/app/server/services/supabase/notion-nesting-bug-mappings', () => ({
+  loadNotionNestingFixMappings: vi.fn().mockResolvedValue([]),
+}));
+
 /**
  * See Atlas document number generation rules in `docs/ATLAS_DOCUMENT_NUMBERING_RULES.md`
  */
@@ -66,7 +71,7 @@ describe('Atlas Tree Builder', () => {
   });
 
   describe('buildAtlasTree', () => {
-    it('should build a simple scope tree', () => {
+    it('should build a simple scope tree', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -86,7 +91,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
@@ -95,7 +100,7 @@ describe('Atlas Tree Builder', () => {
       expect(result.errors).toHaveLength(0);
     });
 
-    it('should build a scope with articles', () => {
+    it('should build a scope with articles', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -128,7 +133,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].articles).toHaveLength(2);
@@ -136,7 +141,7 @@ describe('Atlas Tree Builder', () => {
       expect(result.scopeTrees[0].articles[1].notion_page_id).toBe('article-2');
     });
 
-    it('should handle multiple root scopes', () => {
+    it('should handle multiple root scopes', async () => {
       const scope1 = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -162,14 +167,14 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(2);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
       expect(result.scopeTrees[1].notion_page_id).toBe('scope-2');
     });
 
-    it('should detect orphaned nodes', () => {
+    it('should detect orphaned nodes', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -195,14 +200,14 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.orphanedNodes).toHaveLength(1);
       expect(result.orphanedNodes[0].notion_page_id).toBe('orphaned-article');
     });
 
-    it('should throw error for circular references', () => {
+    it('should throw error for circular references', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -230,12 +235,12 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      expect(() => buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() })).toThrow(
+      await expect(buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() })).rejects.toThrow(
         'Circular reference detected',
       );
     });
 
-    it('should handle missing child documents gracefully', () => {
+    it('should handle missing child documents gracefully', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -259,7 +264,7 @@ describe('Atlas Tree Builder', () => {
       // Should not throw, but should log error
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const result = buildAtlasTree(pagesByDatabase, {
+      const result = await buildAtlasTree(pagesByDatabase, {
         uuidMappings: createMockUuidMappings(),
         reportMissingChildNodes: true,
       });
@@ -271,7 +276,7 @@ describe('Atlas Tree Builder', () => {
       consoleSpy.mockRestore();
     });
 
-    it('should assign document numbers when requested', () => {
+    it('should assign document numbers when requested', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -298,7 +303,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
       expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
@@ -306,7 +311,7 @@ describe('Atlas Tree Builder', () => {
   });
 
   describe('Tree Structure Validation', () => {
-    it('should create proper tree structure with all child types', () => {
+    it('should create proper tree structure with all child types', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -382,7 +387,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [research],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].articles).toHaveLength(1);
       expect(result.scopeTrees[0].annotations).toHaveLength(1);
@@ -401,7 +406,7 @@ describe('filterDirectChildren', () => {
   // Since it's not exported, we'll test it indirectly through buildAtlasTree behavior
 
   describe('Core document internal hierarchy filtering', () => {
-    it('should filter out nested Core documents from Section parent', () => {
+    it('should filter out nested Core documents from Section parent', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -467,7 +472,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 2 direct Core children, not 4
       expect(result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0].sectionsAndPrimaryDocs).toHaveLength(2);
@@ -483,7 +488,7 @@ describe('filterDirectChildren', () => {
       expect(coreChildren.some((c) => c.notion_page_id === 'nested-core-2')).toBe(false);
     });
 
-    it('should correctly handle Core document filtering its own children', () => {
+    it('should correctly handle Core document filtering its own children', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -547,7 +552,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Parent Core should only have 2 direct children (not 3)
       const parentCoreNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -567,7 +572,7 @@ describe('filterDirectChildren', () => {
       expect(childCore1Node?.sectionsAndPrimaryDocs[0].notion_page_id).toBe('grandchild-core');
     });
 
-    it('should handle 4-level deep Core document nesting correctly', () => {
+    it('should handle 4-level deep Core document nesting correctly', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -633,7 +638,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Navigate through the tree to verify correct filtering at each level
       const level1Node = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -653,7 +658,7 @@ describe('filterDirectChildren', () => {
       expect(level4Node.sectionsAndPrimaryDocs).toHaveLength(0); // No children
     });
 
-    it('should handle complex mixed hierarchy with Agent Scope Database filtering', () => {
+    it('should handle complex mixed hierarchy with Agent Scope Database filtering', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -710,7 +715,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Agent root should only have 2 direct children
       const agentRootNode = result.scopeTrees[0].agentScopeDocs[0];
@@ -728,7 +733,7 @@ describe('filterDirectChildren', () => {
       expect(child1Node?.agentScopeDocs[0].notion_page_id).toBe('agent-grandchild');
     });
 
-    it('should handle circular reference protection in deep nesting', () => {
+    it('should handle circular reference protection in deep nesting', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -785,7 +790,7 @@ describe('filterDirectChildren', () => {
       // Should not throw error due to circular reference protection
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify tree structure is correct despite complex ancestry
       const coreANode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -799,7 +804,7 @@ describe('filterDirectChildren', () => {
       consoleSpy.mockRestore();
     });
 
-    it('should handle extremely deep nesting (8 levels) with complex hierarchy', () => {
+    it('should handle extremely deep nesting (8 levels) with complex hierarchy', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -873,7 +878,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify the section only has one direct child (core-l1)
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -893,7 +898,7 @@ describe('filterDirectChildren', () => {
       expect(currentNode.sectionsAndPrimaryDocs).toHaveLength(0);
     });
 
-    it('should handle mixed document types with Core nesting in Sections & Primary Docs', () => {
+    it('should handle mixed document types with Core nesting in Sections & Primary Docs', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -971,7 +976,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 3 direct children of mixed types
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -993,9 +998,9 @@ describe('filterDirectChildren', () => {
 });
 
 describe('Tree Traversal', () => {
-  let scopeTree: ReturnType<typeof buildAtlasTree>['scopeTrees'][0];
+  let scopeTree: Awaited<ReturnType<typeof buildAtlasTree>>['scopeTrees'][0];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
       atlas_database_name: 'Scopes',
@@ -1029,11 +1034,11 @@ describe('Tree Traversal', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
     scopeTree = result.scopeTrees[0];
   });
 
-  it('should traverse tree in pre-order', () => {
+  it('should traverse tree in pre-order', async () => {
     const visited: string[] = [];
 
     preOrderTraversal(scopeTree, (node) => {
@@ -1044,7 +1049,7 @@ describe('Tree Traversal', () => {
     expect(visited).toEqual(['scope-1', 'article-1', 'section-1']);
   });
 
-  it('should find node by document ID', () => {
+  it('should find node by document ID', async () => {
     // Create a fresh test with proper NotionDatabasePage objects
     const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
@@ -1059,7 +1064,7 @@ describe('Tree Traversal', () => {
       plain_text_name: 'Article 1',
     });
 
-    const result = buildAtlasTree(
+    const result = await buildAtlasTree(
       {
         Scopes: [scope],
         Articles: [article],
@@ -1080,14 +1085,14 @@ describe('Tree Traversal', () => {
     expect(foundNode?.notion_page_id).toBe('article-1');
   });
 
-  it('should count nodes correctly', () => {
+  it('should count nodes correctly', async () => {
     const count = getNodeCount(scopeTree);
     expect(count).toBe(3); // scope + article + section
   });
 });
 
 describe('Document Numbering', () => {
-  it('should assign document numbers correctly', () => {
+  it('should assign document numbers correctly', async () => {
     const scope = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
       atlas_database_name: 'Scopes',
@@ -1114,13 +1119,13 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
   });
 
-  it('should handle multiple scopes with correct numbering', () => {
+  it('should handle multiple scopes with correct numbering', async () => {
     const scope1 = makeBasePage('Scope', {
       notion_page_id: 'scope-1',
       atlas_database_name: 'Scopes',
@@ -1146,14 +1151,14 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[1].generatedDocID).toBe('A.1');
   });
 
   describe('duplicated nodes tracking', () => {
-    it('should track nodes that appear in multiple parent contexts', () => {
+    it('should track nodes that appear in multiple parent contexts', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -1207,7 +1212,7 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
 
       // Should detect the duplication - tracks ALL parent relationships (2 parents = 2 entries)
       expect(result.duplicatedNodes).toHaveLength(2);
@@ -1231,7 +1236,7 @@ describe('Document Numbering', () => {
       expect(section2Node?.neededResearch[0].notion_page_id).toBe('research-1');
     });
 
-    it('should track multiple duplications of the same node', () => {
+    it('should track multiple duplications of the same node', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -1283,7 +1288,7 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
 
       // Should detect all duplications - tracks ALL parent relationships (3 parents = 3 entries)
       expect(result.duplicatedNodes).toHaveLength(3);
@@ -1297,7 +1302,7 @@ describe('Document Numbering', () => {
   });
 
   describe('Atlas UUID Maps', () => {
-    it('should generate atlasUUIDsToDocNames map correctly', () => {
+    it('should generate atlasUUIDsToDocNames map correctly', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -1337,7 +1342,7 @@ describe('Document Numbering', () => {
       uuidMappings.notionPageIDsToAtlasUUIDs.set('article-1', 'atlas-uuid-article-1');
       uuidMappings.notionPageIDsToAtlasUUIDs.set('section-1', 'atlas-uuid-section-1');
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Verify atlasUUIDsToGeneratedDocNumbers map is populated
       // Note: Scope numbering starts at 0, so first scope is A.0
@@ -1352,7 +1357,7 @@ describe('Document Numbering', () => {
       expect(result.atlasUUIDsToDocNames.get('atlas-uuid-section-1')).toBe('Test Section');
     });
 
-    it('should handle orphaned nodes in UUID maps', () => {
+    it('should handle orphaned nodes in UUID maps', async () => {
       // Create a scope and an orphaned section (section not referenced by any parent)
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
@@ -1384,7 +1389,7 @@ describe('Document Numbering', () => {
       uuidMappings.notionPageIDsToAtlasUUIDs.set('scope-1', 'atlas-uuid-scope-1');
       uuidMappings.notionPageIDsToAtlasUUIDs.set('orphaned-1', 'atlas-uuid-orphaned-1');
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Verify scope is in the tree
       expect(result.scopeTrees).toHaveLength(1);
@@ -1400,7 +1405,7 @@ describe('Document Numbering', () => {
       expect(result.atlasUUIDsToDocNames.get('atlas-uuid-orphaned-1')).toBe('Orphaned Section');
     });
 
-    it('should not include nodes without UUID mappings', () => {
+    it('should not include nodes without UUID mappings', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
@@ -1423,11 +1428,214 @@ describe('Document Numbering', () => {
       // Empty UUID mappings - no mapping for scope-1
       const uuidMappings = createMockUuidMappings();
 
-      const result = buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Maps should be empty since there's no UUID mapping
       expect(result.atlasUUIDsToGeneratedDocNumbers.size).toBe(0);
       expect(result.atlasUUIDsToDocNames.size).toBe(0);
+    });
+  });
+
+  describe('Nesting Override Integration', () => {
+    beforeEach(async () => {
+      // Reset mock before each test
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([]);
+    });
+
+    it('should apply nesting overrides during tree building', async () => {
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+
+      // Create test data: parent section with two cores, but child-2 should move to child-1
+      const parentSection = makeBasePage('Section', {
+        notion_page_id: 'section-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Parent Section',
+        child_section_and_primary_doc_ids: ['core-1', 'core-2'],
+      });
+
+      const coreChild1 = makeBasePage('Core', {
+        notion_page_id: 'core-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 1',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const coreChild2 = makeBasePage('Core', {
+        notion_page_id: 'core-2',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 2',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+        child_section_and_primary_doc_ids: ['section-1'],
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        'Sections & Primary Docs': [parentSection, coreChild1, coreChild2],
+        Articles: [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Mock nesting mappings: move core-2 from section-1 to core-1
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([
+        {
+          child_notion_page_id: 'core-2',
+          parent_notion_page_id: 'core-1',
+          atlas_database_name: 'Sections & Primary Docs',
+        },
+      ]);
+
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      // Verify the override was applied
+      expect(result.scopeTrees).toHaveLength(1);
+      const builtScope = result.scopeTrees[0];
+
+      // Navigate to parent section
+      expect(builtScope.sectionsAndPrimaryDocs).toHaveLength(1);
+      const builtSection = builtScope.sectionsAndPrimaryDocs[0];
+
+      // Section should now only have core-1 as direct child
+      expect(builtSection.sectionsAndPrimaryDocs).toHaveLength(1);
+      expect(builtSection.sectionsAndPrimaryDocs[0].notion_page_id).toBe('core-1');
+
+      // Core-1 should have core-2 as its child
+      const builtCore1 = builtSection.sectionsAndPrimaryDocs[0];
+      expect(builtCore1.sectionsAndPrimaryDocs).toHaveLength(1);
+      expect(builtCore1.sectionsAndPrimaryDocs[0].notion_page_id).toBe('core-2');
+    });
+
+    it('should handle empty nesting mappings', async () => {
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        Articles: [],
+        'Sections & Primary Docs': [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // No mappings
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([]);
+
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      expect(result.scopeTrees).toHaveLength(1);
+      expect(result.errors).toHaveLength(0);
+    });
+
+    it('should apply overrides for Agent Scope Database', async () => {
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+
+      const parentCore = makeBasePage('Core', {
+        notion_page_id: 'agent-core-1',
+        atlas_database_name: 'Agent Scope Database',
+        plain_text_name: 'Agent Core 1',
+        child_agent_scope_ids: ['agent-core-2', 'agent-core-3'],
+      });
+
+      const childCore2 = makeBasePage('Core', {
+        notion_page_id: 'agent-core-2',
+        atlas_database_name: 'Agent Scope Database',
+        plain_text_name: 'Agent Core 2',
+        parent_notion_page_id: 'agent-core-1',
+        child_agent_scope_ids: [],
+      });
+
+      const childCore3 = makeBasePage('Core', {
+        notion_page_id: 'agent-core-3',
+        atlas_database_name: 'Agent Scope Database',
+        plain_text_name: 'Agent Core 3',
+        parent_notion_page_id: 'agent-core-1',
+        child_agent_scope_ids: [],
+      });
+
+      const section = makeBasePage('Section', {
+        notion_page_id: 'section-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Parent Section',
+        child_agent_scope_ids: ['agent-core-1'],
+      });
+
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+        child_section_and_primary_doc_ids: ['section-1'],
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        'Sections & Primary Docs': [section],
+        'Agent Scope Database': [parentCore, childCore2, childCore3],
+        Articles: [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Needed Research': [],
+      };
+
+      // Mock nesting mappings: move agent-core-3 from agent-core-1 to agent-core-2
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([
+        {
+          child_notion_page_id: 'agent-core-3',
+          parent_notion_page_id: 'agent-core-2',
+          atlas_database_name: 'Agent Scope Database',
+        },
+      ]);
+
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      // Navigate through tree to verify override
+      expect(result.scopeTrees).toHaveLength(1);
+      const builtScope = result.scopeTrees[0];
+      const builtSection = builtScope.sectionsAndPrimaryDocs[0];
+      const builtAgentCore1 = builtSection.agentScopeDocs[0];
+
+      // agent-core-1 should only have agent-core-2 as direct child now
+      expect(builtAgentCore1.agentScopeDocs).toHaveLength(1);
+      expect(builtAgentCore1.agentScopeDocs[0].notion_page_id).toBe('agent-core-2');
+
+      // agent-core-2 should have agent-core-3 as its child
+      const builtAgentCore2 = builtAgentCore1.agentScopeDocs[0];
+      expect(builtAgentCore2.agentScopeDocs).toHaveLength(1);
+      expect(builtAgentCore2.agentScopeDocs[0].notion_page_id).toBe('agent-core-3');
     });
   });
 });

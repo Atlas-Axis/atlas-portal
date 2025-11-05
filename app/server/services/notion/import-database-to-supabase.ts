@@ -1,4 +1,3 @@
-import { databaseSupportsInternalNesting } from '@/app/atlas/sync/_lib/atlas-database-mapper';
 import {
   ATLAS_DATABASE_ID_MAP,
   AtlasDatabaseID,
@@ -11,7 +10,6 @@ import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase'
 import { upsertPagesInBatches } from '../supabase/insert-pages-in-batches';
 import { loadNotionDatabasePagesFromSupabase } from '../supabase/load-notion-database-pages-from-supabase';
 import { logImportOperation } from '../supabase/log-import';
-import { type NotionNestingBugMapping, loadNotionNestingFixMappings } from '../supabase/notion-nesting-bug-mappings';
 import { DatabasePageChanges, compareDatabasePages } from './compare-database-pages';
 import { convertNotionPagesToDatabaseFormat } from './convert-notion-pages-to-supabase-format';
 import { displayImportSummary } from './display-import-summary';
@@ -61,15 +59,6 @@ export async function importDatabasePagesFromNotionToSupabase({
   try {
     // Update sync status in database
     await acquireSyncLock(notionDatabaseId);
-
-    // Load nesting fix mappings once if this database supports internal nesting
-    const nestingMappings: NotionNestingBugMapping[] = databaseSupportsInternalNesting(atlasDatabaseName)
-      ? await loadNotionNestingFixMappings()
-      : [];
-
-    if (nestingMappings.length > 0) {
-      console.log(`🔧 Loaded ${nestingMappings.length} nesting fix mapping(s) for database "${atlasDatabaseName}"`);
-    }
 
     // Load existing database pages from Supabase to detect changes
     if (DEBUG_LOGGING()) {
@@ -137,7 +126,6 @@ export async function importDatabasePagesFromNotionToSupabase({
         const pagesInDatabaseFormat = await convertNotionPagesToDatabaseFormat({
           notionPages: notionPagesToInsertOrUpsert,
           atlasDatabaseName,
-          nestingMappings,
         });
 
         // Insert new pages
@@ -168,7 +156,6 @@ export async function importDatabasePagesFromNotionToSupabase({
       const databasePages = await convertNotionPagesToDatabaseFormat({
         notionPages: notionPagesWithRelationships,
         atlasDatabaseName,
-        nestingMappings,
       });
       await upsertPagesInBatches(databasePages, 'insert');
       console.log(`✅ Successfully inserted all ${databasePages.length} pages`);

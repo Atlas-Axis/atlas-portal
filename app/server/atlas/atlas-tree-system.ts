@@ -75,7 +75,7 @@ export async function buildAtlasTreeWithValidation(
   const { validateIntegrity = true, reportMissingChildNodes = false, ...treeOptions } = options;
 
   // Build the tree structure
-  const result = buildAtlasTree(pagesByDatabase, treeOptions);
+  const result = await buildAtlasTree(pagesByDatabase, treeOptions);
 
   // Validate tree integrity if requested
   let validationSummary = { totalErrors: 0, errorTypes: {}, criticalErrors: 0, warnings: 0 };

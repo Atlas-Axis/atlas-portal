@@ -23,7 +23,7 @@ export default async function Page() {
   const uuidMappings = await loadUuidMappings();
 
   // Build the Atlas tree structure with validation
-  const atlas = buildAtlasTree(atlasPagesPerDatabase, {
+  const atlas = await buildAtlasTree(atlasPagesPerDatabase, {
     uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,

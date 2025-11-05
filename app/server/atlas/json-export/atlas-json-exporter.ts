@@ -20,7 +20,7 @@ export async function buildAtlasJSON() {
   };
 
   // Build tree structure with document numbering and validation
-  const result = buildAtlasTree(atlasData, options);
+  const result = await buildAtlasTree(atlasData, options);
   const scopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 
