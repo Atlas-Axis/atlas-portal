@@ -7,6 +7,7 @@
  *
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
+import { revalidatePage } from '@/app/server/revalidate-page';
 import {
   NotionNestingBugMapping,
   saveNotionNestingFixMappings,
@@ -19,10 +20,15 @@ export interface SaveMappingsResult {
 
 /**
  * Server action to save nesting bug mappings
+ * Revalidates the home page after successful save since UUID mappings affect the Atlas hierarchy
  */
 export async function saveMappingsAction(mappings: NotionNestingBugMapping[]): Promise<SaveMappingsResult> {
   try {
     await saveNotionNestingFixMappings(mappings);
+
+    // Revalidate the home page to reflect updated UUID mappings
+    await revalidatePage('/');
+
     return { success: true };
   } catch (error) {
     console.error('Error saving mappings:', error);
