@@ -60,7 +60,7 @@ export function StandardizedExtraData({
 
   return (
     <div className={className}>
-      <div className="mt-2 text-sm text-slate-600">
+      <div className="mt-2 flex flex-col gap-y-3 text-sm text-slate-600">
         {rows.map(({ key, label, value }) => {
           // Format the value based on its type
           let formattedValue: React.ReactNode;
@@ -82,8 +82,8 @@ export function StandardizedExtraData({
           }
 
           return (
-            <div key={key} className="mb-1">
-              <p className="font-semibold text-slate-700">{label}:</p>
+            <div key={key}>
+              <p className="mb-0.5 font-semibold text-slate-700">{label}:</p>
               <div>{formattedValue}</div>
             </div>
           );
