@@ -57,20 +57,23 @@ function flattenDocuments(docs: StandardizedAtlasDocument[]): StandardizedAtlasD
  * If a match is found, centers the preview around it. Otherwise, shows the beginning.
  */
 function truncateText(text: string, maxLength: number, query?: string): string {
-  if (text.length <= maxLength) return text;
+  // Convert Markdown links [text](url) to plain text before truncating
+  const plainText = text.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+
+  if (plainText.length <= maxLength) return plainText;
 
   // If no query or query not found, truncate from start
   if (!query || !query.trim()) {
-    return text.slice(0, maxLength).trim() + '...';
+    return plainText.slice(0, maxLength).trim() + '...';
   }
 
   const trimmedQuery = query.trim().toLowerCase();
-  const lowerText = text.toLowerCase();
+  const lowerText = plainText.toLowerCase();
   const matchIndex = lowerText.indexOf(trimmedQuery);
 
   // If query not found in text, truncate from start
   if (matchIndex === -1) {
-    return text.slice(0, maxLength).trim() + '...';
+    return plainText.slice(0, maxLength).trim() + '...';
   }
 
   // Calculate how much text to show before and after the match
@@ -82,15 +85,15 @@ function truncateText(text: string, maxLength: number, query?: string): string {
   let end = start + maxLength;
 
   // Adjust if we're at the end of the text
-  if (end > text.length) {
-    end = text.length;
+  if (end > plainText.length) {
+    end = plainText.length;
     start = Math.max(0, end - maxLength);
   }
 
   // Build the result with ellipses as needed
   const prefix = start > 0 ? '...' : '';
-  const suffix = end < text.length ? '...' : '';
-  const excerpt = text.slice(start, end).trim();
+  const suffix = end < plainText.length ? '...' : '';
+  const excerpt = plainText.slice(start, end).trim();
 
   return prefix + excerpt + suffix;
 }
