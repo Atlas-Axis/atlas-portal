@@ -22,7 +22,7 @@ export default function AtlasPagePrerendered({
     <div className="min-h-screen overflow-x-hidden bg-white">
       <MobileTopBar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
-      <div className="min-w-0 p-6 pt-20 sm:ml-80 sm:pt-6">
+      <div className="min-w-0 pt-24 pb-24 sm:ml-80 sm:p-6 sm:pt-6 sm:pb-24">
         <ContentTree scopeTreesWithoutAgents={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       </div>
     </div>

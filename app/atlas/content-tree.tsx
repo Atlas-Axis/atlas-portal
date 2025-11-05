@@ -360,7 +360,7 @@ function TreeNode({
           }
           classNames={{
             base: 'px-0 mb-3',
-            trigger: `px-0 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
+            trigger: `px-2 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
             content: 'px-0 pt-2 pb-0',
             indicator: 'text-slate-600',
             title: 'w-full',
@@ -627,7 +627,7 @@ export default function ContentTree({
             }
             classNames={{
               heading: 'bg-slate-100 rounded-md p-3 text-indigo-900 cursor-pointer',
-              base: 'px-0 shadow-none',
+              base: 'px-0 shadow-none mb-3 sm:mb-6',
               trigger: 'cursor-pointer',
             }}
           >
