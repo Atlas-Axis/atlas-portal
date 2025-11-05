@@ -1170,7 +1170,7 @@ The Definition Type is used for documents that define unique concepts contained 
 
 **Doc Identifier Rules**:
 
-Translation Documents are located as subdocuments to the Atlas Document they are translating. Their Document Identifier is the same as the Atlas Document they are translating, with an additional suffix that represents the language of the translation. For example, a Spanish translation of A.1 would have the Document Identifier A.1.es.
+Translation Documents are located as subdocuments to the Atlas Document they are translating. Their Document Identifier is the same as the Atlas Document they are translating, with an additional suffix that represents the language of the translation. For example, a Spanish translation of [A.1](18ac7dd3-c646-4352-9b0d-d01a2932d7d1) would have the Document Identifier A.1.es.
 
 **Additional Logic**:
 
@@ -1200,7 +1200,7 @@ The Translation Type is used for creating translated versions of Atlas Documents
 
 **Doc Identifier Rules**:
 
-Archive Documents are located as subdocuments to the Atlas Document they are archiving. Their Document Identifier is the same as the Atlas Document they are archiving, with an additional suffix 'v' followed by the version number of the document being archived. For example, the third version of A.1 would have the Document Identifier A.1.v3.
+Archive Documents are located as subdocuments to the Atlas Document they are archiving. Their Document Identifier is the same as the Atlas Document they are archiving, with an additional suffix 'v' followed by the version number of the document being archived. For example, the third version of [A.1](18ac7dd3-c646-4352-9b0d-d01a2932d7d1) would have the Document Identifier A.1.v3.
 
 **Additional Logic**:
 
@@ -1354,7 +1354,7 @@ Facilitator Scenario Documents contain hypothetical fact patterns that are desig
 
 **Doc Identifier Rules**:
 
-Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document A.1.1.0.4.1.1.1. would have the following identifier: A.1.1.0.4.1.1.1.var2 .
+Scenario Variation Documents are located as subdocuments to the Scenario Document of which they are a variation. Their Document Identifier is the same as their parent Scenario, with an additional suffix 'var' followed by the variation number of the original Scenario document. For example, the second Scenario Variation of the original Scenario document `A.1.1.0.4.1.1.1.` would have the following identifier: `A.1.1.0.4.1.1.1.var2` .
 
 **Additional Logic**:
 
@@ -1496,7 +1496,7 @@ This need is an extensive Research Track. The central research need that grows o
 
 The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies (including Alignment Conserver misalignment) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence. 
 
-Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically. What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
+Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
 
 Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof (e.g., preponderance of evidence, beyond a reasonable doubt), and the use of experts. 
 
@@ -1540,7 +1540,7 @@ Misaligned
 
 That Entity is alternating between two roles to perform their duties in separate time intervals does not negate the misalignment risk that the Target Document is intended to protect against. They are still formally occupying two roles at once. They still have access to sensitive information and experiences in two roles with different mandates and incentives.
 
-The Facilitator should derecognize Entity per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+The Facilitator should derecognize Entity per [A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition](ac998664-5b5e-4ea5-813b-dc3105ea6cf2).
 
 ###### A.1.4.5.0.4.1.1.1.var1 - Alternating Between Two Roles In Separate Time Intervals - var. 1 [Scenario Variation]  <!-- UUID: b7eb5043-6f80-4dcf-8392-fbb3e200cf9e -->
 
@@ -1554,11 +1554,11 @@ Misaligned
 
 **Additional Guidance**:
 
-An "ecosystem role" need not be compensated or full-time to be regulated by the Target Document. See Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document.
+An "ecosystem role" need not be compensated or full-time to be regulated by the Target Document. See [Other Ecosystem Roles - Ecosystem Role Need Not Be Compensated Or Full-Time To Be Regulated Under Target Document](9b3828a7-0e71-4c63-82d2-8f65ee84a1ca).
 
 An unranked, uncompensated Aligned Delegate is nevertheless an 'ecosystem role' in the sense of the Target Document. Notwithstanding being unranked and uncompensated, the AD role still carries with it a mandate and array of incentives that are distinct from those of a Facilitator.
 
-The Facilitator should derecognize Entity from both AC roles per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+The Facilitator should derecognize Entity from both AC roles per [A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition](ac998664-5b5e-4ea5-813b-dc3105ea6cf2).
 
 ##### A.1.4.5.0.4.1.1.2 - On-Call Or Stand-By Role [Scenario]  <!-- UUID: 01e5369d-c05c-41ae-99d4-d489aa84eaee -->
 
@@ -1574,7 +1574,7 @@ Misaligned
 
 If an actor assumes more than one role in the Sky ecosystem, the risks of conflict of interest, collusion, conspiracy and other misaligned behavior necessarily arises. That the Entity's second position is in an "on-call" or stand-by position does not negate this risk. Entity is still formally occupying two roles with different mandates, incentives and access/permissions. It is conceivable that Entity's decision-making in their first role could be compromised or influenced, even in subtle ways, by the experiences, knowledge and biases to which Entity is exposed in their second role. Therefore, the risk of misalignment, which the Target Document aims to guard against, remains present.
 
-The Facilitator should derecognize Entity as an AD per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+The Facilitator should derecognize Entity as an AD per [A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition](ac998664-5b5e-4ea5-813b-dc3105ea6cf2).
 
 No specific logic exists as yet for the adjudication of misalignment on the part of an Ecosystem Actor team member.
 
@@ -1594,7 +1594,7 @@ In contrast to the original Scenario, the Facilitator uncovered evidence that in
 
 That the Facilitator was stonewalled in its investigation also is a strong indication of malign intent on the part of Entity and the EA. Yet, there is no concrete proof of this. 
 
-Under these circumstances, it is reasonable to extrapolate that derecognition from the AC role would suffice, per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+Under these circumstances, it is reasonable to extrapolate that derecognition from the AC role would suffice, per [A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition](ac998664-5b5e-4ea5-813b-dc3105ea6cf2).
 
 The concern remains that, potentially, a bad actor can continue to exploit the ecosystem, especially if other ecosystem participants are not aware of their questionable history. To mitigate this risk, the Facilitator can include details about the evidence it discovered in its formal derecognition notice, which can impact the reputation score of Entity.
 
@@ -1626,7 +1626,7 @@ Misaligned
 
 Entity was unable to provide any proof that it had formally resigned its first role with the Facilitator team. Merely claiming that a resignation email was sent is not sufficient. Further, unlike the original Scenario, Entity in this Variation continued to have access to the Facilitator team workspace even after the alleged date of resignation. Technically speaking, Entity is still formally occupying two roles with different mandates and incentives. The potential exists for conflict of interest, collusion, etc. The part-time role does not impact this analysis.
 
-The Core Facilitator should derecognize Entity from its AD role per A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition.
+The Core Facilitator should derecognize Entity from its AD role per [A.1.4 - A10 - Alignment Conservers - Accountability And Misalignment Handling - AC Derecognition](ac998664-5b5e-4ea5-813b-dc3105ea6cf2).
 
 ##### A.1.4.5.0.4.1.1.4 - Volunteer Discord Moderator [Scenario]  <!-- UUID: 6ebff450-1cdd-4d57-93c9-0537066daf44 -->
 
@@ -1660,7 +1660,7 @@ An "ecosystem role" need not be compensated or full-time to be regulated by the 
 
 **Content**:
 
-Given the rationale behind the Target Document A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time, the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
+Given the rationale behind the Target Document [A.1.4 - A5 - Alignment Conservers - Powers And Constraints - ACs Can Be Operationally Active In Only One Role At A Time](9b1d1c2f-ace0-4637-8050-4711ae9f9a8c), the 'simultaneous occupying of two ecosystem roles' prohibition should likely not be limited to just the AC stakeholder category, but rather should apply universally to any Sky stakeholder who occupies a role formally defined in the Atlas. What would be the arguments for and against such a position?
 
 #### NR-3 - Should Team Contributors Be Subject To The Ban Against Occupying Two Ecosystem Roles? [Needed Research]  <!-- UUID: 4560326b-abab-4147-957f-c5c8ddfa96f1 -->
 
@@ -1704,7 +1704,7 @@ The operational security of the Alignment Conserver roles is key to governance i
 
 **Content**:
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
+The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -1863,7 +1863,7 @@ This need is an extensive Research Track. The central research need that grows o
 
 The Atlas has made a good start with establishing an adjudication framework. There is some logic concerning procedures for how disputes and controversies (including Alignment Conserver misalignment) are brought forward and how they are reviewed. But essential elements are missing, such as protocols and standards for fact-finding and evidence. 
 
-Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically. What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
+Needed Research here includes methods for implementing a structured fact-finding process that gathers relevant information impartially and comprehensively. Who has the authority to investigate, to request evidence, to handle evidence?  What types of evidence are permissible to consider? See [Responsibly Provided - Whistleblower Evidence Of Misalignment Must Be Secured Ethically](ba46ef4f-2ed6-4b16-b5b5-8a3ee01ad18d). What are the processes for collecting, preserving, and analyzing this evidence? When should evidence be shared with the larger community and when should it be kept confidential? 
 
 Then there is the matter of assessing evidence in a way that is rigorous and impartial, without which, confidence in the Atlas and the governance process may be undermined. What criteria should be used to validate and evaluate evidence to ensure its reliability and relevance in decision-making? This involves determining the credibility of sources, the reliability of evidence, and the relevance of information to the specific case. The research should explore different approaches to evidence evaluation, such as the application of the burden of proof, standards of proof (e.g., preponderance of evidence, beyond a reasonable doubt), and the use of experts. 
 
@@ -2235,7 +2235,7 @@ Aligned Delegates (ADs) are required to maintain a high level of operational sec
 
 **Content**:
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
+The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -2297,7 +2297,7 @@ What are the expectations placed on Facilitators to verify whistleblower evidenc
 
 **Content**:
 
-The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post (https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2) on AD derecognition:
+The Core Facilitator may not have the needed experience and skills to adjudicate matters involving operational security best practices. See Endgame Edge Governance Facilitator team Forum post ([https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532#proposal-for-community-discussion-2)) on AD derecognition:
 
 The DAO could hire a security advisor firm/consultant as a Scope Advisor. (This could fall under the Governance Scope and its requirement for Governance Security processes). Their task would be to thoroughly analyze the security needs and risks of the Alignment Conservers and develop ever-evolving Operational Security "Best Practices".
 
@@ -2956,7 +2956,7 @@ Following the interim deployment, the Prime will work with the Core Council Risk
 
 ####### A.1.9.2.3.2.2.2 - Execution Of Agent Spells [Core]  <!-- UUID: 5b0fd894-094e-4b0c-91ca-c5b59b710c0c -->
 
-The execution of Agent Spells is described in the subdocuments herein. Two methods are available: direct execution in a Sky Core Spell and execution through StarGuard. Execution through StarGuard is the preferred method and any exceptions require valid reasoning, except as specified in A.1.9 - Short-term Transitionary Measures.
+The execution of Agent Spells is described in the subdocuments herein. Two methods are available: direct execution in a Sky Core Spell and execution through StarGuard. Execution through StarGuard is the preferred method and any exceptions require valid reasoning, except as specified in [A.1.9.2.3.2.2.2.3 - Short-term Transitionary Measures](acd33afa-5061-4b56-b76f-56554614558d).
 
 ######## A.1.9.2.3.2.2.2.1 - Execution Through StarGuard [Core]  <!-- UUID: 78ec918d-cd9e-4326-bfa9-ab338e658a8b -->
 
@@ -9263,15 +9263,22 @@ Sky Direct Exposures are exposures that are held directly by Sky but implemented
 
 ######## A.2.3.9.1.1.1.1.1 - Designation Process [Core]  <!-- UUID: 3161489a-11bd-4dea-b676-09d0cce45ae9 -->
 
-Sky Direct Exposures are designated by the Core Facilitator in consultation with the Core Council Risk Advisor via posts to the Sky Forum under the “Sky Core” category. Sky Direct Exposures are recorded in A.2.4 - List Of Current Sky Direct Exposures and must specify the asset that is being designated as a Sky Direct Exposure and the Prime Agent responsible for implementing the exposure.
+Sky Direct Exposures are designated by the Core Facilitator in consultation with the Core Council Risk Advisor via posts to the Sky Forum under the “Sky Core” category. Sky Direct Exposures are recorded in [A.2.3.9.1.1.1.1.2.0.6.1 - List Of Current Sky Direct Exposures](5f368e33-7a82-4244-a9ba-f285193ec043) and must specify the asset that is being designated as a Sky Direct Exposure and the Prime Agent responsible for implementing the exposure.
 
 ######## A.2.3.9.1.1.1.1.2 - Current Sky Direct Exposures [Active Data Controller]  <!-- UUID: 1c0410e4-fe36-4a01-8b82-8ea74f67fbec -->
 
-The list of current Sky Direct Exposures is defined as Active Data in [[Unknown]](5f368e33-7a82-4244-a9ba-f285193ec043). 
+The list of current Sky Direct Exposures is defined as Active Data in [A.2.3.9.1.1.1.1.2.0.6.1 - List Of Current Sky Direct Exposures](5f368e33-7a82-4244-a9ba-f285193ec043). 
 
 The Active Data is updated as follows:
 • The Responsible Party is the Core Facilitator.
 • The Update Process must follow the protocol for ‘Direct Edit’.
+
+######### A.2.3.9.1.1.1.1.2.0.6.1 - List Of Current Sky Direct Exposures [Active Data]  <!-- UUID: 5f368e33-7a82-4244-a9ba-f285193ec043 -->
+
+The current Sky Direct Exposures are:
+    
+◦ Treasury Bills - Investments in BUIDL, JTRSY, and USTB on Ethereum Mainnet by Grove    
+◦ Collateralized Loan Obligations - Investments in JAAA on Ethereum Mainnet by Grove
 
 ######## A.2.3.9.1.1.1.1.3 - Parameters For Sky Direct Exposures [Core]  <!-- UUID: cbd64e6c-547b-4b8d-a0cb-b605f780aef1 -->
 
