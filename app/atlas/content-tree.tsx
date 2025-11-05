@@ -240,7 +240,7 @@ function TreeNode({
         <CustomHTML html={formattedContent} />
       </div>
 
-      <StandardizedExtraData node={node} className={styles.nodeContent} />
+      <StandardizedExtraData node={node} className={styles.nodeContent} uuidToDocNoMap={uuidToDocNoMap} />
 
       {showUUIDs && (
         <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
