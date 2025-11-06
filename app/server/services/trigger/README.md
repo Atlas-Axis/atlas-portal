@@ -14,13 +14,13 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 ### `daily-notion-import-schedule.ts`
 
 - **ID**: `daily-notion-import`
-- **Purpose**: Scheduled task that runs the full Atlas import daily at 4:00 AM UTC
-- **Schedule**: `0 4 * * *` (cron format)
+- **Purpose**: Scheduled task that runs the full Atlas import hourly
+- **Schedule**: `0 * * * *` (cron format)
 - **Timezone**: UTC
 
 ## Usage
 
-The scheduled task will automatically trigger the full Atlas import task every day at 4:00 AM UTC. This ensures that the Supabase database stays in sync with the latest changes from Notion.
+The scheduled task will automatically trigger the full Atlas import task every hour. This ensures that the Supabase database stays in sync with the latest changes from Notion.
 
 ## Development
 
