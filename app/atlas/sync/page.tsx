@@ -2,6 +2,8 @@ import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supaba
 import { loadUuidMappings, serializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { Content } from './content';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Atlas Sync Page - Server Component
  *
