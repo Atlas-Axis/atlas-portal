@@ -4,7 +4,10 @@ import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionRichText } from '@/app/server/markdown/notion-types';
 import { applyNestingOverrides } from '@/app/server/services/notion/apply-nesting-overrides';
-import { loadNotionNestingFixMappings } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
+import {
+  NotionNestingBugMapping,
+  loadNotionNestingFixMappings,
+} from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { getDocumentTitle, sortAtlasDocuments } from './atlas-tree-helpers';
 import { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 import {
@@ -77,6 +80,10 @@ export async function buildAtlasTree(
     console.log(`🔧 Loaded ${nestingMappings.length} nesting fix mapping(s) to apply during tree building`);
   }
 
+  // Pre-index sibling positioning mappings by parent ID for O(1) lookup
+  // This avoids filtering through all mappings for every parent node
+  const siblingPositioningMappingsByParent = createSiblingPositioningIndex(nestingMappings);
+
   // Apply nesting overrides to pages in-memory before building tree
   const pagesByDatabaseWithOverrides: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {};
 
@@ -116,7 +123,16 @@ export async function buildAtlasTree(
 
   for (const rootScope of rootScopes) {
     try {
-      const treeNode = buildTreeNode(rootScope, lookupMaps, 0, maxDepth, verbose, reportMissingChildNodes);
+      const treeNode = buildTreeNode(
+        rootScope,
+        lookupMaps,
+        0,
+        maxDepth,
+        verbose,
+        reportMissingChildNodes,
+        undefined,
+        siblingPositioningMappingsByParent,
+      );
       scopeTrees.push(treeNode);
     } catch (error) {
       if (error instanceof Error && error.message.includes('circular reference')) {
@@ -139,7 +155,16 @@ export async function buildAtlasTree(
   const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
     try {
       // Build tree node for orphaned page (with reasonable depth limit to avoid performance issues)
-      return buildTreeNode(orphanedPage, lookupMaps, 0, 50, false, false);
+      return buildTreeNode(
+        orphanedPage,
+        lookupMaps,
+        0,
+        50,
+        false,
+        false,
+        undefined,
+        siblingPositioningMappingsByParent,
+      );
     } catch (conversionError) {
       // If conversion fails, create a minimal AtlasTreeNode
       if (verbose) {
@@ -387,6 +412,7 @@ function buildTreeNode(
   verbose: boolean,
   reportMissingChildNodes: boolean = false,
   parentPageId?: string,
+  siblingPositioningMappingsByParent?: Map<string, NotionNestingBugMapping[]>,
 ): AtlasTreeNode {
   const { nodeMapByPageId: nodeMap, processedIds, nodeToParentsMap } = lookupMaps;
 
@@ -448,7 +474,8 @@ function buildTreeNode(
       if (Array.isArray(array)) {
         const childNodes: AtlasTreeNode[] = [];
 
-        // Sort siblings based on rules before processing. Docs: https://www.notion.so/atlas-axis/Ordering-Of-Atlas-Documents-280f2ff08d73802e8e08d0bd88e081be
+        // Sort siblings based on rules before processing
+        // Docs: https://www.notion.so/atlas-axis/Ordering-Of-Atlas-Documents-280f2ff08d73802e8e08d0bd88e081be
         const childPages = array
           .map((id) => findPageById(id, lookupMaps))
           .filter((page): page is NotionDatabasePage => page !== undefined);
@@ -481,6 +508,7 @@ function buildTreeNode(
                   verbose,
                   reportMissingChildNodes,
                   page.notion_page_id,
+                  siblingPositioningMappingsByParent,
                 );
                 childNodes.push(childTreeNode);
               } catch (error) {
@@ -501,7 +529,18 @@ function buildTreeNode(
         }
 
         // Sort children by sort_order and document number
-        const sortedChildren = sortAtlasDocuments<AtlasTreeNode>(childNodes);
+        let sortedChildren = sortAtlasDocuments<AtlasTreeNode>(childNodes);
+
+        // Apply sibling positioning adjustments after sorting (if any mappings exist for this parent)
+        if (siblingPositioningMappingsByParent) {
+          sortedChildren = applySiblingPositioning(
+            sortedChildren,
+            page.notion_page_id,
+            siblingPositioningMappingsByParent,
+            verbose,
+          );
+        }
+
         treeNode[type] = sortedChildren;
       }
     }
@@ -511,6 +550,106 @@ function buildTreeNode(
     // IMPORTANT: Remove from processedIds when backtracking to allow legitimate multiple references
     processedIds.delete(page.notion_page_id);
   }
+}
+
+/**
+ * Create an index of sibling positioning mappings by parent ID for O(1) lookup.
+ * This pre-processes the mappings once instead of filtering on every parent node.
+ *
+ * @param nestingMappings - All nesting mappings from Supabase
+ * @returns Map of parent page ID to array of sibling positioning mappings
+ */
+function createSiblingPositioningIndex(
+  nestingMappings: NotionNestingBugMapping[],
+): Map<string, NotionNestingBugMapping[]> {
+  const index = new Map<string, NotionNestingBugMapping[]>();
+
+  for (const mapping of nestingMappings) {
+    // Only index mappings that have sibling positioning
+    if (mapping.place_after_sibling_notion_page_id) {
+      const parentId = mapping.parent_notion_page_id;
+      const existing = index.get(parentId);
+
+      if (existing) {
+        existing.push(mapping);
+      } else {
+        index.set(parentId, [mapping]);
+      }
+    }
+  }
+
+  return index;
+}
+
+/**
+ * Apply sibling positioning adjustments to sorted children.
+ * This reorders children based on place_after_sibling_notion_page_id mappings,
+ * applying manual positioning after the default sort.
+ *
+ * **Important**: Multiple mappings for the same parent are applied sequentially.
+ * If multiple children reference the same sibling, they will be inserted in
+ * the order the mappings are processed (last mapping's child appears after earlier ones).
+ *
+ * @param sortedChildren - Children already sorted by default rules
+ * @param parentPageId - The parent page ID to check for mappings
+ * @param siblingPositioningByParent - Pre-indexed map of parent ID to sibling positioning mappings (O(1) lookup)
+ * @param verbose - Whether to log positioning actions
+ * @returns Reordered children with sibling positioning applied
+ */
+function applySiblingPositioning(
+  sortedChildren: AtlasTreeNode[],
+  parentPageId: string,
+  siblingPositioningByParent: Map<string, NotionNestingBugMapping[]>,
+  verbose: boolean,
+): AtlasTreeNode[] {
+  // O(1) lookup - get mappings for this specific parent
+  const relevantMappings = siblingPositioningByParent.get(parentPageId);
+
+  if (!relevantMappings || relevantMappings.length === 0) {
+    return sortedChildren;
+  }
+
+  // Create a working copy of the sorted children
+  const result = [...sortedChildren];
+
+  // Apply each sibling positioning mapping
+  for (const mapping of relevantMappings) {
+    const childId = mapping.child_notion_page_id;
+    const siblingId = mapping.place_after_sibling_notion_page_id!;
+
+    // Find the child and sibling in the current array
+    const childIndex = result.findIndex((node) => node.notion_page_id === childId);
+    const siblingIndex = result.findIndex((node) => node.notion_page_id === siblingId);
+
+    if (childIndex === -1) {
+      if (verbose) {
+        console.warn(`  ⚠ Child ${childId} not found in sorted children for parent ${parentPageId}`);
+      }
+      continue;
+    }
+
+    if (siblingIndex === -1) {
+      if (verbose) {
+        console.warn(`  ⚠ Sibling ${siblingId} not found in sorted children for parent ${parentPageId}`);
+      }
+      continue;
+    }
+
+    // Remove child from its current position
+    const [childNode] = result.splice(childIndex, 1);
+
+    // Recalculate sibling index after removal (if child was before sibling)
+    const adjustedSiblingIndex = childIndex < siblingIndex ? siblingIndex - 1 : siblingIndex;
+
+    // Insert child after the sibling
+    result.splice(adjustedSiblingIndex + 1, 0, childNode);
+
+    if (verbose) {
+      console.log(`  🎯 Repositioned ${childId} after sibling ${siblingId} in parent ${parentPageId}`);
+    }
+  }
+
+  return result;
 }
 
 /**

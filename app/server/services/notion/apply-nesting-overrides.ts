@@ -79,7 +79,7 @@ export function applyNestingOverrides(
 
     // Add child to new parent
     const newParentChildArray = newParentPage[childArrayField];
-    const existingArray = Array.isArray(newParentChildArray) ? newParentChildArray : [];
+    const existingArray: string[] = Array.isArray(newParentChildArray) ? newParentChildArray : [];
     if (!existingArray.includes(childId)) {
       // Check if we need to place the child after a specific sibling
       if (mapping.place_after_sibling_notion_page_id) {
@@ -88,19 +88,24 @@ export function applyNestingOverrides(
 
         if (siblingIndex !== -1) {
           // Insert after the sibling
-          const newArray = [...existingArray];
+          const newArray: string[] = [...existingArray];
           newArray.splice(siblingIndex + 1, 0, childId);
-          newParentPage[childArrayField] = newArray;
-          console.log(`  ✓ Added ${childId} to new parent ${newParentId} after sibling ${siblingId}`);
+          newParentPage[childArrayField] = newArray as (typeof newParentPage)[typeof childArrayField];
+          console.log(
+            `  ✓ Added ${childId} to new parent ${newParentId} after sibling ${siblingId} at index ${siblingIndex + 1}`,
+          );
         } else {
           // Sibling not found, place at end with warning
           console.warn(`  ⚠ Sibling ${siblingId} not found in parent ${newParentId}, placing child ${childId} at end`);
-          newParentPage[childArrayField] = [...existingArray, childId];
+          newParentPage[childArrayField] = [
+            ...existingArray,
+            childId,
+          ] as (typeof newParentPage)[typeof childArrayField];
           console.log(`  ✓ Added ${childId} to new parent ${newParentId} (at end)`);
         }
       } else {
         // No sibling specified, place at end
-        newParentPage[childArrayField] = [...existingArray, childId];
+        newParentPage[childArrayField] = [...existingArray, childId] as (typeof newParentPage)[typeof childArrayField];
         console.log(`  ✓ Added ${childId} to new parent ${newParentId}`);
       }
     } else {
