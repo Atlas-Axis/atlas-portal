@@ -1,27 +1,26 @@
 /**
- * Hard-coded Notion database IDs and other Notion-specific identifiers
+ * Hard-coded Notion database IDs and other Notion-specific identifiers (TEST VERSION)
  *
- * This file contains all Notion-specific IDs that reference actual Notion databases,
- * pages, and properties. These are environment-specific and may differ between
- * development and production environments.
+ * This file contains empty/test values for all Notion-specific IDs.
+ * Used in test environments to avoid requiring real Notion credentials.
  */
 import type { AtlasDatabaseName } from './atlas-types';
-import { ATLAS_DATABASES } from './constants';
 
 /**
- * Maps Atlas database names to their corresponding Notion database IDs
+ * Maps Atlas database names to empty strings for testing
+ * NOTE: Keys use string literals instead of ATLAS_DATABASES constants to avoid circular dependency
  */
 export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
-  [ATLAS_DATABASES.SCOPES]: '',
-  [ATLAS_DATABASES.ARTICLES]: '',
-  [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: '',
-  [ATLAS_DATABASES.ANNOTATIONS]: '',
-  [ATLAS_DATABASES.TENETS]: '',
-  [ATLAS_DATABASES.SCENARIOS]: '',
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: '',
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: '',
-  [ATLAS_DATABASES.ACTIVE_DATA]: '',
-  [ATLAS_DATABASES.AGENTS]: '',
+  Scopes: '',
+  Articles: '',
+  'Sections & Primary Docs': '',
+  Annotations: '',
+  Tenets: '',
+  Scenarios: '',
+  'Scenario Variations': '',
+  'Needed Research': '',
+  'Active Data': '',
+  'Agent Scope Database': '',
 } as const;
 
 /**

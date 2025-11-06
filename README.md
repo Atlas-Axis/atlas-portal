@@ -343,9 +343,19 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 #### Atlas Configuration Files
 
 - `atlas-types.ts` - Type definitions for Atlas (AtlasDatabaseName, AtlasDocumentType, etc.)
-- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files
-- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs)
+- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files. Conditionally imports Notion IDs based on environment
+- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs) for production use
+- `notion-ids-test.ts` - Empty Notion identifiers for testing environments (empty strings/arrays)
 - `type-color-map.ts` - UI color mappings for document types
+
+**Environment-based Notion ID Loading:**
+
+The `constants.ts` file conditionally imports Notion IDs from either `notion-ids.ts` (production) or `notion-ids-test.ts` (testing) based on environment:
+
+- Uses `notion-ids-test.ts` (empty IDs) when: `NODE_ENV !== 'production'` OR `USE_TEST_NOTION_IDS === 'true'`
+- Uses `notion-ids.ts` (real IDs) when: `NODE_ENV === 'production'` AND `USE_TEST_NOTION_IDS !== 'true'`
+
+This allows tests to run without requiring real Notion credentials and prevents accidental use of production IDs in development.
 
 ### Notion Database Property Mapping (`/app/server/atlas`)
 
@@ -499,7 +509,8 @@ This project maintains **2 synchronized documentation files** that provide high-
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_API_KEY` - Your Supabase API key
 - `TRIGGER_SECRET_KEY` - Trigger.dev secret key (for background jobs)
-- `NODE_ENV` - Either 'development' (for `npm run dev`) or 'production' (for `npm run build`)
+- `NODE_ENV` - Either 'development' (for `npm run dev`) or 'production' (for `npm run build`). Controls which Notion IDs are loaded (production uses real IDs, non-production uses empty test IDs)
+- `USE_TEST_NOTION_IDS` - When set to `'true'`, forces the use of empty test Notion IDs regardless of `NODE_ENV` (useful for testing in any environment)
 - `DEBUG_LOGGING` - When set, console logs will be verbose
 
 ## 🧰 Command line scripts

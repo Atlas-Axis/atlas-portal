@@ -6,22 +6,22 @@
  * development and production environments.
  */
 import type { AtlasDatabaseName } from './atlas-types';
-import { ATLAS_DATABASES } from './constants';
 
 /**
  * Maps Atlas database names to their corresponding Notion database IDs
+ * NOTE: Keys use string literals instead of ATLAS_DATABASES constants to avoid circular dependency
  */
 export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
-  [ATLAS_DATABASES.SCOPES]: 'ebdb403a44bd4d169ec8f9330e955247',
-  [ATLAS_DATABASES.ARTICLES]: '15e06a0d07364458a5caeb85d7b54408',
-  [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: '06d1d4fa1cc44e88a06559d4082163a8',
-  [ATLAS_DATABASES.ANNOTATIONS]: 'e147e8835a2143c38264e86b1d9b24fc',
-  [ATLAS_DATABASES.TENETS]: '7fcbad225c524dffa20cd4efb2e13b56',
-  [ATLAS_DATABASES.SCENARIOS]: '8a05694599194c3ca8c8ee1b86086837',
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'd0de59236e6d4a48a44533fa64d966ac',
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: 'effd5738033548a98ec1a7e99cbadd1d',
-  [ATLAS_DATABASES.ACTIVE_DATA]: '5b566dd732464927b8eee6e1b2ff99d9',
-  [ATLAS_DATABASES.AGENTS]: '1bbf2ff08d73808d9ce3e2122857e262',
+  Scopes: 'ebdb403a44bd4d169ec8f9330e955247',
+  Articles: '15e06a0d07364458a5caeb85d7b54408',
+  'Sections & Primary Docs': '06d1d4fa1cc44e88a06559d4082163a8',
+  Annotations: 'e147e8835a2143c38264e86b1d9b24fc',
+  Tenets: '7fcbad225c524dffa20cd4efb2e13b56',
+  Scenarios: '8a05694599194c3ca8c8ee1b86086837',
+  'Scenario Variations': 'd0de59236e6d4a48a44533fa64d966ac',
+  'Needed Research': 'effd5738033548a98ec1a7e99cbadd1d',
+  'Active Data': '5b566dd732464927b8eee6e1b2ff99d9',
+  'Agent Scope Database': '1bbf2ff08d73808d9ce3e2122857e262',
 } as const;
 
 /**

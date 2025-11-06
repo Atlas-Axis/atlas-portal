@@ -383,9 +383,19 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 ### Atlas Configuration Files
 
 - `atlas-types.ts` - Type definitions for Atlas (AtlasDatabaseName, AtlasDocumentType, etc.)
-- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files
-- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs)
+- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files. Conditionally imports Notion IDs based on environment
+- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs) for production use
+- `notion-ids-test.ts` - Empty Notion identifiers for testing environments (empty strings/arrays)
 - `type-color-map.ts` - UI color mappings for document types
+
+**Environment-based Notion ID Loading:**
+
+The `constants.ts` file conditionally imports Notion IDs from either `notion-ids.ts` (production) or `notion-ids-test.ts` (testing) based on environment:
+
+- Uses `notion-ids-test.ts` (empty IDs) when: `NODE_ENV !== 'production'` OR `USE_TEST_NOTION_IDS === 'true'`
+- Uses `notion-ids.ts` (real IDs) when: `NODE_ENV === 'production'` AND `USE_TEST_NOTION_IDS !== 'true'`
+
+This allows tests to run without requiring real Notion credentials and prevents accidental use of production IDs in development.
 
 ## Notion Database Property Mapping (`/app/server/atlas`)
 
