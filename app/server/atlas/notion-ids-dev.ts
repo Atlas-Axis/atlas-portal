@@ -1,13 +1,14 @@
 /**
- * Hard-coded Notion database IDs and other Notion-specific identifiers (TEST VERSION)
+ * Hard-coded Notion database IDs and other Notion-specific identifiers (DEVELOPMENT VERSION)
  *
- * This file contains empty/test values for all Notion-specific IDs.
- * Used in test environments to avoid requiring real Notion credentials.
+ * This file contains Notion-specific IDs for development and manual QA environments.
+ * These IDs are separate from production to prevent accidental access to production data.
+ * Unit tests use notion-ids-unit-test.ts instead.
  */
 import type { AtlasDatabaseName } from './atlas-types';
 
 /**
- * Maps Atlas database names to empty strings for testing
+ * Maps Atlas database names to their corresponding Notion database IDs for development/QA
  * NOTE: Keys use string literals instead of ATLAS_DATABASES constants to avoid circular dependency
  */
 export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {

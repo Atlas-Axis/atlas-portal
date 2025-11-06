@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -227,7 +228,7 @@ describe('sync-actions', () => {
 
   describe('createNotionDatabasePage', () => {
     it('creates page with database parent (no ancestry)', async () => {
-      const dbId = 'ebdb403a44bd4d169ec8f9330e955247'; // Scopes (root-level database)
+      const dbId = ATLAS_DATABASE_ID_MAP.Scopes; // Scopes (root-level database)
       mockNotionClient.addMockDatabase(dbId, {});
 
       const change: AtlasDocumentChange = {
@@ -258,7 +259,7 @@ describe('sync-actions', () => {
     });
 
     it('creates page after validating parent exists', async () => {
-      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs']; // Sections & Primary Docs
       mockNotionClient.addMockDatabase(dbId, {});
       mockNotionClient.addMockPage('parent-123', {});
 
@@ -333,7 +334,7 @@ describe('sync-actions', () => {
     });
 
     it('sets parent relationship for internally nested database', async () => {
-      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs']; // Sections & Primary Docs
       mockNotionClient.addMockDatabase(dbId, {});
       mockNotionClient.addMockPage('parent-section', {});
 
@@ -373,7 +374,7 @@ describe('sync-actions', () => {
     });
 
     it('does not set parent relationship when parent is in different database', async () => {
-      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs']; // Sections & Primary Docs
       mockNotionClient.addMockDatabase(dbId, {});
       mockNotionClient.addMockPage('article-parent', {}); // Parent exists but is in Articles database
 
@@ -499,7 +500,7 @@ describe('sync-actions', () => {
 
   describe('inter-database relationships', () => {
     it('creates page with inter-database parent relationship (Section under Article)', async () => {
-      const dbId = '06d1d4fa1cc44e88a06559d4082163a8'; // Sections & Primary Docs
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs']; // Sections & Primary Docs
       mockNotionClient.addMockDatabase(dbId, {});
       mockNotionClient.addMockPage('article-parent', {}); // Article parent exists in Notion
 
@@ -543,7 +544,7 @@ describe('sync-actions', () => {
     });
 
     it('creates page with inter-database parent relationship (Annotation under Section)', async () => {
-      const dbId = 'e147e8835a2143c38264e86b1d9b24fc'; // Annotations
+      const dbId = ATLAS_DATABASE_ID_MAP.Annotations; // Annotations
       mockNotionClient.addMockDatabase(dbId, {});
       mockNotionClient.addMockPage('section-parent', {}); // Section parent exists in Notion
 

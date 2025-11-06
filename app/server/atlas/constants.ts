@@ -1,3 +1,25 @@
+// export type AtlasDatabaseName = (typeof ATLAS_DATABASE_NAMES)[number];
+/**
+ * Conditionally import Notion IDs based on environment
+ *
+ * This module imports Notion-specific identifiers (database IDs, status IDs, agent UUIDs)
+ * from one of three files based on the current environment:
+ * - notion-ids.ts: Real production Notion IDs
+ * - notion-ids-dev.ts: Notion IDs for development and manual QA environments
+ * - notion-ids-unit-test.ts: Made-up UUIDs for unit tests
+ *
+ * Environment Selection Logic (in priority order):
+ * 1. Uses notion-ids-unit-test.ts (made-up UUIDs) when: running in unit tests (isTestEnv() === true)
+ * 2. Uses notion-ids-dev.ts (dev IDs) when: NODE_ENV !== 'production' OR USE_DEV_NOTION_IDS === 'true'
+ * 3. Uses notion-ids.ts (production IDs) when: NODE_ENV === 'production' AND USE_DEV_NOTION_IDS !== 'true'
+ *
+ * Benefits:
+ * - Unit tests use consistent made-up UUIDs that don't require real credentials
+ * - Development/QA uses separate IDs to prevent accidental production data access
+ * - Production uses real production Notion IDs
+ * - Allows manual override via USE_DEV_NOTION_IDS environment variable
+ */
+import { isTestEnv } from '../../shared/utils/is-test-env';
 import type {
   AtlasDatabaseID,
   AtlasDatabaseName,
@@ -5,26 +27,9 @@ import type {
   GitHubAtlasDocumentType,
   MasterStatus,
 } from './atlas-types';
-// export type AtlasDatabaseName = (typeof ATLAS_DATABASE_NAMES)[number];
-
-/**
- * Conditionally import Notion IDs based on environment
- *
- * This module imports Notion-specific identifiers (database IDs, status IDs, agent UUIDs)
- * from either the production file (notion-ids.ts) or test file (notion-ids-test.ts)
- * based on the current environment.
- *
- * Environment Selection Logic:
- * - Uses notion-ids-test.ts (empty IDs) when: NODE_ENV !== 'production' OR USE_TEST_NOTION_IDS === 'true'
- * - Uses notion-ids.ts (real IDs) when: NODE_ENV === 'production' AND USE_TEST_NOTION_IDS !== 'true'
- *
- * Benefits:
- * - Tests can run without real Notion credentials
- * - Prevents accidental use of production IDs in development
- * - Allows manual override via USE_TEST_NOTION_IDS environment variable
- */
 import * as notionIds from './notion-ids';
-import * as notionIdsTest from './notion-ids-test';
+import * as notionIdsDev from './notion-ids-dev';
+import * as notionIdsUnitTest from './notion-ids-unit-test';
 
 // Re-export types for backward compatibility
 export type { AtlasDatabaseName, AtlasDatabaseID, AtlasDocumentType, GitHubAtlasDocumentType, MasterStatus };
@@ -70,8 +75,12 @@ export const ATLAS_DATABASE_NAMES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.AGENTS,
 ] as const;
 
-const useTestIds = process.env.NODE_ENV !== 'production' || process.env.USE_TEST_NOTION_IDS === 'true';
-const selectedIds = useTestIds ? notionIdsTest : notionIds;
+// Priority order: unit tests > development/QA > production
+const selectedIds = isTestEnv()
+  ? notionIdsUnitTest
+  : process.env.NODE_ENV !== 'production' || process.env.USE_DEV_NOTION_IDS === 'true'
+    ? notionIdsDev
+    : notionIds;
 
 export const ATLAS_DATABASE_ID_MAP = selectedIds.ATLAS_DATABASE_ID_MAP;
 export const ATLAS_DATABASE_ID_MAP_REVERSED = selectedIds.ATLAS_DATABASE_ID_MAP_REVERSED;

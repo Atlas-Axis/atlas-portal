@@ -385,17 +385,28 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 - `atlas-types.ts` - Type definitions for Atlas (AtlasDatabaseName, AtlasDocumentType, etc.)
 - `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files. Conditionally imports Notion IDs based on environment
 - `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs) for production use
-- `notion-ids-test.ts` - Empty Notion identifiers for testing environments (empty strings/arrays)
+- `notion-ids-dev.ts` - Empty Notion identifiers for development and manual QA environments (empty strings/arrays)
+- `notion-ids-unit-test.ts` - Made-up UUIDs for unit tests (consistent test data)
 - `type-color-map.ts` - UI color mappings for document types
 
 **Environment-based Notion ID Loading:**
 
-The `constants.ts` file conditionally imports Notion IDs from either `notion-ids.ts` (production) or `notion-ids-test.ts` (testing) based on environment:
+The `constants.ts` file conditionally imports Notion IDs from one of three files based on environment (in priority order):
 
-- Uses `notion-ids-test.ts` (empty IDs) when: `NODE_ENV !== 'production'` OR `USE_TEST_NOTION_IDS === 'true'`
-- Uses `notion-ids.ts` (real IDs) when: `NODE_ENV === 'production'` AND `USE_TEST_NOTION_IDS !== 'true'`
+1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
+   - Provides consistent, realistic-looking UUIDs for unit tests
+   - Agent root UUIDs are properly set for tests that check agent ancestry
+2. **Development/QA**: Uses `notion-ids-dev.ts` (empty IDs) when `NODE_ENV !== 'production'` OR `USE_DEV_NOTION_IDS === 'true'`
+   - Empty strings prevent accidental access to production data during local development and manual QA
+3. **Production** (lowest priority): Uses `notion-ids.ts` (real IDs) when `NODE_ENV === 'production'` AND `USE_DEV_NOTION_IDS !== 'true'`
+   - Real Notion database and page IDs for production use
 
-This allows tests to run without requiring real Notion credentials and prevents accidental use of production IDs in development.
+This three-tier system ensures:
+
+- Unit tests use consistent made-up UUIDs that don't require real credentials
+- Development and manual QA environments use empty IDs to prevent accidental production data access
+- Production uses real Notion IDs
+- Manual override via `USE_DEV_NOTION_IDS` environment variable for forcing dev IDs in any environment
 
 ## Notion Database Property Mapping (`/app/server/atlas`)
 
