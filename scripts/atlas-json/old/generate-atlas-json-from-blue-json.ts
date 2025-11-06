@@ -25,13 +25,9 @@
  */
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import path from 'path';
+import { AtlasDatabaseName, AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
-import {
-  ATLAS_DATABASES,
-  AtlasDatabaseName,
-  AtlasDocumentType,
-  GitHubAtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { fixDocumentNumberPrefix } from '../utils';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_BLUE } from './constants';

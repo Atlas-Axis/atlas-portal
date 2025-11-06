@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import TypeChip from '../type-chip';
 
 describe('TypeChip', () => {

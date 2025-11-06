@@ -1,9 +1,5 @@
-import {
-  AGENT_ROOT_SECTION_UUIDS_MAPPED,
-  ATLAS_DATABASE_ID_MAP,
-  AtlasDatabaseName,
-  AtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
+import { AGENT_ROOT_SECTION_UUIDS_MAPPED, ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
 
 /**

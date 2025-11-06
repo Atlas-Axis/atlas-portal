@@ -1,4 +1,4 @@
-import { AtlasDatabaseName, AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/atlas-types';
 
 export interface AtlasDocumentJson {
   type: AtlasDocumentType;

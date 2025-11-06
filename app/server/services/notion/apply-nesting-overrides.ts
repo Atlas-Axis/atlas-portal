@@ -7,7 +7,7 @@
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
 import { databaseSupportsInternalNesting } from '@/app/atlas/sync/_lib/atlas-database-mapper';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionNestingBugMapping } from '../supabase/notion-nesting-bug-mappings';
 

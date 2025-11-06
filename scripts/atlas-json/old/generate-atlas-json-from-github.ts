@@ -26,9 +26,9 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { JSDOM } from 'jsdom';
 import path from 'path';
+import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 import { ATLAS_GITHUB_HTML_URL } from '@/app/server/atlas/constants';
-import { AtlasDocumentType, GitHubAtlasDocumentType } from '@/app/server/atlas/constants';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { fixDocumentNumberPrefix } from '../utils';
 import { ATLAS_JSON_OUTPUT_DIR, ATLAS_JSON_OUTPUT_FILE_GITHUB } from './constants';

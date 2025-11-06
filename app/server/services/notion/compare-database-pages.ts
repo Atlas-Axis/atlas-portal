@@ -1,5 +1,5 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,

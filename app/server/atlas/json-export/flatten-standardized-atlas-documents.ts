@@ -1,4 +1,4 @@
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { traverseStandardizedDocuments } from './standardized-atlas-document-traversal';
 import {
   type ChildCollectionName,

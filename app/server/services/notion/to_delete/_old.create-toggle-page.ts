@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { BlockObjectRequest, CreatePageParameters, DatabaseObjectResponse } from '@notionhq/client';
-import { ATLAS_DATABASE_ID_MAP, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { NotionBlock } from '@/app/server/database/notion-block';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { extractSubtreePageIds } from '@/app/server/diff/extract-subtree';

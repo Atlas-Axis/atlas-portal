@@ -1,5 +1,6 @@
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
-import { ATLAS_DATABASES, AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionRichText } from '@/app/server/markdown/notion-types';
 import { applyNestingOverrides } from '@/app/server/services/notion/apply-nesting-overrides';

@@ -30,11 +30,8 @@
  *   applicable) and trim only one leading and one trailing separator blank line
  *   from the content segment, preserving author-intended whitespace.
  */
-import {
-  AGENT_ROOT_SECTION_UUIDS_MAPPED,
-  type AtlasDatabaseName,
-  type AtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { type AtlasDatabaseName, type AtlasDocumentType } from '@/app/server/atlas/atlas-types';
+import { AGENT_ROOT_SECTION_UUIDS_MAPPED } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

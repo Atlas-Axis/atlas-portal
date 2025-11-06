@@ -1,6 +1,6 @@
 import { traverseTree } from './atlas-tree-traversal';
 import { AtlasTreeNode } from './atlas-tree-types';
-import { AtlasDatabaseName } from './constants';
+import { AtlasDatabaseName } from './atlas-types';
 
 const ALLOWED_DUPLICATE_TYPES = ['Needed Research', 'Action Tenet'];
 

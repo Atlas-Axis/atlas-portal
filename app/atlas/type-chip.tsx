@@ -1,6 +1,6 @@
 'use client';
 
-import { AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 
 export default function TypeChip({ type }: { type: AtlasDocumentType }) {

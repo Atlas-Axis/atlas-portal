@@ -22,7 +22,8 @@
  */
 import { RichTextItemResponse } from '@notionhq/client';
 import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
-import { AGENT_ROOT_SECTION_UUIDS, type AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { type AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { AGENT_ROOT_SECTION_UUIDS } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

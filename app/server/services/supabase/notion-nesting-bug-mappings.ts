@@ -6,7 +6,7 @@
  *
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { supabase } from './supabase-client';
 
 export interface NotionNestingBugMapping {

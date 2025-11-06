@@ -19,7 +19,7 @@
  * Usage:
  *   npx tsx scripts/experiment4.ts
  */
-import type { AtlasDocumentType } from '@/app/server/atlas/constants';
+import type { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from './utils/load-env';
 

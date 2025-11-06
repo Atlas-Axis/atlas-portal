@@ -1,14 +1,13 @@
-import { Database } from '@/app/server/services/supabase/database.types';
+import type {
+  AtlasDatabaseID,
+  AtlasDatabaseName,
+  AtlasDocumentType,
+  GitHubAtlasDocumentType,
+  MasterStatus,
+} from './atlas-types';
 
-export type AtlasDatabaseName = Exclude<
-  Database['public']['Enums']['atlas_database_name_enum'],
-  'Type Specification' | 'Original Context Data'
->;
-
-export type AtlasDocumentType = Exclude<
-  Database['public']['Enums']['atlas_document_type_enum'],
-  'Spell SP Controller' | 'Placeholder' | 'Category'
->;
+// Re-export types for backward compatibility
+export type { AtlasDatabaseName, AtlasDatabaseID, AtlasDocumentType, GitHubAtlasDocumentType, MasterStatus };
 
 export const ATLAS_DOCUMENT_TYPES: AtlasDocumentType[] = [
   'Section',
@@ -23,20 +22,7 @@ export const ATLAS_DOCUMENT_TYPES: AtlasDocumentType[] = [
   'Scenario',
   'Scenario Variation',
   'Needed Research',
-];
-
-export type GitHubAtlasDocumentType =
-  | 'Scopes'
-  | 'Articles'
-  | 'Sections & Primary Docs'
-  | 'Type Specifications'
-  | 'Annotations'
-  | 'Tenets'
-  | 'Scenarios'
-  | 'Scenario Variations'
-  | 'Needed Research'
-  | 'Active Data'
-  | 'Agent Scope Database';
+] as const;
 
 export const ATLAS_DATABASES = {
   SCOPES: 'Scopes',
@@ -83,8 +69,6 @@ export const ATLAS_DATABASE_ID_MAP_REVERSED: Record<string, AtlasDatabaseName> =
   Object.entries(ATLAS_DATABASE_ID_MAP).map(([key, value]) => [value, key as AtlasDatabaseName]),
 );
 
-export type AtlasDatabaseID = (typeof ATLAS_DATABASE_ID_MAP)[AtlasDatabaseName];
-
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',
   PROVISIONAL: 'Provisional',
@@ -100,8 +84,6 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
   [MASTER_STATUSES.PROVISIONAL]: '3dbb9d9c-fd63-462b-99f3-1ce879f16768',
   [MASTER_STATUSES.PLACEHOLDER]: '3edf54e3-be0e-4bbb-b008-502cfc23394e',
 };
-
-export type MasterStatus = (typeof MASTER_STATUSES)[keyof typeof MASTER_STATUSES];
 
 export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
 

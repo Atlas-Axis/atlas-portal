@@ -1,4 +1,4 @@
-import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

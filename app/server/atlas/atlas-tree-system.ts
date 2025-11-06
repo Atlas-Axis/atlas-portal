@@ -32,7 +32,7 @@
  * console.log('Document numbers:', docNumbers);
  * ```
  */
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { buildAtlasTree } from './atlas-tree-builder';
 import { createValidationSummary, logValidationErrors, validateTreeIntegrity } from './atlas-tree-errors';

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { Plus, Save, Trash2 } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { isValidUUID, normalizeUUID } from '@/app/shared/utils/utils';
 import { saveMappingsAction } from './_actions/nesting-fix-actions';

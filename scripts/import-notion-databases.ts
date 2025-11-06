@@ -1,5 +1,6 @@
 import { parseArgs } from 'node:util';
-import { type AtlasDatabaseName, IMPORT_DATABASES } from '@/app/server/atlas/constants';
+import { type AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
 import { importDatabasesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';

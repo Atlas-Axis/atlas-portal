@@ -16,12 +16,8 @@
  *
  * The --delete-existing flag will archive existing test databases before creating new ones.
  */
-import {
-  ATLAS_DATABASES,
-  ATLAS_DOCUMENT_TYPES,
-  AtlasDatabaseName,
-  AtlasDocumentType,
-} from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
+import { ATLAS_DATABASES, ATLAS_DOCUMENT_TYPES } from '@/app/server/atlas/constants';
 import {
   DOCUMENT_TYPE_EXTRA_FIELDS,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,

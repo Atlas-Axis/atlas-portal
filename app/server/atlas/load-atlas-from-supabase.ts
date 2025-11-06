@@ -3,7 +3,8 @@ import {
   loadNotionDatabasePagesAtTimeFromSupabase,
   loadNotionDatabasePagesFromSupabase,
 } from '../services/supabase/load-notion-database-pages-from-supabase';
-import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES, AtlasDatabaseName } from './constants';
+import { AtlasDatabaseName } from './atlas-types';
+import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES } from './constants';
 import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
 
 type LoadAtlasOptions = {

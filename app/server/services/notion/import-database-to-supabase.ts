@@ -1,9 +1,5 @@
-import {
-  ATLAS_DATABASE_ID_MAP,
-  AtlasDatabaseID,
-  AtlasDatabaseName,
-  IMPORT_DATABASES,
-} from '@/app/server/atlas/constants';
+import { AtlasDatabaseID, AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { ATLAS_DATABASE_ID_MAP, IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { deletePagesFromSupabase } from '../supabase/delete-pages-from-supabase';

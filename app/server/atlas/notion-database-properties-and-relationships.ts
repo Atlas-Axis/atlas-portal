@@ -1,5 +1,6 @@
 import { Json, Tables } from '@/app/server/services/supabase/database.types';
-import { ATLAS_DATABASES, AtlasDatabaseName, AtlasDocumentType } from './constants';
+import { AtlasDatabaseName, AtlasDocumentType } from './atlas-types';
+import { ATLAS_DATABASES } from './constants';
 
 export interface NotionDatabasePropertyMapping {
   // TODO: Delete atlasFullDocumentTitle - in Atlas Explorer, there are only two fields: Document No and Document Name

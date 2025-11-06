@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader } from '@heroui/react';
 import { ArrowRight, FileText } from 'lucide-react';
-import { AtlasDatabaseName } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 
 /**

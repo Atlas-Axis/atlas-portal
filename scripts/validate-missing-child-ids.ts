@@ -3,7 +3,8 @@ import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 import { detectMissingChildren } from '@/app/server/atlas/atlas-tree-errors';
-import { MASTER_STATUS_ID_MAP, MasterStatus } from '@/app/server/atlas/constants';
+import { MasterStatus } from '@/app/server/atlas/atlas-types';
+import { MASTER_STATUS_ID_MAP } from '@/app/server/atlas/constants';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
@@ -153,7 +154,7 @@ async function main() {
                 .filter((name) => name !== undefined);
               const unknownIds = relationIds.filter((relId) => !masterStatusIdToName[relId]);
 
-              const allStatuses = [...statusNames];
+              const allStatuses: string[] = [...statusNames];
               if (unknownIds.length > 0) {
                 allStatuses.push(...unknownIds.map((id) => `Unknown:${id}`));
               }

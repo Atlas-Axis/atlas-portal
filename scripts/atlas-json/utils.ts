@@ -1,4 +1,4 @@
-import { AtlasDatabaseName, GitHubAtlasDocumentType } from '@/app/server/atlas/constants';
+import { AtlasDatabaseName, GitHubAtlasDocumentType } from '@/app/server/atlas/atlas-types';
 
 const CATEGORIES_REQUIRING_A_PREFIX: ReadonlyArray<GitHubAtlasDocumentType | AtlasDatabaseName> = [
   'Active Data',
