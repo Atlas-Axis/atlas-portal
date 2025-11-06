@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { Plus, Save, Trash2 } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
@@ -8,6 +8,7 @@ import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionNestingBugMapping } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { isValidUUID, normalizeUUID } from '@/app/shared/utils/utils';
 import { saveMappingsAction } from './_actions/nesting-fix-actions';
+import { UuidVerificationResult, verifyUuidAction } from './_actions/verify-uuid-action';
 import { HierarchyOverview } from './hierarchy-overview';
 
 /**
@@ -27,6 +28,13 @@ interface MappingWithId extends NotionNestingBugMapping {
   id: string; // Temporary ID for React key
 }
 
+interface VerificationState {
+  child?: UuidVerificationResult;
+  parent?: UuidVerificationResult;
+  sibling?: UuidVerificationResult;
+  siblingIsValidChild?: boolean; // true if sibling is in parent's child array
+}
+
 const DATABASES_WITH_NESTING: AtlasDatabaseName[] = ['Sections & Primary Docs', 'Agent Scope Database'];
 
 export function Content({ initialMappings }: ContentProps) {
@@ -35,6 +43,32 @@ export function Content({ initialMappings }: ContentProps) {
   );
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [verifications, setVerifications] = useState<Record<string, VerificationState>>({}); // By UUID
+
+  // Validate all UUIDs on initial load
+  useEffect(() => {
+    const validateInitialMappings = async () => {
+      for (const mapping of mappings) {
+        // Verify child UUID
+        if (mapping.child_notion_page_id && isValidUUID(mapping.child_notion_page_id)) {
+          verifyUuid(mapping.id, 'child', mapping.child_notion_page_id);
+        }
+
+        // Verify parent UUID
+        if (mapping.parent_notion_page_id && isValidUUID(mapping.parent_notion_page_id)) {
+          verifyUuid(mapping.id, 'parent', mapping.parent_notion_page_id);
+        }
+
+        // Verify sibling UUID if present
+        if (mapping.place_after_sibling_notion_page_id && isValidUUID(mapping.place_after_sibling_notion_page_id)) {
+          verifyUuid(mapping.id, 'sibling', mapping.place_after_sibling_notion_page_id);
+        }
+      }
+    };
+
+    validateInitialMappings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on mount
 
   const hasCircularDependency = (childId: string, parentId: string): boolean => {
     // Check if parentId would create a cycle by being a descendant of childId
@@ -84,6 +118,23 @@ export function Content({ initialMappings }: ContentProps) {
     value: string,
   ) => {
     setMappings(mappings.map((m) => (m.id === id ? { ...m, [field]: value } : m)));
+
+    // Clear verification for this field when value changes
+    if (['child_notion_page_id', 'parent_notion_page_id', 'place_after_sibling_notion_page_id'].includes(field)) {
+      const verificationField =
+        field === 'child_notion_page_id' ? 'child' : field === 'parent_notion_page_id' ? 'parent' : 'sibling';
+
+      setVerifications((prev) => ({
+        ...prev,
+        [id]: {
+          ...prev[id],
+          [verificationField]: undefined,
+          ...(verificationField === 'parent' || verificationField === 'sibling'
+            ? { siblingIsValidChild: undefined }
+            : {}),
+        },
+      }));
+    }
   };
 
   const handleUuidBlur = (
@@ -107,6 +158,77 @@ export function Content({ initialMappings }: ContentProps) {
 
   const deleteMapping = (id: string) => {
     setMappings(mappings.filter((m) => m.id !== id));
+  };
+
+  const verifyUuid = async (mappingId: string, field: 'child' | 'parent' | 'sibling', uuid: string) => {
+    if (!uuid || !isValidUUID(uuid)) return;
+
+    const result = await verifyUuidAction(uuid);
+
+    // Update verification and check sibling-parent relationship in a single state update
+    setVerifications((prev) => {
+      const updatedVerification = {
+        ...prev[mappingId],
+        [field]: result,
+      };
+
+      // If verifying parent or sibling, check sibling-parent relationship
+      if (field === 'parent' || field === 'sibling') {
+        const mapping = mappings.find((m) => m.id === mappingId);
+
+        if (updatedVerification.parent && updatedVerification.sibling && mapping) {
+          const childArrayField =
+            mapping.atlas_database_name === 'Sections & Primary Docs'
+              ? 'child_section_and_primary_doc_ids'
+              : 'child_agent_scope_ids';
+
+          const siblingId = mapping.place_after_sibling_notion_page_id;
+          if (siblingId) {
+            const siblingIsValid = updatedVerification.parent[childArrayField]?.includes(siblingId) ?? false;
+            updatedVerification.siblingIsValidChild = siblingIsValid;
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        [mappingId]: updatedVerification,
+      };
+    });
+  };
+
+  const getVerificationIndicator = (mappingId: string, field: 'child' | 'parent' | 'sibling'): string => {
+    const verification = verifications[mappingId]?.[field];
+
+    if (!verification) return '';
+
+    if (!verification.exists) return ' ✗';
+
+    // For sibling field, also check if it's a valid child of parent
+    if (field === 'sibling') {
+      const siblingIsValid = verifications[mappingId]?.siblingIsValidChild;
+      if (siblingIsValid === false) return ' ✗ (not a child of parent)';
+      if (siblingIsValid === true) return ' ✓';
+      return ' ✓'; // exists but relationship not checked yet
+    }
+
+    return ' ✓';
+  };
+
+  const hasVerificationFailed = (mappingId: string, field: 'child' | 'parent' | 'sibling'): boolean => {
+    const verification = verifications[mappingId]?.[field];
+
+    if (!verification) return false;
+
+    if (!verification.exists) return true;
+
+    // For sibling field, also check if relationship validation failed
+    if (field === 'sibling') {
+      const siblingIsValid = verifications[mappingId]?.siblingIsValidChild;
+      if (siblingIsValid === false) return true;
+    }
+
+    return false;
   };
 
   const validateMappings = (): { valid: boolean; errors: string[] } => {
@@ -265,11 +387,18 @@ export function Content({ initialMappings }: ContentProps) {
                             />
                             <Input
                               size="sm"
-                              label="Notion page ID"
+                              label={`Notion page ID${getVerificationIndicator(mapping.id, 'child')}`}
                               placeholder="Child UUID"
                               value={mapping.child_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'child_notion_page_id', e.target.value)}
-                              onBlur={(e) => handleUuidBlur(mapping.id, 'child_notion_page_id', e.target.value)}
+                              onBlur={(e) => {
+                                handleUuidBlur(mapping.id, 'child_notion_page_id', e.target.value);
+                                verifyUuid(mapping.id, 'child', e.target.value);
+                              }}
+                              isInvalid={hasVerificationFailed(mapping.id, 'child')}
+                              errorMessage={
+                                hasVerificationFailed(mapping.id, 'child') ? 'UUID not found in database' : ''
+                              }
                               classNames={{
                                 input: 'font-mono text-xs',
                               }}
@@ -302,11 +431,18 @@ export function Content({ initialMappings }: ContentProps) {
                             />
                             <Input
                               size="sm"
-                              label="Notion page ID"
+                              label={`Notion page ID${getVerificationIndicator(mapping.id, 'parent')}`}
                               placeholder="Parent UUID"
                               value={mapping.parent_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'parent_notion_page_id', e.target.value)}
-                              onBlur={(e) => handleUuidBlur(mapping.id, 'parent_notion_page_id', e.target.value)}
+                              onBlur={(e) => {
+                                handleUuidBlur(mapping.id, 'parent_notion_page_id', e.target.value);
+                                verifyUuid(mapping.id, 'parent', e.target.value);
+                              }}
+                              isInvalid={hasVerificationFailed(mapping.id, 'parent')}
+                              errorMessage={
+                                hasVerificationFailed(mapping.id, 'parent') ? 'UUID not found in database' : ''
+                              }
                               classNames={{
                                 input: 'font-mono text-xs',
                               }}
@@ -342,14 +478,23 @@ export function Content({ initialMappings }: ContentProps) {
                             />
                             <Input
                               size="sm"
-                              label="Notion page ID"
+                              label={`Notion page ID${getVerificationIndicator(mapping.id, 'sibling')}`}
                               placeholder="Sibling UUID (optional)"
                               value={mapping.place_after_sibling_notion_page_id || ''}
                               onChange={(e) =>
                                 updateMapping(mapping.id, 'place_after_sibling_notion_page_id', e.target.value)
                               }
-                              onBlur={(e) =>
-                                handleUuidBlur(mapping.id, 'place_after_sibling_notion_page_id', e.target.value)
+                              onBlur={(e) => {
+                                handleUuidBlur(mapping.id, 'place_after_sibling_notion_page_id', e.target.value);
+                                verifyUuid(mapping.id, 'sibling', e.target.value);
+                              }}
+                              isInvalid={hasVerificationFailed(mapping.id, 'sibling')}
+                              errorMessage={
+                                hasVerificationFailed(mapping.id, 'sibling')
+                                  ? verifications[mapping.id]?.siblingIsValidChild === false
+                                    ? 'Sibling is not a child of the parent document'
+                                    : 'UUID not found in database'
+                                  : ''
                               }
                               classNames={{
                                 input: 'font-mono text-xs',
