@@ -2339,7 +2339,9 @@ Facilitators are required to maintain a high level of operational security, adhe
 
 ### A.1.6.4 - Derecognition Required Where Facilitator Operational Security Is Compromised [Section]  <!-- UUID: c3ba34f0-b3f0-449b-b609-52548db090ea -->
 
-The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.</p><p>If there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.
+The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.
+
+If there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.
 
 #### A.1.6.4.0.4.1 - Promptly Derecognized - Mandated Timeline For Facilitator Derecognition [Action Tenet]  <!-- UUID: b8601ee2-6576-4a0a-83da-660d1b81936b -->
 

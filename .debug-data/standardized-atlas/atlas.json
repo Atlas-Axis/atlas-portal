@@ -3449,7 +3449,7 @@
             "name": "Derecognition Required Where Facilitator Operational Security Is Compromised",
             "uuid": "c3ba34f0-b3f0-449b-b609-52548db090ea",
             "last_modified": "",
-            "content": "The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.</p><p>If there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.",
+            "content": "The Core Facilitator must act swiftly to investigate a Facilitator who is suspected of breaching their requirements regarding operational security and privacy.\n\nIf there is clear evidence or significant suspicion that the operational security of a Facilitator has been compromised, or that they have failed to follow best practice or otherwise made operational security errors, the Core Facilitator must promptly derecognize the Facilitator.",
             "sections_and_primary_docs": [],
             "annotations": [],
             "tenets": [
