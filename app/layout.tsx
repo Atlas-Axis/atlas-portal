@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Atlas Axis Notion-Supabase Workflow',
+  title: 'Sky Atlas',
 };
 
 export default function RootLayout({
