@@ -26061,7 +26061,7 @@ The parameters of the Root Edit Primitive are fully specified by the Operational
 
 ########## A.6.1.1.2.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 40826926-adb2-4de3-936d-702e2d8cb3b9 -->
 
-The documents herein define the process for using the Root Edit Primitive to update the Grove Agent Artifact. Information on Grove governance that is unrelated to the use of the Root Edit Primitive is located at [A.6.1.1.2.4.1 - Governance Information Unrelated To Root Edit Primitive](c1c86e47-a7db-4080-ab1f-99ed8e4892f7).
+The documents herein define the process for using the Root Edit Primitive to update the Grove Agent Artifact. Information on Grove governance that is unrelated to the use of the Root Edit Primitive is located at [A.6.1.1.2.5.1 - Governance Information Unrelated To Root Edit Primitive](c1c86e47-a7db-4080-ab1f-99ed8e4892f7).
 
 ########### A.6.1.1.2.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: d919ea0f-f819-45f3-b065-7f2cbdba5b08 -->
 
@@ -29424,79 +29424,243 @@ The Ethereum Mainnet Instances of the Morpho Protocol with `Active` Status are s
 
 The documents herein contain the Instance Configuration Document for the Morpho Grove x Steakhouse High Yield Vault USDC Instance.
 
-####### A.6.1.1.2.3.1.1 - Instance Identifiers [Core]  <!-- UUID: 260778ff-223a-4aca-a262-cd20aafe5f49 -->
+####### A.6.1.1.2.3.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 6127e31a-798c-41eb-90d5-044d9b214d2a -->
+
+**`Pending`**
+
+####### A.6.1.1.2.3.1.2 - Parameters [Core]  <!-- UUID: 7cdf8908-1adc-421d-9c71-37d138f99b20 -->
+
+The documents herein define the parameters of the Morpho Grove x Steakhouse High Yield Vault USDC Instance of the Allocation System Primitive.
+
+######## A.6.1.1.2.3.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 260778ff-223a-4aca-a262-cd20aafe5f49 -->
 
 The documents herein define the Instance identifiers.
 
-######## A.6.1.1.2.3.1.1.1 - Network [Core]  <!-- UUID: f4e45e27-3775-46e7-9f7f-ada5fb72bc27 -->
+######### A.6.1.1.2.3.1.2.1.1 - Network [Core]  <!-- UUID: f4e45e27-3775-46e7-9f7f-ada5fb72bc27 -->
 
 Ethereum Mainnet
 
-######## A.6.1.1.2.3.1.1.2 - Target Protocol [Core]  <!-- UUID: a9e1a42f-d92b-4658-814a-2ad449de6eb5 -->
+######### A.6.1.1.2.3.1.2.1.2 - Target Protocol [Core]  <!-- UUID: a9e1a42f-d92b-4658-814a-2ad449de6eb5 -->
 
 Morpho
 
-######## A.6.1.1.2.3.1.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: a810c912-a460-4a1f-ac0d-838eb6ff2f04 -->
+######### A.6.1.1.2.3.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: a810c912-a460-4a1f-ac0d-838eb6ff2f04 -->
 
 USDC
 
-######## A.6.1.1.2.3.1.1.4 - Token [Core]  <!-- UUID: 4e19d59e-628e-4478-a986-6418879f03b2 -->
+######### A.6.1.1.2.3.1.2.1.4 - Token [Core]  <!-- UUID: 4e19d59e-628e-4478-a986-6418879f03b2 -->
 
 grove-bbqUSDC
 
-##### A.6.1.1.2.4 - Omni Documents [Core]  <!-- UUID: df257205-6b3a-4afc-bbfd-0a35c950bb87 -->
+######## A.6.1.1.2.3.1.2.2 - Contract Addresses [Core]  <!-- UUID: 94042273-29a0-4538-833b-1ea63b737db1 -->
+
+The documents herein define the Instance contract addresses.
+
+######### A.6.1.1.2.3.1.2.2.1 - Token Address [Core]  <!-- UUID: dcdff78c-809f-4ec8-80a2-36c124ca9ae8 -->
+
+`0xBEEf2B5FD3D94469b7782aeBe6364E6e6FB1B709`
+
+######### A.6.1.1.2.3.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: ff7b0875-7f6d-4b18-b609-34eec3f725a0 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+######## A.6.1.1.2.3.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 35269818-4f06-49a8-8675-f7da3f616976 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+######### A.6.1.1.2.3.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: e258f0cd-0b47-464a-bcdb-78fdfb3451a2 -->
+
+The inflow RateLimitID is: `0x82fb6a87781d1c18617960e9528d0633bfbc534f5ae8109347f10bb49a2f4f19`.
+
+######### A.6.1.1.2.3.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: a7ad7e2a-5c2e-4231-94d4-cdd14d526c1d -->
+
+**Outflow RateLimitID** _(Core)_ - The outflow RateLimitID is: `0xe668276e49fbcb8fc24c716adf328ec4602ad894aaeabc608d172aadfd5cd485`.
+
+######## A.6.1.1.2.3.1.2.4 - Rate Limits [Core]  <!-- UUID: a907ce48-a651-4cc9-a382-82e989f3ee50 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+######### A.6.1.1.2.3.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: dbb8ef9e-c2ce-43b5-b320-bae57f6cb993 -->
+
+The deposit rate limits are:
+
+• `maxAmount`: 20,000,000 USDC
+• `slope`: 20,000,000 USDC per day
+
+######### A.6.1.1.2.3.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: b4ca4845-a846-479b-aaf8-e83e73bf25f7 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: Unlimited
+
+######## A.6.1.1.2.3.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 1ab38f81-28f4-4262-8529-37ef7d43e087 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+######### A.6.1.1.2.3.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 9583419b-b97c-45d5-9581-fad0b5c656b0 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+########## A.6.1.1.2.3.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 3e4fc425-6b44-408b-b90e-f408d1920636 -->
+
+The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
+
+########## A.6.1.1.2.3.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 6caba5e6-b5b5-43a0-8f6f-9de2d2c559cd -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+####### A.6.1.1.2.3.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 9c79b4b9-8584-4414-bddf-36158d01dc20 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+##### A.6.1.1.2.4 - Securitize Tokenized AAA CLO Fund (STAC) [Core]  <!-- UUID: b05d9fc2-9a93-4f3b-b0d8-b4f77bc294ce -->
+
+The Ethereum Mainnet Instances of the Securitize Tokenized AAA CLO Fund (STAC) with `Active` Status are stored herein.
+
+###### A.6.1.1.2.4.1 - Ethereum Mainnet - Securitize Tokenized AAA CLO Fund (STAC) Instance Configuration Document [Core]  <!-- UUID: a0c4fcd6-ebf9-4124-8767-cf14ab6ab397 -->
+
+The documents herein contain the Instance Configuration Document for the Securitize Tokenized AAA CLO Fund (STAC) Instance.
+
+####### A.6.1.1.2.4.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 96b8832b-b6b9-4550-b211-8df9adbf163c -->
+
+**`Pending`**
+
+####### A.6.1.1.2.4.1.2 - Parameters [Core]  <!-- UUID: 1258f424-862a-4e22-9281-658b7dcca2c5 -->
+
+The documents herein define the parameters of the Securitize Tokenized AAA CLO Fund (STAC) Instance of the Allocation System Primitive.
+
+######## A.6.1.1.2.4.1.2.1 - Instance Identifiers [Core]  <!-- UUID: a5c55b02-742c-4172-a6d0-88155fd3b73f -->
+
+The documents herein define the Instance identifiers.
+
+######### A.6.1.1.2.4.1.2.1.1 - Network [Core]  <!-- UUID: ca21487e-43e1-4fd7-a67c-7389e59bf46d -->
+
+Ethereum Mainnet
+
+######### A.6.1.1.2.4.1.2.1.2 - Target Protocol [Core]  <!-- UUID: f29e4e19-73d2-4a9b-812f-0226be26687a -->
+
+Securitize Tokenized AAA CLO Fund (STAC)
+
+######### A.6.1.1.2.4.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 5e3282b6-3920-43e8-9659-ad9d0a4f2efe -->
+
+USDC
+
+######### A.6.1.1.2.4.1.2.1.4 - Token [Core]  <!-- UUID: c448bf3a-b51d-40e9-ba3c-8bdeadad1dc2 -->
+
+STAC
+
+######## A.6.1.1.2.4.1.2.2 - Contract Addresses [Core]  <!-- UUID: 9ab65d47-267a-4be6-b298-8a636b909e13 -->
+
+The documents herein define the Instance contract addresses.
+
+######### A.6.1.1.2.4.1.2.2.1 - Token Address [Core]  <!-- UUID: b6737216-3829-40ae-b033-846080f61d34 -->
+
+`0x51C2d74017390CbBd30550179A16A1c28F7210fc`
+
+######### A.6.1.1.2.4.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 19b23b6a-f8a5-4db8-8768-88b045bab3d2 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+######## A.6.1.1.2.4.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: dd63b171-c94f-4082-8719-24870cb173c1 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+######### A.6.1.1.2.4.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: ae0239af-eed4-40d6-8d21-c53bda72249d -->
+
+The inflow RateLimitID is: `0x01ccccb0233955b3de85eca4dcc78aaf2aa6da1cf048b496e85a91396c2feab6`.
+
+######### A.6.1.1.2.4.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: d451d2b1-70ea-458a-b2bb-dde38d29e9c0 -->
+
+The outflow RateLimitID is: `0xcbb4d6e874245392c78f0f249b7dc876e5462bb0dce135a6e5c4cc21d774390b`.
+
+######## A.6.1.1.2.4.1.2.4 - Rate Limits [Core]  <!-- UUID: fd676948-7b31-4f11-b4b0-933226a193e7 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+######### A.6.1.1.2.4.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: ee33b709-1239-44c3-9c94-4211433877c4 -->
+
+The deposit rate limits are:
+
+• `maxAmount`: 50,000,000 USDC
+• `slope`: 50,000,000 USDC per day
+
+######### A.6.1.1.2.4.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 3cafebb2-cf4d-4830-9787-1c2d7d7da030 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: Unlimited
+
+######## A.6.1.1.2.4.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 174ba214-cfe9-4d35-83cb-3c0795e1936c -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+######### A.6.1.1.2.4.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 7f2502ce-752e-47e9-bac5-94642c9496d1 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+########## A.6.1.1.2.4.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 34735806-06ea-41cb-8e69-05ee68063194 -->
+
+The maximum allocation for all Interim Deployments in Securitize Tokenized AAA CLO Fund (STAC) is $25 million.
+
+########## A.6.1.1.2.4.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 03802a9c-89db-44ad-bf11-b8c28d402cca -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+####### A.6.1.1.2.4.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 0f3ebd6c-2b7f-4125-aea8-68e84476da06 -->
+
+##### A.6.1.1.2.5 - Omni Documents [Core]  <!-- UUID: df257205-6b3a-4afc-bbfd-0a35c950bb87 -->
 
 The documents herein define Grove’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
 
-###### A.6.1.1.2.4.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: c1c86e47-a7db-4080-ab1f-99ed8e4892f7 -->
+###### A.6.1.1.2.5.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: c1c86e47-a7db-4080-ab1f-99ed8e4892f7 -->
 
 The documents herein specify Grove governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Grove Artifact is specified in the Root Edit Primitive above at [A.6.1.1.2.2.2.2 - Root Edit Primitive](da862b9f-ca77-443a-ac56-5a287c50b4db).
 
-####### A.6.1.1.2.4.1.1 - Sky Forum [Core]  <!-- UUID: 2eaeb1d9-99ea-478d-9fba-d7410885b4e5 -->
+####### A.6.1.1.2.5.1.1 - Sky Forum [Core]  <!-- UUID: 2eaeb1d9-99ea-478d-9fba-d7410885b4e5 -->
 
 Grove uses the Sky Forum for governance-related discussion. Posts should use the “Grove Prime” category.
 
-####### A.6.1.1.2.4.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 33bf516a-c9e1-4ee0-8a09-69b1f2bb5604 -->
+####### A.6.1.1.2.5.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 33bf516a-c9e1-4ee0-8a09-69b1f2bb5604 -->
 
 The documents herein specify Grove’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Grove Artifact.
 
-####### A.6.1.1.2.4.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: 98930f9c-13eb-433c-b485-2fb0e37d0029 -->
+####### A.6.1.1.2.5.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: 98930f9c-13eb-433c-b485-2fb0e37d0029 -->
 
 The documents herein specify Grove’s emergency response protocol in situations solely impacting Grove versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Grove Artifact.
 
-###### A.6.1.1.2.4.2 - Strategic Intent [Core]  <!-- UUID: 56fec44a-f8ca-4a03-a614-2c0eb0dde262 -->
+###### A.6.1.1.2.5.2 - Strategic Intent [Core]  <!-- UUID: 56fec44a-f8ca-4a03-a614-2c0eb0dde262 -->
 
 Grove will unlock the full potential of USDS by building an institutional-grade credit platform designed to facilitate credit creation and seamlessly move yield in and out of the onchain economy. Grove's priority is to make USDS more attractive through diversified stability fee streams, more efficient rates, and greater utility, with CLOs as the first step into accessing higher yielding investment-grade credit assets. To accomplish these goals, Grove will deploy a RWA Allocation Conduit focused on traditional credit opportunities, as well as crypto-native Conduits for Morpho and Curve.
 
-####### A.6.1.1.2.4.2.1 - Collateralized Loan Obligation Strategy [Core]  <!-- UUID: 2cd87922-d450-4cc2-bce5-81c26239a015 -->
+####### A.6.1.1.2.5.2.1 - Collateralized Loan Obligation Strategy [Core]  <!-- UUID: 2cd87922-d450-4cc2-bce5-81c26239a015 -->
 
 Grove will prioritize Collateralized Loan Obligations (CLOs) as the initial pathway to provide Sky ecosystem with rapid exposure to higher yielding investment-grade credit assets, establishing a scalable model for offchain credit with onchain governance.
 
-####### A.6.1.1.2.4.2.2 - RWA Conduit [Core]  <!-- UUID: 0e6f2c26-31a2-4ce4-8ed3-2d235561e3d3 -->
+####### A.6.1.1.2.5.2.2 - RWA Conduit [Core]  <!-- UUID: 0e6f2c26-31a2-4ce4-8ed3-2d235561e3d3 -->
 
 Grove will begin with onboarding winners of the Grand Prix ([https://forum.sky.money/t/announcement-spark-tokenization-grand-prix-request-for-proposal/24631](https://forum.sky.money/t/announcement-spark-tokenization-grand-prix-request-for-proposal/24631)).
 
-####### A.6.1.1.2.4.2.3 - Institutional Credit Platform [Core]  <!-- UUID: d89b9da2-caf7-423f-9305-efcd66df62d8 -->
+####### A.6.1.1.2.5.2.3 - Institutional Credit Platform [Core]  <!-- UUID: d89b9da2-caf7-423f-9305-efcd66df62d8 -->
 
 Grove will build partnerships with leading financial institutions to scale credit opportunities. This will provide transparent insight into balance sheet allocations while delivering higher, more stable yields through diversified institutional-grade assets.
 
-####### A.6.1.1.2.4.2.4 - Crypto-Native Conduits [Core]  <!-- UUID: f1793c13-0022-4c27-a439-17ea98d2e1d1 -->
+####### A.6.1.1.2.5.2.4 - Crypto-Native Conduits [Core]  <!-- UUID: f1793c13-0022-4c27-a439-17ea98d2e1d1 -->
 
 Grove will deploy Allocation Conduits for Morpho and Curve to capture high-yield, low-risk DeFi opportunities.
 
-######## A.6.1.1.2.4.2.4.1 - Morpho Allocation Conduit [Core]  <!-- UUID: e834343d-e67a-4e8e-acde-34e0a85ea4cd -->
+######## A.6.1.1.2.5.2.4.1 - Morpho Allocation Conduit [Core]  <!-- UUID: e834343d-e67a-4e8e-acde-34e0a85ea4cd -->
 
 Grove will allocate capital to low risk collateral to take advantage of opportunities for high rates in these markets.
 
-######## A.6.1.1.2.4.2.4.2 - Curve Allocation Conduit [Core]  <!-- UUID: 9a76d9e7-b648-4a32-b097-1466902a4309 -->
+######## A.6.1.1.2.5.2.4.2 - Curve Allocation Conduit [Core]  <!-- UUID: 9a76d9e7-b648-4a32-b097-1466902a4309 -->
 
 Grove will partner with emerging stablecoins to deploy liquidity against fiat-backed stablecoins.
 
-####### A.6.1.1.2.4.2.5 - Exploratory Allocation Opportunities [Core]  <!-- UUID: e629ebcb-4588-4305-b6ef-9a568b35d554 -->
+####### A.6.1.1.2.5.2.5 - Exploratory Allocation Opportunities [Core]  <!-- UUID: e629ebcb-4588-4305-b6ef-9a568b35d554 -->
 
 Grove will consider allocations to basis trades, Pendle PTs, and other delta-neutral crypto primitives.
 
-###### A.6.1.1.2.4.3 - Projected Operational Roadmap [Core]  <!-- UUID: 156c9c72-46c9-4668-81b6-7e524e7a4bac -->
+###### A.6.1.1.2.5.3 - Projected Operational Roadmap [Core]  <!-- UUID: 156c9c72-46c9-4668-81b6-7e524e7a4bac -->
 
 Grove’s phased plan to execute its strategy includes:
 
@@ -29505,67 +29669,67 @@ Grove’s phased plan to execute its strategy includes:
 3) Develop quantitative reallocation parameters and conditions to optimize and decentralize conduit management over time; and
 4) Develop transparent insights into the allocation of the balance sheet.
 
-###### A.6.1.1.2.4.4 - Management Of Infrastructure Inherited From Sky Core [Core]  <!-- UUID: 55a72d83-1de3-401c-aef4-9bb330abb774 -->
+###### A.6.1.1.2.5.4 - Management Of Infrastructure Inherited From Sky Core [Core]  <!-- UUID: 55a72d83-1de3-401c-aef4-9bb330abb774 -->
 
 The documents herein specify Grove's strategy and operational processes for managing infrastructure inherited from Sky Core.
 
-####### A.6.1.1.2.4.4.1 - Andromeda [Core]  <!-- UUID: 631d1b05-9828-4b53-a8ab-80dccf549f05 -->
+####### A.6.1.1.2.5.4.1 - Andromeda [Core]  <!-- UUID: 631d1b05-9828-4b53-a8ab-80dccf549f05 -->
 
 Control of the Andromeda RWA Arranged Structure is currently being transitioned to Grove. Andromeda is the RWA Arranged Structure inherited from Sky Core that allocates capital into safe, short-term treasury strategies of less than one (1) year duration.
 
-######## A.6.1.1.2.4.4.1.1 - Parameters [Core]  <!-- UUID: 73f483b4-f330-49a8-a6d8-59bccb985b5d -->
+######## A.6.1.1.2.5.4.1.1 - Parameters [Core]  <!-- UUID: 73f483b4-f330-49a8-a6d8-59bccb985b5d -->
 
 The parameters of Andromeda are defined in [A.3.3.2.7.2.1 - Andromeda](1b153f9f-7c70-4ae1-b76c-ef12f87532c6).
 
-######## A.6.1.1.2.4.4.1.2 - Operational Process Definition [Core]  <!-- UUID: 62b93c99-8a06-4dad-a95e-96029cb5372a -->
+######## A.6.1.1.2.5.4.1.2 - Operational Process Definition [Core]  <!-- UUID: 62b93c99-8a06-4dad-a95e-96029cb5372a -->
 
 The documents herein define the process for the ongoing management of Andromeda. Future iterations of the Artifact will specify operational processes owned by Grove.
 
-######## A.6.1.1.2.4.4.1.3 - Data Repository [Core]  <!-- UUID: e16c9799-7be7-4482-a954-6b8fbf873fbb -->
+######## A.6.1.1.2.5.4.1.3 - Data Repository [Core]  <!-- UUID: e16c9799-7be7-4482-a954-6b8fbf873fbb -->
 
 The documents herein contain data relevant to Andromeda.
 
-####### A.6.1.1.2.4.4.2 - Lite Peg Stability Module [Core]  <!-- UUID: beb54246-6454-4716-a381-be605560cba5 -->
+####### A.6.1.1.2.5.4.2 - Lite Peg Stability Module [Core]  <!-- UUID: beb54246-6454-4716-a381-be605560cba5 -->
 
 Control of the Lite PSM is currently being transitioned to Grove.
 
-######## A.6.1.1.2.4.4.2.1 - Parameters [Core]  <!-- UUID: d83f190a-99d6-4f8c-8502-d3e7e917816d -->
+######## A.6.1.1.2.5.4.2.1 - Parameters [Core]  <!-- UUID: d83f190a-99d6-4f8c-8502-d3e7e917816d -->
 
 The parameters of the Lite PSM are defined in the Sky Core Atlas.
 
-######## A.6.1.1.2.4.4.2.2 - Operational Process Definition [Core]  <!-- UUID: b935a218-b921-41b3-aaac-3203c2ca3b84 -->
+######## A.6.1.1.2.5.4.2.2 - Operational Process Definition [Core]  <!-- UUID: b935a218-b921-41b3-aaac-3203c2ca3b84 -->
 
 The transfer of ongoing management of the Lite PSM is specified in Ecosystem Accord 2, see [A.2.9.2.2 - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
-######### A.6.1.1.2.4.4.2.2.1 - Parameter Modification [Core]  <!-- UUID: f22bc9ce-cd9c-4f20-957f-1591b50abad0 -->
+######### A.6.1.1.2.5.4.2.2.1 - Parameter Modification [Core]  <!-- UUID: f22bc9ce-cd9c-4f20-957f-1591b50abad0 -->
 
 Sky Core Facilitators currently own the process for modifying the parameters of the Lite PSM, which process is defined in the Sky Core Atlas. This process is currently being transitioned over to Grove.
 
-######## A.6.1.1.2.4.4.2.3 - Data Repository [Core]  <!-- UUID: 165fc3f7-39cf-4f4e-ae94-6460263b8a71 -->
+######## A.6.1.1.2.5.4.2.3 - Data Repository [Core]  <!-- UUID: 165fc3f7-39cf-4f4e-ae94-6460263b8a71 -->
 
 The documents herein contain data relevant to the Lite PSM.
 
-###### A.6.1.1.2.4.5 - Ecosystem Accords [Core]  <!-- UUID: 8b3829dd-fb87-4b08-b1dc-224d7c993ee4 -->
+###### A.6.1.1.2.5.5 - Ecosystem Accords [Core]  <!-- UUID: 8b3829dd-fb87-4b08-b1dc-224d7c993ee4 -->
 
 Grove has formally agreed to the Ecosystem Accords herein.
 
-####### A.6.1.1.2.4.5.1 - Ecosystem Accord 1 [Core]  <!-- UUID: 867b3512-2c21-41e2-81c2-3a442c441a14 -->
+####### A.6.1.1.2.5.5.1 - Ecosystem Accord 1 [Core]  <!-- UUID: 867b3512-2c21-41e2-81c2-3a442c441a14 -->
 
 Grove engaged in terms of agreement with the Spark Agent in Ecosystem Accord 1, located in [A.2.9.2.1 - Ecosystem Accord 1: Grove And Spark Agents](9ca40096-937e-431e-af50-9ecd50c0d0a8).
 
-####### A.6.1.1.2.4.5.2 - Ecosystem Accord 2 [Core]  <!-- UUID: dfa20b2f-e803-47f7-95fa-4e457816ae69 -->
+####### A.6.1.1.2.5.5.2 - Ecosystem Accord 2 [Core]  <!-- UUID: dfa20b2f-e803-47f7-95fa-4e457816ae69 -->
 
 Grove engaged in terms of agreement with Sky, Moonbow and the Spark Agent in Ecosystem Accord 2, located in [A.2.9.2.2 - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
-###### A.6.1.1.2.4.6 - DAO Resolutions [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
+###### A.6.1.1.2.5.6 - DAO Resolutions [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
 
 Grove has formally agreed to the DAO Resolutions recorded herein.
 
-####### A.6.1.1.2.4.6.1 - Onboard To FalconX [Core]  <!-- UUID: 287ca9e6-e807-4565-a48d-83805be94b92 -->
+####### A.6.1.1.2.5.6.1 - Onboard To FalconX [Core]  <!-- UUID: 287ca9e6-e807-4565-a48d-83805be94b92 -->
 
 On October 16, 2025, Grove agreed to a DAO Resolution authorizing Grove Foundation and Bamboo Grove Ltd to onboard to FalconX. See [https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola](https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola).
 
-####### A.6.1.1.2.4.6.2 - Onboard With Ethena [Core]  <!-- UUID: 9629b16e-4f11-49bc-80be-6c85d711716c -->
+####### A.6.1.1.2.5.6.2 - Onboard With Ethena [Core]  <!-- UUID: 9629b16e-4f11-49bc-80be-6c85d711716c -->
 
 On October 23, 2025, Grove agreed to a DAO Resolution authorizing Bamboo Grove to onboard with Ethena. See [https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q](https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q). The DAO Resolution makes reference to a Deed Poll that is approved as part of the DAO Resolution. See [https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24](https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24).
 
