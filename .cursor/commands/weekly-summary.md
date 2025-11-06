@@ -1,1 +1,2 @@
-Review the Git log from the last week and prepare a clear, detailed work log for my manager, emphasizing the main tasks completed. Keep it simple and easy to understand for someone without a technical background.
+Review the Git log from the last week and prepare a clear, detailed work log for my manager, emphasizing the main tasks completed. Keep it simple and easy to understand for someone without a technical background. Group new features, changes, and bug fixes by project (e.g. Atlas Portal, Markdown to Notion Sync (`/atlas/sync` page), Notion importer, Atlas validator, Notion nesting bug fix, Code / Infrastructure Maintenance, Documentation, Other automations, Unit tests, Other...).
+Don't mention the commits about exported Markdown/JSON/YAML files
