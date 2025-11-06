@@ -380,6 +380,13 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 - `generate-proposal.ts` - Will generate human-readable diffs
 - Canonical document titles (e.g., "A.2.3.21") represent hierarchical position
 
+### Atlas Configuration Files
+
+- `atlas-types.ts` - Type definitions for Atlas (AtlasDatabaseName, AtlasDocumentType, etc.)
+- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files
+- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs)
+- `type-color-map.ts` - UI color mappings for document types
+
 ## Notion Database Property Mapping (`/app/server/atlas`)
 
 - `notion-database-properties-and-relationships.ts` - Maps Notion database page properties to Supabase fields
