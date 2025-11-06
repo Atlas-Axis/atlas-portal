@@ -1,5 +1,5 @@
 import { Json, Tables } from '@/app/server/services/supabase/database.types';
-import { ATLAS_DATABASES, AtlasDatabaseName } from './constants';
+import { ATLAS_DATABASES, AtlasDatabaseName, AtlasDocumentType } from './constants';
 
 export interface NotionDatabasePropertyMapping {
   // TODO: Delete atlasFullDocumentTitle - in Atlas Explorer, there are only two fields: Document No and Document Name
@@ -39,7 +39,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   AtlasDatabaseName,
   {
     properties: NotionDatabasePropertyMapping;
-    childRelationships: Partial<Record<AtlasDatabaseName, string>>;
+    childRelationships: Partial<Record<AtlasDatabaseName, string>>; // The name of the relationship property in this database that links to the child database. There may be more than one child relationships.
     parentRelationships: Partial<Record<AtlasDatabaseName, string>>; // The name of the relationship property in this database that links to the parent database. There may be more than one parent relationships.
     parentPropertyName?: string;
     // subItemsPropertyName?: string;
@@ -340,6 +340,30 @@ export const NEEDED_RESEARCH_PROPERTY_MAPPING = {
   needed_research_content: 'Content', // Rich Text
 } as const;
 export type NeededResearchExtraFields = ExtraFieldsFromMapping<typeof NEEDED_RESEARCH_PROPERTY_MAPPING>;
+
+/**
+ * Mapping of document types to their extra field property mappings.
+ *
+ * This is a centralized registry that maps each Atlas document type that has extra fields
+ * to its corresponding property mapping constant. This allows any part of the codebase
+ * to dynamically look up which extra fields exist for a given document type.
+ *
+ * Usage example:
+ * ```typescript
+ * const extraFields = DOCUMENT_TYPE_EXTRA_FIELDS['Type Specification'];
+ * // Returns TYPE_SPECIFICATION_PROPERTY_MAPPING
+ * ```
+ *
+ * To add support for a new document type with extra fields:
+ * 1. Create a new property mapping constant (e.g., NEW_TYPE_PROPERTY_MAPPING)
+ * 2. Add an entry here mapping the document type to that constant
+ */
+export const DOCUMENT_TYPE_EXTRA_FIELDS: Partial<Record<AtlasDocumentType, Record<string, string>>> = {
+  'Type Specification': TYPE_SPECIFICATION_PROPERTY_MAPPING,
+  Scenario: SCENARIO_PROPERTY_MAPPING,
+  'Scenario Variation': SCENARIO_VARIATION_PROPERTY_MAPPING,
+  'Needed Research': NEEDED_RESEARCH_PROPERTY_MAPPING,
+};
 
 /**
  * Notion Property Type Overrides per Document Type

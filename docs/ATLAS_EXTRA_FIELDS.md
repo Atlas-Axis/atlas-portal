@@ -36,6 +36,21 @@ When syncing from Markdown to Notion, the system uses these property types to fo
 
 Currently, four Atlas document types have extra fields: Type Specification, Scenario, Scenario Variation, and Needed Research.
 
+### Centralized Registry
+
+The `DOCUMENT_TYPE_EXTRA_FIELDS` constant in `notion-database-properties-and-relationships.ts` serves as a centralized registry mapping each document type to its extra field property mapping:
+
+```typescript
+export const DOCUMENT_TYPE_EXTRA_FIELDS: Partial<Record<AtlasDocumentType, Record<string, string>>> = {
+  'Type Specification': TYPE_SPECIFICATION_PROPERTY_MAPPING,
+  Scenario: SCENARIO_PROPERTY_MAPPING,
+  'Scenario Variation': SCENARIO_VARIATION_PROPERTY_MAPPING,
+  'Needed Research': NEEDED_RESEARCH_PROPERTY_MAPPING,
+};
+```
+
+This allows any part of the codebase to dynamically discover which document types have extra fields and what those fields are, without hardcoding type-specific logic.
+
 ### 1. Type Specification
 
 **Interface**: `TypeSpecificationExtraFields`
@@ -254,6 +269,7 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 - `app/server/atlas/notion-database-properties-and-relationships.ts`
   - Defines all extra field types (derived from property mappings via `ExtraFieldsFromMapping` utility type)
   - Defines property mappings (Supabase field → Notion property name)
+  - **Defines `DOCUMENT_TYPE_EXTRA_FIELDS`** - centralized registry mapping document types to their property mappings
   - Central source of truth for extra fields
   - The `ExtraFieldsFromMapping<T>` utility type automatically generates type definitions from property mappings, ensuring all fields have `string | null` values
 
@@ -308,15 +324,17 @@ Currently, four Atlas document types have extra fields: Type Specification, Scen
 To add a new extra field to an existing document type:
 
 1. **Update property mapping** in `notion-database-properties-and-relationships.ts`
-   - Add mapping entry: `field_name: 'Notion Property Name'`
+   - Add mapping entry to the property mapping constant: `field_name: 'Notion Property Name'`
    - Add property type override if not Rich Text (Select, Number, etc.)
    - The type definition will automatically update thanks to `ExtraFieldsFromMapping<T>`
+   - **No need to update `DOCUMENT_TYPE_EXTRA_FIELDS`** - it already references the property mapping constant
 
 2. **Update extraction function** in `convert-notion-pages-to-supabase-format.ts`
    - Add field to initialization object: `field_name: { plain_text: null, rich_text: null }`
    - The loop will automatically extract it using `extractRichTextFromProperty()`
 
 3. **All other systems automatically adapt** because they iterate over the mappings dynamically
+   - `DOCUMENT_TYPE_EXTRA_FIELDS` automatically includes the new field
    - Change detection compares both plain_text and rich_text
    - Export converts rich_text to markdown strings
    - UI displays markdown-formatted content
@@ -325,17 +343,20 @@ To add a new extra field to an existing document type:
 
 1. Define property mapping constant in `notion-database-properties-and-relationships.ts` (using `as const`)
 2. Define type using `ExtraFieldsFromMapping<typeof YOUR_PROPERTY_MAPPING>`
-3. Add extraction function in `convert-notion-pages-to-supabase-format.ts`
-4. Add comparison function in `compare-database-pages.ts`
-5. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
-6. Add case in `pickExtraFields()` in `atlas-node-tree-to-standardized-atlas-node-tree.ts`
-7. **Add `...pickExtraFields(node)` spread** in document type's case in `atlasNodeToStandardized()` function
-8. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
-9. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
-10. Add to `extraFieldsByDocumentType` in `json-export/types.ts`
-11. Add validation case in `validate-standardized-atlas-tree.ts`
-12. Add case in UI components (`page-extra-data.tsx`, `content-tree.tsx`, `sync/page.tsx`)
-13. Add unit test in `atlas-node-tree-to-standardized-atlas-node-tree.test.ts`
+3. **Add entry to `DOCUMENT_TYPE_EXTRA_FIELDS`** mapping the document type to your property mapping constant
+4. Add extraction function in `convert-notion-pages-to-supabase-format.ts`
+5. Add comparison function in `compare-database-pages.ts`
+6. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
+7. Add case in `pickExtraFields()` in `atlas-node-tree-to-standardized-atlas-node-tree.ts`
+8. **Add `...pickExtraFields(node)` spread** in document type's case in `atlasNodeToStandardized()` function
+9. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
+10. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
+11. Add to `extraFieldsByDocumentType` in `json-export/types.ts`
+12. Add validation case in `validate-standardized-atlas-tree.ts`
+13. Add case in UI components (`page-extra-data.tsx`, `content-tree.tsx`, `sync/page.tsx`)
+14. Add unit test in `atlas-node-tree-to-standardized-atlas-node-tree.test.ts`
+
+**Note**: Step 3 (updating `DOCUMENT_TYPE_EXTRA_FIELDS`) enables automatic discovery of extra fields across the codebase, allowing data-driven code to work without hardcoded type checks (e.g., the test database creation script).
 
 ## Testing Extra Fields
 
