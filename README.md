@@ -356,17 +356,19 @@ The `constants.ts` file conditionally imports Notion IDs from one of three files
 1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
    - Provides consistent, realistic-looking UUIDs for unit tests
    - Agent root UUIDs are properly set for tests that check agent ancestry
-2. **Development/QA**: Uses `notion-ids-dev.ts` when `NODE_ENV !== 'production'` OR `USE_DEV_NOTION_IDS === 'true'`
+2. **Development/QA**: Uses `notion-ids-dev.ts` when `USE_DEV_NOTION_IDS === 'true'`
    - Separate dev/QA IDs prevent accidental access to production data during local development and manual QA
-3. **Production** (lowest priority): Uses `notion-ids.ts` (real IDs) when `NODE_ENV === 'production'` AND `USE_DEV_NOTION_IDS !== 'true'`
+   - Must be explicitly set to 'true' to enable
+3. **Production** (lowest priority, default): Uses `notion-ids.ts` (real IDs) when `USE_DEV_NOTION_IDS !== 'true'`
    - Real Notion database and page IDs for production use
+   - This is the default when USE_DEV_NOTION_IDS is not set or set to any value other than 'true'
 
 This three-tier system ensures:
 
 - Unit tests use consistent made-up UUIDs that don't require real credentials
-- Development and manual QA environments use separate IDs to prevent accidental production data access
-- Production uses real production Notion IDs
-- Manual override via `USE_DEV_NOTION_IDS` environment variable for forcing dev IDs in any environment
+- Development and manual QA environments use separate IDs when explicitly opted-in via `USE_DEV_NOTION_IDS='true'`
+- Production uses real production Notion IDs by default (safe default)
+- Explicit control via `USE_DEV_NOTION_IDS` environment variable
 
 ### Notion Database Property Mapping (`/app/server/atlas`)
 
@@ -520,8 +522,7 @@ This project maintains **2 synchronized documentation files** that provide high-
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_API_KEY` - Your Supabase API key
 - `TRIGGER_SECRET_KEY` - Trigger.dev secret key (for background jobs)
-- `NODE_ENV` - Either 'development' (for `npm run dev`) or 'production' (for `npm run build`). Controls which Notion IDs are loaded (production uses production IDs, non-production uses dev IDs)
-- `USE_DEV_NOTION_IDS` - When set to `'true'`, forces the use of dev Notion IDs regardless of `NODE_ENV` (useful for manual QA in any environment)
+- `USE_DEV_NOTION_IDS` - When set to `'true'`, uses dev Notion IDs instead of production IDs. Defaults to `false` (production IDs) when not set. Useful for development and manual QA to prevent accidental production data access
 - `DEBUG_LOGGING` - When set, console logs will be verbose
 
 ## 🧰 Command line scripts
