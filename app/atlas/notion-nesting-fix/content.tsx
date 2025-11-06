@@ -64,21 +64,33 @@ export function Content({ initialMappings }: ContentProps) {
       child_notion_page_id: '',
       parent_notion_page_id: '',
       atlas_database_name: database,
-      child_label: '',
-      parent_label: '',
+      child_label: undefined,
+      parent_label: undefined,
+      place_after_sibling_notion_page_id: undefined,
+      place_after_sibling_label: undefined,
     };
     setMappings([...mappings, newMapping]);
   };
 
   const updateMapping = (
     id: string,
-    field: 'child_notion_page_id' | 'parent_notion_page_id' | 'child_label' | 'parent_label',
+    field:
+      | 'child_notion_page_id'
+      | 'parent_notion_page_id'
+      | 'child_label'
+      | 'parent_label'
+      | 'place_after_sibling_notion_page_id'
+      | 'place_after_sibling_label',
     value: string,
   ) => {
     setMappings(mappings.map((m) => (m.id === id ? { ...m, [field]: value } : m)));
   };
 
-  const handleUuidBlur = (id: string, field: 'child_notion_page_id' | 'parent_notion_page_id', value: string) => {
+  const handleUuidBlur = (
+    id: string,
+    field: 'child_notion_page_id' | 'parent_notion_page_id' | 'place_after_sibling_notion_page_id',
+    value: string,
+  ) => {
     // Skip empty values
     if (!value.trim()) return;
 
@@ -117,6 +129,13 @@ export function Content({ initialMappings }: ContentProps) {
         errors.push(`Invalid parent UUID format in "${atlas_database_name}": ${parent_notion_page_id}`);
       }
 
+      // Validate sibling UUID format if provided (optional field)
+      if (mapping.place_after_sibling_notion_page_id && !isValidUUID(mapping.place_after_sibling_notion_page_id)) {
+        errors.push(
+          `Invalid sibling UUID format in "${atlas_database_name}": ${mapping.place_after_sibling_notion_page_id}`,
+        );
+      }
+
       // Check for circular dependencies
       if (hasCircularDependency(child_notion_page_id, parent_notion_page_id)) {
         errors.push(
@@ -146,8 +165,30 @@ export function Content({ initialMappings }: ContentProps) {
     setIsSaving(true);
 
     try {
-      // Remove temporary IDs before saving
-      const mappingsToSave = mappings.map(({ id, ...rest }) => rest);
+      // Remove temporary IDs and clean up empty optional fields before saving
+      const mappingsToSave = mappings.map(({ id, ...rest }) => {
+        const cleaned: NotionNestingBugMapping = {
+          child_notion_page_id: rest.child_notion_page_id,
+          parent_notion_page_id: rest.parent_notion_page_id,
+          atlas_database_name: rest.atlas_database_name,
+        };
+
+        // Only include optional fields if they have non-empty values
+        if (rest.child_label?.trim()) {
+          cleaned.child_label = rest.child_label.trim();
+        }
+        if (rest.parent_label?.trim()) {
+          cleaned.parent_label = rest.parent_label.trim();
+        }
+        if (rest.place_after_sibling_notion_page_id?.trim()) {
+          cleaned.place_after_sibling_notion_page_id = rest.place_after_sibling_notion_page_id.trim();
+        }
+        if (rest.place_after_sibling_label?.trim()) {
+          cleaned.place_after_sibling_label = rest.place_after_sibling_label.trim();
+        }
+
+        return cleaned;
+      });
       const result = await saveMappingsAction(mappingsToSave);
 
       if (result.success) {
@@ -196,7 +237,7 @@ export function Content({ initialMappings }: ContentProps) {
                   {databaseMappings.map((mapping) => (
                     <Card key={mapping.id} className="border border-slate-200 shadow-sm">
                       <CardBody className="gap-4 p-4">
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                           <div>
                             <div className="mb-1 flex items-center gap-2">
                               <label className="text-xs font-medium text-slate-600">Child Document</label>
@@ -266,6 +307,50 @@ export function Content({ initialMappings }: ContentProps) {
                               value={mapping.parent_notion_page_id}
                               onChange={(e) => updateMapping(mapping.id, 'parent_notion_page_id', e.target.value)}
                               onBlur={(e) => handleUuidBlur(mapping.id, 'parent_notion_page_id', e.target.value)}
+                              classNames={{
+                                input: 'font-mono text-xs',
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <div className="mb-1 flex items-center gap-2">
+                              <label className="text-xs font-medium text-slate-600">
+                                Place After Sibling <span className="text-slate-400">(optional)</span>
+                              </label>
+                              {mapping.place_after_sibling_notion_page_id &&
+                                isValidUUID(mapping.place_after_sibling_notion_page_id) && (
+                                  <a
+                                    href={`https://www.notion.so/${mapping.place_after_sibling_notion_page_id.replace(/-/g, '')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 transition-colors hover:text-blue-800"
+                                    title="Open in Notion"
+                                  >
+                                    <ExternalLink size={14} />
+                                  </a>
+                                )}
+                            </div>
+                            <Input
+                              size="sm"
+                              label="Label"
+                              value={mapping.place_after_sibling_label || ''}
+                              onChange={(e) => updateMapping(mapping.id, 'place_after_sibling_label', e.target.value)}
+                              classNames={{
+                                input: 'text-sm font-medium',
+                              }}
+                              className="mb-2"
+                            />
+                            <Input
+                              size="sm"
+                              label="Notion page ID"
+                              placeholder="Sibling UUID (optional)"
+                              value={mapping.place_after_sibling_notion_page_id || ''}
+                              onChange={(e) =>
+                                updateMapping(mapping.id, 'place_after_sibling_notion_page_id', e.target.value)
+                              }
+                              onBlur={(e) =>
+                                handleUuidBlur(mapping.id, 'place_after_sibling_notion_page_id', e.target.value)
+                              }
                               classNames={{
                                 input: 'font-mono text-xs',
                               }}

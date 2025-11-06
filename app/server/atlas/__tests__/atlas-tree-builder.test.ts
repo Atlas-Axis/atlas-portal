@@ -1637,5 +1637,178 @@ describe('Document Numbering', () => {
       expect(builtAgentCore2.agentScopeDocs).toHaveLength(1);
       expect(builtAgentCore2.agentScopeDocs[0].notion_page_id).toBe('agent-core-3');
     });
+
+    it('should respect place_after_sibling_notion_page_id when applying overrides', async () => {
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+
+      // Create parent section with 3 children
+      const parentSection = makeBasePage('Section', {
+        notion_page_id: 'section-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Parent Section',
+        child_section_and_primary_doc_ids: ['core-1', 'core-2', 'core-3'],
+      });
+
+      const coreChild1 = makeBasePage('Core', {
+        notion_page_id: 'core-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 1',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const coreChild2 = makeBasePage('Core', {
+        notion_page_id: 'core-2',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 2',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const coreChild3 = makeBasePage('Core', {
+        notion_page_id: 'core-3',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 3',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      // Create new child that should be inserted after core-2
+      const coreChild4 = makeBasePage('Core', {
+        notion_page_id: 'core-4',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 4',
+        parent_notion_page_id: null, // Currently not under correct parent
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+        child_section_and_primary_doc_ids: ['section-1'],
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        'Sections & Primary Docs': [parentSection, coreChild1, coreChild2, coreChild3, coreChild4],
+        Articles: [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Mock nesting mappings: move core-4 to section-1, placed after core-2
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([
+        {
+          child_notion_page_id: 'core-4',
+          parent_notion_page_id: 'section-1',
+          atlas_database_name: 'Sections & Primary Docs',
+          place_after_sibling_notion_page_id: 'core-2',
+        },
+      ]);
+
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      // Verify the override was applied with correct positioning
+      expect(result.scopeTrees).toHaveLength(1);
+      const builtScope = result.scopeTrees[0];
+      expect(builtScope.sectionsAndPrimaryDocs).toHaveLength(1);
+      const builtSection = builtScope.sectionsAndPrimaryDocs[0];
+
+      // Section should have 4 children in order: core-1, core-2, core-4, core-3
+      expect(builtSection.sectionsAndPrimaryDocs).toHaveLength(4);
+      const childIds = builtSection.sectionsAndPrimaryDocs.map((c) => c.notion_page_id);
+      expect(childIds).toEqual(['core-1', 'core-2', 'core-4', 'core-3']);
+    });
+
+    it('should place child at end when sibling not found', async () => {
+      const { loadNotionNestingFixMappings } = await import(
+        '@/app/server/services/supabase/notion-nesting-bug-mappings'
+      );
+
+      const parentSection = makeBasePage('Section', {
+        notion_page_id: 'section-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Parent Section',
+        child_section_and_primary_doc_ids: ['core-1', 'core-2'],
+      });
+
+      const coreChild1 = makeBasePage('Core', {
+        notion_page_id: 'core-1',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 1',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const coreChild2 = makeBasePage('Core', {
+        notion_page_id: 'core-2',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 2',
+        parent_notion_page_id: 'section-1',
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const coreChild3 = makeBasePage('Core', {
+        notion_page_id: 'core-3',
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Core 3',
+        parent_notion_page_id: null,
+        child_section_and_primary_doc_ids: [],
+      });
+
+      const scope = makeBasePage('Scope', {
+        notion_page_id: 'scope-1',
+        atlas_database_name: 'Scopes',
+        plain_text_name: 'Test Scope',
+        child_section_and_primary_doc_ids: ['section-1'],
+      });
+
+      const pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>> = {
+        Scopes: [scope],
+        'Sections & Primary Docs': [parentSection, coreChild1, coreChild2, coreChild3],
+        Articles: [],
+        Annotations: [],
+        Tenets: [],
+        Scenarios: [],
+        'Scenario Variations': [],
+        'Active Data': [],
+        'Agent Scope Database': [],
+        'Needed Research': [],
+      };
+
+      // Mock nesting mappings: move core-3 to section-1, but specify invalid sibling
+      vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([
+        {
+          child_notion_page_id: 'core-3',
+          parent_notion_page_id: 'section-1',
+          atlas_database_name: 'Sections & Primary Docs',
+          place_after_sibling_notion_page_id: 'invalid-sibling-id', // Non-existent sibling
+        },
+      ]);
+
+      // Spy on console.warn to verify warning is logged
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      // Verify warning was logged
+      expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('Sibling invalid-sibling-id not found'));
+
+      // Verify child was placed at end
+      const builtSection = result.scopeTrees[0].sectionsAndPrimaryDocs[0];
+      expect(builtSection.sectionsAndPrimaryDocs).toHaveLength(3);
+      const childIds = builtSection.sectionsAndPrimaryDocs.map((c) => c.notion_page_id);
+      expect(childIds).toEqual(['core-1', 'core-2', 'core-3']); // core-3 at end
+
+      consoleWarnSpy.mockRestore();
+    });
   });
 });

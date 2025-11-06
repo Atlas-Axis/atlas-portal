@@ -230,6 +230,8 @@ export type Database = {
           child_notion_page_id: string;
           parent_label: string | null;
           parent_notion_page_id: string;
+          place_after_sibling_label: string | null;
+          place_after_sibling_notion_page_id: string | null;
         };
         Insert: {
           atlas_database_name: Database['public']['Enums']['atlas_database_name_enum'];
@@ -237,6 +239,8 @@ export type Database = {
           child_notion_page_id: string;
           parent_label?: string | null;
           parent_notion_page_id: string;
+          place_after_sibling_label?: string | null;
+          place_after_sibling_notion_page_id?: string | null;
         };
         Update: {
           atlas_database_name?: Database['public']['Enums']['atlas_database_name_enum'];
@@ -244,6 +248,8 @@ export type Database = {
           child_notion_page_id?: string;
           parent_label?: string | null;
           parent_notion_page_id?: string;
+          place_after_sibling_label?: string | null;
+          place_after_sibling_notion_page_id?: string | null;
         };
         Relationships: [];
       };

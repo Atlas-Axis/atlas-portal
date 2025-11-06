@@ -60,6 +60,15 @@ export function HierarchyOverview({ mappings }: HierarchyOverviewProps) {
                         {mapping.child_label || <span className="text-slate-400 italic">Unlabeled</span>}
                       </span>
                     </div>
+                    {/* Sibling positioning info - if specified */}
+                    {(mapping.place_after_sibling_label || mapping.place_after_sibling_notion_page_id) && (
+                      <div className="flex items-center gap-2 pl-12 text-slate-500">
+                        <span className="text-xs italic">
+                          ↳ Placed after:{' '}
+                          {mapping.place_after_sibling_label || <span className="text-slate-400">Unlabeled</span>}
+                        </span>
+                      </div>
+                    )}
                     {/* Separator between mappings (except last one) */}
                     {index < databaseMappings.length - 1 && <div className="my-3 border-t border-slate-100" />}
                   </div>

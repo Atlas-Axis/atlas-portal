@@ -15,6 +15,8 @@ export interface NotionNestingBugMapping {
   atlas_database_name: AtlasDatabaseName;
   child_label?: string;
   parent_label?: string;
+  place_after_sibling_notion_page_id?: string;
+  place_after_sibling_label?: string;
 }
 
 /**
@@ -23,7 +25,9 @@ export interface NotionNestingBugMapping {
 export async function loadNotionNestingFixMappings(): Promise<NotionNestingBugMapping[]> {
   const { data, error } = await supabase()
     .from('notion_nesting_bug_mapping')
-    .select('child_notion_page_id, parent_notion_page_id, atlas_database_name, child_label, parent_label')
+    .select(
+      'child_notion_page_id, parent_notion_page_id, atlas_database_name, child_label, parent_label, place_after_sibling_notion_page_id, place_after_sibling_label',
+    )
     .order('atlas_database_name', { ascending: true });
 
   if (error) {

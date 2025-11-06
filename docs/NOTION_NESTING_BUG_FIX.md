@@ -26,6 +26,10 @@ Mappings are stored in the `notion_nesting_bug_mapping` table:
 - `child_notion_page_id`: UUID of the child document
 - `parent_notion_page_id`: UUID of the correct parent document
 - `atlas_database_name`: Which Atlas database this mapping applies to
+- `place_after_sibling_notion_page_id` (optional): UUID of the sibling document after which the child should be positioned
+- `place_after_sibling_label` (optional): Human-readable label for the sibling document
+- `child_label` (optional): Human-readable label for the child document
+- `parent_label` (optional): Human-readable label for the parent document
 
 ### 2. User Interface
 
@@ -33,15 +37,17 @@ Navigate to `/atlas/notion-nesting-fix` to:
 
 - View existing mappings grouped by database
 - Add new mappings by entering child and parent UUIDs
+- Optionally specify sibling positioning (place child after a specific sibling)
+- Add human-readable labels for documents
 - See document names automatically (looked up from Supabase)
 - Delete incorrect mappings
 - Save all changes
 
 **Validation includes:**
 
-- UUID format checking
+- UUID format checking (for child, parent, and optional sibling)
 - Circular dependency prevention (A→B→A)
-- Empty field detection
+- Empty field detection (child and parent required, sibling optional)
 
 ### 3. Tree Building Integration
 
@@ -52,6 +58,11 @@ During Atlas tree building (`buildAtlasTree`):
    - Finds the child in the appropriate `child_*_ids` array
    - Removes it from the current (incorrect) parent
    - Adds it to the correct parent specified in the mapping
+   - If `place_after_sibling_notion_page_id` is specified:
+     - Finds the sibling in the parent's child array
+     - Inserts the child immediately after the sibling
+     - If sibling not found, logs a warning and places child at end
+   - If no sibling specified, places child at end of parent's child array
 3. Tree is built using the corrected relationships
 4. Original Supabase data remains unchanged
 
@@ -94,6 +105,8 @@ Mappings modify these relationship arrays based on database:
 
 ## Example Scenario
 
+### Basic Example
+
 **Problem**: Core document "A.1.1.1.1.1.1.1" (deeply nested) appears at root level instead of under parent "A.1.1.1.1.1.1"
 
 **Solution**:
@@ -103,3 +116,20 @@ Mappings modify these relationship arrays based on database:
 3. Create mapping in UI with database = "Sections & Primary Docs"
 4. Save and re-import
 5. Child now appears under correct parent with relationship stored in `child_section_and_primary_doc_ids`
+
+### Example with Sibling Positioning
+
+**Problem**: Core document "A.1.1.1.3" should be placed after "A.1.1.1.1" but before "A.1.1.1.2" under parent Section "A.1.1.1"
+
+**Solution**:
+
+1. Get child UUID: `aaa11111-e89b-12d3-a456-426614174000`
+2. Get parent UUID: `bbb22222-51a2-43d7-8901-234567890abc`
+3. Get sibling UUID (A.1.1.1.1): `ccc33333-e89b-12d3-a456-426614174000`
+4. Create mapping in UI:
+   - Database: "Sections & Primary Docs"
+   - Child: `aaa11111-e89b-12d3-a456-426614174000`
+   - Parent: `bbb22222-51a2-43d7-8901-234567890abc`
+   - Place After Sibling: `ccc33333-e89b-12d3-a456-426614174000`
+5. Save and re-import
+6. Child is now inserted after A.1.1.1.1 in the parent's child list

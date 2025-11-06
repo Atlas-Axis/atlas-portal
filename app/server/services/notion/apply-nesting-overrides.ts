@@ -81,8 +81,28 @@ export function applyNestingOverrides(
     const newParentChildArray = newParentPage[childArrayField];
     const existingArray = Array.isArray(newParentChildArray) ? newParentChildArray : [];
     if (!existingArray.includes(childId)) {
-      newParentPage[childArrayField] = [...existingArray, childId];
-      console.log(`  ✓ Added ${childId} to new parent ${newParentId}`);
+      // Check if we need to place the child after a specific sibling
+      if (mapping.place_after_sibling_notion_page_id) {
+        const siblingId = mapping.place_after_sibling_notion_page_id;
+        const siblingIndex = existingArray.indexOf(siblingId);
+
+        if (siblingIndex !== -1) {
+          // Insert after the sibling
+          const newArray = [...existingArray];
+          newArray.splice(siblingIndex + 1, 0, childId);
+          newParentPage[childArrayField] = newArray;
+          console.log(`  ✓ Added ${childId} to new parent ${newParentId} after sibling ${siblingId}`);
+        } else {
+          // Sibling not found, place at end with warning
+          console.warn(`  ⚠ Sibling ${siblingId} not found in parent ${newParentId}, placing child ${childId} at end`);
+          newParentPage[childArrayField] = [...existingArray, childId];
+          console.log(`  ✓ Added ${childId} to new parent ${newParentId} (at end)`);
+        }
+      } else {
+        // No sibling specified, place at end
+        newParentPage[childArrayField] = [...existingArray, childId];
+        console.log(`  ✓ Added ${childId} to new parent ${newParentId}`);
+      }
     } else {
       console.log(`  ℹ Child ${childId} already in new parent ${newParentId}`);
     }
