@@ -424,9 +424,17 @@ async function addRelationshipProperties(databaseMappings: DatabaseMapping[]) {
         continue;
       }
 
-      // Check if this is a two-way relationship (target has parent relationship back)
-      const targetConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[targetDbName as AtlasDatabaseName];
-      const inverseName: string | undefined = targetConfig?.parentRelationships?.[mapping.name];
+      // Determine the inverse relationship name
+      let inverseName: string | undefined;
+
+      if (targetDbName === mapping.name) {
+        // Same-database relationship: use parentPropertyName as the inverse
+        inverseName = config.parentPropertyName;
+      } else {
+        // Inter-database relationship: look up the inverse in target's parentRelationships
+        const targetConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[targetDbName as AtlasDatabaseName];
+        inverseName = targetConfig?.parentRelationships?.[mapping.name];
+      }
 
       relationshipsToAdd.push({
         propertyName,
@@ -540,10 +548,28 @@ function displayManualStepReminder(databaseMappings: DatabaseMapping[]) {
   console.log('You must manually enable the "Sub-item" feature in Notion for these databases:');
   console.log();
 
+  console.log('Steps to enable Sub-item feature:');
+  console.log('  1. Click the URL below to open the database in Notion');
+  console.log('  2. Click on Settings above the property names to open the menu for the view options');
+  console.log('  3. Look for "More Settings" and select "Sub-items" option and enable it');
+  console.log('  4. Open the view settings again.');
+  console.log(
+    '     In the Sub-items settings, to to Advanced Settings, and set the "Property" value to the value shown below',
+  );
+  console.log('     (This links the Sub-item feature to the correct relationship property)');
+  console.log('  5. Repeat for both databases');
+  console.log();
+  console.log('This manual step is required to activate in-database relationships (parent-child).');
+  console.log('Without this, the "Subdocs"/"Sub-item" and "Parent Doc"/"Parent item" properties');
+  console.log('will not work correctly.');
+  console.log('='.repeat(80));
+  console.log();
+
   if (sectionsDb) {
     const url = `https://notion.so/${sectionsDb.databaseId.replace(/-/g, '')}`;
     console.log(`1. ${sectionsDb.testName}`);
     console.log(`   ${url}`);
+    console.log(`   → Set "Property" value to: "Subdocs"`);
     console.log();
   }
 
@@ -551,13 +577,9 @@ function displayManualStepReminder(databaseMappings: DatabaseMapping[]) {
     const url = `https://notion.so/${agentsDb.databaseId.replace(/-/g, '')}`;
     console.log(`2. ${agentsDb.testName}`);
     console.log(`   ${url}`);
+    console.log(`   → Set "Property" value to: "Sub-item"`);
     console.log();
   }
-
-  console.log('This manual step is required to activate in-database relationships (parent-child).');
-  console.log('Without this, the "Subdocs" and "Parent Doc" / "Sub-item" relationships will not work.');
-  console.log('='.repeat(80));
-  console.log();
 }
 
 // Execute main function
