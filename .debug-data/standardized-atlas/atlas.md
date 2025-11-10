@@ -1782,10 +1782,11 @@ The Active Data is updated as follows:
 
 ####### A.1.4.9.2.1.2.0.6.1 - List of Formally Warned Alignment Conservers [Active Data]  <!-- UUID: beb9ed67-660b-4ac5-84fe-a5644df957ac -->
 
-| Date | Conserver Role | Identity | Known Aliases | Reasoning Post | |------------|----------------|-----------------------|---------------|-----------------------------------------------------------------------------------------------------------------|   
-| 2023-06-08 | AVC Member | HKUST_EPI_BLOCKCHAIN | - | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) |   
-| 2024-04-06 | AVC Member | ACRE DAOs | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) |  
-| 2025-08-15 | Aligned Delegate | SkyStaking | - | [https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9](https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9) |
+| Date       | Conserver Role    | Identity               | Known Aliases | Reasoning Post                                                                                                    |  
+|------------|--------------------|------------------------|---------------|-------------------------------------------------------------------------------------------------------------------|  
+| 2023-06-08 | AVC Member         | HKUST_EPI_BLOCKCHAIN   | -             | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099)                     |  
+| 2024-04-06 | AVC Member         | ACRE DAOs              | -             | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043)                 |  
+| 2025-08-15 | Aligned Delegate   | SkyStaking             | -             | [https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9](https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9)                            |
 
 ###### A.1.4.9.2.1.0.4.1 - Adjudication Guidelines to be applied to a second misaligned act or a first misaligned act that is not mild [Action Tenet]  <!-- UUID: 98407e43-d462-4aae-b0b4-89e110a6152c -->
 
@@ -1891,7 +1892,17 @@ The Active Data is updated as follows:
 
 ##### A.1.4.10.2.0.6.1 - Derecognized Alignment Conservers [Active Data]  <!-- UUID: e7aec672-ed19-4329-aaf7-736950be2eb7 -->
 
-| Date | Conserver Role | Identity | Known Aliases | Reasoning Post | |------------|----------------|------------|---------------|-----------------------------------------------------------------------------------------------------------------| | 2023-06-08 | AD | Bulwark | - | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) | | 2023-10-30 | AD | PALC | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-10-30 | AD | Navigator | - | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) | | 2023-02-02 | AD | 0xDefensor | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619) | | 2024-04-06 | AD | TRUE NAME | - | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) | | 2024-12-17 | AD | UPMaker | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | QGov | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Skynet | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) | | 2024-12-17 | AD | Pf | - | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |
+| Date       | Conserver Role | Identity   | Known Aliases | Reasoning Post |  
+|------------|----------------|------------|---------------|----------------|  
+| 2023-06-08 | AD             | Bulwark    | -             | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099) |  
+| 2023-10-30 | AD             | PALC       | -             | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) |  
+| 2023-10-30 | AD             | Navigator  | -             | [https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532](https://forum.sky.money/t/ads-derecognition-due-to-operational-security-breach/22532) |  
+| 2023-02-02 | AD             | 0xDefensor | -             | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-02-02-2024/23619) |  
+| 2024-04-06 | AD             | TRUE NAME  | -             | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043) |  
+| 2024-12-17 | AD             | UPMaker    | -             | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |  
+| 2024-12-17 | AD             | QGov       | -             | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |  
+| 2024-12-17 | AD             | Skynet     | -             | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |  
+| 2024-12-17 | AD             | Pf         | -             | [https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718](https://forum.sky.money/t/derecognition-notice-for-multiple-aligned-delegates/25718) |
 
 #### NR-9 - Derecognition Uncertainty Due To Anonymous Actors [Needed Research]  <!-- UUID: 69e4df9f-d2f3-4fd2-9add-e1314a0a5eb3 -->
 
@@ -1985,9 +1996,19 @@ The Active Data is updated as follows:
 
 ##### A.1.5.1.4.0.6.1 - Current Aligned Delegates [Active Data]  <!-- UUID: 5f584db8-f8d8-4118-988c-b2bc3f68ceb7 -->
 
-`| Delegate Name | EA Address | Delegation Contract | Forum Post || --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- || Bonapublica | `[`https://etherscan.io/address/0x167c1a762B08D7e78dbF8f24e5C3f1Ab415021D3`](https://etherscan.io/address/0x167c1a762B08D7e78dbF8f24e5C3f1Ab415021D3)` `[`https://etherscan.io/verifySig/21271`](https://etherscan.io/verifySig/21271)` | `[`https://etherscan.io/address/0xFc48fBcA739079aaB08216C4d5E506B96593753d`](https://etherscan.io/address/0xFc48fBcA739079aaB08216C4d5E506B96593753d)` `[`https://etherscan.io/verifySig/273145`](https://etherscan.io/verifySig/273145)` | `[`https://forum.sky.money/t/bonapublica-aligned-delegate-communication/20451/90`](https://forum.sky.money/t/bonapublica-aligned-delegate-communication/20451/90)` || PBG | `[`https://etherscan.io/address/0x8D4df847dB7FfE0B46AF084fE031F7691C6478c2`](https://etherscan.io/address/0x8D4df847dB7FfE0B46AF084fE031F7691C6478c2)` `[`https://etherscan.io/verifySig/16773`](https://etherscan.io/verifySig/16773)` | `[`https://etherscan.io/address/0x555230eCa835A808518EC3eA3082F05502BAb850`](https://etherscan.io/address/0x555230eCa835A808518EC3eA3082F05502BAb850)` `[`https://etherscan.io/verifySig/273499`](https://etherscan.io/verifySig/273499)` | `[`https://forum.sky.money/t/pbg-aligned-delegate-communication-platform/20471/69`](https://forum.sky.money/t/pbg-aligned-delegate-communication-platform/20471/69)` || WBC | `[`https://etherscan.io/address/0xeBcE83e491947aDB1396Ee7E55d3c81414fB0D47`](https://etherscan.io/address/0xeBcE83e491947aDB1396Ee7E55d3c81414fB0D47)` `[`https://etherscan.io/verifySig/17927`](https://etherscan.io/verifySig/17927)` | `[`https://etherscan.io/address/0x4beD44A9839B8778F69bB6A6d9F843414377ae90`](https://etherscan.io/address/0x4beD44A9839B8778F69bB6A6d9F843414377ae90)` `[`https://etherscan.io/verifySig/273394`](https://etherscan.io/verifySig/273394)` | `[`https://forum.sky.money/t/wbc-aligned-delegate-communications/20828`](https://forum.sky.money/t/wbc-aligned-delegate-communications/20828)` || BLUE | `[`https://etherscan.io/address/0xb6C09680D822F162449cdFB8248a7D3FC26Ec9Bf`](https://etherscan.io/address/0xb6C09680D822F162449cdFB8248a7D3FC26Ec9Bf)` `[`https://etherscan.io/verifySig/19057`](https://etherscan.io/verifySig/19057)` | `[`https://etherscan.io/address/0x173a1c04B79Ed9266721c1154dAa29AddC0B9558`](https://etherscan.io/address/0x173a1c04B79Ed9266721c1154dAa29AddC0B9558)` `[`https://etherscan.io/verifySig/273235`](https://etherscan.io/verifySig/273235)` | `[`https://forum.sky.money/t/blue-ad-recognition-submission/20915`](https://forum.sky.money/t/blue-ad-recognition-submission/20915)` || Cloaky | `[`https://etherscan.io/address/0x9244F47D70587Fa2329B89B6f503022b63Ad54A5`](https://etherscan.io/address/0x9244F47D70587Fa2329B89B6f503022b63Ad54A5)` `[`https://etherscan.io/verifySig/19712`](https://etherscan.io/verifySig/19712)` | `[`https://etherscan.io/address/0x0F23dE72e1581857eacD6308aebb69cF3a49CC86`](https://etherscan.io/address/0x0F23dE72e1581857eacD6308aebb69cF3a49CC86)` `[`https://etherscan.io/verifySig/273233`](https://etherscan.io/verifySig/273233)` | `[`https://forum.sky.money/t/cloaky-ad-recognition-submission/21082`](https://forum.sky.money/t/cloaky-ad-recognition-submission/21082)` || AegisD | `[`https://etherscan.io/address/0x78C180CF113Fe4845C325f44648b6567BC79d6E0`](https://etherscan.io/address/0x78C180CF113Fe4845C325f44648b6567BC79d6E0)` `[`https://etherscan.io/verifySig/269032`](https://etherscan.io/verifySig/269032)` | `[`https://etherscan.io/address/0xd260762E442ea1893E5eD5E7d28984e19aaFbF5e`](https://etherscan.io/address/0xd260762E442ea1893E5eD5E7d28984e19aaFbF5e)` `[`https://etherscan.io/verifySig/273523`](https://etherscan.io/verifySig/273523)` | `[`https://forum.sky.money/t/aegisd-ad-recognition-submission/26145`](https://forum.sky.money/t/aegisd-ad-recognition-submission/26145)` || Excel | `[`https://etherscan.io/address/0x0F04a22B62A26e25A29Cba5a595623038ef7AcE7`](https://etherscan.io/address/0x0F04a22B62A26e25A29Cba5a595623038ef7AcE7)` `[`https://etherscan.io/verifySig/269574`](https://etherscan.io/verifySig/269574)` | `[`https://etherscan.io/address/0xeAD02D18529C10EeDD995F760FDf5e380DDf3Da6`](https://etherscan.io/address/0xeAD02D18529C10EeDD995F760FDf5e380DDf3Da6)` `[`https://etherscan.io/verifySig/273466`](https://etherscan.io/verifySig/273466)` | `[`https://forum.sky.money/t/excel-ad-recognition-submission/26227`](https://forum.sky.money/t/excel-ad-recognition-submission/26227)` || Tango | `[`https://etherscan.io/address/0xB2B86A130B1EC101e4Aed9a88502E08995760307`](https://etherscan.io/address/0xB2B86A130B1EC101e4Aed9a88502E08995760307)` `[`https://etherscan.io/verifySig/272368`](https://etherscan.io/verifySig/272368)` | `[`https://etherscan.io/address/0x550E5EC00B9d26a3517ce772DdFE73e8Ed1672Ad`](https://etherscan.io/address/0x550E5EC00B9d26a3517ce772DdFE73e8Ed1672Ad)` `[`https://etherscan.io/verifySig/274142`](https://etherscan.io/verifySig/274142)` | `[`https://forum.sky.money/t/tango-ad-recognition-submission/26310`](https://forum.sky.money/t/tango-ad-recognition-submission/26310)` || Max Staking Yield | `[`https://etherscan.io/address/0x9746bDaB7ab2609247332324400cc1fbE887095C`](https://etherscan.io/address/0x9746bDaB7ab2609247332324400cc1fbE887095C)` `[`https://etherscan.io/verifySig/273846`](https://etherscan.io/verifySig/273846)` | `[`https://etherscan.io/address/0xFf7615E05EC1C8D5dED24AB50Bf74432666BEE2f`](https://etherscan.io/address/0xFf7615E05EC1C8D5dED24AB50Bf74432666BEE2f)` `[`https://etherscan.io/verifySig/273847`](https://etherscan.io/verifySig/273847)` | `[`https://forum.sky.money/t/max-staking-yield-ad-recognition-submission/26462`](https://forum.sky.money/t/max-staking-yield-ad-recognition-submission/26462)` || Sky Staking | `[`https://etherscan.io/address/0x05c73AE49fF0ec654496bF4008d73274a919cB5C`](https://etherscan.io/address/0x05c73AE49fF0ec654496bF4008d73274a919cB5C)` `[`https://etherscan.io/verifySig/275148`](https://etherscan.io/verifySig/275148)` | `[`https://etherscan.io/address/0xE01684B17dF0aBBdAf97839277b194bE4E1A7E79`](https://etherscan.io/address/0xE01684B17dF0aBBdAf97839277b194bE4E1A7E79)` `[`https://etherscan.io/verifySig/273489`](https://etherscan.io/verifySig/273489)` | `[`https://forum.sky.money/t/sky-staking-recognition-submission/26443`](https://forum.sky.money/t/sky-staking-recognition-submission/26443)` || Kuzmich |   
-`[`https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92 `](https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92)[`https://etherscan.io/verifySig/275839`](https://etherscan.io/verifySig/275839)` |   
-`[`https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C `](https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C)[`https://etherscan.io/verifySig/275837`](https://etherscan.io/verifySig/275837)` | `[`https://forum.sky.money/t/ad-recognition-submission/26743`](https://forum.sky.money/t/ad-recognition-submission/26743)` |`
+| Delegate Name      | EA Address                                                                                                                                     | Delegation Contract                                                                                                                                | Forum Post                                                                 |  
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|  
+| Bonapublica        | [https://etherscan.io/address/0x167c1a762B08D7e78dbF8f24e5C3f1Ab415021D3](https://etherscan.io/address/0x167c1a762B08D7e78dbF8f24e5C3f1Ab415021D3) [https://etherscan.io/verifySig/21271](https://etherscan.io/verifySig/21271)                                   | [https://etherscan.io/address/0xFc48fBcA739079aaB08216C4d5E506B96593753d](https://etherscan.io/address/0xFc48fBcA739079aaB08216C4d5E506B96593753d) [https://etherscan.io/verifySig/273145](https://etherscan.io/verifySig/273145)                                      | [https://forum.sky.money/t/bonapublica-aligned-delegate-communication/20451/90](https://forum.sky.money/t/bonapublica-aligned-delegate-communication/20451/90) |  
+| PBG                | [https://etherscan.io/address/0x8D4df847dB7FfE0B46AF084fE031F7691C6478c2](https://etherscan.io/address/0x8D4df847dB7FfE0B46AF084fE031F7691C6478c2) [https://etherscan.io/verifySig/16773](https://etherscan.io/verifySig/16773)                                  | [https://etherscan.io/address/0x555230eCa835A808518EC3eA3082F05502BAb850](https://etherscan.io/address/0x555230eCa835A808518EC3eA3082F05502BAb850) [https://etherscan.io/verifySig/273499](https://etherscan.io/verifySig/273499)                                      | [https://forum.sky.money/t/pbg-aligned-delegate-communication-platform/20471/69](https://forum.sky.money/t/pbg-aligned-delegate-communication-platform/20471/69) |  
+| WBC                | [https://etherscan.io/address/0xeBcE83e491947aDB1396Ee7E55d3c81414fB0D47](https://etherscan.io/address/0xeBcE83e491947aDB1396Ee7E55d3c81414fB0D47) [https://etherscan.io/verifySig/17927](https://etherscan.io/verifySig/17927)                                  | [https://etherscan.io/address/0x4beD44A9839B8778F69bB6A6d9F843414377ae90](https://etherscan.io/address/0x4beD44A9839B8778F69bB6A6d9F843414377ae90) [https://etherscan.io/verifySig/273394](https://etherscan.io/verifySig/273394)                                      | [https://forum.sky.money/t/wbc-aligned-delegate-communications/20828](https://forum.sky.money/t/wbc-aligned-delegate-communications/20828)       |  
+| BLUE               | [https://etherscan.io/address/0xb6C09680D822F162449cdFB8248a7D3FC26Ec9Bf](https://etherscan.io/address/0xb6C09680D822F162449cdFB8248a7D3FC26Ec9Bf) [https://etherscan.io/verifySig/19057](https://etherscan.io/verifySig/19057)                                  | [https://etherscan.io/address/0x173a1c04B79Ed9266721c1154dAa29AddC0B9558](https://etherscan.io/address/0x173a1c04B79Ed9266721c1154dAa29AddC0B9558) [https://etherscan.io/verifySig/273235](https://etherscan.io/verifySig/273235)                                      | [https://forum.sky.money/t/blue-ad-recognition-submission/20915](https://forum.sky.money/t/blue-ad-recognition-submission/20915)            |  
+| Cloaky             | [https://etherscan.io/address/0x9244F47D70587Fa2329B89B6f503022b63Ad54A5](https://etherscan.io/address/0x9244F47D70587Fa2329B89B6f503022b63Ad54A5) [https://etherscan.io/verifySig/19712](https://etherscan.io/verifySig/19712)                                  | [https://etherscan.io/address/0x0F23dE72e1581857eacD6308aebb69cF3a49CC86](https://etherscan.io/address/0x0F23dE72e1581857eacD6308aebb69cF3a49CC86) [https://etherscan.io/verifySig/273233](https://etherscan.io/verifySig/273233)                                      | [https://forum.sky.money/t/cloaky-ad-recognition-submission/21082](https://forum.sky.money/t/cloaky-ad-recognition-submission/21082)          |  
+| AegisD             | [https://etherscan.io/address/0x78C180CF113Fe4845C325f44648b6567BC79d6E0](https://etherscan.io/address/0x78C180CF113Fe4845C325f44648b6567BC79d6E0) [https://etherscan.io/verifySig/269032](https://etherscan.io/verifySig/269032)                                 | [https://etherscan.io/address/0xd260762E442ea1893E5eD5E7d28984e19aaFbF5e](https://etherscan.io/address/0xd260762E442ea1893E5eD5E7d28984e19aaFbF5e) [https://etherscan.io/verifySig/273523](https://etherscan.io/verifySig/273523)                                      | [https://forum.sky.money/t/aegisd-ad-recognition-submission/26145](https://forum.sky.money/t/aegisd-ad-recognition-submission/26145)          |  
+| Excel              | [https://etherscan.io/address/0x0F04a22B62A26e25A29Cba5a595623038ef7AcE7](https://etherscan.io/address/0x0F04a22B62A26e25A29Cba5a595623038ef7AcE7) [https://etherscan.io/verifySig/269574](https://etherscan.io/verifySig/269574)                                 | [https://etherscan.io/address/0xeAD02D18529C10EeDD995F760FDf5e380DDf3Da6](https://etherscan.io/address/0xeAD02D18529C10EeDD995F760FDf5e380DDf3Da6) [https://etherscan.io/verifySig/273466](https://etherscan.io/verifySig/273466)                                      | [https://forum.sky.money/t/excel-ad-recognition-submission/26227](https://forum.sky.money/t/excel-ad-recognition-submission/26227)           |  
+| Tango              | [https://etherscan.io/address/0xB2B86A130B1EC101e4Aed9a88502E08995760307](https://etherscan.io/address/0xB2B86A130B1EC101e4Aed9a88502E08995760307) [https://etherscan.io/verifySig/272368](https://etherscan.io/verifySig/272368)                                 | [https://etherscan.io/address/0x550E5EC00B9d26a3517ce772DdFE73e8Ed1672Ad](https://etherscan.io/address/0x550E5EC00B9d26a3517ce772DdFE73e8Ed1672Ad) [https://etherscan.io/verifySig/274142](https://etherscan.io/verifySig/274142)                                      | [https://forum.sky.money/t/tango-ad-recognition-submission/26310](https://forum.sky.money/t/tango-ad-recognition-submission/26310)           |  
+| Max Staking Yield  | [https://etherscan.io/address/0x9746bDaB7ab2609247332324400cc1fbE887095C](https://etherscan.io/address/0x9746bDaB7ab2609247332324400cc1fbE887095C) [https://etherscan.io/verifySig/273846](https://etherscan.io/verifySig/273846)                                 | [https://etherscan.io/address/0xFf7615E05EC1C8D5dED24AB50Bf74432666BEE2f](https://etherscan.io/address/0xFf7615E05EC1C8D5dED24AB50Bf74432666BEE2f) [https://etherscan.io/verifySig/273847](https://etherscan.io/verifySig/273847)                                      | [https://forum.sky.money/t/max-staking-yield-ad-recognition-submission/26462](https://forum.sky.money/t/max-staking-yield-ad-recognition-submission/26462) |  
+| Sky Staking        | [https://etherscan.io/address/0x05c73AE49fF0ec654496bF4008d73274a919cB5C](https://etherscan.io/address/0x05c73AE49fF0ec654496bF4008d73274a919cB5C) [https://etherscan.io/verifySig/275148](https://etherscan.io/verifySig/275148)                                 | [https://etherscan.io/address/0xE01684B17dF0aBBdAf97839277b194bE4E1A7E79](https://etherscan.io/address/0xE01684B17dF0aBBdAf97839277b194bE4E1A7E79) [https://etherscan.io/verifySig/273489](https://etherscan.io/verifySig/273489)                                      | [https://forum.sky.money/t/sky-staking-recognition-submission/26443](https://forum.sky.money/t/sky-staking-recognition-submission/26443)        |  
+| Kuzmich            | [https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92](https://etherscan.io/address/0x2847540606a790E5083d0D63470fAb01344c8e92) [https://etherscan.io/verifySig/275839](https://etherscan.io/verifySig/275839)                                 | [https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C](https://etherscan.io/address/0x2C89024c13A80bC1B662A3dB990524652C15221C) [https://etherscan.io/verifySig/275837](https://etherscan.io/verifySig/275837)                                      | [https://forum.sky.money/t/ad-recognition-submission/26743](https://forum.sky.money/t/ad-recognition-submission/26743)                 |
 
 ### A.1.5.2 - In General [Section]  <!-- UUID: 4e9e5868-92ea-486a-b30c-01391a027ba1 -->
 
@@ -4655,7 +4676,7 @@ The risk opened up by this functionality is malicious action by whitelisted oper
 
 ###### A.1.9.3.2.10.3 - stUSDS Bounded External Access Module Exception [Core]  <!-- UUID: 5ce20b57-b8bb-4a67-b5b6-a28b707e2cb2 -->
 
-The stUSDS Bounded External Access Module (stUSDS BEAM) manages the parameters of the stUSDS system. Whitelisted operators can use the stUSDS BEAM to modify certain stUSDS parameters without waiting for the GSM Pause Delay. The stUSDS BEAM modifies stUSDS parameters within specified ranges. See [A.4.4.1.2.8 - stUSDS Bounded External Access Module](37f8f82e-7239-4cfb-8f95-d2cc40515cd9). 
+The stUSDS Bounded External Access Module (stUSDS BEAM) manages the parameters of the stUSDS system. Whitelisted operators can use the stUSDS BEAM to modify certain stUSDS parameters without waiting for the GSM Pause Delay. The stUSDS BEAM modifies stUSDS parameters within specified ranges. See [A.4.4.1.3.8 - stUSDS Bounded External Access Module](37f8f82e-7239-4cfb-8f95-d2cc40515cd9). 
 
 This functionality allows the Sky Protocol to update stUSDS parameters more quickly than waiting for an Executive Vote and the GSM Pause Delay.
 
@@ -4713,11 +4734,157 @@ The Facilitators must take into consideration the benefits and costs with using 
 
 The process to utilize the Linear Interpolation Module to adjust a parameter must follow the same governance process required to modify the designated parameter. If the parameter can be updated directly through an Executive Vote, then utilizing the Linear Interpolation Module to adjust it may also be included directly in an Executive Vote. If modifying the parameter requires a prior Governance Poll, then utilizing the Linear Interpolation Module for that parameter must also be preceded by a Governance Poll.
 
+##### A.1.9.3.2.14 - Ethereum LayerZero Freezer Multisig [Core]  <!-- UUID: b7820ec3-dbe5-43bc-99b9-c7168c53c8fe -->
+
+The Ethereum LayerZero Freezer Multisig (see[A.1.9.4.1.3.1.1 - Ethereum LayerZero Freezer Multisig](21fa6749-6209-4280-9b5f-b2a73d400421)) can freeze LayerZero bridges deployed in the Sky Ecosystem without the need for inclusion in a Spell through the standard Executive Vote process.
+
+Each action executed by the multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum. Such actions include activating or disabling the freeze function.
+
+##### A.1.9.3.2.15 - Solana LayerZero Freezer Multisig [Core]  <!-- UUID: 82aaec1b-acac-4ed4-8e03-2d8f29ba5ccb -->
+
+The Solana LayerZero Freezer Multisig (see[A.1.9.4.1.3.1.2 - Solana LayerZero Freezer Multisig](8e618196-257a-49d8-834d-665dba345fcd)) can freeze the Solana LayerZero bridge without the need for inclusion in a Spell through the standard Executive Vote process.
+
+Each action executed by the multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum. Such actions include activating or disabling the freeze function.
+
 ### A.1.9.4 - Governance Security Culture And Research [Section]  <!-- UUID: 19222532-1ce1-4306-8129-ea95a982c247 -->
 
 This Section must define processes to cultivate and maintain a strong security culture within the Sky Ecosystem. This Section must implement continuous research and integration of best practices to ensure that the Ecosystem’s security remains effective and up-to-date.
 
-#### A.1.9.4.1 - Spark Agent [Core]  <!-- UUID: fe525e67-1142-4312-bab7-bd9549747f77 -->
+#### A.1.9.4.1 - Solana LayerZero Bridge [Core]  <!-- UUID: 56593663-55e5-45d5-8682-5eede11aa14a -->
+
+Sky uses a LayerZero bridge to securely move assets between Ethereum Mainnet and Solana, as well as to provide governance controls for Sky-issued tokens on Solana. Additional details regarding the Solana LayerZero Bridge will be specified in a future iteration of the Atlas.
+
+##### A.1.9.4.1.1 - Introduction [Core]  <!-- UUID: 1157a0cd-9acc-4149-9258-d7f8946df475 -->
+
+The Solana LayerZero Bridge consists of both a Token Bridge that allows bridging USDS between Ethereum Mainnet and Solana as well as a Governance Bridge that allows exercising governance control for Sky-issued tokens on Solana. The Solana LayerZero Bridge replaces the existing Wormhole bridge, which will be deactivated following the first phase of deployment of the LayerZero bridge.
+
+The Solana LayerZero bridge serves as the template for future bridges that will be deployed by the Sky Ecosystem across other blockchains.
+
+##### A.1.9.4.1.2 - Deployment [Core]  <!-- UUID: 593095a6-aec4-4ca5-9c2e-87ce748ac198 -->
+
+The Solana LayerZero Bridge will be deployed in two phases. The first phase will occur in the November 13th Executive Vote and the second phase will occur in a subsequent Out-Of-Schedule Executive Vote. The timing and contents of these phases may be modified by the Core Facilitator in consultation with relevant Ecosystem Actors.
+
+##### A.1.9.4.1.3 - Security Parameters [Core]  <!-- UUID: 2cf3dc2e-2a2a-4f8a-a959-611e5654a29c -->
+
+The documents herein define the security parameters of the Solana LayerZero bridge.
+
+###### A.1.9.4.1.3.1 - Freezer Multisigs [Core]  <!-- UUID: d70d5580-760f-4441-9f93-7494e0d05808 -->
+
+The documents herein define two freezer multisigs that have the ability to freeze the Solana LayerZero Bridge from either the Ethereum Mainnet or Solana sides, respectively.
+
+####### A.1.9.4.1.3.1.1 - Ethereum LayerZero Freezer Multisig [Core]  <!-- UUID: 21fa6749-6209-4280-9b5f-b2a73d400421 -->
+
+The Ethereum LayerZero Freezer Multisig has the ability to freeze the Solana LayerZero Bridge from the Ethereum Mainnet.
+
+######## A.1.9.4.1.3.1.1.1 - Ethereum LayerZero Freezer Multisig Address [Core]  <!-- UUID: 4192a2f6-a660-476d-bbb8-677a78b1c3a3 -->
+
+The address of the Ethereum LayerZero Freezer Multisig on the Ethereum Mainnet is `0x38d1114b4cE3e079CC0f627df6aC2776B5887776`.
+
+######## A.1.9.4.1.3.1.1.2 - Ethereum LayerZero Freezer Multisig Required Number Of Signers [Core]  <!-- UUID: 861347b3-320f-48fb-ab9a-e9030cb9e44f -->
+
+The Ethereum LayerZero Freezer Multisig has a 2/4 signing requirement.
+
+######## A.1.9.4.1.3.1.1.3 - Ethereum LayerZero Freezer Multisig Signers [Core]  <!-- UUID: 2a86809e-8b34-4692-92fe-bcb75b00ce6d -->
+
+The signers of the Ethereum LayerZero Freezer Multisig are two (2) addresses controlled by the Core Facilitator and two (2) addresses controlled by Core GovOps.
+
+######## A.1.9.4.1.3.1.1.4 - Ethereum LayerZero Freezer Multisig Usage Standards [Core]  <!-- UUID: c0337114-d46d-436f-892d-4f6feb192b29 -->
+
+The Ethereum LayerZero Freezer Multisig can only be used in urgent or emergency situations (e.g., potential code exploits). Such situations are characterized by the fact that 1) they have the potential to harm the Sky Ecosystem or its users; and 2) the preparation time required for an Executive Vote would leave the ecosystem vulnerable to harm (e.g., an exploit).
+
+The multisig should be used to prevent technical vulnerabilities; prevent unwanted functionality of the smart contracts or corresponding parts of the system (e.g., price oracles); or prevent unwanted usage of the smart contracts or corresponding parts of the system which deviates from intended behavior.
+
+The Core Council must ensure that use of the multisig is generally aligned and specifically accords with these requirements.
+
+######## A.1.9.4.1.3.1.1.5 - Ethereum LayerZero Freezer Multisig Modification [Core]  <!-- UUID: af5b97be-bf52-431d-8fa9-9b1c6164e328 -->
+
+The Core Facilitator and Core GovOps can change the signers of the Ethereum LayerZero Freezer Multisig so long as:
+
+    ◦ there are four (4) signers;
+
+    ◦ two (2) signers are required to execute transactions; and
+
+    ◦ an equal number of signers are controlled by the Core Facilitator and Core GovOps.
+
+####### A.1.9.4.1.3.1.2 - Solana LayerZero Freezer Multisig [Core]  <!-- UUID: 8e618196-257a-49d8-834d-665dba345fcd -->
+
+The Solana LayerZero Freezer Multisig will be specified in a future iteration of the Atlas.
+
+######## A.1.9.4.1.3.1.2.1 - Solana LayerZero Freezer Multisig Address [Core]  <!-- UUID: bb0b31dd-f68c-4ea1-b36e-ceda655bee7d -->
+
+The address of the Solana LayerZero Freezer Multisig on Solana is `5hARLsT1VA2AmuGL2AXUeSyyFG6o2Fcpb9S6aKXNsbeK`.
+
+######## A.1.9.4.1.3.1.2.2 - Solana LayerZero Freezer Multisig Required Number Of Signers [Core]  <!-- UUID: f376a4da-0818-4d13-a496-25451577fe32 -->
+
+The Solana LayerZero Freezer Multisig has a 2/4 signing requirement.
+
+######## A.1.9.4.1.3.1.2.3 - Solana LayerZero Freezer Multisig Signers [Core]  <!-- UUID: a9f95fb4-690e-43c2-a231-b8705d62036d -->
+
+The signers of the Solana LayerZero Freezer Multisig are two (2) addresses controlled by Amatsu and two (2) addresses controlled by Keel.
+
+######## A.1.9.4.1.3.1.2.4 - Solana LayerZero Freezer Multisig Usage Standards [Core]  <!-- UUID: 9f845d09-4304-4aa7-8bd0-2dda747e52e6 -->
+
+The Solana LayerZero Freezer Multisig can only be used in urgent or emergency situations (e.g., potential code exploits). Such situations are characterized by the fact that 1) they have the potential to harm the Sky Ecosystem or its users; and 2) the preparation time required for an Executive Vote would leave the ecosystem vulnerable to harm (e.g., an exploit).
+
+The multisig should be used to prevent technical vulnerabilities; prevent unwanted functionality of the smart contracts or corresponding parts of the system (e.g., price oracles); or prevent unwanted usage of the smart contracts or corresponding parts of the system which deviates from intended behavior.
+
+The Core Council must ensure that use of the multisig is generally aligned and specifically accords with these requirements.
+
+######## A.1.9.4.1.3.1.2.5 - Solana LayerZero Freezer Multisig Modification [Core]  <!-- UUID: b70ebff7-355c-46c2-bc36-f08561c5ded1 -->
+
+• Amatsu and Keel can change the signers of the Solana LayerZero Freezer Multisig so long as:
+
+    ◦ there are four (4) signers;
+
+    ◦ two (2) signers are required to execute transactions; and
+
+    ◦ an equal number of signers are controlled by Amatsu and Keel.
+
+###### A.1.9.4.1.3.2 - Rate Limits [Core]  <!-- UUID: 36626f77-52da-4bb6-9e32-851420133922 -->
+
+The documents herein define the rate limits for the Solana LayerZero Bridge.
+
+####### A.1.9.4.1.3.2.1 - Rate Limit Accounting [Core]  <!-- UUID: 7c0eeee4-ce0d-45fe-8eab-1be501e367c0 -->
+
+The Solana LayerZero Bridge uses net accounting.
+
+Net accounting means that the rate limit applies to the net amount of tokens transferred from one side of the bridge to the other. For example, if 25,000,000 USDS were transferred from Ethereum Mainnet to Solana and 15,000,000 USDS were transferred from Solana to Ethereum Mainnet, the net amount transferred would be 10,000,000 USDS.
+
+####### A.1.9.4.1.3.2.2 - Rate Limit [Core]  <!-- UUID: 8414b48b-932e-430e-a236-727807fd73ba -->
+
+The Solana LayerZero Bridge currently has a rate limit of 10,000,000 USDS per day. This limit should be gradually increased over time as the bridge becomes more mature.
+
+The rate limit for the Solana LayerZero Bridge may be modified by the Core Facilitator, in consultation with the Core Council Risk Advisor, through the Operational Weekly Cycle. Such modifications can be effected directly via an Executive Vote, without requiring a prior Governance Poll.
+
+###### A.1.9.4.1.3.3 - Validators [Core]  <!-- UUID: 6d04b42a-9e3c-4490-840a-dbe98388ee78 -->
+
+The documents herein specify the selection and configuration of validators for the Solana LayerZero Bridge.
+
+####### A.1.9.4.1.3.3.1 - Token Bridge [Core]  <!-- UUID: 16b49e7d-7360-41bf-ae7a-3c7380972987 -->
+
+The documents herein specify the selection and configuration of validators for the Token Bridge component of the Solana LayerZero Bridge.
+
+######## A.1.9.4.1.3.3.1.1 - Validators [Core]  <!-- UUID: ffb71c51-44cc-4b9e-ae50-ee6975d7bc31 -->
+
+The validators for the Token Bridge are LayerZero and Nethermind.
+
+######## A.1.9.4.1.3.3.1.2 - Quorum Requirement [Core]  <!-- UUID: 30a6d20d-fd23-4fa1-96a6-494b044c023e -->
+
+The quorum requirement for the Token Bridge is 2/2.
+
+####### A.1.9.4.1.3.3.2 - Governance Bridge [Core]  <!-- UUID: 07d43b8c-1230-4de9-959b-8593d69e922a -->
+
+The documents herein specify the selection and configuration of validators for the Governance Bridge component of the Solana LayerZero Bridge.
+
+######## A.1.9.4.1.3.3.2.1 - Validators [Core]  <!-- UUID: 0939f4bf-93d2-4d32-859f-ae4cfdff33b4 -->
+
+The validators for the Governance Bridge are LayerZero, Nethermind, Canary, Deutsche Telekom, P2P, Horizon, and Luganodes.
+
+######## A.1.9.4.1.3.3.2.2 - Quorum Requirement [Core]  <!-- UUID: c5850a58-948d-4c19-bf7f-ba2644cd5001 -->
+
+The quorum requirement for the Token Bridge is 4/7.
+
+#### A.1.9.4.2 - Spark Agent [Core]  <!-- UUID: fe525e67-1142-4312-bab7-bd9549747f77 -->
 
 Spark is one of the initial Agents focused on developing crypto on-chain lending engines. Spark will be governed by Spark token holders pursuant to the conditions specified in the Atlas.
 
@@ -4725,13 +4892,13 @@ SparkLend Protocol is the first such on-chain lending engine, structured as a Co
 
 The subdocuments below outline the governance security procedures specifically in development for the SparkLend Protocol.
 
-##### A.1.9.4.1.1 - Multisig Freeze Of SparkLend [Core]  <!-- UUID: df709091-a82b-4bd6-ab05-42c56a49d326 -->
+##### A.1.9.4.2.1 - Multisig Freeze Of SparkLend [Core]  <!-- UUID: df709091-a82b-4bd6-ab05-42c56a49d326 -->
 
 In addition to the SparkLend Freezer Mom contract defined in [A.1.9.3.2.7 - SparkLend Freezer Mom Exception](645443f1-9004-48d3-868c-139b608bb1f9), an external SparkLend Security Access Multisig has been established that allows for pausing and/or freezing SparkLend markets. The SparkLend Security Access Multisig can enable or disable the SparkLend Freezer Mom contract without the need for inclusion in a spell through the standard Executive Vote process. 
 
 Each action executed by the multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum. Such actions include activating or disabling the pause or freeze function.
 
-###### A.1.9.4.1.1.1 - SparkLend Multisig Usage Standards [Core]  <!-- UUID: 95dd3a55-eff4-4d5c-971d-c9bb8a145d36 -->
+###### A.1.9.4.2.1.1 - SparkLend Multisig Usage Standards [Core]  <!-- UUID: 95dd3a55-eff4-4d5c-971d-c9bb8a145d36 -->
 
 The SparkLend Security Access Multisig can only be used in urgent or emergency situations (e.g., potential code exploits). Such situations are characterized by the fact that 1) they have the potential to harm the Sky Ecosystem or SparkLend users; and 2) the preparation time required for an Executive Vote would leave the ecosystem vulnerable to harm (e.g., an exploit).
 
@@ -4741,19 +4908,19 @@ The Multsig can also be used in cases where a vulnerability or exploit is discov
 
 The Governance Facilitators must ensure that use of the multisig is generally aligned and specifically accords with the requirements defined herein.
 
-####### A.1.9.4.1.1.1.0.3.1 - Same Codebase - Element Annotation [Annotation]  <!-- UUID: d373ebcb-c746-4388-885c-d1bba4edbf05 -->
+####### A.1.9.4.2.1.1.0.3.1 - Same Codebase - Element Annotation [Annotation]  <!-- UUID: d373ebcb-c746-4388-885c-d1bba4edbf05 -->
 
 The element “same codebase” refers to the fact that SparkLend is based on the Aave codebase. Vulnerabilities or exploits discovered within Aave, or any other protocol utilizing the Aave codebase, could potentially be replicated and affect SparkLend.
 
-####### A.1.9.4.1.1.1.0.4.1 - Facilitators Must Exercise Due Caution In Reviewing Use Of Multisig [Action Tenet]  <!-- UUID: 71898c9e-1bb5-43fb-95bb-e9aeec2bdd0c -->
+####### A.1.9.4.2.1.1.0.4.1 - Facilitators Must Exercise Due Caution In Reviewing Use Of Multisig [Action Tenet]  <!-- UUID: 71898c9e-1bb5-43fb-95bb-e9aeec2bdd0c -->
 
 The list of instances justifying use of the multisig in the Target Document is not intended to be exhaustive. However, the Facilitators must exercise due caution in reviewing and validating use of the multisig in edge cases, i.e., use of the multisig that falls outside of the examples provided in the Target Document. In such “edge cases,” the Facilitators must ensure that a postmortem is publicly published on the Sky Forum which justifies the use of the multisig. The Facilitators should also consider proposing an edit to the Target Document so that the edge case is explicitly included in the examples provided in the Target Document.
 
-###### A.1.9.4.1.1.2 - SparkLend Multisig Number Of Signers [Core]  <!-- UUID: 0c71e677-9acb-4f89-bb25-1726e8dac076 -->
+###### A.1.9.4.2.1.2 - SparkLend Multisig Number Of Signers [Core]  <!-- UUID: 0c71e677-9acb-4f89-bb25-1726e8dac076 -->
 
 The SparkLend Security Access Multisig currently has a 3/5 signing requirement.
 
-###### A.1.9.4.1.1.3 - SparkLend Multisig Current Signers [Core]  <!-- UUID: 526a954b-5939-47d0-aacf-fdc190f71d5e -->
+###### A.1.9.4.2.1.3 - SparkLend Multisig Current Signers [Core]  <!-- UUID: 526a954b-5939-47d0-aacf-fdc190f71d5e -->
 
 The SparkLend Security Access Multisig currently has the following signers:
 
@@ -4763,7 +4930,7 @@ The SparkLend Security Access Multisig currently has the following signers:
 ◦ MonetSupply
 ◦ LucasManuel
 
-###### A.1.9.4.1.1.4 - SparkLend Multisig Signer Modifications [Core]  <!-- UUID: d8e0d76b-dd1f-4f3e-9a8b-7724ce4fc880 -->
+###### A.1.9.4.2.1.4 - SparkLend Multisig Signer Modifications [Core]  <!-- UUID: d8e0d76b-dd1f-4f3e-9a8b-7724ce4fc880 -->
 
 Modification of the signers of the SparkLend Security Access Multisig must be approved through a Governance Poll; no Executive Vote is required.
 
@@ -4771,13 +4938,13 @@ The only exceptions to this are if: 1) a signer self-reports a loss of access to
 
 Any changes to the multisig signers that do not fall within the two exceptions listed above, or that have not been ratified by Sky Governance, should be questioned immediately and treated as malicious. The Governance Facilitators should consider preparing an expedited Executive Vote so that Sky Governance can vote on removing external security access from the multisig.
 
-###### A.1.9.4.1.1.5 - SparkLend Multisig Address [Core]  <!-- UUID: 13ad3a13-d446-40db-9db6-18ab34fe049a -->
+###### A.1.9.4.2.1.5 - SparkLend Multisig Address [Core]  <!-- UUID: 13ad3a13-d446-40db-9db6-18ab34fe049a -->
 
 The current whitelisted SparkLend Security Access Multisig address is:
 
 `0x44efFc473e81632B12486866AA1678edbb7BEeC3`
 
-###### A.1.9.4.1.1.0.3.1 - Multisig - Element Annotation [Annotation]  <!-- UUID: 1844a8bf-ad90-413c-9278-129379dc17bb -->
+###### A.1.9.4.2.1.0.3.1 - Multisig - Element Annotation [Annotation]  <!-- UUID: 1844a8bf-ad90-413c-9278-129379dc17bb -->
 
 The element “multisig” refers to a blockchain wallet implemented as a smart contract and requiring multiple signers to approve transactions.
 
@@ -7195,17 +7362,25 @@ USDS balances are eligible for an Accessibility Reward for a period of ten (10) 
 
 In the near term, Ecosystem Actor Viridian Advisors manages the list of Actor Reward Codes. In the future, all current Integrators and onboarding Integrators must be specified in [A.2.3.8.1.2.1.5 - Current And Onboarding Integrators](f3952cc5-cde2-46b9-b575-034dda83570b) so that Prime Agents, through their Operational Executor Agents, can onboard new partners themselves without having to go through a single party.
 
-####### A.2.3.8.1.2.1.3 - Fees [Core]  <!-- UUID: 57384c49-e499-4c69-b22c-8e1f1dd34759 -->
+####### A.2.3.8.1.2.1.3 - Distribution Reward Rate [Core]  <!-- UUID: 54eec2e6-dbe5-45e9-9180-e414cc8a3da1 -->
 
-The documents herein define the methodology for calculating the Accessibility Reward due to the reward recipient for USDS and sUSDS balances attributable to them. The standard Accessibility Reward rate is set at 0.2%. The total 0.2% fee is divided between the frontend reward recipient and the relevant Prime Agent with an expectation of a 50/50 split.
+The standard Distribution Reward rate is set at 0.2%. The Distribution Reward rate is annualized on all USDS and sUSDS balances associated with the relevant Reward Code.
 
-######## A.2.3.8.1.2.1.3.1 - Fee For USDS and sUSDS Balances [Core]  <!-- UUID: 9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e -->
+######## A.2.3.8.1.2.1.3.1 - Boosted Distribution Reward Rate [Core]  <!-- UUID: 1d9219cb-9359-40de-96a0-ac60a8174c63 -->
 
-The frontend reward recipient can earn up to a maximum of a 0.1% Accessibility Reward rate annualized on all USDS and sUSDS balances attributable to them. The specific fee apportionment must be specified in the relevant Prime Agent Artifact.
+An additional 0.3% Boosted Distribution Reward rate will be available starting January 2026 as specified in the documents herein. This Boosted Distribution Reward may be discontinued in the future at the discretion of Sky Governance.
 
-######## A.2.3.8.1.2.1.3.2 - Prime Agent Management Fee [Core]  <!-- UUID: 389ebf97-7ea6-4999-afd4-6419013a31af -->
+######### A.2.3.8.1.2.1.3.1.1 - Approval Process [Core]  <!-- UUID: 3f3162cc-c83c-471d-9dfa-1e0ccada4261 -->
 
-The Prime Agent that Invoked the Accessibility Reward Primitive is entitled to at least a 0.1% Accessibility Reward rate annualized on all USDS and sUSDS balances that use their relevant Reward Code. The specific fee apportionment must be specified in the relevant Prime Agent Artifact.
+A Prime Agent may request the Boosted Distribution Reward rate for a specific Instance by posting on the Sky Forum under the "Sky Core" category. The Core Council will review requests and approve them at its discretion. The Core Facilitator must respond to each request with an approval or rejection decision in the thread of the original post.
+
+######### A.2.3.8.1.2.1.3.1.2 - Specification In The Instance Configuration Document [Core]  <!-- UUID: ce66fc65-014f-447d-b068-2487ec11032e -->
+
+Prime Agent Instances approved for the Boosted Distribution Reward rate must document this designation in their Instance Configuration Document under "Custom Instance Parameters".
+
+######### A.2.3.8.1.2.1.3.1.3 - Limitations [Core]  <!-- UUID: f2b3688f-e9e0-4159-9af3-0502141babab -->
+
+The Boosted Distribution Reward rate is not applicable to USDS and sUSDS balances held by the Prime Agent itself.
 
 ####### A.2.3.8.1.2.1.4 - Rewards Distribution [Core]  <!-- UUID: 8dfabd92-aabc-4605-9ca5-d10f413203dc -->
 
@@ -7220,13 +7395,13 @@ The Accessibility Reward is calculated and distributed on a monthly basis.
 The Accessibility Reward payment for each month is equal to 
 
 (1) the average balance over the month, times 
-(2) the annual Accessibility Reward Fee specified in [A.2.3.8.1.2.1.3 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759), divided by 
+(2) the annual Accessibility Reward Fee specified in [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759), divided by 
 (3) twelve (12).
 
-The Accessibility Reward Fee specified in [A.2.3.8.1.2.1.3 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759) includes all of the following elements:
+The Accessibility Reward Fee specified in [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759) includes all of the following elements:
 
-1) Fees for USDS and sUSDS Balances specified in [A.2.3.8.1.2.1.3.1 - Fee For USDS and sUSDS Balances](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e); and
-2) the Prime Agent Management Fee specified in [A.2.3.8.1.2.1.3.2 - Prime Agent Management Fee](389ebf97-7ea6-4999-afd4-6419013a31af).
+1) Fees for USDS and sUSDS Balances specified in [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e); and
+2) the Prime Agent Management Fee specified in [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af).
 
 ######## A.2.3.8.1.2.1.4.3 - Treasury Management [Core]  <!-- UUID: 935b90bb-a854-4c06-b6ea-48a1cf8fd2f1 -->
 
@@ -9223,25 +9398,43 @@ The documents herein provide an introduction to the Pioneer Chain Primitive.
 
 Pioneer Primes must be designated by the official team or foundation of the Pioneer Chain, they must be created for the specific purpose of being a Pioneer Prime from their genesis moment, and it is only possible for a Pioneer Chain to have Pioneer Prime once, and for a Pioneer Prime to have the Pioneer Prime status with a single blockchain, once.
 
-###### A.2.3.8.3.1.2 - Pioneer Prime Benefits [Core]  <!-- UUID: f0d5ab5e-bf35-4a9d-a73f-d82baac6e604 -->
+###### A.2.3.8.3.1.2 - Pioneer Prime Designation Process [Core]  <!-- UUID: d6d16076-da22-43f1-a303-627af41b486c -->
+
+In order to be confirmed as a Pioneer Prime, a Prime Agent must provide written proof to Operational GovOps that it has been provisionally designated as such by the official team or foundation of the relevant Pioneer Chain. Following a check by Operational GovOps to ensure that the Prime Agent has not been a Pioneer Prime previously and that the Pioneer Chain has not had a Pioneer Prime before, Operational GovOps will add the new Pioneer Prime to the list of Active Pioneer Primes. See [A.2.3.8.3.1.2.1.0.6.1 - List of Active Pioneer Primes](f2ecf6a4-4d5f-4443-b25c-3bd10b1af82e).
+
+####### A.2.3.8.3.1.2.1 - Active Pioneer Primes [Active Data Controller]  <!-- UUID: 65fc0b79-8827-403d-80ee-9f74a6be1069 -->
+
+Active Pioneer Primes are Prime Agents who have been designated by the official team or foundation of the Pioneer Chain and confirmed as Pioneer Primes by Operational GovOps. The list of Current Pioneer Primes is defined as Active Data in [A.2.3.8.3.1.2.1.0.6.1 - List of Active Pioneer Primes](f2ecf6a4-4d5f-4443-b25c-3bd10b1af82e). 
+
+The Active Data is updated as follows:
+• The Responsible Party is Operational GovOps.
+• The Update Process must follow the protocol for ‘Direct Edit’.
+
+######## A.2.3.8.3.1.2.1.0.6.1 - List of Active Pioneer Primes [Active Data]  <!-- UUID: f2ecf6a4-4d5f-4443-b25c-3bd10b1af82e -->
+
+The current Active Pioneer Primes are:
+
+◦ Keel
+
+###### A.2.3.8.3.1.3 - Pioneer Prime Benefits [Core]  <!-- UUID: f0d5ab5e-bf35-4a9d-a73f-d82baac6e604 -->
 
 Pioneer Primes gain benefits and responsibilities related to the general adoption of USDS on the Pioneer Chain, and this benefit comes in two forms.
 
 First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Accessibility Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
 
-Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive Pool payments, see [A.2.3.8.3.1.3 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
+Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive payments, see [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
-####### A.2.3.8.3.1.2.1 - Pioneer Phase [Core]  <!-- UUID: 0c7b0644-68d4-441d-8221-88382a6515e4 -->
+####### A.2.3.8.3.1.3.1 - Pioneer Phase [Core]  <!-- UUID: 0c7b0644-68d4-441d-8221-88382a6515e4 -->
 
-For purposes of [A.2.3.8.3.1.2 - Pioneer Prime Benefits](f0d5ab5e-bf35-4a9d-a73f-d82baac6e604), the Pioneer Phase is a period beginning on the date that a Prime Agent satisfies the Pioneer Prime Requirements specified in [A.2.3.8.3.1.1 - Pioneer Prime Requirements](219459b3-8333-4e9a-9b79-55e0c20d6dbb) and ending three (3) years thereafter.
+For purposes of [A.2.3.8.3.1.3 - Pioneer Prime Benefits](f0d5ab5e-bf35-4a9d-a73f-d82baac6e604), the Pioneer Phase is a period beginning on the date that a Prime Agent satisfies the Pioneer Prime Requirements specified in [A.2.3.8.3.1.1 - Pioneer Prime Requirements](219459b3-8333-4e9a-9b79-55e0c20d6dbb) and ending three (3) years thereafter.
 
-###### A.2.3.8.3.1.3 - Pioneer Incentive Pool [Core]  <!-- UUID: 04edac33-19d5-4a87-a8ab-945a0cd57771 -->
+###### A.2.3.8.3.1.4 - Pioneer Incentive Pool [Core]  <!-- UUID: 04edac33-19d5-4a87-a8ab-945a0cd57771 -->
 
-Every monthly settlement cycle, an amount of funds equivalent to the Sky Savings Rate multiplied by the balance of Unrewarded USDS is paid into the Pioneer Prime’s SubProxy Account (the “Pioneer Incentive Pool”). 80% of the funds going to the Pioneer Incentive Pool are not the property of the Pioneer Primes and must instead be used as incentives to promote general adoption of USDS on the Pioneer Chain. This must provide general benefit for the sake of growing USDS activity on the Pioneer Chain and cannot be biased towards benefiting the Pioneer Prime. The remaining 20% of the funds going to the Pioneer Incentive Pool may be retained by the Pioneer Prime as income.
+All Pioneer Incentive payments are paid through the Monthly Settlement Cycle. Each Monthly Settlement Cycle, an amount of funds equivalent to the Sky Savings Rate multiplied by the balance of Unrewarded USDS is paid into a separate account controlled by the Pioneer Prime (the “Pioneer Incentive Pool”). 80% of the funds going to the Pioneer Incentive Pool are not the property of the Pioneer Primes and must instead be used as incentives to promote general adoption of USDS on the Pioneer Chain. This must provide general benefit for the sake of growing USDS activity on the Pioneer Chain and cannot be biased towards benefiting the Pioneer Prime. The remaining 20% of the funds going to the Pioneer Incentive Pool may be retained by the Pioneer Prime as income.
 
-####### A.2.3.8.3.1.3.1 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: 15e14f25-8d56-4699-ac37-0cef4f0503c5 -->
+####### A.2.3.8.3.1.4.1 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: 15e14f25-8d56-4699-ac37-0cef4f0503c5 -->
 
-A Pre-Pioneer Incentive Pool is a temporary, chain-specific incentive mechanism designed to bootstrap USDS adoption on a new blockchain before a formal Pioneer Prime is established for that chain. It allows a designated Agent to direct incentive payments to ecosystem partners on that specific chain. The Pre-Pioneer Incentive Pool may operate under distinct rules that differ from the standard Pioneer Incentive Pool, which rules will be specified in an Ecosystem Accord between the respective Agent and Sky Core. A Pre-Pioneer Incentive Pool serves as a transitional phase until the conditions for a formal Pioneer Incentive Pool are met. See [A.2.3.8.3.1.3 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
+A Pre-Pioneer Incentive Pool is a temporary, chain-specific incentive mechanism designed to bootstrap USDS adoption on a new blockchain before a formal Pioneer Prime is established for that chain. It allows a designated Agent to direct incentive payments to ecosystem partners on that specific chain. The Pre-Pioneer Incentive Pool may operate under distinct rules that differ from the standard Pioneer Incentive Pool, which rules will be specified in an Ecosystem Accord between the respective Agent and Sky Core. A Pre-Pioneer Incentive Pool serves as a transitional phase until the conditions for a formal Pioneer Incentive Pool are met. See [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
 ### A.2.3.9 - Supply Side Stablecoin Primitives [Section]  <!-- UUID: d1142876-33c2-4e21-9339-d8711525d46f -->
 
@@ -9532,7 +9725,7 @@ The system must provide real-time or near real-time tracking of all held Total R
     
 3. Prime Agents’ internal TRC management systems should enable continuous capital adequacy monitoring. The system must enable the near real-time comparison of the Prime Agent’s internally tracked and calculated TRC against its official Aggregate RRC, as obtained from the Sky Core RRC Dashboard/API. See [A.2.3.9.1.1.3.2.1.1 - Sky Core Required Risk Capital (RRC) Dashboard And API](4eac2c9e-2718-4881-a3f1-ed10fb3f4d13). This core functionality is essential for the Prime Agent to proactively monitor its capital adequacy, identify potential or actual TRC shortfalls, and make timely operational and capital management decisions to maintain compliance.
     
-4. Prime Agents’ internal TRC management systems should define a RRC-incident (e.g., TRC shortfall) response protocol. The system should enable internal alerting mechanisms that detect when a Prime Agent’s TRC approaches predefined internal buffer thresholds relative to its Aggregate RRC. See [A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9). The system should also detect an actual shortfall where the Prime Agent’s held TRC falls below its Aggregate RRC.
+4. Prime Agents’ internal TRC management systems should define a RRC-incident (e.g., TRC shortfall) response protocol. The system should enable internal alerting mechanisms that detect when a Prime Agent’s TRC approaches predefined internal buffer thresholds relative to its Aggregate RRC. See [A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9). The system should also detect an actual shortfall where the Prime Agent’s held TRC falls below its Aggregate RRC.
 Furthermore, Prime Agent teams should establish and document internal processes for responding to such alerts. Such internal processes should include: 1) internal escalation and assessment of the shortfall’s cause and magnitude; 2) formulation of potential responses or corrective actions, which may include sourcing additional TRC, reducing risk-weighted exposures, or other measures; 3) internal decision-making framework for the evaluation of potential responses and selection of the most appropriate one; and 4) notifying any pertinent parties (Operational GovOps) as needed for the purpose of planning or implementing follow-up action.
 
 Prime Agent teams’ internal decision-making framework may consider the economic trade-offs of various actions, including the strategic acceptance of penalties for a TRC shortfall where such an approach is determined to be economically advantageous compared to immediate rebalancing (e.g., avoiding excessive transaction costs or market impact).
@@ -9805,7 +9998,7 @@ Reimbursement Rewards are paid to Prime Agents to reimburse them for the costs o
 
 ####### A.2.4.1.2.1.3.5 - Pioneer Rewards [Core]  <!-- UUID: 33c56bad-c422-48f4-bcca-dc8794c6a0da -->
 
-Pioneer Rewards are paid to Pioneer Primes as specified in [A.2.3.8.3.1.3 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
+Pioneer Rewards are paid to Pioneer Primes as specified in [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
 ##### A.2.4.1.2.2 - Step 1: Security And Stability Maintenance [Core]  <!-- UUID: 324e9d22-70fe-4e44-82ab-118815f5c42e -->
 
@@ -10248,7 +10441,7 @@ The amount due from Sky to each Prime with respect to Demand Side Primitives and
 
 ######### A.2.5.1.2.2.1.1.1.1 - Amount Due From Sky To Primes With Respect To Accessibility Reward [Core]  <!-- UUID: 0b2165cb-c10d-474b-ad55-544821ac29c3 -->
 
-The amount due from Sky to a Prime in a month with respect to the Accessibility Reward is the amount earned by the Prime with respect to all USDS and sUSDS balances marked with the Prime’s reward codes. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). This includes any Bonus Accessibility Reward. See [A.2.9.2.2.2.3.3 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
+The amount due from Sky to a Prime in a month with respect to the Accessibility Reward is the amount earned by the Prime with respect to all USDS and sUSDS balances marked with the Prime’s reward codes. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). This includes any Bonus Accessibility Reward. See [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
 
 ######### A.2.5.1.2.2.1.1.1.2 - Amount Due From Sky To Primes With Respect To Agent Rate [Core]  <!-- UUID: aeb1d633-d6e2-46ef-9f55-bcb0a16a2e63 -->
 
@@ -10842,31 +11035,19 @@ Sky’s recourse for bad debt consists of (1) minting Prime Agent tokens; (2) te
 
 The subdocuments herein set out agreed terms with respect to the Accessibility Reward.
 
-####### A.2.9.2.2.2.3.1 - Accessibility Reward Rate [Core]  <!-- UUID: 8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6 -->
+####### A.2.9.2.2.2.3.1 - Distribution Reward Rate [Core]  <!-- UUID: c5cecc63-b349-4c5a-9424-82a204d53078 -->
 
-The standard Accessibility Reward rate is set at 0.2%. The Accessibility Reward is divided according to the subdocuments herein.
+The standard Distribution Reward rate is set at 0.2%.
 
-######## A.2.9.2.2.2.3.1.1 - Frontend Portion [Core]  <!-- UUID: ae27b537-19da-4c9c-a8db-e115e2a43551 -->
+####### A.2.9.2.2.2.3.2 - 2025 Bonus [Core]  <!-- UUID: 7ca440d3-03fb-4fba-81a8-d2118dc47aa6 -->
 
-Up to a maximum of 50% of the Accessibility Reward rate is apportioned to frontends.
+An additional 0.4% Accessibility Reward bonus will apply during the calendar year 2025 (ending December 31, 2025). This bonus is strictly limited to the Prime and does not extend to the Prime Foundation. The bonus is subject to the limitation specified in [A.2.9.2.2.2.3.2.1 - Bonus Limitation](6996e6c9-b936-4680-855f-b9717572082d).
 
-######## A.2.9.2.2.2.3.1.2 - Prime Portion [Core]  <!-- UUID: 2f083770-b823-4597-b764-c4be0ec1aaf7 -->
+######## A.2.9.2.2.2.3.2.1 - Bonus Limitation [Core]  <!-- UUID: 6996e6c9-b936-4680-855f-b9717572082d -->
 
-A minimum of 50% of the Accessibility Reward rate is apportioned to Prime Agents. This percentage can be up to 100%, dependent on reduction from the Frontend Portion.
+USDS and sUSDS balances held by the Prime itself are not eligible for the Accessibility Reward bonus specified in [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
 
-####### A.2.9.2.2.2.3.2 - Split Specification [Core]  <!-- UUID: 903f5c84-0a3a-4486-89b0-2078ee7d8214 -->
-
-Spark and Grove will specify the split of the Prime Portion in their respective Agent Artifacts, with an expectation of a 50/50 split (0.1% each).
-
-####### A.2.9.2.2.2.3.3 - 2025 Bonus [Core]  <!-- UUID: 7ca440d3-03fb-4fba-81a8-d2118dc47aa6 -->
-
-An additional 0.4% Accessibility Reward bonus will apply during the calendar year 2025 (ending December 31, 2025). This bonus is strictly limited to the Prime and does not extend to the Prime Foundation. The bonus is subject to the limitation specified in [A.2.9.2.2.2.3.3.1 - Bonus Limitation](6996e6c9-b936-4680-855f-b9717572082d).
-
-######## A.2.9.2.2.2.3.3.1 - Bonus Limitation [Core]  <!-- UUID: 6996e6c9-b936-4680-855f-b9717572082d -->
-
-USDS and sUSDS balances held by the Prime itself are not eligible for the Accessibility Reward bonus specified in [A.2.9.2.2.2.3.3 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
-
-####### A.2.9.2.2.2.3.4 - Sky Spread [Core]  <!-- UUID: 5e3e9338-221a-461a-96f9-01e0665ab6a4 -->
+####### A.2.9.2.2.2.3.3 - Sky Spread [Core]  <!-- UUID: 5e3e9338-221a-461a-96f9-01e0665ab6a4 -->
 
 A fixed margin of 0.1% (Sky Spread) forms part of the overall differential between the Savings Rate and the Base Rate, representing the premium earned by Sky for facilitating the ecosystem’s financing. The total spread between the Savings Rate and the Base Rate is therefore 0.3%.
 
@@ -11079,7 +11260,7 @@ Sky has transferred 2.4 million USDS from the Sky Ecosystem Liquidity Bootstrapp
 
 ####### A.2.9.2.2.2.8.6 - Income Definition [Core]  <!-- UUID: fa48f7be-3c7d-4390-8b39-4fdfe9aa06ae -->
 
-"Income" means all revenues or fees received or accrued by the applicable Prime after July 1, 2025, including: (i) Accessibility Rewards (see [A.2.9.2.2.2.3.1 - Accessibility Reward Rate](8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6)), (ii) Accessibility Reward Bonus for 2025 (see [A.2.9.2.2.2.3.3 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6)), (iii) any Platform Fees charged to users, and (iv) Real World Asset fees charged to users, including any origination, servicing, or related charges, and (v) the blended cost of allocation spread between Junior and Senior Risk Capital.
+"Income" means all revenues or fees received or accrued by the applicable Prime after July 1, 2025, including: (i) Accessibility Rewards (see [[Unknown]](8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6)), (ii) Accessibility Reward Bonus for 2025 (see [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6)), (iii) any Platform Fees charged to users, and (iv) Real World Asset fees charged to users, including any origination, servicing, or related charges, and (v) the blended cost of allocation spread between Junior and Senior Risk Capital.
 
 ###### A.2.9.2.2.2.9 - Spark Senior Risk Capital [Core]  <!-- UUID: f763bc3e-671e-44a5-a2ee-17ad8964fb40 -->
 
@@ -11131,7 +11312,7 @@ If Keel elects to use funds in this way, it shall notify its Operational Executo
 
 ###### A.2.9.2.3.2.2 - Pre-Pioneer Incentive Pool [Core]  <!-- UUID: c929aef7-1b81-4693-8fd8-3d75e62882af -->
 
-Keel is eligible for a Pre-Pioneer Incentive Pool. See [A.2.3.8.3.1.3.1 - Pre-Pioneer Incentive Pool](15e14f25-8d56-4699-ac37-0cef4f0503c5). 
+Keel is eligible for a Pre-Pioneer Incentive Pool. See [A.2.3.8.3.1.4.1 - Pre-Pioneer Incentive Pool](15e14f25-8d56-4699-ac37-0cef4f0503c5). 
 
 The Pre-Pioneer Incentive Pool is calculated on a monthly basis as (1) the Sky Savings Rate multiplied by all USDS balances on Solana, less (2) all Integration Boost payments made to partners on Solana.
 Payments are made on a monthly basis from the Integration Boost wallets specified in [A.2.3.8.2.2.1.3.2.1 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5) to a Pre-Pioneer Incentive Pool wallet controlled by Keel’s Operational Executor Agent. The address of the Pre-Pioneer Incentive Pool wallet on Solana is `8JmDPG5BFQ6gpUPJV9xBixYJLqTKCSNotkXksTmNsQfj`.
@@ -11987,24 +12168,44 @@ This Article defines the Ecosystem Entity Grants, which aim to fund the Sky Fron
 
 ### A.2.14.1 - Ecosystem Entity Grants [Section]  <!-- UUID: 5d5759e4-8077-4af5-9a1a-eaeab5088dd7 -->
 
-In the next available Executive Vote, the two Ecosystem Entity Grants, the Sky Frontier Grant and the Fortification Grant, must be paid out to the Sky Frontier Foundation and Fortification Foundation.
+Information regarding ecosystem entities grants to the Sky Frontier Foundation and the Fortification Foundation is detailed in the documents herein.
 
-Sky Frontier Grant Details:
-• Sky Frontier Foundation Address: `0xca5183FB9997046fbd9bA8113139bf5a5Af122A0`
+#### A.2.14.1.1 - Sky Frontier Foundation Grants [Core]  <!-- UUID: 1f5d9b2d-d94d-4945-bcf5-74b9152de90c -->
+
+Information regarding ecosystem entity grants to the Sky Frontier Foundation is detailed in the documents herein.
+
+##### A.2.14.1.1.1 - August 2025 Grant [Core]  <!-- UUID: ecc26bbd-ee6c-4ede-a3da-176cb8857d87 -->
+
+The approved and disbursed August 2025 grant to the Sky Frontier Foundation is as follows:
+
+• Recipient: Sky Frontier Foundation
+• Recipient Address: `0xca5183FB9997046fbd9bA8113139bf5a5Af122A0`
+• Transaction Hash: `0x9dff3cf283969f0d6b54347829463aabbcad43e79ebb7ad20c5154e951586e3f`
 • USDS amount: 50,000,000
-• SKY amount: all SKY remaining in the Sky Pause Proxy less the  Fortification Grant
-• USDS/SKY LP amount: all UniV2 SKY/USDS LP tokens currently held by the treasury
-• MKR amount: All MKR in the Sky Pause Proxy
-• Additional transfers: all additional tokens and dust (ENS etc.) contained in the Sky Core Pause Proxy not part of the Fortification Grant, except for SPK.
+• SKY amount: 1,977,443,914.00
+• USDS/SKY LP (UNI-V2) amount: 28,829,858.44
+• DAI amount: 35.41
+• ENS amount: 46,362.27
+• stkAAVE amount: 1,467.08
+• COMP amount: 643.73
+• AAVE amount: 60
+• WETH amount: 0.0296
 
-Fortification Grant details:
-• Fortification Foundation Address: `0x483413ccCD796Deddee88E4d3e202425d5E891C6`
+The amounts above are rounded down; refer to onchain data for exact figures.
+
+#### A.2.14.1.2 - Fortification Foundation Grants [Core]  <!-- UUID: ec2ebbba-6944-44cb-a04d-4572c6bea1e7 -->
+
+Information regarding ecosystem entity grants to the Fortification Foundation is detailed in the documents herein.
+
+##### A.2.14.1.2.1 - August 2025 Grant [Core]  <!-- UUID: fc6b41c6-f9e3-4690-a75a-6d3d68e8d942 -->
+
+The approved and disbursed August 2025 grant to the Fortification Foundation is as follows:
+
+• Recipient: Fortification Foundation
+• Recipient Address: `0x483413ccCD796Deddee88E4d3e202425d5E891C6`
+• Transaction Hash: `0x9dff3cf283969f0d6b54347829463aabbcad43e79ebb7ad20c5154e951586e3f`
 • USDS amount: 10,000,000
 • SKY amount: 200,000,000
-
-If for any reason, technical or otherwise, the full amounts cannot be transferred, the Facilitators must find the best solution to transfer as many assets as possible to enable the Sky Frontier Foundation to tap into its immediate-term opportunities.
-
-Before encoding the transfers in the executive vote, the recipient addresses must be double checked and modified to the right addresses if necessary.
 
 # A.3 - The Stability Scope [Scope]  <!-- UUID: d56538fc-2220-491a-a4d2-7ad6e461d707 -->
 
@@ -12076,7 +12277,7 @@ The Sky Savings Rate (”SSR”) is the rate USDS holders can earn on their USDS
 
 ##### A.3.1.2.2.1 - Relationship To Base Rate [Core]  <!-- UUID: d16483ff-b83e-490f-a620-1b58cc679c7f -->
 
-The Sky Savings Rate is 0.3% below the Base Rate. This difference is equal to the sum of (1) the 0.2% Accessibility Reward Fee (see [A.2.3.8.1.2.1.3 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759)) and (2) the 0.1% Sky Spread (see [A.3.2.2.4.2.3.3.1 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da)).
+The Sky Savings Rate is 0.3% below the Base Rate. This difference is equal to the sum of (1) the 0.2% Accessibility Reward Fee (see [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759)) and (2) the 0.1% Sky Spread (see [A.3.2.2.4.2.3.3.1 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da)).
 
 ##### A.3.1.2.2.2 - Sky Savings Rate Modification [Core]  <!-- UUID: 1c8bb297-52a6-4774-a76d-e457ae5f5862 -->
 
@@ -12096,7 +12297,7 @@ The Agent Rate is the rate that Prime Agents earn on Unrewarded USDS, Dai, and s
 
 ##### A.3.1.2.3.1 - Relationship To Base Rate [Core]  <!-- UUID: 4e49c66c-3361-48bb-9a18-a0217278488e -->
 
-The Agent Rate is 0.1% below the Base Rate. This is equal to the Sky Savings Rate plus the 0.2% Accessibility Reward Fee (see [A.2.3.8.1.2.1.3 - Fees](57384c49-e499-4c69-b22c-8e1f1dd34759)).
+The Agent Rate is 0.1% below the Base Rate. This is equal to the Sky Savings Rate plus the 0.2% Accessibility Reward Fee (see [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759)).
 
 ##### A.3.1.2.3.2 - Treatment Of USDS and Dai Balances [Core]  <!-- UUID: 3fbca67b-f75d-48f8-9459-3cba592f835b -->
 
@@ -12104,7 +12305,7 @@ Prime Agents receive the full Agent Rate on Unrewarded USDS and Dai balances thr
 
 ##### A.3.1.2.3.3 - Treatment Of sUSDS Balances [Core]  <!-- UUID: b1cc2cb1-aff6-4b7a-bb32-bdf56fc7fd2f -->
 
-Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Accessibility Reward Fee (see [A.2.3.8.1.2.1.3.1 - Fee For USDS and sUSDS Balances](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [A.2.3.8.1.2.1.3.2 - Prime Agent Management Fee](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
+Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Accessibility Reward Fee (see [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
 
 ##### A.3.1.2.3.4 - Spark [Core]  <!-- UUID: e15caed7-276c-4489-95dc-9ba628566bf4 -->
 
@@ -12158,7 +12359,7 @@ Interest accrues on borrowed funds and is reflected in the Allocation Vault bala
 
 ##### A.3.1.2.5.5 - Prime Agent Credit Rating System [Core]  <!-- UUID: 926fb13d-efdd-4a83-a3dc-db1448a106f5 -->
 
-After the development of a Prime Agent Credit Rating System, the Agent Credit Line Borrow Rate will vary based on the Credit Rating of each Prime Agent. The Credit Rating for a Prime Agent will take into account factors including the Risk Tolerance Ratio.
+After the development of a Prime Agent Credit Rating System, the Agent Credit Line Borrow Rate will vary based on the Credit Rating of each Prime Agent. The Credit Rating for a Prime Agent will take into account factors including the Encumbrance Ratio.
 
 ### A.3.1.0.3.1 - Methodologies - Element Annotation [Annotation]  <!-- UUID: 2f658a82-a8d2-4bd1-be5c-906e4733400d -->
 
@@ -13229,7 +13430,7 @@ Investments in JTRSY and JAAA on Avalanche are subject to the following addition
     
 ◦ The initial deployment of capital into JTRSY and JAAA on Avalanche may not exceed 20 million USDS in total;    
 ◦ Each additional deployment of capital into JTRSY or JAAA must be approved by the Stability Scope Advisors;    
-◦ Until audits of Centrifuge v3 are approved by the Protocol Security Workstream Lead, the Prime must be below a 90% Risk Tolerance Ratio on a pro forma basis assuming that each additional deployment of capital into JTRSY and JAAA requires 100% Instance Total CRR; and    
+◦ Until audits of Centrifuge v3 are approved by the Protocol Security Workstream Lead, the Prime must be below a 90% Encumbrance Ratio on a pro forma basis assuming that each additional deployment of capital into JTRSY and JAAA requires 100% Instance Total CRR; and    
 ◦ Total investments in JTRSY and JAAA on Avalanche may not exceed 250 million USDS.
 
 ######### A.3.2.2.1.1.1.5.3.2 - Restrictions On Investments On Plume [Core]  <!-- UUID: c5d70220-4797-4df9-8977-4998d4a57888 -->
@@ -13961,11 +14162,11 @@ The Raw Exposure is the total exposure to the particular Allocation System oppor
 
 ####### A.3.2.2.1.2.4.3 - Ethena [Core]  <!-- UUID: 4d4f4c60-4941-41c8-8164-c1f35c4574c8 -->
 
-In the short term, Direct Ethena Exposures (see [A.3.2.2.1.1.1.2.1.1.1.1 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [[Unknown]](f1839c9b-3080-4740-8696-0f6c00959c21).
+In the short term, Direct Ethena Exposures (see [A.3.2.2.1.1.1.2.1.1.1.1 - Direct Ethena Exposures](e0fa035c-e8f3-4cd2-8ca1-a6afbd1825eb)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See A.3.3 - Legal Recourse Assets.
 
 ####### A.3.2.2.1.2.4.4 - Superstate [Core]  <!-- UUID: d129279e-73a5-4f55-9cc8-3950a05c3fc1 -->
 
-In the short term, Superstate Exposures (see [A.3.2.2.1.1.1.2.1.2.1 - Superstate Capital Requirement Ratio](ffca1065-7f92-4815-8a65-52bdbc82c558)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [[Unknown]](f1839c9b-3080-4740-8696-0f6c00959c21).
+In the short term, Superstate Exposures (see [A.3.2.2.1.1.1.2.1.2.1 - Superstate Capital Requirement Ratio](ffca1065-7f92-4815-8a65-52bdbc82c558)) automatically have Instance Smart Contract CRR and Instance Administrative CRR of zero. In the long term, given the similarity of these assets to Real World Assets, adapted frameworks for Smart Contract Risk and Administrative Risk for these exposures must be developed. See [A.3.2.2.1.2.4.2 - Legal Recourse Assets](717b33c3-708e-4acf-acb4-7be5d5039a2f).
 
 ####### A.3.2.2.1.2.4.5 - Fluid [Core]  <!-- UUID: 442c47ef-0fef-4d10-9b5c-12b163795cdd -->
 
@@ -14282,9 +14483,9 @@ The documents herein specify the penalty mechanisms for Prime Agents for breache
 
 The documents herein define the financial penalties for breaches of Risk Capital requirements.
 
-######## A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio [Core]  <!-- UUID: 5435f680-aaaa-461a-bcae-4056bb8964d9 -->
+######## A.3.2.2.7.2.1.1.1 - Encumbrance Ratio [Core]  <!-- UUID: 5435f680-aaaa-461a-bcae-4056bb8964d9 -->
 
-The Risk Tolerance Ratio for a Prime Agent is the ratio of its Aggregate Required Risk Capital to its Total Risk Capital.
+The Encumbrance Ratio for a Prime Agent is the ratio of its Aggregate Required Risk Capital to its Total Risk Capital.
 
 ######## A.3.2.2.7.2.1.1.2 - Severity Of Breaches [Core]  <!-- UUID: cf1bcb59-c72a-4b17-ae4b-e80beb881f57 -->
 
@@ -14292,11 +14493,11 @@ The financial penalties for breaches of Risk Capital requirements depend on whet
 
 ######### A.3.2.2.7.2.1.1.2.1 - Low Severity Breach Definition [Core]  <!-- UUID: 1981fd65-a9a5-4e5a-a9f8-aa8e85342d7c -->
 
-A Low Severity Breach is one in which the Risk Tolerance Ratio is greater than or equal to 100% but less than 103%.
+A Low Severity Breach is one in which the Encumbrance Ratio is greater than or equal to 100% but less than 103%.
 
 ######### A.3.2.2.7.2.1.1.2.2 - High Severity Breach Definition [Core]  <!-- UUID: 363e2bb5-47e2-4eb8-950d-eafd0f1392c7 -->
 
-A High Severity Breach is one in which the Risk Tolerance Ratio is greater than 103%.
+A High Severity Breach is one in which the Encumbrance Ratio is greater than 103%.
 
 ######## A.3.2.2.7.2.1.1.3 - Length Of Breaches [Core]  <!-- UUID: 9e689143-99a7-4cae-a6fc-1b1c31da4ff6 -->
 
@@ -14356,7 +14557,7 @@ Alternatively, Sky may convert the penalty into a debt owed by the Prime Agent t
 
 ######## A.3.2.2.7.2.1.1.7 - Short-Term Exemption [Core]  <!-- UUID: 829e886b-0d00-488a-bb27-27f12dae9b3b -->
 
-While the Risk Framework undergoes refinement, penalties for any Prime Agent breaches of Required Risk Capital will be calculated by Core GovOps once the infrastructure is in place to do so. This calculation serves the purposes of system monitoring, data gathering, and framework calibration. However, throughout this interim phase, such calculated penalties will not be formally assessed against Prime Agents, and consequently, Prime Agents will not be required to make payment for these penalties. Notwithstanding this temporary exemption from penalty payment, Prime Agents are expected to maintain a Risk Tolerance Ratio of less than or equal to 90%. See [A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
+While the Risk Framework undergoes refinement, penalties for any Prime Agent breaches of Required Risk Capital will be calculated by Core GovOps once the infrastructure is in place to do so. This calculation serves the purposes of system monitoring, data gathering, and framework calibration. However, throughout this interim phase, such calculated penalties will not be formally assessed against Prime Agents, and consequently, Prime Agents will not be required to make payment for these penalties. Notwithstanding this temporary exemption from penalty payment, Prime Agents are expected to maintain a Encumbrance Ratio of less than or equal to 90%. See [A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
 
 ####### A.3.2.2.7.2.1.2 - Additional Token Issuance For Breach Of Capital Requirements [Core]  <!-- UUID: 2e1a8489-5849-4030-9ed8-8b9a0b09d483 -->
 
@@ -15688,190 +15889,19 @@ SKY is the governance token of the Sky Protocol. It grants voting rights in the 
 
 #### A.4.1.2.1 - MKR To SKY Upgrade [Core]  <!-- UUID: 6bb8b5b2-a2a8-4728-bddb-28bf054de9b6 -->
 
-Historically, MKR was the governance token of the Sky Protocol. As part of the transition to the Endgame, the technical infrastructure of the Sky Protocol must be upgraded to use SKY as its governance token rather than MKR. The upgrade will take place over three phases, as defined in the documents herein.
+Historically, MKR was the governance token of the Sky Protocol. As part of the transition to the Endgame, the technical infrastructure of the Sky Protocol was upgraded to use SKY as its governance token rather than MKR.
 
 ##### A.4.1.2.1.1 - MKR To SKY Upgrade Approval [Core]  <!-- UUID: eaa5f1ae-f336-49f8-b5d3-7bb01984ba0e -->
 
-**MKR holders have voted to approve the deprecation of MKR as the governance token of the Sky Protocol with full knowledge of the changes being proposed. See **[**https://vote.makerdao.com/polling/QmcZNZg3**](https://vote.makerdao.com/polling/QmcZNZg3)**. This deprecation includes all actions defined in **[**A.4.1.2.1 - MKR To SKY Upgrade**](6bb8b5b2-a2a8-4728-bddb-28bf054de9b6)**, including, but not limited to, the removal of voting rights from MKR and the Delayed Upgrade Penalty.**
+**MKR holders have voted to approve the deprecation of MKR as the governance token of the Sky Protocol with full knowledge of the changes being proposed. See **[**https://vote.makerdao.com/polling/QmcZNZg3**](https://vote.makerdao.com/polling/QmcZNZg3)**. This deprecation includes all actions defined in **[**A.4.1.2.1 - MKR To SKY Upgrade**](6bb8b5b2-a2a8-4728-bddb-28bf054de9b6)**, including, but not limited to, the removal of voting rights from MKR and the Delayed Upgrade Penalty**.
 
-##### A.4.1.2.1.2 - MKR To SKY Upgrade Phase One [Core]  <!-- UUID: 6473cfec-8524-4b94-98e9-ab3744d68033 -->
+###### A.4.1.2.1.1.1 - MKR To SKY Conversion Contract [Core]  <!-- UUID: 0a26f6d0-1b50-4015-b094-499724796f9e -->
 
-The documents herein define Phase One of the upgrade from MKR to SKY as the governance token of the Protocol.
+The MKR to SKY conversion contract MKR_SKY allows users to upgrade from MKR to SKY at a conversion rate of 1 MKR to 24,000 SKY, subject to the Delayed Upgrade Penalty specified in [A.4.1.2.1.1.1.1 - MKR To SKY Upgrade Penalty](ec820ddb-5d12-43d8-81b7-a7602a70332a).
 
-###### A.4.1.2.1.2.1 - MKR To SKY Upgrade Phase One Timing [Core]  <!-- UUID: f3d8ba64-a916-4c48-825b-aef1edf59be3 -->
+####### A.4.1.2.1.1.1.1 - MKR To SKY Upgrade Penalty [Core]  <!-- UUID: ec820ddb-5d12-43d8-81b7-a7602a70332a -->
 
-Phase One is expected to occur in the May 15, 2025 Executive Vote.
-
-###### A.4.1.2.1.2.2 - MKR To SKY Upgrade Phase One Actions [Core]  <!-- UUID: 22e62734-fcc3-48c5-b27a-f18ec9354b8c -->
-
-The actions specified in the documents herein will be taken as part of Phase One. These actions are authorized to proceed directly to an Executive Vote without a prior Governance Poll.
-
-####### A.4.1.2.1.2.2.1 - Disable Conversion From SKY To MKR In Existing Conversion Contract [Core]  <!-- UUID: 2f8dadac-2557-4605-9283-a8318c39f7f0 -->
-
-The functionality to convert SKY to MKR in the existing converter contract located at `0xBDcFCA946b6CDd965f99a839e4435Bcdc1bc470B` on the Ethereum Mainnet must be disabled.
-
-####### A.4.1.2.1.2.2.2 - Launch New MKR To SKY Conversion Contract [Core]  <!-- UUID: 17677358-fe08-491c-a0c3-25ab63ed0eaa -->
-
-A new contract that allows upgrading from MKR to SKY must be deployed. This contract must have the following features:
-    
-◦ it must allow upgrading from MKR to SKY at a conversion rate of 1 MKR to 24,000 SKY, subject to the Delayed Upgrade Penalty specified below;    
-◦ it must not allow conversion from SKY to MKR;    
-◦ it must support charging a Delayed Upgrade Penalty set by Sky Governance, which applies to all upgrades of MKR to SKY; and    
-◦ the Delayed Upgrade Penalty must initially be set to 0%.
-
-####### A.4.1.2.1.2.2.3 - Disable MKR Flop Auctions [Core]  <!-- UUID: 4a88c667-e3d0-4631-8599-344f1e560537 -->
-
-MKR flop auctions must be disabled.
-
-######## A.4.1.2.1.2.2.3.0.3.1 - MKR Flop Auctions - Element Annotation [Annotation]  <!-- UUID: dc84565b-8fe9-4226-80ac-ae97c2f043a3 -->
-
-The element “MKR flop auctions” refers to auctions in which the Sky Protocol issues and auctions off MKR in exchange for Dai. These auctions allow the Sky Protocol to recapitalize itself to offset net debt.
-
-####### A.4.1.2.1.2.2.4 - Disable Emergency Shutdown Module [Core]  <!-- UUID: 5cf2d47c-61e9-42a7-a281-d908e4939114 -->
-
-The Emergency Shutdown Module must be disabled by setting the amount of MKR required to trigger it to infinity.
-
-####### A.4.1.2.1.2.2.5 - Launch New Chief Contract [Core]  <!-- UUID: 4b67a0b7-c0ba-4462-85f0-8534e81bf2b2 -->
-
-A new Chief contract must be deployed to support voting with SKY instead of MKR. The following changes must be made to support upgrade to the new Chief contract:
-    
-◦ the `ds-pause` contract must be set to be operated by the new Chief contract;    
-◦ all MOM contracts must be set to be operated by the new Chief contract;    
-◦ the `maxYays` parameter in the new Chief contract must be set to 5;    
-◦ the `launchThreshold` in the new Chief contract must be set to 2,400,000,000 SKY (equivalent to 100,000 MKR); and    
-◦ the `liftCooldown` must be set to 10 blocks.
-
-######## A.4.1.2.1.2.2.5.0.3.1 - Chief Contract - Element Annotation [Annotation]  <!-- UUID: 0c940b67-ec69-48af-8651-9156bd007b53 -->
-
-The element “Chief Contract” refers to the contract that implements the Sky Protocol’s on-chain voting mechanism. Under this mechanism, the hat, or current executive authority, is elected via token-weighted votes.
-
-####### A.4.1.2.1.2.2.6 - Move Authority Of Spark Freezer MOM Contract To New Chief Contract [Core]  <!-- UUID: 0e422b0a-7475-45de-af5c-a511bcef3646 -->
-
-A Spark Spell must be triggered to move the authority of the Spark Freezer MOM contract to the new Chief contract. See [A.1.9.3.2.7 - SparkLend Freezer Mom Exception](645443f1-9004-48d3-868c-139b608bb1f9).
-
-####### A.4.1.2.1.2.2.7 - Launch New SKY Oracle [Core]  <!-- UUID: d2699107-a24d-4d6b-834c-17bc8394d11b -->
-
-A new Oracle Security Module based on the Scribe SKY oracle must be deployed.
-
-####### A.4.1.2.1.2.2.8 - Add New SKY Oracle to Oracle Security Module MOM Contract [Core]  <!-- UUID: 6a27417d-6a05-4c91-8699-da9dc3165155 -->
-
-The new SKY oracle must be added to the OSM_MOM contract. See [A.1.9.3.2.2 - Oracle Freeze Exception](e604c477-e8e4-483f-a41e-c93dcff3acfd).
-
-####### A.4.1.2.1.2.2.9 - Update Smart Burn Engine Parameters [Core]  <!-- UUID: 786426a1-1d83-46fc-ae9c-9f34d034c2c6 -->
-
-The parameters of the Smart Burn Engine must be updated as follows:
-    
-◦ The oracle must be changed to the new SKY oracle; and    
-◦ The `rewardsDuration` for the `LSEV2-SKY-A` USDS rewards contract must be set such that it is equal to the `splitter.hop` parameter.
-
-####### A.4.1.2.1.2.2.10 - Launch SKY Staking [Core]  <!-- UUID: 14c38124-2b76-4bc3-8c25-74589085a8e7 -->
-
-SKY Staking must be launched with the following parameters for borrowing against staked SKY:
-    
-◦ `Ilk`: LSEV2-SKY-A    
-◦ `Farms`: 
-    ◦ LSSKY → USDS (`0x38E4254bD82ED5Ee97CD1C4278FAae748d998865`)
-    ◦ LSSKY → SPK (`0x99cBC0e4E6427F6939536eD24d1275B95ff77404`)   
-◦ `Fee`: 0    
-◦ DC-IAM `line`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
-◦ DC-IAM `gap`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
-◦ DC-IAM `ttl`: Set at discretion of Stability Facilitators in consultation with the Core Council Risk Advisor
-◦ Only existing LSE-MKR-A users with drawn debt are allowed to migrate debt to LSEV2-SKY-A initially    
-◦ `Dust`: 30,000    
-◦ `Duty`: 20%    
-◦ `Mat`: 145%    
-◦ `Calc`: StairstepExponentialDecrease    
-◦ `Buf`: 120%    
-◦ `Tail`: 6,000 seconds    
-◦ `Cusp`: 40%    
-◦ `Chip`: 0.1%    
-◦ `Tip`: 300 USDS    
-◦ `Stopped`: 3    
-◦ `Chop`: 13%    
-◦ `Hole`: 250,000    
-◦ `Tau`: 0 days    
-◦ `Cut`: 0.99    
-◦ `Step`: 60 seconds    
-◦ `LineMom`: Yes    
-◦ `Tolerance`: 0.5    
-◦ `Name`: LockstakeSky    
-◦ `Symbol`: lsSKY    
-◦ Use new SKY Chronicle Scribe oracle instance OSM    
-◦ Deny the CLIPPER_MOM from the new lockstake clipper
-
-####### A.4.1.2.1.2.2.11 - Deploy New Vote Delegate Factory Contract [Core]  <!-- UUID: afc62581-9159-4519-ace5-c36a6c8fe433 -->
-
-A new Vote Delegate factory contract must be deployed. The Vote Delegate factory contract must support deploying Delegate Contracts to which SKY holders and SKY Staking users can delegate their voting power.
-
-##### A.4.1.2.1.3 - MKR To SKY Upgrade Phase Two [Core]  <!-- UUID: de9eab64-6901-43c0-92a4-f0d9ad5027e8 -->
-
-The documents herein define Phase Two of the upgrade from MKR to SKY as the governance token of the Protocol.
-
-###### A.4.1.2.1.3.1 - MKR To SKY Upgrade Phase Two Timing [Core]  <!-- UUID: d63ced7e-d3da-4681-bac0-fbbc1912145c -->
-
-Phase Two is expected to occur in the May 29, 2025 Executive Vote.
-
-###### A.4.1.2.1.3.2 - MKR To SKY Upgrade Phase Two Actions [Core]  <!-- UUID: 68f161a6-71f8-43d1-b642-5fb3a78f95d1 -->
-
-The actions specified in the documents herein will be taken as part of Phase Two. These actions are authorized to proceed directly to an Executive Vote without a prior Governance Poll.
-
-####### A.4.1.2.1.3.2.1 - Update Parameters For Staked Sky [Core]  <!-- UUID: a85f7aef-395d-47ac-9844-381e8015c96e -->
-
-The parameters for staked SKY must be updated as follows:
-    
-◦ USDS rewards on the `LSEV2-SKY-A` contract must be activated by setting the `splitter.burn` parameter to 50%;    
-◦ the `maxLine` parameter must be set to 50,000,000 USDS    
-◦ the `gap` parameter must be set to 25,000,000;    
-◦ the `ttl` parameter must be set to 86,400 seconds; and    
-◦ the `autoline` parameter must be enabled.
-
-####### A.4.1.2.1.3.2.2 - Adjust GSM Pause Delay [Core]  <!-- UUID: 2d08217e-01c1-4d73-8ec6-ebe6a3529386 -->
-
-The GSM Pause Delay must be set to 24 hours. See [A.1.9.3.1.2 - Pause Delay Current Value](db442d8a-8d98-47a2-b162-01c2adc22b67).
-
-####### A.4.1.2.1.3.2.3 - Revoke Migrator Authority Over Vat Contract [Core]  <!-- UUID: 9de32331-4c15-4989-bdc1-51542c12a4a9 -->
-
-The Migrator contract authority over the Vat contract must be revoked. This authority was necessary for existing users of `LSE-MKR-A` to migrate to `LSEV2-SKY-A` but is no longer required.
-
-##### A.4.1.2.1.4 - MKR To SKY Upgrade Phase Three [Core]  <!-- UUID: d25c01ae-8690-4486-8766-8cb808df175d -->
-
-The documents herein define Phase Three of the upgrade from MKR to SKY as the governance token of the Protocol.
-
-###### A.4.1.2.1.4.1 - MKR To SKY Upgrade Phase Three Timing [Core]  <!-- UUID: 4f72f973-304f-48f7-b6bd-bcadd3b8703e -->
-
-Phase Three will occur in Executive Votes subsequent to the May 29, 2025 Executive Vote. Unlike Phases One and Two, Phase Three will occur over multiple future Executive Votes.
-
-###### A.4.1.2.1.4.2 - MKR To SKY Upgrade Phase Three Actions [Core]  <!-- UUID: b1e4b2ab-8da9-4af2-be7f-3b0f804e88e2 -->
-
-The actions specified in the documents herein will be taken as part of Phase Three. These actions are authorized to proceed directly to an Executive Vote without a prior Governance Poll.
-
-####### A.4.1.2.1.4.2.1 - Develop SKY Flop Auctions [Core]  <!-- UUID: c9c559fa-aa30-41d5-aedc-67cc8b7babad -->
-
-Functionality for SKY flop auctions must be developed.
-
-######## A.4.1.2.1.4.2.1.0.3.1 - SKY Flop Auctions - Element Annotation [Annotation]  <!-- UUID: ffb241db-d33a-4736-8364-10647f47d72c -->
-
-The element “SKY flop auctions” refers to auctions in which the Sky Protocol issues and auctions off SKY in exchange for USDS. These auctions allow the Sky Protocol to recapitalize itself to offset net debt.
-
-####### A.4.1.2.1.4.2.2 - Offboard Borrowing Against Staked MKR [Core]  <!-- UUID: 178d77aa-153a-4532-af2b-4c67dee3c928 -->
-
-Seal Engine (LSE-MKR-A) must be offboarded as a collateral type. This will require retiring the existing SKY wrapped oracle and removing it from the MegaPoker keeper as well as other actions that will be identified at a future date.
-
-####### A.4.1.2.1.4.2.3 - Upgrade MKR In Pause Proxy To SKY [Core]  <!-- UUID: 99c22704-e9ba-4f54-b6d3-cf387c1e805a -->
-
-The MKR in the Pause Proxy contract must be upgraded to SKY.
-
-####### A.4.1.2.1.4.2.4 - Update Liquidation Parameters For Borrowing Against Staked SKY [Core]  <!-- UUID: a868d2b9-fc52-4282-ba86-4aa6d5ab1e89 -->
-
-Once sufficient liquidity has been attained, liquidations must be enabled and parameters for LSEV2-SKY-A must be updated to normal levels.
-
-####### A.4.1.2.1.4.2.5 - Set Conversion Fee In MKR To SKY Conversion Contract To 1% [Core]  <!-- UUID: 90d06273-9ef4-4de2-ac91-672ef02a43b0 -->
-
-In the September 18, 2025 Executive Vote, the Delayed Upgrade Penalty for the new MKR to SKY conversion contract (see [A.4.1.2.1.2.2.2 - Launch New MKR To SKY Conversion Contract](17677358-fe08-491c-a0c3-25ab63ed0eaa)) must be set to 1%. Thereafter, the Delayed Upgrade Penalty must be increased gradually at the rate of 1 percentage point per three months.
-
-##### A.4.1.2.1.5 - MKR To SKY Upgrade Modification Of Phases [Core]  <!-- UUID: 965e3cd8-aa14-41f8-81fa-394e9b2d755a -->
-
-The timing and contents of Phase One, Phase Two, and Phase Three may be adjusted by the Protocol Facilitators in consultation with relevant Ecosystem Actors.
+In the September 18, 2025 Executive Vote, the Delayed Upgrade Penalty for the MKR to SKY conversion contract was set to 1%. The Delayed Upgrade Penalty will be increased gradually at the rate of 1 percentage point per 3 months thereafter.
 
 #### A.4.1.2.2 - Deflationary Tokenomics [Core]  <!-- UUID: c72ca16f-14d1-4aca-978e-ba9efe6d80bc -->
 
@@ -15961,83 +15991,85 @@ This Article governs the SKY Staking Mechanism that grants voting rewards on sta
 
 SKY holders can stake their tokens via the SKY Staking Mechanism available on Ethereum Mainnet and SkyLink Deployments. SKY stakers earn voting rewards sourced from the Sky Treasury Management Function. In lieu of USDS rewards and SKY rewards, SKY stakers can choose to earn Agent Token Rewards, including SPK and the tokens of other Prime Agents incubated by Sky. SKY stakers can also borrow USDS against their staked collateral using the SKY-backed borrowing mechanism defined herein.
 
-#### A.4.4.1.1 - SKY Staking Voting Rewards [Core]  <!-- UUID: a98a1bfe-5713-43f5-a8bd-83c5808900b8 -->
+#### A.4.4.1.1 - SKY Unstaking [Core]  <!-- UUID: e945372c-f526-45b9-af12-135f0eb6e830 -->
+
+SKY stakers can unstake their staked SKY at any time without penalty, provided the SKY is unencumbered by any borrowed USDS.
+
+#### A.4.4.1.2 - SKY Staking Voting Rewards [Core]  <!-- UUID: a98a1bfe-5713-43f5-a8bd-83c5808900b8 -->
 
 The documents herein define the SKY Staking Voting Rewards. SKY stakers may choose between receiving USDS or Agent Token rewards.
 
-##### A.4.4.1.1.1 - Sources of Voting Rewards [Core]  <!-- UUID: e1c77a6a-5b94-4d40-a205-43c703a780e2 -->
+##### A.4.4.1.2.1 - Sources of Voting Rewards [Core]  <!-- UUID: e1c77a6a-5b94-4d40-a205-43c703a780e2 -->
 
 SKY stakers are eligible to receive voting rewards sourced from the Sky Treasury Management Function (TMF) or the Agent Token Distribution mechanism defined in [A.4.5 - Distribution Of Agent Tokens](e2f1f01f-3303-41c3-b337-f09eb41ba6be).
 
-###### A.4.4.1.1.1.1 - Treasury Management Function-Derived Voting Rewards [Core]  <!-- UUID: 6cacdc1c-bdfa-4f68-bdb4-bf31943dcfba -->
+###### A.4.4.1.2.1.1 - Treasury Management Function-Derived Voting Rewards [Core]  <!-- UUID: 6cacdc1c-bdfa-4f68-bdb4-bf31943dcfba -->
 
 USDS rewards are distributed via two distinct mechanisms based on the staker’s activity level: the High Activity Staking Reward (HASR) and the Standard Activity Staking Reward (SASR). SASR is the base reward when funding from the Treasury Management Function is available; HASR is an additional boost reserved for High-Activity wallets. See [A.2.4.1.2.3.3 - Payout From High Activity Staking Rewards Buffer](6e857f3d-1e5c-4a47-943d-439b1d0d87ea).
 
-####### A.4.4.1.1.1.1.1 - Activity Levels [Core]  <!-- UUID: 42786ca1-42b6-4bfa-b455-54eba9e09c50 -->
+####### A.4.4.1.2.1.1.1 - Activity Levels [Core]  <!-- UUID: 42786ca1-42b6-4bfa-b455-54eba9e09c50 -->
 
 At the Monthly Settlement Cycle, all SKY-staking wallets are tagged as High Activity or Standard Activity, pursuant to the criteria defined in [A.2.4.1.2.3.4 - High Activity Staker Qualification](8e83f80f-5606-41a7-bc90-d79df38b55fe) and [A.2.4.1.2.5.2.3 - Standard Activity Staker Qualification](a22d900a-d15c-41f0-af90-eec23112dcb6). Only High Activity wallets share HASR; both High and Standard Activity wallets share SASR.
 
-####### A.4.4.1.1.1.1.2 - High Activity Staking Rewards [Core]  <!-- UUID: 40d13a7d-ddd7-42bd-ace8-05ba9ce6e588 -->
+####### A.4.4.1.2.1.1.2 - High Activity Staking Rewards [Core]  <!-- UUID: 40d13a7d-ddd7-42bd-ace8-05ba9ce6e588 -->
 
 The High Activity Staking Rewards (HASR) is a boosted reward provided to High Activity wallets. The HASR amount is distributed each monthly cycle pro-rata to the SKY stake of all High Activity wallets. High Activity wallets receive SASR (when funding is available) plus their separate HASR boost.
 
-####### A.4.4.1.1.1.1.3 - Standard Activity Staking Rewards [Core]  <!-- UUID: b18249d5-588a-44a4-8bab-250bb92b027f -->
+####### A.4.4.1.2.1.1.3 - Standard Activity Staking Rewards [Core]  <!-- UUID: b18249d5-588a-44a4-8bab-250bb92b027f -->
 
 The Standard Activity Staking Rewards (SASR) is the base reward shared by all wallets with Standard Activity status or higher. When funding is available, the SASR amount is distributed each monthly cycle pro‑rata to the SKY stake of every Standard or High Activity wallet.
 
-###### A.4.4.1.1.1.2 - Agent Token Distribution Voting Rewards [Core]  <!-- UUID: 6aa85298-4f1c-4dc5-a973-99bc1e5293d1 -->
+###### A.4.4.1.2.1.2 - Agent Token Distribution Voting Rewards [Core]  <!-- UUID: 6aa85298-4f1c-4dc5-a973-99bc1e5293d1 -->
 
 SKY stakers are eligible to receive Agent Token rewards as specified in [A.4.5 - Distribution Of Agent Tokens](e2f1f01f-3303-41c3-b337-f09eb41ba6be). At the Monthly Settlement Cycle, Agent Tokens are distributed pro‑rata, by staked SKY, among wallets that have opted to receive a specific Agent Token for the cycle. To qualify for Agent Token payout a wallet must satisfy the Standard Activity criteria specified in [A.2.4.1.2.5.2.2 - Payout From Standard Activity Staking Rewards Buffer](e288b944-759e-4d30-8db7-b59de7b5f912).
 
-#### A.4.4.1.2 - SKY-Backed Borrowing [Core]  <!-- UUID: 264b1787-cd75-4d28-9c14-c7d5a724eba7 -->
+#### A.4.4.1.3 - SKY-Backed Borrowing [Core]  <!-- UUID: 264b1787-cd75-4d28-9c14-c7d5a724eba7 -->
 
-SKY stakers can borrow USDS against their staked SKY collateral. This borrowing will be facilitated exclusively by the stUSDS system which will provide protocol-independent, or segregated, risk capital. The stUSDS system is currently in development; its elements are outlined in the subdocuments below.
+SKY stakers can borrow USDS against their staked SKY collateral. This borrowing will be facilitated exclusively by the stUSDS system which will provide protocol-independent, or segregated, risk capital. The stUSDS elements are outlined in the subdocuments below.
 
-During the transition period to the stUSDS system, the protocol-dependent SKY-backed borrowing system remains operational and is governed by [A.4.4.1.3 - Short Term Transitionary Measures](22b8f8bf-b477-4439-86f7-ec605d3c657a).
+##### A.4.4.1.3.1 - stUSDS Function [Core]  <!-- UUID: f81ed4c8-ccfc-492a-b8f8-6f284158d8c3 -->
 
-##### A.4.4.1.2.1 - stUSDS Function [Core]  <!-- UUID: f81ed4c8-ccfc-492a-b8f8-6f284158d8c3 -->
+stUSDS is a yield-bearing token representing USDS deposited into the stUSDS contract. Its primary function is to provide segregated risk capital for the SKY-backed borrowing mechanism. Users convert USDS to stUSDS to provide this capital and earn the stUSDS Rate. See [A.4.4.1.3.2 - stUSDS Rate](7e51d5a7-0707-4fba-999b-a1becd5f0192). stUSDS can be converted back to USDS subject to available unutilized liquidity in the stUSDS converter contract.
 
-stUSDS is a yield-bearing token representing USDS deposited into the stUSDS contract. Its primary function is to provide segregated risk capital for the SKY-backed borrowing mechanism. Users convert USDS to stUSDS to provide this capital and earn the stUSDS Rate. See [A.4.4.1.2.2 - stUSDS Rate](7e51d5a7-0707-4fba-999b-a1becd5f0192). stUSDS can be converted back to USDS subject to available unutilized liquidity in the stUSDS converter contract.
-
-##### A.4.4.1.2.2 - stUSDS Rate [Core]  <!-- UUID: 7e51d5a7-0707-4fba-999b-a1becd5f0192 -->
+##### A.4.4.1.3.2 - stUSDS Rate [Core]  <!-- UUID: 7e51d5a7-0707-4fba-999b-a1becd5f0192 -->
 
 The variable yield earned by stUSDS holders is calculated using the formula:
 
 `stUSDS Rate = Sky Savings Rate + (SKY Borrow Rate - SKY Borrow Minimum Rate) * Utilization - Rfactor * f(Utilization)`
 
-###### A.4.4.1.2.2.1 - Parameters Definition [Core]  <!-- UUID: b9a9d09d-57c5-42cd-994f-f5689996f635 -->
+###### A.4.4.1.3.2.1 - Parameters Definition [Core]  <!-- UUID: b9a9d09d-57c5-42cd-994f-f5689996f635 -->
 
 The parameters of the stUSDS Rate formula are further defined in the documents herein.
 
-####### A.4.4.1.2.2.1.1 - Sky Savings Rate Definition [Core]  <!-- UUID: 5878457b-4ff8-4621-bf8e-abd52f02ec6a -->
+####### A.4.4.1.3.2.1.1 - Sky Savings Rate Definition [Core]  <!-- UUID: 5878457b-4ff8-4621-bf8e-abd52f02ec6a -->
 
 `Sky Savings Rate` is the Sky Savings Rate defined in [A.3.1.2.2 - Sky Savings Rate](2674cccb-d779-4868-b83f-8cb86648c88a).
 
-####### A.4.4.1.2.2.1.2 - SKY Borrow Rate Definition [Core]  <!-- UUID: 78cab555-534d-4e7e-989c-d22d90d02d9e -->
+####### A.4.4.1.3.2.1.2 - SKY Borrow Rate Definition [Core]  <!-- UUID: 78cab555-534d-4e7e-989c-d22d90d02d9e -->
 
-`SKY Borrow Rate` is the SKY Borrow Rate defined in [A.4.4.1.2.5 - SKY Borrow Rate](5e546766-a0c0-4744-9ca9-5509db14bc30).
+`SKY Borrow Rate` is the SKY Borrow Rate defined in [A.4.4.1.3.5 - SKY Borrow Rate](5e546766-a0c0-4744-9ca9-5509db14bc30).
 
-####### A.4.4.1.2.2.1.3 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: 2126d7ac-b0e2-46f2-95e8-b9973e09a630 -->
+####### A.4.4.1.3.2.1.3 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: 2126d7ac-b0e2-46f2-95e8-b9973e09a630 -->
 
-`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate defined in [A.4.4.1.2.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
+`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate defined in [A.4.4.1.3.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
 
-####### A.4.4.1.2.2.1.4 - Utilization Definition [Core]  <!-- UUID: 337c4f67-685f-42bd-8237-553ed913b89f -->
+####### A.4.4.1.3.2.1.4 - Utilization Definition [Core]  <!-- UUID: 337c4f67-685f-42bd-8237-553ed913b89f -->
 
 `Utilization` is the percent of funds in the stUSDS contract that are used to fund borrowing against staked SKY.
 
-######## A.4.4.1.2.2.1.4.1 - Utilization Calculation [Core]  <!-- UUID: 4af5cfaf-30b3-41b9-bb22-3253218c62d0 -->
+######## A.4.4.1.3.2.1.4.1 - Utilization Calculation [Core]  <!-- UUID: 4af5cfaf-30b3-41b9-bb22-3253218c62d0 -->
 
 The `Utilization` is calculated as a time-weighted utilization over a one (1) day interval.
 
-######### A.4.4.1.2.2.1.4.1.1 - Time-Weighted Utilization [Core]  <!-- UUID: 33303813-37b7-4aa2-a8e0-3c779c0ed600 -->
+######### A.4.4.1.3.2.1.4.1.1 - Time-Weighted Utilization [Core]  <!-- UUID: 33303813-37b7-4aa2-a8e0-3c779c0ed600 -->
 
 The documents herein define the process to calculate time-weighted utilization.
 
-########## A.4.4.1.2.2.1.4.1.1.1 - Determine Start And End Times [Core]  <!-- UUID: 0110848f-719f-47e7-8f5a-219d6b3e4ee5 -->
+########## A.4.4.1.3.2.1.4.1.1.1 - Determine Start And End Times [Core]  <!-- UUID: 0110848f-719f-47e7-8f5a-219d6b3e4ee5 -->
 
 First, the start time $T_{0}$ and end time $T_{n}$ of the interval, over which time-weighted utilization are to be calculated, are selected.
 
-########## A.4.4.1.2.2.1.4.1.1.2 - Collect Borrow And Supply Events [Core]  <!-- UUID: e196d2f1-fb65-4e31-b511-5ed9ebbaa164 -->
+########## A.4.4.1.3.2.1.4.1.1.2 - Collect Borrow And Supply Events [Core]  <!-- UUID: e196d2f1-fb65-4e31-b511-5ed9ebbaa164 -->
 
 Data is then collected on all supply and borrow events, sorted by time, where:
     
@@ -16047,17 +16079,17 @@ Data is then collected on all supply and borrow events, sorted by time, where:
 ◦ $U_{i}$ is the utilization at time $t_{i}$, $\frac{B_{i}}{S_{i}}
 $.
 
-########## A.4.4.1.2.2.1.4.1.1.3 - Insert Synthetic Events [Core]  <!-- UUID: 9242854f-4b5b-4ca0-9fd4-ca0a4f7dc516 -->
+########## A.4.4.1.3.2.1.4.1.1.3 - Insert Synthetic Events [Core]  <!-- UUID: 9242854f-4b5b-4ca0-9fd4-ca0a4f7dc516 -->
 
 If $t_{0}$ is greater than $T_{0}$ then a synthetic event is inserted at $T_{0}$ with values $B_{0}$ and $S_{0}$. Similarly, if $t_{n}$ is less than $T_{n}$ then a synthetic event is inserted at $T_{n}$ with values $B_{n}$ and $S_{n}$.
 
-########## A.4.4.1.2.2.1.4.1.1.4 - Calculate Time-Weighted Utilization [Core]  <!-- UUID: 08735694-ee69-4315-8ba6-6d08760bdb1c -->
+########## A.4.4.1.3.2.1.4.1.1.4 - Calculate Time-Weighted Utilization [Core]  <!-- UUID: 08735694-ee69-4315-8ba6-6d08760bdb1c -->
 
 Finally, the time-weighted utilization is calculated using the following formula:
 
 $$\text{Util}_{\mathrm{avg}} = \frac{\sum_{i=0}^{n-1} U_i \cdot (t_{i+1} - t_i)}{T_n - T_0}$$
 
-########## A.4.4.1.2.2.1.4.1.1.5 - Reference Implementation [Core]  <!-- UUID: 53ed66f4-d010-4370-b83b-e36a185f12ad -->
+########## A.4.4.1.3.2.1.4.1.1.5 - Reference Implementation [Core]  <!-- UUID: 53ed66f4-d010-4370-b83b-e36a185f12ad -->
 
 A reference implementation of the time-weighted utilization formula is included herein. The reference implementation uses sample data and a 30 day interval for illustrative purposes.
 
@@ -16109,7 +16141,7 @@ avg_utilization = weighted_sum / total_time if total_time > 0 else 0
 
 print(f"30-day time-weighted average utilization: {avg_utilization:.2%}")`
 
-####### A.4.4.1.2.2.1.5 - Rfactor Definition [Core]  <!-- UUID: 6300d908-4ed3-4174-95a5-d9d43864a5a6 -->
+####### A.4.4.1.3.2.1.5 - Rfactor Definition [Core]  <!-- UUID: 6300d908-4ed3-4174-95a5-d9d43864a5a6 -->
 
 `Rfactor` is calculated using the formula:
 
@@ -16119,19 +16151,19 @@ $$
 
 The parameters of this formula are specified in the documents herein.
 
-######## A.4.4.1.2.2.1.5.1 - Maximum Profit Utilization Definition [Core]  <!-- UUID: be7b6a5a-cd25-4822-a20a-e17c0d1176de -->
+######## A.4.4.1.3.2.1.5.1 - Maximum Profit Utilization Definition [Core]  <!-- UUID: be7b6a5a-cd25-4822-a20a-e17c0d1176de -->
 
 $u_{m}$ is the maximum profit utilization.
 
-######### A.4.4.1.2.2.1.5.1.1 - Maximum Profit Utilization Current Value [Core]  <!-- UUID: 846452c4-509d-42b0-8e8c-e426bbcc4ce0 -->
+######### A.4.4.1.3.2.1.5.1.1 - Maximum Profit Utilization Current Value [Core]  <!-- UUID: 846452c4-509d-42b0-8e8c-e426bbcc4ce0 -->
 
 The current value of $u_{m}$ is 70%.
 
-######## A.4.4.1.2.2.1.5.2 - Target Utilization Definition [Core]  <!-- UUID: 1481bf21-dc05-4fea-a929-9741ea903206 -->
+######## A.4.4.1.3.2.1.5.2 - Target Utilization Definition [Core]  <!-- UUID: 1481bf21-dc05-4fea-a929-9741ea903206 -->
 
-$u_{opt}$ is the target utilization specified in [A.4.4.1.2.5.1 - Rate Setting Mechanism](5ad3e32c-9b5c-431a-bc20-e236194b65e8).
+$u_{opt}$ is the target utilization specified in [A.4.4.1.3.5.1 - Rate Setting Mechanism](5ad3e32c-9b5c-431a-bc20-e236194b65e8).
 
-######## A.4.4.1.2.2.1.5.3 - Alpha Definition [Core]  <!-- UUID: e9cfb75d-2d5b-448e-a3e1-784326a94ac4 -->
+######## A.4.4.1.3.2.1.5.3 - Alpha Definition [Core]  <!-- UUID: e9cfb75d-2d5b-448e-a3e1-784326a94ac4 -->
 
 $\alpha$ is calculated using the formula:
 
@@ -16139,35 +16171,35 @@ $\alpha$ is calculated using the formula:
 
 The parameters of this formula are specified in the documents herein.
 
-######### A.4.4.1.2.2.1.5.3.1 - SKY Borrow Maximum Rate Definition [Core]  <!-- UUID: eb77a744-db25-40b0-b51c-dd3187941cc5 -->
+######### A.4.4.1.3.2.1.5.3.1 - SKY Borrow Maximum Rate Definition [Core]  <!-- UUID: eb77a744-db25-40b0-b51c-dd3187941cc5 -->
 
 `SKY Borrow Maximum Rate` is the maximum value of the SKY Borrow Rate at 100% Utilization.
 
-########## A.4.4.1.2.2.1.5.3.1.1 - SKY Borrow Maximum Rate Current Value [Core]  <!-- UUID: 609ca82c-d3c8-4ad9-bc14-d601dace4e40 -->
+########## A.4.4.1.3.2.1.5.3.1.1 - SKY Borrow Maximum Rate Current Value [Core]  <!-- UUID: 609ca82c-d3c8-4ad9-bc14-d601dace4e40 -->
 
 The current value of the `SKY Borrow Maximum Rate` is 30%.
 
-######### A.4.4.1.2.2.1.5.3.2 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: b0831a3c-b37b-4daa-838a-74a32a0cbe76 -->
+######### A.4.4.1.3.2.1.5.3.2 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: b0831a3c-b37b-4daa-838a-74a32a0cbe76 -->
 
-`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate specified in [A.4.4.1.2.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
+`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate specified in [A.4.4.1.3.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
 
-######### A.4.4.1.2.2.1.5.3.3 - Slope 1 Definition [Core]  <!-- UUID: f9ad84ee-2e98-4d74-b61a-efd25e8d17b8 -->
+######### A.4.4.1.3.2.1.5.3.3 - Slope 1 Definition [Core]  <!-- UUID: f9ad84ee-2e98-4d74-b61a-efd25e8d17b8 -->
 
-`Slope 1` is the Slope 1 parameter specified in [A.4.4.1.2.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
+`Slope 1` is the Slope 1 parameter specified in [A.4.4.1.3.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
 
-######## A.4.4.1.2.2.1.5.4 - Beta Definition [Core]  <!-- UUID: 182418ba-47ad-416b-a5fe-440ac92511ec -->
+######## A.4.4.1.3.2.1.5.4 - Beta Definition [Core]  <!-- UUID: 182418ba-47ad-416b-a5fe-440ac92511ec -->
 
 $\beta$ is a tuning parameter that determines how much profit is made at maximum utilization.
 
-######### A.4.4.1.2.2.1.5.4.1 - Beta Current Value [Core]  <!-- UUID: 47c60bd6-c75f-4772-a5f6-18b8054eeb9f -->
+######### A.4.4.1.3.2.1.5.4.1 - Beta Current Value [Core]  <!-- UUID: 47c60bd6-c75f-4772-a5f6-18b8054eeb9f -->
 
 The current value of $\beta$ is 100%.
 
-######## A.4.4.1.2.2.1.5.5 - Slope 1 Definition [Core]  <!-- UUID: 837aa41f-d5d2-4482-a33f-7538a6431e7f -->
+######## A.4.4.1.3.2.1.5.5 - Slope 1 Definition [Core]  <!-- UUID: 837aa41f-d5d2-4482-a33f-7538a6431e7f -->
 
-$slope1$ is the Slope 1 parameter specified in [A.4.4.1.2.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
+$slope1$ is the Slope 1 parameter specified in [A.4.4.1.3.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
 
-####### A.4.4.1.2.2.1.6 - Utilization Function Definition [Core]  <!-- UUID: 4088de4a-8e43-4988-94ca-43908a225047 -->
+####### A.4.4.1.3.2.1.6 - Utilization Function Definition [Core]  <!-- UUID: 4088de4a-8e43-4988-94ca-43908a225047 -->
 
 `f(Utilization)` is calculated using the formula:
 
@@ -16175,89 +16207,89 @@ $slope1$ is the Slope 1 parameter specified in [A.4.4.1.2.5.1.1.4 - Slope 1](f22
 
 The parameters of this formula are specified in the documents herein.
 
-######## A.4.4.1.2.2.1.6.1 - Utilization Definition [Core]  <!-- UUID: 8ff2ac6c-c34e-4b00-9125-05a5404d75eb -->
+######## A.4.4.1.3.2.1.6.1 - Utilization Definition [Core]  <!-- UUID: 8ff2ac6c-c34e-4b00-9125-05a5404d75eb -->
 
-`Utilization` is the utilization as specified in [A.4.4.1.2.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f).
+`Utilization` is the utilization as specified in [A.4.4.1.3.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f).
 
-######## A.4.4.1.2.2.1.6.2 - SKY Borrow Maximum Rate Definition [Core]  <!-- UUID: 3815fba3-bc80-482a-9baf-d201931b26c9 -->
+######## A.4.4.1.3.2.1.6.2 - SKY Borrow Maximum Rate Definition [Core]  <!-- UUID: 3815fba3-bc80-482a-9baf-d201931b26c9 -->
 
-`SKY Borrow Maximum Rate` is the SKY Borrow Maximum Rate specified in [A.4.4.1.2.2.1.5.3.1 - SKY Borrow Maximum Rate Definition](eb77a744-db25-40b0-b51c-dd3187941cc5).
+`SKY Borrow Maximum Rate` is the SKY Borrow Maximum Rate specified in [A.4.4.1.3.2.1.5.3.1 - SKY Borrow Maximum Rate Definition](eb77a744-db25-40b0-b51c-dd3187941cc5).
 
-######## A.4.4.1.2.2.1.6.3 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: d1015b48-32c0-454a-b0a0-7a884f405092 -->
+######## A.4.4.1.3.2.1.6.3 - SKY Borrow Minimum Rate Definition [Core]  <!-- UUID: d1015b48-32c0-454a-b0a0-7a884f405092 -->
 
-`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate specified in [A.4.4.1.2.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
+`SKY Borrow Minimum Rate` is the SKY Borrow Minimum Rate specified in [A.4.4.1.3.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
 
-######## A.4.4.1.2.2.1.6.4 - Beta Definition [Core]  <!-- UUID: 436398ad-9660-4a8c-9556-6631888586fb -->
+######## A.4.4.1.3.2.1.6.4 - Beta Definition [Core]  <!-- UUID: 436398ad-9660-4a8c-9556-6631888586fb -->
 
-`Beta` is the beta specified in [A.4.4.1.2.2.1.5.4 - Beta Definition](182418ba-47ad-416b-a5fe-440ac92511ec).
+`Beta` is the beta specified in [A.4.4.1.3.2.1.5.4 - Beta Definition](182418ba-47ad-416b-a5fe-440ac92511ec).
 
-######## A.4.4.1.2.2.1.6.5 - SKY Borrow Rate Definition [Core]  <!-- UUID: 3bcb6e31-d14f-434e-b3fe-8469a4a49011 -->
+######## A.4.4.1.3.2.1.6.5 - SKY Borrow Rate Definition [Core]  <!-- UUID: 3bcb6e31-d14f-434e-b3fe-8469a4a49011 -->
 
-`SKY Borrow Rate` is the SKY Borrow Rate specified in [A.4.4.1.2.5 - SKY Borrow Rate](5e546766-a0c0-4744-9ca9-5509db14bc30).
+`SKY Borrow Rate` is the SKY Borrow Rate specified in [A.4.4.1.3.5 - SKY Borrow Rate](5e546766-a0c0-4744-9ca9-5509db14bc30).
 
-###### A.4.4.1.2.2.2 - Parameters Modification [Core]  <!-- UUID: a63c529d-890f-4955-89b3-e671e5eb5ff7 -->
+###### A.4.4.1.3.2.2 - Parameters Modification [Core]  <!-- UUID: a63c529d-890f-4955-89b3-e671e5eb5ff7 -->
 
-The parameters specified in [A.4.4.1.2.2.1 - Parameters Definition](b9a9d09d-57c5-42cd-994f-f5689996f635) that are set by governance may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
+The parameters specified in [A.4.4.1.3.2.1 - Parameters Definition](b9a9d09d-57c5-42cd-994f-f5689996f635) that are set by governance may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-##### A.4.4.1.2.3 - stUSDS Holders’ Risk Bearing [Core]  <!-- UUID: 60a37c03-9122-4ef6-9669-2466c335224c -->
+##### A.4.4.1.3.3 - stUSDS Holders’ Risk Bearing [Core]  <!-- UUID: 60a37c03-9122-4ef6-9669-2466c335224c -->
 
 Holders of stUSDS accept the risk associated with providing capital for SKY-backed borrowing. In the event that the liquidation of a borrower’s staked SKY collateral does not cover the outstanding debt, stUSDS balances will be subject to a haircut proportional to the shortfall. This mechanism ensures that the Sky Protocol is isolated from losses originating from the SKY-backed borrowing facility.
 
-##### A.4.4.1.2.4 - Debt Ceiling [Core]  <!-- UUID: f7c00726-64a0-4ba5-8c0d-231d0e27e54c -->
+##### A.4.4.1.3.4 - Debt Ceiling [Core]  <!-- UUID: f7c00726-64a0-4ba5-8c0d-231d0e27e54c -->
 
 The maximum amount of USDS that can be borrowed against staked SKY is dynamically determined by, and equal to, the total amount of USDS currently held within the stUSDS contract. This dynamic ceiling will replace the static `DC-IAM` module and parameters associated with protocol-dependent, SKY-backed borrowing.
 
-##### A.4.4.1.2.5 - SKY Borrow Rate [Core]  <!-- UUID: 5e546766-a0c0-4744-9ca9-5509db14bc30 -->
+##### A.4.4.1.3.5 - SKY Borrow Rate [Core]  <!-- UUID: 5e546766-a0c0-4744-9ca9-5509db14bc30 -->
 
 The interest rate charged to borrowers (SKY Borrow Rate) is dynamic and market-driven, based on the utilization of funds within the stUSDS contract. This dynamic rate will replace the static `Stability Fee` parameter associated with protocol-dependent, SKY-backed borrowing.
 
-###### A.4.4.1.2.5.1 - Rate Setting Mechanism [Core]  <!-- UUID: 5ad3e32c-9b5c-431a-bc20-e236194b65e8 -->
+###### A.4.4.1.3.5.1 - Rate Setting Mechanism [Core]  <!-- UUID: 5ad3e32c-9b5c-431a-bc20-e236194b65e8 -->
 
-The SKY Borrow Rate adjusts to target a 90% utilization rate of the USDS in the stUSDS contract. When stUSDS utilization is below 90%, the rate gradually decreases; when above 90%, it gradually increases. The SKY Borrow Rate cannot fall below the SKY Borrow Minimum Rate. See [A.4.4.1.2.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
+The SKY Borrow Rate adjusts to target a 90% utilization rate of the USDS in the stUSDS contract. When stUSDS utilization is below 90%, the rate gradually decreases; when above 90%, it gradually increases. The SKY Borrow Rate cannot fall below the SKY Borrow Minimum Rate. See [A.4.4.1.3.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
 
 The specific parameters and formula governing the rate of adjustment are specified in the documents herein.
 
-####### A.4.4.1.2.5.1.1 - Rate Setting Parameters [Core]  <!-- UUID: 7e07b3d3-0eb5-449b-abcd-7373b9037691 -->
+####### A.4.4.1.3.5.1.1 - Rate Setting Parameters [Core]  <!-- UUID: 7e07b3d3-0eb5-449b-abcd-7373b9037691 -->
 
 The parameters of the rate setting mechanism are specified in the documents herein.
 
-######## A.4.4.1.2.5.1.1.1 - Utilization [Core]  <!-- UUID: 06440c14-0fc8-42e8-bb16-62c75c007453 -->
+######## A.4.4.1.3.5.1.1.1 - Utilization [Core]  <!-- UUID: 06440c14-0fc8-42e8-bb16-62c75c007453 -->
 
-`Utilization` is the percentage of funds in the stUSDS contract that are used to fund borrowing against staked SKY specified in [A.4.4.1.2.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f).
+`Utilization` is the percentage of funds in the stUSDS contract that are used to fund borrowing against staked SKY specified in [A.4.4.1.3.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f).
 
-######## A.4.4.1.2.5.1.1.2 - Target Utilization [Core]  <!-- UUID: d4f5b180-ea44-4962-a79a-9f09b734758d -->
+######## A.4.4.1.3.5.1.1.2 - Target Utilization [Core]  <!-- UUID: d4f5b180-ea44-4962-a79a-9f09b734758d -->
 
-`Target Utilization` is the target utilization rate of USDS in the stUSDS contract specified in [A.4.4.1.2.5.1 - Rate Setting Mechanism](5ad3e32c-9b5c-431a-bc20-e236194b65e8).
+`Target Utilization` is the target utilization rate of USDS in the stUSDS contract specified in [A.4.4.1.3.5.1 - Rate Setting Mechanism](5ad3e32c-9b5c-431a-bc20-e236194b65e8).
 
-######## A.4.4.1.2.5.1.1.3 - SKY Borrow Minimum Rate [Core]  <!-- UUID: 30577c68-7d3f-4f96-a228-1ad9c5c8ddd0 -->
+######## A.4.4.1.3.5.1.1.3 - SKY Borrow Minimum Rate [Core]  <!-- UUID: 30577c68-7d3f-4f96-a228-1ad9c5c8ddd0 -->
 
-`SKY Borrow Minimum Rate` is the rate that the SKY Borrow Rate cannot fall below specified in [A.4.4.1.2.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
+`SKY Borrow Minimum Rate` is the rate that the SKY Borrow Rate cannot fall below specified in [A.4.4.1.3.5.2 - SKY Borrow Minimum Rate](6e329dd6-eda5-43ce-9899-b3a03ede8d0b).
 
-######## A.4.4.1.2.5.1.1.4 - Slope 1 [Core]  <!-- UUID: f22da959-a76e-477a-a87b-a32c429d2ec0 -->
+######## A.4.4.1.3.5.1.1.4 - Slope 1 [Core]  <!-- UUID: f22da959-a76e-477a-a87b-a32c429d2ec0 -->
 
 `Slope 1` represents the spread of the SKY Borrow Rate over the SKY Borrow Minimum Rate when Utilization is at Target Utilization.
 
-######### A.4.4.1.2.5.1.1.4.1 - Slope 1 Current Value [Core]  <!-- UUID: ef387e32-b649-45ec-bd7a-c63842802134 -->
+######### A.4.4.1.3.5.1.1.4.1 - Slope 1 Current Value [Core]  <!-- UUID: ef387e32-b649-45ec-bd7a-c63842802134 -->
 
 The current value of the `Slope 1` parameter is 12.575%.
 
-######### A.4.4.1.2.5.1.1.4.2 - Slope 1 Modification [Core]  <!-- UUID: 5ea82a74-73e3-4f35-83ef-02d7af0cf58b -->
+######### A.4.4.1.3.5.1.1.4.2 - Slope 1 Modification [Core]  <!-- UUID: 5ea82a74-73e3-4f35-83ef-02d7af0cf58b -->
 
 The `Slope 1` parameter may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-######## A.4.4.1.2.5.1.1.5 - Slope 2 [Core]  <!-- UUID: fb127571-4e01-4deb-b4cf-8fad2f7c9b71 -->
+######## A.4.4.1.3.5.1.1.5 - Slope 2 [Core]  <!-- UUID: fb127571-4e01-4deb-b4cf-8fad2f7c9b71 -->
 
 `Slope 2` represents the spread of the SKY Borrow Rate at 100% Utilization over the SKY Borrow Rate at Target Utilization.
 
-######### A.4.4.1.2.5.1.1.5.1 - Slope 2 Current Value [Core]  <!-- UUID: 6d557d64-e579-4285-92b6-ff8f709dab29 -->
+######### A.4.4.1.3.5.1.1.5.1 - Slope 2 Current Value [Core]  <!-- UUID: 6d557d64-e579-4285-92b6-ff8f709dab29 -->
 
 The current value of the `Slope 2` parameter is 12.575%.
 
-######### A.4.4.1.2.5.1.1.5.2 - Slope 2 Modification [Core]  <!-- UUID: 4446f92c-bb70-4f94-bcf7-d44749ed87b7 -->
+######### A.4.4.1.3.5.1.1.5.2 - Slope 2 Modification [Core]  <!-- UUID: 4446f92c-bb70-4f94-bcf7-d44749ed87b7 -->
 
 The `Slope 2` parameter may be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-######### A.4.4.1.2.5.1.1.5.3 - Slope 2 Methodology [Core]  <!-- UUID: dbc8ec1b-c9cb-40c1-8ccd-bd7478c42466 -->
+######### A.4.4.1.3.5.1.1.5.3 - Slope 2 Methodology [Core]  <!-- UUID: dbc8ec1b-c9cb-40c1-8ccd-bd7478c42466 -->
 
 Under normal circumstances governance should set the `Slope 2` parameter based on the following formula:
 
@@ -16265,15 +16297,15 @@ Under normal circumstances governance should set the `Slope 2` parameter based o
 
 The parameters of this formula are specified in the documents herein.
 
-########## A.4.4.1.2.5.1.1.5.3.1 - Slope 1 Definition [Core]  <!-- UUID: 664f473c-a48a-4961-8352-5dd93b8c5410 -->
+########## A.4.4.1.3.5.1.1.5.3.1 - Slope 1 Definition [Core]  <!-- UUID: 664f473c-a48a-4961-8352-5dd93b8c5410 -->
 
-The `Slope 1` parameter is specified in [A.4.4.1.2.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
+The `Slope 1` parameter is specified in [A.4.4.1.3.5.1.1.4 - Slope 1](f22da959-a76e-477a-a87b-a32c429d2ec0).
 
-########## A.4.4.1.2.5.1.1.5.3.2 - Alpha Definition [Core]  <!-- UUID: 03a02181-fb87-4bac-83cc-f062cc7dc593 -->
+########## A.4.4.1.3.5.1.1.5.3.2 - Alpha Definition [Core]  <!-- UUID: 03a02181-fb87-4bac-83cc-f062cc7dc593 -->
 
-The `alpha` parameter is specified in [A.4.4.1.2.2.1.5.3 - Alpha Definition](e9cfb75d-2d5b-448e-a3e1-784326a94ac4).
+The `alpha` parameter is specified in [A.4.4.1.3.2.1.5.3 - Alpha Definition](e9cfb75d-2d5b-448e-a3e1-784326a94ac4).
 
-####### A.4.4.1.2.5.1.2 - Rate Setting Formula [Core]  <!-- UUID: 05e97d4d-37e2-4ed8-acea-a8728fbe0402 -->
+####### A.4.4.1.3.5.1.2 - Rate Setting Formula [Core]  <!-- UUID: 05e97d4d-37e2-4ed8-acea-a8728fbe0402 -->
 
 The Sky Borrow Rate is calculated according to the following formula when Utilization is less than or equal to Target Utilization:
 
@@ -16283,7 +16315,7 @@ The SKY Borrow Rate is calculated according to the following formula when Utiliz
 
 `SKY Borrow Rate = SKY Borrow Minimum Rate + Slope 1 + (Utilization - Target Utilization) / (1 - Target Utilization) * Slope 2`
 
-###### A.4.4.1.2.5.2 - SKY Borrow Minimum Rate [Core]  <!-- UUID: 6e329dd6-eda5-43ce-9899-b3a03ede8d0b -->
+###### A.4.4.1.3.5.2 - SKY Borrow Minimum Rate [Core]  <!-- UUID: 6e329dd6-eda5-43ce-9899-b3a03ede8d0b -->
 
 The SKY Borrow Minimum Rate is calculated according to the following formula:
 
@@ -16291,19 +16323,19 @@ The SKY Borrow Minimum Rate is calculated according to the following formula:
 
 The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Accessibility Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
 
-####### A.4.4.1.2.5.2.1 - Parameters Definition [Core]  <!-- UUID: 63e86a25-18f6-4810-a362-d2831781ea2c -->
+####### A.4.4.1.3.5.2.1 - Parameters Definition [Core]  <!-- UUID: 63e86a25-18f6-4810-a362-d2831781ea2c -->
 
 The parameters of the SKY Borrow Minimum Rate formula are further defined in the documents herein.
 
-######## A.4.4.1.2.5.2.1.1 - Sky Savings Rate Definition [Core]  <!-- UUID: 27839098-86b9-479f-87b7-ffd467c825c8 -->
+######## A.4.4.1.3.5.2.1.1 - Sky Savings Rate Definition [Core]  <!-- UUID: 27839098-86b9-479f-87b7-ffd467c825c8 -->
 
 `Sky Savings Rate` is defined in [A.3.1.2.2 - Sky Savings Rate](2674cccb-d779-4868-b83f-8cb86648c88a).
 
-######## A.4.4.1.2.5.2.1.2 - stUSDS Accessibility Reward Definition [Core]  <!-- UUID: a61d98e3-ca01-4945-ba76-46955be3631c -->
+######## A.4.4.1.3.5.2.1.2 - stUSDS Accessibility Reward Definition [Core]  <!-- UUID: a61d98e3-ca01-4945-ba76-46955be3631c -->
 
-`stUSDS Accessibility Reward` is defined in [A.4.4.1.2.7 - stUSDS Accessibility Reward](673676d8-62a4-4422-b870-fbcdb3c0aabd).
+`stUSDS Accessibility Reward` is defined in [A.4.4.1.3.7 - stUSDS Accessibility Reward](673676d8-62a4-4422-b870-fbcdb3c0aabd).
 
-##### A.4.4.1.2.6 - stUSDS Risk Parameters [Core]  <!-- UUID: fac38a01-4c67-4810-af22-3e7b2d855567 -->
+##### A.4.4.1.3.6 - stUSDS Risk Parameters [Core]  <!-- UUID: fac38a01-4c67-4810-af22-3e7b2d855567 -->
 
 The liquidation parameters for SKY-backed loans funded via stUSDS are:
  
@@ -16323,125 +16355,125 @@ The liquidation parameters for SKY-backed loans funded via stUSDS are:
 ◦ `Hole`: 250,000    
 ◦ `Dust`: 30,000
 
-###### A.4.4.1.2.6.1 - Modification Of stUSDS Risk Parameters [Core]  <!-- UUID: 1aa35c85-6a96-4921-a6f0-87a58f3d57d6 -->
+###### A.4.4.1.3.6.1 - Modification Of stUSDS Risk Parameters [Core]  <!-- UUID: 1aa35c85-6a96-4921-a6f0-87a58f3d57d6 -->
 
-Except as specified in [A.4.4.1.2.6.1.1 - Modification Of stUSDS Auction Parameters](0296f17f-b615-4f93-9505-94bd78c24324), the Core Executor Agents, in consultation with the Core Council Risk Advisor, have the ability to modify any of the parameters defined in [A.4.4.1.2.6 - stUSDS Risk Parameters](fac38a01-4c67-4810-af22-3e7b2d855567). The modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll.
+Except as specified in [A.4.4.1.3.6.1.1 - Modification Of stUSDS Auction Parameters](0296f17f-b615-4f93-9505-94bd78c24324), the Core Executor Agents, in consultation with the Core Council Risk Advisor, have the ability to modify any of the parameters defined in [A.4.4.1.3.6 - stUSDS Risk Parameters](fac38a01-4c67-4810-af22-3e7b2d855567). The modification of said parameters is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a Governance Poll.
 
-####### A.4.4.1.2.6.1.1 - Modification Of stUSDS Auction Parameters [Core]  <!-- UUID: 0296f17f-b615-4f93-9505-94bd78c24324 -->
+####### A.4.4.1.3.6.1.1 - Modification Of stUSDS Auction Parameters [Core]  <!-- UUID: 0296f17f-b615-4f93-9505-94bd78c24324 -->
 
 A clear justification and analysis must be provided to validate any proposed changes to the `Calc`, `Tau`, `Buf`, `Cusp`, `Tail`, `Chip`, `Tip`, `Chop`, or `Hole` parameters. Before these changes are added to an Executive Vote, the Core Executor Agents must obtain approval through a Governance Poll. However, in an emergency, the Core Executor Agents have the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. These parameters must be regularly monitored and updated if needed.
 
-##### A.4.4.1.2.7 - stUSDS Accessibility Reward [Core]  <!-- UUID: 673676d8-62a4-4422-b870-fbcdb3c0aabd -->
+##### A.4.4.1.3.7 - stUSDS Accessibility Reward [Core]  <!-- UUID: 673676d8-62a4-4422-b870-fbcdb3c0aabd -->
 
 The stUSDS Accessibility Reward is an incentive mechanism, similar to the USDS Accessibility Reward, designed to encourage Prime Agents and Integrators to promote stUSDS adoption. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). It is calculated as a percentage of the stUSDS balance associated with a Reward Code. The reward is initially set at 0.05% for the Integrator portion and 0.05% for the Prime Agent Management Fee, totaling 0.1%.
 
-##### A.4.4.1.2.8 - stUSDS Bounded External Access Module [Core]  <!-- UUID: 37f8f82e-7239-4cfb-8f95-d2cc40515cd9 -->
+##### A.4.4.1.3.8 - stUSDS Bounded External Access Module [Core]  <!-- UUID: 37f8f82e-7239-4cfb-8f95-d2cc40515cd9 -->
 
 The stUSDS Bounded External Access Module (stUSDS BEAM) enables designated, Governance-whitelisted operators to adjust the stUSDS Rate (`str`), the SKY Borrow Rate (`duty`), the maximum amount that users can deposit into the stUSDS contract (`cap`), and the maximum Debt Ceiling (`line`). Adjustments are governed by the stUSDS BEAM smart contract logic and specific parameters set by Sky Governance. stUSDS BEAM holds four parameters that can be set for each stUSDS parameter: (i) `min`, (ii) `max`, (iii) `step`, and (iv) `tau`.
 
-###### A.4.4.1.2.8.1 - Definitions [Core]  <!-- UUID: 2875f146-08b2-4b83-84ed-282af9379762 -->
+###### A.4.4.1.3.8.1 - Definitions [Core]  <!-- UUID: 2875f146-08b2-4b83-84ed-282af9379762 -->
 
 The documents herein define the parameters of the stUSDS BEAM.
 
-####### A.4.4.1.2.8.1.1 - Min Definition [Core]  <!-- UUID: f1ed4794-7642-4ce4-ae80-c5f4e2ec0eed -->
+####### A.4.4.1.3.8.1.1 - Min Definition [Core]  <!-- UUID: f1ed4794-7642-4ce4-ae80-c5f4e2ec0eed -->
 
 The `min` parameter defines the minimum value for the `str` and `duty` parameters that can be set using the stUSDS BEAM. Each of the `str` and `duty` parameters has a specific `min`.
 
-####### A.4.4.1.2.8.1.2 - Max Definition [Core]  <!-- UUID: dbb7b9f3-be84-4eaa-93a0-afe997916ce2 -->
+####### A.4.4.1.3.8.1.2 - Max Definition [Core]  <!-- UUID: dbb7b9f3-be84-4eaa-93a0-afe997916ce2 -->
 
 The `max` parameter defines the maximum value for the `str` and `duty` parameters that can be set using the stUSDS BEAM. Each of the `str` and `duty` parameters has a specific `max`.
 
-####### A.4.4.1.2.8.1.3 - Step Definition [Core]  <!-- UUID: 9d4cd92b-7e77-475b-a8f5-245ea29fe344 -->
+####### A.4.4.1.3.8.1.3 - Step Definition [Core]  <!-- UUID: 9d4cd92b-7e77-475b-a8f5-245ea29fe344 -->
 
 The `step` parameter limits how much the `str` and `duty` parameters can be increased or decreased in a single transaction, bound by the `tau` parameter. Each of the `str` and `duty` parameters has a specific `step`.
 
-####### A.4.4.1.2.8.1.4 - Max Cap Definition [Core]  <!-- UUID: 2ddd3c5d-7fc3-422c-8a61-03404e182270 -->
+####### A.4.4.1.3.8.1.4 - Max Cap Definition [Core]  <!-- UUID: 2ddd3c5d-7fc3-422c-8a61-03404e182270 -->
 
 The `maxCap` parameter defines the maximum value for the `cap` parameter that can be set by the stUSDS BEAM.
 
-######## A.4.4.1.2.8.1.4.1 - Max Cap Current Value [Core]  <!-- UUID: fca6bbee-6c6f-4e0b-a208-d56b136ce729 -->
+######## A.4.4.1.3.8.1.4.1 - Max Cap Current Value [Core]  <!-- UUID: fca6bbee-6c6f-4e0b-a208-d56b136ce729 -->
 
 The `maxCap` is currently set to 1,000,000,000 USDS.
 
-####### A.4.4.1.2.8.1.5 - Max Line Definition [Core]  <!-- UUID: 96dd5de9-b5ba-4249-bcce-09f598d34019 -->
+####### A.4.4.1.3.8.1.5 - Max Line Definition [Core]  <!-- UUID: 96dd5de9-b5ba-4249-bcce-09f598d34019 -->
 
 The `maxLine` parameter defines the maximum value for the `line` parameter that can be set by the stUSDS BEAM.
 
-######## A.4.4.1.2.8.1.5.1 - Max Line Current Value [Core]  <!-- UUID: 3067ff3e-5450-48b7-b8b3-fd671739c6b5 -->
+######## A.4.4.1.3.8.1.5.1 - Max Line Current Value [Core]  <!-- UUID: 3067ff3e-5450-48b7-b8b3-fd671739c6b5 -->
 
 The `maxLine` is currently set to 1,000,000,000 USDS.
 
-####### A.4.4.1.2.8.1.6 - Tau Definition [Core]  <!-- UUID: 4f82fc17-4bcc-4623-b09b-b495c43b06f7 -->
+####### A.4.4.1.3.8.1.6 - Tau Definition [Core]  <!-- UUID: 4f82fc17-4bcc-4623-b09b-b495c43b06f7 -->
 
 The `tau` parameter defines the minimum time interval, in seconds, that must elapse between consecutive uses or operations of the stUSDS BEAM.
 
 A stUSDS BEAM operation may adjust one or more parameters. Once a stUSDS BEAM operation is executed, the `tau` duration must expire before any subsequent stUSDS BEAM operation can be performed.
 
-######## A.4.4.1.2.8.1.6.1 - Tau Current Value [Core]  <!-- UUID: 9e7e18f3-36b2-497a-817a-2fe9054b8745 -->
+######## A.4.4.1.3.8.1.6.1 - Tau Current Value [Core]  <!-- UUID: 9e7e18f3-36b2-497a-817a-2fe9054b8745 -->
 
 The `tau` is currently set to 57,600 seconds (16 hours).
 
-###### A.4.4.1.2.8.2 - stUSDS Parameters [Core]  <!-- UUID: 74b7d8e7-5f55-4760-8f4d-1e5e9bda4279 -->
+###### A.4.4.1.3.8.2 - stUSDS Parameters [Core]  <!-- UUID: 74b7d8e7-5f55-4760-8f4d-1e5e9bda4279 -->
 
 The stUSDS BEAM parameters for each stUSDS parameter set by the stUSDS BEAM are defined in the subdocuments herein.
 
-####### A.4.4.1.2.8.2.1 - Str Parameters [Core]  <!-- UUID: 516eccc7-dd7f-4782-84d5-55121bc1ae44 -->
+####### A.4.4.1.3.8.2.1 - Str Parameters [Core]  <!-- UUID: 516eccc7-dd7f-4782-84d5-55121bc1ae44 -->
 
 The stUSDS BEAM parameters for the `str` stUSDS parameter are as follows:
     
 ◦ `max` - 5,000 basis points,    
 ◦ `min` - 200 basis points,    
-◦ `step` - 4,000 basis points.
+◦ `step` - 500 basis points.
 
-####### A.4.4.1.2.8.2.2 - Duty Parameters [Core]  <!-- UUID: 94da2be4-e21c-4de7-8c0c-21e17718d32b -->
+####### A.4.4.1.3.8.2.2 - Duty Parameters [Core]  <!-- UUID: 94da2be4-e21c-4de7-8c0c-21e17718d32b -->
 
 The stUSDS BEAM parameters for the `duty` stUSDS parameter are as follows:
     
 ◦ `max` - 5,000 basis points,
 ◦ `min` - 210 basis points,    
-◦ `step` - 4,000 basis points.
+◦ `step` - 500 basis points.
 
-###### A.4.4.1.2.8.3 - Parameter Adjustments [Core]  <!-- UUID: 91152a4b-6f97-4b8a-831a-0f85c16a78ab -->
+###### A.4.4.1.3.8.3 - Parameter Adjustments [Core]  <!-- UUID: 91152a4b-6f97-4b8a-831a-0f85c16a78ab -->
 
 All stUSDS BEAM parameters can be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-####### A.4.4.1.2.8.3.1 - Operators [Core]  <!-- UUID: 8fd15f15-c8cd-480d-86b7-cad524cfa9f1 -->
+####### A.4.4.1.3.8.3.1 - Operators [Core]  <!-- UUID: 8fd15f15-c8cd-480d-86b7-cad524cfa9f1 -->
 
 The stUSDS BEAM Operators are whitelisted entities that can directly alter the stUSDS parameters set by the stUSDS BEAM. Changes to stUSDS parameters are limited by the `max`, `min`, `step`, and `tau` parameters. Operators can be added or removed by an Executive Vote.
 
-######## A.4.4.1.2.8.3.1.1 - Operator Multisig [Core]  <!-- UUID: ee9e13e0-23ca-41a3-a1d1-0f1181882c84 -->
+######## A.4.4.1.3.8.3.1.1 - Operator Multisig [Core]  <!-- UUID: ee9e13e0-23ca-41a3-a1d1-0f1181882c84 -->
 
 The Operator Multisig is an Operator of the stUSDS BEAM and is controlled by Core Executor Agent Atlas Axis.
 
-######### A.4.4.1.2.8.3.1.1.1 - Operator Multisig Address [Core]  <!-- UUID: 45679e08-a575-444a-8fae-d7ef6472b073 -->
+######### A.4.4.1.3.8.3.1.1.1 - Operator Multisig Address [Core]  <!-- UUID: 45679e08-a575-444a-8fae-d7ef6472b073 -->
 
 The address of the Operator Multisig on the Ethereum Mainnet is `0xBB865F94B8A92E57f79fCc89Dfd4dcf0D3fDEA16`.
 
-######### A.4.4.1.2.8.3.1.1.2 - Operator Multisig Required Number Of Signers [Core]  <!-- UUID: 88438441-b858-4a0a-b1bb-f79cc19e7490 -->
+######### A.4.4.1.3.8.3.1.1.2 - Operator Multisig Required Number Of Signers [Core]  <!-- UUID: 88438441-b858-4a0a-b1bb-f79cc19e7490 -->
 
 The Operator Multisig currently has a 2/3 signing requirement.
 
-######### A.4.4.1.2.8.3.1.1.3 - Operator Multisig Signers [Core]  <!-- UUID: a9a7503a-d4e2-474f-bbbe-51b45385a00f -->
+######### A.4.4.1.3.8.3.1.1.3 - Operator Multisig Signers [Core]  <!-- UUID: a9a7503a-d4e2-474f-bbbe-51b45385a00f -->
 
 The signers of the Operator Multisig are three (3) addresses controlled by Core Executor Agent Atlas Axis.
 
-######### A.4.4.1.2.8.3.1.1.4 - Operator Multisig Usage Standards [Core]  <!-- UUID: 71e28a28-82b9-43eb-9e93-6aee2d5bbbc0 -->
+######### A.4.4.1.3.8.3.1.1.4 - Operator Multisig Usage Standards [Core]  <!-- UUID: 71e28a28-82b9-43eb-9e93-6aee2d5bbbc0 -->
 
-The signers of the Operator Multisig must use the multisig to operate the stUSDS BEAM in accordance with the instructions specified in [A.4.4.1.2.8.3.2.2 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf).
+The signers of the Operator Multisig must use the multisig to operate the stUSDS BEAM in accordance with the instructions specified in [A.4.4.1.3.8.3.2.2 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf).
 
-######### A.4.4.1.2.8.3.1.1.5 - Operator Multisig Modification [Core]  <!-- UUID: 303ccb86-1411-409f-a3e4-1193e0aa7b9a -->
+######### A.4.4.1.3.8.3.1.1.5 - Operator Multisig Modification [Core]  <!-- UUID: 303ccb86-1411-409f-a3e4-1193e0aa7b9a -->
 
 Core Executor Agent Atlas Axis can change the signers of the Operator Multisig at any time, so long as there are at least three (3) signers and at least a majority of signers are required to execute transactions.
 
-######## A.4.4.1.2.8.3.1.2 - Operator Hot Wallet [Core]  <!-- UUID: bddf50ca-02ef-4991-abb0-53e09831ee6f -->
+######## A.4.4.1.3.8.3.1.2 - Operator Hot Wallet [Core]  <!-- UUID: bddf50ca-02ef-4991-abb0-53e09831ee6f -->
 
-The Operator Hot Wallet is a hot wallet controlled by a bot that will update stUSDS parameters on an automated basis as specified in [A.4.4.1.2.8.3.2.3 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f). The wallet is controlled by Ecosystem Actor TechOps Services under the supervision of Core Executor Agent Atlas Axis in consultation with the Core Council Risk Advisor. The addition of the Hot Wallet as an Operator of the stUSDS BEAM is authorized to proceed directly to an Executive Vote without a prior Governance Poll.
+The Operator Hot Wallet is a hot wallet controlled by a bot that will update stUSDS parameters on an automated basis as specified in [A.4.4.1.3.8.3.2.3 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f). The wallet is controlled by Ecosystem Actor TechOps Services under the supervision of Core Executor Agent Atlas Axis in consultation with the Core Council Risk Advisor. The addition of the Hot Wallet as an Operator of the stUSDS BEAM is authorized to proceed directly to an Executive Vote without a prior Governance Poll.
 
-######### A.4.4.1.2.8.3.1.2.1 - Operator Hot Wallet Address [Core]  <!-- UUID: bc29e096-972c-4bcc-b589-dad148374d33 -->
+######### A.4.4.1.3.8.3.1.2.1 - Operator Hot Wallet Address [Core]  <!-- UUID: bc29e096-972c-4bcc-b589-dad148374d33 -->
 
 The address of the Operator Hot Wallet on the Ethereum Mainnet is `0xd06C14820048de2Fb7c9de611EcFdaCE18eC8896`.
 
-######### A.4.4.1.2.8.3.1.2.2 - Update Of stUSDS Parameters For Hot Wallet [Core]  <!-- UUID: 877f2d58-df39-4cb9-97cc-e529a5c62146 -->
+######### A.4.4.1.3.8.3.1.2.2 - Update Of stUSDS Parameters For Hot Wallet [Core]  <!-- UUID: 877f2d58-df39-4cb9-97cc-e529a5c62146 -->
 
 When the Operator Hot Wallet is added as an Operator of the stUSDS Rate, the stUSDS BEAM parameters must be updated as follows:
     
@@ -16450,15 +16482,15 @@ When the Operator Hot Wallet is added as an Operator of the stUSDS Rate, the stU
 
 These changes are authorized to proceed directly to an Executive Vote without a prior Governance Poll.
 
-######## A.4.4.1.2.8.3.1.3 - Operator Update Process [Core]  <!-- UUID: 64d7e377-9870-4563-a073-768bb7d259a4 -->
+######## A.4.4.1.3.8.3.1.3 - Operator Update Process [Core]  <!-- UUID: 64d7e377-9870-4563-a073-768bb7d259a4 -->
 
 stUSDS BEAM Operators can be modified by the Core Executor Agents, in consultation with the Core Council Risk Advisor. This process will be conducted through the Operational Weekly Governance Cycle or, if necessary, through out-of-schedule Executive Votes.
 
-####### A.4.4.1.2.8.3.2 - Update Process [Core]  <!-- UUID: 7e58f5eb-c339-4f04-aca8-681e9acd0752 -->
+####### A.4.4.1.3.8.3.2 - Update Process [Core]  <!-- UUID: 7e58f5eb-c339-4f04-aca8-681e9acd0752 -->
 
 The stUSDS parameters set by the stUSDS BEAM are managed by the stUSDS BEAM Operators as specified in the documents herein.
 
-######## A.4.4.1.2.8.3.2.1 - Initial Parameter Values Set In Executive Vote [Core]  <!-- UUID: 13c51e11-8ea3-4d4e-b631-2e99c559a914 -->
+######## A.4.4.1.3.8.3.2.1 - Initial Parameter Values Set In Executive Vote [Core]  <!-- UUID: 13c51e11-8ea3-4d4e-b631-2e99c559a914 -->
 
 The initial parameters set by the stUSDS BEAM in the Executive Vote deploying stUSDS and the stUSDS BEAM are:
     
@@ -16467,95 +16499,95 @@ The initial parameters set by the stUSDS BEAM in the Executive Vote deploying st
 ◦ `cap` - 200,000,000 USDS    
 ◦ `line` - 200,000,000 USDS
 
-######## A.4.4.1.2.8.3.2.2 - Manual Parameter Updates By Operator Multisig [Core]  <!-- UUID: 944c2573-1184-4d6b-bbe9-0b84c11956cf -->
+######## A.4.4.1.3.8.3.2.2 - Manual Parameter Updates By Operator Multisig [Core]  <!-- UUID: 944c2573-1184-4d6b-bbe9-0b84c11956cf -->
 
 Initially, the stUSDS parameters set by the stUSDS BEAM are managed by the Operator Multisig based on instructions provided by the Core Council Risk Advisor.
 
-######### A.4.4.1.2.8.3.2.2.1 - Request By Core Council Risk Advisor [Core]  <!-- UUID: cfd01132-42f2-46c9-867c-bd9aa62bf78a -->
+######### A.4.4.1.3.8.3.2.2.1 - Request By Core Council Risk Advisor [Core]  <!-- UUID: cfd01132-42f2-46c9-867c-bd9aa62bf78a -->
 
-Any requests to change stUSDS parameters set by the stUSDS BEAM must be posted to the Sky Forum by the Core Council Risk Advisor recommending the change. Once Utilization is below 100% the Core Council Risk Advisor should begin recommending changes based on the methodology specified in [A.4.4.1.2.8.3.3 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) but may deviate from the values resulting from this methodology if they determine that other values are advisable to support the growth of stUSDS and the interests of the Sky Protocol.
+Any requests to change stUSDS parameters set by the stUSDS BEAM must be posted to the Sky Forum by the Core Council Risk Advisor recommending the change. Once Utilization is below 100% the Core Council Risk Advisor should begin recommending changes based on the methodology specified in [A.4.4.1.3.8.3.3 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) but may deviate from the values resulting from this methodology if they determine that other values are advisable to support the growth of stUSDS and the interests of the Sky Protocol.
 
-######### A.4.4.1.2.8.3.2.2.2 - Operator Execution [Core]  <!-- UUID: 420d6ca3-405a-41be-ba0f-cdc52746477c -->
+######### A.4.4.1.3.8.3.2.2.2 - Operator Execution [Core]  <!-- UUID: 420d6ca3-405a-41be-ba0f-cdc52746477c -->
 
 Once a request to change stUSDS parameters has been posted to the Sky Forum by the Core Council Risk Advisor, the stUSDS BEAM Operators must prepare and execute the proposed changes in a timely manner. Preparation can include the creation of transaction simulations to verify inputs.
 
-######### A.4.4.1.2.8.3.2.2.3 - Public Communication [Core]  <!-- UUID: 7318d160-e182-4276-bdf9-7dfc86ca77a5 -->
+######### A.4.4.1.3.8.3.2.2.3 - Public Communication [Core]  <!-- UUID: 7318d160-e182-4276-bdf9-7dfc86ca77a5 -->
 
 Once a change in stUSDS parameters set by the stUSDS BEAM has been executed, the execution must be publicly communicated to the Sky Ecosystem. This communication may take the form of either (1) a Forum post or (2) inclusion of the execution in an informational dashboard that allows community members to see each stUSDS parameter change executed by the stUSDS BEAM.
 
-######## A.4.4.1.2.8.3.2.3 - Automatic Updates By Operator Hot Wallet [Core]  <!-- UUID: a6e1735f-bd82-4ab6-982b-218013c3455f -->
+######## A.4.4.1.3.8.3.2.3 - Automatic Updates By Operator Hot Wallet [Core]  <!-- UUID: a6e1735f-bd82-4ab6-982b-218013c3455f -->
 
-Once the Operator Hot Wallet has been added as an Operator of the stUSDS BEAM (see [A.4.4.1.2.8.3.1.2 - Operator Hot Wallet](bddf50ca-02ef-4991-abb0-53e09831ee6f)), the stUSDS parameters set by the stUSDS BEAM must be set by the Operator Hot Wallet. These changes must be based on the update methodology specified in [A.4.4.1.2.8.3.3 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) and the results must be publicly visible on an information dashboard.
+Once the Operator Hot Wallet has been added as an Operator of the stUSDS BEAM (see [A.4.4.1.3.8.3.1.2 - Operator Hot Wallet](bddf50ca-02ef-4991-abb0-53e09831ee6f)), the stUSDS parameters set by the stUSDS BEAM must be set by the Operator Hot Wallet. These changes must be based on the update methodology specified in [A.4.4.1.3.8.3.3 - Update Methodology](e37d1045-215d-4f85-bbc3-70aa2c1b818b) and the results must be publicly visible on an information dashboard.
 
-####### A.4.4.1.2.8.3.3 - Update Methodology [Core]  <!-- UUID: e37d1045-215d-4f85-bbc3-70aa2c1b818b -->
+####### A.4.4.1.3.8.3.3 - Update Methodology [Core]  <!-- UUID: e37d1045-215d-4f85-bbc3-70aa2c1b818b -->
 
 The documents herein define the methodology that should be used for determining when and how to update stUSDS parameters with the stUSDS BEAM.
 
-######## A.4.4.1.2.8.3.3.1 - Short Term Process [Core]  <!-- UUID: c296a253-f737-4d17-bea0-4b1dab903096 -->
+######## A.4.4.1.3.8.3.3.1 - Short Term Process [Core]  <!-- UUID: c296a253-f737-4d17-bea0-4b1dab903096 -->
 
-Initially when stUSDS parameters are set manually by the Operator Multisig (see [A.4.4.1.2.8.3.2.2 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf)), the Core Council Risk Advisor may deviate from the long term process specified in [A.4.4.1.2.8.3.3.2 - Long Term Process](b349277c-4e61-474a-85bd-18802324a3a6) in their best judgment based on the guidelines specified herein.
+Initially when stUSDS parameters are set manually by the Operator Multisig (see [A.4.4.1.3.8.3.2.2 - Manual Parameter Updates By Operator Multisig](944c2573-1184-4d6b-bbe9-0b84c11956cf)), the Core Council Risk Advisor may deviate from the long term process specified in [A.4.4.1.3.8.3.3.2 - Long Term Process](b349277c-4e61-474a-85bd-18802324a3a6) in their best judgment based on the guidelines specified herein.
 
-######### A.4.4.1.2.8.3.3.1.1 - Initial Supply Rate [Core]  <!-- UUID: c4523493-97ba-4f57-ae2f-d407ab6e0f98 -->
+######### A.4.4.1.3.8.3.3.1.1 - Initial Supply Rate [Core]  <!-- UUID: c4523493-97ba-4f57-ae2f-d407ab6e0f98 -->
 
-The initial value of the `str` parameter must be set extraordinarily high to a value of approximately 40% initially to incentivize deposits. This rate is not sustainable and must be lowered as specified in [A.4.4.1.2.8.3.3.1.2 - Gradual Reduction In Supply Rate](8441e561-ef59-4a7e-a6d6-438f1bf797be).
+The initial value of the `str` parameter must be set extraordinarily high to a value of approximately 40% initially to incentivize deposits. This rate is not sustainable and must be lowered as specified in [A.4.4.1.3.8.3.3.1.2 - Gradual Reduction In Supply Rate](8441e561-ef59-4a7e-a6d6-438f1bf797be).
 
-######### A.4.4.1.2.8.3.3.1.2 - Gradual Reduction In Supply Rate [Core]  <!-- UUID: 8441e561-ef59-4a7e-a6d6-438f1bf797be -->
+######### A.4.4.1.3.8.3.3.1.2 - Gradual Reduction In Supply Rate [Core]  <!-- UUID: 8441e561-ef59-4a7e-a6d6-438f1bf797be -->
 
 The `str` parameter must be gradually lowered to a more sustainable level as the market approaches the optimal target of 90% utilization.
 
-######### A.4.4.1.2.8.3.3.1.3 - Growth Of Market Size [Core]  <!-- UUID: 0d2ea70b-e031-498e-8f3a-aeb967deb736 -->
+######### A.4.4.1.3.8.3.3.1.3 - Growth Of Market Size [Core]  <!-- UUID: 0d2ea70b-e031-498e-8f3a-aeb967deb736 -->
 
 The `cap` and `line` parameters must be scaled up over time. By the time the market reaches 300,000,000 USDS the `str` parameter must be normalized to a level that is in line with the Interest Rate Model.
 
-######## A.4.4.1.2.8.3.3.2 - Long Term Process [Core]  <!-- UUID: b349277c-4e61-474a-85bd-18802324a3a6 -->
+######## A.4.4.1.3.8.3.3.2 - Long Term Process [Core]  <!-- UUID: b349277c-4e61-474a-85bd-18802324a3a6 -->
 
-Once the process is fully automated (see [A.4.4.1.2.8.3.2.3 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f)) the automated process must fully conform to the specifications herein.
+Once the process is fully automated (see [A.4.4.1.3.8.3.2.3 - Automatic Updates By Operator Hot Wallet](a6e1735f-bd82-4ab6-982b-218013c3455f)) the automated process must fully conform to the specifications herein.
 
-######### A.4.4.1.2.8.3.3.2.1 - Conditions For Update [Core]  <!-- UUID: ce0d4199-da56-4d75-b584-d89cf742597e -->
+######### A.4.4.1.3.8.3.3.2.1 - Conditions For Update [Core]  <!-- UUID: ce0d4199-da56-4d75-b584-d89cf742597e -->
 
-The stUSDS parameters should be updated if (1) the current Utilization (see [A.4.4.1.2.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f)) deviates from the Utilization as of the last time the stUSDS parameters were set by more than 2.4% and (2) the time since the last update is greater than `tau` (see [A.4.4.1.2.8.1.6 - Tau Definition](4f82fc17-4bcc-4623-b09b-b495c43b06f7)).
+The stUSDS parameters should be updated if (1) the current Utilization (see [A.4.4.1.3.2.1.4 - Utilization Definition](337c4f67-685f-42bd-8237-553ed913b89f)) deviates from the Utilization as of the last time the stUSDS parameters were set by more than 2.4% and (2) the time since the last update is greater than `tau` (see [A.4.4.1.3.8.1.6 - Tau Definition](4f82fc17-4bcc-4623-b09b-b495c43b06f7)).
 
-######### A.4.4.1.2.8.3.3.2.2 - Calculations For Update [Core]  <!-- UUID: 01be0bd3-0621-4c22-95c7-395542181008 -->
+######### A.4.4.1.3.8.3.3.2.2 - Calculations For Update [Core]  <!-- UUID: 01be0bd3-0621-4c22-95c7-395542181008 -->
 
 The new values for each stUSDS parameter should be set to be as close as possible to the values specified in the documents herein.
 
-########## A.4.4.1.2.8.3.3.2.2.1 - Str Calculation [Core]  <!-- UUID: aaf4b844-0a8b-4679-969b-382263de86ec -->
+########## A.4.4.1.3.8.3.3.2.2.1 - Str Calculation [Core]  <!-- UUID: aaf4b844-0a8b-4679-969b-382263de86ec -->
 
-The `str` must be calculated as specified in [A.4.4.1.2.2 - stUSDS Rate](7e51d5a7-0707-4fba-999b-a1becd5f0192).
+The `str` must be calculated as specified in [A.4.4.1.3.2 - stUSDS Rate](7e51d5a7-0707-4fba-999b-a1becd5f0192).
 
-########## A.4.4.1.2.8.3.3.2.2.2 - Duty Calculation [Core]  <!-- UUID: 76a96743-9197-4340-9367-74262cc32efd -->
+########## A.4.4.1.3.8.3.3.2.2.2 - Duty Calculation [Core]  <!-- UUID: 76a96743-9197-4340-9367-74262cc32efd -->
 
-The `duty` must be calculated as specified in [A.4.4.1.2.5.1.2 - Rate Setting Formula](05e97d4d-37e2-4ed8-acea-a8728fbe0402).
+The `duty` must be calculated as specified in [A.4.4.1.3.5.1.2 - Rate Setting Formula](05e97d4d-37e2-4ed8-acea-a8728fbe0402).
 
-########## A.4.4.1.2.8.3.3.2.2.3 - Cap Calculation [Core]  <!-- UUID: f5dafbc7-96b2-48e8-8b06-d66714d8b8a6 -->
+########## A.4.4.1.3.8.3.3.2.2.3 - Cap Calculation [Core]  <!-- UUID: f5dafbc7-96b2-48e8-8b06-d66714d8b8a6 -->
 
 The Core Council Risk Advisor must calculate the maximum amount that users can deposit into the stUSDS contract (`cap`) as specified in the documents herein.
 
-########### A.4.4.1.2.8.3.3.2.2.3.1 - Short Term Calculation [Core]  <!-- UUID: 21c4b33d-8644-4c1c-88e2-65f1243abd56 -->
+########### A.4.4.1.3.8.3.3.2.2.3.1 - Short Term Calculation [Core]  <!-- UUID: 21c4b33d-8644-4c1c-88e2-65f1243abd56 -->
 
 In the short term while Utilization is above 100%, the `cap` must be set to 200,000,000 USDS.
 
-########### A.4.4.1.2.8.3.3.2.2.3.2 - Long Term Calculation [Core]  <!-- UUID: bf917cfa-6438-4c91-932d-b4db8cc98af0 -->
+########### A.4.4.1.3.8.3.3.2.2.3.2 - Long Term Calculation [Core]  <!-- UUID: bf917cfa-6438-4c91-932d-b4db8cc98af0 -->
 
 In the long term, the `cap` must be gradually increased when Utilization is above 85% according to the following formula:
 
 `cap = 1.2 * current SKY borrowing`
 
-########## A.4.4.1.2.8.3.3.2.2.4 - Line Calculation [Core]  <!-- UUID: ee92fe50-b3c1-4d44-9d99-8efc671cc67e -->
+########## A.4.4.1.3.8.3.3.2.2.4 - Line Calculation [Core]  <!-- UUID: ee92fe50-b3c1-4d44-9d99-8efc671cc67e -->
 
 The Core Council Risk Advisor must calculate the maximum amount that users can borrow against their staked SKY (`line`) as specified in the documents herein.
 
-########### A.4.4.1.2.8.3.3.2.2.4.1 - Short Term Calculation [Core]  <!-- UUID: be4d269c-7064-4886-bdd5-8a8ff9d4abe2 -->
+########### A.4.4.1.3.8.3.3.2.2.4.1 - Short Term Calculation [Core]  <!-- UUID: be4d269c-7064-4886-bdd5-8a8ff9d4abe2 -->
 
 In the short term while Utilization is above 100%, the `line` must be set to 200,000,000 USDS.
 
-########### A.4.4.1.2.8.3.3.2.2.4.2 - Long Term Calculation [Core]  <!-- UUID: ca92131b-a383-48c9-ab11-4ceeaca180d3 -->
+########### A.4.4.1.3.8.3.3.2.2.4.2 - Long Term Calculation [Core]  <!-- UUID: ca92131b-a383-48c9-ab11-4ceeaca180d3 -->
 
 In the long term, the `line` must be gradually increased when Utilization is above 85% according to the following formula:
 
 `line = 1.14 * current SKY borrowing`
 
-##### A.4.4.1.2.9 - SKY-Backed Borrowing Capped OSM Wrapper [Core]  <!-- UUID: c0fbc4e6-754c-4838-aa27-4ef6226f2769 -->
+##### A.4.4.1.3.9 - SKY-Backed Borrowing Capped OSM Wrapper [Core]  <!-- UUID: c0fbc4e6-754c-4838-aa27-4ef6226f2769 -->
 
 In order to prevent excessive price spikes if there is high demand for leverage against SKY tokens, which could potentially lead to excessive USDS borrowing against SKY, a wrapper for the SKY OSM contract has been developed.
 
@@ -16566,121 +16598,121 @@ Borrowing, which is set to be the minimum value of:
 
 2. The `cap` that has been set on the OSM wrapper contract.
 
-###### A.4.4.1.2.9.1 - Cap Parameter [Core]  <!-- UUID: 532ed9cb-51de-4ac2-ade9-58c07b3ea3d5 -->
+###### A.4.4.1.3.9.1 - Cap Parameter [Core]  <!-- UUID: 532ed9cb-51de-4ac2-ade9-58c07b3ea3d5 -->
 
 The subdocuments herein further describe the `cap` parameter and the process for its modification.
 
-####### A.4.4.1.2.9.1.1 - Definition [Core]  <!-- UUID: b65c4542-5fb3-4379-9412-8113f4d2444a -->
+####### A.4.4.1.3.9.1.1 - Definition [Core]  <!-- UUID: b65c4542-5fb3-4379-9412-8113f4d2444a -->
 
 The `cap` parameter represents one of the potential inputs for the SKY-Backed Borrowing Capped OSM Wrapper. The OSM wrapper uses the minimum value of the `cap` or the PIP_SKY oracle price to determine the price utilized for SKY-backed borrowing.
 
-####### A.4.4.1.2.9.1.2 - Modification [Core]  <!-- UUID: 0d86a609-e432-4312-8989-4e6c1eb9be83 -->
+####### A.4.4.1.3.9.1.2 - Modification [Core]  <!-- UUID: 0d86a609-e432-4312-8989-4e6c1eb9be83 -->
 
 The Core Facilitator, in consultation with the Core Council Risk Advisor, has the ability to modify the `cap` parameter. The modification of said parameter is pursuant to the Operational Weekly Cycle and can be effected directly via an Executive Vote, without requiring a prior Governance Poll.
 
-####### A.4.4.1.2.9.1.3 - Current Value [Core]  <!-- UUID: 161ee404-89b3-43a1-80a9-f387f73c0f6f -->
+####### A.4.4.1.3.9.1.3 - Current Value [Core]  <!-- UUID: 161ee404-89b3-43a1-80a9-f387f73c0f6f -->
 
 The current value of the `cap` parameter is:
 
 • 0.04 USDS.
 
-#### A.4.4.1.3 - Short Term Transitionary Measures [Core]  <!-- UUID: 22b8f8bf-b477-4439-86f7-ec605d3c657a -->
+#### A.4.4.1.4 - Short Term Transitionary Measures [Core]  <!-- UUID: 22b8f8bf-b477-4439-86f7-ec605d3c657a -->
 
 The documents herein define short-term logic for SKY staking rewards pending the implementation of the Sky Treasury Management Function.
 
-##### A.4.4.1.3.1 - Short Term USDS Rewards For SKY Stakers [Core]  <!-- UUID: aad249a0-1332-4b5f-9b46-d89873e73b86 -->
+##### A.4.4.1.4.1 - Short Term USDS Rewards For SKY Stakers [Core]  <!-- UUID: aad249a0-1332-4b5f-9b46-d89873e73b86 -->
 
 Until the Treasury Management Function (TMF) is fully implemented, USDS rewards for SKY stakers will be temporarily funded by the Smart Burn Engine, subject to the parameters of the Smart Burn Engine; this interim mechanism will be discontinued once the TMF becomes fully operational.
 
-##### A.4.4.1.3.2 - Short Term SKY Rewards For SKY Stakers [Core]  <!-- UUID: aed6511f-f5f0-4b46-a56e-9a7bbc6ea310 -->
+##### A.4.4.1.4.2 - Short Term SKY Rewards For SKY Stakers [Core]  <!-- UUID: aed6511f-f5f0-4b46-a56e-9a7bbc6ea310 -->
 
-Until the Treasury Management Function (TMF) is fully implemented, SKY rewards for SKY stakers will be temporarily funded by SKY from the Protocol Treasury as specified in [A.4.4.1.3.2.1 - Implementation](ca151bc7-87fc-4749-9776-ea4308817e81); this interim mechanism will be discontinued once the TMF becomes fully operational.
+Until the Treasury Management Function (TMF) is fully implemented, SKY rewards for SKY stakers will be temporarily funded by SKY from the Protocol Treasury as specified in [A.4.4.1.4.2.1 - Implementation](ca151bc7-87fc-4749-9776-ea4308817e81); this interim mechanism will be discontinued once the TMF becomes fully operational.
 
-###### A.4.4.1.3.2.1 - Implementation [Core]  <!-- UUID: ca151bc7-87fc-4749-9776-ea4308817e81 -->
+###### A.4.4.1.4.2.1 - Implementation [Core]  <!-- UUID: ca151bc7-87fc-4749-9776-ea4308817e81 -->
 
 SKY rewards for SKY stakers are implemented through the Staking Rewards contract, the Vested Rewards Distribution contract, and the Vesting Stream contract, as specified in the documents herein.
 
-####### A.4.4.1.3.2.1.1 - Staking Rewards Contract [Core]  <!-- UUID: cf65f0d8-ae2f-45df-80bd-1014ce66509d -->
+####### A.4.4.1.4.2.1.1 - Staking Rewards Contract [Core]  <!-- UUID: cf65f0d8-ae2f-45df-80bd-1014ce66509d -->
 
 The Staking Rewards contract is the user facing contract that allows SKY stakers to stake their SKY to receive SKY rewards. It maintains the balance of staked SKY receiving SKY rewards for each user and the associated accumulated rewards balance.
 
-######## A.4.4.1.3.2.1.1.1 - Staking Rewards Contract Address [Core]  <!-- UUID: b4989cd9-f45e-4747-8861-fac4175624cc -->
+######## A.4.4.1.4.2.1.1.1 - Staking Rewards Contract Address [Core]  <!-- UUID: b4989cd9-f45e-4747-8861-fac4175624cc -->
 
 The address of the Staking Rewards contract on the Ethereum Mainnet is `0xB44C2Fb4181D7Cb06bdFf34A46FdFe4a259B40Fc`.
 
-######## A.4.4.1.3.2.1.1.2 - Staking Rewards Contract Parameters [Core]  <!-- UUID: 2bfed9a4-9d7f-4544-b331-5e196a13a108 -->
+######## A.4.4.1.4.2.1.1.2 - Staking Rewards Contract Parameters [Core]  <!-- UUID: 2bfed9a4-9d7f-4544-b331-5e196a13a108 -->
 
 The parameters of the Staking Rewards contract are specified in the documents herein.
 
-######### A.4.4.1.3.2.1.1.2.1 - Owner [Core]  <!-- UUID: 3db49535-c663-425d-81b9-3ffa6e2e722d -->
+######### A.4.4.1.4.2.1.1.2.1 - Owner [Core]  <!-- UUID: 3db49535-c663-425d-81b9-3ffa6e2e722d -->
 
 The `owner` of the Staking Rewards contract is the contract that has the ability to control administrative functions for the Staking Rewards contract. The value of the `owner` parameter is the `MCD_PAUSE_PROXY`.
 
-######### A.4.4.1.3.2.1.1.2.2 - Rewards Distribution Contract Address [Core]  <!-- UUID: 12b11af8-08d6-4b42-a323-cac0a60e78d3 -->
+######### A.4.4.1.4.2.1.1.2.2 - Rewards Distribution Contract Address [Core]  <!-- UUID: 12b11af8-08d6-4b42-a323-cac0a60e78d3 -->
 
-The Rewards Distribution contract address `rewardsDistribution` is the address of the Rewards Distribution contract associated with the Staking Rewards contract. The value of the `rewardsDistribution` parameter is the address of the Rewards Distribution contract specified in [A.4.4.1.3.2.1.2.1 - Rewards Distribution Contract Address](fdebe206-2f58-4056-8adf-c42dffb47026).
+The Rewards Distribution contract address `rewardsDistribution` is the address of the Rewards Distribution contract associated with the Staking Rewards contract. The value of the `rewardsDistribution` parameter is the address of the Rewards Distribution contract specified in [A.4.4.1.4.2.1.2.1 - Rewards Distribution Contract Address](fdebe206-2f58-4056-8adf-c42dffb47026).
 
-######### A.4.4.1.3.2.1.1.2.3 - Rewards Token [Core]  <!-- UUID: 9c3bd61a-25ee-43bc-8c93-89142dce6b49 -->
+######### A.4.4.1.4.2.1.1.2.3 - Rewards Token [Core]  <!-- UUID: 9c3bd61a-25ee-43bc-8c93-89142dce6b49 -->
 
 The Rewards Token `rewardsToken` is the token that users receive as rewards. The value of the `rewardsToken` parameter is `SKY`, representing SKY Tokens.
 
-######### A.4.4.1.3.2.1.1.2.4 - Staking Token [Core]  <!-- UUID: 7e88d6b2-a76b-4aae-a045-bc0eb44d9657 -->
+######### A.4.4.1.4.2.1.1.2.4 - Staking Token [Core]  <!-- UUID: 7e88d6b2-a76b-4aae-a045-bc0eb44d9657 -->
 
 The Staking Token `stakingToken` is the token that users stake to earn rewards. The value of the `stakingToken` parameter is `LSSKY`, representing staked SKY Tokens.
 
-####### A.4.4.1.3.2.1.2 - Rewards Distribution Contract [Core]  <!-- UUID: 1317764a-d07f-40de-8ff7-f43a3337ca19 -->
+####### A.4.4.1.4.2.1.2 - Rewards Distribution Contract [Core]  <!-- UUID: 1317764a-d07f-40de-8ff7-f43a3337ca19 -->
 
 The Rewards Distribution contract is the contract that handles the regular transfer of reward tokens from the Vesting Stream contract to the Staking Rewards contract for distribution to end users.
 
-######## A.4.4.1.3.2.1.2.1 - Rewards Distribution Contract Address [Core]  <!-- UUID: fdebe206-2f58-4056-8adf-c42dffb47026 -->
+######## A.4.4.1.4.2.1.2.1 - Rewards Distribution Contract Address [Core]  <!-- UUID: fdebe206-2f58-4056-8adf-c42dffb47026 -->
 
 The address of the Rewards Distribution contract on the Ethereum Mainnet is `0x675671A8756dDb69F7254AFB030865388Ef699Ee`.
 
-######## A.4.4.1.3.2.1.2.2 - Rewards Distribution Contract Parameters [Core]  <!-- UUID: c13efebc-94fe-408f-93a7-5ee5badb109f -->
+######## A.4.4.1.4.2.1.2.2 - Rewards Distribution Contract Parameters [Core]  <!-- UUID: c13efebc-94fe-408f-93a7-5ee5badb109f -->
 
 The parameters of the Rewards Distribution contract are specified in the documents herein.
 
-######### A.4.4.1.3.2.1.2.2.1 - Staking Rewards Contract Address [Core]  <!-- UUID: dd30a514-3abb-4e2b-8cc3-03ef2fbf7834 -->
+######### A.4.4.1.4.2.1.2.2.1 - Staking Rewards Contract Address [Core]  <!-- UUID: dd30a514-3abb-4e2b-8cc3-03ef2fbf7834 -->
 
-The Staking Rewards contract address `stakingRewards` is the address of the Staking Rewards contract associated with the Rewards Distribution contract. The value of the `stakingRewards` parameter is the address of the Staking Rewards contract specified in [A.4.4.1.3.2.1.1.1 - Staking Rewards Contract Address](b4989cd9-f45e-4747-8861-fac4175624cc).
+The Staking Rewards contract address `stakingRewards` is the address of the Staking Rewards contract associated with the Rewards Distribution contract. The value of the `stakingRewards` parameter is the address of the Staking Rewards contract specified in [A.4.4.1.4.2.1.1.1 - Staking Rewards Contract Address](b4989cd9-f45e-4747-8861-fac4175624cc).
 
-######### A.4.4.1.3.2.1.2.2.2 - Vesting Stream Contract Address [Core]  <!-- UUID: 5348e6c1-13f4-4e5c-8d75-83239ad999ea -->
+######### A.4.4.1.4.2.1.2.2.2 - Vesting Stream Contract Address [Core]  <!-- UUID: 5348e6c1-13f4-4e5c-8d75-83239ad999ea -->
 
-The Vesting Stream contract address `dssVest` is the address of the Vesting Stream contract associated with the Rewards Distribution contract. The value of the `dssVest` parameter is the address of the Vesting Stream contract specified in [A.4.4.1.3.2.1.3.1 - Vesting Stream](89155294-6652-481f-938f-a562d5b40e65).
+The Vesting Stream contract address `dssVest` is the address of the Vesting Stream contract associated with the Rewards Distribution contract. The value of the `dssVest` parameter is the address of the Vesting Stream contract specified in [A.4.4.1.4.2.1.3.1 - Vesting Stream](89155294-6652-481f-938f-a562d5b40e65).
 
-####### A.4.4.1.3.2.1.3 - Vesting Stream Contract [Core]  <!-- UUID: 21a8978d-10a5-4151-b99a-ca8115fe0a6d -->
+####### A.4.4.1.4.2.1.3 - Vesting Stream Contract [Core]  <!-- UUID: 21a8978d-10a5-4151-b99a-ca8115fe0a6d -->
 
 The Vesting Stream contract manages various vesting streams that vest SKY Tokens from the Protocol Treasury. One of these vesting streams regularly vests SKY Tokens to the Staking Rewards contract.
 
-######## A.4.4.1.3.2.1.3.1 - Vesting Stream [Core]  <!-- UUID: 89155294-6652-481f-938f-a562d5b40e65 -->
+######## A.4.4.1.4.2.1.3.1 - Vesting Stream [Core]  <!-- UUID: 89155294-6652-481f-938f-a562d5b40e65 -->
 
 The address of the Vesting Stream contract is the address corresponding to the  `MCD_VEST_SKY_TREASURY` key in the Chainlog.
 
-######## A.4.4.1.3.2.1.3.2 - Vesting Stream Contract Parameters [Core]  <!-- UUID: 148e2c86-0f30-49c1-923c-9b32f92aa40f -->
+######## A.4.4.1.4.2.1.3.2 - Vesting Stream Contract Parameters [Core]  <!-- UUID: 148e2c86-0f30-49c1-923c-9b32f92aa40f -->
 
 The parameters of the vesting stream managed by the Vesting Stream contract that vests SKY Tokens to the Staking Rewards contract are specified in the documents herein.
 
-######### A.4.4.1.3.2.1.3.2.1 - Vesting Duration [Core]  <!-- UUID: 9cad1b65-5dea-4510-a1cd-c47eddb66309 -->
+######### A.4.4.1.4.2.1.3.2.1 - Vesting Duration [Core]  <!-- UUID: 9cad1b65-5dea-4510-a1cd-c47eddb66309 -->
 
 The Vesting Duration `vestTau` is the total duration over which the Vesting Total number of tokens are to be vested linearly. The initial value of the `vestTau` parameter is 180 days.
 
-######### A.4.4.1.3.2.1.3.2.2 - Vesting Total [Core]  <!-- UUID: 8bc59b3a-5bf4-4e2c-a793-b51a4ff58ef6 -->
+######### A.4.4.1.4.2.1.3.2.2 - Vesting Total [Core]  <!-- UUID: 8bc59b3a-5bf4-4e2c-a793-b51a4ff58ef6 -->
 
 The Vesting Total `vestTot` is the number of rewards tokens to be vested in total over the Vesting Duration. The initial value of the `vestTot` parameter is 1,000,000,000 SKY.
 
-######## A.4.4.1.3.2.1.3.3 - Vesting Stream Parameter Modification [Core]  <!-- UUID: 7da0cd7a-238f-400f-89a7-a419ed25ce37 -->
+######## A.4.4.1.4.2.1.3.3 - Vesting Stream Parameter Modification [Core]  <!-- UUID: 7da0cd7a-238f-400f-89a7-a419ed25ce37 -->
 
 The parameters of the vesting stream that vests SKY Tokens to be transferred to the Staking Rewards contract may be modified by the Core Facilitator on the recommendation of the Core Council Risk Advisor through the Operational Weekly Cycle, and can be effected directly via an Executive Vote, without a prior Governance Poll. It is expected that the parameters will be reviewed and updated approximately every 90 days.
 
-###### A.4.4.1.3.2.2 - Source Of SKY Rewards [Core]  <!-- UUID: 349a350c-c9b7-4232-a83f-2fb49b91fc74 -->
+###### A.4.4.1.4.2.2 - Source Of SKY Rewards [Core]  <!-- UUID: 349a350c-c9b7-4232-a83f-2fb49b91fc74 -->
 
 Initially, the SKY Tokens in the Protocol Treasury to fund SKY rewards for SKY stakers will be funded by the 500,000,000 SKY transferred by the Sky Frontier Foundation to the Protocol Treasury.
 
 The `vestTot` and `vestTau` parameters of the Vesting Stream contract are set such that these 500,000,000 SKY will be distributed over three (3) months. After these three (3) months, SKY rewards must be funded by SKY acquired through buybacks and the parameters of the Vesting Stream contract must be adjusted accordingly.
 
-####### A.4.4.1.3.2.2.1 - Authorization Of Transfer By Sky Frontier Foundation [Core]  <!-- UUID: 2789177b-5bc7-486f-8aab-75ea16e21035 -->
+####### A.4.4.1.4.2.2.1 - Authorization Of Transfer By Sky Frontier Foundation [Core]  <!-- UUID: 2789177b-5bc7-486f-8aab-75ea16e21035 -->
 
-Sky Governance hereby confirms that the transfer of the 500,000,000 SKY tokens specified in [A.4.4.1.3.2.2 - Source Of SKY Rewards](349a350c-c9b7-4232-a83f-2fb49b91fc74) is consistent with the terms of the grant to the Sky Frontier Foundation. See [A.2.14.1 - Ecosystem Entity Grants](5d5759e4-8077-4af5-9a1a-eaeab5088dd7).
+Sky Governance hereby confirms that the transfer of the 500,000,000 SKY tokens specified in [A.4.4.1.4.2.2 - Source Of SKY Rewards](349a350c-c9b7-4232-a83f-2fb49b91fc74) is consistent with the terms of the grant to the Sky Frontier Foundation. See [A.2.14.1 - Ecosystem Entity Grants](5d5759e4-8077-4af5-9a1a-eaeab5088dd7).
 
 ## A.4.5 - Distribution Of Agent Tokens [Article]  <!-- UUID: e2f1f01f-3303-41c3-b337-f09eb41ba6be -->
 
@@ -19160,9 +19192,9 @@ Phoenix Labs is authorized to propose the inclusion of transfers of accrued trea
 
 The documents herein** **specify requirements related to Spark’s Total Risk Capital (TRC) management.
 
-########### A.6.1.1.1.2.6.1.2.1.3.1 - Spark’s Operation Of Spark Liquidity Layer And Agreement Regarding Risk Tolerance Ratio [Core]  <!-- UUID: 23f7ed09-99ca-45aa-8e12-dffcf55170af -->
+########### A.6.1.1.1.2.6.1.2.1.3.1 - Spark’s Operation Of Spark Liquidity Layer And Agreement Regarding Encumbrance Ratio [Core]  <!-- UUID: 23f7ed09-99ca-45aa-8e12-dffcf55170af -->
 
-Spark will continue to operate the Spark Liquidity Layer and agrees to stay at or below a 90% Risk Tolerance Ratio. See [A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
+Spark will continue to operate the Spark Liquidity Layer and agrees to stay at or below a 90% Encumbrance Ratio. See [A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
 
 ########### A.6.1.1.1.2.6.1.2.1.3.2 - Spark’s Total Risk Capital (TRC) Management Processes [Core]  <!-- UUID: ed9602b1-c7fe-4e2b-b4c4-37a1fd21fafd -->
 
@@ -20209,8 +20241,8 @@ The current `maxAmount` and `slope` for this conduit’s inflow/outflow are 
 ############## A.6.1.1.1.2.6.1.3.1.1.2.2.4.1 - Inflow Rate Limits [Core]  <!-- UUID: 4e05fefc-c013-4f04-8173-7f96cdb90d1e -->
 
 The inflow rate limits are:
-• `maxAmount`: 20,000,000 USDC
-• `slope`: 10,000,000 USDC per day
+• `maxAmount`: 100,000,000 USDC
+• `slope`: 200,000,000 USDC per day
 
 ############## A.6.1.1.1.2.6.1.3.1.1.2.2.4.2 - Outflow Rate Limits [Core]  <!-- UUID: ff880422-b0e0-401d-8d01-e541f7643ffc -->
 
@@ -20345,7 +20377,7 @@ The current `maxAmount` and `slope` for this conduit’s inflow/outflow are 
 
 The inflow rate limits are:
 • `maxAmount`: 100,000,000 USDT
-• `slope`: 100,000,000 USDT per day
+• `slope`: 200,000,000 USDT per day
 
 ############## A.6.1.1.1.2.6.1.3.1.1.4.2.4.2 - Outflow Rate Limits [Core]  <!-- UUID: dadcd267-a47c-4bc0-9216-98369b470b72 -->
 
@@ -22539,7 +22571,7 @@ The subdocuments herein define the current configuration of the risk parameters.
 
 The Risk parameters are:
 
-• Supply cap: 50,000 WETH
+• Supply cap: 100,000 WETH
 • Max yield: 5%
 • Current yield (at launch): 0%
 
@@ -22651,7 +22683,7 @@ The subdocuments herein define the current configuration of the risk parameters.
 
 The Risk parameters are:
 
-• Supply cap: 250,000,000 USDC
+• Supply cap: 500,000,000 USDC
 • Max yield: 10%
 • Current yield (at launch): 0%
 
@@ -22763,7 +22795,7 @@ The subdocuments herein define the current configuration of the risk parameters.
 
 The Risk parameters are:
 
-• Supply cap: 250,000,000 USDT
+• Supply cap: 500,000,000 USDT
 • Max yield: 10%
 • Current yield (at launch): 0%
 
@@ -22862,6 +22894,24 @@ The documents herein contain specific off-chain parameters for this Instance.
 ############ A.6.1.1.1.2.6.1.3.2.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 9b849363-5380-406f-888a-d533f6ec69de -->
 
 The Instance follows the general ERC4626 procedures see [[Unknown]](https://www.notion.so/201f2ff08d7380bca0c3d8406eedc0ef) and for emergency procedures see [A.6.1.1.1.2.6.1.2.2.3.4.1 - ERC-4626 Withdrawal Action](f92ddc3f-672a-4f52-931f-5263a9f709b9). For detailed example of the SLL interaction logic for depositing to, withdrawing from, and redeeming from this ERC4626 vault instance see [A.6.1.1.1.2.6.1.3.1.5.1.3.1 - Deposit ERC-4626 Tokens](e2ad525b-3f3f-4402-9e4d-3ae125b35b76) and [A.6.1.1.1.2.6.1.3.1.5.1.3.2 - Withdraw ERC-4626 Tokens](caa295f4-92f4-4ca9-9083-2a1b94c70d5f).
+
+############ A.6.1.1.1.2.6.1.3.2.1.1.4 - Instance-specific Operational Parameters [Core]  <!-- UUID: 71568640-f127-441d-bdbe-5761d685e505 -->
+
+The documents herein contain operational parameters or configuration details unique to this Instance that deviate from or otherwise supplement the general SLL parameters.
+
+############# A.6.1.1.1.2.6.1.3.2.1.1.4.1 - Market Exposure [Core]  <!-- UUID: ab15055e-99ff-4699-82f9-6f1b9a6b4f58 -->
+
+The documents herein contains exposure details for this Instance
+
+############## A.6.1.1.1.2.6.1.3.2.1.1.4.1.1 - ETH/USDC 86% LLTV Pool [Core]  <!-- UUID: f826bb79-9903-49f0-a421-ff3e5a6b4efb -->
+
+• Pool ID: 0x8793cf302b8ffd655ab97bd1c695dbd967807e8367a65cb2f4edaf1380ba1bda
+• Supply cap: 1,000,000,000
+
+############## A.6.1.1.1.2.6.1.3.2.1.1.4.1.2 - cbETH/USDC 86% LLTV Pool [Core]  <!-- UUID: e9a7720b-27a4-4ec2-8c2c-ce46625369fd -->
+
+• Pool ID: 0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad
+• Supply cap: 50,000,000
 
 ########## A.6.1.1.1.2.6.1.3.2.2 - Fluid [Core]  <!-- UUID: 6be8271c-9f42-4eef-a05e-96e73e5d18b4 -->
 
@@ -25502,17 +25552,17 @@ Dispositions of Spark SubDAO Proxy assets that have already been approved by gov
 
 The documents herein define the currently active policies for managing the Spark SubDAO Proxy, alongside relevant parameters for implementing the policies.
 
-######## A.6.1.1.1.3.4.2.1 - Risk Tolerance Ratio [Core]  <!-- UUID: 9995ba51-1de7-4b32-8b76-a71462dc4c5b -->
+######## A.6.1.1.1.3.4.2.1 - Encumbrance Ratio [Core]  <!-- UUID: 9995ba51-1de7-4b32-8b76-a71462dc4c5b -->
 
-The documents herein define Spark's policy for managing the Risk Tolerance Ratio.
+The documents herein define Spark's policy for managing the Encumbrance Ratio.
 
 ######### A.6.1.1.1.3.4.2.1.1 - Definition [Core]  <!-- UUID: f426cc6e-336a-43bf-825d-1f0c08d1795e -->
 
-The Risk Tolerance Ratio is defined as the ratio of Spark's Required Risk Capital (RRC) to Total Risk Capital (TRC), as these terms are defined in the Sky Atlas Stability Scope ([A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9)). Spark will seek to maintain a Risk Tolerance Ratio not greater than the Target Risk Tolerance Ratio specified in [A.6.1.1.1.3.4.2.1.3 - Parameters](d65a06a6-1426-4af2-978c-cd4f7bac79b7).
+The Encumbrance Ratio is defined as the ratio of Spark's Required Risk Capital (RRC) to Total Risk Capital (TRC), as these terms are defined in the Sky Atlas Stability Scope ([A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9)). Spark will seek to maintain a Encumbrance Ratio not greater than the Target Risk Tolerance Ratio specified in [A.6.1.1.1.3.4.2.1.3 - Parameters](d65a06a6-1426-4af2-978c-cd4f7bac79b7).
 
 ######### A.6.1.1.1.3.4.2.1.2 - Operational Process [Core]  <!-- UUID: 7bc96051-ce11-4e29-aa30-b535183aeaa7 -->
 
-Spark governance and contributors must take immediate action to reduce the Risk Tolerance Ratio when it exceeds the Target Risk Tolerance Ratio level. These actions may fall into two categories, risk capital actions or allocation system actions.
+Spark governance and contributors must take immediate action to reduce the Encumbrance Ratio when it exceeds the Target Encumbrance Ratio level. These actions may fall into two categories, risk capital actions or allocation system actions.
 
 Risk capital actions are actions Spark takes to increase Total Risk Capital, including increasing Internal Junior Risk Capital, sourcing External Junior Risk Capital from other Prime Agents or tokenized sources, or sourcing External Senior Risk Capital from Sky or tokenized sources.
 
@@ -25522,9 +25572,179 @@ The operational processes implemented at Spark will meet or exceed the requireme
 
 ######### A.6.1.1.1.3.4.2.1.3 - Parameters [Core]  <!-- UUID: d65a06a6-1426-4af2-978c-cd4f7bac79b7 -->
 
-The current Target Risk Tolerance Ratio is 90%.
+The current Target Encumbrance Ratio is 90%.
 
-This parameter will be maintained in parallel with the value specified in the Spark Artifact Allocation System Primitive section at [A.6.1.1.1.2.6.1.2.1.3.1 - Spark’s Operation Of Spark Liquidity Layer And Agreement Regarding Risk Tolerance Ratio](23f7ed09-99ca-45aa-8e12-dffcf55170af); any change to one section of the Spark Artifact will require a corresponding change in the other section.
+This parameter will be maintained in parallel with the value specified in the Spark Artifact Allocation System Primitive section at [A.6.1.1.1.2.6.1.2.1.3.1 - Spark’s Operation Of Spark Liquidity Layer And Agreement Regarding Encumbrance Ratio](23f7ed09-99ca-45aa-8e12-dffcf55170af); any change to one section of the Spark Artifact will require a corresponding change in the other section.
+
+###### A.6.1.1.1.3.5 - Spark Savings Configuration [Core]  <!-- UUID: 9b4ce799-3baa-42e8-a742-7e8deb377dfc -->
+
+The documents herein specify Spark's strategy and operational processes for managing parameters and liquidity for the Spark Savings protocol.
+
+####### A.6.1.1.1.3.5.1 - Operational Process Definition [Core]  <!-- UUID: 99f4c04b-e531-498a-aeaa-016c7811bf7a -->
+
+The documents herein define the process for updating Spark Savings Configuration policies and parameters.
+
+######## A.6.1.1.1.3.5.1.1 - Spark Savings Configuration Changes [Core]  <!-- UUID: d6405fa7-d02f-4c31-b191-ad1a2485cca3 -->
+
+Changes to Spark Savings Configuration policies and parameters are implemented using the Root Edit Primitive.
+
+####### A.6.1.1.1.3.5.2 - Onchain Parameters [Core]  <!-- UUID: 32a8f019-86e2-47a0-a55d-c481ade62051 -->
+
+The documents herein define the onchain parameters that are implemented within Spark Savings.
+
+######## A.6.1.1.1.3.5.2.1 - Spark Savings Parameters Definitions [Core]  <!-- UUID: 81198aca-06bd-44fa-90b0-16f8c2c4dd19 -->
+
+The subdocuments herein provide definitions for Spark Savings onchain parameters.
+
+######### A.6.1.1.1.3.5.2.1.1 - Default Admin Role [Core]  <!-- UUID: a4d74779-a7d4-4f89-a1b0-8296227f9a9b -->
+
+The default admin role controls upgrades to Spark Savings vault contracts, and has overall admin control over the vault. This role will be assigned to Spark governance to ensure maximum possible security and decentralization.
+
+######### A.6.1.1.1.3.5.2.1.2 - Setter Role [Core]  <!-- UUID: 811c9931-3a70-4c64-a8fb-d1f162a46d62 -->
+
+The setter role controls the current rewards rate for a Spark Savings vault, within the upper and lower bounds defined by the max yield and min yield onchain parameters.
+
+######### A.6.1.1.1.3.5.2.1.3 - Taker Role [Core]  <!-- UUID: a7fd125d-4017-48ba-a366-96253c6f3a16 -->
+
+The taker role has permission to withdraw a Spark Savings vault's underlying asset from the vault to the Spark Liquidity Layer ALM Proxy contract.
+
+######### A.6.1.1.1.3.5.2.1.4 - Take Rate Limit [Core]  <!-- UUID: e5dbc65a-45b9-41d5-ae13-56c3b3416b13 -->
+
+The take rate limit defines the maximum amount and pace of withdrawals from a Spark Savings vault permitted by the taker role.
+
+######### A.6.1.1.1.3.5.2.1.5 - Min Yield [Core]  <!-- UUID: 739b7c5d-d1b5-48e6-a945-26db2a803854 -->
+
+The min yield parameter is the lowest Spark Savings vault rewards rate that can be implemented by the setter role. Typically this value will be 0.
+
+######### A.6.1.1.1.3.5.2.1.6 - Max Yield [Core]  <!-- UUID: ffc7bf31-df84-4c71-9da2-b4ebea95ae01 -->
+
+The max yield parameter is the highest Spark Savings vault rewards rate that can be implemented by the setter role.
+
+######### A.6.1.1.1.3.5.2.1.7 - Supply Cap [Core]  <!-- UUID: 77918273-af7f-4c7e-80af-3f3d9d2097ec -->
+
+The supply cap defines the maximum amount of underlying asset that can be deposited to a Spark Savings vault by users.
+
+######## A.6.1.1.1.3.5.2.2 - Spark Savings Parameters Current Configuration [Core]  <!-- UUID: 5cfe1941-3231-495c-a4c9-50745ec0a5a9 -->
+
+The subdocuments herein provide the current configuration of Spark Savings onchain parameters.
+
+######### A.6.1.1.1.3.5.2.2.1 - Spark Savings USDC on Ethereum [Core]  <!-- UUID: e541391b-f470-480f-adea-5453f3f7da7a -->
+
+The current parameters for Spark Savings USDC on Ethereum are: 
+
+• Default admin role: 0x3300f198988e4C9C63F75dF86De36421f06af8c4
+• Setter role: 0x2E1b01adABB8D4981863394bEa23a1263CBaeDfC
+• Taker role: 0x1601843c5E9bC251A3272907010AFa41Fa18347E
+• Take rate limit: unlimited
+• Min yield: 0%
+• Max yield: 10%
+• Supply cap: 250 million
+
+######### A.6.1.1.1.3.5.2.2.2 - Spark Savings USDT on Ethereum [Core]  <!-- UUID: 39a398d7-600e-472a-ac85-c789866fddfc -->
+
+The current parameters for Spark Savings USDT on Ethereum are: 
+
+• Default admin role: 0x3300f198988e4C9C63F75dF86De36421f06af8c4
+• Setter role: 0x2E1b01adABB8D4981863394bEa23a1263CBaeDfC
+• Taker role: 0x1601843c5E9bC251A3272907010AFa41Fa18347E
+• Take rate limit: unlimited
+• Min yield: 0%
+• Max yield: 10%
+• Supply cap: 250 million
+
+######### A.6.1.1.1.3.5.2.2.3 - Spark Savings ETH on Ethereum [Core]  <!-- UUID: 02c0847b-5608-4c12-a1f6-df889538722f -->
+
+The current parameters for Spark Savings ETH on Ethereum are: 
+
+• Default admin role: 0x3300f198988e4C9C63F75dF86De36421f06af8c4
+• Setter role: 0x2E1b01adABB8D4981863394bEa23a1263CBaeDfC
+• Taker role: 0x1601843c5E9bC251A3272907010AFa41Fa18347E
+• Take rate limit: unlimited
+• Min yield: 0%
+• Max yield: 5%
+• Supply cap: 50,000
+
+######### A.6.1.1.1.3.5.2.2.4 - Spark Savings USDC on Avalanche [Core]  <!-- UUID: fc108236-9f07-45fb-9ff1-4c806975e049 -->
+
+The current parameters for Spark Savings USDC on Avalanche are: 
+
+• Default admin role: 0x7566DEbC906C17338524A414343fA61BcA26A843
+• Setter role: 0x2E1b01adABB8D4981863394bEa23a1263CBaeDfC
+• Taker role: 0xecE6B0E8a54c2f44e066fBb9234e7157B15b7FeC
+• Take rate limit: unlimited
+• Min yield: 0%
+• Max yield: 10%
+• Supply cap: 150 million
+
+####### A.6.1.1.1.3.5.3 - Policies and Operational Parameters [Core]  <!-- UUID: c8fcae7c-01ea-48cf-9b8c-4de7d3c86d78 -->
+
+The documents herein define the currently active policies for Spark Savings Configuration, alongside relevant operational parameters for implementing the policies.
+
+######## A.6.1.1.1.3.5.3.1 - Target Liquidity [Core]  <!-- UUID: 6f328a96-1275-46f7-a034-b40dcb69f708 -->
+
+The documents herein define Spark's policy for managing the liquidity buffers available for user withdrawals from Spark Savings vaults.
+
+######### A.6.1.1.1.3.5.3.1.1 - Definition [Core]  <!-- UUID: 0289444b-b7fe-4003-b737-4e07230a4d9b -->
+
+Target Liquidity is the amount of deposited assets that should remain within each Spark Savings vault contract to support instant withdrawals. This value may be defined as a percent of total vault deposits, a fixed quantity of tokens, or a combination of both types of evaluation.
+
+######### A.6.1.1.1.3.5.3.1.2 - Operational Process [Core]  <!-- UUID: 33a7389c-c8a3-46ab-96a4-17d6b9ee2b4f -->
+
+The Spark Prime Relayer Multisig will execute transactions to ensure liquidity within Spark Savings vaults is aligned with the Target Liquidity configurations specified in Target Liquidity Current Configuration, up to the total amount of user deposits in a given Spark Savings vault. This will be implemented via control of the taker role in the vault and transferAsset rate limit from Spark Liquidity Layer ALM Proxy to the vault.
+
+In normal conditions, this will be automated via the ALM Planner software. If the Prime Relayer Multisig fails to maintain Spark Savings vault liquidity in alignment with the Target Liquidity configurations, the Core Operator Relayer Multisig is empowered to effectuate transactions to achieve this.
+
+######### A.6.1.1.1.3.5.3.1.3 - Target Liquidity Current Configuration [Core]  <!-- UUID: 98bf1329-ccd7-4a7e-bfaf-d30b5c29574c -->
+
+The subdocuments herein specify the current values for Target Liquidity for each instance of Spark Savings.
+
+########## A.6.1.1.1.3.5.3.1.3.1 - Spark Savings USDC on Ethereum [Core]  <!-- UUID: 3b92fb2c-9944-4fa8-9300-5a53c16189dd -->
+
+The current Target Liquidity for Spark Savings USDC on Ethereum is the greater of 10% of total deposits or 1 million USDC.
+
+########## A.6.1.1.1.3.5.3.1.3.2 - Spark Savings USDT on Ethereum [Core]  <!-- UUID: 5e8fdea7-ce4a-4185-9d18-995ff823eb94 -->
+
+The current Target Liquidity for Spark Savings USDT on Ethereum is the greater of 10% of total deposits or 1 million USDC.
+
+########## A.6.1.1.1.3.5.3.1.3.3 - Spark Savings ETH on Ethereum [Core]  <!-- UUID: 944ebd8c-0562-4397-8a5a-6ebcea8167e7 -->
+
+The current Target Liquidity for Spark Savings ETH on Ethereum is the greater of 10% of total deposits or 250 ETH.
+
+########## A.6.1.1.1.3.5.3.1.3.4 - Spark Savings USDC on Avalanche [Core]  <!-- UUID: 3a7b2e58-01ac-4b0c-a53e-6cce6f563168 -->
+
+The current Target Liquidity for Spark Savings USDC on Avalanche is the greater of 10% of total deposits or 1 million USDC.
+
+######## A.6.1.1.1.3.5.3.2 - Rewards Rate [Core]  <!-- UUID: 22d359a5-3f83-409f-8396-595ac1ea0060 -->
+
+The documents herein define Spark's policy for managing the rewards rate for Spark Savings vaults.
+
+######### A.6.1.1.1.3.5.3.2.1 - Definition [Core]  <!-- UUID: 3a143911-80c9-4eb0-9aa3-5b3d3a8ca843 -->
+
+The Spark Savings Rewards Rate specifies the yield paid out to depositors on their supplied capital, expressed as an annual percentage rate. The Rewards Rate configuration for each vault may be set as a fixed value, or via reference to external benchmarks such as the Sky Savings Rate, Secured Overnight Funding Rate, SparkLend market supply rates, or other relevant measures.
+
+######### A.6.1.1.1.3.5.3.2.2 - Operational Process [Core]  <!-- UUID: 6c7a4964-485f-4edf-a05f-61fa65c9871c -->
+
+The Rewards Rate for each Spark Savings vault will be maintained in alignment with the configuration specified in Rewards Rate Current Configuration via the setter role for each vault. When the currently implemented Rewards Rate diverges from the target value, the setter is responsible for promptly updating the rate onchain.
+
+######### A.6.1.1.1.3.5.3.2.3 - Rewards Rate Current Configuration [Core]  <!-- UUID: 89192471-7e48-43d8-b86e-fa4e70edcf8a -->
+
+The subdocuments herein specify the current configuration for determining Rewards Rate for each instance of Spark Savings.
+
+########## A.6.1.1.1.3.5.3.2.3.1 - Spark Savings USDC on Ethereum [Core]  <!-- UUID: 8cba4337-8305-4b75-9fa2-79cee08a9739 -->
+
+The Rewards Rate for Spark Savings USDC on Ethereum will be maintained to be equal to the Sky Savings Rate.
+
+########## A.6.1.1.1.3.5.3.2.3.2 - Spark Savings USDT on Ethereum [Core]  <!-- UUID: 087dc001-1a44-4096-acd1-feeb109f7ec0 -->
+
+The Rewards Rate for Spark Savings USDT on Ethereum will be maintained to be equal to the Sky Savings Rate.
+
+########## A.6.1.1.1.3.5.3.2.3.3 - Spark Savings ETH on Ethereum [Core]  <!-- UUID: a2a900aa-a3d6-42d6-b491-cd1fb9701fce -->
+
+The Rewards Rate for Spark Savings ETH on Ethereum will be maintained to be equal to 90% of the supply rate of the SparkLend ETH market on Ethereum.
+
+########## A.6.1.1.1.3.5.3.2.3.4 - Spark Savings USDC on Avalanche [Core]  <!-- UUID: afac32a3-7f73-4b24-8857-061eb5c6c264 -->
+
+The Rewards Rate for Spark Savings USDC on Avalanche will be maintained to be equal to the Sky Savings Rate.
 
 #### A.6.1.1.2 - Grove [Core]  <!-- UUID: 727b0de6-095b-485e-bf9c-02108a364480 -->
 
@@ -26061,7 +26281,7 @@ The parameters of the Root Edit Primitive are fully specified by the Operational
 
 ########## A.6.1.1.2.2.2.2.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 40826926-adb2-4de3-936d-702e2d8cb3b9 -->
 
-The documents herein define the process for using the Root Edit Primitive to update the Grove Agent Artifact. Information on Grove governance that is unrelated to the use of the Root Edit Primitive is located at [A.6.1.1.2.5.1 - Governance Information Unrelated To Root Edit Primitive](c1c86e47-a7db-4080-ab1f-99ed8e4892f7).
+The documents herein define the process for using the Root Edit Primitive to update the Grove Agent Artifact. Information on Grove governance that is unrelated to the use of the Root Edit Primitive is located at [A.6.1.1.2.3.1 - Governance Information Unrelated To Root Edit Primitive](c1c86e47-a7db-4080-ab1f-99ed8e4892f7).
 
 ########### A.6.1.1.2.2.2.2.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: d919ea0f-f819-45f3-b065-7f2cbdba5b08 -->
 
@@ -26799,6 +27019,66 @@ The Ethereum Mainnet Instances Directory of the Curve Protocol with `Active` Sta
 
 This Instance’s associated Instance Configuration Document is located at [[Unknown]](https://www.notion.so/29cf2ff08d7380c6ad86f5e0c217ef30).
 
+############ A.6.1.1.2.2.6.1.1.2.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document Location [Core]  <!-- UUID: e09057c5-3a44-4e92-a38c-5695a6ad08d9 -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document](ea9afb08-8f81-4ee9-b9a7-321862bad5d8).
+
+########### A.6.1.1.2.2.6.1.1.2.1.7 - Morpho [Core]  <!-- UUID: c7201d8e-ea9a-4283-ad53-8f1851bde413 -->
+
+The Ethereum Mainnet Instances Directory of the Morpho Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.1.7.1 - Ethereum Mainnet - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document Location [Core]  <!-- UUID: 03708e1d-f0e9-41e6-a792-01ef1b2d969b -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.7.1 - Ethereum Mainnet - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document](29cb8322-96f5-4f18-b4fe-eb31826af580).
+
+########### A.6.1.1.2.2.6.1.1.2.1.8 - Securitize Tokenized AAA CLO Fund (STAC) [Core]  <!-- UUID: 12a0d375-8f1e-4e62-83ba-d56bc6d3f2ab -->
+
+The Ethereum Mainnet Instances Directory of the Securitize Tokenized AAA CLO Fund (STAC) with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.1.8.1 - Ethereum Mainnet - Securitize Tokenized AAA CLO Fund (STAC) Instance Configuration Document Location [Core]  <!-- UUID: f43479d2-2c76-4a18-8e9b-f59f1e1b493b -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.8.1 - Ethereum Mainnet - Securitize Tokenized AAA CLO Fund (STAC) Instance Configuration Document](a0c4fcd6-ebf9-4124-8767-cf14ab6ab397).
+
+########## A.6.1.1.2.2.6.1.1.2.2 - Avalanche [Core]  <!-- UUID: 7f10aaf2-b3e8-4dc8-b91f-ff27200a9ccf -->
+
+The documents herein contain a Directory of all Instances on Avalanche of the Allocation System Primitive with Instance status of `Active`.
+
+########### A.6.1.1.2.2.6.1.1.2.2.1 - Centrifuge [Core]  <!-- UUID: bc3f2a84-6f20-448a-9f2a-9173cfe65204 -->
+
+The Avalanche Instances Directory of the Centrifuge Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.2.1.1 - Avalanche - Centrifuge JTRSY Instance Configuration Document Location [Core]  <!-- UUID: af1d1da5-f77a-4d0e-9fa8-0fef4851eafc -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.2.1.1 - Avalanche - Centrifuge JTRSY Instance Configuration Document](3c731296-858a-4c27-a5cc-6b7ff208cc16).
+
+############ A.6.1.1.2.2.6.1.1.2.2.1.2 - Avalanche - Centrifuge JAAA Instance Configuration Document Location [Core]  <!-- UUID: 975aa703-54ac-4593-a027-7cff0b5e25be -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.2.1.2 - Avalanche - Centrifuge JAAA Instance Configuration Document](bd37d6c9-2e05-4ce3-86dc-3a50d6887e6b).
+
+########## A.6.1.1.2.2.6.1.1.2.3 - Base [Core]  <!-- UUID: a53e977f-7bc9-406e-9be1-1f52d9c51416 -->
+
+The documents herein contain a Directory of all Instances on Base of the Allocation System Primitive with Instance status of `Active`.
+
+########### A.6.1.1.2.2.6.1.1.2.3.1 - Morpho [Core]  <!-- UUID: 4953ca03-359c-46a0-b7f1-3625023492d5 -->
+
+The Base Instances Directory of the Morpho Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.3.1.1 - Base - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document Location [Core]  <!-- UUID: be020cd4-73d4-4fc3-ae39-d38b252defd0 -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.3.1.1 - Base - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document](43d78089-ba75-480c-a277-edaa6eaa6336).
+
+########## A.6.1.1.2.2.6.1.1.2.4 - Plasma [Core]  <!-- UUID: 00ec8ca9-deee-45b2-9acc-f24560ad4a13 -->
+
+The documents herein contain a Directory of all Instances on Plasma of the Allocation System Primitive with Instance status of `Active`.
+
+########### A.6.1.1.2.2.6.1.1.2.4.1 - Aave [Core]  <!-- UUID: 8bf1db06-958b-4037-82f4-5b8463eb22a3 -->
+
+The Plasma Instances Directory of the Aave Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.2.2.6.1.1.2.4.1.1 - Plasma - Aave v3 USDT0 Instance Configuration Document Location [Core]  <!-- UUID: 76b30e0f-543c-43e1-8f8b-2d1145a9cd4e -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.4.1.1 - Plasma - Aave v3 USDT0 Instance Configuration Document](7a620ce6-c67a-4c15-b7fb-c8b869a28a0f).
+
 ######### A.6.1.1.2.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 70ddaca1-07ca-402f-bf3b-cfab52a8f360 -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
@@ -26914,6 +27194,90 @@ The address of the ALM_PROXY contract is: `0x7107DD8F56642327945294a18A4280C78e1
 ############## A.6.1.1.2.2.6.1.2.1.1.1.2.2.5 - ALM Rate Limits (Avalanche) Contract [Core]  <!-- UUID: fae298c2-f505-4d8f-904e-28220926b6d8 -->
 
 The address of the ALM_RATE_LIMITS contract is: `0x6ba2e6bCCe3d2A31F1e3e1d3e11CDffBaA002A21`
+
+############# A.6.1.1.2.2.6.1.2.1.1.1.2.3 - Base [Core]  <!-- UUID: 50e8937a-ae76-49ac-8c50-e2ca21270303 -->
+
+The documents herein contain the ALM Contract Addresses for the Grove Liquidity Layer on Base.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.1 - ALM Controller Contract [Core]  <!-- UUID: c3c11dd2-3b15-4f6b-8771-ff1da05f1115 -->
+
+The address of the ALM_CONTROLLER contract is: `0x08b045609a673996ca10fedbAFAE2395A21ba539`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.2 - ALM Controller Contract Version [Core]  <!-- UUID: 312c1860-7eec-4a60-9add-1b64204c2228 -->
+
+The ALM_CONTROLLER contract version will be specified in a future iteration of the Atlas.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.3 - ALM Freezer Multisig Address [Core]  <!-- UUID: 45278dad-c140-4671-9e33-59ba395d8d11 -->
+
+The address of the Multisig that has the Freezer Role is: `0xB0113804960345fd0a245788b3423319c86940e5`.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.4 - ALM Relayer Multisig Address [Core]  <!-- UUID: b8053bf5-44d3-49b7-9eeb-9653df45abd1 -->
+
+The address of the Multisig that has the Relayer Role is: `0x0eEC86649E756a23CBc68d9EFEd756f16aD5F85f`.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.5 - ALM Proxy Contract [Core]  <!-- UUID: 5c382a94-ce36-4ffa-862b-4718382450fe -->
+
+The address of the ALM_PROXY contract is: `0x9B746dBC5269e1DF6e4193Bcb441C0FbBF1CeCEe`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.3.6 - ALM Rate Limits Contract [Core]  <!-- UUID: a92d0054-8cc7-429b-91bb-dea4f0896e20 -->
+
+The address of the ALM_RATE_LIMITS contract is: `0xAc8BF0669223197ac8B94Cbb53E725e40B3919E8`
+
+############# A.6.1.1.2.2.6.1.2.1.1.1.2.4 - Plasma [Core]  <!-- UUID: eae5ccc0-69e4-4210-8676-0f425e599f87 -->
+
+The documents herein contain the ALM Contract Addresses for the Grove Liquidity Layer on Plasma.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.1 - ALM Controller Contract [Core]  <!-- UUID: 04952825-fe04-4459-ba45-01b44d21f606 -->
+
+The address of the ALM_CONTROLLER contract is: `0x85b0E7F3A7C1aB0E1aDea7dfAaD416D8A6e00f0e`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.2 - ALM Controller Contract Version [Core]  <!-- UUID: ed9f98fd-bdaf-4779-a5d2-66b8194aa796 -->
+
+The ALM_CONTROLLER contract version will be specified in a future iteration of the Atlas.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.3 - ALM Freezer Multisig Address [Core]  <!-- UUID: c7c722e6-f0d7-4182-afe1-ac260ce2482b -->
+
+The address of the Multisig that has the Freezer Role is `0xB0113804960345fd0a245788b3423319c86940e5`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.4 - ALM Relayer Multisig Address [Core]  <!-- UUID: 9a69f651-4e37-4c7e-8ecc-e93d0d36e358 -->
+
+The address of the Multisig that has the Relayer Role is `0x0eEC86649E756a23CBc68d9EFEd756f16aD5F85f`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.5 - ALM Proxy Contract [Core]  <!-- UUID: 9d0bcc23-02d4-4389-9c85-707acf900dee -->
+
+The address of the ALM_PROXY contract is: `0x0C462Fff7Cc975bC9F2B0aEB8270febA5FD71e1B`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.4.6 - ALM Rate Limits Contract [Core]  <!-- UUID: 59485651-9961-4382-8aa0-71b140a9105e -->
+
+The address of the ALM_RATE_LIMITS contract is: `0x1e993F992B90eE50115CD7bA2E7432a9c345d0c4`
+
+############# A.6.1.1.2.2.6.1.2.1.1.1.2.5 - Plume [Core]  <!-- UUID: f2a1de37-0a71-45be-9dbb-8501c1a98252 -->
+
+The documents herein contain the ALM Contract Addresses for the Grove Liquidity Layer on Plume.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.1 - ALM Controller Contract [Core]  <!-- UUID: 15083990-2c69-45c1-93ab-8d48d140159c -->
+
+The address of the ALM_CONTROLLER contract is: `0x0C462Fff7Cc975bC9F2B0aEB8270febA5FD71e1B`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.2 - ALM Controller Contract Version [Core]  <!-- UUID: 51739c12-4a4b-429c-a238-b1bdd554decf -->
+
+The ALM_CONTROLLER contract version will be specified in a future iteration of the Atlas.
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.3 - ALM Freezer Multisig Address [Core]  <!-- UUID: f655efd0-cbce-4c42-9c80-64f8358a339e -->
+
+The address of the Multisig that has the Freezer Role is `0xB0113804960345fd0a245788b3423319c86940e5`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.4 - ALM Relayer Multisig Address [Core]  <!-- UUID: 9e0a7a51-7cc1-4dce-9465-8b3961d14f1d -->
+
+The address of the Multisig that has the Relayer Role is `0x0eEC86649E756a23CBc68d9EFEd756f16aD5F85f`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.5 - ALM Proxy Contract [Core]  <!-- UUID: dcf0beac-b93e-41a7-b8b6-98c1d4cc819b -->
+
+The address of the ALM_PROXY contract is: `0x1DB91ad50446a671e2231f77e00948E68876F812`
+
+############## A.6.1.1.2.2.6.1.2.1.1.1.2.5.6 - ALM Rate Limits Contract [Core]  <!-- UUID: 441a9fa5-4dcc-45f5-83a7-644128c23b05 -->
+
+The address of the ALM_RATE_LIMITS contract is: `0x7f8408eBbBC3504F83eeDa52910dd75Eba92C955`
 
 ########### A.6.1.1.2.2.6.1.2.1.1.2 - Off-chain Operational Parameters [Core]  <!-- UUID: ec6cc8a0-3811-485a-9f9a-78f388659d46 -->
 
@@ -27101,9 +27465,9 @@ Any changes to the multisig signers that do not fall within the two exceptions l
 
 The documents herein specify requirements related to Grove’s Total Risk Capital (TRC) management.
 
-########### A.6.1.1.2.2.6.1.2.1.3.1 - Grove Development Company’s Operation Of Grove Liquidity Layer And Agreement Regarding Risk Tolerance Ratio [Core]  <!-- UUID: b5120b66-7007-4f0c-977f-a441a7067f92 -->
+########### A.6.1.1.2.2.6.1.2.1.3.1 - Grove Development Company’s Operation Of Grove Liquidity Layer And Agreement Regarding Encumbrance Ratio [Core]  <!-- UUID: b5120b66-7007-4f0c-977f-a441a7067f92 -->
 
-Grove Development Company will operate the Grove Liquidity Layer and agrees to stay at or below a 90% Risk Tolerance Ratio. See [A.3.2.2.7.2.1.1.1 - Risk Tolerance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
+Grove Development Company will operate the Grove Liquidity Layer and agrees to stay at or below a 90% Encumbrance Ratio. See [A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
 
 ########### A.6.1.1.2.2.6.1.2.1.3.2 - Grove Development Company’s Total Risk Capital (TRC) Management Processes [Core]  <!-- UUID: 35b828fe-4bf3-49e3-a87b-95751562f2b5 -->
 
@@ -29096,6 +29460,200 @@ The Rate Limits for this Interim Deployment are defined in Rate Limits.
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
 
+########## A.6.1.1.2.2.6.1.3.1.7 - Morpho [Core]  <!-- UUID: d03f121c-7853-4dc7-85d8-f231aaa64a68 -->
+
+The Ethereum Mainnet Instances of the Morpho Protocol with `Active` Status are stored herein.
+
+########### A.6.1.1.2.2.6.1.3.1.7.1 - Ethereum Mainnet - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document [Core]  <!-- UUID: 29cb8322-96f5-4f18-b4fe-eb31826af580 -->
+
+The documents herein contain the Instance Configuration Document for the Morpho Grove x Steakhouse High Yield Vault USDC Instance.
+
+############ A.6.1.1.2.2.6.1.3.1.7.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 6127e31a-798c-41eb-90d5-044d9b214d2a -->
+
+**`Pending`**
+
+############ A.6.1.1.2.2.6.1.3.1.7.1.2 - Parameters [Core]  <!-- UUID: 7cdf8908-1adc-421d-9c71-37d138f99b20 -->
+
+The documents herein define the parameters of the Morpho Grove x Steakhouse High Yield Vault USDC Instance of the Allocation System Primitive.
+
+############# A.6.1.1.2.2.6.1.3.1.7.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 260778ff-223a-4aca-a262-cd20aafe5f49 -->
+
+The documents herein define the Instance identifiers.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.1.1 - Network [Core]  <!-- UUID: f4e45e27-3775-46e7-9f7f-ada5fb72bc27 -->
+
+Ethereum Mainnet
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.1.2 - Target Protocol [Core]  <!-- UUID: a9e1a42f-d92b-4658-814a-2ad449de6eb5 -->
+
+Morpho
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: a810c912-a460-4a1f-ac0d-838eb6ff2f04 -->
+
+USDC
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.1.4 - Token [Core]  <!-- UUID: 4e19d59e-628e-4478-a986-6418879f03b2 -->
+
+grove-bbqUSDC
+
+############# A.6.1.1.2.2.6.1.3.1.7.1.2.2 - Contract Addresses [Core]  <!-- UUID: 94042273-29a0-4538-833b-1ea63b737db1 -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.2.1 - Token Address [Core]  <!-- UUID: dcdff78c-809f-4ec8-80a2-36c124ca9ae8 -->
+
+`0xBEEf2B5FD3D94469b7782aeBe6364E6e6FB1B709`
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: ff7b0875-7f6d-4b18-b609-34eec3f725a0 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+############# A.6.1.1.2.2.6.1.3.1.7.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 35269818-4f06-49a8-8675-f7da3f616976 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: e258f0cd-0b47-464a-bcdb-78fdfb3451a2 -->
+
+The inflow RateLimitID is: `0x82fb6a87781d1c18617960e9528d0633bfbc534f5ae8109347f10bb49a2f4f19`.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: a7ad7e2a-5c2e-4231-94d4-cdd14d526c1d -->
+
+**Outflow RateLimitID** _(Core)_ - The outflow RateLimitID is: `0xe668276e49fbcb8fc24c716adf328ec4602ad894aaeabc608d172aadfd5cd485`.
+
+############# A.6.1.1.2.2.6.1.3.1.7.1.2.4 - Rate Limits [Core]  <!-- UUID: a907ce48-a651-4cc9-a382-82e989f3ee50 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: dbb8ef9e-c2ce-43b5-b320-bae57f6cb993 -->
+
+The deposit rate limits are:
+
+• `maxAmount`: 20,000,000 USDC
+• `slope`: 20,000,000 USDC per day
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: b4ca4845-a846-479b-aaf8-e83e73bf25f7 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: Unlimited
+
+############# A.6.1.1.2.2.6.1.3.1.7.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 1ab38f81-28f4-4262-8529-37ef7d43e087 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############## A.6.1.1.2.2.6.1.3.1.7.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 9583419b-b97c-45d5-9581-fad0b5c656b0 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+############### A.6.1.1.2.2.6.1.3.1.7.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 3e4fc425-6b44-408b-b90e-f408d1920636 -->
+
+The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
+
+############### A.6.1.1.2.2.6.1.3.1.7.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 6caba5e6-b5b5-43a0-8f6f-9de2d2c559cd -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+############ A.6.1.1.2.2.6.1.3.1.7.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 9c79b4b9-8584-4414-bddf-36158d01dc20 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+########## A.6.1.1.2.2.6.1.3.1.8 - Securitize Tokenized AAA CLO Fund (STAC) [Core]  <!-- UUID: b05d9fc2-9a93-4f3b-b0d8-b4f77bc294ce -->
+
+The Ethereum Mainnet Instances of the Securitize Tokenized AAA CLO Fund (STAC) with `Active` Status are stored herein.
+
+########### A.6.1.1.2.2.6.1.3.1.8.1 - Ethereum Mainnet - Securitize Tokenized AAA CLO Fund (STAC) Instance Configuration Document [Core]  <!-- UUID: a0c4fcd6-ebf9-4124-8767-cf14ab6ab397 -->
+
+The documents herein contain the Instance Configuration Document for the Securitize Tokenized AAA CLO Fund (STAC) Instance.
+
+############ A.6.1.1.2.2.6.1.3.1.8.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 96b8832b-b6b9-4550-b211-8df9adbf163c -->
+
+**`Pending`**
+
+############ A.6.1.1.2.2.6.1.3.1.8.1.2 - Parameters [Core]  <!-- UUID: 1258f424-862a-4e22-9281-658b7dcca2c5 -->
+
+The documents herein define the parameters of the Securitize Tokenized AAA CLO Fund (STAC) Instance of the Allocation System Primitive.
+
+############# A.6.1.1.2.2.6.1.3.1.8.1.2.1 - Instance Identifiers [Core]  <!-- UUID: a5c55b02-742c-4172-a6d0-88155fd3b73f -->
+
+The documents herein define the Instance identifiers.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.1.1 - Network [Core]  <!-- UUID: ca21487e-43e1-4fd7-a67c-7389e59bf46d -->
+
+Ethereum Mainnet
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.1.2 - Target Protocol [Core]  <!-- UUID: f29e4e19-73d2-4a9b-812f-0226be26687a -->
+
+Securitize Tokenized AAA CLO Fund (STAC)
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 5e3282b6-3920-43e8-9659-ad9d0a4f2efe -->
+
+USDC
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.1.4 - Token [Core]  <!-- UUID: c448bf3a-b51d-40e9-ba3c-8bdeadad1dc2 -->
+
+STAC
+
+############# A.6.1.1.2.2.6.1.3.1.8.1.2.2 - Contract Addresses [Core]  <!-- UUID: 9ab65d47-267a-4be6-b298-8a636b909e13 -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.2.1 - Token Address [Core]  <!-- UUID: b6737216-3829-40ae-b033-846080f61d34 -->
+
+`0x51C2d74017390CbBd30550179A16A1c28F7210fc`
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 19b23b6a-f8a5-4db8-8768-88b045bab3d2 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+############# A.6.1.1.2.2.6.1.3.1.8.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: dd63b171-c94f-4082-8719-24870cb173c1 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: ae0239af-eed4-40d6-8d21-c53bda72249d -->
+
+The inflow RateLimitID is: `0x01ccccb0233955b3de85eca4dcc78aaf2aa6da1cf048b496e85a91396c2feab6`.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: d451d2b1-70ea-458a-b2bb-dde38d29e9c0 -->
+
+The outflow RateLimitID is: `0xcbb4d6e874245392c78f0f249b7dc876e5462bb0dce135a6e5c4cc21d774390b`.
+
+############# A.6.1.1.2.2.6.1.3.1.8.1.2.4 - Rate Limits [Core]  <!-- UUID: fd676948-7b31-4f11-b4b0-933226a193e7 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: ee33b709-1239-44c3-9c94-4211433877c4 -->
+
+The deposit rate limits are:
+
+• `maxAmount`: 50,000,000 USDC
+• `slope`: 50,000,000 USDC per day
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 3cafebb2-cf4d-4830-9787-1c2d7d7da030 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: Unlimited
+
+############# A.6.1.1.2.2.6.1.3.1.8.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 174ba214-cfe9-4d35-83cb-3c0795e1936c -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############## A.6.1.1.2.2.6.1.3.1.8.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 7f2502ce-752e-47e9-bac5-94642c9496d1 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+############### A.6.1.1.2.2.6.1.3.1.8.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 34735806-06ea-41cb-8e69-05ee68063194 -->
+
+The maximum allocation for all Interim Deployments in Securitize Tokenized AAA CLO Fund (STAC) is $25 million.
+
+############### A.6.1.1.2.2.6.1.3.1.8.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 03802a9c-89db-44ad-bf11-b8c28d402cca -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+############ A.6.1.1.2.2.6.1.3.1.8.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 0f3ebd6c-2b7f-4125-aea8-68e84476da06 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
 ######### A.6.1.1.2.2.6.1.3.2 - Avalanche Instances [Core]  <!-- UUID: fbb34f07-a5c8-475e-9842-fc5c9b9bd359 -->
 
 The Avalanche Instances of the Grove Liquidity Layer with `Active` Status are stored herein and are organized by target protocol.
@@ -29245,6 +29803,208 @@ The outflow rate limits are:
 The documents herein contain specific off-chain parameters for this Instance.
 
 ############ A.6.1.1.2.2.6.1.3.2.1.2.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 74e35297-1d5e-4c4a-be08-741c88329039 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+######### A.6.1.1.2.2.6.1.3.3 - Base [Core]  <!-- UUID: 14c653d1-6667-47c3-bea4-8bb8553bf7b9 -->
+
+The Base Instances of the Grove Liquidity Layer with `Active` Status are stored herein and are organized by target protocol.
+
+########## A.6.1.1.2.2.6.1.3.3.1 - Morpho [Core]  <!-- UUID: 469f2edf-0a5b-4d3a-a32f-e93c0a99b04b -->
+
+The Base Instances of the Morpho Protocol with `Active` Status are stored herein.
+
+########### A.6.1.1.2.2.6.1.3.3.1.1 - Base - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document [Core]  <!-- UUID: 43d78089-ba75-480c-a277-edaa6eaa6336 -->
+
+The documents herein contain the Instance Configuration Document for the Morpho Grove x Steakhouse High Yield Vault USDC Instance.
+
+############ A.6.1.1.2.2.6.1.3.3.1.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 766f35b4-24a6-4393-9a3f-c511a1bce0cc -->
+
+**`Pending`**
+
+############ A.6.1.1.2.2.6.1.3.3.1.1.2 - Parameters [Core]  <!-- UUID: b72d1498-2f89-40ec-8c14-08ce2a84af8c -->
+
+The documents herein define the parameters of the Morpho Grove x Steakhouse High Yield Vault USDC Instance of the Allocation System Primitive.
+
+############# A.6.1.1.2.2.6.1.3.3.1.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 89b9b814-e433-4b20-bdb0-3c8189501f5f -->
+
+The documents herein define the Instance identifiers.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.1.1 - Network [Core]  <!-- UUID: 9b88ee71-1097-431f-8fbe-a5be36ef6128 -->
+
+Base
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 4e1857f5-a3c8-408d-96c1-913fd81c3848 -->
+
+Morpho
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: b08511eb-0c49-4077-9676-da153fbf2797 -->
+
+USDC
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.1.4 - Token [Core]  <!-- UUID: 6ff4aa1b-d139-44af-baae-b8c10220b107 -->
+
+grove-bbqUSDC
+
+############# A.6.1.1.2.2.6.1.3.3.1.1.2.2 - Contract Addresses [Core]  <!-- UUID: 99a5b0c0-88a8-4f3a-9bf3-b87b6f0fdf39 -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.2.1 - Token Address [Core]  <!-- UUID: 1dc90986-481b-4e3a-a38c-7a9a636bb1da -->
+
+`0xBeEf2d50B428675a1921bC6bBF4bfb9D8cF1461A`
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 200c6217-d44c-4a1e-90b3-94735e35959a -->
+
+`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
+
+############# A.6.1.1.2.2.6.1.3.3.1.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: f8e73145-23c5-48f6-b48b-62e4f7b8af0d -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 9e4275e9-c6b0-43a3-a5ff-1e12dc215267 -->
+
+The inflow RateLimitID is: `0xb5c3e377398c99e28d39340657bbc979bef79e01e2af3d0ff742e30722cd0d5a`.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 24179f21-d109-4298-b0c8-b0a182d94bce -->
+
+The outflow RateLimitID is: `0x13e37cfd8b7a0e3f59d4b4424894c2a3693ccf0c313905615ae9848a32e2db97`.
+
+############# A.6.1.1.2.2.6.1.3.3.1.1.2.4 - Rate Limits [Core]  <!-- UUID: d394483b-e739-4346-948b-488fb942a48f -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.4.1 - Inflow Rate Limits [Core]  <!-- UUID: a1c1cca8-b6a3-440b-ae26-9393b95d328f -->
+
+The inflow rate limits are:
+
+• `maxAmount`: 20,000,000 USDC
+• `slope`: 20,000,000 USDC per day
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.4.2 - Outflow Rate Limits [Core]  <!-- UUID: b39a0a7f-3e17-4cf3-b96b-a1a16fc8ae13 -->
+
+The outflow rate limits are:
+
+• `maxAmount`: Unlimited
+
+############# A.6.1.1.2.2.6.1.3.3.1.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 9a9ad1a3-ce48-4947-9da1-13dfcd450ee3 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############## A.6.1.1.2.2.6.1.3.3.1.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: e3a871ba-b1ee-4883-a557-5a56ae292e86 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+############### A.6.1.1.2.2.6.1.3.3.1.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: ac545546-ed62-4726-a97c-e8ef3c273f7e -->
+
+The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
+
+############### A.6.1.1.2.2.6.1.3.3.1.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: f7ed1b75-b4ff-4bb4-ae02-128dd230d70e -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+############ A.6.1.1.2.2.6.1.3.3.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: a274fcdf-dc71-4b78-be4d-e41d1622e076 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+######### A.6.1.1.2.2.6.1.3.4 - Plasma [Core]  <!-- UUID: 348787e7-de5d-465c-9e19-3e8740f04efc -->
+
+The Plasma Instances of the Grove Liquidity Layer with `Active` Status are stored herein and are organized by target protocol.
+
+########## A.6.1.1.2.2.6.1.3.4.1 - Aave [Core]  <!-- UUID: 9587d7aa-8ac3-41d1-ba77-ee5a086a2706 -->
+
+The Plasma Instances of the Aave Protocol with `Active` Status are stored herein.
+
+########### A.6.1.1.2.2.6.1.3.4.1.1 - Plasma - Aave v3 USDT0 Instance Configuration Document [Core]  <!-- UUID: 7a620ce6-c67a-4c15-b7fb-c8b869a28a0f -->
+
+The documents herein contain the Instance Configuration Document for the Aave v3 USDT0 Instance.
+
+############ A.6.1.1.2.2.6.1.3.4.1.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 5e65df67-fa1e-414d-8f0c-7a9b99db4640 -->
+
+**`Pending`**
+
+############ A.6.1.1.2.2.6.1.3.4.1.1.2 - Parameters [Core]  <!-- UUID: d6f69e43-7f2a-4116-992c-526ef48c100e -->
+
+The documents herein define the parameters of the Aave v3 USDT0 Instance of the Allocation System Primitive.
+
+############# A.6.1.1.2.2.6.1.3.4.1.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 8b7a0db8-da51-43c2-8d0a-512a8d95e348 -->
+
+The documents herein define the Instance identifiers.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.1.1 - Network [Core]  <!-- UUID: 2783ab68-e321-4635-886c-6cb3f84ee88f -->
+
+Plasma
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 6ebe8640-bc0f-4637-a49f-645002785274 -->
+
+Aave v3
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: c3aa0280-f998-4510-a1fd-45bb47c62f4b -->
+
+USDC
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.1.4 - Token [Core]  <!-- UUID: f8e5ff09-11a4-42da-b5f8-f3f2152be978 -->
+
+USDT0
+
+############# A.6.1.1.2.2.6.1.3.4.1.1.2.2 - Contract Addresses [Core]  <!-- UUID: 3c791810-2663-432b-9f8a-7276c721c3d2 -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.2.1 - Token Address [Core]  <!-- UUID: c1b87980-9050-48ba-82ef-b5f65ba0840f -->
+
+`0x5D72a9d9A9510Cd8cBdBA12aC62593A58930a948`
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: bfacb6db-078c-49f1-9e68-0e8a1c9ddef8 -->
+
+`0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD`
+
+############# A.6.1.1.2.2.6.1.3.4.1.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 49ae5000-35bb-497f-a545-2369859b651a -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: a54c1592-0be9-45f8-8a46-8dd2da0e0e24 -->
+
+The inflow RateLimitID is: `0xd97a9a164c3a3da9ba6f443e90f688c005720ace173ac2c6fbd10cc9c67a174e`.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 3895d9f5-bde8-4b8a-95f4-0fae627ee25e -->
+
+The outflow RateLimitID is: `0xc170dc947a54b39bf03cfdfa8249447fdacf93d397502740f6703d80ed3d98e7`.
+
+############# A.6.1.1.2.2.6.1.3.4.1.1.2.4 - Rate Limits [Core]  <!-- UUID: 9c8fc963-4a61-4157-a665-bd1ff47f0ae0 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow/outflow are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.4.1 - Inflow Rate Limits [Core]  <!-- UUID: 3035fcf7-9426-46a7-9223-3204d922ca14 -->
+
+The inflow rate limits are:
+
+• `maxAmount`: 20,000,000 USDT0
+• `slope`: 20,000,000 USDT0 per day
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.4.2 - Outflow Rate Limits [Core]  <!-- UUID: 8eeb5709-8e90-44ed-a384-d99df2a89e85 -->
+
+The outflow rate limits are:
+
+• `maxAmount`: Unlimited
+
+############# A.6.1.1.2.2.6.1.3.4.1.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: dfc74dd9-8390-4428-96e4-9b09c1ce0955 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############## A.6.1.1.2.2.6.1.3.4.1.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 0af9e575-9cbb-41e8-a9e2-fbd9e9ba368d -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+############### A.6.1.1.2.2.6.1.3.4.1.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 283d3c76-2ffe-4e99-8530-065800265fca -->
+
+The maximum allocation for all Interim Deployments in Aave v3 USDT0 is $25 million.
+
+############### A.6.1.1.2.2.6.1.3.4.1.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 37be4157-1086-402c-bdcc-5be5975d7842 -->
+
+The Rate Limits for this Interim Deployment are defined in Rate Limits.
+
+############ A.6.1.1.2.2.6.1.3.4.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 5ad3319c-8c5a-4ba3-8578-29ab5bd51830 -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
 
@@ -29416,251 +30176,59 @@ The Instances of the Core Governance Reward Primitive with `Completed` Status ar
 
 The in progress Invocations of the Core Governance Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.2.2.7.1.2 - Active Instances](2e50776e-e2d8-4223-accb-67e72770e16e).
 
-##### A.6.1.1.2.3 - Morpho [Core]  <!-- UUID: d03f121c-7853-4dc7-85d8-f231aaa64a68 -->
-
-The Ethereum Mainnet Instances of the Morpho Protocol with `Active` Status are stored herein.
-
-###### A.6.1.1.2.3.1 - Ethereum Mainnet - Morpho Grove x Steakhouse High Yield Vault USDC Instance Configuration Document [Core]  <!-- UUID: 29cb8322-96f5-4f18-b4fe-eb31826af580 -->
-
-The documents herein contain the Instance Configuration Document for the Morpho Grove x Steakhouse High Yield Vault USDC Instance.
-
-####### A.6.1.1.2.3.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 6127e31a-798c-41eb-90d5-044d9b214d2a -->
-
-**`Pending`**
-
-####### A.6.1.1.2.3.1.2 - Parameters [Core]  <!-- UUID: 7cdf8908-1adc-421d-9c71-37d138f99b20 -->
-
-The documents herein define the parameters of the Morpho Grove x Steakhouse High Yield Vault USDC Instance of the Allocation System Primitive.
-
-######## A.6.1.1.2.3.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 260778ff-223a-4aca-a262-cd20aafe5f49 -->
-
-The documents herein define the Instance identifiers.
-
-######### A.6.1.1.2.3.1.2.1.1 - Network [Core]  <!-- UUID: f4e45e27-3775-46e7-9f7f-ada5fb72bc27 -->
-
-Ethereum Mainnet
-
-######### A.6.1.1.2.3.1.2.1.2 - Target Protocol [Core]  <!-- UUID: a9e1a42f-d92b-4658-814a-2ad449de6eb5 -->
-
-Morpho
-
-######### A.6.1.1.2.3.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: a810c912-a460-4a1f-ac0d-838eb6ff2f04 -->
-
-USDC
-
-######### A.6.1.1.2.3.1.2.1.4 - Token [Core]  <!-- UUID: 4e19d59e-628e-4478-a986-6418879f03b2 -->
-
-grove-bbqUSDC
-
-######## A.6.1.1.2.3.1.2.2 - Contract Addresses [Core]  <!-- UUID: 94042273-29a0-4538-833b-1ea63b737db1 -->
-
-The documents herein define the Instance contract addresses.
-
-######### A.6.1.1.2.3.1.2.2.1 - Token Address [Core]  <!-- UUID: dcdff78c-809f-4ec8-80a2-36c124ca9ae8 -->
-
-`0xBEEf2B5FD3D94469b7782aeBe6364E6e6FB1B709`
-
-######### A.6.1.1.2.3.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: ff7b0875-7f6d-4b18-b609-34eec3f725a0 -->
-
-`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
-
-######## A.6.1.1.2.3.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 35269818-4f06-49a8-8675-f7da3f616976 -->
-
-The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
-
-######### A.6.1.1.2.3.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: e258f0cd-0b47-464a-bcdb-78fdfb3451a2 -->
-
-The inflow RateLimitID is: `0x82fb6a87781d1c18617960e9528d0633bfbc534f5ae8109347f10bb49a2f4f19`.
-
-######### A.6.1.1.2.3.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: a7ad7e2a-5c2e-4231-94d4-cdd14d526c1d -->
-
-**Outflow RateLimitID** _(Core)_ - The outflow RateLimitID is: `0xe668276e49fbcb8fc24c716adf328ec4602ad894aaeabc608d172aadfd5cd485`.
-
-######## A.6.1.1.2.3.1.2.4 - Rate Limits [Core]  <!-- UUID: a907ce48-a651-4cc9-a382-82e989f3ee50 -->
-
-The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
-
-######### A.6.1.1.2.3.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: dbb8ef9e-c2ce-43b5-b320-bae57f6cb993 -->
-
-The deposit rate limits are:
-
-• `maxAmount`: 20,000,000 USDC
-• `slope`: 20,000,000 USDC per day
-
-######### A.6.1.1.2.3.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: b4ca4845-a846-479b-aaf8-e83e73bf25f7 -->
-
-The withdrawal rate limits are:
-
-• `maxAmount`: Unlimited
-
-######## A.6.1.1.2.3.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 1ab38f81-28f4-4262-8529-37ef7d43e087 -->
-
-The documents herein contain specific off-chain parameters for this Instance.
-
-######### A.6.1.1.2.3.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 9583419b-b97c-45d5-9581-fad0b5c656b0 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-########## A.6.1.1.2.3.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 3e4fc425-6b44-408b-b90e-f408d1920636 -->
-
-The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
-
-########## A.6.1.1.2.3.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 6caba5e6-b5b5-43a0-8f6f-9de2d2c559cd -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
-
-####### A.6.1.1.2.3.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 9c79b4b9-8584-4414-bddf-36158d01dc20 -->
-
-The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
-
-##### A.6.1.1.2.4 - Securitize Tokenized AAA CLO Fund (STAC) [Core]  <!-- UUID: b05d9fc2-9a93-4f3b-b0d8-b4f77bc294ce -->
-
-The Ethereum Mainnet Instances of the Securitize Tokenized AAA CLO Fund (STAC) with `Active` Status are stored herein.
-
-###### A.6.1.1.2.4.1 - Ethereum Mainnet - Securitize Tokenized AAA CLO Fund (STAC) Instance Configuration Document [Core]  <!-- UUID: a0c4fcd6-ebf9-4124-8767-cf14ab6ab397 -->
-
-The documents herein contain the Instance Configuration Document for the Securitize Tokenized AAA CLO Fund (STAC) Instance.
-
-####### A.6.1.1.2.4.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 96b8832b-b6b9-4550-b211-8df9adbf163c -->
-
-**`Pending`**
-
-####### A.6.1.1.2.4.1.2 - Parameters [Core]  <!-- UUID: 1258f424-862a-4e22-9281-658b7dcca2c5 -->
-
-The documents herein define the parameters of the Securitize Tokenized AAA CLO Fund (STAC) Instance of the Allocation System Primitive.
-
-######## A.6.1.1.2.4.1.2.1 - Instance Identifiers [Core]  <!-- UUID: a5c55b02-742c-4172-a6d0-88155fd3b73f -->
-
-The documents herein define the Instance identifiers.
-
-######### A.6.1.1.2.4.1.2.1.1 - Network [Core]  <!-- UUID: ca21487e-43e1-4fd7-a67c-7389e59bf46d -->
-
-Ethereum Mainnet
-
-######### A.6.1.1.2.4.1.2.1.2 - Target Protocol [Core]  <!-- UUID: f29e4e19-73d2-4a9b-812f-0226be26687a -->
-
-Securitize Tokenized AAA CLO Fund (STAC)
-
-######### A.6.1.1.2.4.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 5e3282b6-3920-43e8-9659-ad9d0a4f2efe -->
-
-USDC
-
-######### A.6.1.1.2.4.1.2.1.4 - Token [Core]  <!-- UUID: c448bf3a-b51d-40e9-ba3c-8bdeadad1dc2 -->
-
-STAC
-
-######## A.6.1.1.2.4.1.2.2 - Contract Addresses [Core]  <!-- UUID: 9ab65d47-267a-4be6-b298-8a636b909e13 -->
-
-The documents herein define the Instance contract addresses.
-
-######### A.6.1.1.2.4.1.2.2.1 - Token Address [Core]  <!-- UUID: b6737216-3829-40ae-b033-846080f61d34 -->
-
-`0x51C2d74017390CbBd30550179A16A1c28F7210fc`
-
-######### A.6.1.1.2.4.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 19b23b6a-f8a5-4db8-8768-88b045bab3d2 -->
-
-`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
-
-######## A.6.1.1.2.4.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: dd63b171-c94f-4082-8719-24870cb173c1 -->
-
-The specific `RateLimitID`(s) for this conduit’s inflow and outflow are defined in the subdocuments herein.
-
-######### A.6.1.1.2.4.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: ae0239af-eed4-40d6-8d21-c53bda72249d -->
-
-The inflow RateLimitID is: `0x01ccccb0233955b3de85eca4dcc78aaf2aa6da1cf048b496e85a91396c2feab6`.
-
-######### A.6.1.1.2.4.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: d451d2b1-70ea-458a-b2bb-dde38d29e9c0 -->
-
-The outflow RateLimitID is: `0xcbb4d6e874245392c78f0f249b7dc876e5462bb0dce135a6e5c4cc21d774390b`.
-
-######## A.6.1.1.2.4.1.2.4 - Rate Limits [Core]  <!-- UUID: fd676948-7b31-4f11-b4b0-933226a193e7 -->
-
-The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
-
-######### A.6.1.1.2.4.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: ee33b709-1239-44c3-9c94-4211433877c4 -->
-
-The deposit rate limits are:
-
-• `maxAmount`: 50,000,000 USDC
-• `slope`: 50,000,000 USDC per day
-
-######### A.6.1.1.2.4.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 3cafebb2-cf4d-4830-9787-1c2d7d7da030 -->
-
-The withdrawal rate limits are:
-
-• `maxAmount`: Unlimited
-
-######## A.6.1.1.2.4.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 174ba214-cfe9-4d35-83cb-3c0795e1936c -->
-
-The documents herein contain specific off-chain parameters for this Instance.
-
-######### A.6.1.1.2.4.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 7f2502ce-752e-47e9-bac5-94642c9496d1 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-########## A.6.1.1.2.4.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 34735806-06ea-41cb-8e69-05ee68063194 -->
-
-The maximum allocation for all Interim Deployments in Securitize Tokenized AAA CLO Fund (STAC) is $25 million.
-
-########## A.6.1.1.2.4.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 03802a9c-89db-44ad-bf11-b8c28d402cca -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
-
-####### A.6.1.1.2.4.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 0f3ebd6c-2b7f-4125-aea8-68e84476da06 -->
-
-##### A.6.1.1.2.5 - Omni Documents [Core]  <!-- UUID: df257205-6b3a-4afc-bbfd-0a35c950bb87 -->
+##### A.6.1.1.2.3 - Omni Documents [Core]  <!-- UUID: df257205-6b3a-4afc-bbfd-0a35c950bb87 -->
 
 The documents herein define Grove’s strategic intent and operational processes relating to infrastructure inherited from Sky Core, activities unrelated to Sky Primitives, or activities spanning multiple Sky Primitives.
 
-###### A.6.1.1.2.5.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: c1c86e47-a7db-4080-ab1f-99ed8e4892f7 -->
+###### A.6.1.1.2.3.1 - Governance Information Unrelated To Root Edit Primitive [Core]  <!-- UUID: c1c86e47-a7db-4080-ab1f-99ed8e4892f7 -->
 
 The documents herein specify Grove governance information that is unrelated to the use of the Root Edit Primitive. The governance process for updating the Grove Artifact is specified in the Root Edit Primitive above at [A.6.1.1.2.2.2.2 - Root Edit Primitive](da862b9f-ca77-443a-ac56-5a287c50b4db).
 
-####### A.6.1.1.2.5.1.1 - Sky Forum [Core]  <!-- UUID: 2eaeb1d9-99ea-478d-9fba-d7410885b4e5 -->
+####### A.6.1.1.2.3.1.1 - Sky Forum [Core]  <!-- UUID: 2eaeb1d9-99ea-478d-9fba-d7410885b4e5 -->
 
 Grove uses the Sky Forum for governance-related discussion. Posts should use the “Grove Prime” category.
 
-####### A.6.1.1.2.5.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 33bf516a-c9e1-4ee0-8a09-69b1f2bb5604 -->
+####### A.6.1.1.2.3.1.2 - Sky Ecosystem Emergency Response [Core]  <!-- UUID: 33bf516a-c9e1-4ee0-8a09-69b1f2bb5604 -->
 
 The documents herein specify Grove’s emergency response protocol in situations that impact the entire Sky Ecosystem. This protocol will be specified in a future iteration of the Grove Artifact.
 
-####### A.6.1.1.2.5.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: 98930f9c-13eb-433c-b485-2fb0e37d0029 -->
+####### A.6.1.1.2.3.1.3 - Agent-Specific Emergency Response [Core]  <!-- UUID: 98930f9c-13eb-433c-b485-2fb0e37d0029 -->
 
 The documents herein specify Grove’s emergency response protocol in situations solely impacting Grove versus the broader Sky Ecosystem. This protocol will be specified in a future iteration of the Grove Artifact.
 
-###### A.6.1.1.2.5.2 - Strategic Intent [Core]  <!-- UUID: 56fec44a-f8ca-4a03-a614-2c0eb0dde262 -->
+###### A.6.1.1.2.3.2 - Strategic Intent [Core]  <!-- UUID: 56fec44a-f8ca-4a03-a614-2c0eb0dde262 -->
 
 Grove will unlock the full potential of USDS by building an institutional-grade credit platform designed to facilitate credit creation and seamlessly move yield in and out of the onchain economy. Grove's priority is to make USDS more attractive through diversified stability fee streams, more efficient rates, and greater utility, with CLOs as the first step into accessing higher yielding investment-grade credit assets. To accomplish these goals, Grove will deploy a RWA Allocation Conduit focused on traditional credit opportunities, as well as crypto-native Conduits for Morpho and Curve.
 
-####### A.6.1.1.2.5.2.1 - Collateralized Loan Obligation Strategy [Core]  <!-- UUID: 2cd87922-d450-4cc2-bce5-81c26239a015 -->
+####### A.6.1.1.2.3.2.1 - Collateralized Loan Obligation Strategy [Core]  <!-- UUID: 2cd87922-d450-4cc2-bce5-81c26239a015 -->
 
 Grove will prioritize Collateralized Loan Obligations (CLOs) as the initial pathway to provide Sky ecosystem with rapid exposure to higher yielding investment-grade credit assets, establishing a scalable model for offchain credit with onchain governance.
 
-####### A.6.1.1.2.5.2.2 - RWA Conduit [Core]  <!-- UUID: 0e6f2c26-31a2-4ce4-8ed3-2d235561e3d3 -->
+####### A.6.1.1.2.3.2.2 - RWA Conduit [Core]  <!-- UUID: 0e6f2c26-31a2-4ce4-8ed3-2d235561e3d3 -->
 
 Grove will begin with onboarding winners of the Grand Prix ([https://forum.sky.money/t/announcement-spark-tokenization-grand-prix-request-for-proposal/24631](https://forum.sky.money/t/announcement-spark-tokenization-grand-prix-request-for-proposal/24631)).
 
-####### A.6.1.1.2.5.2.3 - Institutional Credit Platform [Core]  <!-- UUID: d89b9da2-caf7-423f-9305-efcd66df62d8 -->
+####### A.6.1.1.2.3.2.3 - Institutional Credit Platform [Core]  <!-- UUID: d89b9da2-caf7-423f-9305-efcd66df62d8 -->
 
 Grove will build partnerships with leading financial institutions to scale credit opportunities. This will provide transparent insight into balance sheet allocations while delivering higher, more stable yields through diversified institutional-grade assets.
 
-####### A.6.1.1.2.5.2.4 - Crypto-Native Conduits [Core]  <!-- UUID: f1793c13-0022-4c27-a439-17ea98d2e1d1 -->
+####### A.6.1.1.2.3.2.4 - Crypto-Native Conduits [Core]  <!-- UUID: f1793c13-0022-4c27-a439-17ea98d2e1d1 -->
 
 Grove will deploy Allocation Conduits for Morpho and Curve to capture high-yield, low-risk DeFi opportunities.
 
-######## A.6.1.1.2.5.2.4.1 - Morpho Allocation Conduit [Core]  <!-- UUID: e834343d-e67a-4e8e-acde-34e0a85ea4cd -->
+######## A.6.1.1.2.3.2.4.1 - Morpho Allocation Conduit [Core]  <!-- UUID: e834343d-e67a-4e8e-acde-34e0a85ea4cd -->
 
 Grove will allocate capital to low risk collateral to take advantage of opportunities for high rates in these markets.
 
-######## A.6.1.1.2.5.2.4.2 - Curve Allocation Conduit [Core]  <!-- UUID: 9a76d9e7-b648-4a32-b097-1466902a4309 -->
+######## A.6.1.1.2.3.2.4.2 - Curve Allocation Conduit [Core]  <!-- UUID: 9a76d9e7-b648-4a32-b097-1466902a4309 -->
 
 Grove will partner with emerging stablecoins to deploy liquidity against fiat-backed stablecoins.
 
-####### A.6.1.1.2.5.2.5 - Exploratory Allocation Opportunities [Core]  <!-- UUID: e629ebcb-4588-4305-b6ef-9a568b35d554 -->
+####### A.6.1.1.2.3.2.5 - Exploratory Allocation Opportunities [Core]  <!-- UUID: e629ebcb-4588-4305-b6ef-9a568b35d554 -->
 
 Grove will consider allocations to basis trades, Pendle PTs, and other delta-neutral crypto primitives.
 
-###### A.6.1.1.2.5.3 - Projected Operational Roadmap [Core]  <!-- UUID: 156c9c72-46c9-4668-81b6-7e524e7a4bac -->
+###### A.6.1.1.2.3.3 - Projected Operational Roadmap [Core]  <!-- UUID: 156c9c72-46c9-4668-81b6-7e524e7a4bac -->
 
 Grove’s phased plan to execute its strategy includes:
 
@@ -29669,67 +30237,67 @@ Grove’s phased plan to execute its strategy includes:
 3) Develop quantitative reallocation parameters and conditions to optimize and decentralize conduit management over time; and
 4) Develop transparent insights into the allocation of the balance sheet.
 
-###### A.6.1.1.2.5.4 - Management Of Infrastructure Inherited From Sky Core [Core]  <!-- UUID: 55a72d83-1de3-401c-aef4-9bb330abb774 -->
+###### A.6.1.1.2.3.4 - Management Of Infrastructure Inherited From Sky Core [Core]  <!-- UUID: 55a72d83-1de3-401c-aef4-9bb330abb774 -->
 
 The documents herein specify Grove's strategy and operational processes for managing infrastructure inherited from Sky Core.
 
-####### A.6.1.1.2.5.4.1 - Andromeda [Core]  <!-- UUID: 631d1b05-9828-4b53-a8ab-80dccf549f05 -->
+####### A.6.1.1.2.3.4.1 - Andromeda [Core]  <!-- UUID: 631d1b05-9828-4b53-a8ab-80dccf549f05 -->
 
 Control of the Andromeda RWA Arranged Structure is currently being transitioned to Grove. Andromeda is the RWA Arranged Structure inherited from Sky Core that allocates capital into safe, short-term treasury strategies of less than one (1) year duration.
 
-######## A.6.1.1.2.5.4.1.1 - Parameters [Core]  <!-- UUID: 73f483b4-f330-49a8-a6d8-59bccb985b5d -->
+######## A.6.1.1.2.3.4.1.1 - Parameters [Core]  <!-- UUID: 73f483b4-f330-49a8-a6d8-59bccb985b5d -->
 
 The parameters of Andromeda are defined in [A.3.3.2.7.2.1 - Andromeda](1b153f9f-7c70-4ae1-b76c-ef12f87532c6).
 
-######## A.6.1.1.2.5.4.1.2 - Operational Process Definition [Core]  <!-- UUID: 62b93c99-8a06-4dad-a95e-96029cb5372a -->
+######## A.6.1.1.2.3.4.1.2 - Operational Process Definition [Core]  <!-- UUID: 62b93c99-8a06-4dad-a95e-96029cb5372a -->
 
 The documents herein define the process for the ongoing management of Andromeda. Future iterations of the Artifact will specify operational processes owned by Grove.
 
-######## A.6.1.1.2.5.4.1.3 - Data Repository [Core]  <!-- UUID: e16c9799-7be7-4482-a954-6b8fbf873fbb -->
+######## A.6.1.1.2.3.4.1.3 - Data Repository [Core]  <!-- UUID: e16c9799-7be7-4482-a954-6b8fbf873fbb -->
 
 The documents herein contain data relevant to Andromeda.
 
-####### A.6.1.1.2.5.4.2 - Lite Peg Stability Module [Core]  <!-- UUID: beb54246-6454-4716-a381-be605560cba5 -->
+####### A.6.1.1.2.3.4.2 - Lite Peg Stability Module [Core]  <!-- UUID: beb54246-6454-4716-a381-be605560cba5 -->
 
 Control of the Lite PSM is currently being transitioned to Grove.
 
-######## A.6.1.1.2.5.4.2.1 - Parameters [Core]  <!-- UUID: d83f190a-99d6-4f8c-8502-d3e7e917816d -->
+######## A.6.1.1.2.3.4.2.1 - Parameters [Core]  <!-- UUID: d83f190a-99d6-4f8c-8502-d3e7e917816d -->
 
 The parameters of the Lite PSM are defined in the Sky Core Atlas.
 
-######## A.6.1.1.2.5.4.2.2 - Operational Process Definition [Core]  <!-- UUID: b935a218-b921-41b3-aaac-3203c2ca3b84 -->
+######## A.6.1.1.2.3.4.2.2 - Operational Process Definition [Core]  <!-- UUID: b935a218-b921-41b3-aaac-3203c2ca3b84 -->
 
 The transfer of ongoing management of the Lite PSM is specified in Ecosystem Accord 2, see [A.2.9.2.2 - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
-######### A.6.1.1.2.5.4.2.2.1 - Parameter Modification [Core]  <!-- UUID: f22bc9ce-cd9c-4f20-957f-1591b50abad0 -->
+######### A.6.1.1.2.3.4.2.2.1 - Parameter Modification [Core]  <!-- UUID: f22bc9ce-cd9c-4f20-957f-1591b50abad0 -->
 
 Sky Core Facilitators currently own the process for modifying the parameters of the Lite PSM, which process is defined in the Sky Core Atlas. This process is currently being transitioned over to Grove.
 
-######## A.6.1.1.2.5.4.2.3 - Data Repository [Core]  <!-- UUID: 165fc3f7-39cf-4f4e-ae94-6460263b8a71 -->
+######## A.6.1.1.2.3.4.2.3 - Data Repository [Core]  <!-- UUID: 165fc3f7-39cf-4f4e-ae94-6460263b8a71 -->
 
 The documents herein contain data relevant to the Lite PSM.
 
-###### A.6.1.1.2.5.5 - Ecosystem Accords [Core]  <!-- UUID: 8b3829dd-fb87-4b08-b1dc-224d7c993ee4 -->
+###### A.6.1.1.2.3.5 - Ecosystem Accords [Core]  <!-- UUID: 8b3829dd-fb87-4b08-b1dc-224d7c993ee4 -->
 
 Grove has formally agreed to the Ecosystem Accords herein.
 
-####### A.6.1.1.2.5.5.1 - Ecosystem Accord 1 [Core]  <!-- UUID: 867b3512-2c21-41e2-81c2-3a442c441a14 -->
+####### A.6.1.1.2.3.5.1 - Ecosystem Accord 1 [Core]  <!-- UUID: 867b3512-2c21-41e2-81c2-3a442c441a14 -->
 
 Grove engaged in terms of agreement with the Spark Agent in Ecosystem Accord 1, located in [A.2.9.2.1 - Ecosystem Accord 1: Grove And Spark Agents](9ca40096-937e-431e-af50-9ecd50c0d0a8).
 
-####### A.6.1.1.2.5.5.2 - Ecosystem Accord 2 [Core]  <!-- UUID: dfa20b2f-e803-47f7-95fa-4e457816ae69 -->
+####### A.6.1.1.2.3.5.2 - Ecosystem Accord 2 [Core]  <!-- UUID: dfa20b2f-e803-47f7-95fa-4e457816ae69 -->
 
 Grove engaged in terms of agreement with Sky, Moonbow and the Spark Agent in Ecosystem Accord 2, located in [A.2.9.2.2 - Prime Program](aa3b8e65-0ded-48c2-9c40-812debf99f32).
 
-###### A.6.1.1.2.5.6 - DAO Resolutions [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
+###### A.6.1.1.2.3.6 - DAO Resolutions [Core]  <!-- UUID: c9c04069-134f-4ab3-b99c-e922edb1cde8 -->
 
 Grove has formally agreed to the DAO Resolutions recorded herein.
 
-####### A.6.1.1.2.5.6.1 - Onboard To FalconX [Core]  <!-- UUID: 287ca9e6-e807-4565-a48d-83805be94b92 -->
+####### A.6.1.1.2.3.6.1 - Onboard To FalconX [Core]  <!-- UUID: 287ca9e6-e807-4565-a48d-83805be94b92 -->
 
 On October 16, 2025, Grove agreed to a DAO Resolution authorizing Grove Foundation and Bamboo Grove Ltd to onboard to FalconX. See [https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola](https://gateway.pinata.cloud/ipfs/bafkreialsthk4uhtxfd7zbhy4xiwnxxowd2qwpletjefrvdmvmpkxpkola).
 
-####### A.6.1.1.2.5.6.2 - Onboard With Ethena [Core]  <!-- UUID: 9629b16e-4f11-49bc-80be-6c85d711716c -->
+####### A.6.1.1.2.3.6.2 - Onboard With Ethena [Core]  <!-- UUID: 9629b16e-4f11-49bc-80be-6c85d711716c -->
 
 On October 23, 2025, Grove agreed to a DAO Resolution authorizing Bamboo Grove to onboard with Ethena. See [https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q](https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q). The DAO Resolution makes reference to a Deed Poll that is approved as part of the DAO Resolution. See [https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24](https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24).
 
@@ -35651,61 +36219,1043 @@ The in progress Invocations of the Pioneer Chain Primitive are contained herein.
 
 The documents herein implement the Supply Side Stablecoin Primitives for Launch Agent 4. See [A.2.3.9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
 
-####### A.6.1.1.5.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 4345f138-7429-4923-98ee-f879d7b97237 -->
+####### A.6.1.1.5.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: fe98c7e7-b7f8-4f2c-800a-bca5192576ac -->
 
-The documents herein contain all data and specifications for Launch Agent 4’s Instances of the Allocation System Primitive. See [A.2.3.9.1 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
+The documents herein contain all data and specifications for Launch Agent 4’s Allocation System Primitive Instances.
 
-######## A.6.1.1.5.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8d7a3b67-0a82-4580-9a55-b4b400d9d3a8 -->
+######## A.6.1.1.5.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: cbf426ee-7754-49c5-9040-b29a5126da39 -->
 
-The documents herein organize all base information relevant to Launch Agent 4’s usage of the Allocation System Primitive.
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Launch Agent 4 Liquidity Layer.
 
-######### A.6.1.1.5.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 164a3772-f874-4bb7-845e-40565e8b2f7f -->
+######### A.6.1.1.5.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 02a794ce-0d32-4044-80c2-1ba5bf0b1ca0 -->
 
 `Active`
 
-######### A.6.1.1.5.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6578c76c-fd72-49b6-8e46-a43dd48c0dc3 -->
+######### A.6.1.1.5.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: b8d74925-677a-48e8-be42-b9e2614c9e0f -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
 
-######### A.6.1.1.5.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: caef9a8f-ae35-4770-94eb-d0778ef89aed -->
+########## A.6.1.1.5.2.6.1.1.2.1 - Ethereum Mainnet [Core]  <!-- UUID: 7b8f5dc5-643d-4eb8-be6f-1663cc0856ac -->
+
+The documents herein contain a Directory of all Instances on Ethereum Mainnet of the Allocation System Primitive with Instance status of `Active`.
+
+########### A.6.1.1.5.2.6.1.1.2.1.1 - Maple [Core]  <!-- UUID: 59ef3080-82eb-4c0f-96cf-5d973128e4ef -->
+
+The Ethereum Mainnet Instances Directory of the Maple Protocol with `Active` Status are stored herein.
+
+############ A.6.1.1.5.2.6.1.1.2.1.1.1 - Ethereum Mainnet - Maple USDC Instance Configuration Document Location [Core]  <!-- UUID: 7188ea33-de7a-4d97-a52e-4a6acbcb608c -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.5.2.6.1.3.1.1.1 - Ethereum Mainnet - Maple USDC Instance Configuration Document](7488a14c-2464-4649-b476-48ee93bb438f).
+
+######### A.6.1.1.5.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f98d5f67-2cf0-4691-b13b-23e11caad05b -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
 
-######### A.6.1.1.5.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: cee634fa-d1d0-4344-882d-f29628f4fd65 -->
+######### A.6.1.1.5.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 492c60d5-d5eb-4fab-b8eb-a4858c7b6033 -->
 
-This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.5.2.6.1.1.2 - Active Instances Directory](6578c76c-fd72-49b6-8e46-a43dd48c0dc3), whereas failed Invocations are Archived in [A.6.1.1.5.2.6.1.1.5 - Hub Data Repository](e2918f2a-3799-4010-a289-ac674e1c4ad6).
+This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.5.2.6.1.1.2 - Active Instances Directory](b8d74925-677a-48e8-be42-b9e2614c9e0f), whereas failed Invocations are Archived in [A.6.1.1.5.2.6.1.1.5 - Hub Data Repository](1a4ddf66-20ba-42e8-b7a9-6a71106f891a).
 
-######### A.6.1.1.5.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: e2918f2a-3799-4010-a289-ac674e1c4ad6 -->
+######### A.6.1.1.5.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 1a4ddf66-20ba-42e8-b7a9-6a71106f891a -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-########## A.6.1.1.5.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: ce32b29c-b995-42f6-8786-2f4855177cde -->
+########## A.6.1.1.5.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 1b2334f1-f766-4b58-94b2-8cfbceb90ac6 -->
 
 The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.5.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: cf0e8953-075d-41e1-a8d0-dcabf088b1fd -->
+########### A.6.1.1.5.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 224c6cc9-f120-4a4c-b708-3df8b9c50faf -->
 
 The subtrees for failed Invocations of the Allocation System Primitive are stored here.
 
-########### A.6.1.1.5.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: f0c371d3-988a-4a6c-aa99-b579c3cfd931 -->
+########### A.6.1.1.5.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: a685b24a-59a8-49e4-94d5-20db465f316e -->
 
 The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
 
-######## A.6.1.1.5.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: 5e72e074-f495-4aa1-969e-095a7aaf9f08 -->
+######## A.6.1.1.5.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: aa59c9ff-7347-407f-9d55-59fa499a58c9 -->
 
-The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
+The documents herein provide general specifications of the Launch Agent 4 Liquidity Layer and define Launch Agent 4’s overarching strategy and operational framework for managing across all Instances.
 
-######## A.6.1.1.5.2.6.1.3 - Active Instances [Core]  <!-- UUID: 16b8c2a3-b764-4191-a9d4-325b993f24c6 -->
+######### A.6.1.1.5.2.6.1.2.1 - General Specifications [Core]  <!-- UUID: 1fa01b00-08d6-4344-ab6c-7a0cbea5e06c -->
 
-The Instances of the Allocation System Primitive with `Active` Status are stored herein.
+The documents herein contain general specifications for the Launch Agent 4 Liquidity Layer.
 
-######## A.6.1.1.5.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 34269206-d912-4d84-8a22-0a3bc211adde -->
+########## A.6.1.1.5.2.6.1.2.1.1 - Launch Agent 4 Liquidity Layer Architecture [Core]  <!-- UUID: c29faa6d-d657-47a0-9379-21b8cd831d02 -->
 
-The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
+The documents herein describe the high-level design of the Launch Agent 4 Liquidity Layer, including its key smart contracts and their functionality.
 
-######## A.6.1.1.5.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 6b795255-7537-4de3-a4fd-bc4f5aae345a -->
+########### A.6.1.1.5.2.6.1.2.1.1.1 - Launch Agent 4 Liquidity Layer Addresses [Core]  <!-- UUID: ef875c4e-2303-4b94-8c92-6831ec96fac9 -->
 
-The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.5.2.6.1.3 - Active Instances](16b8c2a3-b764-4191-a9d4-325b993f24c6).
+The documents herein provide the addresses of the Launch Agent 4 Liquidity Layer’s constituent contracts.
+
+############ A.6.1.1.5.2.6.1.2.1.1.1.1 - Allocator Contract Addresses [Core]  <!-- UUID: 4cd1c7c9-f246-40b1-a31c-4512638f7fd3 -->
+
+The documents herein contain global key addresses for the Allocator Contracts.
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.1.1 - Ethereum Mainnet [Core]  <!-- UUID: 3dbd11b0-2713-40e1-b0ca-66f5ebdf213c -->
+
+The documents herein contain the Allocator Contract Addresses on the Ethereum Mainnet.
+
+############## A.6.1.1.5.2.6.1.2.1.1.1.1.1.1 - Allocator Buffer Contract [Core]  <!-- UUID: 0d4e4822-8b33-4306-9f32-c08cd4014484 -->
+
+The address of the ALLOCATOR_BUFFER contract is: `0x51E9681D7a05abFD33EfaFd43e5dd3Afc0093F1D`
+
+############## A.6.1.1.5.2.6.1.2.1.1.1.1.1.2 - Allocator Oracle Contract [Core]  <!-- UUID: 87e95c06-0f81-4908-8282-8067346b3200 -->
+
+The address of the ALLOCATOR_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
+
+############## A.6.1.1.5.2.6.1.2.1.1.1.1.1.3 - Allocator Registry Contract [Core]  <!-- UUID: 850fc16c-496e-4148-a86a-d2d2e5f03685 -->
+
+The address of the ALLOCATOR_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
+
+############## A.6.1.1.5.2.6.1.2.1.1.1.1.1.4 - Allocator Roles Contract [Core]  <!-- UUID: 0b889cc8-0fa2-476e-ae62-77bc09ca556e -->
+
+The address of the ALLOCATOR_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
+
+############## A.6.1.1.5.2.6.1.2.1.1.1.1.1.5 - Allocator Vault Contract [Core]  <!-- UUID: a4310d54-9535-43ec-8d6a-c92c854f8a98 -->
+
+The address of the ALLOCATOR_VAULT contract is: `0xF275110dFE7B80df66a762f968f59B70BABE2b29`
+
+############ A.6.1.1.5.2.6.1.2.1.1.1.2 - ALM Contracts [Core]  <!-- UUID: 656c09f6-93a7-4b0b-a268-a495adeffaf0 -->
+
+The documents herein contain addresses for the ALM Contracts for the Launch Agent 4 Liquidity Layer.
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.1 - Ethereum Mainnet [Core]  <!-- UUID: 5d99d731-c3ed-461c-a6ea-50ebd741b3d2 -->
+
+The documents herein contain the ALM Contract Addresses for the Launch Agent 4 Liquidity Layer on the Ethereum Mainnet.
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.2 - ALM Controller Contract [Core]  <!-- UUID: cdb42b2b-e506-4e5e-a088-651b10880cde -->
+
+The address of the ALM_CONTROLLER (MainnetController) contract is: `0xF2bB664f16E2df4b0c71F9d2cFc386504E795b7A`
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.3 - ALM Controller Contract Version [Core]  <!-- UUID: 4f345770-ead0-41ce-a821-96ab1291d033 -->
+
+The ALM_CONTROLLER contract version is: V.1.6.0
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.4 - ALM Freezer Multisig Address [Core]  <!-- UUID: 855a0165-ff72-4d0f-bddf-62bae68be333 -->
+
+The address of the Multisig that has the Freezer Role is specified in [A.6.1.1.5.2.6.1.2.1.2.2.3 - Freezer Multisig](49e6c234-7102-43e0-80a6-fb14e259e1f7).
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.5 - ALM Relayer Multisig Address [Core]  <!-- UUID: 86586cb8-ccbb-4ab7-8244-add51cca65fe -->
+
+The address of the Multisigs that has the Relayer Role is specified in [A.6.1.1.5.2.6.1.2.1.2.2.1 - Prime Relayer Multisig](3b53c3b4-1d13-4197-8078-54523949784f) and [A.6.1.1.5.2.6.1.2.1.2.2.2 - Core Operator Relayer Multisig](b32dec2f-51e1-44b0-a81b-679b648ed659).
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.6 - ALM Proxy Contract [Core]  <!-- UUID: 53aa9c70-f2c8-4c0b-a30c-9c541d7dbbd4 -->
+
+The address of the ALM_PROXY contract is: `0xb6dD7ae22C9922AFEe0642f9Ac13e58633f715A2`
+
+############# A.6.1.1.5.2.6.1.2.1.1.1.2.7 - ALM Rate Limits Contract [Core]  <!-- UUID: 837cd549-5b8f-4d00-974b-f53af0f53f82 -->
+
+The address of the ALM_RATE_LIMITS contract is: `0x81f8f5306cF80655Edff78f89860a8D89118E150`
+
+########### A.6.1.1.5.2.6.1.2.1.1.2 - Off-chain Operational Parameters [Core]  <!-- UUID: 3f4a771a-ed2f-43ae-b8ad-a4d27e206779 -->
+
+The documents herein list the off-chain operational parameters for the Launch Agent 4 Liquidity Layer. These operational parameters are protocol settings managed outside of smart contracts (off-chain), used by operators and off-chain systems to guide the functioning of the Launch Agent 4 Liquidity Layer.
+
+############ A.6.1.1.5.2.6.1.2.1.1.2.1 - Off-chain Operational Parameters For Ethereum Mainnet [Core]  <!-- UUID: 5915e763-fa01-4202-95c9-b446b94bc92a -->
+
+The document herein lists the current off-chain operational parameters for the Launch Agent 4 Liquidity Layer on Ethereum Mainnet.
+
+############# A.6.1.1.5.2.6.1.2.1.1.2.1.1 - Minimum Operation Size Ethereum Mainnet [Core]  <!-- UUID: 319b996c-7563-4d56-a7b2-4302cebc91f5 -->
+
+The minimum transaction size for operations on Ethereum Mainnet is (`MAINNET_MIN_OPERATION_SIZE`): 
+
+• This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############# A.6.1.1.5.2.6.1.2.1.1.2.1.2 - Debt Ceiling Buffer Ethereum Mainnet [Core]  <!-- UUID: ff5d0ea1-bfb0-4e18-8768-603230a3dea6 -->
+
+The buffer amount below the maximum debt ceiling is (`DEBT_CEILING_BUFFER`):
+
+• This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.6.1.2.1.1.3 - Rate Limits [Core]  <!-- UUID: 3dea2074-9594-44af-80b9-f67d831bde1a -->
+
+The documents herein list the Rate Limits for the Launch Agent 4 Liquidity Layer on each blockchain.
+
+############ A.6.1.1.5.2.6.1.2.1.1.3.1 - Ethereum Mainnet [Core]  <!-- UUID: cecaa353-2826-4e19-a641-ee24989d42b6 -->
+
+The documents herein list the current `RateLimits` for the Launch Agent 4 Liquidity Layer on Ethereum Mainnet.
+
+############# A.6.1.1.5.2.6.1.2.1.1.3.1.1 - Ethereum Mainnet USDS [Core]  <!-- UUID: a97961ff-de69-4a13-b2a4-830a2458e3b9 -->
+
+The maximum mint, burn and swap for USDS on Ethereum Mainnet are located herein
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.1.1 - USDS Mint Maximum [Core]  <!-- UUID: 1b4f0be7-31d8-4217-9961-08789613fbb1 -->
+
+The maximum amount of USDS that can be minted within the Launch Agent 4 Liquidity Layer (`LIMIT_USDS_MINT`) is specified in the document herein.
+
+• `maxAmount`: 100,000,000 USDS
+• `slope`: 50,000,000 USDS per day
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.1.2 - USDS Burn Maximum [Core]  <!-- UUID: 312ab6a0-55b8-4974-b918-bbd0f69085b3 -->
+
+The maximum amount of USDS that can be burned within the Launch Agent 4 Liquidity Layer (`LIMIT_USDS_BURN`) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.1.3 - USDS For USDC Swap Maximum [Core]  <!-- UUID: 1bae9188-f480-49d7-91c5-c3f271260e60 -->
+
+The maximum amount of USDS that can be swapped for USDC by the Launch Agent 4 Liquidity Layer in the Mainnet PSM (`LIMIT_USDS_TO_USDC`) is specified in the document herein.
+
+• `maxAmount`: 100,000,000 USDS
+• `slope`: 50,000,000 USDS per day
+
+############# A.6.1.1.5.2.6.1.2.1.1.3.1.2 - Ethereum Mainnet sUSDS [Core]  <!-- UUID: d6cbd2a4-e0cb-4339-8354-5c11f6a72c93 -->
+
+The maximum deposit and withdraw amounts for sUSDS on Ethereum Mainnet are located herein.
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.2.1 - Ethereum Mainnet sUSDS Deposit Maximum [Core]  <!-- UUID: a5d4f47c-615d-4bc7-bd7d-7cf694b7b02c -->
+
+The maximum amount of sUSDS that can be deposited (`LIMIT_4626_DEPOSIT`) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.2.2 - Ethereum Mainnet sUSDS Withdrawal Maximum [Core]  <!-- UUID: 40959dc7-e554-4611-b615-25d3ff557bdf -->
+
+The maximum amount of sUSDS that can be withdrawn (`LIMIT_4626_WITHDRAW`) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############# A.6.1.1.5.2.6.1.2.1.1.3.1.3 - Ethereum Mainnet USDC ALM Proxy [Core]  <!-- UUID: 8505febf-f853-4de9-89dc-d483d5439cbc -->
+
+The maximum amount that can be transferred and sent to the Ethereum Mainnet ALM Proxy for USDC are located herein.
+
+############## A.6.1.1.5.2.6.1.2.1.1.3.1.3.1 - USDC ALM Proxy Maximum [Core]  <!-- UUID: 212d5d8b-7d1c-4e25-864b-f9e072d9d345 -->
+
+The maximum amount of USDC that can be sent to the Ethereum Mainnet ALM Proxy (`LIMIT_USDC_TO_DOMAIN`, hashed with Ethereum domain) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############### A.6.1.1.5.2.6.1.2.1.1.3.1.3.1.1 - USDC ALM Proxy Circle Cross-Chain Transfer Protocol Maximum [Core]  <!-- UUID: 17827367-6342-4e4e-bc1f-652c0f5b079e -->
+
+The maximum amount of USDC that can be bridged to Ethereum Mainnet ALM Proxy using the Circle Cross-Chain Transfer Protocol (`LIMIT_USDC_TO_CCTP_ETH`) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.6.1.2.1.1.4 - On-chain Parameters [Core]  <!-- UUID: 97d35c04-2b5b-430d-b297-b2b4703d71c0 -->
+
+The documents herein list general on-chain parameters for the Launch Agent 4 Liquidity Layer
+
+############ A.6.1.1.5.2.6.1.2.1.1.4.1 - Allocator Vault Parameters [Core]  <!-- UUID: c30d6144-4cbd-4ef4-90d5-312d24c9858e -->
+
+The Allocator Vault parameters for ALLOCATOR-OBEX-A are:
+
+• `duty`: 0%
+• `gap`: 50 million USDS
+• `maxLine`: 2.5 billion USDS
+• `ttl`: 86,400 seconds
+
+############ A.6.1.1.5.2.6.1.2.1.1.4.2 - Whitelisting Of ALMProxy [Core]  <!-- UUID: 5c795414-020c-432d-91b6-a7d72495452e -->
+
+The ALMProxy for Launch Agent 4 must be whitelisted on the LitePSM. This will effectively allow Launch Agent 4 to call `buyGemNoFee` and `sellGemNoFee` on the `MCD_LITE_PSM_USDC_A` contract.
+
+########## A.6.1.1.5.2.6.1.2.1.2 - Governance Processes [Core]  <!-- UUID: 94015de1-4d83-43d3-998b-093c1a2099fa -->
+
+The documents herein describe the specific governance processes for the Launch Agent 4 Liquidity Layer.
+
+########### A.6.1.1.5.2.6.1.2.1.2.1 - Invoking New Instances [Core]  <!-- UUID: f6be405d-fae7-474e-882d-5c98985324b6 -->
+
+The governance process to invoke a new Instance of the Allocation System Primitive follows the Root Edit process see Operational Process Definition.
+
+########### A.6.1.1.5.2.6.1.2.1.2.2 - Multisigs [Core]  <!-- UUID: 7b3aa284-2872-4ffe-9938-2bbfa7d4525d -->
+
+The documents herein define multisigs that have privileged access to manage the Launch Agent 4 Liquidity Layer.
+
+############ A.6.1.1.5.2.6.1.2.1.2.2.1 - Prime Relayer Multisig [Core]  <!-- UUID: 3b53c3b4-1d13-4197-8078-54523949784f -->
+
+The Prime Relayer Multisig has the `RELAYER_ROLE` as defined in [A.6.1.1.5.2.6.1.2.2.1.1.2 - Relayer Role](0a8458ff-499e-4ac6-85a3-6ce200df18ae) and is controlled by Launch Agent 4.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.1.1 - Address [Core]  <!-- UUID: 5d2d1cef-96c5-4881-a7b7-d70e75541fac -->
+
+The address of the Prime Relayer Multisig on the Ethereum Mainnet is `0x5d36918C8F4726a62257AA79a50E53D553465663`.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.1.2 - Required Number Of Signers [Core]  <!-- UUID: 2f7dbfea-075e-4208-bb37-abf05599b1d1 -->
+
+The Prime Relayer Multisig currently has a 4/7 signing requirement.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.1.3 - Signers [Core]  <!-- UUID: b14ad946-9e1c-494a-8849-45c30d625e3d -->
+
+The signers of the Prime Relayer Multisig are seven (7) addresses controlled by Launch Agent 4.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.1.4 - Usage Standards [Core]  <!-- UUID: c96f7c83-92e7-4874-9c03-4a450cc904ff -->
+
+The signers of the Prime Relayer Multisig must use the Multisig to exercise the `RELAYER_ROLE` in accordance with the instructions specified in the Launch Agent 4 Artifact.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.1.5 - Modification [Core]  <!-- UUID: 3212cf2f-ec75-4418-9fe2-f4b751bd19d8 -->
+
+Launch Agent 4 can change the signers of the Prime Relayer Multisig at any time, so long as there are at least seven (7) signers and at least a majority of signers are required to execute transactions.
+
+############ A.6.1.1.5.2.6.1.2.1.2.2.2 - Core Operator Relayer Multisig [Core]  <!-- UUID: b32dec2f-51e1-44b0-a81b-679b648ed659 -->
+
+The Core Operator Relayer Multisig has the `RELAYER_ROLE` as defined in [A.6.1.1.5.2.6.1.2.2.1.1.2 - Relayer Role](0a8458ff-499e-4ac6-85a3-6ce200df18ae) and is controlled by Operational GovOps Ozone.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.2.1 - Address [Core]  <!-- UUID: 17c29741-7ed5-4a6e-96ff-55514df2a8f5 -->
+
+The address of the Core Operator Relayer Multisig on the Ethereum Mainnet is `0x2b1D60B11B7015fB83361a219BE01B7564436054`.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.2.2 - Required Number Of Signers [Core]  <!-- UUID: ecc50ea6-d4f0-41be-b0f4-af11a34bd60e -->
+
+The Core Operator Relayer Multisig currently has a 2/3 signing requirement.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.2.3 - Signers [Core]  <!-- UUID: 2c9c02a4-86a1-4862-90aa-e314d9177f37 -->
+
+The signers of the Core Operator Relayer Multisig are three (3) addresses controlled by Operational GovOps Ozone.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.2.4 - Usage Standards [Core]  <!-- UUID: 476f94f2-3e35-4d99-9664-c91984104b6b -->
+
+The signers of the Core Operator Relayer Multisig must use the Multisig to exercise the `RELAYER_ROLE` in accordance with the instructions specified in the Launch Agent 4 Artifact.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.2.5 - Modification [Core]  <!-- UUID: a342e39a-ba3e-4871-ad17-17ce3323e6f2 -->
+
+Operational GovOps Ozone can change the signers of the Core Operator Relayer Multisig at any time, so long as there are at least three (3) signers and at least two thirds of signers are required to execute transactions.
+
+############ A.6.1.1.5.2.6.1.2.1.2.2.3 - Freezer Multisig [Core]  <!-- UUID: 49e6c234-7102-43e0-80a6-fb14e259e1f7 -->
+
+The Freezer Multisig has the `FREEZER_ROLE` as defined in [A.6.1.1.5.2.6.1.2.2.1.1.4 - Freezer Role](afcfa58a-fc3d-4f5d-9bc8-bf40e7fa3ec7) and is controlled by Launch Agent 4.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.3.1 - Address [Core]  <!-- UUID: 6624912c-1cf6-443c-925f-ba1451a1644f -->
+
+The address of the Freezer Multisig on the Ethereum Mainnet is `0x1924b6990B63c5f820b81a23CD40383808D416D8`.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.3.2 - Required Number Of Signers [Core]  <!-- UUID: b1b34a90-ead4-4e45-8a88-72c1149f716b -->
+
+The Freezer Multisig currently has a 2/4 signing requirement.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.3.3 - Signers [Core]  <!-- UUID: cac6b239-3d5f-4014-98a2-df082c1c6cdb -->
+
+The signers of the Freezer Multisig are four (4) addresses controlled by Launch Agent 4.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.3.4 - Usage Standards [Core]  <!-- UUID: 0535c9cd-dd37-4a76-815d-836ad1dd1974 -->
+
+The usage standards for the Freezer Multisig will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############# A.6.1.1.5.2.6.1.2.1.2.2.3.5 - Modification [Core]  <!-- UUID: 247ea87b-5649-4c92-aebe-5a5fc45c2c75 -->
+
+The modification of signers for the Freezer Multisig will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########## A.6.1.1.5.2.6.1.2.1.3 - Total Risk Capital (TRC) Management [Core]  <!-- UUID: f65883db-3b01-4c25-be16-d05c8b95494a -->
+
+The documents herein specify requirements related to Launch Agent 4’s Total Risk Capital (TRC) management.
+
+########### A.6.1.1.5.2.6.1.2.1.3.1 - Rubicon’s Operation Of Launch Agent 4 Liquidity Layer And Agreement Regarding Encumbrance Ratio [Core]  <!-- UUID: d915471b-230e-41ab-bc86-68bc9453e417 -->
+
+Rubicon will operate the Launch Agent 4 Liquidity Layer and agrees to stay at or below a 90% Encumbrance Ratio. See [A.3.3 - Encumbrance Ratio](https://sky-atlas.powerhouse.io/A.3.3.2.7.2.1.1.1_Risk_Tolerance_Ratio/200f2ff0-8d73-803d-a696-ddd376cbab65%7C57ea07cc1306cce89cf4b779d3f1).
+
+########### A.6.1.1.5.2.6.1.2.1.3.2 - Rubicon’s Total Risk Capital (TRC) Management Processes [Core]  <!-- UUID: 8248b6dc-0dd9-4019-98e6-83c8d5892317 -->
+
+As operators of the Launch Agent 4 Liquidity Layer, Rubicon automatically inherits, and is subject to, the base class of operational requirements related to Total Risk Capital management defined in [A.2.3.9.1.1.3.2.1.2 - Primes’ Total Risk Capital (TRC) Management](3af8a3a2-25e5-44b3-87a4-7df1f2712685). Modifications to the base operational logic automatically propagate to the Launch Agent 4 Artifact.
+
+######### A.6.1.1.5.2.6.1.2.2 - Launch Agent 4 Liquidity Layer Operational Processes [Core]  <!-- UUID: f0393207-2bae-42a2-9ca0-df8ffd4d2a39 -->
+
+The documents herein describe common operational procedures for the Launch Agent 4 Liquidity Layer applicable across multiple Instances.
+
+########## A.6.1.1.5.2.6.1.2.2.1 - Routine Protocol [Core]  <!-- UUID: cea1c91e-e940-41ab-99bb-254b821b24ff -->
+
+The documents herein define the protocol for routine ongoing management of the Launch Agent 4 Liquidity Layer and its active Instances.
+
+########### A.6.1.1.5.2.6.1.2.2.1.1 - Role Hierarchy And Permissions [Core]  <!-- UUID: 4eb0b4dc-9ffe-4201-b0cf-31e1cde8fcdb -->
+
+The documents herein defines roles (Admin, Relayer, ALM Controller and Freezer) and their responsibilities/permissions for managing the Launch Agent 4 Liquidity Layer.
+
+############ A.6.1.1.5.2.6.1.2.2.1.1.1 - Default Admin Role [Core]  <!-- UUID: d0dfc54e-e06e-434b-9194-9b1ad5b6be8a -->
+
+The admin role (DEFAULT_ADMIN_ROLE) is the role that can grant and revoke any role, including itself and all other roles defined in the contract. The admin role is also used for general admin functions in all contracts. This role is fully controlled by Sky Governance via the Launch Agent 4 Proxy.
+
+`constructor(address admin) {
+_grantRole(DEFAULT_ADMIN_ROLE, admin);`
+
+############ A.6.1.1.5.2.6.1.2.2.1.1.2 - Relayer Role [Core]  <!-- UUID: 0a8458ff-499e-4ac6-85a3-6ce200df18ae -->
+
+The `RELAYER_ROLE` is the address for the Launch Agent 4 Liquidity Layer ALM Planner off-chain system that calls functions on `Controller` contracts to perform actions on behalf of the `ALMProxy` contract. The Relayer Role may be granted to an address by any address holding the `DEFAULT_ADMIN_ROLE`. The Relayer Role may be removed from an address by any address holding the `DEFAULT_ADMIN_ROLE` or the `FREEZER_ROLE`.
+
+############ A.6.1.1.5.2.6.1.2.2.1.1.3 - ALM Controller Role [Core]  <!-- UUID: 9a8f34e4-1e38-48da-8fc7-e97d8b6dc64f -->
+
+The `ALM_CONTROLLER_ROLE` is the address of the role that can call the `call` functions on the `ALMProxy` contract and update `Rate Limits` contract. It includes the `MainnetController` and `ForeignController` contracts. ALM Controller contracts are accessed and modified via the Relayer Role.
+
+############ A.6.1.1.5.2.6.1.2.2.1.1.4 - Freezer Role [Core]  <!-- UUID: afcfa58a-fc3d-4f5d-9bc8-bf40e7fa3ec7 -->
+
+The `FREEZER_ROLE` is the address of the emergency role that can remove a compromised Relayer.
+
+########### A.6.1.1.5.2.6.1.2.2.1.2 - Controller Functions [Core]  <!-- UUID: b64040c5-b290-478a-b69f-08cd8b5e7003 -->
+
+The documents herein describe the purpose and operational use of key functions within the Launch Agent 4 Liquidity Layer `MainnetController` contracts: USDS management (mint/burn USDS), Asset Transfer Management (direct transfers, protocol deposits/withdrawals), Cross-chain Operations (CCTP bridging).
+
+############ A.6.1.1.5.2.6.1.2.2.1.2.1 - Mainnet Controller Contract Functions [Core]  <!-- UUID: 39a5aa5c-19b0-4012-9f8d-2cef298bdd4b -->
+
+The documents herein define the functions controlled by the Controller contract for Launch Agent 4 Liquidity Layer operations on Ethereum Mainnet.
+
+############# A.6.1.1.5.2.6.1.2.2.1.2.1.1 - Admin Functions [Core]  <!-- UUID: abb49068-d94b-4569-9014-bb767ceec6cb -->
+
+The documents herein define the operations performed by the admin role (see [A.6.1.1.5.2.6.1.2.2.1.1.1 - Default Admin Role](d0dfc54e-e06e-434b-9194-9b1ad5b6be8a)) within the `MainnetController` contract.
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.1.1 - Set Mint Recipient For Destination Domain [Core]  <!-- UUID: 1a834a8b-d87b-4eed-8f17-8276a2ae2dee -->
+
+The documents herein define the steps for an admin to specify which address should receive newly minted tokens on a particular destination domain.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.1.1.1 - Call setMintRecipient Function [Core]  <!-- UUID: 05134536-1b5a-488f-8c82-a9a1aa6ea836 -->
+
+Only an operator with the admin role is able to set the mint recipient for a destination domain. To do so, they must call the `setMintRecipient` function on the Controller contract on mainnet providing the destination domain and the mint recipient address. Calling this function will carry out the following actions:
+
+• The contract will confirm the admin status of the operator. If the caller does not have the admin role the transaction will revert.
+
+• The contract will set the selected mint recipient for the specified destination domain.
+
+• The contract will emit a `MintRecipientSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setMintRecipient(uint32 destinationDomain, bytes32 mintRecipient) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.1.2 - Set LayerZero Recipient [Core]  <!-- UUID: 27f7da97-2cf4-4d32-81e9-c1ef7b8f0199 -->
+
+The documents herein define the steps for an admin to specify which address should receive LayerZero messages on a particular destination endpoint.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.1.2.1 - Call setLayerZeroRecipient Function [Core]  <!-- UUID: 54c019d8-ae0a-4c1c-9f05-1192d7b1cefb -->
+
+Only an operator with the admin role is able to set the LayerZero recipient for a destination endpoint. To do so, they must call the `setLayerZeroRecipient` function on the Controller contract on mainnet, providing the destination endpoint ID and the recipient address. Calling this function will carry out the following actions:
+
+• The contract will confirm the admin status of the operator. If the caller does not have the admin role, the transaction will revert.
+
+• The contract will set the selected LayerZero recipient for the specified destination endpoint.
+
+• The contract will emit a `LayerZeroRecipientSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setLayerZeroRecipient(uint32 destinationEndpointId, bytes32 layerZeroRecipient) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.1.3 - Set Maximum Slippage [Core]  <!-- UUID: c25f736d-c806-4287-a5ee-9ef81f8e0ab7 -->
+
+The documents herein define the steps for an admin to set the maximum allowed slippage for a specific pool.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.1.3.1 - Call setMaximumSlippage Function [Core]  <!-- UUID: 9926982e-5571-4108-9caa-88b4d8708d45 -->
+
+Only an operator with the admin role is able to set the maximum slippage for a pool. To do so, they must call the `setMaxSlippage` function on the Controller contract on mainnet, providing the pool address and the maximum slippage value. Calling this function will carry out the following actions:
+
+• The contract will confirm the admin status of the operator. If the caller does not have the admin role, the transaction will revert.
+
+• The contract will set the maximum slippage for the specified pool.
+
+• The contract will emit a `MaxSlippageSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setMaxSlippage(address pool, uint256 maxSlippage) external`
+
+############# A.6.1.1.5.2.6.1.2.2.1.2.1.2 - Relayer Functions [Core]  <!-- UUID: 04da1a02-47fb-4ecd-9b50-27daf99b6d6f -->
+
+The documents herein define the operations performed by the relayer role (see [A.6.1.1.5.2.6.1.2.2.1.1.2 - Relayer Role](0a8458ff-499e-4ac6-85a3-6ce200df18ae)) within the `MainnetController` contract.
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.1 - Relayer Vault Functions [Core]  <!-- UUID: dad796ae-ec65-4aec-b0d4-c47e87f3d148 -->
+
+The documents herein define the operations that are performed to maintain the desired level of liquidity and debt balance of the Launch Agent 4 Liquidity Layer.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.1.1 - Mint USDS [Core]  <!-- UUID: d56d12e9-b513-4e8c-8e3c-cf9e49d59f2b -->
+
+The documents herein define the steps for a relayer to mint USDS from the Sky Allocation Vault to the Launch Agent 4 ALM Proxy.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.1.1.1 - Call mintUSDS Function [Core]  <!-- UUID: e6313c89-b401-468d-882b-bf5e57d0182c -->
+
+Only an operator with the relayer role is able to mint USDS. To do so, they must call the `mintUSDS` function on the Controller contract on mainnet with the amount of USDS that is required for minting. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+
+• The contract will ensure the `Rate Limits` allow for minting the required amount. If the mint amount does not fall within the available Rate Limit the transaction will revert.
+
+• The contract will reduce the Rate Limit by the amount of USDS minted in this transaction.
+
+• The contract will mint the required USDS into the buffer contract.
+
+• The contract will transfer the newly minted USDS from the buffer to the Proxy.
+
+The function call is as follows:
+
+`function mintUSDS(uint256 usdsAmount) external`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.1.2 - Burn USDS [Core]  <!-- UUID: 1e27b007-ed34-4c15-9116-d62145572dce -->
+
+The documents herein define the steps for a relayer to return and then burn Launch Agent 4’s USDS debt in the Sky Allocation Vault.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.1.2.1 - Call burnUSDS Function [Core]  <!-- UUID: 9faf62a8-812c-4986-8133-5b3493634b9f -->
+
+Only an operator with the relayer role is able to repay vault debt and burn USDS. To do so, they must call the `burnUSDS` function of the Controller contract on mainnet with the amount of USDS that they wish to burn. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+
+• The contract will increase the available Rate Limit for minting USDS by the amount of USDS being burned. This increase will be limited by the `maxAmount` parameter in the `Rate Limit` contract.
+
+• The contract will transfer USDS from the proxy to the buffer.
+
+• The contract will burn the USDS from the buffer and `wipe` an equivalent amount from the vault's debt.
+
+The function call is as follows:
+
+`function burnUSDS(uint256 usdsAmount) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.2 - ERC-20 Functions [Core]  <!-- UUID: 4d4dd524-bad6-424b-9d39-0e35f8f889b4 -->
+
+The documents herein define the operations that are performed to transfer ERC-20 assets to specified destinations.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.2.1 - Transfer Asset [Core]  <!-- UUID: 81128daf-2709-465d-bfd3-ff29e5566072 -->
+
+The documents herein define the steps for a relayer to transfer ERC-20 tokens to a destination address.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.2.1.1 - Call transferAsset Function [Core]  <!-- UUID: 77447d4a-137b-4b1c-b266-02ca8c678f61 -->
+
+Only an operator with the relayer role is able to transfer ERC-20 assets. To do so, they must call the `transferAsset` function on the Controller contract on mainnet, providing the ERC20 asset address, the destination address, and the amount to transfer. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+
+• The contract will ensure the `Rate Limits` allow for transferring the specified amount of the asset to the destination. If the transfer amount does not fall within the available Rate Limit, the transaction will revert.
+
+• The contract will execute the ERC-20 `transfer` function, sending the specified amount of the asset to the destination address.
+
+The function call is as follows:
+
+`function transferAsset(address asset, address destination, uint256 amount) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.3 - ERC-4626 Functions [Core]  <!-- UUID: 08d30ec2-c343-4176-aded-dce33e76d69c -->
+
+The documents herein define the general Launch Agent 4 Liquidity Layer operational procedures for interacting with ERC-4626-compliant tokenized vaults. ERC-4626 is a standard interface for vaults representing shares of an underlying ERC-20 token. Launch Agent 4 Liquidity Layer can integrate with various ERC-4626 vaults. For instance-specific parameters (such as vault addresses, asset addresses, and rate limits), refer to the relevant ERC-4626 Instance Configuration Document.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.1 - Deposit To ERC-4626 Vault [Core]  <!-- UUID: bab638ed-79fb-4163-aeb2-c569fc79c8e1 -->
+
+The documents herein define the steps for a relayer to deposit assets from the ALM Proxy to an ERC-4626 vault to receive yield-bearing shares.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.1.1 - Call depositERC4626 Function [Core]  <!-- UUID: 58edaa80-7dc0-4591-93fb-3552a2bb6a0b -->
+
+Only an operator with the relayer role can deposit assets into an ERC-4626 vault. To do so, they must call the `depositERC4626` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to deposit. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for deposit; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the deposit amount is within the allowed rate limit for the specified vault.
+
+• The contract will approve the vault to spend the underlying asset from the ALM Proxy. The approval and 
+deposit are both performed from the ALM Proxy address.
+
+• The contract will deposit the specified amount into the vault, and the ALM Proxy will receive the corresponding number of vault shares.
+
+The function call is as follows:
+
+`function depositERC4626(address token, uint256 amount) external returns (uint256 shares)`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.2 - Withdraw From ERC-4626 Vault [Core]  <!-- UUID: 3ea615ce-f2a9-4451-aed4-dd52c0703f5b -->
+
+The documents herein define the steps for a relayer to withdraw a specified amount of the underlying asset from an ERC-4626 vault to the ALM Proxy.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.2.1 - Call withdrawERC4626 Function [Core]  <!-- UUID: d545d2f1-5973-4a93-889c-9d558ff79be7 -->
+
+Only an operator with the relayer role can withdraw assets from an ERC-4626 vault. To do so, they must call the `withdrawERC4626` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to withdraw. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for withdrawal; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the withdrawal amount is within the allowed rate limit for the specified vault.
+
+• The contract will withdraw the specified amount from the vault, burning the necessary number of vault shares held by the ALM Proxy as part of the withdrawal process.
+
+• The withdrawn assets will be sent to the ALM Proxy.
+
+The function call is as follows:
+
+`function withdrawERC4626(address token, uint256 amount) external returns (uint256 shares)`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.3 - Redeem ERC-4626 Shares [Core]  <!-- UUID: 8e6a7981-7658-4c4e-ab87-aad8db8e215e -->
+
+The documents herein define the steps for a relayer to redeem vault shares for the underlying asset from an ERC-4626 vault, with the assets sent to the ALM Proxy.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.3.3.1 - Call redeemERC4626 Function [Core]  <!-- UUID: 5e9546bb-fbb9-4f4f-92f6-5ba41dffb41f -->
+
+Only an operator with the relayer role can redeem vault shares for the underlying asset. To do so, they must call the `redeemERC4626` function on the Controller contract on mainnet, providing the number of shares to redeem. The address is the ALM Proxy acting as both the owner of the shares being redeemed and the receiver of the resulting assets. The operation will only succeed if the ALM Proxy holds at least the number of shares specified for redemption; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will redeem the specified number of shares from the vault, sending the resulting assets to the ALM Proxy.
+
+• After redemption, the contract will update the withdrawal rate limit based on the amount of assets received.
+
+The function call is as follows:
+
+`function redeemERC4626(address token, uint256 shares) external returns (uint256 assets)`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.4 - ERC-7540 Functions [Core]  <!-- UUID: e1a57a43-7bac-4f32-b4cc-4de7c050a89b -->
+
+The documents herein define the general Launch Agent 4 Liquidity Layer operational procedures for interacting with ERC-7540-compliant tokenized vaults. ERC-7540 is a standard interface for vaults representing and managing multiple underlying assets within a single vault. Launch Agent 4 Liquidity Layer can integrate with various ERC-7540 vaults. For instance-specific parameters (such as vault addresses, asset addresses, and rate limits), refer to the relevant ERC-7540 Instance Configuration Document.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.1 - Deposit To ERC-7540 Vault [Core]  <!-- UUID: 63200ccb-fb66-4ce8-a9b9-d056f72ec60b -->
+
+The documents herein define the steps for a relayer to request and claim deposit of assets from the ALM Proxy to an ERC-7540 vault.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.1.1 - Call requestDepositERC7540 Function [Core]  <!-- UUID: 134e3124-3ba1-43dc-a3e6-9347416f006b -->
+
+Only an operator with the relayer role can request a deposit into an ERC-7540 vault. To do so, they must call the `requestDepositERC7540` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to deposit. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for deposit; otherwise, the transaction will revert. The Rate Limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the deposit amount is within the allowed rate limit for the specified vault.
+
+• The contract will approve the vault to spend the underlying asset from the ALM Proxy. The approval and deposit are both performed from the ALM Proxy address.
+
+• The contract will submit a deposit request to the vault. Shares will not be received immediately; they must be claimed in a separate step after the vault processes the deposit.
+
+The function call is as follows:
+
+`function requestDepositERC7540(address token, uint256 amount) external`
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.1.2 - Call claimDepositERC7540 Function [Core]  <!-- UUID: 41f68822-0f26-4fb2-a805-587fc08abb3f -->
+
+Only an operator with the relayer role can claim shares from an ERC-7540 vault after a deposit request. To do so, they must call the `claimDepositERC7540` function on the Controller contract on mainnet, providing the vault token address. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will determine the maximum number of shares that can be claimed by the ALM Proxy.
+
+• The contract will claim the shares from the vault, and the ALM Proxy will receive the corresponding number of vault shares.
+
+The function call is as follows:
+
+`function claimDepositERC7540(address token) external`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.2 - Redeem From ERC-7540 Vault [Core]  <!-- UUID: 6765a298-8ea7-4b1d-8d37-b3ccb069e12b -->
+
+The documents herein define the steps for a relayer to request and redeem vault shares for the underlying asset from an ERC-7540 vault, with the assets sent to the ALM Proxy.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.2.1 - Call requestRedeemERC7540 Function [Core]  <!-- UUID: bd723808-6f03-41ed-9b19-72672d38dc36 -->
+
+Only an operator with the relayer role can request the redemption of shares from an ERC-7540 vault. To do so, they must call the `requestRedeemERC7540` function on the Controller contract on mainnet, providing the vault token address and the number of shares to redeem. The rate limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the redemption amount is within the allowed rate limit for the specified vault.
+
+• The contract will submit a redemption request to the vault. Assets will not be received immediately; they must be claimed in a separate step after the vault processes the redemption.
+
+The function call is as follows:
+
+`function requestRedeemERC7540(address token, uint256 amount) external`
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.4.2.2 - Call claimRedeemERC7540 Function [Core]  <!-- UUID: 08474241-fee8-4ca3-95e8-564bd6676ea1 -->
+
+Only an operator with the relayer role can claim assets from an ERC-7540 vault after a redemption request. To do so, they must call the `claimRedeemERC7540` function on the Controller contract on mainnet, providing the vault token address. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will determine the maximum amount of assets that can be claimed by the ALM Proxy.
+
+• The contract will claim the assets from the vault, and the ALM Proxy will receive the corresponding amount of underlying assets.
+
+The function call is as follows:
+
+`function claimRedeemERC7540(address token) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.5 - Dai / USDS Functions [Core]  <!-- UUID: df1e38f3-5954-44d6-8500-6d26f03cc8da -->
+
+The documents herein define the swap operations between Dai and USDS.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.5.1 - Swap USDS to Dai [Core]  <!-- UUID: 22b124dd-3e9d-4439-bc4e-2993f2c267dd -->
+
+The documents herein define a series of operations for an operator to `swap` USDS to Dai.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.5.1.1 - Call swapUSDSToDAI Function [Core]  <!-- UUID: ed445f2b-9211-46fe-b79a-6e70cac7fec7 -->
+
+Only an operator with the relayer role can swap USDS to Dai. To do so, they must call the `swapUSDSToDAI` function on the Controller contract on mainnet, providing the usdsAmount. The operation will only succeed if the Proxy holds enough USDS for the swap; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will approve the DaiUsds migrator to spend the specified USDS amount from the Proxy.
+
+• The contract will swap USDS to Dai at a 1:1 ratio by calling the `usdsToDai` function on the migrator, sending the resulting DAI to the proxy.
+
+The function call is as follows:
+
+`function swapUSDSToDAI(uint256 usdsAmount) external`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.5.2 - Swap Dai to USDS [Core]  <!-- UUID: d536a9fd-fa93-4909-ab75-17f3c4ccce3a -->
+
+The documents herein define a series of operations for an operator to `swap` Dai to USDS.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.5.2.1 - Call swapDAIToUSDS Function [Core]  <!-- UUID: 3941f682-b9ae-483e-93a5-4c756388434e -->
+
+Only an operator with the relayer role can swap Dai to USDS. To do so, they must call the `swapDAIToUSDS` function on the Controller contract on mainnet, providing the daiAmount. The operation will only succeed if the Proxy holds enough Dai for the swap; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will approve the DaiUsds migrator to spend the specified Dai amount from the Proxy.
+
+• The contract will swap Dai to USDS at a 1:1 ratio by calling the `daiToUsds` function on the migrator, sending the resulting USDS to the proxy.
+
+The function call is as follows:
+
+`function swapDAIToUSDS(uint256 daiAmount) external`
+
+############## A.6.1.1.5.2.6.1.2.2.1.2.1.2.6 - PSM Functions [Core]  <!-- UUID: 8666d408-4c3a-4646-8cbf-d0752167dcd6 -->
+
+The documents herein define the swap operations performed by the Launch Agent 4 Liquidity Layer in the PSM.
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.1 - Swap USDS to USDC [Core]  <!-- UUID: 43917647-67dc-4981-8048-522c19b4caf0 -->
+
+The documents herein define a series of operations for an operator to `swap` USDS to USDC through the PSM.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.1.1 - Call swapUSDSToUSDC Function [Core]  <!-- UUID: 0ec7c5be-32a2-4d3b-b856-71face6612a9 -->
+
+Only an operator with the relayer role can swap USDS to USDC via the PSM. To do so, they must call the `swapUSDSToUSDC` function on the Controller contract on mainnet, providing the usdcAmount (denominated in 1e6 precision to match PSM USDC handling). The operation will only succeed if the ALM Proxy holds at least the equivalent amount of USDS for the swap; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for swaps. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the swap amount is within the allowed rate limit (LIMIT_USDS_TO_USDC) for the PSM.
+
+• The contract will convert the USDC amount to an 18-decimal format using psmTo18ConversionFactor.
+
+• The contract will approve the daiUsds contract to spend the converted amount from the ALM Proxy.
+
+• The contract will swap USDS to Dai at a 1:1 ratio via daiUsds, sending Dai to the proxy.
+
+• The contract will approve the PSM to spend the Dai.
+
+• The contract will swap Dai to USDC at a 1:1 ratio with no fee via psm.buyGemNoFee, sending USDC to the proxy.
+
+The function call is as follows:
+
+`function swapUSDSToUSDC(uint256 usdcAmount) external`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.2 - Swap USDC To USDS [Core]  <!-- UUID: 17675b49-5767-47de-9ccf-e324b7bebec5 -->
+
+The documents herein define a series of operations for an operator to `swap` USDC to USDS through the PSM.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.2.1 - Call swapUSDCToUSDS Function [Core]  <!-- UUID: f0117433-4568-4b4b-bed6-fce75f85939a -->
+
+Only an operator with the relayer role can swap USDC to USDS via the PSM. To do so, they must call the `swapUSDCToUSDS` function on the Controller contract on mainnet, providing the usdcAmount (denominated in 1e6 precision to match PSM USDC handling). The operation will only succeed if the ALM Proxy holds at least the amount of USDC specified for the swap; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for swaps. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the swap amount is within the allowed rate limit (LIMIT_USDC_TO_USDS) for the PSM.
+
+• The contract will approve the PSM to spend the USDC from the ALM Proxy.
+
+• The contract will calculate the swap limit per transaction based on the Dai balance held by the PSM, converting with psmTo18ConversionFactor.
+
+• If the usdcAmount is less than or equal to the limit, the contract will perform a direct swap of USDC to Dai.
+
+• If the usdcAmount exceeds the limit, the contract will split the swap into multiple smaller swaps: refill the PSM with Dai via psm.fill, recalculate the limit, swap the maximum allowed amount, update the remaining amount, and repeat until complete (reverting with "DssLitePsm/nothing-to-fill" if PSM cannot be filled).
+
+• The contract will convert the USDC amount to a Dai amount, accounting for token decimal differences.
+
+• The contract will approve the daiUsds contract to spend the Dai amount from the ALM Proxy.
+
+• The contract will swap Dai to USDS at a 1:1 ratio via daiUsds, sending USDS to the proxy.
+
+The function call is as follows:
+
+`function swapUSDCToUSDS(uint256 usdcAmount) external`
+
+############### A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.3 - Transfer Token Via LayerZero [Core]  <!-- UUID: 7f1746e3-9bc8-467f-97b8-72e4ee51ebfc -->
+
+The documents herein define the steps for a relayer to `transfer` a token via LayerZero to a destination endpoint, with the assets sent according to the configured recipient.
+
+################ A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.3.1 - Call transferTokenLayerZero Function [Core]  <!-- UUID: 04a8ecfb-e8b5-4994-b4f1-1fe99efd8dcd -->
+
+Only an operator with the relayer role can transfer tokens via LayerZero. To do so, they must call the `transferTokenLayerZero` function on the Controller contract on mainnet, providing the oftAddress, amount, and destinationEndpointId (payable for native fees). The operation will only succeed if the ALM Proxy holds sufficient tokens and fees; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the transfer amount is within the allowed rate limit (built from LIMIT_LAYERZERO_TRANSFER, oftAddress, and destinationEndpointId).
+
+• If approval is required, the contract will approve the token for the oftAddress.
+
+• The contract will build LayerZero send options and a SendParam struct with destination details, amount, and recipient from layerZeroRecipients.
+
+• The contract will quote the OFT receipt to set the minimum amount received.
+
+• The contract will quote the messaging fee and execute the send via proxy.doCallWithValue, passing the fee value.
+
+The function call is as follows:
+
+`function transferTokenLayerZero(address oftAddress, uint256 amount, uint32  destinationEndpointId) external payable`
+
+########### A.6.1.1.5.2.6.1.2.2.1.3 - Rate Limit Management [Core]  <!-- UUID: 73da45c9-78eb-49f3-a1d5-593780e9d362 -->
+
+The documents herein define the protocol for querying, setting, and adjusting `Rate Limits` for Instances using their `Rate LimitID`s. The Rate Limits must be maintained in line with Launch Agent 4’s strategy, market conditions, and security considerations.
+
+############ A.6.1.1.5.2.6.1.2.2.1.3.1 - Get Rate Limit Data [Core]  <!-- UUID: 716b493e-d102-47c8-8f87-bcb1c809c8ee -->
+
+Anyone can query the full rate limit data for a specific key. Calling this function will carry out the following actions:
+
+• The contract will return the stored Rate LimitData struct from the _data mapping for the key.
+
+The function call is as follows:
+
+`function getRate LimitData(bytes32 key) external override view returns (Rate LimitData memory)`
+
+############ A.6.1.1.5.2.6.1.2.2.1.3.2 - Set Rate Limit Data [Core]  <!-- UUID: 993bbc35-1692-4c1b-87b2-de5997e90bf5 -->
+
+Only an operator with the admin role is able to set or update rate limit data for a specific key, including maxAmount, slope, and historical values. There are two overloads for flexibility. Calling these functions will carry out the following actions:
+
+• The contract will require that lastAmount is less than or equal to maxAmount, reverting with "Rate Limits/invalid-lastAmount" if not.
+
+• The contract will require that lastUpdated is less than or equal to the current block timestamp, reverting with "Rate Limits/invalid-lastUpdated" if not.
+
+• The contract will store the provided data in the _data mapping as a Rate LimitData struct.
+
+• The contract will emit a Rate LimitDataSet event with the key and provided values.
+
+The function calls are as follows:
+
+`function setRate LimitData(bytes32 key, uint256 maxAmount, uint256 slope, uint256 lastAmount, uint256 lastUpdated) public override onlyRole(DEFAULT_ADMIN_ROLE)
+
+function setRate LimitData(bytes32 key, uint256 maxAmount, uint256 slope) external override`
+
+############ A.6.1.1.5.2.6.1.2.2.1.3.3 - Set Unlimited Rate Limit Data [Core]  <!-- UUID: 37aed332-50c8-4392-91be-095bd13139d1 -->
+
+Only an operator with the admin role is able to set unlimited rate limit data for a specific key by configuring it with maximum values. Calling this function will carry out the following actions:
+
+• The contract will call setRate LimitData internally with type(uint256).max for maxAmount and lastAmount, 0 for slope, and the current block timestamp for lastUpdated.
+
+The function call is as follows:
+
+`function setUnlimitedRate LimitData(bytes32 key) external override`
+
+############ A.6.1.1.5.2.6.1.2.2.1.3.4 - Get Current Rate Limit [Core]  <!-- UUID: f629bb8f-afb2-4bfc-b7fa-3f5fbaa2c2f9 -->
+
+Anyone can query the current rate limit value for a specific key, accounting for time-based slope accrual. Calling this function will carry out the following actions:
+
+• The contract will retrieve the Rate LimitData for the key from the _data mapping.
+
+• If maxAmount is type(uint256).max (unlimited case), the contract will return type(uint256).max.
+
+• Otherwise, the contract will calculate and return the minimum of (slope * time elapsed since lastUpdated + lastAmount) and maxAmount.
+
+The function call is as follows:
+
+`function getCurrentRate Limit(bytes32 key) public override view returns (uint256)`
+
+############ A.6.1.1.5.2.6.1.2.2.1.3.5 - Trigger Rate Limit Decrease [Core]  <!-- UUID: 2fc640dc-1f48-4167-a700-cb54f2cb1097 -->
+
+Only an operator with the controller role can trigger a decrease in the rate limit for a specific key by a given amount. Calling this function will carry out the following actions:
+
+• The contract will retrieve the Rate LimitData storage for the key from the data mapping.
+
+• The contract will require that maxAmount is greater than 0, reverting with "Rate Limits/zero-maxAmount" if not.
+
+• If maxAmount is type(uint256).max (unlimited case), the contract will return type(uint256).max without changes.
+
+• The contract will calculate the currentRate Limit using getCurrentRate Limit.
+
+• The contract will require that amountToDecrease is less than or equal to currentRate Limit, reverting with "Rate Limits/rate-limit-exceeded" if not.
+
+• The contract will update lastAmount to currentRate Limit minus amountToDecrease and set lastUpdated to the current block timestamp.
+
+• The contract will emit a Rate LimitDecreaseTriggered event with the key, amountToDecrease, currentRate Limit, and newLimit.
+
+• The contract will return the newLimit.
+
+The function call is as follows:
+
+`function triggerRate LimitDecrease(bytes32 key, uint256 amountToDecrease) external override onlyRole(CONTROLLER) returns (uint256 newLimit)`
+
+########### A.6.1.1.5.2.6.1.2.2.1.4 - Instance Lifecycle Management [Core]  <!-- UUID: 2dde3f2b-925d-42a4-9fe1-0cb5bfd86855 -->
+
+The documents herein define processes for invoking (onboarding) new Launch Agent 4 Liquidity Layer Instances and offboarding existing ones. This process will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########### A.6.1.1.5.2.6.1.2.2.1.5 - Upgrading Controller [Core]  <!-- UUID: 4e238661-718b-44ec-8473-bad60d76074d -->
+
+The documents herein define the process for deploying new Controller contracts. This process will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+########## A.6.1.1.5.2.6.1.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 7fc9e39e-4f3d-435a-84af-7fc74c449ce0 -->
+
+The documents herein define the process for non-routine ongoing management of the Launch Agent 4 Liquidity Layer and its active Instances.
+
+########## A.6.1.1.5.2.6.1.2.2.3 - Emergency Protocol [Core]  <!-- UUID: d99e4cb6-1c6c-4562-948b-c2ac4ea66253 -->
+
+The documents herein define all the possible actions that can be taken in case of an emergency within Launch Agent 4 Liquidity Layer operations.
+
+########### A.6.1.1.5.2.6.1.2.2.3.1 - Remove Compromised Relayer As Freezer [Core]  <!-- UUID: 15c966fc-e579-4277-abb0-6f0b9ad5cbce -->
+
+In the event of a compromised Relayer, the `FREEZER_ROLE` can call the function to `removeRelayer` from the Controller contract. Only an operator with the freezer role can remove a relayer. To do so, they must call the `removeRelayer` function on the Controller contract on mainnet, providing the compromised relayer’s address. Calling this function will carry out the following actions:
+
+• The contract will confirm the caller holds the freezer role. If the caller does not have the freezer role, the transaction will revert.
+
+• The contract will revoke the relayer role from the specified address.
+
+• The contract will emit a `RelayerRemoved(relayer)` event.
+
+The function call is as follows:
+
+`function removeRelayer(address relayer) external`
+
+########### A.6.1.1.5.2.6.1.2.2.3.2 - Redeem All Mainnet Positions [Core]  <!-- UUID: 10597c85-6ce2-4364-a83b-e2d3c93c45c7 -->
+
+The documents herein define the actions that should be performed by an operator if there is a need to recover the liquidity from Mainnet Protocols and centralize it in the Mainnet Launch Agent 4 ALM Proxy.
+
+############ A.6.1.1.5.2.6.1.2.2.3.2.1 - ERC-4626 Withdrawal Action [Core]  <!-- UUID: 6078cd75-f853-49ca-b7c1-eaab4ef85c72 -->
+
+In order to withdraw all ERC-4626 balances, the operator must call the `redeemERC4626` function.
+
+The function call is as follows:
+
+`function redeemERC4626(address(token), token.balanceOf(address(proxy)))`
+
+For more detailed instructions on the code to execute this, see [A.6.1.1.5.2.6.1.2.2.1.2.1.2.3 - ERC-4626 Functions](08d30ec2-c343-4176-aded-dce33e76d69c).
+
+########### A.6.1.1.5.2.6.1.2.2.3.3 - USDC To USDS Swap Action [Core]  <!-- UUID: b93c5c32-642e-4448-9ebd-c908dee78d46 -->
+
+This document defines the action that should be performed by an operator if there is a need to centralize all recovered liquidity in USDS. The operator must call the `swapUSDCToUSDS` function.
+
+The function call is as follows:
+
+`function swapUSDCToUSDS(usdc.balanceOf(address(proxy))`
+
+For more detailed instructions on the code to execute this see [A.6.1.1.5.2.6.1.2.2.1.2.1.2.6.2 - Swap USDC To USDS](17675b49-5767-47de-9ccf-e324b7bebec5).
+
+########### A.6.1.1.5.2.6.1.2.2.3.4 - USDS Burn Action [Core]  <!-- UUID: 3304ecba-6dad-45af-886e-878648d2abb8 -->
+
+This document defines the action that should be performed if there is a need to repay and then burn Launch Agent 4’s USDS debt. The operator must call the `burnUSDS` function.
+
+The function call is as follows:
+
+`function burnUSDS(usds.balanceOf(address(proxy))`
+
+More detailed instructions on the code to execute this, see [A.6.1.1.5.2.6.1.2.2.1.2.1.2.1.2 - Burn USDS](1e27b007-ed34-4c15-9116-d62145572dce).
+
+######### A.6.1.1.5.2.6.1.2.3 - Allocation Strategy [Core]  <!-- UUID: 5611a719-923b-4d95-b246-5bc788d55307 -->
+
+In the future, additional logic will be added herein regarding the strategy by which capital is allocated between different Instances of the Launch Agent 4 Liquidity Layer.
+
+######## A.6.1.1.5.2.6.1.3 - Active Instances [Core]  <!-- UUID: ccde7679-912d-403f-aad1-f9a56c8e3387 -->
+
+The Instances of the Launch Agent 4 Liquidity Layer with `Active` Status are stored herein. The `RRC Framework Full Implementation Coverage` status defines whether the Instance Financial RRC is calculated based on a fully implemented risk model (see [A.3.2.1.1.4.3.1 - Fully Implemented Risk Models](419a1d00-fbae-4d26-bd47-8f57677d8001)) or a pending risk model (see [A.3.2.1.1.4.3.2 - Pending Risk Models](81ca88bf-3f6a-4d10-a3e2-d47cf6636d7d)). If the Instance Financial RRC is calculated based on a fully implemented risk model the status is `Covered`. If the Instance Financial RRC is calculated based on a pending risk model the status is `Pending`.
+
+######### A.6.1.1.5.2.6.1.3.1 - Ethereum Mainnet Instances [Core]  <!-- UUID: a10f4c25-6281-42e5-8247-6ac5cac9f850 -->
+
+The Ethereum Mainnet Instances of the Launch Agent 4 Liquidity Layer with `Active` Status are stored herein and are organized by target protocol.
+
+########## A.6.1.1.5.2.6.1.3.1.1 - Maple [Core]  <!-- UUID: a03f7eb7-4f1f-441c-98ba-41c87f482186 -->
+
+The Ethereum Mainnet Instances of the Maple Protocol with `Active` Status are stored herein.
+
+########### A.6.1.1.5.2.6.1.3.1.1.1 - Ethereum Mainnet - Maple USDC Instance Configuration Document [Core]  <!-- UUID: 7488a14c-2464-4649-b476-48ee93bb438f -->
+
+The documents herein contain the Instance Configuration Document for the Maple USDC Instance.
+
+############ A.6.1.1.5.2.6.1.3.1.1.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 28fa701f-7d0a-45e6-9977-e28bfd32fe0e -->
+
+**`Covered`**
+
+############ A.6.1.1.5.2.6.1.3.1.1.1.2 - Parameters [Core]  <!-- UUID: 82cb8c2b-c551-4ea0-bec2-6afa0d41ab8d -->
+
+The documents herein define the parameters of the Maple USDC Instance of the Allocation System Primitive.
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 87ea484a-cb48-46dc-b97b-ab79e59420bf -->
+
+The documents herein define the Instance identifiers
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.1.1 - Network [Core]  <!-- UUID: 8b3a0a62-f92e-43cd-9791-8eab8c36ffe4 -->
+
+Ethereum Mainnet
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: c953c251-42d5-4dcd-9952-6329ed7179f2 -->
+
+Maple
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.1.3 - Asset Supplied By Launch Agent 4 Liquidity Layer [Core]  <!-- UUID: 7d83e07d-c05f-4917-97ef-7bca6a6cf184 -->
+
+USDC
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.1.4 - Token [Core]  <!-- UUID: 0c1296a7-a091-4753-8851-3eb2df18cc33 -->
+
+syrupUSDC
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.2.2 - Contract Addresses [Core]  <!-- UUID: 81a36b20-bf42-40eb-b47f-c5859529a77c -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.2.1 - Token Address [Core]  <!-- UUID: 85a64942-705d-4079-a265-2510ae4310f7 -->
+
+`0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b`
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: e9a1b7f7-df7c-4b9c-83d1-96fc3b109089 -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.2.3 - RateLimitIDs [Core]  <!-- UUID: d2d46842-e9dd-4f88-bfa5-5e947381f70b -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow and outflow will be specified in a future iteration of the Launch Agent 4 Artifact.
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 97344456-e215-42e5-a149-89f0276e1b4c -->
+
+The inflow RateLimitID is: `0x99a69e57b2f387f999d6adff6eb2e707b59fdb54f06ca6211b4f20956e9bfe10`
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: c4e18b43-5009-4c77-8781-bfc053d2c606 -->
+
+The outflow RateLimitID is: `0x64e6fd9d694640eebeeefc7b5abe32ef09bbabaa3d4e60221461d05a9577dc57`
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.2.4 - Rate Limits [Core]  <!-- UUID: db184982-3dca-493b-b2a9-640196443cd8 -->
+
+The current `maxAmount` and `slope` for this conduit’s inflow/outflow are defined in the documents herein.
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.4.1 - Inflow Rate Limits [Core]  <!-- UUID: 3776ec7d-668c-496d-aaa7-094ba92e496f -->
+
+The deposit rate limits are:
+
+• `maxAmount`: 100,000,000 USDC
+
+• `slope`: 20,000,000 USDC per day
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: b29ac1d6-4cbd-46db-b77c-2f02d9705936 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: Unlimited
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: b7dff5a9-125e-4ee1-9977-4698b5442b26 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############ A.6.1.1.5.2.6.1.3.1.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 12bfd1a4-fe27-4a7d-8c1e-d0541c690066 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Launch Agent 4 Liquidity Layer processes.
+
+############# A.6.1.1.5.2.6.1.3.1.1.1.3.1 - Redeem Maple Shares [Core]  <!-- UUID: 6fb19cf7-516c-4de4-89b9-02288053f905 -->
+
+The documents herein define the steps for a relayer to redeem vault shares from Maple.
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.3.1.1 - Call RequestMapleRedemption Function [Core]  <!-- UUID: fd047e05-3239-434b-a5d8-81cd72ada783 -->
+
+Only an operator with the relayer role can request the redemption of shares from Maple. To do so, they must call the `requestMapleRedemption` function on the Controller contract on mainnet, providing the Maple token address and the number of shares to request. All Maple redemption operations are performed on behalf of the ALM Proxy and the destination address is always set to the proxy by the contract. Calling this function will carry out the following actions:
+
+• The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+• The contract will ensure the redemption amount is within the allowed rate limit for the specified vault and decrease the rate limit for the redemption amount.
+
+• The contract will submit a redemption request to the vault. Assets will not be received immediately; they must be claimed in a separate step after the vault processes the redemption.
+
+The function call is as follows:
+
+`function requestMapleRedemption(address mapleToken, uint256 shares) external`
+
+############## A.6.1.1.5.2.6.1.3.1.1.1.3.1.2 - Call CancelMapleRedemption Function [Core]  <!-- UUID: 7378e3fb-3c6a-4ea4-8e01-c6b84658944d -->
+
+Only an operator with the relayer role can cancel a previously requested redemption of shares from Maple. To do so, they must call the `cancelMapleRedemption` function on the Controller contract on mainnet, providing the Maple token address and the number of shares to cancel. All Maple cancellations of redemption operations are performed on behalf of the ALM Proxy. Calling this function will carry out the following actions:
+
+◦ The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+
+◦ The contract will check that a rate limit exists for the asset. If no rate limit exists the transaction will revert.
+
+◦ The contract will submit a cancellation request to the vault, removing the specified number of shares from the pending redemption.
+
+The function call is as follows:
+
+`function cancelMapleRedemption(address mapleToken, uint256 shares) external`
+
+######## A.6.1.1.5.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 6b16b0d6-a5a1-44da-a95d-e62d38a35ade -->
+
+The Instances of the Launch Agent 4 Liquidity Layer with `Completed` Status are stored herein.
+
+######## A.6.1.1.5.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: ca2c0cd1-73e3-49f1-b415-65e5f200b097 -->
+
+The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.5.2.6.1.3 - Active Instances](ccde7679-912d-403f-aad1-f9a56c8e3387).
 
 ####### A.6.1.1.5.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: 473d0f9e-a5dc-48ee-84b9-a48cd2b6f215 -->
 
