@@ -11319,6 +11319,50 @@ Payments are made on a monthly basis from the Integration Boost wallets specifie
 
 Funds from the Pre-Pioneer Incentive Pool wallet may be used to incentivize partners on Solana to promote USDS adoption as directed by Keel. Funds from the Pre-Pioneer Incentive Pool may not be transferred to Keel’s SubProxy Account, Keel Foundation, or Matariki Labs.
 
+#### A.2.9.2.4 - Ecosystem Accord 4: Sky And Launch Agent 4 [Core]  <!-- UUID: 6bddc5aa-ac80-43d8-b8c8-8cde14e896df -->
+
+The subdocuments herein record the terms of agreement between Sky and Launch Agent 4 as agreed in Ecosystem Accord 4.
+
+##### A.2.9.2.4.1 - Accord Key Details [Core]  <!-- UUID: b82be738-892e-4d55-a42f-84fc1fdf3064 -->
+
+The subdocuments herein set out the key details of Ecosystem Accord 4, such as parties to the agreement and the duration of the Accord.
+
+###### A.2.9.2.4.1.1 - Parties To The Accord [Core]  <!-- UUID: 2cd5a1de-89d0-47d0-b671-87d8fec45766 -->
+
+The parties to Ecosystem Accord 4 are Sky and Launch Agent 4, as defined in the subdocuments herein.
+
+####### A.2.9.2.4.1.1.1 - Sky Details [Core]  <!-- UUID: acb3e4c8-5edb-4ff0-bf47-e0a770cc08e7 -->
+
+The party ‘Sky’ comprises Sky Core.
+
+####### A.2.9.2.4.1.1.2 - Launch Agent 4 Details [Core]  <!-- UUID: 665a712a-d211-4a7a-b4c9-a8bad61b3f9c -->
+
+The party ‘Launch Agent 4’ comprises the Launch Agent 4 Prime Agent, Launch Agent 4 Foundation, and Rubicon.
+
+###### A.2.9.2.4.1.2 - Duration Of The Accord [Core]  <!-- UUID: 90e40d2a-3baa-411f-9512-b7cf61762a75 -->
+
+The duration of Ecosystem Accord 4 is indefinite, commencing from November 13, 2025.
+
+##### A.2.9.2.4.2 - Accord Substantive Terms [Core]  <!-- UUID: ec71c718-4a93-4cd7-8324-11d00110bbd3 -->
+
+The subdocuments herein set out the substantive terms of Ecosystem Accord 4. Additional detail regarding the substantive terms of Ecosystem Accord 4 will be specified in a future iteration of the Atlas, as agreed by the Parties to the Accord.
+
+###### A.2.9.2.4.2.1 - Genesis Capital Allocation [Core]  <!-- UUID: b9e591ad-fd43-42fa-9262-aa9589c79ea3 -->
+
+The subdocuments herein set out agreed terms with respect to Genesis Capital Allocation.
+
+####### A.2.9.2.4.2.1.1 - Launch Agent 4 Initial Allocation [Core]  <!-- UUID: a15698be-8723-4bab-9b25-f393deec41e2 -->
+
+The Initial Allocation for Launch Agent 4 is 21,000,000 USDS.
+
+####### A.2.9.2.4.2.1.2 - Initial Allocation Distribution [Core]  <!-- UUID: 2ace92dc-2a09-4d9e-9bae-9ea4da1b2f38 -->
+
+The Initial Allocation is distributed in USDS to the Launch Agent 4 SubProxy.
+
+######## A.2.9.2.4.2.1.2.1 - Transfer Of Genesis Capital Allocation To Launch Agent 4 SubProxy [Core]  <!-- UUID: c39702fb-bb6a-43c7-b208-18ddd279b1d3 -->
+
+The transfer of 21,000,000 USDS from the Surplus Buffer to the Launch Agent 4 SubProxy for the Genesis Capital Allocation must be included in the November 13, 2025 Executive Vote. This action is authorized to proceed directly to an Executive Vote without a prior Governance Poll.
+
 ### A.2.9.0.3.1 - Business Activities - Element Annotation [Annotation]  <!-- UUID: 31df7e2b-184f-428c-9c4f-23fd8054c5d3 -->
 
 The element "business activities" refers to the commercial activities, transactions, and interactions that Ecosystem Actors perform within the ecosystem. These may include, but are not limited to, service delivery, product development, collaboration, and information exchange.
@@ -15856,6 +15900,7 @@ Genesis Agents are Agents that receive capital contributions from Sky, including
 ◦ Grove    
 ◦ Keel    
 ◦ Launch Agent 3
+◦ Launch Agent 4
 
 ##### A.3.7.1.5.6 - Genesis Capital [Core]  <!-- UUID: 18f3de06-064b-4b08-a855-4720240e37f5 -->
 
@@ -15866,6 +15911,8 @@ The Genesis Capital of an Agent is the lesser of (1) the amount of capital contr
 The amount of capital contributed by Sky to Agents is:
 
 ◦ Spark - 25,000,000 USDS
+
+• Launch Agent 4 - 21,000,000 USDS
 
 # A.4 - The Protocol Scope [Scope]  <!-- UUID: 5c20d9af-0bb9-4ca1-a944-1e2cb6f8bb6b -->
 
@@ -27017,11 +27064,11 @@ The Ethereum Mainnet Instances Directory of the Curve Protocol with `Active` Sta
 
 ############ A.6.1.1.2.2.6.1.1.2.1.6.1 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document Location [Core]  <!-- UUID: 654eac37-dbe6-4bf1-a300-e04645c0652a -->
 
-This Instance’s associated Instance Configuration Document is located at [[Unknown]](https://www.notion.so/29cf2ff08d7380c6ad86f5e0c217ef30).
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.6.1 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document](67b85f8a-3857-461d-a214-d3bf990f9111).
 
 ############ A.6.1.1.2.2.6.1.1.2.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document Location [Core]  <!-- UUID: e09057c5-3a44-4e92-a38c-5695a6ad08d9 -->
 
-This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document](ea9afb08-8f81-4ee9-b9a7-321862bad5d8).
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.2.2.6.1.3.1.6.3 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document](ea9afb08-8f81-4ee9-b9a7-321862bad5d8).
 
 ########### A.6.1.1.2.2.6.1.1.2.1.7 - Morpho [Core]  <!-- UUID: c7201d8e-ea9a-4283-ad53-8f1851bde413 -->
 
@@ -27365,6 +27412,31 @@ The maximum amount of USDC that can be bridged to Avalanche ALM Proxy using the 
 The maximum amount of USDC that can be bridged to Ethereum Mainnet from the Avalanche ALM Proxy using the Circle Cross-Chain Transfer Protocol (`LIMIT_USDC_TO_CCTP_Ethereum`) is specified in the document herein.
 • `maxAmount` (USDC): 50,000,000
 • `slope` (USDC/ day): 50,000,000
+
+############ A.6.1.1.2.2.6.1.2.1.1.3.3 - Base [Core]  <!-- UUID: cedb7b47-c7e6-4948-8835-5862a65592cc -->
+
+The documents herein list the current `RateLimits` for the Grove Liquidity Layer on Base.
+
+############# A.6.1.1.2.2.6.1.2.1.1.3.3.1 - USDC Base ALM Proxy Maximum [Core]  <!-- UUID: dba2c846-ecbe-4227-abfc-63dbd654af48 -->
+
+The maximum amount of USDC that can be sent to the Base ALM Proxy (`LIMIT_USDC_TO_DOMAIN`, hashed with Base domain) is specified in the document herein.
+
+• `maxAmount`: This parameter will be specified in a future iteration of the Grove Artifact.
+• `slope`: This parameter will be specified in a future iteration of the Grove Artifact.
+
+############# A.6.1.1.2.2.6.1.2.1.1.3.3.2 - USDC Base ALM Proxy Circle Cross-Chain Transfer Protocol Maximum [Core]  <!-- UUID: 34e5a190-ec23-4449-8cf1-1125f78a6e44 -->
+
+The maximum amount of USDC that can be bridged to Base ALM Proxy using the Circle Cross-Chain Transfer Protocol (`LIMIT_USDC_TO_CCTP_Base`) is specified in the document herein.
+
+• `maxAmount`: 50,000,000 USDC
+• `slope`: 50,000,000 USDC per day
+
+############# A.6.1.1.2.2.6.1.2.1.1.3.3.3 - USDC Base ALM Proxy Circle Cross-Chain Transfer Protocol Maximum [Core]  <!-- UUID: 9575357d-2778-4556-80d8-ca1e4ab293a6 -->
+
+The maximum amount of USDC that can be bridged to Ethereum Mainnet from the Base ALM Proxy using the Circle Cross-Chain Transfer Protocol (`LIMIT_USDC_TO_CCTP_Ethereum`) is specified in the document herein.
+
+• `maxAmount`: 50,000,000 USDC
+• `slope`: 50,000,000 USDC per day
 
 ########## A.6.1.1.2.2.6.1.2.1.2 - Governance Processes [Core]  <!-- UUID: 6859900b-3d53-4a5c-8a00-ddb1cf0c07a4 -->
 
@@ -29266,88 +29338,188 @@ The documents herein contain operational procedures or monitoring requirements u
 
 The Ethereum Mainnet Instances of the Curve Protocol with `Active` Status are stored herein.
 
-########### A.6.1.1.2.2.6.1.3.1.6.1 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document [Core]  <!-- UUID: f6501dc9-f8e9-4130-9390-a1d9f142fcc7 -->
+########### A.6.1.1.2.2.6.1.3.1.6.1 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document [Core]  <!-- UUID: 67b85f8a-3857-461d-a214-d3bf990f9111 -->
 
 The documents herein contain the Instance Configuration Document for the Curve RLUSD/USDC Pool Instance.
 
-############ A.6.1.1.2.2.6.1.3.1.6.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 438f0f65-8e66-40c6-a17b-b861d57da301 -->
+############ A.6.1.1.2.2.6.1.3.1.6.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: f457fb43-c250-4111-b370-3e875e13db65 -->
 
 **`Pending`**
 
-############ A.6.1.1.2.2.6.1.3.1.6.1.2 - Parameters [Core]  <!-- UUID: 23317c4d-a0ce-48c5-b2ac-7ce4cd93cf83 -->
+############ A.6.1.1.2.2.6.1.3.1.6.1.2 - Parameters [Core]  <!-- UUID: ef903d8d-08fe-4be2-b68f-adb87d7449e3 -->
 
 The documents herein define the parameters of the Curve RLUSD/USDC Pool Instance of the Allocation System Primitive.
 
-############# A.6.1.1.2.2.6.1.3.1.6.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 987eb2cc-420e-40d7-b5b2-31452ed7bcc7 -->
+############# A.6.1.1.2.2.6.1.3.1.6.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 49528c46-1220-46a7-b693-cf0433129077 -->
 
 The documents herein define the Instance identifiers.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.1 - Network [Core]  <!-- UUID: a4fa782e-587c-46d5-b2d0-4a77d778ab07 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.1 - Network [Core]  <!-- UUID: 4b77a1d9-18bc-4144-ad5f-8b1bdf2974db -->
 
 Ethereum Mainnet
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.2 - Target Protocol [Core]  <!-- UUID: e727e42d-e275-4122-9ba0-fe98bb7eedcf -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.2 - Target Protocol [Core]  <!-- UUID: d7ad7cbd-774d-4ef7-b35c-897e1d66b766 -->
 
 Curve
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 7b685931-6f16-40b5-ae0e-86c46751da93 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: aadd33fa-45a8-4df8-963a-2ee40ea6075b -->
 
 RLUSD and USDC
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.4 - Token [Core]  <!-- UUID: 8bc9fd15-00f7-44c5-b48d-1916ea567117 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.1.4 - Token [Core]  <!-- UUID: b787771e-42f4-4a11-b683-1be8d536546c -->
 
 RLUSD/USDC
 
-############# A.6.1.1.2.2.6.1.3.1.6.1.2.2 - Contract Addresses [Core]  <!-- UUID: 8aecdc5f-0f1a-4394-9306-a60c2f7daf69 -->
+############# A.6.1.1.2.2.6.1.3.1.6.1.2.2 - Contract Addresses [Core]  <!-- UUID: 3a2d436e-e498-46ae-aa93-5eaf2b1c3adf -->
 
 The documents herein define the Instance contract addresses.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.1 - Pool Address [Core]  <!-- UUID: ef88cdfb-f431-4897-b9e6-11a16c6b8188 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.1 - Pool Address [Core]  <!-- UUID: 869f4a71-5a20-4e34-b718-cfe844630475 -->
 
 `0xD001aE433f254283FeCE51d4ACcE8c53263aa186`
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: c3b33e2f-23b6-42f9-a6d7-abb5372217ae -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 29aee46d-b94b-4402-ba84-2029422965e6 -->
 
 `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.3 - Underlying Asset Address [Core]  <!-- UUID: f1c52fdb-5856-4fce-b99e-6cbcc13296b1 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.2.3 - Underlying Asset Address [Core]  <!-- UUID: bcb5e6e4-1616-4e0f-96d5-a08d4c4dda84 -->
 
 `0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD`
 
-############# A.6.1.1.2.2.6.1.3.1.6.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 8b1cc07a-58fd-4657-99c7-e1feecc13ab3 -->
+############# A.6.1.1.2.2.6.1.3.1.6.1.2.3 - Rate Limit IDs [Core]  <!-- UUID: 5c5d80a6-c0cc-491c-9e4b-75480d2a7a30 -->
 
 The specific `RateLimitID`(s) for this conduit’s inflow, outflow and swap are defined in the subdocuments herein.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 6cff8544-7a7d-43a6-8db6-3f2b1939b656 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 385325de-b8c3-4e9f-96ee-c8499fca7848 -->
 
 The inflow RateLimitID is: N/A - swap only.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: e5752190-a5a0-4d6f-9738-b07898e0dccb -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 4f630380-8ca6-4ce6-9482-9af88826ea07 -->
 
 The outflow RateLimitID is: N/A - swap only.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.3 - Swap RateLimitID [Core]  <!-- UUID: d2d15203-f105-401f-8d0b-19f67771fb1e -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.3.3 - Swap RateLimitID [Core]  <!-- UUID: 3edab299-1530-48bb-9c89-0a2aee6902ce -->
 
 The swap RateLimitID is: `0x8dcb7a359e6824ce9fd1c1f50ba67cd468764f690da2589aa3c262ac142c333a`.
 
-############# A.6.1.1.2.2.6.1.3.1.6.1.2.4 - Rate Limits [Core]  <!-- UUID: c9ac1f48-8dbf-4c72-8a77-27c6e8863a83 -->
+############# A.6.1.1.2.2.6.1.3.1.6.1.2.4 - Rate Limits [Core]  <!-- UUID: d9cb1721-0f26-41db-a929-4725ac227d3e -->
 
 The current `maxAmount`, `slope` and `maxSlippage` for this conduit’s inflow/outflow/swap are defined in the subdocuments herein.
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 84d948f0-8a23-4710-a6d4-8fc094befc91 -->
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 172836ec-2f76-4e64-96db-fb60c9885d12 -->
+
+The deposit rate limits are:
+
+• `maxAmount`: N/A - swap only
+
+• `slope`: N/A - swap only
+
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: a3a60b38-055f-42e4-b35d-bb04eb829b67 -->
+
+The withdrawal rate limits are:
+
+• `maxAmount`: N/A - swap only
+
+############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.3 - Swap Rate Limits [Core]  <!-- UUID: 511cec98-4c5b-488e-8b5b-c088d04cd46b -->
+
+The swap rate limits are:
+
+• `maxAmount`: 20 million
+
+• `slope`: 100 million per day
+
+• `maxSlippage`: 0.1%
+
+############# A.6.1.1.2.2.6.1.3.1.6.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 8dbe4e53-e70b-4b52-b607-558e9b023b56 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+############ A.6.1.1.2.2.6.1.3.1.6.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 7a0d7698-5f64-47f8-b81e-c2e71e6e15dc -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
+
+########### A.6.1.1.2.2.6.1.3.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool Instance Configuration Document [Core]  <!-- UUID: f6501dc9-f8e9-4130-9390-a1d9f142fcc7 -->
+
+The documents herein contain the Instance Configuration Document for the Curve RLUSD/USDC Pool Instance.
+
+############ A.6.1.1.2.2.6.1.3.1.6.2.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 438f0f65-8e66-40c6-a17b-b861d57da301 -->
+
+**`Pending`**
+
+############ A.6.1.1.2.2.6.1.3.1.6.2.2 - Parameters [Core]  <!-- UUID: 23317c4d-a0ce-48c5-b2ac-7ce4cd93cf83 -->
+
+The documents herein define the parameters of the Curve RLUSD/USDC Pool Instance of the Allocation System Primitive.
+
+############# A.6.1.1.2.2.6.1.3.1.6.2.2.1 - Instance Identifiers [Core]  <!-- UUID: 987eb2cc-420e-40d7-b5b2-31452ed7bcc7 -->
+
+The documents herein define the Instance identifiers.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.1 - Network [Core]  <!-- UUID: a4fa782e-587c-46d5-b2d0-4a77d778ab07 -->
+
+Ethereum Mainnet
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.2 - Target Protocol [Core]  <!-- UUID: e727e42d-e275-4122-9ba0-fe98bb7eedcf -->
+
+Curve
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: 7b685931-6f16-40b5-ae0e-86c46751da93 -->
+
+RLUSD and USDC
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.4 - Token [Core]  <!-- UUID: 8bc9fd15-00f7-44c5-b48d-1916ea567117 -->
+
+RLUSD/USDC
+
+############# A.6.1.1.2.2.6.1.3.1.6.2.2.2 - Contract Addresses [Core]  <!-- UUID: 8aecdc5f-0f1a-4394-9306-a60c2f7daf69 -->
+
+The documents herein define the Instance contract addresses.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.1 - Pool Address [Core]  <!-- UUID: ef88cdfb-f431-4897-b9e6-11a16c6b8188 -->
+
+`0xD001aE433f254283FeCE51d4ACcE8c53263aa186`
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: c3b33e2f-23b6-42f9-a6d7-abb5372217ae -->
+
+`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.3 - Underlying Asset Address [Core]  <!-- UUID: f1c52fdb-5856-4fce-b99e-6cbcc13296b1 -->
+
+`0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD`
+
+############# A.6.1.1.2.2.6.1.3.1.6.2.2.3 - Rate Limit IDs [Core]  <!-- UUID: 8b1cc07a-58fd-4657-99c7-e1feecc13ab3 -->
+
+The specific `RateLimitID`(s) for this conduit’s inflow, outflow and swap are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 6cff8544-7a7d-43a6-8db6-3f2b1939b656 -->
+
+The inflow RateLimitID is: N/A - swap only.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: e5752190-a5a0-4d6f-9738-b07898e0dccb -->
+
+The outflow RateLimitID is: N/A - swap only.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.3.3 - Swap RateLimitID [Core]  <!-- UUID: d2d15203-f105-401f-8d0b-19f67771fb1e -->
+
+The swap RateLimitID is: `0x8dcb7a359e6824ce9fd1c1f50ba67cd468764f690da2589aa3c262ac142c333a`.
+
+############# A.6.1.1.2.2.6.1.3.1.6.2.2.4 - Rate Limits [Core]  <!-- UUID: c9ac1f48-8dbf-4c72-8a77-27c6e8863a83 -->
+
+The current `maxAmount`, `slope` and `maxSlippage` for this conduit’s inflow/outflow/swap are defined in the subdocuments herein.
+
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 84d948f0-8a23-4710-a6d4-8fc094befc91 -->
 
 The deposit rate limits are:
 
 • `maxAmount`: N/A - swap only
 • `slope`: N/A - swap only
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 91eeb3a6-3b06-4e33-b835-51614136ce2e -->
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 91eeb3a6-3b06-4e33-b835-51614136ce2e -->
 
 The withdrawal rate limits are:
 
 • `maxAmount`: N/A - swap only
 
-############## A.6.1.1.2.2.6.1.3.1.6.1.2.4.3 - Swap Rate Limits [Core]  <!-- UUID: 8885e8e3-1ab5-4b0a-998c-07e692db7054 -->
+############## A.6.1.1.2.2.6.1.3.1.6.2.2.4.3 - Swap Rate Limits [Core]  <!-- UUID: 8885e8e3-1ab5-4b0a-998c-07e692db7054 -->
 
 The swap rate limits are:
 
@@ -29355,108 +29527,108 @@ The swap rate limits are:
 • `slope`: 100 million per day
 • `maxSlippage`: 0.1%
 
-############# A.6.1.1.2.2.6.1.3.1.6.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: fb386f16-e7f8-4cba-b10f-346c0e19b8f1 -->
+############# A.6.1.1.2.2.6.1.3.1.6.2.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: fb386f16-e7f8-4cba-b10f-346c0e19b8f1 -->
 
 The documents herein contain specific off-chain parameters for this Instance.
 
-############ A.6.1.1.2.2.6.1.3.1.6.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 502790de-8ab5-4359-86e0-d40b8ceda9ff -->
+############ A.6.1.1.2.2.6.1.3.1.6.2.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 502790de-8ab5-4359-86e0-d40b8ceda9ff -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
 
-########### A.6.1.1.2.2.6.1.3.1.6.2 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document [Core]  <!-- UUID: ea9afb08-8f81-4ee9-b9a7-321862bad5d8 -->
+########### A.6.1.1.2.2.6.1.3.1.6.3 - Ethereum Mainnet - Curve RLUSD/USDC Pool LP Deposits Instance Configuration Document [Core]  <!-- UUID: ea9afb08-8f81-4ee9-b9a7-321862bad5d8 -->
 
 The documents herein contain the Instance Configuration Document for the Curve RLUSD/USDC Pool LP Deposits Instance.
 
-############ A.6.1.1.2.2.6.1.3.1.6.2.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: d2362b8a-bbed-499c-9d76-9b646bc67024 -->
+############ A.6.1.1.2.2.6.1.3.1.6.3.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: d2362b8a-bbed-499c-9d76-9b646bc67024 -->
 
 **`Pending`**
 
-############ A.6.1.1.2.2.6.1.3.1.6.2.2 - Parameters [Core]  <!-- UUID: 4d218b64-f137-43c1-a8b3-430e12677225 -->
+############ A.6.1.1.2.2.6.1.3.1.6.3.2 - Parameters [Core]  <!-- UUID: 4d218b64-f137-43c1-a8b3-430e12677225 -->
 
 The documents herein define the parameters of the Curve RLUSD/USDC Pool LP Deposits Instance of the Allocation System Primitive.
 
-############# A.6.1.1.2.2.6.1.3.1.6.2.2.1 - Instance Identifiers [Core]  <!-- UUID: 5a429e97-4796-45f4-b79d-3bc370074a42 -->
+############# A.6.1.1.2.2.6.1.3.1.6.3.2.1 - Instance Identifiers [Core]  <!-- UUID: 5a429e97-4796-45f4-b79d-3bc370074a42 -->
 
 The documents herein define the Instance identifiers.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.1 - Network [Core]  <!-- UUID: dfc15cd1-2c3f-4943-baa3-2c1a09c40c51 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.1.1 - Network [Core]  <!-- UUID: dfc15cd1-2c3f-4943-baa3-2c1a09c40c51 -->
 
 Ethereum Mainnet
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.2 - Target Protocol [Core]  <!-- UUID: 5c60815c-de1b-4cde-86b4-4c70984c8ad7 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.1.2 - Target Protocol [Core]  <!-- UUID: 5c60815c-de1b-4cde-86b4-4c70984c8ad7 -->
 
 Curve
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: f52ce77b-6823-4afe-a841-f4a50eb8093c -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.1.3 - Asset Supplied By Grove Liquidity Layer [Core]  <!-- UUID: f52ce77b-6823-4afe-a841-f4a50eb8093c -->
 
 RLUSD and USDC
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.1.4 - Token [Core]  <!-- UUID: 104bb526-03c2-4940-bf92-019fd6cf9c9a -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.1.4 - Token [Core]  <!-- UUID: 104bb526-03c2-4940-bf92-019fd6cf9c9a -->
 
 RLUSD/USDC
 
-############# A.6.1.1.2.2.6.1.3.1.6.2.2.2 - Contract Addresses [Core]  <!-- UUID: 60cfaf1e-cfab-4869-aa7b-403a81bd9864 -->
+############# A.6.1.1.2.2.6.1.3.1.6.3.2.2 - Contract Addresses [Core]  <!-- UUID: 60cfaf1e-cfab-4869-aa7b-403a81bd9864 -->
 
 The documents herein define the Instance contract addresses.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.1 - Pool Address [Core]  <!-- UUID: 7e88794d-21d2-43ba-9e72-924dc4c23af5 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.2.1 - Pool Address [Core]  <!-- UUID: 7e88794d-21d2-43ba-9e72-924dc4c23af5 -->
 
 `0xD001aE433f254283FeCE51d4ACcE8c53263aa186`
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.2 - Underlying Asset Address (USDC) [Core]  <!-- UUID: b7168555-b5c9-4f72-871f-7ce226124cff -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.2.2 - Underlying Asset Address (USDC) [Core]  <!-- UUID: b7168555-b5c9-4f72-871f-7ce226124cff -->
 
 `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.2.3 - Underlying Asset Address (RLUSD) [Core]  <!-- UUID: 99fde67c-857d-4ba1-89a5-3b237acdba6e -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.2.3 - Underlying Asset Address (RLUSD) [Core]  <!-- UUID: 99fde67c-857d-4ba1-89a5-3b237acdba6e -->
 
 `0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD`
 
-############# A.6.1.1.2.2.6.1.3.1.6.2.2.3 - Rate Limit IDs [Core]  <!-- UUID: e63c5013-fbfc-40df-bfac-801f0ddb43d2 -->
+############# A.6.1.1.2.2.6.1.3.1.6.3.2.3 - Rate Limit IDs [Core]  <!-- UUID: e63c5013-fbfc-40df-bfac-801f0ddb43d2 -->
 
 The specific `RateLimitID`(s) for this conduit’s inflow, outflow and swap are defined in the subdocuments herein.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 710450c0-a5ee-4eb5-9011-0da07b39ae79 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.3.1 - Inflow RateLimitID [Core]  <!-- UUID: 710450c0-a5ee-4eb5-9011-0da07b39ae79 -->
 
 The inflow RateLimitID is: `0x450c909d837693f4f47c753eb316c7221dd923fff8e28ec3cfbf1cd548f544e7`.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 8a956435-6a32-407d-bb1e-1af3db54bb7b -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.3.2 - Outflow RateLimitID [Core]  <!-- UUID: 8a956435-6a32-407d-bb1e-1af3db54bb7b -->
 
 The outflow RateLimitID is: `0xca9b793f7b515f76fb88684bec4850e8c12afbb7f27a81eab232c966c9eb9e96`.
 
-############# A.6.1.1.2.2.6.1.3.1.6.2.2.4 - Rate Limits [Core]  <!-- UUID: 09b73b1b-969c-485a-822b-9b61840494bc -->
+############# A.6.1.1.2.2.6.1.3.1.6.3.2.4 - Rate Limits [Core]  <!-- UUID: 09b73b1b-969c-485a-822b-9b61840494bc -->
 
 The current `maxAmount` and `slope` for this conduit’s inflow and outflow are defined in the subdocuments herein.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 15679304-3b86-43f4-be14-d02f33f72d2d -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 15679304-3b86-43f4-be14-d02f33f72d2d -->
 
 The deposit rate limits are:
 
 • `maxAmount`: 25,000,000 RLUSD or USDC
 • `slope`: 25,000,000 RLUSD or USDC per day
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 34276745-bc02-4e02-aaac-20284debe350 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 34276745-bc02-4e02-aaac-20284debe350 -->
 
 The withdrawal rate limits are:
 
 • `maxAmount`: Unlimited
 
-############# A.6.1.1.2.2.6.1.3.1.6.2.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: ca62ee2b-3ced-4798-9c39-8687f3f11bef -->
+############# A.6.1.1.2.2.6.1.3.1.6.3.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: ca62ee2b-3ced-4798-9c39-8687f3f11bef -->
 
 The documents herein contain specific off-chain parameters for this Instance.
 
-############## A.6.1.1.2.2.6.1.3.1.6.2.2.5.1 - Interim Deployment [Core]  <!-- UUID: 95a0b39b-86a3-4bfe-96b8-bd6268824c33 -->
+############## A.6.1.1.2.2.6.1.3.1.6.3.2.5.1 - Interim Deployment [Core]  <!-- UUID: 95a0b39b-86a3-4bfe-96b8-bd6268824c33 -->
 
 This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
 
-############### A.6.1.1.2.2.6.1.3.1.6.2.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 0f93decd-937a-4bf7-b9b7-a6e9f1ce7b41 -->
+############### A.6.1.1.2.2.6.1.3.1.6.3.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 0f93decd-937a-4bf7-b9b7-a6e9f1ce7b41 -->
 
 The maximum allocation for all Interim Deployments in Curve RLUSD/USDC Pool LP Deposits is $25 million.
 
-############### A.6.1.1.2.2.6.1.3.1.6.2.2.5.1.2 - Rate Limits [Core]  <!-- UUID: fd5eb921-2987-4bae-83a7-8db85e1172ac -->
+############### A.6.1.1.2.2.6.1.3.1.6.3.2.5.1.2 - Rate Limits [Core]  <!-- UUID: fd5eb921-2987-4bae-83a7-8db85e1172ac -->
 
 The Rate Limits for this Interim Deployment are defined in Rate Limits.
 
-############ A.6.1.1.2.2.6.1.3.1.6.2.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 045a13d9-a6a4-4d50-8cf5-0a762252d9de -->
+############ A.6.1.1.2.2.6.1.3.1.6.3.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 045a13d9-a6a4-4d50-8cf5-0a762252d9de -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
 
@@ -37464,6 +37636,14 @@ Capital deployed through Launch Agent 4 carries explicit first-loss protection d
 ####### A.6.1.1.5.3.2.5 - Data and Transparency Standards [Core]  <!-- UUID: c861f5fb-e99b-40ca-b535-291b94b69811 -->
 
 Launch Agent 4 maintains an active dashboard reporting total allocations, active projects, utilization, default rates, and realized yields.
+
+###### A.6.1.1.5.3.3 - Ecosystem Accords [Core]  <!-- UUID: dba03405-43a8-4ce1-8a16-dfdeb75cda14 -->
+
+Launch Agent 4 has formally agreed to the Ecosystem Accords herein.
+
+####### A.6.1.1.5.3.3.1 - Ecosystem Accord 4 [Core]  <!-- UUID: eab0145b-3b7b-4793-92ff-56717d2e5544 -->
+
+Launch Agent 4 engaged in terms of agreement with Sky in Ecosystem Accord 4, located in [A.2.9.2.4 - Ecosystem Accord 4: Sky And Launch Agent 4](6bddc5aa-ac80-43d8-b8c8-8cde14e896df).
 
 ### A.6.1.2 - List Of Executor Agent Artifacts [Section]  <!-- UUID: df62511d-afe5-42db-8bd4-6452c5a0f464 -->
 
