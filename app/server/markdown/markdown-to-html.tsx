@@ -146,13 +146,13 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
   // Clean up: Remove <br> tags that appear between block-level elements
   // These patterns would create unwanted spacing
   html = html
-    // Remove <br> after opening block tags
-    .replace(/(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre)[^>]*>)\s*<br>\s*/g, '$1')
-    // Remove <br> before closing block tags
-    .replace(/\s*<br>\s*(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre)>)/g, '$1')
-    // Remove <br> between closing and opening block tags
+    // Remove <br> after opening block tags (including table elements)
+    .replace(/(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)[^>]*>)\s*<br>\s*/g, '$1')
+    // Remove <br> before closing block tags (including table elements)
+    .replace(/\s*<br>\s*(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)>)/g, '$1')
+    // Remove <br> between closing and opening block tags (including table elements)
     .replace(
-      /(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre)>)\s*<br>\s*(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre)[^>]*>)/g,
+      /(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)>)\s*<br>\s*(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)[^>]*>)/g,
       '$1\n$2',
     )
     // Remove trailing <br> tags at the end of the HTML

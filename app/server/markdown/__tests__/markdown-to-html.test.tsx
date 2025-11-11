@@ -284,4 +284,162 @@ describe('markdownToHTML', () => {
       expect(output).toContain('href="https://example.com"');
     });
   });
+
+  describe('table rendering', () => {
+    it('should render tables without invalid <br> tags inside table structure', () => {
+      const input = `| Header 1 | Header 2 |
+|----------|----------|
+| Cell 1   | Cell 2   |
+| Cell 3   | Cell 4   |`;
+
+      const output = markdownToHTML(input);
+
+      // Should NOT contain <br> tags inside table elements
+      expect(output).not.toMatch(/<table[^>]*><br>/);
+      expect(output).not.toMatch(/<thead[^>]*><br>/);
+      expect(output).not.toMatch(/<tbody[^>]*><br>/);
+      expect(output).not.toMatch(/<tr[^>]*><br>/);
+      expect(output).not.toMatch(/<th[^>]*>.*<br>/);
+      expect(output).not.toMatch(/<td[^>]*>.*<br>/);
+      expect(output).not.toMatch(/<br>\s*<\/thead>/);
+      expect(output).not.toMatch(/<br>\s*<\/tbody>/);
+      expect(output).not.toMatch(/<br>\s*<\/tr>/);
+      expect(output).not.toMatch(/<br>\s*<\/th>/);
+      expect(output).not.toMatch(/<br>\s*<\/td>/);
+      expect(output).not.toMatch(/<br>\s*<\/table>/);
+    });
+
+    it('should render table with proper HTML structure', () => {
+      const input = `| Name | Age |
+|------|-----|
+| John | 30  |
+| Jane | 25  |`;
+
+      const output = markdownToHTML(input);
+
+      // Should contain proper table structure
+      expect(output).toContain('<table>');
+      expect(output).toContain('<thead>');
+      expect(output).toContain('<tbody>');
+      expect(output).toContain('</table>');
+
+      // Should contain header cells
+      expect(output).toContain('<th>Name</th>');
+      expect(output).toContain('<th>Age</th>');
+
+      // Should contain data cells
+      expect(output).toContain('<td>John</td>');
+      expect(output).toContain('<td>30</td>');
+      expect(output).toContain('<td>Jane</td>');
+      expect(output).toContain('<td>25</td>');
+    });
+
+    it('should render table with links without invalid <br> tags', () => {
+      const input = `| Date       | Link |
+|------------|------|
+| 2023-06-08 | [https://example.com/1](https://example.com/1) |
+| 2024-04-06 | [https://example.com/2](https://example.com/2) |`;
+
+      const output = markdownToHTML(input);
+
+      // Should contain proper links
+      expect(output).toContain('href="https://example.com/1"');
+      expect(output).toContain('href="https://example.com/2"');
+
+      // Should NOT contain <br> tags inside table structure
+      expect(output).not.toMatch(/<table[^>]*><br>/);
+      expect(output).not.toMatch(/<thead[^>]*><br>/);
+      expect(output).not.toMatch(/<tbody[^>]*><br>/);
+      expect(output).not.toMatch(/<tr[^>]*><br>/);
+    });
+
+    it('should handle the exact bug case from the user report', () => {
+      const input = `| Date       | Conserver Role    | Identity               | Known Aliases | Reasoning Post                                                                                                    |
+|------------|--------------------|------------------------|---------------|-------------------------------------------------------------------------------------------------------------------|
+| 2023-06-08 | AVC Member         | HKUST_EPI_BLOCKCHAIN   | -             | [https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099](https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099)                     |
+| 2024-04-06 | AVC Member         | ACRE DAOs              | -             | [https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043](https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043)                 |
+| 2025-08-15 | Aligned Delegate   | SkyStaking             | -             | [https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9](https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9)                            |`;
+
+      const output = markdownToHTML(input);
+
+      // The critical bug: should NOT have <br> tags scattered throughout the table
+      expect(output).not.toMatch(/<table[^>]*><br>/);
+      expect(output).not.toMatch(/<thead[^>]*><br>/);
+      expect(output).not.toMatch(/<tbody[^>]*><br>/);
+      expect(output).not.toMatch(/<tr[^>]*><br>/);
+
+      // Should have proper table structure
+      expect(output).toContain('<table>');
+      expect(output).toContain('<thead>');
+      expect(output).toContain('<tbody>');
+      expect(output).toContain('</table>');
+
+      // Should have all the header columns
+      expect(output).toContain('<th>Date</th>');
+      expect(output).toContain('<th>Conserver Role</th>');
+      expect(output).toContain('<th>Identity</th>');
+      expect(output).toContain('<th>Known Aliases</th>');
+      expect(output).toContain('<th>Reasoning Post</th>');
+
+      // Should have the data cells with proper content
+      expect(output).toContain('HKUST_EPI_BLOCKCHAIN');
+      expect(output).toContain('ACRE DAOs');
+      expect(output).toContain('SkyStaking');
+
+      // Should have the links
+      expect(output).toContain(
+        'href="https://forum.sky.money/t/notice-aligned-delegate-derecognition-and-avc-member-warning/21099"',
+      );
+      expect(output).toContain(
+        'href="https://forum.sky.money/t/ad-derecognition-due-to-operational-security-breach-april-5-2024/24043"',
+      );
+      expect(output).toContain(
+        'href="https://forum.sky.money/t/atlas-edit-weekly-cycle-proposal-week-of-2025-08-04/26957/9"',
+      );
+
+      // Count <br> tags - should not have excessive line breaks
+      // There should be zero <br> tags in valid table HTML
+      const brCount = (output.match(/<br>/g) || []).length;
+      expect(brCount).toBe(0);
+    });
+
+    it('should render complex table with alignment without <br> tags', () => {
+      const input = `| Left | Center | Right |
+|:-----|:------:|------:|
+| L1   | C1     | R1    |
+| L2   | C2     | R2    |`;
+
+      const output = markdownToHTML(input);
+
+      // Should have proper structure
+      expect(output).toContain('<table>');
+      expect(output).toContain('<thead>');
+      expect(output).toContain('<tbody>');
+
+      // Should NOT contain <br> tags in table structure
+      expect(output).not.toMatch(/<table[^>]*><br>/);
+      expect(output).not.toMatch(/<thead[^>]*><br>/);
+      expect(output).not.toMatch(/<tbody[^>]*><br>/);
+      expect(output).not.toMatch(/<tr[^>]*><br>/);
+    });
+
+    it('should render single-row table without <br> tags', () => {
+      const input = `| Column A | Column B |
+|----------|----------|
+| Value A  | Value B  |`;
+
+      const output = markdownToHTML(input);
+
+      // Should have table
+      expect(output).toContain('<table>');
+      expect(output).toContain('Column A');
+      expect(output).toContain('Value A');
+
+      // Should NOT have <br> tags inside table
+      expect(output).not.toMatch(/<table[^>]*><br>/);
+      expect(output).not.toMatch(/<thead[^>]*><br>/);
+      expect(output).not.toMatch(/<tbody[^>]*><br>/);
+      expect(output).not.toMatch(/<tr[^>]*><br>/);
+    });
+  });
 });
