@@ -26,3 +26,13 @@
   font-weight: 500;
   color: rgb(220, 38, 38);
 }
+
+.formattedContent table {
+  border-collapse: separate;
+  border-spacing: 0.25rem;
+}
+
+.formattedContent td,
+.formattedContent th {
+  padding: 0.25rem;
+}
