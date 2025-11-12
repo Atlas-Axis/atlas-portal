@@ -34,15 +34,27 @@ import * as path from 'path';
 type ActionsCore = typeof import('@actions/core') | null;
 let core: ActionsCore = null;
 let isGitHubActions = false;
-try {
+
+// Initialize GitHub Actions support if available
+function initGitHubActions(): void {
   if (process.env.GITHUB_ACTIONS === 'true') {
-    core = await import('@actions/core');
-    isGitHubActions = true;
+    try {
+      // Use dynamic import in an async context
+      import('@actions/core')
+        .then((module) => {
+          core = module;
+          isGitHubActions = true;
+        })
+        .catch(() => {
+          // @actions/core not available, continue without it
+        });
+    } catch {
+      // @actions/core not available, continue without it
+    }
   }
-} catch {
-  // @actions/core not available, continue without it
-  console.log('@actions/core not available, continuing without it');
 }
+
+initGitHubActions();
 
 // ============================================================================
 // Types
@@ -165,7 +177,9 @@ function parseTitleLine(line: string, lineNum: number): { doc: Document | null; 
         line: lineNum,
         severity: 'error',
         message: '📝 Invalid title format',
-        action: 'Use format: # {DocNo} - {Name} [{Type}]  <!-- UUID: {uuid} -->',
+        found: line,
+        expected: '# {DocNo} - {Name} [{Type}]  <!-- UUID: {uuid} -->',
+        action: 'Ensure proper title format with all required components',
       },
     };
   }
@@ -242,6 +256,18 @@ function validateBlankLines(lines: string[], docs: Document[]): ValidationIssue[
         severity: 'error',
         message: '📄 Missing blank line after title',
         action: 'Add a blank line after the title line',
+      });
+    }
+
+    // Check for too many blank lines after title (should be exactly one)
+    if (idx + 2 < lines.length && lines[idx + 1].trim() === '' && lines[idx + 2].trim() === '') {
+      issues.push({
+        line: doc.line + 2,
+        severity: 'error',
+        message: '📄 Too many blank lines after title',
+        found: 'Multiple consecutive blank lines',
+        expected: 'Exactly one blank line after title',
+        action: 'Remove extra blank lines after the title line',
       });
     }
   }
@@ -540,8 +566,9 @@ function validate(content: string): ValidationIssue[] {
   // Parse all documents
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    // Only process lines that look like Atlas document titles (contain [...] and UUID comment)
-    if (!line.match(/^#+\s/) || !line.includes('[') || !line.includes('UUID')) continue;
+    // Only process lines that look like Atlas document titles
+    // Check for heading start and UUID comment, but allow malformed brackets to be caught by validation
+    if (!line.match(/^#+\s/) || !line.includes('UUID')) continue;
 
     const result = parseTitleLine(line, i + 1);
     if (result.issue) {

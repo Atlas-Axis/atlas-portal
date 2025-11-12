@@ -37,6 +37,23 @@ Content here.`;
       const issues = validate(md);
       expect(hasError(issues, 'Invalid title format')).toBe(true);
     });
+
+    it('includes line content in error for invalid title format', () => {
+      const md = `# A.1 Test [Scope]  <!-- UUID: abc -->`;
+      const issues = validate(md);
+      const invalidFormatError = issues.find(
+        (i) => i.severity === 'error' && i.message.includes('Invalid title format'),
+      );
+      expect(invalidFormatError).toBeDefined();
+      expect(invalidFormatError?.found).toBe('# A.1 Test [Scope]  <!-- UUID: abc -->');
+      expect(invalidFormatError?.expected).toBeDefined();
+    });
+
+    it('detects missing opening bracket in title', () => {
+      const md = `#### A.0.1.1.3 - Aligned Structure Core]  <!-- UUID: fad68392-c852-4102-81fd-2a4037be38f91 -->`;
+      const issues = validate(md);
+      expect(hasError(issues, 'Invalid title format')).toBe(true);
+    });
   });
 
   describe('Heading Hierarchy Validation', () => {
@@ -107,6 +124,15 @@ Content here.`;
 Content here.`;
       const issues = validate(md);
       expect(hasError(issues, 'Missing blank line')).toBe(false);
+    });
+
+    it('detects too many blank lines after title', () => {
+      const md = `#### A.0.1.1.2 - Ecosystem Intelligence [Core]  <!-- UUID: 5e2e1397-ff87-43ce-a742-e5a68dc89a44 -->
+
+
+"Ecosystem Intelligence" characterizes a decentralized ecosystem.`;
+      const issues = validate(md);
+      expect(hasError(issues, 'Too many blank lines after title')).toBe(true);
     });
   });
 
