@@ -19,9 +19,9 @@
  * 8. UUID Validation - Checks format (UUID v4), uniqueness, and warns about empty UUIDs
  *
  * Usage:
- *   npx tsx scripts/validate-atlas-markdown.ts path/to/atlas.md
+ *   npx tsx validate-atlas-markdown.ts path/to/atlas.md
  *   or
- *   ./scripts/validate-atlas-markdown.ts path/to/atlas.md (after chmod +x)
+ *   ./validate-atlas-markdown.ts path/to/atlas.md (after chmod +x)
  *
  * Exit codes:
  *   0 - No errors (warnings OK)
@@ -29,6 +29,20 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
+
+// GitHub Actions support (optional)
+type ActionsCore = typeof import('@actions/core') | null;
+let core: ActionsCore = null;
+let isGitHubActions = false;
+try {
+  if (process.env.GITHUB_ACTIONS === 'true') {
+    core = await import('@actions/core');
+    isGitHubActions = true;
+  }
+} catch {
+  // @actions/core not available, continue without it
+  console.log('@actions/core not available, continuing without it');
+}
 
 // ============================================================================
 // Types
@@ -550,6 +564,32 @@ function validate(content: string): ValidationIssue[] {
 // Output Formatting
 // ============================================================================
 
+function outputGitHubAnnotation(issue: ValidationIssue, filePath: string): void {
+  if (!isGitHubActions || !core) return;
+
+  const annotationProps = {
+    file: filePath,
+    startLine: issue.line,
+    endLine: issue.line,
+    title: issue.message,
+  };
+
+  const details = [];
+  if (issue.found) details.push(`Found: ${issue.found}`);
+  if (issue.expected) details.push(`Expected: ${issue.expected}`);
+  if (issue.reason) details.push(`Reason: ${issue.reason}`);
+  if (issue.example) details.push(`Example: ${issue.example}`);
+  details.push(`Action: ${issue.action}`);
+
+  const message = details.join(' | ');
+
+  if (issue.severity === 'error') {
+    core.error(message, annotationProps);
+  } else {
+    core.warning(message, annotationProps);
+  }
+}
+
 function formatIssue(issue: ValidationIssue): string {
   const lines: string[] = [];
   const isError = issue.severity === 'error';
@@ -591,7 +631,7 @@ function formatIssue(issue: ValidationIssue): string {
   return lines.join('\n');
 }
 
-function printResults(issues: ValidationIssue[]): void {
+function printResults(issues: ValidationIssue[], filePath: string): void {
   if (issues.length === 0) {
     console.log('');
     console.log('═════════════════════════════════════════');
@@ -602,7 +642,7 @@ function printResults(issues: ValidationIssue[]): void {
 
   console.log('');
 
-  // Print each issue
+  // Print each issue (console output)
   issues.forEach((issue, index) => {
     console.log(formatIssue(issue));
     if (index < issues.length - 1) {
@@ -610,6 +650,13 @@ function printResults(issues: ValidationIssue[]): void {
       console.log('');
     }
   });
+
+  // Output GitHub Actions annotations
+  if (isGitHubActions) {
+    // Use relative path if provided via environment variable, otherwise use the full path
+    const annotationPath = process.env.GITHUB_ACTION_FILE_PATH || filePath;
+    issues.forEach((issue) => outputGitHubAnnotation(issue, annotationPath));
+  }
 
   // Summary
   const errors = issues.filter((i) => i.severity === 'error').length;
@@ -635,31 +682,37 @@ function printResults(issues: ValidationIssue[]): void {
 // ============================================================================
 
 function main(): void {
-  const args = process.argv.slice(2);
+  try {
+    const args = process.argv.slice(2);
 
-  if (args.length === 0) {
-    console.error('Usage: npx tsx scripts/validate-atlas-markdown.ts <path-to-atlas.md>');
+    if (args.length === 0) {
+      console.error('Usage: npx tsx validate-atlas-markdown.ts <path-to-atlas.md>');
+      process.exit(1);
+    }
+
+    const filePath = path.resolve(args[0]);
+
+    if (!fs.existsSync(filePath)) {
+      console.error(`Error: File not found: ${filePath}`);
+      process.exit(1);
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const issues = validate(content);
+
+    printResults(issues, filePath);
+
+    const hasErrors = issues.some((i) => i.severity === 'error');
+    process.exit(hasErrors ? 1 : 0);
+  } catch (error) {
+    console.error('Fatal error during validation:');
+    console.error(error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
-
-  const filePath = path.resolve(args[0]);
-
-  if (!fs.existsSync(filePath)) {
-    console.error(`Error: File not found: ${filePath}`);
-    process.exit(1);
-  }
-
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const issues = validate(content);
-
-  printResults(issues);
-
-  const hasErrors = issues.some((i) => i.severity === 'error');
-  process.exit(hasErrors ? 1 : 0);
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (ES modules check)
+if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
 
