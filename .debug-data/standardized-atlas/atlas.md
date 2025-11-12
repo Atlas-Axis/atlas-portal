@@ -6447,7 +6447,7 @@ The documents herein define Primitive Global Activation Status.
 
 ##### A.2.3.1.2.1 - Primitives Must First Be Activated To Be Invoked [Core]  <!-- UUID: dcd0bead-7ad1-4fe0-b485-b3565d670c78 -->
 
-An Agent may only Invoke a Primitive that it has previously Globally Activated; the process of Invocation is defined below at [A.2.3.1.3.3 - Changing Primitive Instance Status](263f3b28-9cd4-4ba2-b8e5-152c2ce0c050). In this way, an Agent’s decision regarding which Primitives to Activate allows the Agent to express its strategy to token holders. For example, an Agent that was focused on asset gathering might Globally Activate the Accessibility Reward and Integration Boost Primitives, but not the Allocation System Primitive.
+An Agent may only Invoke a Primitive that it has previously Globally Activated; the process of Invocation is defined below at [A.2.3.1.3.3 - Changing Primitive Instance Status](263f3b28-9cd4-4ba2-b8e5-152c2ce0c050). In this way, an Agent’s decision regarding which Primitives to Activate allows the Agent to express its strategy to token holders. For example, an Agent that was focused on asset gathering might Globally Activate the Distribution Reward and Integration Boost Primitives, but not the Allocation System Primitive.
 
 ##### A.2.3.1.2.2 - Initial Primitive Global Activation Status [Core]  <!-- UUID: 377150b3-d64b-4436-ab6d-758b05d82f26 -->
 
@@ -6591,7 +6591,7 @@ The current Sky Primitives are:
    ◦ Token SkyLink Primitive
 
 • Demand Side Stablecoin Primitives
-   ◦ Accessibility Reward Primitive
+   ◦ Distribution Reward Primitive
    ◦ Integration Boost Primitive
    ◦ Pioneer Chain Primitive
 
@@ -6613,7 +6613,7 @@ Process Definitions function as the first-class objects through which Sky Primit
 
 The documents herein define this data schema for Sky Primitive Process Definitions, which are applied to the universal specifications for each Sky Primitive. This common data schema aligns the entire ecosystem, while each Agent Artifact automatically references and extends the universal rules to incorporate the Agent’s unique Instance-level strategies, parameters and document-driven process flows.
 
-At present, only the Accessibility Reward Primitive and the Integration Boost Primitive specifications are structured using this schema. In future iterations of the Atlas, the schema will be applied to all Primitive specifications in this Article.
+At present, only the Distribution Reward Primitive and the Integration Boost Primitive specifications are structured using this schema. In future iterations of the Atlas, the schema will be applied to all Primitive specifications in this Article.
 
 #### A.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: 5df2043c-000a-4627-9c3a-2fdc12b78c47 -->
 
@@ -7206,7 +7206,7 @@ The documents herein define the process for managing an Instance of the Token Sk
 
 ####### A.2.3.7.1.1.2.1 - Token SkyLink Management Settlement Cycle [Core]  <!-- UUID: 97fb1954-b9f4-429e-bc29-e9eea9fe2e0e -->
 
-During each settlement cycle, the Prime Agent Reimbursement Module tallies the total token bridging volume on the new chain. The Prime Agent Reimbursement Module calculates the reimbursement due for bridge development costs as a percent of the token bridging volume, in addition to normal Accessibility Rewards if applicable. Core GovOps executes a payment to the Prime Agent for the amount due for reimbursement of bridge development costs, to the extent that such costs have not already been fully reimbursed. Core GovOps updates the Powerhouse system to reflect the amount of bridge development costs that have been reimbursed.
+During each settlement cycle, the Prime Agent Reimbursement Module tallies the total token bridging volume on the new chain. The Prime Agent Reimbursement Module calculates the reimbursement due for bridge development costs as a percent of the token bridging volume, in addition to normal Distribution Rewards if applicable. Core GovOps executes a payment to the Prime Agent for the amount due for reimbursement of bridge development costs, to the extent that such costs have not already been fully reimbursed. Core GovOps updates the Powerhouse system to reflect the amount of bridge development costs that have been reimbursed.
 
 ##### A.2.3.7.1.2 - Token SkyLink Input Requirements [Core]  <!-- UUID: 7d9a8373-ed56-4b01-8ec7-ebf2ed4ef8b0 -->
 
@@ -7224,37 +7224,37 @@ The Token SkyLink Primitive must list each active Token SkyLink deployment. The 
 
 Demand Side Stablecoin Primitives are Sky Primitives that target demand generation for USDS. Prime Agents can create and control multiple instances of these Primitives which exist as technical infrastructure incentivizing the adoption or usage of USDS by end users or third parties.
 
-#### A.2.3.8.1 - Accessibility Reward Primitive [Core]  <!-- UUID: e632c38f-3e4e-4c7e-acfd-b6ec45a422e6 -->
+#### A.2.3.8.1 - Distribution Reward Primitive [Core]  <!-- UUID: e632c38f-3e4e-4c7e-acfd-b6ec45a422e6 -->
 
-The documents herein govern the Accessibility Reward Primitive.
+The documents herein govern the Distribution Reward Primitive.
 
 ##### A.2.3.8.1.1 - Introduction [Core]  <!-- UUID: 02189c79-a529-4388-98ad-a743d2a8980d -->
 
-The documents herein provide an introduction to the Accessibility Reward Primitive.
+The documents herein provide an introduction to the Distribution Reward Primitive.
 
 ###### A.2.3.8.1.1.1 - Purpose [Core]  <!-- UUID: 6f1bc619-b8a9-4917-a34b-f52016942c01 -->
 
-The purpose of the Accessibility Reward is to incentivize Prime Agents and third parties to drive USDS adoption by providing a financial reward to these actors for all USDS and sUSDS balances attributable to them.
+The purpose of the Distribution Reward is to incentivize Prime Agents and third parties to drive USDS adoption by providing a financial reward to these actors for all USDS and sUSDS balances attributable to them.
 
 ###### A.2.3.8.1.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 45149960-fbf3-4079-be4e-fe2a71e5e43f -->
 
-Multiple instances of the Accessibility Reward Primitive are allowed. Each instance corresponds to an Accessibility Reward program with an associated Accessibility Reward Code.
+Multiple instances of the Distribution Reward Primitive are allowed. Each instance corresponds to a Distribution Reward program with an associated Distribution Reward Code.
 
 ###### A.2.3.8.1.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: c788ebcf-98a4-4b97-ae3c-db578c75dc2e -->
 
-An Agent Artifact that has more than one active instance of the Accessibility Reward Primitive is not required to have a `Multi-Instance Coordinator Document`, since each Instance can be managed independently.
+An Agent Artifact that has more than one active instance of the Distribution Reward Primitive is not required to have a `Multi-Instance Coordinator Document`, since each Instance can be managed independently.
 
 ##### A.2.3.8.1.2 - Global Specification [Core]  <!-- UUID: 7f0959dc-c6e2-4e64-9526-76563a2a6d29 -->
 
-The requirements herein apply universally across all possible deployments of the Accessibility Reward Primitive by Prime Agents. They include the steps that Agents must take to deploy the Primitive, including Global Activation of the Primitive, Instance Invocation, and ongoing management of the Primitive Instance(s).
+The requirements herein apply universally across all possible deployments of the Distribution Reward Primitive by Prime Agents. They include the steps that Agents must take to deploy the Primitive, including Global Activation of the Primitive, Instance Invocation, and ongoing management of the Primitive Instance(s).
 
 ###### A.2.3.8.1.2.1 - Base Elements [Core]  <!-- UUID: dc123bca-eac1-40e1-ad1f-f888a6ec8d1f -->
 
-The documents herein define base elements of the Accessibility Reward Primitive.
+The documents herein define base elements of the Distribution Reward Primitive.
 
 ####### A.2.3.8.1.2.1.1 - Integrator Program [Core]  <!-- UUID: 37c38f07-b5a0-40df-939c-a54330ea3c7b -->
 
-Integrators are actors that offer access to the Sky Protocol via their frontends or infrastructure. The documents herein define the Integrator Program, which includes the Accessibility Reward and Integration Boost. (Base elements specific to the Integration Boost Primitive are defined in [A.2.3.8.2.2.1 - Base Elements](c398b383-3752-4534-aec6-4cd8e7292119))
+Integrators are actors that offer access to the Sky Protocol via their frontends or infrastructure. The documents herein define the Integrator Program, which includes the Distribution Reward and Integration Boost. (Base elements specific to the Integration Boost Primitive are defined in [A.2.3.8.2.2.1 - Base Elements](c398b383-3752-4534-aec6-4cd8e7292119))
 
 ######## A.2.3.8.1.2.1.1.1 - Integrator Requirements [Core]  <!-- UUID: 1c2b6983-1e03-41b9-a2bf-70f3eca19b98 -->
 
@@ -7264,9 +7264,9 @@ The documents herein define the requirements for Integrators.
 
 The Integrator must be aligned with Sky’s overall strategy regarding promoting adoption of USDS. In the near term, this determination of a prospective or current Integrator’s alignment with Sky’s overall strategy is made by Operational GovOps in consultation with Ecosystem Actor Viridian Advisors. In the future Operational GovOps may make this determination themselves or consult with another actor to do so. Sky Core may choose whether to maintain an Integrator’s Reward Code in its sole and absolute discretion.
 
-######### A.2.3.8.1.2.1.1.1.2 - Compliance With Local Laws And Regulations As A Condition Precedent To Integrators Receiving Accessibility Rewards [Core]  <!-- UUID: f3b4b43d-b2e5-4f56-aeac-9627d3acc31e -->
+######### A.2.3.8.1.2.1.1.1.2 - Compliance With Local Laws And Regulations As A Condition Precedent To Integrators Receiving Distribution Rewards [Core]  <!-- UUID: f3b4b43d-b2e5-4f56-aeac-9627d3acc31e -->
 
-This document and its subdocuments define the jurisdictional compliance rules applicable to Integrators that operate user-facing frontends that integrate with, and thus offer access to, the Sky Protocol and receive Accessibility Rewards.
+This document and its subdocuments define the jurisdictional compliance rules applicable to Integrators that operate user-facing frontends that integrate with, and thus offer access to, the Sky Protocol and receive Distribution Rewards.
 
 Integrators are solely responsible for complying with all relevant legal and regulatory requirements related to their participation in the Integrator Program. Integrators represent and warrant that their participation and activities under the Integrator Program are and will remain in full compliance with all applicable laws and regulations.
 
@@ -7276,11 +7276,11 @@ An Integrator’s right to participate in the Integrator Program is contingent u
 
 ########## A.2.3.8.1.2.1.1.1.2.1 - Consequence For Integrator Non-Compliance With Local Laws And Regulations [Core]  <!-- UUID: a01622fa-e81c-4bcb-8e31-7e66e36f2e57 -->
 
-Sky Ecosystem Governance, in its absolute and unilateral discretion, retains the right to withhold, revoke, or demand immediate repayment of any and all Accessibility Rewards from any Integrator that is determined, suspected, or alleged to be in violation of the Atlas or any legal, regulatory, or other obligations associated with its integration with, and provision of access to, the Sky Protocol.
+Sky Ecosystem Governance, in its absolute and unilateral discretion, retains the right to withhold, revoke, or demand immediate repayment of any and all Distribution Rewards from any Integrator that is determined, suspected, or alleged to be in violation of the Atlas or any legal, regulatory, or other obligations associated with its integration with, and provision of access to, the Sky Protocol.
 
 ########## A.2.3.8.1.2.1.1.1.2.2 - Removal From Integrator Program [Core]  <!-- UUID: 0bdcef8a-b851-42ed-b2e2-77d85c14dad0 -->
 
-If Sky Governance removes an Integrator from the Integrator Program, Operational GovOps must remove the Integrator from the list of Current Integrators in [A.2.3.8.1.2.1.5.1.0.6.1 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157) and deactivate the Instances of the Accessibility Reward and Integration Boost Primitive associated with them.
+If Sky Governance removes an Integrator from the Integrator Program, Operational GovOps must remove the Integrator from the list of Current Integrators in [A.2.3.8.1.2.1.5.1.0.6.1 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157) and deactivate the Instances of the Distribution Reward and Integration Boost Primitive associated with them.
 
 ######## A.2.3.8.1.2.1.1.2 - Integrator Applications [Core]  <!-- UUID: abc79583-78da-4578-9ae0-51dc322ed1cb -->
 
@@ -7312,7 +7312,7 @@ The documents herein define the process for onboarding new Integrators.
 
 ######### A.2.3.8.1.2.1.1.3.1 - Near Term Process [Core]  <!-- UUID: fc46821f-9d3d-4807-b519-d54faf546702 -->
 
-The near term Integrator Onboarding process is as follows. When a Prime Agent’s Invocation of the Accessibility Reward Primitive involves an actor who is not yet an approved Integrator, that actor must submit an Integrator Application to Viridian Advisors. Viridian Advisors determines, in consultation with Operational GovOps, whether the Integrator Requirements are met, and if so issues a Reward Code to the applicant. After the Reward Code has been issued, the Invocation of the Primitive may proceed.
+The near term Integrator Onboarding process is as follows. When a Prime Agent’s Invocation of the Distribution Reward Primitive involves an actor who is not yet an approved Integrator, that actor must submit an Integrator Application to Viridian Advisors. Viridian Advisors determines, in consultation with Operational GovOps, whether the Integrator Requirements are met, and if so issues a Reward Code to the applicant. After the Reward Code has been issued, the Invocation of the Primitive may proceed.
 
 ######### A.2.3.8.1.2.1.1.3.2 - Long Term Process [Core]  <!-- UUID: 0dda062b-5168-47be-bfa8-867f52eaae02 -->
 
@@ -7336,7 +7336,7 @@ In the long term, Reward Codes are assigned by Operational GovOps. Operational G
 
 ######## A.2.3.8.1.2.1.2.2 - Marking [Core]  <!-- UUID: ec2c6d8a-e10f-471a-8f85-67803159cc37 -->
 
-To be eligible for the Accessibility Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
+To be eligible for the Distribution Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
 
 ######### A.2.3.8.1.2.1.2.2.1 - Ethereum Mainnet General Tracking Methodology [Core]  <!-- UUID: 87fd6861-ba8a-4bde-945e-ee9ad37ae3e2 -->
 
@@ -7356,13 +7356,13 @@ The Tracking Methodologies specified above are not exclusive. Prime Agents and O
 
 ######### A.2.3.8.1.2.1.2.2.5 - Lifetime [Core]  <!-- UUID: c0b77312-5e88-4311-bfe2-d95a1a2c5a7c -->
 
-USDS balances are eligible for an Accessibility Reward for a period of ten (10) years from the date of the event marking the USDS balance with the Reward Code. The date of the marking event is determined based on the Primitive Instance’s specified Tracking Methodology.
+USDS balances are eligible for a Distribution Reward for a period of ten (10) years from the date of the event marking the USDS balance with the Reward Code. The date of the marking event is determined based on the Primitive Instance’s specified Tracking Methodology.
 
 ######## A.2.3.8.1.2.1.2.3 - Management [Core]  <!-- UUID: 75ddec36-c39e-4333-9ec1-2d329128e848 -->
 
 In the near term, Ecosystem Actor Viridian Advisors manages the list of Actor Reward Codes. In the future, all current Integrators and onboarding Integrators must be specified in [A.2.3.8.1.2.1.5 - Current And Onboarding Integrators](f3952cc5-cde2-46b9-b575-034dda83570b) so that Prime Agents, through their Operational Executor Agents, can onboard new partners themselves without having to go through a single party.
 
-####### A.2.3.8.1.2.1.3 - Distribution Reward Rate [Core]  <!-- UUID: 54eec2e6-dbe5-45e9-9180-e414cc8a3da1 -->
+####### A.2.3.8.1.2.1.3 - Distribution Reward Rate [Core]  <!-- UUID: 57384c49-e499-4c69-b22c-8e1f1dd34759 -->
 
 The standard Distribution Reward rate is set at 0.2%. The Distribution Reward rate is annualized on all USDS and sUSDS balances associated with the relevant Reward Code.
 
@@ -7384,21 +7384,21 @@ The Boosted Distribution Reward rate is not applicable to USDS and sUSDS balance
 
 ####### A.2.3.8.1.2.1.4 - Rewards Distribution [Core]  <!-- UUID: 8dfabd92-aabc-4605-9ca5-d10f413203dc -->
 
-The documents herein define base elements of the Accessibility Reward Primitive related to distribution of Accessibility Rewards.
+The documents herein define base elements of the Distribution Reward Primitive related to distribution of Distribution Rewards.
 
 ######## A.2.3.8.1.2.1.4.1 - Reward Cadence [Core]  <!-- UUID: 02d1e35f-0a24-43d9-9406-347eef58a9d1 -->
 
-The Accessibility Reward is calculated and distributed on a monthly basis.
+The Distribution Reward is calculated and distributed on a monthly basis.
 
 ######## A.2.3.8.1.2.1.4.2 - Reward Payment [Core]  <!-- UUID: 38cb0bfe-3733-4a11-8b3a-6728df00d08e -->
 
-The Accessibility Reward payment for each month is equal to 
+The Distribution Reward payment for each month is equal to 
 
 (1) the average balance over the month, times 
-(2) the annual Accessibility Reward Fee specified in [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759), divided by 
+(2) the annual Distribution Reward Fee specified in [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759), divided by 
 (3) twelve (12).
 
-The Accessibility Reward Fee specified in [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759) includes all of the following elements:
+The Distribution Reward Fee specified in [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759) includes all of the following elements:
 
 1) Fees for USDS and sUSDS Balances specified in [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e); and
 2) the Prime Agent Management Fee specified in [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af).
@@ -7409,15 +7409,15 @@ The documents herein define the treasury management process.
 
 ######### A.2.3.8.1.2.1.4.3.1 - Near-Term Process [Core]  <!-- UUID: 05fb732b-de55-4886-81a7-7c5d4c13d2d2 -->
 
-In the near term, Amatsu calculates the Accessibility Reward on behalf of the Support Facilitators. The Accessibility Facilitators then pay the Accessibility Reward from the Accessibility Reward Controller Wallet located on the Ethereum Mainnet at `0x05F471262d15EECA4059DadE070e5BEd509a4e73` within seven (7) days of the end of every month. The balance of this wallet may be topped up to 3 million USDS. This funding is subject to an Executive Vote.
+In the near term, Amatsu calculates the Distribution Reward on behalf of the Support Facilitators. The Accessibility Facilitators then pay the Distribution Reward from the Distribution Reward Controller Wallet located on the Ethereum Mainnet at `0x05F471262d15EECA4059DadE070e5BEd509a4e73` within seven (7) days of the end of every month. The balance of this wallet may be topped up to 3 million USDS. This funding is subject to an Executive Vote.
 
 ######### A.2.3.8.1.2.1.4.3.2 - Long Term Process [Core]  <!-- UUID: 07953e87-c201-4ad5-9c1e-b32efc5fba94 -->
 
-In the long term, Operational GovOps calculates the Accessibility Reward for each month. Operational GovOps then pays the Accessibility Reward recipient from its Buffer. Later Sky Core reimburses the Operational Agent Buffer for the amount paid as part of the Settlement Cycle. This minimizes the role of Sky Core in Accessibility Reward payments and emphasizes the primary role of the Operational Executor Agent, acting through Operational GovOps, in implementing the Sky Primitives. The process is specified in further detail in [A.2.3.8.1.2.4.1 - Routine Protocol](c2abdd22-fe0f-489e-b281-450e066db701).
+In the long term, Operational GovOps calculates the Distribution Reward for each month. Operational GovOps then pays the Distribution Reward recipient from its Buffer. Later Sky Core reimburses the Operational Agent Buffer for the amount paid as part of the Settlement Cycle. This minimizes the role of Sky Core in Distribution Reward payments and emphasizes the primary role of the Operational Executor Agent, acting through Operational GovOps, in implementing the Sky Primitives. The process is specified in further detail in [A.2.3.8.1.2.4.1 - Routine Protocol](c2abdd22-fe0f-489e-b281-450e066db701).
 
 ######## A.2.3.8.1.2.1.4.4 - Payment Errors [Core]  <!-- UUID: 1b5edf68-0825-449a-a404-34141a1892cc -->
 
-If it is discovered that previous Accessibility Reward calculations were made erroneously, underpayments are resolved retroactively. In cases where an Integrator was overpaid, the Prime Agent associated with the Integrator must reimburse Sky the overpayment amount and can use future Accessibility Rewards that the Integrator earns to reimburse itself.
+If it is discovered that previous Distribution Reward calculations were made erroneously, underpayments are resolved retroactively. In cases where an Integrator was overpaid, the Prime Agent associated with the Integrator must reimburse Sky the overpayment amount and can use future Distribution Rewards that the Integrator earns to reimburse itself.
 
 ####### A.2.3.8.1.2.1.5 - Current And Onboarding Integrators [Core]  <!-- UUID: f3952cc5-cde2-46b9-b575-034dda83570b -->
 
@@ -7425,7 +7425,7 @@ The documents herein specify current and onboarding Integrators.
 
 ######## A.2.3.8.1.2.1.5.1 - Current Integrators [Active Data Controller]  <!-- UUID: 883f1b52-a6d2-417b-bb24-12917de83b53 -->
 
-Current Integrators are Integrators who have a Reward Code specified in an `Active` Instance of the Accessibility Reward Primitive. The list of Current Integrators is defined as Active Data in [A.2.3.8.1.2.1.5.1.0.6.1 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157).
+Current Integrators are Integrators who have a Reward Code specified in an `Active` Instance of the Distribution Reward Primitive. The list of Current Integrators is defined as Active Data in [A.2.3.8.1.2.1.5.1.0.6.1 - List Of Current Integrators](efbe7903-a76e-40f0-a440-56e463283157).
 
 The Active Data is updated as follows:
 • The Responsible Party is Operational GovOps.
@@ -7437,7 +7437,7 @@ The current Active Integrators are:
 
 ######## A.2.3.8.1.2.1.5.2 - Onboarding Integrators [Active Data Controller]  <!-- UUID: 9a7f47ae-760f-44b5-9b5f-dd4fef86e1cc -->
 
-Onboarding Integrators are actors whose application to the Integrator Program has been approved, but are specified in an Instance of the Accessibility Reward Primitive or Integration Boost Primitive that is “Pending”, or is not `Active` yet. The list of Onboarding Integrators is defined as Active Data in [A.2.3.8.1.2.1.5.2.0.6.1 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be). 
+Onboarding Integrators are actors whose application to the Integrator Program has been approved, but are specified in an Instance of the Distribution Reward Primitive or Integration Boost Primitive that is “Pending”, or is not `Active` yet. The list of Onboarding Integrators is defined as Active Data in [A.2.3.8.1.2.1.5.2.0.6.1 - List Of Onboarding Integrators](eb644108-94fc-430f-ae5a-e3294b9dd9be). 
 
 The Active Data is updated as follows:
 • The Responsible Party is Operational GovOps.
@@ -7447,25 +7447,25 @@ The Active Data is updated as follows:
 
 The current Onboarding Integrators are:
 
-####### A.2.3.8.1.2.1.6 - Accessibility Reward Reimbursement [Core]  <!-- UUID: fd551536-2177-4e78-87a1-c2528ff2fcaf -->
+####### A.2.3.8.1.2.1.6 - Distribution Reward Reimbursement [Core]  <!-- UUID: fd551536-2177-4e78-87a1-c2528ff2fcaf -->
 
-The documents herein specify the Accessibility Reward reimbursement.
+The documents herein specify the Distribution Reward reimbursement.
 
-######## A.2.3.8.1.2.1.6.1 - Sky Core Accessibility Reward Reimbursement [Active Data Controller]  <!-- UUID: 2c0eb02c-144e-4326-b5ec-85805653f0b7 -->
+######## A.2.3.8.1.2.1.6.1 - Sky Core Distribution Reward Reimbursement [Active Data Controller]  <!-- UUID: 2c0eb02c-144e-4326-b5ec-85805653f0b7 -->
 
-The Accessibility Reward reimbursement payments are defined as Active Data in [A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Accessibility Reward Reimbursement Amounts](169eb312-ed63-4a83-9f5d-43b621c0705e).
+The Distribution Reward reimbursement payments are defined as Active Data in [A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Distribution Reward Reimbursement Amounts](169eb312-ed63-4a83-9f5d-43b621c0705e).
  
 The Active Data is updated as follows:
 • The Responsible Party is Core GovOps.
 • The Update Process must follow the protocol for ‘Direct Edit’.
 
-######### A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Accessibility Reward Reimbursement Amounts [Active Data]  <!-- UUID: 169eb312-ed63-4a83-9f5d-43b621c0705e -->
+######### A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Distribution Reward Reimbursement Amounts [Active Data]  <!-- UUID: 169eb312-ed63-4a83-9f5d-43b621c0705e -->
 
 The current Sky Core Accessibility Reward Reimbursement Amounts are:
 
 ###### A.2.3.8.1.2.2 - Global Activation [Core]  <!-- UUID: 49513ac9-43d6-4766-8a51-195e221de3f2 -->
 
-An Agent who intends to deploy the Accessibility Reward Primitive must first Globally Activate it.
+An Agent who intends to deploy the Distribution Reward Primitive must first Globally Activate it.
 
 ####### A.2.3.8.1.2.2.1 - Process Initiation Logic [Core]  <!-- UUID: 776d926e-70d0-4771-bd60-d3fcef0a7ea3 -->
 
@@ -7489,7 +7489,7 @@ See [A.2.3.1.2.4.1 - Agent Launch And Sequence of Primitive Global Activation](2
 
 ####### A.2.3.8.1.2.2.2 - Process Flow [Core]  <!-- UUID: 89d26f82-b662-41df-8935-44aa7e93be6d -->
 
-The Prime Agent uses the Powerhouse interface to Globally Activate (toggle on) the Accessibility Reward Primitive.
+The Prime Agent uses the Powerhouse interface to Globally Activate (toggle on) the Distribution Reward Primitive.
 
 ####### A.2.3.8.1.2.2.3 - Required Primitive Inputs [Core]  <!-- UUID: 108c6d9c-8ecf-48bf-bc8b-365f8cf65c0c -->
 
@@ -7513,7 +7513,7 @@ No Agent Artifact documents are updated as the output of this process. The requi
 
 ###### A.2.3.8.1.2.3 - Instance Invocation Protocol [Core]  <!-- UUID: ad3a3f6b-7bc3-4e5f-b1c3-225b5b4cbe15 -->
 
-After fulfilling the requirements for Global Activation, an Agent can Invoke its first Instance of the Accessibility Reward Primitive by following the sequential process specified herein. Subsequent Invocations of the Primitive must also adhere to the same requirements defined below.
+After fulfilling the requirements for Global Activation, an Agent can Invoke its first Instance of the Distribution Reward Primitive by following the sequential process specified herein. Subsequent Invocations of the Primitive must also adhere to the same requirements defined below.
 
 ####### A.2.3.8.1.2.3.1 - Process Definition For Initial Opportunity Identification And Planning [Core]  <!-- UUID: f07b1cca-5db2-4b1b-b760-ea738d2776f3 -->
 
@@ -7537,13 +7537,13 @@ None.
 
 ######### A.2.3.8.1.2.3.1.1.2 - Dependencies [Core]  <!-- UUID: c89c3cd1-20c4-461f-a220-1754d97e2049 -->
 
-This process is dependent on a Prime Agent Globally Activating the Accessibility Reward Primitive pursuant to [A.2.3.8.1.2.2 - Global Activation](49513ac9-43d6-4766-8a51-195e221de3f2).
+This process is dependent on a Prime Agent Globally Activating the Distribution Reward Primitive pursuant to [A.2.3.8.1.2.2 - Global Activation](49513ac9-43d6-4766-8a51-195e221de3f2).
 
 ######## A.2.3.8.1.2.3.1.2 - Process Flow [Core]  <!-- UUID: 75ff9b92-47e1-454f-864b-b74742df918e -->
 
 The process flow is defined herein.
 
-• The Prime Agent identifies an opportunity to drive USDS adoption through an Accessibility Reward to either 1) reward an existing Integrator for driving USDS adoption or 2) incentivize a new actor to onboard as an Integrator to drive USDS adoption.
+• The Prime Agent identifies an opportunity to drive USDS adoption through a Distribution Reward to either 1) reward an existing Integrator for driving USDS adoption or 2) incentivize a new actor to onboard as an Integrator to drive USDS adoption.
 
 • Existing Integrators
 
@@ -7559,7 +7559,7 @@ The process flow is defined herein.
         • The Prospective Integrator must first apply to the Integrator program and be approved by Operational GovOps pursuant to [A.2.3.8.1.2.1.1.2.2 - Long Term Process](6283379c-d871-40a9-a915-d716d7df5642). Post approval, Operational GovOps issues a Reward Code to the Integrator.
         • The Prime Agent develops a plan to track USDS utilization attributable to it using either on-chain or off-chain data. Where applicable, the plan should include how the Prime Agent will support the prospective Integrator in including the Reward Code in their on-chain infrastructure.
 
-• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Accessibility Reward.
+• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Distribution Reward.
 
     ◦ Near Term process:
         •** **If the Prime Agent is not already an approved Integrator, it must apply to the Program and be approved by Viridian Advisors. Post approval, Viridian Advisors issues a Reward Code to the Prime Agent.
@@ -7642,7 +7642,7 @@ The Agent Artifact is updated pursuant to the following requirements. Each Outpu
 
 ####### A.2.3.8.1.2.3.2 - Process Definition For Operational GovOps Review [Core]  <!-- UUID: 5fd265ef-17f0-4400-b06c-a6ce9fa87636 -->
 
-The documents herein define the process for Operational GovOps Review for an Invocation of the Accessibility Reward Primitive.
+The documents herein define the process for Operational GovOps Review for an Invocation of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.3.2.1 - Process Initiation Logic [Core]  <!-- UUID: da868510-121f-442a-982e-8ab2d2149a25 -->
 
@@ -7723,7 +7723,7 @@ The Document is updated as follows.
 
 ####### A.2.3.8.1.2.3.3 - Process Definition For Artifact Update Draft [Core]  <!-- UUID: 240e0e2c-64b6-4290-aa23-ec19eb2f6e59 -->
 
-The documents herein define the process for preparing the Artifact Update Draft for an Invocation of the Accessibility Reward Primitive.
+The documents herein define the process for preparing the Artifact Update Draft for an Invocation of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.3.3.1 - Process Initiation Logic [Core]  <!-- UUID: 9add3334-5779-4d23-bf5f-6c25cf9fcf9a -->
 
@@ -7809,7 +7809,7 @@ The Document is updated as follows:
 
 ####### A.2.3.8.1.2.3.4 - Process Definition For Operational Facilitator Review [Core]  <!-- UUID: fd9aac63-00a0-4fc5-ad7c-8bb131322bd7 -->
 
-The documents herein define the process for Operational Facilitator Review for an Invocation of the Accessibility Reward Primitive.
+The documents herein define the process for Operational Facilitator Review for an Invocation of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.3.4.1 - Process Initiation Logic [Core]  <!-- UUID: 4e87663b-619e-46b6-a672-9bc81d11f4e7 -->
 
@@ -7882,7 +7882,7 @@ No Agent Artifact documents are updated as the output of this process. The requi
 
 ####### A.2.3.8.1.2.3.5 - Process Definition For Offchain Vote [Core]  <!-- UUID: 3170b9a1-d074-4cbd-bb81-ae1661bc0ed8 -->
 
-The documents herein define the process for an Offchain Vote for an Invocation of the Accessibility Reward Primitive.
+The documents herein define the process for an Offchain Vote for an Invocation of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.3.5.1 - Process Initiation Logic [Core]  <!-- UUID: 3b38ec56-64c1-4093-82f0-fd5a162d549c -->
 
@@ -7979,7 +7979,7 @@ The Agent Artifact documents specified herein are updated as the output of this 
 
 ####### A.2.3.8.1.2.3.6 - Process Definition For Artifact Update [Core]  <!-- UUID: b3ed1e74-7ec2-4537-8e1d-2098dc17d984 -->
 
-The documents herein define the Artifact Update process for an Invocation of the Accessibility Reward Primitive.
+The documents herein define the Artifact Update process for an Invocation of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.3.6.1 - Process Initiation Logic [Core]  <!-- UUID: 005830a0-5845-4460-961a-9d5f15a722ab -->
 
@@ -8079,15 +8079,15 @@ The Document  is updated as follows:
 
 ###### A.2.3.8.1.2.4 - Instance Ongoing Management Protocol [Core]  <!-- UUID: 3af0e156-b5c0-493b-bd6f-80185072b7b1 -->
 
-The documents herein define the process for the ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of an Instance of the Distribution Reward Primitive.
 
 ####### A.2.3.8.1.2.4.1 - Routine Protocol [Core]  <!-- UUID: c2abdd22-fe0f-489e-b281-450e066db701 -->
 
-The documents herein define the protocol for routine ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the protocol for routine ongoing management of an Instance of the Distribution Reward Primitive.
 
 ######## A.2.3.8.1.2.4.1.1 - Process Definition For Reward Calculation By Operational Govops [Core]  <!-- UUID: 27229032-ddb6-41a5-a5d5-6168ccc3142f -->
 
-The documents herein define the process for Accessibility Reward Calculation by Operational GovOps. The Accessibility Reward Calculation includes the calculation of the Fees for Unrewarded USDS Balances, the Fees for Rewarded USDS Balances, and the Prime Agent Management Fee.
+The documents herein define the process for Distribution Reward Calculation by Operational GovOps. The Distribution Reward Calculation includes the calculation of the Fees for Unrewarded USDS Balances, the Fees for Rewarded USDS Balances, and the Prime Agent Management Fee.
 
 ######### A.2.3.8.1.2.4.1.1.1 - Process Initiation Logic [Core]  <!-- UUID: a0a60c30-1c73-4bb1-b4c3-92a5541ff4b2 -->
 
@@ -8099,7 +8099,7 @@ Triggers are specified herein.
 
 ########### A.2.3.8.1.2.4.1.1.1.1.1 - Time-Based Triggers [Core]  <!-- UUID: 3e14118d-b60b-49c4-a730-90eb3ad606a9 -->
 
-This process is triggered on the 1st of every month for each Instance of the Accessibility Reward Primitive with an Instance Status of `Active`.
+This process is triggered on the 1st of every month for each Instance of the Distribution Reward Primitive with an Instance Status of `Active`.
 
 ########### A.2.3.8.1.2.4.1.1.1.1.2 - Document Update Triggers [Core]  <!-- UUID: 351bd87e-1795-4b00-ad05-2b9869394854 -->
 
@@ -8115,7 +8115,7 @@ The process flow is defined herein:
 
 • Operational GovOps calculates the eligible USDS and sUSDS balances using the Tracking Methodology specified in the Primitive Instance.
 
-• Operational GovOps calculates the Accessibility Reward due based on the USDS and sUSDS balances and the Accessibility Reward formula for each.
+• Operational GovOps calculates the Distribution Reward due based on the USDS and sUSDS balances and the Distribution Reward formula for each.
 
 • Operational GovOps updates the Powerhouse system with both the underlying data and their calculations.
 
@@ -8123,7 +8123,7 @@ The process flow is defined herein:
 
 The required Primitive Inputs to this process are specified herein.
 
-• Edit `Accessibility Reward Payments` Document (Active Data)
+• Edit `Distribution Reward Payments` Document (Active Data)
     ◦ Updated fields
         • Status
             • New value: set to `In Progress`
@@ -8133,7 +8133,7 @@ The required Primitive Inputs to this process are specified herein.
             • New value: populate with calculated value
         • Eligible sUSDS balance
             • New value: populate with calculated value
-        • Accessibility Reward Due
+        • Distribution Reward Due
             • New value: populate with calculated value.
     ◦ Responsible party: Operational GovOps.
     ◦ Trigger-Process: [A.2.3.8.1.2.4.1.2 - Process Definition For Reward Issuance From Operational Executor Agent Buffer](ddd65b02-3a2b-4478-a435-989324c2f1b8).
@@ -8152,7 +8152,7 @@ No Agent Artifact documents are updated as the output of this process. The requi
 
 ######## A.2.3.8.1.2.4.1.2 - Process Definition For Reward Issuance From Operational Executor Agent Buffer [Core]  <!-- UUID: ddd65b02-3a2b-4478-a435-989324c2f1b8 -->
 
-The documents herein define the process for Accessibility Reward issuance from the Operational Executor Agent Buffer as part of ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the process for Distribution Reward issuance from the Operational Executor Agent Buffer as part of ongoing management of an Instance of the Distribution Reward Primitive.
 
 ######### A.2.3.8.1.2.4.1.2.1 - Process Initiation Logic [Core]  <!-- UUID: a24bf9e6-3805-4a12-a277-ade2e24e0d77 -->
 
@@ -8168,7 +8168,7 @@ None.
 
 ########### A.2.3.8.1.2.4.1.2.1.1.2 - Document Update Triggers [Core]  <!-- UUID: a66e1d9d-f113-4e83-8a17-77ce1724c2c9 -->
 
-This process is triggered by the Required Primitive Inputs specified in Edit Accessibility Reward Payments Document (Active Data).
+This process is triggered by the Required Primitive Inputs specified in Edit Distribution Reward Payments Document (Active Data).
 
 ########## A.2.3.8.1.2.4.1.2.1.2 - Dependencies [Core]  <!-- UUID: 3741afa3-1593-4ca5-b90c-186f499b111b -->
 
@@ -8186,7 +8186,7 @@ The process flow is defined herein.
 
 The required Primitive Inputs to this process are specified herein.
 
-• Edit `Accessibility Reward Payments` Document (Active Data)
+• Edit `Distribution Reward Payments` Document (Active Data)
     ◦ Updated fields
         • Status
             • New value: set to `Paid`
@@ -8211,7 +8211,7 @@ No Agent Artifact documents are updated as the output of this process. The requi
 
 ######## A.2.3.8.1.2.4.1.3 - Process Definition For Settlement Cycle And Core GovOps Review [Core]  <!-- UUID: dfd65786-e4be-4dad-9e34-cd6235a30a4f -->
 
-The documents herein define the process for the Accessibility Reward Settlement Cycle and Core GovOps review as part of ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the Distribution Reward Settlement Cycle and Core GovOps review as part of ongoing management of an Instance of the Distribution Reward Primitive.
 
 ######### A.2.3.8.1.2.4.1.3.1 - Process Initiation Logic [Core]  <!-- UUID: e0495e9f-5dbd-4191-b52d-b87c6067d19a -->
 
@@ -8237,16 +8237,16 @@ This process has no dependencies.
 
 The process flow is defined herein.
 
-• Core GovOps reviews Accessibility Rewards calculations, including underlying data and calculation of balances and rewards due.
+• Core GovOps reviews Distribution Rewards calculations, including underlying data and calculation of balances and rewards due.
 
-• Once Core GovOps has completed review, they update Powerhouse system to indicate that they confirm the accuracy of the Accessibility Reward amounts.
+• Once Core GovOps has completed review, they update Powerhouse system to indicate that they confirm the accuracy of the Distribution Reward amounts.
 
 ######### A.2.3.8.1.2.4.1.3.3 - Required Primitive Inputs [Core]  <!-- UUID: b55afaef-db92-4bbf-8d80-258d5849ef1c -->
 
 The required Primitive Inputs to this process are specified herein and are mutually exclusive pathways.
 
 • Core GovOps Confirms Accuracy of Payment
-    ◦ Edit `Accessibility Reward Payments` Active Data Document
+    ◦ Edit `Distribution Reward Payments` Active Data Document
         • Updated fields
             • Core GovOps Review/Confirmation
                 ◦ New value: populate with Yes
@@ -8256,7 +8256,7 @@ The required Primitive Inputs to this process are specified herein and are mutua
         • Trigger - Process: [A.2.3.8.1.2.4.1.3.4.1 - Sky Core Atlas Updates](cca17fe9-3dc9-48ce-be26-39a1625b3690) 
 
 • Core GovOps Finds Inaccurate Payment
-    ◦ Edit `Accessibility Reward Payments` Active Data Document
+    ◦ Edit `Distribution Reward Payments` Active Data Document
         • Updated fields
             • Core GovOps Review/Confirmation
                 ◦ New value: populate with No
@@ -8274,7 +8274,7 @@ The documents herein specify the required outputs from this process.
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
 • Payment Accuracy Previously Confirmed By Core GovOps
-    ◦ The document [A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Accessibility Reward Reimbursement Amounts](169eb312-ed63-4a83-9f5d-43b621c0705e) in the Sky Core Atlas is updated as follows:
+    ◦ The document [A.2.3.8.1.2.1.6.1.0.6.1 - Sky Core Distribution Reward Reimbursement Amounts](169eb312-ed63-4a83-9f5d-43b621c0705e) in the Sky Core Atlas is updated as follows:
         • Updated Fields
             • Status
                 ◦ New value: populate with `Pending Payment`
@@ -8297,7 +8297,7 @@ No Agent Artifact documents are updated as the output of this process.
 
 ######## A.2.3.8.1.2.4.1.4 - Process Definition For Executive Vote Reimbursement [Core]  <!-- UUID: 59259360-a288-4412-a39a-da3991c60f8f -->
 
-The documents herein define the process for Accessibility Reward Executive Vote reimbursement as part of ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the process for Distribution Reward Executive Vote reimbursement as part of ongoing management of an Instance of the Distribution Reward Primitive.
 
 ######### A.2.3.8.1.2.4.1.4.1 - Process Initiation Logic [Core]  <!-- UUID: f7bc89b8-424f-4f6a-8f1b-e173ca22f2ce -->
 
@@ -8313,7 +8313,7 @@ None.
 
 ########### A.2.3.8.1.2.4.1.4.1.1.2 - Document Update Triggers [Core]  <!-- UUID: c298f200-2ac8-4fc3-9d02-e05f4cf2f42f -->
 
-This process is triggered by the Document Update specified in **`Sky Core Accessibility Reward Reimbursement`**** Active Data Document Update.**
+This process is triggered by the Document Update specified in **`Sky Core Distribution Reward Reimbursement`** **Active Data Document Update**.
 
 ########## A.2.3.8.1.2.4.1.4.1.2 - Dependencies [Core]  <!-- UUID: ae1c6021-2790-43ce-9d9b-fe8a17a64b60 -->
 
@@ -8323,7 +8323,7 @@ This process has no dependencies.
 
 The process flow is defined herein:
 
-• Core GovOps includes the Accessibility Reward reimbursement in the next standard Executive Vote.
+• Core GovOps includes the Distribution Reward reimbursement in the next standard Executive Vote.
 
 • After the Executive Vote passes, Core GovOps updates the Powerhouse system with the transaction details.
 
@@ -8332,7 +8332,7 @@ The process flow is defined herein:
 The required Primitive Inputs to this process are specified herein and organized as sequential stages.
 
 • Core GovOps adds reimbursement to Executive Vote
-    ◦ Edit `Sky Core Accessibility Reward Reimbursement Amounts`
+    ◦ Edit `Sky Core Distribution Reward Reimbursement Amounts`
         • Updated fields
             • Executive Vote Settlement/Executive Vote
                 ◦ New value: links to proposal
@@ -8340,7 +8340,7 @@ The required Primitive Inputs to this process are specified herein and organized
                 ◦ New value: set to `Added to Executive Vote`
 
 • After Executive Vote passes, Core GovOps updates Powerhouse system
-    ◦ Edit `Sky Core Accessibility Reward Reimbursement Amounts`
+    ◦ Edit `Sky Core Distribution Reward Reimbursement Amounts`
         • Updated fields
             • Executive Vote Settlement / Transaction Details/ Amount Paid
                 ◦ New value: populate with amount paid to reimburse Operational Executor Agent Buffer
@@ -8357,7 +8357,7 @@ The documents herein specify the required outputs from this process.
 
 The Sky Core Atlas documents specified herein are updated as the output of this process.
 
-########### A.2.3.8.1.2.4.1.4.4.1.1 - Sky Core Accessibility Reward Reimbursement Active Data Update [Core]  <!-- UUID: 0c619a26-b9a6-495a-b7e6-a4a5c79c2da6 -->
+########### A.2.3.8.1.2.4.1.4.4.1.1 - Sky Core Distribution Reward Reimbursement Active Data Update [Core]  <!-- UUID: 0c619a26-b9a6-495a-b7e6-a4a5c79c2da6 -->
 
 The Document in the Sky Core Atlas is updated as follows:
 
@@ -8373,11 +8373,11 @@ No Agent Artifact documents are updated as the output of this process.
 
 ####### A.2.3.8.1.2.4.2 - Non-Routine Protocol [Core]  <!-- UUID: e852bd1a-b257-4de9-b25b-63a5492ab720 -->
 
-The documents herein define the protocol for non-routine ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of an Instance of the Distribution Reward Primitive.
 
 ####### A.2.3.8.1.2.4.3 - Emergency Protocol [Core]  <!-- UUID: 81b89dda-558c-438e-8ba4-b75a977b8fd3 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of an Instance of the Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of an Instance of the Distribution Reward Primitive.
 
 #### A.2.3.8.2 - Integration Boost Primitive [Core]  <!-- UUID: 73577399-62e4-4a83-ae11-64ef7e7b7f20 -->
 
@@ -8463,21 +8463,21 @@ In the long term, Operational GovOps calculates the Integration Boost for each o
 
 If it is discovered that previous Integration Boost calculations were made erroneously, underpayments are resolved retroactively. In cases where an Integrator was overpaid, the Prime Agent associated with the Integrator must reimburse Sky the overpayment amount and can use future Integration Boost payments that the Integrator earns to reimburse itself.
 
-####### A.2.3.8.2.2.1.4 - Accessibility Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
+####### A.2.3.8.2.2.1.4 - Distribution Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
 
-Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Accessibility Reward.
+Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Distribution Reward.
 
 ######## A.2.3.8.2.2.1.4.1 - Reporting Of Net USDS Balances Is Valid Tracking Methodology [Core]  <!-- UUID: a4ca2e70-d013-4c54-8e17-1d6f352ddbc0 -->
 
-The methodology used to report net USDS balances in the protocol for the Integration Boost is itself an acceptable Tracking Methodology for purposes of the Accessibility Reward.
+The methodology used to report net USDS balances in the protocol for the Integration Boost is itself an acceptable Tracking Methodology for purposes of the Distribution Reward.
 
 ######## A.2.3.8.2.2.1.4.2 - No Double Payments [Core]  <!-- UUID: 5828a3a0-243d-48a5-b537-297015a0c5f5 -->
 
-Accessibility Reward may only be paid on net USDS balances of an Integration Boost partner to the extent that an Accessibility Reward is not already being paid on those balances.
+Distribution Reward may only be paid on net USDS balances of an Integration Boost partner to the extent that a Distribution Reward is not already being paid on those balances.
 
-######## A.2.3.8.2.2.1.4.3 - Prime Agent May Choose Whether To Share Accessibility Reward With Integration Boost Partner [Core]  <!-- UUID: c27d41eb-61f4-4daa-a9c3-b463fa840f60 -->
+######## A.2.3.8.2.2.1.4.3 - Prime Agent May Choose Whether To Share Distribution Reward With Integration Boost Partner [Core]  <!-- UUID: c27d41eb-61f4-4daa-a9c3-b463fa840f60 -->
 
-Prime Agents may choose whether to share Accessibility Reward payments with Integration Boost Partners.
+Prime Agents may choose whether to share Distribution Reward payments with Integration Boost Partners.
 
 ####### A.2.3.8.2.2.1.5 - Integration Boost Reimbursement [Core]  <!-- UUID: 63ff5ae5-4a50-4d44-b7e4-526608c44598 -->
 
@@ -8485,7 +8485,7 @@ The documents herein specify the Integration Boost reimbursement.
 
 ######## A.2.3.8.2.2.1.5.1 - Sky Core Integration Boost Reimbursement [Active Data Controller]  <!-- UUID: 7ed013c9-f7ac-4459-8675-8bbd398d5133 -->
 
-The Accessibility Reward reimbursement payments are defined as Active Data in [A.2.3.8.2.2.1.5.1.0.6.1 - Sky Core Integration Boost Reimbursement Amounts](8cbff90b-5633-427e-91da-0fb775812535). 
+The Integration Boost reimbursement payments are defined as Active Data in [A.2.3.8.2.2.1.5.1.0.6.1 - Sky Core Integration Boost Reimbursement Amounts](8cbff90b-5633-427e-91da-0fb775812535). 
  
 The Active Data is updated as follows:
 • The Responsible Party is Core GovOps.
@@ -8575,9 +8575,9 @@ This process is dependent on a Prime Agent Globally Activating the Integration B
 
 The process flow is defined herein.
 
-• The Prime Agent identifies a DeFi protocol or market where an Integration Boost would drive adoption. The Prime Agent estimates the potential earnings from the Accessibility Reward associated with the incremental USDS usage versus the operational cost of funding the Sky Savings Rate payouts.
+• The Prime Agent identifies a DeFi protocol or market where an Integration Boost would drive adoption. The Prime Agent estimates the potential earnings from the Distribution Reward associated with the incremental USDS usage versus the operational cost of funding the Sky Savings Rate payouts.
 
-• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Accessibility Reward.
+• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Distribution Reward.
 
 ######## A.2.3.8.2.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: b91d0eb6-fa86-486c-8350-4564bdb5af09 -->
 
@@ -9420,7 +9420,7 @@ The current Active Pioneer Primes are:
 
 Pioneer Primes gain benefits and responsibilities related to the general adoption of USDS on the Pioneer Chain, and this benefit comes in two forms.
 
-First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Accessibility Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
+First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Distribution Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
 
 Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive payments, see [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
@@ -9988,9 +9988,9 @@ The Sky Savings Rate is the interest expense paid to sUSDS holders on their bala
 
 The Integration Boost provides the equivalent of the Sky Savings Rate to users of decentralized finance protocols who hold USDS balances. See [A.2.3.8.2 - Integration Boost Primitive](73577399-62e4-4a83-ae11-64ef7e7b7f20).
 
-####### A.2.4.1.2.1.3.3 - Accessibility Rewards [Core]  <!-- UUID: 2177f303-a0a7-4807-b815-d17aa76a264e -->
+####### A.2.4.1.2.1.3.3 - Distribution Rewards [Core]  <!-- UUID: 2177f303-a0a7-4807-b815-d17aa76a264e -->
 
-The Accessibility Reward is paid to Prime Agents and third-party partners that drive adoption of USDS. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The Distribution Reward is paid to Prime Agents and third-party partners that drive adoption of USDS. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ####### A.2.4.1.2.1.3.4 - Reimbursement Rewards [Core]  <!-- UUID: 3aa5b01e-6661-4b01-b32c-ea7b02fbedcb -->
 
@@ -10397,9 +10397,9 @@ Amounts due from Prime Agents, excluding reimbursements made to Operational Exec
 
 Reimbursements of payments already made by the Operational Executor Agent with respect to Demand Side Stablecoin Primitives (see [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)) are transferred to the Operational Executor Agent’s Buffer through an Executive Vote.
 
-######## A.2.5.1.2.1.4.3.1 - Reimbursement To Accessibility Reward Wallet And Integration Boost Wallets [Core]  <!-- UUID: 1eeb6c15-d112-438c-9269-4c4cbc823df1 -->
+######## A.2.5.1.2.1.4.3.1 - Reimbursement To Distribution Reward Wallet And Integration Boost Wallets [Core]  <!-- UUID: 1eeb6c15-d112-438c-9269-4c4cbc823df1 -->
 
-On an interim basis, Accessibility Reward reimbursements may also be made to the Accessibility Reward Controller Wallet (see [A.2.3.8.1.2.1.4.3.1 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2)) at the request of an Operational Executor Agent. Similarly, Integration Boost reimbursements may also be made to the Integration Boost Wallet (see [A.2.3.8.2.2.1.3.2.1 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5)) at the request of an Operational Executor Agent.
+On an interim basis, Distribution Reward reimbursements may also be made to the Distribution Reward Controller Wallet (see [A.2.3.8.1.2.1.4.3.1 - Near-Term Process](05fb732b-de55-4886-81a7-7c5d4c13d2d2)) at the request of an Operational Executor Agent. Similarly, Integration Boost reimbursements may also be made to the Integration Boost Wallet (see [A.2.3.8.2.2.1.3.2.1 - Near Term Process](4ab621b4-ef8e-4b01-a6aa-9296601033c5)) at the request of an Operational Executor Agent.
 
 ###### A.2.5.1.2.1.5 - True Up In Subsequent Monthly Settlement Cycle [Core]  <!-- UUID: de1592f5-dbce-46de-913f-6ec9589d36e8 -->
 
@@ -10439,17 +10439,17 @@ In Stage 1 of the implementation of the Monthly Settlement Cycle, the net amount
 
 The amount due from Sky to each Prime with respect to Demand Side Primitives and the Agent Rate is calculated as specified in the documents herein.
 
-######### A.2.5.1.2.2.1.1.1.1 - Amount Due From Sky To Primes With Respect To Accessibility Reward [Core]  <!-- UUID: 0b2165cb-c10d-474b-ad55-544821ac29c3 -->
+######### A.2.5.1.2.2.1.1.1.1 - Amount Due From Sky To Primes With Respect To Distribution Reward [Core]  <!-- UUID: 0b2165cb-c10d-474b-ad55-544821ac29c3 -->
 
-The amount due from Sky to a Prime in a month with respect to the Accessibility Reward is the amount earned by the Prime with respect to all USDS and sUSDS balances marked with the Prime’s reward codes. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). This includes any Bonus Accessibility Reward. See [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
+The amount due from Sky to a Prime in a month with respect to the Distribution Reward is the amount earned by the Prime with respect to all USDS and sUSDS balances marked with the Prime’s reward codes. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). This includes any Bonus Distribution Reward. See [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
 
 ######### A.2.5.1.2.2.1.1.1.2 - Amount Due From Sky To Primes With Respect To Agent Rate [Core]  <!-- UUID: aeb1d633-d6e2-46ef-9f55-bcb0a16a2e63 -->
 
 The amount due from Sky to a Prime in a month with respect to the Agent Rate is calculated as specified in [A.3.1.2.3 - Agent Rate](012c953b-c522-4ea3-939b-3282af4e1d7e).
 
-######### A.2.5.1.2.2.1.1.1.3 - Amount Due From Sky To Primes With Respect To Accessibility Reward And Agent Rate [Core]  <!-- UUID: cef16014-05db-4b21-a5a2-20e62aaca027 -->
+######### A.2.5.1.2.2.1.1.1.3 - Amount Due From Sky To Primes With Respect To Distribution Reward And Agent Rate [Core]  <!-- UUID: cef16014-05db-4b21-a5a2-20e62aaca027 -->
 
-The amount due from Sky to a Prime in a month with respect to the Accessibility Reward and the Agent Rate is the sum of the amounts specified in [A.2.5.1.2.2.1.1.1.1 - Amount Due From Sky To Primes With Respect To Accessibility Reward](0b2165cb-c10d-474b-ad55-544821ac29c3) and [A.2.5.1.2.2.1.1.1.2 - Amount Due From Sky To Primes With Respect To Agent Rate](aeb1d633-d6e2-46ef-9f55-bcb0a16a2e63).
+The amount due from Sky to a Prime in a month with respect to the Distribution Reward and the Agent Rate is the sum of the amounts specified in [A.2.5.1.2.2.1.1.1.1 - Amount Due From Sky To Primes With Respect To Distribution Reward](0b2165cb-c10d-474b-ad55-544821ac29c3) and [A.2.5.1.2.2.1.1.1.2 - Amount Due From Sky To Primes With Respect To Agent Rate](aeb1d633-d6e2-46ef-9f55-bcb0a16a2e63).
 
 ######## A.2.5.1.2.2.1.1.2 - Amount Due From Prime To Sky With Respect To Supply Side Primitives [Core]  <!-- UUID: e98ddd17-a8c3-4523-8464-cc41247c66e8 -->
 
@@ -11031,21 +11031,21 @@ Spark and Grove can borrow amounts exceeding the 1,000,000,000 USDS limit at the
 
 Sky’s recourse for bad debt consists of (1) minting Prime Agent tokens; (2) terminating a Prime’s right to further borrowing; and (3) activation of the Resolution Mechanism which includes, without limitation, the authority to suspend all protocol operations, seize or reallocate all of the Prime assets, override or disable smart contract functions, initiate managed restructuring, or execute full and permanent liquidation of the affected sub-protocol and all of its assets, in order to contain risk and preserve the stability and solvency of the broader ecosystem.
 
-###### A.2.9.2.2.2.3 - Accessibility Reward [Core]  <!-- UUID: 85b8e871-2d42-4a85-a887-c33d860bed64 -->
+###### A.2.9.2.2.2.3 - Distribution Reward [Core]  <!-- UUID: 85b8e871-2d42-4a85-a887-c33d860bed64 -->
 
-The subdocuments herein set out agreed terms with respect to the Accessibility Reward.
+The subdocuments herein set out agreed terms with respect to the Distribution Reward.
 
-####### A.2.9.2.2.2.3.1 - Distribution Reward Rate [Core]  <!-- UUID: c5cecc63-b349-4c5a-9424-82a204d53078 -->
+####### A.2.9.2.2.2.3.1 - Distribution Reward Rate [Core]  <!-- UUID: 8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6 -->
 
 The standard Distribution Reward rate is set at 0.2%.
 
 ####### A.2.9.2.2.2.3.2 - 2025 Bonus [Core]  <!-- UUID: 7ca440d3-03fb-4fba-81a8-d2118dc47aa6 -->
 
-An additional 0.4% Accessibility Reward bonus will apply during the calendar year 2025 (ending December 31, 2025). This bonus is strictly limited to the Prime and does not extend to the Prime Foundation. The bonus is subject to the limitation specified in [A.2.9.2.2.2.3.2.1 - Bonus Limitation](6996e6c9-b936-4680-855f-b9717572082d).
+An additional 0.4% Distribution Reward bonus will apply during the calendar year 2025 (ending December 31, 2025). This bonus is strictly limited to the Prime and does not extend to the Prime Foundation. The bonus is subject to the limitation specified in [A.2.9.2.2.2.3.2.1 - Bonus Limitation](6996e6c9-b936-4680-855f-b9717572082d).
 
 ######## A.2.9.2.2.2.3.2.1 - Bonus Limitation [Core]  <!-- UUID: 6996e6c9-b936-4680-855f-b9717572082d -->
 
-USDS and sUSDS balances held by the Prime itself are not eligible for the Accessibility Reward bonus specified in [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
+USDS and sUSDS balances held by the Prime itself are not eligible for the Distribution Reward bonus specified in [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6).
 
 ####### A.2.9.2.2.2.3.3 - Sky Spread [Core]  <!-- UUID: 5e3e9338-221a-461a-96f9-01e0665ab6a4 -->
 
@@ -11260,7 +11260,7 @@ Sky has transferred 2.4 million USDS from the Sky Ecosystem Liquidity Bootstrapp
 
 ####### A.2.9.2.2.2.8.6 - Income Definition [Core]  <!-- UUID: fa48f7be-3c7d-4390-8b39-4fdfe9aa06ae -->
 
-"Income" means all revenues or fees received or accrued by the applicable Prime after July 1, 2025, including: (i) Accessibility Rewards (see [[Unknown]](8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6)), (ii) Accessibility Reward Bonus for 2025 (see [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6)), (iii) any Platform Fees charged to users, and (iv) Real World Asset fees charged to users, including any origination, servicing, or related charges, and (v) the blended cost of allocation spread between Junior and Senior Risk Capital.
+"Income" means all revenues or fees received or accrued by the applicable Prime after July 1, 2025, including: (i) Distribution Rewards (see [A.2.9.2.2.2.3.1 - Distribution Reward Rate](8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6)), (ii) Distribution Reward Bonus for 2025 (see [A.2.9.2.2.2.3.2 - 2025 Bonus](7ca440d3-03fb-4fba-81a8-d2118dc47aa6)), (iii) any Platform Fees charged to users, and (iv) Real World Asset fees charged to users, including any origination, servicing, or related charges, and (v) the blended cost of allocation spread between Junior and Senior Risk Capital.
 
 ###### A.2.9.2.2.2.9 - Spark Senior Risk Capital [Core]  <!-- UUID: f763bc3e-671e-44a5-a2ee-17ad8964fb40 -->
 
@@ -12321,7 +12321,7 @@ The Sky Savings Rate (”SSR”) is the rate USDS holders can earn on their USDS
 
 ##### A.3.1.2.2.1 - Relationship To Base Rate [Core]  <!-- UUID: d16483ff-b83e-490f-a620-1b58cc679c7f -->
 
-The Sky Savings Rate is 0.3% below the Base Rate. This difference is equal to the sum of (1) the 0.2% Accessibility Reward Fee (see [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759)) and (2) the 0.1% Sky Spread (see [A.3.2.2.4.2.3.3.1 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da)).
+The Sky Savings Rate is 0.3% below the Base Rate. This difference is equal to the sum of (1) the 0.2% Distribution Reward Fee (see [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759)) and (2) the 0.1% Sky Spread (see [A.3.2.2.4.2.3.3.1 - Sky Spread](c160f99c-c3d8-41e9-a3d1-cde514b7a2da)).
 
 ##### A.3.1.2.2.2 - Sky Savings Rate Modification [Core]  <!-- UUID: 1c8bb297-52a6-4774-a76d-e457ae5f5862 -->
 
@@ -12341,7 +12341,7 @@ The Agent Rate is the rate that Prime Agents earn on Unrewarded USDS, Dai, and s
 
 ##### A.3.1.2.3.1 - Relationship To Base Rate [Core]  <!-- UUID: 4e49c66c-3361-48bb-9a18-a0217278488e -->
 
-The Agent Rate is 0.1% below the Base Rate. This is equal to the Sky Savings Rate plus the 0.2% Accessibility Reward Fee (see [[Unknown]](57384c49-e499-4c69-b22c-8e1f1dd34759)).
+The Agent Rate is 0.1% below the Base Rate. This is equal to the Sky Savings Rate plus the 0.2% Distribution Reward Fee (see [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759)).
 
 ##### A.3.1.2.3.2 - Treatment Of USDS and Dai Balances [Core]  <!-- UUID: 3fbca67b-f75d-48f8-9459-3cba592f835b -->
 
@@ -12349,7 +12349,7 @@ Prime Agents receive the full Agent Rate on Unrewarded USDS and Dai balances thr
 
 ##### A.3.1.2.3.3 - Treatment Of sUSDS Balances [Core]  <!-- UUID: b1cc2cb1-aff6-4b7a-bb32-bdf56fc7fd2f -->
 
-Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Accessibility Reward Fee (see [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
+Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Distribution Reward Fee (see [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
 
 ##### A.3.1.2.3.4 - Spark [Core]  <!-- UUID: e15caed7-276c-4489-95dc-9ba628566bf4 -->
 
@@ -14387,15 +14387,15 @@ Sky earns revenue from facilitating ESRC from two sources. These sources are inc
 
 ######## A.3.2.2.4.2.3.3.1 - Sky Spread [Core]  <!-- UUID: c160f99c-c3d8-41e9-a3d1-cde514b7a2da -->
 
-Sky takes a spread equal to the Sky Spread on all ESRC balances. The Sky Spread is the difference between (1) the rate at which Prime Agents borrow from Sky and (2) the Sky Savings Rate plus the Accessibility Reward Fee.
+Sky takes a spread equal to the Sky Spread on all ESRC balances. The Sky Spread is the difference between (1) the rate at which Prime Agents borrow from Sky and (2) the Sky Savings Rate plus the Distribution Reward Fee.
 
 ######## A.3.2.2.4.2.3.3.2 - ESRC Earnings Fee [Core]  <!-- UUID: 559f6fb6-daf6-41b2-9882-53a91aaf132f -->
 
 Sky takes a 5% fee on the net interest earnings generated from the ESRC portion of originated SRC before these earnings are distributed to srUSDS holders via the conversion rate adjustment.
 
-###### A.3.2.2.4.2.4 - srUSDS Accessibility Reward [Core]  <!-- UUID: 626f0f67-1df9-41e8-a4a6-230aa1ccc824 -->
+###### A.3.2.2.4.2.4 - srUSDS Distribution Reward [Core]  <!-- UUID: 626f0f67-1df9-41e8-a4a6-230aa1ccc824 -->
 
-Prime Agents and third-party partners that drive srUSDS usage are entitled to a srUSDS Accessibility Reward similar to the Accessibility Reward paid on USDS balances. The srUSDS Accessibility Reward Fee is the same as the Accessibility Reward Fee on USDS. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+Prime Agents and third-party partners that drive srUSDS usage are entitled to a srUSDS Distribution Reward similar to the Distribution Reward paid on USDS balances. The srUSDS Distribution Reward Fee is the same as the Distribution Reward Fee on USDS. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ##### A.3.2.2.4.3 - Senior Risk Capital (SRC) Origination Process [Core]  <!-- UUID: b74e61f5-3793-406d-a0e5-f8f0e4d3ac2f -->
 
@@ -16366,9 +16366,9 @@ The SKY Borrow Rate is calculated according to the following formula when Utiliz
 
 The SKY Borrow Minimum Rate is calculated according to the following formula:
 
-`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Accessibility Reward`
+`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Distribution Reward`
 
-The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Accessibility Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
+The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Distribution Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
 
 ####### A.4.4.1.3.5.2.1 - Parameters Definition [Core]  <!-- UUID: 63e86a25-18f6-4810-a362-d2831781ea2c -->
 
@@ -16378,9 +16378,9 @@ The parameters of the SKY Borrow Minimum Rate formula are further defined in the
 
 `Sky Savings Rate` is defined in [A.3.1.2.2 - Sky Savings Rate](2674cccb-d779-4868-b83f-8cb86648c88a).
 
-######## A.4.4.1.3.5.2.1.2 - stUSDS Accessibility Reward Definition [Core]  <!-- UUID: a61d98e3-ca01-4945-ba76-46955be3631c -->
+######## A.4.4.1.3.5.2.1.2 - stUSDS Distribution Reward Definition [Core]  <!-- UUID: a61d98e3-ca01-4945-ba76-46955be3631c -->
 
-`stUSDS Accessibility Reward` is defined in [A.4.4.1.3.7 - stUSDS Accessibility Reward](673676d8-62a4-4422-b870-fbcdb3c0aabd).
+`stUSDS Distribution Reward` is defined in [A.4.4.1.3.7 - stUSDS Distribution Reward](673676d8-62a4-4422-b870-fbcdb3c0aabd).
 
 ##### A.4.4.1.3.6 - stUSDS Risk Parameters [Core]  <!-- UUID: fac38a01-4c67-4810-af22-3e7b2d855567 -->
 
@@ -16410,9 +16410,9 @@ Except as specified in [A.4.4.1.3.6.1.1 - Modification Of stUSDS Auction Paramet
 
 A clear justification and analysis must be provided to validate any proposed changes to the `Calc`, `Tau`, `Buf`, `Cusp`, `Tail`, `Chip`, `Tip`, `Chop`, or `Hole` parameters. Before these changes are added to an Executive Vote, the Core Executor Agents must obtain approval through a Governance Poll. However, in an emergency, the Core Executor Agents have the authority to bypass the Governance Poll and add the proposed parameters directly to an Executive Vote. These parameters must be regularly monitored and updated if needed.
 
-##### A.4.4.1.3.7 - stUSDS Accessibility Reward [Core]  <!-- UUID: 673676d8-62a4-4422-b870-fbcdb3c0aabd -->
+##### A.4.4.1.3.7 - stUSDS Distribution Reward [Core]  <!-- UUID: 673676d8-62a4-4422-b870-fbcdb3c0aabd -->
 
-The stUSDS Accessibility Reward is an incentive mechanism, similar to the USDS Accessibility Reward, designed to encourage Prime Agents and Integrators to promote stUSDS adoption. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). It is calculated as a percentage of the stUSDS balance associated with a Reward Code. The reward is initially set at 0.05% for the Integrator portion and 0.05% for the Prime Agent Management Fee, totaling 0.1%.
+The stUSDS Distribution Reward is an incentive mechanism, similar to the USDS Distribution Reward, designed to encourage Prime Agents and Integrators to promote stUSDS adoption. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6). It is calculated as a percentage of the stUSDS balance associated with a Reward Code. The reward is initially set at 0.05% for the Integrator portion and 0.05% for the Prime Agent Management Fee, totaling 0.1%.
 
 ##### A.4.4.1.3.8 - stUSDS Bounded External Access Module [Core]  <!-- UUID: 37f8f82e-7239-4cfb-8f95-d2cc40515cd9 -->
 
@@ -18014,13 +18014,13 @@ The in progress Invocations of the Token SkyLink Primitive are contained herein.
 
 The documents herein implement the Demand Side Stablecoin Primitives for Spark. See [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.1.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: 87916659-3b1e-4e65-8080-d6e1baab74e4 -->
+####### A.6.1.1.1.2.5.1 - Distribution Reward Primitive [Core]  <!-- UUID: 87916659-3b1e-4e65-8080-d6e1baab74e4 -->
 
-The documents herein contain all data and specifications for Spark’s instances of the Accessibility Reward Primitive. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The documents herein contain all data and specifications for Spark’s instances of the Distribution Reward Primitive. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ######## A.6.1.1.1.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: 8dece7e0-529f-4522-9742-d883cc0939a7 -->
 
-The documents herein organize all base information relevant to Spark’s usage of the Accessibility Reward Primitive.
+The documents herein organize all base information relevant to Spark’s usage of the Distribution Reward Primitive.
 
 ######### A.6.1.1.1.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: b7f5818c-2c5c-4fda-aff0-58321cfbab35 -->
 
@@ -18028,7 +18028,7 @@ The documents herein organize all base information relevant to Spark’s usage o
 
 ######### A.6.1.1.1.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: fd278ccf-3054-4437-a052-ccb0291c3025 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Active`.
 
 ########## A.6.1.1.1.2.5.1.1.2.1 - SparkLend Instance Configuration Document Location [Core]  <!-- UUID: 9537232d-674a-4821-b0ce-8ea5ce79b91e -->
 
@@ -18036,11 +18036,11 @@ This Instance’s associated Instance Configuration Document is located at [A.6.
 
 ######### A.6.1.1.1.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7b60bfe0-3dbb-4a19-9c6c-88f0fdb9479b -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Completed`.
 
 ######### A.6.1.1.1.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 798b67c4-749e-4d70-be25-7f7b9ff88268 -->
 
-This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.1.2.5.1.1.2 - Active Instances Directory](fd278ccf-3054-4437-a052-ccb0291c3025), whereas failed Invocations are Archived in [A.6.1.1.1.2.5.1.1.5 - Hub Data Repository](fad965ad-63a7-4814-97db-bc1809dee69c).
+This document contains a Directory of all prospective Instances of the Distribution Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.1.2.5.1.1.2 - Active Instances Directory](fd278ccf-3054-4437-a052-ccb0291c3025), whereas failed Invocations are Archived in [A.6.1.1.1.2.5.1.1.5 - Hub Data Repository](fad965ad-63a7-4814-97db-bc1809dee69c).
 
 ######### A.6.1.1.1.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: fad965ad-63a7-4814-97db-bc1809dee69c -->
 
@@ -18048,27 +18048,27 @@ The documents herein contain the Data Repository for the Primitive Hub Document.
 
 ########## A.6.1.1.1.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 470664fd-8220-4745-8e5c-0fec350cc21f -->
 
-The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+The subtrees for archived Invocations and Instances of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.1.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 46ccaf77-f048-47fe-adfd-ef66fb0e2a93 -->
 
-The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+The subtrees for failed Invocations of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.1.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: d8edb5d5-2a21-46e0-a894-1cd452999763 -->
 
-The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+The subtrees for Instances of the Distribution Reward Primitive with `Suspended` Status are stored here.
 
 ######## A.6.1.1.1.2.5.1.2 - Active Instances [Core]  <!-- UUID: 53a54bee-41b6-4135-9fa0-cf7876955a28 -->
 
-The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Active` Status are stored herein.
 
 ######### A.6.1.1.1.2.5.1.2.1 - SparkLend Instance Configuration Document [Core]  <!-- UUID: fd4059de-4a35-4147-a6ff-f7ecc88ceae6 -->
 
-The documents herein contain the Instance Configuration Document for the SparkLend Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the SparkLend Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.1.2.5.1.2.1.1 - Parameters [Core]  <!-- UUID: d737b3b2-f574-41e9-8ebc-3b828174f6fc -->
 
-The documents herein define the parameters of the SparkLend Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the SparkLend Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.1.2.5.1.2.1.1.1 - Reward Code [Core]  <!-- UUID: 1e5d71a8-5e79-40da-8b86-c07b3f341344 -->
 
@@ -18080,11 +18080,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.1.2.5.1.2.1.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 6c15d6b4-24b9-49e3-b7eb-c955c4a8d7cd -->
 
-The documents herein define the custom parameters of the SparkLend Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the SparkLend Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.1.2.5.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: 8dd6242a-e7ca-4cb9-bfd0-c0393886485f -->
 
-The documents herein define the process for the ongoing management of the SparkLend Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the SparkLend Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.1.2.5.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: a419b055-7d92-41b9-89f4-8f1fe082b814 -->
 
@@ -18100,15 +18100,15 @@ The Prime Agent may define instance-specific customization of the routine protoc
 
 ########### A.6.1.1.1.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 56404af1-c2ec-4bd5-876d-aa5db178ff40 -->
 
-The documents herein define the protocol for non-routine ongoing management of the SparkLend Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the SparkLend Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.1.2.5.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: 221f522d-789e-418c-9d47-1d3c1bfcd803 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the SparkLend Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the SparkLend Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.1.2.5.1.2.1.3 - Data Repository [Core]  <!-- UUID: cfe05f3a-5017-442a-998d-8b71ba3f6845 -->
 
-The documents herein contain data relevant to the SparkLend Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the SparkLend Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.1.2.5.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: 09138ffc-9484-4a3a-b12a-d2fb2fc8f6ac -->
 
@@ -18122,9 +18122,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.1.2.5.1.2.1.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 971d047b-4e7b-4545-9090-6d509e572aa0 -->
+########### A.6.1.1.1.2.5.1.2.1.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 971d047b-4e7b-4545-9090-6d509e572aa0 -->
 
-The Accessibility Reward payments for the SparkLend Instance of the Accessibility Reward Primitive are defined as Active Data. 
+The Distribution Reward payments for the SparkLend Instance of the Distribution Reward Primitive are defined as Active Data. 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
@@ -18135,11 +18135,11 @@ The Accessibility Reward Payments are:
 
 ######## A.6.1.1.1.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 6552c0fe-f9f7-4828-893b-cf278ce5161f -->
 
-The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Completed` Status are stored herein.
 
 ######## A.6.1.1.1.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 701a2dc3-bcfe-494e-8a4c-af18cfbffc54 -->
 
-The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.1.2.5.1.2 - Active Instances](53a54bee-41b6-4135-9fa0-cf7876955a28).
+The in progress Invocations of the Distribution Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.1.2.5.1.2 - Active Instances](53a54bee-41b6-4135-9fa0-cf7876955a28).
 
 ####### A.6.1.1.1.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: e9f5a7e8-2260-484f-a725-871782a9bc01 -->
 
@@ -26810,13 +26810,13 @@ The in progress Invocations of the Token SkyLink Primitive are contained herein.
 
 The documents herein implement the Demand Side Stablecoin Primitives for Grove. See [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.2.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: 8c46d61f-9b02-4898-be15-f875692f3715 -->
+####### A.6.1.1.2.2.5.1 - Distribution Reward Primitive [Core]  <!-- UUID: 8c46d61f-9b02-4898-be15-f875692f3715 -->
 
-The documents herein contain all data and specifications for Grove’s Instances of the Accessibility Reward Primitive. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The documents herein contain all data and specifications for Grove’s Instances of the Distribution Reward Primitive. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ######## A.6.1.1.2.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: 21b5e889-c9f9-45e7-becb-fde3e070e063 -->
 
-The documents herein organize all base information relevant to Groves usage of the Accessibility Reward Primitive.
+The documents herein organize all base information relevant to Groves usage of the Distribution Reward Primitive.
 
 ######### A.6.1.1.2.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 95daf547-3e90-48e2-93cf-1bb2b3240b3c -->
 
@@ -26824,15 +26824,15 @@ The documents herein organize all base information relevant to Groves usage of t
 
 ######### A.6.1.1.2.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: c1d594d3-4303-451e-9efb-2baa8ffaa034 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Active`.
 
 ######### A.6.1.1.2.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 11f1f7ba-82ed-4d1e-a457-344406a158f3 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Completed`.
 
 ######### A.6.1.1.2.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 1caf1f9a-040b-4687-ad2d-e4ad0c7709d5 -->
 
-This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.2.2.5.1.1.2 - Active Instances Directory](c1d594d3-4303-451e-9efb-2baa8ffaa034), whereas failed Invocations are Archived in [A.6.1.1.2.2.5.1.1.5 - Hub Data Repository](8ea4b4ad-e167-4772-b7d6-0c87357a10e8).
+This document contains a Directory of all prospective Instances of the Distribution Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.2.2.5.1.1.2 - Active Instances Directory](c1d594d3-4303-451e-9efb-2baa8ffaa034), whereas failed Invocations are Archived in [A.6.1.1.2.2.5.1.1.5 - Hub Data Repository](8ea4b4ad-e167-4772-b7d6-0c87357a10e8).
 
 ######### A.6.1.1.2.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 8ea4b4ad-e167-4772-b7d6-0c87357a10e8 -->
 
@@ -26840,27 +26840,27 @@ The documents herein contain the Data Repository for the Primitive Hub Document.
 
 ########## A.6.1.1.2.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 6be994b9-97fa-4768-9e71-2f8c2c110cd4 -->
 
-The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+The subtrees for archived Invocations and Instances of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.2.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: e20a22c1-1cac-4dc5-9194-8e474ac53f4c -->
 
-The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+The subtrees for failed Invocations of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.2.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 50eb902b-79db-47c4-8927-94303313595d -->
 
-The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+The subtrees for Instances of the Distribution Reward Primitive with `Suspended` Status are stored here.
 
 ######## A.6.1.1.2.2.5.1.2 - Active Instances [Core]  <!-- UUID: a4df61c2-514e-46e4-a84d-d2782f2f183f -->
 
-The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Active` Status are stored herein.
 
 ######## A.6.1.1.2.2.5.1.3 - Completed Instances [Core]  <!-- UUID: cca65b4d-5cf9-449e-9178-195b611ddc06 -->
 
-The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Completed` Status are stored herein.
 
 ######## A.6.1.1.2.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 1169df23-b14e-492d-9602-996c3aa0d577 -->
 
-The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.2.2.5.1.2 - Active Instances](a4df61c2-514e-46e4-a84d-d2782f2f183f).
+The in progress Invocations of the Distribution Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.2.2.5.1.2 - Active Instances](a4df61c2-514e-46e4-a84d-d2782f2f183f).
 
 ####### A.6.1.1.2.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 634971ac-f579-4673-afbd-6a4366d26db9 -->
 
@@ -31466,13 +31466,13 @@ The in progress Invocations of the Token SkyLink Primitive are contained herein.
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 2. See [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.3.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: 9ec308ad-b010-4f2d-ac33-eb56f1236493 -->
+####### A.6.1.1.3.2.5.1 - Distribution Reward Primitive [Core]  <!-- UUID: 9ec308ad-b010-4f2d-ac33-eb56f1236493 -->
 
-The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Accessibility Reward Primitive. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The documents herein contain all data and specifications for Launch Agent 2’s Instances of the Distribution Reward Primitive. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ######## A.6.1.1.3.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: b6b85415-c331-41b9-847e-4c5173528ca8 -->
 
-The documents herein organize all base information relevant to Launch Agent 2’s usage of the Accessibility Reward Primitive.
+The documents herein organize all base information relevant to Launch Agent 2’s usage of the Distribution Reward Primitive.
 
 ######### A.6.1.1.3.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 9e1fc932-ba41-43fb-a63f-c3011020669f -->
 
@@ -31480,15 +31480,15 @@ The documents herein organize all base information relevant to Launch Agent 2’
 
 ######### A.6.1.1.3.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: cc24f926-2163-46e6-a480-8d6365911553 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Active`.
 
 ######### A.6.1.1.3.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 7e800a1b-d86b-43f7-a227-a7ba94d264ef -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Completed`.
 
 ######### A.6.1.1.3.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 63d5ec68-45da-4146-b672-6b7bae2e9c21 -->
 
-This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.3.2.5.1.2 - Active Instances](4da74767-8e45-420c-9477-89b810654ab4), whereas failed Invocations are Archived in [A.6.1.1.3.2.5.1.1.5 - Hub Data Repository](4cc7dd10-6321-4c82-a504-a5021c79fe5f).
+This document contains a Directory of all prospective Instances of the Distribution Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.3.2.5.1.2 - Active Instances](4da74767-8e45-420c-9477-89b810654ab4), whereas failed Invocations are Archived in [A.6.1.1.3.2.5.1.1.5 - Hub Data Repository](4cc7dd10-6321-4c82-a504-a5021c79fe5f).
 
 ######### A.6.1.1.3.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 4cc7dd10-6321-4c82-a504-a5021c79fe5f -->
 
@@ -31496,27 +31496,27 @@ The documents herein contain the Data Repository for the Primitive Hub Document.
 
 ########## A.6.1.1.3.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 785e9f1a-fa79-416e-b71f-27604fc0f63d -->
 
-The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+The subtrees for archived Invocations and Instances of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.3.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: c3c58b55-7d46-4dfe-927b-e571311f61c7 -->
 
-The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+The subtrees for failed Invocations of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.3.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 72e1da1a-4b11-4920-b28a-2b1a8d070e79 -->
 
-The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+The subtrees for Instances of the Distribution Reward Primitive with `Suspended` Status are stored here.
 
 ######## A.6.1.1.3.2.5.1.2 - Active Instances [Core]  <!-- UUID: 4da74767-8e45-420c-9477-89b810654ab4 -->
 
-The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Active` Status are stored herein.
 
 ######## A.6.1.1.3.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 15a011c4-a0bb-4fd4-bf9d-ff8b5ebc74a6 -->
 
-The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Completed` Status are stored herein.
 
 ######## A.6.1.1.3.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 8aa73f62-1589-4f34-a14b-c95a4701eebc -->
 
-The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.3.2.5.1.2 - Active Instances](4da74767-8e45-420c-9477-89b810654ab4).
+The in progress Invocations of the Distribution Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.3.2.5.1.2 - Active Instances](4da74767-8e45-420c-9477-89b810654ab4).
 
 ####### A.6.1.1.3.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: 6319e8b0-577c-4d08-92af-8332fde7e553 -->
 
@@ -33344,13 +33344,13 @@ The in progress Invocations of the Token SkyLink Primitive are contained herein.
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 3. See [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.4.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: d8e61fc3-18a2-4952-8e5b-43cfb94b0bab -->
+####### A.6.1.1.4.2.5.1 - Distribution Reward Primitive [Core]  <!-- UUID: d8e61fc3-18a2-4952-8e5b-43cfb94b0bab -->
 
-The documents herein contain all data and specifications for Launch Agent 3’s instances of the Accessibility Reward Primitive. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The documents herein contain all data and specifications for Launch Agent 3’s instances of the Distribution Reward Primitive. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ######## A.6.1.1.4.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: 10b6c6e8-edee-4a77-a6c4-bbb05db8b364 -->
 
-The documents herein organize all base information relevant to Launch Agent 3’s usage of the Accessibility Reward Primitive.
+The documents herein organize all base information relevant to Launch Agent 3’s usage of the Distribution Reward Primitive.
 
 ######### A.6.1.1.4.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 03230dbb-8896-40b3-b5c3-d3c4ee729606 -->
 
@@ -33358,7 +33358,7 @@ The documents herein organize all base information relevant to Launch Agent 3’
 
 ######### A.6.1.1.4.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: c6275b51-9ee0-49df-a4ea-33a24cd2c752 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Active`.
 
 ########## A.6.1.1.4.2.5.1.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document Location [Core]  <!-- UUID: ab7ff4b8-7e62-4a36-8573-581c86293e50 -->
 
@@ -33394,11 +33394,11 @@ This Instance’s associated Instance Configuration Document is located at [A.6.
 
 ######### A.6.1.1.4.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: 3c43db85-3995-4c95-a85c-e72786a28501 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Completed`.
 
 ######### A.6.1.1.4.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 95beed80-4199-4c08-82bd-0ae7827c98b0 -->
 
-This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.4.2.5.1.1.2 - Active Instances Directory](c6275b51-9ee0-49df-a4ea-33a24cd2c752),; whereas failed Invocations are Archived in [A.6.1.1.4.2.5.1.1.5 - Hub Data Repository](86d7913a-b8d0-42a8-a6b7-02c190e74373).
+This document contains a Directory of all prospective Instances of the Distribution Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.4.2.5.1.1.2 - Active Instances Directory](c6275b51-9ee0-49df-a4ea-33a24cd2c752),; whereas failed Invocations are Archived in [A.6.1.1.4.2.5.1.1.5 - Hub Data Repository](86d7913a-b8d0-42a8-a6b7-02c190e74373).
 
 ########## A.6.1.1.4.2.5.1.1.4.1 - MetaMask [Core]  <!-- UUID: 91c685ab-75fb-4bd4-ad68-b9a26afc1962 -->
 
@@ -33446,27 +33446,27 @@ The documents herein contain the Data Repository for the Primitive Hub Document.
 
 ########## A.6.1.1.4.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d2f66b3d-7903-47e7-8f71-3aaa79407c20 -->
 
-The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+The subtrees for archived Invocations and Instances of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.4.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 9e28ce11-cd68-4c1a-b872-eae49dc4887e -->
 
-The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+The subtrees for failed Invocations of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.4.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 6e3010db-596c-478b-9aed-8fb4222a53d1 -->
 
-The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+The subtrees for Instances of the Distribution Reward Primitive with `Suspended` Status are stored here.
 
 ######## A.6.1.1.4.2.5.1.2 - Active Instances [Core]  <!-- UUID: cb0709e4-c51d-45cc-b385-0c20a0bf4b25 -->
 
-The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Active` Status are stored herein.
 
 ######### A.6.1.1.4.2.5.1.2.1 - Launch Agent 3 Frontend App Instance Configuration Document [Core]  <!-- UUID: b52f88c6-427b-45f6-8e1c-81fa27e522c8 -->
 
-The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend App Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend App Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.1.1 - Parameters [Core]  <!-- UUID: 5455497f-bfb3-49a0-a788-0b7db4da799b -->
 
-The documents herein define the parameters of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Launch Agent 3 Frontend App Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.1.1.1 - Reward Code [Core]  <!-- UUID: fcff71ae-93ff-49f7-aa39-a97077a921c6 -->
 
@@ -33478,11 +33478,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.1.1.3 - Custom Instance Parameters [Core]  <!-- UUID: e5ff6cc4-c1d2-4184-a266-010104a6a28f -->
 
-The documents herein define the custom parameters of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Launch Agent 3 Frontend App Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.1.2 - Operational Process Definition [Core]  <!-- UUID: cb266ef8-782b-4bef-af06-be12b727b280 -->
 
-The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend App Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.1.2.1 - Routine Protocol [Core]  <!-- UUID: bd3b25ac-90b8-49f0-ac29-bb51a2290820 -->
 
@@ -33498,15 +33498,15 @@ The Prime Agent may define instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.1.2.2 - Non-Routine Protocol [Core]  <!-- UUID: eff49ccd-5874-41d9-aff0-3e3e2a348336 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend App Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend App Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.1.2.3 - Emergency Protocol [Core]  <!-- UUID: d7296a92-3a38-42c3-938c-5327725b0fbb -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend App Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend App Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.1.3 - Data Repository [Core]  <!-- UUID: 4ef496cf-201e-4a98-9f7e-e61ad7eebfd6 -->
 
-The documents herein contain data relevant to the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Launch Agent 3 Frontend App Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.1.3.1 - Initial Planning [Core]  <!-- UUID: c4fead38-31dc-4a6a-8d98-5f28b1a46f7a -->
 
@@ -33520,9 +33520,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.1.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 8ece0051-0eee-427f-b2ea-1abfd52b80cd -->
+########### A.6.1.1.4.2.5.1.2.1.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 8ece0051-0eee-427f-b2ea-1abfd52b80cd -->
 
-The Accessibility Reward payments for the Launch Agent 3 Frontend App Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Launch Agent 3 Frontend App Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33534,11 +33534,11 @@ The Accessibility Reward Payments are:
 
 ######### A.6.1.1.4.2.5.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document [Core]  <!-- UUID: 5aada153-29f6-4304-b56e-9d425dc978a4 -->
 
-The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend Open Source Widgets Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Launch Agent 3 Frontend Open Source Widgets Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.2.1 - Parameters [Core]  <!-- UUID: 159c7e99-c884-4496-aa9b-b7721be4849a -->
 
-The documents herein define the parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.2.1.1 - Reward Code [Core]  <!-- UUID: 9a774d02-8882-4363-87b9-2efebc8142f8 -->
 
@@ -33550,11 +33550,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.2.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 79e22741-ef2b-4b8e-b97c-acead4550deb -->
 
-The documents herein define the custom parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Launch Agent 3 Frontend Open Source Widgets Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.2.2 - Operational Process Definition [Core]  <!-- UUID: 4f94c1ee-d908-412a-b4c9-2f59e5bd4e67 -->
 
-The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: 461e8506-cc90-4c8d-9927-153ee996c432 -->
 
@@ -33570,15 +33570,15 @@ The Prime Agent may define instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 2ff3ed8b-6466-4a3d-87e0-040fb8940859 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: 45f2cc2c-e96d-455f-808e-e188e5aece34 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Launch Agent 3 Frontend Open Source Widgets Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.2.3 - Data Repository [Core]  <!-- UUID: b198cdd7-92c2-4ff5-9f10-b0d315ed5f00 -->
 
-The documents herein contain data relevant to the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Launch Agent 3 Frontend Open Source Widgets Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.2.3.1 - Initial Planning [Core]  <!-- UUID: 8578558a-5bd3-4256-a8f6-0e14da879257 -->
 
@@ -33592,9 +33592,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.2.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: d96439a8-df0d-4ba9-973e-896fac953fad -->
+########### A.6.1.1.4.2.5.1.2.2.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: d96439a8-df0d-4ba9-973e-896fac953fad -->
 
-The Accessibility Reward payments for the Launch Agent 3 Frontend Open Source Widgets Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Launch Agent 3 Frontend Open Source Widgets Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33606,11 +33606,11 @@ The Accessibility Reward Payments are:
 
 ######### A.6.1.1.4.2.5.1.2.3 - Summer.fi Instance Configuration Document [Core]  <!-- UUID: fd9c7ace-e72c-4ffb-a74e-7106a0dde80b -->
 
-The documents herein contain the Instance Configuration Document for the Summer.fi Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Summer.fi Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.3.1 - Parameters [Core]  <!-- UUID: a2cbe867-bc51-4a3c-82b6-d921e2b0a4fc -->
 
-The documents herein define the parameters of the Summer.fi Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Summer.fi Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.3.1.1 - Reward Code [Core]  <!-- UUID: 1e8b16e7-b10e-4da7-936d-5cffbac57571 -->
 
@@ -33622,11 +33622,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.3.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 80314c99-0e54-4449-88a0-828e86da92c5 -->
 
-The documents herein define the custom parameters of the Summer.fi Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Summer.fi Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.3.2 - Operational Process Definition [Core]  <!-- UUID: 7d73baad-0128-460d-b3b3-6b18ba86e755 -->
 
-The documents herein define the process for the ongoing management of the Summer.fi Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Summer.fi Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.3.2.1 - Routine Protocol [Core]  <!-- UUID: de64fb0f-e867-495f-9e43-c197072e1c3d -->
 
@@ -33642,15 +33642,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.3.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 47306338-2f28-4c95-b0d3-843744e04165 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Summer.fi Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Summer.fi Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.3.2.3 - Emergency Protocol [Core]  <!-- UUID: 41233dc2-c7d4-4cd4-9e23-cebbbbfaa9ce -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Summer.fi Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Summer.fi Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.3.3 - Data Repository [Core]  <!-- UUID: 72bc2ff0-df12-4156-8300-5c6a09badccf -->
 
-The documents herein contain data relevant to the Summer.fi Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Summer.fi Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.3.3.1 - Initial Planning [Core]  <!-- UUID: dabb169a-e7d5-44c2-9ed8-f0936aa9c22a -->
 
@@ -33664,9 +33664,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.3.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7cc02e97-e849-4f19-81bc-2fc85ccd2361 -->
+########### A.6.1.1.4.2.5.1.2.3.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 7cc02e97-e849-4f19-81bc-2fc85ccd2361 -->
 
-The Accessibility Reward payments for the Summer.fi Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Summer.fi Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33700,11 +33700,11 @@ Summer.fi - `0xC7b548AD9Cf38721810246C079b2d8083aba8909`
 
 ######### A.6.1.1.4.2.5.1.2.4 - DeFi Saver Instance Configuration Document [Core]  <!-- UUID: 9907bb75-f389-42bb-8fe4-e03ff3039c46 -->
 
-The documents herein contain the Instance Configuration Document for the DeFi Saver Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the DeFi Saver Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.4.1 - Parameters [Core]  <!-- UUID: a7b36acb-01b2-42a3-8014-d567a82ab81e -->
 
-The documents herein define the parameters of the DeFi Saver Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the DeFi Saver Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.4.1.1 - Reward Code [Core]  <!-- UUID: b8b563d3-7b0c-4a35-adb7-4c6f120c7f26 -->
 
@@ -33716,11 +33716,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.4.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 613151ab-cddd-426e-b4b4-4a7a659efd0c -->
 
-The documents herein define the custom parameters of the DeFi Saver Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the DeFi Saver Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.4.2 - Operational Process Definition [Core]  <!-- UUID: 352fd637-e23d-4598-998f-a1949f006002 -->
 
-The documents herein define the process for the ongoing management of the DeFi Saver Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the DeFi Saver Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.4.2.1 - Routine Protocol [Core]  <!-- UUID: 2e0cdaa7-5d3a-42c2-808d-220c4823c0e2 -->
 
@@ -33736,15 +33736,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.4.2.2 - Non-Routine Protocol [Core]  <!-- UUID: a1f81f47-953d-4fde-8406-48ef1f4bf55a -->
 
-The documents herein define the protocol for non-routine ongoing management of the DeFi Saver Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the DeFi Saver Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.4.2.3 - Emergency Protocol [Core]  <!-- UUID: 8a8a1d60-594e-4042-8252-612d9603dab4 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the DeFi Saver Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the DeFi Saver Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.4.3 - Data Repository [Core]  <!-- UUID: 7b55a0f5-cd48-4a95-a637-6cbf10a66ec5 -->
 
-The documents herein contain data relevant to the DeFi Saver Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the DeFi Saver Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.4.3.1 - Initial Planning [Core]  <!-- UUID: 3117ffa8-81bb-4fc3-ab15-2e2a41de26fa -->
 
@@ -33758,9 +33758,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.4.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 0f9d7876-d376-4f85-840d-c3cbb96872d3 -->
+########### A.6.1.1.4.2.5.1.2.4.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 0f9d7876-d376-4f85-840d-c3cbb96872d3 -->
 
-The Accessibility Reward payments for the DeFi Saver Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the DeFi Saver Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33794,11 +33794,11 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.2.5 - CoW Swap Instance Configuration Document [Core]  <!-- UUID: 80f22d64-0ccf-4bb2-8da4-d170a95d2161 -->
 
-The documents herein contain the Instance Configuration Document for the CoW Swap Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the CoW Swap Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.5.1 - Parameters [Core]  <!-- UUID: 014a4af6-2df3-47fe-b0e4-c1238f3ce18b -->
 
-The documents herein define the parameters of the CoW Swap Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the CoW Swap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.5.1.1 - Reward Code [Core]  <!-- UUID: 3df72746-229c-4b32-bafa-802df1b04401 -->
 
@@ -33810,11 +33810,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.2 - 
 
 ########### A.6.1.1.4.2.5.1.2.5.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 947cf303-80e9-4b9f-9403-a9634d876d76 -->
 
-The documents herein define the custom parameters of the CoW Swap Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the CoW Swap Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.5.2 - Operational Process Definition [Core]  <!-- UUID: 6c37960a-a6e0-44af-b2fd-148853d0655f -->
 
-The documents herein define the process for the ongoing management of the CoW Swap Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the CoW Swap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.5.2.1 - Routine Protocol [Core]  <!-- UUID: c6e84f25-85fe-412e-808a-235e713d4ec2 -->
 
@@ -33830,15 +33830,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.5.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8f48dd88-d114-4c6f-9b01-a8c7468808b8 -->
 
-The documents herein define the protocol for non-routine ongoing management of the CoW Swap Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the CoW Swap Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.5.2.3 - Emergency Protocol [Core]  <!-- UUID: 61d2a0ea-09d1-4ad3-a668-66ebd5593c2f -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the CoW Swap Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the CoW Swap Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.5.3 - Data Repository [Core]  <!-- UUID: 67188304-6a6e-421a-92b9-bf995cd49e49 -->
 
-The documents herein contain data relevant to the CoW Swap Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the CoW Swap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.5.3.1 - Initial Planning [Core]  <!-- UUID: d0dcbfc1-826f-4f68-ac22-f356f2b3d3f4 -->
 
@@ -33852,9 +33852,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.5.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: dc323489-6f9b-4f0d-a5c6-3c74729cef7c -->
+########### A.6.1.1.4.2.5.1.2.5.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: dc323489-6f9b-4f0d-a5c6-3c74729cef7c -->
 
-The Accessibility Reward payments for the CoW Swap Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the CoW Swap Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33888,11 +33888,11 @@ CoW Swap - `0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669`
 
 ######### A.6.1.1.4.2.5.1.2.6 - ParaSwap Instance Configuration Document [Core]  <!-- UUID: d3f7f0e6-b912-4464-be3f-20b0c600bcfa -->
 
-The documents herein contain the Instance Configuration Document for the ParaSwap Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the ParaSwap Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.6.1 - Parameters [Core]  <!-- UUID: 0dbc09fd-557b-4434-a3ac-2ac66da6acb4 -->
 
-The documents herein define the parameters of the ParaSwap Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the ParaSwap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.6.1.1 - Reward Code [Core]  <!-- UUID: 6940bdf3-78db-4565-8195-1c2fea444c8a -->
 
@@ -33904,11 +33904,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.6.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 78a7d271-f5d2-4692-8831-7bf98ea754ac -->
 
-The documents herein define the custom parameters of the ParaSwap Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the ParaSwap Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.6.2 - Operational Process Definition [Core]  <!-- UUID: 576943c0-8301-4372-bc8d-4620cf94bb05 -->
 
-The documents herein define the process for the ongoing management of the ParaSwap Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the ParaSwap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.6.2.1 - Routine Protocol [Core]  <!-- UUID: bf955649-4ac2-45e2-8376-052e884698e4 -->
 
@@ -33924,15 +33924,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.6.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 0d81e6c2-4586-4aa1-9a1b-c8ce66a05fd1 -->
 
-The documents herein define the protocol for non-routine ongoing management of the ParaSwap Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the ParaSwap Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.6.2.3 - Emergency Protocol [Core]  <!-- UUID: b5583385-2432-40f3-a110-6790c7520754 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the ParaSwap Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the ParaSwap Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.6.3 - Data Repository [Core]  <!-- UUID: 4a18e7da-c6b5-4850-825d-9e7aaf406795 -->
 
-The documents herein contain data relevant to the ParaSwap Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the ParaSwap Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.6.3.1 - Initial Planning [Core]  <!-- UUID: 32dfe611-a223-40af-9100-70688fa0f162 -->
 
@@ -33946,9 +33946,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.6.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 3ea87681-b351-462c-b375-6fb60c817755 -->
+########### A.6.1.1.4.2.5.1.2.6.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 3ea87681-b351-462c-b375-6fb60c817755 -->
 
-The Accessibility Reward payments for the ParaSwap Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the ParaSwap Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -33982,11 +33982,11 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.2.7 - Yearn (Gimme) Instance Configuration Document [Core]  <!-- UUID: f36ce752-38d1-4dd4-8a51-dd18f2151756 -->
 
-The documents herein contain the Instance Configuration Document for the Yearn (Gimme) Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Yearn (Gimme) Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.7.1 - Parameters [Core]  <!-- UUID: 49866e74-c131-4e4d-9165-325bba89cd48 -->
 
-The documents herein define the parameters of the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Yearn (Gimme) Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.7.1.1 - Reward Code [Core]  <!-- UUID: 30bcc1e7-0c26-4e67-b823-1fd1203c7370 -->
 
@@ -33998,11 +33998,11 @@ This Instance uses the Tracking Methodology specified in [A.2.3.8.1.2.1.2.2.1 - 
 
 ########### A.6.1.1.4.2.5.1.2.7.1.3 - Custom Instance Parameters [Core]  <!-- UUID: f1a4510d-f38c-499c-bc07-405a8ca6816d -->
 
-The documents herein define the custom parameters of the Yearn (Gimme) Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Yearn (Gimme) Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.7.2 - Operational Process Definition [Core]  <!-- UUID: a3796610-b310-4dac-872b-21ce3bd835e7 -->
 
-The documents herein define the process for the ongoing management of the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Yearn (Gimme) Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.7.2.1 - Routine Protocol [Core]  <!-- UUID: 1c93fd6d-5cff-46e7-86e5-0af4f6c83b4b -->
 
@@ -34018,15 +34018,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.7.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 8998657a-ed5e-4610-b1bc-171f715a5d48 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Yearn (Gimme) Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Yearn (Gimme) Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.7.2.3 - Emergency Protocol [Core]  <!-- UUID: 8146f803-ddf9-4f85-81d3-84666b3f259c -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Yearn (Gimme) Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Yearn (Gimme) Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.7.3 - Data Repository [Core]  <!-- UUID: e2cf9382-81d0-4f38-a9bc-8b7c647805fb -->
 
-The documents herein contain data relevant to the Yearn (Gimme) Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Yearn (Gimme) Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.7.3.1 - Initial Planning [Core]  <!-- UUID: 2a400f84-7251-41ed-a8ce-c3d091c90ad6 -->
 
@@ -34040,9 +34040,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.7.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 30be45d8-cd38-4c52-b4d0-ed7225c97b9a -->
+########### A.6.1.1.4.2.5.1.2.7.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 30be45d8-cd38-4c52-b4d0-ed7225c97b9a -->
 
-The Accessibility Reward payments for the Yearn (Gimme) Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Yearn (Gimme) Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34076,11 +34076,11 @@ Yearn (Gimme) - `0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52`
 
 ######### A.6.1.1.4.2.5.1.2.8 - MOM Instance Configuration Document [Core]  <!-- UUID: ee4f9b64-aeb7-4813-b187-996e8172fea1 -->
 
-The documents herein contain the Instance Configuration Document for the MOM Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the MOM Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.2.8.1 - Parameters [Core]  <!-- UUID: 8adfffaf-011e-4762-9b44-3e35f0f6adaa -->
 
-The documents herein define the parameters of the MOM Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the MOM Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.8.1.1 - Reward Code [Core]  <!-- UUID: d87d51bb-8476-48b7-a8af-795917bb6f0d -->
 
@@ -34092,11 +34092,11 @@ This Instance uses the Tracking Methodologies specified in [A.2.3.8.1.2.1.2.2.1 
 
 ########### A.6.1.1.4.2.5.1.2.8.1.3 - Custom Instance Parameters [Core]  <!-- UUID: 4c40a025-6ff0-4ee7-9a33-d4c03b68f332 -->
 
-The documents herein define the custom parameters of the MOM Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the MOM Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.2.8.2 - Operational Process Definition [Core]  <!-- UUID: 3c170bd2-4a9e-4461-bf81-d33fd253dfc9 -->
 
-The documents herein define the process for the ongoing management of the MOM Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the MOM Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.8.2.1 - Routine Protocol [Core]  <!-- UUID: 4b22e820-db7b-4f76-8b82-6f60b21ca1d9 -->
 
@@ -34112,15 +34112,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.2.8.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 940153fc-b44e-4421-82de-2d196fe1b505 -->
 
-The documents herein define the protocol for non-routine ongoing management of the MOM Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the MOM Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.8.2.3 - Emergency Protocol [Core]  <!-- UUID: 0d0e6b23-5f44-4f0f-98a1-a4c82780c3d7 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the MOM Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the MOM Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.2.8.3 - Data Repository [Core]  <!-- UUID: 6c8b1217-db6e-4952-bccf-a5635a3a0119 -->
 
-The documents herein contain data relevant to the MOM Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the MOM Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.2.8.3.1 - Initial Planning [Core]  <!-- UUID: bea56b80-5d46-4a44-81a5-0df050a5255b -->
 
@@ -34134,9 +34134,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.2.8.3.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: e1961614-467f-40b0-9e7a-f67e2a70cc97 -->
+########### A.6.1.1.4.2.5.1.2.8.3.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: e1961614-467f-40b0-9e7a-f67e2a70cc97 -->
 
-The Accessibility Reward payments for the MOM Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the MOM Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34170,15 +34170,15 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######## A.6.1.1.4.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 44389e6f-b48e-4426-a6c8-110ec76ebea1 -->
 
-The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Completed` Status are stored herein.
 
 ######## A.6.1.1.4.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 05362fab-8fc5-487c-af2e-b6ebf6f4445e -->
 
-The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.4.2.5.1.2 - Active Instances](cb0709e4-c51d-45cc-b385-0c20a0bf4b25).
+The in progress Invocations of the Distribution Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.4.2.5.1.2 - Active Instances](cb0709e4-c51d-45cc-b385-0c20a0bf4b25).
 
 ######### A.6.1.1.4.2.5.1.4.1 - MetaMask Instance Configuration Document [Core]  <!-- UUID: d43ec3dd-96bf-419f-8387-f85615e6bcc5 -->
 
-The documents herein contain the Instance Configuration Document for the MetaMask Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the MetaMask Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.4.1.1 - Invocation Status [Core]  <!-- UUID: 650a20a0-362c-431b-bd56-ef13386c3aec -->
 
@@ -34186,7 +34186,7 @@ The documents herein contain the Instance Configuration Document for the MetaMas
 
 ########## A.6.1.1.4.2.5.1.4.1.2 - Parameters [Core]  <!-- UUID: f46ff617-d495-402f-a3dc-f4822a018b19 -->
 
-The documents herein define the parameters of the MetaMask Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the MetaMask Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.1.2.1 - Reward Code [Core]  <!-- UUID: c3f4fb9f-9af6-495d-8261-04bd19c8c552 -->
 
@@ -34198,11 +34198,11 @@ This parameter will be defined in a future iteration of the Launch Agent 3 Artif
 
 ########### A.6.1.1.4.2.5.1.4.1.2.3 - Custom Instance Parameters [Core]  <!-- UUID: fc5ec9c3-fad3-455d-8cb8-8be082ea388e -->
 
-The documents herein define the custom parameters of the MetaMask Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the MetaMask Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.4.1.3 - Operational Process Definition [Core]  <!-- UUID: 81e97a1c-9bf1-4038-be0e-4eece0a2f88b -->
 
-The documents herein define the process for the ongoing management of the MetaMask Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the MetaMask Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.1.3.1 - Routine Protocol [Core]  <!-- UUID: 02c6ffc8-5fdc-4a1f-8037-a6a1aeb5e51c -->
 
@@ -34218,15 +34218,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.4.1.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 167f2753-e45f-4d55-b182-2c17c4f1e2c5 -->
 
-The documents herein define the protocol for non-routine ongoing management of the MetaMask Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the MetaMask Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.1.3.3 - Emergency Protocol [Core]  <!-- UUID: 6c02ae31-2313-46ff-9232-2875186e0255 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the MetaMask Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the MetaMask Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.4.1.4 - Data Repository [Core]  <!-- UUID: a4a10d71-42f8-49f3-9eeb-dda2ceb1332a -->
 
-The documents herein contain data relevant to the MetaMask Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the MetaMask Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.1.4.1 - Initial Planning [Core]  <!-- UUID: 177f02ea-cde5-4d68-b7de-c3cef1a47f32 -->
 
@@ -34240,9 +34240,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.4.1.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 6296fedf-c2f4-4cdc-a16f-a2b0e8bd19bc -->
+########### A.6.1.1.4.2.5.1.4.1.4.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 6296fedf-c2f4-4cdc-a16f-a2b0e8bd19bc -->
 
-The Accessibility Reward payments for the MetaMask Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the MetaMask Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34276,7 +34276,7 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.4.2 - InstaDapp Instance Configuration Document [Core]  <!-- UUID: e870392a-2552-41ca-a148-4be47d34bac7 -->
 
-The documents herein contain the Instance Configuration Document for the InstaDapp Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the InstaDapp Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.4.2.1 - Invocation Status [Core]  <!-- UUID: 2f8dec26-fa98-454d-b035-284359de4fe3 -->
 
@@ -34284,7 +34284,7 @@ The documents herein contain the Instance Configuration Document for the InstaDa
 
 ########## A.6.1.1.4.2.5.1.4.2.2 - Parameters [Core]  <!-- UUID: 58b69a0b-a8f3-40cd-bc36-154aa61d8f0c -->
 
-The documents herein define the parameters of the InstaDapp Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the InstaDapp Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.2.2.1 - Reward Code [Core]  <!-- UUID: d57c7da4-c5dd-4e11-b5a3-d08aafdaa65f -->
 
@@ -34296,11 +34296,11 @@ This parameter will be defined in a future iteration of the Launch Agent 3 Artif
 
 ########### A.6.1.1.4.2.5.1.4.2.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 5c7380f4-bb98-4dcc-81de-0f02d4e71bbc -->
 
-The documents herein define the custom parameters of the InstaDapp Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the InstaDapp Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.4.2.3 - Operational Process Definition [Core]  <!-- UUID: 64113652-22f2-487b-b170-675ed1e25741 -->
 
-The documents herein define the process for the ongoing management of the InstaDapp Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the InstaDapp Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.2.3.1 - Routine Protocol [Core]  <!-- UUID: c458078b-ffba-428e-950a-9c20a64967d4 -->
 
@@ -34316,15 +34316,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.4.2.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 7a34becd-4afd-405c-bfb2-a367568c516f -->
 
-The documents herein define the protocol for non-routine ongoing management of the InstaDapp Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the InstaDapp Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.2.3.3 - Emergency Protocol [Core]  <!-- UUID: 060f50d5-e37f-430a-a103-a06c6b880c63 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the InstaDapp Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the InstaDapp Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.4.2.4 - Data Repository [Core]  <!-- UUID: 0d530623-4cf8-4046-ac19-5a2095a805d2 -->
 
-The documents herein contain data relevant to the InstaDapp Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the InstaDapp Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.2.4.1 - Initial Planning [Core]  <!-- UUID: f51aa574-e8c8-4e15-bfba-76082d40ac91 -->
 
@@ -34338,9 +34338,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.4.2.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 38f84680-46ff-400b-baeb-62a0684d2aa7 -->
+########### A.6.1.1.4.2.5.1.4.2.4.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 38f84680-46ff-400b-baeb-62a0684d2aa7 -->
 
-The Accessibility Reward payments for the InstaDapp Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the InstaDapp Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34374,7 +34374,7 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.4.3 - Gnosis Protocol Instance Configuration Document [Core]  <!-- UUID: 34cde6e0-89a1-44a4-9ce1-58873b83c63b -->
 
-The documents herein contain the Instance Configuration Document for the Gnosis Protocol Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Gnosis Protocol Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.4.3.1 - Invocation Status [Core]  <!-- UUID: ec6a6561-a5e3-4ec6-8ecf-b8053c98149b -->
 
@@ -34382,7 +34382,7 @@ The documents herein contain the Instance Configuration Document for the Gnosis 
 
 ########## A.6.1.1.4.2.5.1.4.3.2 - Parameters [Core]  <!-- UUID: a8cf666e-2fb6-4830-bc53-5005e0111408 -->
 
-The documents herein define the parameters of the Gnosis Protocol Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Gnosis Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.3.2.1 - Reward Code [Core]  <!-- UUID: 96af997a-cd62-41f4-9e32-c5a9dd243f37 -->
 
@@ -34394,11 +34394,11 @@ This parameter will be defined in a future iteration of the Launch Agent 3 Artif
 
 ########### A.6.1.1.4.2.5.1.4.3.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 6fc01270-3033-45b4-8e88-79751b36448c -->
 
-The documents herein define the custom parameters of the Gnosis Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Gnosis Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.4.3.3 - Operational Process Definition [Core]  <!-- UUID: fac720c6-f7d2-410c-80bb-8b68c77cdd7c -->
 
-The documents herein define the process for the ongoing management of the Gnosis Protocol Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Gnosis Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.3.3.1 - Routine Protocol [Core]  <!-- UUID: 34d65ab5-5a03-42a6-848d-ace67c5e9ab0 -->
 
@@ -34414,15 +34414,15 @@ The Prime Agent may define instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.4.3.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 9b770474-14bd-4846-8813-4df2bfa77a8f -->
 
-The documents herein define the protocol for non-routine ongoing management of the Gnosis Protocol Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Gnosis Protocol Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.3.3.3 - Emergency Protocol [Core]  <!-- UUID: 06e37d7d-f130-4b78-b207-32769d75c9db -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Gnosis Protocol Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Gnosis Protocol Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.4.3.4 - Data Repository [Core]  <!-- UUID: 1bd8546a-db64-46e5-9271-efc314b0a374 -->
 
-The documents herein contain data relevant to the Gnosis Protocol Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Gnosis Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.3.4.1 - Initial Planning [Core]  <!-- UUID: c2db568d-6c90-4a62-8fb9-33cfb504fc1d -->
 
@@ -34436,9 +34436,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.4.3.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 32c6b23b-8c5f-4798-97e2-84248365365d -->
+########### A.6.1.1.4.2.5.1.4.3.4.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 32c6b23b-8c5f-4798-97e2-84248365365d -->
 
-The Accessibility Reward payments for the Gnosis Protocol Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Gnosis Protocol Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34472,7 +34472,7 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.4.4 - Piku.co Instance Configuration Document [Core]  <!-- UUID: bc145261-ff5d-4937-abbd-0719390ff124 -->
 
-The documents herein contain the Instance Configuration Document for the Piku.co Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Piku.co Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.4.4.1 - Invocation Status [Core]  <!-- UUID: 76e70fba-b3a1-40dc-8625-6ba5c6447444 -->
 
@@ -34480,7 +34480,7 @@ The documents herein contain the Instance Configuration Document for the Piku.co
 
 ########## A.6.1.1.4.2.5.1.4.4.2 - Parameters [Core]  <!-- UUID: 79da10fb-e6c0-491f-8e18-80edc9e642ad -->
 
-The documents herein define the parameters of the Piku.co Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Piku.co Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.4.2.1 - Reward Code [Core]  <!-- UUID: e2a11959-ddcf-4b85-b093-92e2924f2d85 -->
 
@@ -34492,11 +34492,11 @@ This parameter will be defined in a future iteration of the Launch Agent 3 Artif
 
 ########### A.6.1.1.4.2.5.1.4.4.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 0f252ad2-ea66-49a4-9ff5-10d9bb222532 -->
 
-The documents herein define the custom parameters of the Piku.co Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Piku.co Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.4.4.3 - Operational Process Definition [Core]  <!-- UUID: 78aaaa71-7843-4910-aefe-6ba166cbbb0d -->
 
-The documents herein define the process for the ongoing management of the Piku.co Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Piku.co Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.4.3.1 - Routine Protocol [Core]  <!-- UUID: a08670ae-0bc5-4424-9b65-38db64441e8d -->
 
@@ -34512,15 +34512,15 @@ The Prime Agent may define Instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.4.4.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 4eee5be9-976e-4899-8444-a73c41a952e7 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Piku.co Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Piku.co Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.4.3.3 - Emergency Protocol [Core]  <!-- UUID: 316c7704-f588-430a-bc71-6a0730810e54 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Piku.co Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Piku.co Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.4.4.4 - Data Repository [Core]  <!-- UUID: 07bcf5db-08bd-4091-9416-38e2561e992b -->
 
-The documents herein contain data relevant to the Piku.co Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Piku.co Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.4.4.1 - Initial Planning [Core]  <!-- UUID: 3fa947ef-d8e4-4315-bccb-b4a1b6e760ca -->
 
@@ -34534,9 +34534,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.4.4.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: a1f69b33-8bd2-4c68-b4d5-6b8d34ed763e -->
+########### A.6.1.1.4.2.5.1.4.4.4.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: a1f69b33-8bd2-4c68-b4d5-6b8d34ed763e -->
 
-The Accessibility Reward payments for the Piku.co Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Piku.co Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -34570,7 +34570,7 @@ The payment address of this Third Party Partner will be defined in a future iter
 
 ######### A.6.1.1.4.2.5.1.4.5 - Lazy Summer Protocol Instance Configuration Document [Core]  <!-- UUID: 022ab7d1-05c3-422f-815c-0605f7f83f02 -->
 
-The documents herein contain the Instance Configuration Document for the Lazy Summer Protocol Accessibility Reward Primitive Instance.
+The documents herein contain the Instance Configuration Document for the Lazy Summer Protocol Distribution Reward Primitive Instance.
 
 ########## A.6.1.1.4.2.5.1.4.5.1 - Invocation Status [Core]  <!-- UUID: 33ddd322-7ec0-4d7f-8b53-a78f6479d4ca -->
 
@@ -34578,7 +34578,7 @@ The documents herein contain the Instance Configuration Document for the Lazy Su
 
 ########## A.6.1.1.4.2.5.1.4.5.2 - Parameters [Core]  <!-- UUID: 8c536779-676d-47e0-8ae9-f0c459a04d2e -->
 
-The documents herein define the parameters of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
+The documents herein define the parameters of the Lazy Summer Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.5.2.1 - Reward Code [Core]  <!-- UUID: ee4af219-fad3-4987-ba88-7b1e35a7d7de -->
 
@@ -34590,11 +34590,11 @@ This parameter will be defined in a future iteration of the Launch Agent 3 Artif
 
 ########### A.6.1.1.4.2.5.1.4.5.2.3 - Custom Instance Parameters [Core]  <!-- UUID: 00cd6bb6-4342-4856-a706-7c9f1434cb42 -->
 
-The documents herein define the custom parameters of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive, if any.
+The documents herein define the custom parameters of the Lazy Summer Protocol Instance of the Distribution Reward Primitive, if any.
 
 ########## A.6.1.1.4.2.5.1.4.5.3 - Operational Process Definition [Core]  <!-- UUID: fe61a44f-ed67-432a-bc7d-c349ccf2ecab -->
 
-The documents herein define the process for the ongoing management of the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
+The documents herein define the process for the ongoing management of the Lazy Summer Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.5.3.1 - Routine Protocol [Core]  <!-- UUID: d085cb25-fc4a-41e2-92ed-26cba7585978 -->
 
@@ -34610,15 +34610,15 @@ The Prime Agent may define instance-specific customization of the routine protoc
 
 ########### A.6.1.1.4.2.5.1.4.5.3.2 - Non-Routine Protocol [Core]  <!-- UUID: 45119527-f6d5-46ab-b86b-3b1eb038cba3 -->
 
-The documents herein define the protocol for non-routine ongoing management of the Lazy Summer Protocol Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for non-routine ongoing management of the Lazy Summer Protocol Instance of this Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.5.3.3 - Emergency Protocol [Core]  <!-- UUID: 165aad80-51a8-48ec-acb8-0ae06a3709c3 -->
 
-The documents herein define the protocol for handling emergency situations in the ongoing management of the Lazy Summer Protocol Instance of this Accessibility Reward Primitive.
+The documents herein define the protocol for handling emergency situations in the ongoing management of the Lazy Summer Protocol Instance of this Distribution Reward Primitive.
 
 ########## A.6.1.1.4.2.5.1.4.5.4 - Data Repository [Core]  <!-- UUID: 04b7677e-dd54-434d-818a-2c5583c23b9c -->
 
-The documents herein contain data relevant to the Lazy Summer Protocol Instance of the Accessibility Reward Primitive.
+The documents herein contain data relevant to the Lazy Summer Protocol Instance of the Distribution Reward Primitive.
 
 ########### A.6.1.1.4.2.5.1.4.5.4.1 - Initial Planning [Core]  <!-- UUID: ea3a21c2-0a2b-45ea-bd02-bb65b3c64f2b -->
 
@@ -34632,9 +34632,9 @@ The materials associated with Operational GovOps Review during the Invocation of
 
 The materials associated with preparing the Artifact Edit Proposal during the Invocation of this Instance are contained herein.
 
-########### A.6.1.1.4.2.5.1.4.5.4.4 - Accessibility Reward Payments [Active Data Controller]  <!-- UUID: 7fda1aa2-f693-4362-a301-06258831aebb -->
+########### A.6.1.1.4.2.5.1.4.5.4.4 - Distribution Reward Payments [Active Data Controller]  <!-- UUID: 7fda1aa2-f693-4362-a301-06258831aebb -->
 
-The Accessibility Reward payments for the Lazy Summer Protocol Instance of the Accessibility Reward Primitive are defined as Active Data.
+The Distribution Reward payments for the Lazy Summer Protocol Instance of the Distribution Reward Primitive are defined as Active Data.
 
 The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
@@ -35214,9 +35214,9 @@ The documents herein specify Launch Agent 3’s emergency response protocol in s
 
 The documents herein define Launch Agent 3’s strategic intent with respect to certain Sky Primitives.
 
-####### A.6.1.1.4.3.2.1 - Accessibility Reward Strategy [Core]  <!-- UUID: 825f23f7-739b-4a76-8e23-540b11f1854c -->
+####### A.6.1.1.4.3.2.1 - Distribution Reward Strategy [Core]  <!-- UUID: 825f23f7-739b-4a76-8e23-540b11f1854c -->
 
-Launch Agent 3’s strategy with respect to the Accessibility Reward Primitive is to encourage the broad adoption of USDS by bridging into new communities and DeFi platforms, thereby earning and distributing Accessibility Rewards for USDS balances facilitated through its frontend. Prospective partners should demonstrate strong alignment with Launch Agent 3’s mission, and offer clear pathways to engage new user bases and support the sustainable growth of USDS across diverse ecosystems.
+Launch Agent 3’s strategy with respect to the Distribution Reward Primitive is to encourage the broad adoption of USDS by bridging into new communities and DeFi platforms, thereby earning and distributing Distribution Rewards for USDS balances facilitated through its frontend. Prospective partners should demonstrate strong alignment with Launch Agent 3’s mission, and offer clear pathways to engage new user bases and support the sustainable growth of USDS across diverse ecosystems.
 
 The guiding criteria are as follows:
 - **Shared Mission Alignment:** Partners must demonstrate a commitment to promoting user-friendly stablecoin usage and responsible financial empowerment.
@@ -36231,13 +36231,13 @@ The in progress Invocations of the Token SkyLink Primitive are contained herein.
 
 The documents herein implement the Demand Side Stablecoin Primitives for Launch Agent 4. See [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d).
 
-####### A.6.1.1.5.2.5.1 - Accessibility Reward Primitive [Core]  <!-- UUID: f055e990-51e6-44c2-8d14-4e8694e62c1d -->
+####### A.6.1.1.5.2.5.1 - Distribution Reward Primitive [Core]  <!-- UUID: f055e990-51e6-44c2-8d14-4e8694e62c1d -->
 
-The documents herein contain all data and specifications for Launch Agent 4’s instances of the Accessibility Reward Primitive. See [A.2.3.8.1 - Accessibility Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
+The documents herein contain all data and specifications for Launch Agent 4’s instances of the Distribution Reward Primitive. See [A.2.3.8.1 - Distribution Reward Primitive](e632c38f-3e4e-4c7e-acfd-b6ec45a422e6).
 
 ######## A.6.1.1.5.2.5.1.1 - Primitive Hub Document [Core]  <!-- UUID: f11e8f01-a17f-44e7-aac1-56dbd5e9272e -->
 
-The documents herein organize all base information relevant to Launch Agent 4’s usage of the Accessibility Reward Primitive.
+The documents herein organize all base information relevant to Launch Agent 4’s usage of the Distribution Reward Primitive.
 
 ######### A.6.1.1.5.2.5.1.1.1 - Global Activation Status [Core]  <!-- UUID: 94bbd7ec-e724-41e7-b74a-0e567768f219 -->
 
@@ -36245,15 +36245,15 @@ The documents herein organize all base information relevant to Launch Agent 4’
 
 ######### A.6.1.1.5.2.5.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 6d07d8e0-e37e-47f0-8534-e0c67effd267 -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Active`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Active`.
 
 ######### A.6.1.1.5.2.5.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f3d16b8f-4ac2-41b8-8744-13beb396588e -->
 
-This document contains a Directory of all Instances of the Accessibility Reward Primitive with Instance status of `Completed`.
+This document contains a Directory of all Instances of the Distribution Reward Primitive with Instance status of `Completed`.
 
 ######### A.6.1.1.5.2.5.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: e1234baf-b923-4837-a279-96a76208f78d -->
 
-This document contains a Directory of all prospective Instances of the Accessibility Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.5.2.5.1.1.2 - Active Instances Directory](6d07d8e0-e37e-47f0-8534-e0c67effd267), whereas failed Invocations are Archived in [A.6.1.1.5.2.5.1.1.5 - Hub Data Repository](27d2b846-1278-4cf6-9a2f-09114d659813).
+This document contains a Directory of all prospective Instances of the Distribution Reward Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.5.2.5.1.1.2 - Active Instances Directory](6d07d8e0-e37e-47f0-8534-e0c67effd267), whereas failed Invocations are Archived in [A.6.1.1.5.2.5.1.1.5 - Hub Data Repository](27d2b846-1278-4cf6-9a2f-09114d659813).
 
 ######### A.6.1.1.5.2.5.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 27d2b846-1278-4cf6-9a2f-09114d659813 -->
 
@@ -36261,27 +36261,27 @@ The documents herein contain the Data Repository for the Primitive Hub Document.
 
 ########## A.6.1.1.5.2.5.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: d345b6e5-cf01-4c2c-a177-6d4f5549dcff -->
 
-The subtrees for archived Invocations and Instances of the Accessibility Reward Primitive are stored here.
+The subtrees for archived Invocations and Instances of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.5.2.5.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: 1cb40bb8-ab91-4fb8-82ba-84e71bd84504 -->
 
-The subtrees for failed Invocations of the Accessibility Reward Primitive are stored here.
+The subtrees for failed Invocations of the Distribution Reward Primitive are stored here.
 
 ########### A.6.1.1.5.2.5.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: ce59ab47-8c7a-4893-a3f2-c9eeafac5168 -->
 
-The subtrees for Instances of the Accessibility Reward Primitive with `Suspended` Status are stored here.
+The subtrees for Instances of the Distribution Reward Primitive with `Suspended` Status are stored here.
 
 ######## A.6.1.1.5.2.5.1.2 - Active Instances [Core]  <!-- UUID: bbe5be33-f895-48a4-a8de-7d65d83d4321 -->
 
-The Instances of the Accessibility Reward Primitive with `Active` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Active` Status are stored herein.
 
 ######## A.6.1.1.5.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 51861e24-08e4-4828-a5ea-0f0ac08f67db -->
 
-The Instances of the Accessibility Reward Primitive with `Completed` Status are stored herein.
+The Instances of the Distribution Reward Primitive with `Completed` Status are stored herein.
 
 ######## A.6.1.1.5.2.5.1.4 - In Progress Invocations [Core]  <!-- UUID: 12cf9640-3b5b-4255-b7d9-e84baa973d9f -->
 
-The in progress Invocations of the Accessibility Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.5.2.5.1.2 - Active Instances](bbe5be33-f895-48a4-a8de-7d65d83d4321).
+The in progress Invocations of the Distribution Reward Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.5.2.5.1.2 - Active Instances](bbe5be33-f895-48a4-a8de-7d65d83d4321).
 
 ####### A.6.1.1.5.2.5.2 - Integration Boost Primitive [Core]  <!-- UUID: edc5cd33-99a9-4687-b3fe-8c3e07da92e8 -->
 
