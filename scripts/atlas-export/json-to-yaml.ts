@@ -6,8 +6,8 @@ import { stringify } from 'yaml';
  * Command line tool to convert JSON to YAML
  *
  * Usage:
- *   npx tsx scripts/json-to-yaml.ts [input-file]
- *   npx tsx scripts/json-to-yaml.ts --help
+ *   npx tsx scripts/atlas-export/json-to-yaml.ts [input-file]
+ *   npx tsx scripts/atlas-export/json-to-yaml.ts --help
  *
  * If no input file is provided, defaults to:
  *   .debug-data/standardized-atlas/atlas.json
@@ -38,8 +38,8 @@ function showUsage(): void {
 JSON to YAML Converter
 
 Usage:
-  npx tsx scripts/json-to-yaml.ts [input-file]
-  npx tsx scripts/json-to-yaml.ts --help
+  npx tsx scripts/atlas-export/json-to-yaml.ts [input-file]
+  npx tsx scripts/atlas-export/json-to-yaml.ts --help
 
 Arguments:
   input-file    Path to the JSON file to convert (optional)
@@ -53,8 +53,8 @@ Output:
   with the same name but with a .yaml extension.
 
 Examples:
-  npx tsx scripts/json-to-yaml.ts data.json
-  npx tsx scripts/json-to-yaml.ts
+  npx tsx scripts/atlas-export/json-to-yaml.ts data.json
+  npx tsx scripts/atlas-export/json-to-yaml.ts
 `);
 }
 
