@@ -6,6 +6,10 @@ function hasError(issues: ValidationIssue[], messageSubstring: string): boolean 
   return issues.some((i) => i.severity === 'error' && i.message.includes(messageSubstring));
 }
 
+function hasErrorInExpected(issues: ValidationIssue[], expectedSubstring: string): boolean {
+  return issues.some((i) => i.severity === 'error' && i.expected && i.expected.includes(expectedSubstring));
+}
+
 function hasWarning(issues: ValidationIssue[], messageSubstring: string): boolean {
   return issues.some((i) => i.severity === 'warning' && i.message.includes(messageSubstring));
 }
@@ -57,55 +61,154 @@ Content here.`;
   });
 
   describe('Heading Hierarchy Validation', () => {
-    it('accepts valid progression', () => {
-      const md = `# A.1 - Scope [Scope]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+    it('accepts valid progression with correct heading levels', () => {
+      const md = `# A.0 - Scope [Scope]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
 
 Content.
 
-## A.1.1 - Article [Article]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+## A.0.1 - Article [Article]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
 
 Content.
 
-### A.1.1.1 - Section [Section]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
+### A.0.1.1 - Section [Section]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
 
 Content.`;
       const issues = validate(md);
       expect(hasError(issues, 'hierarchy')).toBe(false);
+      expect(hasError(issues, 'mismatch')).toBe(false);
     });
 
-    it('detects skipped levels', () => {
-      const md = `## A.1.1 - Article [Article]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
-
-Content.
-
-#### A.1.1.1.1 - Core [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+    it('detects heading levels exceeding 6', () => {
+      const md = `####### A.1.1.1.1.1.1.1 - Deep Core [Core]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
 
 Content.`;
       const issues = validate(md);
-      expect(hasError(issues, 'skipped from level 2 to level 4')).toBe(true);
+      expect(hasError(issues, 'exceeds maximum of 6')).toBe(true);
     });
 
-    it('accepts valid nesting and unnesting', () => {
-      const md = `### A.1.1.1 - Section [Section]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
-
-Content.
-
-#### A.1.1.1.1 - Core [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
-
-Content.
-
-##### A.1.1.1.1.1 - Nested Core [Core]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
-
-Content.
-
-#### A.1.1.1.2 - Core [Core]  <!-- UUID: 44444444-4444-4444-4444-444444444444 -->
-
-Content.
-
-##### A.1.1.1.2.1 - Nested Core [Core]  <!-- UUID: 55555555-5555-5555-5555-555555555555 -->
+    it('detects heading level mismatch with document number depth', () => {
+      const md = `#### A.0.1.1 - Section [Section]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
 
 Content.`;
       const issues = validate(md);
+      expect(hasError(issues, 'Heading level mismatch')).toBe(true);
+    });
+
+    it('accepts 6 hashtags for documents at depth > 6', () => {
+      const md = `#### A.1.2.3.4 - Core [Core]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+
+Content.
+
+##### A.1.2.3.4.5 - Core [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+
+Content.
+
+###### A.1.2.3.4.5.6 - Core [Core]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
+
+Content.
+
+###### A.1.2.3.4.5.6.7 - Core [Core]  <!-- UUID: 44444444-4444-4444-4444-444444444444 -->
+
+Content at depth 7 (capped at 6 hashtags).
+
+###### A.1.2.3.4.5.6.7.8 - Core [Core]  <!-- UUID: 55555555-5555-5555-5555-555555555555 -->
+
+Content at depth 8 (capped at 6 hashtags).`;
+      const issues = validate(md);
+      expect(hasError(issues, 'hierarchy')).toBe(false);
+      expect(hasError(issues, 'mismatch')).toBe(false);
+      expect(hasError(issues, 'exceeds')).toBe(false);
+    });
+
+    it('validates parent-child relationships using document numbers', () => {
+      const md = `#### A.1.2.3.4 - Core [Core]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+
+Content.
+
+###### A.1.2.3.4.5.6 - Core [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+
+Content (missing parent A.1.2.3.4.5).`;
+      const issues = validate(md);
+      expect(hasError(issues, 'Missing parent document')).toBe(true);
+    });
+
+    it('validates Needed Research heading levels based on parent document', () => {
+      const md = `#### A.1.2.3.4 - Core [Core]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+
+Content.
+
+##### NR-1 - Research Item [Needed Research]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+
+Research content.
+
+##### A.1.2.3.4.5 - Child Core [Core]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
+
+Content.
+
+###### NR-2 - Another Research [Needed Research]  <!-- UUID: 44444444-4444-4444-4444-444444444444 -->
+
+More research.`;
+      const issues = validate(md);
+      expect(hasError(issues, 'mismatch')).toBe(false);
+    });
+
+    it('detects incorrect Needed Research heading levels', () => {
+      const md = `### A.1.2.3 - Section [Section]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+
+Content.
+
+##### NR-1 - Research Item [Needed Research]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+
+**Content**:
+
+Research content (should be #### not #####, parent is at depth 3 so child should be at depth 4).`;
+      const issues = validate(md);
+      expect(hasError(issues, 'Heading level mismatch')).toBe(true);
+      expect(hasErrorInExpected(issues, 'expected 4 hashtags')).toBe(true);
+    });
+
+    it('handles Needed Research at various nesting depths', () => {
+      const md = `# A.0 - Scope [Scope]  <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
+
+Content.
+
+## NR-1 - Scope Research [Needed Research]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+
+Research at depth 2.
+
+## A.0.1 - Article [Article]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
+
+Content.
+
+### NR-2 - Article Research [Needed Research]  <!-- UUID: 44444444-4444-4444-4444-444444444444 -->
+
+Research at depth 3.
+
+### A.0.1.1 - Section [Section]  <!-- UUID: 55555555-5555-5555-5555-555555555555 -->
+
+Content.
+
+#### NR-3 - Section Research [Needed Research]  <!-- UUID: 66666666-6666-6666-6666-666666666666 -->
+
+Research at depth 4.
+
+#### A.0.1.1.1 - Core [Core]  <!-- UUID: 77777777-7777-7777-7777-777777777777 -->
+
+Content.
+
+##### NR-4 - Core Research [Needed Research]  <!-- UUID: 88888888-8888-8888-8888-888888888888 -->
+
+Research at depth 5.
+
+##### A.0.1.1.1.1 - Nested Core [Core]  <!-- UUID: 99999999-9999-9999-9999-999999999999 -->
+
+Content.
+
+###### NR-5 - Deep Research [Needed Research]  <!-- UUID: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa -->
+
+Research at depth 6 (capped).`;
+      const issues = validate(md);
+      expect(hasError(issues, 'mismatch')).toBe(false);
       expect(hasError(issues, 'hierarchy')).toBe(false);
     });
   });
@@ -555,7 +658,11 @@ Content without blank line.
 
 Content.
 
-#### A.1.1.1.1 - Skipped [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
+### A.1.1.1 - Section [Section]  <!-- UUID: 33333333-3333-3333-3333-333333333333 -->
+
+Content.
+
+##### A.1.1.1.1 - Wrong Level [Core]  <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
 
 Content.`;
 
@@ -565,7 +672,7 @@ Content.`;
       expect(hasError(issues, 'Invalid document type')).toBe(true);
       expect(hasError(issues, 'Duplicate UUID')).toBe(true);
       expect(hasError(issues, 'Missing blank line')).toBe(true);
-      expect(hasError(issues, 'skipped')).toBe(true);
+      expect(hasError(issues, 'mismatch')).toBe(true);
     });
   });
 });

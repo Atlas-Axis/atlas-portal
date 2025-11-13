@@ -240,6 +240,32 @@ The numbering system uses special directory numbers for organizational purposes:
 >
 > **Implementation**: The `sortAtlasDocuments` sorts sibling nodes by sort_order and document number.
 
+## Markdown Heading Limitations
+
+When Atlas documents are exported to Markdown format, there is an important limitation:
+
+**Heading Level Cap**: Markdown viewers do not support more than 6 heading levels (######). To maintain compatibility:
+
+- **Heading levels are capped at 6 hashtags** in Atlas Markdown files
+- Documents at semantic depth 1-5 use their natural heading level (# through #####)
+- **Documents at semantic depth 6 or greater all use 6 hashtags (######)**
+- Parent-child relationships for deeply nested documents are determined by document numbers, not heading levels
+
+### Semantic Depth vs. Heading Level
+
+- **Semantic Depth**: The true hierarchical level calculated from the document number structure
+- **Heading Level**: The visual representation in Markdown (capped at 6)
+
+Example:
+
+```
+A.1.1.1.1.1.1     → Depth 6 → ######  (6 hashtags)
+A.1.1.1.1.1.1.1   → Depth 7 → ######  (still 6 hashtags, capped)
+A.1.1.1.1.1.1.1.1 → Depth 8 → ######  (still 6 hashtags, capped)
+```
+
+All three documents use 6 hashtags in the Markdown, but their document numbers reveal their true hierarchical depths. The parser uses document number structure to correctly reconstruct the hierarchy.
+
 ## Implementation Guidelines
 
 ### For AI Agents
@@ -416,3 +442,29 @@ Each Atlas database contains specific types of documents. Here's the mapping of 
 
 - **Needed Research**
   - Needed Research
+
+## Markdown Heading Limitations
+
+When Atlas documents are exported to Markdown format, there is an important limitation:
+
+**Heading Level Cap**: Markdown viewers do not support more than 6 heading levels (######). To maintain compatibility:
+
+- **Heading levels are capped at 6 hashtags** in Atlas Markdown files
+- Documents at semantic depth 1-5 use their natural heading level (# through #####)
+- **Documents at semantic depth 6 or greater all use 6 hashtags (######)**
+- Parent-child relationships for deeply nested documents are determined by document numbers, not heading levels
+
+### Semantic Depth vs. Heading Level
+
+- **Semantic Depth**: The true hierarchical level calculated from the document number structure
+- **Heading Level**: The visual representation in Markdown (capped at 6)
+
+Example:
+
+```
+A.1.1.1.1.1.1     → Depth 6 → ######  (6 hashtags)
+A.1.1.1.1.1.1.1   → Depth 7 → ######  (still 6 hashtags, capped)
+A.1.1.1.1.1.1.1.1 → Depth 8 → ######  (still 6 hashtags, capped)
+```
+
+All three documents use 6 hashtags in the Markdown, but their document numbers reveal their true hierarchical depths. The parser uses document number structure to correctly reconstruct the hierarchy.

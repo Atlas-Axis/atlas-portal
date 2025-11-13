@@ -16,18 +16,38 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 
 ## 2. File Structure & Hierarchy
 
-The Atlas Markdown file represents the document hierarchy using standard Markdown heading levels. The heading level directly corresponds to the depth of the document in the Atlas tree.
+The Atlas Markdown file represents the document hierarchy using standard Markdown heading levels. However, due to markdown viewer limitations, **heading levels are capped at 6** (######).
 
-**Hierarchy Representation:**
+### Heading Level Cap
 
-- `#` (Heading 1) = Scope documents (top level)
-- `##` (Heading 2) = Article documents (under Scopes)
-- `###` (Heading 3) = Section documents (under Articles)
-- `####` (Heading 4) = Primary documents (Core, Type Specification, Active Data Controller) under Sections
-- `#####` (Heading 5) = Nested primary documents or supporting documents
+**IMPORTANT**: Markdown viewers do not support more than 6 heading levels. To maintain compatibility:
+
+- Heading levels are **capped at 6 hashtags** (######)
+- Documents at depth > 6 all use 6 hashtags
+- **Document numbers** (not heading levels) determine the true hierarchical depth
+- Parent-child relationships are determined by document number structure
+
+### Semantic Depth vs. Heading Level
+
+- **Semantic Depth**: The true hierarchical level calculated from the document number
+- **Heading Level**: The number of `#` symbols in the markdown (capped at 6)
+
+For documents at semantic depth 1-5, the heading level matches the depth:
+
+- Depth 1 (Scope) → `#`
+- Depth 2 (Article) → `##`
+- Depth 3 (Section) → `###`
+- Depth 4 → `####`
+- Depth 5 → `#####`
+
+For documents at semantic depth 6 or greater, all use 6 hashtags:
+
+- Depth 6 → `######`
+- Depth 7 → `######` (capped)
+- Depth 8 → `######` (capped)
 - And so on...
 
-**Example Hierarchy:**
+**Example Hierarchy with Deep Nesting:**
 
 ```markdown
 # A.1 - The Governance Scope [Scope] <!-- UUID: abc-123 -->
@@ -48,8 +68,22 @@ Core document content here.
 
 ##### A.1.1.1.1.1 - Vote Counting [Core] <!-- UUID: mno-345 -->
 
-Nested core document content here.
+Nested core document at depth 5.
+
+###### A.1.1.1.1.1.1 - Vote Auditing [Core] <!-- UUID: pqr-678 -->
+
+Nested core document at depth 6 (still 6 hashtags).
+
+###### A.1.1.1.1.1.1.1 - Audit Trail [Core] <!-- UUID: stu-901 -->
+
+Nested core document at depth 7 (capped at 6 hashtags).
+
+###### A.1.1.1.1.1.1.1.1 - Trail Verification [Core] <!-- UUID: vwx-234 -->
+
+Nested core document at depth 8 (capped at 6 hashtags).
 ```
+
+Notice how documents at depth 7 and 8 both use 6 hashtags. Their hierarchical relationship is determined by their document numbers, not by heading levels.
 
 ## 3. Title Line Syntax
 
@@ -118,7 +152,49 @@ Every document in the Atlas Markdown file begins with a title line that follows 
 ##### A.1.2.3.1.0.3.1 - Budget - Element Annotation [Annotation] <!-- UUID: 5e2e1397-ff87-43ce-a742-e5a68dc89a44 -->
 ```
 
-## 4. Content Separation
+## 4. Semantic Depth Calculation
+
+Understanding how semantic depth is calculated from document numbers is crucial for working with deeply nested documents.
+
+### Basic Rule for Regular Documents
+
+For most documents (Scope, Article, Section, Core, Type Specification, Active Data Controller):
+
+- Count the segments in the document number (split by `.`)
+- Subtract 1 (the `A` prefix doesn't count as depth)
+
+Examples:
+
+- `A.1` → 2 segments → depth 1 (Scope)
+- `A.1.2` → 3 segments → depth 2 (Article)
+- `A.1.2.3` → 4 segments → depth 3 (Section)
+- `A.1.2.3.4` → 5 segments → depth 4
+- `A.1.2.3.4.5.6.7.8` → 9 segments → depth 8
+
+### Special Rule for Supporting Documents
+
+Supporting documents (Annotations, Tenets, Scenarios, Scenario Variations, Active Data) use special patterns:
+
+1. **Annotations** (`.0.3.X`): Depth = target document depth + 1
+   - Example: `A.1.1.1.0.3.1` targets `A.1.1.1` (depth 3) → annotation depth is 4
+
+2. **Tenets** (`.0.4.X`): Depth = target document depth + 1
+   - Example: `A.1.4.5.0.4.1` targets `A.1.4.5` (depth 3) → tenet depth is 4
+
+3. **Scenarios** (`.1.X`): Depth = parent tenet depth + 1
+   - Example: `A.1.4.5.0.4.1.1.1` → parent tenet `A.1.4.5.0.4.1` (depth 4) → scenario depth is 5
+
+4. **Scenario Variations** (`.varX`): Depth = parent scenario depth + 1
+   - Example: `A.1.4.5.0.4.1.1.1.var1` → parent scenario `A.1.4.5.0.4.1.1.1` (depth 5) → variation depth is 6
+
+5. **Active Data** (`.0.6.X`): Depth = controller document depth + 1
+   - Example: `A.1.1.3.1.0.6.1` → controller `A.1.1.3.1` (depth 4) → active data depth is 5
+
+### Special Case: Needed Research
+
+Needed Research documents (`NR-X`) don't encode hierarchy in their numbers. Their depth is determined by their parent document in context.
+
+## 5. Content Separation
 
 Documents consist of a title line followed by content, with specific spacing rules:
 
@@ -175,7 +251,7 @@ This approach provides better formatting.
 - Everything from the blank line after the title up to the first `**Label**:` pattern is considered the document's main content
 - If no extra fields exist, all text until the next title line is content
 
-## 5. Extra Fields Syntax
+## 6. Extra Fields Syntax
 
 Certain document types have structured extra fields that appear after the main content. These fields use a specific format that must be followed exactly.
 
@@ -293,7 +369,7 @@ Must appear in this order:
 - Field labels are case-sensitive and must match exactly
 - The parser detects extra fields by the `**Label**:` pattern (bold text ending with colon)
 
-## 6. Document Numbering Rules
+## 7. Document Numbering Rules
 
 Atlas document numbers follow a hierarchical system. This section provides a summary
 
@@ -340,7 +416,7 @@ Atlas document numbers follow a hierarchical system. This section provides a sum
 
 - **Core documents** can nest under other Core documents (arbitrary depth)
 
-## 7. Nesting Rules & Restrictions
+## 8. Nesting Rules & Restrictions
 
 Understanding what documents can be nested under other documents is critical for maintaining valid Atlas structure.
 
@@ -381,7 +457,7 @@ When editing the Atlas Markdown:
 3. Check that heading levels match the nesting depth
 4. Confirm supporting documents use correct directory numbers (`.0.3`, `.0.4`, etc.)
 
-## 8. Validation & Common Errors
+## 9. Validation & Common Errors
 
 ### Validation Tool
 
@@ -404,11 +480,12 @@ npx tsx scripts/validate-atlas-markdown.ts atlas.md
 The validator checks for:
 
 - Proper title line format (heading, document number, name, type, UUID)
-- Correct heading level progression (no skipped levels)
+- Heading level cap enforcement (maximum 6 hashtags)
+- Correct heading levels matching document number-based semantic depth
 - Valid document numbering according to Atlas rules
 - Proper extra fields format and ordering for document types that require them
 - UUID uniqueness and format
-- Correct parent-child relationships based on document types
+- Correct parent-child relationships based on document numbers
 - Proper spacing around content and extra fields
 
 **Using the validator is highly recommended** before importing Atlas Markdown files to catch syntax errors early.
@@ -423,9 +500,10 @@ To ensure the parser can correctly process the Atlas Markdown file, follow these
    - One space after heading symbols
    - One space before opening bracket of type
 
-2. **Heading Consistency**:
-   - Cannot skip heading levels (e.g., cannot go from `##` to `####`)
-   - Each child must be exactly one level deeper than its parent
+2. **Heading Level Cap**:
+   - Maximum 6 hashtags (######) due to markdown viewer limitations
+   - Documents at depth > 6 all use 6 hashtags
+   - Heading level must match semantic depth (calculated from document number), capped at 6
 
 3. **Document Numbers**:
    - Must follow the numbering rules for the document type
@@ -451,7 +529,7 @@ Understanding how the parser works helps avoid errors:
 - **Field Detection**: The parser identifies extra fields by the `**Label**:` pattern
 - **Content Boundary**: Everything before the first `**Label**:` line is considered main content
 
-## 9. Complete Examples
+## 10. Complete Examples
 
 ### Example 1: Simple Core Document
 

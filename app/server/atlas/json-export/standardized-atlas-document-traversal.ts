@@ -85,10 +85,10 @@ export function traverseStandardizedDocument(
     }
 
     // Track visited UUIDs to detect circular references
-    // Note: Some documents (Needed Research, Action Tenet) can appear multiple times legitimately
+    // Note: Needed Research documents can appear multiple times legitimately (global numbering)
     if (doc.uuid && visitedUuids.has(doc.uuid)) {
-      // Allow multiple visits for certain document types
-      const allowDuplicates = doc.type === 'Needed Research' || doc.type === 'Action Tenet';
+      // Allow multiple visits for Needed Research documents
+      const allowDuplicates = doc.type === 'Needed Research';
       if (!allowDuplicates) {
         console.warn(
           `[traverseStandardizedDocument] Circular reference or duplicate detected: ${doc.uuid} (${doc.type})`,

@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
 import { buildAtlasJSON } from '../json-export/atlas-json-exporter';
+import { StandardizedAtlasScopeTrees } from '../json-export/types';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
@@ -29,11 +30,11 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   };
 }
 
-async function loadSupabaseAsStandardizedAtlasScopeTrees() {
+async function loadSupabaseAsStandardizedAtlasScopeTrees(): Promise<StandardizedAtlasScopeTrees> {
   return buildAtlasJSON();
 }
 
-async function loadMarkdownAsStandardizedAtlasScopeTrees() {
+async function loadMarkdownAsStandardizedAtlasScopeTrees(): Promise<StandardizedAtlasScopeTrees> {
   const projectRoot = process.cwd();
   const dir = path.join(projectRoot, '.debug-data', 'standardized-atlas');
   const inFile = path.join(dir, 'atlas.md');

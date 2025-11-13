@@ -7,7 +7,7 @@ import {
   childCollectionNames,
 } from './types';
 
-const ALLOWED_DUPLICATE_TYPES = ['Needed Research', 'Action Tenet'];
+const ALLOWED_DUPLICATE_TYPES = ['Needed Research'];
 
 /**
  * Flattens StandardizedAtlasDocument trees into flat arrays grouped by Atlas database.
@@ -103,15 +103,9 @@ export function flattenStandardizedAtlasDocuments(
 
       // Log duplicates for allowed types
       if (doc.uuid && seenUuids.has(doc.uuid) && allowDuplicatesForType) {
-        if (doc.type === 'Needed Research') {
-          console.info(
-            `[flattenStandardizedAtlasDocuments] Duplicate 'Needed Research' document kept: ${doc.uuid} - ${doc.name}`,
-          );
-        } else if (doc.type === 'Action Tenet') {
-          console.warn(
-            `[flattenStandardizedAtlasDocuments] Duplicate 'Action Tenet' document kept: ${doc.uuid} - ${doc.name}`,
-          );
-        }
+        console.info(
+          `[flattenStandardizedAtlasDocuments] Duplicate 'Needed Research' document kept: ${doc.uuid} - ${doc.name}`,
+        );
       }
 
       // Track this UUID

@@ -235,9 +235,20 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      await expect(buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() })).rejects.toThrow(
-        'Circular reference detected',
-      );
+      // With the new duplicate handling, circular references are detected and handled gracefully
+      // The duplicate node is returned as a stub without throwing an error
+      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+
+      // Should successfully build the tree (no error thrown)
+      expect(result.scopeTrees).toHaveLength(1);
+      expect(result.scopeTrees[0].plain_text_name).toBe('Test Scope');
+      expect(result.scopeTrees[0].articles).toHaveLength(1);
+
+      // The circular reference (Article -> Scope) should be detected and the duplicate Scope stub should have no children
+      const articleNode = result.scopeTrees[0].articles[0];
+      expect(articleNode.scopes).toHaveLength(1);
+      const duplicateScope = articleNode.scopes[0];
+      expect(duplicateScope.articles).toHaveLength(0); // Stub node has no children
     });
 
     it('should handle missing child documents gracefully', async () => {

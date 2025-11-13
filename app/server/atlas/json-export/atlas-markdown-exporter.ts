@@ -5,6 +5,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../notion-database-properties-and-relationships';
 import { buildAtlasJSON } from './atlas-json-exporter';
+import { calculateHeadingLevel } from './atlas-markdown-depth-utils';
 import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees, childCollectionNames } from './types';
 
 export async function buildAtlasMarkdown(): Promise<string> {
@@ -50,10 +51,34 @@ function sanitizeScopeName(name: string): string {
   return name.replace(/[/\\:*?"<>|]/g, '_');
 }
 
-function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number): string[] {
+function formatDocumentRecursive(
+  doc: StandardizedAtlasDocument,
+  depth: number,
+  parentDoc?: StandardizedAtlasDocument,
+): string[] {
   const lines: string[] = [];
 
-  const hashes = '#'.repeat(Math.max(1, depth + 1));
+  // Skip stub nodes (duplicate documents that were filtered out during tree building)
+  if (!doc.name || doc.name.trim() === '') {
+    console.warn(`[formatDocumentRecursive] Skipping stub node without name: ${doc.uuid ?? 'unknown'} (${doc.type})`);
+    return lines; // Return empty array to skip this document
+  }
+
+  // Calculate heading level based on document number and type (capped at 6)
+  // For Needed Research, use parent's depth + 1 since NR-X doesn't encode hierarchy
+  let headingLevel: number;
+  if (doc.type === 'Needed Research' && parentDoc) {
+    const parentLevel = calculateHeadingLevel(parentDoc.doc_no, parentDoc.type);
+    headingLevel = Math.min(6, parentLevel + 1);
+  } else if (doc.type === 'Needed Research') {
+    // Fallback for root-level NR (shouldn't happen in practice)
+    console.warn(`Needed Research document ${doc.doc_no} (${doc.type}) is at root level.`);
+    headingLevel = 6;
+  } else {
+    headingLevel = calculateHeadingLevel(doc.doc_no, doc.type);
+  }
+
+  const hashes = '#'.repeat(headingLevel);
   const uuid = ` <!-- UUID: ${doc.uuid ?? ''} -->`;
   const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}] ${uuid}`;
   lines.push(title, '');
@@ -75,7 +100,8 @@ function formatDocumentRecursive(doc: StandardizedAtlasDocument, depth: number):
     // TODO: Don't sort here, the original tree is already sorted
     // const sortedChildren = [...allChildren].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
     for (const child of allChildren) {
-      lines.push(...formatDocumentRecursive(child, depth + 1));
+      // Pass current doc as parent for Needed Research depth calculation
+      lines.push(...formatDocumentRecursive(child, depth + 1, doc));
     }
   }
 

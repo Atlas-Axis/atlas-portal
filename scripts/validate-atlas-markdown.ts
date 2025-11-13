@@ -7,16 +7,17 @@
  * Validations performed:
  * 1. Title Line Format - Validates exact pattern: `# {DocNo} - {Name} [{Type}]  <!-- UUID: {uuid} -->`
  * 2. Document Types - Ensures document type is one of the 12 valid Atlas document types
- * 3. Heading Hierarchy - Checks sequential heading levels (no skipping from # to ###)
- * 4. Blank Lines - Validates required blank lines after titles and around extra fields
- * 5. Extra Fields - Validates format, order, and presence of required fields for:
+ * 3. Heading Level Cap - Ensures heading levels never exceed 6 (######)
+ * 4. Heading Hierarchy - Validates heading levels match document number-based semantic depth
+ * 5. Blank Lines - Validates required blank lines after titles and around extra fields
+ * 6. Extra Fields - Validates format, order, and presence of required fields for:
  *    - Type Specification (6 fields)
  *    - Scenario (3 fields)
  *    - Scenario Variation (3 fields)
  *    - Needed Research (1 field)
- * 6. Document Numbering - Validates patterns for all 12 document types (e.g., A.1, NR-1, .0.3.1)
- * 7. Nesting Rules - Ensures valid parent-child type combinations (e.g., Core under Section)
- * 8. UUID Validation - Checks format (UUID v4), uniqueness, and warns about empty UUIDs
+ * 7. Document Numbering - Validates patterns for all 12 document types (e.g., A.1, NR-1, .0.3.1)
+ * 8. Nesting Rules - Ensures valid parent-child type combinations based on document numbers
+ * 9. UUID Validation - Checks format (UUID v4), uniqueness, and warns about empty UUIDs
  *
  * Usage:
  *   npx tsx validate-atlas-markdown.ts path/to/atlas.md
@@ -150,6 +151,118 @@ const ALLOWED_NESTING: Record<AtlasDocumentType, AtlasDocumentType[]> = {
 };
 
 // ============================================================================
+// Helper Functions for Document Number-Based Depth Calculation
+// ============================================================================
+
+/**
+ * Calculate the semantic depth of a document based on its document number and type.
+ * This matches the logic in atlas-markdown-depth-utils.ts but is duplicated here
+ * to keep the validator standalone.
+ */
+function calculateSemanticDepth(docNo: string, type: AtlasDocumentType): number | null {
+  if (type === 'Needed Research') {
+    return null; // Context-dependent
+  }
+
+  // For supporting documents with special patterns, calculate based on target document
+  if (['Annotation', 'Action Tenet', 'Scenario', 'Scenario Variation', 'Active Data'].includes(type)) {
+    const parentDocNo = findParentDocNumber(docNo, type);
+    if (parentDocNo && parentDocNo !== docNo) {
+      const parentType = inferDocumentType(parentDocNo);
+      const parentDepth = calculateSemanticDepth(parentDocNo, parentType);
+      return parentDepth !== null ? parentDepth + 1 : null;
+    }
+  }
+
+  // For regular documents, count segments
+  const segments = docNo.split('.');
+  return segments.length - 1;
+}
+
+/**
+ * Find the parent document number for a given document.
+ */
+function findParentDocNumber(docNo: string, type: AtlasDocumentType): string | null {
+  if (type === 'Needed Research') return null;
+
+  if (type === 'Scenario Variation') {
+    const match = docNo.match(/^(.+)\.var\d+$/);
+    return match ? match[1] : null;
+  }
+
+  if (type === 'Annotation') {
+    const match = docNo.match(/^(.+)\.0\.3\.\d+$/);
+    return match ? match[1] : null;
+  }
+
+  if (type === 'Action Tenet') {
+    const match = docNo.match(/^(.+)\.0\.4\.\d+$/);
+    return match ? match[1] : null;
+  }
+
+  if (type === 'Scenario') {
+    const match = docNo.match(/^(.+)\.1\.\d+$/);
+    return match ? match[1] : null;
+  }
+
+  if (type === 'Active Data') {
+    const match = docNo.match(/^(.+)\.0\.6\.\d+$/);
+    return match ? match[1] : null;
+  }
+
+  const segments = docNo.split('.');
+  if (segments.length <= 2) return null;
+
+  return segments.slice(0, -1).join('.');
+}
+
+/**
+ * Infer the document type from a document number (heuristic).
+ */
+function inferDocumentType(docNo: string): AtlasDocumentType {
+  if (docNo.startsWith('NR-')) return 'Needed Research';
+
+  // Check for special patterns (order matters!)
+  if (docNo.match(/\.var\d+$/)) return 'Scenario Variation';
+  if (docNo.match(/\.0\.3\.\d+$/)) return 'Annotation';
+  if (docNo.match(/\.0\.6\.\d+$/)) return 'Active Data';
+
+  // Scenarios: <target>.0.4.<tenet-num>.1.<scenario-num>
+  // Must check for .0.4. before .1. to avoid false positives with Core documents like A.0.1.2.1.1
+  if (docNo.match(/\.0\.4\.\d+\.1\.\d+$/)) return 'Scenario';
+
+  // Tenets: <target>.0.4.<tenet-num> (but NOT followed by .1.X which would be Scenario)
+  if (docNo.match(/\.0\.4\.\d+$/)) return 'Action Tenet';
+
+  const segments = docNo.split('.');
+  const depth = segments.length - 1;
+
+  switch (depth) {
+    case 1:
+      return 'Scope';
+    case 2:
+      return 'Article';
+    case 3:
+      return 'Section';
+    default:
+      return 'Core';
+  }
+}
+
+/**
+ * Calculate the expected heading level (1-6) for a document.
+ */
+function calculateExpectedHeadingLevel(docNo: string, type: AtlasDocumentType): number {
+  // Needed Research should not use this function directly
+  // It's handled in validateHierarchy by finding the parent document
+
+  const semanticDepth = calculateSemanticDepth(docNo, type);
+  if (semanticDepth === null) return 6; // Fallback
+
+  return Math.min(6, Math.max(1, semanticDepth));
+}
+
+// ============================================================================
 // Validation Functions
 // ============================================================================
 
@@ -218,25 +331,84 @@ function parseTitleLine(line: string, lineNum: number): { doc: Document | null; 
 function validateHierarchy(docs: Document[]): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  for (let i = 1; i < docs.length; i++) {
-    const prev = docs[i - 1];
-    const curr = docs[i];
-    const levelDiff = curr.level - prev.level;
+  for (let i = 0; i < docs.length; i++) {
+    const doc = docs[i];
 
-    // Can go deeper by 1, or same level, or shallower by any amount
-    if (levelDiff > 1) {
-      const prevHashes = '#'.repeat(prev.level);
-      const currHashes = '#'.repeat(curr.level);
-      const expectedHashes = '#'.repeat(prev.level + 1);
+    // Check 1: Heading level must not exceed 6
+    if (doc.level > 6) {
+      issues.push({
+        line: doc.line,
+        severity: 'error',
+        message: `🪜 Heading level exceeds maximum of 6`,
+        found: `${'#'.repeat(doc.level)} (${doc.level} hashtags)`,
+        expected: `Maximum 6 hashtags (######)`,
+        reason: 'Markdown viewers do not support more than 6 heading levels',
+        action: `Use ###### (6 hashtags) for documents at depth > 6`,
+      });
+    }
+
+    // Check 2: Heading level should match semantic depth (capped at 6)
+    // For Needed Research, find the parent by looking backwards at shallower heading levels
+    let expectedLevel: number;
+    if (doc.type === 'Needed Research') {
+      // Find parent document (first document with lower heading level going backwards)
+      let parentDoc: Document | undefined;
+      for (let j = i - 1; j >= 0; j--) {
+        if (docs[j].level < doc.level) {
+          parentDoc = docs[j];
+          break;
+        }
+      }
+
+      if (parentDoc) {
+        const parentLevel = calculateExpectedHeadingLevel(parentDoc.docNo, parentDoc.type);
+        expectedLevel = Math.min(6, parentLevel + 1);
+      } else {
+        expectedLevel = 6; // Fallback for root-level NR (shouldn't happen)
+      }
+    } else {
+      expectedLevel = calculateExpectedHeadingLevel(doc.docNo, doc.type);
+    }
+
+    if (doc.level !== expectedLevel) {
+      const semanticDepth = calculateSemanticDepth(doc.docNo, doc.type);
+      const depthInfo = semanticDepth !== null ? ` (semantic depth: ${semanticDepth})` : '';
 
       issues.push({
-        line: curr.line,
+        line: doc.line,
         severity: 'error',
-        message: `🪜 Heading hierarchy error - skipped from level ${prev.level} to level ${curr.level}`,
-        found: `Previous: ${prevHashes} ${prev.docNo} (level ${prev.level})\nCurrent:  ${currHashes} ${curr.docNo} (level ${curr.level})`,
-        expected: `Insert a level ${prev.level + 1} heading (${expectedHashes}) between these documents`,
-        action: `Add missing level ${prev.level + 1} heading`,
+        message: `🪜 Heading level mismatch`,
+        found: `${'#'.repeat(doc.level)} ${doc.docNo}${depthInfo}`,
+        expected: `${'#'.repeat(expectedLevel)} ${doc.docNo} (expected ${expectedLevel} hashtags based on document number)`,
+        reason: `Document number structure indicates semantic depth${depthInfo}, heading level should match (capped at 6)`,
+        action: `Change to ${'#'.repeat(expectedLevel)} (${expectedLevel} hashtags)`,
       });
+    }
+
+    // Check 3: Parent-child relationship based on document numbers
+    if (i > 0 && doc.type !== 'Needed Research') {
+      const parentDocNo = findParentDocNumber(doc.docNo, doc.type);
+      if (parentDocNo) {
+        // Find the parent in previous documents
+        let parentFound = false;
+        for (let j = i - 1; j >= 0; j--) {
+          if (docs[j].docNo === parentDocNo) {
+            parentFound = true;
+            break;
+          }
+        }
+
+        if (!parentFound) {
+          issues.push({
+            line: doc.line,
+            severity: 'error',
+            message: `🌳 Missing parent document`,
+            found: `Document ${doc.docNo} expects parent ${parentDocNo}`,
+            expected: `Parent document ${parentDocNo} should appear before this document`,
+            action: `Add missing parent document or fix document number`,
+          });
+        }
+      }
     }
   }
 
@@ -470,19 +642,26 @@ function validateNesting(docs: Document[]): ValidationIssue[] {
   for (let i = 1; i < docs.length; i++) {
     const child = docs[i];
 
-    // Find parent (nearest previous document with lower level)
+    // Needed Research can nest anywhere
+    if (child.type === 'Needed Research') continue;
+
+    // Find parent based on document number
+    const parentDocNo = findParentDocNumber(child.docNo, child.type);
+    if (!parentDocNo) continue; // Root-level document
+
+    // Find the parent document in the list
     let parent: Document | null = null;
     for (let j = i - 1; j >= 0; j--) {
-      if (docs[j].level < child.level) {
+      if (docs[j].docNo === parentDocNo) {
         parent = docs[j];
         break;
       }
     }
 
-    if (!parent) continue;
-
-    // Needed Research can nest anywhere
-    if (child.type === 'Needed Research') continue;
+    if (!parent) {
+      // Parent not found - this is already reported by validateHierarchy
+      continue;
+    }
 
     // Check if parent-child combination is allowed
     const allowedChildren = ALLOWED_NESTING[parent.type as AtlasDocumentType] || [];

@@ -51,6 +51,10 @@ Article body
 
 \[See below\]
 
+**Components**:
+
+Components content
+
 **Doc Identifier Rules**:
 
 Rule content
@@ -77,6 +81,7 @@ Overview content
     const node = trees[0] as {
       type: string;
       content: string;
+      type_specification_components: string;
       type_specification_doc_identifier_rules: string;
       type_specification_additional_logic: string;
       type_specification_type_category: string;
@@ -87,6 +92,7 @@ Overview content
     // Content is everything up to first known extra field label
     expect(node.content.trim()).toBe('[See below]');
     // Known fields captured
+    expect(node.type_specification_components).toBe('Components content');
     expect(node.type_specification_doc_identifier_rules).toBe('Rule content');
     expect(node.type_specification_additional_logic).toBe('Logic content');
     expect(node.type_specification_type_category).toBe('Primary Document');
@@ -96,9 +102,13 @@ Overview content
 
   it('extracts Scenario and Scenario Variation extra fields correctly', () => {
     const input = md`
-#### A.1.1.0.4.1 - Example Scenario [Scenario] <!-- UUID: 00000000-0000-0000-0000-000000000010 -->
+#### A.1.1.0.4.1.1.1 - Example Scenario [Scenario] <!-- UUID: 00000000-0000-0000-0000-000000000010 -->
 
 Scenario intro
+
+**Description**:
+
+Scenario description text
 
 **Finding**:
 
@@ -108,9 +118,13 @@ Scenario finding text
 
 Scenario guidance text
 
-##### A.1.1.0.4.1.1 - Variant [Scenario Variation] <!-- UUID: 00000000-0000-0000-0000-000000000011 -->
+##### A.1.1.0.4.1.1.1.var1 - Variant [Scenario Variation] <!-- UUID: 00000000-0000-0000-0000-000000000011 -->
 
 Variation intro
+
+**Description**:
+
+Variation description text
 
 **Finding**:
 
@@ -126,17 +140,20 @@ Variation guidance text
     const scenario = trees[0] as {
       type: string;
       content: string;
+      scenario_description: string;
       scenario_finding: string;
       scenario_additional_guidance: string;
       scenario_variations: Array<{
         type: string;
         content: string;
+        scenario_variation_description: string;
         scenario_variation_finding: string;
         scenario_variation_additional_guidance: string;
       }>;
     };
     expect(scenario.type).toBe('Scenario');
     expect(scenario.content.trim()).toBe('Scenario intro');
+    expect(scenario.scenario_description).toBe('Scenario description text');
     expect(scenario.scenario_finding).toBe('Scenario finding text');
     expect(scenario.scenario_additional_guidance).toBe('Scenario guidance text');
 
@@ -145,11 +162,13 @@ Variation guidance text
     const variation = scenario.scenario_variations[0] as {
       type: string;
       content: string;
+      scenario_variation_description: string;
       scenario_variation_finding: string;
       scenario_variation_additional_guidance: string;
     };
     expect(variation.type).toBe('Scenario Variation');
     expect(variation.content.trim()).toBe('Variation intro');
+    expect(variation.scenario_variation_description).toBe('Variation description text');
     expect(variation.scenario_variation_finding).toBe('Variation finding text');
     expect(variation.scenario_variation_additional_guidance).toBe('Variation guidance text');
   });
@@ -488,5 +507,180 @@ Last field value (no trailing blank line)
     expect(node.type_specification_type_category).toBe('Third field value');
     expect(node.type_specification_type_name).toBe('Fourth field value');
     expect(node.type_specification_type_overview).toBe('Last field value (no trailing blank line)');
+  });
+
+  it('parses deeply nested documents with 6 hashtag cap', () => {
+    const input = md`
+#### A.1.2.3.4 - Parent Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000200 -->
+
+Parent content at depth 4
+
+##### A.1.2.3.4.5 - Child Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000201 -->
+
+Child content at depth 5
+
+###### A.1.2.3.4.5.6 - Grandchild Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000202 -->
+
+Grandchild content at depth 6
+
+###### A.1.2.3.4.5.6.7 - Great-grandchild Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000203 -->
+
+Great-grandchild content at depth 7 (capped at 6 hashtags)
+
+###### A.1.2.3.4.5.6.7.8 - Deep Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000204 -->
+
+Deep content at depth 8 (capped at 6 hashtags)
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    // Verify the tree structure is correct
+    const root = trees[0] as {
+      type: string;
+      doc_no: string;
+      sections_and_primary_docs: Array<{
+        type: string;
+        doc_no: string;
+        sections_and_primary_docs: Array<{
+          type: string;
+          doc_no: string;
+          sections_and_primary_docs: Array<{
+            type: string;
+            doc_no: string;
+            sections_and_primary_docs: Array<{ type: string; doc_no: string }>;
+          }>;
+        }>;
+      }>;
+    };
+
+    expect(root.doc_no).toBe('A.1.2.3.4');
+    expect(root.sections_and_primary_docs).toHaveLength(1);
+
+    const child = root.sections_and_primary_docs[0];
+    expect(child.doc_no).toBe('A.1.2.3.4.5');
+    expect(child.sections_and_primary_docs).toHaveLength(1);
+
+    const grandchild = child.sections_and_primary_docs[0];
+    expect(grandchild.doc_no).toBe('A.1.2.3.4.5.6');
+    expect(grandchild.sections_and_primary_docs).toHaveLength(1);
+
+    const greatGrandchild = grandchild.sections_and_primary_docs[0];
+    expect(greatGrandchild.doc_no).toBe('A.1.2.3.4.5.6.7');
+    expect(greatGrandchild.sections_and_primary_docs).toHaveLength(1);
+
+    const deepCore = greatGrandchild.sections_and_primary_docs[0];
+    expect(deepCore.doc_no).toBe('A.1.2.3.4.5.6.7.8');
+  });
+
+  it('correctly determines parent-child relationships using document numbers, not heading levels', () => {
+    const input = md`
+##### A.1.2.3.4.5 - First Doc [Core] <!-- UUID: 00000000-0000-0000-0000-000000000300 -->
+
+First doc content
+
+###### A.1.2.3.4.5.6 - Second Doc [Core] <!-- UUID: 00000000-0000-0000-0000-000000000301 -->
+
+Second doc content
+
+###### A.1.2.3.4.5.7 - Sibling Doc [Core] <!-- UUID: 00000000-0000-0000-0000-000000000302 -->
+
+Sibling doc content (should be sibling of A.1.2.3.4.5.6, not child)
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    const root = trees[0] as {
+      doc_no: string;
+      sections_and_primary_docs: Array<{
+        doc_no: string;
+      }>;
+    };
+
+    // First doc should have two children (Second Doc and Sibling Doc)
+    expect(root.doc_no).toBe('A.1.2.3.4.5');
+    expect(root.sections_and_primary_docs).toHaveLength(2);
+    expect(root.sections_and_primary_docs[0].doc_no).toBe('A.1.2.3.4.5.6');
+    expect(root.sections_and_primary_docs[1].doc_no).toBe('A.1.2.3.4.5.7');
+  });
+
+  it('parses Needed Research documents nested under various parent types', () => {
+    const input = md`
+### A.0.1.1 - Section [Section] <!-- UUID: 00000000-0000-0000-0000-000000000400 -->
+
+Section content
+
+#### NR-1 - Research for Section [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000401 -->
+
+Research content
+
+#### A.0.1.1.1 - Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000402 -->
+
+Core content
+
+##### NR-2 - Research for Core [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000403 -->
+
+More research
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    const section = trees[0] as {
+      type: string;
+      doc_no: string;
+      needed_research: Array<{ doc_no: string; type: string }>;
+      sections_and_primary_docs: Array<{
+        type: string;
+        doc_no: string;
+        needed_research: Array<{ doc_no: string; type: string }>;
+      }>;
+    };
+
+    expect(section.type).toBe('Section');
+    expect(section.doc_no).toBe('A.0.1.1');
+
+    // Section should have 1 Needed Research child
+    expect(section.needed_research).toHaveLength(1);
+    expect(section.needed_research[0].doc_no).toBe('NR-1');
+    expect(section.needed_research[0].type).toBe('Needed Research');
+
+    // Section should have 1 Core child
+    expect(section.sections_and_primary_docs).toHaveLength(1);
+    const core = section.sections_and_primary_docs[0];
+    expect(core.doc_no).toBe('A.0.1.1.1');
+    expect(core.type).toBe('Core');
+
+    // Core should have 1 Needed Research child
+    expect(core.needed_research).toHaveLength(1);
+    expect(core.needed_research[0].doc_no).toBe('NR-2');
+    expect(core.needed_research[0].type).toBe('Needed Research');
+  });
+
+  it('handles Needed Research at depth > 6 (capped heading level)', () => {
+    const input = md`
+###### A.1.2.3.4.5.6 - Deep Core [Core] <!-- UUID: 00000000-0000-0000-0000-000000000500 -->
+
+Deep content at depth 6
+
+###### NR-10 - Research at Depth 7 [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000501 -->
+
+Research content (both use 6 hashtags but NR is child)
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    const core = trees[0] as {
+      type: string;
+      doc_no: string;
+      needed_research: Array<{ doc_no: string; type: string }>;
+    };
+
+    expect(core.type).toBe('Core');
+    expect(core.doc_no).toBe('A.1.2.3.4.5.6');
+    expect(core.needed_research).toHaveLength(1);
+    expect(core.needed_research[0].doc_no).toBe('NR-10');
   });
 });

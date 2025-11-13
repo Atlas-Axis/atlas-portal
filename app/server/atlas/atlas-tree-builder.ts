@@ -424,10 +424,37 @@ function buildTreeNode(
     nodeToParentsMap.get(page.notion_page_id)!.add(parentPageId);
   }
 
-  // Check for circular reference
-  // TODO: There are some exceptions: Needed Research can appear in multiple places
+  // Check for duplicate processing
+  // Exception: Needed Research documents can appear in multiple places (handled in finally block)
   if (processedIds.has(page.notion_page_id)) {
-    throw new Error(`Circular reference detected at page ${page.notion_page_id} (${page.plain_text_name})`);
+    // This is a duplicate occurrence - only allowed for Needed Research
+    if (page.atlas_document_type === 'Needed Research') {
+      // This shouldn't happen due to the finally block logic, but handle it defensively
+      console.warn(
+        `[buildTreeNode] Needed Research document processed multiple times: ${page.notion_page_id} - ${page.plain_text_name}`,
+      );
+    } else {
+      // Skip this duplicate occurrence for non-Needed-Research documents
+      console.warn(
+        `[buildTreeNode] Duplicate document detected (skipping): ${page.notion_page_id} - ${page.plain_text_name} (${page.atlas_document_type})`,
+      );
+      // Return a stub node without children - will be filtered out during flattening
+      return {
+        ...page,
+        generatedDocID: undefined,
+        generatedDocName: undefined,
+        scopes: [],
+        articles: [],
+        sectionsAndPrimaryDocs: [],
+        annotations: [],
+        tenets: [],
+        scenarios: [],
+        scenarioVariations: [],
+        activeData: [],
+        agentScopeDocs: [],
+        neededResearch: [],
+      };
+    }
   }
 
   // Check depth limit
@@ -547,8 +574,11 @@ function buildTreeNode(
 
     return treeNode;
   } finally {
-    // IMPORTANT: Remove from processedIds when backtracking to allow legitimate multiple references
-    processedIds.delete(page.notion_page_id);
+    // Only allow Needed Research documents to appear multiple times (they use global numbering like NR-1, NR-2)
+    // For all other document types, keep them in processedIds to prevent duplicate processing
+    if (page.atlas_document_type === 'Needed Research') {
+      processedIds.delete(page.notion_page_id);
+    }
   }
 }
 

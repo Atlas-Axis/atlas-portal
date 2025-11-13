@@ -38,6 +38,7 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../notion-database-properties-and-relationships';
+import { findParentDocNumber } from './atlas-markdown-depth-utils';
 import {
   type ActiveDataDocument,
   type AgentScopeDatabaseDocument,
@@ -143,9 +144,40 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
 
     const item: StackItem = { node, database, uuid: header.uuid, depth: header.depth };
 
-    // Pop stack to find the correct parent: remove items at same or deeper depth
-    while (stack.length > 0 && stack[stack.length - 1].depth >= header.depth) {
-      stack.pop();
+    // Find the correct parent using document numbers instead of heading depth
+    // This allows us to cap heading levels at 6 while maintaining correct hierarchy
+    const parentDocNo = findParentDocNumber(header.docNo, header.type);
+
+    // Pop stack to find the parent document by doc_no
+    // For Needed Research (parentDocNo is null), use the top of stack as parent
+    if (parentDocNo === null && header.type === 'Needed Research') {
+      // Needed Research: attach to the most recent document in stack
+      // Don't pop anything, just use current stack top as parent
+    } else if (parentDocNo === null) {
+      // Root-level document (Scope) - clear the stack
+      while (stack.length > 0) {
+        stack.pop();
+      }
+    } else {
+      // Find the parent by matching doc_no
+      // Pop until we find the parent or reach a shallower level
+      while (stack.length > 0) {
+        const top = stack[stack.length - 1];
+        if ((top.node as BaseAtlasDocument).doc_no === parentDocNo) {
+          // Found the parent, stop popping
+          break;
+        }
+        // If we've gone too shallow (popped past where parent should be), stop
+        // This handles malformed input gracefully
+        const topDocNo = (top.node as BaseAtlasDocument).doc_no;
+        if (parentDocNo.startsWith(topDocNo + '.')) {
+          // Parent should be between here and top, but it's missing
+          // Keep this item and attach as child (best effort)
+          console.warn(`Parent document ${topDocNo} is missing for child ${header.docNo} (${header.type}).`);
+          break;
+        }
+        stack.pop();
+      }
     }
 
     if (stack.length === 0) {

@@ -2,7 +2,7 @@ import { traverseTree } from './atlas-tree-traversal';
 import { AtlasTreeNode } from './atlas-tree-types';
 import { AtlasDatabaseName } from './atlas-types';
 
-const ALLOWED_DUPLICATE_TYPES = ['Needed Research', 'Action Tenet'];
+const ALLOWED_DUPLICATE_TYPES = ['Needed Research'];
 
 export function flattenAtlasScopeTreesToNodesPerDatabase({
   scopeTrees,
@@ -52,22 +52,16 @@ export function flattenAtlasScopeTreesToNodesPerDatabase({
         // Skip if we've already processed this node (except allowed duplicate types)
         if (seenNodeIds.has(node.notion_page_id) && !allowDuplicatesForType) {
           console.warn(
-            `[flattenAtlasScopeTreesToNotionPages] Duplicate node detected: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
+            `[flattenAtlasScopeTreesToNotionPages] Duplicate node detected: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}. Skipping duplicate occurrence.`,
           );
-          // Continue traversal
+          return true; // Skip adding this duplicate to output, but continue traversal
         }
 
-        // Log duplicates by type
+        // Log kept Needed Research duplicates
         if (seenNodeIds.has(node.notion_page_id) && allowDuplicatesForType) {
-          if (node.atlas_document_type === 'Needed Research') {
-            console.info(
-              `[flattenAtlasScopeTreesToNotionPages] Duplicate 'Needed Research' document kept: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
-            );
-          } else if (node.atlas_document_type === 'Action Tenet') {
-            console.warn(
-              `[flattenAtlasScopeTreesToNotionPages] Duplicate 'Action Tenet' document kept: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
-            );
-          }
+          console.info(
+            `[flattenAtlasScopeTreesToNotionPages] Duplicate 'Needed Research' document kept: ${node.notion_page_id} - ${node.canonical_document_title || node.plain_text_name}`,
+          );
         }
 
         if (!seenNodeIds.has(node.notion_page_id)) {
