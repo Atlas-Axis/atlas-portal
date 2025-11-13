@@ -3,7 +3,7 @@ import {
   StandardizedAtlasDocument,
   StandardizedAtlasScopeTrees,
   childCollectionNames,
-} from '../json-export/types';
+} from '../export/types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

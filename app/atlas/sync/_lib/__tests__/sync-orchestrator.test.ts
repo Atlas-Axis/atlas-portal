@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
 import { sortAdditionsByHierarchy } from '../sync-orchestrator';
 
 describe('sync-orchestrator', () => {

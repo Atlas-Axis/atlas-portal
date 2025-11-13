@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { Button, Popover, PopoverContent, PopoverTrigger, useDisclosure } from '@heroui/react';
 import { Download, Search, Settings } from 'lucide-react';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import DownloadAtlasButton from './download-atlas-button';
 import SearchModal from './search-modal';

@@ -1,4 +1,4 @@
-import { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 
 /**
  * Type-safe helper to get child collection from a document.

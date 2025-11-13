@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { BaseAtlasDocument, StandardizedAtlasScopeTrees } from '../../json-export/types';
+import type { BaseAtlasDocument, StandardizedAtlasScopeTrees } from '../../export/types';
 import {
   type LookupMaps,
   buildLookupMaps,

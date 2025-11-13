@@ -11,7 +11,7 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
+import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 async function main() {

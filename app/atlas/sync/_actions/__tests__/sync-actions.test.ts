@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { mockNotionClient } from '@/app/server/services/notion/__tests__/notion-client.mock';
 import {

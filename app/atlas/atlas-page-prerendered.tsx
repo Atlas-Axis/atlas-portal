@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { type UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
 import MobileTopBar from './mobile-top-bar';

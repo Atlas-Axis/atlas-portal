@@ -43,7 +43,7 @@
 //   type StandardizedAtlasScopeTrees,
 //   type TenetDocument,
 //   type TypeSpecificationDocument,
-// } from '@/app/server/atlas/json-export/types';
+// } from '@/app/server/atlas/export/types';
 // import { TDocType } from './powerhouse-types/types';
 // import type { ViewNode } from './powerhouse-types/types/view-nodes';
 // import { makeViewNodeAtlasId, makeViewNodeTitleText } from './powerhouse-types/utils';

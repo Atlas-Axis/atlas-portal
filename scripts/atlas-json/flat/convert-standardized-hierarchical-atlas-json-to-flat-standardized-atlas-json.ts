@@ -21,7 +21,7 @@
 import fs from 'fs';
 import path from 'path';
 import { AGENT_ROOT_SECTION_UUIDS, ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { type StandardizedAtlasScopeTrees, childCollectionNames } from '@/app/server/atlas/json-export/types';
+import { type StandardizedAtlasScopeTrees, childCollectionNames } from '@/app/server/atlas/export/types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from '../../utils/load-env';
 

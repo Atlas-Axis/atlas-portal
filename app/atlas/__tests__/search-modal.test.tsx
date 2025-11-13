@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import type { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import SearchModal from '../search-modal';
 

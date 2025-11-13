@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,

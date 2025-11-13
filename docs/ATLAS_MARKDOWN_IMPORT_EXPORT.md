@@ -14,10 +14,7 @@ The Atlas Markdown import/export system provides a human-readable, version-contr
 ### Programmatic Export
 
 ```typescript
-import {
-  buildAtlasMarkdown,
-  buildAtlasMarkdownsPerScope,
-} from '@/app/server/atlas/json-export/atlas-markdown-exporter';
+import { buildAtlasMarkdown, buildAtlasMarkdownsPerScope } from '@/app/server/atlas/export/atlas-markdown-exporter';
 
 // Export entire Atlas as single markdown file
 const markdown = await buildAtlasMarkdown();
@@ -49,7 +46,7 @@ The exporter generates valid Atlas Markdown with:
 ### Programmatic Import
 
 ```typescript
-import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
+import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 
 const markdown = `
 # A.1 - Test Scope [Scope]  <!-- UUID: abc-123 -->

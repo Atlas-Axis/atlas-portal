@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { useDisclosure } from '@heroui/react';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { dispatchExpandScopeEvent } from './custom-events';

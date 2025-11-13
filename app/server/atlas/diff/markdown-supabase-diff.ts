@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
-import { buildAtlasJSON } from '../json-export/atlas-json-exporter';
-import { StandardizedAtlasScopeTrees } from '../json-export/types';
+import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
+import { buildAtlasJSON } from '../export/atlas-json-exporter';
+import { StandardizedAtlasScopeTrees } from '../export/types';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**

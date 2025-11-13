@@ -24,13 +24,13 @@ import fs from 'fs';
 import path from 'path';
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
 import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-types';
-import atlasNodeToStandardized from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
+import atlasNodeToStandardized from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import type {
   ChildCollectionName,
   StandardizedAtlasDocument,
   StandardizedAtlasScopeTrees,
-} from '@/app/server/atlas/json-export/types';
-import { childCollectionNames } from '@/app/server/atlas/json-export/types';
+} from '@/app/server/atlas/export/types';
+import { childCollectionNames } from '@/app/server/atlas/export/types';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { loadEnv } from '@/scripts/utils/load-env';

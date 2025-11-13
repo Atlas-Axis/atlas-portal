@@ -1,7 +1,7 @@
 import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
 import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
-import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
-import { flattenStandardizedAtlasDocuments } from '@/app/server/atlas/json-export/flatten-standardized-atlas-documents';
+import { atlasNodeToStandardized } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import { flattenStandardizedAtlasDocuments } from '@/app/server/atlas/export/flatten-standardized-atlas-documents';
 import { loadAtlasFromSupabaseWithoutNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import AtlasListPrerendered from './atlas-list-prerendered';

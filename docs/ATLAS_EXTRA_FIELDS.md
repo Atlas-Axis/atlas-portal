@@ -164,7 +164,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 **Files**:
 
-- `app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
+- `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
   - `convertExtraFieldToMarkdown()` helper: Converts rich text structure to markdown strings
     - Handles both `plain_text` and `rich_text` properties
     - Uses `convertNotionRichTextToMarkdown()` for rich text arrays
@@ -176,13 +176,13 @@ This allows any part of the codebase to dynamically discover which document type
   - `atlasNodeToStandardized()` function: Spreads `...pickExtraFields(node, uuidMappings)` in document type's case
   - Validates presence of expected fields and warns about missing ones
 
-- `app/server/atlas/json-export/types.ts`
+- `app/server/atlas/export/types.ts`
   - `extraFieldsByDocumentType` constant: Maps document types to their extra field keys
   - Document interfaces extend `BaseAtlasDocument` with extra field properties (as strings in JSON export)
 
 #### Markdown Export
 
-**File**: `app/server/atlas/json-export/atlas-markdown-exporter.ts`
+**File**: `app/server/atlas/export/atlas-markdown-exporter.ts`
 
 - `getExtraFieldsForDocument()` function: Formats extra fields for markdown
 - Iterates over the property mapping to generate formatted fields in the format:
@@ -207,7 +207,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 #### Markdown Import
 
-**File**: `app/server/atlas/json-export/atlas-markdown-importer.ts`
+**File**: `app/server/atlas/export/atlas-markdown-importer.ts`
 
 - `extractContentAndExtraFields()` function: Parses markdown back to structured data
 - Detects `**Label**:` patterns (colon at end of line with no value on the same line)
@@ -256,7 +256,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 ### Validation
 
-**File**: `app/server/atlas/json-export/validate-standardized-atlas-tree.ts`
+**File**: `app/server/atlas/export/validate-standardized-atlas-tree.ts`
 
 - Validates extra field presence and types for documents
 - Ensures all fields defined in mappings exist on documents
@@ -287,23 +287,23 @@ This allows any part of the codebase to dynamically discover which document type
 
 ### Export
 
-- `app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
+- `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
   - Picks and validates extra fields for JSON export
   - Warning messages for missing fields
 
-- `app/server/atlas/json-export/atlas-markdown-exporter.ts`
+- `app/server/atlas/export/atlas-markdown-exporter.ts`
   - Formats extra fields for markdown export
   - Uses property mappings for labels
 
-- `app/server/atlas/json-export/atlas-markdown-importer.ts`
+- `app/server/atlas/export/atlas-markdown-importer.ts`
   - Parses markdown back to structured extra fields
   - Handles labeled field format
 
-- `app/server/atlas/json-export/types.ts`
+- `app/server/atlas/export/types.ts`
   - Type definitions for exported Atlas documents
   - `extraFieldsByDocumentType` constant
 
-- `app/server/atlas/json-export/validate-standardized-atlas-tree.ts`
+- `app/server/atlas/export/validate-standardized-atlas-tree.ts`
   - Validates extra fields in exported data
 
 ### Change Detection & Diffing

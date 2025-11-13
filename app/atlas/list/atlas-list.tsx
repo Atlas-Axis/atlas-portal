@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
-import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { typeColorMap } from '@/app/server/atlas/type-color-map';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';

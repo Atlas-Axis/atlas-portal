@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { AGENT_ROOT_SECTION_UUIDS_MAPPED, AGENT_ROOT_SECTION_UUID_FOR_NESTING } from '@/app/server/atlas/constants';
-import { parseAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-importer';
+import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 
 function md(strings: TemplateStringsArray, ...values: Array<string | number>): string {
   let out = '';

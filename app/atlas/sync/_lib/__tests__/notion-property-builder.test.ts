@@ -6,7 +6,7 @@
  * @see app/server/atlas/notion-database-properties-and-relationships.ts
  */
 import { describe, expect, it } from 'vitest';
-import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { addParentPageRelationshipProperty, buildNotionProperties } from '../notion-property-builder';
 

@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Input } from '@heroui/input';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { Search } from 'lucide-react';
-import type { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
-import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
+import type { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,

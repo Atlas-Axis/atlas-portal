@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buildAtlasMarkdown, buildAtlasMarkdownsPerScope } from '@/app/server/atlas/json-export/atlas-markdown-exporter';
+import { buildAtlasMarkdown, buildAtlasMarkdownsPerScope } from '@/app/server/atlas/export/atlas-markdown-exporter';
 import archiver from 'archiver';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {

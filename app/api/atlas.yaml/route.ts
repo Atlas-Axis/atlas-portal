@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stringify } from 'yaml';
-import { buildAtlasJSON } from '@/app/server/atlas/json-export/atlas-json-exporter';
+import { buildAtlasJSON } from '@/app/server/atlas/export/atlas-json-exporter';
 
 interface ConversionOptions {
   indent: number;

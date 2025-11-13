@@ -210,4 +210,4 @@ npm run test:run -- app/server/atlas/diff/__tests__/markdown-supabase-diff.ts
 
 - [Atlas Document Numbering Rules](./ATLAS_DOCUMENT_NUMBERING_RULES.md)
 - Implementation: `app/server/atlas/diff/atlas-diff.ts`
-- Types: `app/server/atlas/json-export/types.ts`
+- Types: `app/server/atlas/export/types.ts`

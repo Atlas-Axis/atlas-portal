@@ -4,7 +4,7 @@ import {
   childCollectionNameToDatabaseName,
   childCollectionNames,
   extraFieldsByDocumentType,
-} from '@/app/server/atlas/json-export/types';
+} from '@/app/server/atlas/export/types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

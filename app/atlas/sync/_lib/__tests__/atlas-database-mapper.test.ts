@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { AGENT_ROOT_SECTION_UUIDS_MAPPED } from '@/app/server/atlas/constants';
-import { BaseAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
 import {
   databaseSupportsInternalNesting,
   getDatabaseNameFromDocument,

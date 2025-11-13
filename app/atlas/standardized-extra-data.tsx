@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CustomHTML } from '@/app/components/custom-html';
-import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/json-export/types';
+import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,

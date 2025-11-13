@@ -10,7 +10,7 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { buildAtlasMarkdown } from '@/app/server/atlas/json-export/atlas-markdown-exporter';
+import { buildAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-exporter';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 async function main() {

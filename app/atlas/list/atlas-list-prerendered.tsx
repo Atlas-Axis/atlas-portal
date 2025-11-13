@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { StandardizedAtlasDocument } from '@/app/server/atlas/json-export/types';
+import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import AtlasList from './atlas-list';
 

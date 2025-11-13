@@ -16,7 +16,7 @@
  *
  * Usage
  * ```ts
- * import { atlasNodeToStandardized } from '@/app/server/atlas/json-export/atlas-node-tree-to-standardized-atlas-node-tree';
+ * import { atlasNodeToStandardized } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
  * const standardized: StandardizedAtlasDocument = atlasNodeToStandardized(rootNode);
  * ```
  */

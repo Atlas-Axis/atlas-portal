@@ -20,7 +20,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { type StandardizedAtlasScopeTrees, childCollectionNames } from '@/app/server/atlas/json-export/types';
+import { type StandardizedAtlasScopeTrees, childCollectionNames } from '@/app/server/atlas/export/types';
 
 const MAX_DISPLAY = 20;
 

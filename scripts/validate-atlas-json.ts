@@ -12,7 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import validateStandardizedAtlasTree, {
   type ValidationError,
-} from '@/app/server/atlas/json-export/validate-standardized-atlas-tree';
+} from '@/app/server/atlas/export/validate-standardized-atlas-tree';
 
 function formatError(validationError: ValidationError): string {
   return `⚠️  ${validationError.message}\n    id: ${validationError.nodeId}\n    name: ${validationError.node.name}\n    type: ${validationError.node.type}\n    action: ${validationError.actionSuggestion}`;
