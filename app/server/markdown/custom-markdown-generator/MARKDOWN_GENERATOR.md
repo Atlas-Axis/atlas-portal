@@ -367,4 +367,4 @@ function generateAtlasChangeReport(changes: AtlasChange[]) {
 
 ## Testing
 
-The system includes comprehensive examples in `app/server/markdown/example.ts` that demonstrate all features and can be used as test cases for AI agents learning the system.
+The system includes comprehensive examples in `app/server/markdown/custom-markdown-generator/example.ts` that demonstrate all features and can be used as test cases for AI agents learning the system.

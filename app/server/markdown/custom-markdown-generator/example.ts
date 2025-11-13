@@ -13,7 +13,7 @@ import {
   paragraph,
   richParagraph,
   unorderedList,
-} from './index';
+} from '../index';
 
 // Example 1: Simple document with headings and paragraphs
 export const basicDocumentExample = document(
