@@ -12,7 +12,7 @@
  *
  * Usage
  * ```bash
- * npx tsx scripts/atlas-json/old/flat/convert-github-atlas-to-flat-standardized-atlas-json.ts
+ * npx tsx scripts/atlas-export/old/flat/convert-github-atlas-to-flat-standardized-atlas-json.ts
  * ```
  */
 import fs from 'fs';

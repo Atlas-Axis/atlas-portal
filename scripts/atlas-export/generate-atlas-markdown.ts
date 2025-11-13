@@ -6,7 +6,7 @@
  * - Output path: .debug-data/standardized-atlas/atlas.md
  *
  * Usage:
- *   npx tsx scripts/atlas-json/hierarchical/generate-atlas-markdown.ts
+ *   npx tsx scripts/atlas-export/generate-atlas-markdown.ts
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';

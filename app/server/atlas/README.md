@@ -295,7 +295,7 @@ const docNumbers = result.documentNumbers; // Note: All the pages inside `result
 Run the test suite to verify the system works correctly:
 
 ```bash
-npm test -- scripts/atlas-json/__tests__/atlas-tree-builder.test.ts
+npm test -- scripts/atlas-export/__tests__/atlas-tree-builder.test.ts
 ```
 
 The test suite covers:

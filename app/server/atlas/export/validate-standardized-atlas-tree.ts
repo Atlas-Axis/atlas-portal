@@ -328,7 +328,7 @@ function validateNode(
  * - Validation recurses into children. All errors are collected; no short-circuiting.
  * - Errors include a shallow node snapshot with child arrays emptied for safety and readability.
  *
- * Tests: see `scripts/atlas-json/hierarchical/__tests__/validate-standardized-atlas-tree.test.ts`.
+ * Tests: see `scripts/atlas-export/__tests__/validate-standardized-atlas-tree.test.ts`.
  *
  * @param jsonString JSON string containing the standardized Atlas tree (array of root nodes)
  * @returns Object with `errors` (list of ValidationError) and `root` (parsed array on success, otherwise null)

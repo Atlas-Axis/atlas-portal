@@ -7,7 +7,7 @@
  * - Writes the resulting JSON to `.debug-data/standardized-atlas/markdown-to-json.json`
  *
  * Usage:
- *   npx tsx scripts/atlas-json/hierarchical/convert-atlas-markdown-to-json.ts
+ *   npx tsx scripts/atlas-export/convert-atlas-markdown-to-json.ts
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';

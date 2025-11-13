@@ -538,18 +538,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
       ```
 
-- **scripts/atlas-json/generate-atlas-json-from-supabase.ts**: Exports current or past Atlas data from Supabase into `atlas-supabase.json` (or `atlas-supabase-without-agents.json` when using `--skip-agent-scope`).
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts
-      ```
-    - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --validAt 2025-01-15T12:00:00Z
-      ```
-    - ```bash
-      npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
-      ```
-
 - **scripts/get-notion-database-page-count.ts**: Prints the total number of pages in a given Notion database ID.
   - Example:
     - ```bash
@@ -582,7 +570,7 @@ All commands are intended to be run from the repository root using tsx.
 
 Non-executable helper modules (imported by scripts):
 
-- `scripts/atlas-json/utils.ts` — document number comparison and prefix fixing utilities
+- `scripts/atlas-export/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
 
 **Important relationship note:** Do not use or rely on `parent_notion_page_id` to build the Atlas tree. It is not a reliable way to construct hierarchy. Instead, construct the tree by traversing the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) beginning from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy).

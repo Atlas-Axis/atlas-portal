@@ -14,8 +14,8 @@
  *
  * Usage
  * ```bash
- * npx tsx scripts/atlas-json/old/flat/convert-standardized-hierarchical-atlas-json-to-flat-standardized-atlas-json.ts
- * npx tsx scripts/atlas-json/old/flat/convert-standardized-hierarchical-atlas-json-to-flat-standardized-atlas-json.ts <inputFileName.json> <outputFileName.json>
+ * npx tsx scripts/atlas-export/old/flat/convert-standardized-hierarchical-atlas-json-to-flat-standardized-atlas-json.ts
+ * npx tsx scripts/atlas-export/old/flat/convert-standardized-hierarchical-atlas-json-to-flat-standardized-atlas-json.ts <inputFileName.json> <outputFileName.json>
  * ```
  */
 import fs from 'fs';
