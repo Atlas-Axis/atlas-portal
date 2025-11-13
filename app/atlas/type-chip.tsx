@@ -1,7 +1,7 @@
 'use client';
 
 import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
-import { typeColorMap } from '@/app/server/atlas/type-color-map';
+import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 
 export default function TypeChip({ type }: { type: AtlasDocumentType }) {
   const colorClass = typeColorMap[type] || 'bg-gray-100 text-gray-800';

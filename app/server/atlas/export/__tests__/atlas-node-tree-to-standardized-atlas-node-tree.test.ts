@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { type AtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-types';
 import { type Json } from '@/app/server/services/supabase/database.types';
 import type { UuidMappings } from '../../load-uuid-mapping';
 import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
@@ -38,7 +38,7 @@ const mockUUIDMappings: UuidMappings = {
   notionPageIDsToAtlasUUIDs: new Map<string, string>(),
 };
 
-vi.mock('../../atlas-rich-text-formatter', () => ({
+vi.mock('../../formatters/atlas-rich-text-formatter', () => ({
   atlasDatabasePageToMarkdown: vi.fn().mockImplementation(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (node: AtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) => `# ${node.generatedDocName ?? ''}`,

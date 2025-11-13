@@ -4,7 +4,7 @@ import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '../notion-database-properties-and-relationships';
+} from '../notion-mapping/notion-database-properties-and-relationships';
 
 /**
  * Extra field types for JSON export (string-only versions).

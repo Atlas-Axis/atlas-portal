@@ -3,7 +3,7 @@ import {
   type AtlasPageChange,
   CHILD_FIELDS,
   loadAtlasChangeHistory,
-} from '@/app/server/atlas/load-atlas-change-history';
+} from '@/app/server/atlas/changelog/load-atlas-change-history';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
 export const dynamic = 'force-dynamic';

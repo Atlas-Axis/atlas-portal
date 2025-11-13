@@ -9,7 +9,7 @@ import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
 import { getDatabaseNameFromDocument } from './atlas-database-mapper';
 

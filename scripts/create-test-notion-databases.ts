@@ -22,7 +22,7 @@ import {
   DOCUMENT_TYPE_EXTRA_FIELDS,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
   NOTION_PROPERTY_TYPE_OVERRIDES,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { loadEnv } from './utils/load-env';
 

@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import AtlasChangelogPage from '../page';
 
 // Mock the loadAtlasChangeHistory function
-vi.mock('@/app/server/atlas/load-atlas-change-history', () => ({
+vi.mock('@/app/server/atlas/changelog/load-atlas-change-history', () => ({
   loadAtlasChangeHistory: vi.fn(),
 }));
 
@@ -19,7 +19,7 @@ vi.mock('lucide-react', () => ({
 
 describe('AtlasChangelogPage', () => {
   it('renders the page title and description', async () => {
-    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/load-atlas-change-history');
+    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/changelog/load-atlas-change-history');
     vi.mocked(loadAtlasChangeHistory).mockResolvedValue([]);
 
     const component = await AtlasChangelogPage();
@@ -30,7 +30,7 @@ describe('AtlasChangelogPage', () => {
   });
 
   it('displays no changes message when no changes are found', async () => {
-    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/load-atlas-change-history');
+    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/changelog/load-atlas-change-history');
     vi.mocked(loadAtlasChangeHistory).mockResolvedValue([]);
 
     const component = await AtlasChangelogPage();
@@ -41,7 +41,7 @@ describe('AtlasChangelogPage', () => {
   });
 
   it('displays changes when they exist', async () => {
-    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/load-atlas-change-history');
+    const { loadAtlasChangeHistory } = await import('@/app/server/atlas/changelog/load-atlas-change-history');
     const mockChanges = [
       {
         type: 'new' as const,

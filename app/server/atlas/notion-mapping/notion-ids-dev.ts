@@ -5,7 +5,7 @@
  * These IDs are separate from production to prevent accidental access to production data.
  * Unit tests use notion-ids-unit-test.ts instead.
  */
-import type { AtlasDatabaseName } from './atlas-types';
+import type { AtlasDatabaseName } from '../atlas-types';
 
 /**
  * Maps Atlas database names to their corresponding Notion database IDs for development/QA

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { useDisclosure } from '@heroui/react';
 import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
-import { compareDocNumbers } from '../server/atlas/atlas-utils';
+import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { dispatchExpandScopeEvent } from './custom-events';
 import DownloadAtlasButton from './download-atlas-button';

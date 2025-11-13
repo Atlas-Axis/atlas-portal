@@ -5,7 +5,7 @@
  * These UUIDs are used to avoid requiring real Notion credentials in tests
  * and to ensure tests are isolated from production data.
  */
-import type { AtlasDatabaseName } from './atlas-types';
+import type { AtlasDatabaseName } from '../atlas-types';
 
 /**
  * Maps Atlas database names to made-up UUIDs for unit testing

@@ -21,7 +21,6 @@
  * ```
  */
 import { RichTextItemResponse } from '@notionhq/client';
-import { type AtlasTreeNode } from '@/app/server/atlas/atlas-tree-types';
 import { type AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AGENT_ROOT_SECTION_UUIDS } from '@/app/server/atlas/constants';
 import {
@@ -29,10 +28,11 @@ import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
+import { type AtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-types';
 import { convertNotionRichTextToMarkdown } from '@/app/server/markdown/rich-text-to-markdown';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
-import { atlasDatabasePageToMarkdown } from '../atlas-rich-text-formatter';
+import { atlasDatabasePageToMarkdown } from '../formatters/atlas-rich-text-formatter';
 import { UuidMappings } from '../load-uuid-mapping';
 import {
   type ActiveDataDocument,

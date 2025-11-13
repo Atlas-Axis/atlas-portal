@@ -1,7 +1,7 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
-import { UuidMappings } from './load-uuid-mapping';
+import { UuidMappings } from '../load-uuid-mapping';
 
 /**
  * Represents a node in the Atlas document tree structure.

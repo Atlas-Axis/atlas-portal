@@ -6,14 +6,14 @@ import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { Search } from 'lucide-react';
 import type { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
 import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
+import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
-import { typeColorMap } from '@/app/server/atlas/type-color-map';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { dispatchExpandScopeEvent } from './custom-events';
 
 interface SearchModalProps {

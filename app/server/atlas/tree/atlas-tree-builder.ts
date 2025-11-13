@@ -1,6 +1,6 @@
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
+import { compareDocNumbers } from '@/app/server/atlas/document-numbering/atlas-utils';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionRichText } from '@/app/server/markdown/notion-types';
 import { applyNestingOverrides } from '@/app/server/services/notion/apply-nesting-overrides';
@@ -8,6 +8,7 @@ import {
   NotionNestingBugMapping,
   loadNotionNestingFixMappings,
 } from '@/app/server/services/supabase/notion-nesting-bug-mappings';
+import { UuidMappings } from '../load-uuid-mapping';
 import { getDocumentTitle, sortAtlasDocuments } from './atlas-tree-helpers';
 import { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 import {
@@ -20,7 +21,6 @@ import {
   TreeConstructionError,
   TreeConstructionOptions,
 } from './atlas-tree-types';
-import { UuidMappings } from './load-uuid-mapping';
 
 /**
  * Builds the Atlas document tree structure from Supabase data.

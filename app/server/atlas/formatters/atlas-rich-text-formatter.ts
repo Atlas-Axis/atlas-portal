@@ -1,9 +1,9 @@
 import { RichTextItemResponse } from '@notionhq/client';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
-import { NotionDatabasePage } from '../database/notion-database-page';
-import { convertNotionRichTextToMarkdown, notionLinkToMappedUUID } from '../markdown/rich-text-to-markdown';
-import { AtlasTreeNode } from './atlas-tree-types';
-import { UuidMappings } from './load-uuid-mapping';
+import { NotionDatabasePage } from '../../database/notion-database-page';
+import { convertNotionRichTextToMarkdown, notionLinkToMappedUUID } from '../../markdown/rich-text-to-markdown';
+import { UuidMappings } from '../load-uuid-mapping';
+import { AtlasTreeNode } from '../tree/atlas-tree-types';
 
 export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | AtlasTreeNode>(
   page: T,

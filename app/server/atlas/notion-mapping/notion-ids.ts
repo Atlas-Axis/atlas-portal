@@ -5,7 +5,7 @@
  * pages, and properties. These are environment-specific and may differ between
  * development and production environments.
  */
-import type { AtlasDatabaseName } from './atlas-types';
+import type { AtlasDatabaseName } from '../atlas-types';
 
 /**
  * Maps Atlas database names to their corresponding Notion database IDs

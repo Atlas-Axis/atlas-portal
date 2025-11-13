@@ -2,9 +2,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { UuidMappings } from '../../load-uuid-mapping';
 import { buildAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
-import { UuidMappings } from '../load-uuid-mapping';
 
 // Mock the nesting fix mappings loader
 vi.mock('@/app/server/services/supabase/notion-nesting-bug-mappings', () => ({

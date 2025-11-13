@@ -10,7 +10,7 @@ import {
   SCENARIO_PROPERTY_MAPPING,
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { ATLAS_DOCUMENT_TYPES, AtlasDatabaseName, AtlasDocumentType } from '../constants';
 
 export type ValidationErrorKind =

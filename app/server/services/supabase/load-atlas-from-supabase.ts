@@ -1,11 +1,11 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
+import { AtlasDatabaseName } from '../../atlas/atlas-types';
+import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES } from '../../atlas/constants';
+import { nestRootAgentDocumentsUnderAgentSection } from '../../atlas/nest-root-agent-documents-under-agent-section';
 import {
   loadNotionDatabasePagesAtTimeFromSupabase,
   loadNotionDatabasePagesFromSupabase,
-} from '../services/supabase/load-notion-database-pages-from-supabase';
-import { AtlasDatabaseName } from './atlas-types';
-import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES } from './constants';
-import { nestRootAgentDocumentsUnderAgentSection } from './nest-root-agent-documents-under-agent-section';
+} from './load-notion-database-pages-from-supabase';
 
 type LoadAtlasOptions = {
   excludeAgents?: boolean;

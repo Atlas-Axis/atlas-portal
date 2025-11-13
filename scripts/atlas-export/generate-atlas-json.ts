@@ -22,8 +22,6 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { buildAtlasTree } from '@/app/server/atlas/atlas-tree-system';
-import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/atlas-tree-types';
 import atlasNodeToStandardized from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import type {
   ChildCollectionName,
@@ -31,8 +29,10 @@ import type {
   StandardizedAtlasScopeTrees,
 } from '@/app/server/atlas/export/types';
 import { childCollectionNames } from '@/app/server/atlas/export/types';
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-types';
+import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 /**

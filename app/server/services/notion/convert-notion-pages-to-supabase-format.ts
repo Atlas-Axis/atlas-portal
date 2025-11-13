@@ -12,7 +12,7 @@ import {
   ScenarioVariationExtraFields,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
   TypeSpecificationExtraFields,
-} from '@/app/server/atlas/notion-database-properties-and-relationships';
+} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';

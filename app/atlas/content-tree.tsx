@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
-import { typeColorMap } from '@/app/server/atlas/type-color-map';
+import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';

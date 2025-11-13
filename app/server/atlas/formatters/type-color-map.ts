@@ -1,4 +1,4 @@
-import { AtlasDocumentType } from './atlas-types';
+import { AtlasDocumentType } from '../atlas-types';
 
 export const typeColorMap: Record<AtlasDocumentType, string> = {
   Scope: 'bg-teal-50 text-teal-800',

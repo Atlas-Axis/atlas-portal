@@ -27,9 +27,9 @@ import type {
   GitHubAtlasDocumentType,
   MasterStatus,
 } from './atlas-types';
-import * as notionIds from './notion-ids';
-import * as notionIdsDev from './notion-ids-dev';
-import * as notionIdsUnitTest from './notion-ids-unit-test';
+import * as notionIds from './notion-mapping/notion-ids';
+import * as notionIdsDev from './notion-mapping/notion-ids-dev';
+import * as notionIdsUnitTest from './notion-mapping/notion-ids-unit-test';
 
 // Re-export types for backward compatibility
 export type { AtlasDatabaseName, AtlasDatabaseID, AtlasDocumentType, GitHubAtlasDocumentType, MasterStatus };
