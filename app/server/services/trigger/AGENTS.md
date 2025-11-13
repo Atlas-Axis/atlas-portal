@@ -9,7 +9,7 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 - **ID**: `notion-database-import`
 - **Purpose**: Imports all Atlas databases from Notion to Supabase
 - **Duration**: Up to 60 minutes
-- **Retries**: 2 attempts with exponential backoff
+- **Retries**: 1 attempt with exponential backoff
 
 ### `daily-notion-import-schedule.ts`
 
