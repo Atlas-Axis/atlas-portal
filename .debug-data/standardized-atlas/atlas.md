@@ -7232,7 +7232,7 @@ The purpose of the Distribution Reward is to incentivize Prime Agents and third 
 
 ###### A.2.3.8.1.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 45149960-fbf3-4079-be4e-fe2a71e5e43f -->
 
-Multiple instances of the Distribution Reward Primitive are allowed. Each instance corresponds to a Distribution Reward program with an associated Distribution Reward Code.
+Multiple instances of the Distribution Reward Primitive are allowed. Each instance corresponds to an Distribution Reward program with an associated Distribution Reward Code.
 
 ###### A.2.3.8.1.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: c788ebcf-98a4-4b97-ae3c-db578c75dc2e -->
 
@@ -7330,7 +7330,7 @@ In the long term, Reward Codes are assigned by Operational GovOps. Operational G
 
 ###### A.2.3.8.1.2.1.2.2 - Marking [Core]  <!-- UUID: ec2c6d8a-e10f-471a-8f85-67803159cc37 -->
 
-To be eligible for the Distribution Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
+To be eligible for the Accessibility Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
 
 ###### A.2.3.8.1.2.1.2.2.1 - Ethereum Mainnet General Tracking Methodology [Core]  <!-- UUID: 87fd6861-ba8a-4bde-945e-ee9ad37ae3e2 -->
 
@@ -7553,7 +7553,7 @@ The process flow is defined herein.
         • The Prospective Integrator must first apply to the Integrator program and be approved by Operational GovOps pursuant to [A.2.3.8.1.2.1.1.2.2 - Long Term Process](6283379c-d871-40a9-a915-d716d7df5642). Post approval, Operational GovOps issues a Reward Code to the Integrator.
         • The Prime Agent develops a plan to track USDS utilization attributable to it using either on-chain or off-chain data. Where applicable, the plan should include how the Prime Agent will support the prospective Integrator in including the Reward Code in their on-chain infrastructure.
 
-• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Distribution Reward.
+• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Accessibility Reward.
 
     ◦ Near Term process:
         •** **If the Prime Agent is not already an approved Integrator, it must apply to the Program and be approved by Viridian Advisors. Post approval, Viridian Advisors issues a Reward Code to the Prime Agent.
@@ -8459,11 +8459,11 @@ If it is discovered that previous Integration Boost calculations were made erron
 
 ###### A.2.3.8.2.2.1.4 - Distribution Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
 
-Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Distribution Reward.
+Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Accessibility Reward.
 
 ###### A.2.3.8.2.2.1.4.1 - Reporting Of Net USDS Balances Is Valid Tracking Methodology [Core]  <!-- UUID: a4ca2e70-d013-4c54-8e17-1d6f352ddbc0 -->
 
-The methodology used to report net USDS balances in the protocol for the Integration Boost is itself an acceptable Tracking Methodology for purposes of the Distribution Reward.
+The methodology used to report net USDS balances in the protocol for the Integration Boost is itself an acceptable Tracking Methodology for purposes of the Accessibility Reward.
 
 ###### A.2.3.8.2.2.1.4.2 - No Double Payments [Core]  <!-- UUID: 5828a3a0-243d-48a5-b537-297015a0c5f5 -->
 
@@ -8571,7 +8571,7 @@ The process flow is defined herein.
 
 • The Prime Agent identifies a DeFi protocol or market where an Integration Boost would drive adoption. The Prime Agent estimates the potential earnings from the Distribution Reward associated with the incremental USDS usage versus the operational cost of funding the Sky Savings Rate payouts.
 
-• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Distribution Reward.
+• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Accessibility Reward.
 
 ###### A.2.3.8.2.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: b91d0eb6-fa86-486c-8350-4564bdb5af09 -->
 
@@ -9414,7 +9414,7 @@ The current Active Pioneer Primes are:
 
 Pioneer Primes gain benefits and responsibilities related to the general adoption of USDS on the Pioneer Chain, and this benefit comes in two forms.
 
-First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Distribution Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
+First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Accessibility Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
 
 Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive payments, see [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
@@ -11025,9 +11025,9 @@ Spark and Grove can borrow amounts exceeding the 1,000,000,000 USDS limit at the
 
 Sky’s recourse for bad debt consists of (1) minting Prime Agent tokens; (2) terminating a Prime’s right to further borrowing; and (3) activation of the Resolution Mechanism which includes, without limitation, the authority to suspend all protocol operations, seize or reallocate all of the Prime assets, override or disable smart contract functions, initiate managed restructuring, or execute full and permanent liquidation of the affected sub-protocol and all of its assets, in order to contain risk and preserve the stability and solvency of the broader ecosystem.
 
-###### A.2.9.2.2.2.3 - Distribution Reward [Core]  <!-- UUID: 85b8e871-2d42-4a85-a887-c33d860bed64 -->
+###### A.2.9.2.2.2.3 - Accessibility Reward [Core]  <!-- UUID: 85b8e871-2d42-4a85-a887-c33d860bed64 -->
 
-The subdocuments herein set out agreed terms with respect to the Distribution Reward.
+The subdocuments herein set out agreed terms with respect to the Accessibility Reward.
 
 ###### A.2.9.2.2.2.3.1 - Distribution Reward Rate [Core]  <!-- UUID: 8e3cde6b-3b8b-4e9a-b9a0-8c24d84881f6 -->
 
@@ -16360,9 +16360,9 @@ The SKY Borrow Rate is calculated according to the following formula when Utiliz
 
 The SKY Borrow Minimum Rate is calculated according to the following formula:
 
-`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Distribution Reward`
+`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Accessibility Reward`
 
-The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Distribution Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
+The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Accessibility Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
 
 ###### A.4.4.1.3.5.2.1 - Parameters Definition [Core]  <!-- UUID: 63e86a25-18f6-4810-a362-d2831781ea2c -->
 
@@ -18123,9 +18123,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps. 
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.1.2.5.1.2.1.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 055fe10c-2d08-49a1-90c5-e124e2e0b4f9 -->
+###### A.6.1.1.1.2.5.1.2.1.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 055fe10c-2d08-49a1-90c5-e124e2e0b4f9 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.1.2.5.1.3 - Completed Instances [Core]  <!-- UUID: 6552c0fe-f9f7-4828-893b-cf278ce5161f -->
 
@@ -33522,9 +33522,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.1.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 09282f1f-f4fa-40b6-9073-6adc42f31569 -->
+###### A.6.1.1.4.2.5.1.2.1.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 09282f1f-f4fa-40b6-9073-6adc42f31569 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.2 - Launch Agent 3 Frontend Open Source Widgets Instance Configuration Document [Core]  <!-- UUID: 5aada153-29f6-4304-b56e-9d425dc978a4 -->
 
@@ -33594,9 +33594,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.2.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: ad573b24-befc-49f9-be30-6c65f8986c61 -->
+###### A.6.1.1.4.2.5.1.2.2.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: ad573b24-befc-49f9-be30-6c65f8986c61 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.3 - Summer.fi Instance Configuration Document [Core]  <!-- UUID: fd9c7ace-e72c-4ffb-a74e-7106a0dde80b -->
 
@@ -33666,9 +33666,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.3.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 289e8b48-d1ae-43d0-a9a5-b66672caacde -->
+###### A.6.1.1.4.2.5.1.2.3.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 289e8b48-d1ae-43d0-a9a5-b66672caacde -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.3.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 73fc6f80-ac05-423f-ac58-e22dbfa8de3f -->
 
@@ -33760,9 +33760,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.4.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 731c96eb-57a2-434c-852c-2c7f461efb46 -->
+###### A.6.1.1.4.2.5.1.2.4.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 731c96eb-57a2-434c-852c-2c7f461efb46 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.4.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: e2a262ce-e59a-421c-ab32-803fe41802c4 -->
 
@@ -33854,7 +33854,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.5.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 655886dc-7ca2-45cd-be2c-7be8421961c7 -->
+###### A.6.1.1.4.2.5.1.2.5.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 655886dc-7ca2-45cd-be2c-7be8421961c7 -->
 
 The Distribution Reward Payments are:
 
@@ -33948,7 +33948,7 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.6.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 4588c98b-1c51-4f8c-8cc5-baab631950ef -->
+###### A.6.1.1.4.2.5.1.2.6.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 4588c98b-1c51-4f8c-8cc5-baab631950ef -->
 
 The Distribution Reward Payments are:
 
@@ -34042,9 +34042,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.7.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 707956cc-62f8-4620-a95f-b45ebf263218 -->
+###### A.6.1.1.4.2.5.1.2.7.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 707956cc-62f8-4620-a95f-b45ebf263218 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.7.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 690e54dd-c88a-422e-a06d-e6812035fc1c -->
 
@@ -34136,9 +34136,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.2.8.3.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 8520b41b-cf03-493b-a6ce-9314983f38b3 -->
+###### A.6.1.1.4.2.5.1.2.8.3.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 8520b41b-cf03-493b-a6ce-9314983f38b3 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.2.8.3.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 74b0e9af-0a6d-4cfc-988a-5621713772fc -->
 
@@ -34242,9 +34242,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.4.1.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 20376e25-f067-400e-be73-dc2552766c47 -->
+###### A.6.1.1.4.2.5.1.4.1.4.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 20376e25-f067-400e-be73-dc2552766c47 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.4.1.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: ded05ed5-e470-4cbc-b3f0-c7d8cd928584 -->
 
@@ -34340,9 +34340,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.4.2.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: a75fa6c5-8d93-43fe-acad-dfb07e226668 -->
+###### A.6.1.1.4.2.5.1.4.2.4.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: a75fa6c5-8d93-43fe-acad-dfb07e226668 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.4.2.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 28b69d1f-44d3-4b97-8aff-809513145245 -->
 
@@ -34438,9 +34438,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.4.3.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 3dd71633-a629-47af-b806-f7930f1332da -->
+###### A.6.1.1.4.2.5.1.4.3.4.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 3dd71633-a629-47af-b806-f7930f1332da -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.4.3.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: efbea98b-9063-4706-a467-050eb2594339 -->
 
@@ -34536,9 +34536,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.4.4.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: e05bf544-6a9c-42f5-9135-01a41887a75f -->
+###### A.6.1.1.4.2.5.1.4.4.4.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: e05bf544-6a9c-42f5-9135-01a41887a75f -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.4.4.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 55ab7dfa-57e5-49d2-9dc3-05b0bfe14d04 -->
 
@@ -34634,9 +34634,9 @@ The Active Data is updated as follows:
 - The Responsible Party is Operational GovOps.
 - The Update Process must follow the protocol for ‘Direct Edit’.
 
-###### A.6.1.1.4.2.5.1.4.5.4.4.0.6.1 - List Of Accessibility Reward Payments [Active Data]  <!-- UUID: 1597416e-188f-4f62-82a0-0be1d7daef20 -->
+###### A.6.1.1.4.2.5.1.4.5.4.4.0.6.1 - List Of Distribution Reward Payments [Active Data]  <!-- UUID: 1597416e-188f-4f62-82a0-0be1d7daef20 -->
 
-The Accessibility Reward Payments are:
+The Distribution Reward Payments are:
 
 ###### A.6.1.1.4.2.5.1.4.5.4.5 - Third Party Partner Payment Addresses And Transaction Records [Active Data Controller]  <!-- UUID: 034f992e-bca4-4d38-ae9d-1f6ae2f0c048 -->
 
