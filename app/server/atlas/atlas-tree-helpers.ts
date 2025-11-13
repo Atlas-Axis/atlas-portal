@@ -3,8 +3,6 @@ import { compareDocNumbers } from '@/app/server/atlas/atlas-utils';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { AtlasTreeNode } from './atlas-tree-system';
 
-// See `makeDocTitle` in Powerhouse Notion importer for original logic reference
-// I made changes to simplify and better fit our needs
 export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): string {
   switch (node.atlas_database_name) {
     // Return the plain text name as-is for these databases
