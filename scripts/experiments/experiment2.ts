@@ -3,10 +3,10 @@
  * Demonstrates that Notion allows updating relationships to existing pages,
  * but enforces nesting depth limits (pages beyond depth 10 cannot be linked).
  *
- * Usage: npx tsx scripts/experiment2.ts
+ * Usage: npx tsx scripts/experiments/experiment2.ts
  */
 import { notion } from '@/app/server/services/notion/notion-client';
-import { loadEnv } from './utils/load-env';
+import { loadEnv } from '../utils/load-env';
 
 // Test case: Nesting level exceeds 10 (fails)
 // const PARENT_NOTION_PAGE_ID = '292f2ff08d73813fa0ebdf4f11519e6d';
@@ -70,7 +70,7 @@ async function main() {
 
 /**
  * Usage:
- * npx tsx scripts/experiment2.ts
+ * npx tsx scripts/experiments/experiment2.ts
  */
 main().catch((err) => {
   console.error(err);

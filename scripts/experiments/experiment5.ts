@@ -5,10 +5,10 @@
  * by updating the "Parent item" property on the CHILD page (not the parent).
  * This is an alternative approach to experiment2.ts which updates the parent's "Sub-item" property.
  *
- * Usage: npx tsx scripts/experiment5.ts
+ * Usage: npx tsx scripts/experiments/experiment5.ts
  */
 import { notion } from '@/app/server/services/notion/notion-client';
-import { loadEnv } from './utils/load-env';
+import { loadEnv } from '../utils/load-env';
 
 // Configure the parent-child relationship
 // Note: Nesting level at 10 may cause issues

@@ -517,12 +517,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
       ```
 
-- **scripts/experiment.ts** — Finds Notion database entries with empty "Master Status"
-  - Example:
-    - ```bash
-      npx tsx scripts/experiment.ts
-      ```
-
 - **scripts/get-notion-database-page-count.ts** — Prints the total number of pages in a given Notion database ID.
   - Examples:
     - ```bash

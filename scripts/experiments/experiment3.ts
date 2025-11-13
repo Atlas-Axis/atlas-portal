@@ -16,10 +16,10 @@
  * - Reports total count of discrepancies found
  *
  * Usage:
- *   npx tsx scripts/experiment3.ts
+ *   npx tsx scripts/experiments/experiment3.ts
  */
 import { notion } from '@/app/server/services/notion/notion-client';
-import { loadEnv } from './utils/load-env';
+import { loadEnv } from '../utils/load-env';
 
 const NOTION_DATABASE_ID = '292f2ff08d7380df9acede66fe5a9d89';
 
@@ -137,7 +137,7 @@ async function main() {
 
 /**
  * Usage:
- * npx tsx scripts/experiment3.ts
+ * npx tsx scripts/experiments/experiment3.ts
  */
 main().catch((err) => {
   console.error(err);

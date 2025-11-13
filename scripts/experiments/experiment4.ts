@@ -17,11 +17,11 @@
  * - Reports total count of discrepancies found
  *
  * Usage:
- *   npx tsx scripts/experiment4.ts
+ *   npx tsx scripts/experiments/experiment4.ts
  */
 import type { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
-import { loadEnv } from './utils/load-env';
+import { loadEnv } from '../utils/load-env';
 
 interface NotionDatabasePage {
   notion_page_id: string;
@@ -196,7 +196,7 @@ async function main() {
 
 /**
  * Usage:
- * npx tsx scripts/experiment4.ts
+ * npx tsx scripts/experiments/experiment4.ts
  */
 main().catch((err) => {
   console.error(err);

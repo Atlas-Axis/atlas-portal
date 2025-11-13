@@ -3,11 +3,11 @@
  * Creates pages in a database with Parent item relationships to determine the maximum
  * allowed nesting depth before Notion API returns an error.
  *
- * Usage: npx tsx scripts/experiment.ts
+ * Usage: npx tsx scripts/experiments/experiment.ts
  */
 import type { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
 import { notion } from '@/app/server/services/notion/notion-client';
-import { loadEnv } from './utils/load-env';
+import { loadEnv } from '../utils/load-env';
 
 const NOTION_DATABASE_ID = '292f2ff08d7380df9acede66fe5a9d89';
 const NESTING_LEVELS = 15;
@@ -150,7 +150,7 @@ async function main() {
 
 /**
  * Usage:
- * npx tsx scripts/experiment.ts
+ * npx tsx scripts/experiments/experiment.ts
  */
 main().catch((err) => {
   console.error(err);
