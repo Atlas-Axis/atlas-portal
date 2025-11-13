@@ -529,26 +529,10 @@ This project maintains **2 synchronized documentation files** that provide high-
 
 All commands are intended to be run from the repository root using tsx.
 
-- **scripts/atlas-changelog.ts**: Prints a human-readable change log of Atlas documents since a time window.
-  - Example:
-    - ```bash
-      npx tsx scripts/atlas-changelog
-      ```
-    - ```bash
-      npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
-      ```
-
-- **scripts/get-notion-database-page-count.ts**: Prints the total number of pages in a given Notion database ID.
-  - Example:
-    - ```bash
-      npx tsx scripts/get-notion-database-page-count.ts 00000000-0000-0000-0000-000000000000
-      ```
-    - ```bash
-      npx tsx scripts/get-notion-database-page-count.ts --verbose 00000000-0000-0000-0000-000000000000
-      ```
+### Atlas Data Import/Export
 
 - **scripts/import-notion-databases.ts**: Imports all configured Notion databases into Supabase, with optional local Notion API caching.
-  - Example:
+  - Examples:
     - ```bash
       npx tsx scripts/import-notion-databases.ts
       ```
@@ -556,17 +540,97 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/import-notion-databases.ts --verbose --local-cache
       ```
 
+- **scripts/atlas-export/generate-atlas-json.ts**: Builds standardized Atlas trees from Supabase and exports to JSON format. Output: `.debug-data/standardized-atlas/atlas.json`
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-export/generate-atlas-json.ts
+      ```
+
+- **scripts/atlas-export/generate-atlas-markdown.ts**: Builds standardized Atlas trees from Supabase and exports to Markdown format. Output: `.debug-data/standardized-atlas/atlas.md`
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-export/generate-atlas-markdown.ts
+      ```
+
+- **scripts/atlas-export/convert-atlas-markdown-to-json.ts**: Parses Atlas Markdown file and converts it to JSON format. Input: `.debug-data/standardized-atlas/atlas.md`, Output: `.debug-data/standardized-atlas/markdown-to-json.json`
+  - Example:
+    - ```bash
+      npx tsx scripts/atlas-export/convert-atlas-markdown-to-json.ts
+      ```
+
+- **scripts/atlas-export/json-to-yaml.ts**: Converts JSON files to YAML format. Defaults to Atlas JSON if no input file provided.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-export/json-to-yaml.ts
+      ```
+    - ```bash
+      npx tsx scripts/atlas-export/json-to-yaml.ts path/to/file.json
+      ```
+    - ```bash
+      npx tsx scripts/atlas-export/json-to-yaml.ts --help
+      ```
+
+### Atlas Validation & Analysis
+
 - **scripts/validate-atlas-markdown.ts**: Validates Atlas Markdown files for syntax errors and structural issues. Checks title line format, heading level progression, document numbering, extra fields, UUID uniqueness, and parent-child relationships.
   - Examples:
     - ```bash
       npx tsx scripts/validate-atlas-markdown.ts
       ```
     - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts atlas.md
+      npx tsx scripts/validate-atlas-markdown.ts .debug-data/atlas.md
       ```
     - ```bash
       npx tsx scripts/validate-atlas-markdown.ts --verbose
       ```
+
+- **scripts/validate-atlas-json.ts**: Validates standardized Atlas JSON files for structural integrity and consistency. Defaults to `.debug-data/standardized-atlas/atlas.json` if no file path provided.
+  - Examples:
+    - ```bash
+      npx tsx scripts/validate-atlas-json.ts
+      ```
+    - ```bash
+      npx tsx scripts/validate-atlas-json.ts path/to/atlas.json
+      ```
+
+- **scripts/atlas-changelog.ts**: Prints a human-readable change log of Atlas documents since a time window.
+  - Examples:
+    - ```bash
+      npx tsx scripts/atlas-changelog
+      ```
+    - ```bash
+      npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
+      ```
+
+### Notion Database Utilities
+
+- **scripts/get-notion-database-page-count.ts**: Prints the total number of pages in a given Notion database ID.
+  - Examples:
+    - ```bash
+      npx tsx scripts/get-notion-database-page-count.ts 00000000-0000-0000-0000-000000000000
+      ```
+    - ```bash
+      npx tsx scripts/get-notion-database-page-count.ts --verbose 00000000-0000-0000-0000-000000000000
+      ```
+
+- **scripts/create-test-notion-databases.ts**: Creates test versions of all Atlas databases in Notion for safe testing of Markdown→Notion sync automation. All test databases are created with [TEST] prefix.
+  - Examples:
+    - ```bash
+      npx tsx scripts/create-test-notion-databases.ts
+      ```
+    - ```bash
+      npx tsx scripts/create-test-notion-databases.ts --delete-existing
+      ```
+
+- **scripts/generate-uuid-mapping.ts**: Generates UUID mappings for all current Notion database pages. Reads from `notion_database_pages` and inserts into `uuid_mapping` table.
+  - Example:
+    - ```bash
+      npx tsx scripts/generate-uuid-mapping.ts
+      ```
+
+### Utility Scripts
+
+- **scripts/agent-notification.ts**: Sends notification when AI agent completes a task (internal utility).
 
 Non-executable helper modules (imported by scripts):
 
