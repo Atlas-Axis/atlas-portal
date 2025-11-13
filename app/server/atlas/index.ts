@@ -2,15 +2,15 @@
  * Atlas services exports
  */
 
-export { convertTreeChangesToAtlasProposal } from './generate-proposal';
-export { generateAtlasProposalFromDiff, createMockProposalExample } from './example-usage';
+export { convertTreeChangesToAtlasProposal } from './proposal-generation/old/generate-proposal';
+export { generateAtlasProposalFromDiff, createMockProposalExample } from './proposal-generation/old/example-usage';
 export type {
   ProposalContext,
   ProposalOptions,
   GroupedChanges,
   DocumentReference,
   FormattedChange,
-} from './proposal-types';
+} from './proposal-generation/old/proposal-types';
 export {
   formatDocumentReference,
   formatDocumentReferenceString,
@@ -18,4 +18,4 @@ export {
   formatDocumentContent,
   detectDocumentType,
   formatChangeEntry,
-} from './proposal-formatter';
+} from './proposal-generation/old/proposal-formatter';

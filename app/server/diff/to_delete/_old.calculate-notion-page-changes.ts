@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { convertTreeChangesToAtlasProposal } from '@/app/server/atlas/generate-proposal';
-import { ProposalContext } from '@/app/server/atlas/proposal-types';
+import { convertTreeChangesToAtlasProposal } from '@/app/server/atlas/proposal-generation/old/generate-proposal';
+import { ProposalContext } from '@/app/server/atlas/proposal-generation/old/proposal-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { convertSupabaseDatabasePagesToTreeNodes } from '@/app/server/diff/to_delete/convert-supabase-database-pages-to-tree-nodes-old';
 import { TreeNode, buildTree } from '@/app/server/diff/tree';

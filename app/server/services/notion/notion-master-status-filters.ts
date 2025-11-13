@@ -1,5 +1,5 @@
 import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints';
-import { MASTER_STATUSES, MASTER_STATUS_ID_MAP } from './constants';
+import { MASTER_STATUSES, MASTER_STATUS_ID_MAP } from '../../atlas/constants';
 
 export const NOTION_DATABASE_FILTERS: QueryDatabaseParameters['filter'] = {
   and: [
