@@ -1,6 +1,6 @@
 # Atlas Tree Diffing
 
-Compares two versions of the Atlas document hierarchy (Supabase vs Markdown export) and identifies all changes.
+Compares two versions of the Atlas document hierarchy (Supabase vs Markdown file) and identifies all changes.
 
 The Atlas Diffing system provides a robust mechanism for comparing two versions of the Atlas document hierarchy and identifying all changes between them.
 

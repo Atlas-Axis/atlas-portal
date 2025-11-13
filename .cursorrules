@@ -505,24 +505,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
       ```
 
-- **scripts/atlas-github-html-analytics.ts** — Analyzes the GitHub-exported Sky Atlas HTML and prints section/document analytics.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-github-html-analytics.ts
-      ```
-    - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/atlas-github-html-analytics.ts
-      ```
-
-- **scripts/atlas-json/old/generate-atlas-json-from-github.ts** — Parses the Sky Atlas HTML into a machine-friendly JSON array and writes `.output/atlas-github.json`.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/generate-atlas-json-from-github.ts
-      ```
-    - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/old/generate-atlas-json-from-github.ts
-      ```
-
 - **scripts/atlas-json/generate-atlas-json-from-supabase.ts** — Exports current or past Atlas data from Supabase into `atlas-supabase.json` (or `atlas-supabase-without-agents.json` when using `--skip-agent-scope`).
   - Examples:
     - ```bash
@@ -533,42 +515,6 @@ All commands are intended to be run from the repository root using tsx.
       ```
     - ```bash
       npx tsx scripts/atlas-json/generate-atlas-json-from-supabase.ts --skip-agent-scope
-      ```
-
-- **scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts** — Parses hierarchical Blue JSON export from `.debug-data/blue.json`, flattens it into documents, and writes categorized JSON to `.output/atlas-blue.json`.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts
-      ```
-    - ```bash
-      npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts --keep-inactives
-      ```
-    - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/atlas-json/old/generate-atlas-json-from-blue-json.ts
-      ```
-
-- **scripts/generate-blue-json.ts** — Generates a Blue-style hierarchical JSON from Supabase (child\_\* relationships only; excludes Agent Scope Database) and writes `.debug-data/atlas-json-generated/blue-from-supabase.json`.
-  - Examples:
-    - ```bash
-      npx tsx scripts/generate-blue-json.ts
-      ```
-    - ```bash
-      DEBUG_LOGGING=1 npx tsx scripts/generate-blue-json.ts
-      ```
-
-- **scripts/atlas-json/old/strip-blue-json-last-modified.ts** — Recursively replaces any `*_last_modified` fields with empty strings to minimize diff noise when comparing Blue JSONs.
-  - Outputs:
-    - `.debug-data/atlas-json-generated/blue-from-supabase-without-dates.json`
-    - `.debug-data/atlas-json-generated/blue-without-dates.json`
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/strip-blue-json-last-modified.ts
-      ```
-
-- **scripts/atlas-json/old/get-blue-uuid-diffs.ts** — Scans both generated Blue JSONs for UUIDs and reports: (1) IDs present in second but missing from first; (2) IDs present in first but missing from second; (3) duplicate UUIDs within each file.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/get-blue-uuid-diffs.ts
       ```
 
 - **scripts/experiment.ts** — Finds Notion database entries with empty "Master Status"
@@ -595,15 +541,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/import-notion-databases.ts --verbose --local-cache
       ```
 
-- **scripts/visualize-hierarchy.ts** — Loads Atlas pages from Supabase, builds the tree, and prints an ASCII or structured visualization.
-  - Examples:
-    - ```bash
-      npx tsx scripts/visualize-hierarchy.ts
-      ```
-    - ```bash
-      npx tsx scripts/visualize-hierarchy.ts --ascii
-      ```
-
 - **scripts/validate-atlas-markdown.ts** — Validates Atlas Markdown files for syntax errors and structural issues. Checks title line format, heading level progression, document numbering, extra fields, UUID uniqueness, and parent-child relationships.
   - Examples:
     - ```bash
@@ -616,22 +553,8 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/validate-atlas-markdown.ts --verbose
       ```
 
-- **scripts/atlas-json/old/filter-blue-json-inactive-docs.ts** — Filters a Blue-style JSON input to exclude all `inactive: 1` items (including nested children) and writes the filtered output to a file.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/filter-blue-json-inactive-docs.ts .debug-data/blue.json .debug-data/atlas-json-generated/blue-without-inactive.json
-      ```
-
-- **scripts/atlas-json/old/get-atlas-json-diffs.ts** — Compares two Atlas JSON exports grouped by category, reporting missing UUIDs in both directions and duplicates. Skips `inactive: 1` docs unless `--include-inactives` is used.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-json/old/get-atlas-json-diffs.ts --file1 .debug-data/atlas-json-generated/atlas-blue.json --file2 .debug-data/atlas-json-generated/atlas-supabase.json
-      ```
-
 Helper modules (imported by scripts):
 
-- `scripts/atlas-json/old/types.ts` — shared types for JSON generation scripts
-- `scripts/atlas-json/old/constants.ts` — output file paths and configuration constants
 - `scripts/atlas-json/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
 
