@@ -2,7 +2,7 @@
  * Atlas Markdown Importer
  *
  * Converts a Markdown document produced by `buildAtlasMarkdown()` into
- * `StandardizedAtlasScopeTrees` (the standardized Atlas tree shape grouped by
+ * `ExportAtlasTreeScopeTrees` (the standardized Atlas tree shape grouped by
  * Atlas database/child collection names).
  *
  * Input format (per document):

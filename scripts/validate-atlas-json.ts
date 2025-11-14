@@ -10,7 +10,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import validateStandardizedAtlasTree, {
+import validateExportAtlasTree, {
   type ValidationError,
 } from '@/app/server/atlas/export/validate-standardized-atlas-tree';
 
@@ -29,7 +29,7 @@ function main() {
   }
 
   const jsonStr = fs.readFileSync(absPath, 'utf8');
-  const { errors, root } = validateStandardizedAtlasTree(jsonStr);
+  const { errors, root } = validateExportAtlasTree(jsonStr);
 
   console.log(`Validating: ${absPath}`);
   if (!root) {

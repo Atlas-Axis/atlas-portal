@@ -333,7 +333,7 @@ function validateNode(
  * @param jsonString JSON string containing the standardized Atlas tree (array of root nodes)
  * @returns Object with `errors` (list of ValidationError) and `root` (parsed array on success, otherwise null)
  */
-export function validateStandardizedAtlasTree(jsonString: string): {
+export function validateExportAtlasTree(jsonString: string): {
   errors: ValidationError[];
   root: ExportAtlasTreeDocument[] | null;
 } {
@@ -390,4 +390,4 @@ export function validateStandardizedAtlasTree(jsonString: string): {
   return { errors, root: parsed as ExportAtlasTreeDocument[] };
 }
 
-export default validateStandardizedAtlasTree;
+export default validateExportAtlasTree;

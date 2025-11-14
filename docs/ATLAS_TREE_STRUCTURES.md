@@ -280,7 +280,7 @@ const { scopeTrees } = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Convert to Export Tree for UI
 const exportScopeTrees = scopeTrees.map((node) =>
-  notionTreeNodeToExportTreeDocument(node, uuidMappings)
+  notionTreeNodeToExportTreeNode(node, uuidMappings)
 );
 
 // Render UI components with Export Tree
@@ -296,7 +296,7 @@ const uuidMappings = await loadUuidMappings();
 const { scopeTrees } = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Convert to Export Tree
-const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeDocument(node, uuidMappings));
+const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeNode(node, uuidMappings));
 
 // Serialize to JSON
 const jsonOutput = JSON.stringify(exportTrees, null, 2);
@@ -330,14 +330,14 @@ const exportTrees = parseAtlasMarkdown(markdownContent);
 
 ### Conversion Function
 
-The `notionTreeNodeToExportTreeDocument()` function in `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts` converts Notion Tree nodes to Export Tree documents.
+The `notionTreeNodeToExportTreeNode()` function in `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts` converts Notion Tree nodes to Export Tree documents.
 
 ### Conversion Flow
 
 ```
 Notion Tree (NotionAtlasTreeNode)
           ↓
-  notionTreeNodeToExportTreeDocument()
+  notionTreeNodeToExportTreeNode()
           ↓
 Export Tree (ExportAtlasTreeDocument)
 ```
@@ -367,13 +367,13 @@ Export Tree (ExportAtlasTreeDocument)
 
 5. **Recursively Convert Children**
    - For each child collection (articles, sections, tenets, etc.)
-   - Call `notionTreeNodeToExportTreeDocument()` recursively
+   - Call `notionTreeNodeToExportTreeNode()` recursively
    - Build database-grouped child collections
 
 ### Code Example
 
 ```typescript
-export function notionTreeNodeToExportTreeDocument(
+export function notionTreeNodeToExportTreeNode(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
 ): ExportAtlasTreeDocument {
@@ -402,7 +402,7 @@ export function notionTreeNodeToExportTreeDocument(
     case 'Scopes':
       return {
         ...base,
-        articles: node.articles.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+        articles: node.articles.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings)),
       } as ExportAtlasTreeScopesDocument;
 
     case 'Sections & Primary Docs':
@@ -410,12 +410,12 @@ export function notionTreeNodeToExportTreeDocument(
         ...base,
         ...extraFields, // Type Specification fields
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map((c) =>
-          notionTreeNodeToExportTreeDocument(c, uuidMappings),
+          notionTreeNodeToExportTreeNode(c, uuidMappings),
         ),
-        annotations: node.annotations.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
-        tenets: node.tenets.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
-        active_data: node.activeData.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
-        needed_research: node.neededResearch.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+        annotations: node.annotations.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings)),
+        tenets: node.tenets.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings)),
+        active_data: node.activeData.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings)),
+        needed_research: node.neededResearch.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings)),
       } as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
 
     // ... other database cases
@@ -491,7 +491,7 @@ const notionPageId = node.notion_page_id;
 const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(notionPageId);
 
 // Use Atlas UUID in Export Tree
-const exportDoc: StandardizedAtlasDocument = {
+const exportDoc: ExportAtlasTreeDocument = {
   uuid: atlasUUID ?? null,
   // ... other fields
 };
@@ -676,7 +676,7 @@ Parse Markdown → Build Export Tree → Validate → Convert to Notion Pages
 │ NotionAtlasTreeNode     │
 │ NotionAtlasTreeResult   │
 └────────┬────────────────┘
-         │ Convert (notionTreeNodeToExportTreeDocument)
+         │ Convert (notionTreeNodeToExportTreeNode)
          ↓
 ┌──────────────────────────────┐
 │  Export Tree                 │
@@ -752,12 +752,12 @@ Load UUID mappings once at the start of operations and pass them through:
 ```typescript
 // ✅ Correct
 const uuidMappings = await loadUuidMappings();
-const exportTree = notionTreeNodeToExportTreeDocument(notionTree, uuidMappings);
+const exportTree = notionTreeNodeToExportTreeNode(notionTree, uuidMappings);
 
 // ❌ Wrong - reloading mappings repeatedly
 for (const node of nodes) {
   const uuidMappings = await loadUuidMappings(); // Expensive!
-  const exportTree = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+  const exportTree = notionTreeNodeToExportTreeNode(node, uuidMappings);
 }
 ```
 
@@ -767,10 +767,10 @@ The conversion process is recursive and structure-preserving. Don't flatten or r
 
 ```typescript
 // ✅ Correct - preserves hierarchy
-const exportTree = notionTreeNodeToExportTreeDocument(rootNode, uuidMappings);
+const exportTree = notionTreeNodeToExportTreeNode(rootNode, uuidMappings);
 
 // ❌ Wrong - loses hierarchy
-const flatList = nodes.map((n) => notionTreeNodeToExportTreeDocument(n, uuidMappings));
+const flatList = nodes.map((n) => notionTreeNodeToExportTreeNode(n, uuidMappings));
 ```
 
 ### 5. Validate Export Trees
@@ -778,11 +778,11 @@ const flatList = nodes.map((n) => notionTreeNodeToExportTreeDocument(n, uuidMapp
 Always validate Export Trees before serialization:
 
 ```typescript
-import { validateStandardizedAtlasTree } from '@/app/server/atlas/export/validate-standardized-atlas-tree';
+import { validateExportAtlasTree } from '@/app/server/atlas/export/validate-standardized-atlas-tree';
 
-const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeDocument(node, uuidMappings));
+const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeNode(node, uuidMappings));
 
-const errors = validateStandardizedAtlasTree(exportTrees);
+const errors = validateExportAtlasTree(exportTrees);
 if (errors.length > 0) {
   console.error('Export Tree validation failed:', errors);
 }

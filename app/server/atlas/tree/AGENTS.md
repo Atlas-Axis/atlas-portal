@@ -90,7 +90,7 @@ Core function that builds the Notion Tree structure. Document numbers are automa
 
 - `scopeTrees`: Array of root scope trees with document numbers assigned
 - `orphanedNodes`: Array of orphaned documents
-- `orphanedNodesAsTreeNodes`: Orphaned nodes as AtlasTreeNode format
+- `orphanedNodesAsTreeNodes`: Orphaned nodes as NotionAtlasTreeNode format
 - `errors`: Array of construction errors
 - `duplicatedNodes`: List of nodes appearing in multiple locations
 - `atlasUUIDsToGeneratedDocNumbers`: Map from Atlas UUID to generated document number

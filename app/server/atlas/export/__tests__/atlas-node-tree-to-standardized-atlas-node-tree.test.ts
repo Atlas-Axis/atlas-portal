@@ -3,7 +3,7 @@ import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
 import { type NotionAtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
 import { type Json } from '@/app/server/services/supabase/database.types';
 import type { UuidMappings } from '../../load-uuid-mapping';
-import notionTreeNodeToExportTreeDocument from '../atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeNode from '../atlas-node-tree-to-standardized-atlas-node-tree';
 import {
   type NeededResearchExtraFields,
   type ScenarioExtraFields,
@@ -89,7 +89,7 @@ function cryptoRandomId(): string {
   return '00000000-0000-0000-0000-' + Math.random().toString(16).slice(2, 14).padEnd(12, '0');
 }
 
-describe('notionTreeNodeToExportTreeDocument', () => {
+describe('notionTreeNodeToExportTreeNode', () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
   let errorSpy: ReturnType<typeof vi.spyOn>;
   let uuidMappings: UuidMappings;
@@ -116,7 +116,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       generatedDocName: 'Generated Name',
     });
 
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     expect(result.type).toBe('Article');
     expect(result.doc_no).toBe('GEN.1');
     expect(result.name).toBe('Generated Name');
@@ -141,7 +141,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scope',
       articles: [child1, child2],
     });
-    const result = notionTreeNodeToExportTreeDocument(root, uuidMappings) as ExportAtlasTreeScopesDocument;
+    const result = notionTreeNodeToExportTreeNode(root, uuidMappings) as ExportAtlasTreeScopesDocument;
     expect(result.type).toBe('Scope');
     expect(result.articles[0].name).toBe('1');
     expect(result.articles[1].name).toBe('2');
@@ -158,7 +158,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scope',
       articles: [art],
     });
-    const result = notionTreeNodeToExportTreeDocument(scope, uuidMappings) as ExportAtlasTreeScopesDocument;
+    const result = notionTreeNodeToExportTreeNode(scope, uuidMappings) as ExportAtlasTreeScopesDocument;
     expect(result).toHaveProperty('articles');
     expect(result.articles).toHaveLength(1);
     expect(result.articles[0].type).toBe('Article');
@@ -183,7 +183,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       neededResearch: [nr],
       agentScopeDocs: [agent],
     });
-    const result = notionTreeNodeToExportTreeDocument(art, uuidMappings) as ExportAtlasTreeArticlesDocument;
+    const result = notionTreeNodeToExportTreeNode(art, uuidMappings) as ExportAtlasTreeArticlesDocument;
     expect(result).toHaveProperty('sections_and_primary_docs');
     expect(result).toHaveProperty('annotations');
     expect(result).toHaveProperty('needed_research');
@@ -218,7 +218,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
         unknown_prop: 'x',
       },
     });
-    const result = notionTreeNodeToExportTreeDocument(
+    const result = notionTreeNodeToExportTreeNode(
       typeSpec,
       uuidMappings,
     ) as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
@@ -244,7 +244,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       scenarios: [scen],
       neededResearch: [nr],
     });
-    const result = notionTreeNodeToExportTreeDocument(tenet, uuidMappings) as ExportAtlasTreeTenetsDocument;
+    const result = notionTreeNodeToExportTreeNode(tenet, uuidMappings) as ExportAtlasTreeTenetsDocument;
     expect(result.scenarios).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
   });
@@ -268,7 +268,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
         unknown: 1,
       },
     });
-    const result = notionTreeNodeToExportTreeDocument(scen, uuidMappings) as ExportAtlasTreeScenariosDocument;
+    const result = notionTreeNodeToExportTreeNode(scen, uuidMappings) as ExportAtlasTreeScenariosDocument;
     expect(result.scenario_variations).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_finding).toBeDefined();
@@ -289,7 +289,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
         bogus: true,
       },
     });
-    const result = notionTreeNodeToExportTreeDocument(sv, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
+    const result = notionTreeNodeToExportTreeNode(sv, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_variation_finding).toBeDefined();
     expect('bogus' in (result as object)).toBe(false);
@@ -305,7 +305,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -322,7 +322,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -339,7 +339,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -356,7 +356,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Needed Research',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -373,7 +373,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Active Data',
       neededResearch: [nr],
     });
-    const result = notionTreeNodeToExportTreeDocument(ad, uuidMappings) as ExportAtlasTreeActiveDataDocument;
+    const result = notionTreeNodeToExportTreeNode(ad, uuidMappings) as ExportAtlasTreeActiveDataDocument;
     expect(result.needed_research).toHaveLength(1);
   });
 
@@ -395,10 +395,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       activeData: [ad],
       neededResearch: [nr],
     });
-    const result = notionTreeNodeToExportTreeDocument(
-      agentRoot,
-      uuidMappings,
-    ) as ExportAtlasTreeAgentScopeDatabaseDocument;
+    const result = notionTreeNodeToExportTreeNode(agentRoot, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument;
     expect(result.agent_scope_database).toHaveLength(1);
     expect(result.annotations).toHaveLength(1);
     expect(result.tenets).toHaveLength(1);
@@ -411,7 +408,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_database_name: ATLAS_DATABASES.NEEDED_RESEARCH,
       atlas_document_type: 'Needed Research',
     });
-    const result = notionTreeNodeToExportTreeDocument(nr, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(nr, uuidMappings);
     // no child arrays on type interface beyond base
     expect(Object.keys(result)).not.toContain('articles');
   });
@@ -426,7 +423,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       notion_page_id: agentRootId,
       agentScopeDocs: [child],
     });
-    const result = notionTreeNodeToExportTreeDocument(agentRoot, uuidMappings, { omitAgents: true });
+    const result = notionTreeNodeToExportTreeNode(agentRoot, uuidMappings, { omitAgents: true });
     expect(result.type).toBe('Core');
     expect('agent_scope_database' in (result as object)).toBe(false);
   });
@@ -435,7 +432,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
     const node = makeNode({
       atlas_database_name: 'Unknown' as unknown as (typeof ATLAS_DATABASES)[keyof typeof ATLAS_DATABASES],
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings);
     expect(errorSpy).toHaveBeenCalled();
     expect('articles' in (result as object)).toBe(false);
   });
@@ -447,7 +444,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scope',
       activeData: [badChild],
     });
-    const result = notionTreeNodeToExportTreeDocument(scope, uuidMappings);
+    const result = notionTreeNodeToExportTreeNode(scope, uuidMappings);
     expect(result.type).toBe('Scope');
     expect(warnSpy).toHaveBeenCalled();
   });
@@ -462,10 +459,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(
-      node,
-      uuidMappings,
-    ) as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings) as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -482,7 +476,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings) as ExportAtlasTreeScenariosDocument;
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings) as ExportAtlasTreeScenariosDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -499,7 +493,7 @@ describe('notionTreeNodeToExportTreeDocument', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
+    const result = notionTreeNodeToExportTreeNode(node, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);

@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import validateStandardizedAtlasTree from '@/app/server/atlas/export/validate-standardized-atlas-tree';
+import validateExportAtlasTree from '@/app/server/atlas/export/validate-standardized-atlas-tree';
 
-describe('validateStandardizedAtlasTree', () => {
+describe('validateExportAtlasTree', () => {
   it('returns JSON_PARSE_ERROR on invalid JSON', () => {
-    const { errors, root } = validateStandardizedAtlasTree('{ invalid json');
+    const { errors, root } = validateExportAtlasTree('{ invalid json');
     expect(root).toBeNull();
     expect(errors.some((e) => e.kind === 'JSON_PARSE_ERROR')).toBe(true);
   });
 
   it('returns ROOT_NOT_ARRAY when root is not an array', () => {
-    const { errors, root } = validateStandardizedAtlasTree('{}');
+    const { errors, root } = validateExportAtlasTree('{}');
     expect(root).toBeNull();
     expect(errors.some((e) => e.kind === 'ROOT_NOT_ARRAY')).toBe(true);
   });
@@ -21,7 +21,7 @@ describe('validateStandardizedAtlasTree', () => {
       uuid: 'uuid-1',
       content: '',
     };
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'NODE_MISSING_TYPE')).toBe(true);
   });
 
@@ -33,7 +33,7 @@ describe('validateStandardizedAtlasTree', () => {
       uuid: 'uuid-1',
       content: '',
     };
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'NODE_INVALID_TYPE')).toBe(true);
   });
 
@@ -45,7 +45,7 @@ describe('validateStandardizedAtlasTree', () => {
       uuid: 'uuid-sec-1',
       content: 'content',
     };
-    const { errors, root } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors, root } = validateExportAtlasTree(JSON.stringify([node]));
     expect(root).not.toBeNull();
     expect(errors).toHaveLength(0);
   });
@@ -63,7 +63,7 @@ describe('validateStandardizedAtlasTree', () => {
       // scopes cannot have annotations directly
       annotations: [],
     } as const;
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'CHILD_COLLECTION_NOT_ALLOWED')).toBe(true);
   });
 
@@ -76,7 +76,7 @@ describe('validateStandardizedAtlasTree', () => {
       content: '',
       articles: {},
     } as const;
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'CHILD_COLLECTION_NOT_ARRAY')).toBe(true);
   });
 
@@ -89,7 +89,7 @@ describe('validateStandardizedAtlasTree', () => {
       content: '',
       articles: [123],
     } as const;
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'CHILD_ITEM_NOT_OBJECT')).toBe(true);
   });
 
@@ -110,7 +110,7 @@ describe('validateStandardizedAtlasTree', () => {
         },
       ],
     } as const;
-    const { errors } = validateStandardizedAtlasTree(JSON.stringify([node]));
+    const { errors } = validateExportAtlasTree(JSON.stringify([node]));
     expect(errors.some((e) => e.kind === 'CHILD_NODE_TYPE_MISMATCH')).toBe(true);
   });
   */

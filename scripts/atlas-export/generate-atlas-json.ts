@@ -22,7 +22,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import notionTreeNodeToExportTreeDocument from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import type {
   ChildCollectionName,
   ExportAtlasTreeDocument,
@@ -204,13 +204,13 @@ async function main() {
 
   // Convert Scope trees to Export Atlas Tree JSON format
   const exportScopeTrees: ExportAtlasTreeScopeTrees = originalScopeTrees.map((scopeNode) =>
-    notionTreeNodeToExportTreeDocument(scopeNode, uuidMappings),
+    notionTreeNodeToExportTreeNode(scopeNode, uuidMappings),
   );
 
   // Convert orphaned nodes to export format
   const exportOrphanedNodes: ExportAtlasTreeDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
     try {
-      return notionTreeNodeToExportTreeDocument(orphanedNode, uuidMappings);
+      return notionTreeNodeToExportTreeNode(orphanedNode, uuidMappings);
     } catch (error) {
       console.warn(`Failed to convert orphaned node ${orphanedNode.notion_page_id}: ${error}`);
       // Return a minimal document for counting purposes

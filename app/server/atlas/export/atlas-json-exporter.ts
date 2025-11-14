@@ -1,4 +1,4 @@
-import notionTreeNodeToExportTreeDocument from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { ExportAtlasTreeScopeTrees } from '@/app/server/atlas/export/types';
 import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
 import type { NotionAtlasTreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
@@ -26,7 +26,7 @@ export async function buildExportAtlasTreeJSON() {
 
   // Convert Scope trees to Export Atlas Tree JSON format
   const exportTrees: ExportAtlasTreeScopeTrees = scopeTrees.map((scopeNode) =>
-    notionTreeNodeToExportTreeDocument(scopeNode, uuidMappings),
+    notionTreeNodeToExportTreeNode(scopeNode, uuidMappings),
   );
 
   return exportTrees;

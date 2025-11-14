@@ -295,7 +295,7 @@ export function detectMissingChildren(
  *
  * @example
  * ```typescript
- * const result = buildAtlasTree(atlasData);
+ * const result = buildNotionAtlasTree(atlasData);
  * const validationErrors = validateTreeIntegrity(
  *   result.scopeTrees,
  *   result.orphanedNodes,

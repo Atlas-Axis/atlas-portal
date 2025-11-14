@@ -151,7 +151,7 @@ export async function buildNotionAtlasTree(
   // Step 5: Find orphaned nodes (nodes not connected to any root tree)
   const orphanedNodes = findOrphanedNodes(pagesByDatabaseWithOverrides, lookupMaps, scopeTrees);
 
-  // Step 5b: Convert orphaned nodes to AtlasTreeNode format
+  // Step 5b: Convert orphaned nodes to NotionAtlasTreeNode format
   const orphanedNodesAsTreeNodes: NotionAtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
     try {
       // Build tree node for orphaned page (with reasonable depth limit to avoid performance issues)
@@ -166,7 +166,7 @@ export async function buildNotionAtlasTree(
         siblingPositioningMappingsByParent,
       );
     } catch (conversionError) {
-      // If conversion fails, create a minimal AtlasTreeNode
+      // If conversion fails, create a minimal NotionAtlasTreeNode
       if (verbose) {
         console.warn(`Failed to convert orphaned node ${orphanedPage.notion_page_id}: ${conversionError}`);
       }
@@ -245,7 +245,7 @@ function generateNormalizedDocumentNames(lookupMaps: NotionAtlasTreeLookupMaps):
  * Creates efficient lookup maps for O(1) access to nodes and relationships.
  *
  * This function processes all pages from all databases and creates:
- * - nodeMap: pageId -> AtlasTreeNode for instant node access
+ * - nodeMap: pageId -> NotionAtlasTreeNode for instant node access
  * - parentMap: childId -> parentId for efficient parent lookup
  * - childrenMap: parentId -> childIds[] for efficient child lookup
  * - processedIds: Set of processed IDs for circular reference detection
@@ -270,7 +270,7 @@ function createLookupMaps(
     }
   }
 
-  // Create AtlasTreeNode for each page and build relationship maps
+  // Create NotionAtlasTreeNode for each page and build relationship maps
   for (const page of allPages) {
     const treeNode: NotionAtlasTreeNode = {
       ...page,

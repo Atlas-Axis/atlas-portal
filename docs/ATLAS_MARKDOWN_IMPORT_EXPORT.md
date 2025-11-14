@@ -116,7 +116,7 @@ The system maintains data fidelity through export-import cycles:
 
 ```typescript
 // 1. Export from JSON
-const originalJSON = await buildAtlasJSON();
+const originalJSON = await buildExportAtlasTreeJSON();
 const markdown = await buildAtlasMarkdown();
 
 // 2. Import back to JSON

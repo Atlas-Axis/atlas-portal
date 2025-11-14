@@ -31,7 +31,7 @@ import { NotionAtlasTreeNode } from './atlas-tree-types';
  * @example
  * ```typescript
  * const uuidMappings = await loadUuidMappings();
- * const result = buildAtlasTree(atlasData, { uuidMappings });
+ * const result = buildNotionAtlasTree(atlasData, { uuidMappings });
  * // Document numbers are automatically assigned to all nodes in result.scopeTrees
  *
  * // Access document numbers and names via UUID maps
