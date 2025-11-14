@@ -2939,71 +2939,172 @@ The Core Facilitator must include the module deployment in the Executive Documen
 
 This process will be further specified in a future iteration of the Atlas.
 
-###### A.1.9.2.3.2.2.1 - Interim Deployments [Core]  <!-- UUID: 9b3edbbf-89d1-42da-a9c3-18f858f8471f -->
+###### A.1.9.2.3.2.2.1 - Prime Spell Security Enforcement [Core]  <!-- UUID: e44ede45-464e-4a2e-b074-965f7ca1303f -->
+
+The documents herein define policies and procedures related to enforcement of the Prime Spell Security Process.
+
+###### A.1.9.2.3.2.2.1.1 - Purpose [Core]  <!-- UUID: 0782d6bf-2b71-4a55-b832-cc9f9cca1d82 -->
+
+Prime Spell Security Enforcement establishes binding enforcement and formal recordkeeping for Prime Agent spell security during the period when the Prime Spell Security Framework is progressively codified and operationalized in the Atlas. Its objective is to protect the Executive Process by ensuring that Prime Agents adhere to all applicable security requirements.
+
+###### A.1.9.2.3.2.2.1.2 - Prime Spell Security Guidelines [Core]  <!-- UUID: 0bc23932-cb06-4c48-8bf0-c1628d644a7a -->
+
+Prime Spell Security Guidelines are all security guidelines, requirements, and best practices codified in the Atlas or communicated to Prime Agents through the official channels used for Prime operations. These communications include, but are not limited to, (1) designated Signal and Discord channels, (2) documentation authored or provided by Core Spell Teams or other stakeholders, and (3) live calls.
+
+###### A.1.9.2.3.2.2.1.3 - Enforcement Authority And Penalties [Core]  <!-- UUID: c14b730a-eea7-4957-9a4b-7994518f3076 -->
+
+The documents herein define enforcement authority and penalties related to the Prime Spell Security Guidelines.
+
+###### A.1.9.2.3.2.2.1.3.1 - Obligation To Comply With Prime Spell Security Guidelines [Core]  <!-- UUID: 109ba764-0266-4875-97f1-1de5bd5e6188 -->
+
+Prime Agents must adhere to all Prime Spell Security Guidelines as a condition of inclusion in an Executive Vote.
+
+###### A.1.9.2.3.2.2.1.3.2 - Prime Spell Security Incidents [Core]  <!-- UUID: 9433535a-fbda-4c85-8871-5118ce073ca1 -->
+
+Any breach by a Prime Agent of the Prime Spell Security Guidelines is designated a “Prime Spell Security Incident”.
+
+###### A.1.9.2.3.2.2.1.3.3 - Determination Of Occurrence Of Prime Spell Security Incident And Penalties [Core]  <!-- UUID: b3cd3112-dcc6-46b6-82bf-b99fa73eb6ca -->
+
+The Core Facilitator and Core GovOps, in consultation with other appropriate stakeholders, have full discretion to determine whether a Prime Spell Security Incident has occurred and to impose appropriate penalties.
+
+###### A.1.9.2.3.2.2.1.3.4 - Penalties [Core]  <!-- UUID: 20aece61-c81d-44b8-8138-c56ca5364222 -->
+
+The penalties for a Prime Spell Security Incident may include, without limitation:
+
+• financial penalties;
+• deprioritization in the Executive spell queue;
+• exclusion from an upcoming Executive Vote cycle;
+• requirement to obtain additional audits at the Prime’s expense; and
+• suspension or reduction of non‑essential support from the Core Council or the Prime’s Operational Executor Agent.
+
+###### A.1.9.2.3.2.2.1.4 - Prime Spell Security Incident Registry [Core]  <!-- UUID: 3921d0c0-881f-4603-9d27-95d02c042cc1 -->
+
+The documents herein define the Prime Spell Security Incident Registry.
+
+###### A.1.9.2.3.2.2.1.4.1 - Process Definition [Core]  <!-- UUID: 13e611c6-f39a-464a-82de-12627204cb29 -->
+
+The documents herein define the process for recording Prime Spell Security Incidents in the Prime Spell Security Incident Registry.
+
+###### A.1.9.2.3.2.2.1.4.1.1 - Prime Agent And Operational Executor Agent Produce Prime Spell Security Incident Report [Core]  <!-- UUID: 8323c8af-7736-482b-b4f2-965bf164ebd9 -->
+
+After a Prime Spell Security Incident has occurred, the Prime and its Operational Executor Agent must promptly produce a Prime Spell Security Incident Report using the designated template.
+
+###### A.1.9.2.3.2.2.1.4.1.1.1 - Delay In Submitting Or Failure To Thoroughly And Accurately Complete Report [Core]  <!-- UUID: 01b44f43-c6e1-4b24-b715-296a5122fb35 -->
+
+Unreasonable delay in submitting the Report, or failure to thoroughly and accurately complete it (including omission of relevant facts), as determined by the Core Council, constitutes a separate Prime Spell Security Incident and may result in additional penalties.
+
+###### A.1.9.2.3.2.2.1.4.1.2 - Core Spell Teams Review Prime Spell Security Incident Report [Core]  <!-- UUID: e480b8f8-b2dc-4a97-a8c7-1745750a9a83 -->
+
+The relevant Core Spell Team, on behalf of the Core Council, must review this Incident Report for completeness and accuracy.
+
+###### A.1.9.2.3.2.2.1.4.1.3 - Core Facilitator Records Prime Spell Security Incident Report In Prime Spell Security Incident Registry [Core]  <!-- UUID: 0da6c412-56e5-4ee7-bc81-683147442c62 -->
+
+All Prime Spell Security Incidents must be recorded by the Core Facilitator in the Incident Registry at A.1.9 - Prime Spell Security Incidents. Each Registry entry must identify the Prime Agent and its Operational Executor Agent, the incident date(s), a short description of the violation, the penalties imposed, and a link to the corresponding Prime Spell Security Incident Report.
+
+###### A.1.9.2.3.2.2.1.4.2 - Uses Of Prime Spell Security Incident Registry [Core]  <!-- UUID: 160bf31b-18c5-4e51-bce4-a1c5630c024e -->
+
+The documents herein define required uses of the Prime Spell Security Registry.
+
+###### A.1.9.2.3.2.2.1.4.2.1 - Use Of Prime Spell Security Registry In Prime Agent Credit Rating System [Core]  <!-- UUID: 4c165fcc-59e5-45c8-866d-c5c68192e591 -->
+
+The Registry shall serve as a critical input to the Prime Agent Credit Rating system and will determine Primes’ Agent Credit Line Borrow Rate when variable pricing is activated pursuant to [A.3.1.2.5.1 - Relationship To Base Rate](4659cbf0-78c2-469b-8432-883e5c931dd1).
+
+###### A.1.9.2.3.2.2.1.4.2.2 - Use Of Prime Spell Security Registry In Risk-Based Pricing Of Insurance [Core]  <!-- UUID: fd1f682c-2d8a-47c5-8c1d-d95a0a2f2021 -->
+
+Insurance‑related fees charged by a Prime’s Operational Executor shall also be calculated using risk‑based pricing informed by the Prime Spell Security Incident Registry, including the severity, frequency, and recency of incidents.
+
+###### A.1.9.2.3.2.2.1.4.2.3 - Use Of Prime Spell Security Registry By Prime Agents [Core]  <!-- UUID: 59d5aa08-3314-4ff0-bceb-57f783465e6f -->
+
+The documents herein define required uses of the Prime Spell Security Registry by Prime Agents.
+
+###### A.1.9.2.3.2.2.1.4.2.3.1 - Review Of Prime Spell Security Registry By Prime Agents [Core]  <!-- UUID: 540e8f4e-0691-435d-bc14-2e4e07d3e39e -->
+
+Prime Agents are expected to review the Prime Spell Security Incident Registry on an ongoing basis and to independently incorporate mitigations and controls based on relevant prior incidents into their spell-development related processes.
+
+###### A.1.9.2.3.2.2.1.4.2.3.2 - Escalated Penalties For Similar Prime Spell Security Incidents [Core]  <!-- UUID: 9555c38c-fc75-4f5e-bbbb-70ebd5b7453a -->
+
+Where a new Prime Spell Security Incident reflects the same or a substantially similar circumstance as a previous Incident in the Registry, the new Incident shall be subject to an escalation multiplier applied to its financial penalty, as determined by the Core Council. This applies regardless of whether the earlier Incident involved the same Prime.
+
+###### A.1.9.2.3.2.2.1.5 - Prime Spell Security Incident Registry [Active Data Controller]  <!-- UUID: a2777f65-6340-46c2-b0f3-95a63fef2f8a -->
+
+Prime Spell Security Incidents are recorded as Active Data in [A.1.9.2.3.2.2.1.5.0.6.1 - Prime Spell Security Incidents](7bcaaa37-c914-41a4-b61b-cf3a7eb5438f).
+
+The Active Data is updated as follows:
+
+• The Responsible Party is the Core Facilitator.
+• The Update Process must follow the protocol for ‘Direct Edit’.
+
+###### A.1.9.2.3.2.2.1.5.0.6.1 - Prime Spell Security Incidents [Active Data]  <!-- UUID: 7bcaaa37-c914-41a4-b61b-cf3a7eb5438f -->
+
+The Prime Spell Security Incidents that have occurred to date are:
+
+    ◦ None
+
+###### A.1.9.2.3.2.2.2 - Interim Deployments [Core]  <!-- UUID: 9b3edbbf-89d1-42da-a9c3-18f858f8471f -->
 
 Prime Agents are allowed to deploy a new Allocation Instance on-chain and allocate capital through it under constrained testing conditions, prior to completing a full risk assessment. Such deployments are termed “Interim Deployments”. Interim Deployments are otherwise subject to the customary requirements of the Sky Core Executive Spell and Prime Proxy Spell process.
 
-###### A.1.9.2.3.2.2.1.1 - Process Definition [Core]  <!-- UUID: db6f880b-17d9-41b0-8940-5afdeda1e7f1 -->
+###### A.1.9.2.3.2.2.2.1 - Process Definition [Core]  <!-- UUID: db6f880b-17d9-41b0-8940-5afdeda1e7f1 -->
 
 The documents herein define the process for Interim Deployments.
 
-###### A.1.9.2.3.2.2.1.1.1 - Forum Post By Prime Agent [Core]  <!-- UUID: de77dbbc-8ff6-44c7-814c-9ee10ca7a543 -->
+###### A.1.9.2.3.2.2.2.1.1 - Forum Post By Prime Agent [Core]  <!-- UUID: de77dbbc-8ff6-44c7-814c-9ee10ca7a543 -->
 
 The technical implementation of Interim Deployments must successfully complete all required external audits before the Prime can post its Interim Deployment proposal to the Forum.
 
-###### A.1.9.2.3.2.2.1.1.2 - Specification Of Testing Parameters By Core Council Risk Advisor [Core]  <!-- UUID: a93952b9-b9c3-45eb-8169-abd0153d3df4 -->
+###### A.1.9.2.3.2.2.2.1.2 - Specification Of Testing Parameters By Core Council Risk Advisor [Core]  <!-- UUID: a93952b9-b9c3-45eb-8169-abd0153d3df4 -->
 
 Once posted to the Forum, the Core Council Risk Advisor must respond on the Forum thread specifying testing parameters that will govern the Interim Deployment, including maximum exposure and rate limits. The Prime must maintain 100% Instance Capital Requirement Ratio for all Interim Deployments.
 
-###### A.1.9.2.3.2.2.1.1.3 - Submission Of Artifact Edit Proposal By Governance Actor [Core]  <!-- UUID: 0c0e09e7-4cbf-4a6f-acfa-0c13c67abca1 -->
+###### A.1.9.2.3.2.2.2.1.3 - Submission Of Artifact Edit Proposal By Governance Actor [Core]  <!-- UUID: 0c0e09e7-4cbf-4a6f-acfa-0c13c67abca1 -->
 
 Subsequently, the appropriate Governance Actor must submit an Artifact Edit Proposal incorporating the approved testing parameters into the Prime’s Artifact.
 
-###### A.1.9.2.3.2.2.1.1.4 - Artifact Update [Core]  <!-- UUID: 1fc1ba29-9273-4d95-b1a5-bdfc61ebf2ab -->
+###### A.1.9.2.3.2.2.2.1.4 - Artifact Update [Core]  <!-- UUID: 1fc1ba29-9273-4d95-b1a5-bdfc61ebf2ab -->
 
 Upon successful conclusion of the Artifact Edit Poll, the Prime's Agent Artifact is updated with a new Instance Configuration Document codifying the Deployment’s approved interim testing parameters and other basic data.
 
-###### A.1.9.2.3.2.2.1.1.5 - Inclusion Of Interim Deployment In Sky Core Executive Cycle [Core]  <!-- UUID: fe8e5e31-fc3a-4631-894c-890cb6c82d81 -->
+###### A.1.9.2.3.2.2.2.1.5 - Inclusion Of Interim Deployment In Sky Core Executive Cycle [Core]  <!-- UUID: fe8e5e31-fc3a-4631-894c-890cb6c82d81 -->
 
 The approved Artifact Edit Poll and resulting Instance Configuration Document serve as provenance authorizing the inclusion of the Interim Deployment into the Sky Core Executive Cycle.
 
-###### A.1.9.2.3.2.2.1.1.6 - Completion Of Full Risk Assessment [Core]  <!-- UUID: 14954d6a-0b97-45bf-8734-1e50af8f9ca7 -->
+###### A.1.9.2.3.2.2.2.1.6 - Completion Of Full Risk Assessment [Core]  <!-- UUID: 14954d6a-0b97-45bf-8734-1e50af8f9ca7 -->
 
 Following the interim deployment, the Prime will work with the Core Council Risk Advisor to complete a full risk assessment. Once the means to calculate an official Capital Requirement Ratio for the deployment has been determined, the Prime can propose a subsequent spell to lift the testing constraints and reduce RRC to the Atlas-calculated value.
 
-###### A.1.9.2.3.2.2.2 - Execution Of Agent Spells [Core]  <!-- UUID: 5b0fd894-094e-4b0c-91ca-c5b59b710c0c -->
+###### A.1.9.2.3.2.2.3 - Execution Of Agent Spells [Core]  <!-- UUID: 5b0fd894-094e-4b0c-91ca-c5b59b710c0c -->
 
-The execution of Agent Spells is described in the subdocuments herein. Two methods are available: direct execution in a Sky Core Spell and execution through StarGuard. Execution through StarGuard is the preferred method and any exceptions require valid reasoning, except as specified in [A.1.9.2.3.2.2.2.3 - Short-term Transitionary Measures](acd33afa-5061-4b56-b76f-56554614558d).
+The execution of Agent Spells is described in the subdocuments herein. Two methods are available: direct execution in a Sky Core Spell and execution through StarGuard. Execution through StarGuard is the preferred method and any exceptions require valid reasoning, except as specified in [A.1.9.2.3.2.2.3.3 - Short-term Transitionary Measures](acd33afa-5061-4b56-b76f-56554614558d).
 
-###### A.1.9.2.3.2.2.2.1 - Execution Through StarGuard [Core]  <!-- UUID: 78ec918d-cd9e-4326-bfa9-ab338e658a8b -->
+###### A.1.9.2.3.2.2.3.1 - Execution Through StarGuard [Core]  <!-- UUID: 78ec918d-cd9e-4326-bfa9-ab338e658a8b -->
 
 When the execution through the StarGuard method is used, the Agent Spells are whitelisted in Sky Core Spells and later executed using the StarGuard module. The Sky Core Spell includes a whitelist of approved Agent Spells, which allows them to be executed via separate transactions. This enhances resilience and scalability, ensuring robust handling of payloads from multiple active Agents while minimizing risks to Sky Core.
 
-###### A.1.9.2.3.2.2.2.1.1 - StarGuard [Core]  <!-- UUID: e5cbb61a-82c3-4fce-b6f2-191911d5c155 -->
+###### A.1.9.2.3.2.2.3.1.1 - StarGuard [Core]  <!-- UUID: e5cbb61a-82c3-4fce-b6f2-191911d5c155 -->
 
 For each Agent, a `StarGuard` contract is deployed to manage whitelisting and execution of Agent Spells. This contract acts as a standardized "proxy wrapper”.
 
-###### A.1.9.2.3.2.2.2.1.1.1 - StarGuard Functionality [Core]  <!-- UUID: 04712596-beda-452e-a667-44e6fe707abd -->
+###### A.1.9.2.3.2.2.3.1.1.1 - StarGuard Functionality [Core]  <!-- UUID: 04712596-beda-452e-a667-44e6fe707abd -->
 
 When initiated in a Sky Core Spell, the StarGuard whitelists relevant Agent Spells, enabling their secure execution. This whitelisting allows Agent Spells to run independently, supporting arbitrary complexity and custom features like office hours or expiration times. StarGuard also supports dropping a whitelisted Agent Spell, providing a mechanism to revoke access if needed for security or error correction. This is done via the `drop()` function.
 
-###### A.1.9.2.3.2.2.2.1.1.1.1 - StarGuard Ownership [Core]  <!-- UUID: e6ec35bc-28af-4e06-bc92-c8706add6017 -->
+###### A.1.9.2.3.2.2.3.1.1.1.1 - StarGuard Ownership [Core]  <!-- UUID: e6ec35bc-28af-4e06-bc92-c8706add6017 -->
 
 The StarGuard contract is owned by the Pause Proxy, ensuring centralized control and preventing unauthorized changes.
 
-###### A.1.9.2.3.2.2.2.1.1.1.2 - Responsibilities For Agents [Core]  <!-- UUID: 3deb3282-434c-4d56-b5e3-3a4daad3cd1d -->
+###### A.1.9.2.3.2.2.3.1.1.1.2 - Responsibilities For Agents [Core]  <!-- UUID: 3deb3282-434c-4d56-b5e3-3a4daad3cd1d -->
 
 The Agents are required to include logic for the public view method `isExecutable()` in their Spell. This function is used to signal if the Spell is ready to be executed in a particular block or not. StarGuard cannot execute an Agent Spell if `isExecutable()` returns `False`. The value that must be returned for execution to be possible is `True`.
 
-###### A.1.9.2.3.2.2.2.1.1.1.3 - StarGuard Whitelisting Authority [Core]  <!-- UUID: f23f9ea7-64e1-4083-93b8-2864b232f451 -->
+###### A.1.9.2.3.2.2.3.1.1.1.3 - StarGuard Whitelisting Authority [Core]  <!-- UUID: f23f9ea7-64e1-4083-93b8-2864b232f451 -->
 
 Only the owner, the Pause Proxy, is able to whitelist new Agent Spells via a Sky Core Spell.
 
-###### A.1.9.2.3.2.2.2.1.1.1.4 - StarGuard Max Delay [Core]  <!-- UUID: ccb1f61a-660b-4a8a-976f-53915dd21b03 -->
+###### A.1.9.2.3.2.2.3.1.1.1.4 - StarGuard Max Delay [Core]  <!-- UUID: ccb1f61a-660b-4a8a-976f-53915dd21b03 -->
 
 A configurable `maxDelay` sets the maximum duration between the whitelisting of the Agent Spell in the Sky Core Spell and the execution of the Agent Spell. This feature ensures Spells do not linger indefinitely, enforcing timely processing and reducing risks from delayed or forgotten actions. The recommended value for `maxDelay` is seven (7) days.
 
-###### A.1.9.2.3.2.2.2.1.1.1.5 - Requirements For Whitelisting [Core]  <!-- UUID: a03c9e5a-4fe4-46a2-8ec6-f8900ed90f47 -->
+###### A.1.9.2.3.2.2.3.1.1.1.5 - Requirements For Whitelisting [Core]  <!-- UUID: a03c9e5a-4fe4-46a2-8ec6-f8900ed90f47 -->
 
 The requirements for whitelisting are:
 
@@ -3013,15 +3114,15 @@ The requirements for whitelisting are:
 
 This information must be provided by the Agent Spell reviewers to the Governance Point.
 
-###### A.1.9.2.3.2.2.2.1.1.1.6 - Permissionless Execution [Core]  <!-- UUID: 50f71e34-6705-4ccb-a911-3797b05f422f -->
+###### A.1.9.2.3.2.2.3.1.1.1.6 - Permissionless Execution [Core]  <!-- UUID: 50f71e34-6705-4ccb-a911-3797b05f422f -->
 
 The triggering of an Agent Spell is permissionless; anyone can initiate execution. A keeper job, StarGuardJob, allows keepers to monitor and execute eligible Spells at the earliest possible block.
 
-###### A.1.9.2.3.2.2.2.1.1.1.7 - Function Call For Execution [Core]  <!-- UUID: 8113159f-dcf6-4c44-afb0-aed09b1e5cf7 -->
+###### A.1.9.2.3.2.2.3.1.1.1.7 - Function Call For Execution [Core]  <!-- UUID: 8113159f-dcf6-4c44-afb0-aed09b1e5cf7 -->
 
 Execution is initiated on the StarGuard contract via its `exec()` function, which performs necessary validation checks before calling the SubProxy’s `exec(spellDataCopy.addr, abi.encodePacked(StarSpellLike.execute.selector))` to perform the Spell's actions.
 
-###### A.1.9.2.3.2.2.2.1.1.1.7.1 - Validation Checks By StarGuard [Core]  <!-- UUID: e15ea323-038d-4935-a39e-295c152251da -->
+###### A.1.9.2.3.2.2.3.1.1.1.7.1 - Validation Checks By StarGuard [Core]  <!-- UUID: e15ea323-038d-4935-a39e-295c152251da -->
 
 The following checks are enabled by the contract:
 
@@ -3033,17 +3134,17 @@ The following checks are enabled by the contract:
 
 • Verifies that StarGuard retains access to the SubProxy, ensuring no loss of control during the Agent spell execution.
 
-###### A.1.9.2.3.2.2.2.2 - Direct Execution Through Sky Core Spell [Core]  <!-- UUID: ffc88a5e-b7b2-4ed9-8c88-fcbcb7632f14 -->
+###### A.1.9.2.3.2.2.3.2 - Direct Execution Through Sky Core Spell [Core]  <!-- UUID: ffc88a5e-b7b2-4ed9-8c88-fcbcb7632f14 -->
 
 When the execution through the Sky Core Spell method is used, the Agent Spells are executed directly in the Sky Core Spells.
 
-###### A.1.9.2.3.2.2.2.2.1 - Sky Core Spell Executes Agent Spell [Core]  <!-- UUID: a109ad0d-0743-4ae9-bcc1-df04a6e5da43 -->
+###### A.1.9.2.3.2.2.3.2.1 - Sky Core Spell Executes Agent Spell [Core]  <!-- UUID: a109ad0d-0743-4ae9-bcc1-df04a6e5da43 -->
 
 Execution of an Agent Spell is initiated by the Sky Core Spell, which directly calls `exec()` on the Agent’s SubProxy contract to perform the Spell's actions in the same transaction. The SubProxy limits rights to the specific Agent, preventing access to Sky Core contracts. The current SubProxy contract is designed to execute the Agent Spell in the same transaction as the Sky Core Spell.
 
-###### A.1.9.2.3.2.2.2.3 - Short-term Transitionary Measures [Core]  <!-- UUID: acd33afa-5061-4b56-b76f-56554614558d -->
+###### A.1.9.2.3.2.2.3.3 - Short-term Transitionary Measures [Core]  <!-- UUID: acd33afa-5061-4b56-b76f-56554614558d -->
 
-During the transitioning phase, before StarGuard is fully implemented and tested, only the Spark Agent will use the process specified in [A.1.9.2.3.2.2.2.1 - Execution Through StarGuard](78ec918d-cd9e-4326-bfa9-ab338e658a8b). Other Agent Spells will use the process specified in [A.1.9.2.3.2.2.2.2 - Direct Execution Through Sky Core Spell](ffc88a5e-b7b2-4ed9-8c88-fcbcb7632f14).
+During the transitioning phase, before StarGuard is fully implemented and tested, only the Spark Agent will use the process specified in [A.1.9.2.3.2.2.3.1 - Execution Through StarGuard](78ec918d-cd9e-4326-bfa9-ab338e658a8b). Other Agent Spells will use the process specified in [A.1.9.2.3.2.2.3.2 - Direct Execution Through Sky Core Spell](ffc88a5e-b7b2-4ed9-8c88-fcbcb7632f14).
 
 #### A.1.9.2.4 - Executive Process Breakdown [Core]  <!-- UUID: 98298ab3-8d08-4c4f-b47b-81242a3e3903 -->
 
@@ -9637,7 +9738,7 @@ Once a new Instance is deployed, its data is integrated into risk-capital monito
 
 ###### A.2.3.9.1.1.2.3 - Instance Setup Deployments [Core]  <!-- UUID: 3766cb8c-ab6c-41af-9465-b8dea76d0532 -->
 
-The documents herein define how the deployment of an Allocation Instance is executed on-chain. In the short-term, an Allocation Instance may also be deployed using the process for Interim Deployments specified in [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f).
+The documents herein define how the deployment of an Allocation Instance is executed on-chain. In the short-term, an Allocation Instance may also be deployed using the process for Interim Deployments specified in [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f).
 
 The Prime Agent must subsequently prepare a pro-forma Required Risk Capital estimate, which must be approved by the Core Council Risk Advisor, before the parameters of the Instance can be updated for normal operation.
 
@@ -12387,7 +12488,7 @@ The Agent Credit Line Borrow Rate is the annual percentage rate that Agents must
 
 ##### A.3.1.2.5.1 - Relationship To Base Rate [Core]  <!-- UUID: 4659cbf0-78c2-469b-8432-883e5c931dd1 -->
 
-The Agent Credit Line Borrow Rate is equal to the Base Rate.
+The Agent Credit Line Borrow Rate is equal to the Base Rate unless variable pricing has been activated pursuant to [A.1.9.2.3.2.2.1.4.2.1 - Use Of Prime Spell Security Registry In Prime Agent Credit Rating System](4c165fcc-59e5-45c8-866d-c5c68192e591). Upon activation, the Agent Credit Line Borrow Rate will vary by Prime Agent according to its Credit Rating.
 
 ##### A.3.1.2.5.2 - Subsidized Rate [Core]  <!-- UUID: ceceb90b-57d1-43db-9e52-133532c373fd -->
 
@@ -12403,7 +12504,7 @@ Interest accrues on borrowed funds and is reflected in the Allocation Vault bala
 
 ##### A.3.1.2.5.5 - Prime Agent Credit Rating System [Core]  <!-- UUID: 926fb13d-efdd-4a83-a3dc-db1448a106f5 -->
 
-After the development of a Prime Agent Credit Rating System, the Agent Credit Line Borrow Rate will vary based on the Credit Rating of each Prime Agent. The Credit Rating for a Prime Agent will take into account factors including the Encumbrance Ratio.
+After the development of a Prime Agent Credit Rating System, the Agent Credit Line Borrow Rate will vary based on the Credit Rating of each Prime Agent. The Credit Rating for a Prime Agent will take into account factors including the Encumbrance Ratio and the Prime Spell Security Incident Registry.
 
 ### A.3.1.0.3.1 - Methodologies - Element Annotation [Annotation]  <!-- UUID: 2f658a82-a8d2-4bd1-be5c-906e4733400d -->
 
@@ -29651,18 +29752,6 @@ The withdrawal rate limits are:
 
 The documents herein contain specific off-chain parameters for this Instance.
 
-###### A.6.1.1.2.2.6.1.3.1.6.3.2.5.1 - Interim Deployment [Core]  <!-- UUID: 95a0b39b-86a3-4bfe-96b8-bd6268824c33 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-###### A.6.1.1.2.2.6.1.3.1.6.3.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 0f93decd-937a-4bf7-b9b7-a6e9f1ce7b41 -->
-
-The maximum allocation for all Interim Deployments in Curve RLUSD/USDC Pool LP Deposits is $25 million.
-
-###### A.6.1.1.2.2.6.1.3.1.6.3.2.5.1.2 - Rate Limits [Core]  <!-- UUID: fd5eb921-2987-4bae-83a7-8db85e1172ac -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
-
 ###### A.6.1.1.2.2.6.1.3.1.6.3.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 045a13d9-a6a4-4d50-8cf5-0a762252d9de -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
@@ -29748,18 +29837,6 @@ The withdrawal rate limits are:
 
 The documents herein contain specific off-chain parameters for this Instance.
 
-###### A.6.1.1.2.2.6.1.3.1.7.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 9583419b-b97c-45d5-9581-fad0b5c656b0 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-###### A.6.1.1.2.2.6.1.3.1.7.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 3e4fc425-6b44-408b-b90e-f408d1920636 -->
-
-The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
-
-###### A.6.1.1.2.2.6.1.3.1.7.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 6caba5e6-b5b5-43a0-8f6f-9de2d2c559cd -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
-
 ###### A.6.1.1.2.2.6.1.3.1.7.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 9c79b4b9-8584-4414-bddf-36158d01dc20 -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
@@ -29844,18 +29921,6 @@ The withdrawal rate limits are:
 ###### A.6.1.1.2.2.6.1.3.1.8.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 174ba214-cfe9-4d35-83cb-3c0795e1936c -->
 
 The documents herein contain specific off-chain parameters for this Instance.
-
-###### A.6.1.1.2.2.6.1.3.1.8.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 7f2502ce-752e-47e9-bac5-94642c9496d1 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-###### A.6.1.1.2.2.6.1.3.1.8.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 34735806-06ea-41cb-8e69-05ee68063194 -->
-
-The maximum allocation for all Interim Deployments in Securitize Tokenized AAA CLO Fund (STAC) is $25 million.
-
-###### A.6.1.1.2.2.6.1.3.1.8.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 03802a9c-89db-44ad-bf11-b8c28d402cca -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
 
 ###### A.6.1.1.2.2.6.1.3.1.8.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 0f3ebd6c-2b7f-4125-aea8-68e84476da06 -->
 
@@ -30098,18 +30163,6 @@ The outflow rate limits are:
 
 The documents herein contain specific off-chain parameters for this Instance.
 
-###### A.6.1.1.2.2.6.1.3.3.1.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: e3a871ba-b1ee-4883-a557-5a56ae292e86 -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-###### A.6.1.1.2.2.6.1.3.3.1.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: ac545546-ed62-4726-a97c-e8ef3c273f7e -->
-
-The maximum allocation for all Interim Deployments in Morpho Grove x Steakhouse High Yield Vault USDC is $25 million.
-
-###### A.6.1.1.2.2.6.1.3.3.1.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: f7ed1b75-b4ff-4bb4-ae02-128dd230d70e -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
-
 ###### A.6.1.1.2.2.6.1.3.3.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: a274fcdf-dc71-4b78-be4d-e41d1622e076 -->
 
 The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Grove Liquidity Layer processes.
@@ -30198,18 +30251,6 @@ The outflow rate limits are:
 ###### A.6.1.1.2.2.6.1.3.4.1.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: dfc74dd9-8390-4428-96e4-9b09c1ce0955 -->
 
 The documents herein contain specific off-chain parameters for this Instance.
-
-###### A.6.1.1.2.2.6.1.3.4.1.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 0af9e575-9cbb-41e8-a9e2-fbd9e9ba368d -->
-
-This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.1 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
-
-###### A.6.1.1.2.2.6.1.3.4.1.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 283d3c76-2ffe-4e99-8530-065800265fca -->
-
-The maximum allocation for all Interim Deployments in Aave v3 USDT0 is $25 million.
-
-###### A.6.1.1.2.2.6.1.3.4.1.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 37be4157-1086-402c-bdcc-5be5975d7842 -->
-
-The Rate Limits for this Interim Deployment are defined in Rate Limits.
 
 ###### A.6.1.1.2.2.6.1.3.4.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 5ad3319c-8c5a-4ba3-8578-29ab5bd51830 -->
 
