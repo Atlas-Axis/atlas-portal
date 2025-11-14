@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { buildAtlasTree, getDocumentTitle } from './atlas-tree-system';
+ * import { buildAtlasTree } from './atlas-tree-system';
  * import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
  * import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
  *
@@ -17,7 +17,7 @@
  * const uuidMappings = await loadUuidMappings();
  *
  * // Build tree structure with document numbering
- * const result = buildAtlasTree(atlasData, { uuidMappings });
+ * const result = await buildAtlasTree(atlasData, { uuidMappings });
  *
  * // Access the tree structure
  * console.log(`Built ${result.scopeTrees.length} scope trees`);
@@ -32,87 +32,8 @@
  * console.log('Document numbers:', docNumbers);
  * ```
  */
-import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { buildAtlasTree } from './atlas-tree-builder';
-import { createValidationSummary, logValidationErrors, validateTreeIntegrity } from './atlas-tree-errors';
 import { findNodeByDocumentID, preOrderTraversal } from './atlas-tree-traversal';
-import { AtlasTreeNode, AtlasTreeResult, TreeConstructionOptions } from './atlas-tree-types';
-
-/**
- * High-level function to build Atlas tree with comprehensive validation and error handling.
- *
- * This function combines tree building, document numbering, and validation into a single
- * operation with detailed error reporting and logging.
- *
- * @param pagesByDatabase - Pages organized by database name from loadAtlasFromSupabaseWithNestingAgentsUnderSection
- * @param options - Configuration options for tree construction
- * @returns Complete tree result with validation information
- *
- * @example
- * ```typescript
- * const uuidMappings = await loadUuidMappings();
- * const result = await buildAtlasTreeWithValidation(atlasData, {
- *   uuidMappings,
- *   verbose: true,
- *   maxDepth: 100
- * });
- *
- * if (result.validationSummary.criticalErrors > 0) {
- *   console.error('Critical errors found:', result.validationSummary);
- * }
- * ```
- */
-export async function buildAtlasTreeWithValidation(
-  pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
-  options: TreeConstructionOptions & { validateIntegrity?: boolean },
-): Promise<
-  AtlasTreeResult & {
-    validationSummary: ReturnType<typeof createValidationSummary>;
-    documentNumbers: Map<string, string>;
-  }
-> {
-  const { validateIntegrity = true, reportMissingChildNodes = false, ...treeOptions } = options;
-
-  // Build the tree structure
-  const result = await buildAtlasTree(pagesByDatabase, treeOptions);
-
-  // Validate tree integrity if requested
-  let validationSummary = { totalErrors: 0, errorTypes: {}, criticalErrors: 0, warnings: 0 };
-  if (validateIntegrity) {
-    const validationErrors = validateTreeIntegrity(result.scopeTrees, result.orphanedNodes, pagesByDatabase);
-
-    validationSummary = createValidationSummary(
-      validationErrors,
-      reportMissingChildNodes,
-      treeOptions.reportOrphanedNodes,
-    );
-
-    if (validationErrors.length > 0) {
-      logValidationErrors(
-        validationErrors,
-        treeOptions.verbose,
-        reportMissingChildNodes,
-        treeOptions.reportOrphanedNodes,
-      );
-    }
-  }
-
-  // Collect document numbers from all trees
-  const documentNumbers = new Map<string, string>();
-  for (const scopeTree of result.scopeTrees) {
-    collectDocumentNumbers(scopeTree, documentNumbers);
-  }
-
-  console.log(`✅ Built ${result.scopeTrees.length} scope trees with ${result.orphanedNodes.length} orphaned nodes`);
-  console.log(`📊 Generated ${documentNumbers.size} document numbers`);
-
-  return {
-    ...result,
-    validationSummary,
-    documentNumbers,
-  };
-}
+import { AtlasTreeNode } from './atlas-tree-types';
 
 /**
  * Collects all document numbers from a tree structure.

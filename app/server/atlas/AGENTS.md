@@ -42,66 +42,23 @@ Located in `app/server/atlas/tree/__tests__/`:
 ```typescript
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { buildAtlasTreeWithValidation } from './tree/atlas-tree-system';
+import { buildAtlasTree } from './tree/atlas-tree-system';
 
 // Load Atlas data
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 const uuidMappings = await loadUuidMappings();
 
-// Build tree structure with document numbering and validation
-const result = await buildAtlasTreeWithValidation(atlasData, {
-  uuidMappings,
-  verbose: true,
-  validateIntegrity: true,
-});
+// Build tree structure with document numbering
+const result = await buildAtlasTree(atlasData, { uuidMappings });
 
 // Access the results
 console.log(`Built ${result.scopeTrees.length} scope trees`);
 console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
-console.log(`Generated ${result.documentNumbers.size} document numbers`);
-
-// Check for validation errors
-if (result.validationSummary.criticalErrors > 0) {
-  console.error('Critical errors found:', result.validationSummary);
-}
 ```
 
 ## API Reference
 
 ### Tree Construction
-
-#### `buildAtlasTreeWithValidation(pagesByDatabase, options)`
-
-High-level function that builds the tree structure with comprehensive validation and error handling.
-
-**Parameters:**
-
-- `pagesByDatabase`: Pages organized by database name from `loadAtlasFromSupabaseWithNestingAgentsUnderSection()`
-- `options`: Configuration options (see `TreeConstructionOptions` below)
-
-**Returns:**
-
-- `scopeTrees`: Array of root scope trees with document numbers assigned
-- `orphanedNodes`: Array of orphaned documents
-- `errors`: Array of construction errors
-- `validationSummary`: Summary of validation results
-- `documentNumbers`: Map of page ID to document number
-
-**Example:**
-
-```typescript
-const uuidMappings = await loadUuidMappings();
-const result = await buildAtlasTreeWithValidation(atlasData, {
-  uuidMappings,
-  verbose: true,
-  maxDepth: 100,
-  validateIntegrity: true,
-});
-
-if (result.validationSummary.criticalErrors > 0) {
-  console.error('Critical errors found:', result.validationSummary);
-}
-```
 
 #### `buildAtlasTree(pagesByDatabase, options)`
 
@@ -530,7 +487,7 @@ npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder-mentions.test.ts
 Enable verbose logging to see detailed construction information:
 
 ```typescript
-const result = await buildAtlasTreeWithValidation(atlasData, {
+const result = await buildAtlasTree(atlasData, {
   uuidMappings,
   verbose: true,
   reportMissingChildNodes: true,
