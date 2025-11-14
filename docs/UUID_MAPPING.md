@@ -201,9 +201,9 @@ For embedding in HTML/JSON contexts, mappings can be converted to plain objects:
 
 ### 4. JSON Export
 
-**Location**: `atlas-node-tree-to-standardized-atlas-node-tree.ts`
+**Location**: `notion-tree-to-export-tree.ts`
 
-**Purpose**: Include Atlas UUIDs in standardized JSON export
+**Purpose**: Include Atlas UUIDs in Export Tree JSON export
 
 **Process:**
 

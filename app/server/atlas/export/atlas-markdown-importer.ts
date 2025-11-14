@@ -2,7 +2,7 @@
  * Atlas Markdown Importer
  *
  * Converts a Markdown document produced by `buildAtlasMarkdown()` into
- * `ExportAtlasTreeScopeTrees` (the standardized Atlas tree shape grouped by
+ * `ExportAtlasTreeScopeTrees` (the Export Atlas tree shape grouped by
  * Atlas database/child collection names).
  *
  * Input format (per document):
@@ -78,7 +78,7 @@ interface StackItem {
 }
 
 /**
- * Main entry point: Parse Atlas Markdown into a structured tree of standardized Atlas documents.
+ * Main entry point: Parse Atlas Markdown into a structured tree of Export Atlas documents.
  *
  * Algorithm overview:
  * 1. Scan line-by-line: title lines start new documents, other lines are content
@@ -504,7 +504,7 @@ function pushChildIntoCollection(
  * - Agent Scope Database: agent_scope_database[], annotations[], tenets[], active_data[], needed_research[]
  * - And so on...
  *
- * This ensures type safety and correct structure for the standardized Atlas tree.
+ * This ensures type safety and correct structure for the Export Atlas tree.
  */
 function createNodeForDatabase(
   base: { type: AtlasDocumentType; doc_no: string; name: string; uuid: string | null },

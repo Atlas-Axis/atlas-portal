@@ -164,7 +164,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 **Files**:
 
-- `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
+- `app/server/atlas/export/notion-tree-to-export-tree.ts`
   - `convertExtraFieldToMarkdown()` helper: Converts rich text structure to markdown strings
     - Handles both `plain_text` and `rich_text` properties
     - Uses `convertNotionRichTextToMarkdown()` for rich text arrays
@@ -245,7 +245,7 @@ This allows any part of the codebase to dynamically discover which document type
   - Renders as a definition list (`<dl>`) with labels and values
 
 - `app/atlas/content-tree.tsx`
-  - `StandardizedExtraData` component: Renders extra fields in tree view
+  - `ExportTreeExtraData` component: Renders extra fields in tree view
   - Filters out empty values before display
   - Uses property mappings to get human-readable labels
 
@@ -256,7 +256,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 ### Validation
 
-**File**: `app/server/atlas/export/validate-standardized-atlas-tree.ts`
+**File**: `app/server/atlas/export/validate-export-atlas-tree.ts`
 
 - Validates extra field presence and types for documents
 - Ensures all fields defined in mappings exist on documents
@@ -287,7 +287,7 @@ This allows any part of the codebase to dynamically discover which document type
 
 ### Export
 
-- `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts`
+- `app/server/atlas/export/notion-tree-to-export-tree.ts`
   - Picks and validates extra fields for JSON export
   - Warning messages for missing fields
 
@@ -303,7 +303,7 @@ This allows any part of the codebase to dynamically discover which document type
   - Type definitions for exported Atlas documents
   - `extraFieldsByDocumentType` constant
 
-- `app/server/atlas/export/validate-standardized-atlas-tree.ts`
+- `app/server/atlas/export/validate-export-atlas-tree.ts`
   - Validates extra fields in exported data
 
 ### Change Detection & Diffing
@@ -347,14 +347,14 @@ To add a new extra field to an existing document type:
 4. Add extraction function in `convert-notion-pages-to-supabase-format.ts`
 5. Add comparison function in `compare-database-pages.ts`
 6. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
-7. Add case in `pickExtraFields()` in `atlas-node-tree-to-standardized-atlas-node-tree.ts`
+7. Add case in `pickExtraFields()` in `notion-tree-to-export-tree.ts`
 8. **Add `...pickExtraFields(node)` spread** in document type's case in `notionTreeNodeToExportTreeNode()` function
 9. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
 10. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
 11. Add to `extraFieldsByDocumentType` in `json-export/types.ts`
-12. Add validation case in `validate-standardized-atlas-tree.ts`
+12. Add validation case in `validate-export-atlas-tree.ts`
 13. Add case in UI components (`page-extra-data.tsx`, `content-tree.tsx`, `sync/page.tsx`)
-14. Add unit test in `atlas-node-tree-to-standardized-atlas-node-tree.test.ts`
+14. Add unit test in `notion-tree-to-export-tree.test.ts`
 
 **Note**: Step 3 (updating `DOCUMENT_TYPE_EXTRA_FIELDS`) enables automatic discovery of extra fields across the codebase, allowing data-driven code to work without hardcoded type checks (e.g., the test database creation script).
 

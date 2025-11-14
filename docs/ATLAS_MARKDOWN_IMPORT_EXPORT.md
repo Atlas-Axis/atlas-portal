@@ -64,7 +64,7 @@ const trees = parseAtlasMarkdown(markdown);
 2. **Calculate parent**: Uses document numbers to find parent documents
 3. **Build tree**: Constructs hierarchical JSON structure
 4. **Extract fields**: Parses extra fields for specific document types
-5. **Return JSON**: Returns standardized Atlas JSON format
+5. **Return JSON**: Returns Export Atlas Tree JSON format
 
 ### Parent-Child Resolution
 

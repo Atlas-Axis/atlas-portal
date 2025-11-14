@@ -2,7 +2,7 @@
  * Generate Atlas Markdown
  *
  * Description:
- * - Builds standardized Atlas trees and exports a hierarchical Markdown file.
+ * - Builds Export Atlas trees and exports a hierarchical Markdown file.
  * - Output path: exported-atlas/atlas.md
  *
  * Usage:

@@ -559,13 +559,13 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/import-notion-databases.ts --verbose --local-cache
       ```
 
-- **scripts/atlas-export/generate-atlas-json.ts**: Builds standardized Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
+- **scripts/atlas-export/generate-atlas-json.ts**: Builds Export Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-json.ts
       ```
 
-- **scripts/atlas-export/generate-atlas-markdown.ts**: Builds standardized Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
+- **scripts/atlas-export/generate-atlas-markdown.ts**: Builds Export Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-markdown.ts
@@ -603,7 +603,7 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/validate-atlas-markdown.ts --verbose
       ```
 
-- **scripts/validate-atlas-json.ts**: Validates standardized Atlas JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
+- **scripts/validate-atlas-json.ts**: Validates Export Atlas Tree JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
   - Examples:
     - ```bash
       npx tsx scripts/validate-atlas-json.ts

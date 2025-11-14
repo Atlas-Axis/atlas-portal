@@ -1,4 +1,4 @@
-import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/notion-tree-to-export-tree';
 import { ExportAtlasTreeScopeTrees } from '@/app/server/atlas/export/types';
 import { buildNotionAtlasTree } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import type { NotionAtlasTreeConstructionOptions } from '@/app/server/atlas/notion-tree/atlas-tree-system';

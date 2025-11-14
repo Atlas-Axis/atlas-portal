@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * CLI: Validate Standardized Atlas JSON
+ * CLI: Validate Export Atlas Tree JSON
  *
  * Usage:
  *   npx tsx scripts/validate-atlas-json.ts [path/to/file.json]
@@ -10,9 +10,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import validateExportAtlasTree, {
-  type ValidationError,
-} from '@/app/server/atlas/export/validate-standardized-atlas-tree';
+import validateExportAtlasTree, { type ValidationError } from '@/app/server/atlas/export/validate-export-atlas-tree';
 
 function formatError(validationError: ValidationError): string {
   return `⚠️  ${validationError.message}\n    id: ${validationError.nodeId}\n    name: ${validationError.node.name}\n    type: ${validationError.node.type}\n    action: ${validationError.actionSuggestion}`;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import validateExportAtlasTree from '@/app/server/atlas/export/validate-standardized-atlas-tree';
+import validateExportAtlasTree from '@/app/server/atlas/export/validate-export-atlas-tree';
 
 describe('validateExportAtlasTree', () => {
   it('returns JSON_PARSE_ERROR on invalid JSON', () => {

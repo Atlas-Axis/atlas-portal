@@ -181,7 +181,7 @@ updateRichTextMentions(scopeTrees, uuidMappings, docNumberMaps);
 
 ### Purpose
 
-The Export Tree is a minimal, standardized representation of Atlas documents designed for external consumption. It is completely decoupled from Notion and Supabase, using Atlas document UUIDs and markdown strings instead of Notion-specific structures.
+The Export Tree is a minimal, Export Tree representation of Atlas documents designed for external consumption. It is completely decoupled from Notion and Supabase, using Atlas document UUIDs and markdown strings instead of Notion-specific structures.
 
 ### Key Types
 
@@ -330,7 +330,7 @@ const exportTrees = parseAtlasMarkdown(markdownContent);
 
 ### Conversion Function
 
-The `notionTreeNodeToExportTreeNode()` function in `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts` converts Notion Tree nodes to Export Tree documents.
+The `notionTreeNodeToExportTreeNode()` function in `app/server/atlas/export/notion-tree-to-export-tree.ts` converts Notion Tree nodes to Export Tree documents.
 
 ### Conversion Flow
 
@@ -778,7 +778,7 @@ const flatList = nodes.map((n) => notionTreeNodeToExportTreeNode(n, uuidMappings
 Always validate Export Trees before serialization:
 
 ```typescript
-import { validateExportAtlasTree } from '@/app/server/atlas/export/validate-standardized-atlas-tree';
+import { validateExportAtlasTree } from '@/app/server/atlas/export/validate-export-atlas-tree';
 
 const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeNode(node, uuidMappings));
 

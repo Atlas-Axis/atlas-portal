@@ -16,7 +16,7 @@
  *
  * Usage
  * ```ts
- * import { notionTreeNodeToExportTreeNode } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+ * import { notionTreeNodeToExportTreeNode } from '@/app/server/atlas/export/notion-tree-to-export-tree';
  * const exportDoc: ExportAtlasTreeDocument = notionTreeNodeToExportTreeNode(rootNode, uuidMappings);
  * ```
  */

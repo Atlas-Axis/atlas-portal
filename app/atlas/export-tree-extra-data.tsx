@@ -35,7 +35,7 @@ function getLabelMapping(documentType: ExportAtlasTreeDocument['type']): Record<
  * Renders extra fields for document types that have them (Type Specification, Scenario, Scenario Variation, Needed Research).
  * Displays each field as a label-value pair with markdown formatting support.
  */
-export function StandardizedExtraData({
+export function ExportTreeExtraData({
   node,
   className,
   uuidToDocNoMap,

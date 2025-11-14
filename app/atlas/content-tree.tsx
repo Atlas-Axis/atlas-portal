@@ -13,7 +13,7 @@ import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants
 import styles from './content-tree.module.css';
 import { CopyToClipboardButton } from './copy-to-clipboard-button';
 import { addExpandScopeListener } from './custom-events';
-import { StandardizedExtraData } from './standardized-extra-data';
+import { ExportTreeExtraData } from './export-tree-extra-data';
 import { createPathLookupMap, createUuidToDocNoMap } from './tree-utils';
 import TypeChip from './type-chip';
 
@@ -240,7 +240,7 @@ function TreeNode({
         <CustomHTML html={formattedContent} />
       </div>
 
-      <StandardizedExtraData node={node} className={styles.nodeContent} uuidToDocNoMap={uuidToDocNoMap} />
+      <ExportTreeExtraData node={node} className={styles.nodeContent} uuidToDocNoMap={uuidToDocNoMap} />
 
       {showUUIDs && (
         <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>

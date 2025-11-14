@@ -22,7 +22,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/notion-tree-to-export-tree';
 import type {
   ChildCollectionName,
   ExportAtlasTreeDocument,
@@ -125,7 +125,7 @@ function countExportDocuments(docs: ExportAtlasTreeDocument[]): number {
 
 /**
  * Entry point.
- * - Reads data from Supabase, builds Atlas tree, converts to standardized format, writes output JSON, prints summary stats.
+ * - Reads data from Supabase, builds Atlas tree, converts to Export Tree format, writes output JSON, prints summary stats.
  */
 async function main() {
   const outputDir = 'exported-atlas';
@@ -253,7 +253,7 @@ async function main() {
 
   console.log(`Exported ${exportScopeTrees.length} root scope trees`);
   console.log(`Excluded ${exportOrphanedNodes.length} orphaned nodes`);
-  console.log(`Wrote standardized JSON to ${outputFile}`);
+  console.log(`Wrote Export Tree JSON to ${outputFile}`);
 
   process.exit(0);
 }
