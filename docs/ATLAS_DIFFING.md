@@ -86,8 +86,8 @@ async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult>;
 
 interface AtlasDiffResult {
   changes: GroupedAtlasChanges;
-  originalIdsToDocuments: Map<string, BaseAtlasDocument>;
-  newIdsToDocuments: Map<string, BaseAtlasDocument>;
+  originalIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
+  newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
 }
 
 interface GroupedAtlasChanges {

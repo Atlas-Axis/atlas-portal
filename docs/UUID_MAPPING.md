@@ -208,7 +208,7 @@ For embedding in HTML/JSON contexts, mappings can be converted to plain objects:
 **Process:**
 
 1. For each tree node, look up Atlas UUID using `notionPageIDsToAtlasUUIDs`
-2. Include Atlas UUID in `StandardizedAtlasDocument.uuid` field
+2. Include Atlas UUID in `ExportAtlasTreeDocument.uuid` field
 3. Enables markdown export with stable UUIDs
 
 ### 5. UI Rendering
@@ -268,10 +268,10 @@ interface NotionDatabasePage {
 }
 ```
 
-#### `StandardizedAtlasDocument`
+#### `ExportAtlasTreeDocument`
 
 ```typescript
-interface StandardizedAtlasDocument {
+interface ExportAtlasTreeDocument {
   uuid: string | null; // Atlas document UUID
   doc_no: string;
   name: string;
@@ -280,10 +280,10 @@ interface StandardizedAtlasDocument {
 }
 ```
 
-#### `AtlasTreeNode`
+#### `NotionAtlasTreeNode`
 
 ```typescript
-interface AtlasTreeNode {
+interface NotionAtlasTreeNode {
   notion_page_id: string; // Notion page UUID (internal)
   generatedDocID?: string;
   generatedDocName?: string;

@@ -43,14 +43,14 @@ Located in `app/server/atlas/tree/__tests__/`:
 ```typescript
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { buildAtlasTree } from './tree/atlas-tree-system';
+import { buildNotionAtlasTree } from './tree/atlas-tree-system';
 
 // Load Atlas data
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 const uuidMappings = await loadUuidMappings();
 
 // Build tree structure with document numbering
-const result = await buildAtlasTree(atlasData, { uuidMappings });
+const result = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Access the results
 console.log(`Built ${result.scopeTrees.length} scope trees`);
@@ -61,9 +61,9 @@ console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
 
 ### Tree Construction
 
-#### `buildAtlasTree(pagesByDatabase, options)`
+#### `buildNotionAtlasTree(pagesByDatabase, options)`
 
-Core function that builds the tree structure. Document numbers are automatically assigned during tree construction.
+Core function that builds the Notion Tree structure. Document numbers are automatically assigned during tree construction.
 
 **Process Steps:**
 
@@ -101,7 +101,7 @@ Core function that builds the tree structure. Document numbers are automatically
 ```typescript
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 const uuidMappings = await loadUuidMappings();
-const result = await buildAtlasTree(atlasData, { uuidMappings });
+const result = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Access the first scope tree
 const firstScope = result.scopeTrees[0];
@@ -125,7 +125,7 @@ Performs pre-order traversal (parent before children), ideal for:
 
 **Parameters:**
 
-- `root: AtlasTreeNode` - The root node to start traversal from
+- `root: NotionAtlasTreeNode` - The root node to start traversal from
 - `callback: TraversalCallback` - Function to call for each visited node
 - `maxDepth?: number` - Maximum depth to traverse (default: 50)
 
@@ -134,7 +134,7 @@ Performs pre-order traversal (parent before children), ideal for:
 **Example:**
 
 ```typescript
-const nodes: AtlasTreeNode[] = [];
+const nodes: NotionAtlasTreeNode[] = [];
 preOrderTraversal(scopeTree, (node, depth) => {
   console.log(`${'  '.repeat(depth)}${node.generatedDocID} - ${node.plain_text_name}`);
   nodes.push(node);
@@ -163,7 +163,7 @@ Returns the total number of nodes in the tree.
 
 #### `assignDocumentNumbersToTreesRecursively(scopeTrees)`
 
-Assigns document numbers to all nodes in the tree structures using the Atlas Document Numbering Rules. This function is automatically called by `buildAtlasTree()` during tree construction, so you typically don't need to call it directly.
+Assigns document numbers to all nodes in the tree structures using the Atlas Document Numbering Rules. This function is automatically called by `buildNotionAtlasTree()` during tree construction, so you typically don't need to call it directly.
 
 **Returns:** Map of page ID to generated document number
 
@@ -213,14 +213,14 @@ const sortedChildren = sortAtlasDocuments(node.sectionsAndPrimaryDocs);
 
 ### Data Structures
 
-#### `AtlasTreeNode` Interface
+#### `NotionAtlasTreeNode` Interface
 
 The main tree node type that represents an Atlas document with embedded child relationships.
 
 **Key Fields:**
 
 ```typescript
-interface AtlasTreeNode {
+interface NotionAtlasTreeNode {
   // Notion database fields
   notion_page_id: string;
   atlas_document_type: AtlasDocumentType;
@@ -235,41 +235,41 @@ interface AtlasTreeNode {
   generatedDocName?: string; // Generated document name
 
   // Embedded child relationships (instead of ID arrays)
-  scopes: AtlasTreeNode[];
-  articles: AtlasTreeNode[];
-  sectionsAndPrimaryDocs: AtlasTreeNode[];
-  annotations: AtlasTreeNode[];
-  tenets: AtlasTreeNode[];
-  scenarios: AtlasTreeNode[];
-  scenarioVariations: AtlasTreeNode[];
-  activeData: AtlasTreeNode[];
-  agentScopeDocs: AtlasTreeNode[];
-  neededResearch: AtlasTreeNode[];
+  scopes: NotionAtlasTreeNode[];
+  articles: NotionAtlasTreeNode[];
+  sectionsAndPrimaryDocs: NotionAtlasTreeNode[];
+  annotations: NotionAtlasTreeNode[];
+  tenets: NotionAtlasTreeNode[];
+  scenarios: NotionAtlasTreeNode[];
+  scenarioVariations: NotionAtlasTreeNode[];
+  activeData: NotionAtlasTreeNode[];
+  agentScopeDocs: NotionAtlasTreeNode[];
+  neededResearch: NotionAtlasTreeNode[];
 }
 ```
 
-#### `AtlasTreeResult` Interface
+#### `NotionAtlasTreeResult` Interface
 
-Result of building the Atlas tree structure.
+Result of building the Notion Tree structure.
 
 ```typescript
-interface AtlasTreeResult {
-  scopeTrees: AtlasTreeNode[]; // Root scope trees
+interface NotionAtlasTreeResult {
+  scopeTrees: NotionAtlasTreeNode[]; // Root scope trees
   orphanedNodes: NotionDatabasePage[]; // Disconnected documents
-  orphanedNodesAsTreeNodes: AtlasTreeNode[]; // Orphaned nodes as tree format
-  errors: TreeConstructionError[]; // Construction errors
-  duplicatedNodes: DuplicatedNodeEntry[]; // Nodes in multiple locations
+  orphanedNodesAsTreeNodes: NotionAtlasTreeNode[]; // Orphaned nodes as tree format
+  errors: NotionAtlasTreeConstructionError[]; // Construction errors
+  duplicatedNodes: NotionAtlasTreeDuplicatedNodeEntry[]; // Nodes in multiple locations
   atlasUUIDsToGeneratedDocNumbers: Map<string, string>; // UUID → doc number
   atlasUUIDsToDocNames: Map<string, string>; // UUID → doc name
 }
 ```
 
-#### `TreeConstructionOptions` Interface
+#### `NotionAtlasTreeConstructionOptions` Interface
 
 Configuration options for tree construction.
 
 ```typescript
-interface TreeConstructionOptions {
+interface NotionAtlasTreeConstructionOptions {
   uuidMappings: UuidMappings; // Required: UUID mappings
   verbose?: boolean; // Log construction details (default: true)
   maxDepth?: number; // Max tree depth (default: 50)
@@ -279,13 +279,13 @@ interface TreeConstructionOptions {
 }
 ```
 
-#### `AtlasLookupMaps` Interface
+#### `NotionAtlasTreeLookupMaps` Interface
 
 Efficient lookup maps used internally during tree construction for O(1) access.
 
 ```typescript
-interface AtlasLookupMaps {
-  nodeMapByPageId: Map<string, AtlasTreeNode>; // Page ID → node
+interface NotionAtlasTreeLookupMaps {
+  nodeMapByPageId: Map<string, NotionAtlasTreeNode>; // Page ID → node
   originalPageMap: Map<string, NotionDatabasePage>; // Page ID → original page
   parentIdMap: Map<string, string>; // Child ID → parent ID
   childrenIdsMap: Map<string, string[]>; // Page ID → child IDs
@@ -352,17 +352,17 @@ After processing:
 }
 ```
 
-This happens automatically in Step 8 of `buildAtlasTree()`, after document numbers are assigned and the UUID-to-document-number map is generated.
+This happens automatically in Step 8 of `buildNotionAtlasTree()`, after document numbers are assigned and the UUID-to-document-number map is generated.
 
 ## Error Handling
 
-The `buildAtlasTree()` function provides comprehensive error handling for common tree construction issues:
+The `buildNotionAtlasTree()` function provides comprehensive error handling for common tree construction issues:
 
 - **Circular References**: Detects when documents reference themselves in child arrays
 - **Orphaned Nodes**: Identifies documents not connected to any root tree
 - **Missing Child References**: Detects when child IDs don't exist in the database (controlled by `reportMissingChildNodes` option, false by default)
 
-All errors are returned in the `errors` array of the `AtlasTreeResult` object.
+All errors are returned in the `errors` array of the `NotionAtlasTreeResult` object.
 
 ## Performance Characteristics
 
@@ -401,7 +401,7 @@ npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder-mentions.test.ts
 
 ### Common Issues
 
-1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays. Circular references are detected automatically by `buildAtlasTree()`.
+1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays. Circular references are detected automatically by `buildNotionAtlasTree()`.
 
 2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships. Orphaned nodes are identified automatically in the `orphanedNodes` array.
 
@@ -414,7 +414,7 @@ npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder-mentions.test.ts
 Enable verbose logging to see detailed construction information:
 
 ```typescript
-const result = await buildAtlasTree(atlasData, {
+const result = await buildNotionAtlasTree(atlasData, {
   uuidMappings,
   verbose: true,
   reportMissingChildNodes: true,
@@ -436,7 +436,7 @@ This will log:
 
 The Atlas tree system is currently integrated with:
 
-- **`/atlas` page** (`app/atlas/page.tsx`) - Uses `buildAtlasTree()` to render the Atlas hierarchy
+- **`/atlas` page** (`app/atlas/page.tsx`) - Uses `buildNotionAtlasTree()` to render the Atlas hierarchy
 - **Atlas Export Scripts** (`scripts/atlas-export/`) - Uses tree structures for JSON and Markdown export
 - **UUID Mapping System** (`docs/UUID_MAPPING.md`) - Provides bidirectional UUID mappings for document number and name generation
 

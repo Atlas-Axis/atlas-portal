@@ -51,7 +51,7 @@ Navigate to `/atlas/notion-nesting-fix` to:
 
 ### 3. Tree Building Integration
 
-During Atlas tree building (`buildAtlasTree`):
+During Atlas tree building (`buildNotionAtlasTree`):
 
 1. Nesting mappings are loaded automatically from Supabase
 2. `applyNestingOverrides()` processes each mapping in-memory:

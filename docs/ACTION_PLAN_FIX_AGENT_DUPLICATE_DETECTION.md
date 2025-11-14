@@ -143,7 +143,7 @@ The duplicate detection logic cannot distinguish between:
 ### Tree Building
 
 - **`app/server/atlas/tree/atlas-tree-builder.ts`**
-  - Lines 66-135: `buildAtlasTree()` main entry point
+  - Lines 66-135: `buildNotionAtlasTree()` main entry point
   - Lines 415-596: `buildTreeNode()` recursive tree builder
   - Lines 431-461: Duplicate detection logic (THE ISSUE)
   - Lines 586-587: Add to `addedToTreeIds` after successful processing

@@ -173,12 +173,12 @@ This allows any part of the codebase to dynamically discover which document type
     - Iterates over property mappings for document type
     - Calls `convertExtraFieldToMarkdown()` for each field
     - Returns a record with markdown string values (null if missing)
-  - `atlasNodeToStandardized()` function: Spreads `...pickExtraFields(node, uuidMappings)` in document type's case
+  - `notionTreeNodeToExportTreeDocument()` function: Spreads `...pickExtraFields(node, uuidMappings)` in document type's case
   - Validates presence of expected fields and warns about missing ones
 
 - `app/server/atlas/export/types.ts`
   - `extraFieldsByDocumentType` constant: Maps document types to their extra field keys
-  - Document interfaces extend `BaseAtlasDocument` with extra field properties (as strings in JSON export)
+  - Document interfaces extend `ExportAtlasTreeBaseDocument` with extra field properties (as strings in JSON export)
 
 #### Markdown Export
 
@@ -348,7 +348,7 @@ To add a new extra field to an existing document type:
 5. Add comparison function in `compare-database-pages.ts`
 6. Add case in `getExtraFieldKeysForDocumentType()` in `atlas-diff.ts`
 7. Add case in `pickExtraFields()` in `atlas-node-tree-to-standardized-atlas-node-tree.ts`
-8. **Add `...pickExtraFields(node)` spread** in document type's case in `atlasNodeToStandardized()` function
+8. **Add `...pickExtraFields(node)` spread** in document type's case in `notionTreeNodeToExportTreeDocument()` function
 9. Add case in `getExtraFieldsForDocument()` in `atlas-markdown-exporter.ts`
 10. Add case in `extractContentAndExtraFields()` in `atlas-markdown-importer.ts`
 11. Add to `extraFieldsByDocumentType` in `json-export/types.ts`

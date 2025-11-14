@@ -276,16 +276,16 @@ type ExportAtlasTreeScopeTrees = ExportAtlasTreeDocument[];
 
 ```typescript
 // Build Notion Tree
-const { scopeTrees } = await buildAtlasTree(atlasData, { uuidMappings });
+const { scopeTrees } = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Convert to Export Tree for UI
-const standardizedScopeTrees = scopeTrees.map((node) =>
-  atlasNodeToStandardized(node, uuidMappings)
+const exportScopeTrees = scopeTrees.map((node) =>
+  notionTreeNodeToExportTreeDocument(node, uuidMappings)
 );
 
 // Render UI components with Export Tree
-<Sidebar scopeTrees={standardizedScopeTrees} uuidMappings={uuidMappings} />
-<ContentTree scopeTrees={standardizedScopeTrees} uuidMappings={uuidMappings} />
+<Sidebar scopeTrees={exportScopeTrees} uuidMappings={uuidMappings} />
+<ContentTree scopeTrees={exportScopeTrees} uuidMappings={uuidMappings} />
 ```
 
 **JSON Export** (`atlas-json-exporter.ts`):
@@ -293,10 +293,10 @@ const standardizedScopeTrees = scopeTrees.map((node) =>
 ```typescript
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 const uuidMappings = await loadUuidMappings();
-const { scopeTrees } = await buildAtlasTree(atlasData, { uuidMappings });
+const { scopeTrees } = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Convert to Export Tree
-const exportTrees = scopeTrees.map((node) => atlasNodeToStandardized(node, uuidMappings));
+const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeDocument(node, uuidMappings));
 
 // Serialize to JSON
 const jsonOutput = JSON.stringify(exportTrees, null, 2);
@@ -306,7 +306,7 @@ const jsonOutput = JSON.stringify(exportTrees, null, 2);
 
 ```typescript
 // Export Tree to Markdown conversion
-const markdownOutput = standardizedAtlasToMarkdown(exportTrees);
+const markdownOutput = exportAtlasTreeToMarkdown(exportTrees);
 ```
 
 **Public API** (`app/api/atlas.json/route.ts`):
@@ -314,7 +314,7 @@ const markdownOutput = standardizedAtlasToMarkdown(exportTrees);
 ```typescript
 // Serve Export Tree via JSON API
 export async function GET() {
-  const exportTrees = await generateStandardizedAtlasTrees();
+  const exportTrees = await buildExportAtlasTreeJSON();
   return Response.json(exportTrees);
 }
 ```
@@ -330,16 +330,16 @@ const exportTrees = parseAtlasMarkdown(markdownContent);
 
 ### Conversion Function
 
-The `atlasNodeToStandardized()` function in `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts` converts Notion Tree nodes to Export Tree documents.
+The `notionTreeNodeToExportTreeDocument()` function in `app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree.ts` converts Notion Tree nodes to Export Tree documents.
 
 ### Conversion Flow
 
 ```
-Notion Tree (AtlasTreeNode)
+Notion Tree (NotionAtlasTreeNode)
           ↓
-  atlasNodeToStandardized()
+  notionTreeNodeToExportTreeDocument()
           ↓
-Export Tree (StandardizedAtlasDocument)
+Export Tree (ExportAtlasTreeDocument)
 ```
 
 ### Process Steps
@@ -367,15 +367,18 @@ Export Tree (StandardizedAtlasDocument)
 
 5. **Recursively Convert Children**
    - For each child collection (articles, sections, tenets, etc.)
-   - Call `atlasNodeToStandardized()` recursively
+   - Call `notionTreeNodeToExportTreeDocument()` recursively
    - Build database-grouped child collections
 
 ### Code Example
 
 ```typescript
-export function atlasNodeToStandardized(node: AtlasTreeNode, uuidMappings: UuidMappings): StandardizedAtlasDocument {
+export function notionTreeNodeToExportTreeDocument(
+  node: NotionAtlasTreeNode,
+  uuidMappings: UuidMappings,
+): ExportAtlasTreeDocument {
   // Step 1: Map base fields
-  const base: BaseAtlasDocument = {
+  const base: ExportAtlasTreeBaseDocument = {
     type: node.atlas_document_type,
     doc_no: node.generatedDocID ?? '',
     name: node.generatedDocName ?? '',
@@ -399,19 +402,21 @@ export function atlasNodeToStandardized(node: AtlasTreeNode, uuidMappings: UuidM
     case 'Scopes':
       return {
         ...base,
-        articles: node.articles.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-      } as ScopesDocument;
+        articles: node.articles.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+      } as ExportAtlasTreeScopesDocument;
 
     case 'Sections & Primary Docs':
       return {
         ...base,
         ...extraFields, // Type Specification fields
-        sections_and_primary_docs: node.sectionsAndPrimaryDocs.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-        tenets: node.tenets.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-        active_data: node.activeData.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-        needed_research: node.neededResearch.map((c) => atlasNodeToStandardized(c, uuidMappings)),
-      } as SectionsAndPrimaryDocsDocument;
+        sections_and_primary_docs: node.sectionsAndPrimaryDocs.map((c) =>
+          notionTreeNodeToExportTreeDocument(c, uuidMappings),
+        ),
+        annotations: node.annotations.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+        tenets: node.tenets.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+        active_data: node.activeData.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+        needed_research: node.neededResearch.map((c) => notionTreeNodeToExportTreeDocument(c, uuidMappings)),
+      } as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
 
     // ... other database cases
   }
@@ -508,19 +513,19 @@ See **[UUID_MAPPING.md](./UUID_MAPPING.md)** for comprehensive documentation.
 In the Notion Tree, children are embedded as typed arrays within the parent node:
 
 ```typescript
-interface AtlasTreeNode {
+interface NotionAtlasTreeNode {
   // Children are embedded objects
-  articles: AtlasTreeNode[];
-  sectionsAndPrimaryDocs: AtlasTreeNode[];
-  annotations: AtlasTreeNode[];
-  tenets: AtlasTreeNode[];
+  articles: NotionAtlasTreeNode[];
+  sectionsAndPrimaryDocs: NotionAtlasTreeNode[];
+  annotations: NotionAtlasTreeNode[];
+  tenets: NotionAtlasTreeNode[];
   // ... more child collections
 }
 ```
 
 **Characteristics**:
 
-- Children are actual `AtlasTreeNode` objects (not IDs)
+- Children are actual `NotionAtlasTreeNode` objects (not IDs)
 - Enables efficient traversal without additional lookups
 - Organized by Atlas database using camelCase naming
 - Built during tree construction from child ID arrays
@@ -530,14 +535,14 @@ interface AtlasTreeNode {
 The Export Tree maintains the same database-grouped structure with different naming:
 
 ```typescript
-interface SectionsAndPrimaryDocsDocument {
+interface ExportAtlasTreeSectionsAndPrimaryDocsDocument {
   // Children grouped by Atlas database
-  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
-  agent_scope_database?: AgentScopeDatabaseDocument[];
-  annotations: AnnotationsDocument[];
-  tenets: TenetsDocument[];
-  active_data: ActiveDataDocument[];
-  needed_research: NeededResearchDocument[];
+  sections_and_primary_docs: ExportAtlasTreeSectionsAndPrimaryDocsDocument[];
+  agent_scope_database?: ExportAtlasTreeAgentScopeDatabaseDocument[];
+  annotations: ExportAtlasTreeAnnotationsDocument[];
+  tenets: ExportAtlasTreeTenetsDocument[];
+  active_data: ExportAtlasTreeActiveDataDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 ```
 
@@ -666,16 +671,16 @@ Parse Markdown → Build Export Tree → Validate → Convert to Notion Pages
 └────────┬────────┘
          │ Load
          ↓
-┌─────────────────┐
-│  Notion Tree    │
-│ AtlasTreeNode   │
-│ AtlasTreeResult │
-└────────┬────────┘
-         │ Convert (atlasNodeToStandardized)
+┌─────────────────────────┐
+│  Notion Tree            │
+│ NotionAtlasTreeNode     │
+│ NotionAtlasTreeResult   │
+└────────┬────────────────┘
+         │ Convert (notionTreeNodeToExportTreeDocument)
          ↓
 ┌──────────────────────────────┐
 │  Export Tree                 │
-│ StandardizedAtlasDocument    │
+│ ExportAtlasTreeDocument      │
 └────────┬─────────────────────┘
          │ Serialize / Render
          ↓
@@ -683,7 +688,7 @@ Parse Markdown → Build Export Tree → Validate → Convert to Notion Pages
 │ Output          │
 │ - UI Components │
 │ - JSON/Markdown │
-│ - APIs   │
+│ - APIs          │
 └─────────────────┘
 ```
 
@@ -747,12 +752,12 @@ Load UUID mappings once at the start of operations and pass them through:
 ```typescript
 // ✅ Correct
 const uuidMappings = await loadUuidMappings();
-const exportTree = atlasNodeToStandardized(notionTree, uuidMappings);
+const exportTree = notionTreeNodeToExportTreeDocument(notionTree, uuidMappings);
 
 // ❌ Wrong - reloading mappings repeatedly
 for (const node of nodes) {
   const uuidMappings = await loadUuidMappings(); // Expensive!
-  const exportTree = atlasNodeToStandardized(node, uuidMappings);
+  const exportTree = notionTreeNodeToExportTreeDocument(node, uuidMappings);
 }
 ```
 
@@ -762,10 +767,10 @@ The conversion process is recursive and structure-preserving. Don't flatten or r
 
 ```typescript
 // ✅ Correct - preserves hierarchy
-const exportTree = atlasNodeToStandardized(rootNode, uuidMappings);
+const exportTree = notionTreeNodeToExportTreeDocument(rootNode, uuidMappings);
 
 // ❌ Wrong - loses hierarchy
-const flatList = nodes.map((n) => atlasNodeToStandardized(n, uuidMappings));
+const flatList = nodes.map((n) => notionTreeNodeToExportTreeDocument(n, uuidMappings));
 ```
 
 ### 5. Validate Export Trees
@@ -775,7 +780,7 @@ Always validate Export Trees before serialization:
 ```typescript
 import { validateStandardizedAtlasTree } from '@/app/server/atlas/export/validate-standardized-atlas-tree';
 
-const exportTrees = scopeTrees.map((node) => atlasNodeToStandardized(node, uuidMappings));
+const exportTrees = scopeTrees.map((node) => notionTreeNodeToExportTreeDocument(node, uuidMappings));
 
 const errors = validateStandardizedAtlasTree(exportTrees);
 if (errors.length > 0) {

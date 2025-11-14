@@ -5,7 +5,7 @@
 The Atlas Markdown import/export system provides a human-readable, version-controllable format for the entire Atlas document hierarchy. It enables:
 
 - **Export**: Convert Atlas data from Supabase (Rich Text) to Markdown format
-- **Import**: Parse Atlas Markdown back into structured `StandardizedAtlasScopeTrees`
+- **Import**: Parse Atlas Markdown back into structured `ExportAtlasTreeScopeTrees`
 - **Validation**: Verify Atlas Markdown syntax before import
 - **Round-trip**: Export → Import maintains data fidelity
 
@@ -55,7 +55,7 @@ Content here.
 `;
 
 const trees = parseAtlasMarkdown(markdown);
-// Returns: StandardizedAtlasScopeTrees (structured JSON tree)
+// Returns: ExportAtlasTreeScopeTrees (structured JSON tree)
 ```
 
 ### How Import Works
