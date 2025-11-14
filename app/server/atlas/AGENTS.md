@@ -1,6 +1,6 @@
 # Atlas Tree-Based Document Numbering System
 
-This directory contains the new tree-based document numbering system for Atlas documents, which replaces the previous sequential approach with a more efficient and robust tree traversal system.
+This directory contains the tree-based Atlas data structures and tree traversal and processing algorithms and document numbering system for Atlas documents.
 
 ## Overview
 
