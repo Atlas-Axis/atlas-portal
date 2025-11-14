@@ -18,7 +18,7 @@ The Atlas tree system provides comprehensive functionality for working with Atla
 
 ### Core System
 
-Located in `app/server/atlas/tree/`:
+Located in `app/server/atlas/notion-tree/`:
 
 - **`atlas-tree-types.ts`** - Type definitions for tree nodes and interfaces
 - **`atlas-tree-builder.ts`** - Main tree construction logic with efficient lookup maps
@@ -31,7 +31,7 @@ Located in `app/server/atlas/tree/`:
 
 ### Testing
 
-Located in `app/server/atlas/tree/__tests__/`:
+Located in `app/server/atlas/notion-tree/__tests__/`:
 
 - **`atlas-tree-builder.test.ts`** - Tree construction, circular references, orphaned nodes
 - **`atlas-tree-numbering.test.ts`** - Document numbering patterns and accuracy
@@ -381,13 +381,13 @@ Run the test suite to verify the system works correctly:
 
 ```bash
 # Run all tree system tests
-npm test -- app/server/atlas/tree/__tests__
+npm test -- app/server/atlas/notion-tree/__tests__
 
 # Run specific test files
-npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder.test.ts
-npm test -- app/server/atlas/tree/__tests__/atlas-tree-numbering.test.ts
-npm test -- app/server/atlas/tree/__tests__/atlas-tree-helpers.test.ts
-npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder-mentions.test.ts
+npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-builder.test.ts
+npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-numbering.test.ts
+npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-helpers.test.ts
+npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-builder-mentions.test.ts
 ```
 
 ### Test Coverage

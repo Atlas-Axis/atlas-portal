@@ -3,7 +3,7 @@ import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 import { convertNotionRichTextToMarkdown, notionLinkToMappedUUID } from '../../markdown/rich-text-to-markdown';
 import { UuidMappings } from '../load-uuid-mapping';
-import { NotionAtlasTreeNode } from '../tree/atlas-tree-system';
+import { NotionAtlasTreeNode } from '../notion-tree/atlas-tree-system';
 
 export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | NotionAtlasTreeNode>(
   page: T,

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { type NotionAtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
+import { type NotionAtlasTreeNode } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import { type Json } from '@/app/server/services/supabase/database.types';
 import type { UuidMappings } from '../../load-uuid-mapping';
 import notionTreeNodeToExportTreeNode from '../atlas-node-tree-to-standardized-atlas-node-tree';

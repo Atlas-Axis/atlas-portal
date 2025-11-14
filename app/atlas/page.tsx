@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
-import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import { buildNotionAtlasTree } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import AtlasPagePrerendered from './atlas-page-prerendered';

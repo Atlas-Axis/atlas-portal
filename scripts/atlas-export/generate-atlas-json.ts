@@ -30,11 +30,11 @@ import type {
 } from '@/app/server/atlas/export/types';
 import { childCollectionNames } from '@/app/server/atlas/export/types';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import { buildNotionAtlasTree } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import type {
   NotionAtlasTreeConstructionOptions,
   NotionAtlasTreeNode,
-} from '@/app/server/atlas/tree/atlas-tree-system';
+} from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
 

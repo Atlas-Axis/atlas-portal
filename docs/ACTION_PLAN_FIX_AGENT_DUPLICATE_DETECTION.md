@@ -98,7 +98,7 @@ The issue stems from how Agent documents are processed during tree building, cau
 
 ### 3. Duplicate Detection
 
-**File:** `app/server/atlas/tree/atlas-tree-builder.ts` (lines 431-461)
+**File:** `app/server/atlas/notion-tree/atlas-tree-builder.ts` (lines 431-461)
 
 `buildTreeNode()` duplicate detection:
 
@@ -142,7 +142,7 @@ The duplicate detection logic cannot distinguish between:
 
 ### Tree Building
 
-- **`app/server/atlas/tree/atlas-tree-builder.ts`**
+- **`app/server/atlas/notion-tree/atlas-tree-builder.ts`**
   - Lines 66-135: `buildNotionAtlasTree()` main entry point
   - Lines 415-596: `buildTreeNode()` recursive tree builder
   - Lines 431-461: Duplicate detection logic (THE ISSUE)
@@ -157,7 +157,7 @@ The duplicate detection logic cannot distinguish between:
 
 ### Supporting Files
 
-- **`app/server/atlas/tree/atlas-tree-types.ts`** (line 161)
+- **`app/server/atlas/notion-tree/atlas-tree-types.ts`** (line 161)
   - Defines `addedToTreeIds: Set<string>` in `AtlasLookupMaps`
 - **`app/server/atlas/constants.ts`**
   - Contains `AGENT_ROOT_SECTION_UUID_FOR_NESTING` constant
@@ -170,7 +170,7 @@ The duplicate detection logic cannot distinguish between:
 
 ### Task 1: Trace Agent Document Flow
 
-**File:** `app/server/atlas/tree/atlas-tree-builder.ts` (lines 66-135, 415-596)
+**File:** `app/server/atlas/notion-tree/atlas-tree-builder.ts` (lines 66-135, 415-596)
 
 Understand the exact tree traversal path:
 
@@ -238,7 +238,7 @@ Based on investigation findings, implement ONE of these solutions:
 
 #### Changes Required
 
-**File:** `app/server/atlas/tree/atlas-tree-builder.ts` (line 431-461)
+**File:** `app/server/atlas/notion-tree/atlas-tree-builder.ts` (line 431-461)
 
 Modify duplicate detection to allow Agent documents (like Needed Research):
 
@@ -262,7 +262,7 @@ if (addedToTreeIds.has(page.notion_page_id)) {
 }
 ```
 
-**File:** `app/server/atlas/tree/atlas-tree-builder.ts` (line 586-587)
+**File:** `app/server/atlas/notion-tree/atlas-tree-builder.ts` (line 586-587)
 
 Update the "add to tree" logic to always allow re-adding Agent docs:
 
@@ -289,7 +289,7 @@ if (
 
 #### Changes Required
 
-**File:** `app/server/atlas/tree/atlas-tree-types.ts` (line 161)
+**File:** `app/server/atlas/notion-tree/atlas-tree-types.ts` (line 161)
 
 Change tracking structure:
 
@@ -297,7 +297,7 @@ Change tracking structure:
 addedToTreeIds: Map<string, Set<string>>; // Map of document ID -> Set of parent contexts
 ```
 
-**File:** `app/server/atlas/tree/atlas-tree-builder.ts` (line 431-461)
+**File:** `app/server/atlas/notion-tree/atlas-tree-builder.ts` (line 431-461)
 
 Check if the same document is being added under the SAME parent:
 
@@ -357,7 +357,7 @@ npx tsx scripts/atlas-export/generate-atlas-markdown.ts 2>&1 | tail -20
 ### 3. Run Unit Tests
 
 ```bash
-npm test app/server/atlas/tree/__tests__/atlas-tree-builder.test.ts
+npm test app/server/atlas/notion-tree/__tests__/atlas-tree-builder.test.ts
 ```
 
 **Expected:**

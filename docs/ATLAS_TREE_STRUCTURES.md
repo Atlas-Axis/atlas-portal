@@ -599,7 +599,7 @@ Needed Research may nest under any document type
 
 ### Systems Using Notion Tree
 
-**Tree Construction** (`app/server/atlas/tree/`):
+**Tree Construction** (`app/server/atlas/notion-tree/`):
 
 - `atlas-tree-builder.ts` - Builds Notion Trees from database pages
 - `atlas-tree-numbering.ts` - Assigns document numbers to Notion Tree nodes
@@ -709,7 +709,7 @@ Parse Markdown → Build Export Tree → Validate → Convert to Notion Pages
 
 ## Related Documentation
 
-- **[Atlas Tree System (AGENTS.md)](../app/server/atlas/tree/AGENTS.md)** - Comprehensive guide to tree building algorithms, traversal, document numbering, and the Notion Tree system
+- **[Atlas Tree System (AGENTS.md)](../app/server/atlas/notion-tree/AGENTS.md)** - Comprehensive guide to tree building algorithms, traversal, document numbering, and the Notion Tree system
 - **[UUID Mapping System](./UUID_MAPPING.md)** - Bidirectional UUID mappings between Notion page UUIDs and Atlas document UUIDs
 - **[Atlas Markdown Import/Export](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Markdown format specification and conversion workflows
 - **[Atlas Document Numbering Rules](./ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Hierarchical document numbering system used in both tree structures

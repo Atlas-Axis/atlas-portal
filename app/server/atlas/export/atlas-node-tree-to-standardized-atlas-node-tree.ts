@@ -29,7 +29,7 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
-import { type NotionAtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
+import { type NotionAtlasTreeNode } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import { convertNotionRichTextToMarkdown } from '@/app/server/markdown/rich-text-to-markdown';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { atlasDatabasePageToMarkdown } from '../formatters/atlas-rich-text-formatter';
