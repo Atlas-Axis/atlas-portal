@@ -1,4 +1,3 @@
-// import { flattenAtlasScopeTreesToNodesPerDatabase } from '@/app/server/atlas/atlas-tree-flattener';
 import type { Metadata } from 'next';
 import { atlasNodeToStandardized } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
@@ -34,16 +33,9 @@ export default async function Page() {
     atlasNodeToStandardized(node, uuidMappings, { omitAgents: true }),
   );
 
-  // Extract agent nodes and convert to StandardizedAtlasDocument for embedding/hydration
-  // const flattened = flattenAtlasScopeTreesToNodesPerDatabase({ scopeTrees: atlas.scopeTrees });
-  // const agentNodes = flattened['Agent Scope Database'] || [];
-  // const standardizedAgentDocs = agentNodes.map((node) => atlasNodeToStandardized(node, uuidMappings));
-
   return (
     <AtlasPagePrerendered
       standardizedScopeTreesWithoutAgents={standardizedScopeTreesWithoutAgents}
-      // standardizedAgentDocs={[]}
-      // standardizedAgentDocs={standardizedAgentDocs}
       uuidMappings={uuidMappings}
     />
   );

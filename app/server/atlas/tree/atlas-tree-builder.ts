@@ -439,7 +439,7 @@ function buildTreeNode(
       console.warn(
         `[buildTreeNode] Duplicate document detected (skipping): ${page.notion_page_id} - ${page.plain_text_name} (${page.atlas_document_type})`,
       );
-      // Return a stub node without children - will be filtered out during flattening
+      // Return a stub node without children - will be filtered out later
       return {
         ...page,
         generatedDocID: undefined,

@@ -237,58 +237,6 @@ function analyzeTreeStructure(root: AtlasTreeNode): {
 }
 
 /**
- * Exports the tree structure to a flat array of nodes with their document numbers.
- *
- * @param scopeTrees - Array of root scope trees to export
- * @returns Array of nodes with their document numbers and metadata
- *
- * @example
- * ```typescript
- * const flatNodes = exportTreeToFlatArray(result.scopeTrees);
- * console.table(flatNodes.map(node => ({
- *   id: node.notion_page_id,
- *   name: node.plain_text_name,
- *   type: node.atlas_document_type,
- *   docNumber: node.generatedDocID
- * })));
- * ```
- */
-export function exportTreeToFlatArray(scopeTrees: AtlasTreeNode[]): Array<{
-  notion_page_id: string;
-  plain_text_name: string | null;
-  atlas_document_type: string;
-  generatedDocID?: string;
-  depth: number;
-  parent_id?: string;
-}> {
-  const flatNodes: Array<{
-    notion_page_id: string;
-    plain_text_name: string | null;
-    atlas_document_type: string;
-    generatedDocID?: string;
-    depth: number;
-    parent_id?: string;
-  }> = [];
-
-  for (const scopeTree of scopeTrees) {
-    preOrderTraversal(scopeTree, (node, depth, parent) => {
-      flatNodes.push({
-        notion_page_id: node.notion_page_id,
-        plain_text_name: node.plain_text_name || null,
-        atlas_document_type: node.atlas_document_type,
-        generatedDocID: node.generatedDocID,
-        depth,
-        parent_id: parent?.notion_page_id,
-      });
-
-      return true; // Continue traversal
-    });
-  }
-
-  return flatNodes;
-}
-
-/**
  * Validates that all document numbers are unique and follow correct patterns.
  *
  * @param scopeTrees - Array of root scope trees to validate

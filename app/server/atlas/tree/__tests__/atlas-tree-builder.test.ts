@@ -604,7 +604,7 @@ describe('filterDirectChildren', () => {
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Level 1 Core',
         parent_notion_page_id: null,
-        // Contains all descendants in flattened array (simulating real Notion behavior)
+        // Contains all descendants in child array (simulating real Notion behavior)
         child_section_and_primary_doc_ids: ['level2-core', 'level3-core', 'level4-core'],
       });
 
