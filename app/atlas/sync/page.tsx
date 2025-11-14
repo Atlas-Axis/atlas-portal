@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 /**
  * Atlas Sync Page - Server Component
  *
- * This page compares the Atlas Markdown export (.debug-data/standardized-atlas/atlas.md)
+ * This page compares the Atlas Markdown export (exported-atlas/atlas.md)
  * with the current Supabase data and displays all differences in a visual diff UI.
  * The client component handles user interaction and synchronization to Notion.
  */

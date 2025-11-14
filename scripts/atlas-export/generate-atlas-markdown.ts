@@ -3,7 +3,7 @@
  *
  * Description:
  * - Builds standardized Atlas trees and exports a hierarchical Markdown file.
- * - Output path: .debug-data/standardized-atlas/atlas.md
+ * - Output path: exported-atlas/atlas.md
  *
  * Usage:
  *   npx tsx scripts/atlas-export/generate-atlas-markdown.ts
@@ -18,7 +18,7 @@ async function main() {
 
   const markdown = await buildAtlasMarkdown();
 
-  const outDir = path.join(process.cwd(), '.debug-data', 'standardized-atlas');
+  const outDir = path.join(process.cwd(), 'exported-atlas');
   const outFile = path.join(outDir, 'atlas.md');
 
   await fs.mkdir(outDir, { recursive: true });

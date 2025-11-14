@@ -380,7 +380,7 @@ npx tsx scripts/validate-atlas-markdown.ts
 
 ### 5. Manual Verification in Output
 
-Open `.debug-data/standardized-atlas/atlas.md` and check:
+Open `exported-atlas/atlas.md` and check:
 
 - Agent documents appear in their expected locations
 - No duplicate sections for the same document

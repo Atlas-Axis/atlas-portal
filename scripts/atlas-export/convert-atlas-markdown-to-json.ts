@@ -2,9 +2,9 @@
  * Convert Atlas Markdown to JSON
  *
  * Description:
- * - Reads the Markdown export at `.debug-data/standardized-atlas/atlas.md`
+ * - Reads the Markdown export at `exported-atlas/atlas.md`
  * - Parses it with `parseAtlasMarkdown`
- * - Writes the resulting JSON to `.debug-data/standardized-atlas/markdown-to-json.json`
+ * - Writes the resulting JSON to `exported-atlas/markdown-to-json.json`
  *
  * Usage:
  *   npx tsx scripts/atlas-export/convert-atlas-markdown-to-json.ts
@@ -17,7 +17,7 @@ import { loadEnv } from '@/scripts/utils/load-env';
 async function main() {
   loadEnv();
 
-  const dir = path.join(process.cwd(), '.debug-data', 'standardized-atlas');
+  const dir = path.join(process.cwd(), 'exported-atlas');
   const inFile = path.join(dir, 'atlas.md');
   const outFile = path.join(dir, 'markdown-to-json.json');
 

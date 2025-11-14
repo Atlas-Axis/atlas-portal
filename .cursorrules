@@ -539,19 +539,19 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/import-notion-databases.ts --verbose --local-cache
       ```
 
-- **scripts/atlas-export/generate-atlas-json.ts** — Builds standardized Atlas trees from Supabase and exports to JSON format. Output: `.debug-data/standardized-atlas/atlas.json`
+- **scripts/atlas-export/generate-atlas-json.ts** — Builds standardized Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-json.ts
       ```
 
-- **scripts/atlas-export/generate-atlas-markdown.ts** — Builds standardized Atlas trees from Supabase and exports to Markdown format. Output: `.debug-data/standardized-atlas/atlas.md`
+- **scripts/atlas-export/generate-atlas-markdown.ts** — Builds standardized Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-markdown.ts
       ```
 
-- **scripts/atlas-export/convert-atlas-markdown-to-json.ts** — Parses Atlas Markdown file and converts it to JSON format. Input: `.debug-data/standardized-atlas/atlas.md`, Output: `.debug-data/standardized-atlas/markdown-to-json.json`
+- **scripts/atlas-export/convert-atlas-markdown-to-json.ts** — Parses Atlas Markdown file and converts it to JSON format. Input: `exported-atlas/atlas.md`, Output: `exported-atlas/markdown-to-json.json`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/convert-atlas-markdown-to-json.ts
@@ -577,13 +577,13 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/validate-atlas-markdown.ts
       ```
     - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts .debug-data/atlas.md
+      npx tsx scripts/validate-atlas-markdown.ts exported-atlas/atlas.md
       ```
     - ```bash
       npx tsx scripts/validate-atlas-markdown.ts --verbose
       ```
 
-- **scripts/validate-atlas-json.ts** — Validates standardized Atlas JSON files for structural integrity and consistency. Defaults to `.debug-data/standardized-atlas/atlas.json` if no file path provided.
+- **scripts/validate-atlas-json.ts** — Validates standardized Atlas JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
   - Examples:
     - ```bash
       npx tsx scripts/validate-atlas-json.ts

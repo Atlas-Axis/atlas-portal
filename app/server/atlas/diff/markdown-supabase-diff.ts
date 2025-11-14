@@ -36,7 +36,7 @@ async function loadSupabaseAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeSco
 
 async function loadMarkdownAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
   const projectRoot = process.cwd();
-  const dir = path.join(projectRoot, '.debug-data', 'standardized-atlas');
+  const dir = path.join(projectRoot, 'exported-atlas');
   const inFile = path.join(dir, 'atlas.md');
 
   const markdown = await fs.readFile(inFile, 'utf8');

@@ -5,14 +5,14 @@
  * Description
  * - Reads Atlas Scope trees produced by `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
  * - Converts each node from `NotionAtlasTreeNode` shape to a simplified `ExportAtlasTreeDocument` shape.
- * - Writes the export trees to `.debug-data/standardized-atlas/atlas.json`.
+ * - Writes the export trees to `exported-atlas/atlas.json`.
  *
  * Input
  * - Supabase: `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
  * - Type: `NotionAtlasTreeNode[]` roots representing Scope documents
  *
  * Output (result format)
- * - File: `.debug-data/standardized-atlas/atlas.json`
+ * - File: `exported-atlas/atlas.json`
  * - Type: `ExportAtlasTreeDocument[]` (same child array names as input)
  *
  * How to run
@@ -128,7 +128,7 @@ function countExportDocuments(docs: ExportAtlasTreeDocument[]): number {
  * - Reads data from Supabase, builds Atlas tree, converts to standardized format, writes output JSON, prints summary stats.
  */
 async function main() {
-  const outputDir = '.debug-data/standardized-atlas';
+  const outputDir = 'exported-atlas';
   const outputFile = path.join(outputDir, 'atlas.json');
 
   loadEnv();

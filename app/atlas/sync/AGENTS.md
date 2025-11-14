@@ -8,7 +8,7 @@ Synchronize changes from the Atlas Markdown export back to Notion database pages
 
 ### 1. Change Detection
 
-The sync page automatically diffs the Atlas Markdown file (`.debug-data/standardized-atlas/atlas.md`) against the current Atlas data stored in Supabase, identifying all differences between the two versions.
+The sync page automatically diffs the Atlas Markdown file (`exported-atlas/atlas.md`) against the current Atlas data stored in Supabase, identifying all differences between the two versions.
 
 Changes are grouped into five categories:
 
@@ -107,7 +107,7 @@ Real-time operation log shows:
 
 ### Markdown File Path
 
-Currently: `.debug-data/standardized-atlas/atlas.md`
+Currently: `exported-atlas/atlas.md`
 
 This path is configurable in `app/atlas/sync/page.tsx` (will be made user-configurable in future to use the Markdown Atlas stored in GitHub in production).
 
