@@ -365,9 +365,10 @@ const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(atlasUUID);
 
 ## Related Documentation
 
+- [Atlas Tree Structures](./ATLAS_TREE_STRUCTURES.md) - Comprehensive guide to the dual tree architecture: Notion Tree vs Export Tree
 - [Atlas Markdown Import/Export](./ATLAS_MARKDOWN_IMPORT_EXPORT.md) - Markdown format and conversion
 - [Atlas Markdown to Notion Back Sync](../app/atlas/sync/AGENTS.md) - Markdown Atlas to Notion back sync
-- [Atlas Tree Data Structures And Algorithms](../app/server/atlas/AGENTS.md) - Atlas Tree Data Structures And Algorithms
+- [Atlas Tree Data Structures And Algorithms](../app/server/atlas/tree/AGENTS.md) - Atlas Tree Data Structures And Algorithms
 
 ## Best Practices
 

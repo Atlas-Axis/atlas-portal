@@ -480,6 +480,7 @@ This project maintains **2 synchronized documentation files** that provide high-
 
 ### Atlas Architecture & Core Concepts
 
+- **[docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree (internal) vs Export Tree (external)
 - **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
 - **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
 - **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
