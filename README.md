@@ -478,17 +478,36 @@ This project maintains **2 synchronized documentation files** that provide high-
 
 ⚠️ **Important**: When updating high-level project information, **always update all 2 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
 
-### Docs for Embeddable Notion Pages
+### Atlas Architecture & Core Concepts
+
+- **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
+- **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
+- **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
+- **[docs/ATLAS_DIFFING.md](./docs/ATLAS_DIFFING.md)** - Tree diffing algorithms and change detection for Atlas documents
+
+### Atlas Data Formats & Export
+
+- **[docs/ATLAS_MARKDOWN_SYNTAX.md](./docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown syntax specification for Atlas document representation
+- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](./docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
+
+### Edit Pages & Workflows
+
+- **[docs/EDIT_PAGE_GENERATION_USAGE.md](./docs/EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
+- **[docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](./docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
+
+### Notion Integration
 
 - **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
+- **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
 
-### Atlas Services
+### Action Plans & Future Features
 
-- **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown
+- **[docs/ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md](./docs/ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md)** - Action plan for fixing agent duplicate detection issues
 
-### Atlas Sync
+### Component & Service Documentation
 
-- **[app/atlas/sync/README.md](./app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow that enables pushing Atlas changes from Markdown format back to Notion databases
+- **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown _(planned)_
+- **[app/atlas/sync/README.md](./app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow that enables pushing Atlas changes from Markdown format back to Notion databases _(planned)_
 
 ## 🚀 Getting Started
 
