@@ -1,5 +1,7 @@
 # Action Plan: Fix Agent Duplicate Detection
 
+⚠️ **Note**: This is a historical action plan. File line numbers may have changed since this was written. Refer to actual code for current implementation.
+
 **Created:** 2025-11-13  
 **Status:** Ready for Implementation  
 **Priority:** High (Regression from 2 days ago)

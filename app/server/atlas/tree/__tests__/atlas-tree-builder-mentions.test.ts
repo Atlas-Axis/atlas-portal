@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { NotionRichText } from '@/app/server/markdown/notion-types';
 import { UuidMappings } from '../../load-uuid-mapping';
-import { updateMentionInRichTextArray } from '../atlas-tree-builder';
+import { updateMentionInRichTextArray } from '../atlas-tree-mentions';
 
 /**
  * Tests for Rich Text mention updates in Atlas tree builder.

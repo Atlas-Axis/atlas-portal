@@ -1,4 +1,4 @@
-import { isValidDocumentNumber } from './atlas-tree-system';
+import { isValidDocumentNumber } from './atlas-tree-numbering';
 import { AtlasTreeNode } from './atlas-tree-types';
 
 /**
@@ -392,40 +392,6 @@ export function getNodePath(root: AtlasTreeNode, targetNode: AtlasTreeNode): Atl
 export function getNodeDepth(root: AtlasTreeNode, targetNode: AtlasTreeNode): number {
   const path = getNodePath(root, targetNode);
   return path.length > 0 ? path.length - 1 : -1;
-}
-
-/**
- * Gets all leaf nodes (nodes with no children) in the tree.
- *
- * @param root - The root node to start from
- * @returns Array of all leaf nodes
- *
- * // TODO: Remove this function, useless
- */
-export function getLeafNodes(root: AtlasTreeNode): AtlasTreeNode[] {
-  const leaves: AtlasTreeNode[] = [];
-
-  preOrderTraversal(root, (node) => {
-    const hasChildren =
-      node.scopes.length > 0 ||
-      node.articles.length > 0 ||
-      node.sectionsAndPrimaryDocs.length > 0 ||
-      node.annotations.length > 0 ||
-      node.tenets.length > 0 ||
-      node.scenarios.length > 0 ||
-      node.scenarioVariations.length > 0 ||
-      node.activeData.length > 0 ||
-      node.agentScopeDocs.length > 0 ||
-      node.neededResearch.length > 0;
-
-    if (!hasChildren) {
-      leaves.push(node);
-    }
-
-    return true; // Continue traversal
-  });
-
-  return leaves;
 }
 
 /**

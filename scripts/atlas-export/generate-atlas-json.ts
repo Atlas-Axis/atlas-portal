@@ -31,7 +31,7 @@ import type {
 import { childCollectionNames } from '@/app/server/atlas/export/types';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
-import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-types';
+import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
 

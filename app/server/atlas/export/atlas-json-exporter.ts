@@ -1,7 +1,7 @@
 import atlasNodeToStandardized from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import { StandardizedAtlasScopeTrees } from '@/app/server/atlas/export/types';
 import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
-import type { TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-types';
+import type { TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../load-uuid-mapping';
 

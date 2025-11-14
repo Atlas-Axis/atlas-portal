@@ -22,10 +22,11 @@ Located in `app/server/atlas/tree/`:
 
 - **`atlas-tree-types.ts`** - Type definitions for tree nodes and interfaces
 - **`atlas-tree-builder.ts`** - Main tree construction logic with efficient lookup maps
-- **`atlas-tree-system.ts`** - High-level API and convenience functions
+- **`atlas-tree-system.ts`** - Public API barrel module (re-exports only)
 - **`atlas-tree-traversal.ts`** - Tree traversal utilities and algorithms
 - **`atlas-tree-numbering.ts`** - Document numbering using tree traversal
 - **`atlas-tree-helpers.ts`** - Helper functions for sorting and name formatting
+- **`atlas-tree-mentions.ts`** - Rich Text mention correction and updates
 - **`atlas-tree-errors.ts`** - Comprehensive error handling and validation
 
 ### Testing

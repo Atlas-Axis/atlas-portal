@@ -181,7 +181,7 @@ export function validateDocumentNumbers(docNumbers: Map<string, string>): string
  * @param docNumber - The document number to validate
  * @returns True if the number format is valid
  */
-function isValidDocumentNumber(docNumber: string): boolean {
+export function isValidDocumentNumber(docNumber: string): boolean {
   // Valid patterns:
   // - A.0, A.1, A.2, ... (Scopes)
   // - A.0.1, A.0.2, ... (Articles)

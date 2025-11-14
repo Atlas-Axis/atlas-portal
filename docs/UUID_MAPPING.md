@@ -129,7 +129,7 @@ For embedding in HTML/JSON contexts, mappings can be converted to plain objects:
 
 ### 2. Rich Text Mention Updates
 
-**Location**: `atlas-tree-builder.ts` (Step 8)
+**Location**: `atlas-tree-mentions.ts` (called from `atlas-tree-builder.ts` Step 8)
 
 **Purpose**: Update outdated document numbers in Notion mention objects by matching the Notion page UUID
 
