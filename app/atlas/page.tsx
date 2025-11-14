@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { atlasNodeToStandardized } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
-import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import notionTreeNodeToExportTreeDocument from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import AtlasPagePrerendered from './atlas-page-prerendered';
@@ -22,21 +22,18 @@ export default async function Page() {
   const uuidMappings = await loadUuidMappings();
 
   // Build the Atlas tree structure with validation
-  const atlas = await buildAtlasTree(atlasPagesPerDatabase, {
+  const atlas = await buildNotionAtlasTree(atlasPagesPerDatabase, {
     uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   });
 
-  // Convert entire scope trees to StandardizedAtlasDocument, omitting agent subtrees for lazy loading
-  const standardizedScopeTreesWithoutAgents = atlas.scopeTrees.map((node) =>
-    atlasNodeToStandardized(node, uuidMappings, { omitAgents: true }),
+  // Convert entire scope trees to ExportAtlasTreeDocument, omitting agent subtrees for lazy loading
+  const exportScopeTreesWithoutAgents = atlas.scopeTrees.map((node) =>
+    notionTreeNodeToExportTreeDocument(node, uuidMappings, { omitAgents: true }),
   );
 
   return (
-    <AtlasPagePrerendered
-      standardizedScopeTreesWithoutAgents={standardizedScopeTreesWithoutAgents}
-      uuidMappings={uuidMappings}
-    />
+    <AtlasPagePrerendered exportScopeTreesWithoutAgents={exportScopeTreesWithoutAgents} uuidMappings={uuidMappings} />
   );
 }

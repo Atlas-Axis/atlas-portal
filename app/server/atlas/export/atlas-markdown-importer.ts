@@ -40,20 +40,20 @@ import {
 } from '../notion-mapping/notion-database-properties-and-relationships';
 import { findParentDocNumber } from './atlas-markdown-depth-utils';
 import {
-  type ActiveDataDocument,
-  type AgentScopeDatabaseDocument,
-  type AnnotationsDocument,
-  type ArticlesDocument,
-  type BaseAtlasDocument,
   type ChildCollectionName,
-  type NeededResearchDocument,
-  type ScenarioVariationsDocument,
-  type ScenariosDocument,
-  type ScopesDocument,
-  type SectionsAndPrimaryDocsDocument,
-  type StandardizedAtlasDocument,
-  type StandardizedAtlasScopeTrees,
-  type TenetsDocument,
+  type ExportAtlasTreeActiveDataDocument,
+  type ExportAtlasTreeAgentScopeDatabaseDocument,
+  type ExportAtlasTreeAnnotationsDocument,
+  type ExportAtlasTreeArticlesDocument,
+  type ExportAtlasTreeBaseDocument,
+  type ExportAtlasTreeDocument,
+  type ExportAtlasTreeNeededResearchDocument,
+  type ExportAtlasTreeScenarioVariationsDocument,
+  type ExportAtlasTreeScenariosDocument,
+  type ExportAtlasTreeScopeTrees,
+  type ExportAtlasTreeScopesDocument,
+  type ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+  type ExportAtlasTreeTenetsDocument,
   allowedChildCollectionNamesPerDatabase,
   childCollectionNameToDatabaseName,
 } from './types';
@@ -71,7 +71,7 @@ interface ParsedHeader {
 }
 
 interface StackItem {
-  node: StandardizedAtlasDocument;
+  node: ExportAtlasTreeDocument;
   database: AtlasDatabaseName;
   uuid: string | null;
   depth: number;
@@ -87,11 +87,11 @@ interface StackItem {
  * 4. Insert children into correct typed collections based on parent→child database mappings
  * 5. Extract structured extra fields for specific types (Type Spec, Scenario, etc.)
  */
-export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTrees {
-  // High-level: convert a single Markdown string into an in-memory tree of standardized Atlas documents
+export function parseAtlasMarkdown(markdown: string): ExportAtlasTreeScopeTrees {
+  // High-level: convert a single Markdown string into an in-memory tree of export Atlas documents
   const lines = markdown.split(/\r?\n/);
 
-  const rootScopes: StandardizedAtlasScopeTrees = [];
+  const rootScopes: ExportAtlasTreeScopeTrees = [];
   const stack: StackItem[] = [];
 
   let currentItem: StackItem | null = null;
@@ -107,12 +107,15 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
   const flushCurrent = () => {
     if (!currentItem) return;
     // Trim trailing blank lines
-    const parsed = extractContentAndExtraFields((currentItem.node as unknown as BaseAtlasDocument).type, contentBuffer);
+    const parsed = extractContentAndExtraFields(
+      (currentItem.node as unknown as ExportAtlasTreeBaseDocument).type,
+      contentBuffer,
+    );
     if (parsed.extra) {
       const asRecord = currentItem.node as unknown as Record<string, unknown>;
       for (const [k, v] of Object.entries(parsed.extra)) asRecord[k] = v;
     }
-    (currentItem.node as unknown as BaseAtlasDocument).content = parsed.content;
+    (currentItem.node as unknown as ExportAtlasTreeBaseDocument).content = parsed.content;
     contentBuffer = [];
   };
 
@@ -163,13 +166,13 @@ export function parseAtlasMarkdown(markdown: string): StandardizedAtlasScopeTree
       // Pop until we find the parent or reach a shallower level
       while (stack.length > 0) {
         const top = stack[stack.length - 1];
-        if ((top.node as BaseAtlasDocument).doc_no === parentDocNo) {
+        if ((top.node as ExportAtlasTreeBaseDocument).doc_no === parentDocNo) {
           // Found the parent, stop popping
           break;
         }
         // If we've gone too shallow (popped past where parent should be), stop
         // This handles malformed input gracefully
-        const topDocNo = (top.node as BaseAtlasDocument).doc_no;
+        const topDocNo = (top.node as ExportAtlasTreeBaseDocument).doc_no;
         if (parentDocNo.startsWith(topDocNo + '.')) {
           // Parent should be between here and top, but it's missing
           // Keep this item and attach as child (best effort)
@@ -480,12 +483,12 @@ function getChildCollectionName(
  * Ensures the collection array exists before pushing.
  */
 function pushChildIntoCollection(
-  parent: StandardizedAtlasDocument,
+  parent: ExportAtlasTreeDocument,
   collection: ChildCollectionName,
-  child: StandardizedAtlasDocument,
+  child: ExportAtlasTreeDocument,
 ) {
-  type ParentWithCollections = StandardizedAtlasDocument &
-    Partial<Record<ChildCollectionName, StandardizedAtlasDocument[]>>;
+  type ParentWithCollections = ExportAtlasTreeDocument &
+    Partial<Record<ChildCollectionName, ExportAtlasTreeDocument[]>>;
   const p = parent as ParentWithCollections;
   if (!Array.isArray(p[collection])) p[collection] = [];
   p[collection]!.push(child);
@@ -506,7 +509,7 @@ function pushChildIntoCollection(
 function createNodeForDatabase(
   base: { type: AtlasDocumentType; doc_no: string; name: string; uuid: string | null },
   database: AtlasDatabaseName,
-): StandardizedAtlasDocument {
+): ExportAtlasTreeDocument {
   const common = {
     type: base.type,
     doc_no: base.doc_no,
@@ -518,14 +521,14 @@ function createNodeForDatabase(
 
   switch (database) {
     case 'Scopes':
-      return { ...common, articles: [] } as ScopesDocument;
+      return { ...common, articles: [] } as ExportAtlasTreeScopesDocument;
     case 'Articles':
       return {
         ...common,
         sections_and_primary_docs: [],
         annotations: [],
         needed_research: [],
-      } as ArticlesDocument;
+      } as ExportAtlasTreeArticlesDocument;
     case 'Sections & Primary Docs':
       return {
         ...common,
@@ -534,17 +537,17 @@ function createNodeForDatabase(
         tenets: [],
         active_data: [],
         needed_research: [],
-      } as SectionsAndPrimaryDocsDocument;
+      } as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
     case 'Annotations':
-      return { ...common, needed_research: [] } as AnnotationsDocument;
+      return { ...common, needed_research: [] } as ExportAtlasTreeAnnotationsDocument;
     case 'Tenets':
-      return { ...common, scenarios: [], needed_research: [] } as TenetsDocument;
+      return { ...common, scenarios: [], needed_research: [] } as ExportAtlasTreeTenetsDocument;
     case 'Scenarios':
-      return { ...common, scenario_variations: [], needed_research: [] } as ScenariosDocument;
+      return { ...common, scenario_variations: [], needed_research: [] } as ExportAtlasTreeScenariosDocument;
     case 'Scenario Variations':
-      return { ...common, needed_research: [] } as ScenarioVariationsDocument;
+      return { ...common, needed_research: [] } as ExportAtlasTreeScenarioVariationsDocument;
     case 'Active Data':
-      return { ...common, needed_research: [] } as ActiveDataDocument;
+      return { ...common, needed_research: [] } as ExportAtlasTreeActiveDataDocument;
     case 'Agent Scope Database':
       return {
         ...common,
@@ -553,9 +556,9 @@ function createNodeForDatabase(
         tenets: [],
         active_data: [],
         needed_research: [],
-      } as AgentScopeDatabaseDocument;
+      } as ExportAtlasTreeAgentScopeDatabaseDocument;
     case 'Needed Research':
-      return { ...common } as NeededResearchDocument;
+      return { ...common } as ExportAtlasTreeNeededResearchDocument;
     default:
       throw new Error(`Unsupported Atlas database: ${database}`);
   }

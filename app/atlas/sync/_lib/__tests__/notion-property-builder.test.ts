@@ -6,7 +6,7 @@
  * @see app/server/atlas/notion-database-properties-and-relationships.ts
  */
 import { describe, expect, it } from 'vitest';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { addParentPageRelationshipProperty, buildNotionProperties } from '../notion-property-builder';
 
@@ -19,7 +19,7 @@ const mockUuidMappings: UuidMappings = {
 describe('notion-property-builder', () => {
   describe('buildNotionProperties', () => {
     it('builds basic properties for Section document', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Section',
         doc_no: 'A.1.2',
         name: 'Test Section',
@@ -47,7 +47,7 @@ describe('notion-property-builder', () => {
     });
 
     it('builds basic properties for Scope document', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Scope',
         doc_no: 'A.1',
         name: 'Test Scope',
@@ -88,7 +88,11 @@ describe('notion-property-builder', () => {
         type_specification_type_category: 'Category A',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Sections & Primary Docs', mockUuidMappings);
+      const properties = buildNotionProperties(
+        doc as ExportAtlasTreeBaseDocument,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+      );
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -119,7 +123,7 @@ describe('notion-property-builder', () => {
         scenario_finding: 'Finding text',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Scenarios', mockUuidMappings);
+      const properties = buildNotionProperties(doc as ExportAtlasTreeBaseDocument, 'Scenarios', mockUuidMappings);
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -144,7 +148,11 @@ describe('notion-property-builder', () => {
         scenario_variation_finding: 'Variation finding',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Scenario Variations', mockUuidMappings);
+      const properties = buildNotionProperties(
+        doc as ExportAtlasTreeBaseDocument,
+        'Scenario Variations',
+        mockUuidMappings,
+      );
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -168,7 +176,7 @@ describe('notion-property-builder', () => {
         needed_research_content: 'Research content text',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Needed Research', mockUuidMappings);
+      const properties = buildNotionProperties(doc as ExportAtlasTreeBaseDocument, 'Needed Research', mockUuidMappings);
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -191,7 +199,7 @@ describe('notion-property-builder', () => {
         scenario_additional_guidance: undefined,
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Scenarios', mockUuidMappings);
+      const properties = buildNotionProperties(doc as ExportAtlasTreeBaseDocument, 'Scenarios', mockUuidMappings);
 
       // Should not include null/undefined fields (field not present)
       expect(properties['Description']).toBeUndefined();
@@ -210,7 +218,7 @@ describe('notion-property-builder', () => {
         scenario_finding: '',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Scenarios', mockUuidMappings);
+      const properties = buildNotionProperties(doc as ExportAtlasTreeBaseDocument, 'Scenarios', mockUuidMappings);
 
       // Should set empty string fields to empty rich_text array (to clear Notion field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -220,7 +228,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles empty content by providing empty rich_text array', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Section',
         doc_no: 'A.1.2',
         name: 'Empty Section',
@@ -236,7 +244,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles database without content property', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Scenario Variation',
         doc_no: '.var1',
         name: 'Variation',
@@ -253,7 +261,7 @@ describe('notion-property-builder', () => {
     });
 
     it('uses correct property name for document type in Agent Scope Database', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Core',
         doc_no: 'A.1.1',
         name: 'Agent Core',
@@ -277,7 +285,7 @@ describe('notion-property-builder', () => {
     });
 
     it('uses correct property name for document type in Scopes database', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Scope',
         doc_no: 'A.1',
         name: 'Test Scope',
@@ -301,7 +309,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles document name as title type for Sections & Primary Docs', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Core',
         doc_no: 'A.1.2.1',
         name: 'Core Document Name',
@@ -323,7 +331,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles document name as rich_text type for Articles', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Article',
         doc_no: 'A.1.1',
         name: 'Article Name',
@@ -345,7 +353,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles empty document name for title type', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Core',
         doc_no: 'A.1.2.1',
         name: '',
@@ -362,7 +370,7 @@ describe('notion-property-builder', () => {
     });
 
     it('handles empty document name for rich_text type', () => {
-      const doc: BaseAtlasDocument = {
+      const doc: ExportAtlasTreeBaseDocument = {
         type: 'Scope',
         doc_no: 'A.1',
         name: '',
@@ -389,7 +397,11 @@ describe('notion-property-builder', () => {
         type_specification_type_category: 'Primary',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Sections & Primary Docs', mockUuidMappings);
+      const properties = buildNotionProperties(
+        doc as ExportAtlasTreeBaseDocument,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+      );
 
       // Type Category should be formatted as select
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -409,7 +421,11 @@ describe('notion-property-builder', () => {
         type_specification_type_category: '',
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Sections & Primary Docs', mockUuidMappings);
+      const properties = buildNotionProperties(
+        doc as ExportAtlasTreeBaseDocument,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+      );
 
       // Empty select should be set to null to clear the field
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -427,7 +443,11 @@ describe('notion-property-builder', () => {
         type_specification_type_category: null,
       };
 
-      const properties = buildNotionProperties(doc as BaseAtlasDocument, 'Sections & Primary Docs', mockUuidMappings);
+      const properties = buildNotionProperties(
+        doc as ExportAtlasTreeBaseDocument,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+      );
 
       // Null value should be skipped entirely (field not set)
       expect(properties['Type Category']).toBeUndefined();

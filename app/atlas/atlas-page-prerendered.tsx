@@ -1,22 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { type UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
 import MobileTopBar from './mobile-top-bar';
 import Sidebar from './sidebar';
 
 interface AtlasPagePrerenderedProps {
-  standardizedScopeTreesWithoutAgents: StandardizedAtlasDocument[];
+  exportScopeTreesWithoutAgents: ExportAtlasTreeDocument[];
   uuidMappings: UuidMappings;
 }
 
 export default function AtlasPagePrerendered({
-  standardizedScopeTreesWithoutAgents,
+  exportScopeTreesWithoutAgents,
   uuidMappings,
 }: AtlasPagePrerenderedProps) {
-  const [scopeTreesWithoutAgents] = useState(standardizedScopeTreesWithoutAgents);
+  const [scopeTreesWithoutAgents] = useState(exportScopeTreesWithoutAgents);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white">

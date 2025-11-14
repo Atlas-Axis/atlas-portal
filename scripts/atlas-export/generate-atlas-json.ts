@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 /**
- * CLI: Standardize Atlas Scope Trees from Supabase
+ * CLI: Generate Export Atlas Tree JSON from Supabase
  *
  * Description
- * - Reads Atlas Scope trees produced by `buildAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
- * - Converts each node from `AtlasTreeNode` shape to a simplified `StandardizedAtlasDocument` shape.
- * - Writes the standardized trees to `.debug-data/standardized-atlas/atlas.json`.
+ * - Reads Atlas Scope trees produced by `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
+ * - Converts each node from `NotionAtlasTreeNode` shape to a simplified `ExportAtlasTreeDocument` shape.
+ * - Writes the export trees to `.debug-data/standardized-atlas/atlas.json`.
  *
  * Input
- * - Supabase: `buildAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
- * - Type: `AtlasTreeNode[]` roots representing Scope documents
+ * - Supabase: `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
+ * - Type: `NotionAtlasTreeNode[]` roots representing Scope documents
  *
  * Output (result format)
  * - File: `.debug-data/standardized-atlas/atlas.json`
- * - Type: `StandardizedAtlasDocument[]` (same child array names as input)
+ * - Type: `ExportAtlasTreeDocument[]` (same child array names as input)
  *
  * How to run
  * ```bash
@@ -22,38 +22,41 @@
  */
 import fs from 'fs';
 import path from 'path';
-import atlasNodeToStandardized from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeDocument from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
 import type {
   ChildCollectionName,
-  StandardizedAtlasDocument,
-  StandardizedAtlasScopeTrees,
+  ExportAtlasTreeDocument,
+  ExportAtlasTreeScopeTrees,
 } from '@/app/server/atlas/export/types';
 import { childCollectionNames } from '@/app/server/atlas/export/types';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
-import type { AtlasTreeNode, TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
+import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import type {
+  NotionAtlasTreeConstructionOptions,
+  NotionAtlasTreeNode,
+} from '@/app/server/atlas/tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 /**
- * Type-safe helper to check if a property exists on a StandardizedAtlasDocument
+ * Type-safe helper to check if a property exists on an ExportAtlasTreeDocument
  * and narrow its type. This ensures we only use valid child collection names.
  */
 function hasChildCollection(
-  doc: StandardizedAtlasDocument,
+  doc: ExportAtlasTreeDocument,
   collectionName: ChildCollectionName,
-): doc is StandardizedAtlasDocument & Record<ChildCollectionName, StandardizedAtlasDocument[]> {
+): doc is ExportAtlasTreeDocument & Record<ChildCollectionName, ExportAtlasTreeDocument[]> {
   return collectionName in doc && Array.isArray((doc as unknown as Record<string, unknown>)[collectionName]);
 }
 
 /**
- * Recursively count all unique documents in an AtlasTreeNode tree structure.
+ * Recursively count all unique documents in a NotionAtlasTreeNode tree structure.
  * Uses a Set to track unique UUIDs to avoid counting duplicates.
  */
-function countUniqueDocuments(nodes: AtlasTreeNode[]): number {
+function countUniqueDocuments(nodes: NotionAtlasTreeNode[]): number {
   const uniqueUuids = new Set<string>();
 
-  function traverse(node: AtlasTreeNode) {
+  function traverse(node: NotionAtlasTreeNode) {
     if (node.notion_page_id) {
       uniqueUuids.add(node.notion_page_id);
     }
@@ -71,7 +74,7 @@ function countUniqueDocuments(nodes: AtlasTreeNode[]): number {
     traverseChildren(node.neededResearch);
   }
 
-  function traverseChildren(children: AtlasTreeNode[]) {
+  function traverseChildren(children: NotionAtlasTreeNode[]) {
     for (const child of children) {
       traverse(child);
     }
@@ -85,16 +88,16 @@ function countUniqueDocuments(nodes: AtlasTreeNode[]): number {
 }
 
 /**
- * Recursively count all unique documents in a StandardizedAtlasDocument tree structure.
+ * Recursively count all unique documents in an ExportAtlasTreeDocument tree structure.
  * Uses a Set to track unique UUIDs to avoid counting duplicates.
  * This function correctly handles the case where the same document appears multiple times
  * in the tree due to duplicated nodes (e.g., Needed Research documents that can appear
  * under multiple parents).
  */
-function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
+function countExportDocuments(docs: ExportAtlasTreeDocument[]): number {
   const uniqueUuids = new Set<string>();
 
-  function traverse(doc: StandardizedAtlasDocument) {
+  function traverse(doc: ExportAtlasTreeDocument) {
     if (doc.uuid) {
       uniqueUuids.add(doc.uuid);
     }
@@ -107,7 +110,7 @@ function countStandardizedDocuments(docs: StandardizedAtlasDocument[]): number {
     }
   }
 
-  function traverseChildren(children: StandardizedAtlasDocument[]) {
+  function traverseChildren(children: ExportAtlasTreeDocument[]) {
     for (const child of children) {
       traverse(child);
     }
@@ -137,14 +140,14 @@ async function main() {
   const uuidMappings = await loadUuidMappings();
 
   // Configure options
-  const options: TreeConstructionOptions = {
+  const options: NotionAtlasTreeConstructionOptions = {
     uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   };
 
   // Build tree structure with document numbering and validation
-  const result = await buildAtlasTree(atlasData, options);
+  const result = await buildNotionAtlasTree(atlasData, options);
   const originalScopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 
@@ -165,7 +168,7 @@ async function main() {
     console.warn(`⚠️  Found ${result.duplicatedNodes.length} duplicated nodes:`);
 
     // Group duplicated nodes by the duplicated node ID for better readability
-    const duplicatesByNodeId = new Map<string, { parentId: string; node: AtlasTreeNode }[]>();
+    const duplicatesByNodeId = new Map<string, { parentId: string; node: NotionAtlasTreeNode }[]>();
     for (const duplicate of result.duplicatedNodes) {
       const nodeId = duplicate.node.notion_page_id;
       if (!duplicatesByNodeId.has(nodeId)) {
@@ -199,15 +202,15 @@ async function main() {
     console.log('✅ No duplicated nodes found');
   }
 
-  // Convert Scope trees to standardized JSON format
-  const standardizedScopeTrees: StandardizedAtlasScopeTrees = originalScopeTrees.map((scopeNode) =>
-    atlasNodeToStandardized(scopeNode, uuidMappings),
+  // Convert Scope trees to Export Atlas Tree JSON format
+  const exportScopeTrees: ExportAtlasTreeScopeTrees = originalScopeTrees.map((scopeNode) =>
+    notionTreeNodeToExportTreeDocument(scopeNode, uuidMappings),
   );
 
-  // Convert orphaned nodes to standardized format
-  const standardizedOrphanedNodes: StandardizedAtlasDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
+  // Convert orphaned nodes to export format
+  const exportOrphanedNodes: ExportAtlasTreeDocument[] = result.orphanedNodesAsTreeNodes.map((orphanedNode) => {
     try {
-      return atlasNodeToStandardized(orphanedNode, uuidMappings);
+      return notionTreeNodeToExportTreeDocument(orphanedNode, uuidMappings);
     } catch (error) {
       console.warn(`Failed to convert orphaned node ${orphanedNode.notion_page_id}: ${error}`);
       // Return a minimal document for counting purposes
@@ -217,39 +220,39 @@ async function main() {
         name: orphanedNode.generatedDocName ?? orphanedNode.plain_text_name ?? '',
         uuid: orphanedNode.notion_page_id ?? null,
         content: orphanedNode.plain_text_content ?? '',
-      } as StandardizedAtlasDocument;
+      } as ExportAtlasTreeDocument;
     }
   });
 
-  // Verify document counts match between original and standardized trees
+  // Verify document counts match between original and export trees
   const uniqueDocumentCount = countUniqueDocuments(originalScopeTrees);
   const originalOrphanedCount = result.orphanedNodes.length;
   const uniqueCount = uniqueDocumentCount + originalOrphanedCount;
 
-  const standardizedDocumentCount = countStandardizedDocuments(standardizedScopeTrees);
-  const standardizedOrphanedCount = countStandardizedDocuments(standardizedOrphanedNodes);
-  const standardizedCount = standardizedDocumentCount + standardizedOrphanedCount;
+  const exportDocumentCount = countExportDocuments(exportScopeTrees);
+  const exportOrphanedCount = countExportDocuments(exportOrphanedNodes);
+  const exportCount = exportDocumentCount + exportOrphanedCount;
 
   console.log(`📊 Count breakdown:`);
   console.log(`   Unique documents: ${uniqueDocumentCount}`);
   console.log(`   Original orphaned: ${originalOrphanedCount}`);
   console.log(`   Duplicated nodes: ${result.duplicatedNodes.length}`);
   console.log(`   Unique documents: ${uniqueCount}`);
-  console.log(`   Standardized documents: ${standardizedDocumentCount}`);
-  console.log(`   Standardized orphaned: ${standardizedOrphanedCount}`);
-  console.log(`   Standardized total: ${standardizedCount}`);
+  console.log(`   Export documents: ${exportDocumentCount}`);
+  console.log(`   Export orphaned: ${exportOrphanedCount}`);
+  console.log(`   Export total: ${exportCount}`);
 
-  if (uniqueCount !== standardizedCount) {
-    console.error(`❌ Document count mismatch! Original: ${uniqueCount}, Standardized: ${standardizedCount}`);
+  if (uniqueCount !== exportCount) {
+    console.error(`❌ Document count mismatch! Original: ${uniqueCount}, Export: ${exportCount}`);
   } else {
     console.log(`✅ Document counts match: ${uniqueCount} documents in both trees`);
   }
 
   fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(outputFile, JSON.stringify(standardizedScopeTrees, null, 2), 'utf8');
+  fs.writeFileSync(outputFile, JSON.stringify(exportScopeTrees, null, 2), 'utf8');
 
-  console.log(`Standardized ${standardizedScopeTrees.length} root scope trees`);
-  console.log(`Excluded ${standardizedOrphanedNodes.length} orphaned nodes`);
+  console.log(`Exported ${exportScopeTrees.length} root scope trees`);
+  console.log(`Excluded ${exportOrphanedNodes.length} orphaned nodes`);
   console.log(`Wrote standardized JSON to ${outputFile}`);
 
   process.exit(0);

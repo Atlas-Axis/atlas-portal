@@ -1,11 +1,11 @@
-import atlasNodeToStandardized from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
-import { StandardizedAtlasScopeTrees } from '@/app/server/atlas/export/types';
-import { buildAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
-import type { TreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
+import notionTreeNodeToExportTreeDocument from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+import { ExportAtlasTreeScopeTrees } from '@/app/server/atlas/export/types';
+import { buildNotionAtlasTree } from '@/app/server/atlas/tree/atlas-tree-system';
+import type { NotionAtlasTreeConstructionOptions } from '@/app/server/atlas/tree/atlas-tree-system';
 import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../load-uuid-mapping';
 
-export async function buildAtlasJSON() {
+export async function buildExportAtlasTreeJSON() {
   // Load Atlas data
   const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
@@ -13,21 +13,21 @@ export async function buildAtlasJSON() {
   const uuidMappings = await loadUuidMappings();
 
   // Configure options
-  const options: TreeConstructionOptions = {
+  const options: NotionAtlasTreeConstructionOptions = {
     uuidMappings,
     reportMissingChildNodes: true,
     reportOrphanedNodes: true,
   };
 
   // Build tree structure with document numbering and validation
-  const result = await buildAtlasTree(atlasData, options);
+  const result = await buildNotionAtlasTree(atlasData, options);
   const scopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 
-  // Convert Scope trees to standardized JSON format
-  const standardizedTrees: StandardizedAtlasScopeTrees = scopeTrees.map((scopeNode) =>
-    atlasNodeToStandardized(scopeNode, uuidMappings),
+  // Convert Scope trees to Export Atlas Tree JSON format
+  const exportTrees: ExportAtlasTreeScopeTrees = scopeTrees.map((scopeNode) =>
+    notionTreeNodeToExportTreeDocument(scopeNode, uuidMappings),
   );
 
-  return standardizedTrees;
+  return exportTrees;
 }

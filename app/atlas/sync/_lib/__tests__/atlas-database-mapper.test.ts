@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { AGENT_ROOT_SECTION_UUIDS_MAPPED } from '@/app/server/atlas/constants';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import {
   databaseSupportsInternalNesting,
   getDatabaseNameFromDocument,
@@ -173,19 +173,19 @@ describe('atlas-database-mapper', () => {
   describe('getInternalParentPageIdFromAncestry', () => {
     describe('returns null cases', () => {
       it('returns null when ancestry is undefined', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>();
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>();
         const result = getInternalParentPageIdFromAncestry(undefined, 'Sections & Primary Docs', uuidToDocumentMap);
         expect(result).toBeNull();
       });
 
       it('returns null when ancestry is empty array', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>();
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>();
         const result = getInternalParentPageIdFromAncestry([], 'Sections & Primary Docs', uuidToDocumentMap);
         expect(result).toBeNull();
       });
 
       it('returns null when parent document not found in map', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>();
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>();
         const result = getInternalParentPageIdFromAncestry(
           ['parent-uuid'],
           'Sections & Primary Docs',
@@ -195,7 +195,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('returns null when parent is in different database (cross-database relationship)', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'article-uuid',
             {
@@ -221,7 +221,7 @@ describe('atlas-database-mapper', () => {
 
     describe('same-database parent cases', () => {
       it('returns parent ID when Section parent of Core in Sections & Primary Docs', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'section-uuid',
             {
@@ -244,7 +244,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('returns parent ID when Core parent of nested Core in Sections & Primary Docs', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'article-uuid',
             {
@@ -290,7 +290,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('returns parent ID when Core parent of Active Data Controller in Sections & Primary Docs', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'section-uuid',
             {
@@ -324,7 +324,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('returns parent ID when Core parent of Core in Agent Scope Database', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             agentRootSectionUuid1,
             {
@@ -359,7 +359,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('returns parent ID when Active Data Controller parent of Core in Agent Scope Database', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             agentRootSectionUuid1,
             {
@@ -395,7 +395,7 @@ describe('atlas-database-mapper', () => {
 
     describe('filters cross-database parents correctly', () => {
       it('filters out Article parent when checking Section', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'article-uuid',
             {
@@ -419,7 +419,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('filters out Section parent when checking Annotation', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'section-uuid',
             {
@@ -439,7 +439,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('filters out Core (Agent) parent when checking Core (non-Agent)', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             agentRootSectionUuid1,
             {
@@ -476,7 +476,7 @@ describe('atlas-database-mapper', () => {
 
     describe('handles deep ancestry chains', () => {
       it('correctly identifies same-database parent in deep chain', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'scope-uuid',
             {
@@ -534,7 +534,7 @@ describe('atlas-database-mapper', () => {
       });
 
       it('ignores distant same-type ancestors and only checks immediate parent', () => {
-        const uuidToDocumentMap = new Map<string, BaseAtlasDocument>([
+        const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
           [
             'section-uuid-1',
             {

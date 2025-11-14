@@ -20,10 +20,17 @@ export type ScenarioVariationExtraFields = ExtraFieldsAsStrings<typeof SCENARIO_
 export type NeededResearchExtraFields = ExtraFieldsAsStrings<typeof NEEDED_RESEARCH_PROPERTY_MAPPING>;
 
 /**
- * A simplified, standardized representation of an Atlas document used for downstream processing.
- * Now grouped by Atlas database instead of document type.
+ * Base fields for Export Atlas Tree documents (External Atlas Representation).
+ *
+ * This is a minimal, platform-independent representation of Atlas documents designed for
+ * external consumption (JSON/Markdown export, APIs, public interfaces). It is completely
+ * decoupled from Notion and Supabase, using Atlas document UUIDs and markdown strings
+ * instead of Notion-specific structures.
+ *
+ * For internal operations (tree construction, document numbering), use the Notion Tree
+ * types (NotionAtlasTreeNode, etc.) instead.
  */
-export interface BaseAtlasDocument {
+export interface ExportAtlasTreeBaseDocument {
   type: AtlasDocumentType;
   doc_no: string;
   name: string;
@@ -32,20 +39,20 @@ export interface BaseAtlasDocument {
   content: string;
 }
 
-export type StandardizedAtlasDocument =
-  | ScopesDocument
-  | ArticlesDocument
-  | SectionsAndPrimaryDocsDocument
-  | AnnotationsDocument
-  | TenetsDocument
-  | ScenariosDocument
-  | ScenarioVariationsDocument
-  | ActiveDataDocument
-  | AgentScopeDatabaseDocument
-  | NeededResearchDocument;
+export type ExportAtlasTreeDocument =
+  | ExportAtlasTreeScopesDocument
+  | ExportAtlasTreeArticlesDocument
+  | ExportAtlasTreeSectionsAndPrimaryDocsDocument
+  | ExportAtlasTreeAnnotationsDocument
+  | ExportAtlasTreeTenetsDocument
+  | ExportAtlasTreeScenariosDocument
+  | ExportAtlasTreeScenarioVariationsDocument
+  | ExportAtlasTreeActiveDataDocument
+  | ExportAtlasTreeAgentScopeDatabaseDocument
+  | ExportAtlasTreeNeededResearchDocument;
 
-/** Root array of standardized Atlas database trees. */
-export type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
+/** Root array of Export Atlas Tree scope trees. */
+export type ExportAtlasTreeScopeTrees = ExportAtlasTreeDocument[];
 
 export const childCollectionNameToDatabaseName = {
   scopes: 'Scopes',
@@ -100,65 +107,71 @@ export const allowedChildCollectionNamesPerDatabase: Record<AtlasDatabaseName, C
 };
 
 /**
- * Atlas Database Documents
+ * Export Atlas Tree Documents (External Atlas Representation)
  * Each document type represents an Atlas database and contains children grouped by database.
  */
 
-export interface ScopesDocument extends BaseAtlasDocument {
-  articles: ArticlesDocument[];
+export interface ExportAtlasTreeScopesDocument extends ExportAtlasTreeBaseDocument {
+  articles: ExportAtlasTreeArticlesDocument[];
 }
 
-export interface ArticlesDocument extends BaseAtlasDocument {
-  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
-  // agent_scope_database: AgentScopeDatabaseDocument[];
-  annotations: AnnotationsDocument[];
-  needed_research: NeededResearchDocument[];
+export interface ExportAtlasTreeArticlesDocument extends ExportAtlasTreeBaseDocument {
+  sections_and_primary_docs: ExportAtlasTreeSectionsAndPrimaryDocsDocument[];
+  // agent_scope_database: ExportAtlasTreeAgentScopeDatabaseDocument[];
+  annotations: ExportAtlasTreeAnnotationsDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface SectionsAndPrimaryDocsDocument extends BaseAtlasDocument, Partial<TypeSpecificationExtraFields> {
-  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
-  agent_scope_database?: AgentScopeDatabaseDocument[];
-  annotations: AnnotationsDocument[];
-  tenets: TenetsDocument[];
-  active_data: ActiveDataDocument[];
-  needed_research: NeededResearchDocument[];
+export interface ExportAtlasTreeSectionsAndPrimaryDocsDocument
+  extends ExportAtlasTreeBaseDocument,
+    Partial<TypeSpecificationExtraFields> {
+  sections_and_primary_docs: ExportAtlasTreeSectionsAndPrimaryDocsDocument[];
+  agent_scope_database?: ExportAtlasTreeAgentScopeDatabaseDocument[];
+  annotations: ExportAtlasTreeAnnotationsDocument[];
+  tenets: ExportAtlasTreeTenetsDocument[];
+  active_data: ExportAtlasTreeActiveDataDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
   // TODO: Add extra fields for Type Specification documents (optional)
 }
 
-export interface AnnotationsDocument extends BaseAtlasDocument {
+export interface ExportAtlasTreeAnnotationsDocument extends ExportAtlasTreeBaseDocument {
   // No children - leaf database
-  needed_research: NeededResearchDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface TenetsDocument extends BaseAtlasDocument {
-  scenarios: ScenariosDocument[];
-  needed_research: NeededResearchDocument[];
+export interface ExportAtlasTreeTenetsDocument extends ExportAtlasTreeBaseDocument {
+  scenarios: ExportAtlasTreeScenariosDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface ScenariosDocument extends BaseAtlasDocument, Partial<ScenarioExtraFields> {
-  scenario_variations: ScenarioVariationsDocument[];
-  needed_research: NeededResearchDocument[];
+export interface ExportAtlasTreeScenariosDocument extends ExportAtlasTreeBaseDocument, Partial<ScenarioExtraFields> {
+  scenario_variations: ExportAtlasTreeScenarioVariationsDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface ScenarioVariationsDocument extends BaseAtlasDocument, Partial<ScenarioVariationExtraFields> {
+export interface ExportAtlasTreeScenarioVariationsDocument
+  extends ExportAtlasTreeBaseDocument,
+    Partial<ScenarioVariationExtraFields> {
   // No children - leaf database
-  needed_research: NeededResearchDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface ActiveDataDocument extends BaseAtlasDocument {
+export interface ExportAtlasTreeActiveDataDocument extends ExportAtlasTreeBaseDocument {
   // No children - leaf database
-  needed_research: NeededResearchDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface AgentScopeDatabaseDocument extends BaseAtlasDocument {
-  agent_scope_database: AgentScopeDatabaseDocument[];
-  annotations: AnnotationsDocument[];
-  tenets: TenetsDocument[];
-  active_data: ActiveDataDocument[];
-  needed_research: NeededResearchDocument[];
+export interface ExportAtlasTreeAgentScopeDatabaseDocument extends ExportAtlasTreeBaseDocument {
+  agent_scope_database: ExportAtlasTreeAgentScopeDatabaseDocument[];
+  annotations: ExportAtlasTreeAnnotationsDocument[];
+  tenets: ExportAtlasTreeTenetsDocument[];
+  active_data: ExportAtlasTreeActiveDataDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
-export interface NeededResearchDocument extends BaseAtlasDocument, Partial<NeededResearchExtraFields> {
+export interface ExportAtlasTreeNeededResearchDocument
+  extends ExportAtlasTreeBaseDocument,
+    Partial<NeededResearchExtraFields> {
   // No children - leaf database
 }
 

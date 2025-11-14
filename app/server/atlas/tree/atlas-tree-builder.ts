@@ -12,18 +12,18 @@ import { getDocumentTitle, sortAtlasDocuments } from './atlas-tree-helpers';
 import { updateRichTextMentionsInTree } from './atlas-tree-mentions';
 import { assignDocumentNumbersToTreesRecursively } from './atlas-tree-numbering';
 import {
-  AtlasLookupMaps,
-  AtlasTreeNode,
-  AtlasTreeNodeRelationship,
-  AtlasTreeResult,
-  AtlasUUIDToDocNoAndDocNameMaps,
-  DuplicatedNodeEntry,
-  TreeConstructionError,
-  TreeConstructionOptions,
+  NotionAtlasTreeConstructionError,
+  NotionAtlasTreeConstructionOptions,
+  NotionAtlasTreeDuplicatedNodeEntry,
+  NotionAtlasTreeLookupMaps,
+  NotionAtlasTreeNode,
+  NotionAtlasTreeNodeRelationship,
+  NotionAtlasTreeResult,
+  NotionAtlasTreeUUIDToDocNoAndDocNameMaps,
 } from './atlas-tree-types';
 
 /**
- * Builds the Atlas document tree structure from Supabase data.
+ * Builds the Notion Atlas Tree structure (Internal Atlas Representation) from Supabase data.
  *
  * This function takes the output of `loadAtlasFromSupabaseWithNestingAgentsUnderSection`
  * and creates a hierarchical tree structure where each root node is a Scope document
@@ -45,13 +45,13 @@ import {
  *
  * @param pagesByDatabase - Pages organized by database name from loadAtlasFromSupabaseWithNestingAgentsUnderSection
  * @param options - Configuration options for tree construction
- * @returns AtlasTreeResult containing scope trees, orphaned nodes, and any errors
+ * @returns NotionAtlasTreeResult containing scope trees, orphaned nodes, and any errors
  *
  * @example
  * ```typescript
  * const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
  * const uuidMappings = await loadUuidMappings();
- * const result = buildAtlasTree(atlasData, { uuidMappings });
+ * const result = buildNotionAtlasTree(atlasData, { uuidMappings });
  *
  * // Access the first scope tree
  * const firstScope = result.scopeTrees[0];
@@ -63,10 +63,10 @@ import {
  * });
  * ```
  */
-export async function buildAtlasTree(
+export async function buildNotionAtlasTree(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
-  options: TreeConstructionOptions,
-): Promise<AtlasTreeResult> {
+  options: NotionAtlasTreeConstructionOptions,
+): Promise<NotionAtlasTreeResult> {
   const { uuidMappings, verbose = true, maxDepth = 50, reportMissingChildNodes = false } = options;
 
   if (verbose) {
@@ -95,7 +95,7 @@ export async function buildAtlasTree(
   });
 
   // Step 1: Create lookup maps for efficient O(1) access
-  const lookupMaps = createLookupMaps(pagesByDatabaseWithOverrides);
+  const lookupMaps: NotionAtlasTreeLookupMaps = createLookupMaps(pagesByDatabaseWithOverrides);
 
   // Step 2: Normalize document names for all nodes
   generateNormalizedDocumentNames(lookupMaps);
@@ -118,8 +118,8 @@ export async function buildAtlasTree(
   }
 
   // Step 4: Build tree structures for each root scope
-  const scopeTrees: AtlasTreeNode[] = [];
-  const errors: TreeConstructionError[] = [];
+  const scopeTrees: NotionAtlasTreeNode[] = [];
+  const errors: NotionAtlasTreeConstructionError[] = [];
 
   for (const rootScope of rootScopes) {
     try {
@@ -152,7 +152,7 @@ export async function buildAtlasTree(
   const orphanedNodes = findOrphanedNodes(pagesByDatabaseWithOverrides, lookupMaps, scopeTrees);
 
   // Step 5b: Convert orphaned nodes to AtlasTreeNode format
-  const orphanedNodesAsTreeNodes: AtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
+  const orphanedNodesAsTreeNodes: NotionAtlasTreeNode[] = orphanedNodes.map((orphanedPage) => {
     try {
       // Build tree node for orphaned page (with reasonable depth limit to avoid performance issues)
       return buildTreeNode(
@@ -235,7 +235,7 @@ export async function buildAtlasTree(
  *
  * Example: "A.1.6 - Facilitators - Budgets" → "Budgets"
  */
-function generateNormalizedDocumentNames(lookupMaps: AtlasLookupMaps): void {
+function generateNormalizedDocumentNames(lookupMaps: NotionAtlasTreeLookupMaps): void {
   for (const treeNode of lookupMaps.nodeMapByPageId.values()) {
     treeNode.generatedDocName = getDocumentTitle(treeNode).trim();
   }
@@ -251,10 +251,12 @@ function generateNormalizedDocumentNames(lookupMaps: AtlasLookupMaps): void {
  * - processedIds: Set of processed IDs for circular reference detection
  *
  * @param pagesByDatabase - All pages organized by database
- * @returns AtlasLookupMaps with efficient lookup structures
+ * @returns NotionAtlasTreeLookupMaps with efficient lookup structures
  */
-function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>): AtlasLookupMaps {
-  const nodeMap = new Map<string, AtlasTreeNode>();
+function createLookupMaps(
+  pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
+): NotionAtlasTreeLookupMaps {
+  const nodeMap = new Map<string, NotionAtlasTreeNode>();
   const originalPageMap = new Map<string, NotionDatabasePage>();
   const parentMap = new Map<string, string>();
   const childrenMap = new Map<string, string[]>();
@@ -270,7 +272,7 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
 
   // Create AtlasTreeNode for each page and build relationship maps
   for (const page of allPages) {
-    const treeNode: AtlasTreeNode = {
+    const treeNode: NotionAtlasTreeNode = {
       ...page,
       generatedDocID: undefined,
       scopes: [],
@@ -339,7 +341,7 @@ function createLookupMaps(pagesByDatabase: Partial<Record<AtlasDatabaseName, Not
  * @param lookupMaps - Lookup maps containing all pages
  * @returns The NotionDatabasePage if found, undefined otherwise
  */
-function findPageById(pageId: string, lookupMaps: AtlasLookupMaps): NotionDatabasePage | undefined {
+function findPageById(pageId: string, lookupMaps: NotionAtlasTreeLookupMaps): NotionDatabasePage | undefined {
   // Efficient O(1) lookup using original NotionDatabasePage objects
   return lookupMaps.originalPageMap.get(pageId);
 }
@@ -358,7 +360,11 @@ function findPageById(pageId: string, lookupMaps: AtlasLookupMaps): NotionDataba
  * @param parentPageId - ID of the page whose children are being filtered (optional)
  * @returns Filtered array containing only direct children
  */
-function filterDirectChildren(descendantIds: string[], lookupMaps: AtlasLookupMaps, parentPageId?: string): string[] {
+function filterDirectChildren(
+  descendantIds: string[],
+  lookupMaps: NotionAtlasTreeLookupMaps,
+  parentPageId?: string,
+): string[] {
   if (!Array.isArray(descendantIds)) {
     return [];
   }
@@ -402,19 +408,19 @@ function filterDirectChildren(descendantIds: string[], lookupMaps: AtlasLookupMa
  * @param depth - Current recursion depth for cycle detection
  * @param maxDepth - Maximum allowed depth to prevent infinite recursion
  * @param verbose - Whether to log detailed construction information
- * @returns AtlasTreeNode with all descendants embedded
+ * @returns NotionAtlasTreeNode with all descendants embedded
  * @throws Error if circular reference is detected
  */
 function buildTreeNode(
   page: NotionDatabasePage,
-  lookupMaps: AtlasLookupMaps,
+  lookupMaps: NotionAtlasTreeLookupMaps,
   depth: number,
   maxDepth: number,
   verbose: boolean,
   reportMissingChildNodes: boolean = false,
   parentPageId?: string,
   siblingPositioningMappingsByParent?: Map<string, NotionNestingBugMapping[]>,
-): AtlasTreeNode {
+): NotionAtlasTreeNode {
   const { nodeMapByPageId: nodeMap, processedIds, nodeToParentsMap } = lookupMaps;
 
   // Track parent-child relationship for duplicate detection
@@ -486,7 +492,7 @@ function buildTreeNode(
     );
     const filteredAgentScopeIds = filterDirectChildren(page.child_agent_scope_ids, lookupMaps, page.notion_page_id);
 
-    const childArrays: { array: string[]; type: AtlasTreeNodeRelationship }[] = [
+    const childArrays: { array: string[]; type: NotionAtlasTreeNodeRelationship }[] = [
       { array: page.child_scope_ids, type: 'scopes' },
       { array: page.child_article_ids, type: 'articles' },
       { array: filteredSectionAndPrimaryDocIds, type: 'sectionsAndPrimaryDocs' },
@@ -500,7 +506,7 @@ function buildTreeNode(
     ];
     for (const { array, type } of childArrays) {
       if (Array.isArray(array)) {
-        const childNodes: AtlasTreeNode[] = [];
+        const childNodes: NotionAtlasTreeNode[] = [];
 
         // Sort siblings based on rules before processing
         // Docs: https://www.notion.so/atlas-axis/Ordering-Of-Atlas-Documents-280f2ff08d73802e8e08d0bd88e081be
@@ -557,7 +563,7 @@ function buildTreeNode(
         }
 
         // Sort children by sort_order and document number
-        let sortedChildren = sortAtlasDocuments<AtlasTreeNode>(childNodes);
+        let sortedChildren = sortAtlasDocuments<NotionAtlasTreeNode>(childNodes);
 
         // Apply sibling positioning adjustments after sorting (if any mappings exist for this parent)
         if (siblingPositioningMappingsByParent) {
@@ -628,11 +634,11 @@ function createSiblingPositioningIndex(
  * @returns Reordered children with sibling positioning applied
  */
 function applySiblingPositioning(
-  sortedChildren: AtlasTreeNode[],
+  sortedChildren: NotionAtlasTreeNode[],
   parentPageId: string,
   siblingPositioningByParent: Map<string, NotionNestingBugMapping[]>,
   verbose: boolean,
-): AtlasTreeNode[] {
+): NotionAtlasTreeNode[] {
   // O(1) lookup - get mappings for this specific parent
   const relevantMappings = siblingPositioningByParent.get(parentPageId);
 
@@ -693,15 +699,15 @@ function applySiblingPositioning(
  */
 function findOrphanedNodes(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
-  lookupMaps: AtlasLookupMaps,
-  scopeTrees: AtlasTreeNode[],
+  lookupMaps: NotionAtlasTreeLookupMaps,
+  scopeTrees: NotionAtlasTreeNode[],
 ): NotionDatabasePage[] {
   const { nodeMapByPageId: nodeMap, originalPageMap } = lookupMaps;
 
   // Collect all page IDs that are connected to root trees
   const connectedIds = new Set<string>();
 
-  function collectConnectedIds(node: AtlasTreeNode) {
+  function collectConnectedIds(node: NotionAtlasTreeNode) {
     connectedIds.add(node.notion_page_id);
 
     // Recursively collect from all child arrays
@@ -758,14 +764,14 @@ function findOrphanedNodes(
  * @returns Object containing both UUID-to-document-number and UUID-to-document-name maps
  */
 function generateAtlasUUIDToDocNoAndDocNameMaps(
-  scopeTrees: AtlasTreeNode[],
-  orphanedNodesAsTreeNodes: AtlasTreeNode[],
+  scopeTrees: NotionAtlasTreeNode[],
+  orphanedNodesAsTreeNodes: NotionAtlasTreeNode[],
   uuidMappings: UuidMappings,
-): AtlasUUIDToDocNoAndDocNameMaps {
+): NotionAtlasTreeUUIDToDocNoAndDocNameMaps {
   const atlasUUIDsToDocNumbers = new Map<string, string>();
   const atlasUUIDsToDocNames = new Map<string, string>();
 
-  function processNode(node: AtlasTreeNode) {
+  function processNode(node: NotionAtlasTreeNode) {
     const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(node.notion_page_id);
 
     if (atlasUUID) {
@@ -824,9 +830,9 @@ function generateAtlasUUIDToDocNoAndDocNameMaps(
  * @param lookupMaps - Lookup maps containing parent tracking information
  * @returns Array of duplicated nodes with their parent relationships
  */
-function generateDuplicatedNodeList(lookupMaps: AtlasLookupMaps): DuplicatedNodeEntry[] {
+function generateDuplicatedNodeList(lookupMaps: NotionAtlasTreeLookupMaps): NotionAtlasTreeDuplicatedNodeEntry[] {
   const { nodeToParentsMap, nodeMapByPageId } = lookupMaps;
-  const duplicatedNodes: DuplicatedNodeEntry[] = [];
+  const duplicatedNodes: NotionAtlasTreeDuplicatedNodeEntry[] = [];
 
   // Find nodes that appear under multiple parents
   for (const [nodeId, parentIds] of nodeToParentsMap.entries()) {

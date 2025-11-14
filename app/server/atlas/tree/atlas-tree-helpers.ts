@@ -1,9 +1,9 @@
 // Original name example: "A.1.5 - Aligned Delegates - Budget And Participation Requirements - Eligibility To Receive Budget"
 import { compareDocNumbers } from '@/app/server/atlas/document-numbering/atlas-utils';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { AtlasTreeNode } from './atlas-tree-system';
+import { NotionAtlasTreeNode } from './atlas-tree-system';
 
-export function getDocumentTitle(node: AtlasTreeNode | NotionDatabasePage): string {
+export function getDocumentTitle(node: NotionAtlasTreeNode | NotionDatabasePage): string {
   switch (node.atlas_database_name) {
     // Return the plain text name as-is for these databases
     case 'Scopes':

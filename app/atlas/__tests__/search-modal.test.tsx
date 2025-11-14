@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import type { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import SearchModal from '../search-modal';
 
@@ -24,22 +24,22 @@ describe('SearchModal', () => {
     name: string,
     content: string,
     extraFields?: Record<string, string>,
-  ): StandardizedAtlasDocument =>
+  ): ExportAtlasTreeDocument =>
     ({
-      type: type as StandardizedAtlasDocument['type'],
+      type: type as ExportAtlasTreeDocument['type'],
       doc_no,
       name,
       uuid: null,
       last_modified: '2025-01-01',
       content,
       ...extraFields,
-    }) as StandardizedAtlasDocument;
+    }) as ExportAtlasTreeDocument;
 
   it('searches in standard fields (doc_no, name, content)', async () => {
     const user = userEvent.setup();
     const scopeTrees = [
       createMockDocument('Scope', 'A.1', 'Test Scope', 'This is test content'),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -74,7 +74,7 @@ describe('SearchModal', () => {
         type_specification_type_overview: 'This is a unique overview',
         type_specification_components: 'Component A, Component B',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -114,7 +114,7 @@ describe('SearchModal', () => {
         scenario_finding: 'Important finding here',
         scenario_additional_guidance: 'Follow these guidelines',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -152,7 +152,7 @@ describe('SearchModal', () => {
         scenario_variation_finding: 'Variation finding',
         scenario_variation_additional_guidance: 'Variation guidance',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -171,7 +171,7 @@ describe('SearchModal', () => {
       createMockDocument('Needed Research', 'NR-1', 'Research Item', '', {
         needed_research_content: 'This research is about quantum computing',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -191,7 +191,7 @@ describe('SearchModal', () => {
       createMockDocument('Type Specification', 'A.1.1.1', 'Type Spec', 'Regular content', {
         type_specification_type_name: 'Special Name',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -213,7 +213,7 @@ describe('SearchModal', () => {
       createMockDocument('Type Specification', 'A.1.1.1', 'Type Spec', 'Content', {
         type_specification_type_name: 'Special Type Name',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -232,7 +232,7 @@ describe('SearchModal', () => {
       createMockDocument('Scenario', 'A.1.1.1.1', 'Test Scenario', '', {
         scenario_description: 'This is a test description with unique keyword',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -254,7 +254,7 @@ describe('SearchModal', () => {
       createMockDocument('Type Specification', 'A.1.1.1', 'My Type Spec', 'This content has special text', {
         type_specification_type_name: 'Some other text',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 
@@ -277,7 +277,7 @@ describe('SearchModal', () => {
       createMockDocument('Type Specification', 'A.1.1.1', 'My Type Spec', 'Regular content here', {
         type_specification_type_name: 'Unique field text',
       }),
-    ] as StandardizedAtlasDocument[];
+    ] as ExportAtlasTreeDocument[];
 
     render(<SearchModal scopeTrees={scopeTrees} uuidMappings={mockUuidMappings} isOpen={true} onClose={mockOnClose} />);
 

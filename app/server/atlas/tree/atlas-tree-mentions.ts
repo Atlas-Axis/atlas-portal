@@ -1,6 +1,6 @@
 import { NotionRichText } from '@/app/server/markdown/notion-types';
 import { UuidMappings } from '../load-uuid-mapping';
-import { AtlasTreeNode } from './atlas-tree-types';
+import { NotionAtlasTreeNode } from './atlas-tree-types';
 
 /**
  * Rich Text mention correction and updates for Atlas documents.
@@ -118,7 +118,7 @@ export function updateMentionInRichTextArray(
  * @returns Number of mentions updated
  */
 function updateRichTextMentionsInNode(
-  node: AtlasTreeNode,
+  node: NotionAtlasTreeNode,
   atlasUUIDsToGeneratedDocNumbers: Map<string, string>,
   atlasUUIDsToDocNames: Map<string, string>,
   uuidMappings: UuidMappings,
@@ -178,8 +178,8 @@ function updateRichTextMentionsInNode(
  * @returns Total number of mentions updated across all nodes
  */
 export function updateRichTextMentionsInTree(
-  scopeTrees: AtlasTreeNode[],
-  orphanedNodesAsTreeNodes: AtlasTreeNode[],
+  scopeTrees: NotionAtlasTreeNode[],
+  orphanedNodesAsTreeNodes: NotionAtlasTreeNode[],
   atlasUUIDsToGeneratedDocNumbers: Map<string, string>,
   atlasUUIDsToDocNames: Map<string, string>,
   uuidMappings: UuidMappings,
@@ -187,7 +187,7 @@ export function updateRichTextMentionsInTree(
 ): number {
   let totalUpdatedCount = 0;
 
-  function processNode(node: AtlasTreeNode): void {
+  function processNode(node: NotionAtlasTreeNode): void {
     // Update mentions in current node
     const count = updateRichTextMentionsInNode(
       node,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { BaseAtlasDocument, StandardizedAtlasScopeTrees } from '../../export/types';
+import type { ExportAtlasTreeBaseDocument, ExportAtlasTreeScopeTrees } from '../../export/types';
 import {
   type LookupMaps,
   buildLookupMaps,
@@ -69,8 +69,8 @@ describe('stripChildCollections', () => {
 
     const stripped = stripChildCollections(doc);
 
-    // Cast to access extra fields since BaseAtlasDocument doesn't include them in its type
-    const strippedWithExtras = stripped as BaseAtlasDocument & {
+    // Cast to access extra fields since ExportAtlasTreeBaseDocument doesn't include them in its type
+    const strippedWithExtras = stripped as ExportAtlasTreeBaseDocument & {
       type_specification_type_name?: string;
       type_specification_type_category?: string;
     };
@@ -83,7 +83,7 @@ describe('stripChildCollections', () => {
 
 describe('buildLookupMaps', () => {
   it('builds UUID, doc_no, and ancestry lookup maps', () => {
-    const scopeTrees: StandardizedAtlasScopeTrees = [
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
       {
         type: 'Scope',
         doc_no: 'A.1',
@@ -125,7 +125,7 @@ describe('buildLookupMaps', () => {
   });
 
   it('correctly tracks ancestry for nested documents', () => {
-    const scopeTrees: StandardizedAtlasScopeTrees = [
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
       {
         type: 'Scope',
         doc_no: 'A.1',
@@ -172,7 +172,7 @@ describe('buildLookupMaps', () => {
   });
 
   it('correctly tracks ancestry for Needed Research documents', () => {
-    const scopeTrees: StandardizedAtlasScopeTrees = [
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
       {
         type: 'Scope',
         doc_no: 'A.1',
@@ -212,7 +212,7 @@ describe('buildLookupMaps', () => {
   });
 
   it('handles documents without UUIDs', () => {
-    const scopeTrees: StandardizedAtlasScopeTrees = [
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
       {
         type: 'Scope',
         doc_no: 'A.1',
@@ -235,7 +235,7 @@ describe('buildLookupMaps', () => {
 
 describe('extractAllUuids', () => {
   it('extracts all UUIDs from a lookup map', () => {
-    const lookupMap = new Map<string, BaseAtlasDocument>([
+    const lookupMap = new Map<string, ExportAtlasTreeBaseDocument>([
       ['uuid-1', { type: 'Scope', doc_no: 'A.1', name: 'Scope 1', uuid: 'uuid-1', content: '', last_modified: '' }],
       [
         'uuid-2',
@@ -252,7 +252,7 @@ describe('extractAllUuids', () => {
 });
 
 describe('compareDocumentFields', () => {
-  const baseDoc: BaseAtlasDocument = {
+  const baseDoc: ExportAtlasTreeBaseDocument = {
     type: 'Scope',
     doc_no: 'A.1',
     name: 'Test',

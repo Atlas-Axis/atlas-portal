@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CustomHTML } from '@/app/components/custom-html';
-import { StandardizedAtlasDocument, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeDocument, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -16,7 +16,7 @@ type ExtraFieldValue = string | number | boolean | string[] | null | undefined;
 /**
  * Get the appropriate label mapping for a document type's extra fields.
  */
-function getLabelMapping(documentType: StandardizedAtlasDocument['type']): Record<string, string> {
+function getLabelMapping(documentType: ExportAtlasTreeDocument['type']): Record<string, string> {
   switch (documentType) {
     case 'Type Specification':
       return TYPE_SPECIFICATION_PROPERTY_MAPPING as Record<string, string>;
@@ -40,7 +40,7 @@ export function StandardizedExtraData({
   className,
   uuidToDocNoMap,
 }: {
-  node: StandardizedAtlasDocument;
+  node: ExportAtlasTreeDocument;
   className?: string;
   uuidToDocNoMap: Map<string, string>;
 }): React.ReactElement | null {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stringify } from 'yaml';
-import { buildAtlasJSON } from '@/app/server/atlas/export/atlas-json-exporter';
+import { buildExportAtlasTreeJSON } from '@/app/server/atlas/export/atlas-json-exporter';
 
 interface ConversionOptions {
   indent: number;
@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS: ConversionOptions = {
 
 export async function GET() {
   try {
-    const atlasJSON = await buildAtlasJSON();
+    const atlasJSON = await buildExportAtlasTreeJSON();
 
     // Convert to YAML
     const yamlContent = stringify(atlasJSON, DEFAULT_OPTIONS);

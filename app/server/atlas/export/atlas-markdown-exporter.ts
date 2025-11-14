@@ -4,18 +4,18 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../notion-mapping/notion-database-properties-and-relationships';
-import { buildAtlasJSON } from './atlas-json-exporter';
+import { buildExportAtlasTreeJSON } from './atlas-json-exporter';
 import { calculateHeadingLevel } from './atlas-markdown-depth-utils';
-import { type StandardizedAtlasDocument, StandardizedAtlasScopeTrees, childCollectionNames } from './types';
+import { type ExportAtlasTreeDocument, ExportAtlasTreeScopeTrees, childCollectionNames } from './types';
 
 export async function buildAtlasMarkdown(): Promise<string> {
   // Load Atlas JSON
-  const standardizedTrees: StandardizedAtlasScopeTrees = await buildAtlasJSON();
+  const exportTrees: ExportAtlasTreeScopeTrees = await buildExportAtlasTreeJSON();
 
   // Convert to Markdown, preserving hierarchy and sibling order as represented
   const lines: string[] = [];
 
-  for (const root of standardizedTrees) {
+  for (const root of exportTrees) {
     lines.push(...formatDocumentRecursive(root, 0));
   }
 
@@ -24,12 +24,12 @@ export async function buildAtlasMarkdown(): Promise<string> {
 
 export async function buildAtlasMarkdownsPerScope(): Promise<Record<string, string>> {
   // Load Atlas JSON
-  const standardizedTrees: StandardizedAtlasScopeTrees = await buildAtlasJSON();
+  const exportTrees: ExportAtlasTreeScopeTrees = await buildExportAtlasTreeJSON();
 
   // Create a map of sanitized scope names to their markdown content
   const markdownsByScope: Record<string, string> = {};
 
-  for (const scopeDoc of standardizedTrees) {
+  for (const scopeDoc of exportTrees) {
     // Generate markdown for this scope tree
     const lines = formatDocumentRecursive(scopeDoc, 0);
     const markdownContent = lines.join('\n');
@@ -52,9 +52,9 @@ function sanitizeScopeName(name: string): string {
 }
 
 function formatDocumentRecursive(
-  doc: StandardizedAtlasDocument,
+  doc: ExportAtlasTreeDocument,
   depth: number,
-  parentDoc?: StandardizedAtlasDocument,
+  parentDoc?: ExportAtlasTreeDocument,
 ): string[] {
   const lines: string[] = [];
 
@@ -109,7 +109,7 @@ function formatDocumentRecursive(
 }
 
 // For more info on extra fields, see `docs/ATLAS_EXTRA_FIELDS.md`
-function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
+function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
   let mapping: Record<string, string> | null = null;
   switch (doc.type) {
     case 'Type Specification':
@@ -155,8 +155,8 @@ function getExtraFieldsForDocument(doc: StandardizedAtlasDocument): string[] {
   return out;
 }
 
-function getAllChildren(doc: StandardizedAtlasDocument): StandardizedAtlasDocument[] {
-  const children: StandardizedAtlasDocument[] = [];
+function getAllChildren(doc: ExportAtlasTreeDocument): ExportAtlasTreeDocument[] {
+  const children: ExportAtlasTreeDocument[] = [];
 
   // Collect all children from all possible collections, following the original tree structure
   const docAsRecord = doc as unknown as Record<string, unknown>;
@@ -166,7 +166,7 @@ function getAllChildren(doc: StandardizedAtlasDocument): StandardizedAtlasDocume
   for (const collectionName of childCollectionNames) {
     const collection = docAsRecord[collectionName];
     if (Array.isArray(collection)) {
-      children.push(...(collection as StandardizedAtlasDocument[]));
+      children.push(...(collection as ExportAtlasTreeDocument[]));
     }
   }
 

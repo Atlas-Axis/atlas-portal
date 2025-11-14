@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { sortAdditionsByHierarchy } from '../sync-orchestrator';
 
 describe('sync-orchestrator', () => {
@@ -49,7 +49,7 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, BaseAtlasDocument>([
+      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
         ['scope-1', changes[2].newValues!],
         ['article-1', changes[1].newValues!],
         ['section-1', changes[0].newValues!],
@@ -106,7 +106,7 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, BaseAtlasDocument>([
+      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
         ['section-1', changes[2].newValues!],
         ['nested-core', changes[0].newValues!],
         ['parent-core', changes[1].newValues!],
@@ -163,7 +163,7 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, BaseAtlasDocument>([
+      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
         [
           'article-1',
           {
@@ -257,7 +257,7 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, BaseAtlasDocument>([
+      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
         ['article-1', changes[3].newValues!],
         ['section-1', changes[1].newValues!],
         ['annotation-1', changes[0].newValues!],
@@ -336,7 +336,7 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, BaseAtlasDocument>([
+      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
         ['section-1', changes[3].newValues!],
         ['annotation-1', changes[1].newValues!],
         ['nr-on-section', changes[2].newValues!],

@@ -1,4 +1,4 @@
-import { AtlasTreeNode } from './atlas-tree-types';
+import { NotionAtlasTreeNode } from './atlas-tree-types';
 
 /**
  * Document number generation for Atlas documents. (see rules in `docs/ATLAS_DOCUMENT_NUMBERING_RULES.md`)
@@ -39,7 +39,7 @@ import { AtlasTreeNode } from './atlas-tree-types';
  * console.log(result.atlasUUIDsToDocNames.get('some-atlas-uuid')); // "Document Name"
  * ```
  */
-export function assignDocumentNumbersToTreesRecursively(scopeTrees: AtlasTreeNode[]): Map<string, string> {
+export function assignDocumentNumbersToTreesRecursively(scopeTrees: NotionAtlasTreeNode[]): Map<string, string> {
   const docNumbers = new Map<string, string>();
 
   // Global counter for Needed Research documents
@@ -70,7 +70,7 @@ export function assignDocumentNumbersToTreesRecursively(scopeTrees: AtlasTreeNod
  * @param neededResearchCounter - Global counter for Needed Research documents
  */
 function traverseAndNumberNode(
-  node: AtlasTreeNode,
+  node: NotionAtlasTreeNode,
   parentNumber: string,
   docNumbers: Map<string, string>,
   neededResearchCounter: { value: number },

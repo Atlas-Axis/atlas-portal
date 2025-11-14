@@ -1,14 +1,14 @@
 /**
- * Standardize Atlas Trees
+ * Convert Notion Atlas Tree to Export Atlas Tree
  *
  * Purpose
- * - Converts an `AtlasTreeNode` (children grouped by Atlas database) into a
- *   `StandardizedAtlasDocument` (children grouped by Atlas database).
+ * - Converts a `NotionAtlasTreeNode` (Internal Atlas Representation) into an
+ *   `ExportAtlasTreeDocument` (External Atlas Representation).
  * - Preserves original child order and recursively converts all descendants.
  *
  * How it works
  * - Base fields are mapped 1:1 from the node: `type` (document type), `doc_no`, `name`, `uuid`.
- * - For relationships: children are grouped by Atlas database, maintaining the same structure as AtlasTreeNode.
+ * - For relationships: children are grouped by Atlas database, maintaining the same structure as NotionAtlasTreeNode.
  * - The `type` field uses Atlas document types (Scope, Article, Section, etc.) for compatibility.
  * - Child collections use database-based grouping (articles, sections_and_primary_docs, etc.).
  * - Everything is recursive: child nodes are converted with the same function.
@@ -16,8 +16,8 @@
  *
  * Usage
  * ```ts
- * import { atlasNodeToStandardized } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
- * const standardized: StandardizedAtlasDocument = atlasNodeToStandardized(rootNode);
+ * import { notionTreeNodeToExportTreeDocument } from '@/app/server/atlas/export/atlas-node-tree-to-standardized-atlas-node-tree';
+ * const exportDoc: ExportAtlasTreeDocument = notionTreeNodeToExportTreeDocument(rootNode, uuidMappings);
  * ```
  */
 import { RichTextItemResponse } from '@notionhq/client';
@@ -29,24 +29,24 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
-import { type AtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
+import { type NotionAtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
 import { convertNotionRichTextToMarkdown } from '@/app/server/markdown/rich-text-to-markdown';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { atlasDatabasePageToMarkdown } from '../formatters/atlas-rich-text-formatter';
 import { UuidMappings } from '../load-uuid-mapping';
 import {
-  type ActiveDataDocument,
-  type AgentScopeDatabaseDocument,
-  type AnnotationsDocument,
-  type ArticlesDocument,
-  type BaseAtlasDocument,
-  type NeededResearchDocument,
-  type ScenarioVariationsDocument,
-  type ScenariosDocument,
-  type ScopesDocument,
-  type SectionsAndPrimaryDocsDocument,
-  type StandardizedAtlasDocument,
-  type TenetsDocument,
+  type ExportAtlasTreeActiveDataDocument,
+  type ExportAtlasTreeAgentScopeDatabaseDocument,
+  type ExportAtlasTreeAnnotationsDocument,
+  type ExportAtlasTreeArticlesDocument,
+  type ExportAtlasTreeBaseDocument,
+  type ExportAtlasTreeDocument,
+  type ExportAtlasTreeNeededResearchDocument,
+  type ExportAtlasTreeScenarioVariationsDocument,
+  type ExportAtlasTreeScenariosDocument,
+  type ExportAtlasTreeScopesDocument,
+  type ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+  type ExportAtlasTreeTenetsDocument,
 } from './types';
 
 /**
@@ -84,7 +84,7 @@ function convertExtraFieldToMarkdown(
 }
 
 // Validation helper to check allowed child databases per Atlas hierarchy rules
-function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasDatabaseName[]): void {
+function validateChildDatabases(node: NotionAtlasTreeNode, allowedDatabases: AtlasDatabaseName[]): void {
   const allChildren = [
     ...node.scopes,
     ...node.articles,
@@ -109,7 +109,7 @@ function validateChildDatabases(node: AtlasTreeNode, allowedDatabases: AtlasData
 }
 
 // Convert simple fields
-function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocument {
+function toBase(node: NotionAtlasTreeNode, uuidMappings: UuidMappings): ExportAtlasTreeBaseDocument {
   if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
     console.warn(
       `⚠️  Missing 'generatedDocName' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
@@ -134,7 +134,7 @@ function toBase(node: AtlasTreeNode, uuidMappings: UuidMappings): BaseAtlasDocum
 
 // Helper: deterministically pick extra_fields for a node based on database
 // Optionally require a specific document type to include fields
-function pickExtraFields(node: AtlasTreeNode, uuidMappings: UuidMappings): Record<string, unknown> {
+function pickExtraFields(node: NotionAtlasTreeNode, uuidMappings: UuidMappings): Record<string, unknown> {
   let allowedKeys: string[] = [];
   switch (node.atlas_document_type) {
     case 'Type Specification':
@@ -189,12 +189,12 @@ function pickExtraFields(node: AtlasTreeNode, uuidMappings: UuidMappings): Recor
   return result;
 }
 
-// Main entry: convert an `AtlasTreeNode` into a `StandardizedAtlasDocument`
-export function atlasNodeToStandardized(
-  node: AtlasTreeNode,
+// Main entry: convert a `NotionAtlasTreeNode` into an `ExportAtlasTreeDocument`
+export function notionTreeNodeToExportTreeDocument(
+  node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
   options?: { omitAgents: boolean },
-): StandardizedAtlasDocument {
+): ExportAtlasTreeDocument {
   const base = toBase(node, uuidMappings);
 
   // If omitting Agent Scope subtrees (for ISR optimization) and this node matches one of the agent roots,
@@ -209,16 +209,18 @@ export function atlasNodeToStandardized(
     console.log('options', options);
     console.log('isAgentRoot', isAgentRoot);
     console.log('--------------------------------');
-    return { ...base } as StandardizedAtlasDocument;
+    return { ...base } as ExportAtlasTreeDocument;
   }
 
   switch (node.atlas_database_name) {
     case 'Scopes': {
       // Scopes → has `articles`
       validateChildDatabases(node, ['Articles']);
-      const doc: ScopesDocument = {
+      const doc: ExportAtlasTreeScopesDocument = {
         ...base,
-        articles: node.articles.map((c) => atlasNodeToStandardized(c, uuidMappings) as ArticlesDocument),
+        articles: node.articles.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeArticlesDocument,
+        ),
       };
       return doc;
     }
@@ -231,15 +233,17 @@ export function atlasNodeToStandardized(
         'Annotations',
         'Needed Research',
       ]); // TODO: Add annotations, needed_research
-      const doc: ArticlesDocument = {
+      const doc: ExportAtlasTreeArticlesDocument = {
         ...base,
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as SectionsAndPrimaryDocsDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
-        // agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as AgentScopeDatabaseDocument),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
+        // agent_scope_database: node.agentScopeDocs.map((c) => atlasNodeToStandardized(c) as ExportAtlasTreeAgentScopeDatabaseDocument),
+        annotations: node.annotations.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+        ),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -255,22 +259,28 @@ export function atlasNodeToStandardized(
         'Active Data',
         'Needed Research',
       ]);
-      const doc: SectionsAndPrimaryDocsDocument = {
+      const doc: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
         ...base,
         ...pickExtraFields(node, uuidMappings),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as SectionsAndPrimaryDocsDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
-        tenets: node.tenets.map((c) => atlasNodeToStandardized(c, uuidMappings) as TenetsDocument),
-        active_data: node.activeData.map((c) => atlasNodeToStandardized(c, uuidMappings) as ActiveDataDocument),
+        annotations: node.annotations.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+        ),
+        tenets: node.tenets.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeTenetsDocument,
+        ),
+        active_data: node.activeData.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeActiveDataDocument,
+        ),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       if (node.agentScopeDocs.length > 0) {
         doc.agent_scope_database = node.agentScopeDocs.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as AgentScopeDatabaseDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument,
         );
       }
       return doc;
@@ -279,10 +289,10 @@ export function atlasNodeToStandardized(
     case 'Annotations': {
       // Annotations → leaf database
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
-      const doc: AnnotationsDocument = {
+      const doc: ExportAtlasTreeAnnotationsDocument = {
         ...base,
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -291,11 +301,13 @@ export function atlasNodeToStandardized(
     case 'Tenets': {
       // Tenets → has `scenarios`
       validateChildDatabases(node, ['Scenarios', 'Needed Research']); // TODO: Add needed_research
-      const doc: TenetsDocument = {
+      const doc: ExportAtlasTreeTenetsDocument = {
         ...base,
-        scenarios: node.scenarios.map((c) => atlasNodeToStandardized(c, uuidMappings) as ScenariosDocument),
+        scenarios: node.scenarios.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeScenariosDocument,
+        ),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -304,14 +316,14 @@ export function atlasNodeToStandardized(
     case 'Scenarios': {
       // Scenarios → has `scenario_variations`
       validateChildDatabases(node, ['Scenario Variations', 'Needed Research']); // TODO: Add needed_research
-      const doc: ScenariosDocument = {
+      const doc: ExportAtlasTreeScenariosDocument = {
         ...base,
         ...pickExtraFields(node, uuidMappings),
         scenario_variations: node.scenarioVariations.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as ScenarioVariationsDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -320,11 +332,11 @@ export function atlasNodeToStandardized(
     case 'Scenario Variations': {
       // Scenario Variations → leaf database
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
-      const doc: ScenarioVariationsDocument = {
+      const doc: ExportAtlasTreeScenarioVariationsDocument = {
         ...base,
         ...pickExtraFields(node, uuidMappings),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -333,10 +345,10 @@ export function atlasNodeToStandardized(
     case 'Active Data': {
       // Active Data → leaf database
       validateChildDatabases(node, ['Needed Research']); // TODO: Add needed_research
-      const doc: ActiveDataDocument = {
+      const doc: ExportAtlasTreeActiveDataDocument = {
         ...base,
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -345,16 +357,22 @@ export function atlasNodeToStandardized(
     case 'Agent Scope Database': {
       // Agent Scope Database → has `annotations`, `tenets`, and `active_data`
       validateChildDatabases(node, ['Agent Scope Database', 'Annotations', 'Tenets', 'Active Data', 'Needed Research']); // TODO: Add needed_research
-      const doc: AgentScopeDatabaseDocument = {
+      const doc: ExportAtlasTreeAgentScopeDatabaseDocument = {
         ...base,
         agent_scope_database: node.agentScopeDocs.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as AgentScopeDatabaseDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument,
         ),
-        annotations: node.annotations.map((c) => atlasNodeToStandardized(c, uuidMappings) as AnnotationsDocument),
-        tenets: node.tenets.map((c) => atlasNodeToStandardized(c, uuidMappings) as TenetsDocument),
-        active_data: node.activeData.map((c) => atlasNodeToStandardized(c, uuidMappings) as ActiveDataDocument),
+        annotations: node.annotations.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+        ),
+        tenets: node.tenets.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeTenetsDocument,
+        ),
+        active_data: node.activeData.map(
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeActiveDataDocument,
+        ),
         needed_research: node.neededResearch.map(
-          (c) => atlasNodeToStandardized(c, uuidMappings) as NeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeDocument(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -363,7 +381,7 @@ export function atlasNodeToStandardized(
     case 'Needed Research': {
       // Needed Research → leaf database
       validateChildDatabases(node, []);
-      const doc: NeededResearchDocument = {
+      const doc: ExportAtlasTreeNeededResearchDocument = {
         ...base,
         ...pickExtraFields(node, uuidMappings),
       };
@@ -372,8 +390,8 @@ export function atlasNodeToStandardized(
 
     default:
       console.error(`Unknown database: ${node.atlas_database_name}`);
-      return { ...base } as StandardizedAtlasDocument;
+      return { ...base } as ExportAtlasTreeDocument;
   }
 }
 
-export default atlasNodeToStandardized;
+export default notionTreeNodeToExportTreeDocument;

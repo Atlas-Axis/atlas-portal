@@ -1,7 +1,7 @@
 import {
-  BaseAtlasDocument,
-  StandardizedAtlasDocument,
-  StandardizedAtlasScopeTrees,
+  ExportAtlasTreeBaseDocument,
+  ExportAtlasTreeDocument,
+  ExportAtlasTreeScopeTrees,
   childCollectionNames,
 } from '../export/types';
 import {
@@ -20,8 +20,8 @@ export type AtlasChangeType = 'added' | 'deleted' | 'changed' | 'sibling_order_c
 export interface AtlasDocumentChange {
   uuid: string;
   changeType: AtlasChangeType;
-  oldValues?: BaseAtlasDocument;
-  newValues?: BaseAtlasDocument;
+  oldValues?: ExportAtlasTreeBaseDocument;
+  newValues?: ExportAtlasTreeBaseDocument;
   oldAncestry?: string[]; // UUIDs from parent to root
   newAncestry?: string[]; // UUIDs from parent to root
 }
@@ -36,8 +36,8 @@ export interface GroupedAtlasChanges {
 
 export interface AtlasDiffResult {
   changes: GroupedAtlasChanges;
-  originalIdsToDocuments: Map<string, BaseAtlasDocument>;
-  newIdsToDocuments: Map<string, BaseAtlasDocument>;
+  originalIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
+  newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
 }
 
 // ============================================================================
@@ -48,8 +48,8 @@ export interface AtlasDiffResult {
  * Result of building lookup maps from scope trees.
  */
 export interface LookupMaps {
-  uuidToDoc: Map<string, BaseAtlasDocument>;
-  docNoToDoc: Map<string, BaseAtlasDocument>;
+  uuidToDoc: Map<string, ExportAtlasTreeBaseDocument>;
+  docNoToDoc: Map<string, ExportAtlasTreeBaseDocument>;
   uuidToAncestry: Map<string, string[]>; // UUID → ancestry list (from parent to root)
 }
 
@@ -59,12 +59,12 @@ export interface LookupMaps {
  * Returns UUID→document, doc_no→document, and UUID→ancestry maps.
  * Ancestry is tracked during traversal, not inferred from doc_no.
  */
-export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): LookupMaps {
-  const uuidToDoc = new Map<string, BaseAtlasDocument>();
-  const docNoToDoc = new Map<string, BaseAtlasDocument>();
+export function buildLookupMaps(scopeTrees: ExportAtlasTreeScopeTrees): LookupMaps {
+  const uuidToDoc = new Map<string, ExportAtlasTreeBaseDocument>();
+  const docNoToDoc = new Map<string, ExportAtlasTreeBaseDocument>();
   const uuidToAncestry = new Map<string, string[]>(); // List of UUIDs from parent to root
 
-  function traverseDocument(doc: StandardizedAtlasDocument, ancestry: string[] = []) {
+  function traverseDocument(doc: ExportAtlasTreeDocument, ancestry: string[] = []) {
     const strippedDoc = stripChildCollections(doc);
 
     // Skip documents without UUIDs and log as error
@@ -88,7 +88,7 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
     for (const collectionName of childCollectionNames) {
       const collection = docAsRecord[collectionName];
       if (Array.isArray(collection)) {
-        for (const child of collection as StandardizedAtlasDocument[]) {
+        for (const child of collection as ExportAtlasTreeDocument[]) {
           traverseDocument(child, childAncestry);
         }
       }
@@ -105,7 +105,7 @@ export function buildLookupMaps(scopeTrees: StandardizedAtlasScopeTrees): Lookup
 /**
  * Extract all UUIDs from a lookup map as a Set.
  */
-export function extractAllUuids(lookupMap: Map<string, BaseAtlasDocument>): Set<string> {
+export function extractAllUuids(lookupMap: Map<string, ExportAtlasTreeBaseDocument>): Set<string> {
   return new Set(lookupMap.keys());
 }
 
@@ -139,7 +139,10 @@ function normalizeWhitespace(text: string): string {
  * Does NOT compare last_modified.
  * Trims whitespace from each line in multi-line texts for comparison.
  */
-export function compareDocumentFields(original: BaseAtlasDocument, updated: BaseAtlasDocument): boolean {
+export function compareDocumentFields(
+  original: ExportAtlasTreeBaseDocument,
+  updated: ExportAtlasTreeBaseDocument,
+): boolean {
   // Compare basic fields
   if (original.type !== updated.type) return true;
   if (normalizeWhitespace(original.name) !== normalizeWhitespace(updated.name)) return true;
@@ -188,7 +191,7 @@ function getExtraFieldKeysForDocumentType(type: string): string[] {
  * Returns only core fields: type, doc_no, name, uuid, content, and extra fields.
  * Does NOT include last_modified.
  */
-export function stripChildCollections(doc: StandardizedAtlasDocument): BaseAtlasDocument {
+export function stripChildCollections(doc: ExportAtlasTreeDocument): ExportAtlasTreeBaseDocument {
   const stripped: Record<string, unknown> = {
     type: doc.type,
     doc_no: doc.doc_no,
@@ -209,7 +212,7 @@ export function stripChildCollections(doc: StandardizedAtlasDocument): BaseAtlas
     }
   }
 
-  return stripped as unknown as BaseAtlasDocument;
+  return stripped as unknown as ExportAtlasTreeBaseDocument;
 }
 
 // ============================================================================

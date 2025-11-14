@@ -4,8 +4,8 @@
 
 The Atlas system uses two distinct tree data structures to represent the hierarchical document corpus of the Atlas:
 
-1. **Notion Tree** - Internal representation for Notion pages loaded from Supabase
-2. **Export Tree** - External representation for exports, APIs, and public interfaces
+1. **Notion Tree** - Internal Atlas Representation for Notion pages loaded from Supabase
+2. **Export Tree** - External Atlas Representation for exports, APIs, and public interfaces
 
 This dual-tree architecture separates internal implementation details (Notion integration, database schema) from external concerns (markdown export, JSON APIs, public documentation). The Notion Tree is rich with metadata and Notion-specific fields, while the Export Tree is minimal and platform-agnostic.
 
@@ -38,7 +38,7 @@ This dual-tree architecture separates internal implementation details (Notion in
 - External integrations
 - Search indexing
 
-## Notion Tree (Internal Representation)
+## Notion Tree (Internal Atlas Representation)
 
 ### Purpose
 
@@ -46,15 +46,15 @@ The Notion Tree represents Atlas documents as loaded from the `notion_database_p
 
 ### Key Types
 
-- `AtlasTreeNode` - Individual document node with embedded children
-- `AtlasTreeResult` - Complete tree build result with roots, orphans, and errors
-- `AtlasLookupMaps` - Efficient O(1) lookup maps used during construction
-- `TreeConstructionOptions` - Configuration for tree building
+- `NotionAtlasTreeNode` - Individual document node with embedded children
+- `NotionAtlasTreeResult` - Complete tree build result with roots, orphans, and errors
+- `NotionAtlasTreeLookupMaps` - Efficient O(1) lookup maps used during construction
+- `NotionAtlasTreeConstructionOptions` - Configuration for tree building
 
 ### Type Structure
 
 ```typescript
-interface AtlasTreeNode {
+interface NotionAtlasTreeNode {
   // Notion database fields
   notion_page_id: string; // Notion page UUID
   atlas_document_type: AtlasDocumentType; // Document type enum
@@ -85,24 +85,24 @@ interface AtlasTreeNode {
   generatedDocName?: string; // Generated document name
 
   // Embedded child relationships (database-grouped)
-  scopes: AtlasTreeNode[];
-  articles: AtlasTreeNode[];
-  sectionsAndPrimaryDocs: AtlasTreeNode[];
-  annotations: AtlasTreeNode[];
-  tenets: AtlasTreeNode[];
-  scenarios: AtlasTreeNode[];
-  scenarioVariations: AtlasTreeNode[];
-  activeData: AtlasTreeNode[];
-  agentScopeDocs: AtlasTreeNode[];
-  neededResearch: AtlasTreeNode[];
+  scopes: NotionAtlasTreeNode[];
+  articles: NotionAtlasTreeNode[];
+  sectionsAndPrimaryDocs: NotionAtlasTreeNode[];
+  annotations: NotionAtlasTreeNode[];
+  tenets: NotionAtlasTreeNode[];
+  scenarios: NotionAtlasTreeNode[];
+  scenarioVariations: NotionAtlasTreeNode[];
+  activeData: NotionAtlasTreeNode[];
+  agentScopeDocs: NotionAtlasTreeNode[];
+  neededResearch: NotionAtlasTreeNode[];
 }
 
-interface AtlasTreeResult {
-  scopeTrees: AtlasTreeNode[]; // Root scope trees
+interface NotionAtlasTreeResult {
+  scopeTrees: NotionAtlasTreeNode[]; // Root scope trees
   orphanedNodes: NotionDatabasePage[]; // Disconnected documents
-  orphanedNodesAsTreeNodes: AtlasTreeNode[]; // Orphaned nodes as tree format
-  errors: TreeConstructionError[]; // Construction errors
-  duplicatedNodes: DuplicatedNodeEntry[]; // Nodes in multiple locations
+  orphanedNodesAsTreeNodes: NotionAtlasTreeNode[]; // Orphaned nodes as tree format
+  errors: NotionAtlasTreeConstructionError[]; // Construction errors
+  duplicatedNodes: NotionAtlasTreeDuplicatedNodeEntry[]; // Nodes in multiple locations
   atlasUUIDsToGeneratedDocNumbers: Map<string, string>; // UUID → doc number
   atlasUUIDsToDocNames: Map<string, string>; // UUID → doc name
 }
@@ -148,10 +148,10 @@ interface AtlasTreeResult {
 ```typescript
 const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 const uuidMappings = await loadUuidMappings();
-const result = await buildAtlasTree(atlasData, { uuidMappings });
+const result = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
 // Access the Notion Tree
-const scopeTrees = result.scopeTrees; // Array of AtlasTreeNode roots
+const scopeTrees = result.scopeTrees; // Array of NotionAtlasTreeNode roots
 ```
 
 **Document Numbering** (`atlas-tree-numbering.ts`):
@@ -177,7 +177,7 @@ preOrderTraversal(scopeTree, (node, depth) => {
 updateRichTextMentions(scopeTrees, uuidMappings, docNumberMaps);
 ```
 
-## Export Tree (External Representation)
+## Export Tree (External Atlas Representation)
 
 ### Purpose
 
@@ -185,15 +185,15 @@ The Export Tree is a minimal, standardized representation of Atlas documents des
 
 ### Key Types
 
-- `StandardizedAtlasDocument` - Union type of all database-specific document types
-- `StandardizedAtlasScopeTrees` - Array of root scope documents
-- `BaseAtlasDocument` - Base fields shared by all document types
-- Database-specific types: `ScopesDocument`, `ArticlesDocument`, `SectionsAndPrimaryDocsDocument`, etc.
+- `ExportAtlasTreeDocument` - Union type of all database-specific document types
+- `ExportAtlasTreeScopeTrees` - Array of root scope documents
+- `ExportAtlasTreeBaseDocument` - Base fields shared by all document types
+- Database-specific types: `ExportAtlasTreeScopesDocument`, `ExportAtlasTreeArticlesDocument`, `ExportAtlasTreeSectionsAndPrimaryDocsDocument`, etc.
 
 ### Type Structure
 
 ```typescript
-interface BaseAtlasDocument {
+interface ExportAtlasTreeBaseDocument {
   type: AtlasDocumentType; // Document type enum (Scope, Article, Section, etc.)
   doc_no: string; // Document number (e.g., "A.1.2.3")
   name: string; // Document name
@@ -203,33 +203,33 @@ interface BaseAtlasDocument {
 }
 
 // Example: Sections & Primary Docs document
-interface SectionsAndPrimaryDocsDocument extends BaseAtlasDocument {
+interface ExportAtlasTreeSectionsAndPrimaryDocsDocument extends ExportAtlasTreeBaseDocument {
   // Optional extra fields for Type Specifications
   type_spec_field1?: string | null;
   type_spec_field2?: string | null;
 
   // Children grouped by Atlas database
-  sections_and_primary_docs: SectionsAndPrimaryDocsDocument[];
-  agent_scope_database?: AgentScopeDatabaseDocument[];
-  annotations: AnnotationsDocument[];
-  tenets: TenetsDocument[];
-  active_data: ActiveDataDocument[];
-  needed_research: NeededResearchDocument[];
+  sections_and_primary_docs: ExportAtlasTreeSectionsAndPrimaryDocsDocument[];
+  agent_scope_database?: ExportAtlasTreeAgentScopeDatabaseDocument[];
+  annotations: ExportAtlasTreeAnnotationsDocument[];
+  tenets: ExportAtlasTreeTenetsDocument[];
+  active_data: ExportAtlasTreeActiveDataDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
 // Example: Scenarios document with extra fields
-interface ScenariosDocument extends BaseAtlasDocument {
+interface ExportAtlasTreeScenariosDocument extends ExportAtlasTreeBaseDocument {
   // Extra fields for Scenarios
   scenario_field1?: string | null;
   scenario_field2?: string | null;
 
   // Children
-  scenario_variations: ScenarioVariationsDocument[];
-  needed_research: NeededResearchDocument[];
+  scenario_variations: ExportAtlasTreeScenarioVariationsDocument[];
+  needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
 
 // Root array type
-type StandardizedAtlasScopeTrees = StandardizedAtlasDocument[];
+type ExportAtlasTreeScopeTrees = ExportAtlasTreeDocument[];
 ```
 
 ### Key Characteristics

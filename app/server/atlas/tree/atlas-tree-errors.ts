@@ -1,5 +1,5 @@
 import { NotionDatabasePage, NotionDatabasePageRelationshipProperty } from '@/app/server/database/notion-database-page';
-import { AtlasTreeNode, TreeConstructionError } from './atlas-tree-types';
+import { NotionAtlasTreeConstructionError, NotionAtlasTreeNode } from './atlas-tree-types';
 
 /**
  * Comprehensive error handling and validation for Atlas tree construction.
@@ -28,8 +28,8 @@ import { AtlasTreeNode, TreeConstructionError } from './atlas-tree-types';
  */
 export function detectCircularReferences(
   pagesByDatabase: Partial<Record<string, NotionDatabasePage[]>>,
-): TreeConstructionError[] {
-  const errors: TreeConstructionError[] = [];
+): NotionAtlasTreeConstructionError[] {
+  const errors: NotionAtlasTreeConstructionError[] = [];
   const visited = new Set<string>();
   const recursionStack = new Set<string>();
 
@@ -227,8 +227,8 @@ export function findOrphanedNodes(
  */
 export function detectMissingChildren(
   pagesByDatabase: Partial<Record<string, NotionDatabasePage[]>>,
-): TreeConstructionError[] {
-  const errors: TreeConstructionError[] = [];
+): NotionAtlasTreeConstructionError[] {
+  const errors: NotionAtlasTreeConstructionError[] = [];
 
   // Create a set of all existing page IDs
   const existingIds = new Set<string>();
@@ -308,11 +308,11 @@ export function detectMissingChildren(
  * ```
  */
 export function validateTreeIntegrity(
-  scopeTrees: AtlasTreeNode[],
+  scopeTrees: NotionAtlasTreeNode[],
   orphanedNodes: NotionDatabasePage[],
   pagesByDatabase: Partial<Record<string, NotionDatabasePage[]>>,
-): TreeConstructionError[] {
-  const errors: TreeConstructionError[] = [];
+): NotionAtlasTreeConstructionError[] {
+  const errors: NotionAtlasTreeConstructionError[] = [];
 
   // Check for circular references
   const circularErrors = detectCircularReferences(pagesByDatabase);
@@ -353,8 +353,8 @@ export function validateTreeIntegrity(
  * @param node - The tree node to validate
  * @returns Array of validation errors for this node
  */
-function validateTreeNode(node: AtlasTreeNode): TreeConstructionError[] {
-  const errors: TreeConstructionError[] = [];
+function validateTreeNode(node: NotionAtlasTreeNode): NotionAtlasTreeConstructionError[] {
+  const errors: NotionAtlasTreeConstructionError[] = [];
 
   // Check for required fields
   if (!node.notion_page_id) {
@@ -422,7 +422,7 @@ function validateTreeNode(node: AtlasTreeNode): TreeConstructionError[] {
  * @param reportOrphanedNodes - Whether to report orphaned_node errors in detail (false by default, only shows count in summary)
  */
 export function logValidationErrors(
-  errors: TreeConstructionError[],
+  errors: NotionAtlasTreeConstructionError[],
   verbose: boolean = false,
   reportMissingChildNodes: boolean = false,
   reportOrphanedNodes: boolean = false,
@@ -496,7 +496,7 @@ export function logValidationErrors(
  * @returns Summary report object
  */
 export function createValidationSummary(
-  errors: TreeConstructionError[],
+  errors: NotionAtlasTreeConstructionError[],
   reportMissingChildNodes: boolean = false,
   reportOrphanedNodes: boolean = false,
 ): {

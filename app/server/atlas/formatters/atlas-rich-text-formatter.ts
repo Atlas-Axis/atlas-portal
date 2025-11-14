@@ -3,9 +3,9 @@ import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { NotionDatabasePage } from '../../database/notion-database-page';
 import { convertNotionRichTextToMarkdown, notionLinkToMappedUUID } from '../../markdown/rich-text-to-markdown';
 import { UuidMappings } from '../load-uuid-mapping';
-import { AtlasTreeNode } from '../tree/atlas-tree-system';
+import { NotionAtlasTreeNode } from '../tree/atlas-tree-system';
 
-export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | AtlasTreeNode>(
+export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | NotionAtlasTreeNode>(
   page: T,
   uuidMappings: UuidMappings,
 ): string {
@@ -20,7 +20,7 @@ export function atlasDatabasePageToMarkdown<T extends NotionDatabasePage | Atlas
 }
 
 // TODO: This is not used anywhere, and should be removed
-export function atlasDatabasePageToHTML<T extends NotionDatabasePage | AtlasTreeNode>(
+export function atlasDatabasePageToHTML<T extends NotionDatabasePage | NotionAtlasTreeNode>(
   page: T,
   uuidMappings: UuidMappings,
 ): string {

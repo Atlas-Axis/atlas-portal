@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { mockNotionClient } from '@/app/server/services/notion/__tests__/notion-client.mock';
 import {
@@ -38,8 +38,8 @@ describe('sync-actions', () => {
   });
 
   // Helper to create a document map from a change
-  function createDocMap(change: AtlasDocumentChange): Map<string, BaseAtlasDocument> {
-    const map = new Map<string, BaseAtlasDocument>();
+  function createDocMap(change: AtlasDocumentChange): Map<string, ExportAtlasTreeBaseDocument> {
+    const map = new Map<string, ExportAtlasTreeBaseDocument>();
     if (change.oldValues) map.set(change.uuid, change.oldValues);
     if (change.newValues) map.set(change.uuid, change.newValues);
 
@@ -153,7 +153,7 @@ describe('sync-actions', () => {
           last_modified: '',
           type_specification_components: 'New components',
           type_specification_type_name: 'MyType',
-        } as BaseAtlasDocument,
+        } as ExportAtlasTreeBaseDocument,
         oldAncestry: [],
       };
 

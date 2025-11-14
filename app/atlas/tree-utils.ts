@@ -1,14 +1,11 @@
-import { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import { ChildCollectionName, ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 
 /**
  * Type-safe helper to get child collection from a document.
  * Uses proper typing with ChildCollectionName to avoid unsafe casts.
  */
-export function getChildCollection(
-  node: StandardizedAtlasDocument,
-  key: ChildCollectionName,
-): StandardizedAtlasDocument[] {
-  const value = node[key as keyof StandardizedAtlasDocument];
+export function getChildCollection(node: ExportAtlasTreeDocument, key: ChildCollectionName): ExportAtlasTreeDocument[] {
+  const value = node[key as keyof ExportAtlasTreeDocument];
   return Array.isArray(value) ? value : [];
 }
 
@@ -20,7 +17,7 @@ export function getChildCollection(
  * @param currentPath - Accumulated path of UUIDs from root to current node
  * @param map - The map being built (doc_no -> path of UUIDs)
  */
-function buildPathLookupMap(node: StandardizedAtlasDocument, currentPath: string[], map: Map<string, string[]>): void {
+function buildPathLookupMap(node: ExportAtlasTreeDocument, currentPath: string[], map: Map<string, string[]>): void {
   // Add current node's UUID to path (all document types are collapsible)
   const newPath = node.uuid ? [...currentPath, node.uuid] : currentPath;
 
@@ -30,7 +27,7 @@ function buildPathLookupMap(node: StandardizedAtlasDocument, currentPath: string
   }
 
   // Recursively process all children
-  const children: StandardizedAtlasDocument[] = [
+  const children: ExportAtlasTreeDocument[] = [
     ...getChildCollection(node, 'scopes'),
     ...getChildCollection(node, 'articles'),
     ...getChildCollection(node, 'sections_and_primary_docs'),
@@ -54,7 +51,7 @@ function buildPathLookupMap(node: StandardizedAtlasDocument, currentPath: string
  * @param trees - Array of root scope trees
  * @returns Map from document number to path of collapsible UUIDs
  */
-export function createPathLookupMap(trees: StandardizedAtlasDocument[]): Map<string, string[]> {
+export function createPathLookupMap(trees: ExportAtlasTreeDocument[]): Map<string, string[]> {
   const map = new Map<string, string[]>();
   for (const tree of trees) {
     buildPathLookupMap(tree, [], map);
@@ -69,14 +66,14 @@ export function createPathLookupMap(trees: StandardizedAtlasDocument[]): Map<str
  * @param node - The current node being examined
  * @param map - The map being built (uuid -> doc_no)
  */
-function buildUuidToDocNoMap(node: StandardizedAtlasDocument, map: Map<string, string>): void {
+function buildUuidToDocNoMap(node: ExportAtlasTreeDocument, map: Map<string, string>): void {
   // Store UUID -> doc_no mapping if both exist
   if (node.uuid && node.doc_no) {
     map.set(node.uuid, node.doc_no);
   }
 
   // Recursively process all children
-  const children: StandardizedAtlasDocument[] = [
+  const children: ExportAtlasTreeDocument[] = [
     ...getChildCollection(node, 'scopes'),
     ...getChildCollection(node, 'articles'),
     ...getChildCollection(node, 'sections_and_primary_docs'),
@@ -101,7 +98,7 @@ function buildUuidToDocNoMap(node: StandardizedAtlasDocument, map: Map<string, s
  * @param trees - Array of root scope trees
  * @returns Map from UUID to document number
  */
-export function createUuidToDocNoMap(trees: StandardizedAtlasDocument[]): Map<string, string> {
+export function createUuidToDocNoMap(trees: ExportAtlasTreeDocument[]): Map<string, string> {
   const map = new Map<string, string>();
   for (const tree of trees) {
     buildUuidToDocNoMap(tree, map);

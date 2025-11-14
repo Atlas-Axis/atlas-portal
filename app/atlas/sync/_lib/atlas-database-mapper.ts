@@ -1,6 +1,6 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { AGENT_ROOT_SECTION_UUIDS_MAPPED, ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 
 /**
  * Gets the Atlas database name for a document based on its type and ancestry.
@@ -93,7 +93,7 @@ export function databaseSupportsInternalNesting(databaseName: AtlasDatabaseName)
 export function getInternalParentPageIdFromAncestry(
   ancestry: string[] | undefined,
   childDatabaseName: AtlasDatabaseName,
-  uuidToDocumentMap: Map<string, BaseAtlasDocument>,
+  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
 ): string | null {
   if (!ancestry || ancestry.length === 0) {
     return null;

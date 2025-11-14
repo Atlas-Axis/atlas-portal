@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
-import { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
@@ -18,7 +18,7 @@ import { createPathLookupMap, createUuidToDocNoMap } from './tree-utils';
 import TypeChip from './type-chip';
 
 interface RenderTreeNodeProps {
-  node: StandardizedAtlasDocument;
+  node: ExportAtlasTreeDocument;
   depth?: number;
   isRootNode?: boolean;
   uuidMappings: UuidMappings;
@@ -35,22 +35,22 @@ interface RenderTreeNodeProps {
  * Supporting documents that can be attached to a node
  */
 type SupportingDocsContainer = {
-  annotations?: StandardizedAtlasDocument[];
-  tenets?: StandardizedAtlasDocument[];
-  scenarios?: StandardizedAtlasDocument[];
-  scenario_variations?: StandardizedAtlasDocument[];
-  active_data?: StandardizedAtlasDocument[];
-  needed_research?: StandardizedAtlasDocument[];
+  annotations?: ExportAtlasTreeDocument[];
+  tenets?: ExportAtlasTreeDocument[];
+  scenarios?: ExportAtlasTreeDocument[];
+  scenario_variations?: ExportAtlasTreeDocument[];
+  active_data?: ExportAtlasTreeDocument[];
+  needed_research?: ExportAtlasTreeDocument[];
 };
 
 /**
  * Immutable and primary documents that form the main document hierarchy
  */
 type ImmutableDocsContainer = {
-  scopes?: StandardizedAtlasDocument[];
-  articles?: StandardizedAtlasDocument[];
-  sections_and_primary_docs?: StandardizedAtlasDocument[];
-  agent_scope_database?: StandardizedAtlasDocument[];
+  scopes?: ExportAtlasTreeDocument[];
+  articles?: ExportAtlasTreeDocument[];
+  sections_and_primary_docs?: ExportAtlasTreeDocument[];
+  agent_scope_database?: ExportAtlasTreeDocument[];
 };
 
 /**
@@ -69,7 +69,7 @@ interface RenderDocumentsSharedProps {
 interface RenderSupportingDocumentListProps extends RenderDocumentsSharedProps {
   label: string;
   documentType: AtlasDocumentType;
-  documents: StandardizedAtlasDocument[];
+  documents: ExportAtlasTreeDocument[];
 }
 
 function renderSupportingDocumentListInSameType({
@@ -116,7 +116,7 @@ function renderSupportingDocumentListInSameType({
 }
 
 interface RenderSupportingDocumentsProps extends RenderDocumentsSharedProps {
-  node: StandardizedAtlasDocument;
+  node: ExportAtlasTreeDocument;
 }
 
 function renderSupportingDocuments({
@@ -132,7 +132,7 @@ function renderSupportingDocuments({
   const nodeId = node.uuid || '';
 
   // Get supporting documents from child collections
-  const docWithSupporting = node as StandardizedAtlasDocument & SupportingDocsContainer;
+  const docWithSupporting = node as ExportAtlasTreeDocument & SupportingDocsContainer;
 
   const supportingDocumentLabels = [
     { label: 'Annotations', documentType: 'Annotation' as const, documents: docWithSupporting.annotations || [] },
@@ -215,9 +215,9 @@ function TreeNode({
   const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
 
   // Get immutable and primary document children based on node type
-  const docWithImmutable = node as StandardizedAtlasDocument & ImmutableDocsContainer;
+  const docWithImmutable = node as ExportAtlasTreeDocument & ImmutableDocsContainer;
 
-  const immutableAndPrimaryDocumentPages: StandardizedAtlasDocument[] = [
+  const immutableAndPrimaryDocumentPages: ExportAtlasTreeDocument[] = [
     ...(docWithImmutable.scopes || []),
     ...(docWithImmutable.articles || []),
     ...(docWithImmutable.sections_and_primary_docs || []),
@@ -384,7 +384,7 @@ export default function ContentTree({
   scopeTreesWithoutAgents,
   uuidMappings,
 }: {
-  scopeTreesWithoutAgents: StandardizedAtlasDocument[];
+  scopeTreesWithoutAgents: ExportAtlasTreeDocument[];
   uuidMappings: UuidMappings;
 }) {
   // State to control which accordion items are expanded

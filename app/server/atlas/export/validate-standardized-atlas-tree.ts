@@ -1,5 +1,5 @@
 import {
-  type StandardizedAtlasDocument,
+  type ExportAtlasTreeDocument,
   allowedChildCollectionNamesPerDatabase,
   childCollectionNameToDatabaseName,
   childCollectionNames,
@@ -33,10 +33,10 @@ export interface ValidationError {
   path: string; // JSON path like $.0.sections.2
   message: string; // human-readable description and simple fix guidance
   actionSuggestion: string; // concise imperative suggestion (e.g., Remove field "X")
-  node: Partial<StandardizedAtlasDocument>; // shallow snapshot; child collections emptied
+  node: Partial<ExportAtlasTreeDocument>; // shallow snapshot; child collections emptied
 }
 
-// Base fields required on every StandardizedAtlasDocument
+// Base fields required on every ExportAtlasTreeDocument
 // `last_modified` is optional in inputs
 const baseRequiredFields = ['type', 'doc_no', 'name', 'uuid', 'content'] as const;
 
@@ -67,13 +67,13 @@ function validDocumentTypesList(): string {
   return ATLAS_DOCUMENT_TYPES.join(', ');
 }
 
-function makeNodeSnapshot(node: Record<string, unknown>): Partial<StandardizedAtlasDocument> {
+function makeNodeSnapshot(node: Record<string, unknown>): Partial<ExportAtlasTreeDocument> {
   const snapshot: Record<string, unknown> = { ...node };
   // Ensure known child collections are arrays but empty
   for (const key of childCollectionNames) {
     snapshot[key] = Array.isArray(node[key]) ? [] : [];
   }
-  return snapshot as Partial<StandardizedAtlasDocument>;
+  return snapshot as Partial<ExportAtlasTreeDocument>;
 }
 
 /**
@@ -105,7 +105,7 @@ function addError(
     path,
     message,
     actionSuggestion,
-    node: node ? makeNodeSnapshot(node) : ({} as Partial<StandardizedAtlasDocument>),
+    node: node ? makeNodeSnapshot(node) : ({} as Partial<ExportAtlasTreeDocument>),
   });
 }
 
@@ -335,7 +335,7 @@ function validateNode(
  */
 export function validateStandardizedAtlasTree(jsonString: string): {
   errors: ValidationError[];
-  root: StandardizedAtlasDocument[] | null;
+  root: ExportAtlasTreeDocument[] | null;
 } {
   const errors: ValidationError[] = [];
 
@@ -352,7 +352,7 @@ export function validateStandardizedAtlasTree(jsonString: string): {
         typeof e === 'object' && e !== null && 'message' in e ? String((e as { message?: unknown }).message) : String(e)
       }. Fix the JSON and try again.`,
       actionSuggestion: 'Fix JSON syntax (commas, quotes, braces) and retry.',
-      node: {} as Partial<StandardizedAtlasDocument>,
+      node: {} as Partial<ExportAtlasTreeDocument>,
     });
     return { errors, root: null };
   }
@@ -364,7 +364,7 @@ export function validateStandardizedAtlasTree(jsonString: string): {
       path: '$',
       message: 'Root must be an array of Atlas document objects.',
       actionSuggestion: 'Wrap root object(s) in an array (e.g., [ { ... } ]).',
-      node: {} as Partial<StandardizedAtlasDocument>,
+      node: {} as Partial<ExportAtlasTreeDocument>,
     });
     return { errors, root: null };
   }
@@ -387,7 +387,7 @@ export function validateStandardizedAtlasTree(jsonString: string): {
     validateNode(item, path, errors, null);
   });
 
-  return { errors, root: parsed as StandardizedAtlasDocument[] };
+  return { errors, root: parsed as ExportAtlasTreeDocument[] };
 }
 
 export default validateStandardizedAtlasTree;

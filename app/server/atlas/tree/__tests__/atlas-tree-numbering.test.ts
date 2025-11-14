@@ -3,9 +3,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { UuidMappings } from '../../load-uuid-mapping';
-import { buildAtlasTree } from '../atlas-tree-builder';
+import { buildNotionAtlasTree } from '../atlas-tree-builder';
 import { assignDocumentNumbersToTreesRecursively } from '../atlas-tree-numbering';
-import { AtlasTreeNode } from '../atlas-tree-types';
+import { NotionAtlasTreeNode } from '../atlas-tree-types';
 
 // Mock the Supabase nesting mappings loader
 vi.mock('@/app/server/services/supabase/notion-nesting-bug-mappings', () => ({
@@ -80,10 +80,10 @@ function createMockUuidMappings(): UuidMappings {
 async function buildTreeWithNumbering(
   pagesByDatabase: Partial<Record<AtlasDatabaseName, NotionDatabasePage[]>>,
 ): Promise<{
-  scopeTrees: AtlasTreeNode[];
+  scopeTrees: NotionAtlasTreeNode[];
   docNumbers: Map<string, string>;
 }> {
-  const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+  const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
   const docNumbers = assignDocumentNumbersToTreesRecursively(result.scopeTrees);
   return { scopeTrees: result.scopeTrees, docNumbers };
 }

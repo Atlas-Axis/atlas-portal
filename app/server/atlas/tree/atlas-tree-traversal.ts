@@ -1,5 +1,5 @@
 import { isValidDocumentNumber } from './atlas-tree-numbering';
-import { AtlasTreeNode } from './atlas-tree-types';
+import { NotionAtlasTreeNode } from './atlas-tree-types';
 
 /**
  * Traversal callback function type for tree operations.
@@ -9,7 +9,7 @@ import { AtlasTreeNode } from './atlas-tree-types';
  * @param parent - The parent node (undefined for root nodes)
  * @returns Whether to continue traversal (true) or stop (false)
  */
-export type TraversalCallback = (node: AtlasTreeNode, depth: number, parent?: AtlasTreeNode) => boolean;
+export type TraversalCallback = (node: NotionAtlasTreeNode, depth: number, parent?: NotionAtlasTreeNode) => boolean;
 
 /**
  * Traversal order options for tree operations.
@@ -31,7 +31,7 @@ export type TraversalOrder = 'preorder' | 'postorder' | 'levelorder';
  *
  * @example
  * ```typescript
- * const nodes: AtlasTreeNode[] = [];
+ * const nodes: NotionAtlasTreeNode[] = [];
  * preOrderTraversal(scopeTree, (node, depth) => {
  *   console.log(`${'  '.repeat(depth)}${node.generatedDocID} - ${node.plain_text_name}`);
  *   nodes.push(node);
@@ -40,14 +40,14 @@ export type TraversalOrder = 'preorder' | 'postorder' | 'levelorder';
  * ```
  */
 export function preOrderTraversal(
-  root: AtlasTreeNode,
+  root: NotionAtlasTreeNode,
   callback: TraversalCallback,
   maxDepth: number = 50,
-): AtlasTreeNode[] {
-  const visited: AtlasTreeNode[] = [];
+): NotionAtlasTreeNode[] {
+  const visited: NotionAtlasTreeNode[] = [];
   const visitedIds = new Set<string>();
 
-  function traverse(node: AtlasTreeNode, depth: number, parent?: AtlasTreeNode): void {
+  function traverse(node: NotionAtlasTreeNode, depth: number, parent?: NotionAtlasTreeNode): void {
     if (depth > maxDepth) {
       throw new Error(`Maximum traversal depth (${maxDepth}) exceeded`);
     }
@@ -117,14 +117,14 @@ export function preOrderTraversal(
  * ```
  */
 export function postOrderTraversal(
-  root: AtlasTreeNode,
+  root: NotionAtlasTreeNode,
   callback: TraversalCallback,
   maxDepth: number = 50,
-): AtlasTreeNode[] {
-  const visited: AtlasTreeNode[] = [];
+): NotionAtlasTreeNode[] {
+  const visited: NotionAtlasTreeNode[] = [];
   const visitedIds = new Set<string>();
 
-  function traverse(node: AtlasTreeNode, depth: number, parent?: AtlasTreeNode): void {
+  function traverse(node: NotionAtlasTreeNode, depth: number, parent?: NotionAtlasTreeNode): void {
     if (depth > maxDepth) {
       throw new Error(`Maximum traversal depth (${maxDepth}) exceeded`);
     }
@@ -183,7 +183,7 @@ export function postOrderTraversal(
  * @example
  * ```typescript
  * // Find all nodes at depth 2
- * const depth2Nodes: AtlasTreeNode[] = [];
+ * const depth2Nodes: NotionAtlasTreeNode[] = [];
  * levelOrderTraversal(scopeTree, (node, depth) => {
  *   if (depth === 2) {
  *     depth2Nodes.push(node);
@@ -193,13 +193,13 @@ export function postOrderTraversal(
  * ```
  */
 export function levelOrderTraversal(
-  root: AtlasTreeNode,
+  root: NotionAtlasTreeNode,
   callback: TraversalCallback,
   maxDepth: number = 50,
-): AtlasTreeNode[] {
-  const visited: AtlasTreeNode[] = [];
+): NotionAtlasTreeNode[] {
+  const visited: NotionAtlasTreeNode[] = [];
   const visitedIds = new Set<string>();
-  const queue: { node: AtlasTreeNode; depth: number; parent?: AtlasTreeNode }[] = [];
+  const queue: { node: NotionAtlasTreeNode; depth: number; parent?: NotionAtlasTreeNode }[] = [];
 
   queue.push({ node: root, depth: 0 });
 
@@ -254,11 +254,11 @@ export function levelOrderTraversal(
  * @returns Array of all visited nodes in the specified order
  */
 export function traverseTree(
-  root: AtlasTreeNode,
+  root: NotionAtlasTreeNode,
   callback: TraversalCallback,
   order: TraversalOrder = 'preorder',
   maxDepth: number = 50,
-): AtlasTreeNode[] {
+): NotionAtlasTreeNode[] {
   switch (order) {
     case 'preorder':
       return preOrderTraversal(root, callback, maxDepth);
@@ -286,8 +286,11 @@ export function traverseTree(
  * }
  * ```
  */
-export function findNodeByDocumentID(root: AtlasTreeNode, generatedDocID: string): AtlasTreeNode | undefined {
-  let found: AtlasTreeNode | undefined;
+export function findNodeByDocumentID(
+  root: NotionAtlasTreeNode,
+  generatedDocID: string,
+): NotionAtlasTreeNode | undefined {
+  let found: NotionAtlasTreeNode | undefined;
 
   preOrderTraversal(root, (node) => {
     if (node.generatedDocID === generatedDocID) {
@@ -316,10 +319,10 @@ export function findNodeByDocumentID(root: AtlasTreeNode, generatedDocID: string
  * ```
  */
 export function findNodesByPredicate(
-  root: AtlasTreeNode,
-  predicate: (node: AtlasTreeNode) => boolean,
-): AtlasTreeNode[] {
-  const matches: AtlasTreeNode[] = [];
+  root: NotionAtlasTreeNode,
+  predicate: (node: NotionAtlasTreeNode) => boolean,
+): NotionAtlasTreeNode[] {
+  const matches: NotionAtlasTreeNode[] = [];
 
   preOrderTraversal(root, (node) => {
     if (predicate(node)) {
@@ -344,10 +347,10 @@ export function findNodesByPredicate(
  * console.log('Path:', path.map(node => node.generatedDocID).join(' -> '));
  * ```
  */
-export function getNodePath(root: AtlasTreeNode, targetNode: AtlasTreeNode): AtlasTreeNode[] {
-  const path: AtlasTreeNode[] = [];
+export function getNodePath(root: NotionAtlasTreeNode, targetNode: NotionAtlasTreeNode): NotionAtlasTreeNode[] {
+  const path: NotionAtlasTreeNode[] = [];
 
-  function findPath(currentNode: AtlasTreeNode, currentPath: AtlasTreeNode[]): boolean {
+  function findPath(currentNode: NotionAtlasTreeNode, currentPath: NotionAtlasTreeNode[]): boolean {
     const newPath = [...currentPath, currentNode];
 
     if (currentNode.notion_page_id === targetNode.notion_page_id) {
@@ -389,7 +392,7 @@ export function getNodePath(root: AtlasTreeNode, targetNode: AtlasTreeNode): Atl
  * @param targetNode - The target node to find the depth of
  * @returns The depth of the target node (0 for root), or -1 if not found
  */
-export function getNodeDepth(root: AtlasTreeNode, targetNode: AtlasTreeNode): number {
+export function getNodeDepth(root: NotionAtlasTreeNode, targetNode: NotionAtlasTreeNode): number {
   const path = getNodePath(root, targetNode);
   return path.length > 0 ? path.length - 1 : -1;
 }
@@ -400,7 +403,7 @@ export function getNodeDepth(root: AtlasTreeNode, targetNode: AtlasTreeNode): nu
  * @param root - The root node to start from
  * @returns Total number of nodes in the tree
  */
-export function getNodeCount(root: AtlasTreeNode): number {
+export function getNodeCount(root: NotionAtlasTreeNode): number {
   let count = 0;
 
   preOrderTraversal(root, () => {
@@ -417,7 +420,7 @@ export function getNodeCount(root: AtlasTreeNode): number {
  * @param root - The root node to validate
  * @returns Array of validation errors, empty if tree is valid
  */
-export function validateTree(root: AtlasTreeNode): string[] {
+export function validateTree(root: NotionAtlasTreeNode): string[] {
   const errors: string[] = [];
   const visitedIds = new Set<string>();
 

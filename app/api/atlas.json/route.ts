@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { buildAtlasJSON } from '@/app/server/atlas/export/atlas-json-exporter';
+import { buildExportAtlasTreeJSON } from '@/app/server/atlas/export/atlas-json-exporter';
 
 export async function GET() {
   try {
-    const atlasJSON = await buildAtlasJSON();
+    const atlasJSON = await buildExportAtlasTreeJSON();
 
     // Generate filename with current date
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format

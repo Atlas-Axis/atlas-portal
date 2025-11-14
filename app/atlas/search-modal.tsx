@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Input } from '@heroui/input';
 import { Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { Search } from 'lucide-react';
-import type { ChildCollectionName, StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import type { ChildCollectionName, ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -17,7 +17,7 @@ import {
 import { dispatchExpandScopeEvent } from './custom-events';
 
 interface SearchModalProps {
-  scopeTrees: StandardizedAtlasDocument[];
+  scopeTrees: ExportAtlasTreeDocument[];
   uuidMappings: UuidMappings;
   isOpen: boolean;
   onClose: () => void;
@@ -27,7 +27,7 @@ interface SearchModalProps {
  * Result type that includes the document and information about which field matched
  */
 interface SearchResult {
-  doc: StandardizedAtlasDocument;
+  doc: ExportAtlasTreeDocument;
   matchedField?: 'doc_no' | 'name' | 'content' | string; // string for extra field keys
   matchedFieldLabel?: string; // Human-readable label for extra fields
   matchedFieldValue?: string; // Value of the matched extra field
@@ -37,9 +37,9 @@ interface SearchResult {
  * Type guard to check if a property exists on an object
  */
 function hasChildCollection(
-  doc: StandardizedAtlasDocument,
+  doc: ExportAtlasTreeDocument,
   collectionName: ChildCollectionName,
-): doc is StandardizedAtlasDocument & Record<ChildCollectionName, StandardizedAtlasDocument[]> {
+): doc is ExportAtlasTreeDocument & Record<ChildCollectionName, ExportAtlasTreeDocument[]> {
   return collectionName in doc && Array.isArray((doc as unknown as Record<string, unknown>)[collectionName]);
 }
 
@@ -65,10 +65,10 @@ function getPropertyMappingForDocumentType(docType: string): Record<string, stri
  * Recursively flattens the scopeTrees hierarchy into a flat array of all documents
  * including all supporting documents (annotations, tenets, scenarios, etc.)
  */
-function flattenDocuments(docs: StandardizedAtlasDocument[]): StandardizedAtlasDocument[] {
-  const result: StandardizedAtlasDocument[] = [];
+function flattenDocuments(docs: ExportAtlasTreeDocument[]): ExportAtlasTreeDocument[] {
+  const result: ExportAtlasTreeDocument[] = [];
 
-  function traverse(doc: StandardizedAtlasDocument) {
+  function traverse(doc: ExportAtlasTreeDocument) {
     result.push(doc);
 
     // Check all possible child collections using the exported constant

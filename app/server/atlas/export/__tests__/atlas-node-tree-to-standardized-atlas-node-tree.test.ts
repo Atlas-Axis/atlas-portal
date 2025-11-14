@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ATLAS_DATABASES } from '@/app/server/atlas/constants';
-import { type AtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
+import { type NotionAtlasTreeNode } from '@/app/server/atlas/tree/atlas-tree-system';
 import { type Json } from '@/app/server/services/supabase/database.types';
 import type { UuidMappings } from '../../load-uuid-mapping';
-import { atlasNodeToStandardized } from '../atlas-node-tree-to-standardized-atlas-node-tree';
+import notionTreeNodeToExportTreeDocument from '../atlas-node-tree-to-standardized-atlas-node-tree';
 import {
   type NeededResearchExtraFields,
   type ScenarioExtraFields,
@@ -11,14 +11,14 @@ import {
   type TypeSpecificationExtraFields,
 } from '../types';
 import {
-  type ActiveDataDocument,
-  type AgentScopeDatabaseDocument,
-  type ArticlesDocument,
-  type ScenarioVariationsDocument,
-  type ScenariosDocument,
-  type ScopesDocument,
-  type SectionsAndPrimaryDocsDocument,
-  type TenetsDocument,
+  type ExportAtlasTreeActiveDataDocument,
+  type ExportAtlasTreeAgentScopeDatabaseDocument,
+  type ExportAtlasTreeArticlesDocument,
+  type ExportAtlasTreeScenarioVariationsDocument,
+  type ExportAtlasTreeScenariosDocument,
+  type ExportAtlasTreeScopesDocument,
+  type ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+  type ExportAtlasTreeTenetsDocument,
   extraFieldsByDocumentType,
 } from '../types';
 
@@ -41,11 +41,11 @@ const mockUUIDMappings: UuidMappings = {
 vi.mock('../../formatters/atlas-rich-text-formatter', () => ({
   atlasDatabasePageToMarkdown: vi.fn().mockImplementation(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (node: AtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) => `# ${node.generatedDocName ?? ''}`,
+    (node: NotionAtlasTreeNode, uuidMappings: UuidMappings = mockUUIDMappings) => `# ${node.generatedDocName ?? ''}`,
   ),
 }));
 
-function makeNode(overrides: Partial<AtlasTreeNode> = {}): AtlasTreeNode {
+function makeNode(overrides: Partial<NotionAtlasTreeNode> = {}): NotionAtlasTreeNode {
   const now = '2025-01-01T00:00:00.000Z';
   return {
     notion_page_id: overrides.notion_page_id ?? cryptoRandomId(),
@@ -89,7 +89,7 @@ function cryptoRandomId(): string {
   return '00000000-0000-0000-0000-' + Math.random().toString(16).slice(2, 14).padEnd(12, '0');
 }
 
-describe('atlasNodeToStandardized', () => {
+describe('notionTreeNodeToExportTreeDocument', () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
   let errorSpy: ReturnType<typeof vi.spyOn>;
   let uuidMappings: UuidMappings;
@@ -116,7 +116,7 @@ describe('atlasNodeToStandardized', () => {
       generatedDocName: 'Generated Name',
     });
 
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     expect(result.type).toBe('Article');
     expect(result.doc_no).toBe('GEN.1');
     expect(result.name).toBe('Generated Name');
@@ -141,7 +141,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       articles: [child1, child2],
     });
-    const result = atlasNodeToStandardized(root, uuidMappings) as ScopesDocument;
+    const result = notionTreeNodeToExportTreeDocument(root, uuidMappings) as ExportAtlasTreeScopesDocument;
     expect(result.type).toBe('Scope');
     expect(result.articles[0].name).toBe('1');
     expect(result.articles[1].name).toBe('2');
@@ -158,7 +158,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       articles: [art],
     });
-    const result = atlasNodeToStandardized(scope, uuidMappings) as ScopesDocument;
+    const result = notionTreeNodeToExportTreeDocument(scope, uuidMappings) as ExportAtlasTreeScopesDocument;
     expect(result).toHaveProperty('articles');
     expect(result.articles).toHaveLength(1);
     expect(result.articles[0].type).toBe('Article');
@@ -183,7 +183,7 @@ describe('atlasNodeToStandardized', () => {
       neededResearch: [nr],
       agentScopeDocs: [agent],
     });
-    const result = atlasNodeToStandardized(art, uuidMappings) as ArticlesDocument;
+    const result = notionTreeNodeToExportTreeDocument(art, uuidMappings) as ExportAtlasTreeArticlesDocument;
     expect(result).toHaveProperty('sections_and_primary_docs');
     expect(result).toHaveProperty('annotations');
     expect(result).toHaveProperty('needed_research');
@@ -218,7 +218,10 @@ describe('atlasNodeToStandardized', () => {
         unknown_prop: 'x',
       },
     });
-    const result = atlasNodeToStandardized(typeSpec, uuidMappings) as SectionsAndPrimaryDocsDocument;
+    const result = notionTreeNodeToExportTreeDocument(
+      typeSpec,
+      uuidMappings,
+    ) as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
     expect(result.sections_and_primary_docs).toHaveLength(1);
     expect(result.annotations).toHaveLength(1);
     expect(result.tenets).toHaveLength(1);
@@ -241,7 +244,7 @@ describe('atlasNodeToStandardized', () => {
       scenarios: [scen],
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(tenet, uuidMappings) as TenetsDocument;
+    const result = notionTreeNodeToExportTreeDocument(tenet, uuidMappings) as ExportAtlasTreeTenetsDocument;
     expect(result.scenarios).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
   });
@@ -265,7 +268,7 @@ describe('atlasNodeToStandardized', () => {
         unknown: 1,
       },
     });
-    const result = atlasNodeToStandardized(scen, uuidMappings) as ScenariosDocument;
+    const result = notionTreeNodeToExportTreeDocument(scen, uuidMappings) as ExportAtlasTreeScenariosDocument;
     expect(result.scenario_variations).toHaveLength(1);
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_finding).toBeDefined();
@@ -286,7 +289,7 @@ describe('atlasNodeToStandardized', () => {
         bogus: true,
       },
     });
-    const result = atlasNodeToStandardized(sv, uuidMappings) as ScenarioVariationsDocument;
+    const result = notionTreeNodeToExportTreeDocument(sv, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
     expect(result.needed_research).toHaveLength(1);
     expect(result.scenario_variation_finding).toBeDefined();
     expect('bogus' in (result as object)).toBe(false);
@@ -302,7 +305,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -319,7 +322,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -336,7 +339,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -353,7 +356,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Needed Research',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${key}`);
@@ -370,7 +373,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Active Data',
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(ad, uuidMappings) as ActiveDataDocument;
+    const result = notionTreeNodeToExportTreeDocument(ad, uuidMappings) as ExportAtlasTreeActiveDataDocument;
     expect(result.needed_research).toHaveLength(1);
   });
 
@@ -392,7 +395,10 @@ describe('atlasNodeToStandardized', () => {
       activeData: [ad],
       neededResearch: [nr],
     });
-    const result = atlasNodeToStandardized(agentRoot, uuidMappings) as AgentScopeDatabaseDocument;
+    const result = notionTreeNodeToExportTreeDocument(
+      agentRoot,
+      uuidMappings,
+    ) as ExportAtlasTreeAgentScopeDatabaseDocument;
     expect(result.agent_scope_database).toHaveLength(1);
     expect(result.annotations).toHaveLength(1);
     expect(result.tenets).toHaveLength(1);
@@ -405,7 +411,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_database_name: ATLAS_DATABASES.NEEDED_RESEARCH,
       atlas_document_type: 'Needed Research',
     });
-    const result = atlasNodeToStandardized(nr, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(nr, uuidMappings);
     // no child arrays on type interface beyond base
     expect(Object.keys(result)).not.toContain('articles');
   });
@@ -420,7 +426,7 @@ describe('atlasNodeToStandardized', () => {
       notion_page_id: agentRootId,
       agentScopeDocs: [child],
     });
-    const result = atlasNodeToStandardized(agentRoot, uuidMappings, { omitAgents: true });
+    const result = notionTreeNodeToExportTreeDocument(agentRoot, uuidMappings, { omitAgents: true });
     expect(result.type).toBe('Core');
     expect('agent_scope_database' in (result as object)).toBe(false);
   });
@@ -429,7 +435,7 @@ describe('atlasNodeToStandardized', () => {
     const node = makeNode({
       atlas_database_name: 'Unknown' as unknown as (typeof ATLAS_DATABASES)[keyof typeof ATLAS_DATABASES],
     });
-    const result = atlasNodeToStandardized(node, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings);
     expect(errorSpy).toHaveBeenCalled();
     expect('articles' in (result as object)).toBe(false);
   });
@@ -441,7 +447,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scope',
       activeData: [badChild],
     });
-    const result = atlasNodeToStandardized(scope, uuidMappings);
+    const result = notionTreeNodeToExportTreeDocument(scope, uuidMappings);
     expect(result.type).toBe('Scope');
     expect(warnSpy).toHaveBeenCalled();
   });
@@ -456,7 +462,10 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Type Specification',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings) as SectionsAndPrimaryDocsDocument;
+    const result = notionTreeNodeToExportTreeDocument(
+      node,
+      uuidMappings,
+    ) as ExportAtlasTreeSectionsAndPrimaryDocsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -473,7 +482,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings) as ScenariosDocument;
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings) as ExportAtlasTreeScenariosDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);
@@ -490,7 +499,7 @@ describe('atlasNodeToStandardized', () => {
       atlas_document_type: 'Scenario Variation',
       extra_fields: extra,
     });
-    const result = atlasNodeToStandardized(node, uuidMappings) as ScenarioVariationsDocument;
+    const result = notionTreeNodeToExportTreeDocument(node, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument;
     for (const key of allKeys) {
       const got = (result as unknown as Record<string, unknown>)[key as string];
       expect(got).toBe(`val-${String(key)}`);

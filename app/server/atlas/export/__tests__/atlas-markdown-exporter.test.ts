@@ -4,21 +4,22 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '../../notion-mapping/notion-database-properties-and-relationships';
-import { buildAtlasJSON } from '../atlas-json-exporter';
+import { buildExportAtlasTreeJSON } from '../atlas-json-exporter';
 import { buildAtlasMarkdown } from '../atlas-markdown-exporter';
 import type {
-  ArticlesDocument,
-  ScenarioVariationsDocument,
-  ScenariosDocument,
-  SectionsAndPrimaryDocsDocument,
-  StandardizedAtlasScopeTrees,
+  ExportAtlasTreeArticlesDocument,
+  ExportAtlasTreeScenarioVariationsDocument,
+  ExportAtlasTreeScenariosDocument,
+  ExportAtlasTreeScopeTrees,
+  ExportAtlasTreeSectionsAndPrimaryDocsDocument,
 } from '../types';
 
 vi.mock('../atlas-json-exporter', () => ({
-  buildAtlasJSON: vi.fn(),
+  buildExportAtlasTreeJSON: vi.fn(),
 }));
 
-const buildAtlasJSONMock = () => vi.mocked(buildAtlasJSON as unknown as () => Promise<StandardizedAtlasScopeTrees>);
+const buildExportAtlasTreeJSONMock = () =>
+  vi.mocked(buildExportAtlasTreeJSON as unknown as () => Promise<ExportAtlasTreeScopeTrees>);
 
 describe('atlas-markdown-exporter', () => {
   beforeEach(() => {
@@ -26,7 +27,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('generates basic markdown for simple documents', async () => {
-    const basicArticle: ArticlesDocument = {
+    const basicArticle: ExportAtlasTreeArticlesDocument = {
       type: 'Article',
       doc_no: 'A.1.2',
       name: 'An Article',
@@ -38,7 +39,7 @@ describe('atlas-markdown-exporter', () => {
       needed_research: [],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([basicArticle]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([basicArticle]);
 
     const md = await buildAtlasMarkdown();
 
@@ -48,7 +49,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('includes extra fields for Type Specification', async () => {
-    const typeSpec: SectionsAndPrimaryDocsDocument = {
+    const typeSpec: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Type Specification',
       doc_no: 'A.1.1.3.1',
       name: 'Spec: Example',
@@ -69,7 +70,7 @@ describe('atlas-markdown-exporter', () => {
       type_specification_type_overview: 'Overview here',
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([typeSpec]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([typeSpec]);
 
     const md = await buildAtlasMarkdown();
 
@@ -94,7 +95,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('includes extra fields for Scenario', async () => {
-    const scenario: ScenariosDocument = {
+    const scenario: ExportAtlasTreeScenariosDocument = {
       type: 'Scenario',
       doc_no: 'A.1.1.4.1',
       name: 'Scenario Alpha',
@@ -108,7 +109,7 @@ describe('atlas-markdown-exporter', () => {
       scenario_additional_guidance: 'Some guidance',
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([scenario]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([scenario]);
 
     const md = await buildAtlasMarkdown();
 
@@ -121,7 +122,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('includes extra fields for Scenario Variation', async () => {
-    const variation: ScenarioVariationsDocument = {
+    const variation: ExportAtlasTreeScenarioVariationsDocument = {
       type: 'Scenario Variation',
       doc_no: 'A.1.1.4.1.var1',
       name: 'Scenario Alpha - Variant 1',
@@ -134,7 +135,7 @@ describe('atlas-markdown-exporter', () => {
       scenario_variation_additional_guidance: 'Variant guidance',
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([variation]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([variation]);
 
     const md = await buildAtlasMarkdown();
 
@@ -152,7 +153,7 @@ describe('atlas-markdown-exporter', () => {
 
   it('caps heading levels at 6 for deeply nested documents', async () => {
     // Create a deeply nested Core document at depth 8
-    const deeplyNested: SectionsAndPrimaryDocsDocument = {
+    const deeplyNested: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.1.2.3.4.5.6.7.8', // Depth 8
       name: 'Deeply Nested Core',
@@ -166,7 +167,7 @@ describe('atlas-markdown-exporter', () => {
       needed_research: [],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([deeplyNested]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([deeplyNested]);
 
     const md = await buildAtlasMarkdown();
 
@@ -176,7 +177,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('uses correct heading levels for documents at depth 1-6', async () => {
-    const scope: ArticlesDocument = {
+    const scope: ExportAtlasTreeArticlesDocument = {
       type: 'Article', // Depth 2
       doc_no: 'A.1.2',
       name: 'Test Article',
@@ -188,7 +189,7 @@ describe('atlas-markdown-exporter', () => {
       needed_research: [],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([scope]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([scope]);
 
     const md = await buildAtlasMarkdown();
 
@@ -197,7 +198,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('handles multiple documents at depth 7+ all with 6 hashtags', async () => {
-    const doc1: SectionsAndPrimaryDocsDocument = {
+    const doc1: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.1.2.3.4.5.6.7', // Depth 7
       name: 'First Deep Doc',
@@ -211,7 +212,7 @@ describe('atlas-markdown-exporter', () => {
       needed_research: [],
     };
 
-    const doc2: SectionsAndPrimaryDocsDocument = {
+    const doc2: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.1.2.3.4.5.6.7.8', // Depth 8
       name: 'Second Deep Doc',
@@ -228,7 +229,7 @@ describe('atlas-markdown-exporter', () => {
     // Put doc2 as child of doc1
     doc1.sections_and_primary_docs.push(doc2);
 
-    buildAtlasJSONMock().mockResolvedValueOnce([doc1]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([doc1]);
 
     const md = await buildAtlasMarkdown();
 
@@ -238,7 +239,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('exports Needed Research with correct heading levels based on parent', async () => {
-    const core: SectionsAndPrimaryDocsDocument = {
+    const core: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.1.2.3.4', // Depth 4
       name: 'Test Core',
@@ -262,7 +263,7 @@ describe('atlas-markdown-exporter', () => {
       ],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([core]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([core]);
 
     const md = await buildAtlasMarkdown();
 
@@ -273,7 +274,7 @@ describe('atlas-markdown-exporter', () => {
   });
 
   it('exports Needed Research at depth > 6 with capped heading level', async () => {
-    const deepCore: SectionsAndPrimaryDocsDocument = {
+    const deepCore: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.1.2.3.4.5.6', // Depth 6
       name: 'Deep Core',
@@ -297,7 +298,7 @@ describe('atlas-markdown-exporter', () => {
       ],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([deepCore]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([deepCore]);
 
     const md = await buildAtlasMarkdown();
 
@@ -310,7 +311,7 @@ describe('atlas-markdown-exporter', () => {
   it('exports Annotations with correct depth calculation (regression test for inferDocumentType)', async () => {
     // This tests the fix for the bug where A.0.1.2.1.1 was incorrectly identified as Scenario
     // because it ended with .1.1, matching the pattern /\.1\.\d+$/
-    const core: SectionsAndPrimaryDocsDocument = {
+    const core: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
       type: 'Core',
       doc_no: 'A.0.1.2.1.1', // Depth 5 (ends with .1.1, should NOT be confused with Scenario)
       name: 'Authorization Core',
@@ -334,7 +335,7 @@ describe('atlas-markdown-exporter', () => {
       needed_research: [],
     };
 
-    buildAtlasJSONMock().mockResolvedValueOnce([core]);
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([core]);
 
     const md = await buildAtlasMarkdown();
 

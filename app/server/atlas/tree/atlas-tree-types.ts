@@ -4,14 +4,18 @@ import { Json } from '@/app/server/services/supabase/database.types';
 import { UuidMappings } from '../load-uuid-mapping';
 
 /**
- * Represents a node in the Atlas document tree structure.
+ * Represents a node in the Notion Atlas Tree (Internal Atlas Representation).
  *
  * This type is almost the same as NotionDatabasePage, but with embedded child relationships,
  * making it suitable for tree traversal and hierarchical operations.
  * Unlike the flat NotionDatabasePage structure that uses ID arrays for children,
- * AtlasTreeNode embeds the actual child nodes for efficient tree operations.
+ * NotionAtlasTreeNode embeds the actual child nodes for efficient tree operations.
+ *
+ * This is the Internal Atlas Representation used for tree construction, document numbering,
+ * and processing. For external consumption (JSON/Markdown export, APIs), use the
+ * Export Tree types (ExportAtlasTreeDocument, etc.) instead.
  */
-export interface AtlasTreeNode {
+export interface NotionAtlasTreeNode {
   // All fields from NotionDatabasePage
   notion_page_id: string;
   canonical_document_title?: string | null;
@@ -42,30 +46,30 @@ export interface AtlasTreeNode {
 
   // Embedded child database relationships (replacing ID arrays with actual nodes)
   /** Child Scope documents */
-  scopes: AtlasTreeNode[];
+  scopes: NotionAtlasTreeNode[];
   /** Child Article documents */
-  articles: AtlasTreeNode[];
+  articles: NotionAtlasTreeNode[];
   /** Child Section and Primary Doc documents */
-  sectionsAndPrimaryDocs: AtlasTreeNode[];
+  sectionsAndPrimaryDocs: NotionAtlasTreeNode[];
   /** Child Annotation documents */
-  annotations: AtlasTreeNode[];
+  annotations: NotionAtlasTreeNode[];
   /** Child Tenet documents */
-  tenets: AtlasTreeNode[];
+  tenets: NotionAtlasTreeNode[];
   /** Child Scenario documents */
-  scenarios: AtlasTreeNode[];
+  scenarios: NotionAtlasTreeNode[];
   /** Child Scenario Variation documents */
-  scenarioVariations: AtlasTreeNode[];
+  scenarioVariations: NotionAtlasTreeNode[];
   /** Child Active Data documents */
-  activeData: AtlasTreeNode[];
+  activeData: NotionAtlasTreeNode[];
   /** Child Agent Scope documents */
-  agentScopeDocs: AtlasTreeNode[];
+  agentScopeDocs: NotionAtlasTreeNode[];
   /** Child Needed Research documents */
-  neededResearch: AtlasTreeNode[];
+  neededResearch: NotionAtlasTreeNode[];
 }
 
 // These are based on the Atlas database name, not the document type
-export type AtlasTreeNodeRelationship = keyof Pick<
-  AtlasTreeNode,
+export type NotionAtlasTreeNodeRelationship = keyof Pick<
+  NotionAtlasTreeNode,
   | 'scopes'
   | 'articles'
   | 'sectionsAndPrimaryDocs'
@@ -78,7 +82,7 @@ export type AtlasTreeNodeRelationship = keyof Pick<
   | 'neededResearch'
 >;
 
-export const atlasTreeNodeRelationshipNames: AtlasTreeNodeRelationship[] = [
+export const notionAtlasTreeNodeRelationshipNames: NotionAtlasTreeNodeRelationship[] = [
   'scopes',
   'articles',
   'sectionsAndPrimaryDocs',
@@ -92,19 +96,19 @@ export const atlasTreeNodeRelationshipNames: AtlasTreeNodeRelationship[] = [
 ];
 
 /**
- * Represents a node that appears under multiple parent nodes in the tree.
+ * Represents a node that appears under multiple parent nodes in the Notion Atlas Tree.
  */
-export interface DuplicatedNodeEntry {
+export interface NotionAtlasTreeDuplicatedNodeEntry {
   /** The ID of the parent node where this node appears */
   parentId: string;
   /** The tree node that appears in multiple locations */
-  node: AtlasTreeNode;
+  node: NotionAtlasTreeNode;
 }
 
 /**
- * Maps from Atlas UUIDs to document metadata (numbers and names).
+ * Maps from Atlas UUIDs to document metadata (numbers and names) in the Notion Atlas Tree.
  */
-export interface AtlasUUIDToDocNoAndDocNameMaps {
+export interface NotionAtlasTreeUUIDToDocNoAndDocNameMaps {
   /** Map from Atlas UUID to document number (`node.generatedDocID` field) */
   atlasUUIDsToGeneratedDocNumbers: Map<string, string>;
   /** Map from Atlas UUID to document name (`node.generatedDocName` field) */
@@ -112,26 +116,26 @@ export interface AtlasUUIDToDocNoAndDocNameMaps {
 }
 
 /**
- * Result of building the Atlas tree structure.
+ * Result of building the Notion Atlas Tree structure (Internal Atlas Representation).
  * Contains the tree roots and any orphaned documents that couldn't be connected.
  */
-export interface AtlasTreeResult extends AtlasUUIDToDocNoAndDocNameMaps {
+export interface NotionAtlasTreeResult extends NotionAtlasTreeUUIDToDocNoAndDocNameMaps {
   /** Array of root Scope trees, one for each top-level Scope document */
-  scopeTrees: AtlasTreeNode[];
+  scopeTrees: NotionAtlasTreeNode[];
   /** Documents that exist in the database but are not connected to any root tree */
   orphanedNodes: NotionDatabasePage[]; // TODO: Delete
-  /** Orphaned nodes converted to AtlasTreeNode format for consistency */
-  orphanedNodesAsTreeNodes: AtlasTreeNode[];
+  /** Orphaned nodes converted to NotionAtlasTreeNode format for consistency */
+  orphanedNodesAsTreeNodes: NotionAtlasTreeNode[];
   /** Any errors encountered during tree construction */
-  errors: TreeConstructionError[];
+  errors: NotionAtlasTreeConstructionError[];
   /** List of nodes that appear in multiple locations with their parent relationships */
-  duplicatedNodes: DuplicatedNodeEntry[];
+  duplicatedNodes: NotionAtlasTreeDuplicatedNodeEntry[];
 }
 
 /**
- * Represents an error encountered during tree construction.
+ * Represents an error encountered during Notion Atlas Tree construction.
  */
-export interface TreeConstructionError {
+export interface NotionAtlasTreeConstructionError {
   /** Type of error */
   type: 'missing_child' | 'circular_reference' | 'orphaned_node';
   /** Human-readable error message */
@@ -143,12 +147,12 @@ export interface TreeConstructionError {
 }
 
 /**
- * Efficient lookup maps for tree construction and traversal.
+ * Efficient lookup maps for Notion Atlas Tree construction and traversal.
  * These maps provide O(1) access to nodes and relationships.
  */
-export interface AtlasLookupMaps {
-  /** Map from page ID to AtlasTreeNode for O(1) node access */
-  nodeMapByPageId: Map<string, AtlasTreeNode>;
+export interface NotionAtlasTreeLookupMaps {
+  /** Map from page ID to NotionAtlasTreeNode for O(1) node access */
+  nodeMapByPageId: Map<string, NotionAtlasTreeNode>;
   /** Map from page ID to original NotionDatabasePage for efficient O(1) lookups */
   originalPageMap: Map<string, NotionDatabasePage>;
   /** Map from child page ID to parent page ID for efficient parent lookup */
@@ -162,9 +166,9 @@ export interface AtlasLookupMaps {
 }
 
 /**
- * Configuration options for tree construction.
+ * Configuration options for Notion Atlas Tree construction.
  */
-export interface TreeConstructionOptions {
+export interface NotionAtlasTreeConstructionOptions {
   /** UUID mappings for generating Atlas UUID maps (document numbers and names) */
   uuidMappings: UuidMappings;
   /** Whether to log detailed construction information */

@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { UuidMappings } from '../../load-uuid-mapping';
-import { buildAtlasTree } from '../atlas-tree-builder';
+import { buildNotionAtlasTree } from '../atlas-tree-builder';
 import { findNodeByDocumentID, getNodeCount, preOrderTraversal } from '../atlas-tree-traversal';
 
 // Mock the nesting fix mappings loader
@@ -70,7 +70,7 @@ describe('Atlas Tree Builder', () => {
     pagesByDatabase = {};
   });
 
-  describe('buildAtlasTree', () => {
+  describe('buildNotionAtlasTree', () => {
     it('should build a simple scope tree', async () => {
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
@@ -91,7 +91,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
@@ -133,7 +133,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.scopeTrees[0].articles).toHaveLength(2);
@@ -167,7 +167,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(2);
       expect(result.scopeTrees[0].notion_page_id).toBe('scope-1');
@@ -200,7 +200,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.orphanedNodes).toHaveLength(1);
@@ -237,7 +237,7 @@ describe('Atlas Tree Builder', () => {
 
       // With the new duplicate handling, circular references are detected and handled gracefully
       // The duplicate node is returned as a stub without throwing an error
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Should successfully build the tree (no error thrown)
       expect(result.scopeTrees).toHaveLength(1);
@@ -275,7 +275,7 @@ describe('Atlas Tree Builder', () => {
       // Should not throw, but should log error
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      const result = await buildAtlasTree(pagesByDatabase, {
+      const result = await buildNotionAtlasTree(pagesByDatabase, {
         uuidMappings: createMockUuidMappings(),
         reportMissingChildNodes: true,
       });
@@ -314,7 +314,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
       expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
@@ -398,7 +398,7 @@ describe('Atlas Tree Builder', () => {
         'Needed Research': [research],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees[0].articles).toHaveLength(1);
       expect(result.scopeTrees[0].annotations).toHaveLength(1);
@@ -414,7 +414,7 @@ describe('Atlas Tree Builder', () => {
 
 describe('filterDirectChildren', () => {
   // We need to test the internal filterDirectChildren function
-  // Since it's not exported, we'll test it indirectly through buildAtlasTree behavior
+  // Since it's not exported, we'll test it indirectly through buildNotionAtlasTree behavior
 
   describe('Core document internal hierarchy filtering', () => {
     it('should filter out nested Core documents from Section parent', async () => {
@@ -483,7 +483,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 2 direct Core children, not 4
       expect(result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0].sectionsAndPrimaryDocs).toHaveLength(2);
@@ -563,7 +563,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Parent Core should only have 2 direct children (not 3)
       const parentCoreNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -649,7 +649,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Navigate through the tree to verify correct filtering at each level
       const level1Node = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -726,7 +726,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Agent root should only have 2 direct children
       const agentRootNode = result.scopeTrees[0].agentScopeDocs[0];
@@ -801,7 +801,7 @@ describe('filterDirectChildren', () => {
       // Should not throw error due to circular reference protection
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify tree structure is correct despite complex ancestry
       const coreANode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -889,7 +889,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify the section only has one direct child (core-l1)
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -987,7 +987,7 @@ describe('filterDirectChildren', () => {
         'Needed Research': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Section should only have 3 direct children of mixed types
       const sectionNode = result.scopeTrees[0].articles[0].sectionsAndPrimaryDocs[0];
@@ -1009,7 +1009,7 @@ describe('filterDirectChildren', () => {
 });
 
 describe('Tree Traversal', () => {
-  let scopeTree: Awaited<ReturnType<typeof buildAtlasTree>>['scopeTrees'][0];
+  let scopeTree: Awaited<ReturnType<typeof buildNotionAtlasTree>>['scopeTrees'][0];
 
   beforeEach(async () => {
     const scope = makeBasePage('Scope', {
@@ -1045,7 +1045,7 @@ describe('Tree Traversal', () => {
       'Needed Research': [],
     };
 
-    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
     scopeTree = result.scopeTrees[0];
   });
 
@@ -1075,7 +1075,7 @@ describe('Tree Traversal', () => {
       plain_text_name: 'Article 1',
     });
 
-    const result = await buildAtlasTree(
+    const result = await buildNotionAtlasTree(
       {
         Scopes: [scope],
         Articles: [article],
@@ -1130,7 +1130,7 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[0].articles[0].generatedDocID).toBe('A.0.1');
@@ -1162,7 +1162,7 @@ describe('Document Numbering', () => {
       'Needed Research': [],
     };
 
-    const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+    const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
     expect(result.scopeTrees[0].generatedDocID).toBe('A.0');
     expect(result.scopeTrees[1].generatedDocID).toBe('A.1');
@@ -1223,7 +1223,10 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
+      const result = await buildNotionAtlasTree(pagesByDatabase, {
+        uuidMappings: createMockUuidMappings(),
+        verbose: false,
+      });
 
       // Should detect the duplication - tracks ALL parent relationships (2 parents = 2 entries)
       expect(result.duplicatedNodes).toHaveLength(2);
@@ -1299,7 +1302,10 @@ describe('Document Numbering', () => {
         'Agent Scope Database': [],
       };
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings(), verbose: false });
+      const result = await buildNotionAtlasTree(pagesByDatabase, {
+        uuidMappings: createMockUuidMappings(),
+        verbose: false,
+      });
 
       // Should detect all duplications - tracks ALL parent relationships (3 parents = 3 entries)
       expect(result.duplicatedNodes).toHaveLength(3);
@@ -1353,7 +1359,7 @@ describe('Document Numbering', () => {
       uuidMappings.notionPageIDsToAtlasUUIDs.set('article-1', 'atlas-uuid-article-1');
       uuidMappings.notionPageIDsToAtlasUUIDs.set('section-1', 'atlas-uuid-section-1');
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Verify atlasUUIDsToGeneratedDocNumbers map is populated
       // Note: Scope numbering starts at 0, so first scope is A.0
@@ -1400,7 +1406,7 @@ describe('Document Numbering', () => {
       uuidMappings.notionPageIDsToAtlasUUIDs.set('scope-1', 'atlas-uuid-scope-1');
       uuidMappings.notionPageIDsToAtlasUUIDs.set('orphaned-1', 'atlas-uuid-orphaned-1');
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Verify scope is in the tree
       expect(result.scopeTrees).toHaveLength(1);
@@ -1439,7 +1445,7 @@ describe('Document Numbering', () => {
       // Empty UUID mappings - no mapping for scope-1
       const uuidMappings = createMockUuidMappings();
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings });
 
       // Maps should be empty since there's no UUID mapping
       expect(result.atlasUUIDsToGeneratedDocNumbers.size).toBe(0);
@@ -1514,7 +1520,7 @@ describe('Document Numbering', () => {
         },
       ]);
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify the override was applied
       expect(result.scopeTrees).toHaveLength(1);
@@ -1561,7 +1567,7 @@ describe('Document Numbering', () => {
       // No mappings
       vi.mocked(loadNotionNestingFixMappings).mockResolvedValue([]);
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       expect(result.scopeTrees).toHaveLength(1);
       expect(result.errors).toHaveLength(0);
@@ -1631,7 +1637,7 @@ describe('Document Numbering', () => {
         },
       ]);
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Navigate through tree to verify override
       expect(result.scopeTrees).toHaveLength(1);
@@ -1725,7 +1731,7 @@ describe('Document Numbering', () => {
         },
       ]);
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify the override was applied with correct positioning
       expect(result.scopeTrees).toHaveLength(1);
@@ -1808,7 +1814,7 @@ describe('Document Numbering', () => {
       // Spy on console.warn to verify warning is logged
       const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      const result = await buildAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
+      const result = await buildNotionAtlasTree(pagesByDatabase, { uuidMappings: createMockUuidMappings() });
 
       // Verify warning was logged
       expect(consoleWarnSpy).toHaveBeenCalledWith(expect.stringContaining('Sibling invalid-sibling-id not found'));

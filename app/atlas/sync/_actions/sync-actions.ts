@@ -1,7 +1,7 @@
 'use server';
 
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
@@ -85,7 +85,7 @@ export async function updateNotionPageContent(
  */
 export async function createNotionDatabasePage(
   change: AtlasDocumentChange,
-  newIdsToDocuments: Map<string, BaseAtlasDocument>,
+  newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>,
   uuidMappings: UuidMappings,
 ): Promise<SyncActionResult> {
   try {
@@ -261,7 +261,7 @@ export async function validatePageExists(pageId: string): Promise<boolean> {
  */
 async function pageHasChildren(
   pageId: string,
-  pageDocument: BaseAtlasDocument,
+  pageDocument: ExportAtlasTreeBaseDocument,
   pageAncestry: string[] | undefined,
 ): Promise<boolean> {
   try {

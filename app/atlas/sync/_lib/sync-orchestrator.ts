@@ -1,5 +1,5 @@
 import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   SyncActionResult,
@@ -265,7 +265,7 @@ export async function syncChangesToNotion(
  */
 export function sortAdditionsByHierarchy(
   additions: AtlasDocumentChange[],
-  uuidToDocumentMap: Map<string, BaseAtlasDocument>,
+  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
 ): AtlasDocumentChange[] {
   // Create array with sorting metadata
   const withMetadata = additions.map((change, originalIndex) => {

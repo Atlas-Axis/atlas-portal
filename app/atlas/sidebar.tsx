@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/accordion';
 import { useDisclosure } from '@heroui/react';
-import type { StandardizedAtlasDocument } from '@/app/server/atlas/export/types';
+import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { dispatchExpandScopeEvent } from './custom-events';
@@ -14,12 +14,12 @@ import SearchTrigger from './search-trigger';
 import SettingsDropdown from './settings-dropdown';
 
 interface SidebarProps {
-  scopeTrees: StandardizedAtlasDocument[];
+  scopeTrees: ExportAtlasTreeDocument[];
   uuidMappings: UuidMappings;
 }
 
 interface RenderSidebarNodeProps {
-  node: StandardizedAtlasDocument;
+  node: ExportAtlasTreeDocument;
   depth?: number;
   activeHash: string;
   uuidMappings: UuidMappings;
@@ -28,8 +28,8 @@ interface RenderSidebarNodeProps {
 /**
  * Type-safe helper to get child collection from a document.
  */
-function getChildCollection(node: StandardizedAtlasDocument, key: string): StandardizedAtlasDocument[] {
-  const value = node[key as keyof StandardizedAtlasDocument];
+function getChildCollection(node: ExportAtlasTreeDocument, key: string): ExportAtlasTreeDocument[] {
+  const value = node[key as keyof ExportAtlasTreeDocument];
   return Array.isArray(value) ? value : [];
 }
 
@@ -45,12 +45,7 @@ function renderSidebarNode({
   const sectionsAndPrimaryDocs = getChildCollection(node, 'sections_and_primary_docs');
   const agentScopeDocs = getChildCollection(node, 'agent_scope_database');
 
-  const allChildren: StandardizedAtlasDocument[] = [
-    ...scopes,
-    ...articles,
-    ...sectionsAndPrimaryDocs,
-    ...agentScopeDocs,
-  ];
+  const allChildren: ExportAtlasTreeDocument[] = [...scopes, ...articles, ...sectionsAndPrimaryDocs, ...agentScopeDocs];
 
   // Sort children by generatedDocID using compareDocNumbers
   const sortedChildren = allChildren.sort((a, b) => compareDocNumbers(a.doc_no || '', b.doc_no || ''));

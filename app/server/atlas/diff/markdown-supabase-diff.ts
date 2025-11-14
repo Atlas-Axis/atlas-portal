@@ -1,16 +1,16 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
-import { buildAtlasJSON } from '../export/atlas-json-exporter';
-import { StandardizedAtlasScopeTrees } from '../export/types';
+import { buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
+import { ExportAtlasTreeScopeTrees } from '../export/types';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
  * Diff two Atlas scope tree lists and return the list of changes.
  */
 export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
-  const originalScopeTreeList = await loadSupabaseAsStandardizedAtlasScopeTrees();
-  const newScopeTreeList = await loadMarkdownAsStandardizedAtlasScopeTrees();
+  const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees();
+  const newScopeTreeList = await loadMarkdownAsExportAtlasScopeTrees();
 
   // Build lookup maps for both trees (UUID→doc and doc_no→doc)
   const originalMaps = buildLookupMaps(originalScopeTreeList);
@@ -30,11 +30,11 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   };
 }
 
-async function loadSupabaseAsStandardizedAtlasScopeTrees(): Promise<StandardizedAtlasScopeTrees> {
-  return buildAtlasJSON();
+async function loadSupabaseAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
+  return buildExportAtlasTreeJSON();
 }
 
-async function loadMarkdownAsStandardizedAtlasScopeTrees(): Promise<StandardizedAtlasScopeTrees> {
+async function loadMarkdownAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
   const projectRoot = process.cwd();
   const dir = path.join(projectRoot, '.debug-data', 'standardized-atlas');
   const inFile = path.join(dir, 'atlas.md');

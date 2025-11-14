@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { BaseAtlasDocument } from '@/app/server/atlas/export/types';
+import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
@@ -89,7 +89,7 @@ function formatNotionProperty(
 
 /**
  * Builds Notion property objects from Atlas document data.
- * Maps BaseAtlasDocument fields to Notion API property format.
+ * Maps ExportAtlasTreeBaseDocument fields to Notion API property format.
  *
  * Uses the Markdown to Notion Rich Text converter to properly format content
  * with inline formatting (bold, italic, code, links, etc.).
@@ -105,7 +105,7 @@ function formatNotionProperty(
  * - Sort order not synced (only affects "Sections & Primary Docs" database)
  */
 export function buildNotionProperties(
-  doc: BaseAtlasDocument,
+  doc: ExportAtlasTreeBaseDocument,
   atlasDatabaseName: AtlasDatabaseName,
   uuidMappings: UuidMappings,
 ): Record<string, unknown> {
@@ -276,7 +276,7 @@ export function addParentPageRelationshipProperty(
 export function addInterDatabaseRelationshipProperties(
   ancestry: string[] | undefined,
   childDatabaseName: AtlasDatabaseName,
-  uuidToDocumentMap: Map<string, BaseAtlasDocument>,
+  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
 ): Record<string, unknown> {
   const properties: Record<string, unknown> = {};
 
