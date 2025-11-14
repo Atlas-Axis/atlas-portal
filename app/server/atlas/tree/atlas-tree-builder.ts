@@ -209,6 +209,7 @@ export async function buildAtlasTree(
   );
 
   // Step 9: Generate duplicated nodes from parent tracking
+  // TODO: What is this?s
   const duplicatedNodes = generateDuplicatedNodeList(lookupMaps);
 
   if (verbose) {

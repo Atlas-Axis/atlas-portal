@@ -15,7 +15,7 @@ export async function buildAtlasJSON() {
   // Configure options
   const options: TreeConstructionOptions = {
     uuidMappings,
-    reportMissingChildNodes: false,
+    reportMissingChildNodes: true,
     reportOrphanedNodes: true,
   };
 

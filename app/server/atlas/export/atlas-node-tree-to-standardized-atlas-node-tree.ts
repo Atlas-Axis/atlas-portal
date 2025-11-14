@@ -201,6 +201,14 @@ export function atlasNodeToStandardized(
   // prune all its children (keep the node itself with empty children arrays).
   const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_SECTION_UUIDS.has(node.notion_page_id);
   if (options?.omitAgents && isAgentRoot) {
+    // Add big debug console logs
+    console.log('--------------------------------');
+    console.log('Omitting Agent Scope subtrees');
+    console.log('--------------------------------');
+    console.log('node', node);
+    console.log('options', options);
+    console.log('isAgentRoot', isAgentRoot);
+    console.log('--------------------------------');
     return { ...base } as StandardizedAtlasDocument;
   }
 
