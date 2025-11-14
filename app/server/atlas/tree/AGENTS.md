@@ -141,22 +141,6 @@ preOrderTraversal(scopeTree, (node, depth) => {
 });
 ```
 
-#### `postOrderTraversal(root, callback, maxDepth)`
-
-Performs post-order traversal (children before parent), ideal for:
-
-- Cleanup operations
-- Bottom-up processing
-- Aggregating child data
-
-#### `levelOrderTraversal(root, callback, maxDepth)`
-
-Performs level-order traversal (breadth-first), ideal for:
-
-- Processing by depth level
-- Finding nearest nodes
-- Level-based analysis
-
 #### `findNodeByDocumentID(root, generatedDocID)`
 
 Finds a node by its generated document ID.
@@ -173,10 +157,6 @@ if (node) {
 #### `getNodeCount(root)`
 
 Returns the total number of nodes in the tree.
-
-#### `validateTree(root, maxDepth)`
-
-Validates tree structure for circular references and depth constraints.
 
 ### Document Numbering
 
@@ -375,67 +355,13 @@ This happens automatically in Step 8 of `buildAtlasTree()`, after document numbe
 
 ## Error Handling
 
-The system provides comprehensive error handling for common tree construction issues.
+The `buildAtlasTree()` function provides comprehensive error handling for common tree construction issues:
 
-### `validateTreeIntegrity(scopeTrees, orphanedNodes, pagesByDatabase)`
+- **Circular References**: Detects when documents reference themselves in child arrays
+- **Orphaned Nodes**: Identifies documents not connected to any root tree
+- **Missing Child References**: Detects when child IDs don't exist in the database (controlled by `reportMissingChildNodes` option, false by default)
 
-Validates the overall integrity of the tree structure, checking for:
-
-- Circular references
-- Orphaned nodes
-- Missing child references
-- Document number uniqueness
-
-**Example:**
-
-```typescript
-const validationErrors = validateTreeIntegrity(result.scopeTrees, result.orphanedNodes, pagesByDatabase);
-
-if (validationErrors.length > 0) {
-  console.error('Tree validation failed:', validationErrors);
-}
-```
-
-### `detectCircularReferences(pagesByDatabase)`
-
-Detects when documents reference themselves directly or through a chain of relationships.
-
-**Example:**
-
-```typescript
-const errors = detectCircularReferences(pagesByDatabase);
-if (errors.length > 0) {
-  console.error('Circular references detected:', errors);
-}
-```
-
-### `findOrphanedNodes(pagesByDatabase, rootScopeIds)`
-
-Finds documents that exist in the database but are not connected to any root tree.
-
-**Example:**
-
-```typescript
-const orphanedNodes = findOrphanedNodes(pagesByDatabase, rootScopeIds);
-if (orphanedNodes.length > 0) {
-  console.warn(`Found ${orphanedNodes.length} orphaned nodes`);
-}
-```
-
-### Missing Child References
-
-The system detects when child IDs referenced in relationship arrays don't exist in the database. This is controlled by the `reportMissingChildNodes` option (false by default, as many missing references are intentional due to database filters).
-
-### Error Types
-
-```typescript
-interface TreeConstructionError {
-  type: 'missing_child' | 'circular_reference' | 'orphaned_node';
-  message: string;
-  pageId: string;
-  context?: Json;
-}
-```
+All errors are returned in the `errors` array of the `AtlasTreeResult` object.
 
 ## Performance Characteristics
 
@@ -474,13 +400,13 @@ npm test -- app/server/atlas/tree/__tests__/atlas-tree-builder-mentions.test.ts
 
 ### Common Issues
 
-1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays. Use `detectCircularReferences()` to identify the cycle.
+1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays. Circular references are detected automatically by `buildAtlasTree()`.
 
-2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships. Use `findOrphanedNodes()` to identify disconnected documents.
+2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships. Orphaned nodes are identified automatically in the `orphanedNodes` array.
 
 3. **Missing Child References**: Verify that all child IDs in relationship arrays exist in the database. This is often intentional due to database filters, so enable `reportMissingChildNodes` only when debugging.
 
-4. **Invalid Document Numbers**: Check that document numbers follow the correct patterns defined in `ATLAS_DOCUMENT_NUMBERING_RULES.md`. Use `validateDocumentNumbers()` to verify.
+4. **Invalid Document Numbers**: Check that document numbers follow the correct patterns defined in `ATLAS_DOCUMENT_NUMBERING_RULES.md`.
 
 ### Debug Mode
 
