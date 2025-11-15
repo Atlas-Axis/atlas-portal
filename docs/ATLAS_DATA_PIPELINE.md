@@ -27,7 +27,7 @@ The pipeline handles complex transformations, relationship mappings, workarounds
                │
                ▼
 ┌─────────────────────────────────────┐
-│  1. FETCH VIA NOTION API            │
+│  1. FETCH VIA NOTION API            │◄── NOTION_IMPORT_PROCESS.md
 │     - Property mapping              │◄── notion-database-properties-and-relationships.ts
 │     - Relationship mapping          │
 │     - Change detection              │
@@ -44,7 +44,7 @@ The pipeline handles complex transformations, relationship mappings, workarounds
                ▼
 ┌─────────────────────────────────────┐
 │  3. LOAD FROM SUPABASE              │
-│     - Group by Atlas database       │◄── load-atlas-from-supabase.ts
+│     - Load all pages (flat array)   │◄── load-atlas-from-supabase.ts
 │     - Current/historical data       │
 └──────────────┬──────────────────────┘
                │
@@ -170,6 +170,7 @@ The pipeline begins by fetching all Atlas documents from 10 Notion databases usi
 
 - `app/server/services/notion/import-database-to-supabase.ts`
 - `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts`
+- **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - Detailed 10-step import workflow documentation
 
 ### 3.2 Storage in Supabase
 
@@ -200,6 +201,7 @@ Atlas documents are stored in PostgreSQL via Supabase with full version history 
 
 - `app/server/services/supabase/insert-pages-in-batches.ts`
 - **[UUID_MAPPING.md](./UUID_MAPPING.md)**
+- **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - See Step 8 (Batch Insert/Update) and Step 9 (Generate UUID Mappings)
 
 ### 3.3 Loading from Supabase
 
@@ -222,6 +224,7 @@ Atlas documents are loaded from Supabase as a flat array of all pages from all d
 
 - `app/server/services/supabase/load-atlas-from-supabase.ts`
 - `app/server/services/supabase/load-notion-database-pages-from-supabase.ts`
+- **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - See Step 3 (Load Existing Pages from Supabase)
 
 ### 3.4 Pre-Processing Workarounds
 
@@ -682,6 +685,7 @@ The new approach recognizes that duplicates in the tree are acceptable and somet
 - **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to dual tree architecture (Notion Tree vs Export Tree), conversion process, and data structure differences
 - **[UUID_MAPPING.md](./UUID_MAPPING.md)** - Bidirectional UUID mapping system between Notion page UUIDs and Atlas document UUIDs, enabling stable references and markdown-first workflows
 - **[ATLAS_DOCUMENT_NUMBERING_RULES.md](./ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Complete hierarchical document numbering system with rules for all document types and special cases
+- **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - Detailed 10-step Notion to Supabase import workflow with property mapping, change detection, sync locking, and batching
 
 ### Atlas Data Formats
 
