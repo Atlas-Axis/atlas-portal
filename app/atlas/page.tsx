@@ -15,14 +15,14 @@ export const metadata: Metadata = {
 console.log('/atlas is being prerendered');
 
 export default async function Page() {
-  // Load ALL Atlas pages including agents
-  const atlasPagesPerDatabase = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  // Load ALL Atlas pages including agents as flat array
+  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();
 
   // Build the Atlas tree structure with validation
-  const atlas = await buildNotionAtlasTree(atlasPagesPerDatabase, {
+  const atlas = await buildNotionAtlasTree(allPages, {
     uuidMappings,
     reportMissingChildNodes: false,
     reportOrphanedNodes: true,

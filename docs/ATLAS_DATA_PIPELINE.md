@@ -203,13 +203,14 @@ Atlas documents are stored in PostgreSQL via Supabase with full version history 
 
 ### 3.3 Loading from Supabase
 
-Atlas documents are loaded from Supabase and organized by their source database.
+Atlas documents are loaded from Supabase as a flat array of all pages from all databases.
 
-**Database Grouping:**
+**Flat Array Loading:**
 
-- Pages loaded and grouped by `atlas_database_name` (enum field)
-- Returns structure: `Record<AtlasDatabaseName, NotionDatabasePage[]>`
-- Each database's pages loaded separately with appropriate filters
+- Pages loaded from all databases in a single query
+- Returns structure: `NotionDatabasePage[]` (flat array)
+- More efficient than per-database queries
+- Simplifies pre-processing steps
 
 **Current vs Historical Data:**
 
@@ -224,28 +225,36 @@ Atlas documents are loaded from Supabase and organized by their source database.
 
 ### 3.4 Pre-Processing Workarounds
 
-Before tree construction, several workarounds are applied to correct data modeling limitations and platform bugs.
+Before tree construction, several workarounds are applied to correct data modeling limitations and platform bugs. These steps are now performed inside `buildNotionAtlasTree()` in the correct order.
 
-**Agent Document Nesting:**
-
-- **Issue**: Root-level Agent Scope Database documents have no parent in Notion, but they are supposed to be nested under section documents from Sections & Primary Docs
-- **Solution**: Artificially nest them under designated Agent section (`AGENT_ROOT_SECTION_UUID_FOR_NESTING`)
-- **Rationale**: Matches Atlas Explorer UI display, provides proper hierarchy context
-- Agent documents with `parent_notion_page_id === null` are identified as root documents
-- These IDs are added to the section's `child_agent_scope_ids` array
-
-**Nesting Bug Fix:**
+**Nesting Bug Fix (Step 2):**
 
 - **Issue**: Notion's sub-item feature fails at deep nesting levels (database limitation after 10+ levels)
 - **Solution**: Manual parent-child mappings stored in `notion_nesting_bug_mapping` table
 - Mappings override incorrect Notion relationships during tree building
 - Optional sibling positioning for precise document order
+- Applied to flat array of all pages in a single pass
 - Affects: Sections & Primary Docs, Agent Scope Database (internally nested databases)
 - See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation
 
+**Agent Document Nesting (Step 2b):**
+
+- **Issue**: Root-level Agent Scope Database documents have no parent in Notion, but should be nested under section documents from Sections & Primary Docs for display
+- **Solution**: Artificially nest them under designated Agent section (`AGENT_ROOT_SECTION_UUID_FOR_NESTING`)
+- **Rationale**: Matches Atlas Explorer UI display, provides proper hierarchy context
+- Root Agent documents are those with `parent_notion_page_id === null` (no internal parent within Agent Scope Database)
+- These IDs are added to the section's `child_agent_scope_ids` array
+
+**Special Handling for parent_notion_page_id in Atlas databases that support internal nesting:**
+
+- For Agent Scope Database and Sections & Primary Docs, `filterDirectChildren` treats null `parent_notion_page_id` as "no internal parent"
+- This works because nesting overrides (Step 2) already fix any incorrect relationships from Notion's deep nesting bugs
+
 **References:**
 
+- `app/server/atlas/notion-tree/atlas-tree-builder.ts` (Steps 2, 2b, filterDirectChildren)
 - `app/server/atlas/nest-root-agent-documents-under-agent-section.ts`
+- `app/server/services/notion/apply-nesting-overrides.ts`
 - `app/server/atlas/notion-mapping/notion-ids.ts` (AGENT_ROOT_SECTION_UUID_FOR_NESTING)
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**
 
@@ -255,16 +264,19 @@ Flat Notion database pages are transformed into hierarchical tree structures rep
 
 **Building Notion Tree:**
 
-- Converts flat `NotionDatabasePage[]` arrays into nested `NotionAtlasTreeNode` trees
+- Converts flat `NotionDatabasePage[]` array into nested `NotionAtlasTreeNode` trees
 - Root nodes: Scope documents (identified by absence of parent relationships)
 - Child relationships embedded as typed arrays (not ID references)
-- Process steps: Create lookup maps → Find roots → Build trees recursively → Process errors
+- Process steps: Apply nesting overrides → Nest root agents → Create lookup maps → Find roots → Build trees recursively → Find orphaned nodes
 
 **Lookup Maps for O(1) Access:**
 
 - `nodeMapByPageId`: Page ID → tree node
+- `originalPageMap`: Page ID → original page
 - `parentIdMap`: Child ID → parent ID
 - `childrenIdsMap`: Page ID → child IDs array
+- `processedIds`: Set of successfully processed page IDs
+- `nodeToParentsMap`: Node ID → parent IDs (for duplicate tracking)
 - Enables efficient tree construction without repeated searches
 
 **Filtering Direct Children:**
@@ -274,24 +286,25 @@ Flat Notion database pages are transformed into hierarchical tree structures rep
 - **Solution**: `filterDirectChildren` removes non-direct descendants using `parent_notion_page_id`
 - Cross-database child: Keep only if `parent_notion_page_id` is null
 - Same-database child: Keep only if `parent_notion_page_id === parentPageId`
+- Special handling for Agent Scope Database: If `parent_notion_page_id` is still null after computation, treat as direct child
 
-**Duplicate Detection:**
+**Duplicate Handling:**
 
-- Identifies documents appearing in multiple parent trees
-- Policy varies by document type:
-  - Needed Research: Allowed (log info)
-  - Tenets: Allowed (log warning - we will deduplicate in Notion soon)
-  - Others: Modeling issue (log error)
+- Duplicates are now allowed to exist in the tree data structure (temporarily - this will be reverted once we fix the last remaining duplication in Notion)
+- No longer returns stub nodes for duplicate documents
+- Documents can appear in multiple locations naturally (e.g., Needed Research)
+- The `nodeToParentsMap` still tracks all parent relationships for reporting purposes
 
 **Circular Reference Detection:**
 
-- Detects documents that reference themselves in child arrays
+- Detects documents that exceed maximum tree depth (default: 50)
 - Prevents infinite recursion during tree traversal
-- Construction errors returned in result
+- Throws error when depth limit exceeded
 
 **Orphaned Node Identification:**
 
 - Finds documents not connected to any root scope tree
+- Uses `processedIds` Set from lookup maps to accurately determine orphaned status
 - May indicate missing relationships or data quality issues
 - Returned separately for manual review
 
@@ -540,18 +553,18 @@ This workflow enables external editing of the Atlas in markdown format with subs
 
 ## Key Transformations Summary
 
-| Stage                           | Input Format            | Transformation                                | Output Format                                     |
-| ------------------------------- | ----------------------- | --------------------------------------------- | ------------------------------------------------- |
-| **1. Notion API Fetch**         | Notion pages (API JSON) | Property mapping, relationship extraction     | `NotionDatabasePage[]` arrays                     |
-| **2. Supabase Storage**         | `NotionDatabasePage[]`  | Versioned insert, UUID generation             | Supabase `notion_database_pages` rows             |
-| **3. Supabase Load**            | Supabase rows           | Group by database, filter current             | `Record<AtlasDatabaseName, NotionDatabasePage[]>` |
-| **4. Pre-Processing**           | Grouped pages           | Agent nesting, manual parent remapping        | Modified `NotionDatabasePage[]` arrays            |
-| **5. Tree Building**            | Flat pages              | Hierarchy construction, filtering, validation | `NotionAtlasTreeNode[]` (Notion Tree)             |
-| **6. Tree Processing**          | Notion Tree nodes       | Doc numbering, UUID mapping, mention updates  | Enhanced `NotionAtlasTreeNode[]`                  |
-| **7. Export Transform**         | Notion Tree             | Rich Text → Markdown, UUID conversion         | `ExportAtlasTreeDocument[]` (Export Tree)         |
-| **8. Serialization**            | Export Tree             | JSON/Markdown formatting                      | `atlas.md`, `atlas.json`, `atlas.yaml`            |
-| **[PLANNED] 9. Markdown Parse** | Atlas markdown file     | Parse structure, extract metadata             | Export Tree                                       |
-| **[PLANNED] 10. Notion Sync**   | Export Tree             | Markdown → Rich Text, property building       | Notion pages (via API)                            |
+| Stage                           | Input Format            | Transformation                                             | Output Format                                |
+| ------------------------------- | ----------------------- | ---------------------------------------------------------- | -------------------------------------------- |
+| **1. Notion API Fetch**         | Notion pages (API JSON) | Property mapping, relationship extraction                  | `NotionDatabasePage[]` arrays                |
+| **2. Supabase Storage**         | `NotionDatabasePage[]`  | Versioned insert, UUID generation                          | Supabase `notion_database_pages` rows        |
+| **3. Supabase Load**            | Supabase rows           | Load all databases, filter current                         | `NotionDatabasePage[]` (flat array)          |
+| **4. Pre-Processing**           | Flat array              | Nesting overrides, Agent parent computation, Agent nesting | Modified `NotionDatabasePage[]` (flat array) |
+| **5. Tree Building**            | Flat pages              | Hierarchy construction, filtering, validation              | `NotionAtlasTreeNode[]` (Notion Tree)        |
+| **6. Tree Processing**          | Notion Tree nodes       | Doc numbering, UUID mapping, mention updates               | Enhanced `NotionAtlasTreeNode[]`             |
+| **7. Export Transform**         | Notion Tree             | Rich Text → Markdown, UUID conversion                      | `ExportAtlasTreeDocument[]` (Export Tree)    |
+| **8. Serialization**            | Export Tree             | JSON/Markdown formatting                                   | `atlas.md`, `atlas.json`, `atlas.yaml`       |
+| **[PLANNED] 9. Markdown Parse** | Atlas markdown file     | Parse structure, extract metadata                          | Export Tree                                  |
+| **[PLANNED] 10. Notion Sync**   | Export Tree             | Markdown → Rich Text, property building                    | Notion pages (via API)                       |
 
 ## Workarounds and Special Cases
 
@@ -566,13 +579,15 @@ This workflow enables external editing of the Atlas in markdown format with subs
 **Implementation:**
 
 - Hardcoded section UUID: `AGENT_ROOT_SECTION_UUID_FOR_NESTING`
-- Root agent documents (those with `parent_notion_page_id === null`) identified
-- Their IDs added to section's `child_agent_scope_ids` array in-memory
-- Applied after loading from Supabase, before tree construction
+- Root agent documents are those with `parent_notion_page_id === null` (no internal parent within Agent Scope Database)
+- Their IDs are added to section's `child_agent_scope_ids` array in-memory
+- Applied inside `buildNotionAtlasTree()` (Step 2b), after nesting overrides
+- This ensures agents re-parented by mappings are not incorrectly treated as root agents
 
 **References:**
 
 - `app/server/atlas/nest-root-agent-documents-under-agent-section.ts`
+- `app/server/atlas/notion-tree/atlas-tree-builder.ts` (Step 2b)
 - `app/server/atlas/notion-mapping/notion-ids.ts`
 
 ### Notion Nesting Bug and Manual Mappings
@@ -636,36 +651,29 @@ This workflow enables external editing of the Atlas in markdown format with subs
 
 ### Duplicate Handling Policies
 
-Different document types have different policies for appearing in multiple parent trees:
+As of November 2025, duplicates are allowed to exist naturally in the tree data structure (temporarily - this will be reverted once we fix the last remaining duplication in Notion):
 
-**Needed Research:**
+**Current Approach:**
 
-- **Policy**: Allowed
-- **Rationale**: Can be related to multiple documents by design
-- **Action**: Log info message, no error
+- **Policy**: Duplicates are no longer prevented during tree construction
+- **Rationale**: Some documents legitimately appear in multiple locations (e.g., Needed Research can be attached to multiple parents)
+- **Implementation**: Removed stub node logic from `buildTreeNode()`; duplicates flow naturally into the tree
+- **Tracking**: The `nodeToParentsMap` still tracks all parent relationships for reporting purposes
 
-**Tenets (Action Tenet):**
+**Historical Context:**
 
-- **Policy**: Allowed with warning
-- **Rationale**: May target multiple sections (tolerated for now because there is one known case where this happens in Notion); We will deduplicate these in Notion soon and then we will require Tenets too to not be duplicated
-- **Action**: Log warning for review
+Previously, the system tried to prevent duplicates by returning stub nodes when a duplicate was detected. This caused issues:
 
-**Other Document Types:**
+- False positive duplicate warnings for Agent Scope Database documents
+- Orphaned node detection incorrectly flagged legitimate documents
+- Made it difficult to handle documents that should naturally appear in multiple places
 
-- **Policy**: Not allowed (modeling issue)
-- **Rationale**: Each document should have single location in hierarchy
-- **Action**: Log error, include in duplicated nodes report
-- **Examples**: Sections, Core, Annotations, etc.
-
-**Detection:**
-
-- During tree construction, track which nodes have been added to trees
-- If node appears again under different parent, record as duplicate
-- Duplicate report included in `NotionAtlasTreeResult.duplicatedNodes`
+The new approach recognizes that duplicates in the tree are acceptable and sometimes expected, allowing the data structure to reflect the actual relationships in Notion.
 
 **References:**
 
 - `app/server/atlas/notion-tree/atlas-tree-builder.ts`
+- `docs/ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md` (completed action plan)
 
 ## Related Documentation
 

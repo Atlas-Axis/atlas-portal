@@ -6,8 +6,8 @@ import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server
 import { loadUuidMappings } from '../load-uuid-mapping';
 
 export async function buildExportAtlasTreeJSON() {
-  // Load Atlas data
-  const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  // Load Atlas data as flat array
+  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();
@@ -20,7 +20,7 @@ export async function buildExportAtlasTreeJSON() {
   };
 
   // Build tree structure with document numbering and validation
-  const result = await buildNotionAtlasTree(atlasData, options);
+  const result = await buildNotionAtlasTree(allPages, options);
   const scopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 

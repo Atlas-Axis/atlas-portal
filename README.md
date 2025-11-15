@@ -501,10 +501,6 @@ This project maintains **2 synchronized documentation files** that provide high-
 - **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
 - **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
 
-### Action Plans & Future Features
-
-- **[docs/ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md](./docs/ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md)** - Action plan for fixing agent duplicate detection issues
-
 ### Component & Service Documentation
 
 - **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown _(planned)_

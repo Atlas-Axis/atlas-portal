@@ -61,21 +61,24 @@ console.log(`Found ${result.orphanedNodes.length} orphaned nodes`);
 
 ### Tree Construction
 
-#### `buildNotionAtlasTree(pagesByDatabase, options)`
+#### `buildNotionAtlasTree(allPages, options)`
 
 Core function that builds the Notion Tree structure. Document numbers are automatically assigned during tree construction.
 
 **Process Steps:**
 
-1. Create lookup maps for O(1) access
-2. Generate normalized document names
-3. Find root Scope documents
-4. Build tree structures for each root scope
-5. Find orphaned nodes
-6. Assign document numbers
-7. Generate Atlas UUID maps (document numbers and names)
-8. Update Rich Text mentions with correct document numbers and names
-9. Generate duplicated nodes list
+1. Load nesting fix mappings
+2. Apply nesting overrides to flat array
+   2b. Nest root Agent documents under the Agent section
+3. Create lookup maps for O(1) access
+4. Generate normalized document names
+5. Find root Scope documents
+6. Build tree structures for each root scope
+7. Find orphaned nodes
+8. Assign document numbers
+9. Generate Atlas UUID maps (document numbers and names)
+10. Update Rich Text mentions with correct document numbers and names
+11. Generate duplicated nodes list
 
 **Options:**
 
@@ -289,10 +292,15 @@ interface NotionAtlasTreeLookupMaps {
   originalPageMap: Map<string, NotionDatabasePage>; // Page ID → original page
   parentIdMap: Map<string, string>; // Child ID → parent ID
   childrenIdsMap: Map<string, string[]>; // Page ID → child IDs
-  processedIds: Set<string>; // Processed page IDs
-  nodeToParentsMap: Map<string, Set<string>>; // Node ID → parent IDs
+  processedIds: Set<string>; // Successfully processed page IDs (used for orphaned node detection)
+  nodeToParentsMap: Map<string, Set<string>>; // Node ID → parent IDs (for duplicate tracking)
 }
 ```
+
+**Key Changes (November 2025):**
+
+- `processedIds` is now used by `findOrphanedNodes()` to accurately determine which nodes are connected to the tree
+- `nodeToParentsMap` tracks all parent relationships for reporting, even when duplicates are allowed in the tree
 
 ## Rich Text Mention Updates
 
@@ -358,11 +366,15 @@ This happens automatically in Step 8 of `buildNotionAtlasTree()`, after document
 
 The `buildNotionAtlasTree()` function provides comprehensive error handling for common tree construction issues:
 
-- **Circular References**: Detects when documents reference themselves in child arrays
-- **Orphaned Nodes**: Identifies documents not connected to any root tree
+- **Maximum Depth Exceeded**: Throws an error when documents exceed the maximum tree depth (default: 50 levels), preventing infinite recursion
+- **Orphaned Nodes**: Identifies documents not connected to any root tree using the `processedIds` Set from lookup maps
 - **Missing Child References**: Detects when child IDs don't exist in the database (controlled by `reportMissingChildNodes` option, false by default)
 
-All errors are returned in the `errors` array of the `NotionAtlasTreeResult` object.
+Construction errors are returned in the `errors` array of the `NotionAtlasTreeResult` object.
+
+**Important Change (November 2025):**
+
+Circular references are no longer detected via stub nodes. Instead, the maximum depth limit prevents infinite recursion. If a document structure exceeds the depth limit, the function throws an error immediately.
 
 ## Performance Characteristics
 
@@ -401,13 +413,18 @@ npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-builder-mentions.t
 
 ### Common Issues
 
-1. **Circular Reference Errors**: Check for documents that reference themselves in their child arrays. Circular references are detected automatically by `buildNotionAtlasTree()`.
+1. **Maximum Depth Exceeded Errors**: Check if documents have excessively deep nesting (>50 levels by default). This may indicate circular references or data modeling issues. The error will show which page ID caused the limit to be exceeded.
 
-2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships. Orphaned nodes are identified automatically in the `orphanedNodes` array.
+2. **Orphaned Nodes**: Ensure all documents are connected to root scopes through proper relationships. Orphaned nodes are identified automatically in the `orphanedNodes` array using the `processedIds` Set from lookup maps.
 
 3. **Missing Child References**: Verify that all child IDs in relationship arrays exist in the database. This is often intentional due to database filters, so enable `reportMissingChildNodes` only when debugging.
 
 4. **Invalid Document Numbers**: Check that document numbers follow the correct patterns defined in `ATLAS_DOCUMENT_NUMBERING_RULES.md`.
+
+5. **Agent Documents Not Appearing**: If Agent Scope Database documents are not appearing where expected, check:
+   - The root agent nesting (Step 2b) - are root agents being identified correctly (null `parent_notion_page_id`)?
+   - The `filterDirectChildren` logic - are agents with null `parent_notion_page_id` being treated as direct children?
+   - The nesting overrides (Step 2) - are manual parent-child mappings being applied correctly?
 
 ### Debug Mode
 

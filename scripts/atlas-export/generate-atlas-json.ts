@@ -133,8 +133,8 @@ async function main() {
 
   loadEnv();
 
-  // Load Atlas data from Supabase
-  const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  // Load Atlas data from Supabase as flat array
+  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();
@@ -147,7 +147,7 @@ async function main() {
   };
 
   // Build tree structure with document numbering and validation
-  const result = await buildNotionAtlasTree(atlasData, options);
+  const result = await buildNotionAtlasTree(allPages, options);
   const originalScopeTrees = result.scopeTrees;
   console.log(`Built ${result.scopeTrees.length} scope trees`);
 

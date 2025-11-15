@@ -32,22 +32,25 @@ function getSortCriteria(atlasDatabaseName: AtlasDatabaseName): (keyof NotionDat
 export async function loadNotionDatabasePagesFromSupabase({
   atlasDatabaseName,
 }: {
-  atlasDatabaseName: AtlasDatabaseName;
-}): Promise<NotionDatabasePage[]> {
+  atlasDatabaseName?: AtlasDatabaseName;
+} = {}): Promise<NotionDatabasePage[]> {
   const allPages: NotionDatabasePage[] = [];
   let page = 0;
   const pageSize = 1000;
 
-  // Get custom sort criteria based on database name
-  const sortCriteria = getSortCriteria(atlasDatabaseName);
+  // Get custom sort criteria based on database name (use default if loading all databases)
+  const sortCriteria = atlasDatabaseName ? getSortCriteria(atlasDatabaseName) : DEFAULT_SORT_CRITERIA;
 
   // Load all pages from Supabase with pagination
   while (true) {
-    let query = supabase()
-      .from('notion_database_pages_current')
-      .select('*')
-      .eq('atlas_database_name', atlasDatabaseName)
-      .range(page * pageSize, (page + 1) * pageSize - 1);
+    let query = supabase().from('notion_database_pages_current').select('*');
+
+    // Filter by database name if provided
+    if (atlasDatabaseName) {
+      query = query.eq('atlas_database_name', atlasDatabaseName);
+    }
+
+    query = query.range(page * pageSize, (page + 1) * pageSize - 1);
 
     // Apply ordering as chained .order calls
     for (const col of sortCriteria) {
@@ -72,14 +75,15 @@ export async function loadNotionDatabasePagesFromSupabase({
     page++;
   }
 
-  console.log(`Loaded ${allPages.length} "${atlasDatabaseName}" pages from Supabase`);
+  const dbLabel = atlasDatabaseName ? `"${atlasDatabaseName}"` : 'all databases';
+  console.log(`Loaded ${allPages.length} ${dbLabel} pages from Supabase`);
   return allPages;
 }
 
 /**
  * Usage:
  *   const rows = await loadNotionDatabasePagesAtTimeFromSupabase({
- *    atlasDatabaseName: 'Articles',
+ *    atlasDatabaseName: 'Articles', // Optional: omit to load all databases
  *    validAt: '2025-01-01T00:00:00Z', // or new Date()
  *   });
  */
@@ -87,14 +91,14 @@ export async function loadNotionDatabasePagesAtTimeFromSupabase({
   atlasDatabaseName,
   validAt,
 }: {
-  atlasDatabaseName: AtlasDatabaseName;
+  atlasDatabaseName?: AtlasDatabaseName;
   validAt: string | Date;
 }): Promise<NotionDatabasePage[]> {
   const allPages: NotionDatabasePage[] = [];
   let page = 0;
   const pageSize = 1000;
 
-  const sortCriteria = getSortCriteria(atlasDatabaseName);
+  const sortCriteria = atlasDatabaseName ? getSortCriteria(atlasDatabaseName) : DEFAULT_SORT_CRITERIA;
 
   const validAtIso = (validAt instanceof Date ? validAt : new Date(validAt)).toISOString();
 
@@ -105,9 +109,14 @@ export async function loadNotionDatabasePagesAtTimeFromSupabase({
       .lte('date_valid_from', validAtIso)
       .or(`date_valid_to.is.null,date_valid_to.gt.${validAtIso}`)
       .eq('archived', false)
-      .eq('in_trash', false)
-      .eq('atlas_database_name', atlasDatabaseName)
-      .range(page * pageSize, (page + 1) * pageSize - 1);
+      .eq('in_trash', false);
+
+    // Filter by database name if provided
+    if (atlasDatabaseName) {
+      query = query.eq('atlas_database_name', atlasDatabaseName);
+    }
+
+    query = query.range(page * pageSize, (page + 1) * pageSize - 1);
 
     for (const col of sortCriteria) {
       query = query.order(col as keyof NotionDatabasePage);
@@ -127,8 +136,7 @@ export async function loadNotionDatabasePagesAtTimeFromSupabase({
     page++;
   }
 
-  console.log(
-    `Loaded ${allPages.length} "${atlasDatabaseName}" pages from Supabase at ${validAtIso} (valid at time query)`,
-  );
+  const dbLabel = atlasDatabaseName ? `"${atlasDatabaseName}"` : 'all databases';
+  console.log(`Loaded ${allPages.length} ${dbLabel} pages from Supabase at ${validAtIso} (valid at time query)`);
   return allPages;
 }

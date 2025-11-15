@@ -6,63 +6,58 @@
  *
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
-import { databaseSupportsInternalNesting } from '@/app/atlas/sync/_lib/atlas-database-mapper';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { NotionNestingBugMapping } from '../supabase/notion-nesting-bug-mappings';
 
 /**
- * Apply nesting bug overrides to database pages
+ * Apply nesting bug overrides to all database pages in one pass
  * This function modifies the child_*_ids arrays to move children from their current parent to the correct parent
+ * Works with a flat array of all pages and processes all mappings regardless of database
  */
 export function applyNestingOverrides(
   pages: NotionDatabasePage[],
   mappings: NotionNestingBugMapping[],
-  atlasDatabaseName: AtlasDatabaseName,
 ): NotionDatabasePage[] {
-  // Only apply overrides to databases that support internal nesting
-  if (!databaseSupportsInternalNesting(atlasDatabaseName)) {
+  if (mappings.length === 0) {
     return pages;
   }
 
-  // Filter mappings for the current database
-  const relevantMappings = mappings.filter((m) => m.atlas_database_name === atlasDatabaseName);
-
-  if (relevantMappings.length === 0) {
-    return pages;
-  }
-
-  // Determine which child array field to modify based on database name
-  const childArrayField = getChildArrayField(atlasDatabaseName);
-  if (!childArrayField) {
-    return pages;
-  }
-
-  console.log(`⧟ Applying ${relevantMappings.length} nesting overrides for database "${atlasDatabaseName}"...`);
+  console.log(`⧟ Applying ${mappings.length} nesting override(s)...`);
 
   // Create a mutable copy of pages for modifications
   const modifiedPages = pages.map((page) => ({ ...page }));
 
   // Apply each mapping
-  for (const mapping of relevantMappings) {
+  for (const mapping of mappings) {
     const childId = mapping.child_notion_page_id;
     const newParentId = mapping.parent_notion_page_id;
+
+    // Determine which child array field to modify based on the mapping's database
+    const childArrayField = getChildArrayField(mapping.atlas_database_name);
+    if (!childArrayField) {
+      console.warn(
+        `  ⚠ Database "${mapping.atlas_database_name}" does not support internal nesting. Skipping mapping.`,
+      );
+      continue;
+    }
 
     // Find the child page to verify it exists
     const childPage = modifiedPages.find((p) => p.notion_page_id === childId);
     if (!childPage) {
-      console.warn(`Child page ${childId} not found in pages array. Skipping mapping.`);
+      console.warn(`  ⚠ Child page ${childId} not found in pages array. Skipping mapping.`);
       continue;
     }
 
     // Find the new parent page
     const newParentPage = modifiedPages.find((p) => p.notion_page_id === newParentId);
     if (!newParentPage) {
-      console.warn(`Parent page ${newParentId} not found in pages array. Skipping mapping.`);
+      console.warn(`  ⚠ Parent page ${newParentId} not found in pages array. Skipping mapping.`);
       continue;
     }
 
     // Find the current parent (the page that currently has this child in its array)
+    // Note: Child may have been orphaned previously (not listed in any parent's children)
     const currentParentPage = modifiedPages.find((p) => {
       const childArray = p[childArrayField];
       return Array.isArray(childArray) && childArray.includes(childId);
@@ -117,7 +112,7 @@ export function applyNestingOverrides(
     console.log(`  ✓ Updated ${childId} parent_notion_page_id to ${newParentId}`);
   }
 
-  console.log(`✅ Applied ${relevantMappings.length} nesting overrides`);
+  console.log(`✅ Applied ${mappings.length} nesting override(s)`);
 
   return modifiedPages;
 }

@@ -1,14 +1,10 @@
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
-import { AtlasDatabaseName } from '../../atlas/atlas-types';
-import { ATLAS_DATABASES, ATLAS_DATABASE_NAMES } from '../../atlas/constants';
-import { nestRootAgentDocumentsUnderAgentSection } from '../../atlas/nest-root-agent-documents-under-agent-section';
 import {
   loadNotionDatabasePagesAtTimeFromSupabase,
   loadNotionDatabasePagesFromSupabase,
 } from './load-notion-database-pages-from-supabase';
 
 type LoadAtlasOptions = {
-  excludeAgents?: boolean;
   validAt?: string;
 };
 
@@ -17,37 +13,19 @@ type LoadAtlasOptions = {
  */
 
 /**
- * Generic helper function to load Atlas pages from Supabase with various options
- * Automatically sorts documents in each database to ensure those with defined sort_order come first
+ * Generic helper function to load all Atlas pages from Supabase in a single query
+ * Returns a flat array of all pages across all Atlas databases
  */
-async function loadNotionDatabasePages(options: LoadAtlasOptions = {}) {
-  const { excludeAgents = false, validAt } = options;
+async function loadNotionDatabasePages(options: LoadAtlasOptions = {}): Promise<NotionDatabasePage[]> {
+  const { validAt } = options;
 
-  const atlasPagesPerDatabase: Record<AtlasDatabaseName, NotionDatabasePage[]> = {} as Record<
-    AtlasDatabaseName,
-    NotionDatabasePage[]
-  >;
-
-  for (const databaseName of ATLAS_DATABASE_NAMES) {
-    let pages: NotionDatabasePage[];
-
-    if (excludeAgents && databaseName === ATLAS_DATABASES.AGENTS) {
-      pages = [];
-    } else if (validAt) {
-      pages = await loadNotionDatabasePagesAtTimeFromSupabase({
-        atlasDatabaseName: databaseName,
-        validAt,
-      });
-    } else {
-      pages = await loadNotionDatabasePagesFromSupabase({
-        atlasDatabaseName: databaseName,
-      });
-    }
-
-    atlasPagesPerDatabase[databaseName] = pages;
+  if (validAt) {
+    // Load all pages at a specific time
+    return await loadNotionDatabasePagesAtTimeFromSupabase({ validAt });
+  } else {
+    // Load all current pages
+    return await loadNotionDatabasePagesFromSupabase({});
   }
-
-  return atlasPagesPerDatabase;
 }
 
 export async function loadAtlasFromSupabaseWithoutNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
@@ -59,28 +37,10 @@ export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
   return loadNotionDatabasePages({ validAt: atDateTime });
 }
 
-// Load Atlas pages from Supabase, with additional nesting logic applied
-// This is needed for the Agents database, where root-level Agent documents need to be nested under a specific Agent section to match the Atlas Explorer UI
-export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
-  // Load the base Atlas data (already sorted by loadNotionDatabasePages)
-  const atlasPagesPerDatabase = await loadNotionDatabasePages(options);
-
-  const agentPages = atlasPagesPerDatabase[ATLAS_DATABASES.AGENTS];
-  const sectionsAndPrimaryDocsPages = atlasPagesPerDatabase[ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS];
-
-  const rootAgentDocumentIds = agentPages
-    .filter((page: NotionDatabasePage) => page.parent_notion_page_id === null)
-    .map((page: NotionDatabasePage) => page.notion_page_id);
-
-  // Nest root Agent documents under a specific Agent section below Agent Scope - the relationship is not set in Notion, so we do it here. This is how the Atlas Explorer UI does it.
-  const updatedSectionsAndPrimaryDocsPages = await nestRootAgentDocumentsUnderAgentSection({
-    sectionsAndPrimaryDocsPages,
-    rootAgentDocumentIds,
-  });
-
-  // Return the updated data with nesting applied, re-sorting only the modified SECTIONS_AND_PRIMARY_DOCS
-  return {
-    ...atlasPagesPerDatabase,
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: updatedSectionsAndPrimaryDocsPages,
-  };
+// Load Atlas pages from Supabase (simplified - no agent nesting logic here)
+// Agent nesting is now handled in buildNotionAtlasTree for better ordering
+export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(
+  options: LoadAtlasOptions = {},
+): Promise<NotionDatabasePage[]> {
+  return loadNotionDatabasePages(options);
 }

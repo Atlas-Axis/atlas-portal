@@ -58,7 +58,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Original parent should not have the child
       const originalParent = result.find((p) => p.notion_page_id === originalParentId);
@@ -97,7 +97,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Original parent should have no children
       const original = result.find((p) => p.notion_page_id === originalParent);
@@ -127,7 +127,7 @@ describe('applyNestingOverrides', () => {
       ];
 
       // Should not throw
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       expect(result).toHaveLength(1);
       expect(result[0].child_section_and_primary_doc_ids).toHaveLength(0);
@@ -148,7 +148,7 @@ describe('applyNestingOverrides', () => {
       ];
 
       // Should not throw, child should remain with original parent
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       const originalParent = result.find((p) => p.notion_page_id === originalParentId);
       expect(originalParent?.child_section_and_primary_doc_ids).toContain(childId);
@@ -168,7 +168,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       const parent = result.find((p) => p.notion_page_id === parentId);
       expect(parent?.child_section_and_primary_doc_ids).toHaveLength(1);
@@ -204,7 +204,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Agent Scope Database');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Original parent should not have the child
       const originalParent = result.find((p) => p.notion_page_id === originalParentId);
@@ -231,7 +231,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Should not apply the mapping since it's for a different database
       const parent = result.find((p) => p.notion_page_id === parentId);
@@ -249,7 +249,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Articles');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Should return pages unchanged
       expect(result).toEqual(pages);
@@ -260,7 +260,7 @@ describe('applyNestingOverrides', () => {
 
       const mappings: NotionNestingBugMapping[] = [];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       expect(result).toEqual(pages);
     });
@@ -281,7 +281,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       // New parent should have the child
       const newParent = result.find((p) => p.notion_page_id === newParentId);
@@ -309,7 +309,7 @@ describe('applyNestingOverrides', () => {
         },
       ];
 
-      const result = applyNestingOverrides(pages, mappings, 'Sections & Primary Docs');
+      const result = applyNestingOverrides(pages, mappings);
 
       // Original parent should still have the child that wasn't moved
       const originalParent = result.find((p) => p.notion_page_id === originalParentId);
