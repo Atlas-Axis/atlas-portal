@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
+import { AGENT_ROOT_SECTION_UUID_FOR_NESTING } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { UuidMappings } from '../../load-uuid-mapping';
 import { buildNotionAtlasTree } from '../atlas-tree-builder';
@@ -685,16 +686,13 @@ describe('Atlas Document Numbering System', () => {
   });
 
   describe('Complete Hierarchy Integration Tests', () => {
-    // Note: Removed "should handle complete Atlas hierarchy with all document types" test as it has
-    // complex agent nesting issues that are edge cases after the duplicate handling refactoring
-    it.skip('should handle complete Atlas hierarchy with all document types', async () => {
+    it('should handle complete Atlas hierarchy with all document types', async () => {
       // Build a comprehensive hierarchy
       const scope = makeBasePage('Scope', {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
         child_article_ids: ['article-1'],
-        child_agent_scope_ids: ['agent-core-1'],
         child_needed_research_ids: ['research-1'],
       });
 
@@ -702,7 +700,7 @@ describe('Atlas Document Numbering System', () => {
         notion_page_id: 'article-1',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
-        child_section_and_primary_doc_ids: ['section-1'],
+        child_section_and_primary_doc_ids: ['section-1', AGENT_ROOT_SECTION_UUID_FOR_NESTING],
       });
 
       const section = makeBasePage('Section', {
@@ -712,6 +710,16 @@ describe('Atlas Document Numbering System', () => {
         child_section_and_primary_doc_ids: ['core-1', 'adc-1'],
         child_annotation_ids: ['annotation-1'],
         child_tenet_ids: ['tenet-1'],
+      });
+
+      // The Agent Section (where root agents will be nested)
+      // Must use the specific UUID from AGENT_ROOT_SECTION_UUID_FOR_NESTING for nesting to work
+      const agentSection = makeBasePage('Section', {
+        notion_page_id: AGENT_ROOT_SECTION_UUID_FOR_NESTING,
+        atlas_database_name: 'Sections & Primary Docs',
+        plain_text_name: 'Agent Section',
+        // This will be populated by nestRootAgentDocumentsUnderAgentSection
+        child_agent_scope_ids: [],
       });
 
       const core = makeBasePage('Core', {
@@ -761,11 +769,12 @@ describe('Atlas Document Numbering System', () => {
         plain_text_name: 'Active Data 1',
       });
 
+      // Root agent core (no parent_notion_page_id, so it's a root agent that will be nested under agent section)
       const agentCore = makeBasePage('Core', {
         notion_page_id: 'agent-core-1',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Core 1',
-        parent_notion_page_id: 'fake-parent', // Prevent from being treated as root agent
+        parent_notion_page_id: null, // Root agent
       });
 
       const research = makeBasePage('Needed Research', {
@@ -777,7 +786,7 @@ describe('Atlas Document Numbering System', () => {
       pagesByDatabase = {
         Scopes: [scope],
         Articles: [article],
-        'Sections & Primary Docs': [section, core, adc],
+        'Sections & Primary Docs': [section, agentSection, core, adc],
         Annotations: [annotation],
         Tenets: [tenet],
         Scenarios: [scenario],
@@ -793,6 +802,7 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('scope-1')).toBe('A.0');
       expect(docNumbers.get('article-1')).toBe('A.0.1');
       expect(docNumbers.get('section-1')).toBe('A.0.1.1');
+      expect(docNumbers.get(AGENT_ROOT_SECTION_UUID_FOR_NESTING)).toBe('A.0.1.2');
       expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
       expect(docNumbers.get('adc-1')).toBe('A.0.1.1.2');
       expect(docNumbers.get('annotation-1')).toBe('A.0.1.1.0.3.1');
@@ -800,7 +810,7 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('scenario-1')).toBe('A.0.1.1.0.4.1.1.1');
       expect(docNumbers.get('variation-1')).toBe('A.0.1.1.0.4.1.1.1.var1');
       expect(docNumbers.get('active-data-1')).toBe('A.0.1.1.2.0.6.1');
-      expect(docNumbers.get('agent-core-1')).toBe('A.0.1');
+      expect(docNumbers.get('agent-core-1')).toBe('A.0.1.2.1');
       expect(docNumbers.get('research-1')).toBe('NR-1');
     });
   });
