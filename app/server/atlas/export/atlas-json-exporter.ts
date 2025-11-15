@@ -15,7 +15,7 @@ export async function buildExportAtlasTreeJSON() {
   // Configure options
   const options: NotionAtlasTreeConstructionOptions = {
     uuidMappings,
-    reportMissingChildNodes: true,
+    reportMissingChildNodes: false,
     reportOrphanedNodes: true,
   };
 
