@@ -41,12 +41,12 @@ Located in `app/server/atlas/notion-tree/__tests__/`:
 ## Quick Start
 
 ```typescript
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/atlas/load-atlas-from-supabase';
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { loadAtlasFromSupabase } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { buildNotionAtlasTree } from './tree/atlas-tree-system';
 
 // Load Atlas data
-const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+const atlasData = await loadAtlasFromSupabase();
 const uuidMappings = await loadUuidMappings();
 
 // Build tree structure with document numbering
@@ -102,7 +102,7 @@ Core function that builds the Notion Tree structure. Document numbers are automa
 **Example:**
 
 ```typescript
-const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+const atlasData = await loadAtlasFromSupabase();
 const uuidMappings = await loadUuidMappings();
 const result = await buildNotionAtlasTree(atlasData, { uuidMappings });
 

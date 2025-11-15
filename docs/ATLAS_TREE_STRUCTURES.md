@@ -146,7 +146,7 @@ interface NotionAtlasTreeResult {
 **Tree Construction** (`atlas-tree-builder.ts`):
 
 ```typescript
-const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+const atlasData = await loadAtlasFromSupabase();
 const uuidMappings = await loadUuidMappings();
 const result = await buildNotionAtlasTree(atlasData, { uuidMappings });
 
@@ -291,7 +291,7 @@ const exportScopeTrees = scopeTrees.map((node) =>
 **JSON Export** (`atlas-json-exporter.ts`):
 
 ```typescript
-const atlasData = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+const atlasData = await loadAtlasFromSupabase();
 const uuidMappings = await loadUuidMappings();
 const { scopeTrees } = await buildNotionAtlasTree(atlasData, { uuidMappings });
 

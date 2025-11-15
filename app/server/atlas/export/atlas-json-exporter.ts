@@ -2,12 +2,12 @@ import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/notion-tre
 import { ExportAtlasTreeScopeTrees } from '@/app/server/atlas/export/types';
 import { buildNotionAtlasTree } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import type { NotionAtlasTreeConstructionOptions } from '@/app/server/atlas/notion-tree/atlas-tree-system';
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
+import { loadAtlasFromSupabase } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../load-uuid-mapping';
 
 export async function buildExportAtlasTreeJSON() {
   // Load Atlas data as flat array
-  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  const allPages = await loadAtlasFromSupabase();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();

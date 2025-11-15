@@ -23,7 +23,7 @@ import {
 /**
  * Builds the Notion Atlas Tree structure (Internal Atlas Representation) from Supabase data.
  *
- * This function takes a flat array of all Atlas pages from `loadAtlasFromSupabaseWithNestingAgentsUnderSection`
+ * This function takes a flat array of all Atlas pages from `loadAtlasFromSupabase`
  * and creates a hierarchical tree structure where each root node is a Scope document
  * and contains all its descendant documents as embedded child nodes.
  *
@@ -44,13 +44,13 @@ import {
  * 10. Update Rich Text mentions with correct document numbers and names
  * 11. Generate duplicated nodes list
  *
- * @param allPages - Flat array of all pages from loadAtlasFromSupabaseWithNestingAgentsUnderSection
+ * @param allPages - Flat array of all pages from loadAtlasFromSupabase
  * @param options - Configuration options for tree construction
  * @returns NotionAtlasTreeResult containing scope trees, orphaned nodes, and any errors
  *
  * @example
  * ```typescript
- * const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+ * const allPages = await loadAtlasFromSupabase();
  * const uuidMappings = await loadUuidMappings();
  * const result = buildNotionAtlasTree(allPages, { uuidMappings });
  *

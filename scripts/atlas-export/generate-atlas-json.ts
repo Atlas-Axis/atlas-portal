@@ -3,12 +3,12 @@
  * CLI: Generate Export Atlas Tree JSON from Supabase
  *
  * Description
- * - Reads Atlas Scope trees produced by `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
+ * - Reads Atlas Scope trees produced by `buildNotionAtlasTree(await loadAtlasFromSupabase())`
  * - Converts each node from `NotionAtlasTreeNode` shape to a simplified `ExportAtlasTreeDocument` shape.
  * - Writes the export trees to `exported-atlas/atlas.json`.
  *
  * Input
- * - Supabase: `buildNotionAtlasTree(await loadAtlasFromSupabaseWithNestingAgentsUnderSection())`
+ * - Supabase: `buildNotionAtlasTree(await loadAtlasFromSupabase())`
  * - Type: `NotionAtlasTreeNode[]` roots representing Scope documents
  *
  * Output (result format)
@@ -35,7 +35,7 @@ import type {
   NotionAtlasTreeConstructionOptions,
   NotionAtlasTreeNode,
 } from '@/app/server/atlas/notion-tree/atlas-tree-system';
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
+import { loadAtlasFromSupabase } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 /**
@@ -134,7 +134,7 @@ async function main() {
   loadEnv();
 
   // Load Atlas data from Supabase as flat array
-  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  const allPages = await loadAtlasFromSupabase();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();

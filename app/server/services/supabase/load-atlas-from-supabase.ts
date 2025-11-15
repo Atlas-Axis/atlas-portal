@@ -9,14 +9,13 @@ type LoadAtlasOptions = {
 };
 
 /**
- * Agent Scope Database documents that are at the root level (no parent_notion_page_id) need to be nested under a specific Agent section
+ * Load all Atlas pages from Supabase in a single query.
+ * Returns a flat array of all pages across all Atlas databases.
+ *
+ * Note: Agent nesting logic (previously handled here) is now performed in buildNotionAtlasTree
+ * for better ordering and consistency.
  */
-
-/**
- * Generic helper function to load all Atlas pages from Supabase in a single query
- * Returns a flat array of all pages across all Atlas databases
- */
-async function loadNotionDatabasePages(options: LoadAtlasOptions = {}): Promise<NotionDatabasePage[]> {
+export async function loadAtlasFromSupabase(options: LoadAtlasOptions = {}): Promise<NotionDatabasePage[]> {
   const { validAt } = options;
 
   if (validAt) {
@@ -28,19 +27,10 @@ async function loadNotionDatabasePages(options: LoadAtlasOptions = {}): Promise<
   }
 }
 
-export async function loadAtlasFromSupabaseWithoutNestingAgentsUnderSection(options: LoadAtlasOptions = {}) {
-  return loadNotionDatabasePages(options);
-}
-
-// Load Atlas pages from Supabase, as of a specific past date/time
-export async function loadAtlasFromSupabasePastVersion(atDateTime: string) {
-  return loadNotionDatabasePages({ validAt: atDateTime });
-}
-
-// Load Atlas pages from Supabase (simplified - no agent nesting logic here)
-// Agent nesting is now handled in buildNotionAtlasTree for better ordering
-export async function loadAtlasFromSupabaseWithNestingAgentsUnderSection(
-  options: LoadAtlasOptions = {},
-): Promise<NotionDatabasePage[]> {
-  return loadNotionDatabasePages(options);
+/**
+ * Load Atlas pages from Supabase as of a specific past date/time.
+ * @param atDateTime - ISO 8601 timestamp string
+ */
+export async function loadAtlasFromSupabasePastVersion(atDateTime: string): Promise<NotionDatabasePage[]> {
+  return loadAtlasFromSupabase({ validAt: atDateTime });
 }

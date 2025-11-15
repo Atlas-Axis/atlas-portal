@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import notionTreeNodeToExportTreeNode from '@/app/server/atlas/export/notion-tree-to-export-tree';
 import { buildNotionAtlasTree } from '@/app/server/atlas/notion-tree/atlas-tree-system';
-import { loadAtlasFromSupabaseWithNestingAgentsUnderSection } from '@/app/server/services/supabase/load-atlas-from-supabase';
+import { loadAtlasFromSupabase } from '@/app/server/services/supabase/load-atlas-from-supabase';
 import { loadUuidMappings } from '../server/atlas/load-uuid-mapping';
 import AtlasPagePrerendered from './atlas-page-prerendered';
 
@@ -16,7 +16,7 @@ console.log('/atlas is being prerendered');
 
 export default async function Page() {
   // Load ALL Atlas pages including agents as flat array
-  const allPages = await loadAtlasFromSupabaseWithNestingAgentsUnderSection();
+  const allPages = await loadAtlasFromSupabase();
 
   // Load UUID mappings
   const uuidMappings = await loadUuidMappings();
