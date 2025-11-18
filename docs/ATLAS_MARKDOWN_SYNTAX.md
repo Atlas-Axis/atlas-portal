@@ -18,67 +18,38 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 
 The Atlas Markdown file represents the document hierarchy using standard Markdown heading levels. However, due to markdown viewer limitations, **heading levels are capped at 6** (######).
 
-### Heading Level Cap
-
-**IMPORTANT**: Markdown viewers do not support more than 6 heading levels. To maintain compatibility:
-
-- Heading levels are **capped at 6 hashtags** (######)
-- Documents at depth > 6 all use 6 hashtags
-- **Document numbers** (not heading levels) determine the true hierarchical depth
-- Parent-child relationships are determined by document number structure
-
-### Semantic Depth vs. Heading Level
-
-- **Semantic Depth**: The true hierarchical level calculated from the document number
-- **Heading Level**: The number of `#` symbols in the markdown (capped at 6)
-
-For documents at semantic depth 1-5, the heading level matches the depth:
-
-- Depth 1 (Scope) → `#`
-- Depth 2 (Article) → `##`
-- Depth 3 (Section) → `###`
-- Depth 4 → `####`
-- Depth 5 → `#####`
-
-For documents at semantic depth 6 or greater, all use 6 hashtags:
-
-- Depth 6 → `######`
-- Depth 7 → `######` (capped)
-- Depth 8 → `######` (capped)
-- And so on...
-
 **Example Hierarchy with Deep Nesting:**
 
 ```markdown
-# A.1 - The Governance Scope [Scope] <!-- UUID: abc-123 -->
+# A.1 - The Governance Scope [Scope] <!-- UUID: 696aa690-ae79-4e51-9957-fa178e12d989 -->
 
 Scope content here.
 
-## A.1.1 - Governance Framework [Article] <!-- UUID: def-456 -->
+## A.1.1 - Governance Framework [Article] <!-- UUID: 7f44b822-2ab5-4d2f-bbe9-f8f0cad2cc13 -->
 
 Article content here.
 
-### A.1.1.1 - Decision Making [Section] <!-- UUID: ghi-789 -->
+### A.1.1.1 - Decision Making [Section] <!-- UUID: ee39f45b-c7ab-4bfc-877a-e2af50533b0d -->
 
 Section content here.
 
-#### A.1.1.1.1 - Voting Process [Core] <!-- UUID: jkl-012 -->
+#### A.1.1.1.1 - Voting Process [Core] <!-- UUID: c434e800-99a6-47c3-b099-e12c7a88b5aa -->
 
 Core document content here.
 
-##### A.1.1.1.1.1 - Vote Counting [Core] <!-- UUID: mno-345 -->
+##### A.1.1.1.1.1 - Vote Counting [Core] <!-- UUID: 7886d4de-2fe0-4233-9431-d529c2ec1df8 -->
 
 Nested core document at depth 5.
 
-###### A.1.1.1.1.1.1 - Vote Auditing [Core] <!-- UUID: pqr-678 -->
+###### A.1.1.1.1.1.1 - Vote Auditing [Core] <!-- UUID: 04643c0e-6ea7-4d3b-84d6-cd0f4dfe8f53 -->
 
 Nested core document at depth 6 (still 6 hashtags).
 
-###### A.1.1.1.1.1.1.1 - Audit Trail [Core] <!-- UUID: stu-901 -->
+###### A.1.1.1.1.1.1.1 - Audit Trail [Core] <!-- UUID: eda34edf-072d-4f52-aa3a-a4ba0a4ed7b1 -->
 
 Nested core document at depth 7 (capped at 6 hashtags).
 
-###### A.1.1.1.1.1.1.1.1 - Trail Verification [Core] <!-- UUID: vwx-234 -->
+###### A.1.1.1.1.1.1.1.1 - Trail Verification [Core] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
 
 Nested core document at depth 8 (capped at 6 hashtags).
 ```
@@ -233,7 +204,7 @@ The function signature is `function calculate(
 **Note**: For multi-line code, prefer using code blocks instead of inline code for better readability:
 
 ````markdown
-#### A.1.1.1.1 - Code Example [Core] <!-- UUID: abc-123 -->
+#### A.1.1.1.1 - Code Example [Core] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
 
 The function signature is:
 
@@ -258,7 +229,7 @@ Certain document types have structured extra fields that appear after the main c
 ### Format
 
 ```markdown
-#### A.1.2.2.2.1 - The Type Specification Type [Type Specification] <!-- UUID: abc-123 -->
+#### A.1.2.2.2.1 - The Type Specification Type [Type Specification] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
 
 Main content goes here.
 
@@ -642,7 +613,7 @@ Additional guidance for emergency situations.
 
 Universal Alignment refers to an actor's holistic understanding.
 
-##### NR-15 - Research Universal Alignment Metrics [Needed Research] <!-- UUID: 123-456-789 -->
+##### NR-15 - Research Universal Alignment Metrics [Needed Research] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
 
 **Content**:
 
@@ -655,3 +626,34 @@ When editing the Atlas Markdown file:
 
 1. **Generate UUIDs for New Documents**: Use an online UUID generator (e.g., [uuidgenerator.net](https://www.uuidgenerator.net/)) for any newly added documents
 2. **Never Modify Existing UUIDs**: UUIDs are permanent identifiers - changing them breaks document tracking across versions in external automations
+
+## Other Notes
+
+### Heading Level Cap
+
+**IMPORTANT**: Markdown viewers do not support more than 6 heading levels. To maintain compatibility:
+
+- Heading levels are **capped at 6 hashtags** (######)
+- Documents at depth > 6 all use 6 hashtags
+- **Document numbers** (not heading levels) determine the true hierarchical depth
+- Parent-child relationships are determined by document number structure
+
+### Semantic Depth vs. Heading Level
+
+- **Semantic Depth**: The true hierarchical level calculated from the document number
+- **Heading Level**: The number of `#` symbols in the markdown (capped at 6)
+
+For documents at semantic depth 1-5, the heading level matches the depth:
+
+- Depth 1 (Scope) → `#`
+- Depth 2 (Article) → `##`
+- Depth 3 (Section) → `###`
+- Depth 4 → `####`
+- Depth 5 → `#####`
+
+For documents at semantic depth 6 or greater, all use 6 hashtags:
+
+- Depth 6 → `######`
+- Depth 7 → `######` (capped)
+- Depth 8 → `######` (capped)
+- And so on...
