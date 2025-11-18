@@ -92,6 +92,7 @@ export async function buildNotionAtlasTree(
   // Step 2b: Nest root Agent documents under the Agent section
   // Root agents are those with parent_notion_page_id === null (no internal parent within Agent Scope Database)
   // These are artificially nested under the designated Agent section for proper display hierarchy
+  // Dynamic import used here to avoid circular dependency: constants.ts → atlas-tree-builder.ts → nest-root-agent-documents-under-agent-section.ts → constants.ts
   const { nestRootAgentDocumentsUnderAgentSection } = await import(
     '@/app/server/atlas/nest-root-agent-documents-under-agent-section'
   );
