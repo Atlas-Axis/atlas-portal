@@ -81,7 +81,7 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 **Data Integrity:**
 
 - UUID mappings must be consistent and bidirectional
-- Agent nesting is artificial (display-only) and must be removed before sync
+- Agent nesting is a fix for missing Notion relationships and must be removed before sync
 - Relationships must be bidirectional (parent → child and child → parent)
 
 ## Architecture Design
@@ -211,7 +211,7 @@ export function exportTreeToNotionTree(options: ExportTreeToNotionTreeOptions): 
   //    - Reconstruct parent_notion_page_id
   //    - Build child_*_ids arrays
   //    - Map extra fields to Notion properties
-  //    - Reconstruct title format ("{DocNo} - {Name}")
+  //    - Reconstruct document name format (general: "{Name}", Sections & Primary Docs: "{DocNo} - {Name}")
   // 3. Return Notion Tree structure
 }
 ```
@@ -222,6 +222,7 @@ export function exportTreeToNotionTree(options: ExportTreeToNotionTreeOptions): 
 - Map each document to NotionAtlasTreeNode structure
 - Handle missing UUID mappings (new documents)
 - Preserve document hierarchy and relationships
+- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (default type is Rich Text)
 
 **Tests:**
 
@@ -283,7 +284,7 @@ export function unnestRootAgentDocuments(
   // 1. Find section page with AGENT_ROOT_SECTION_UUID_FOR_NESTING
   // 2. Identify agent documents in section's child_agent_scope_ids
   // 3. Remove agent IDs from section's child array
-  // 4. For each agent: Set parent_notion_page_id to null
+  // 4. For each agent: Set parent_notion_page_id to null (it was already null, but just to make sure)
   // 5. Return pages with unnested agents (root-level in Agent Scope DB)
 }
 ```
@@ -292,7 +293,7 @@ export function unnestRootAgentDocuments(
 
 - Reverse of `nestRootAgentDocumentsUnderAgentSection()`
 - Identify artificially nested agents
-- Restore root-level structure
+- Restore root-level structure (an existing issue in Notion that we will have to fix)
 - Log all unnested agents
 
 **Tests:**
@@ -324,20 +325,24 @@ interface MarkdownToRichTextOptions {
 export function markdownToRichText(options: MarkdownToRichTextOptions): TextRichTextItemRequest[] {
   // Existing implementation...
   // NEW: If convertAtlasUuidMentions enabled:
-  // 1. Parse markdown links: [text](uuid:atlas-uuid)
-  // 2. Look up Notion page UUID from atlas_uuid
-  // 3. Convert to Notion mention object:
+  // 1. Parse markdown links: [text](atlas-uuid) (no "uuid:" prefix)
+  // 2. Look up Notion page UUID from atlas_uuid in preloaded lookup map
+  // 3. Convert markdown link to Notion mention object and rewrite Atlas UUID to Notion UUID:
   //    { type: 'mention', mention: { type: 'page', page: { id: notion_page_id } } }
   // 4. Handle missing mappings (log warning, keep original or placeholder)
+  // 5. Edge case: New document links to another new document without Notion ID yet
+  //    - First round: Create page content without mention objects
+  //    - Second round: Update blocks with proper mention objects after all pages created
 }
 ```
 
 **Key Logic:**
 
-- Detect Atlas UUID link pattern: `[text](uuid:...)`
-- Query UUID mapping for conversion
-- Generate Notion mention object structure
+- Detect Atlas UUID link pattern: `[text](atlas-uuid)` (no "uuid:" prefix)
+- Query UUID mapping from preloaded lookup map for conversion
+- Generate Notion mention object structure and rewrite Atlas UUID to Notion UUID
 - Handle errors gracefully
+- Handle edge case where new document links to another new document (two-round approach)
 
 **Tests:**
 
@@ -382,8 +387,9 @@ export function buildTitleProperty(
   documentName: string,
   databaseName: AtlasDatabaseName,
 ): TitlePropertyItemRequest[] {
-  // Format: "{DocNo} - {Name}"
-  // Special handling for Sections & Primary Docs
+  // General format: "{Name}" (e.g., "Primitive Hub Document")
+  // Sections & Primary Docs special format: "{DocNo} - {Name}"
+  // Note: Final specification not finalized, may not include doc number or use different formatting
 }
 
 export function buildRelationProperty(
@@ -400,7 +406,8 @@ export function buildRelationProperty(
 - Use `notion-database-properties-and-relationships.ts` for mappings
 - Handle database-specific property names
 - Build typed property objects for Notion API
-- Convert all Atlas UUIDs to Notion UUIDs in relations
+- Convert all Atlas UUIDs to Notion UUIDs in relations (if not done already in a previous step)
+- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES`
 
 **Tests:**
 
@@ -538,13 +545,14 @@ export async function createNotionPages(
   options: CreatePagesOptions,
 ): Promise<CreatePagesResult> {
   // 1. Sort documents by hierarchy (parents before children)
-  // 2. For each document in order:
+  // 2. For each document in order (no batching for better error handling):
   //    - Build complete property object
   //    - Set parent to database ID
   //    - Call Notion API: POST /pages
   //    - Extract new Notion page UUID
-  //    - Create UUID mapping entry
+  //    - Create UUID mapping entry: { atlas_document_uuid, notion_page_id }
   //    - Store in Supabase uuid_mapping table
+  //    - Make newly created IDs available for documents synced in same batch
   //    - Log to audit table
   // 3. Handle errors with partial success tracking
   // 4. Return created pages and mappings
@@ -554,17 +562,18 @@ export async function createNotionPages(
 **Key Logic:**
 
 - Respect hierarchical dependencies
-- Batch operations (50 pages per batch)
-- Rate limiting (3 requests/second)
+- Don't batch operations for more reliable error handling and better audit log
 - Store UUID mappings immediately
+- Make newly created Notion page IDs available during sync if referenced by other documents
 - Handle partial failures
 
 **Tests:**
 
 - Unit test: Create single page
 - Unit test: Create hierarchical pages (parent before child)
-- Integration test: Batch creation with rate limiting
+- Integration test: Sequential creation with error handling
 - Integration test: Partial failure recovery
+- Integration test: New page IDs available for same-sync references
 
 #### Task 5.3: Update Notion Pages
 
@@ -586,7 +595,7 @@ export async function updateNotionPages(
   //    - Call Notion API: PATCH /pages/{page_id}
   //    - Update relationships if changed
   //    - Log to audit table
-  // 2. Handle retry logic with exponential backoff
+  // 2. Handle retry logic with exponential backoff (already exists in our Notion client class)
   // 3. Return updated pages
 }
 ```
@@ -596,7 +605,7 @@ export async function updateNotionPages(
 - Only update changed fields (delta sync)
 - Look up Notion UUIDs via mapping
 - Update relationships separately
-- Retry on transient errors
+- Retry on transient errors (already exists in Notion client class)
 
 **Tests:**
 
@@ -618,28 +627,32 @@ export async function deleteNotionPages(
   deletedPages: NotionDatabasePage[],
   options: DeletePagesOptions,
 ): Promise<DeletePagesResult> {
-  // 1. For each deleted document:
+  // 1. Start from leaf nodes, traverse up tree as parents become leaves
+  // 2. For each deleted document:
   //    - Look up Notion page UUID
+  //    - Check if page has children (use efficient lookup map)
+  //    - If has children, prevent deletion to avoid cascading/orphans
   //    - Call Notion API: PATCH /pages/{page_id} with { archived: true }
-  //    - Preserve UUID mapping (don't delete)
+  //    - Delete UUID mapping in Supabase
   //    - Log to audit table
-  // 2. Handle cascading effects (re-parent or archive children)
   // 3. Return archived pages
 }
 ```
 
 **Key Logic:**
 
-- Soft delete (archive, don't permanently delete)
-- Preserve UUID mappings for history
-- Handle child documents appropriately
+- Archive pages (set archived: true)
+- Delete UUID mappings in Supabase (not preserve)
+- Start from leaf nodes to avoid cascading effects
+- Prevent deletion if page has children (check via efficient lookup map)
 - Log all deletions
 
 **Tests:**
 
 - Unit test: Archive single page
-- Integration test: Batch archival
-- Integration test: Handle child documents
+- Unit test: Prevent deletion of pages with children
+- Integration test: Leaf-to-root traversal deletion
+- Integration test: Handle child document checks
 
 ### Phase 6: Integration
 
@@ -815,7 +828,8 @@ app/server/atlas/sync/__tests__/
 
 - Return list of successful syncs
 - Return list of failed syncs with reasons
-- Enable re-running sync for failed documents only
+- Partial success tracking: Store successfully synced documents to avoid re-processing (?)
+- Consider simple approach: Show modal to user, on confirm reload page to retry remaining changes
 
 ### Rollback Strategy
 
@@ -823,7 +837,8 @@ app/server/atlas/sync/__tests__/
 
 **Actions:**
 
-- Attempt to restore previous state (if possible)
+- Rollback strategy optional if adds too much complexity
+- If implemented: Attempt to restore previous state
 - Archive newly created pages
 - Revert property changes to previous values
 - Log rollback attempt and result
@@ -833,6 +848,7 @@ app/server/atlas/sync/__tests__/
 - Rollback may not be 100% successful
 - Some changes may persist
 - Document manual cleanup steps if needed
+- Consider keeping it simple: show error and let user retry
 
 ## Progress Tracking & Audit Log
 
@@ -843,7 +859,8 @@ app/server/atlas/sync/__tests__/
 - Callback function in sync options
 - Emit progress events: `{ phase, completed, total, currentDocument }`
 - Update UI in real-time via WebSocket or polling
-- Store progress state in Supabase for resume capability
+- Transaction-like behavior: Validate all changes before applying (prevent partial corruption)
+- Simple interruption handling: Modal → reload page on confirm
 
 **UI Display:**
 
@@ -851,7 +868,7 @@ app/server/atlas/sync/__tests__/
 - Current phase indicator
 - Document counter (e.g., "45/100 documents synced")
 - Estimated time remaining
-- Cancel button (graceful cancellation)
+- If interrupted: Show modal, on user confirm reload page to reload remaining syncable changes (keep it simple)
 
 ### Audit Log
 
@@ -912,36 +929,19 @@ CREATE TABLE notion_api_audit_log (
 
 **Strategy:**
 
-- Process 50 documents per batch
-- Delay between batches: 350ms (ensures ~3 req/sec)
-- Parallel processing within batch (up to 3 concurrent)
-- Progress tracking per batch
-
-**Code Example:**
-
-```typescript
-async function processBatch(documents: Document[], batchSize: number) {
-  for (let i = 0; i < documents.length; i += batchSize) {
-    const batch = documents.slice(i, i + batchSize);
-
-    // Process batch with concurrency limit
-    const results = await pLimit(3)(batch.map((doc) => () => processDocument(doc)));
-
-    // Wait before next batch
-    if (i + batchSize < documents.length) {
-      await delay(350);
-    }
-  }
-}
-```
+- Don't batch operations for more reliable error handling
+- Process documents sequentially for better audit log of Notion API calls
+- Better error isolation when issues occur
+- Clearer tracking of what succeeded vs failed
 
 ### Performance Targets
 
 - Validation: < 5 seconds for full Atlas
 - Transformation: < 10 seconds for full Atlas
 - Change detection: < 5 seconds
-- Sync operations: ~2 minutes per 1000 documents (limited by API rate)
-- Total sync time: ~15-20 minutes for full Atlas (~7000 documents)
+- Sync operations: Sequential processing (no batching), limited by API rate
+- Total sync time: Will vary based on number of changes and API response times
+- Progress tracking: Log completion percentage and estimated time remaining
 
 ## Future Enhancements
 
