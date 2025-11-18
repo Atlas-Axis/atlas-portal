@@ -92,6 +92,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
     },
     childRelationships: {
       [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Subdocs',
+      [ATLAS_DATABASES.AGENTS]: 'Agent Scope Database',
       [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
