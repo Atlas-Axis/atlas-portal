@@ -39,15 +39,29 @@ describe('sync-actions', () => {
     vi.clearAllMocks();
   });
 
-  // Helper to create an Atlas document UUID to Atlas database name map from documents
-  function createDatabaseMap(documents: ExportAtlasTreeBaseDocument[]): Map<string, AtlasDatabaseName> {
+  // Helper to create an Atlas document UUID to Atlas database name map from documents with proper Core/ADC handling
+  function createDatabaseMap(
+    documents: ExportAtlasTreeBaseDocument[],
+    options: { coreDatabase?: AtlasDatabaseName } = {},
+  ): Map<string, AtlasDatabaseName> {
     const map = new Map<string, AtlasDatabaseName>();
+    const coreDatabase = options.coreDatabase || 'Sections & Primary Docs';
+
+    // First pass: map all Core and ADC documents to the specified database
     for (const doc of documents) {
-      if (doc.uuid) {
+      if (doc.uuid && (doc.type === 'Core' || doc.type === 'Active Data Controller')) {
+        map.set(doc.uuid, coreDatabase);
+      }
+    }
+
+    // Second pass: map all other document types using getDatabaseNameFromDocument
+    for (const doc of documents) {
+      if (doc.uuid && doc.type !== 'Core' && doc.type !== 'Active Data Controller') {
         const database = getDatabaseNameFromDocument(doc.type, doc.uuid, map);
         map.set(doc.uuid, database);
       }
     }
+
     return map;
   }
 
