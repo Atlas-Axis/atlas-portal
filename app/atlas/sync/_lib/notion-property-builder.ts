@@ -11,7 +11,6 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
-import { getDatabaseNameFromDocument } from './atlas-database-mapper';
 
 /**
  * Helper functions for formatting Notion property values
@@ -277,6 +276,7 @@ export function addInterDatabaseRelationshipProperties(
   ancestry: string[] | undefined,
   childDatabaseName: AtlasDatabaseName,
   uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
+  uuidToDatabase: Map<string, AtlasDatabaseName>,
 ): Record<string, unknown> {
   const properties: Record<string, unknown> = {};
 
@@ -310,10 +310,15 @@ export function addInterDatabaseRelationshipProperties(
     return properties;
   }
 
-  // Derive parent's database name from its type and ancestry
-  // Get parent's ancestry (all ancestors except the last one which is the parent itself)
-  const parentAncestry = ancestry.slice(0, -1);
-  const parentDatabaseName = getDatabaseNameFromDocument(parentDoc.type, parentAncestry);
+  // Derive parent's database name from database tracking map
+  const parentDatabaseName = uuidToDatabase.get(parentId);
+  if (!parentDatabaseName) {
+    // Parent database not found - invalid reference
+    const message = 'Parent database not found for inter-database relationship properties';
+    console.error(message, { childDatabaseName, parentId, ancestry });
+    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentId, ancestry } });
+    return properties;
+  }
 
   // Only set relationship if parent is in a different database (cross-database relationship)
   if (parentDatabaseName === childDatabaseName) {
