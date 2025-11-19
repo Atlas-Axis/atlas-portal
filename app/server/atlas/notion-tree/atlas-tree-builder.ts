@@ -33,7 +33,6 @@ import {
  * Process steps:
  * 1. Load nesting fix mappings
  * 2. Apply nesting overrides to flat array
- * 2b. Nest root Agent documents under the Agent section
  * 3. Create lookup maps for O(1) access
  * 4. Generate normalized document names
  * 5. Find root Scope documents
@@ -89,33 +88,14 @@ export async function buildNotionAtlasTree(
   // This must happen before tree building so orphaned node detection is accurate - this may fix previously orphaned nodes' parents
   const pagesWithOverrides = applyNestingOverrides(allPages, nestingMappings);
 
-  // Step 2b: Nest root Agent documents under the Agent section
-  // Root agents are those with parent_notion_page_id === null (no internal parent within Agent Scope Database)
-  // These are artificially nested under the designated Agent section for proper display hierarchy
-  // Dynamic import used here to avoid circular dependency: constants.ts → atlas-tree-builder.ts → nest-root-agent-documents-under-agent-section.ts → constants.ts
-  const { nestRootAgentDocumentsUnderAgentSection } = await import(
-    '@/app/server/atlas/nest-root-agent-documents-under-agent-section'
-  );
-  const rootAgentDocumentIds = pagesWithOverrides
-    .filter(
-      (page: NotionDatabasePage) =>
-        page.parent_notion_page_id === null && page.atlas_database_name === 'Agent Scope Database',
-    )
-    .map((page: NotionDatabasePage) => page.notion_page_id);
-
-  const pagesWithAgentNesting = await nestRootAgentDocumentsUnderAgentSection({
-    allPages: pagesWithOverrides,
-    rootAgentDocumentIds,
-  });
-
   // Step 3: Create lookup maps for efficient O(1) access
-  const lookupMaps: NotionAtlasTreeLookupMaps = createLookupMaps(pagesWithAgentNesting);
+  const lookupMaps: NotionAtlasTreeLookupMaps = createLookupMaps(pagesWithOverrides);
 
   // Step 4: Normalize document names for all nodes
   generateNormalizedDocumentNames(lookupMaps);
 
   // Step 5: Find root Scope documents
-  const unsortedRootScopes = pagesWithAgentNesting.filter((page) => page.atlas_database_name === 'Scopes');
+  const unsortedRootScopes = pagesWithOverrides.filter((page) => page.atlas_database_name === 'Scopes');
 
   if (unsortedRootScopes.length === 0) {
     throw new Error('No root Scope documents found. Atlas tree requires at least one root Scope.');
@@ -162,7 +142,7 @@ export async function buildNotionAtlasTree(
   }
 
   // Step 7: Find orphaned nodes (nodes not connected to any root tree, after overrides have been applied)
-  const orphanedNodes = findOrphanedNodes(pagesWithAgentNesting, lookupMaps, scopeTrees);
+  const orphanedNodes = findOrphanedNodes(pagesWithOverrides, lookupMaps, scopeTrees);
 
   if (verbose) {
     console.log(`📊 Found ${orphanedNodes.length} orphaned nodes`);

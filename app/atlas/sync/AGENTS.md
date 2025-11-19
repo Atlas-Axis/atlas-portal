@@ -184,8 +184,8 @@ app/atlas/sync/
    - Receives full AtlasDiffResult with document lookup maps
    - Passes document maps to all server actions for Notion database derivation
 4. **Server Actions**: Make Notion API calls (update, create, delete)
-   - Derive Notion database names from Atlas document type and ancestry
-   - Handle Core/Active Data Controller disambiguation using ancestry
+   - Derive Notion database names from Atlas document type and database tracking maps
+   - Handle Core/Active Data Controller disambiguation using database tracking
 5. **Client**: Updates UI with progress and logs
 
 ### Testing
@@ -232,21 +232,39 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 
 ## Implementation Notes
 
-### Database Derivation (No Supabase Dependency)
+### Database Derivation (Database Tracking)
 
-The sync system derives Atlas database names from document types and ancestry without querying Supabase:
+The sync system uses **database tracking from the Export Tree structure** for reliable database identification:
 
-- **Most types**: Direct mapping (e.g., Scope → Scopes, Article → Articles)
-- **Core/Active Data Controller**: Disambiguated by checking ancestry against known agent root section UUIDs
-  - If any ancestor matches agent roots → `Agent Scope Database`
-  - Otherwise → `Sections & Primary Docs`
+**How it works:**
+
+1. **Markdown Import** (`atlas-markdown-importer.ts`): When parsing markdown into Export Tree format, the `mapTypeToDatabase()` function determines each document's database:
+   - Most types map directly (e.g., Scope → Scopes, Article → Articles)
+   - Core/ADC documents use parent detection:
+     - If immediate parent name is `AGENT_ROOT_DOCUMENT_NAME` → Agent Scope Database
+     - If any ancestor is from Agent Scope Database → Agent Scope Database
+     - Otherwise → Sections & Primary Docs
+   - Database information is encoded as collection names in the Export Tree
+
+2. **Diff Stage** (`atlas-diff.ts`): During diffing, `buildLookupMaps()` simply reads the collection names from the Export Tree and creates a `uuidToDatabase` tracking map:
+   - `getDatabaseFromCollectionName()` converts collection name to database name
+   - No additional Agent Scope Database detection occurs here
+
+3. **Sync Stage**: The sync library receives the `uuidToDatabase` map and uses direct UUID lookup to identify each document's database - no name checks or ancestry traversal needed
+
+This architecture separates concerns properly:
+
+- **Detection** happens once during markdown import
+- **Tracking** happens during diff (reading pre-determined collection names)
+- **Usage** happens during sync (simple map lookup)
 
 This approach:
 
 - Works for both existing documents (in Supabase) and new documents (only in Markdown)
 - Eliminates the performance overhead of loading page mappings from Supabase
-- Matches the proven logic from `atlas-markdown-importer.ts`
+- Provides type-safe, reliable database identification based on tree structure
 - Enables correct synchronization of new documents being added from Markdown that don't exist in Supabase yet
+- Uses natural Notion relationships established via relationship properties
 
 ## Related Documentation
 

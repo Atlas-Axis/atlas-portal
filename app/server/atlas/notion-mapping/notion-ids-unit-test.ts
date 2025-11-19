@@ -46,33 +46,3 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
  * All Master Status option IDs as an array
  */
 export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
-
-/**
- * The specific Section & Primary Doc page ID under which root Agent documents will be nested
- * (Prime Agents ancestor section)
- */
-export const AGENT_ROOT_SECTION_UUID_FOR_NESTING = '1b4f2ff0-8d73-8082-862b-dcd586862638';
-
-/**
- * UUIDs of agent root documents whose subtrees can be omitted via --omit-agents
- * - First UUID: Prime Agents ancestor section
- * - Second UUID: Executor Agents ancestor section
- */
-export const AGENT_ROOT_SECTION_UUIDS = new Set<string>([
-  '1b4f2ff0-8d73-8082-862b-dcd586862638', // Prime Agents
-  '1b4f2ff0-8d73-802f-a054-fece4d8731a4', // Executor Agents
-]);
-
-/**
- * Map Notion UUIDs of agent root sections to Atlas UUIDs
- */
-export const AGENT_ROOT_SECTION_UUIDS_MAPPED = new Map<string, string>([
-  ['1b4f2ff0-8d73-8082-862b-dcd586862638', '9fb7f1cc-f60b-4195-892d-5e540f969973'], // Prime Agents
-  ['1b4f2ff0-8d73-802f-a054-fece4d8731a4', 'df62511d-afe5-42db-8bd4-6452c5a0f464'], // Executor Agents
-]);
-
-/**
- * This is the specific Article Notion page ID under which agent parent section(s) is/are nested
- * This is not the direct parent of the agent documents, but their common grandparent that they all inherit from
- */
-export const AGENT_ANCESTOR_ARTICLE_ID = '1b4f2ff0-8d73-805a-af66-de296b4aed33';

@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { AGENT_ROOT_SECTION_UUIDS_MAPPED, AGENT_ROOT_SECTION_UUID_FOR_NESTING } from '@/app/server/atlas/constants';
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 
 function md(strings: TemplateStringsArray, ...values: Array<string | number>): string {
@@ -173,24 +172,41 @@ Variation guidance text
     expect(variation.scenario_variation_additional_guidance).toBe('Variation guidance text');
   });
 
-  it('assigns Core under agent root to Agent Scope Database collection', () => {
+  it('assigns Core under Agent Scope Database parent to Agent Scope Database collection', () => {
     const input = md`
-#### A.6.1.1 - Agent Section [Section]  <!-- UUID: ${AGENT_ROOT_SECTION_UUIDS_MAPPED.get(AGENT_ROOT_SECTION_UUID_FOR_NESTING) ?? ''} -->
+### A.6.1 - List Of Prime Agent Artifacts [Section] <!-- UUID: 00000000-0000-0000-0000-000000000001 -->
+
+Agent root section
+
+#### A.6.1.1 - Agent Root [Core] <!-- UUID: 11111111-1111-1111-1111-111111111111 -->
 
 Parent content
 
-##### A.6.1.1.1 - Agent Core Doc [Core]  <!-- UUID: 00000000-0000-0000-0000-000000000099 -->
+##### A.6.1.1.1 - Agent Core Doc [Core] <!-- UUID: 22222222-2222-2222-2222-222222222222 -->
 
-Core content`;
+Core content
+    `;
 
     const trees = parseAtlasMarkdown(input);
     expect(trees).toHaveLength(1);
-    const parent = trees[0] as {
+    const agentSection = trees[0] as {
       type: string;
-      agent_scope_database: Array<{ type: string; content: string }>;
+      name: string;
+      agent_scope_database: Array<{
+        type: string;
+        content: string;
+        agent_scope_database: Array<{ type: string; content: string }>;
+      }>;
     };
-    expect(parent.type).toBe('Section');
-    // Since the child Core resolves to Agent Scope Database, it should appear under agent_scope_database
+    expect(agentSection.type).toBe('Section');
+    expect(agentSection.name).toBe('List Of Prime Agent Artifacts');
+    expect(Array.isArray(agentSection.agent_scope_database)).toBe(true);
+    expect(agentSection.agent_scope_database.length).toBe(1);
+
+    const parent = agentSection.agent_scope_database[0];
+    expect(parent.type).toBe('Core');
+    expect(parent.content).toContain('Parent content');
+    // Since the child Core's parent is from Agent Scope Database, it should also be Agent Scope Database
     expect(Array.isArray(parent.agent_scope_database)).toBe(true);
     expect(parent.agent_scope_database.length).toBe(1);
     const child = parent.agent_scope_database[0];

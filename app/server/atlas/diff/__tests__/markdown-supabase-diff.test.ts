@@ -6,6 +6,7 @@ import {
   compareDocumentFields,
   detectChanges,
   extractAllUuids,
+  getDatabaseFromCollectionName,
   stripChildCollections,
 } from '../atlas-diff';
 
@@ -81,8 +82,50 @@ describe('stripChildCollections', () => {
   });
 });
 
+describe('getDatabaseFromCollectionName', () => {
+  it('maps articles collection to Articles database', () => {
+    expect(getDatabaseFromCollectionName('articles')).toBe('Articles');
+  });
+
+  it('maps sections_and_primary_docs collection to Sections & Primary Docs database', () => {
+    expect(getDatabaseFromCollectionName('sections_and_primary_docs')).toBe('Sections & Primary Docs');
+  });
+
+  it('maps agent_scope_database collection to Agent Scope Database', () => {
+    expect(getDatabaseFromCollectionName('agent_scope_database')).toBe('Agent Scope Database');
+  });
+
+  it('maps annotations collection to Annotations database', () => {
+    expect(getDatabaseFromCollectionName('annotations')).toBe('Annotations');
+  });
+
+  it('maps tenets collection to Tenets database', () => {
+    expect(getDatabaseFromCollectionName('tenets')).toBe('Tenets');
+  });
+
+  it('maps scenarios collection to Scenarios database', () => {
+    expect(getDatabaseFromCollectionName('scenarios')).toBe('Scenarios');
+  });
+
+  it('maps scenario_variations collection to Scenario Variations database', () => {
+    expect(getDatabaseFromCollectionName('scenario_variations')).toBe('Scenario Variations');
+  });
+
+  it('maps active_data collection to Active Data database', () => {
+    expect(getDatabaseFromCollectionName('active_data')).toBe('Active Data');
+  });
+
+  it('maps needed_research collection to Needed Research database', () => {
+    expect(getDatabaseFromCollectionName('needed_research')).toBe('Needed Research');
+  });
+
+  it('throws error for unknown collection name', () => {
+    expect(() => getDatabaseFromCollectionName('invalid_collection')).toThrow('Unknown collection name');
+  });
+});
+
 describe('buildLookupMaps', () => {
-  it('builds UUID, doc_no, and ancestry lookup maps', () => {
+  it('builds UUID, doc_no, ancestry, and database lookup maps', () => {
     const scopeTrees: ExportAtlasTreeScopeTrees = [
       {
         type: 'Scope',
@@ -112,6 +155,7 @@ describe('buildLookupMaps', () => {
     expect(maps.uuidToDoc.size).toBe(2);
     expect(maps.docNoToDoc.size).toBe(2);
     expect(maps.uuidToAncestry.size).toBe(2);
+    expect(maps.uuidToDatabase.size).toBe(2);
 
     expect(maps.uuidToDoc.get('uuid-1')?.doc_no).toBe('A.1');
     expect(maps.uuidToDoc.get('uuid-2')?.doc_no).toBe('A.1.1');
@@ -122,6 +166,10 @@ describe('buildLookupMaps', () => {
     expect(maps.uuidToAncestry.get('uuid-1')).toEqual([]);
     // Child document has parent in ancestry
     expect(maps.uuidToAncestry.get('uuid-2')).toEqual(['uuid-1']);
+
+    // Database tracking
+    expect(maps.uuidToDatabase.get('uuid-1')).toBe('Scopes');
+    expect(maps.uuidToDatabase.get('uuid-2')).toBe('Articles');
   });
 
   it('correctly tracks ancestry for nested documents', () => {
@@ -229,7 +277,340 @@ describe('buildLookupMaps', () => {
     expect(maps.uuidToDoc.size).toBe(0);
     expect(maps.docNoToDoc.size).toBe(1);
     expect(maps.uuidToAncestry.size).toBe(0);
+    expect(maps.uuidToDatabase.size).toBe(0);
     expect(maps.docNoToDoc.get('A.1')?.uuid).toBe(null);
+  });
+
+  it('correctly tracks databases for Core documents in Sections & Primary Docs', () => {
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
+      {
+        type: 'Scope',
+        doc_no: 'A.1',
+        name: 'Scope 1',
+        uuid: 'uuid-scope',
+        content: 'Content',
+        last_modified: '2025-01-01',
+        articles: [
+          {
+            type: 'Article',
+            doc_no: 'A.1.1',
+            name: 'Article 1',
+            uuid: 'uuid-article',
+            content: 'Content',
+            last_modified: '2025-01-01',
+            sections_and_primary_docs: [
+              {
+                type: 'Section',
+                doc_no: 'A.1.1.1',
+                name: 'Section 1',
+                uuid: 'uuid-section',
+                content: 'Content',
+                last_modified: '2025-01-01',
+                sections_and_primary_docs: [
+                  {
+                    type: 'Core',
+                    doc_no: 'A.1.1.1.1',
+                    name: 'Core Doc',
+                    uuid: 'uuid-core',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    sections_and_primary_docs: [],
+                    agent_scope_database: [],
+                    annotations: [],
+                    tenets: [],
+                    active_data: [],
+                    needed_research: [],
+                  },
+                ],
+                agent_scope_database: [],
+                annotations: [],
+                tenets: [],
+                active_data: [],
+                needed_research: [],
+              },
+            ],
+            annotations: [],
+            needed_research: [],
+          },
+        ],
+      },
+    ];
+
+    const maps = buildLookupMaps(scopeTrees);
+
+    // All documents from sections_and_primary_docs collection should map to that database
+    expect(maps.uuidToDatabase.get('uuid-section')).toBe('Sections & Primary Docs');
+    expect(maps.uuidToDatabase.get('uuid-core')).toBe('Sections & Primary Docs');
+  });
+
+  it('correctly tracks databases for Core documents in Agent Scope Database', () => {
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
+      {
+        type: 'Scope',
+        doc_no: 'A.1',
+        name: 'Scope 1',
+        uuid: 'uuid-scope',
+        content: 'Content',
+        last_modified: '2025-01-01',
+        articles: [
+          {
+            type: 'Article',
+            doc_no: 'A.1.1',
+            name: 'Article 1',
+            uuid: 'uuid-article',
+            content: 'Content',
+            last_modified: '2025-01-01',
+            sections_and_primary_docs: [
+              {
+                type: 'Section',
+                doc_no: 'A.1.1.1',
+                name: 'List Of Prime Agent Artifacts',
+                uuid: 'uuid-section',
+                content: 'Content',
+                last_modified: '2025-01-01',
+                sections_and_primary_docs: [],
+                agent_scope_database: [
+                  {
+                    type: 'Core',
+                    doc_no: 'A.1.1.1.1',
+                    name: 'Agent Core',
+                    uuid: 'uuid-agent-core',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    agent_scope_database: [
+                      {
+                        type: 'Core',
+                        doc_no: 'A.1.1.1.1.1',
+                        name: 'Nested Agent Core',
+                        uuid: 'uuid-nested-agent-core',
+                        content: 'Content',
+                        last_modified: '2025-01-01',
+                        agent_scope_database: [],
+                        annotations: [],
+                        tenets: [],
+                        active_data: [],
+                        needed_research: [],
+                      },
+                    ],
+                    annotations: [],
+                    tenets: [],
+                    active_data: [],
+                    needed_research: [],
+                  },
+                ],
+                annotations: [],
+                tenets: [],
+                active_data: [],
+                needed_research: [],
+              },
+            ],
+            annotations: [],
+            needed_research: [],
+          },
+        ],
+      },
+    ];
+
+    const maps = buildLookupMaps(scopeTrees);
+
+    // Section is in sections_and_primary_docs collection
+    expect(maps.uuidToDatabase.get('uuid-section')).toBe('Sections & Primary Docs');
+
+    // Core documents from agent_scope_database collection should map to Agent Scope Database
+    expect(maps.uuidToDatabase.get('uuid-agent-core')).toBe('Agent Scope Database');
+    expect(maps.uuidToDatabase.get('uuid-nested-agent-core')).toBe('Agent Scope Database');
+  });
+
+  it('correctly tracks databases for Active Data Controller documents', () => {
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
+      {
+        type: 'Scope',
+        doc_no: 'A.1',
+        name: 'Scope 1',
+        uuid: 'uuid-scope',
+        content: 'Content',
+        last_modified: '2025-01-01',
+        articles: [
+          {
+            type: 'Article',
+            doc_no: 'A.1.1',
+            name: 'Article 1',
+            uuid: 'uuid-article',
+            content: 'Content',
+            last_modified: '2025-01-01',
+            sections_and_primary_docs: [
+              {
+                type: 'Section',
+                doc_no: 'A.1.1.1',
+                name: 'Section 1',
+                uuid: 'uuid-section',
+                content: 'Content',
+                last_modified: '2025-01-01',
+                sections_and_primary_docs: [
+                  {
+                    type: 'Active Data Controller',
+                    doc_no: 'A.1.1.1.1',
+                    name: 'ADC in Sections',
+                    uuid: 'uuid-adc-sections',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    sections_and_primary_docs: [],
+                    agent_scope_database: [],
+                    annotations: [],
+                    tenets: [],
+                    active_data: [],
+                    needed_research: [],
+                  },
+                ],
+                agent_scope_database: [
+                  {
+                    type: 'Active Data Controller',
+                    doc_no: 'A.1.1.1.2',
+                    name: 'ADC in Agent DB',
+                    uuid: 'uuid-adc-agent',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    agent_scope_database: [],
+                    annotations: [],
+                    tenets: [],
+                    active_data: [],
+                    needed_research: [],
+                  },
+                ],
+                annotations: [],
+                tenets: [],
+                active_data: [],
+                needed_research: [],
+              },
+            ],
+            annotations: [],
+            needed_research: [],
+          },
+        ],
+      },
+    ];
+
+    const maps = buildLookupMaps(scopeTrees);
+
+    // ADC from sections_and_primary_docs collection
+    expect(maps.uuidToDatabase.get('uuid-adc-sections')).toBe('Sections & Primary Docs');
+
+    // ADC from agent_scope_database collection
+    expect(maps.uuidToDatabase.get('uuid-adc-agent')).toBe('Agent Scope Database');
+  });
+
+  it('correctly tracks databases for all document types', () => {
+    const scopeTrees: ExportAtlasTreeScopeTrees = [
+      {
+        type: 'Scope',
+        doc_no: 'A.1',
+        name: 'Scope 1',
+        uuid: 'uuid-scope',
+        content: 'Content',
+        last_modified: '2025-01-01',
+        articles: [
+          {
+            type: 'Article',
+            doc_no: 'A.1.1',
+            name: 'Article 1',
+            uuid: 'uuid-article',
+            content: 'Content',
+            last_modified: '2025-01-01',
+            sections_and_primary_docs: [
+              {
+                type: 'Section',
+                doc_no: 'A.1.1.1',
+                name: 'Section 1',
+                uuid: 'uuid-section',
+                content: 'Content',
+                last_modified: '2025-01-01',
+                sections_and_primary_docs: [],
+                agent_scope_database: [],
+                annotations: [
+                  {
+                    type: 'Annotation',
+                    doc_no: '.0.3.1',
+                    name: 'Annotation 1',
+                    uuid: 'uuid-annotation',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    needed_research: [],
+                  },
+                ],
+                tenets: [
+                  {
+                    type: 'Action Tenet',
+                    doc_no: '.0.4.1',
+                    name: 'Tenet 1',
+                    uuid: 'uuid-tenet',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    scenarios: [
+                      {
+                        type: 'Scenario',
+                        doc_no: '.1.1',
+                        name: 'Scenario 1',
+                        uuid: 'uuid-scenario',
+                        content: 'Content',
+                        last_modified: '2025-01-01',
+                        scenario_variations: [
+                          {
+                            type: 'Scenario Variation',
+                            doc_no: '.var1',
+                            name: 'Variation 1',
+                            uuid: 'uuid-variation',
+                            content: 'Content',
+                            last_modified: '2025-01-01',
+                            needed_research: [],
+                          },
+                        ],
+                        needed_research: [],
+                      },
+                    ],
+                    needed_research: [],
+                  },
+                ],
+                active_data: [
+                  {
+                    type: 'Active Data',
+                    doc_no: '.0.6.1',
+                    name: 'Active Data 1',
+                    uuid: 'uuid-active-data',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                    needed_research: [],
+                  },
+                ],
+                needed_research: [
+                  {
+                    type: 'Needed Research',
+                    doc_no: 'NR-1',
+                    name: 'Research 1',
+                    uuid: 'uuid-nr',
+                    content: 'Content',
+                    last_modified: '2025-01-01',
+                  },
+                ],
+              },
+            ],
+            annotations: [],
+            needed_research: [],
+          },
+        ],
+      },
+    ];
+
+    const maps = buildLookupMaps(scopeTrees);
+
+    expect(maps.uuidToDatabase.get('uuid-scope')).toBe('Scopes');
+    expect(maps.uuidToDatabase.get('uuid-article')).toBe('Articles');
+    expect(maps.uuidToDatabase.get('uuid-section')).toBe('Sections & Primary Docs');
+    expect(maps.uuidToDatabase.get('uuid-annotation')).toBe('Annotations');
+    expect(maps.uuidToDatabase.get('uuid-tenet')).toBe('Tenets');
+    expect(maps.uuidToDatabase.get('uuid-scenario')).toBe('Scenarios');
+    expect(maps.uuidToDatabase.get('uuid-variation')).toBe('Scenario Variations');
+    expect(maps.uuidToDatabase.get('uuid-active-data')).toBe('Active Data');
+    expect(maps.uuidToDatabase.get('uuid-nr')).toBe('Needed Research');
   });
 });
 
@@ -451,6 +832,7 @@ describe('detectChanges', () => {
       uuidToDoc: new Map(),
       docNoToDoc: new Map(),
       uuidToAncestry: new Map(),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -461,6 +843,7 @@ describe('detectChanges', () => {
         ['A.1', { type: 'Scope', doc_no: 'A.1', name: 'New Scope', uuid: 'uuid-1', content: '', last_modified: '' }],
       ]),
       uuidToAncestry: new Map([['uuid-1', []]]),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(), new Set(['uuid-1']));
@@ -486,12 +869,14 @@ describe('detectChanges', () => {
         ['A.1', { type: 'Scope', doc_no: 'A.1', name: 'Old Scope', uuid: 'uuid-1', content: '', last_modified: '' }],
       ]),
       uuidToAncestry: new Map([['uuid-1', []]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
       uuidToDoc: new Map(),
       docNoToDoc: new Map(),
       uuidToAncestry: new Map(),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set());
@@ -523,6 +908,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', []]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -539,6 +925,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', []]]),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -571,6 +958,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -588,6 +976,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -623,6 +1012,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -643,6 +1033,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a2']]]), // Different parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -689,6 +1080,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-nr1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -719,6 +1111,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-nr1', ['uuid-scope', 'uuid-a2']]]), // Different parent (moved from A.1.1 to A.1.2)
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-nr1']), new Set(['uuid-nr1']));
@@ -743,12 +1136,14 @@ describe('detectChanges', () => {
       uuidToDoc: new Map(),
       docNoToDoc: new Map(),
       uuidToAncestry: new Map(),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
       uuidToDoc: new Map(),
       docNoToDoc: new Map(),
       uuidToAncestry: new Map(),
+      uuidToDatabase: new Map(),
     };
 
     // UUID exists in set but not in map (data inconsistency)
@@ -781,6 +1176,7 @@ describe('detectChanges', () => {
         ['uuid-1', []],
         ['uuid-2', ['uuid-1']],
       ]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -808,6 +1204,7 @@ describe('detectChanges', () => {
         ['uuid-1', []],
         ['uuid-3', ['uuid-1']],
       ]),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1', 'uuid-2']), new Set(['uuid-1', 'uuid-3']));
@@ -858,6 +1255,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -888,6 +1286,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a2']]]), // Different parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -942,6 +1341,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -972,6 +1372,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -1026,6 +1427,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -1056,6 +1458,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a2']]]),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -1100,6 +1503,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -1130,6 +1534,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -1160,6 +1565,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -1176,6 +1582,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a2']]]), // Different parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -1208,6 +1615,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -1224,6 +1632,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
@@ -1270,6 +1679,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-nr1', ['uuid-scope', 'uuid-a1']]]),
+      uuidToDatabase: new Map(),
     };
 
     const newMaps: LookupMaps = {
@@ -1300,6 +1710,7 @@ describe('detectChanges', () => {
         ],
       ]),
       uuidToAncestry: new Map([['uuid-nr1', ['uuid-scope', 'uuid-a2']]]), // Different parent
+      uuidToDatabase: new Map(),
     };
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-nr1']), new Set(['uuid-nr1']));

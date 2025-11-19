@@ -1,5 +1,6 @@
 'use server';
 
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -29,10 +30,12 @@ export interface SyncActionResult {
  * Handles all document types including extra fields.
  *
  * @param change The change object containing the new values
+ * @param originalIdsToDatabase Map of UUIDs to database names for original documents
  * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page links in markdown
  */
 export async function updateNotionPageContent(
   change: AtlasDocumentChange,
+  originalIdsToDatabase: Map<string, AtlasDatabaseName>,
   uuidMappings: UuidMappings,
 ): Promise<SyncActionResult> {
   try {
@@ -48,8 +51,8 @@ export async function updateNotionPageContent(
       return { success: false, error: 'Missing old values for database derivation' };
     }
 
-    // Derive database name from document type and ancestry
-    const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.oldAncestry);
+    // Derive database name from document type and database tracking map
+    const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
     // Build Notion properties from the document (converts markdown to rich text)
     const properties = buildNotionProperties(change.newValues, databaseName, uuidMappings);
@@ -81,11 +84,13 @@ export async function updateNotionPageContent(
  *
  * @param change The change object containing the new document
  * @param newIdsToDocuments Map of UUIDs to document objects for database derivation
+ * @param newIdsToDatabase Map of UUIDs to database names for new documents
  * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page links in markdown
  */
 export async function createNotionDatabasePage(
   change: AtlasDocumentChange,
   newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>,
+  newIdsToDatabase: Map<string, AtlasDatabaseName>,
   uuidMappings: UuidMappings,
 ): Promise<SyncActionResult> {
   try {
@@ -95,13 +100,17 @@ export async function createNotionDatabasePage(
 
     const doc = change.newValues;
 
-    // Derive database name from document type and ancestry
-    const databaseName = getDatabaseNameFromDocument(doc.type, change.newAncestry);
+    if (!doc.uuid) {
+      return { success: false, error: 'Missing document UUID' };
+    }
+
+    // Derive database name from document type and database tracking map
+    const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid, newIdsToDatabase);
     const databaseId = getNotionDatabaseIdForDatabaseName(databaseName);
 
     // Get internal parent page ID (only if parent is in the same database)
     // Returns null for cross-database parents or when no parent exists - both are valid scenarios
-    const parentPageId = getInternalParentPageIdFromAncestry(change.newAncestry, databaseName, newIdsToDocuments);
+    const parentPageId = getInternalParentPageIdFromAncestry(change.newAncestry, databaseName, newIdsToDatabase);
 
     // Validate relationship parent exists ONLY if one is specified and it's in the same database
     // Skip validation when parentPageId is null (root-level or cross-database) - both are valid
@@ -132,6 +141,7 @@ export async function createNotionDatabasePage(
       change.newAncestry,
       databaseName,
       newIdsToDocuments,
+      newIdsToDatabase,
     );
 
     // Validate inter-database parent exists (if one was found)
@@ -193,7 +203,10 @@ export async function createNotionDatabasePage(
  * Deletes (archives) a Notion page.
  * Verifies the page has no children before deletion.
  */
-export async function deleteNotionPage(change: AtlasDocumentChange): Promise<SyncActionResult> {
+export async function deleteNotionPage(
+  change: AtlasDocumentChange,
+  originalIdsToDatabase: Map<string, AtlasDatabaseName>,
+): Promise<SyncActionResult> {
   try {
     if (!change.uuid) {
       return { success: false, error: 'Missing page UUID' };
@@ -204,7 +217,7 @@ export async function deleteNotionPage(change: AtlasDocumentChange): Promise<Syn
     }
 
     // Check if page has children
-    const hasChildren = await pageHasChildren(change.uuid, change.oldValues, change.oldAncestry);
+    const hasChildren = await pageHasChildren(change.uuid, change.oldValues, originalIdsToDatabase);
     if (hasChildren) {
       return {
         success: false,
@@ -257,16 +270,16 @@ export async function validatePageExists(pageId: string): Promise<boolean> {
  *
  * @param pageId The UUID of the page to check
  * @param pageDocument The document object for database derivation
- * @param pageAncestry The ancestry array for database derivation
+ * @param originalIdsToDatabase Map of UUIDs to database names for original documents
  */
 async function pageHasChildren(
   pageId: string,
   pageDocument: ExportAtlasTreeBaseDocument,
-  pageAncestry: string[] | undefined,
+  originalIdsToDatabase: Map<string, AtlasDatabaseName>,
 ): Promise<boolean> {
   try {
-    // Derive database name from document type and ancestry
-    const databaseName = getDatabaseNameFromDocument(pageDocument.type, pageAncestry);
+    // Derive database name from document type and database tracking map
+    const databaseName = getDatabaseNameFromDocument(pageDocument.type, pageId, originalIdsToDatabase);
 
     // Get all child relationship property names for this database
     // e.g., "Subdocs", "Annotations", "Tenets", "Sub-item", etc.

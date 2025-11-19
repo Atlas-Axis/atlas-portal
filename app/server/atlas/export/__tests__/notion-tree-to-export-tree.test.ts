@@ -413,21 +413,6 @@ describe('notionTreeNodeToExportTreeNode', () => {
     expect(Object.keys(result)).not.toContain('articles');
   });
 
-  it('omitAgents option prunes agent roots (keeps base only)', async () => {
-    const { AGENT_ROOT_SECTION_UUIDS } = await import('@/app/server/atlas/constants');
-    const agentRootId = Array.from(AGENT_ROOT_SECTION_UUIDS)[0];
-    const child = makeNode({ atlas_database_name: ATLAS_DATABASES.AGENTS, atlas_document_type: 'Core' });
-    const agentRoot = makeNode({
-      atlas_database_name: ATLAS_DATABASES.AGENTS,
-      atlas_document_type: 'Core',
-      notion_page_id: agentRootId,
-      agentScopeDocs: [child],
-    });
-    const result = notionTreeNodeToExportTreeNode(agentRoot, uuidMappings, { omitAgents: true });
-    expect(result.type).toBe('Core');
-    expect('agent_scope_database' in (result as object)).toBe(false);
-  });
-
   it('unknown database falls back to base only and logs error', () => {
     const node = makeNode({
       atlas_database_name: 'Unknown' as unknown as (typeof ATLAS_DATABASES)[keyof typeof ATLAS_DATABASES],

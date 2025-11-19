@@ -523,15 +523,15 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'scope-1',
         atlas_database_name: 'Scopes',
         plain_text_name: 'Test Scope',
-        child_section_and_primary_doc_ids: ['1b4f2ff0-8d73-8082-862b-dcd586862638'],
+        child_section_and_primary_doc_ids: ['agent-section-1'],
       });
 
-      // The Agent Section where root agents will be nested
+      // Agent Section with proper Notion relationship to Agent Scope Database
       const agentSection = makeBasePage('Section', {
-        notion_page_id: '1b4f2ff0-8d73-8082-862b-dcd586862638', // AGENT_ROOT_SECTION_UUID_FOR_NESTING
+        notion_page_id: 'agent-section-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Agent Section',
-        child_agent_scope_ids: [], // Will be populated by nestRootAgentDocumentsUnderAgentSection
+        child_agent_scope_ids: ['agent-root'], // Properly related via Notion
       });
 
       // Agent Scope root document
@@ -539,7 +539,7 @@ describe('filterDirectChildren', () => {
         notion_page_id: 'agent-root',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Root',
-        parent_notion_page_id: null, // Root agent document
+        parent_notion_page_id: null,
         // Flattened array with all descendants
         child_agent_scope_ids: ['agent-child-1', 'agent-child-2', 'agent-grandchild'],
       });
@@ -589,7 +589,7 @@ describe('filterDirectChildren', () => {
 
       // Navigate to: Scope -> Agent Section -> Agent Root
       const agentSectionNode = result.scopeTrees[0].sectionsAndPrimaryDocs[0];
-      expect(agentSectionNode.notion_page_id).toBe('1b4f2ff0-8d73-8082-862b-dcd586862638');
+      expect(agentSectionNode.notion_page_id).toBe('agent-section-1');
 
       // Agent root should be nested under the agent section
       const agentRootNode = agentSectionNode.agentScopeDocs[0];

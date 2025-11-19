@@ -7,7 +7,7 @@
  *
  * Input format (per document):
  * - A title line: `#### A.1.2 - Name [Type]  <!-- UUID: x-y-z -->`
- *   - The number of `#` indicates depth in the tree (parent before children).
+ *   - The number of `#` indicates heading level (capped at 6), NOT semantic depth.
  *   - Includes document number, name, Atlas document type, and UUID comment.
  * - Body lines until the next title line belong to that document.
  * - Certain types (Type Specification, Scenario, Scenario Variation) may include
@@ -18,20 +18,26 @@
  * Algorithm:
  * - Scan the file line-by-line. A title line starts a new document; all other
  *   lines are appended to the current document body buffer.
- * - For each new document, resolve its Atlas database:
+ * - For each new document, resolve its Atlas database using `mapTypeToDatabase()`:
  *   - Most types map directly (e.g., Scope→Scopes, Article→Articles).
- *   - Core and Active Data Controller are disambiguated using ancestry: if any
- *     ancestor UUID matches one of the known agent root section UUIDs, they
- *     belong to the `Agent Scope Database`; otherwise to `Sections & Primary Docs`.
- * - Use a stack keyed by heading depth to attach new documents as children of
- *   the nearest shallower parent. Children are inserted into the correct
- *   collection using the allowed parent→child database mapping.
+ *   - Core and Active Data Controller require disambiguation between "Sections & Primary Docs"
+ *     and "Agent Scope Database":
+ *     1. If immediate parent's name matches AGENT_ROOT_DOCUMENT_NAME → Agent Scope Database
+ *     2. If any ancestor in the chain is from Agent Scope Database → Agent Scope Database
+ *     3. Otherwise → Sections & Primary Docs
+ *   - This is the ONLY place in the codebase where Agent Scope Database detection occurs.
+ *     Once determined, the database is encoded as a collection name in the Export Tree.
+ *     Downstream code (diff algorithms, sync library) simply reads these collection names.
+ * - Use document numbers (not heading depth) to determine parent-child relationships.
+ *   Stack management uses findParentDocNumber() to match documents by doc_no patterns.
+ *   Children are inserted into the correct collection using the allowed parent→child
+ *   database mapping. This approach handles heading levels capped at 6 correctly.
  * - When finalizing a document, extract structured extra fields (when
  *   applicable) and trim only one leading and one trailing separator blank line
  *   from the content segment, preserving author-intended whitespace.
  */
 import { type AtlasDatabaseName, type AtlasDocumentType } from '@/app/server/atlas/atlas-types';
-import { AGENT_ROOT_SECTION_UUIDS_MAPPED } from '@/app/server/atlas/constants';
+import { AGENT_ROOT_DOCUMENT_NAME } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -82,7 +88,9 @@ interface StackItem {
  *
  * Algorithm overview:
  * 1. Scan line-by-line: title lines start new documents, other lines are content
- * 2. Use heading depth (number of #'s) to maintain a stack for parent-child relationships
+ * 2. Use document numbers (not heading depth) to determine parent-child relationships
+ *    - This allows heading levels to be capped at 6 while maintaining correct hierarchy
+ *    - Stack management based on matching doc_no patterns via findParentDocNumber()
  * 3. Disambiguate document database using type and ancestry (Core/ADC check agent roots)
  * 4. Insert children into correct typed collections based on parent→child database mappings
  * 5. Extract structured extra fields for specific types (Type Spec, Scenario, etc.)
@@ -131,7 +139,7 @@ export function parseAtlasMarkdown(markdown: string): ExportAtlasTreeScopeTrees 
     // New document starts; finalize previous
     flushCurrent();
 
-    // Determine database from type and ancestry (Core/ADC: check if under agent root sections or not)
+    // Determine database from type and ancestry (Core/ADC: check parent database)
     const database = mapTypeToDatabase(header.type, stack);
 
     // Create a node shape consistent with the resolved database (correct child collections present)
@@ -378,13 +386,13 @@ function parseLabeledLine(line: string): string | null {
  *
  * CRITICAL DISAMBIGUATION: Core and Active Data Controller can belong to either:
  * - "Sections & Primary Docs"
- * - "Agent Scope Database" (if any ancestor UUID matches a known agent root section)
+ * - "Agent Scope Database" (if parent is from Agent Scope Database)
  *
- * This ancestry check is essential because Core documents appear in both databases
+ * This parent database check is essential because Core documents appear in both databases
  * but must be routed correctly based on their hierarchical context.
  *
  * @param type - The Atlas document type from the title line
- * @param ancestors - Stack of parent documents to check ancestry
+ * @param ancestors - Stack of parent documents to check parent database
  * @returns The Atlas database name where this document belongs
  */
 function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): AtlasDatabaseName {
@@ -398,16 +406,23 @@ function mapTypeToDatabase(type: AtlasDocumentType, ancestors: StackItem[]): Atl
       return 'Sections & Primary Docs';
     case 'Core':
     case 'Active Data Controller': {
-      // Disambiguate by ancestry: if descendant of agent root section, it belongs to Agent Scope Database
-      const isUnderAgentRoot = ancestors.some((a) => {
-        if (!a.uuid) return false;
-        // Compare against mapped Atlas UUIDs of agent root sections
-        for (const mapped of AGENT_ROOT_SECTION_UUIDS_MAPPED.values()) {
-          if (a.uuid === mapped) return true;
-        }
-        return false;
-      });
-      return isUnderAgentRoot ? 'Agent Scope Database' : 'Sections & Primary Docs';
+      // Check if parent is the agent root section by name
+      const parentIsAgentRoot =
+        ancestors.length > 0 && ancestors[ancestors.length - 1].node.name === AGENT_ROOT_DOCUMENT_NAME;
+
+      if (parentIsAgentRoot) {
+        return 'Agent Scope Database';
+      }
+
+      // Also check if ANY ancestor in the chain is from Agent Scope Database
+      // This handles nested Core → Core → Core under the agent root
+      const hasAgentAncestor = ancestors.some((a) => a.database === 'Agent Scope Database');
+      if (hasAgentAncestor) {
+        return 'Agent Scope Database';
+      }
+
+      // Default to Sections & Primary Docs
+      return 'Sections & Primary Docs';
     }
     case 'Annotation':
       return 'Annotations';

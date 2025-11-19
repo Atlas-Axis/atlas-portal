@@ -1,7 +1,10 @@
+import { AtlasDatabaseName } from '../atlas-types';
 import {
+  ChildCollectionName,
   ExportAtlasTreeBaseDocument,
   ExportAtlasTreeDocument,
   ExportAtlasTreeScopeTrees,
+  childCollectionNameToDatabaseName,
   childCollectionNames,
 } from '../export/types';
 import {
@@ -38,6 +41,8 @@ export interface AtlasDiffResult {
   changes: GroupedAtlasChanges;
   originalIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
   newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
+  originalIdsToDatabase: Map<string, AtlasDatabaseName>;
+  newIdsToDatabase: Map<string, AtlasDatabaseName>;
 }
 
 // ============================================================================
@@ -51,20 +56,47 @@ export interface LookupMaps {
   uuidToDoc: Map<string, ExportAtlasTreeBaseDocument>;
   docNoToDoc: Map<string, ExportAtlasTreeBaseDocument>;
   uuidToAncestry: Map<string, string[]>; // UUID → ancestry list (from parent to root)
+  uuidToDatabase: Map<string, AtlasDatabaseName>; // UUID → Atlas database name
+}
+
+/**
+ * Maps a collection name to its corresponding Atlas database name.
+ * Each collection name uniquely identifies a database in the Export Tree.
+ *
+ * NOTE: This function does NOT perform Agent Scope Database detection.
+ * Agent Scope Database detection happens during markdown import in
+ * `mapTypeToDatabase()` within `atlas-markdown-importer.ts`. This function
+ * simply reads the collection names that were already determined during import.
+ */
+export function getDatabaseFromCollectionName(collectionName: string): AtlasDatabaseName {
+  if (collectionName in childCollectionNameToDatabaseName) {
+    return childCollectionNameToDatabaseName[collectionName as ChildCollectionName];
+  }
+  throw new Error(`Unknown collection name: ${collectionName}`);
 }
 
 /**
  * Recursively traverse all documents in the tree and build flat lookup maps.
  * Documents without UUIDs are skipped and logged as errors.
- * Returns UUID→document, doc_no→document, and UUID→ancestry maps.
- * Ancestry is tracked during traversal, not inferred from doc_no.
+ * Returns UUID→document, doc_no→document, UUID→ancestry, and UUID→database maps.
+ * Ancestry and database are tracked during traversal, not inferred from doc_no.
+ *
+ * NOTE: Database tracking reads collection names from the Export Tree structure.
+ * Agent Scope Database detection happens earlier during markdown import in
+ * `mapTypeToDatabase()` within `atlas-markdown-importer.ts`. This function
+ * simply records which collection each document came from.
  */
 export function buildLookupMaps(scopeTrees: ExportAtlasTreeScopeTrees): LookupMaps {
   const uuidToDoc = new Map<string, ExportAtlasTreeBaseDocument>();
   const docNoToDoc = new Map<string, ExportAtlasTreeBaseDocument>();
   const uuidToAncestry = new Map<string, string[]>(); // List of UUIDs from parent to root
+  const uuidToDatabase = new Map<string, AtlasDatabaseName>(); // Track which database each document belongs to
 
-  function traverseDocument(doc: ExportAtlasTreeDocument, ancestry: string[] = []) {
+  function traverseDocument(
+    doc: ExportAtlasTreeDocument,
+    ancestry: string[] = [],
+    parentCollectionName?: string, // Track which collection this doc came from
+  ) {
     const strippedDoc = stripChildCollections(doc);
 
     // Skip documents without UUIDs and log as error
@@ -75,6 +107,15 @@ export function buildLookupMaps(scopeTrees: ExportAtlasTreeScopeTrees): LookupMa
       uuidToDoc.set(doc.uuid, strippedDoc);
       // Store ancestry for this document (copy of current ancestry array)
       uuidToAncestry.set(doc.uuid, [...ancestry]);
+
+      // Derive and store database from collection name
+      if (parentCollectionName) {
+        const database = getDatabaseFromCollectionName(parentCollectionName);
+        uuidToDatabase.set(doc.uuid, database);
+      } else {
+        // Root documents are always Scopes
+        uuidToDatabase.set(doc.uuid, 'Scopes');
+      }
     }
 
     // Always store in doc_no map (may be used for other purposes)
@@ -83,23 +124,23 @@ export function buildLookupMaps(scopeTrees: ExportAtlasTreeScopeTrees): LookupMa
     // Build extended ancestry for children (add current doc's UUID if it has one)
     const childAncestry = doc.uuid ? [...ancestry, doc.uuid] : ancestry;
 
-    // Traverse all child collections
+    // Traverse all child collections and pass collection name down
     const docAsRecord = doc as unknown as Record<string, unknown>;
     for (const collectionName of childCollectionNames) {
       const collection = docAsRecord[collectionName];
       if (Array.isArray(collection)) {
         for (const child of collection as ExportAtlasTreeDocument[]) {
-          traverseDocument(child, childAncestry);
+          traverseDocument(child, childAncestry, collectionName); // Pass collection name
         }
       }
     }
   }
 
   for (const rootDoc of scopeTrees) {
-    traverseDocument(rootDoc);
+    traverseDocument(rootDoc); // Root docs have no parent collection
   }
 
-  return { uuidToDoc, docNoToDoc, uuidToAncestry };
+  return { uuidToDoc, docNoToDoc, uuidToAncestry, uuidToDatabase };
 }
 
 /**

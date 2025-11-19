@@ -355,7 +355,6 @@ The `constants.ts` file conditionally imports Notion IDs from one of three files
 
 1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
    - Provides consistent, realistic-looking UUIDs for unit tests
-   - Agent root UUIDs are properly set for tests that check agent ancestry
 2. **Development/QA**: Uses `notion-ids-dev.ts` when `USE_DEV_NOTION_IDS === 'true'`
    - Separate dev/QA IDs prevent accidental access to production data during local development and manual QA
    - Must be explicitly set to 'true' to enable

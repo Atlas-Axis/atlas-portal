@@ -81,7 +81,7 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 **Data Integrity:**
 
 - UUID mappings must be consistent and bidirectional
-- Agent nesting is a fix for missing Notion relationships and must be removed before sync
+- Agent Scope Database documents are properly linked via Notion relationship properties (previously it was not so, and we needed a workaround in the code)
 - Relationships must be bidirectional (parent → child and child → parent)
 
 ## Architecture Design
@@ -114,16 +114,15 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 ├──────────────────┤
 │ a) Export Tree → │◄── export-tree-to-notion-tree.ts
 │    Notion Tree   │
-│ b) Unnest Agents │◄── unnest-root-agent-documents.ts
-│ c) Reverse       │◄── reverse-nesting-overrides.ts
+│ b) Reverse       │◄── reverse-nesting-overrides.ts
 │    Overrides     │
-│ d) Markdown →    │◄── markdown-to-rich-text.ts
+│ c) Markdown →    │◄── markdown-to-rich-text.ts
 │    Rich Text     │
-│ e) Atlas UUID →  │◄── UUID mapping helpers
+│ d) Atlas UUID →  │◄── UUID mapping helpers
 │    Notion UUID   │
-│ f) Rewrite       │◄── (part of markdown-to-rich-text)
+│ e) Rewrite       │◄── (part of markdown-to-rich-text)
 │    Mentions      │
-│ g) Build Props & │◄── notion-property-builder.ts
+│ f) Build Props & │◄── notion-property-builder.ts
 │    Relations     │
 └────────┬─────────┘
          │
@@ -267,41 +266,6 @@ export function reverseNestingOverrides(
 - Unit test: Reverse multiple mappings with dependencies
 - Unit test: Handle missing parents gracefully
 - Integration test: Full reverse transformation
-
-#### Task 1.3: Unnest Root Agent Documents
-
-**File:** `app/server/atlas/unnest-root-agent-documents.ts`
-
-**Purpose:** Remove artificial nesting of Agent Scope Database documents.
-
-**Implementation:**
-
-```typescript
-export function unnestRootAgentDocuments(
-  pages: NotionDatabasePage[],
-  agentRootSectionUuid: string,
-): NotionDatabasePage[] {
-  // 1. Find section page with AGENT_ROOT_SECTION_UUID_FOR_NESTING
-  // 2. Identify agent documents in section's child_agent_scope_ids
-  // 3. Remove agent IDs from section's child array
-  // 4. For each agent: Set parent_notion_page_id to null (it was already null, but just to make sure)
-  // 5. Return pages with unnested agents (root-level in Agent Scope DB)
-}
-```
-
-**Key Logic:**
-
-- Reverse of `nestRootAgentDocumentsUnderAgentSection()`
-- Identify artificially nested agents
-- Restore root-level structure (an existing issue in Notion that we will have to fix)
-- Log all unnested agents
-
-**Tests:**
-
-- Unit test: Unnest single agent document
-- Unit test: Unnest multiple agent documents
-- Unit test: Handle non-agent documents correctly
-- Integration test: Full unnesting transformation
 
 ### Phase 2: Content Transformation
 
@@ -758,9 +722,6 @@ app/server/atlas/export/__tests__/
 app/server/services/notion/__tests__/
   - reverse-nesting-overrides.test.ts
 
-app/server/atlas/__tests__/
-  - unnest-root-agent-documents.test.ts
-
 app/server/atlas/notion-mapping/__tests__/
   - notion-property-builder.test.ts
 
@@ -1012,12 +973,6 @@ CREATE TABLE notion_api_audit_log (
   - [ ] Main reverse function
   - [ ] Load mappings from database
   - [ ] Apply reverse transformations
-  - [ ] Unit tests
-  - [ ] Integration tests
-- [ ] Create `unnest-root-agent-documents.ts`
-  - [ ] Main unnesting function
-  - [ ] Identify artificial nesting
-  - [ ] Restore root-level structure
   - [ ] Unit tests
   - [ ] Integration tests
 

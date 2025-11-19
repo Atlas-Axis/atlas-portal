@@ -86,10 +86,6 @@ export const ATLAS_DATABASE_ID_MAP = selectedIds.ATLAS_DATABASE_ID_MAP;
 export const ATLAS_DATABASE_ID_MAP_REVERSED = selectedIds.ATLAS_DATABASE_ID_MAP_REVERSED;
 export const MASTER_STATUS_ID_MAP = selectedIds.MASTER_STATUS_ID_MAP;
 export const MASTER_STATUS_IDS = selectedIds.MASTER_STATUS_IDS;
-export const AGENT_ROOT_SECTION_UUID_FOR_NESTING = selectedIds.AGENT_ROOT_SECTION_UUID_FOR_NESTING;
-export const AGENT_ROOT_SECTION_UUIDS = selectedIds.AGENT_ROOT_SECTION_UUIDS;
-export const AGENT_ROOT_SECTION_UUIDS_MAPPED = selectedIds.AGENT_ROOT_SECTION_UUIDS_MAPPED;
-export const AGENT_ANCESTOR_ARTICLE_ID = selectedIds.AGENT_ANCESTOR_ARTICLE_ID;
 
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',
@@ -98,6 +94,28 @@ export const MASTER_STATUSES = {
   DEFERRED: 'Deferred',
   ARCHIVED: 'Archived',
 };
+
+/**
+ * Hard-coded document name used to identify Agent Scope Database context during markdown import.
+ *
+ * PURPOSE: The markdown importer (`atlas-markdown-importer.ts`) uses this constant in
+ * `mapTypeToDatabase()` to detect whether a Core or Active Data Controller document
+ * belongs to Agent Scope Database or Sections & Primary Docs.
+ *
+ * DETECTION LOGIC: A Core/ADC document belongs to Agent Scope Database if:
+ * 1. Its immediate parent's name matches AGENT_ROOT_DOCUMENT_NAME, OR
+ * 2. Any ancestor in the chain is from Agent Scope Database
+ * Otherwise, it belongs to Sections & Primary Docs.
+ *
+ * WHY NAME-BASED: The markdown importer parses incrementally line-by-line and must
+ * immediately decide which collection to insert each document into during parsing.
+ * This requires checking the immediate parent's name for the initial decision.
+ *
+ * SCOPE: This constant is ONLY used during markdown import. Once documents are in
+ * Export Tree format, their database is encoded as collection names. The sync library
+ * and diff algorithms do NOT use this constant - they read collection names directly.
+ */
+export const AGENT_ROOT_DOCUMENT_NAME = 'List Of Prime Agent Artifacts';
 
 export const IMPORT_DATABASES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCOPES,

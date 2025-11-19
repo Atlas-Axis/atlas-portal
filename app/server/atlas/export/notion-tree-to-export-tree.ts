@@ -22,7 +22,6 @@
  */
 import { RichTextItemResponse } from '@notionhq/client';
 import { type AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { AGENT_ROOT_SECTION_UUIDS } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -193,24 +192,8 @@ function pickExtraFields(node: NotionAtlasTreeNode, uuidMappings: UuidMappings):
 export function notionTreeNodeToExportTreeNode(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
-  options?: { omitAgents: boolean },
 ): ExportAtlasTreeDocument {
   const base = toBase(node, uuidMappings);
-
-  // If omitting Agent Scope subtrees (for ISR optimization) and this node matches one of the agent roots,
-  // prune all its children (keep the node itself with empty children arrays).
-  const isAgentRoot = node.notion_page_id != null && AGENT_ROOT_SECTION_UUIDS.has(node.notion_page_id);
-  if (options?.omitAgents && isAgentRoot) {
-    // Add big debug console logs
-    console.log('--------------------------------');
-    console.log('Omitting Agent Scope subtrees');
-    console.log('--------------------------------');
-    console.log('node', node);
-    console.log('options', options);
-    console.log('isAgentRoot', isAgentRoot);
-    console.log('--------------------------------');
-    return { ...base } as ExportAtlasTreeDocument;
-  }
 
   switch (node.atlas_database_name) {
     case 'Scopes': {

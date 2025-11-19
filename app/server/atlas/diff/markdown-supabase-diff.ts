@@ -12,7 +12,7 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees();
   const newScopeTreeList = await loadMarkdownAsExportAtlasScopeTrees();
 
-  // Build lookup maps for both trees (UUID→doc and doc_no→doc)
+  // Build lookup maps for both trees (UUID→doc, doc_no→doc, UUID→ancestry, UUID→database)
   const originalMaps = buildLookupMaps(originalScopeTreeList);
   const newMaps = buildLookupMaps(newScopeTreeList);
 
@@ -27,6 +27,8 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
     changes,
     originalIdsToDocuments: originalMaps.uuidToDoc,
     newIdsToDocuments: newMaps.uuidToDoc,
+    originalIdsToDatabase: originalMaps.uuidToDatabase,
+    newIdsToDatabase: newMaps.uuidToDatabase,
   };
 }
 

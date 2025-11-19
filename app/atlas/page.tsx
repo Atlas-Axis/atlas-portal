@@ -28,9 +28,9 @@ export default async function Page() {
     reportOrphanedNodes: true,
   });
 
-  // Convert entire scope trees to ExportAtlasTreeDocument, omitting agent subtrees for lazy loading
+  // Convert entire scope trees to ExportAtlasTreeDocument
   const exportScopeTreesWithoutAgents = atlas.scopeTrees.map((node) =>
-    notionTreeNodeToExportTreeNode(node, uuidMappings, { omitAgents: true }),
+    notionTreeNodeToExportTreeNode(node, uuidMappings),
   );
 
   return (

@@ -1,10 +1,38 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
+import { getDatabaseNameFromDocument } from '../atlas-database-mapper';
 import { sortAdditionsByHierarchy } from '../sync-orchestrator';
 
 describe('sync-orchestrator', () => {
+  // Helper to create a database map from documents with proper Core/ADC handling
+  function createDatabaseMap(
+    documents: ExportAtlasTreeBaseDocument[],
+    options: { coreDatabase?: 'Sections & Primary Docs' | 'Agent Scope Database' } = {},
+  ): Map<string, AtlasDatabaseName> {
+    const map = new Map<string, AtlasDatabaseName>();
+    const coreDatabase = options.coreDatabase || 'Sections & Primary Docs';
+
+    // First pass: map all Core and ADC documents to the specified database
+    for (const doc of documents) {
+      if (doc.uuid && (doc.type === 'Core' || doc.type === 'Active Data Controller')) {
+        map.set(doc.uuid, coreDatabase);
+      }
+    }
+
+    // Second pass: map all other document types using getDatabaseNameFromDocument
+    for (const doc of documents) {
+      if (doc.uuid && doc.type !== 'Core' && doc.type !== 'Active Data Controller') {
+        const database = getDatabaseNameFromDocument(doc.type, doc.uuid, map);
+        map.set(doc.uuid, database);
+      }
+    }
+
+    return map;
+  }
+
   describe('sortAdditionsByHierarchy', () => {
     it('sorts additions by database hierarchy level', () => {
       const changes: AtlasDocumentChange[] = [
@@ -55,7 +83,8 @@ describe('sync-orchestrator', () => {
         ['section-1', changes[0].newValues!],
       ]);
 
-      const sorted = sortAdditionsByHierarchy(changes, docMap);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
 
       // Should be sorted: Scope (level 0), Article (level 1), Section (level 2)
       expect(sorted[0].uuid).toBe('scope-1');
@@ -112,7 +141,8 @@ describe('sync-orchestrator', () => {
         ['parent-core', changes[1].newValues!],
       ]);
 
-      const sorted = sortAdditionsByHierarchy(changes, docMap);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
 
       // Should be sorted by depth: Section (depth 0), Parent Core (depth 1), Nested Core (depth 2)
       expect(sorted[0].uuid).toBe('section-1');
@@ -180,7 +210,8 @@ describe('sync-orchestrator', () => {
         ['section-2', changes[2].newValues!],
       ]);
 
-      const sorted = sortAdditionsByHierarchy(changes, docMap);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
 
       // Should maintain original order: section-3, section-1, section-2
       expect(sorted[0].uuid).toBe('section-3');
@@ -265,7 +296,8 @@ describe('sync-orchestrator', () => {
         ['scenario-1', changes[2].newValues!],
       ]);
 
-      const sorted = sortAdditionsByHierarchy(changes, docMap);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
 
       // Expected order by hierarchy and depth:
       // 1. Article (level 1, depth 0)
@@ -343,7 +375,8 @@ describe('sync-orchestrator', () => {
         ['nr-on-annotation', changes[0].newValues!],
       ]);
 
-      const sorted = sortAdditionsByHierarchy(changes, docMap);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
 
       // Expected order:
       // 1. Section (level 2, depth 0)

@@ -69,7 +69,6 @@ Core function that builds the Notion Tree structure. Document numbers are automa
 
 1. Load nesting fix mappings
 2. Apply nesting overrides to flat array
-   2b. Nest root Agent documents under the Agent section
 3. Create lookup maps for O(1) access
 4. Generate normalized document names
 5. Find root Scope documents
@@ -422,7 +421,7 @@ npm test -- app/server/atlas/notion-tree/__tests__/atlas-tree-builder-mentions.t
 4. **Invalid Document Numbers**: Check that document numbers follow the correct patterns defined in `ATLAS_DOCUMENT_NUMBERING_RULES.md`.
 
 5. **Agent Documents Not Appearing**: If Agent Scope Database documents are not appearing where expected, check:
-   - The root agent nesting (Step 2b) - are root agents being identified correctly (null `parent_notion_page_id`)?
+   - The relationship properties in Notion - are agent documents properly linked to parent sections via the "Agent Scope Database" relation property?
    - The `filterDirectChildren` logic - are agents with null `parent_notion_page_id` being treated as direct children?
    - The nesting overrides (Step 2) - are manual parent-child mappings being applied correctly?
 

@@ -52,7 +52,6 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 ┌─────────────────────────────────────┐
 │  4. BUILD NOTION TREE               │
 │     - Apply nesting bug fixes       │◄── NOTION_NESTING_BUG_FIX.md (Step 2)
-│     - Nest root agent documents     │◄── nest-root-agent-documents-under-agent-section.ts (Step 2b)
 │     - Flat pages → tree hierarchy   │◄── ATLAS_TREE_STRUCTURES.md, app/server/atlas/notion-tree/AGENTS.md
 │     - Filter direct children        │
 │     - Detect duplicates/cycles      │
@@ -118,7 +117,6 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 ┌─────────────────────────────────────┐
 │  3. TRANSFORM TO NOTION FORMAT      │
 │     - Export Tree → Notion Tree     │◄── export-tree-to-notion-tree.ts
-│     - Unnest root agent documents   │◄── unnest-root-agent-documents.ts
 │     - Reverse nesting overrides     │◄── reverse-nesting-overrides.ts
 │     - Markdown → Rich Text          │◄── markdown-to-rich-text.ts
 │     - Atlas UUID → Notion UUID      │◄── UUID_MAPPING.md
@@ -245,7 +243,7 @@ Flat Notion database pages are transformed into hierarchical tree structures rep
 - Converts flat `NotionDatabasePage[]` array into nested `NotionAtlasTreeNode` trees
 - Root nodes: Scope documents
 - Child relationships embedded as typed arrays (not ID references)
-- Process steps: Apply nesting overrides (Step 2) → Nest root agents (Step 2b) → Create lookup maps (Step 3) → Generate normalized document names (Step 4) → Find roots (Step 5) → Build trees recursively (Step 6) → Find orphaned nodes (Step 7) → Assign document numbers (Step 8) → Generate UUID maps (Step 9) → Update mentions (Step 10) → Generate duplicated nodes list (Step 11)
+- Process steps: Apply nesting overrides (Step 2) → Create lookup maps (Step 3) → Generate normalized document names (Step 4) → Find roots (Step 5) → Build trees recursively (Step 6) → Find orphaned nodes (Step 7) → Assign document numbers (Step 8) → Generate UUID maps (Step 9) → Update mentions (Step 10) → Generate duplicated nodes list (Step 11)
 
 **Nesting Bug Fix (Step 2):**
 
@@ -256,14 +254,6 @@ Flat Notion database pages are transformed into hierarchical tree structures rep
 - Applied to flat array of all pages in a single pass inside `buildNotionAtlasTree()`
 - Affects: Sections & Primary Docs, Agent Scope Database (internally nested databases)
 - See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation
-
-**Agent Document Nesting (Step 2b):**
-
-- **Issue**: Root-level Agent Scope Database documents have no parent in Notion, but should be nested under section documents from Sections & Primary Docs for display
-- **Solution**: Artificially nest them under designated Agent section (`AGENT_ROOT_SECTION_UUID_FOR_NESTING`)
-- **Rationale**: Matches Atlas Portal UI display, provides proper hierarchy context
-- Root Agent documents are those with `parent_notion_page_id === null` (no internal parent within Agent Scope Database)
-- These IDs are added to the section's `child_agent_scope_ids` array inside `buildNotionAtlasTree()`
 
 **Special Handling for parent_notion_page_id in Atlas databases that support internal nesting:**
 
@@ -312,9 +302,7 @@ Flat Notion database pages are transformed into hierarchical tree structures rep
 **References:**
 
 - `app/server/atlas/notion-tree/atlas-tree-builder.ts` (contains all steps 1-11)
-- `app/server/atlas/nest-root-agent-documents-under-agent-section.ts` (Step 2b helper)
 - `app/server/services/notion/apply-nesting-overrides.ts` (Step 2 helper)
-- `app/server/atlas/notion-mapping/notion-ids.ts` (AGENT_ROOT_SECTION_UUID_FOR_NESTING)
 - `app/server/atlas/notion-tree/AGENTS.md` (comprehensive API documentation)
 - **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**
@@ -564,40 +552,7 @@ Sections & Primary Docs database pages have different title formatting:
 - **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**
 - **[UUID_MAPPING.md](./UUID_MAPPING.md)**
 
-#### 4.3.2 Unnest Root Agent Documents
-
-This step reverses the artificial nesting of root Agent Scope Database documents, restoring their original Notion structure before sync.
-
-**Process:**
-
-- Identify artificially nested agent documents: those appearing under `AGENT_ROOT_SECTION_UUID_FOR_NESTING` in the Export Tree
-- Remove these agent document IDs from the section's `child_agent_scope_ids` array
-- Set their `parent_notion_page_id` to `null` (indicating root-level documents in Agent Scope Database)
-- This restores the original Notion structure where Agent Scope Database is standalone without parent relationships (an existing issue in Notion)
-
-**Why This is Necessary:**
-
-- The nesting of agents under a section is a fix for missing relationships in Notion so that the Atlas Portal UI and markdown exports have the correct document hierarchy
-- Notion databases don't have this cross-database parent-child relationship (this is an issue that we will have to fix)
-- Agent Scope Database documents are root-level in Notion (no inherent parent) (this is an issue that we will have to fix)
-- Must remove artificial nesting before syncing to Notion to maintain original Notion structure
-
-**Implementation:**
-
-- Create reverse function `unnestRootAgentDocuments()` that:
-  - Takes Notion Tree with artificially nested agents
-  - Identifies agents under `AGENT_ROOT_SECTION_UUID_FOR_NESTING`
-  - Removes them from section's child array
-  - Sets `parent_notion_page_id` to `null` (it was already null, but just to make sure)
-  - Returns updated Notion Tree ready for sync
-
-**References:**
-
-- `app/server/atlas/unnest-root-agent-documents.ts` (to be created)
-- `app/server/atlas/nest-root-agent-documents-under-agent-section.ts` (forward direction reference)
-- `app/server/atlas/notion-mapping/notion-ids.ts` (AGENT_ROOT_SECTION_UUID_FOR_NESTING constant)
-
-#### 4.3.3 Reverse Nesting Overrides
+#### 4.3.2 Reverse Nesting Overrides
 
 This step applies nesting bug fix mappings in reverse, moving children back to their original (incorrect) Notion parent locations to maintain compatibility with the platform's limitations.
 
@@ -826,41 +781,75 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **1. Notion API Fetch**             | Notion pages (API JSON) | Property mapping, relationship extraction                                                   | `NotionDatabasePage[]` arrays             |
 | **2. Supabase Storage**             | `NotionDatabasePage[]`  | Versioned insert, UUID generation                                                           | Supabase `notion_database_pages` rows     |
 | **3. Supabase Load**                | Supabase rows           | Load all databases, filter current                                                          | `NotionDatabasePage[]` (flat array)       |
-| **4. Tree Building**                | Flat pages              | Apply nesting overrides, nest root agents, hierarchy construction, filtering, validation    | `NotionAtlasTreeNode[]` (Notion Tree)     |
+| **4. Tree Building**                | Flat pages              | Apply nesting overrides, hierarchy construction, filtering, validation                      | `NotionAtlasTreeNode[]` (Notion Tree)     |
 | **5. Tree Processing**              | Notion Tree nodes       | Name normalization, doc numbering, UUID mapping, mention updates (all inside tree building) | Enhanced `NotionAtlasTreeNode[]`          |
 | **6. Export Transform**             | Notion Tree             | Rich Text → Markdown, UUID conversion                                                       | `ExportAtlasTreeDocument[]` (Export Tree) |
 | **7. Serialization**                | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
 | **[PLANNED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
 | **[PLANNED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text, Atlas UUID→Notion UUID, reconstruct Notion fields                       | Notion Tree (internal format)             |
-| **[PLANNED] 10. Unnest Agents**     | Notion Tree             | Remove artificial agent nesting, restore root-level structure                               | Updated Notion Tree                       |
-| **[PLANNED] 11. Reverse Overrides** | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
-| **[PLANNED] 12. Rewrite Mentions**  | Notion Tree             | Convert Atlas UUID mentions to Notion UUID mentions                                         | Notion Tree (ready for API)               |
-| **[PLANNED] 13. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[PLANNED] 14. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages, batch operations                                | Notion pages (via API)                    |
+| **[PLANNED] 10. Reverse Overrides** | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
+| **[PLANNED] 11. Rewrite Mentions**  | Notion Tree             | Convert Atlas UUID mentions to Notion UUID mentions                                         | Notion Tree (ready for API)               |
+| **[PLANNED] 12. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
+| **[PLANNED] 13. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages, batch operations                                | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 
-### Agent Document Nesting
+### Internal Nesting
 
 **Rationale:**
 
-- Agent Scope Database is a standalone database with no inherent parent
-- Atlas Portal UI displays agents nested under specific section for context; Markdown Atlas file does the same
-- This relationship doesn't exist in Notion but is needed for proper display
+- Two databases support internal nesting (parent-child relationships within the same database):
+  - **Sections & Primary Docs** (via "Parent Doc" / "Subdocs" relationships)
+  - **Agent Scope Database** (via "Parent item" / "Sub-item" relationships)
 
 **Implementation:**
 
-- Hardcoded section UUID: `AGENT_ROOT_SECTION_UUID_FOR_NESTING`
-- Root agent documents are those with `parent_notion_page_id === null` (no internal parent within Agent Scope Database)
-- Their IDs are added to section's `child_agent_scope_ids` array in-memory
-- Applied inside `buildNotionAtlasTree()` (Step 2b), after nesting overrides (Step 2)
-- This ensures agents re-parented by mappings are not incorrectly treated as root agents
+- Relationships are established through Notion's relationship properties (e.g., "Parent Doc", "Parent item")
+- The `parent_notion_page_id` field in Supabase stores these internal relationships - this field is only filled for internal parents, NOT inter-database parent documents
+- Tree building respects these internal database relationships when constructing hierarchical structures
+- Filtering logic ensures nested documents don't appear as direct children when they belong deeper in the hierarchy. This is needed because sometimes Notion child relationships contain not only direct children, but all descendant documents
 
 **References:**
 
-- `app/server/atlas/nest-root-agent-documents-under-agent-section.ts` (Step 2b helper function)
-- `app/server/atlas/notion-tree/atlas-tree-builder.ts` (orchestrates Steps 2 and 2b)
-- `app/server/atlas/notion-mapping/notion-ids.ts` (AGENT_ROOT_SECTION_UUID_FOR_NESTING constant)
+- `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` (relationship property mappings)
+- `app/server/atlas/notion-tree/atlas-tree-builder.ts` (tree construction with internal nesting support)
+
+### Agent Scope Database Detection During Markdown Parsing
+
+Atlas database names are not stored in the markdown format of the Atlas.
+When parsing the markdown Atlas file into Export Tree format, we need a way to accurately detect which Atlas database a document belongs to.
+In most cases, there is a one-to-one mapping. However, some document types (Core, Active Data Controller) may belong to either Sections & Primary Docs, or Agent Scope Database.
+
+**Solution:**
+
+The system detects which database each document belongs to during markdown import in the `mapTypeToDatabase()` function within `atlas-markdown-importer.ts`. Once determined, the database is encoded as the collection name in the Export Tree format, and no further disambiguation is needed downstream.
+
+**Implementation:**
+
+The `mapTypeToDatabase()` function uses two checks for Core and Active Data Controller documents:
+
+1. **Immediate parent check**: If the direct parent's name matches `AGENT_ROOT_DOCUMENT_NAME` (hard-coded as "List Of Prime Agent Artifacts"), the document belongs to Agent Scope Database
+2. **Ancestor chain check**: If any ancestor in the chain is from Agent Scope Database, the document also belongs to Agent Scope Database
+3. **Default**: Otherwise, the document belongs to Sections & Primary Docs
+
+This approach handles both direct children of the agent root section and deeply nested Core → Core → Core chains under the agent root.
+
+**Why name-based detection is required:**
+
+The markdown importer parses documents incrementally line-by-line. When it encounters a Core or Active Data Controller document, it must immediately decide which collection to insert it into (either `sections_and_primary_docs` or `agent_scope_database`) before continuing. This requires the `AGENT_ROOT_DOCUMENT_NAME` constant for immediate parent identification.
+
+**Downstream processing:**
+
+Once the markdown is parsed into Export Tree format, the database information is already encoded in the collection structure. The sync library and diff algorithms simply read these collection names - no further Agent Scope Database detection is performed.
+
+**References:**
+
+- `docs/ATLAS_MARKDOWN_SYNTAX.md` - Markdown format specification
+- `docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md` - Import/export workflows
+- `app/server/atlas/constants.ts` - `AGENT_ROOT_DOCUMENT_NAME` constant definition
+- `app/server/atlas/export/atlas-markdown-importer.ts` - `mapTypeToDatabase()` function with agent detection logic
+- `app/server/atlas/diff/atlas-diff.ts` - `getDatabaseFromCollectionName()` reads collection names from Export Tree
+- `app/atlas/sync/_lib/atlas-database-mapper.ts` - `getDatabaseNameFromDocument()` uses database tracking map from diff results
 
 ### Notion Nesting Bug and Manual Mappings
 

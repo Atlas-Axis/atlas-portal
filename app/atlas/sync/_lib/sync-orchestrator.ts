@@ -1,3 +1,4 @@
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
@@ -83,8 +84,8 @@ export async function syncChangesToNotion(
     });
   };
 
-  // Extract changes and document lookup maps from diff result
-  const { changes, newIdsToDocuments } = diffResult;
+  // Extract changes, document lookup maps, and database tracking maps from diff result
+  const { changes, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = diffResult;
 
   // Calculate total changes to process
   const totalChangesToProcess =
@@ -127,7 +128,7 @@ export async function syncChangesToNotion(
       addLog(`Updating content: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await updateNotionPageContent(change, uuidMappings);
+        const actionResult = await updateNotionPageContent(change, originalIdsToDatabase, uuidMappings);
         completedCount++;
 
         if (actionResult.success) {
@@ -150,7 +151,7 @@ export async function syncChangesToNotion(
   // Phase 2: Process additions (validate parents first)
   if (changes.added.length > 0 && !options.stopRequested) {
     // Sort additions by hierarchy level and depth to ensure parents are created before children
-    const sortedAdditions = sortAdditionsByHierarchy(changes.added, newIdsToDocuments);
+    const sortedAdditions = sortAdditionsByHierarchy(changes.added, newIdsToDocuments, newIdsToDatabase);
 
     addLog(`Phase 2: Processing ${sortedAdditions.length} additions (sorted by hierarchy)`, 'info');
     updateProgress('additions', null);
@@ -167,7 +168,7 @@ export async function syncChangesToNotion(
       addLog(`Creating page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await createNotionDatabasePage(change, newIdsToDocuments, uuidMappings);
+        const actionResult = await createNotionDatabasePage(change, newIdsToDocuments, newIdsToDatabase, uuidMappings);
         completedCount++;
 
         if (actionResult.success) {
@@ -209,7 +210,7 @@ export async function syncChangesToNotion(
       addLog(`Deleting page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await deleteNotionPage(change);
+        const actionResult = await deleteNotionPage(change, originalIdsToDatabase);
         completedCount++;
 
         if (actionResult.success) {
@@ -266,6 +267,7 @@ export async function syncChangesToNotion(
 export function sortAdditionsByHierarchy(
   additions: AtlasDocumentChange[],
   uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
+  uuidToDatabase: Map<string, AtlasDatabaseName>,
 ): AtlasDocumentChange[] {
   // Create array with sorting metadata
   const withMetadata = additions.map((change, originalIndex) => {
@@ -274,7 +276,11 @@ export function sortAdditionsByHierarchy(
       throw new Error(`Document not found for addition change: ${JSON.stringify(change)}`);
     }
 
-    const databaseName = getDatabaseNameFromDocument(doc.type, change.newAncestry);
+    if (!doc.uuid) {
+      throw new Error(`Document UUID not found for addition change: ${JSON.stringify(change)}`);
+    }
+
+    const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid, uuidToDatabase);
     const depth = getAncestryDepth(change.newAncestry);
 
     // For Needed Research, derive parent database to get correct hierarchy level
@@ -283,8 +289,7 @@ export function sortAdditionsByHierarchy(
       const parentId = change.newAncestry[change.newAncestry.length - 1];
       const parentDoc = uuidToDocumentMap.get(parentId);
       if (parentDoc) {
-        const parentAncestry = change.newAncestry.slice(0, -1);
-        parentDatabaseName = getDatabaseNameFromDocument(parentDoc.type, parentAncestry);
+        parentDatabaseName = uuidToDatabase.get(parentId);
       } else {
         throw new Error(`Parent document not found for new Needed Research document: ${JSON.stringify(change)}`);
       }

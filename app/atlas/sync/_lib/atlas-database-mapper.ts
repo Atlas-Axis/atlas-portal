@@ -1,24 +1,20 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
-import { AGENT_ROOT_SECTION_UUIDS_MAPPED, ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
-import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
+import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 
 /**
- * Gets the Atlas database name for a document based on its type and ancestry.
+ * Gets the Atlas database name for a document based on its type.
  *
- * Most document types map directly to a specific database (e.g., Scope→Scopes).
- * Core and Active Data Controller types require disambiguation based on ancestry:
- * - If any ancestor matches a known agent root section UUID, returns 'Agent Scope Database'
- * - Otherwise, returns 'Sections & Primary Docs'
- *
- * This approach mirrors the logic from atlas-markdown-importer.ts and works for both
- * existing documents (in Supabase) and new documents (only in Markdown).
+ * For Core and Active Data Controller, uses the database tracking map
+ * to determine the correct database (Sections & Primary Docs vs Agent Scope Database).
  *
  * @param documentType The Atlas document type
- * @param ancestryUuids Array of ancestor UUIDs from immediate parent to root
+ * @param documentUuid The UUID of the document
+ * @param uuidToDatabase Map of UUIDs to database names (from buildLookupMaps)
  */
 export function getDatabaseNameFromDocument(
   documentType: AtlasDocumentType,
-  ancestryUuids: string[] | undefined,
+  documentUuid: string,
+  uuidToDatabase: Map<string, AtlasDatabaseName>,
 ): AtlasDatabaseName {
   // Most types have direct mappings
   const directMapping: Partial<Record<AtlasDocumentType, AtlasDatabaseName>> = {
@@ -39,18 +35,14 @@ export function getDatabaseNameFromDocument(
     return directDatabase;
   }
 
-  // Core and Active Data Controller need disambiguation by ancestry
+  // Core and Active Data Controller need disambiguation via database tracking
   if (documentType === 'Core' || documentType === 'Active Data Controller') {
-    // Check if any ancestor UUID matches a known agent root section
-    const isUnderAgentRoot = ancestryUuids?.some((ancestorUuid) => {
-      // Compare against mapped Atlas UUIDs of agent root sections
-      for (const mapped of AGENT_ROOT_SECTION_UUIDS_MAPPED.values()) {
-        if (ancestorUuid === mapped) return true;
-      }
-      return false;
-    });
+    const database = uuidToDatabase.get(documentUuid);
+    if (database) {
+      return database;
+    }
 
-    return isUnderAgentRoot ? 'Agent Scope Database' : 'Sections & Primary Docs';
+    throw new Error(`Database name not found for document ${documentUuid}`);
   }
 
   throw new Error(`No database mapping found for document type: ${documentType}`);
@@ -88,12 +80,12 @@ export function databaseSupportsInternalNesting(databaseName: AtlasDatabaseName)
  *
  * @param ancestry The ancestry array from the change
  * @param childDatabaseName The database name of the child document
- * @param uuidToDocumentMap Map of UUIDs to document objects for deriving parent database
+ * @param uuidToDatabase Map of UUIDs to database names (from buildLookupMaps)
  */
 export function getInternalParentPageIdFromAncestry(
   ancestry: string[] | undefined,
   childDatabaseName: AtlasDatabaseName,
-  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
+  uuidToDatabase: Map<string, AtlasDatabaseName>,
 ): string | null {
   if (!ancestry || ancestry.length === 0) {
     return null;
@@ -102,17 +94,11 @@ export function getInternalParentPageIdFromAncestry(
   // Get the immediate parent UUID (last element in ancestry array)
   const potentialParentId = ancestry[ancestry.length - 1];
 
-  // Get parent document to determine its database
-  const parentDoc = uuidToDocumentMap.get(potentialParentId);
-  if (!parentDoc) {
-    // Parent document not found - might be a new document or invalid reference
-    return null;
+  // Derive parent's database name from the database tracking map
+  const parentDatabaseName = uuidToDatabase.get(potentialParentId);
+  if (!parentDatabaseName) {
+    throw new Error(`Parent database not found for document ${potentialParentId}`);
   }
-
-  // Derive parent's database name from its type and ancestry
-  // Get parent's ancestry (all ancestors except the last one which is the parent itself)
-  const parentAncestry = ancestry.slice(0, -1);
-  const parentDatabaseName = getDatabaseNameFromDocument(parentDoc.type, parentAncestry);
 
   // Only return parent ID if it's in the same database (internal hierarchy)
   // Cross-database relationships are handled differently (via child_* arrays)

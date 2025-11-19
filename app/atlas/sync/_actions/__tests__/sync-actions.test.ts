@@ -1,5 +1,7 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { getDatabaseNameFromDocument } from '@/app/atlas/sync/_lib/atlas-database-mapper';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
@@ -36,6 +38,18 @@ describe('sync-actions', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
+
+  // Helper to create an Atlas document UUID to Atlas database name map from documents
+  function createDatabaseMap(documents: ExportAtlasTreeBaseDocument[]): Map<string, AtlasDatabaseName> {
+    const map = new Map<string, AtlasDatabaseName>();
+    for (const doc of documents) {
+      if (doc.uuid) {
+        const database = getDatabaseNameFromDocument(doc.type, doc.uuid, map);
+        map.set(doc.uuid, database);
+      }
+    }
+    return map;
+  }
 
   // Helper to create a document map from a change
   function createDocMap(change: AtlasDocumentChange): Map<string, ExportAtlasTreeBaseDocument> {
@@ -111,7 +125,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await updateNotionPageContent(change, mockUuidMappings);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       expect(result.pageId).toBe('page-123');
@@ -157,7 +173,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await updateNotionPageContent(change, mockUuidMappings);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       const updated = mockNotionClient.get('page-123') as Record<string, unknown>;
@@ -191,7 +209,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await updateNotionPageContent(change, mockUuidMappings);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toContain('not found');
@@ -219,7 +239,9 @@ describe('sync-actions', () => {
         },
       };
 
-      const result = await updateNotionPageContent(change, mockUuidMappings);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing page UUID');
@@ -246,7 +268,8 @@ describe('sync-actions', () => {
       };
 
       const docMap = createDocMap(change);
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       expect(result.pageId).toBeDefined();
@@ -288,7 +311,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Parent validation
@@ -326,7 +350,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('parent_not_found');
@@ -363,7 +388,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
 
@@ -403,7 +429,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
 
@@ -438,7 +465,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await deleteNotionPage(change);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await deleteNotionPage(change, dbMap);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // To check children
@@ -469,7 +498,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await deleteNotionPage(change);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await deleteNotionPage(change, dbMap);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('has_children');
@@ -491,7 +522,9 @@ describe('sync-actions', () => {
         oldAncestry: [],
       };
 
-      const result = await deleteNotionPage(change);
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await deleteNotionPage(change, dbMap);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing page UUID');
@@ -528,7 +561,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
@@ -572,7 +606,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
@@ -612,7 +647,8 @@ describe('sync-actions', () => {
         last_modified: '',
       });
 
-      const result = await createNotionDatabasePage(change, docMap, mockUuidMappings);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('parent_not_found');

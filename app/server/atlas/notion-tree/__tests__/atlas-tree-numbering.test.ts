@@ -1,7 +1,6 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
-import { AGENT_ROOT_SECTION_UUID_FOR_NESTING } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { UuidMappings } from '../../load-uuid-mapping';
 import { buildNotionAtlasTree } from '../atlas-tree-builder';
@@ -700,7 +699,7 @@ describe('Atlas Document Numbering System', () => {
         notion_page_id: 'article-1',
         atlas_database_name: 'Articles',
         plain_text_name: 'Article 1',
-        child_section_and_primary_doc_ids: ['section-1', AGENT_ROOT_SECTION_UUID_FOR_NESTING],
+        child_section_and_primary_doc_ids: ['section-1', 'agent-section-1'],
       });
 
       const section = makeBasePage('Section', {
@@ -712,14 +711,12 @@ describe('Atlas Document Numbering System', () => {
         child_tenet_ids: ['tenet-1'],
       });
 
-      // The Agent Section (where root agents will be nested)
-      // Must use the specific UUID from AGENT_ROOT_SECTION_UUID_FOR_NESTING for nesting to work
+      // Agent Section with proper relationship to Agent Scope Database
       const agentSection = makeBasePage('Section', {
-        notion_page_id: AGENT_ROOT_SECTION_UUID_FOR_NESTING,
+        notion_page_id: 'agent-section-1',
         atlas_database_name: 'Sections & Primary Docs',
         plain_text_name: 'Agent Section',
-        // This will be populated by nestRootAgentDocumentsUnderAgentSection
-        child_agent_scope_ids: [],
+        child_agent_scope_ids: ['agent-core-1'], // Properly related via Notion
       });
 
       const core = makeBasePage('Core', {
@@ -769,12 +766,12 @@ describe('Atlas Document Numbering System', () => {
         plain_text_name: 'Active Data 1',
       });
 
-      // Root agent core (no parent_notion_page_id, so it's a root agent that will be nested under agent section)
+      // Agent core document (properly related to agent section via Notion relationship)
       const agentCore = makeBasePage('Core', {
         notion_page_id: 'agent-core-1',
         atlas_database_name: 'Agent Scope Database',
         plain_text_name: 'Agent Core 1',
-        parent_notion_page_id: null, // Root agent
+        parent_notion_page_id: null,
       });
 
       const research = makeBasePage('Needed Research', {
@@ -802,7 +799,7 @@ describe('Atlas Document Numbering System', () => {
       expect(docNumbers.get('scope-1')).toBe('A.0');
       expect(docNumbers.get('article-1')).toBe('A.0.1');
       expect(docNumbers.get('section-1')).toBe('A.0.1.1');
-      expect(docNumbers.get(AGENT_ROOT_SECTION_UUID_FOR_NESTING)).toBe('A.0.1.2');
+      expect(docNumbers.get('agent-section-1')).toBe('A.0.1.2');
       expect(docNumbers.get('core-1')).toBe('A.0.1.1.1');
       expect(docNumbers.get('adc-1')).toBe('A.0.1.1.2');
       expect(docNumbers.get('annotation-1')).toBe('A.0.1.1.0.3.1');
