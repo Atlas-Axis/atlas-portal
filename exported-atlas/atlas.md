@@ -3074,9 +3074,17 @@ Upon successful conclusion of the Artifact Edit Poll, the Prime's Agent Artifact
 
 The approved Artifact Edit Poll and resulting Instance Configuration Document serve as provenance authorizing the inclusion of the Interim Deployment into the Sky Core Executive Cycle.
 
-###### A.1.9.2.3.2.2.2.1.6 - Completion Of Full Risk Assessment [Core]  <!-- UUID: 14954d6a-0b97-45bf-8734-1e50af8f9ca7 -->
+###### A.1.9.2.3.2.2.2.1.6 - Creation Of Public Information Dashboard [Core]  <!-- UUID: 14954d6a-0b97-45bf-8734-1e50af8f9ca7 -->
 
-Following the interim deployment, the Prime will work with the Core Council Risk Advisor to complete a full risk assessment. Once the means to calculate an official Capital Requirement Ratio for the deployment has been determined, the Prime can propose a subsequent spell to lift the testing constraints and reduce RRC to the Atlas-calculated value.
+The Prime Agent must create a publicly available information dashboard through a platform such as Dune showing, at a minimum, the current exposure to the Interim Deployment. This requirement is waived if the Core Council Risk Advisor has already included the Interim Deployment in the publicly available information dashboard at https://info.sky.money.
+
+###### A.1.9.2.3.2.2.2.1.7 - Prime Agent Usage Of Interim Deployment [Core]  <!-- UUID: 02cb6865-6e41-4465-a1b2-bbeededd9258 -->
+
+Once the Interim Deployment has been deployed and all requirements above have been satisfied, the Prime Agent may begin using it subject to the approved testing parameters.
+
+###### A.1.9.2.3.2.2.2.1.8 - Completion Of Full Risk Assessment [Core]  <!-- UUID: b405eadc-2538-44fc-9b7a-31d45ab601c7 -->
+
+Following the Interim Deployment, the Prime will work with the Core Council Risk Advisor to complete a full risk assessment. Once the means to calculate an official Capital Requirement Ratio for the deployment has been determined, the Prime can request that Core GovOps propose a subsequent Atlas Edit Proposal to lift the testing constraints and reduce the RRC to the Atlas-calculated value.
 
 ###### A.1.9.2.3.2.2.3 - Execution Of Agent Spells [Core]  <!-- UUID: 5b0fd894-094e-4b0c-91ca-c5b59b710c0c -->
 
@@ -7339,7 +7347,7 @@ The purpose of the Distribution Reward is to incentivize Prime Agents and third 
 
 ###### A.2.3.8.1.1.2 - Allowed Number Of Instances [Core]  <!-- UUID: 45149960-fbf3-4079-be4e-fe2a71e5e43f -->
 
-Multiple instances of the Distribution Reward Primitive are allowed. Each instance corresponds to an Distribution Reward program with an associated Distribution Reward Code.
+Multiple instances of the Distribution Reward Primitive are allowed. Each instance corresponds to a Distribution Reward program with an associated Distribution Reward Code.
 
 ###### A.2.3.8.1.1.3 - Multi-Instance Coordinator Document [Core]  <!-- UUID: c788ebcf-98a4-4b97-ae3c-db578c75dc2e -->
 
@@ -7437,7 +7445,7 @@ In the long term, Reward Codes are assigned by Operational GovOps. Operational G
 
 ###### A.2.3.8.1.2.1.2.2 - Marking [Core]  <!-- UUID: ec2c6d8a-e10f-471a-8f85-67803159cc37 -->
 
-To be eligible for the Accessibility Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
+To be eligible for the Distribution Reward, USDS balances must be “marked” with a Reward Code using the agreed-on Tracking Methodology.
 
 ###### A.2.3.8.1.2.1.2.2.1 - Ethereum Mainnet General Tracking Methodology [Core]  <!-- UUID: 87fd6861-ba8a-4bde-945e-ee9ad37ae3e2 -->
 
@@ -7498,11 +7506,6 @@ The Distribution Reward payment for each month is equal to
 (1) the average balance over the month, times 
 (2) the annual Distribution Reward Fee specified in [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759), divided by 
 (3) twelve (12).
-
-The Distribution Reward Fee specified in [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759) includes all of the following elements:
-
-1) Fees for USDS and sUSDS Balances specified in [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e); and
-2) the Prime Agent Management Fee specified in [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af).
 
 ###### A.2.3.8.1.2.1.4.3 - Treasury Management [Core]  <!-- UUID: 935b90bb-a854-4c06-b6ea-48a1cf8fd2f1 -->
 
@@ -7660,7 +7663,7 @@ The process flow is defined herein.
         • The Prospective Integrator must first apply to the Integrator program and be approved by Operational GovOps pursuant to [A.2.3.8.1.2.1.1.2.2 - Long Term Process](6283379c-d871-40a9-a915-d716d7df5642). Post approval, Operational GovOps issues a Reward Code to the Integrator.
         • The Prime Agent develops a plan to track USDS utilization attributable to it using either on-chain or off-chain data. Where applicable, the plan should include how the Prime Agent will support the prospective Integrator in including the Reward Code in their on-chain infrastructure.
 
-• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Accessibility Reward.
+• The Prime Agent may also be (or choose to be) an Integrator itself and deploy a Reward Code on its frontend to earn the Distribution Reward.
 
     ◦ Near Term process:
         •** **If the Prime Agent is not already an approved Integrator, it must apply to the Program and be approved by Viridian Advisors. Post approval, Viridian Advisors issues a Reward Code to the Prime Agent.
@@ -8566,7 +8569,7 @@ If it is discovered that previous Integration Boost calculations were made erron
 
 ###### A.2.3.8.2.2.1.4 - Distribution Rewards [Core]  <!-- UUID: d71a7b9c-3d0e-4383-9671-098bead326c1 -->
 
-Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Accessibility Reward.
+Net USDS balances in a DeFi protocol that is receiving an Integration Boost are also eligible for the Distribution Reward.
 
 ###### A.2.3.8.2.2.1.4.1 - Reporting Of Net USDS Balances Is Valid Tracking Methodology [Core]  <!-- UUID: a4ca2e70-d013-4c54-8e17-1d6f352ddbc0 -->
 
@@ -8678,7 +8681,7 @@ The process flow is defined herein.
 
 • The Prime Agent identifies a DeFi protocol or market where an Integration Boost would drive adoption. The Prime Agent estimates the potential earnings from the Distribution Reward associated with the incremental USDS usage versus the operational cost of funding the Sky Savings Rate payouts.
 
-• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Accessibility Reward.
+• The Prime Agent and the prospective Integration Boost partner discuss (1) the proposed Integration Boost cadence and (2) whether and how the protocol operator also receives a portion of the Distribution Reward.
 
 ###### A.2.3.8.2.2.3.1.3 - Required Primitive Inputs [Core]  <!-- UUID: b91d0eb6-fa86-486c-8350-4564bdb5af09 -->
 
@@ -9521,7 +9524,7 @@ The current Active Pioneer Primes are:
 
 Pioneer Primes gain benefits and responsibilities related to the general adoption of USDS on the Pioneer Chain, and this benefit comes in two forms.
 
-First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Accessibility Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
+First, during the Pioneer Phase, the Pioneer Prime counts as having tagged, for the purposes of calculating the Distribution Reward, all USDS and sUSDS accounts and balances on the Pioneer Chain that have not been tagged by another Prime. At the end of the Pioneer Phase, all untagged USDS accounts and balances are one-time tagged by the Pioneer Prime, and this tag will remain normally for the following ten (10) years unless tagged by a different Prime, or retagged.
 
 Second, during the Pioneer Phase, all Unrewarded USDS bridged to the Pioneer Chain counts towards Pioneer Incentive payments, see [A.2.3.8.3.1.4 - Pioneer Incentive Pool](04edac33-19d5-4a87-a8ab-945a0cd57771).
 
@@ -9594,9 +9597,7 @@ Any investments in assets that would otherwise qualify as Sky Direct Exposures b
 
 ###### A.2.3.9.1.1.1.1.4 - Revenue Sharing For Sky Direct Exposures [Core]  <!-- UUID: 07e0f716-ce23-4394-a5f4-bee537713f48 -->
 
-The Prime Agent implementing a Sky Direct Exposure is not liable for any amounts that would otherwise be due to Sky with respect to the Sky Direct Exposure if the yield for the Sky Direct Exposure is less than the Agent Credit Line Borrow Rate. This is implemented as an adjustment to the Monthly Settlement Cycle.
-
-If the yield for the Sky Direct Exposure is greater than or equal to the Agent Credit Line Borrow Rate, then the Prime Agent may retain the difference as compensation for using its Allocation System and the Monthly Settlement Cycle is implemented normally.
+Because Sky Direct Exposures are held by Sky rather than the Prime Agent implementing the exposure through its Allocation System, Prime Agents are not required to pay the Agent Credit Line Borrow Rate with respect to funds borrowed to finance Sky Direct Exposures. All yield on Sky Direct Exposures is also due exclusively to Sky and is not retained by the Prime Agent. This is implemented as an adjustment to the Monthly Settlement Cycle.
 
 ###### A.2.3.9.1.1.1.1.5 - No Risk Capital Requirements With Respect To Sky Direct Exposures [Core]  <!-- UUID: b683953e-d9b0-4e15-a405-978ef1854870 -->
 
@@ -10440,57 +10441,61 @@ The documents herein define the initial implementation of the Monthly Settlement
 
 The documents herein define the initial process for performing the Monthly Settlement Cycle. The calculations to be performed as part of the Monthly Settlement Cycle are defined in [A.2.5.1.2.2 - Implementation Stages](cf1d76c1-fc9f-499d-866f-265276e421f0). This process definition specifies who performs the calculations and how funds are ultimately paid out.
 
-###### A.2.5.1.2.1.1 - Initial Calculation By Operational Executor Agent [Core]  <!-- UUID: 5122086f-a067-4898-bcd2-bfba4ca3d795 -->
+###### A.2.5.1.2.1.1 - Forum Post By Core GovOps [Core]  <!-- UUID: 5122086f-a067-4898-bcd2-bfba4ca3d795 -->
 
-Within five (5) calendar days of the end of each month, each Operational Executor Agent posts on the Sky Forum a calculation of the net amounts due to or from the Prime Agents that it has an Executor Accord with (the “Initial Calculation”). The Initial Calculation must be posted under the “Sky Core” category using the `monthly-settlement-cycle` tag and must contain reasonable supporting detail. The required contents of the Initial Calculation will be further specified in a future iteration of the Atlas.
+By the end of each month, Core GovOps creates a post on the Sky Forum to organize all communications regarding the Monthly Settlement Cycle for that month (the “Monthly Settlement Cycle Post”). The post must be made under the “Sky Core” category using the `monthly-settlement-cycle` tag.
 
-###### A.2.5.1.2.1.1.1 - Demand Side Stablecoin Primitive Recipients [Core]  <!-- UUID: aa6cec2d-7131-4a1e-b63c-11627e3b9fbd -->
+###### A.2.5.1.2.1.2 - Calculations By Operational Executor Agents And Core Council Risk Advisor [Core]  <!-- UUID: e9f6226e-656c-4290-a329-d745f45323ba -->
+
+Within seven (7) calendar days of the end of each month, each Operational Executor Agent and the Core Council Risk Advisor replies to the Monthly Settlement Cycle Post with their calculation of the net amounts due to or from Prime Agents as specified in the documents herein.
+
+###### A.2.5.1.2.1.2.1 - Initial Calculation By Operational Executor Agent [Core]  <!-- UUID: 7f209f46-72c6-42f7-a7ad-898190ff4e6f -->
+
+Within seven (7) calendar days of the end of each month, each Operational Executor Agent replies to the Monthly Settlement Cycle Post with a calculation of the net amounts due to or from the Prime Agents that it has an Executor Accord with (the “Initial Calculation”). The Initial Calculation must contain reasonable supporting detail. The required contents of the Initial Calculation will be further specified in a future iteration of the Atlas.
+
+###### A.2.5.1.2.1.2.1.1 - Demand Side Stablecoin Primitive Recipients [Core]  <!-- UUID: f62602a6-1c1a-44d4-9c9f-a903ce433330 -->
 
 For each Prime Agent, the Initial Calculation must specify whether payments with respect to Demand Side Stablecoin Primitives (see [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)) have already been made by the Operational Executor Agent, and thus should be reimbursed to the Operational Executor Agent instead of being paid to the Prime Agent.
 
-###### A.2.5.1.2.1.2 - Independent Calculation By Core Council Risk Advisor On Behalf Of Core Council [Core]  <!-- UUID: 8be8ae66-2453-4d7d-8880-ffaba36bdb7e -->
+###### A.2.5.1.2.1.2.2 - Independent Calculation By Core Council Risk Advisor On Behalf Of Core Council [Core]  <!-- UUID: 8be8ae66-2453-4d7d-8880-ffaba36bdb7e -->
 
-Within five (5) calendar days of the posting of each Initial Calculation, the Core Council Risk Advisor, on behalf of the Core Council, replies to the Initial Calculation with their own independent calculation of the net amounts due to or from the Prime Agents covered by the Initial Calculation (the “Independent Calculation”). The Independent Calculation must specify whether each amount is an Agreed Amount or a Disputed Amount (see [A.2.5.1.2.1.2.3 - Allowed Deviation](2e471685-fec5-4306-8747-a50dbbdd5c70)) and contain reasonable supporting detail. The required contents of the Independent Calculation will be further specified in a future iteration of the Atlas.
+Within seven (7) calendar days of the end of each month, the Core Council Risk Advisor replies to the Monthly Settlement Cycle Post with their own independent calculation of the net amounts due to or from each Prime Agent (the “Independent Calculation”). The Independent Calculation must contain reasonable supporting detail. The required contents of the Independent Calculation will be further specified in a future iteration of the Atlas.
 
-###### A.2.5.1.2.1.2.1 - Agreed Amount [Core]  <!-- UUID: 8669ef42-d55b-4be8-839e-646b4ff17e4c -->
+###### A.2.5.1.2.1.3 - Final Calculation By Core GovOps [Core]  <!-- UUID: 9de89bf3-9051-44f1-9ec0-d362ee4d4b38 -->
 
-The net amount due to or from a Prime Agent in an Initial Calculation is an Agreed Amount if the absolute value of the percentage difference between the amounts in the Initial Calculation and the Independent Calculation is less than or equal to the Allowed Deviation (see [A.2.5.1.2.1.2.3 - Allowed Deviation](2e471685-fec5-4306-8747-a50dbbdd5c70)). The net amount due to or from a Prime Agent in an Independent Calculation is also an Agreed Amount if there is no Initial Calculation (see [A.2.5.1.2.1.2.4 - Missing Initial Calculations](ab9015ed-c53f-4be4-893c-993bce51cf0c)).
+Within twelve (12) calendar days of the end of each month, Core GovOps replies to the Monthly Settlement Cycle Post with the final calculation of the net amounts due to or from each Prime Agent (the “Final Calculation”). If there are any Disputed Amounts (see [A.2.5.1.2.1.3.2 - Disputed Amount](4ddda7cd-9942-4f60-9555-6b3f16770334)), then Core GovOps must resolve them. Core GovOps must work with the relevant Operational Executor Agent, relevant Prime Agents, and the Core Council Risk Advisor to reach a mutually acceptable resolution and may consult other parties to the extent it deems advisable.
 
-###### A.2.5.1.2.1.2.2 - Disputed Amount [Core]  <!-- UUID: 4ddda7cd-9942-4f60-9555-6b3f16770334 -->
+Core GovOps makes the final decision in resolving differences between the Initial Calculation and the Independent Calculation. The Final Calculation must specify the Final Amount and contain reasonable supporting detail. The required contents of the Final Calculation will be further specified in a future iteration of the Atlas.
+
+###### A.2.5.1.2.1.3.1 - Agreed Amount [Core]  <!-- UUID: 8669ef42-d55b-4be8-839e-646b4ff17e4c -->
+
+The net amount due to or from a Prime Agent in an Initial Calculation is an Agreed Amount if the absolute value of the percentage difference between the amounts in the Initial Calculation and the Independent Calculation is less than or equal to the Allowed Deviation (see [A.2.5.1.2.1.3.3 - Allowed Deviation](2e471685-fec5-4306-8747-a50dbbdd5c70)). The net amount due to or from a Prime Agent in an Independent Calculation is also an Agreed Amount if there is no Initial Calculation.
+
+###### A.2.5.1.2.1.3.2 - Disputed Amount [Core]  <!-- UUID: 4ddda7cd-9942-4f60-9555-6b3f16770334 -->
 
 The net amount due to or from a Prime Agent in an Initial Calculation is a Disputed Amount if it is not an Agreed Amount.
 
-###### A.2.5.1.2.1.2.3 - Allowed Deviation [Core]  <!-- UUID: 2e471685-fec5-4306-8747-a50dbbdd5c70 -->
+###### A.2.5.1.2.1.3.3 - Allowed Deviation [Core]  <!-- UUID: 2e471685-fec5-4306-8747-a50dbbdd5c70 -->
 
 The Allowed Deviation is the maximum allowed deviation, on a percentage basis, between the net amount due to or from a Prime Agent in the Initial Calculation and Independent Calculation before resolution of these differences is required. It recognizes that if the Initial Calculation and Independent Calculation are truly developed independently then differences in methodology are likely to result in small deviations.
 
-###### A.2.5.1.2.1.2.3.1 - Allowed Deviation Current Value [Core]  <!-- UUID: 0d2f4cb2-815a-4b0c-9bca-3a0d2635effc -->
+###### A.2.5.1.2.1.3.3.1 - Allowed Deviation Current Value [Core]  <!-- UUID: 0d2f4cb2-815a-4b0c-9bca-3a0d2635effc -->
 
 The current value of the Allowed Deviation is 1%.
 
-###### A.2.5.1.2.1.2.4 - Missing Initial Calculations [Core]  <!-- UUID: ab9015ed-c53f-4be4-893c-993bce51cf0c -->
-
-If an Operational Executor Agent does not deliver the Initial Calculation as specified in [A.2.5.1.2.1.1 - Initial Calculation By Operational Executor Agent](5122086f-a067-4898-bcd2-bfba4ca3d795), the Core Council Risk Advisor must prepare an Independent Calculation with respect to the Prime Agents covered by such Initial Calculation within ten (10) calendar days of the end of each month. The Independent Calculation must be posted under the “Sky Core” category using the `monthly-settlement-cycle` tag, contain reasonable supporting detail, and specify that no Initial Calculation was posted by the Operational Executor Agent.
-
-###### A.2.5.1.2.1.3 - Resolution Of Differences By Core GovOps Atlas Axis [Core]  <!-- UUID: 9de89bf3-9051-44f1-9ec0-d362ee4d4b38 -->
-
-If there are any Disputed Amounts (see [A.2.5.1.2.1.2.2 - Disputed Amount](4ddda7cd-9942-4f60-9555-6b3f16770334)), then Core GovOps Atlas Axis must resolve them. Atlas Axis must work with the relevant Operational Executor Agent, relevant Prime Agents, and the Core Council Risk Advisor to reach a mutually acceptable resolution and may consult other parties to the extent it deems advisable.
-
-Core GovOps Atlas Axis makes the final decision in resolving differences between the Initial Calculation and the Independent Calculation (the “Final Calculation”). Atlas Axis must post the Final Calculation as a reply to the Independent Calculation within five (5) calendar days of the posting of an Independent Calculation that includes a Disputed Amount. The Final Calculation must specify the Final Amount and contain reasonable supporting detail. The required contents of the Final Calculation will be further specified in a future iteration of the Atlas.
-
-###### A.2.5.1.2.1.3.1 - Final Amount [Core]  <!-- UUID: c20c38fe-c952-4e75-86fe-d6b561f7f436 -->
+###### A.2.5.1.2.1.3.4 - Final Amount [Core]  <!-- UUID: c20c38fe-c952-4e75-86fe-d6b561f7f436 -->
 
 The net amount due to or from a Prime Agent in a Final Calculation is a Final Amount.
 
-###### A.2.5.1.2.1.3.2 - Disputes By Prime Agents [Core]  <!-- UUID: c204b363-7cc0-4e40-a7dc-68de57358cf9 -->
+###### A.2.5.1.2.1.3.5 - Disputes By Prime Agents [Core]  <!-- UUID: c204b363-7cc0-4e40-a7dc-68de57358cf9 -->
 
-A Prime Agent may dispute the calculation of the net amount due to or from it (a “Dispute Notice”). The Dispute Notice must be posted as a reply to the Initial Calculation within five (5) calendar days of the posting of the Initial Calculation. The Dispute Notice must specify the errors in the Initial Calculation and the Prime’s own calculation of the net amount due to or from it. The required contents of the Dispute Notice will be further specified in a future iteration of the Atlas.
+A Prime Agent may dispute the calculation of the net amount due to or from it (a “Dispute Notice”). The Dispute Notice must be posted as a reply to the Monthly Settlement Cycle Post within five (5) calendar days of the posting of the Initial Calculation or Independent Calculation being disputed. The Dispute Notice must specify the errors in the Initial Calculation or Independent Calculation and the Prime’s own calculation of the net amount due to or from it. The required contents of the Dispute Notice will be further specified in a future iteration of the Atlas.
 
-Core GovOps Atlas Axis may at its discretion resolve the differences between the calculations using the process specified in [A.2.5.1.2.1.3 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). Alternatively, Atlas Axis may elect to determine the correct amount and true up any differences in the next Monthly Settlement Cycle as specified in [A.2.5.1.2.1.5 - True Up In Subsequent Monthly Settlement Cycle](de1592f5-dbce-46de-913f-6ec9589d36e8). In either case Atlas Axis must post its decision as a reply to the Dispute Notice.
+Core GovOps may at its discretion resolve the differences between the calculations using the process specified in [A.2.5.1.2.1.3 - Final Calculation By Core GovOps](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). Alternatively, Core GovOps may elect to determine the correct amount and true up any differences in the next Monthly Settlement Cycle as specified in [A.2.5.1.2.1.5 - True Up In Subsequent Monthly Settlement Cycle](de1592f5-dbce-46de-913f-6ec9589d36e8). In either case Core GovOps must post its decision as a reply to the Dispute Notice.
 
 ###### A.2.5.1.2.1.4 - Settlement Through Sky Core Executive Vote [Core]  <!-- UUID: 0d561ea6-8689-459c-85eb-7c861553e116 -->
 
-When all amounts due to or from Prime Agents are Agreed Amounts or Final Amounts then the Core Facilitator must include payments of these amounts in the next Sky Core Executive Vote as specified herein.
+When Core GovOps has posted the Final Calculation then the Core Facilitator must include payments of these amounts in the next Sky Core Executive Vote as specified herein.
 
 ###### A.2.5.1.2.1.4.1 - Payment Of Amounts Due To Prime Agents [Core]  <!-- UUID: 1816e5eb-3cf1-427f-b831-8eeb9408887c -->
 
@@ -10510,25 +10515,29 @@ On an interim basis, Distribution Reward reimbursements may also be made to the 
 
 ###### A.2.5.1.2.1.5 - True Up In Subsequent Monthly Settlement Cycle [Core]  <!-- UUID: de1592f5-dbce-46de-913f-6ec9589d36e8 -->
 
-If the amounts of any payments included in the Sky Core Executive Vote (see A.2.6 - Settlement Through Sky Core Executive Vote) are subsequently determined to be incorrect, adjustments are included in the next Monthly Settlement Cycle to ensure that each party pays the amount it owes or receives the amount to which it is entitled.
+If the amounts of any payments included in the Sky Core Executive Vote (see [A.2.5.1.2.1.4 - Settlement Through Sky Core Executive Vote](0d561ea6-8689-459c-85eb-7c861553e116)) are subsequently determined to be incorrect, adjustments are included in the next Monthly Settlement Cycle to ensure that each party pays the amount it owes or receives the amount to which it is entitled.
 
-Core GovOps Atlas Axis must prepare a statement specifying the errors, the correct amounts, and the adjustments needed (the “Correction Calculation”). The Correction Calculation must be posted to the Sky Forum under the “Sky Core” category with the `monthly-settlement-cycle` tag. The required contents of the Correction Calculation will be further specified in a future iteration of the Atlas.
+Core GovOps must prepare a statement specifying the errors, the correct amounts, and the adjustments needed (the “Correction Calculation”). The Correction Calculation must be posted to the Sky Forum under the “Sky Core” category with the `monthly-settlement-cycle` tag. The required contents of the Correction Calculation will be further specified in a future iteration of the Atlas.
 
 ###### A.2.5.1.2.1.6 - Interim Measures [Core]  <!-- UUID: f2401c5e-0fea-4a50-ab0b-3e03fc413dbb -->
 
 The documents herein define interim exceptions to the process definition for the Monthly Settlement Cycle.
 
-###### A.2.5.1.2.1.6.1 - Scope Of September 2025 Monthly Settlement Cycle [Core]  <!-- UUID: bfc3548d-5ad1-4327-a54a-ddd4549c5fdc -->
+###### A.2.5.1.2.1.6.1 - Scope Of July / August 2025 Monthly Settlement Cycle [Core]  <!-- UUID: bfc3548d-5ad1-4327-a54a-ddd4549c5fdc -->
 
 The initial Monthly Settlement Cycle conducted in September 2025 will be for the two month period from July 1, 2025 to August 31, 2025.
 
-###### A.2.5.1.2.1.6.2 - Process For September 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 146d3d9c-7f8a-4dc4-b6b3-349bab4279bb -->
+###### A.2.5.1.2.1.6.2 - Process For July / August 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 146d3d9c-7f8a-4dc4-b6b3-349bab4279bb -->
 
-For the initial Monthly Settlement Cycle conducted in September 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Demand Side Stablecoin Primitives (see [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)). The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Demand Side Stablecoin Primitives will be subject to the normal resolution process defined in [A.2.5.1.2.1.3 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts. The Initial Calculation and the Independent Calculation will be posted to the Sky Forum by September 10, 2025.
+For the initial Monthly Settlement Cycle conducted in September 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Demand Side Stablecoin Primitives (see [A.2.3.8 - Demand Side Stablecoin Primitives](26415305-432d-423b-9553-3f325279712d)). The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Demand Side Stablecoin Primitives will be subject to the normal resolution process defined in [A.2.5.1.2.1.3 - Final Calculation By Core GovOps](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts. The Initial Calculation and the Independent Calculation will be posted to the Sky Forum by September 10, 2025.
 
-###### A.2.5.1.2.1.6.3 - Process For October 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 8e8ff62f-c6c5-4094-afd1-2cedcf482df6 -->
+###### A.2.5.1.2.1.6.3 - Process For September 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 8e8ff62f-c6c5-4094-afd1-2cedcf482df6 -->
 
-For the Monthly Settlement Cycle conducted in October 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Spark. The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Spark will be subject to the normal resolution process defined in [A.2.5.1.2.1.3 - Resolution Of Differences By Core GovOps Atlas Axis](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts.
+For the Monthly Settlement Cycle conducted in October 2025, the Initial Calculation prepared by Operational Executor Agent Amatsu will only include calculations related to Spark. The Independent Calculation prepared by the Core Council Risk Advisor on behalf of the Core Council will be prepared normally. The calculations related to Spark will be subject to the normal resolution process defined in [A.2.5.1.2.1.3 - Final Calculation By Core GovOps](9de89bf3-9051-44f1-9ec0-d362ee4d4b38). For all other calculations, the amounts in the Independent Calculation will be treated as Agreed Amounts.
+
+###### A.2.5.1.2.1.6.4 - Process For November / December 2025 Monthly Settlement Cycle [Core]  <!-- UUID: 5aa66a15-d59c-4f66-9d80-96583698f24d -->
+
+There will be no Monthly Settlement Cycle conducted in December 2025. Instead, the Monthly Settlement Cycle conducted in January 2026 will be for the two month period from November 1, 2025 to December 31, 2025.
 
 ##### A.2.5.1.2.2 - Implementation Stages [Core]  <!-- UUID: cf1d76c1-fc9f-499d-866f-265276e421f0 -->
 
@@ -12456,7 +12465,7 @@ Prime Agents receive the full Agent Rate on Unrewarded USDS and Dai balances thr
 
 ##### A.3.1.2.3.3 - Treatment Of sUSDS Balances [Core]  <!-- UUID: b1cc2cb1-aff6-4b7a-bb32-bdf56fc7fd2f -->
 
-Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% to account for the 0.1% Distribution Reward Fee (see [[Unknown]](9ba4f815-6fc7-4cfe-a5d6-b73ea7ff9f7e)) and the 0.1% Prime Agent Management Fee (see [[Unknown]](389ebf97-7ea6-4999-afd4-6419013a31af)) that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
+Prime Agents receive the Agent Rate on sUSDS balances in a modified form. sUSDS balances already earn the Sky Savings Rate. In addition to this, sUSDS balances earn additional compensation of 0.20% (see [A.2.3.8.1.2.1.3 - Distribution Reward Rate](57384c49-e499-4c69-b22c-8e1f1dd34759)) to account for the Distribution Reward Rate that is paid through the Monthly Settlement Cycle, as specified in [A.3.1.2.3.6 - Settlement](eed3d922-7bb8-4cee-97a4-47e902a1c937).
 
 ##### A.3.1.2.3.4 - Spark [Core]  <!-- UUID: e15caed7-276c-4489-95dc-9ba628566bf4 -->
 
@@ -14879,7 +14888,7 @@ In the near term, the Core Council Risk Advisor must develop a tool to automatic
 • Operational GovOps for the Prime Agent; and
 • the Prime Agent.
 
-In addition, the Core Council Risk Advisor must include a summary of all such violations in the Independent Calculation it prepares as part of each Monthly Settlement Cycle. See [A.2.5.1.2.1.2 - Independent Calculation By Core Council Risk Advisor On Behalf Of Core Council](8be8ae66-2453-4d7d-8880-ffaba36bdb7e).
+In addition, the Core Council Risk Advisor must include a summary of all such violations in the Independent Calculation it prepares as part of each Monthly Settlement Cycle. See [A.2.5.1.2.1.2.2 - Independent Calculation By Core Council Risk Advisor On Behalf Of Core Council](8be8ae66-2453-4d7d-8880-ffaba36bdb7e).
 
 ##### A.3.3.2.2.3 - Near Term Exemption For Keel [Core]  <!-- UUID: 864611dd-38cd-493e-b594-a85610a9c63e -->
 
@@ -16508,9 +16517,9 @@ The SKY Borrow Rate is calculated according to the following formula when Utiliz
 
 The SKY Borrow Minimum Rate is calculated according to the following formula:
 
-`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Accessibility Reward`
+`SKY Borrow Minimum Rate = Sky Savings Rate + stUSDS Distribution Reward`
 
-The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Accessibility Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
+The formula ensures the SKY Borrow Minimum Rate covers the baseline cost of capital (Sky Savings Rate) plus the incentive cost (stUSDS Distribution Reward), preventing value-draining arbitrage where users could borrow below the Sky Savings Rate.
 
 ###### A.4.4.1.3.5.2.1 - Parameters Definition [Core]  <!-- UUID: 63e86a25-18f6-4810-a362-d2831781ea2c -->
 
@@ -18813,7 +18822,7 @@ The address of the ALM_CONTROLLER (MainnetController) contract is: `0x577Fa18a49
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.1.2 - ALM Controller (MainnetController) Contract Version [Core]  <!-- UUID: d7b0b6a0-0bac-4169-a006-4a375cba4baa -->
 
-The ALM_CONTROLLER (MainnetController) contract version is: 1.7
+The ALM_CONTROLLER (MainnetController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.1.3 - ALM Freezer Multisig (Mainnet) Address [Core]  <!-- UUID: 8d6c5c86-4b70-4115-b712-65106416aa77 -->
 
@@ -18841,7 +18850,7 @@ The address of the ALM_CONTROLLER (ForeignController) contract is: `0xC0bcbb2554
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.2.2 - ALM Controller (ForeignController Base) Contract Version Address [Core]  <!-- UUID: 2f264586-051d-4944-9c15-c271a2a8a0b5 -->
 
-The ALM_CONTROLLER (ForeignController) contract version is: 1.7
+The ALM_CONTROLLER (ForeignController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.2.3 - ALM Freezer Multisig (Base) Address [Core]  <!-- UUID: 5147079e-3ff5-44c5-8039-5b1d3895ceec -->
 
@@ -18870,7 +18879,7 @@ TBC
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.3.2 - ALM Controller (ForeignController Arbitrum) Contract Version [Core]  <!-- UUID: ea182fbb-586b-4df2-ac03-ea8291702649 -->
 
-The ALM_CONTROLLER (ForeignController) contract version is: 1.7
+The ALM_CONTROLLER (ForeignController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.3.3 - ALM Freezer Multisig (Arbitrum) Address [Core]  <!-- UUID: 294230e0-d7f9-43c5-9f38-d19074b61d47 -->
 
@@ -18898,7 +18907,7 @@ The address of the ALM_CONTROLLER (ForeignController) contract is: TBC
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.4.2 - ALM Controller (ForeignController Unichain) Contract Version [Core]  <!-- UUID: 17ff233f-2ada-4856-be5f-f3ba2616c1b7 -->
 
-The ALM_CONTROLLER (ForeignController) contract version is: 1.7
+The ALM_CONTROLLER (ForeignController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.4.3 - ALM Freezer Multisig (Unichain) Address [Core]  <!-- UUID: 23bb04f0-d312-4230-930d-27782b73b04f -->
 
@@ -18926,7 +18935,7 @@ The address of the ALM_CONTROLLER (ForeignController) contract is: TBC
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.5.2 - ALM Controller (ForeignController Optimism) Contract Version [Core]  <!-- UUID: 715c19b6-63bc-4eae-b8a4-0327e9a10c71 -->
 
-The ALM_CONTROLLER (ForeignController) contract version is: 1.7
+The ALM_CONTROLLER (ForeignController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.5.3 - ALM Freezer Multisig (Optimism) Address [Core]  <!-- UUID: a4cb2345-64a9-4e1f-b084-c25f6df7082a -->
 
@@ -18954,7 +18963,7 @@ The address of the ALM_CONTROLLER (ForeignController) contract address is: `0x4
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.6.2 - ALM Controller (ForeignController Avalanche) Contract Version [Core]  <!-- UUID: 0bf9305e-df4e-4f12-9051-a4974fd7272c -->
 
-The ALM_CONTROLLER (ForeignController) contract version is: 1.7
+The ALM_CONTROLLER (ForeignController) contract version is: 1.8
 
 ###### A.6.1.1.1.2.6.1.2.1.1.1.2.6.3 - ALM Freezer Multisig (Avalanche) Address [Core]  <!-- UUID: abe7f425-65fd-4a3a-b70c-55a8f30e708d -->
 
@@ -19987,10 +19996,6 @@ The process for depositing to ERC-4626 Tokens on destination blockchain through 
 
 ###### A.6.1.1.1.2.6.1.2.2.1.2.2.2.1.2 - Withdraw ERC-4626 Tokens [Core]  <!-- UUID: 49e470dc-9619-4a41-897f-1e1aa532f21b -->
 
-This document defines the steps to withdraw a yield-earning balance from the ERC-4626 vault to the ALM Proxy. 
-
-The process for withdrawing ERC-4626 Tokens on destination blockchain through the `ForeignController` contract is the same as the one for withdrawing ERC-4626 Tokens on Ethereum Mainnet through the `MainnetController` contract, see [[Unknown]](https://www.notion.so/201f2ff08d73804e8f56d0acb2a45d7e).
-
 ###### A.6.1.1.1.2.6.1.2.2.1.2.2.2.1.3 - Withdraw ERC-4626 Tokens [Core]  <!-- UUID: c2bbf44a-496c-4cf6-b0f6-25f77e66465b -->
 
 This document defines the steps to withdraw a yield-earning balance from the ERC-4626 vault to the ALM Proxy. 
@@ -20197,11 +20202,7 @@ For more detailed instructions on the code to execute this, see [A.6.1.1.1.2.6.1
 
 ###### A.6.1.1.1.2.6.1.2.2.3.2.2 - ERC-4626 Withdrawal Action [Core]  <!-- UUID: 29bb82e9-a308-448f-ace1-e8b0397a0995 -->
 
-In order to withdraw all ERC-4626 balances, the operator must execute the following action:
-
-`foreignController.redeemERC4626(address(token), token.balanceOf(address(proxy)))
-`
-For more detailed instructions on the code to execute this, see [[Unknown]](https://www.notion.so/201f2ff08d73804e8f56d0acb2a45d7e) and [A.6.1.1.1.2.6.1.2.2.1.2.1.2.2.3 - General Redeem from ERC-4626 Tokens Procedure](ed774ab7-c761-444b-963d-7407bf91e243).
+[A.6.1.1.1.2.6.1.2.2.1.2.1.2.2.3 - General Redeem from ERC-4626 Tokens Procedure](ed774ab7-c761-444b-963d-7407bf91e243)
 
 ###### A.6.1.1.1.2.6.1.2.2.3.2.3 - Aave AToken Withdrawal Action [Core]  <!-- UUID: 2560adbb-4a5c-4c95-86cb-04647bb33836 -->
 
@@ -20257,11 +20258,7 @@ For more detailed instructions on the code to execute this, see [[Unknown]](http
 
 ###### A.6.1.1.1.2.6.1.2.2.3.4.2 - ERC-4626 Withdrawal Action [Core]  <!-- UUID: eb2056e5-2987-45fc-bb7d-453f09a3d5b7 -->
 
-In order to withdraw all ERC-4626 balances, the operator must execute the following action:
-
-`mainnetController.redeemERC4626(address(token), token.balanceOf(address(proxy)))
-`
-For more detailed instructions on the code to execute this, see [[Unknown]](https://www.notion.so/201f2ff08d73804e8f56d0acb2a45d7e) and [A.6.1.1.1.2.6.1.2.2.1.2.1.2.2.3 - General Redeem from ERC-4626 Tokens Procedure](ed774ab7-c761-444b-963d-7407bf91e243).
+[A.6.1.1.1.2.6.1.2.2.1.2.1.2.2.3 - General Redeem from ERC-4626 Tokens Procedure](ed774ab7-c761-444b-963d-7407bf91e243)
 
 ###### A.6.1.1.1.2.6.1.2.2.3.4.3 - Aave AToken Withdrawal Action [Core]  <!-- UUID: 09de757a-e742-4061-a1d4-7e5d70e9c0df -->
 
@@ -24027,7 +24024,7 @@ The Delegate onboarding process is specified in the subdocuments herein.
 
 ###### A.6.1.1.1.3.1.3.4.1 - Bootstrapping Phase [Core]  <!-- UUID: d08b9b32-bce9-45f4-b8db-9301556ac8db -->
 
-During the bootstrapping phase, before the Spark Risk Council (SRC) is formally established, two (2) initial Delegates will be appointed directly by the Operational Facilitator with the advice and consent of the Spark Foundation through a public announcement on the Sky Forum, following a due diligence review equivalent to the standards set out in [A.6.1.1.1.3.1.3.4.2 - Application Requirements](1bc894fc-f8d1-450b-9829-15a4a5b707c3). Upon the formal constitution of the SRC, all future Delegate appointments and oversight will be conducted by the SRC as specified below.
+The Spark Foundation manages Delegate onboarding. The Spark Foundation may onboard a Delegate at its discretion. Minimum onboarding requirements are (1) identity and contact information, (2) Delegate wallet address, and (3) a signed acceptance of [A.6.1.1.1.3.1.3.3 - Delegate Responsibilities](f230ba4e-eb5a-444e-b07a-13a0292338bd). The Spark Foundation conducts identity verification, conflict-of-interest collection, and sanctions and undue-risk checks as it deems necessary. Upon acceptance, the Foundation notifies the Operational Facilitator, who updates [A.6.1.1.1.3.1.3.8 - Registry of Delegates](f49a1e26-f774-4fbd-b7f8-156639e077f2) and posts a notice on the Sky Forum.
 
 ###### A.6.1.1.1.3.1.3.4.2 - Application Requirements [Core]  <!-- UUID: 1bc894fc-f8d1-450b-9829-15a4a5b707c3 -->
 
@@ -24055,11 +24052,13 @@ Submission of fraudulent information, criminal indictment for financial crime, o
 
 ###### A.6.1.1.1.3.1.3.4.2.6 - Application Does Not Guarantee Acceptance [Core]  <!-- UUID: 6dd2ed9e-7b1a-4b03-901f-51d29c19e8a4 -->
 
-The submission of a Delegate Application is not a guarantee of acceptance and is subject to the above requirements, availability of additional Delegate seats, and the SRC.
+Submission of a Delegate Application does not guarantee acceptance. Acceptance is at the Spark Foundation's sole discretion. The Spark Foundation may approve or deny any application at any time, for any reason or no stated reason including legal, sanctions, risk, operational, or capacity considerations even if the applicant satisfies the minimum requirements in [A.6.1.1.1.3.1.3.4.2 - Application Requirements](1bc894fc-f8d1-450b-9829-15a4a5b707c3). The Spark Foundation is not required to provide individualized rationale. Decisions are final unless otherwise provided in this Artifact.
 
 ###### A.6.1.1.1.3.1.3.4.3 - Minimum Term [Core]  <!-- UUID: c612d4e4-96c4-4ccf-a830-7f742338cfd9 -->
 
-Delegates are guaranteed to serve at least six (6) months, unless they are in violation of their duties. Delegates can always voluntarily offboard according to the process outlined in [A.6.1.1.1.3.1.3.5 - Delegate Offboarding](b49d9086-cb8a-43f7-a024-0d3320eae317).
+Effective upon approval of this proposal, Delegates are appointed by the Spark Foundation to fixed six (6) month terms aligned to calendar half-years (January 1–June 30; July 1–December 31). To continue beyond a term, a Delegate must be re-approved by the Spark Foundation prior to term end; absent re-approval, the Delegate is automatically offboarded at term end pursuant to [A.6.1.1.1.3.1.3.5.5 - Term-End Automatic Offboarding](02deeacc-5305-4a08-a5aa-2aabeb5591be).
+
+Transition. Delegates serving prior to approval are automatically rolled over into this structure and deemed approved through June 30, 2026. For the avoidance of doubt, there will be no re-approval on January 1, 2026; the first re-approval checkpoint is July 1, 2026 for all such Delegates.
 
 ###### A.6.1.1.1.3.1.3.4.4 - Delegate Record [Core]  <!-- UUID: 708a614c-115e-470c-b076-52834422ebc9 -->
 
@@ -24092,12 +24091,19 @@ The Spark Risk Council can immediately offboard a delegate if they:
 
 Upon offboarding, the Delegate’s status in [A.6.1.1.1.3.1.3.8 - Registry of Delegates](f49a1e26-f774-4fbd-b7f8-156639e077f2) is updated to Inactive. SPK delegators must manually revoke their delegations and redelegate if they wish to continue participating in Spark governance.
 
+###### A.6.1.1.1.3.1.3.5.5 - Term-End Automatic Offboarding [Core]  <!-- UUID: 02deeacc-5305-4a08-a5aa-2aabeb5591be -->
+
+At the end of a Delegate's six (6) month term (see [A.6.1.1.1.3.1.3.4.3 - Minimum Term](c612d4e4-96c4-4ccf-a830-7f742338cfd9)), if the Spark Foundation has not recorded a re-approval, the Delegate is automatically offboarded effective 00:00 UTC on the day after term end. The Operational Facilitator updates the Registry and posts a notice on the Sky Forum.
+
 ###### A.6.1.1.1.3.1.3.6 - Incentives & Compensation [Core]  <!-- UUID: 5e38acbd-f010-4bd1-af6c-acdd17b3e9e9 -->
 
-Spark currently offers no protocol-level monetary incentives to Delegates.
-    
-◦ Delegation is viewed as a pro-bono stewardship role.    
-◦ The governance community may revisit compensation only through a future Root Edit proposal.
+Delegates are compensated for their service as follows:
+
+1. Compensation Amount. Active Delegates receive USD 4,000 per calendar month.
+2. Administration. The Spark Foundation administers compensation from its approved operating budget.
+3. Timing & Proration. The compensation structure goes into effect by December 1st 2025, with first payment being made January 2026. Payment is made monthly in arrears and prorated for partial months of service.
+4. Eligibility & Clawback. Payment requires the Delegate to be in good standing and to have met responsibilities in [A.6.1.1.1.3.1.3.3 - Delegate Responsibilities](f230ba4e-eb5a-444e-b07a-13a0292338bd) during the covered period; the Spark Foundation may withhold or claw back amounts for non-performance or breach.
+5. No Waiver of Oversight. Compensation does not limit or waive any onboarding, renewal, or offboarding requirements.
 
 ###### A.6.1.1.1.3.1.3.7 - Security Requirements & Compromise Procedure [Core]  <!-- UUID: 8ab7950c-c347-41a1-bf53-ef4d77000af5 -->
 
@@ -24142,8 +24148,10 @@ The list of Delegates must follow this template for each recorded Delegate:
 The list of Delegates is defined as Active Data in [A.6.1.1.1.3.1.3.8.2.0.6.1 - List of Delegates](daa90217-00f4-4579-bc6d-cacb6afc70dc). 
 
 The Active Data is updated as follows:
-◦ The Responsible Party is the Operational Facilitator.    
-◦ The Update Process must follow the protocol for ‘Direct Edit’.
+• Responsible Party: Operational Facilitator.
+• Trigger: Receipt of onboarding, renewal/re-approval, term-end automatic offboarding, or discretionary offboarding notice from the Spark Foundation.
+• Update Process: Direct Edit.
+• Publication: The Operational Facilitator posts a notice on the Sky Forum.
 
 ###### A.6.1.1.1.3.1.3.8.2.0.6.1 - List of Delegates [Active Data]  <!-- UUID: daa90217-00f4-4579-bc6d-cacb6afc70dc -->
 
@@ -30607,6 +30615,10 @@ On October 16, 2025, Grove agreed to a DAO Resolution authorizing Grove Foundati
 
 On October 23, 2025, Grove agreed to a DAO Resolution authorizing Bamboo Grove to onboard with Ethena. See [https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q](https://ipfs.io/ipfs/bafkreic5vspzukckcgnx5ykwj2inqidvbfcknafa56jqgo25cveqyi565q). The DAO Resolution makes reference to a Deed Poll that is approved as part of the DAO Resolution. See [https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24](https://ipfs.io/ipfs/bafkreibvyodjaosdfdzsrqjtuohwte46pol4zzmchky4t5xejaltonzi24).
 
+###### A.6.1.1.2.3.6.3 - Onboard With Ripple, Agora And Paxos [Core]  <!-- UUID: 1890a855-9e68-4705-a20c-085ee8b5f463 -->
+
+On November 20, 2025, a DAO Resolution was passed authorizing the Grove Foundation and Bamboo Grove Ltd to onboard with Ripple, Agora, and Paxos. See [https://gateway.pinata.cloud/ipfs/bafkreia77ngaxn54wy33v3dgzqr3cm4bykulrjldvf4iyahbfy2yv3jebi](https://gateway.pinata.cloud/ipfs/bafkreia77ngaxn54wy33v3dgzqr3cm4bykulrjldvf4iyahbfy2yv3jebi).
+
 #### A.6.1.1.3 - Keel [Core]  <!-- UUID: bc6aed17-2969-4d04-9af6-c7bf3e4497e6 -->
 
 The documents herein specify all of the logic for Keel, including Keel’s strategy and how it uses the Sky Primitives to operationalize this strategy.
@@ -35457,7 +35469,7 @@ The name of the Agent is Launch Agent 4.
 
 ###### A.6.1.1.5.2.1.1.3.1.1.2 - SubProxy Account [Core]  <!-- UUID: 510817f8-7ce6-4b32-b598-186610760525 -->
 
-The address of Launch Agent 4’s SubProxy Account will be specified in a future iteration of the Launch Agent 4 Artifact.
+The address of Launch Agent 4’s SubProxy Account on the Ethereum Mainnet is `0x8be042581f581E3620e29F213EA8b94afA1C8071`.
 
 ###### A.6.1.1.5.2.1.1.3.1.1.3 - Genesis Account [Core]  <!-- UUID: d77522ec-0987-474d-87b3-9377f107c9b6 -->
 
