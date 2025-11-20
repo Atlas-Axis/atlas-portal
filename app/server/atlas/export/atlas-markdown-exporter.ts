@@ -51,6 +51,21 @@ function sanitizeScopeName(name: string): string {
   return name.replace(/[/\\:*?"<>|]/g, '_');
 }
 
+/**
+ * Normalize content by replacing certain characters with their standard equivalents.
+ * This ensures consistent formatting across exported markdown.
+ *
+ * Replacements:
+ * - Replace “ (LEFT DOUBLE QUOTATION MARK - U+201C) with " (straight quote)
+ * - Replace ” (RIGHT DOUBLE QUOTATION MARK - U+201D) with " (straight quote)
+ * - Replace • (bullet character) with - (hyphen for markdown list compatibility)
+ */
+function normalizeContent(text: string): string {
+  return text
+    .replace(/[“”]/g, '"') // Replace left/right double quotation marks with straight quotes
+    .replace(/•/g, '-'); // Replace bullets with hyphens
+}
+
 function formatDocumentRecursive(
   doc: ExportAtlasTreeDocument,
   depth: number,
@@ -84,7 +99,8 @@ function formatDocumentRecursive(
   lines.push(title, '');
 
   if (doc.content && doc.content.trim().length > 0) {
-    lines.push(doc.content.trim(), '');
+    const normalizedContent = normalizeContent(doc.content.trim());
+    lines.push(normalizedContent, '');
   }
 
   // Extra fields (if any) — above structured fields
@@ -142,10 +158,11 @@ function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
     }
     const value = raw === null ? '' : typeof raw === 'string' ? raw : String(raw);
     const trimmed = value.trim();
+    const normalizedValue = normalizeContent(trimmed);
     // Format: **Label**: followed by newline, then value, then blank line after value
     out.push(`**${label}**:`);
     out.push('');
-    out.push(trimmed);
+    out.push(normalizedValue);
     out.push(''); // Blank line after value
   }
   // Remove the trailing blank line (line 39 in formatDocumentRecursive adds the final separator)

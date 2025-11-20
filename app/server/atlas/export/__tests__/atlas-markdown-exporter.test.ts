@@ -308,6 +308,70 @@ describe('atlas-markdown-exporter', () => {
     expect(md).toContain('###### NR-5 - Deep Research [Needed Research]');
   });
 
+  it('normalizes fancy quotes and bullets in content during export', async () => {
+    const docWithUnnormalizedContent: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
+      type: 'Core',
+      doc_no: 'A.1.2.3.4',
+      name: 'Test "Core" Document',
+      uuid: '00000000-0000-0000-0000-000000000100',
+      last_modified: '2025-01-11T00:00:00Z',
+      content: 'This has “fancy quotes” and bullet points:\n• First item\n• Second item',
+      sections_and_primary_docs: [],
+      annotations: [],
+      tenets: [],
+      active_data: [],
+      needed_research: [],
+    };
+
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([docWithUnnormalizedContent]);
+
+    const md = await buildAtlasMarkdown();
+
+    // Fancy quotes in INPUT should be replaced with straight quotes in OUTPUT
+    expect(md).toContain('"fancy quotes"'); // Straight quotes in output
+    expect(md).not.toContain('“fancy quotes”'); // No fancy quotes in output
+
+    // Bullets in INPUT should be replaced with hyphens in OUTPUT
+    expect(md).toContain('- First item');
+    expect(md).toContain('- Second item');
+    expect(md).not.toContain('• First item');
+    expect(md).not.toContain('• Second item');
+  });
+
+  it('normalizes fancy quotes and bullets in extra fields during export', async () => {
+    const typeSpecWithUnnormalized: ExportAtlasTreeSectionsAndPrimaryDocsDocument = {
+      type: 'Type Specification',
+      doc_no: 'A.1.1.3.1',
+      name: 'Spec with "Quotes"',
+      uuid: '00000000-0000-0000-0000-000000000101',
+      last_modified: '2025-01-11T00:00:00Z',
+      content: 'Main content',
+      sections_and_primary_docs: [],
+      annotations: [],
+      tenets: [],
+      active_data: [],
+      needed_research: [],
+      // extra fields with unnormalized content
+      type_specification_components: 'Components',
+      type_specification_doc_identifier_rules: 'Rules with “quotes” and bullets:\n• Rule one\n• Rule two',
+      type_specification_additional_logic: 'Logic text',
+      type_specification_type_category: 'Category',
+      type_specification_type_name: 'Name',
+      type_specification_type_overview: 'Overview',
+    };
+
+    buildExportAtlasTreeJSONMock().mockResolvedValueOnce([typeSpecWithUnnormalized]);
+
+    const md = await buildAtlasMarkdown();
+
+    // Extra fields in INPUT with fancy quotes/bullets should be normalized in OUTPUT
+    expect(md).toContain('"quotes"'); // Straight quotes in output
+    expect(md).not.toContain('“quotes”'); // No fancy quotes in output
+    expect(md).toContain('- Rule one');
+    expect(md).toContain('- Rule two');
+    expect(md).not.toContain('• Rule one');
+  });
+
   it('exports Annotations with correct depth calculation (regression test for inferDocumentType)', async () => {
     // This tests the fix for the bug where A.0.1.2.1.1 was incorrectly identified as Scenario
     // because it ended with .1.1, matching the pattern /\.1\.\d+$/

@@ -140,6 +140,8 @@ Some normalization occurs during round-trip:
 - Leading/trailing blank lines in content are trimmed
 - Internal blank lines are preserved
 - Extra field values are trimmed
+- Left/right double quotation marks, aka. fancy quotes (`“` and `”`) are replaced with straight quotes (`"`)
+- Bullet characters (`•`) are replaced with hyphens (`-`) for markdown list compatibility
 
 ## Special Use Cases
 
