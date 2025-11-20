@@ -118,6 +118,7 @@ Compare Supabase pages (old) with Notion pages (new) to identify changes.
 - Uses reversed property mapping for efficient lookup
 - Special handling for `sortOrder`: converts string to number
 - Plain text comparison for property values
+- Rich text JSON comparison for content and name properties (detects mention changes and formatting)
 
 **Extra Fields Comparison:**
 
@@ -125,13 +126,37 @@ Compare Supabase pages (old) with Notion pages (new) to identify changes.
 - Scenario: 3 extra fields (Description, Finding, Additional Guidance)
 - Scenario Variation: 3 extra fields (same as Scenarios)
 - Needed Research: 1 extra field (Content)
-- Compares `plain_text` only (not rich_text JSON structure)
+- Compares both `plain_text` and `rich_text` JSON structure
+- Plain text comparison catches content changes
+- JSON structure comparison catches mention target changes and formatting
 
 **Relationship Comparison:**
 
 - Parent relationship: Compares `parent_notion_page_id` field
 - Child relationships: Compares all `child_*_ids` arrays
 - Order-independent comparison (arrays sorted before comparison)
+
+**Rich Text JSON Comparison:**
+
+In addition to plain text comparison, the system now compares the full rich text JSON structure for:
+
+- Content properties (`json_content`)
+- Name/title properties (`json_name`)
+- Extra fields (`rich_text` within `extra_fields`)
+
+This detects changes that plain text comparison misses:
+
+- Mention target changes (when label text stays the same but linked page changes)
+- Formatting changes (bold, italic, code, strikethrough)
+- Annotation changes (colors, links)
+- Equation changes
+
+The comparison uses deep equality checking on the JSON structure to detect any differences in:
+
+- Mention `page.id` references
+- Text annotations (bold, italic, code, etc.)
+- Link URLs
+- Equation expressions
 
 **Change Detection Output:**
 

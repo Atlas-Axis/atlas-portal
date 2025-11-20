@@ -14,6 +14,7 @@ import {
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
+import { areJsonValuesEqual } from './compare-json-content';
 import { extractRichTextFromProperty } from './extract-page-title';
 import { EnhancedPageObjectResponse } from './fetch-database-pages';
 import { readPlainTextValueFromNotionPageProperty } from './read-simple-value-from-property';
@@ -53,25 +54,42 @@ function compareExtraFields(
   // Extract extra fields from Supabase page
   const supabaseExtraFields = (supabasePage.extra_fields as Record<string, unknown>) || {};
 
+  // Define the expected structure for extra field values
+  interface ExtraFieldValue {
+    plain_text?: string | null;
+    rich_text?: Json[] | null;
+  }
+
   // Compare each field
   for (const field of Object.keys(propertyMapping)) {
     const notionValue = notionExtraFields[field];
     const supabaseRawValue = supabaseExtraFields[field];
 
     // Handle backward compatibility: old data may be plain strings instead of {plain_text, rich_text}
-    const supabaseValue =
-      typeof supabaseRawValue === 'string' ? { plain_text: supabaseRawValue, rich_text: null } : supabaseRawValue;
+    const supabaseValue: ExtraFieldValue =
+      typeof supabaseRawValue === 'string'
+        ? { plain_text: supabaseRawValue, rich_text: null }
+        : (supabaseRawValue as ExtraFieldValue);
 
-    // Compare plain_text only (rich_text JSON structure comparison is too fragile)
-    // The plain_text contains the actual content, which is what matters for change detection
+    // Compare plain_text first
     const notionPlainText = notionValue?.plain_text ?? null;
-    const supabasePlainText = (supabaseValue as { plain_text?: string | null })?.plain_text ?? null;
+    const supabasePlainText = supabaseValue?.plain_text ?? null;
 
     if (notionPlainText !== supabasePlainText) {
-      console.log(`‼️‼️‼️‼️📝 Extra field change detected in page ${notionPage.id}: ${field}`);
+      console.log(`‼️‼️‼️‼️📝 Extra field text content changed in page ${notionPage.id}: ${field}`);
       console.log(
         `  Plain text changed: "${notionPlainText?.slice(0, 100)}..." → "${supabasePlainText?.slice(0, 100)}..."`,
       );
+      return true; // Has changes
+    }
+
+    // Also compare rich_text JSON structure to catch mention changes, formatting, etc.
+    const notionRichText = notionValue?.rich_text ?? null;
+    const supabaseRichText = supabaseValue?.rich_text ?? null;
+
+    if (!areJsonValuesEqual(notionRichText, supabaseRichText)) {
+      console.log(`‼️‼️‼️‼️📝 Extra field rich text structure changed in page ${notionPage.id}: ${field}`);
+      console.log(`  👉 https://www.notion.so/${notionPage.id.replace(/-/g, '')}`);
       return true; // Has changes
     }
   }
@@ -203,6 +221,30 @@ export function compareDatabasePages({
           `‼️‼️‼️‼️📝 Property change detected in page ${notionPage.id}: ${propertyName} (Notion: "${JSON.stringify(notionValue)}", Supabase: "${JSON.stringify(supabaseValue)}")`,
         );
         console.log(`  👉 https://www.notion.so/${notionPage.id.replace(/-/g, '')}`);
+      }
+
+      // Also compare rich text JSON structure for content and name properties
+      // This catches changes in mentions, formatting, and annotations that plain text comparison misses
+      if (propertyName === databaseConfig.properties.content && databaseConfig.properties.content) {
+        const notionRichText = extractRichTextFromProperty(notionPage, propertyName);
+        const supabaseRichText = supabasePage.json_content;
+
+        if (!areJsonValuesEqual(notionRichText.richText, supabaseRichText)) {
+          hasPropertyChanges = true;
+          console.log(`‼️‼️‼️‼️📝 Rich text structure change detected in content of page ${notionPage.id}`);
+          console.log(`  👉 https://www.notion.so/${notionPage.id.replace(/-/g, '')}`);
+        }
+      }
+
+      if (propertyName === databaseConfig.properties.atlasDocumentName) {
+        const notionRichText = extractRichTextFromProperty(notionPage, propertyName);
+        const supabaseRichText = supabasePage.json_name;
+
+        if (!areJsonValuesEqual(notionRichText.richText, supabaseRichText)) {
+          hasPropertyChanges = true;
+          console.log(`‼️‼️‼️‼️📝 Rich text structure change detected in name/title of page ${notionPage.id}`);
+          console.log(`  👉 https://www.notion.so/${notionPage.id.replace(/-/g, '')}`);
+        }
       }
     }
 

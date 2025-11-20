@@ -174,6 +174,16 @@ The pipeline begins by fetching all Atlas documents from 10 Notion databases usi
 - Detects new pages, deleted pages, property changes, relationship changes
 - Only modified data is updated (efficient delta sync)
 
+**Rich Text Change Detection:**
+
+The import process performs deep comparison of rich text JSON structures in addition to plain text comparison. This ensures all changes are detected including:
+
+- Mention page ID changes (even when display text unchanged)
+- Text formatting modifications (bold, italic, code, etc.)
+- Link and annotation updates
+
+This comprehensive approach prevents silent data loss when rich text metadata changes but plain text appears identical.
+
 **References:**
 
 - `app/server/services/notion/import-database-to-supabase.ts`
