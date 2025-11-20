@@ -43,7 +43,8 @@ export const notionFullAtlasImportTask = task({
       setApiCallCountTriggerMetadata(finalStats.totalApiCalls);
       flushTriggerMetadata();
 
-      // Revalidate /atlas page to reflect the newly imported data
+      // Revalidate atlas page to reflect the newly imported data
+      await revalidatePage('/');
       await revalidatePage('/atlas');
 
       const changedDatabases = results.filter((result) => result.hasChanges);

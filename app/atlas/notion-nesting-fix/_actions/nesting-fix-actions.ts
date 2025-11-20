@@ -28,6 +28,7 @@ export async function saveMappingsAction(mappings: NotionNestingBugMapping[]): P
 
     // Revalidate the home page to reflect updated UUID mappings
     await revalidatePage('/');
+    await revalidatePage('/atlas');
 
     return { success: true };
   } catch (error) {

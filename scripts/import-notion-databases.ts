@@ -94,7 +94,8 @@ ${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
       importType: targetDatabase ? 'partial' : 'full_sync',
     });
 
-    // Revalidate /atlas page to reflect the newly imported data
+    // Revalidate atlas page to reflect the newly imported data
+    await revalidatePage('/');
     await revalidatePage('/atlas');
 
     // The command hangs after completion, so we explicitly exit. TODO: Investigate why and fix.
