@@ -121,7 +121,7 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
     },
     parentRelationships: {
-      // TODO: We are not syncing parent relationships for Agent Scope Database documents at the moment because the relationships in Notion are not defined - we should add this later!
+      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
     },
     parentPropertyName: 'Parent item',
     // subItemsPropertyName: 'Sub-item',
