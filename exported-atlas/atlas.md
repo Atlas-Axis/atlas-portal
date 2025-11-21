@@ -32247,61 +32247,2285 @@ The in progress Invocations of the Pioneer Chain Primitive are contained herein.
 
 The documents herein implement the Supply Side Stablecoin Primitives for Keel. See [A.2.3.9 - Supply Side Stablecoin Primitives](d1142876-33c2-4e21-9339-d8711525d46f).
 
-###### A.6.1.1.3.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 8bbe0130-2676-47b2-a3d3-0de74fc0deb2 -->
+###### A.6.1.1.3.2.6.1 - Allocation System Primitive [Core]  <!-- UUID: 0f04cae2-326f-42f1-bc8a-74d01e6ad2af -->
 
-The documents herein contain all data and specifications for Keel’s Instances of the Allocation System Primitive. See [A.2.3.9.1 - Allocation System Primitive](9db14ab7-bb4b-4751-8084-843bd4359f2a).
+The documents herein contain all data and specifications for Keel’s Allocation System Primitive Instances.
 
-###### A.6.1.1.3.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: c44e39b7-1705-4dbb-b204-faaa1e63002d -->
+###### A.6.1.1.3.2.6.1.1 - Primitive Hub Document [Core]  <!-- UUID: 835a84a6-2167-4013-acce-281e164c5985 -->
 
-The documents herein organize all base information relevant to Keel’s usage of the Allocation System Primitive.
+The documents herein organize all base information relevant to Keel’s usage of the Keel Liquidity Layer.
 
-###### A.6.1.1.3.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 2f9369bc-0edc-430b-a4c9-812f9ac589df -->
+###### A.6.1.1.3.2.6.1.1.1 - Global Activation Status [Core]  <!-- UUID: 08c6ac06-313b-47bc-b0af-bc93192c6a95 -->
 
 `Active`
 
-###### A.6.1.1.3.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 42035630-8859-4db9-a666-e37ef45a5692 -->
+###### A.6.1.1.3.2.6.1.1.2 - Active Instances Directory [Core]  <!-- UUID: 134c14e9-28ed-4e18-b15a-26899644dc0b -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Active`.
 
-###### A.6.1.1.3.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: f9335826-937e-4b89-bd48-5397949ec3fe -->
+###### A.6.1.1.3.2.6.1.1.2.1 - Solana [Core]  <!-- UUID: 421535cf-d79d-4e2f-92fa-020d53bd1aff -->
+
+The documents herein contain a Directory of all Instances on Solana of the Allocation System Primitive with Instance status of `Active`.
+
+###### A.6.1.1.3.2.6.1.1.2.1.1 - Kamino [Core]  <!-- UUID: 50b33f03-fdb8-4b5b-8b75-3768b17759a9 -->
+
+The Solana Instances Directory of the Kamino Protocol with `Active` Status are stored herein.
+
+###### A.6.1.1.3.2.6.1.1.2.1.1.1 - Solana - Kamino USDS Instance Configuration Document Location [Core]  <!-- UUID: 874acdaa-1c84-47a5-aa08-ec87718e3c0d -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.1.1 - Solana - Kamino USDS Instance Configuration Document](fa6f6aa7-410e-4515-8458-9f3efb30c942)
+
+###### A.6.1.1.3.2.6.1.1.2.1.1.2 - Solana - Kamino USDC Instance Configuration Document Location [Core]  <!-- UUID: 202b96d7-36d0-4b5b-b885-dfe314464d3d -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.1.2 - Solana - Kamino USDC Instance Configuration Document](2510c2ba-c304-478f-84b1-a421e62de8b4)
+
+###### A.6.1.1.3.2.6.1.1.2.1.1.3 - Solana - Kamino USDT Instance Configuration Document Location [Core]  <!-- UUID: 4e40376a-59b3-4c2d-ab2b-9320b4f72e4e -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.1.3 - Solana - Kamino USDT Instance Configuration Document](4adbf528-4a16-496c-974f-ce612af69162).
+
+###### A.6.1.1.3.2.6.1.1.2.1.1.4 - Solana - Kamino USDG Instance Configuration Document Location [Core]  <!-- UUID: 09d70aa2-7082-42d0-b81b-2ec5065b49be -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.1.4 - Solana - Kamino USDG Instance Configuration Document](8b972495-2f93-4d88-b1f4-d447e2d821a3).
+
+###### A.6.1.1.3.2.6.1.1.2.1.1.5 - Solana - Kamino PYUSD Instance Configuration Document Location [Core]  <!-- UUID: efde31d7-efae-463b-8c85-f104c284992d -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.1.5 - Solana - Kamino PYUSD Instance Configuration Document](dd6cf5ec-6ccd-46af-9c4e-0858f79948f7)
+
+###### A.6.1.1.3.2.6.1.1.2.1.2 - Drift [Core]  <!-- UUID: e9748bec-bdee-440c-bde1-a2c7bb450a74 -->
+
+The Solana Instances Directory of the Drift Protocol with `Active` Status are stored herein.
+
+###### A.6.1.1.3.2.6.1.1.2.1.2.1 - Solana - Drift USDS Instance Configuration Document Location [Core]  <!-- UUID: 32707a35-c0a8-47b8-abb3-03022a5df11d -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.2.1 - Solana - Drift USDS Instance Configuration Document](5e934067-e691-4247-bfa1-7df9d4625f21).
+
+###### A.6.1.1.3.2.6.1.1.2.1.2.2 - Solana - Drift USDC Instance Configuration Document Location [Core]  <!-- UUID: 8b23bd05-aa9a-4298-be16-03a2f8165a84 -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.2.2 - Solana - Drift USDC Instance Configuration Document](ddf9f671-bf5c-4f21-af92-63cce7815af4).
+
+###### A.6.1.1.3.2.6.1.1.2.1.2.3 - Solana - Drift USDT Instance Configuration Document Location [Core]  <!-- UUID: d720a25c-2e97-4b52-bdc4-3e1400789448 -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.2.3 - Solana - Drift USDT Instance Configuration Document](300e6f12-800f-4f55-900b-a0697acfb257).
+
+###### A.6.1.1.3.2.6.1.1.2.1.2.4 - Solana - Drift PYUSD Instance Configuration Document Location [Core]  <!-- UUID: 04889d34-faf3-4619-ad82-bd12a8c0e28e -->
+
+This Instance’s associated Instance Configuration Document is located at [A.6.1.1.3.2.6.1.3.1.2.4 - Solana - Drift PYUSD Instance Configuration Document](ea272eb2-0ffd-4704-a02c-ee4f047cb8a3).
+
+###### A.6.1.1.3.2.6.1.1.3 - Completed Instances Directory [Core]  <!-- UUID: ca7557db-6f08-4352-a1b8-5d098ece70ec -->
 
 This document contains a Directory of all Instances of the Allocation System Primitive with Instance status of `Completed`.
 
-###### A.6.1.1.3.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: 9ed1b497-816a-4836-a499-08399b08a752 -->
+###### A.6.1.1.3.2.6.1.1.4 - In Progress Invocations Directory [Core]  <!-- UUID: c0753031-d528-4f41-affc-aed720bd018a -->
 
-This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to [A.6.1.1.3.2.6.1.3 - Active Instances](b151562b-44c4-4ca7-93ad-6ffa351e128d), whereas failed Invocations are Archived in [A.6.1.1.3.2.6.1.1.5 - Hub Data Repository](b625c52c-d461-4ba8-9d28-af015abd5da5).
+This document contains a Directory of all prospective Instances of the Allocation System Primitive whose Invocation is currently in progress. Invocations that are completed successfully are moved to[A.6.1.1.3.2.6.1.1.2 - Active Instances Directory](134c14e9-28ed-4e18-b15a-26899644dc0b), whereas failed Invocations are Archived in [A.6.1.1.3.2.6.1.1.5 - Hub Data Repository](99be2bd2-c065-43b7-82f9-d51dfeeeaa58).
 
-###### A.6.1.1.3.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: b625c52c-d461-4ba8-9d28-af015abd5da5 -->
+###### A.6.1.1.3.2.6.1.1.5 - Hub Data Repository [Core]  <!-- UUID: 99be2bd2-c065-43b7-82f9-d51dfeeeaa58 -->
 
 The documents herein contain the Data Repository for the Primitive Hub Document.
 
-###### A.6.1.1.3.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: a083f74f-8633-497e-9fa8-5bfda4600112 -->
+###### A.6.1.1.3.2.6.1.1.5.1 - Archived Invocations/Instances [Core]  <!-- UUID: 3326fd03-88b1-4ab4-a0ab-24c8023d2c01 -->
 
 The subtrees for archived Invocations and Instances of the Allocation System Primitive are stored here.
 
-###### A.6.1.1.3.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: e865b2b1-6fc3-4153-9165-16c55bf1609c -->
+###### A.6.1.1.3.2.6.1.1.5.1.1 - Failed Invocations [Core]  <!-- UUID: e080e3ed-c786-46bc-b68a-e46b6a752f17 -->
 
 The subtrees for failed Invocations of the Allocation System Primitive are stored here.
 
-###### A.6.1.1.3.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 01872171-b777-4723-a630-a3cfd229d1ac -->
+###### A.6.1.1.3.2.6.1.1.5.1.2 - Suspended Instances [Core]  <!-- UUID: 7bf3b5c6-6cc5-46fe-b4a8-08b9a0108bec -->
 
 The subtrees for Instances of the Allocation System Primitive with `Suspended` Status are stored here.
 
-###### A.6.1.1.3.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: ce04eb97-1bde-4c90-a96e-d6a32890a4ec -->
+###### A.6.1.1.3.2.6.1.2 - Multi-Instance Coordinator Document [Core]  <!-- UUID: d4a7f9b4-7ee0-4f99-a9b9-eebe0219fa8c -->
 
-The documents herein specify the logic for coordinating multiple Instances of the Allocation System Primitive. In the future, additional logic will be added herein regarding how capital is allocated between different Instances of the Allocation System Primitive.
+The documents herein provide general specifications of the Keel Liquidity Layer and define Keel’s overarching strategy and operational framework for managing across all Instances.
 
-###### A.6.1.1.3.2.6.1.3 - Active Instances [Core]  <!-- UUID: b151562b-44c4-4ca7-93ad-6ffa351e128d -->
+###### A.6.1.1.3.2.6.1.2.1 - General Specifications [Core]  <!-- UUID: 5a1327e3-8c53-43d4-96b8-61483557e27d -->
 
-The Instances of the Allocation System Primitive with `Active` Status are stored herein.
+The documents herein contain general specifications for the Keel Liquidity Layer.
 
-###### A.6.1.1.3.2.6.1.4 - Completed Instances [Core]  <!-- UUID: 0f9a9229-0540-415c-8998-79793adebbb8 -->
+###### A.6.1.1.3.2.6.1.2.1.1 - Keel Liquidity Layer Architecture [Core]  <!-- UUID: 0ab7adfb-1f39-479a-b8a0-546410401bba -->
 
-The Instances of the Allocation System Primitive with `Completed` Status are stored herein.
+The documents herein describe the high-level design of the Keel Liquidity Layer, including its key smart contracts and their functionality.
 
-###### A.6.1.1.3.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 733a8b9a-df49-49e8-9f5c-3633453e5dc7 -->
+###### A.6.1.1.3.2.6.1.2.1.1.1 - Keel Liquidity Layer Addresses [Core]  <!-- UUID: c65bd264-cb23-4587-add5-d3091a16613d -->
 
-The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.3.2.6.1.3 - Active Instances](b151562b-44c4-4ca7-93ad-6ffa351e128d).
+The subdocuments herein provide the addresses of the Keel Liquidity Layer’s constituent contracts.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1 - Allocator Contract Addresses [Core]  <!-- UUID: 54f36966-b656-4f51-9272-ac60fd90e1cc -->
+
+The documents herein contain global key addresses for the Allocator Contracts.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1 - Ethereum Mainnet [Core]  <!-- UUID: 14887966-f73a-4abd-bd5e-51df5a7fe061 -->
+
+The documents herein contain the Allocator Contract Addresses on the Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1.1 - Allocator Buffer Contract [Core]  <!-- UUID: 7aa8974f-04fe-4e51-9452-c01296250068 -->
+
+The address of the ALLOCATOR_BUFFER contract is: `0x065E5De3D3A08c9d14BF79Ce5A6d3D0E8794640c`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1.2 - Allocator Oracle Contract [Core]  <!-- UUID: 05259994-3a57-4249-82f4-f47eb881b5ee -->
+
+The address of the ALLOCATOR_ORACLE contract is: `0xc7B91C401C02B73CBdF424dFaaa60950d5040dB7`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1.3 - Allocator Registry Contract [Core]  <!-- UUID: 2052c0df-8888-48cf-990c-735899d60a47 -->
+
+The address of the ALLOCATOR_REGISTRY contract is: `0xCdCFA95343DA7821fdD01dc4d0AeDA958051bB3B`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1.4 - Allocator Roles Contract [Core]  <!-- UUID: 60f119c3-ba99-4370-8f77-f163374f73eb -->
+
+The address of the ALLOCATOR_ROLES contract is: `0x9A865A710399cea85dbD9144b7a09C889e94E803`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.1.1.5 - Allocator Vault (Nova) Contract [Core]  <!-- UUID: 7fd991d5-e2f4-4f8e-b4a6-13ab01509894 -->
+
+The address of the ALLOCATOR_VAULT (ALLOCATOR Nova) contract is: `0xe4470DD3158F7A905cDeA07260551F72d4bB0e77`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2 - ALM Contracts [Core]  <!-- UUID: d655a727-9a7c-4f7d-84e1-dc26395983fe -->
+
+The documents herein contain addresses for the ALM Contracts for the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1 - Ethereum Mainnet [Core]  <!-- UUID: 0a39fe78-c262-495a-96fa-cb50077a0d53 -->
+
+The documents herein contain the ALM Contract Addresses for the Keel Liquidity Layer on the Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.1 - ALM Controller Contract Address [Core]  <!-- UUID: 8ea07623-dc66-4e6b-8478-6fc3fadf049b -->
+
+The address of the ALM_CONTROLLER (`MainnetController`) contract is: `0xEF26BDc34F35669C235345aeF24A251B1EE80EF3`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.2 - ALM Controller Contract Version [Core]  <!-- UUID: b0980c40-fd44-492b-8435-b71fa0217819 -->
+
+The ALM_CONTROLLER contract version is: `1.7.0`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.3 - ALM Freezer Multisig Address [Core]  <!-- UUID: bd6847f1-093d-44a7-8971-98628de6fa8d -->
+
+The address of the Multisig that has the Freezer Role is specified in [A.6.1.1.3.2.6.1.2.1.2.2.3 - Freezer Multisig](50ef16ee-1309-4172-befa-186529eb91c3).
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.4 - ALM Relayer Multisig Addresses [Core]  <!-- UUID: 9e280969-f099-4b67-8528-41f2248e634a -->
+
+The addresses of the Multisigs that have the Relayer Role are specified in [A.6.1.1.3.2.6.1.2.1.2.2.1 - Prime Relayer Multisig](0bdf0649-1446-4ea7-b8dd-e41dc26b9be7) and [A.6.1.1.3.2.6.1.2.1.2.2.2 - Core Operator Relayer Multisig](b17a4a11-7340-4113-972d-76362f816b8a).
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.5 - ALM Proxy Contract [Core]  <!-- UUID: 796968ee-aa7b-40f2-acc8-a784eb41b21a -->
+
+The address of the ALM_PROXY contract is: `0xa5139956eC99aE2e51eA39d0b57C42B6D8db0758`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.1.6 - ALM Rate Limits Contract [Core]  <!-- UUID: 0a1eaef9-84e5-4ebe-a6b7-328349b5f310 -->
+
+The address of the ALM_RATE_LIMITS contract is: `0x65E7B39e508944F7C4278d3e4580f84Eb20b26a7`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2 - Solana [Core]  <!-- UUID: 63dcc42b-87ba-43db-a9f6-4eb2b47ecb79 -->
+
+The documents herein contain the ALM Program Addresses for the Keel Liquidity Layer on Solana.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.1 - Solana ALM Controller Program [Core]  <!-- UUID: 286d26d1-4737-4c3a-9344-4a6d0cdefa93 -->
+
+The address of the SOLANA_ALM_CONTROLLER (`SvmAlmController`) program is: `ALM1JSnEhc5PkNecbSZotgprBuJujL5objTbwGtpTgTd`.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.2 - Solana ALM Controller State [Core]  <!-- UUID: 725952f6-ed88-4869-8105-c43de12bb9a5 -->
+
+The address of the state instance configured for Keel is: `EeobZr57FSmNvw8Hs719iULJNqv3XLrTB5uPezvC2ND3`.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.3 - Solana ALM Controller’s PDA [Core]  <!-- UUID: 844da5c2-cc3b-4bc2-8d2d-2ee9ee09f3a1 -->
+
+The address of the instance’s PDA, configured for Keel is `EeWDutgcKNTdQGJkGRrWYmTXXuKnPUZNvXepbLkQrxW4`. This is the address that ‘owns’ any positions or tokens.
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.4 - Solana ALM Controller Contract Version [Core]  <!-- UUID: aec3b22f-5d75-4c27-b6f8-68babb1211ed -->
+
+The ALM_CONTROLLER contract version is: `1.0.0`
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.5 - ALM Freezer Multisig Address [Core]  <!-- UUID: d321eb55-3592-400a-970d-3ed194c57988 -->
+
+The address of the Multisig that has the Freezer Role is specified in [A.6.1.1.3.2.6.1.2.1.2.3.4 - Freezer Multisig](aeee4280-ab46-4269-9430-fef8c2ee6d43).
+
+###### A.6.1.1.3.2.6.1.2.1.1.1.2.2.6 - ALM Relayer Multisig Addresses [Core]  <!-- UUID: 21ec6877-82e9-4897-ac67-f23de2917a4b -->
+
+The addresses of the Multisigs that have the Relayer Role are specified in [A.6.1.1.3.2.6.1.2.1.2.3.1 - Prime Primary Relayer Address](600dfd83-d3a1-4b26-a906-c412673855b9), [A.6.1.1.3.2.6.1.2.1.2.3.2 - Prime Secondary Relayer Address](3b538bc7-3d18-4091-908d-dc0c3a6e8a62) and [A.6.1.1.3.2.6.1.2.1.2.3.3 - Core Operator Relayer Multisig](ced26169-892b-4ec4-9a16-8fb90e94a9ef).
+
+###### A.6.1.1.3.2.6.1.2.1.1.2 - Off-chain Operational Parameters [Core]  <!-- UUID: 6a9eed19-76e3-42c5-a3ac-2fda937600f4 -->
+
+The documents herein list the off-chain operational parameters for the Keel Liquidity Layer. These operational parameters are protocol settings managed outside of smart contracts (off-chain), used by operators and off-chain systems to guide the functioning of the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.1.1.2.1 - Off-chain Operational Parameters For Ethereum Mainnet [Core]  <!-- UUID: 8477f75e-2800-4511-af34-dd25e590aa1f -->
+
+The document herein lists the current off-chain operational parameters for the Keel Liquidity Layer on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.1.1.2.1.1 - Minimum Operation Size Ethereum Mainnet [Core]  <!-- UUID: 387e28bf-7748-416c-9a62-6696e131f975 -->
+
+The minimum transaction size for operations on Ethereum Mainnet is (`MAINNET_MIN_OPERATION_SIZE`)
+
+- This parameter will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.1.2.1.2 - Debt Ceiling Buffer Ethereum Mainnet [Core]  <!-- UUID: 6d4807f2-c6d0-4731-a315-3eb64397e4b0 -->
+
+The buffer amount below the maximum debt ceiling is (`DEBT_CEILING_BUFFER`)
+
+- This parameter will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.1.2.2 - Off-chain Operational Parameters For Solana [Core]  <!-- UUID: 297df822-cb2a-40ca-b42b-2f88f669122d -->
+
+The document herein lists the current off-chain operational parameters for the Keel Liquidity Layer on Solana.
+
+###### A.6.1.1.3.2.6.1.2.1.1.2.2.1 - Minimum Operation Size Solana [Core]  <!-- UUID: 68a562ac-e43d-4aa7-971e-b9c13d0465c7 -->
+
+The minimum transaction size for operations on Solana is (`SOLANA_MIN_OPERATION_SIZE`)
+
+- This parameter will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3 - Rate Limits [Core]  <!-- UUID: bdbfe3ef-b848-4095-872d-66d189668fd3 -->
+
+The documents herein list the Rate Limits for the Keel Liquidity Layer on each blockchain.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1 - Ethereum Mainnet [Core]  <!-- UUID: f783b89a-c2c7-4b78-91d3-08794358bb5f -->
+
+The documents herein list the current `RateLimits` for the Keel Liquidity Layer on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.1 - Ethereum Mainnet USDS [Core]  <!-- UUID: 8c2ffb6e-0f1b-458d-9066-ee65b6099e87 -->
+
+The maximum mint, burn and swap for USDS on Ethereum Mainnet are located herein.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.1.1 - USDS Mint Maximum [Core]  <!-- UUID: 568f6fae-4680-4090-8eee-fe0b8e920155 -->
+
+The maximum amount of USDS that can be minted within the Keel Liquidity Layer (`LIMIT_USDS_MINT`) is specified in the document herein.
+
+- `maxAmount`: 10,000 USDS
+- `slope`: 10,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.1.2 - USDS Burn Maximum [Core]  <!-- UUID: 308b6a69-7b8d-4631-a8c7-cfa2cd260ea4 -->
+
+The maximum amount of USDS that can be burned within the Keel Liquidity Layer (`LIMIT_USDS_BURN`) is specified in the document herein.
+
+- `maxAmount`: Unlimited
+- `slope`: Unlimited
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.1.3 - USDS For USDC Swap Maximum [Core]  <!-- UUID: b5c9efe7-4240-4a29-bd4d-9dcb7bbe3840 -->
+
+The maximum amount of USDS that can be swapped for USDC by the Keel Liquidity Layer in the Mainnet PSM (`LIMIT_USDS_TO_USDC`) is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDS
+- `slope`: 50,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.1.4 - USDS to Solana via SkyBridge/OFT [Core]  <!-- UUID: 5ee088fb-53b0-46f9-bf40-b59101cc2f24 -->
+
+The maximum amount of USDS that can be sent to Keel’s Solana ALM Controller (`LIMIT_LAYERZERO_TRANSFER`, hashed with Solana USDS OFT address and Solana destination domain) is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDS
+- `slope`: 50,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.2 - Ethereum Mainnet sUSDS [Core]  <!-- UUID: b593503f-ba6d-4f04-8fae-cf1971b55cbf -->
+
+The maximum deposit and withdrawal amounts for sUSDS on Ethereum Mainnet are located herein.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.2.1 - Ethereum Mainnet sUSDS Deposit Maximum [Core]  <!-- UUID: 28831fcf-2e28-4760-a4cd-27ae538edd9a -->
+
+The maximum amount of sUSDS that can be deposited (`LIMIT_4626_DEPOSIT`) is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDS
+- `slope`: 50,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.2.2 - Ethereum Mainnet sUSDS Withdrawal Maximum [Core]  <!-- UUID: 26dd35a7-0c0e-46e4-8717-84e974e27239 -->
+
+The maximum amount of sUSDS that can be withdrawn (`LIMIT_4626_WITHDRAW`) is specified in the document herein.
+
+- `maxAmount`: Unlimited
+- `slope`: 0
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.3 - Ethereum Mainnet USDC [Core]  <!-- UUID: 6e47f3c2-1f5a-4d78-a74e-333e705a2257 -->
+
+The maximum amount that can be transferred and sent to Keel’s Solana ALM Controller for USDC are located herein.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.3.1 - USDC to Solana via CCTP [Core]  <!-- UUID: cada0328-a57d-49c6-9d47-6e70400fc668 -->
+
+The maximum amount of USDC that can be sent to Keel’s Solana ALM Controller (`LIMIT_USDC_TO_DOMAIN`, hashed with Solana domain) is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDC
+- `slope`: 50,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.1.3.2 - USDC Circle Cross-Chain Transfer Protocol Maximum [Core]  <!-- UUID: 4d8f22cb-194c-4a92-8c2e-ea258d52986a -->
+
+The maximum amount of USDC that can be bridged to Ethereum Mainnet ALM Proxy using the Circle Cross-Chain Transfer Protocol (`LIMIT_USDC_TO_CCTP`) is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDC
+- `slope`: 50,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2 - Solana [Core]  <!-- UUID: 2edb355c-541a-44e3-bcf0-87227fad560b -->
+
+The documents herein list the current rate limits for the Keel Liquidity Layer on Solana.
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.1 - Solana USDS [Core]  <!-- UUID: a9868620-43c5-419a-a1ff-691d7618ab8c -->
+
+The maximum mint, burn and swap for USDS on Solana are located herein
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.1.1 - USDS Reserve [Core]  <!-- UUID: d9e9085a-cc04-41b9-8708-fe41fc2ef0f3 -->
+
+The maximum amount of USDS that can leave the USDS `Reserve` in aggregate across any integrations is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDS
+- `slope`: 10,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.1.2 - USDS For USDC Swap Maximum [Core]  <!-- UUID: 5f86844e-579b-425c-8f7b-e6521cfe55b9 -->
+
+The maximum amount of USDS that can be swapped for USDC by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 100,000,000 USDS
+- `slope`: 50,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.1.3 - USDS to Ethereum Mainnet via SkyBridge/OFT [Core]  <!-- UUID: 3e48b867-07ff-4af7-a0d8-66e95b935a8f -->
+
+The maximum amount of USDS that can be sent to Keel’s Ethereum Mainnet ALM Controller is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDS
+- `slope`: 10,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2 - Solana USDC [Core]  <!-- UUID: 081d2895-b10a-44cf-871f-c2efc60d17ea -->
+
+The maximum mint, burn and swap for USDC on Solana are located herein
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.1 - USDC Reserve [Core]  <!-- UUID: 7f7a3441-7bf4-46e7-9e03-5144d47091f5 -->
+
+The maximum amount of USDC that can leave the USDC `Reserve` in aggregate across any integrations is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.2 - USDC For USDS Swap Maximum [Core]  <!-- UUID: 06081a43-075d-48c1-a26d-6578c1aa2fd3 -->
+
+The maximum amount of USDC that can be swapped for USDC by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.3 - USDC For USDT Swap Maximum [Core]  <!-- UUID: ed93fa5c-eb76-480d-9462-bd5d0af2bad2 -->
+
+The maximum amount of USDC that can be swapped for USDT by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.4 - USDC For USDG Swap Maximum [Core]  <!-- UUID: bb63cc13-3e51-43fa-becb-6b4a8e2df939 -->
+
+The maximum amount of USDC that can be swapped for USDG by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.5 - USDC For PYUSD Swap Maximum [Core]  <!-- UUID: 58cf4236-d399-45b9-b650-b1cc8392459e -->
+
+The maximum amount of USDC that can be swapped for PYUSD by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.2.6 - USDC to Ethereum Mainnet via CCTP [Core]  <!-- UUID: 3aeb4993-17b2-4959-ae81-d1518bb7d333 -->
+
+The maximum amount of USDC that can be sent to Keel’s Ethereum Mainnet ALM Controller is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.3 - Solana USDT [Core]  <!-- UUID: 492f7297-f350-45d7-baca-88f1fb9f6b5c -->
+
+The maximum mint, burn and swap for USDT on Solana are located herein
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.3.1 - USDT Reserve [Core]  <!-- UUID: ddfd7cfe-ebc0-413f-8060-f564a559b8fb -->
+
+The maximum amount of USDT that can leave the USDT `Reserve` in aggregate across any integrations is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDT
+- `slope`: 10,000,000 USDT per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.3.2 - USDT For USDC Swap Maximum [Core]  <!-- UUID: 23c8500f-0866-4aa4-99a1-e9f513ad4fa8 -->
+
+The maximum amount of USDT that can be swapped for USDC by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDT
+- `slope`: 10,000,000 USDT per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.4 - Solana USDG [Core]  <!-- UUID: d37a9ed4-8945-4076-8e05-dd2319bcb033 -->
+
+The maximum mint, burn and swap for USDG on Solana are located herein
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.4.1 - USDG Reserve [Core]  <!-- UUID: dfd32464-7a3b-454d-99e4-c1652cb57c5d -->
+
+The maximum amount of USDG that can leave the USDG `Reserve` in aggregate across any integrations is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDG
+- `slope`: 10,000,000 USDG per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.4.2 - USDG For USDC Swap Maximum [Core]  <!-- UUID: e6ab3642-13a1-40bc-9f95-ba68b25a7b89 -->
+
+The maximum amount of USDG that can be swapped for USDC by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 USDG
+- `slope`: 10,000,000 USDG per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.5 - Solana PYUSD [Core]  <!-- UUID: eff69ee3-46bb-44c5-b7e2-df7cc9848618 -->
+
+The maximum mint, burn and swap for PYUSD on Solana are located herein
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.5.1 - PYUSD Reserve [Core]  <!-- UUID: 2037a597-0dd7-4887-ab21-e4a6ff103af0 -->
+
+The maximum amount of PYUSD that can leave the PYUSD `Reserve` in aggregate across any integrations is specified in the document herein.
+
+- `maxAmount`: 25,000,000 PYUSD
+- `slope`: 10,000,000 PYUSD per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.3.2.5.2 - PYUSD For USDC Swap Maximum [Core]  <!-- UUID: 9e4ef1e5-95fd-4052-ab4d-778806a4e27a -->
+
+The maximum amount of PYUSD that can be swapped for USDC by the Keel Liquidity Layer on Solana is specified in the document herein.
+
+- `maxAmount`: 25,000,000 PYUSD
+- `slope`: 10,000,000 PYUSD per day
+
+###### A.6.1.1.3.2.6.1.2.1.1.4 - On-chain Parameters [Core]  <!-- UUID: 09f65586-bd5d-47fc-847b-3f3c087c6b62 -->
+
+The documents herein list general on-chain parameters for the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.1.1.4.1 - Allocator Vault Parameters [Core]  <!-- UUID: 6952b3d2-7b66-46ba-90f7-700f244c5ee0 -->
+
+The Allocator Vault parameters for ALLOCATOR-NOVA-A are:
+
+- `duty`: 0
+- `gap`: 1 million USDS
+- `maxLine`: 60 million USDS
+- `ttl`: 20 hours
+
+###### A.6.1.1.3.2.6.1.2.1.1.4.2 - Whitelisting Of ALMProxy [Core]  <!-- UUID: 810671ff-8674-4178-a7ce-dd98c112688d -->
+
+The ALMProxy for Keel is whitelisted on the LitePSM. This allows Keel to call `buyGemNoFee` and `sellGemNoFee` on the `MCD_LITE_PSM_USDC_A` contract.
+
+###### A.6.1.1.3.2.6.1.2.1.1.4.3 - Whitelisting of Keel SubProxy Cross‑Chain Messaging [Core]  <!-- UUID: b319a7e6-d484-44e7-b622-6df9754c5973 -->
+
+Keel’s SubProxy must be authorized by the Pause Proxy contract to send cross‑chain messages on Solana.
+
+###### A.6.1.1.3.2.6.1.2.1.2 - Governance Processes [Core]  <!-- UUID: 21742792-9418-4857-a143-664f9d7d44d9 -->
+
+The documents herein describe the specific governance processes for the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.1.2.1 - Invoking New Instances [Core]  <!-- UUID: ca0026a1-a4d2-4ebd-a99a-0a089dea8c82 -->
+
+The governance process to invoke a new Instance of the Allocation System Primitive follows the Root Edit process see [A.6.1.1.3.2.2.2.2.1.2 - Operational Process Definition](53987e91-b86c-42be-bb4b-20af084d622d).
+
+###### A.6.1.1.3.2.6.1.2.1.2.2 - Ethereum Multisigs [Core]  <!-- UUID: fcdf3c3c-fc8e-4bcc-af84-4aae709d5411 -->
+
+The documents herein define multisigs that have privileged access to manage the Keel Liquidity Layer on Ethereum.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1 - Prime Relayer Multisig [Core]  <!-- UUID: 0bdf0649-1446-4ea7-b8dd-e41dc26b9be7 -->
+
+The Prime Relayer Multisig has the `RELAYER_ROLE` as defined in [A.6.1.1.3.2.6.1.2.2.1.1.1.2 - Relayer Role](1b64d5b8-ea7d-408e-a409-3e9e72989396) and is controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1.1 - Address [Core]  <!-- UUID: 76265560-4bc8-42fd-b5d7-85be52e11648 -->
+
+The address of the Prime Relayer Multisig on the Ethereum Mainnet is `0xA4F39dAae4Dc86c27c46b9a0605AE2c911451F95`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1.2 - Required Number Of Signers [Core]  <!-- UUID: 90059aef-0d59-4174-9076-e894ce9cf730 -->
+
+The Prime Relayer Multisig currently has a 1/2 signing requirement.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1.3 - Signers [Core]  <!-- UUID: 10d25644-72b7-406e-ac02-97a6cc31322d -->
+
+The signers of the Prime Relayer Multisig are two (2) addresses controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1.4 - Usage Standards [Core]  <!-- UUID: c0928c5e-9679-4e4c-929e-865a15007006 -->
+
+The signers of the Prime Relayer Multisig must use the Multisig to exercise the `RELAYER_ROLE` in accordance with the instructions specified in the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.1.5 - Modification [Core]  <!-- UUID: 8e1357dc-80a7-4716-becf-9a50ef7ae3a0 -->
+
+Keel can change the signers of the Prime Relayer Multisig at any time, so long as there are at least two (2) signers and at least a majority of signers are required to execute transactions.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2 - Core Operator Relayer Multisig [Core]  <!-- UUID: b17a4a11-7340-4113-972d-76362f816b8a -->
+
+The Core Operator Relayer Multisig has the `RELAYER_ROLE` as defined in [A.6.1.1.3.2.6.1.2.2.1.1.1.2 - Relayer Role](1b64d5b8-ea7d-408e-a409-3e9e72989396) and is controlled by Operational GovOps Amatsu.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2.1 - Address [Core]  <!-- UUID: 8028f164-6410-4f0a-bbba-dc175fc77f58 -->
+
+The address of the Core Operator Relayer Multisig on the Ethereum Mainnet is `0x0f72935f6de6C54Ce8056FD040d4Ddb012B7cd54`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2.2 - Required Number Of Signers [Core]  <!-- UUID: e92ff3c5-581b-4d5e-bab4-e244348991e4 -->
+
+The Core Operator Relayer Multisig currently has a 2/3 signing requirement.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2.3 - Signers [Core]  <!-- UUID: 17a98019-f677-471b-aebd-7885108c614b -->
+
+The signers of the Core Operator Relayer Multisig are three (3) addresses controlled by Operational GovOps Amatsu.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2.4 - Usage Standards [Core]  <!-- UUID: 6c744f15-9dc2-47a6-b1f5-33e534697baf -->
+
+The signers of the Core Operator Relayer Multisig must use the Multisig to exercise the `RELAYER_ROLE` in accordance with the instructions specified in the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.2.5 - Modification [Core]  <!-- UUID: f9bf39ea-a02f-4eac-bd81-7c0b4daeb970 -->
+
+Operational GovOps Amatsu can change the signers of the Core Operator Relayer Multisig at any time, so long as there are at least three (3) signers and at least two thirds of signers are required to execute transactions.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3 - Freezer Multisig [Core]  <!-- UUID: 50ef16ee-1309-4172-befa-186529eb91c3 -->
+
+The Freezer Multisig has the `FREEZER_ROLE` as defined in [A.6.1.1.3.2.6.1.2.2.1.1.1.4 - Freezer Role](45b602fb-9427-4555-a3f7-8ad5b17a1cf2).
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3.1 - Address [Core]  <!-- UUID: 5a0b849f-fbfc-4a4d-88f2-d639924548bf -->
+
+The address of the Freezer Multisig on the Ethereum Mainnet is `0xBCCB60cf518391d3315D63313F7bb764d02541fE`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3.2 - Required Number Of Signers [Core]  <!-- UUID: 354e8b0c-4883-4ae9-9d18-b95fcfe56b3c -->
+
+The Freezer Multisig currently has a 2/4 signing requirement.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3.3 - Signers [Core]  <!-- UUID: 81708b61-3321-42f2-af55-204c56b32eb3 -->
+
+The signers of the Freezer Multisig will be specified in a future iteration of the Atlas.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3.4 - Usage Standards [Core]  <!-- UUID: b375c2b6-b52d-42cf-bfd3-01e46af44248 -->
+
+The signers of the Freezer Multisig should exercise their authority to freeze the Keel Liquidity Layer in the event that Keel is not complying with rules regarding Risk Capital or Asset Liability Management, or in the event of another emergency. The signers should consult with Operational GovOps Amatsu before exercising such authority, unless such consultation would cause a delay that could result in a loss of user funds or harm to Sky or Keel. Amatsu may also ask the signers to exercise the Freezer Multisig in an emergency. The signers will work with Operational GovOps Amatsu and, if necessary, other Ecosystem Actors, in good faith in determining whether to exercise their authority based on such request.
+
+Each action executed by the Freezer Multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum.
+
+###### A.6.1.1.3.2.6.1.2.1.2.2.3.5 - Modification [Core]  <!-- UUID: d9ec1326-2e1c-45a9-918e-bbedfa5235c8 -->
+
+Modification of the signers of the Freezer Multisig must be approved through an Atlas Edit Proposal.
+
+The only exceptions to this are if: 1) a signer self-reports a loss of access to their private key due to any reason; or 2) a signer explicitly expresses their wish to be removed as a signer. In both cases, the signer is required to communicate the loss of access to their private key, or the wish to be removed as a signer, in the form of a public Sky Forum post. The specific signer should be replaced as soon as possible.
+
+Any changes to the Multisig signers that do not fall within the two exceptions listed above, or that have not been ratified by Sky Governance, should be questioned immediately and treated as malicious. Where malicious activity is suspected, the Facilitators must prepare an expedited Executive Vote so that Sky Governance can vote on removing external security access from the Multisig.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3 - Solana Multisigs And Addresses [Core]  <!-- UUID: 5c25417a-8698-47f4-821c-06e51e6447b6 -->
+
+The documents herein define multisigs and addresses that have privileged access to manage the Keel Liquidity Layer on Solana.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1 - Prime Primary Relayer Address [Core]  <!-- UUID: 600dfd83-d3a1-4b26-a906-c412673855b9 -->
+
+The Prime Primary Relayer Address holds a [A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484) and is controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1.1 - Address [Core]  <!-- UUID: e4c22be8-bae8-45a3-9fe6-84d007282786 -->
+
+The address of the Prime Primary Relayer is `99J5Vcf3tav2dorWmB1qxdXtD4MKk6pyayQwS8RCXZKc`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1.2 - State Address [Core]  <!-- UUID: b9643943-7dac-4ba6-bd47-56d907ed802e -->
+
+The address of the Prime Primary Relayer’s permission configurations is `2MeJkkKPfHs6qJgTKZJGnrpq8jBRsvty6zB5iA8SkoVU`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1.3 - Signer [Core]  <!-- UUID: 19f801cf-4014-4ebc-8512-5e0b7efc544d -->
+
+The signer of the Prime Relayer Address is controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1.4 - Usage Standards [Core]  <!-- UUID: d5bbbab6-ab49-4b45-90c8-31c2bbce5e65 -->
+
+The signers of the Prime Relayer Address must use it to exercise the[A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484) in accordance with the instructions specified in the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.1.5 - Modification [Core]  <!-- UUID: e7492c8c-10b6-4ee1-9d62-fb3c292f1308 -->
+
+Changes to the Prime Relayer Addresses is a controller action which must be invoked by a [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367).
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2 - Prime Secondary Relayer Address [Core]  <!-- UUID: 3b538bc7-3d18-4091-908d-dc0c3a6e8a62 -->
+
+The Prime Secondary Relayer Address holds a [A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484) and is controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2.1 - Address [Core]  <!-- UUID: 0cacb86a-aaaa-4857-b1d5-b4ac69bf5111 -->
+
+The address of the Prime Secondary Relayer is `2gDBGyhU8M96JDMWzCfiGb3Pw2HvrEvdL5MkfwosBYnh`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2.2 - State Address [Core]  <!-- UUID: 03cabe40-5ddf-47ef-9cf2-d2f33e8c39a1 -->
+
+The address of the Prime Secondary Relayer’s permission configurations is `6TdcW3qX25JcN9nMgSkFka5wXTXBFhb5J2tVRdG3pw3w`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2.3 - Signer [Core]  <!-- UUID: 35c732d2-113a-4b05-bbd1-866938c01470 -->
+
+The signer of the Prime Relayer Address is controlled by Keel.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2.4 - Usage Standards [Core]  <!-- UUID: 3ca26d03-bb4d-4fe0-8f3f-3f9e6d92e2ed -->
+
+The signers of the Prime Relayer Address must use it to exercise the [A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484) in accordance with the instructions specified in the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.2.5 - Modification [Core]  <!-- UUID: e471ce78-e775-4aff-a331-7e581a4606e6 -->
+
+Changes to the Prime Relayer Addresses is a controller action which must be invoked by a [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367).
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3 - Core Operator Relayer Multisig [Core]  <!-- UUID: ced26169-892b-4ec4-9a16-8fb90e94a9ef -->
+
+The Core Operator Relayer Multisig holds a [A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484) and is controlled by Operational GovOps Amatsu.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.1 - Address [Core]  <!-- UUID: f027ec03-4e5a-4262-9992-07fab72dc014 -->
+
+The address of the Core Operator Relayer Multisig on  Solana is `7JvfSy4mWcw1EAy7vjvsHnKeC28UZeAURhVi4nQjUM6h`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.2 - State Address [Core]  <!-- UUID: 310849fb-a67d-4e9a-aadb-8c39ff2a8b8e -->
+
+The address of the Core Operator Relayer’s permission configurations is `2YLLgUuWHwf8hFnWXWUL9V5Vk68yBswVtJED1h4vnPjX`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.3 - Required Number Of Signers [Core]  <!-- UUID: e8868f7c-3033-4355-9f87-81956961bedb -->
+
+The Core Operator Relayer Multisig currently has a 2/3 signing requirement.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.4 - Signers [Core]  <!-- UUID: 08036115-62a3-40c8-9b70-61f8dc38035c -->
+
+The signers of the Core Operator Relayer Multisig are three (3) addresses controlled by Operational GovOps Amatsu.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.5 - Usage Standards [Core]  <!-- UUID: f2730835-93da-4616-989d-a38f1bd6416a -->
+
+The signers of the Core Operator Relayer Multisig must use the Multisig to exercise the Relayer Role in accordance with the instructions specified in the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.3.6 - Modification [Core]  <!-- UUID: 2cf82458-eae4-4fad-9504-0fee8effd172 -->
+
+Operational GovOps Amatsu can change the signers of the Core Operator Relayer Multisig at any time, so long as there are at least three (3) signers and at least two thirds of signers are required to execute transactions.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4 - Freezer Multisig [Core]  <!-- UUID: aeee4280-ab46-4269-9430-fef8c2ee6d43 -->
+
+The Freezer Multisig has the [A.6.1.1.3.2.6.1.2.2.2.1.1.3 - Freezer Role](6f7becc7-2e70-44e5-8662-25ba7dd1a5f8).
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.1 - Address [Core]  <!-- UUID: b76dbc30-602e-4464-b797-8b6643d8e2b8 -->
+
+The address of the Freezer Multisig on the Solana is `AUAJeXgLDNoDbBZ1uRguj9hWDZJSQkmoy4xk9U5zJF8h`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.2 - State Address [Core]  <!-- UUID: f9d1c2bc-5903-4581-9b0d-9c68f7c64ac8 -->
+
+The address of the Freezer Multisig permission configurations is `B24DtbKAV25fcZ6e3buqfB8CSuuiFLRsHHojBGigntff`.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.3 - Required Number Of Signers [Core]  <!-- UUID: c900500f-d44a-4c6f-9429-032a28262b68 -->
+
+The Freezer Multisig currently has a 2/4 signing requirement.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.4 - Signers [Core]  <!-- UUID: e6c86321-bef0-435c-a2db-2b82dc7f1c77 -->
+
+The signers of the Freezer Multisig will be specified in a future iteration of the Atlas.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.5 - Usage Standards [Core]  <!-- UUID: 9a900853-f703-4454-92bf-416fbb157aea -->
+
+The signers of the Freezer Multisig should exercise their authority to freeze the Keel Liquidity Layer in the event that Keel is not complying with rules regarding Risk Capital or Asset Liability Management, or in the event of another emergency. The signers should consult with Operational GovOps Amatsu before exercising such authority, unless such consultation would cause a delay that could result in a loss of user funds or harm to Sky or Keel. Amatsu may also ask the signers to exercise the Freezer Multisig in an emergency. The signers will work with Operational GovOps Amatsu and, if necessary, other Ecosystem Actors, in good faith in determining whether to exercise their authority based on such request.
+
+Each action executed by the Freezer Multisig, including any function calls and their parameters, must be reported to the Sky community within a reasonable time frame through a post on the Sky Forum.
+
+###### A.6.1.1.3.2.6.1.2.1.2.3.4.6 - Modification [Core]  <!-- UUID: 6369ddc9-8898-40b3-b454-c324c75d7d39 -->
+
+Modification of the signers of the Freezer Multisig must be approved through an Atlas Edit Proposal.
+
+The only exceptions to this are if: 1) a signer self-reports a loss of access to their private key due to any reason; or 2) a signer explicitly expresses their wish to be removed as a signer. In both cases, the signer is required to communicate the loss of access to their private key, or the wish to be removed as a signer, in the form of a public Sky Forum post. The specific signer should be replaced as soon as possible.
+
+Any changes to the Multisig signers that do not fall within the two exceptions listed above, or that have not been ratified by Sky Governance, should be questioned immediately and treated as malicious. Where malicious activity is suspected, the Facilitators must prepare an expedited Executive Vote so that Sky Governance can vote on removing external security access from the Multisig.
+
+###### A.6.1.1.3.2.6.1.2.1.3 - Total Risk Capital (TRC) Management [Core]  <!-- UUID: 921ca242-451a-4013-90b4-611696fb1a41 -->
+
+The documents herein specify requirements related to Keel’s Total Risk Capital (TRC) management.
+
+###### A.6.1.1.3.2.6.1.2.1.3.1 - Keel’s Operation Of Keel Liquidity Layer And Agreement Regarding Encumbrance Ratio [Core]  <!-- UUID: e6b81e35-8a04-4d66-ac37-80b0a91d553b -->
+
+Keel will operate the Keel Liquidity Layer and agrees to stay at or below a 90% Encumbrance Ratio. See[A.3.2.2.7.2.1.1.1 - Encumbrance Ratio](5435f680-aaaa-461a-bcae-4056bb8964d9).
+
+###### A.6.1.1.3.2.6.1.2.1.3.2 - Keel’s Total Risk Capital (TRC) Management Processes [Core]  <!-- UUID: afdffc09-3a0f-450f-beb8-e4a5107b434c -->
+
+As operators of the Keel Liquidity Layer, Keel automatically inherits, and is subject to, the base class of operational requirements related to Total Risk Capital management defined in [A.2.3.9.1.1.3.2.1.2 - Primes’ Total Risk Capital (TRC) Management](3af8a3a2-25e5-44b3-87a4-7df1f2712685). Modifications to the base operational logic automatically propagate to the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2 - Keel Liquidity Layer Operational Processes [Core]  <!-- UUID: 44a6cfcc-26d3-414b-99a7-cf57d2b6c5d6 -->
+
+The documents herein describe common operational procedures for the Keel Liquidity Layer applicable across multiple Instances.
+
+###### A.6.1.1.3.2.6.1.2.2.1 - Ethereum Mainnet [Core]  <!-- UUID: d0dd4281-e342-43d9-9aa7-41d42ee6279d -->
+
+The documents herein describe common operational procedures for the Keel Liquidity Layer applicable across multiple Instances on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1 - Routine Protocol [Core]  <!-- UUID: 0a382c05-5a2b-43a5-83ac-94032e065094 -->
+
+The documents herein define the protocol for routine ongoing management of the Keel Liquidity Layer and its active Instances on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.1 - Role Hierarchy And Permissions [Core]  <!-- UUID: 70617021-ff70-4a9b-97aa-56be5ec2038d -->
+
+The documents herein define roles (Admin, Relayer, ALM Controller and Freezer) and their responsibilities/permissions for managing the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.1.1 - Default Admin Role [Core]  <!-- UUID: 26cac5a1-6313-4aff-952c-70eb84513815 -->
+
+The admin role (`DEFAULT_ADMIN_ROLE`) is the role that can grant and revoke any role, including itself and all other roles defined in the contract. The admin role is also used for general admin functions in all contracts. This role is fully controlled by Sky Governance via the Keel Proxy.
+
+`constructor(address admin) {
+_grantRole(DEFAULT_ADMIN_ROLE, admin);`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.1.2 - Relayer Role [Core]  <!-- UUID: 1b64d5b8-ea7d-408e-a409-3e9e72989396 -->
+
+The `RELAYER_ROLE` is the address for the Keel Liquidity Layer ALM Planner off-chain system that calls functions on `Controller` contracts to perform actions on behalf of the `ALMProxy` contract. The Relayer Role may be granted to an address by any address holding the `DEFAULT_ADMIN_ROLE`. The Relayer Role may be removed from an address by any address holding the `DEFAULT_ADMIN_ROLE` or the `FREEZER_ROLE`.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.1.3 - ALM Controller Role [Core]  <!-- UUID: 6ebd37e7-5234-4ac6-a48b-b75e86f29e82 -->
+
+The `ALM_CONTROLLER_ROLE` is the address of the role that can call the `call` functions on the `ALMProxy` contract and update `Rate Limits` contract. It includes the `MainnetController` and `ForeignController` contracts. ALM Controller contracts are accessed and modified via the Relayer Role.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.1.4 - Freezer Role [Core]  <!-- UUID: 45b602fb-9427-4555-a3f7-8ad5b17a1cf2 -->
+
+The `FREEZER_ROLE` is the address of the emergency role that can remove a compromised Relayer.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2 - Controller Functions [Core]  <!-- UUID: 777db288-7558-4e07-b649-fbf15c7ab202 -->
+
+The documents herein describe the purpose and operational use of key functions within Keel Liquidity Layer `MainnetController` contracts: USDS management (mint/burn USDS), Asset Transfer Management (direct transfers, protocol deposits/withdrawals), Cross-chain Operations (CCTP bridging)
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1 - Mainnet Controller Contract Functions [Core]  <!-- UUID: 93b5cec4-1398-4adf-a14f-3c8fb5281cc9 -->
+
+The documents herein define the functions controlled by the Controller contract for Keel Liquidity Layer operations on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1 - Admin Functions [Core]  <!-- UUID: 91ed43a8-98d6-4954-8d4d-a79e49d17cbe -->
+
+The documents herein define the operations performed by the admin role (see [A.6.1.1.3.2.6.1.2.2.1.1.1.1 - Default Admin Role](26cac5a1-6313-4aff-952c-70eb84513815)) within the `MainnetController` contract.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.1 - Set Mint Recipient For Destination Domain [Core]  <!-- UUID: d54329a6-eeaa-4741-9518-d7d24e2d418c -->
+
+The documents herein define the steps for an admin to specify which address should receive newly minted tokens on a particular destination domain.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.1.1 - Call setMintRecipient Function [Core]  <!-- UUID: 0d2d22cf-1ee4-44ee-8e10-95f516da51a9 -->
+
+Only an operator with the admin role is able to set the mint recipient for a destination domain. To do so, they must call the `setMintRecipient` function on the Controller contract on mainnet providing the destination domain and the mint recipient address. Calling this function will carry out the following actions:
+
+- The contract will confirm the admin status of the operator. If the caller does not have the admin role the transaction will revert.
+- The contract will set the selected mint recipient for the specified destination domain.
+- The contract will emit a `MintRecipientSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setMintRecipient(uint32 destinationDomain, bytes32 mintRecipient) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.2 - Set LayerZero Recipient [Core]  <!-- UUID: 753bcc77-e4a6-438b-942c-bf2b4ef908be -->
+
+The documents herein define the steps for an admin to specify which address should receive LayerZero messages on a particular destination endpoint.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.2.1 - Call setLayerZeroRecipient Function [Core]  <!-- UUID: aceb66dc-7349-4d49-a893-7ed417e83797 -->
+
+Only an operator with the admin role is able to set the LayerZero recipient for a destination endpoint. To do so, they must call the `setLayerZeroRecipient` function on the Controller contract on mainnet, providing the destination endpoint ID and the recipient address. Calling this function will carry out the following actions:
+
+- The contract will confirm the admin status of the operator. If the caller does not have the admin role, the transaction will revert.
+- The contract will set the selected LayerZero recipient for the specified destination endpoint.
+- The contract will emit a `LayerZeroRecipientSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setLayerZeroRecipient(uint32 destinationEndpointId, bytes32 layerZeroRecipient) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.3 - Set Maximum Slippage [Core]  <!-- UUID: 323bb906-f37c-470d-8124-b133a050ffa6 -->
+
+The documents herein define the steps for an admin to set the maximum allowed slippage for a specific pool.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.1.3.1 - Set The Maximum Slippage Function [Core]  <!-- UUID: 8838da61-5edf-4ad5-b910-d4536aecd822 -->
+
+Only an operator with the admin role is able to set the maximum slippage for a pool. To do so, they must call the `setMaxSlippage` function on the Controller contract on mainnet, providing the pool address and the maximum slippage value. Calling this function will carry out the following actions:
+
+- The contract will confirm the admin status of the operator. If the caller does not have the admin role, the transaction will revert.
+- The contract will set the maximum slippage for the specified pool.
+- The contract will emit a `MaxSlippageSet` event to the blockchain logs.
+
+The function call is as follows:
+
+`function setMaxSlippage(address pool, uint256 maxSlippage) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2 - Relayer Functions [Core]  <!-- UUID: 0a7927fb-3301-423a-9b8f-6eff2c995dd0 -->
+
+The documents herein define the operations performed by the relayer role (see [A.6.1.1.3.2.6.1.2.2.1.1.1.2 - Relayer Role](1b64d5b8-ea7d-408e-a409-3e9e72989396)) within the `MainnetController` contract.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1 - Relayer Vault Functions [Core]  <!-- UUID: 1a335368-4c05-49b1-b5fb-e0a9c572b28c -->
+
+The documents herein define the operations that are performed to maintain the desired level of liquidity and debt balance of the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1.1 - Mint USDS [Core]  <!-- UUID: 6090ffba-788d-465c-b5d9-34e710745647 -->
+
+The documents herein define the steps for a relayer to mint USDS from the Sky Allocation Vault to the Keel ALM Proxy.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1.1.1 - Call mintUSDS Function [Core]  <!-- UUID: 768ca90b-8432-456c-8f75-2469514d6969 -->
+
+Only an operator with the relayer role is able to mint USDS. To do so, they must call the mintUSDS function on the Controller contract on mainnet with the amount of USDS that is required for minting. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+- The contract will ensure the `Rate Limits` allow for minting the required amount. If the mint amount does not fall within the available Rate Limit the transaction will revert.
+- The contract will reduce the Rate Limit by the amount of USDS minted in this transaction.
+- The contract will mint the required USDS into the buffer contract.
+- The contract will transfer the newly minted USDS from the buffer to the Proxy.
+
+The function call is as follows:
+
+`function mintUSDS(uint256 usdsAmount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1.2 - Burn USDS [Core]  <!-- UUID: 9c9536a8-bb2d-4d37-98cf-4c25a5699026 -->
+
+The documents herein define the steps for a relayer to return and then burn Keel’s USDS debt in the Sky Allocation Vault.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1.2.1 - Call burnUSDS Function [Core]  <!-- UUID: 59b093a0-9025-4c60-ba6f-7a2e78a35ed4 -->
+
+Only an operator with the relayer role is able to repay vault debt and burn USDS. To do so, they must call the burnUSDS function of the Controller contract on mainnet with the amount of USDS that they wish to burn. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+- The contract will increase the available Rate Limit for minting USDS by the amount of USDS being burned. This increase will be limited by the maxAmount parameter in the `Rate Limit` contract.
+- The contract will transfer USDS from the proxy to the buffer.
+- The contract will burn the USDS from the buffer and `wipe` an equivalent amount from the vault's debt.
+
+The function call is as follows:
+
+`function burnUSDS(uint256 usdsAmount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.2 - ERC-20 Functions [Core]  <!-- UUID: 7f8d8294-d5d6-437e-aae1-a1ee36c11e7e -->
+
+The documents herein define the operations that are performed to transfer ERC-20 assets to specified destinations.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.2.1 - Transfer Asset [Core]  <!-- UUID: 0a409cf8-a66d-4fd4-beaf-ca518eaa77c1 -->
+
+The documents herein define the steps for a relayer to transfer ERC-20 tokens to a destination address.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.2.1.1 - Call transferAsset Function [Core]  <!-- UUID: fa55c1fb-83b5-4f73-a7a4-116d2c7814dd -->
+
+Only an operator with the relayer role is able to transfer ERC-20 assets. To do so, they must call the `transferAsset` function on the Controller contract on mainnet, providing the ERC20 asset address, the destination address, and the amount to transfer. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role the transaction will revert.
+- The contract will ensure the `Rate Limits` allow for transferring the specified amount of the asset to the destination. If the transfer amount does not fall within the available Rate Limit, the transaction will revert.
+- The contract will execute the ERC-20 `transfer` function, sending the specified amount of the asset to the destination address.
+
+The function call is as follows:
+
+`function transferAsset(address asset, address destination, uint256 amount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3 - ERC-4626 Functions [Core]  <!-- UUID: 3de32801-e895-4a21-84da-aa5818d16349 -->
+
+The documents herein define the general Keel Liquidity Layer operational procedures for interacting with ERC-4626-compliant tokenized vaults. ERC-4626 is a standard interface for vaults representing shares of an underlying ERC-20 token. Keel Liquidity Layer can integrate with various ERC-4626 vaults. For instance-specific parameters (such as vault addresses, asset addresses, and rate limits), refer to the relevant ERC-4626 Instance Configuration Document.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.1 - Deposit To ERC-4626 Vault [Core]  <!-- UUID: a01273a3-0fc3-44ce-931a-cdc3d3983a73 -->
+
+The documents herein define the steps for a relayer to deposit assets from the ALM Proxy to an ERC-4626 vault to receive yield-bearing shares.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.1.1 - Call depositERC4626 Function [Core]  <!-- UUID: 4e2c13af-7f66-4b87-9662-693e94212c28 -->
+
+Only an operator with the relayer role can deposit assets into an ERC-4626 vault. To do so, they must call the `depositERC4626` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to deposit. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for deposit; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the deposit amount is within the allowed rate limit for the specified vault.
+- The contract will approve the vault to spend the underlying asset from the ALM Proxy. The approval and deposit are both performed from the ALM Proxy address.
+- The contract will deposit the specified amount into the vault, and the ALM Proxy will receive the corresponding number of vault shares.
+
+The function call is as follows:
+
+`function depositERC4626(address token, uint256 amount) external returns (uint256 shares)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.2 - Withdraw From ERC-4626 Vault [Core]  <!-- UUID: ad2c7a22-96aa-428d-a373-b92fec3b529f -->
+
+The documents herein define the steps for a relayer to withdraw a specified amount of the underlying asset from an ERC-4626 vault to the ALM Proxy.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.2.1 - Call withdrawERC4626 Function [Core]  <!-- UUID: 37c09b7c-6aa0-4c3c-861e-984de4e3ba4d -->
+
+Only an operator with the relayer role can withdraw assets from an ERC-4626 vault. To do so, call the `withdrawERC4626` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to withdraw. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for withdrawal; otherwise, the transaction will revert. When this function is called:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the withdrawal amount is within the allowed rate limit for the specified vault.
+- The contract will withdraw the specified amount from the vault, burning the necessary number of vault shares held by the ALM Proxy as part of the withdrawal process.
+- The withdrawn assets will be sent to the ALM Proxy.
+
+The function call is as follows:
+
+`function withdrawERC4626(address token, uint256 amount) external returns (uint256 shares)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.3 - Redeem ERC-4626 Shares [Core]  <!-- UUID: eec2b12a-6578-483a-824e-1442f3b0410c -->
+
+The documents herein define the steps for a relayer to redeem vault shares for the underlying asset from an ERC-4626 vault, with the assets sent to the ALM Proxy.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3.3.1 - Call redeemERC4626 Function [Core]  <!-- UUID: a6474ee7-317b-430b-abd7-bf81a50ca898 -->
+
+Only an operator with the relayer role can redeem vault shares for the underlying asset. To do so, they must call the `redeemERC4626` function on the Controller contract on mainnet, providing the number of shares to redeem. The address is the ALM Proxy acting as both the owner of the shares being redeemed and the receiver of the resulting assets. The operation will only succeed if the ALM Proxy holds at least the number of shares specified for redemption; otherwise, the transaction will revert. When this function is called:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will redeem the specified number of shares from the vault, sending the resulting assets to the ALM Proxy.
+- After redemption, the contract will update the withdrawal rate limit based on the amount of assets received.
+
+The function call is as follows:
+
+`function redeemERC4626(address token, uint256 shares) external returns (uint256 assets)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4 - ERC-7540 Functions [Core]  <!-- UUID: ff9638aa-a4d5-4a5e-a2bb-9b924b9987f9 -->
+
+The documents herein define the general Keel Liquidity Layer operational procedures for interacting with ERC-7540-compliant tokenized vaults. ERC-7540 is a standard interface for vaults representing and managing multiple underlying assets within a single vault. Keel Liquidity Layer can integrate with various ERC-7540 vaults. For instance-specific parameters (such as vault addresses, asset addresses, and rate limits), refer to the relevant ERC-7540 Instance Configuration Document.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.1 - Deposit To ERC-7540 Vault [Core]  <!-- UUID: 0ab348c1-50f9-4215-a78b-2b9dcf22aa03 -->
+
+The documents herein define the steps for a relayer to request and claim deposit of assets from the ALM Proxy to an ERC-7540 vault.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.1.1 - Call requestDepositERC7540 Function [Core]  <!-- UUID: e86cf2c1-31f6-4f83-8120-89b52611adae -->
+
+Only an operator with the relayer role can request a deposit into an ERC-7540 vault. To do so, they must call the `requestDepositERC7540` function on the Controller contract on mainnet, providing the vault token address and the amount of the underlying asset to deposit. The operation will only succeed if the ALM Proxy holds at least the amount of the underlying asset specified for deposit; otherwise, the transaction will revert. The Rate Limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the deposit amount is within the allowed rate limit for the specified vault.
+- The contract will approve the vault to spend the underlying asset from the ALM Proxy. The approval and deposit request are both performed from the ALM Proxy address.
+- The contract will submit a deposit request to the vault. Shares will not be received immediately; they must be claimed in a separate step after the vault processes the deposit.
+
+The function call is as follows:
+
+`function requestDepositERC7540(address token, uint256 amount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.1.2 - Call claimDepositERC7540 Function [Core]  <!-- UUID: cb81a01a-74b8-4e35-a83d-0848dd1f9f14 -->
+
+Only an operator with the relayer role can claim shares from an ERC-7540 vault after a deposit request. To do so, they must call the `claimDepositERC7540` function on the Controller contract on mainnet, providing the vault token address. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will determine the maximum number of shares that can be claimed by the ALM Proxy.
+- The contract will claim the shares from the vault, and the ALM Proxy will receive the corresponding number of vault shares.
+
+The function call is as follows:
+
+`function claimDepositERC7540(address token) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.2 - Redeem From ERC-7540 Vault [Core]  <!-- UUID: 7077efbf-91fb-402c-831f-8f15e13f0a6a -->
+
+The documents herein define the steps for a relayer to request and redeem vault shares for the underlying asset from an ERC-7540 vault, with the assets sent to the ALM Proxy.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.2.1 - Call requestRedeemERC7540 Function [Core]  <!-- UUID: 19e6bba4-8d6f-4d1c-95d5-000b2dbf948c -->
+
+Only an operator with the relayer role can request the redemption of shares from an ERC-7540 vault. To do so, they must call the `requestRedeemERC7540` function on the Controller contract on mainnet, providing the vault token address and the number of shares to redeem. The rate limit configuration serves as whitelisting for vaults. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the redemption amount is within the allowed rate limit for the specified vault.
+- The contract will submit a redemption request to the vault. Assets will not be received immediately; they must be claimed in a separate step after the vault processes the redemption.
+
+The function call is as follows:
+
+`function requestRedeemERC7540(address token, uint256 amount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.4.2.2 - Call claimRedeemERC7540 Function [Core]  <!-- UUID: 9b43cc7e-dfb9-4868-b9a6-8848c837691b -->
+
+Only an operator with the relayer role can claim assets from an ERC-7540 vault after a redemption request. To do so, they must call the `claimRedeemERC7540` function on the Controller contract on mainnet, providing the vault token address. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will determine the maximum amount of assets that can be claimed by the ALM Proxy.
+- The contract will claim the assets from the vault, and the ALM Proxy will receive the corresponding amount of underlying assets.
+
+The function call is as follows:
+
+`function claimRedeemERC7540(address token) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5 - PSM Functions [Core]  <!-- UUID: 19d426c4-9846-4ea8-91f7-5b6d71055491 -->
+
+The documents herein define the swap operations performed by the Keel Liquidity Layer in the PSM.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.1 - Swap USDS To USDC [Core]  <!-- UUID: cb52a3c2-6b2a-43a0-b2e0-728101c409bd -->
+
+The documents herein define a series of operations for an operator to `swap` USDS to USDC through the PSM.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.1.1 - Call swapUSDSToUSDC Function [Core]  <!-- UUID: df09edaf-7a92-4d8e-ae86-a9666a0bf082 -->
+
+Only an operator with the relayer role can swap USDS to USDC via the PSM. To do so, they must call the swapUSDSToUSDC function on the Controller contract on mainnet, providing the usdcAmount (denominated in 1e6 precision to match PSM USDC handling). The operation will only succeed if the ALM Proxy holds at least the equivalent amount of USDS for the swap; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for swaps. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the swap amount is within the allowed rate limit (LIMIT_USDS_TO_USDC) for the PSM.
+- The contract will convert the USDC amount to an 18-decimal format using psmTo18ConversionFactor.
+- The contract will approve the daiUsds contract to spend the converted amount from the ALM Proxy.
+- The contract will swap USDS to DAI at a 1:1 ratio via daiUsds, sending DAI to the proxy.
+- The contract will approve the PSM to spend the DAI.
+- The contract will swap DAI to USDC at a 1:1 ratio with no fee via psm.buyGemNoFee, sending USDC to the proxy.
+
+The function call is as follows:
+
+`function swapUSDSToUSDC(uint256 usdcAmount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.2 - Swap USDC To USDS [Core]  <!-- UUID: da2164e3-03bc-447c-89c5-119d01feddaa -->
+
+The documents herein define a series of operations for an operator to `swap` USDC to USDS through the PSM.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.2.1 - Call swapUSDCToUSDS Function [Core]  <!-- UUID: 1b18072b-c409-4d2f-a333-1e5c3ae8ab90 -->
+
+Only an operator with the relayer role can swap USDC to USDS via the PSM. To do so, they must call the `swapUSDCToUSDS` function on the Controller contract on mainnet, providing the usdcAmount (denominated in 1e6 precision to match PSM USDC handling). The operation will only succeed if the ALM Proxy holds at least the amount of USDC specified for the swap; otherwise, the transaction will revert. The rate limit configuration serves as whitelisting for swaps. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the swap amount is within the allowed rate limit (LIMIT_USDC_TO_USDS) for the PSM.
+- The contract will approve the PSM to spend the USDC from the ALM Proxy.
+- The contract will calculate the swap limit per transaction based on the DAI balance held by the PSM, converting with psmTo18ConversionFactor.
+- If the usdcAmount is less than or equal to the limit, the contract will perform a direct swap of USDC to DAI.
+- If the usdcAmount exceeds the limit, the contract will split the swap into multiple smaller swaps: refill the PSM with DAI via psm.fill, recalculate the limit, swap the maximum allowed amount, update the remaining amount, and repeat until complete (reverting with "DssLitePsm/nothing-to-fill" if PSM cannot be filled).
+- The contract will convert the USDC amount to a DAI amount, accounting for token decimal differences.
+- The contract will approve the daiUsds contract to spend the DAI amount from the ALM Proxy.
+- The contract will swap DAI to USDS at a 1:1 ratio via daiUsds, sending USDS to the proxy.
+
+The function call is as follows:
+
+`function swapUSDCToUSDS(uint256 usdcAmount) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.3 - Transfer Token Via LayerZero [Core]  <!-- UUID: 030c5483-6126-40f7-b7ff-a99186ab105d -->
+
+The documents herein define the steps for a relayer to transfer a token via LayerZero to a destination endpoint, with the assets sent according to the configured recipient.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.3.1 - Call transferTokenLayerZero Function [Core]  <!-- UUID: f88e14a0-fa64-44cc-a52c-cb35b7704ee8 -->
+
+Only an operator with the relayer role can transfer tokens via LayerZero. To do so, they must call the `transferTokenLayerZero` function on the Controller contract on mainnet, providing the oftAddress, amount, and destinationEndpointId (payable for native fees). The operation will only succeed if the ALM Proxy holds sufficient tokens and fees; otherwise, the transaction will revert. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will ensure the transfer amount is within the allowed rate limit (built from LIMIT_LAYERZERO_TRANSFER, oftAddress, and destinationEndpointId).
+- If approval is required, the contract will approve the token for the oftAddress.
+- The contract will build LayerZero send options and a SendParam struct with destination details, amount, and recipient from layerZeroRecipients.
+- The contract will quote the OFT receipt to set the minimum amount received.
+- The contract will quote the messaging fee and execute the send via proxy.doCallWithValue, passing the fee value.
+
+The function call is as follows:
+
+`function transferTokenLayerZero(address oftAddress, uint256 amount, uint32  destinationEndpointId) external payable`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.6 - Bridging Functions [Core]  <!-- UUID: 66d40b48-7f80-46a2-8ee0-503580a42d4c -->
+
+The documents herein define the operations performed by an operator to bridge liquidity between Ethereum Mainnet and the destination blockchains for the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.6.1 - Bridge USDC Using Circle Cross-Chain Transfer Protocol [Core]  <!-- UUID: e4b91efa-ff29-4a8e-a28c-d54127ad2480 -->
+
+The documents herein define the process to bridge USDC using the Circle Cross-Chain Transfer Protocol.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.6.1.1 - Call transferUSDCToCCTP Function [Core]  <!-- UUID: 46a74cd0-5e4e-4ea6-8fe6-ab38a8930f32 -->
+
+Only an operator with the relayer role can initiate a USDC transfer to a specified destination domain using CCTP, handling rate limits, approvals, and splitting large amounts if needed. It requires parameters like proxy, Rate Limits, cctp, usdc, rate limit IDs, mintRecipient, destinationDomain, and usdcAmount. To do so, they must call the `transferUSDCToCCTP` function on the Controller contract on mainnet. Calling this function will carry out the following actions:
+
+- The contract will confirm the relayer status of the operator. If the caller does not have the relayer role, the transaction will revert.
+- The contract will trigger a rate limit decrease for the CCTP limit ID and amount.
+- The contract will trigger a rate limit decrease for a domain-specific key and amount.
+- The contract will require that mintRecipient is not zero, reverting if it is.
+- The contract will approve the CCTP contract to spend the USDC amount from the proxy, assuming that the proxy has enough USDC.
+- The contract will retrieve the burn limit per message for the USDC address (if the amount is larger than the limit it must be split into multiple calls).
+- If the usdcAmount exceeds the burn limit, the contract will initiate a CCTP transfer for the burn limit amount and subtract it from the remaining usdcAmount.
+- If any usdcAmount remains after the loop, the contract will initiate a final CCTP transfer for that amount.
+
+The function call is as follows:
+
+`function transferUSDCToCCTP(uint256 usdcAmount, uint32 destinationDomain) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.6.2 - Bridge USDS / sUSDS Using SkyBridge (LayerZero OFT) Token Bridge [Core]  <!-- UUID: d239ba22-9a09-49f1-9fdc-a1d306ffe697 -->
+
+This document defines the process for an operator to bridge USDS or sUSDS using the OP Token Bridge. This process will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3 - Rate Limit Management [Core]  <!-- UUID: bf81a7dd-9483-48e4-b489-cb3cb2e61b37 -->
+
+The documents herein define the protocol for querying, setting, and adjusting `Rate Limits` for Instances using their `Rate LimitID`s. The Rate Limits must be maintained in line with Keel’s strategy, market conditions, and security considerations.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3.1 - Get Rate Limit Data [Core]  <!-- UUID: 921dd8b4-763e-4edf-9cb9-f2e0cb012109 -->
+
+Anyone can query the full rate limit data for a specific key. Calling this function will carry out the following actions:
+
+- The contract will return the stored Rate LimitData struct from the _data mapping for the key.
+
+The function call is as follows:
+
+`function getRate LimitData(bytes32 key) external override view returns (Rate LimitData memory)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3.2 - Set Rate Limit Data [Core]  <!-- UUID: 132f4de3-5b4c-462b-8f03-4cc15706baaf -->
+
+Only an operator with the admin role is able to set or update rate limit data for a specific key, including maxAmount, slope, and historical values. There are two overloads for flexibility. Calling these functions will carry out the following actions:
+
+- The contract will require that lastAmount is less than or equal to maxAmount, reverting with "Rate Limits/invalid-lastAmount" if not.
+- The contract will require that lastUpdated is less than or equal to the current block timestamp, reverting with "Rate Limits/invalid-lastUpdated" if not.
+- The contract will store the provided data in the _data mapping as a Rate LimitData struct.
+- The contract will emit a Rate LimitDataSet event with the key and provided values.
+
+The function calls are as follows:
+
+`function setRate LimitData(bytes32 key, uint256 maxAmount, uint256 slope, uint256 lastAmount, uint256 lastUpdated) public override onlyRole(DEFAULT_ADMIN_ROLE)
+
+function setRate LimitData(bytes32 key, uint256 maxAmount, uint256 slope) external override`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3.3 - Set Unlimited Rate Limit Data [Core]  <!-- UUID: 0a5ccc61-eaf4-4b49-80d7-770e29178c1a -->
+
+Only an operator with the admin role is able to set unlimited rate limit data for a specific key by configuring it with maximum values. Calling this function will carry out the following actions:
+
+- The contract will call setRate LimitData internally with type(uint256).max for maxAmount and lastAmount, 0 for slope, and the current block timestamp for lastUpdated.
+
+The function call is as follows:
+
+`function setUnlimitedRate LimitData(bytes32 key) external override`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3.4 - Get Current Rate Limit [Core]  <!-- UUID: 99f4fe4c-04af-4efe-b099-f5d92122de78 -->
+
+Anyone can query the current rate limit value for a specific key, accounting for time-based slope accrual. Calling this function will carry out the following actions:
+
+- The contract will retrieve the Rate LimitData for the key from the _data mapping.
+- If maxAmount is type(uint256).max (unlimited case), the contract will return type(uint256).max.
+- Otherwise, the contract will calculate and return the minimum of (slope * time elapsed since lastUpdated + lastAmount) and maxAmount.
+
+The function call is as follows:
+
+`function getCurrentRate Limit(bytes32 key) public override view returns (uint256)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.3.5 - Trigger Rate Limit Decrease [Core]  <!-- UUID: a710528f-e695-4262-bab1-e5ee57241315 -->
+
+Only an operator with the controller role can trigger a decrease in the rate limit for a specific key by a given amount. Calling this function will carry out the following actions:
+
+- The contract will retrieve the Rate LimitData storage for the key from the data mapping.
+- The contract will require that maxAmount is greater than 0, reverting with "Rate Limits/zero-maxAmount" if not.
+- If maxAmount is type(uint256).max (unlimited case), the contract will return type(uint256).max without changes.
+- The contract will calculate the currentRate Limit using getCurrentRate Limit.
+- The contract will require that amountToDecrease is less than or equal to currentRate Limit, reverting with "Rate Limits/rate-limit-exceeded" if not.
+- The contract will update lastAmount to currentRate Limit minus amountToDecrease and set lastUpdated to the current block timestamp.
+- The contract will emit a Rate LimitDecreaseTriggered event with the key, amountToDecrease, currentRate Limit, and newLimit.
+- The contract will return the newLimit.
+
+The function call is as follows:
+
+`function triggerRate LimitDecrease(bytes32 key, uint256 amountToDecrease) external override onlyRole(CONTROLLER) returns (uint256 newLimit)`
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.4 - Instance Lifecycle Management [Core]  <!-- UUID: 724970e4-e5e7-41ff-9448-d984c2c9a9e3 -->
+
+The documents herein define processes for invoking (onboarding) new Keel Liquidity Layer Instances and offboarding existing ones. This process will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.1.1.5 - Upgrading Controller [Core]  <!-- UUID: f427c73d-fa0a-4183-89da-595ac1f5792e -->
+
+The documents herein define the process for deploying new Controller contracts. This process will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.1.2 - Non-Routine Protocol [Core]  <!-- UUID: 0ca77e89-5598-46f6-a829-ff85c8c41e5e -->
+
+The documents herein define the process for non-routine ongoing management of the Keel Liquidity Layer and its active Instances on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.2.1.3 - Emergency Protocol [Core]  <!-- UUID: 61b08883-4417-4f10-acb3-2cafdc5eda21 -->
+
+The documents herein define all the possible actions that can be taken in case of an emergency within Keel Liquidity Layer operations on Ethereum Mainnet.
+
+###### A.6.1.1.3.2.6.1.2.2.1.3.1 - Remove Compromised Relayer As Freezer [Core]  <!-- UUID: 00a56799-7803-460a-bda3-eab312fc296d -->
+
+In the event of a compromised Relayer, the `FREEZER_ROLE` can call the function to `removeRelayer` from the Controller contract. Only an operator with the freezer role can remove a relayer. To do so, they must call the `removeRelayer` function on the Controller contract on mainnet, providing the compromised relayer’s address. Calling this function will carry out the following actions:
+
+- The contract will confirm the caller holds the freezer role. If the caller does not have the freezer role, the transaction will revert.
+- The contract will revoke the relayer role from the specified address.
+- The contract will emit a `RelayerRemoved(relayer)` event.
+
+The function call is as follows:
+
+`function removeRelayer(address relayer) external`
+
+###### A.6.1.1.3.2.6.1.2.2.1.3.2 - Redeem All Ethereum Mainnet Positions [Core]  <!-- UUID: 23a36776-11e0-4c65-a25d-500a44e14eb4 -->
+
+The documents herein define the actions that should be performed by an operator if there is a need to recover the liquidity from Mainnet Protocols and centralize it in the Mainnet Keel ALM Proxy.
+
+###### A.6.1.1.3.2.6.1.2.2.1.3.2.1 - ERC-4626 Withdrawal Action [Core]  <!-- UUID: 98208afa-5810-4591-b261-efe0c1b882e5 -->
+
+In order to withdraw all ERC-4626 balances, the operator must call the `redeemERC4626` function.
+
+The function call is as follows:
+
+`function redeemERC4626(address(token), token.balanceOf(address(proxy)))`
+
+For more detailed instructions on the code to execute this, see [A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.3 - ERC-4626 Functions](3de32801-e895-4a21-84da-aa5818d16349).
+
+###### A.6.1.1.3.2.6.1.2.2.1.3.3 - USDC to USDS Swap Action [Core]  <!-- UUID: 23770b76-5a1f-49d2-b970-dbf908c05817 -->
+
+This document defines the action that should be performed by an operator if there is a need to centralize all recovered liquidity in USDS. The operator must call the `swapUSDCToUSDS` function.
+
+The function call is as follows:
+
+`function swapUSDCToUSDS(usdc.balanceOf(address(proxy))`
+
+For more detailed instructions on the code to execute this see [A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.2 - Swap USDC To USDS](da2164e3-03bc-447c-89c5-119d01feddaa).
+
+###### A.6.1.1.3.2.6.1.2.2.1.3.4 - USDS Burn Action [Core]  <!-- UUID: 44ca2425-03dd-4913-919a-666a77854709 -->
+
+This document defines the action that should be performed if there is a need to repay and then burn Keel’s USDS debt. The operator must call the `burnUSDS` function.
+
+The function call is as follows:
+
+`function burnUSDS(usds.balanceOf(address(proxy))`
+
+More detailed instructions on the code to execute this, see [A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.1.2 - Burn USDS](9c9536a8-bb2d-4d37-98cf-4c25a5699026).
+
+###### A.6.1.1.3.2.6.1.2.2.2 - Solana [Core]  <!-- UUID: f70746e5-a879-4d13-bd48-74bf79478f4d -->
+
+The documents herein describe common operational procedures for the Keel Liquidity Layer applicable across multiple Instances on Solana.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1 - Routine Protocol [Core]  <!-- UUID: 828e1609-88b5-4d6d-a31a-607183901ea1 -->
+
+The documents herein define the protocol for routine ongoing management of the Keel Liquidity Layer and its active Instances on Solana.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.1 - Role Hierarchy And Permissions [Core]  <!-- UUID: 6c7d3476-9e97-495d-a491-3194e7c061a3 -->
+
+The documents herein define roles (Admin, Relayer, ALM Controller and Freezer) and their responsibilities/permissions for managing the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role [Core]  <!-- UUID: 0270b595-8957-4fb2-a9cd-2bc197dc3367 -->
+
+The admin role is configured with the following permissions: `can_freeze_controller`, `can_unfreeze_controller`, `can_manage_permissions`, `can_suspend_permissions`, `can_manage_reserves_and_integrations`, `can_invoke_external_transfer`. This role can grant and revoke any role, including itself and all other roles defined in the contract. The admin role is also used for general admin functions in all contracts. This role is fully controlled by Sky Governance via the Keel Proxy. 
+
+`constructor(address admin) {
+_grantRole(DEFAULT_ADMIN_ROLE, admin);`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role [Core]  <!-- UUID: 2b42015c-c76a-4364-b8b5-c9a2b9f6f484 -->
+
+The Relayer role is the address(es) for the Keel Liquidity Layer ALM Planner off-chain system that calls functions on `SvmAlmController` program to perform actions on funds held by Keel's Solana Controller. The Relayer Role has `can_execute_swap` and `can_reallocate` permissions. The Relayer Role may be granted to an address by any address with `can_manage_permissions` privileges and can be revoked by one with `can_suspend_permissions` privileges.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.1.3 - Freezer Role [Core]  <!-- UUID: 6f7becc7-2e70-44e5-8662-25ba7dd1a5f8 -->
+
+The Freezer role is the address of the emergency role that can remove a compromised Relayer. The Freezer role has `can_freeze_controller` , `can_suspend_permissions` and `can_liquidate` permissions.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2 - Controller Functions [Core]  <!-- UUID: 78b48a5e-d4f8-46f3-bf32-c60cdc213be4 -->
+
+The documents herein describe the purpose and operational use of key functions within Keel Liquidity Layer `SvmAlmController` programs: Asset Transfer Management (direct transfers, protocol deposits/withdrawals) and Cross-chain Operations (CCTP bridging, SkyBridge bridging).
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1 - Controller Contract Functions [Core]  <!-- UUID: 397928f4-0d80-4ed9-8a51-6e22f962ab94 -->
+
+The documents herein define the functions controlled by the Controller contract for Keel Liquidity Layer operations on Solana.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.1 - Admin Functions [Core]  <!-- UUID: ab262163-ec0a-49c7-be21-578ed120ca56 -->
+
+The documents herein define the operations performed by the admin role (see [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367)[)](https://www.notion.so/atlas-axis/SH-Add-Allocation-System-Primitive-Keel-294f2ff08d73802089c6e838cd85462c#2a2f2ff08d7381e7b822efcf1013e9f9) within the `SvmAlmController` contract.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.1.1 - Configure Integrations [Core]  <!-- UUID: 10be5f11-b678-45b9-8ba2-f636ec3c83c7 -->
+
+The admin can configure and update configurations on permitted integrations with third party protocols. For example, permitting bridge interfaces, setting slippage rules for permitted swap routes or permitting certain lending market interfaces.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.1.2 - Configure Reserves [Core]  <!-- UUID: 85dbd095-10fd-46bf-9d6b-96a7b1a8c979 -->
+
+The admin can configure and update configurations on permitted tokens which the `SvmAlmController` can hold or transact in.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.1.3 - Configure Rate Limits [Core]  <!-- UUID: 7f7333d4-c1a8-4bb0-8dec-47ce46aac125 -->
+
+The admin can configure and update the rate limits for `Integration`s and `Reserve`s.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2 - Relayer Function [Core]  <!-- UUID: ee2f8a2e-8225-4747-9f3a-cc1b4624987b -->
+
+The documents herein define the operations performed by the relayer role (see [A.6.1.1.3.2.6.1.2.2.2.1.1.2 - Relayer Role](2b42015c-c76a-4364-b8b5-c9a2b9f6f484)) within the `SvmAlmController` contract.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.1 - CctpBridge Actions [Core]  <!-- UUID: 619a94f1-05ac-4b47-80d5-cafd9515b7e5 -->
+
+The Relayer can perform CCTP Bridge actions which facilitates transferring of assets across networks using Circle’s CCTP Interoperability protocol.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.1.1 - Push Action [Core]  <!-- UUID: 1294a5b5-316b-4a05-bdb3-87ed33067d39 -->
+
+The Relayer can transfer tokens via a permitted bridging protocol, to a pre-configured destination chain and address, subject to rate limits.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.2 - LzBridge Actions [Core]  <!-- UUID: e408605b-d029-42ca-b9cb-8974d64f5be6 -->
+
+The Relayer can perform OFT Bridge actions which facilitates transferring of assets across networks using LayerZero's OFT Interoperability protocol.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.2.1 - Push Action [Core]  <!-- UUID: 5d174ad0-e955-40f9-b64e-e07a72b60216 -->
+
+The push action can transfer tokens via a permitted bridging protocol, to a pre-configured destination chain and address, subject to rate limits.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.3 - AtomicSwap Action [Core]  <!-- UUID: 2f6f0f93-6a3b-4dec-a862-a78080b23736 -->
+
+The Relayer can perform swapping actions from one token to another. This action is split across two instructions which are applied as bookends to inner swap instructions.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.3.1 - Borrow Action [Core]  <!-- UUID: 544c4bae-7d5c-494f-8bdc-4ee47203e1e7 -->
+
+The borrow action temporarily funds the Relayers account with tokens to support an intended swap on a permitted swap route, subject to rate limits and validating that the corresponding `Repay` instruction is present at the end of the transaction.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.2.1.2.3.2 - Repay Action [Core]  <!-- UUID: f19c7438-54ee-47ef-b92d-9313b581da29 -->
+
+The repay action validates that the proceeds of the swap meet minimum slippage requirements, or fails the overall transaction.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3 - Rate Limit Management [Core]  <!-- UUID: 7e6e8dea-5c3e-430f-a984-926bc726e992 -->
+
+The documents herein define the protocol for querying, setting, and adjusting Rate Limits. The Rate Limits must be maintained in line with Keel’s strategy, market conditions, and security considerations.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.1 - Reserve Level Rate Limits [Core]  <!-- UUID: f5b98691-5237-427b-8d8e-2b08262da8eb -->
+
+`Reserve` level rate limits constrain the outflow that can occur from a given token’s `Reserve` in aggregate across all Integrations.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.1.1 - Get Rate Limit Data [Core]  <!-- UUID: 21590f17-8e03-4fc3-9a37-e8364bbee322 -->
+
+The properties associated with a Reserve level rate limit can be read from the `Reserve` account corresponding to a particular token, as follows:
+
+`pub struct Reserve {
+// ...
+pub rate_limit_slope: u64,
+pub rate_limit_max_outflow: u64,
+pub rate_limit_outflow_amount_available: u64,
+pub rate_limit_remainder: u64
+// ...
+}`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.1.2 - Set Rate Limit Data [Core]  <!-- UUID: aa43f1e6-6ee6-4596-a288-f79685cd8144 -->
+
+Only an operator with the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) is able to set or update rate limit data for a specific `Reserve`, including `rate_limit_slope` and `rate_limit_max_outflow`.
+
+`manage_reserves(
+ManageReserveArgs {
+status: None,
+rate_limit_slope: Some(rate_limit_slope),
+rate_limit_max_outflow: Some(rate_limit_max_outflow),
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.1.3 - Set Unlimited Rate Limit Data [Core]  <!-- UUID: 76946aaf-70dc-43cf-a6e0-ce947f19b93b -->
+
+Only an operator with the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) is able to set unlimited rate limit data for a specific key by configuring it with maximum values.
+
+`manage_reserves(
+ManageReserveArgs {
+status: None,
+rate_limit_slope: Some(0),
+rate_limit_max_outflow: Some(u64::MAX),
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.2 - Integration Level Rate Limits [Core]  <!-- UUID: 3bf06ac1-44d2-4901-92fb-7af3cebef5a0 -->
+
+`Integration` level rate limits constrain the flow of assets into a particular `Integration`.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.2.1 - Get Rate Limit Data [Core]  <!-- UUID: c75e8c0d-0b16-4808-a14c-dac919ef9269 -->
+
+The properties associated with a Reserve level rate limit can be read from the `Integration` account corresponding to a particular token, as follows:
+
+`pub struct Integration {
+// ...
+pub rate_limit_slope: u64,
+pub rate_limit_max_outflow: u64,
+pub rate_limit_outflow_amount_available: u64,
+pub rate_limit_remainder: u64
+// ...
+}`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.2.2 - Set Rate Limit Data [Core]  <!-- UUID: 62654961-cf70-4455-a7df-c81861944395 -->
+
+Only an operator with the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) is able to set or update rate limit data for a specific `Integration`, including `rate_limit_slope` and `rate_limit_max_outflow`.
+
+`manage_integration(
+ManageIntegrationArgs {
+status: None,
+description: None,
+rate_limit_slope: Some(rate_limit_slope),
+rate_limit_max_outflow: Some(rate_limit_max_outflow),
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.3.2.3 - Set Unlimited Rate Limit Data [Core]  <!-- UUID: bd904ac0-32d2-4592-92cd-3eb01a3ce7de -->
+
+Only an operator with the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) is able to set unlimited rate limit data for a specific key by configuring it with maximum values.
+
+`manage_integration(
+ManageIntegrationArgs {
+status: None,
+description: None,
+rate_limit_slope: Some(0),
+rate_limit_max_outflow: Some(u64::MAX),
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.4 - Instance Lifecycle Management [Core]  <!-- UUID: 5fcff9f8-7f6d-427d-a12d-02df83b4db6e -->
+
+The documents herein define processes for invoking (onboarding) new Keel Liquidity Layer Instances and off-boarding existing ones.
+
+###### A.6.1.1.3.2.6.1.2.2.2.1.5 - Upgrading Controller [Core]  <!-- UUID: 7675ad2a-f865-4756-8da9-49062e785074 -->
+
+The documents herein define the process for deploying new Controller contracts. This process will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.2.2 - Non-Routine Protocol [Core]  <!-- UUID: 0aa16a2c-b0a0-427e-b822-1d9a399c65db -->
+
+The documents herein define the process for non-routine ongoing management of the Keel Liquidity Layer and its active Instances on Solana.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3 - Emergency Protocol [Core]  <!-- UUID: 6cc9260a-88f8-4bf2-8819-8897000c5e5d -->
+
+The documents herein define all the possible actions that can be taken in case of an emergency within Keel Liquidity Layer operations on Solana.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.1 - Remove Compromised Relayer As Freezer [Core]  <!-- UUID: c4932ae7-0bf2-46fe-bbca-4bdd675368c9 -->
+
+In the event of a compromised Relayer, the [A.6.1.1.3.2.6.1.2.2.2.1.1.3 - Freezer Role](6f7becc7-2e70-44e5-8662-25ba7dd1a5f8) and [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) can call the instruction to suspend the compromised Relayer from the Controller program, thereby preventing it from doing any further harm to the system. The backstop Relayer can then take over. This function should only be used if the keys to the Relayer multisig have been leaked or compromised, and the Relayer is now in the hands of an external bad actor.
+
+`manage_permission(
+ManagePermissionArgs {
+status: PermissionStatus::Suspended,
+can_manage_permissions: false,
+can_invoke_external_transfer: false,
+can_execute_swap: false,
+can_reallocate: false,
+can_freeze_controller: false,
+can_unfreeze_controller: false,
+can_manage_reserves_and_integrations: false,
+can_suspend_permissions: false,
+can_liquidate: false,
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.2 - Freeze the Controller [Core]  <!-- UUID: de48d076-bad2-4edd-a740-0e5ee9173d0d -->
+
+In the event of a more severe threat to the Controller, the [A.6.1.1.3.2.6.1.2.2.2.1.1.3 - Freezer Role](6f7becc7-2e70-44e5-8662-25ba7dd1a5f8) can call the instruction to suspend the entire Controller instance.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.2.1 - Full Freeze [Core]  <!-- UUID: 4f8c8aa3-fffc-46dd-aeb7-b23e996619d7 -->
+
+This action leads to a complete freeze and prevents any actions on the Controller until the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) subsequently lifts this status. Integrations, Reserves nor Permissions cannot be managed during this period, and funds cannot be moved.
+
+`manage_controller(
+ManageControllerArgs {
+status: ControllerStatus::PushPullFrozen,
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.2.2 - Reallocation Freeze [Core]  <!-- UUID: 2ed41eef-989b-4253-8de7-5e368da0242a -->
+
+A complete freeze prevents any movement of funds within the Controller until the [A.6.1.1.3.2.6.1.2.2.2.1.1.1 - Default Admin Role](0270b595-8957-4fb2-a9cd-2bc197dc3367) subsequently lifts this status. Integrations, Reserves and Permissions cannot be configured during this period.
+
+`manage_controller(
+ManageControllerArgs {
+status: ControllerStatus::Frozen,
+}
+)`
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.3 - Redeem All Positions [Core]  <!-- UUID: 4f4a2911-a604-4203-8103-e9a05fe4cb80 -->
+
+The documents herein define the actions that should be performed by an operator if there is a need to recover the liquidity from Solana Protocols and centralize it in the Keel ALM Controller.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.3.1 - Integrations [Core]  <!-- UUID: 22943595-8338-47b6-b3d2-55bd131895e9 -->
+
+This will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.3.2 - Reserves [Core]  <!-- UUID: 8d1232fa-d714-48e5-9cca-798543c02e65 -->
+
+This will be specified in a future iteration of the Keel Artifact.
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.4 - AtomicSwap Action [Core]  <!-- UUID: 1bc17a00-a5b7-4390-bec5-46674053222b -->
+
+This document defines the action that should be performed by an operator if there is a need to centralize all recovered liquidity in USDS.
+
+`mainnetController.swapUSDCToUSDS(usdc.balanceOf(address(proxy))`
+
+For more detailed instructions on the code to execute this see [A.6.1.1.3.2.6.1.2.2.1.1.2.1.2.5.2 - Swap USDC To USDS](da2164e3-03bc-447c-89c5-119d01feddaa).
+
+###### A.6.1.1.3.2.6.1.2.2.2.3.5 - Bridge to Ethereum Mainnet [Core]  <!-- UUID: c60fe936-a500-4366-bcf2-ae813e64584a -->
+
+This document defines the action that should be performed by an operator if there is a need to return recovered liquidity to Keel’s Ethereum Mainnet ALM Controller.
+
+###### A.6.1.1.3.2.6.1.2.3 - Allocation Strategy [Core]  <!-- UUID: cebfc91d-1b4e-49ca-9e4d-4c9b7043db81 -->
+
+In the future, additional logic will be added herein regarding the strategy by which capital is allocated between different Instances of the Keel Liquidity Layer.
+
+###### A.6.1.1.3.2.6.1.3 - Active Instances [Core]  <!-- UUID: b9316097-ab93-4a8b-aa51-1e44ceb69c4d -->
+
+The Instances of the Keel Liquidity Layer with `Active` Status are stored herein. The `RRC Framework Full Implementation Coverage` status defines whether the Instance Financial RRC is calculated based on a fully implemented risk model (see [A.3.2.1.1.4.3.1 - Fully Implemented Risk Models](419a1d00-fbae-4d26-bd47-8f57677d8001)) or a pending risk model (see [A.3.2.1.1.4.3.2 - Pending Risk Models](81ca88bf-3f6a-4d10-a3e2-d47cf6636d7d)). If the Instance Financial RRC is calculated based on a fully implemented risk model the status is `Covered`. If the Instance Financial RRC is calculated based on a pending risk model the status is `Pending`.
+
+###### A.6.1.1.3.2.6.1.3.1 - Solana Instances [Core]  <!-- UUID: 77c4c83d-199b-412b-abf5-999b94e93531 -->
+
+The Solana Instances of the Keel Liquidity Layer with `Active` Status are stored herein and are organized by target protocol.
+
+###### A.6.1.1.3.2.6.1.3.1.1 - Kamino [Core]  <!-- UUID: 39979f83-5da3-45c9-9ad4-bb17cca5513c -->
+
+The Solana Instances of the Kamino Protocol with `Active` Status are stored herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1 - Solana - Kamino USDS Instance Configuration Document [Core]  <!-- UUID: fa6f6aa7-410e-4515-8458-9f3efb30c942 -->
+
+The documents herein contain the Instance Configuration Document for the Kamino USDS Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 5a235b70-b3d0-4a33-a88d-32b0c3aec917 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2 - Parameters [Core]  <!-- UUID: 3fc55a0d-c568-4b70-9771-ba125a89782e -->
+
+The documents herein define the parameters of the Kamino USDS Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 77832cc0-aa05-4a84-952d-54efb83b6ec0 -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1.1 - Network [Core]  <!-- UUID: 32e1e642-91bd-4f67-b271-771f32da87d9 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 3eba506a-6482-424d-8cc9-752c65e634c5 -->
+
+Kamino
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1.3 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 7198e08b-080d-46c7-87fe-2387461b3473 -->
+
+USDS
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1.4 - Market [Core]  <!-- UUID: 5569d20b-c7ac-4736-b5a1-c6017cff4520 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.1.5 - Token [Core]  <!-- UUID: d86162cd-defd-431c-8cac-5b0f6eecc1ac -->
+
+kUSDS
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.2 - Contract Addresses [Core]  <!-- UUID: 2bd4ac66-9878-42f1-9873-4708ed2a44c6 -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.2.1 - Token Address [Core]  <!-- UUID: e8d610ec-9514-46fb-9431-3c4260edc7be -->
+
+`6nnt6N4Ay9tBeMWnVWKS24hDtE6R3fshi5TteUcSKJcQ`
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 1de01d57-847c-4b6d-afc9-d841d63228c0 -->
+
+`USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA`
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.3 - Rate Limit Information [Core]  <!-- UUID: d625d675-4667-4464-af41-95d35414fad4 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Kamino USDS Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.3.1 - Integration Account Address [Core]  <!-- UUID: 28537d8e-fe00-46db-b2ce-726fd718bd86 -->
+
+`H5Vix4RGchYq1cemoe61y7J4j4v3XgWPGLBeqvPEgvzr`
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.4 - Rate Limits [Core]  <!-- UUID: ecde5b24-7807-40ee-b352-f509d4e2daf7 -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 9577670b-0f91-45e8-b7e9-faf072e2d7e9 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDS
+- `slope`: 10,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 1d393362-1b05-4dc3-9531-233d748c2394 -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 3503046a-a936-46d1-93f6-dbce0b6b55d3 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: bd9985e8-65f5-4152-88dd-4d9b366fa7b8 -->
+
+This Instance is currently defined as an Interim Deployment (see A.1.9 - Interim Deployments) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.5.1.1 - Kamino Maximum Allocation [Core]  <!-- UUID: 927a9a53-b977-44be-bfc9-46cdd9330cf2 -->
+
+The maximum allocation for all Interim Deployments in Kamino is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 81552b6c-7fe7-43ef-abfe-0fd067aaea4b -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.1.1.2.4 - Rate Limits](ecde5b24-7807-40ee-b352-f509d4e2daf7).
+
+###### A.6.1.1.3.2.6.1.3.1.1.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 0a1e41de-51bb-4da5-972d-d1e7cfd13ace -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2 - Solana - Kamino USDC Instance Configuration Document [Core]  <!-- UUID: 2510c2ba-c304-478f-84b1-a421e62de8b4 -->
+
+The documents herein contain the Instance Configuration Document for the Kamino USDC Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: f0715f96-8cc2-4bc9-88d4-11542aa9c288 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2 - Parameters [Core]  <!-- UUID: dae88d4b-670f-47e4-b9bb-11c5f8ce3833 -->
+
+The documents herein define the parameters of the Kamino USDC Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1 - Instance Identifiers [Core]  <!-- UUID: 2b1419e1-a279-4172-88dc-a897905ab17e -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1.1 - Network [Core]  <!-- UUID: b9ca0b9a-e633-4902-9b56-39593690a455 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1.2 - Target Protocol [Core]  <!-- UUID: 11ebac06-18a7-4105-8523-0ae4020eb669 -->
+
+Kamino
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1.3 - Market [Core]  <!-- UUID: 6d5a7c41-5630-4df4-8995-f7f75df9a866 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1.4 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 47b8761c-6f72-48dd-a014-05e29c8d6680 -->
+
+USDC
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.1.5 - Token [Core]  <!-- UUID: 8d7a5c83-d917-40ed-9fc7-f912fe9933f6 -->
+
+kUSDC
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.2 - Contract Addresses [Core]  <!-- UUID: 76c37fb1-f74c-486f-8523-d485de5c278c -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.2.1 - Token Address [Core]  <!-- UUID: 3f3deb3c-e023-4b37-94af-5e93a592ce3a -->
+
+`9DrvZvyWh1HuAoZxvYWMvkf2XCzryCpGgHqrMjyDWpmo`
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 537e73fd-f7d6-4776-af11-1cc83433dd43 -->
+
+`EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.3 - Rate Limit Information [Core]  <!-- UUID: 3740064f-912c-4ab0-8b79-8f2c5970ed0b -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Kamino USDC Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.3.1 - Integration Account Address [Core]  <!-- UUID: 9f0cdd10-d1fe-4da5-9b64-6757195ebf8b -->
+
+`GZ6vUcBZk4QiaBUhhn1TpX6S7FiXK71Pogke1RnBc3zA`
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.4 - Rate Limits [Core]  <!-- UUID: a1cf8da0-dc37-4abb-9205-aee0a825363a -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 564245a6-2191-4434-ba16-52a2f76d4acd -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDC
+- `slope`: 10,000,000 USDC per day
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: f21f04b3-30d3-4b5e-81e0-2e83dda36b37 -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: fe79db33-1328-4baa-867d-141173666215 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.5.1 - Interim Deployment [Core]  <!-- UUID: 4d7615fb-4c15-480f-94ee-cdd7cc2c2167 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 70be3fc1-7a65-4577-81e3-c71d987ddaf2 -->
+
+The maximum allocation for all Interim Deployments in Kamino is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.2.5.1.2 - Rate Limits [Core]  <!-- UUID: cb6d6b51-d6a6-485c-99da-5880db5f8efe -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.1.2.2.4 - Rate Limits](a1cf8da0-dc37-4abb-9205-aee0a825363a).
+
+###### A.6.1.1.3.2.6.1.3.1.1.2.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 44ed77d2-a81c-41d3-a77c-84b6e9293a3e -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3 - Solana - Kamino USDT Instance Configuration Document [Core]  <!-- UUID: 4adbf528-4a16-496c-974f-ce612af69162 -->
+
+The documents herein contain the Instance Configuration Document for the Kamino USDT Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 1c188d86-597d-414b-bb2f-8cc6250303d0 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2 - Parameters [Core]  <!-- UUID: d10c9266-b16b-4914-aba8-796acda503d0 -->
+
+The documents herein define the parameters of the Kamino USDT Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1 - Instance Identifiers [Core]  <!-- UUID: 52324ef9-2f4b-4774-8b67-0cd4397c8194 -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1.1 - Network [Core]  <!-- UUID: 3597fd3c-b4ed-4d7b-b4fa-74c816879966 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1.2 - Target Protocol [Core]  <!-- UUID: 54e8166d-a2fd-42b6-a716-5a342c4f6f86 -->
+
+Kamino
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1.3 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 68d30595-356b-4ca3-a820-91a96fd7ac88 -->
+
+USDT
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1.4 - Market [Core]  <!-- UUID: 704864d1-80d7-4e63-8389-ef58bac891f7 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.1.5 - Token [Core]  <!-- UUID: 99b7437e-97a0-4788-828e-bfc3ed5a2d29 -->
+
+kUSDT
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.2 - Contract Addresses [Core]  <!-- UUID: 7c2ea693-828d-4c7a-9cfb-c6ae164622af -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.2.1 - Token Address [Core]  <!-- UUID: 916d9d97-14f4-4e03-b7ae-fe81a69b664b -->
+
+`B8zf4kojJbwgCRKA7rLaLhRCZBGhgAJp8wPBVZZHMhSv`
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: e14b47e9-9da0-475d-bfe7-001a7339f745 -->
+
+`Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB`
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.3 - Rate Limit Information [Core]  <!-- UUID: 4ce2bc6f-e280-4056-9d0c-d640a722fadb -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Kamino USDT Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.3.1 - Integration Account Address [Core]  <!-- UUID: 77b012a2-0e1f-4674-9984-86ac5eb2b53c -->
+
+`ArpjQUCqHvtDQZFR2tFbPPEKYiQHuaJkcFQBdW5NQC4U`
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.4 - Rate Limits [Core]  <!-- UUID: 522805d9-5d8c-4147-ab77-f7472512852e -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 7168f4a2-c928-41f5-a4c9-8a8da5fbd2d1 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDT
+- `slope`: 10,000,000 USDT per day
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: bdbed1a4-1957-442f-b6b6-f68ccb2c372a -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: d00abdfb-bc4b-476a-9962-06469889ace7 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.5.1 - Interim Deployment [Core]  <!-- UUID: 3e2d09d4-21bf-433d-b4b1-ce494c6b7468 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 18d8aaed-98cd-4bf9-9b19-71eb5f723ccd -->
+
+The maximum allocation for all Interim Deployments in Kamino is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.2.5.1.2 - Rate Limits [Core]  <!-- UUID: df35027d-17a3-4033-b97d-a711373baa32 -->
+
+The Rate Limits for this Interim Deployment are defined in[A.6.1.1.3.2.6.1.3.1.1.3.2.4 - Rate Limits](522805d9-5d8c-4147-ab77-f7472512852e).
+
+###### A.6.1.1.3.2.6.1.3.1.1.3.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 7c687440-6b84-40a7-8fa1-db0d15a33309 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4 - Solana - Kamino USDG Instance Configuration Document [Core]  <!-- UUID: 8b972495-2f93-4d88-b1f4-d447e2d821a3 -->
+
+The documents herein contain the Instance Configuration Document for the Kamino USDG Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 65169498-1d46-4f29-8144-535eb26bd9b2 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2 - Parameters [Core]  <!-- UUID: a37d7fbb-8326-4419-8d1d-7056ec48254a -->
+
+The documents herein define the parameters of the Kamino USDG Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1 - Instance Identifiers [Core]  <!-- UUID: db7a0534-1a4b-4a75-af13-5e1af34a5726 -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1.1 - Network [Core]  <!-- UUID: f2493a5e-7bd7-42f3-8f8a-9e8d2f526d71 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1.2 - Target Protocol [Core]  <!-- UUID: 71c5639c-26e8-4ea5-b99f-46208feca2b1 -->
+
+Kamino
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1.3 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 4ec9542e-700c-4e1f-b25d-33823fa13f54 -->
+
+USDG
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1.4 - Market [Core]  <!-- UUID: de1bbb96-f280-4d42-9aa7-dacb6474d6a1 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.1.5 - Token [Core]  <!-- UUID: 1416747d-d36c-48d8-ad9c-45c9c538788b -->
+
+kUSDG
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.2 - Contract Addresses [Core]  <!-- UUID: 1d1fc05b-ac3c-4991-a3c1-3b90f8eaad29 -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.2.1 - Token Address [Core]  <!-- UUID: 852f18fd-9ca0-4d7c-8f5b-4ce1adf6e447 -->
+
+`BG6gsv8goyoJguEbLquUZFNiZ8aGTXgo4DyH9h8z9qao`
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 96e864d5-57b9-44e7-9b9b-5de29477569d -->
+
+`2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH`
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.3 - Rate Limit Information [Core]  <!-- UUID: 07f18f84-22d3-468d-8a2d-5874ec703a23 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Kamino USDG Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.3.1 - Integration Account Address [Core]  <!-- UUID: 2857d96b-1196-48a5-9983-b629f708d75a -->
+
+`5JYk4vbZTFcBiHK5HzQTmYcT6kosEKJV62tYTCTpT6xy`
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.4 - Rate Limits [Core]  <!-- UUID: 1e88d799-a269-44e7-9ce4-2b3f871ece01 -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: bbb53065-3606-45db-9c40-d49cfa6193e3 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDG 
+- `slope`: 10,000,000 USDG  per day
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 5af501f7-f554-4b02-9cf0-742fa8aeee82 -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 1c475afa-a3ed-4b6f-99ee-ec1073880484 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.5.1 - Interim Deployment [Core]  <!-- UUID: f1f3030a-2add-4346-9c0a-7d30aa31fffd -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 25aeaf82-75bf-48f5-8f7b-7a6a2bc1ebba -->
+
+The maximum allocation for all Interim Deployments in Kamino is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.2.5.1.2 - Rate Limits [Core]  <!-- UUID: d5093426-b706-4878-94dd-2925277fdab1 -->
+
+The Rate Limits for this Interim Deployment are defined in[A.6.1.1.3.2.6.1.3.1.1.4.2.4 - Rate Limits](1e88d799-a269-44e7-9ce4-2b3f871ece01).
+
+###### A.6.1.1.3.2.6.1.3.1.1.4.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 770281c7-e626-4f05-8c64-0f0af533a7ea -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5 - Solana - Kamino PYUSD Instance Configuration Document [Core]  <!-- UUID: dd6cf5ec-6ccd-46af-9c4e-0858f79948f7 -->
+
+The documents herein contain the Instance Configuration Document for the Kamino PYUSD Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 951520fb-c20b-4962-82fa-b41a5a3ae4d3 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2 - Parameters [Core]  <!-- UUID: 6f476ccf-09ce-4390-8ca0-8e92cd089fb3 -->
+
+The documents herein define the parameters of the Kamino PYUSD Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1 - Instance Identifiers [Core]  <!-- UUID: d9eb7260-03e4-4a82-9d7c-c3cd5c6e5bdb -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1.1 - Network [Core]  <!-- UUID: ff242d99-5c3c-439c-a02a-751781177aef -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1.2 - Target Protocol [Core]  <!-- UUID: 267fcf21-2917-45d3-a7fa-ee55bcfe78b9 -->
+
+Kamino
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1.3 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: cb3adf9b-1ab7-40c4-b7d2-52a457af1048 -->
+
+PYUSD
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1.4 - Market [Core]  <!-- UUID: 7e4fe3c6-f252-4ee2-abb8-fbf2faa1b54c -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.1.5 - Token [Core]  <!-- UUID: a54c7a30-48e2-4512-8541-4d87be565f13 -->
+
+kPYUSD
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.2 - Contract Addresses [Core]  <!-- UUID: 5309d275-c87d-47e0-9323-a1150b2d9453 -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.2.1 - Token Address [Core]  <!-- UUID: b2442469-85ca-4458-a2b9-fa11ae1c9022 -->
+
+`2dQkXr1e9LBvT2QcfKrzZaWY6gGAAVoCjLgkWFk3Mhkj`
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 6bca9d2a-c670-431c-b48d-3bfb3a6055e0 -->
+
+`2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo`
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.3 - Rate Limit Information [Core]  <!-- UUID: 2da72590-96a3-4ad7-a346-0a07034356d8 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Kamino PYUSD Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.3.1 - Integration Account Address [Core]  <!-- UUID: 627adb56-d243-42e7-8268-579c417db818 -->
+
+`9DULRsF4Cfj2BbYZp9n6deLf16yYnR5EcFicvzLNMC2s`
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.4 - Rate Limits [Core]  <!-- UUID: cb14e916-8015-46a0-812c-be780edec54f -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: e9130658-124d-4788-8c2d-6a4352276bd2 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 PYUSD
+- `slope`: 10,000,000 PYUSD per day
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 86989052-581b-4b06-b906-f8b85e661b64 -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: b8b3c21f-e712-46cf-b36a-79b0682f107f -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.5.1 - Interim Deployment [Core]  <!-- UUID: e6e4e2cb-de21-44c4-b720-35a57ca68833 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: f2e63c3e-2723-4c11-8fe2-aa83b84d75d8 -->
+
+The maximum allocation for all Interim Deployments in Kamino is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 56fed5c3-b97b-4504-9b25-70cac3c64c39 -->
+
+The Rate Limits for this Interim Deployment are defined in  [A.6.1.1.3.2.6.1.3.1.1.5.2.4 - Rate Limits](cb14e916-8015-46a0-812c-be780edec54f).
+
+###### A.6.1.1.3.2.6.1.3.1.1.5.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 54403309-9bbe-4cac-bc6c-22cfc7ea9748 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.2 - Drift [Core]  <!-- UUID: 94351aff-0a88-4d30-a954-f710b136e32e -->
+
+The Solana Instances of the Drift Protocol with `Active` Status are stored herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1 - Solana - Drift USDS Instance Configuration Document [Core]  <!-- UUID: 5e934067-e691-4247-bfa1-7df9d4625f21 -->
+
+The documents herein contain the Instance Configuration Document for the Drift USDS Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 5a8a55c4-3e8a-4f08-9a28-4e125b4b5dc0 -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2 - Parameters [Core]  <!-- UUID: 60970f9a-c632-462f-b3c9-83c33899b48c -->
+
+The documents herein define the parameters of the Drift USDS Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1 - Instance Identifiers [Core]  <!-- UUID: 12d6850f-1d4c-4eb7-9bf6-a3686534930a -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1.1 - Network [Core]  <!-- UUID: 2c80a41b-04ce-4dd9-9d9e-e02f4ed04222 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1.2 - Target Protocol [Core]  <!-- UUID: 1db37f5c-f9f9-4ab3-b3b8-98095c22a145 -->
+
+Drift
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1.3 - Market [Core]  <!-- UUID: 68739838-07ae-49d6-9f9b-699a06478e31 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1.4 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: d44bb449-b540-4e7c-8e81-f5781ea9fb7c -->
+
+USDS
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.1.5 - Token [Core]  <!-- UUID: ef18b85f-9ba1-4877-b488-4f4c254f2ec7 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.2 - Contract Addresses [Core]  <!-- UUID: 89f44d6a-c066-47d7-9411-4d1b733ff69e -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.2.1 - Token Address [Core]  <!-- UUID: 0c03ae38-d4cb-4d24-9e7a-74dcc077367a -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: 1ef8c53e-e019-45ee-a91e-76e32c324a36 -->
+
+`USDSwr9ApdHk5bvJKMjzff41FfuX8bSxdKcR81vTwcA`
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.3 - Rate Limit Information [Core]  <!-- UUID: 1bd446ed-d9e7-41a0-89c2-40291f9c0e36 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Drift USDS Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.3.1 - Integration Account Address [Core]  <!-- UUID: 19468eb6-4192-4db4-9289-b3110b296b29 -->
+
+`DFrV1Nyfvoucz3nofVRGFmhWAxV1qz1xQxz5rQi4MNot`
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.4 - Rate Limits [Core]  <!-- UUID: e9d53583-526e-441e-87a6-79038aad553e -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 305929f9-e0f3-494e-9679-264ca1d6026c -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDS
+- `slope`: 10,000,000 USDS per day
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 09c83fd0-73ec-482b-8c87-bee7c0e5e57b -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: b03fa016-bec9-45b5-accb-b1edec40114a -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.5.1 - Interim Deployment [Core]  <!-- UUID: 1f86dcae-f1f1-4f4d-adcd-c2e77b5a4bbe -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: fd762bc3-dbf8-4948-89fd-58a6ffdd0a5c -->
+
+The maximum allocation for all Interim Deployments in Drift is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 4b0edc70-52f4-4b79-884f-3cd36e0a5945 -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.2.1.2.4 - Rate Limits](e9d53583-526e-441e-87a6-79038aad553e).
+
+###### A.6.1.1.3.2.6.1.3.1.2.1.3 - Instance-specific Operational Processes [Core]  <!-- UUID: c2bc44bc-1c9e-46d1-977f-abe117105d88 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2 - Solana - Drift USDC Instance Configuration Document [Core]  <!-- UUID: ddf9f671-bf5c-4f21-af92-63cce7815af4 -->
+
+The documents herein contain the Instance Configuration Document for the Drift USDC Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 1cf7cf5e-c80f-43d6-bfa8-2b9088c5745d -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2 - Parameters [Core]  <!-- UUID: 4f7d5f5c-7d07-4aa6-a5c4-f3a25e67135d -->
+
+The documents herein define the parameters of the Drift USDC Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1 - Instance Identifiers [Core]  <!-- UUID: 154f31f7-6c8b-4948-b8f3-377e64b14bfb -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1.1 - Network [Core]  <!-- UUID: 36b5102d-817e-4b01-8dcb-f0d1c31578a4 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1.2 - Target Protocol [Core]  <!-- UUID: d814206c-ecbb-4e0d-b404-a5946f76f429 -->
+
+Drift
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1.3 - Market [Core]  <!-- UUID: 4fce1780-e418-4080-9e19-4b7cba7b7d9b -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1.4 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 2378b485-cdcf-4417-b283-a5ca2462ef27 -->
+
+USDC
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.1.5 - Token [Core]  <!-- UUID: b486d70e-c793-41b8-a70b-e4b8e71276b0 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.2 - Contract Addresses [Core]  <!-- UUID: 5642e99a-b127-4e2c-8055-66cfdae46972 -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.2.1 - Token Address [Core]  <!-- UUID: 63026c1f-8a06-4cb4-9bcc-6509bda69cc6 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: f8f92260-eda4-484c-ae9e-ab74174f7572 -->
+
+`EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.3 - Rate Limit Information [Core]  <!-- UUID: 963b3617-57ac-4ebb-a240-ed186225d16e -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Drift USDC Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.3.1 - Integration Account Address [Core]  <!-- UUID: 69610d1d-df89-4169-966e-808d96b35044 -->
+
+`ET3k7uBeXLmeVQW5Tm8xBnLte9FgUSRebgneT57wjuqL`
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.4 - Rate Limits [Core]  <!-- UUID: b722ec68-1d66-49c7-a728-e64e3667059e -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 7268c2b8-b83b-480c-a51a-66e15e66d4f3 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDC 
+- `slope`: 10,000,000 USDC  per day
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: f2c12b28-6cea-400e-af47-f8c0acade37e -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 72896ba0-86c9-4291-b8a7-95de8f76acc5 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.5.1 - Interim Deployment [Core]  <!-- UUID: 2269dfd4-264d-4ca9-944e-e4044bb7dff1 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 0588729e-3694-46d7-ab63-a2a3d6b2950c -->
+
+The maximum allocation for all Interim Deployments in Drift is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.2.5.1.2 - Rate Limits [Core]  <!-- UUID: 19115e2c-d799-4ebd-b370-0fda7302777a -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.2.2.2.4 - Rate Limits](b722ec68-1d66-49c7-a728-e64e3667059e).
+
+###### A.6.1.1.3.2.6.1.3.1.2.2.3 - Instance-specific Operational Processes [Core]  <!-- UUID: 074a32ed-ca95-4dea-b9de-10dcc9e2b02c -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3 - Solana - Drift USDT Instance Configuration Document [Core]  <!-- UUID: 300e6f12-800f-4f55-900b-a0697acfb257 -->
+
+The documents herein contain the Instance Configuration Document for the Drift USDT Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: f8408ed4-839d-481b-8099-8756d568c91c -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2 - Parameters [Core]  <!-- UUID: 55df082a-1982-4880-8e45-d3c3309008fd -->
+
+The documents herein define the parameters of the Drift USDT Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1 - Instance Identifiers [Core]  <!-- UUID: f3c5a79b-f87f-4d5c-8df2-dad8d6ad6a50 -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1.1 - Network [Core]  <!-- UUID: ce9ee0fb-2f77-4cc7-a1b7-accaf3426521 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1.2 - Target Protocol [Core]  <!-- UUID: 782880a8-2b84-400c-91f3-2048004c74f2 -->
+
+Drift
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1.3 - Market [Core]  <!-- UUID: f5a6429e-f8c4-4606-8e41-c24efb324129 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1.4 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: 1cfaeb94-1d8f-40ca-8e03-59684c39ce09 -->
+
+USDT
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.1.5 - Token [Core]  <!-- UUID: 932d4502-14fe-49d5-adfe-4a5835784e55 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.2 - Contract Addresses [Core]  <!-- UUID: 8862cc3f-cbfa-4781-989a-e7bc5914610a -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.2.1 - Token Address [Core]  <!-- UUID: 04ab961e-8169-457c-887f-9427909910bc -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: fb3ea256-b870-475a-82d9-5c1223154c87 -->
+
+`Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB`
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.3 - Rate Limit Information [Core]  <!-- UUID: 2537cc72-26f4-44d5-9b87-8cd6fa6c6f55 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Drift USDT Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.3.1 - Integration Account Address [Core]  <!-- UUID: 5eb625d1-f3ea-4b5a-99ab-0fd668aeb19f -->
+
+`Gb8TLtzWtUVVm5VaEXeZS7hdeXMc675PBvWimeep6aU1`
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.4 - Rate Limits [Core]  <!-- UUID: c9fcbc68-412f-4c62-a59d-a100ccb1e9f2 -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: 7ad9224b-5ad1-4aa5-9249-11823d8fdd39 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 USDT
+- `slope`: 10,000,000 USDT per day
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: fdb802a9-5100-4951-b9d6-a7307e2c8cbe -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: d7c17775-2373-4214-b125-3f9ff3055b54 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.5.1 - Interim Deployment [Core]  <!-- UUID: 329e1088-8f7b-4d30-9725-debfa9fb4306 -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 33ceb216-baea-4d6f-b8e9-5999f8bf6be7 -->
+
+The maximum allocation for all Interim Deployments in Drift is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.2.5.1.2 - Rate Limits [Core]  <!-- UUID: cfa2b3b4-5049-4c65-8dd7-e86faef7d952 -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.2.3.2.4 - Rate Limits](c9fcbc68-412f-4c62-a59d-a100ccb1e9f2).
+
+###### A.6.1.1.3.2.6.1.3.1.2.3.3 - Instance-specific Operational Processes [Core]  <!-- UUID: a276dc64-2505-43fa-a3d5-82cebeaeabff -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4 - Solana - Drift PYUSD Instance Configuration Document [Core]  <!-- UUID: ea272eb2-0ffd-4704-a02c-ee4f047cb8a3 -->
+
+The documents herein contain the Instance Configuration Document for the Drift PYUSD Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.1 - RRC Framework Full Implementation Coverage [Core]  <!-- UUID: 10cda4cd-9cdc-45f8-a63f-094abe5adc3b -->
+
+**`Pending`**
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2 - Parameters [Core]  <!-- UUID: 8387df83-2229-4b49-bd90-142c370c550d -->
+
+The documents herein define the parameters of the Drift PYUSD Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1 - Instance Identifiers [Core]  <!-- UUID: f332c28d-9fa7-4d29-bddf-c9367265fa0e -->
+
+The documents herein define the Instance identifiers.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1.1 - Network [Core]  <!-- UUID: cd79375b-5836-4661-8272-08c5a64403a8 -->
+
+Solana
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1.2 - Target Protocol [Core]  <!-- UUID: a9ce9a01-ab10-49fa-915a-9045a9d175a1 -->
+
+Drift
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1.3 - Market [Core]  <!-- UUID: cefe0e20-f880-43d6-b447-31df98c89646 -->
+
+Main
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1.4 - Asset Supplied By Keel Liquidity Layer [Core]  <!-- UUID: dce9457e-6054-4230-a28b-ad9db2705cf9 -->
+
+PYUSD
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.1.5 - Token [Core]  <!-- UUID: 6bff132c-66c9-43c9-a0fb-88f558b41829 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.2 - Contract Addresses [Core]  <!-- UUID: 217ebbef-bf36-4636-b61c-3751b2d56065 -->
+
+The documents herein define the Instance contract addresses.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.2.1 - Token Address [Core]  <!-- UUID: 67e955f5-75d9-4428-8f10-4ffe48fdc933 -->
+
+N/A
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.2.2 - Underlying Asset Address [Core]  <!-- UUID: d4cbf289-dd54-43ad-b608-35eb7a71b49e -->
+
+`2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo`
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.3 - Rate Limit Information [Core]  <!-- UUID: 9f4549ed-69c5-4660-a8da-9648cecf5836 -->
+
+The specific `Integration` account contains the rate limit information to control inflows into the Drift PYUSD Instance of the Allocation System Primitive.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.3.1 - Integration Account Address [Core]  <!-- UUID: 9d7cc1c8-9ad0-4cc2-84ad-9e54687eb60d -->
+
+`5rqJu2NrbMBnW2B2mejSPUV589gb7pvHSGrWQyQqnQz5`
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.4 - Rate Limits [Core]  <!-- UUID: 715c3865-bf52-41cd-84e3-d57508c27b5f -->
+
+The current `maxAmount` and `slope` for this conduit’s deposit and withdrawal are defined in the subdocuments herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.4.1 - Deposit Rate Limits [Core]  <!-- UUID: f888618b-acc1-4ef8-9e02-d292448da6f0 -->
+
+The deposit rate limits are:
+
+- `maxAmount`: 25,000,000 PYUSD
+- `slope`: 10,000,000 PYUSD per day
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.4.2 - Withdrawal Rate Limits [Core]  <!-- UUID: 074d5acf-8e9c-40bc-a1a0-f31bafb4f3b6 -->
+
+The withdrawal rate limits are:
+
+- `maxAmount`: Unlimited
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.5 - Off-chain Operational Parameters [Core]  <!-- UUID: 474e5b21-e27b-466d-b337-3a4b205d1f96 -->
+
+The documents herein contain specific off-chain parameters for this Instance.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.5.1 - Interim Deployment [Core]  <!-- UUID: 96fa3806-12eb-4ca5-99ff-b930bac8ee7e -->
+
+This Instance is currently defined as an Interim Deployment (see [A.1.9.2.3.2.2.2 - Interim Deployments](9b3edbbf-89d1-42da-a9c3-18f858f8471f)) and as such has CRR of 100%. The testing parameters of this Interim Deployment are specified in the documents herein.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.5.1.1 - Maximum Allocation [Core]  <!-- UUID: 252badfc-0b4b-4c93-9510-d321bb7c1437 -->
+
+The maximum allocation for all Interim Deployments in Drift is $25 million.
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.2.5.1.2 - Rate Limits [Core]  <!-- UUID: bf25d908-6252-411a-9a6b-6da72bd9d25f -->
+
+The Rate Limits for this Interim Deployment are defined in [A.6.1.1.3.2.6.1.3.1.2.4.2.4 - Rate Limits](715c3865-bf52-41cd-84e3-d57508c27b5f).
+
+###### A.6.1.1.3.2.6.1.3.1.2.4.3 - Instance-specific Operational Processes [Core]  <!-- UUID: d05923ef-0b89-4870-a080-920a6e81f417 -->
+
+The documents herein contain operational procedures or monitoring requirements unique to this Instance that deviate from or otherwise supplement the general Keel Liquidity Layer processes.
+
+###### A.6.1.1.3.2.6.1.4 - Completed Instances [Core]  <!-- UUID: a1286844-4299-49fd-b744-51b8a0c84494 -->
+
+The Instances of the Keel Liquidity Layer with `Completed` Status are stored herein.
+
+###### A.6.1.1.3.2.6.1.5 - In Progress Invocations [Core]  <!-- UUID: 712b3441-b303-4296-8f07-dc298109308e -->
+
+The in progress Invocations of the Allocation System Primitive are contained herein. Once an Invocation is successfully completed, its subtree will be moved to [A.6.1.1.3.2.6.1.3 - Active Instances](b9316097-ab93-4a8b-aa51-1e44ceb69c4d).
 
 ###### A.6.1.1.3.2.6.2 - Junior Risk Capital Rental Primitive [Core]  <!-- UUID: af316389-e11d-4205-a14e-bb3c230ba2b5 -->
 
