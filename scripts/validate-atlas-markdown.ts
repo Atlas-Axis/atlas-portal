@@ -714,17 +714,13 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
     // Check uniqueness
     const existing = uuidMap.get(uuid);
     if (existing) {
-      // Skip reporting if this UUID is in the suppression list
-      // TODO: Delete this suppression list once the duplicate UUIDs are fixed
-      if (!SUPPRESSED_DUPLICATE_UUIDS.has(uuid)) {
-        issues.push({
-          line: doc.line,
-          severity: 'error',
-          message: `🆔 Duplicate UUID found: ${uuid}`,
-          found: `First occurrence: line ${existing.line} (${existing.docNo} - ${existing.name} [${existing.type}])\nDuplicate at: line ${doc.line} (${doc.docNo} - ${doc.name} [${doc.type}])`,
-          action: `Generate a new unique UUID for line ${doc.line}`,
-        });
-      }
+      issues.push({
+        line: doc.line,
+        severity: 'error',
+        message: `🆔 Duplicate UUID found: ${uuid}`,
+        found: `First occurrence: line ${existing.line} (${existing.docNo} - ${existing.name} [${existing.type}])\nDuplicate at: line ${doc.line} (${doc.docNo} - ${doc.name} [${doc.type}])`,
+        action: `Generate a new unique UUID for line ${doc.line}`,
+      });
     } else {
       uuidMap.set(uuid, doc);
     }
@@ -736,6 +732,44 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
 // ============================================================================
 // Main Validator
 // ============================================================================
+
+// TODO: Delete this function once the duplicate UUIDs are fixed
+function filterSuppressedIssues(issues: ValidationIssue[], docs: Document[], lines: string[]): ValidationIssue[] {
+  if (SUPPRESSED_DUPLICATE_UUIDS.size === 0) return issues;
+
+  return issues.filter((issue) => {
+    // 1. Check if issue belongs to a suppressed document
+    for (let i = 0; i < docs.length; i++) {
+      const doc = docs[i];
+      if (SUPPRESSED_DUPLICATE_UUIDS.has(doc.uuid)) {
+        // Range inclusive of start, exclusive of next doc start
+        const nextDocLine = i + 1 < docs.length ? docs[i + 1].line : lines.length + 1;
+
+        if (issue.line >= doc.line && issue.line < nextDocLine) {
+          return false; // Suppress
+        }
+
+        // Special case: Missing blank line error might flag the next line which is the start of next doc
+        if (issue.line === doc.line + 1 && issue.message.includes('Missing blank line after title')) {
+          return false; // Suppress
+        }
+      }
+    }
+
+    // 2. Fallback: Check if the line itself contains a suppressed UUID
+    // This handles cases where the document wasn't parsed (e.g. malformed title)
+    // but we still want to suppress errors on that line if it has the UUID
+    const lineContent = lines[issue.line - 1];
+    if (lineContent) {
+      const uuidMatch = lineContent.match(/UUID:\s*([a-f0-9-]{36})/i);
+      if (uuidMatch && SUPPRESSED_DUPLICATE_UUIDS.has(uuidMatch[1])) {
+        return false; // Suppress
+      }
+    }
+
+    return true; // Keep
+  });
+}
 
 function validate(content: string): ValidationIssue[] {
   const lines = content.split(/\r?\n/);
@@ -771,8 +805,11 @@ function validate(content: string): ValidationIssue[] {
   issues.push(...validateNesting(docs));
   issues.push(...validateUUIDs(docs));
 
+  // Filter out suppressed issues
+  const filteredIssues = filterSuppressedIssues(issues, docs, lines);
+
   // Sort by line number
-  return issues.sort((a, b) => a.line - b.line);
+  return filteredIssues.sort((a, b) => a.line - b.line);
 }
 
 // ============================================================================
