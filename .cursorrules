@@ -173,6 +173,22 @@ Relationship modeling note:
 
 - Parent-child relationships are modeled via per-type child ID arrays, not a parent foreign key. Cleanup of stale child IDs is handled at the application/import layer.
 
+### `notion_database_pages_current`
+
+A view that filters `notion_database_pages` to show only current, active rows.
+
+**Filter Conditions:**
+
+- `date_valid_to IS NULL` - Only current versions
+- `in_trash = FALSE` - Excludes trashed pages
+- `archived = FALSE` - Excludes archived pages
+
+**Notes:**
+
+- Same columns as `notion_database_pages` table
+- RLS is automatically inherited from the underlying `notion_database_pages` table
+- Provides convenient access to active Atlas documents without manually applying filters
+
 ### `notion_sync_status`
 
 Manages synchronization state and prevents concurrent syncs of the same content.
@@ -190,6 +206,63 @@ Manages synchronization state and prevents concurrent syncs of the same content.
 - `sync_lock_acquired_at` (TIMESTAMPTZ) - Lock timestamp
 - `sync_lock_expires_at` (TIMESTAMPTZ) - Auto-unlock time for stale locks
 - `created_at`, `updated_at` - Standard timestamps
+
+### `import_logs`
+
+Tracks Notion to Supabase import operations with detailed metrics and change tracking.
+
+**Key Fields:**
+
+- `id` (UUID, PRIMARY KEY, DEFAULT gen_random_uuid()) - Internal ID
+- `finished_at` (TIMESTAMPTZ, NOT NULL) - When import completed
+- `started_at` (TIMESTAMPTZ, NOT NULL) - When import began
+- `success` (BOOLEAN, NOT NULL) - Whether import succeeded
+- `has_changes` (BOOLEAN, NOT NULL) - Whether any changes were detected
+- `duration_minutes` (DECIMAL(5,2), NOT NULL) - Import duration
+- `changed_notion_page_ids` (JSONB, NOT NULL, DEFAULT '[]') - Array of changed page IDs
+- `import_type` (TEXT, NOT NULL) - Type: 'full_sync' or 'partial'
+- `error_message` (TEXT) - Error details if failed
+- `new_pages_count` (INTEGER, NOT NULL, DEFAULT 0) - Number of new pages
+- `deleted_pages_count` (INTEGER, NOT NULL, DEFAULT 0) - Number of deleted pages
+- `changed_properties_count` (INTEGER, NOT NULL, DEFAULT 0) - Number of pages with property changes
+- `changed_relationships_count` (INTEGER, NOT NULL, DEFAULT 0) - Number of pages with relationship changes
+- `trigger_dev_run_id` (TEXT) - Link to Trigger.dev run ID
+
+### `uuid_mapping`
+
+Maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs.
+
+**Key Fields:**
+
+- `notion_page_id` (UUID, NOT NULL, UNIQUE) - Notion page UUID
+- `atlas_document_uuid` (UUID, NOT NULL, UNIQUE) - Atlas document UUID
+
+**Purpose:**
+
+Maps Notion's internal page identifiers to stable Atlas document UUIDs used in exported formats. This allows external systems to reference Atlas documents consistently regardless of Notion's internal IDs.
+
+See **[docs/UUID_MAPPING.md](../docs/UUID_MAPPING.md)** for detailed documentation.
+
+### `notion_nesting_bug_mapping`
+
+Manual workaround mapping for Notion's sub-item relationship bug at deep nesting levels.
+
+**Key Fields:**
+
+- `child_notion_page_id` (UUID, NOT NULL) - Child page UUID
+- `parent_notion_page_id` (UUID, NOT NULL) - Parent page UUID
+- `atlas_database_name` (ENUM, NOT NULL) - Database containing these pages
+- `child_label` (TEXT) - Human-readable child page label
+- `parent_label` (TEXT) - Human-readable parent page label
+- `place_after_sibling_notion_page_id` (UUID) - Sibling to position after (for ordering)
+- `place_after_sibling_label` (TEXT) - Human-readable sibling label
+- Composite PRIMARY KEY on (child_notion_page_id, parent_notion_page_id)
+
+**Purpose:**
+
+Stores manual parent-child relationship corrections for cases where Notion's API fails to properly maintain sub-item relationships at deep nesting levels (typically 4+ levels deep). This table is used by the Notion-Markdown sync automations to apply and restore proper hierarchies.
+
+See **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** for detailed documentation.
 
 # Atlas
 
@@ -472,6 +545,22 @@ await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload
 ```ts
 await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
 ```
+
+- Query change events:
+
+```ts
+// Get last 100 change events (new/changed/deleted)
+const { data } = await supabase().rpc('public_get_atlas_page_changes', { p_limit: 100 }).throwOnError();
+```
+
+**Change Event Function:**
+
+The `public_get_atlas_page_changes(p_limit int DEFAULT 100)` function returns unified change events for `notion_database_pages`:
+
+- **Returns:** notion_page_id, event_time, event_type, old_row (JSONB), new_row (JSONB)
+- **Event Types:** 'new' (first version), 'changed' (subsequent versions), 'deleted' (invalidated)
+- **Ordering:** By event_time DESC (most recent first)
+- **Use Cases:** Changelog generation, audit trails, change notifications
 
 ## Future Features
 
