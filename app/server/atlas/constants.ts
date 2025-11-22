@@ -20,19 +20,13 @@
  * - Explicit control via USE_DEV_NOTION_IDS environment variable
  */
 import { isTestEnv } from '../../shared/utils/is-test-env';
-import type {
-  AtlasDatabaseID,
-  AtlasDatabaseName,
-  AtlasDocumentType,
-  GitHubAtlasDocumentType,
-  MasterStatus,
-} from './atlas-types';
+import type { AtlasDatabaseID, AtlasDatabaseName, AtlasDocumentType, MasterStatus } from './atlas-types';
 import * as notionIds from './notion-mapping/notion-ids';
 import * as notionIdsDev from './notion-mapping/notion-ids-dev';
 import * as notionIdsUnitTest from './notion-mapping/notion-ids-unit-test';
 
 // Re-export types for backward compatibility
-export type { AtlasDatabaseName, AtlasDatabaseID, AtlasDocumentType, GitHubAtlasDocumentType, MasterStatus };
+export type { AtlasDatabaseName, AtlasDatabaseID, AtlasDocumentType, MasterStatus };
 
 export const ATLAS_DOCUMENT_TYPES: AtlasDocumentType[] = [
   'Section',
@@ -129,6 +123,3 @@ export const IMPORT_DATABASES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCENARIO_VARIATIONS,
   ATLAS_DATABASES.NEEDED_RESEARCH,
 ] as const;
-
-export const ATLAS_GITHUB_HTML_URL =
-  'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/main/Sky%20Atlas/Sky%20Atlas.html';

@@ -222,7 +222,7 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - Sync doc_no field (currently not synced)
 - Log all changes made through the Notion API during sync to get an audit log
 - Sync sort_order ("No.") field for "Sections & Primary Docs" database (currently not synced)
-- User-selectable Markdown file path (will default to GitHub Atlas Markdown in production)
+- User-selectable Markdown file path (configurable source for Atlas Markdown)
 - Support for additional Notion property types (multi-select, date, checkbox, url, email, phone, etc.)
 - Batch Notion API operations for better performance
 - Automatic conflict resolution
