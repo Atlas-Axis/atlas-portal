@@ -157,9 +157,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
       // Validate canonical document title format
       // Expected format: A.1.2.3 - Document Title (e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate")
       if (page.plain_text_name && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.plain_text_name)) {
-        console.warn(
-          `Warning: Page ${page.notion_page_id} has non-standard canonical document title: "${page.plain_text_name}"`,
-        );
+        console.warn(`Warning: Page ${page.notion_page_id} has non-standard name: "${page.plain_text_name}"`);
       }
     });
 
