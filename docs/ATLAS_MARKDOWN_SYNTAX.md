@@ -31,44 +31,6 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 
 The Atlas Markdown file represents the document hierarchy using standard Markdown heading levels. However, due to markdown viewer limitations, **heading levels are capped at 6** (######).
 
-**Example Hierarchy with Deep Nesting:**
-
-```markdown
-# A.1 - The Governance Scope [Scope] <!-- UUID: 696aa690-ae79-4e51-9957-fa178e12d989 -->
-
-Scope content here.
-
-## A.1.1 - Governance Framework [Article] <!-- UUID: 7f44b822-2ab5-4d2f-bbe9-f8f0cad2cc13 -->
-
-Article content here.
-
-### A.1.1.1 - Decision Making [Section] <!-- UUID: ee39f45b-c7ab-4bfc-877a-e2af50533b0d -->
-
-Section content here.
-
-#### A.1.1.1.1 - Voting Process [Core] <!-- UUID: c434e800-99a6-47c3-b099-e12c7a88b5aa -->
-
-Core document content here.
-
-##### A.1.1.1.1.1 - Vote Counting [Core] <!-- UUID: 7886d4de-2fe0-4233-9431-d529c2ec1df8 -->
-
-Nested core document at depth 5.
-
-###### A.1.1.1.1.1.1 - Vote Auditing [Core] <!-- UUID: 04643c0e-6ea7-4d3b-84d6-cd0f4dfe8f53 -->
-
-Nested core document at depth 6 (still 6 hashtags).
-
-###### A.1.1.1.1.1.1.1 - Audit Trail [Core] <!-- UUID: eda34edf-072d-4f52-aa3a-a4ba0a4ed7b1 -->
-
-Nested core document at depth 7 (capped at 6 hashtags).
-
-###### A.1.1.1.1.1.1.1.1 - Trail Verification [Core] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
-
-Nested core document at depth 8 (capped at 6 hashtags).
-```
-
-Notice how documents at depth 7 and 8 both use 6 hashtags. Their hierarchical relationship is determined by their document numbers, not by heading levels.
-
 ## 4. Title Line Syntax
 
 Every document in the Atlas Markdown file begins with a title line that follows this exact pattern:
@@ -660,3 +622,43 @@ For documents at semantic depth 6 or greater, all use 6 hashtags:
 - Depth 7 → `######` (capped)
 - Depth 8 → `######` (capped)
 - And so on...
+
+### Example: Deep Nesting with Heading Level Cap
+
+This example demonstrates how documents beyond semantic depth 6 all use the maximum heading level (6 hashtags), while their true hierarchical relationships are determined by their document numbers:
+
+```markdown
+# A.1 - The Governance Scope [Scope] <!-- UUID: 696aa690-ae79-4e51-9957-fa178e12d989 -->
+
+Scope content here.
+
+## A.1.1 - Governance Framework [Article] <!-- UUID: 7f44b822-2ab5-4d2f-bbe9-f8f0cad2cc13 -->
+
+Article content here.
+
+### A.1.1.1 - Decision Making [Section] <!-- UUID: ee39f45b-c7ab-4bfc-877a-e2af50533b0d -->
+
+Section content here.
+
+#### A.1.1.1.1 - Voting Process [Core] <!-- UUID: c434e800-99a6-47c3-b099-e12c7a88b5aa -->
+
+Core document content here.
+
+##### A.1.1.1.1.1 - Vote Counting [Core] <!-- UUID: 7886d4de-2fe0-4233-9431-d529c2ec1df8 -->
+
+Nested core document at depth 5.
+
+###### A.1.1.1.1.1.1 - Vote Auditing [Core] <!-- UUID: 04643c0e-6ea7-4d3b-84d6-cd0f4dfe8f53 -->
+
+Nested core document at depth 6 (still 6 hashtags).
+
+###### A.1.1.1.1.1.1.1 - Audit Trail [Core] <!-- UUID: eda34edf-072d-4f52-aa3a-a4ba0a4ed7b1 -->
+
+Nested core document at depth 7 (capped at 6 hashtags).
+
+###### A.1.1.1.1.1.1.1.1 - Trail Verification [Core] <!-- UUID: 58bff6d3-f874-4f53-8ca4-c2dbbff225c9 -->
+
+Nested core document at depth 8 (capped at 6 hashtags).
+```
+
+Notice how documents at depth 7 and 8 both use 6 hashtags. Their hierarchical relationship is determined by their document numbers, not by heading levels.
