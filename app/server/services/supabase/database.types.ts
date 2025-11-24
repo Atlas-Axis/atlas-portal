@@ -128,7 +128,6 @@ export type Database = {
           atlas_document_number: string;
           atlas_document_number_sortable: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
-          canonical_document_title: string | null;
           child_active_data_ids: Json;
           child_agent_scope_ids: Json;
           child_annotation_ids: Json;
@@ -161,7 +160,6 @@ export type Database = {
           atlas_document_number?: string;
           atlas_document_number_sortable?: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'];
-          canonical_document_title?: string | null;
           child_active_data_ids?: Json;
           child_agent_scope_ids?: Json;
           child_annotation_ids?: Json;
@@ -194,7 +192,6 @@ export type Database = {
           atlas_document_number?: string;
           atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'];
-          canonical_document_title?: string | null;
           child_active_data_ids?: Json;
           child_agent_scope_ids?: Json;
           child_annotation_ids?: Json;
@@ -322,7 +319,6 @@ export type Database = {
           atlas_document_number: string | null;
           atlas_document_number_sortable: string | null;
           atlas_document_type: Database['public']['Enums']['atlas_document_type_enum'] | null;
-          canonical_document_title: string | null;
           child_active_data_ids: Json | null;
           child_agent_scope_ids: Json | null;
           child_annotation_ids: Json | null;
@@ -355,7 +351,6 @@ export type Database = {
           atlas_document_number?: string | null;
           atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
-          canonical_document_title?: string | null;
           child_active_data_ids?: Json | null;
           child_agent_scope_ids?: Json | null;
           child_annotation_ids?: Json | null;
@@ -388,7 +383,6 @@ export type Database = {
           atlas_document_number?: string | null;
           atlas_document_number_sortable?: string | null;
           atlas_document_type?: Database['public']['Enums']['atlas_document_type_enum'] | null;
-          canonical_document_title?: string | null;
           child_active_data_ids?: Json | null;
           child_agent_scope_ids?: Json | null;
           child_annotation_ids?: Json | null;
