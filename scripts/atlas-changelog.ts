@@ -111,7 +111,7 @@ Examples:
     for (const change of changes) {
       const emoji = change.type === 'new' ? '🟢' : change.type === 'deleted' ? '🔴' : '🟡';
       const page = change.newPage ?? change.oldPage;
-      const title = page?.canonical_document_title || page?.atlas_document_number || '(unknown)';
+      const title = page?.plain_text_name || page?.atlas_document_number || '(unknown)';
       const name = page?.plain_text_name ? ` — ${page.plain_text_name}` : '';
       console.log(`${emoji} ${change.type.toUpperCase()}: ${title}${name}`);
 

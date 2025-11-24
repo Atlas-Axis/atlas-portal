@@ -7,7 +7,6 @@ import { applyNestingOverrides } from '../apply-nesting-overrides';
 function createMockPage(id: string, childIds: string[] = []): NotionDatabasePage {
   return {
     notion_page_id: id,
-    canonical_document_title: null,
     atlas_document_type: 'Core',
     atlas_document_number: '',
     atlas_database_name: 'Sections & Primary Docs',

@@ -23,7 +23,6 @@ export async function upsertPagesInBatches(
     // Call RPC to perform atomic invalidate-and-insert (temporal versioning)
     const payload = batch.map((p) => ({
       notion_page_id: p.notion_page_id,
-      canonical_document_title: p.canonical_document_title ?? null,
       atlas_document_type: p.atlas_document_type,
       atlas_document_number: p.atlas_document_number,
       atlas_database_name: p.atlas_database_name,

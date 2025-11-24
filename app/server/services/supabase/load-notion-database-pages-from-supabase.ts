@@ -7,7 +7,7 @@ import { supabase } from '@/app/server/services/supabase/supabase-client';
 // null means use default sorting criteria
 const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, (keyof NotionDatabasePage)[] | null>> =
   {
-    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: ['sort_order', 'canonical_document_title', 'notion_page_id'],
+    [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: ['sort_order', 'plain_text_name', 'notion_page_id'],
     [ATLAS_DATABASES.AGENTS]: ['atlas_document_number_sortable', 'notion_page_id'],
 
     // New
@@ -21,7 +21,6 @@ const ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES: Partial<Record<AtlasDatabaseName, 
 const DEFAULT_SORT_CRITERIA: (keyof NotionDatabasePage)[] = [
   'sort_order',
   'atlas_document_number_sortable',
-  // 'canonical_document_title',
   'notion_page_id',
 ];
 

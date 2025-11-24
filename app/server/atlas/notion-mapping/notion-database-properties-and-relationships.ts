@@ -3,8 +3,6 @@ import { AtlasDatabaseName, AtlasDocumentType } from '../atlas-types';
 import { ATLAS_DATABASES } from '../constants';
 
 export interface NotionDatabasePropertyMapping {
-  // TODO: Delete atlasFullDocumentTitle - in Atlas Explorer, there are only two fields: Document No and Document Name
-  atlasFullDocumentTitle: string; // A property name representing the full title, including the document number and name, e.g. "A.3.1.1 - Scope Improvement"
   atlasDocumentNo: string; // A property name representing the formal document ID, e.g. "A.3.1.1"
   atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
   atlasDocumentType: string; // A property name representing the type of document, e.g. "Core", "Section"...
@@ -15,7 +13,6 @@ export interface NotionDatabasePropertyMapping {
 export type NotionDatabasePropertyKey = keyof NotionDatabasePropertyMapping;
 
 export const PROPERTY_MAPPING_NAMES = {
-  ATLAS_FULL_DOCUMENT_TITLE: 'atlasFullDocumentTitle',
   ATLAS_DOCUMENT_NO: 'atlasDocumentNo',
   ATLAS_DOCUMENT_NAME: 'atlasDocumentName',
   ATLAS_DOCUMENT_TYPE: 'atlasDocumentType',
@@ -31,10 +28,6 @@ export const PROPERTY_MAPPING_NAMES = {
  * - Current Doc No (or Temp Name): "A.3.1 - A1 - Scope Improvement"
  * - Name: "Scope Improvement"
  * - Formal Doc ID: "A.3.1.1"
- *
- * TODO: Simplify the property mappings
- *  - atlasFullDocumentTitle and atlasDocumentName are always the same
- *  - atlasDocumentNo doesn't seem to be used at all - Use AI to process all code usages and update docs
  */
 export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   AtlasDatabaseName,
@@ -48,7 +41,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
 > = {
   [ATLAS_DATABASES.SCOPES]: {
     properties: {
-      atlasFullDocumentTitle: 'Name', // rich_text
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Name', // rich_text
       atlasDocumentType: 'Type', // select
@@ -62,7 +54,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.ARTICLES]: {
     properties: {
-      atlasFullDocumentTitle: 'Name', // rich_text
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Name', // rich_text
       atlasDocumentType: 'Type', // select
@@ -83,7 +74,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No (or Temp Name)', // Note: This is the same as `Name` with a prefix like `A.1.2 - ` // title
       atlasDocumentNo: 'Doc No (or Temp Name)', // Previously 'Formal Doc ID' - but that doesn't match the PH importer mapping // title
       atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -107,7 +97,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.AGENTS]: {
     properties: {
-      atlasFullDocumentTitle: 'Document Name', // title
       atlasDocumentNo: 'Formal Doc ID', // rich_text // TODO: Is this field used at all?
       atlasDocumentName: 'Document Name', // title
       atlasDocumentType: 'Doc Type', // select
@@ -128,7 +117,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.ANNOTATIONS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -145,7 +133,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.TENETS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No (or Temp Name)', // title
       atlasDocumentNo: 'Doc No (or Temp Name)', // title
       atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -163,7 +150,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.ACTIVE_DATA]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -179,7 +165,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.SCENARIOS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No (or Temp Name)', // title
       atlasDocumentNo: 'Doc No (or Temp Name)', // title
       atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -195,7 +180,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -210,7 +194,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
   },
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
     properties: {
-      atlasFullDocumentTitle: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentNo: 'Doc No', // title
       atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
       atlasDocumentType: 'Type', // select
@@ -389,29 +372,29 @@ export const NOTION_PROPERTY_TYPE_OVERRIDES: Partial<Record<AtlasDatabaseName, R
     'Doc No': 'title', // atlasDocumentNo
   },
   [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
-    'Doc No (or Temp Name)': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
     'No.': 'number', // sortOrder
     'Type Category': 'select', // Extra field for Type Specification
   },
   [ATLAS_DATABASES.AGENTS]: {
-    'Document Name': 'title', // atlasFullDocumentTitle, atlasDocumentName
+    'Document Name': 'title', // atlasDocumentName
   },
   [ATLAS_DATABASES.ANNOTATIONS]: {
-    'Doc No': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
   },
   [ATLAS_DATABASES.TENETS]: {
-    'Doc No (or Temp Name)': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
   },
   [ATLAS_DATABASES.ACTIVE_DATA]: {
-    'Doc No': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
   },
   [ATLAS_DATABASES.SCENARIOS]: {
-    'Doc No (or Temp Name)': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
   },
   [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
-    'Doc No': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
   },
   [ATLAS_DATABASES.NEEDED_RESEARCH]: {
-    'Doc No': 'title', // atlasFullDocumentTitle, atlasDocumentNo, atlasDocumentName
+    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
   },
 } as const;

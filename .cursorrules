@@ -149,7 +149,6 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 - `json_name` (JSONB) - Rich text page title from Notion API
 - `parent_notion_page_id` (UUID) - Parent Notion page ID (if any) - This field is deprecated, don't use it
 - `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
-- `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at`, `updated_at`, `last_edited_by_user_id` - Same as in notion_blocks table
 
 Child relationship fields (JSONB arrays of UUID strings):
@@ -623,13 +622,13 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/import-notion-databases.ts --verbose --local-cache
       ```
 
-- **scripts/atlas-export/generate-atlas-json.ts** — Builds standardized Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
+- **scripts/atlas-export/generate-atlas-json.ts** — Builds "Export Tree" Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-json.ts
       ```
 
-- **scripts/atlas-export/generate-atlas-markdown.ts** — Builds standardized Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
+- **scripts/atlas-export/generate-atlas-markdown.ts** — Builds "Export Tree" Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
   - Example:
     - ```bash
       npx tsx scripts/atlas-export/generate-atlas-markdown.ts
@@ -667,7 +666,7 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/validate-atlas-markdown.ts --verbose
       ```
 
-- **scripts/validate-atlas-json.ts** — Validates standardized Atlas JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
+- **scripts/validate-atlas-json.ts** — Validates Atlas JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
   - Examples:
     - ```bash
       npx tsx scripts/validate-atlas-json.ts

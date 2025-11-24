@@ -40,7 +40,6 @@ function makeBasePage(
 ): NotionDatabasePage {
   return {
     notion_page_id: 'test-id',
-    canonical_document_title: null,
     atlas_document_type: documentType,
     atlas_document_number: '',
     atlas_document_number_sortable: '',

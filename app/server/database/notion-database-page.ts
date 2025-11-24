@@ -7,7 +7,6 @@ export interface NotionDatabasePage {
   notion_page_id: string; // UUID - Notion page ID
 
   // Atlas document fields
-  canonical_document_title?: string | null; // Title of the Atlas document this page belongs to
   atlas_document_type: AtlasDocumentType;
   atlas_document_number: string; // Document number of the Atlas document this page belongs to
   atlas_document_number_sortable?: string; // Computed column for natural sorting (auto-generated)

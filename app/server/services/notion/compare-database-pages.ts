@@ -355,8 +355,6 @@ function extractPropertyValueFromSupabase(
   }
   // Use a type-safe switch to access the correct field
   switch (mappedPropertyName as NotionDatabasePropertyKey) {
-    case PROPERTY_MAPPING_NAMES.ATLAS_FULL_DOCUMENT_TITLE:
-      return page.canonical_document_title ?? null;
     case PROPERTY_MAPPING_NAMES.ATLAS_DOCUMENT_NO:
       return page.atlas_document_number ?? null;
     case PROPERTY_MAPPING_NAMES.ATLAS_DOCUMENT_NAME:

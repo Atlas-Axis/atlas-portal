@@ -221,7 +221,6 @@ Transform Notion API responses to Supabase database format.
 ```typescript
 interface NotionDatabasePage {
   notion_page_id: string;
-  canonical_document_title: string | null;
   atlas_document_type: AtlasDocumentType;
   atlas_document_number: string;
   atlas_database_name: AtlasDatabaseName;
@@ -299,7 +298,6 @@ Property and relationship mappings are centralized in a single configuration fil
 
 ```typescript
 interface NotionDatabasePropertyMapping {
-  atlasFullDocumentTitle: string; // Full title property name
   atlasDocumentNo: string; // Document number property name
   atlasDocumentName: string; // Document name property name
   atlasDocumentType: string; // Document type property name
@@ -313,7 +311,6 @@ interface NotionDatabasePropertyMapping {
 ```typescript
 [ATLAS_DATABASES.SCOPES]: {
   properties: {
-    atlasFullDocumentTitle: 'Name',
     atlasDocumentNo: 'Doc No',
     atlasDocumentName: 'Name',
     atlasDocumentType: 'Type',

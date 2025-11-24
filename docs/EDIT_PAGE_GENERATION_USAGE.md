@@ -111,7 +111,7 @@ console.log(`Blocks created: ${result.blocksCreatedCount}`);
 
 - Creates toggle blocks hierarchically, level by level
 - Each toggle block represents a database page
-- Toggle title = `canonical_document_title` or `plain_text_name`
+- Toggle title = `plain_text_name`
 - Toggle content = rich text from `json_content` or `plain_text_content`
 - Maintains parent-child relationships and sort order
 

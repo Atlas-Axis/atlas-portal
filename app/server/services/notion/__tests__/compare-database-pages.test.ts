@@ -66,7 +66,6 @@ function createMockSupabasePage(
 ): NotionDatabasePage {
   return {
     notion_page_id: id,
-    canonical_document_title: null,
     atlas_document_type: 'Section',
     atlas_document_number: 'A.1',
     atlas_database_name: 'Sections & Primary Docs',

@@ -49,7 +49,6 @@ function makeNode(overrides: Partial<NotionAtlasTreeNode> = {}): NotionAtlasTree
   const now = '2025-01-01T00:00:00.000Z';
   return {
     notion_page_id: overrides.notion_page_id ?? cryptoRandomId(),
-    canonical_document_title: overrides.canonical_document_title ?? null,
     atlas_document_type: overrides.atlas_document_type ?? 'Section',
     atlas_document_number: overrides.atlas_document_number ?? 'A.1',
     atlas_document_number_sortable: overrides.atlas_document_number_sortable ?? undefined,

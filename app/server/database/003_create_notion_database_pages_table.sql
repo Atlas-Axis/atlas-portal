@@ -79,8 +79,6 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
   notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
-  -- TODO: Delete canonical_document_title - in Atlas Explorer, there are only two fields: Document No and Document Name
-  canonical_document_title TEXT, -- Title of the Atlas document this page belongs to, e.g. A.AGX.2.1.P1 - TODO: Is this format still correct? This may be a more recent example: A.2.2.1.1
   atlas_document_type atlas_document_type_enum NOT NULL,
   atlas_document_number TEXT NOT NULL DEFAULT '',
   atlas_database_name atlas_database_name_enum NOT NULL,
@@ -127,10 +125,6 @@ ON notion_database_pages(date_valid_from);
 CREATE INDEX IF NOT EXISTS idx_ndp_date_valid_to
 ON notion_database_pages(date_valid_to);
 
--- Index for document-level queries
-CREATE INDEX IF NOT EXISTS idx_notion_database_pages_canonical_title 
-ON notion_database_pages(canonical_document_title) 
-WHERE canonical_document_title IS NOT NULL;
 
 -- Ensure only one active (current) version of a page exists at a time
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_notion_page_id_current
@@ -142,8 +136,7 @@ CREATE INDEX IF NOT EXISTS idx_atlas_pages_natural_sort
 ON notion_database_pages (
   atlas_database_name, 
   atlas_document_number_sortable, 
-  sort_order, 
-  canonical_document_title
+  sort_order
 )
 WHERE date_valid_to IS NULL 
   AND archived = false 
@@ -200,7 +193,6 @@ BEGIN
   -- Insert new versions from payload
   INSERT INTO notion_database_pages (
     notion_page_id,
-    canonical_document_title,
     atlas_document_type,
     atlas_document_number,
     atlas_database_name,
@@ -231,7 +223,6 @@ BEGIN
   )
   SELECT
     notion_page_id,
-    canonical_document_title,
     atlas_document_type,
     atlas_document_number,
     atlas_database_name,
@@ -261,7 +252,6 @@ BEGIN
     NULL
   FROM jsonb_to_recordset(p_rows) AS x (
     notion_page_id UUID,
-    canonical_document_title TEXT,
     atlas_document_type atlas_document_type_enum,
     atlas_document_number TEXT,
     atlas_database_name atlas_database_name_enum,

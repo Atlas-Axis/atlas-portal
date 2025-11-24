@@ -77,7 +77,6 @@ interface NotionAtlasTreeNode {
   updated_at: string;
   date_valid_from?: string | null; // Temporal validity (versioning)
   date_valid_to?: string | null;
-  canonical_document_title?: string | null;
   atlas_document_number_sortable?: string;
 
   // Tree-specific generated fields
@@ -449,7 +448,7 @@ export function notionTreeNodeToExportTreeNode(
 - `created_at`, `date_valid_from`, `date_valid_to` (internal metadata)
 - `archived`, `in_trash`, `has_children` (internal flags)
 - `last_edited_by_user_id` (internal metadata)
-- `canonical_document_title`, `atlas_document_number`, `atlas_document_number_sortable` (internal numbering)
+- `atlas_document_number`, `atlas_document_number_sortable` (internal numbering)
 
 ## UUID Handling
 

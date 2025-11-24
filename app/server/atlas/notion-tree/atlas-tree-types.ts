@@ -18,7 +18,6 @@ import { UuidMappings } from '../load-uuid-mapping';
 export interface NotionAtlasTreeNode {
   // All fields from NotionDatabasePage
   notion_page_id: string;
-  canonical_document_title?: string | null;
   atlas_document_type: AtlasDocumentType;
   atlas_document_number: string;
   atlas_document_number_sortable?: string;

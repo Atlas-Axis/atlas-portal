@@ -66,7 +66,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
     }
 
     // Validate that the root page has a valid title
-    if (!rootPage.canonical_document_title && !rootPage.plain_text_name) {
+    if (!rootPage.plain_text_name && !rootPage.plain_text_name) {
       console.warn(`Warning: Root page ${rootNotionPageId} has no title, will use fallback`);
     }
 
@@ -151,14 +151,14 @@ export async function _delete_createNotionPageWithToggleBlocks({
     subtreePages.forEach((page) => {
       const depth = pageDepthMap.get(page.notion_page_id) || 0;
       const indent = '  '.repeat(depth);
-      const title = page.canonical_document_title || page.plain_text_name || 'Untitled';
+      const title = page.plain_text_name || page.plain_text_name || 'Untitled';
       console.log(`${indent}${title} (${page.notion_page_id})`);
 
       // Validate canonical document title format
       // Expected format: A.1.2.3 - Document Title (e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate")
-      if (page.canonical_document_title && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.canonical_document_title)) {
+      if (page.plain_text_name && !/^[A-Z]\.[0-9]+(\.[0-9]+)* - .+$/.test(page.plain_text_name)) {
         console.warn(
-          `Warning: Page ${page.notion_page_id} has non-standard canonical document title: "${page.canonical_document_title}"`,
+          `Warning: Page ${page.notion_page_id} has non-standard canonical document title: "${page.plain_text_name}"`,
         );
       }
     });
@@ -174,7 +174,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
 
     // Step 4: Create new Notion page
     console.log('Step 4: Creating new Notion page...');
-    const rootPageTitle = rootPage.canonical_document_title || rootPage.plain_text_name || 'Untitled Page';
+    const rootPageTitle = rootPage.plain_text_name || rootPage.plain_text_name || 'Untitled Page';
     const newPageTitle = `${rootPageTitle} - Editable`;
     console.log(`New page title: "${newPageTitle}"`);
 
@@ -196,7 +196,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
     if (invalidPages.length > 0) {
       console.warn(
         `Warning: ${invalidPages.length} pages in subtree are archived or in trash:`,
-        invalidPages.map((p) => ({ id: p.notion_page_id, title: p.canonical_document_title || p.plain_text_name })),
+        invalidPages.map((p) => ({ id: p.notion_page_id, title: p.plain_text_name || p.plain_text_name })),
       );
     }
 
@@ -207,7 +207,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
     }
 
     // Validate that all pages in the subtree have valid titles
-    const pagesWithoutTitle = subtreePages.filter((page) => !page.canonical_document_title && !page.plain_text_name);
+    const pagesWithoutTitle = subtreePages.filter((page) => !page.plain_text_name && !page.plain_text_name);
     if (pagesWithoutTitle.length > 0) {
       console.warn(
         `Warning: ${pagesWithoutTitle.length} pages in subtree have no title:`,
@@ -241,12 +241,12 @@ export async function _delete_createNotionPageWithToggleBlocks({
     // Validate that all pages in the subtree have valid canonical document titles
     // Expected format: e.g., "A.3.2 - Core Stability Parameters - Parameters - Sky Savings Rate", "Grove"
     const pagesWithInvalidCanonicalTitle = subtreePages.filter(
-      (page) => page.canonical_document_title && !/^..+$/.test(page.canonical_document_title),
+      (page) => page.plain_text_name && !/^..+$/.test(page.plain_text_name),
     );
     if (pagesWithInvalidCanonicalTitle.length > 0) {
       console.warn(
         `Warning: ${pagesWithInvalidCanonicalTitle.length} pages in subtree have non-standard canonical document titles:`,
-        pagesWithInvalidCanonicalTitle.map((p) => ({ id: p.notion_page_id, title: p.canonical_document_title })),
+        pagesWithInvalidCanonicalTitle.map((p) => ({ id: p.notion_page_id, title: p.plain_text_name })),
       );
     }
 
@@ -450,7 +450,7 @@ function extractDatabaseTitle(database: DatabaseObjectResponse): string {
  * Creates a single toggle block for a database page
  */
 async function createSingleToggleBlock(parentId: string, databasePage: NotionDatabasePage): Promise<string> {
-  const toggleTitle = databasePage.canonical_document_title || databasePage.plain_text_name || 'Untitled';
+  const toggleTitle = databasePage.plain_text_name || databasePage.plain_text_name || 'Untitled';
 
   // Validate that we have a valid title
   if (!toggleTitle || toggleTitle.trim() === '') {

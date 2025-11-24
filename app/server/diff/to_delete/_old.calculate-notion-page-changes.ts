@@ -112,14 +112,14 @@ export async function _delete_calculateNotionPageHierarchyChanges({
   console.log(`Original subtree page IDs: ${originalSubtreePageIds.join(', ')}`);
   console.log(
     `Subtree pages found:`,
-    originalSubtreePages.map((p) => `${p.notion_page_id} (${p.canonical_document_title})`),
+    originalSubtreePages.map((p) => `${p.notion_page_id} (${p.plain_text_name})`),
   );
 
   console.log(`Extracted duplicated subtree with ${duplicatedSubtreePages.length} pages`);
   console.log(`Duplicated subtree page IDs: ${duplicatedSubtreePageIds.join(', ')}`);
   console.log(
     `Subtree pages found:`,
-    duplicatedSubtreePages.map((p) => `${p.notion_page_id} (${p.canonical_document_title})`),
+    duplicatedSubtreePages.map((p) => `${p.notion_page_id} (${p.plain_text_name})`),
   );
 
   // Step 7: Load text content for all nodes from Supabase into a single map

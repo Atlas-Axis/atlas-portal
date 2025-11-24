@@ -100,7 +100,6 @@ Stores Notion page content as hierarchical blocks. This is the primary table for
 - `plain_text_content` (TEXT) - Extracted plain text for searching/display
 - `json_content` (JSONB) - Full rich content from Notion API
 - `sort_order` (INTEGER, NOT NULL) - Position within parent (0-indexed)
-- `canonical_document_title` (TEXT) - Atlas document identifier (e.g., "A.2.3.21 Some Document")
 
 **Edit Page Fields:**
 
@@ -125,7 +124,6 @@ Stores Notion database pages and their hierarchical relationships.
 - `json_name` (JSONB) - Rich text page title from Notion API
 - `parent_notion_page_id` (UUID) - Parent Notion page ID (if any) - This field is deprecated, don't use it
 - `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
-- `canonical_document_title` (TEXT) - Atlas document identifier
 - `created_at` (TIMESTAMPTZ) - Database row creation time
 - `updated_at` (TIMESTAMPTZ)
 - `last_edited_by_user_id` (TEXT) - Notion user ID who last edited

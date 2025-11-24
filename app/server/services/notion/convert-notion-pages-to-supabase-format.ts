@@ -70,11 +70,6 @@ async function convertSingleNotionPageToDatabaseFormat(
     ? extractRichTextFromProperty(notionPage, contentPropertyName)
     : { plainText: '', richText: [] };
 
-  // Extract canonical document title
-  const canonicalDocumentTitle = readPlainTextValueFromNotionPageProperty(
-    notionPage.properties[databaseConfig.properties.atlasFullDocumentTitle],
-  );
-
   // Extract document number
   const documentNumber = extractDocumentNumber(notionPage, databaseConfig.properties.atlasDocumentNo);
 
@@ -151,7 +146,6 @@ async function convertSingleNotionPageToDatabaseFormat(
 
   const databasePage: NotionDatabasePage = {
     notion_page_id: notionPage.id,
-    canonical_document_title: canonicalDocumentTitle ? String(canonicalDocumentTitle) : null,
     atlas_document_type: documentType as NotionDatabasePage['atlas_document_type'],
     atlas_document_number: documentNumber,
     atlas_database_name: atlasDatabaseName,

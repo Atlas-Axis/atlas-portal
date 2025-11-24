@@ -40,6 +40,6 @@ export function convertSupabaseDatabasePagesToTreeNodes(pages: NotionDatabasePag
     type: page.atlas_document_type,
     sortOrder: page.sort_order,
     atlasDocumentType: page.atlas_document_type,
-    canonicalDocumentTitle: page.canonical_document_title || '',
+    canonicalDocumentTitle: page.plain_text_name || '',
   }));
 }

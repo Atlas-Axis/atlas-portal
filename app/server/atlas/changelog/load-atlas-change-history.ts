@@ -106,7 +106,6 @@ export async function loadAtlasChangeHistory(params?: { since?: Date | string })
       'plain_text_name',
       'plain_text_content',
       'atlas_document_number',
-      'canonical_document_title',
       'parent_notion_page_id',
       // 'sort_order',
       'archived',

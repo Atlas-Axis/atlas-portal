@@ -17,7 +17,7 @@ We have hierarchical Atlas documents stored in the `notion_database_pages` Supab
 
 - Create a single Notion page using the Notion API
 - Include all Atlas documents as hierarchical toggle blocks
-- Each toggle block title = `canonical_document_title` from database pages
+- Each toggle block title = `plain_text_name` from database pages
 - Each toggle block content = rich text from `json_content` + child toggle blocks
 - Store created blocks in `notion_blocks` table with proper mapping
 - Preserve parent-child relationships and sort order
@@ -57,7 +57,7 @@ We have hierarchical Atlas documents stored in the `notion_database_pages` Supab
 
 **Q**: What should be the page title format?
 
-**A**: Use the root document's `canonical_document_title`
+**A**: Use the root document's `plain_text_name`
 
 #### 5. Return Type
 
@@ -256,7 +256,7 @@ The `notion_blocks` table has these relevant fields:
 - `block_type` - Should be 'toggle' for toggle blocks, 'paragraph' for content
 - `belongs_to_edit_page` - Should be `true`
 - `mapped_notion_page_id` - **CRITICAL**: Maps to source database page ID
-- `canonical_document_title` - Atlas document identifier
+- `canonical_document_title` - Atlas document identifier (from notion_blocks table) -- TODO: Rename to document_name or similar
 - `sort_order` - Position within parent (0-indexed)
 
 #### Notion API Structure for Toggle Blocks
@@ -404,7 +404,7 @@ import { TextRichTextItemRequest } from './types';
 
 1. **Functional Requirements**
    - ✅ Single Notion page created with hierarchical toggle blocks
-   - ✅ Toggle titles show `canonical_document_title`
+   - ✅ Toggle titles show document name
    - ✅ Toggle content shows rich text from `json_content`
    - ✅ Proper nesting preserves parent-child relationships
    - ✅ **CRITICAL**: All blocks stored in Supabase with correct mapping
