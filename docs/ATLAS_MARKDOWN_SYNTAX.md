@@ -1,6 +1,19 @@
 # Atlas Markdown Syntax Documentation
 
-## 1. Introduction
+## 1. UUIDs - Critical Information
+
+**⚠️ IMPORTANT**: Every Atlas document must have a unique UUID identifier in its title line.
+
+### UUID Rules
+
+1. **For New Documents**: Generate a new UUID using any UUID generator (any version: v4, v7, etc.)
+2. **For Existing Documents**: ⚠️ **NEVER change existing UUIDs** - they are permanent identifiers used by automations to track documents across changes. Changing a UUID breaks document matching and causes data integrity issues
+3. **Format**: Standard UUID format in HTML comment: `<!-- UUID: 8650a584-01f8-45d6-882b-c14eab9879c4 -->`
+4. **Uniqueness**: Must be unique within the entire Atlas Markdown file
+
+**Recommended UUID Generators**: [uuidgenerator.net](https://www.uuidgenerator.net/), command-line tools (`uuidgen`), or any programming language's UUID library.
+
+## 2. Introduction
 
 ### Purpose
 
@@ -14,7 +27,7 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 
 **⚠️ WARNING**: The Atlas Markdown parser expects exact adherence to the syntax rules documented here. Deviations from these rules will cause external automations to fail or produce incorrect results.
 
-## 2. File Structure & Hierarchy
+## 3. File Structure & Hierarchy
 
 The Atlas Markdown file represents the document hierarchy using standard Markdown heading levels. However, due to markdown viewer limitations, **heading levels are capped at 6** (######).
 
@@ -56,7 +69,7 @@ Nested core document at depth 8 (capped at 6 hashtags).
 
 Notice how documents at depth 7 and 8 both use 6 hashtags. Their hierarchical relationship is determined by their document numbers, not by heading levels.
 
-## 3. Title Line Syntax
+## 4. Title Line Syntax
 
 Every document in the Atlas Markdown file begins with a title line that follows this exact pattern:
 
@@ -89,10 +102,7 @@ Every document in the Atlas Markdown file begins with a title line that follows 
 6. **UUID Comment**: HTML comment with exactly two spaces before it
    - Format: `  <!-- UUID: {uuid} -->`
    - Must have exactly two spaces before `<!--`
-   - UUID can be any valid UUID format (e.g., `8650a584-01f8-45d6-882b-c14eab9879c4`)
-   - Must be unique within the file and cannot be empty
-   - **For new documents**: Generate a new UUID using any online UUID generator (UUID v4 recommended)
-   - **For existing documents**: ⚠️ **Never change existing UUIDs** - they are permanent identifiers used by automations to track documents across changes. Changing a UUID will break document matching and cause data integrity issues
+   - See Section 1 for UUID requirements and rules
 
 ### Valid Document Types
 
@@ -123,7 +133,7 @@ Every document in the Atlas Markdown file begins with a title line that follows 
 ##### A.1.2.3.1.0.3.1 - Budget - Element Annotation [Annotation] <!-- UUID: 5e2e1397-ff87-43ce-a742-e5a68dc89a44 -->
 ```
 
-## 4. Semantic Depth Calculation
+## 5. Semantic Depth Calculation
 
 Understanding how semantic depth is calculated from document numbers is crucial for working with deeply nested documents.
 
@@ -165,7 +175,7 @@ Supporting documents (Annotations, Tenets, Scenarios, Scenario Variations, Activ
 
 Needed Research documents (`NR-X`) don't encode hierarchy in their numbers. Their depth is determined by their parent document in context.
 
-## 5. Content Separation
+## 6. Content Separation
 
 Documents consist of a title line followed by content, with specific spacing rules:
 
@@ -222,7 +232,7 @@ This approach provides better formatting.
 - Everything from the blank line after the title up to the first `**Label**:` pattern is considered the document's main content
 - If no extra fields exist, all text until the next title line is content
 
-## 6. Extra Fields Syntax
+## 7. Extra Fields Syntax
 
 Certain document types have structured extra fields that appear after the main content. These fields use a specific format that must be followed exactly.
 
@@ -340,7 +350,7 @@ Must appear in this order:
 - Field labels are case-sensitive and must match exactly
 - The parser detects extra fields by the `**Label**:` pattern (bold text ending with colon)
 
-## 7. Document Numbering Rules
+## 8. Document Numbering Rules
 
 Atlas document numbers follow a hierarchical system. This section provides a summary
 
@@ -387,7 +397,7 @@ Atlas document numbers follow a hierarchical system. This section provides a sum
 
 - **Core documents** can nest under other Core documents (arbitrary depth)
 
-## 8. Nesting Rules & Restrictions
+## 9. Nesting Rules & Restrictions
 
 Understanding what documents can be nested under other documents is critical for maintaining valid Atlas structure.
 
@@ -428,7 +438,7 @@ When editing the Atlas Markdown:
 3. Check that heading levels match the nesting depth
 4. Confirm supporting documents use correct directory numbers (`.0.3`, `.0.4`, etc.)
 
-## 9. Validation & Common Errors
+## 10. Validation & Common Errors
 
 ### Validation Tool
 
@@ -500,7 +510,7 @@ Understanding how the parser works helps avoid errors:
 - **Field Detection**: The parser identifies extra fields by the `**Label**:` pattern
 - **Content Boundary**: Everything before the first `**Label**:` line is considered main content
 
-## 10. Complete Examples
+## 11. Complete Examples
 
 ### Example 1: Simple Core Document
 
@@ -620,14 +630,7 @@ Universal Alignment refers to an actor's holistic understanding.
 Further research is needed to develop quantitative metrics for measuring Universal Alignment in practice. This research should explore both subjective and objective indicators.
 ```
 
-## 11. UUIDs
-
-When editing the Atlas Markdown file:
-
-1. **Generate UUIDs for New Documents**: Use an online UUID generator (e.g., [uuidgenerator.net](https://www.uuidgenerator.net/)) for any newly added documents
-2. **Never Modify Existing UUIDs**: UUIDs are permanent identifiers - changing them breaks document tracking across versions in external automations
-
-## Other Notes
+## 12. Other Notes
 
 ### Heading Level Cap
 
