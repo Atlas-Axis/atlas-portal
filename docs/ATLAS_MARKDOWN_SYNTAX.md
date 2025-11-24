@@ -12,7 +12,7 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 
 ### Critical Importance
 
-**⚠️ WARNING**: The Atlas Markdown parser expects exact adherence to the syntax rules documented here. Deviations from these rules will cause the parser to fail or produce incorrect results. Always validate your changes before importing.
+**⚠️ WARNING**: The Atlas Markdown parser expects exact adherence to the syntax rules documented here. Deviations from these rules will cause external automations to fail or produce incorrect results.
 
 ## 2. File Structure & Hierarchy
 
@@ -432,7 +432,7 @@ When editing the Atlas Markdown:
 
 ### Validation Tool
 
-The project includes a command-line validator script that can check Atlas Markdown files for syntax errors and structural issues:
+The [Atlas Validator project](https://github.com/Atlas-Axis/atlas-validator) includes a command-line validator script that can check Atlas Markdown files for syntax errors and structural issues:
 
 ```bash
 npx tsx scripts/validate-atlas-markdown.ts [file-path]
