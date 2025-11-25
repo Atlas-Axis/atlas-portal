@@ -11,12 +11,13 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 - **Duration**: Up to 60 minutes
 - **Retries**: 1 attempt with exponential backoff
 
-### `daily-notion-import-schedule.ts`
+### `hourly-notion-sync-schedule.ts`
 
-- **ID**: `daily-notion-import`
+- **ID**: `hourly-notion-import`
 - **Purpose**: Scheduled task that runs the full Atlas import hourly
-- **Schedule**: `0 * * * *` (cron format)
+- **Schedule**: `0 * * * *` (cron format - hourly at minute 0)
 - **Timezone**: UTC
+- **Exports**: `hourlyNotionImportSchedule`
 
 ## Usage
 
