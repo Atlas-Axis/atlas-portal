@@ -7,7 +7,7 @@ The Atlas data pipeline is a comprehensive system that manages the complete life
 **Two Main Workflows:**
 
 1. **Notion → Supabase → Markdown**: Import Atlas documents from Notion databases, store them in Supabase with full version history, build hierarchical tree structures, and export to markdown/JSON formats
-2. **Markdown → Notion** [IMPLEMENTED]: Parse externally-edited Atlas markdown file, validate them, and sync changes back to Notion databases
+2. **Markdown → Notion**: Parse externally-edited Atlas markdown file, validate them, and sync changes back to Notion databases
 
 The pipeline handles complex transformations, relationship mappings, workarounds for platform limitations, and ensures data consistency across all systems.
 
@@ -88,7 +88,7 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 
 
 ┌─────────────────────────────────────────────────────────────────────┐
-│                  MARKDOWN → NOTION [IMPLEMENTED]                    │
+│                  MARKDOWN → NOTION                                  │
 └─────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────┐
@@ -445,7 +445,7 @@ The Export Tree is serialized to multiple formats for different consumption need
 - **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**
 - **[ATLAS_MARKDOWN_SYNTAX.md](./ATLAS_MARKDOWN_SYNTAX.md)**
 
-## Markdown → Notion Pipeline [IMPLEMENTED]
+## Markdown → Notion Pipeline
 
 This workflow enables external editing of the Atlas in markdown format with subsequent synchronization back to Notion databases. The core sync functionality has been implemented with audit logging, UUID mapping persistence, and support for all change types.
 
@@ -766,7 +766,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **5. Tree Processing**                  | Notion Tree nodes       | Name normalization, doc numbering, UUID mapping, mention updates (all inside tree building) | Enhanced `NotionAtlasTreeNode[]`          |
 | **6. Export Transform**                 | Notion Tree             | Rich Text → Markdown, UUID conversion                                                       | `ExportAtlasTreeDocument[]` (Export Tree) |
 | **7. Serialization**                    | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
-| **[PLANNED] 8. Markdown Parse**         | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
+| **[IMPLEMENTED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
 | **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
 | **[PLANNED] 10. Reverse Overrides**     | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
 | **[PLANNED] 11. Build Properties**      | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
