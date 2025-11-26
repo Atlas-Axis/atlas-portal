@@ -59,6 +59,48 @@ export type Database = {
         };
         Relationships: [];
       };
+      notion_api_audit_log: {
+        Row: {
+          atlas_document_uuid: string | null;
+          created_at: string;
+          database_name: string;
+          error_message: string | null;
+          id: string;
+          notion_page_id: string;
+          operation_type: string;
+          request_payload: Json;
+          response_payload: Json | null;
+          success: boolean;
+          sync_batch_id: string | null;
+        };
+        Insert: {
+          atlas_document_uuid?: string | null;
+          created_at?: string;
+          database_name: string;
+          error_message?: string | null;
+          id?: string;
+          notion_page_id: string;
+          operation_type: string;
+          request_payload: Json;
+          response_payload?: Json | null;
+          success: boolean;
+          sync_batch_id?: string | null;
+        };
+        Update: {
+          atlas_document_uuid?: string | null;
+          created_at?: string;
+          database_name?: string;
+          error_message?: string | null;
+          id?: string;
+          notion_page_id?: string;
+          operation_type?: string;
+          request_payload?: Json;
+          response_payload?: Json | null;
+          success?: boolean;
+          sync_batch_id?: string | null;
+        };
+        Relationships: [];
+      };
       notion_blocks: {
         Row: {
           archived: boolean;

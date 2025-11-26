@@ -99,9 +99,13 @@ function formatNotionProperty(
  * - select: Single selection from predefined options - knowing the text value is enough, no need to know the ID, as long as the text value exists in the predefined options
  * - number: Numeric values
  *
- * Current limitations:
- * - Document number (doc_no) not synced
- * - Sort order not synced (only affects "Sections & Primary Docs" database)
+ * All standard fields are now synced:
+ * - Document name
+ * - Document number (doc_no)
+ * - Document type
+ * - Content
+ * - Sort order (for databases that have it)
+ * - Extra fields (for specific document types)
  */
 export function buildNotionProperties(
   doc: ExportAtlasTreeBaseDocument,
@@ -128,13 +132,13 @@ export function buildNotionProperties(
     allowEmptyForDocumentName,
   )!;
 
-  // Document number (rich_text) - NOT SYNCED (commented out for now)
-  // const documentNoPropertyType = typeOverrides[config.properties.atlasDocumentNo] || 'rich_text';
-  // properties[config.properties.atlasDocumentNo] = formatNotionProperty(
-  //   doc.doc_no || '',
-  //   documentNoPropertyType,
-  //   uuidMappings,
-  // )!;
+  // Document number (rich_text) - now synced
+  const documentNoPropertyType = typeOverrides[config.properties.atlasDocumentNo] || 'rich_text';
+  properties[config.properties.atlasDocumentNo] = formatNotionProperty(
+    doc.doc_no || '',
+    documentNoPropertyType,
+    uuidMappings,
+  )!;
 
   // Document type (select) - always a select field in Notion
   properties[config.properties.atlasDocumentType] = {
@@ -146,10 +150,14 @@ export function buildNotionProperties(
     properties[config.properties.content] = formatNotionProperty(doc.content || '', 'rich_text', uuidMappings)!;
   }
 
-  // TODO: Handle sortOrder property
-  // if (config.properties.sortOrder) {
-  //   properties[config.properties.sortOrder] = formatNotionProperty(doc.sortOrder || '', 'number', uuidMappings)!;
-  // }
+  // Sort order property (number) - only for databases that have it (e.g., "Sections & Primary Docs")
+  // The sortOrder field comes from the Export Tree and represents the "No." property in Notion
+  if (config.properties.sortOrder) {
+    const docWithSort = doc as unknown as { sortOrder?: number | string };
+    if (docWithSort.sortOrder !== undefined && docWithSort.sortOrder !== null) {
+      properties[config.properties.sortOrder] = formatNumberProperty(String(docWithSort.sortOrder));
+    }
+  }
 
   // Handle extra fields based on document type
   const docRecord = doc as unknown as Record<string, unknown>;

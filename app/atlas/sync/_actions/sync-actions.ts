@@ -6,6 +6,8 @@ import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
+import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
+import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
 import {
   databaseSupportsInternalNesting,
   getDatabaseNameFromDocument,
@@ -25,6 +27,10 @@ export interface SyncActionResult {
   reason?: string;
 }
 
+export interface SyncActionOptions {
+  syncBatchId?: string;
+}
+
 /**
  * Updates content and properties of an existing Notion page.
  * Handles all document types including extra fields.
@@ -32,12 +38,17 @@ export interface SyncActionResult {
  * @param change The change object containing the new values
  * @param originalIdsToDatabase Map of UUIDs to database names for original documents
  * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page links in markdown
+ * @param options Sync options including batch ID for audit logging
  */
 export async function updateNotionPageContent(
   change: AtlasDocumentChange,
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
   uuidMappings: UuidMappings,
+  options?: SyncActionOptions,
 ): Promise<SyncActionResult> {
+  let databaseName: AtlasDatabaseName | null = null;
+  let properties: Record<string, unknown> | null = null;
+
   try {
     if (!change.uuid) {
       return { success: false, error: 'Missing page UUID' };
@@ -52,22 +63,49 @@ export async function updateNotionPageContent(
     }
 
     // Derive database name from document type and database tracking map
-    const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
+    databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
     // Build Notion properties from the document (converts markdown to rich text)
-    const properties = buildNotionProperties(change.newValues, databaseName, uuidMappings);
+    properties = buildNotionProperties(change.newValues, databaseName, uuidMappings);
 
     // Update the page using Notion API
     const notionClient = notion('write');
-    await notionClient.pages.update({
+    const response = await notionClient.pages.update({
       page_id: change.uuid,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
+    });
+
+    // Log successful operation to audit log
+    await logNotionApiOperation({
+      operationType: 'update',
+      notionPageId: change.uuid,
+      atlasDocumentUuid: change.newValues.uuid || null,
+      databaseName,
+      requestPayload: { page_id: change.uuid, properties },
+      responsePayload: response as Record<string, unknown>,
+      success: true,
+      syncBatchId: options?.syncBatchId,
     });
 
     return { success: true, pageId: change.uuid };
   } catch (error) {
     const err = error as Error;
     console.error(`Failed to update page ${change.uuid}:`, err);
+
+    // Log failed operation to audit log
+    if (databaseName && properties) {
+      await logNotionApiOperation({
+        operationType: 'update',
+        notionPageId: change.uuid || 'unknown',
+        atlasDocumentUuid: change.newValues?.uuid || null,
+        databaseName,
+        requestPayload: { page_id: change.uuid, properties },
+        success: false,
+        errorMessage: err.message,
+        syncBatchId: options?.syncBatchId,
+      });
+    }
+
     return {
       success: false,
       error: err.message || 'Unknown error',
@@ -86,12 +124,14 @@ export async function updateNotionPageContent(
  * @param newIdsToDocuments Map of UUIDs to document objects for database derivation
  * @param newIdsToDatabase Map of UUIDs to database names for new documents
  * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page links in markdown
+ * @param options Sync options including batch ID for audit logging
  */
 export async function createNotionDatabasePage(
   change: AtlasDocumentChange,
   newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>,
   newIdsToDatabase: Map<string, AtlasDatabaseName>,
   uuidMappings: UuidMappings,
+  options?: SyncActionOptions,
 ): Promise<SyncActionResult> {
   try {
     if (!change.newValues) {
@@ -178,6 +218,15 @@ export async function createNotionDatabasePage(
     // Merge inter-database relationship properties
     Object.assign(properties, interDbRelationshipProps);
 
+    // Prepare request payload for audit logging
+    const requestPayload = {
+      parent: {
+        type: 'database_id',
+        database_id: databaseId,
+      },
+      properties,
+    };
+
     // Create the page (parent is always the database ID, never a page ID)
     const notionClient = notion('write');
     const createdPage = await notionClient.pages.create({
@@ -188,10 +237,50 @@ export async function createNotionDatabasePage(
       properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
     });
 
+    // Store UUID mapping for the newly created page
+    // This allows the new page to be referenced in subsequent operations during the same sync
+    if (doc.uuid) {
+      await storeUuidMapping(createdPage.id, doc.uuid);
+
+      // Update the UUID mappings in-memory for use in this sync batch
+      uuidMappings.atlasUUIDsToNotionPageIds.set(doc.uuid, createdPage.id);
+      uuidMappings.notionPageIDsToAtlasUUIDs.set(createdPage.id, doc.uuid);
+    }
+
+    // Log successful operation to audit log
+    await logNotionApiOperation({
+      operationType: 'create',
+      notionPageId: createdPage.id,
+      atlasDocumentUuid: doc.uuid,
+      databaseName,
+      requestPayload,
+      responsePayload: createdPage as Record<string, unknown>,
+      success: true,
+      syncBatchId: options?.syncBatchId,
+    });
+
     return { success: true, pageId: createdPage.id };
   } catch (error) {
     const err = error as Error;
     console.error(`Failed to create page:`, err);
+
+    // Log failed operation to audit log (best effort - may not have all details)
+    if (change.newValues?.uuid) {
+      const doc = change.newValues;
+      const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid!, newIdsToDatabase);
+
+      await logNotionApiOperation({
+        operationType: 'create',
+        notionPageId: 'failed-to-create',
+        atlasDocumentUuid: doc.uuid,
+        databaseName,
+        requestPayload: { error: 'Failed before request could be made' },
+        success: false,
+        errorMessage: err.message,
+        syncBatchId: options?.syncBatchId,
+      });
+    }
+
     return {
       success: false,
       error: err.message || 'Unknown error',
@@ -202,10 +291,15 @@ export async function createNotionDatabasePage(
 /**
  * Deletes (archives) a Notion page.
  * Verifies the page has no children before deletion.
+ *
+ * @param change The change object containing the old values
+ * @param originalIdsToDatabase Map of UUIDs to database names for original documents
+ * @param options Sync options including batch ID for audit logging
  */
 export async function deleteNotionPage(
   change: AtlasDocumentChange,
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
+  options?: SyncActionOptions,
 ): Promise<SyncActionResult> {
   try {
     if (!change.uuid) {
@@ -215,6 +309,9 @@ export async function deleteNotionPage(
     if (!change.oldValues) {
       return { success: false, error: 'Missing old values for database derivation' };
     }
+
+    // Derive database name for audit logging
+    const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
     // Check if page has children
     const hasChildren = await pageHasChildren(change.uuid, change.oldValues, originalIdsToDatabase);
@@ -226,17 +323,188 @@ export async function deleteNotionPage(
       };
     }
 
-    // Archive the page (soft delete)
-    const notionClient = notion('write');
-    await notionClient.pages.update({
+    // Prepare request payload for audit logging
+    const requestPayload = {
       page_id: change.uuid,
       archived: true,
+    };
+
+    // Archive the page (soft delete)
+    const notionClient = notion('write');
+    const response = await notionClient.pages.update({
+      page_id: change.uuid,
+      archived: true,
+    });
+
+    // Log successful operation to audit log
+    await logNotionApiOperation({
+      operationType: 'delete',
+      notionPageId: change.uuid,
+      atlasDocumentUuid: change.oldValues.uuid || null,
+      databaseName,
+      requestPayload,
+      responsePayload: response as Record<string, unknown>,
+      success: true,
+      syncBatchId: options?.syncBatchId,
     });
 
     return { success: true, pageId: change.uuid };
   } catch (error) {
     const err = error as Error;
     console.error(`Failed to delete page ${change.uuid}:`, err);
+
+    // Log failed operation to audit log
+    if (change.oldValues) {
+      const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid!, originalIdsToDatabase);
+
+      await logNotionApiOperation({
+        operationType: 'delete',
+        notionPageId: change.uuid || 'unknown',
+        atlasDocumentUuid: change.oldValues.uuid || null,
+        databaseName,
+        requestPayload: { page_id: change.uuid, archived: true },
+        success: false,
+        errorMessage: err.message,
+        syncBatchId: options?.syncBatchId,
+      });
+    }
+
+    return {
+      success: false,
+      error: err.message || 'Unknown error',
+    };
+  }
+}
+
+/**
+ * Updates the parent relationship for a Notion page.
+ * Handles both same-database and cross-database parent changes.
+ *
+ * @param change The change object containing old and new parent information
+ * @param newIdsToDocuments Map of UUIDs to document objects for parent lookup
+ * @param newIdsToDatabase Map of UUIDs to database names for new documents
+ * @param originalIdsToDatabase Map of UUIDs to database names for original documents
+ * @param options Sync options including batch ID for audit logging
+ */
+export async function updateNotionPageParent(
+  change: AtlasDocumentChange,
+  newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>,
+  newIdsToDatabase: Map<string, AtlasDatabaseName>,
+  originalIdsToDatabase: Map<string, AtlasDatabaseName>,
+  options?: SyncActionOptions,
+): Promise<SyncActionResult> {
+  let databaseName: AtlasDatabaseName | null = null;
+  let properties: Record<string, unknown> | null = null;
+
+  try {
+    if (!change.uuid) {
+      return { success: false, error: 'Missing page UUID' };
+    }
+
+    if (!change.newValues || !change.oldValues) {
+      return { success: false, error: 'Missing values for parent change' };
+    }
+
+    // Derive database name from document type
+    databaseName = getDatabaseNameFromDocument(change.newValues.type, change.uuid, newIdsToDatabase);
+
+    // Build properties object for updating relationships
+    properties = {};
+
+    // Get new parent information
+    const newParentId =
+      change.newAncestry && change.newAncestry.length > 0 ? change.newAncestry[change.newAncestry.length - 1] : null;
+
+    // Handle same-database parent changes (internal nesting)
+    if (databaseSupportsInternalNesting(databaseName) && newParentId) {
+      // Check if new parent is in the same database
+      const newParentDatabase = newIdsToDatabase.get(newParentId);
+
+      if (newParentDatabase === databaseName) {
+        // Same-database parent change
+        const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[databaseName];
+
+        if (config.parentPropertyName) {
+          // Update parent relationship property
+          properties[config.parentPropertyName] = {
+            relation: [{ id: newParentId }],
+          };
+        }
+      }
+    }
+
+    // Handle cross-database parent changes
+    if (newParentId) {
+      const newParentDatabase = newIdsToDatabase.get(newParentId);
+
+      if (newParentDatabase && newParentDatabase !== databaseName) {
+        // Cross-database parent change
+        const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
+          change.newAncestry,
+          databaseName,
+          newIdsToDocuments,
+          newIdsToDatabase,
+        );
+
+        Object.assign(properties, interDbRelationshipProps);
+      }
+    }
+
+    // If no properties to update, return success (no-op)
+    if (Object.keys(properties).length === 0) {
+      return { success: true, pageId: change.uuid };
+    }
+
+    // Validate new parent exists
+    if (newParentId) {
+      const parentExists = await validatePageExists(newParentId);
+      if (!parentExists) {
+        return {
+          success: false,
+          reason: 'parent_not_found',
+          error: `New parent page ${newParentId} does not exist`,
+        };
+      }
+    }
+
+    // Update the page using Notion API
+    const notionClient = notion('write');
+    const response = await notionClient.pages.update({
+      page_id: change.uuid,
+      properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
+    });
+
+    // Log successful operation to audit log
+    await logNotionApiOperation({
+      operationType: 'update',
+      notionPageId: change.uuid,
+      atlasDocumentUuid: change.newValues.uuid || null,
+      databaseName,
+      requestPayload: { page_id: change.uuid, properties },
+      responsePayload: response as Record<string, unknown>,
+      success: true,
+      syncBatchId: options?.syncBatchId,
+    });
+
+    return { success: true, pageId: change.uuid };
+  } catch (error) {
+    const err = error as Error;
+    console.error(`Failed to update page parent ${change.uuid}:`, err);
+
+    // Log failed operation to audit log
+    if (databaseName && properties) {
+      await logNotionApiOperation({
+        operationType: 'update',
+        notionPageId: change.uuid || 'unknown',
+        atlasDocumentUuid: change.newValues?.uuid || null,
+        databaseName,
+        requestPayload: { page_id: change.uuid, properties },
+        success: false,
+        errorMessage: err.message,
+        syncBatchId: options?.syncBatchId,
+      });
+    }
+
     return {
       success: false,
       error: err.message || 'Unknown error',

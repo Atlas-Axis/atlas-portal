@@ -15,26 +15,13 @@ export default async function AtlasSyncPage() {
   // Diff happens server-side for performance (large datasets)
   const result = await diffAtlasScopeTreeLists();
 
-  // Omit structural changes (parent_changed, sibling_order_changed) for now - will be enabled later!
-  const filteredChanges = {
-    added: result.changes.added,
-    changed: result.changes.changed,
-    deleted: result.changes.deleted,
-    parent_changed: [],
-    sibling_order_changed: [],
-  };
-  const filteredResult = {
-    ...result,
-    changes: filteredChanges,
-  };
-
   // Load and serialize UUID mappings for markdown to rich text conversion
   const uuidMappings = await loadUuidMappings();
   const serializedMappings = serializeUuidMappings(uuidMappings);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6 pb-12">
-      <Content result={filteredResult} serializedMappings={serializedMappings} />
+      <Content result={result} serializedMappings={serializedMappings} />
     </div>
   );
 }

@@ -2,11 +2,14 @@ import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { createSyncBatch } from '@/app/server/services/supabase/audit-log-service';
 import {
+  SyncActionOptions,
   SyncActionResult,
   createNotionDatabasePage,
   deleteNotionPage,
   updateNotionPageContent,
+  updateNotionPageParent,
 } from '../_actions/sync-actions';
 import { getAncestryDepth, getDatabaseHierarchyLevel, getDatabaseNameFromDocument } from './atlas-database-mapper';
 
@@ -84,6 +87,12 @@ export async function syncChangesToNotion(
     });
   };
 
+  // Create sync batch ID for audit logging
+  const syncBatchId = createSyncBatch();
+  const syncActionOptions: SyncActionOptions = { syncBatchId };
+
+  addLog(`Starting sync batch: ${syncBatchId}`, 'info');
+
   // Extract changes, document lookup maps, and database tracking maps from diff result
   const { changes, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = diffResult;
 
@@ -128,7 +137,12 @@ export async function syncChangesToNotion(
       addLog(`Updating content: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await updateNotionPageContent(change, originalIdsToDatabase, uuidMappings);
+        const actionResult = await updateNotionPageContent(
+          change,
+          originalIdsToDatabase,
+          uuidMappings,
+          syncActionOptions,
+        );
         completedCount++;
 
         if (actionResult.success) {
@@ -168,7 +182,13 @@ export async function syncChangesToNotion(
       addLog(`Creating page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await createNotionDatabasePage(change, newIdsToDocuments, newIdsToDatabase, uuidMappings);
+        const actionResult = await createNotionDatabasePage(
+          change,
+          newIdsToDocuments,
+          newIdsToDatabase,
+          uuidMappings,
+          syncActionOptions,
+        );
         completedCount++;
 
         if (actionResult.success) {
@@ -210,7 +230,7 @@ export async function syncChangesToNotion(
       addLog(`Deleting page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await deleteNotionPage(change, originalIdsToDatabase);
+        const actionResult = await deleteNotionPage(change, originalIdsToDatabase, syncActionOptions);
         completedCount++;
 
         if (actionResult.success) {
@@ -234,8 +254,101 @@ export async function syncChangesToNotion(
     }
   }
 
-  // TODO: Phase 4: Process parent changes
-  // TODO: Phase 5: Process sibling order changes
+  // Phase 4: Process parent changes
+  if (changes.parent_changed.length > 0 && !options.stopRequested) {
+    addLog(`Phase 4: Processing ${changes.parent_changed.length} parent changes`, 'info');
+    updateProgress('content', null); // Reuse content phase for now
+
+    for (const change of changes.parent_changed) {
+      if (options.stopRequested) {
+        result.stopRequested = true;
+        addLog('Stop requested, skipping remaining parent changes', 'warning');
+        break;
+      }
+
+      const docLabel = getDocumentLabel(change);
+      updateProgress('content', docLabel);
+      addLog(`Updating parent: ${docLabel}`, 'info', change.uuid, docLabel);
+
+      try {
+        const actionResult = await updateNotionPageParent(
+          change,
+          newIdsToDocuments,
+          newIdsToDatabase,
+          originalIdsToDatabase,
+          syncActionOptions,
+        );
+        completedCount++;
+
+        if (actionResult.success) {
+          result.succeeded.push({ change, result: actionResult, phase: 'content' });
+          addLog(`✓ Updated parent: ${docLabel}`, 'success', change.uuid, docLabel);
+        } else if (actionResult.reason === 'parent_not_found') {
+          result.skipped.push({ change, result: actionResult, phase: 'content' });
+          addLog(`⊘ Skipped (new parent not found): ${docLabel}`, 'warning', change.uuid, docLabel);
+        } else {
+          result.failed.push({ change, result: actionResult, phase: 'content' });
+          addLog(`✗ Failed to update parent: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+        }
+      } catch (error) {
+        completedCount++;
+        const err = error as Error;
+        const actionResult: SyncActionResult = { success: false, error: err.message };
+        result.failed.push({ change, result: actionResult, phase: 'content' });
+        addLog(`✗ Error updating parent: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
+      }
+    }
+  }
+
+  // Phase 5: Process sibling order changes
+  // Note: Since doc_no and sort_order are now synced via property builder,
+  // sibling order changes are effectively handled by updating the doc_no property
+  if (changes.sibling_order_changed.length > 0 && !options.stopRequested) {
+    addLog(`Phase 5: Processing ${changes.sibling_order_changed.length} sibling order changes`, 'info');
+    updateProgress('content', null); // Reuse content phase for now
+
+    for (const change of changes.sibling_order_changed) {
+      if (options.stopRequested) {
+        result.stopRequested = true;
+        addLog('Stop requested, skipping remaining sibling order changes', 'warning');
+        break;
+      }
+
+      const docLabel = getDocumentLabel(change);
+      updateProgress('content', docLabel);
+      addLog(`Updating sibling order: ${docLabel}`, 'info', change.uuid, docLabel);
+
+      try {
+        // Use updateNotionPageContent which now includes doc_no and sort_order sync
+        const actionResult = await updateNotionPageContent(
+          change,
+          originalIdsToDatabase,
+          uuidMappings,
+          syncActionOptions,
+        );
+        completedCount++;
+
+        if (actionResult.success) {
+          result.succeeded.push({ change, result: actionResult, phase: 'content' });
+          addLog(`✓ Updated sibling order: ${docLabel}`, 'success', change.uuid, docLabel);
+        } else {
+          result.failed.push({ change, result: actionResult, phase: 'content' });
+          addLog(
+            `✗ Failed to update sibling order: ${docLabel} - ${actionResult.error}`,
+            'error',
+            change.uuid,
+            docLabel,
+          );
+        }
+      } catch (error) {
+        completedCount++;
+        const err = error as Error;
+        const actionResult: SyncActionResult = { success: false, error: err.message };
+        result.failed.push({ change, result: actionResult, phase: 'content' });
+        addLog(`✗ Error updating sibling order: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
+      }
+    }
+  }
 
   result.totalProcessed = completedCount;
 

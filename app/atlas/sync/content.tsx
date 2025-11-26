@@ -65,9 +65,6 @@ interface SyncState {
   completed: boolean;
 }
 
-/**
- * Note: Structural changes (parent_changed, sibling_order_changed) are not shown yet - will be enabled later!
- */
 export function Content({
   result,
   serializedMappings,
@@ -243,8 +240,6 @@ export function Content({
           uuidToDocMap={originalIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
-
-        <p className="my-3 text-xs text-slate-300">Limitations: Moved documents are not shown yet.</p>
 
         {/* Sync Controls and Progress */}
         <div className="my-6">

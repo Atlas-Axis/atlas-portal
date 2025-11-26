@@ -168,12 +168,23 @@ app/atlas/sync/
 ├── page.tsx                       # Server component - diffs and fetches data
 ├── content.tsx                    # Client component - UI and sync orchestration
 ├── _actions/
-│   └── sync-actions.ts            # Server actions for Notion API calls
+│   └── sync-actions.ts            # Server actions for Notion API calls (with audit logging)
 ├── _lib/
 │   ├── sync-orchestrator.ts       # Coordinates sync process
 │   ├── notion-property-builder.ts # Builds Notion property objects
 │   └── atlas-database-mapper.ts   # Derives database names from document types
-└── README.md                      # This file
+└── AGENTS.md                      # This file
+```
+
+**Supporting Services:**
+
+```
+app/server/services/
+├── supabase/
+│   ├── audit-log-service.ts       # Audit logging for all Notion API operations
+│   └── uuid-mapping-service.ts    # UUID mapping persistence for new pages
+└── notion/
+    └── reverse-nesting-overrides.ts # Reverses nesting bug fixes (not yet integrated)
 ```
 
 ### Data Flow
@@ -202,33 +213,56 @@ npm run test:coverage -- app/atlas/sync
 
 Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts`
 
+## Features Implemented
+
+### Core Sync Capabilities ✅
+
+- ✅ **Content changes**: Updates to document name, content, type, and extra fields
+- ✅ **Document additions**: Create new documents with proper hierarchy and relationships
+- ✅ **Document deletions**: Archive documents (with child validation)
+- ✅ **Parent changes**: Sync parent relationship changes (same-database and cross-database)
+- ✅ **Sibling order changes**: Sync document numbering and sort order changes
+- ✅ **Document number sync**: doc_no field now synced to Notion
+- ✅ **Sort order sync**: sort_order ("No.") field now synced for applicable databases
+- ✅ **Audit logging**: Complete audit trail of all Notion API operations with request/response payloads
+- ✅ **UUID mapping persistence**: Automatic storage of UUID mappings for newly created pages
+- ✅ **Progress tracking**: Real-time progress updates and detailed operation logs
+- ✅ **Error handling**: Graceful error handling with detailed error messages
+- ✅ **Batch ID tracking**: All operations grouped by sync batch for easy tracking
+
+### Sync Phases
+
+The orchestrator processes changes in 5 sequential phases:
+
+1. **Content Changes** - Safest operations (no relationship changes)
+2. **Additions** - Creates new pages (sorted by hierarchy, parents before children)
+3. **Deletions** - Archives pages (validates no children exist)
+4. **Parent Changes** - Updates parent relationships (same-database and cross-database)
+5. **Sibling Order Changes** - Updates document numbering and sort order
+
 ## Limitations
 
 ### Current Version
 
-- **No moved document detection**: Structural changes (parent_changed, sibling_order_changed) are detected but not yet synced - will be implemented in a future iteration
-- **No batch operations**: Pages are processed one at a time
+- **No batch operations**: Pages are processed one at a time (intentional for better error isolation)
 - **No background processing**: Progress stops on page refresh
-- **No undo/rollback**: Operations cannot be reversed
+- **No undo/rollback**: Operations cannot be reversed (audit log provides history)
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
-- **Document number not synced**: The doc_no field is not currently synced to Notion
-- **Sort order not synced**: The sort_order field ("No.") in "Sections & Primary Docs" database is not currently synced
+- **Reverse nesting overrides not integrated**: Function exists but not yet called in sync workflow (see [MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md](../../../docs/MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md))
 - **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
-- When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion.
-- Inter-database parent relationships for documents in Agent Scope Database don't have parent relationships in Notion, even though it should be defined. These are skipped during the sync
+- When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion
 
 ### Future Enhancements
 
-- Sync doc_no field (currently not synced)
-- Log all changes made through the Notion API during sync to get an audit log
-- Sync sort_order ("No.") field for "Sections & Primary Docs" database (currently not synced)
+- Integrate reverse nesting overrides for Notion bug workaround
 - User-selectable Markdown file path (configurable source for Atlas Markdown)
 - Support for additional Notion property types (multi-select, date, checkbox, url, email, phone, etc.)
-- Batch Notion API operations for better performance
+- Batch Notion API operations for better performance (if needed)
 - Automatic conflict resolution
 - Automated sync triggers on Markdown file changes in GitHub
+- UI for viewing audit logs
+- Dry-run mode for previewing changes
 - Handle the case when a document doesn't have a parent document and it's not a Scope document
-- Fix inter-database parent relationships for documents in Agent Scope Database. Currently, they don't have parent relationships in Notion, even though it should be defined
 
 ## Implementation Notes
 
