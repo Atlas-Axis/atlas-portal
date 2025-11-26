@@ -271,7 +271,7 @@ export async function createNotionDatabasePage(
 
       await logNotionApiOperation({
         operationType: 'create',
-        notionPageId: 'failed-to-create',
+        notionPageId: null,
         atlasDocumentUuid: doc.uuid,
         databaseName,
         requestPayload: { error: 'Failed before request could be made' },
