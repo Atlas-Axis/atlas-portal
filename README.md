@@ -567,7 +567,6 @@ This project maintains **2 synchronized documentation files** that provide high-
 - **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
 - **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
 - **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
-- **[docs/ATLAS_DIFFING.md](./docs/ATLAS_DIFFING.md)** - Tree diffing algorithms and change detection for Atlas documents
 - **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
 
 ### Atlas Data Formats & Export

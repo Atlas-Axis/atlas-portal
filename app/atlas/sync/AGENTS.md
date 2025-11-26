@@ -43,6 +43,125 @@ When you click "Sync Changes to Notion", the system processes changes in a speci
 
 **Note**: Structural changes (parent_changed, sibling_order_changed) are **not synced** yet. These will be implemented in a future iteration to handle moved documents.
 
+## Change Detection Algorithm
+
+The sync system uses a sophisticated tree diffing algorithm to detect changes between the Atlas Markdown file and Supabase data.
+
+### Change Type Details
+
+The five change types have important behavioral characteristics:
+
+- **Added**: New documents (UUID exists in Markdown only)
+- **Deleted**: Removed documents (UUID exists in Supabase only)
+- **Changed**: Field modifications to `type`, `name`, `content`, and type-specific extra fields
+  - Note: `last_modified` changes are ignored
+- **Parent Changed**: Document moved to different parent (ancestry array differs)
+  - Note: When parent changes, `doc_no` typically changes too, but only `parent_changed` is recorded
+  - Mutually exclusive with Sibling Order Changed
+- **Sibling Order Changed**: Document reordered among siblings (`doc_no` changed, same ancestry)
+  - Note: Mutually exclusive with Parent Changed
+
+### Multiple Changes Per Document
+
+A document can appear in multiple change arrays simultaneously:
+
+- Field changes + parent change = 2 separate change records
+- Field changes + sibling order change = 2 separate change records
+- Each change type is logged separately for complete audit trail
+- However, `parent_changed` and `sibling_order_changed` are mutually exclusive (only one per document)
+
+### Ancestry Tracking Design
+
+**Why track ancestry during tree traversal?**
+
+The algorithm tracks ancestry during recursive tree traversal rather than parsing `doc_no` values. This design decision solves a critical problem:
+
+**Problem with doc_no parsing:**
+
+- Parsing hierarchical numbers like `"A.1.2.3"` → `["A", "A.1", "A.1.2"]` works for most documents
+- However, Needed Research documents use global numbering (`NR-1`, `NR-2`) regardless of parent
+- Moving `NR-1` between parents wouldn't be detected because the number stays the same
+
+**Solution:**
+
+- Build `uuidToAncestry` map during recursive tree traversal
+- Each document stores its actual parent chain as an array of UUIDs
+- Works correctly for all document types (hierarchical or global numbering)
+
+**Example:**
+
+```typescript
+// Standard hierarchical document: A.1.2.3
+ancestry: ['uuid-A.1.2', 'uuid-A.1', 'uuid-A'];
+
+// Needed Research with global numbering: NR-1
+ancestry: ['uuid-article', 'uuid-scope'];
+```
+
+### Change Detection Priority
+
+The algorithm applies this priority logic when detecting changes:
+
+1. If ancestry changed → `parent_changed` (takes priority)
+2. Else if `doc_no` changed → `sibling_order_changed`
+3. If fields changed → `changed` (independent check, can coexist with structural changes above)
+
+### API Reference
+
+The diff function is called during page load to prepare the sync UI:
+
+```typescript
+async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult>;
+
+interface AtlasDiffResult {
+  changes: GroupedAtlasChanges;
+  originalIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
+  newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>;
+}
+
+interface GroupedAtlasChanges {
+  added: AtlasDocumentChange[];
+  deleted: AtlasDocumentChange[];
+  changed: AtlasDocumentChange[];
+  parent_changed: AtlasDocumentChange[];
+  sibling_order_changed: AtlasDocumentChange[];
+}
+```
+
+Example usage:
+
+```typescript
+import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
+
+const result = await diffAtlasScopeTreeLists();
+
+console.log(`Added: ${result.changes.added.length}`);
+console.log(`Deleted: ${result.changes.deleted.length}`);
+console.log(`Changed: ${result.changes.changed.length}`);
+console.log(`Parent changed: ${result.changes.parent_changed.length}`);
+console.log(`Sibling order changed: ${result.changes.sibling_order_changed.length}`);
+```
+
+### Testing
+
+The diff algorithm has comprehensive test coverage:
+
+- **Test file**: `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts`
+- **Test count**: 28 test cases
+- **Coverage**: All 5 change types, multiple simultaneous changes, mutual exclusivity rules, Needed Research global numbering, deeply nested documents (9+ levels), documents without UUIDs, data inconsistencies
+
+Run tests:
+
+```bash
+npm run test:run -- app/server/atlas/diff/__tests__/markdown-supabase-diff.ts
+```
+
+### Performance Characteristics
+
+- **Time Complexity**: O(n) - single pass per tree
+- **Space Complexity**: O(n) - three lookup maps (UUID to document, UUID to ancestry, UUID to database)
+- **Lookups**: O(1) - Map-based lookups for all operations
+
 ## Safety Features
 
 ### Parent Validation
@@ -306,9 +425,11 @@ This approach:
 
 ## Related Documentation
 
-- [Atlas Diffing](../../../docs/ATLAS_DIFFING.md) - How the diff algorithm works
 - [Atlas Document Numbering](../../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md) - Document numbering rules
 - [Atlas Markdown Syntax](../../../docs/ATLAS_MARKDOWN_SYNTAX.md) - Markdown format specification
+- [Atlas Tree Structures](../../../docs/ATLAS_TREE_STRUCTURES.md) - Export tree architecture
+- Implementation: `app/server/atlas/diff/atlas-diff.ts` - Core diff algorithm
+- Types: `app/server/atlas/export/types.ts` - TypeScript type definitions
 
 ## Troubleshooting
 

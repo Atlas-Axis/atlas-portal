@@ -69,7 +69,19 @@ export const childCollectionNameToDatabaseName = {
 
 export type ChildCollectionName = keyof typeof childCollectionNameToDatabaseName;
 
+/**
+ * Order of child collections when iterating/exporting.
+ *
+ * IMPORTANT: 'needed_research' MUST be first in this array.
+ * Needed Research documents use global numbering (NR-1, NR-2, etc.) that doesn't encode
+ * their parent. The markdown importer uses stack-based parsing where NR documents are
+ * attached to the nearest non-NR document on the stack. By outputting NR first, we ensure
+ * the parent (not a sibling) is on top of the stack when NR is parsed.
+ *
+ * See: docs/ATLAS_DOCUMENT_NUMBERING_RULES.md (Needed Research section)
+ */
 export const childCollectionNames: ChildCollectionName[] = [
+  'needed_research', // Must be first - see comment above
   'scopes',
   'articles',
   'sections_and_primary_docs',
@@ -79,7 +91,6 @@ export const childCollectionNames: ChildCollectionName[] = [
   'scenario_variations',
   'active_data',
   'agent_scope_database',
-  'needed_research',
 ];
 
 /**

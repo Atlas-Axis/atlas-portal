@@ -944,7 +944,6 @@ The new approach recognizes that duplicates in the tree are acceptable and somet
 
 ### Other Documentation
 
-- **[ATLAS_DIFFING.md](./ATLAS_DIFFING.md)** - Tree diffing algorithms and change detection for Atlas documents (used for Edit Pages)
 - **[EDIT_PAGE_GENERATION_USAGE.md](./EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
 - **[ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md](./ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md)** - Action plan for fixing agent duplicate detection issues
 

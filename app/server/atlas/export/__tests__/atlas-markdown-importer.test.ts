@@ -766,4 +766,59 @@ Third research question.
     expect(section.needed_research[2].doc_no).toBe('NR-3');
     expect(section.needed_research[2].content).toContain('Third research question');
   });
+
+  it('correctly attaches NR documents when they appear before sibling documents', () => {
+    // Regression test for: NR documents being attached to correct parent
+    // This tests that NR appearing before siblings (new exporter behavior) works correctly
+    const input = md`
+### A.1.1.1 - Section [Section] <!-- UUID: 00000000-0000-0000-0000-000000000800 -->
+
+Section content
+
+#### NR-5 - Section Research [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000802 -->
+
+This should be attached to Section
+
+#### A.1.1.1.1 - Core Document [Core] <!-- UUID: 00000000-0000-0000-0000-000000000801 -->
+
+Core content
+
+##### NR-6 - Core Research [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000803 -->
+
+This should be attached to Core
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    const section = trees[0] as {
+      type: string;
+      doc_no: string;
+      needed_research: Array<{ doc_no: string; uuid: string }>;
+      sections_and_primary_docs: Array<{
+        type: string;
+        doc_no: string;
+        needed_research: Array<{ doc_no: string; uuid: string }>;
+      }>;
+    };
+
+    expect(section.type).toBe('Section');
+    expect(section.doc_no).toBe('A.1.1.1');
+
+    // NR-5 should be attached to Section
+    expect(section.needed_research).toHaveLength(1);
+    expect(section.needed_research[0].doc_no).toBe('NR-5');
+    expect(section.needed_research[0].uuid).toBe('00000000-0000-0000-0000-000000000802');
+
+    // Core should exist as child of Section
+    expect(section.sections_and_primary_docs).toHaveLength(1);
+    const core = section.sections_and_primary_docs[0];
+    expect(core.type).toBe('Core');
+    expect(core.doc_no).toBe('A.1.1.1.1');
+
+    // NR-6 should be attached to Core
+    expect(core.needed_research).toHaveLength(1);
+    expect(core.needed_research[0].doc_no).toBe('NR-6');
+    expect(core.needed_research[0].uuid).toBe('00000000-0000-0000-0000-000000000803');
+  });
 });
