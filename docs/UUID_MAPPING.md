@@ -62,6 +62,7 @@ CREATE TABLE uuid_mapping (
 
 - Bidirectional uniqueness constraints (one-to-one mapping)
 - No foreign key constraints (allows mappings to exist before/after documents)
+- Mappings are preserved forever (never deleted), even when Notion pages are archived via Markdown → Notion sync - this enables potential recovery and maintains audit history
 
 ### Creation
 

@@ -4,6 +4,13 @@
 
 This document outlines the complete action plan for implementing the Markdown → Notion back sync feature, enabling external markdown editing with subsequent synchronization back to Notion databases. This completes the bidirectional sync capability of the Atlas data pipeline.
 
+**Related Documentation:**
+
+- **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** - Complete Atlas data pipeline overview including the planned Markdown → Notion workflow
+- **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)** - Dual tree architecture (Notion Tree vs Export Tree) that this sync process navigates
+- **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Atlas markdown format and parsing specifications
+- **[UUID_MAPPING.md](./UUID_MAPPING.md)** - UUID mapping system between Notion page UUIDs and Atlas document UUIDs
+
 ### Purpose
 
 - Enable markdown-first editing workflow for Atlas documents
@@ -13,7 +20,7 @@ This document outlines the complete action plan for implementing the Markdown �
 
 ### Scope
 
-- Parse and validate Atlas markdown files
+- Parse and validate Atlas markdown file
 - Transform Export Tree to Notion-compatible format
 - Reverse all forward pipeline transformations
 - Sync changes to Notion via API
@@ -22,11 +29,11 @@ This document outlines the complete action plan for implementing the Markdown �
 
 ### Goals
 
-- Complete bidirectional sync: Markdown ↔ Notion ↔ Supabase
+- Complete bidirectional sync: Markdown -> Notion (new), Notion -> Supabase (existing), Supabase -> Markdown (existing)
 - Preserve data integrity throughout transformation pipeline
 - Respect Notion API limits and constraints
-- Handle errors gracefully with rollback capability
-- Enable real-time collaboration between Notion and markdown users
+- Handle errors gracefully with rollback capability- Enable real-time collaboration between Notion and markdown users
+- Track sync progress and store audit log from the changes made during sync
 
 ## Background Context
 
@@ -34,42 +41,41 @@ This document outlines the complete action plan for implementing the Markdown �
 
 Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Markdown exports. This limits editing workflows to Notion users only. External contributors, bulk editors, and technical documentation teams need the ability to edit Atlas documents in markdown format and sync changes back to Notion.
 
+See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for the complete current pipeline and the planned Markdown → Notion workflow architecture.
+
 ### Requirements
 
 **Must Have:**
 
-- Parse Atlas markdown to Export Tree structure
+- Parse Atlas markdown to Export Tree structure (see **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**)
 - Validate markdown structure and consistency
-- Convert Export Tree back to Notion format
+- Convert Export Tree back to Notion format (see **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**)
 - Reverse all forward pipeline transformations:
-  - Unnest root agent documents (reverse artificial nesting)
-  - Reverse nesting bug fix overrides
-  - Convert markdown to Notion Rich Text
-  - Map Atlas UUIDs to Notion page UUIDs
-  - Rewrite mention references
-  - Build Notion property objects
+  - Reverse nesting bug fix overrides (see **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**)
+  - Convert markdown to Notion Rich Text (includes mention UUID rewrite - see `markdown-to-rich-text.ts`)
+  - Map Atlas UUIDs to Notion page UUIDs (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
+  - Build Notion property objects (see **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**)
   - Establish relationships
-- Detect changes: new, modified, deleted documents
-- Create, update, delete pages via Notion API
-- Generate and store UUID mappings for new documents
-- Batch operations with rate limiting
+- Detect changes: new, modified, deleted documents (compare markdown file with data in Supabase using **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** change detection patterns)
+- Create, update, delete pages via Notion API (sequential processing, no batching)
+- Generate and store UUID mappings for new documents (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
+- Keep UUID mappings forever when archiving pages (preserved for potential recovery)
+- Rate limiting (handled by existing Notion client)
 - Error handling and partial sync recovery
+- Progress tracking UI
+- Audit log of all Notion API changes
+- Warn user if Notion documents have been modified more recently than the markdown export. Both on the UI and before starting the sync
+- Incremental sync (only changed documents)
 
 **Nice to Have:**
 
-- Dry-run mode to preview changes
-- Conflict resolution for concurrent edits
-- Incremental sync (only changed documents)
-- Webhook triggers for immediate sync
-- Progress tracking UI
-- Audit log of all Notion API changes
+- Dry-run mode to preview changes (omit if adds too much complexity)
 
 ### Constraints
 
 **Notion API Limitations:**
 
-- Rate limit: 3 requests per second
-- Bulk operations not supported (must iterate)
+- Rate limiting is already handled in the Notion client proxy tool
 - Parent property for database pages: Must use `database_id`, never `page_id`
 - Relationships: Must be established via relation properties, not parent property
 
@@ -77,12 +83,12 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 
 - Notion's sub-item feature fails at deep nesting levels (10+ levels)
 - Must maintain nesting bug fix mappings and apply in reverse
+- See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation on the nesting bug workaround
 
 **Data Integrity:**
 
 - UUID mappings must be consistent and bidirectional
-- Agent Scope Database documents are properly linked via Notion relationship properties (previously it was not so, and we needed a workaround in the code)
-- Relationships must be bidirectional (parent → child and child → parent)
+- See **[UUID_MAPPING.md](./UUID_MAPPING.md)** for UUID mapping system architecture and best practices
 
 ## Architecture Design
 
@@ -92,6 +98,8 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 ┌──────────────────┐
 │ Markdown File    │
 │ (GitHub Repo)    │
+│ pppdns/next-gen- │
+│ atlas            │
 └────────┬─────────┘
          │
          ▼
@@ -116,13 +124,11 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 │    Notion Tree   │
 │ b) Reverse       │◄── reverse-nesting-overrides.ts
 │    Overrides     │
-│ c) Markdown →    │◄── markdown-to-rich-text.ts
+│ c) Markdown →    │◄── markdown-to-rich-text.ts (includes mention UUID rewrite)
 │    Rich Text     │
 │ d) Atlas UUID →  │◄── UUID mapping helpers
 │    Notion UUID   │
-│ e) Rewrite       │◄── (part of markdown-to-rich-text)
-│    Mentions      │
-│ f) Build Props & │◄── notion-property-builder.ts
+│ e) Build Props & │◄── notion-property-builder.ts
 │    Relations     │
 └────────┬─────────┘
          │
@@ -156,24 +162,28 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 - Input: Markdown file
 - Validation: Structure, syntax, UUIDs, relationships
 - Output: Export Tree
+- References: **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**, **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**
 
 **Layer 2: Transformation**
 
 - Input: Export Tree
-- Transformations: 7 sequential steps (see data flow diagram)
+- Transformations: 5 sequential steps (see data flow diagram: a-e)
 - Output: Notion API-ready property objects
+- References: **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**, **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**, **[UUID_MAPPING.md](./UUID_MAPPING.md)**
 
 **Layer 3: Change Detection**
 
 - Input: Export Tree + Current Supabase data
 - Comparison: Deep diff using Atlas UUIDs
 - Output: Change sets (new, modified, deleted)
+- References: **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** (Step 5: Compare & Detect Changes)
 
 **Layer 4: Notion Sync**
 
 - Input: Change sets + Property objects
 - Operations: Create, Update, Delete via Notion API
 - Output: Updated Notion pages + UUID mappings
+- References: **[UUID_MAPPING.md](./UUID_MAPPING.md)**, **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**
 
 **Layer 5: Audit & Tracking**
 
@@ -192,6 +202,8 @@ Currently, the Atlas data pipeline is unidirectional: Notion → Supabase → Ma
 **File:** `app/server/atlas/export/export-tree-to-notion-tree.ts`
 
 **Purpose:** Convert external Export Tree format back to internal Notion Tree format.
+
+**Context:** This reverses the `notionTreeNodeToExportTreeNode()` function documented in **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**.
 
 **Implementation:**
 
@@ -218,10 +230,10 @@ export function exportTreeToNotionTree(options: ExportTreeToNotionTreeOptions): 
 **Key Logic:**
 
 - Recursively traverse Export Tree
-- Map each document to NotionAtlasTreeNode structure
-- Handle missing UUID mappings (new documents)
+- Map each document to NotionAtlasTreeNode structure (see **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)** for structure details)
+- Handle missing UUID mappings (new documents) using **[UUID_MAPPING.md](./UUID_MAPPING.md)** patterns
 - Preserve document hierarchy and relationships
-- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (default type is Rich Text)
+- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (default type is Rich Text) - see **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)** and **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**
 
 **Tests:**
 
@@ -235,6 +247,8 @@ export function exportTreeToNotionTree(options: ExportTreeToNotionTreeOptions): 
 **File:** `app/server/services/notion/reverse-nesting-overrides.ts`
 
 **Purpose:** Apply nesting bug fix mappings in reverse direction.
+
+**Context:** See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation on the nesting bug workaround system.
 
 **Implementation:**
 
@@ -255,7 +269,7 @@ export function reverseNestingOverrides(
 
 **Key Logic:**
 
-- Reverse of `applyNestingOverrides()` function
+- Reverse of `applyNestingOverrides()` function (see **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**)
 - Move children from corrected positions back to original positions
 - Preserve sibling order from mappings
 - Log all reversals for debugging
@@ -303,7 +317,7 @@ export function markdownToRichText(options: MarkdownToRichTextOptions): TextRich
 **Key Logic:**
 
 - Detect Atlas UUID link pattern: `[text](atlas-uuid)` (no "uuid:" prefix)
-- Query UUID mapping from preloaded lookup map for conversion
+- Query UUID mapping from preloaded lookup map for conversion (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
 - Generate Notion mention object structure and rewrite Atlas UUID to Notion UUID
 - Handle errors gracefully
 - Handle edge case where new document links to another new document (two-round approach)
@@ -324,6 +338,8 @@ export function markdownToRichText(options: MarkdownToRichTextOptions): TextRich
 **File:** `app/server/atlas/notion-mapping/notion-property-builder.ts`
 
 **Purpose:** Map Export Tree fields to Notion property objects.
+
+**Context:** Uses mappings from **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)** and handles extra fields documented in **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)**.
 
 **Implementation:**
 
@@ -367,11 +383,11 @@ export function buildRelationProperty(
 
 **Key Logic:**
 
-- Use `notion-database-properties-and-relationships.ts` for mappings
+- Use `notion-database-properties-and-relationships.ts` for mappings (see **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**)
 - Handle database-specific property names
 - Build typed property objects for Notion API
-- Convert all Atlas UUIDs to Notion UUIDs in relations (if not done already in a previous step)
-- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES`
+- Convert all Atlas UUIDs to Notion UUIDs in relations using **[UUID_MAPPING.md](./UUID_MAPPING.md)** patterns (if not done already in a previous step)
+- Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (see **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)**)
 
 **Tests:**
 
@@ -389,6 +405,8 @@ export function buildRelationProperty(
 **File:** `app/server/atlas/sync/detect-markdown-changes.ts`
 
 **Purpose:** Compare Export Tree against Supabase data to identify changes.
+
+**Context:** Uses change detection patterns from **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** (Step 5: Compare & Detect Changes).
 
 **Implementation:**
 
@@ -422,10 +440,11 @@ export function detectMarkdownChanges(
 
 **Key Logic:**
 
-- Use Atlas UUIDs as stable identifiers
+- Use Atlas UUIDs as stable identifiers (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
 - Deep comparison of content and metadata
 - Track what specifically changed for each document
 - Support dry-run mode (preview changes)
+- Compare extra fields for document types with them (see **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)**)
 
 **Tests:**
 
@@ -527,7 +546,7 @@ export async function createNotionPages(
 
 - Respect hierarchical dependencies
 - Don't batch operations for more reliable error handling and better audit log
-- Store UUID mappings immediately
+- Store UUID mappings immediately (see **[UUID_MAPPING.md](./UUID_MAPPING.md)** for mapping storage patterns)
 - Make newly created Notion page IDs available during sync if referenced by other documents
 - Handle partial failures
 
@@ -567,7 +586,7 @@ export async function updateNotionPages(
 **Key Logic:**
 
 - Only update changed fields (delta sync)
-- Look up Notion UUIDs via mapping
+- Look up Notion UUIDs via mapping (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
 - Update relationships separately
 - Retry on transient errors (already exists in Notion client class)
 
@@ -597,7 +616,7 @@ export async function deleteNotionPages(
   //    - Check if page has children (use efficient lookup map)
   //    - If has children, prevent deletion to avoid cascading/orphans
   //    - Call Notion API: PATCH /pages/{page_id} with { archived: true }
-  //    - Delete UUID mapping in Supabase
+  //    - Keep UUID mapping in Supabase (preserved forever for potential recovery)
   //    - Log to audit table
   // 3. Return archived pages
 }
@@ -605,8 +624,8 @@ export async function deleteNotionPages(
 
 **Key Logic:**
 
-- Archive pages (set archived: true)
-- Delete UUID mappings in Supabase (not preserve)
+- Archive pages in Notion (set archived: true)
+- Keep UUID mappings in Supabase (do not delete - mappings are preserved forever for potential recovery)
 - Start from leaf nodes to avoid cascading effects
 - Prevent deletion if page has children (check via efficient lookup map)
 - Log all deletions
@@ -741,8 +760,8 @@ app/server/atlas/sync/__tests__/
 
 **Actions:**
 
-- Validate markdown structure
-- Check UUID uniqueness
+- Validate markdown structure (see **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**)
+- Check UUID uniqueness (see **[UUID_MAPPING.md](./UUID_MAPPING.md)**)
 - Verify document number patterns
 - Validate relationships
 
@@ -863,6 +882,8 @@ CREATE TABLE notion_api_audit_log (
 - Timestamp and user info
 - Batch ID for grouping related operations
 
+**Note:** Similar to the import log structure in **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)**, but tracks individual API operations rather than bulk imports.
+
 **Usage:**
 
 - Debugging sync issues
@@ -886,14 +907,16 @@ CREATE TABLE notion_api_audit_log (
 - Exponential backoff on 429 responses
 - Respect Retry-After header
 
-### Batch Operations
+### Sequential Processing (No Batching)
 
 **Strategy:**
 
-- Don't batch operations for more reliable error handling
-- Process documents sequentially for better audit log of Notion API calls
+- Process documents one at a time (no batching)
+- Sequential processing provides more reliable error handling
+- Better audit log of individual Notion API calls
 - Better error isolation when issues occur
 - Clearer tracking of what succeeded vs failed
+- Rate limiting still applies via existing Notion client
 
 ### Performance Targets
 
@@ -914,7 +937,7 @@ CREATE TABLE notion_api_audit_log (
 
 **Implementation:**
 
-- GitHub webhook on markdown file changes
+- GitHub webhook on `pppdns/next-gen-atlas` repository for `Sky Atlas/Sky Atlas.md` changes
 - Next.js API route receives webhook
 - Triggers Trigger.dev task for sync
 - Reduces latency from hours to minutes
@@ -934,16 +957,15 @@ CREATE TABLE notion_api_audit_log (
 
 ### Conflict Resolution
 
-**Current:** Last write wins (no conflict detection)
-
-**Future:** Detect concurrent edits and prompt for resolution
+**Current:** Markdown always wins, but warn user before sync
 
 **Implementation:**
 
-- Track edit timestamps on both sides
-- Detect conflicts (both modified since last sync)
-- Present diff to user for manual resolution
-- Support merge strategies (prefer Notion, prefer markdown, manual merge)
+- Load markdown file from GitHub using `loadAtlasMarkdownFromGitHub()` helper (see `app/server/atlas/load-atlas-markdown-from-github.ts`)
+- Compare Notion's `updated_at` timestamps with markdown file's `lastModified` date (from GitHub API)
+- If Notion documents were modified after the markdown was last exported, warn user on UI before sync starts
+- User must acknowledge warning to proceed
+- Markdown version always takes precedence (overwrites Notion changes)
 
 ### Incremental Sync
 
@@ -1095,16 +1117,16 @@ CREATE TABLE notion_api_audit_log (
 
 **Code Prerequisites:**
 
-- [ ] Markdown validation working (`scripts/validate-atlas-markdown.ts`)
-- [ ] Markdown parser working (`atlas-markdown-importer.ts`)
+- [x] Markdown validation working (`scripts/validate-atlas-markdown.ts`)
+- [x] Markdown parser working (`atlas-markdown-importer.ts`)
 - [ ] UUID mapping helpers available
 - [ ] Existing sync infrastructure reviewed (`app/atlas/sync/`)
+- [x] GitHub integration: `ATLAS_MARKDOWN_GITHUB_RAW_URL` constant and `loadAtlasMarkdownFromGitHub()` helper available in `app/server/atlas/`
 
 **Infrastructure Prerequisites:**
 
-- [ ] Supabase audit log table created
+- [ ] Supabase audit log table created (`notion_api_audit_log`)
 - [ ] Notion API keys available
-- [ ] Rate limiting infrastructure in place
 - [ ] Error logging configured
 
 ### External Dependencies
@@ -1158,13 +1180,14 @@ CREATE TABLE notion_api_audit_log (
 - Generate mappings atomically
 - Store mappings immediately after creation
 - Regular mapping consistency checks
+- Follow patterns from **[UUID_MAPPING.md](./UUID_MAPPING.md)**
 
 **Risk:** Nesting bug fix mappings become stale
 
 **Mitigation:**
 
 - Regular audits of mappings
-- UI for managing mappings
+- UI for managing mappings (see **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**)
 - Validation during sync
 - Clear documentation of affected documents
 
@@ -1204,10 +1227,51 @@ CREATE TABLE notion_api_audit_log (
 ### Documentation Requirements ✓
 
 - [ ] All transformations documented in `ATLAS_DATA_PIPELINE.md` ✓
+- [ ] Update existing documentation files in the `docs` folder ✓
 - [ ] Complete implementation action plan ✓
 - [ ] JSDoc comments for all public functions
 - [ ] Troubleshooting guide for common issues
 - [ ] User guide for markdown-first workflow
+
+## Related Documentation
+
+This action plan builds upon and references several key documentation files that provide essential context for the Markdown → Notion sync workflow:
+
+### Core Pipeline Architecture
+
+- **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** - Complete Atlas data pipeline overview including both forward (Notion → Supabase → Markdown) and planned reverse (Markdown → Notion) workflows. Provides high-level context for this sync feature's role in the bidirectional pipeline.
+
+- **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture (Notion Tree vs Export Tree). Essential for understanding the tree conversion process that this sync must reverse.
+
+### Data Formats and Transformations
+
+- **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Atlas markdown syntax specification and parsing documentation. Critical for Phase 1 (validation and parsing) of this action plan.
+
+- **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in specific document types (Type Specifications, Scenarios, Scenario Variations, Needed Research). Referenced throughout property building and transformation phases.
+
+### Notion Integration
+
+- **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - Detailed 10-step Notion to Supabase import workflow. Provides change detection patterns (Step 5) that can be adapted for markdown change detection in this sync workflow.
+
+- **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)** - Complete reference for property and relationship mappings across all Atlas databases. Essential for Phase 3 (Property Building) when constructing Notion API property objects.
+
+- **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels. Task 1.2 implements the reverse transformation of these overrides.
+
+### UUID Management
+
+- **[UUID_MAPPING.md](./UUID_MAPPING.md)** - Comprehensive documentation of the UUID mapping system between Notion page UUIDs and Atlas document UUIDs. Referenced extensively throughout the sync workflow for bidirectional UUID lookups, new document mapping creation, and stable reference maintenance.
+
+### How These Documents Relate
+
+The Markdown → Notion sync workflow navigates the entire Atlas data ecosystem:
+
+1. **Parse** markdown using specifications from ATLAS_MARKDOWN_IMPORT_EXPORT.md
+2. **Transform** Export Tree to Notion Tree (reverses ATLAS_TREE_STRUCTURES.md)
+3. **Reverse** nesting overrides (reverses NOTION_NESTING_BUG_FIX.md)
+4. **Map** UUIDs bidirectionally (uses UUID_MAPPING.md)
+5. **Build** Notion properties (uses NOTION_PROPERTY_MAPPING.md and ATLAS_EXTRA_FIELDS.md)
+6. **Detect** changes (adapts patterns from NOTION_IMPORT_PROCESS.md)
+7. **Complete** the pipeline (fits into ATLAS_DATA_PIPELINE.md)
 
 ## Conclusion
 

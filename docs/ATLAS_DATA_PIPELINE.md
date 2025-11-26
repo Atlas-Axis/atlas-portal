@@ -511,16 +511,26 @@ The Notion sync process involves multiple transformation steps that reverse the 
 
 The first step converts the Export Tree (external format) back to Notion Tree (internal format) with all Notion-specific metadata.
 
-**Markdown → Rich Text Conversion:**
+**Markdown → Rich Text Conversion (includes Mention UUID Rewrite):**
 
 - Reverse of `rich-text-to-markdown.ts` transformation
 - Convert markdown strings back to Notion Rich Text API format (`TextRichTextItemRequest[]`)
 - Handle formatting: bold (`**text**` → bold annotation), italic (`*text*` → italic annotation), code (`` `text` `` → code annotation)
-- Convert markdown links to Notion mention objects
+- Convert markdown links with Atlas UUIDs to Notion mention objects (integrated into `convertMarkdownToNotionRichText()`)
+  - Input format: `[text](atlas-uuid)` (no "uuid:" prefix, just the UUID)
+  - Output: Notion mention object with Notion page UUID
+  - UUID lookup via `uuidMappings.atlasUUIDsToNotionPageIds` map
 - Convert LaTeX equations to Notion equation objects
 - Preserve line breaks and paragraph structure
-- Use existing `markdown-to-rich-text.ts` with Atlas UUID mention conversion
+- Use existing `markdown-to-rich-text.ts` which already handles Atlas UUID mention conversion
 - Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (default type is Rich Text)
+
+**Edge Case - New Documents Linking to Other New Documents:**
+
+When a new document links to another new document that doesn't have a Notion page ID yet:
+
+- First round: Create page content without the mention objects (or with placeholder text)
+- Second round: Update those Notion blocks with proper mention objects after all new pages are created and UUID mappings are stored
 
 **Atlas UUID → Notion UUID Mapping:**
 
@@ -552,7 +562,7 @@ The first step converts the Export Tree (external format) back to Notion Tree (i
 Sections & Primary Docs database pages have different title formatting:
 
 - Format: `"{DocNo} - {Name}"` (e.g., `"A.1.1.1 - Universal Alignment And The Spirit Of The Atlas"`)
-- Simplified from original complex format (e.g., `"A.1.1 - A1 - Spirit Of The Atlas - Universal Alignment And The Spirit Of The Atlas"`)
+- Simplified from original complex format (e.g., `"A.1.1.1 - A1 - Spirit Of The Atlas - Universal Alignment And The Spirit Of The Atlas"`)
 - Apply only to Sections & Primary Docs database pages (property: "Doc No (or Temp Name)")
 - Research needed to confirm if other databases require similar title formatting
 - The final specification of the format is still not finalized, it may be that we will not include the document number at all, or that the formatting will be different
@@ -605,51 +615,7 @@ This step applies nesting bug fix mappings in reverse, moving children back to t
 - `app/server/services/notion/apply-nesting-overrides.ts` (forward direction reference)
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**
 
-#### 4.3.4 Mention UUID Rewrite
-
-This step converts markdown links with Atlas UUIDs back to Notion mention objects with Notion page UUIDs.
-
-**Process:**
-
-- Scan Rich Text content for markdown links with Atlas UUID format: `[text](uuid:atlas-uuid-here)`
-- For each Atlas UUID link:
-  - Look up corresponding Notion page UUID in `uuid_mapping` table's preloaded lookup map
-  - Convert markdown link to Notion mention object and rewrite Atlas UUID to Notion UUID
-  - Handle missing mappings (document may not exist in Notion yet)
-- Notion mentions auto-generate their own `plain_text` field, so we don't need to provide doc numbers
-
-**Mention Format Conversion:**
-
-- Input (Markdown): `[A.1.3 - General Provisions](550e8400-e29b-41d4-a716-446655440000)`
-- Output (Notion API):
-  ```json
-  {
-    "type": "mention",
-    "mention": {
-      "type": "page",
-      "page": { "id": "12345678-1234-1234-1234-123456789abc" }
-    }
-  }
-  ```
-
-**Error Handling:**
-
-- Missing UUID mappings: Log warning, keep original markdown link or replace with placeholder
-- Invalid UUID format: Log error, keep original text
-- Notion API errors: Handled at sync layer
-
-**References:**
-
-- `app/server/markdown/markdown-to-rich-text.ts` (extend with UUID conversion logic)
-- `app/server/atlas/notion-tree/atlas-tree-mentions.ts` (forward direction reference - Step 10)
-- **[UUID_MAPPING.md](./UUID_MAPPING.md)**
-
-**Edge Cases:**
-
-It may be that a new document links to another new document which doesn't have an ID in Notion yet.
-We should handle this case in a robust way, e.g. in two rounds: First create the page content without the mention objects, then update those Notion blocks with the proper mention objects once all new pages have been created
-
-#### 4.3.5 Property and Relationship Mapping
+#### 4.3.3 Property and Relationship Mapping
 
 This step builds Notion API property objects using reverse mappings from the Export Tree structure.
 
@@ -697,7 +663,7 @@ This step builds Notion API property objects using reverse mappings from the Exp
 - `app/server/atlas/notion-mapping/notion-property-builder.ts` (to be created)
 - `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts`
 
-#### 4.3.6 Create/Update/Delete Operations
+#### 4.3.4 Create/Update/Delete Operations
 
 This step performs the actual synchronization with Notion via API calls, handling creation, updates, and deletions.
 
@@ -743,7 +709,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - If the page has child documents, prevent deletion to avoid implicit cascading effect or orphaned pages in Notion (use an efficient lookup map to store Notion page IDs and whether they have child documents)
   - Set `archived: true` in Notion via API
   - Call Notion API: `PATCH /pages/{page_id}` with `{ archived: true }`
-  - Delete UUID mapping in Supabase
+  - Keep UUID mapping in Supabase (mappings are preserved forever for potential recovery)
 - Start from leaf nodes to avoid cascading effects, then traverse up the tree as parent nodes become leaf nodes after their child nodes are deleted
 
 **Progress Tracking:**
@@ -800,11 +766,10 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **6. Export Transform**             | Notion Tree             | Rich Text → Markdown, UUID conversion                                                       | `ExportAtlasTreeDocument[]` (Export Tree) |
 | **7. Serialization**                | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
 | **[PLANNED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
-| **[PLANNED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text, Atlas UUID→Notion UUID, reconstruct Notion fields                       | Notion Tree (internal format)             |
+| **[PLANNED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
 | **[PLANNED] 10. Reverse Overrides** | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
-| **[PLANNED] 11. Rewrite Mentions**  | Notion Tree             | Convert Atlas UUID mentions to Notion UUID mentions                                         | Notion Tree (ready for API)               |
-| **[PLANNED] 12. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[PLANNED] 13. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages, batch operations                                | Notion pages (via API)                    |
+| **[PLANNED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
+| **[PLANNED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (sequential, no batching)                        | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 
