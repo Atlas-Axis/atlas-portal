@@ -712,10 +712,6 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 - **[UUID_MAPPING.md](./UUID_MAPPING.md)** - UUID mapping system for stable document references
 - **[ATLAS_DOCUMENT_NUMBERING_RULES.md](./ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Document numbering rules used during hierarchy reconstruction
 
-### Implementation Status
-
-- **[MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md](./MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md)** - Open questions and remaining implementation tasks (reverse nesting overrides integration, integration tests)
-
 ## Implementation Files
 
 ### Core Sync Logic
