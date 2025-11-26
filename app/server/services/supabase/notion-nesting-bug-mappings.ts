@@ -7,6 +7,7 @@
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { supabase } from './supabase-client';
 
 export interface NotionNestingBugMapping {
@@ -67,4 +68,34 @@ export async function saveNotionNestingFixMappings(mappings: NotionNestingBugMap
       throw new Error(`Failed to insert new mappings: ${insertError.message}`);
     }
   }
+}
+
+/**
+ * Builds a Set of Atlas UUIDs that are affected by the nesting bug.
+ * Uses existing UuidMappings for efficient O(1) lookups during sync.
+ *
+ * This is used during the Markdown-to-Notion sync to skip parent changes
+ * for documents that have manual nesting bug corrections.
+ *
+ * @param nestingMappings - Nesting bug mappings from Supabase
+ * @param uuidMappings - UUID mappings for Notion page ID to Atlas UUID conversion
+ * @returns Set of Atlas UUIDs that are affected by the nesting bug
+ */
+export function buildNestingBugAffectedUuidsSet(
+  nestingMappings: NotionNestingBugMapping[],
+  uuidMappings: UuidMappings,
+): Set<string> {
+  const affectedUuids = new Set<string>();
+
+  for (const mapping of nestingMappings) {
+    const atlasUuid = uuidMappings.notionPageIDsToAtlasUUIDs.get(mapping.child_notion_page_id);
+    if (atlasUuid) {
+      affectedUuids.add(atlasUuid);
+    } else {
+      console.error(`No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`);
+      throw new Error(`No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`);
+    }
+  }
+
+  return affectedUuids;
 }

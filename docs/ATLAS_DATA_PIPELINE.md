@@ -118,7 +118,6 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 ┌─────────────────────────────────────┐
 │  3. TRANSFORM TO NOTION FORMAT      │
 │     - Export Tree → Notion Tree     │◄── export-tree-to-notion-tree.ts
-│     - Reverse nesting overrides     │◄── reverse-nesting-overrides.ts
 │     - Markdown → Rich Text          │◄── markdown-to-rich-text.ts
 │     - Atlas UUID → Notion UUID      │◄── UUID_MAPPING.md
 │     - Rewrite mention UUIDs         │
@@ -132,7 +131,6 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 │     - Create new pages              │◄── create-notion-pages.ts
 │     - Update existing pages         │◄── update-notion-pages.ts
 │     - Delete/archive pages          │◄── delete-notion-pages.ts
-│     - Batch with rate limiting      │
 └──────────────┬──────────────────────┘
                │
                ▼
@@ -596,25 +594,26 @@ This step applies nesting bug fix mappings in reverse, moving children back to t
 - Notion's sub-item feature fails at deep nesting levels (platform limitation after 10+ levels)
 - Documents remain in incorrect parent locations in Notion due to this bug
 - Nesting override mappings correct this for display/export (forward direction)
-- Must reverse these corrections before syncing to maintain consistency with Notion's buggy state
-- Changing Notion structure directly would break future import syncs
+- Must handle these documents specially during sync to avoid corrupting manual corrections
 
 **Implementation:**
 
-- Create new function `reverseNestingOverrides()` that:
-  - Takes Notion Tree with corrected relationships
-  - Loads mappings from `notion_nesting_bug_mapping` table
-  - For each mapping, moves child from correct parent back to incorrect parent
-  - Updates `parent_notion_page_id` to incorrect parent
-  - Handles sibling positioning in reverse
-  - Returns Notion Tree with original (buggy) Notion relationships restored
+During the sync Phase 4 (process parent changes), documents affected by the nesting bug are skipped:
+
+- Load nesting bug mappings once at sync start via `loadNotionNestingFixMappings()`
+- Build a Set of affected Atlas UUIDs using `buildNestingBugAffectedUuidsSet()` for O(1) lookups
+- For each parent change, check if the document's UUID is in the affected set
+- If affected: skip the parent change and log a warning
+- If not affected: proceed with normal parent update
+
+This approach preserves manual relationship corrections in `notion_nesting_bug_mapping` while allowing normal parent changes for unaffected documents.
 
 **References:**
 
-- `app/server/services/notion/reverse-nesting-overrides.ts` (implemented, integration pending)
-- `app/server/services/notion/apply-nesting-overrides.ts` (forward direction reference)
+- `app/server/services/supabase/notion-nesting-bug-mappings.ts` - Helper functions
+- `app/atlas/sync/_lib/sync-orchestrator.ts` - Integration point (Phase 4)
+- `app/server/services/notion/apply-nesting-overrides.ts` - Forward direction reference
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**
-- **[MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md](./MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md)** (see for integration status)
 
 #### 4.3.3 Property and Relationship Mapping
 
@@ -768,9 +767,9 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **7. Serialization**                    | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
 | **[IMPLEMENTED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
 | **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
-| **[PLANNED] 10. Reverse Overrides**     | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
-| **[PLANNED] 11. Build Properties**      | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[PLANNED] 12. Sync to Notion**        | Property objects        | Detect changes, create/update/delete pages (sequential, no batching)                        | Notion pages (via API)                    |
+| **[IMPLEMENTED] 10. Reverse Overrides** | Notion Tree             | Skip parent changes for nesting-bug-affected documents during sync                          | Sync orchestrator skips affected docs     |
+| **[IMPLEMENTED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
+| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (sequential, no batching)                        | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 

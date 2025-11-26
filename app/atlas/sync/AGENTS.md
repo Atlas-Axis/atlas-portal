@@ -15,8 +15,8 @@ Changes are grouped into five categories:
 - **Added**: New documents in the Markdown that don't exist in Supabase
 - **Changed**: Documents with modified content, name, type, or extra fields
 - **Deleted**: Documents removed from the Markdown
-- **Parent Changed**: Documents moved to different parents (not synced - will be implemented later)
-- **Sibling Order Changed**: Documents reordered among siblings (not synced - will be implemented later)
+- **Parent Changed**: Documents moved to different parents
+- **Sibling Order Changed**: Documents reordered among siblings
 
 ### 2. Change Review
 
@@ -41,7 +41,7 @@ When you click "Sync Changes to Notion", the system processes changes in a speci
 - Then Section pages (level 2)
 - Within each database, root-level pages are created before nested pages
 
-**Note**: Structural changes (parent_changed, sibling_order_changed) are **not synced** yet. These will be implemented in a future iteration to handle moved documents.
+**Note**: Documents affected by the nesting bug (with mappings in `notion_nesting_bug_mapping`) will have their parent changes **skipped** to preserve manual corrections. See [NOTION_NESTING_BUG_FIX.md](../../../docs/NOTION_NESTING_BUG_FIX.md).
 
 ## Change Detection Algorithm
 
@@ -305,9 +305,8 @@ app/atlas/sync/
 app/server/services/
 ├── supabase/
 │   ├── audit-log-service.ts       # Audit logging for all Notion API operations
-│   └── uuid-mapping-service.ts    # UUID mapping persistence for new pages
-└── notion/
-    └── reverse-nesting-overrides.ts # Reverses nesting bug fixes (not yet integrated)
+│   ├── uuid-mapping-service.ts    # UUID mapping persistence for new pages
+│   └── notion-nesting-bug-mappings.ts # Nesting bug mapping helpers
 ```
 
 ### Data Flow
@@ -360,7 +359,7 @@ The orchestrator processes changes in 5 sequential phases:
 1. **Content Changes** - Safest operations (no relationship changes)
 2. **Additions** - Creates new pages (sorted by hierarchy, parents before children)
 3. **Deletions** - Archives pages (validates no children exist)
-4. **Parent Changes** - Updates parent relationships (same-database and cross-database)
+4. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
 5. **Sibling Order Changes** - Updates document numbering and sort order
 
 ## Limitations
@@ -371,13 +370,12 @@ The orchestrator processes changes in 5 sequential phases:
 - **No background processing**: Progress stops on page refresh
 - **No undo/rollback**: Operations cannot be reversed (audit log provides history)
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
-- **Reverse nesting overrides not integrated**: Function exists but not yet called in sync workflow (see [MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md](../../../docs/MARKDOWN_TO_NOTION_SYNC_REMAINING_TASKS.md))
+- **Nesting bug affected documents**: Parent changes skipped for documents with nesting bug mappings (see [NOTION_NESTING_BUG_FIX.md](../../../docs/NOTION_NESTING_BUG_FIX.md))
 - **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
 - When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion
 
 ### Future Enhancements
 
-- Integrate reverse nesting overrides for Notion bug workaround
 - User-selectable Markdown file path (configurable source for Atlas Markdown)
 - Support for additional Notion property types (multi-select, date, checkbox, url, email, phone, etc.)
 - Batch Notion API operations for better performance (if needed)

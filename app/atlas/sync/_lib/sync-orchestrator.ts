@@ -4,6 +4,10 @@ import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { createSyncBatch } from '@/app/server/services/supabase/audit-log-service';
 import {
+  buildNestingBugAffectedUuidsSet,
+  loadNotionNestingFixMappings,
+} from '@/app/server/services/supabase/notion-nesting-bug-mappings';
+import {
   SyncActionOptions,
   SyncActionResult,
   createNotionDatabasePage,
@@ -92,6 +96,17 @@ export async function syncChangesToNotion(
   const syncActionOptions: SyncActionOptions = { syncBatchId };
 
   addLog(`Starting sync batch: ${syncBatchId}`, 'info');
+
+  // Load nesting bug mappings once and build affected UUIDs set for O(1) lookups
+  // Documents affected by the nesting bug should not have their parent relationships changed
+  const nestingMappings = await loadNotionNestingFixMappings();
+  const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
+  if (nestingBugAffectedUuids.size > 0) {
+    addLog(
+      `Loaded ${nestingBugAffectedUuids.size} documents affected by nesting bug (parent changes will be skipped)`,
+      'info',
+    );
+  }
 
   // Extract changes, document lookup maps, and database tracking maps from diff result
   const { changes, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = diffResult;
@@ -255,6 +270,7 @@ export async function syncChangesToNotion(
   }
 
   // Phase 4: Process parent changes
+  // Note: Documents affected by the nesting bug are skipped to preserve manual relationship corrections
   if (changes.parent_changed.length > 0 && !options.stopRequested) {
     addLog(`Phase 4: Processing ${changes.parent_changed.length} parent changes`, 'info');
     updateProgress('content', null); // Reuse content phase for now
@@ -268,6 +284,25 @@ export async function syncChangesToNotion(
 
       const docLabel = getDocumentLabel(change);
       updateProgress('content', docLabel);
+
+      // Skip documents affected by nesting bug to preserve manual relationship corrections
+      if (change.uuid && nestingBugAffectedUuids.has(change.uuid)) {
+        const actionResult: SyncActionResult = {
+          success: false,
+          reason: 'nesting_bug_affected',
+          error: 'Document has manual nesting bug mapping - parent change skipped',
+        };
+        result.skipped.push({ change, result: actionResult, phase: 'content' });
+        addLog(
+          `⊘ Skipped (nesting bug affected): ${docLabel} - manual mapping exists`,
+          'warning',
+          change.uuid,
+          docLabel,
+        );
+        completedCount++;
+        continue;
+      }
+
       addLog(`Updating parent: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {

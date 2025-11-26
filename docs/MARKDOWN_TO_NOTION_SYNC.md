@@ -70,10 +70,9 @@ This workflow takes an externally-edited Atlas markdown file and syncs all chang
 │ a) Export Tree → │◄── export-tree-to-notion-tree.ts
 │    Notion Tree   │    • Reconstruct Notion structure
 │                  │
-│ b) Reverse       │◄── reverse-nesting-overrides.ts
-│    Overrides     │    • Restore buggy Notion hierarchies
-│    [NOT YET      │    (function created, not yet integrated)
-│     INTEGRATED]  │
+│ b) Nesting Bug   │◄── sync-orchestrator.ts (Phase 4)
+│    Handling      │    • Skip parent changes for
+│                  │      affected documents
 │                  │
 │ c) Markdown →    │◄── markdown-to-rich-text.ts
 │    Rich Text     │    • Convert to Notion Rich Text
@@ -145,14 +144,14 @@ The sync workflow is organized into five sequential layers, each with specific r
 - **Input**: Export Tree from markdown parsing
 - **Operations** (5 sequential steps):
   1. Export Tree → Notion Tree structure conversion
-  2. Reverse nesting overrides (restore Notion's buggy positions) - NOT YET INTEGRATED
+  2. Nesting bug handling (skip parent changes for affected documents)
   3. Markdown → Notion Rich Text with mention UUID rewriting
   4. Atlas UUID → Notion UUID mapping lookups
   5. Build Notion property objects and relationship arrays
 - **Output**: Notion API-ready property objects
 - **Files**:
   - `app/server/atlas/export/export-tree-to-notion-tree.ts`
-  - `app/server/services/notion/reverse-nesting-overrides.ts` (created but not integrated)
+  - `app/atlas/sync/_lib/sync-orchestrator.ts` (nesting bug handling in Phase 4)
   - `app/server/markdown/markdown-to-rich-text.ts`
   - `app/server/services/supabase/uuid-mapping-service.ts`
   - `app/atlas/sync/_lib/notion-property-builder.ts`
@@ -565,7 +564,7 @@ Internal hierarchy within databases (e.g., Section → Core → Core) is managed
 - Notion's sub-item feature fails at deep nesting levels (10+ levels)
 - Documents remain in incorrect parent locations due to platform bug
 - Nesting override mappings correct this for display/export (forward direction)
-- Reverse overrides would restore buggy state before syncing (not yet integrated)
+- During sync, parent changes for affected documents are skipped to preserve manual corrections
 
 See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation.
 
@@ -577,7 +576,7 @@ See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete do
 
 **Test Files**:
 
-- `app/server/services/notion/__tests__/reverse-nesting-overrides.test.ts`
+- `app/server/services/supabase/__tests__/notion-nesting-bug-mappings.test.ts`
 - `app/server/services/supabase/__tests__/uuid-mapping-service.test.ts`
 - `app/server/services/supabase/__tests__/audit-log-service.test.ts`
 
@@ -706,7 +705,7 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 
 - **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - Reverse workflow (Notion → Supabase) that runs after this sync completes
 - **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)** - Property and relationship mappings used during transformation
-- **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** - Nesting bug workaround (reverse transformation not yet integrated)
+- **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** - Nesting bug workaround (parent changes skipped for affected documents)
 
 ### Supporting Systems
 
@@ -731,7 +730,7 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 ### Transformation Services
 
 - `app/server/atlas/export/export-tree-to-notion-tree.ts` - Export Tree to Notion Tree conversion
-- `app/server/services/notion/reverse-nesting-overrides.ts` - Reverse nesting bug fix (not yet integrated)
+- `app/server/services/supabase/notion-nesting-bug-mappings.ts` - Nesting bug mapping helpers
 - `app/server/markdown/markdown-to-rich-text.ts` - Markdown to Notion Rich Text conversion
 
 ### Support Services
@@ -747,7 +746,7 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 
 ### Testing
 
-- `app/server/services/notion/__tests__/reverse-nesting-overrides.test.ts`
+- `app/server/services/supabase/__tests__/notion-nesting-bug-mappings.test.ts`
 - `app/server/services/supabase/__tests__/uuid-mapping-service.test.ts`
 - `app/server/services/supabase/__tests__/audit-log-service.test.ts`
 
@@ -755,12 +754,9 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 
 The Atlas Markdown → Notion synchronization workflow completes the bidirectional data pipeline by enabling external markdown editing with sync back to Notion. With comprehensive error handling, audit logging, UUID mapping, and change detection, this workflow enables markdown-first editing while ensuring changes flow back into the Notion-based Atlas system.
 
-**Implementation Status: 95% Complete**
+**Implementation Status: Complete (not tested yet)**
 
-The core sync functionality is implemented and in production use, successfully handling all change types including structural changes (parent moves and sibling reordering). Remaining tasks include:
-
-- Reverse nesting overrides integration (function created but not yet integrated into workflow)
-- End-to-end integration tests (unit tests complete)
+The core sync functionality is implemented but not tested yet. It is supposed to be successfully handling all change types including structural changes (parent moves and sibling reordering). Nesting bug handling is complete (parent changes for affected documents are skipped).
 
 **Round-Trip Data Flow:**
 
