@@ -17,7 +17,9 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
+import { executeDryRun } from './_actions/sync-actions';
+import { DryRunSummaryModal } from './_components/dry-run-summary-modal';
+import { DryRunResult, SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
 
 const colors: {
   [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
@@ -107,6 +109,17 @@ export function Content({
     completed: false,
   });
 
+  // Dry-run state
+  const [dryRunState, setDryRunState] = useState<{
+    isRunning: boolean;
+    result: DryRunResult | null;
+    modalOpen: boolean;
+  }>({
+    isRunning: false,
+    result: null,
+    modalOpen: false,
+  });
+
   // Use ref for stop flag so it can be read by sync function without re-rendering
   const syncOptionsRef = useRef({ stopRequested: false });
 
@@ -175,6 +188,46 @@ export function Content({
     }));
   };
 
+  const handlePreviewClick = async () => {
+    setDryRunState({
+      isRunning: true,
+      result: null,
+      modalOpen: false,
+    });
+
+    try {
+      const dryRunResult = await executeDryRun(result, uuidMappings);
+      setDryRunState({
+        isRunning: false,
+        result: dryRunResult,
+        modalOpen: true,
+      });
+    } catch (error) {
+      const err = error as Error;
+      console.error('Dry-run failed:', err);
+      setDryRunState({
+        isRunning: false,
+        result: null,
+        modalOpen: false,
+      });
+    }
+  };
+
+  const handleDryRunModalClose = () => {
+    setDryRunState((prev) => ({
+      ...prev,
+      modalOpen: false,
+    }));
+  };
+
+  const handleProceedFromDryRun = () => {
+    setDryRunState((prev) => ({
+      ...prev,
+      modalOpen: false,
+    }));
+    handleSyncClick();
+  };
+
   return (
     <Card className="container mx-auto max-w-7xl p-6">
       <CardHeader>
@@ -237,15 +290,25 @@ export function Content({
 
         {/* Sync Controls and Progress */}
         <div className="my-6">
-          {/* Sync Button */}
+          {/* Sync Buttons */}
           <div className="flex justify-center gap-3">
+            <Button
+              size="lg"
+              onPress={handlePreviewClick}
+              variant="bordered"
+              color="secondary"
+              isLoading={dryRunState.isRunning}
+              isDisabled={syncState.isRunning || dryRunState.isRunning || !hasChanges}
+            >
+              Preview Changes
+            </Button>
             <Button
               size="lg"
               onPress={handleSyncClick}
               variant="solid"
               color="primary"
               isLoading={syncState.isRunning}
-              isDisabled={syncState.isRunning || !hasChanges}
+              isDisabled={syncState.isRunning || dryRunState.isRunning || !hasChanges}
             >
               Sync Changes to Notion
             </Button>
@@ -308,6 +371,14 @@ export function Content({
           )}
         </div>
       </CardBody>
+
+      {/* Dry-Run Summary Modal */}
+      <DryRunSummaryModal
+        isOpen={dryRunState.modalOpen}
+        onClose={handleDryRunModalClose}
+        onProceed={handleProceedFromDryRun}
+        result={dryRunState.result}
+      />
     </Card>
   );
 }

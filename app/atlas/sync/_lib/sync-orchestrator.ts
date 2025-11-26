@@ -1,5 +1,5 @@
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { createSyncBatch } from '@/app/server/services/supabase/audit-log-service';
@@ -21,7 +21,54 @@ export type SyncPhase = 'content' | 'additions' | 'deletions' | 'idle';
 
 export interface SyncOptions {
   stopRequested: boolean;
+  dryRun?: boolean;
 }
+
+/**
+ * Represents a single operation that would be performed during sync.
+ * Used for dry-run mode to show what changes would be made without executing them.
+ */
+export interface DryRunOperation {
+  phase: SyncPhase;
+  operationType: 'create' | 'update' | 'archive';
+  documentLabel: string;
+  documentId: string;
+  databaseName: AtlasDatabaseName;
+  changeType: AtlasChangeType;
+  /** Whether this operation would be skipped */
+  skipped?: boolean;
+  /** Reason for skipping (e.g., nesting bug affected, has children) */
+  skipReason?: string;
+}
+
+/**
+ * Summary counts for dry-run results.
+ */
+export interface DryRunSummary {
+  createCount: number;
+  updateCount: number;
+  archiveCount: number;
+  skippedCount: number;
+  totalCount: number;
+}
+
+/**
+ * Result of a dry-run sync operation.
+ * Contains planned operations without executing any writes.
+ * Operations are limited to MAX_OPERATIONS_PER_TYPE to avoid exceeding server action limits.
+ */
+export interface DryRunResult {
+  /** Limited list of operations (max 50 per type to stay under 1MB limit) */
+  operations: DryRunOperation[];
+  /** Summary counts (always accurate, even when operations are truncated) */
+  summary: DryRunSummary;
+  /** Whether the operations list was truncated due to size limits */
+  truncated: boolean;
+  skippedCount: number;
+}
+
+/** Maximum operations to return per type to stay under Next.js 1MB response limit */
+export const MAX_OPERATIONS_PER_TYPE = 50;
 
 export interface SyncLogEntry {
   timestamp: Date;

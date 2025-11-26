@@ -346,6 +346,7 @@ Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts
 - ✅ **Sibling order changes**: Sync document numbering and sort order changes
 - ✅ **Document number sync**: doc_no field now synced to Notion
 - ✅ **Sort order sync**: sort_order ("No.") field now synced for applicable databases
+- ✅ **Dry-run preview**: Preview all operations via "Preview Changes" button without making API calls
 - ✅ **Audit logging**: Complete audit trail of all Notion API operations with request/response payloads
 - ✅ **UUID mapping persistence**: Automatic storage of UUID mappings for newly created pages
 - ✅ **Progress tracking**: Real-time progress updates and detailed operation logs
@@ -382,7 +383,6 @@ The orchestrator processes changes in 5 sequential phases:
 - Automatic conflict resolution
 - Automated sync triggers on Markdown file changes in GitHub
 - UI for viewing audit logs
-- Dry-run mode for previewing changes
 - Handle the case when a document doesn't have a parent document and it's not a Scope document
 
 ## Implementation Notes

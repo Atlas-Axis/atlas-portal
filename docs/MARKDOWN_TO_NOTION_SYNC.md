@@ -25,6 +25,7 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for complete pipeline
 
 - ✅ **Change Detection**: Automatically detects new, modified, moved, and deleted documents
 - ✅ **Structural Changes**: Syncs parent changes (cross-database and same-database) and sibling ordering
+- ✅ **Dry-Run Preview**: Preview all operations before executing with "Preview Changes" button
 - ✅ **Audit Logging**: Complete audit trail of all Notion API operations
 - ✅ **UUID Mapping**: Automatic storage and lookup of UUID mappings for document references
 - ✅ **Error Handling**: Graceful error handling with detailed logging and partial success tracking
@@ -427,14 +428,23 @@ await logNotionApiOperation({
 - Requires user acknowledgment to proceed
 - Prevents accidental overwrites
 
-**4. Sync Execution**
+**4. Dry-Run Preview**
+
+- "Preview Changes" button for dry-run mode
+- Shows summary modal with all operations that would be performed
+- Counts by operation type (create, update, archive, skipped)
+- Lists documents grouped by operation type
+- "Proceed with Sync" button to execute after review
+- No API calls, audit logs, or UUID mappings written during preview
+
+**5. Sync Execution**
 
 - "Sync to Notion" button triggers sync
 - Real-time progress tracking
 - Operation count display
 - Success/error reporting
 
-**5. Results Display**
+**6. Results Display**
 
 - Summary of operations performed
 - List of errors if any occurred
@@ -584,7 +594,7 @@ See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete do
 
 - UUID mapping service (create, lookup, batch operations)
 - Audit log service (create, query operations)
-- Reverse nesting overrides (transformation logic)
+- Reverse nesting overrides
 - Change detection (all change types)
 - Property building (all property types)
 
@@ -611,29 +621,13 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 
 ## Known Limitations
 
-### 1. Reverse Nesting Overrides Not Integrated
-
-**Status**: Function implemented and tested, but not integrated into sync workflow
-
-**Impact**: If nesting bug mappings exist in `notion_nesting_bug_mapping` table, relationships may become inconsistent
-
-**Resolution**: Pending investigation of whether mappings exist and integration decision
-
-### 2. No Dry-Run Mode
-
-**Status**: Listed as "Nice to Have" but not implemented
-
-**Impact**: Cannot preview changes without executing sync
-
-**Workaround**: UI shows detailed change preview before sync
-
-### 3. No Integration Tests
+### 1. No Integration Tests
 
 **Status**: Unit tests complete, but end-to-end tests not created
 
 **Impact**: Full workflow reliability not validated with automated tests
 
-**Mitigation**: Comprehensive manual testing performed
+**Mitigation**: Comprehensive manual testing needs to be performed
 
 ## Future Enhancements
 
