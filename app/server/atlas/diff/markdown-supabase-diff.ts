@@ -1,12 +1,14 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 import { buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
 import { ExportAtlasTreeScopeTrees } from '../export/types';
+import { fetchAtlasMarkdownContent } from '../load-atlas-markdown-from-github';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
  * Diff two Atlas scope tree lists and return the list of changes.
+ *
+ * Compares the current Atlas data in Supabase with the canonical Atlas markdown
+ * file stored in GitHub.
  */
 export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees();
@@ -36,11 +38,12 @@ async function loadSupabaseAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeSco
   return buildExportAtlasTreeJSON();
 }
 
+/**
+ * Loads the canonical Atlas markdown file from GitHub and parses it into Export Tree format.
+ *
+ * @returns The parsed Atlas scope trees from the GitHub markdown file
+ */
 async function loadMarkdownAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
-  const projectRoot = process.cwd();
-  const dir = path.join(projectRoot, 'exported-atlas');
-  const inFile = path.join(dir, 'atlas.md');
-
-  const markdown = await fs.readFile(inFile, 'utf8');
+  const markdown = await fetchAtlasMarkdownContent();
   return parseAtlasMarkdown(markdown);
 }

@@ -699,4 +699,71 @@ Research content (both use 6 hashtags but NR is child)
     expect(core.needed_research).toHaveLength(1);
     expect(core.needed_research[0].doc_no).toBe('NR-10');
   });
+
+  it('handles multiple consecutive Needed Research documents at the same level', () => {
+    // Regression test for: "No child collection mapping from parent database 'Needed Research'
+    // to child database 'Needed Research'" error when parsing consecutive NR documents
+    const input = md`
+# A.1 - Test Scope [Scope] <!-- UUID: 00000000-0000-0000-0000-000000000001 -->
+
+Test scope content
+
+## A.1.1 - Test Article [Article] <!-- UUID: 00000000-0000-0000-0000-000000000002 -->
+
+Test article content
+
+### A.1.1.1 - Test Section [Section] <!-- UUID: 00000000-0000-0000-0000-000000000003 -->
+
+Test section content
+
+#### NR-1 - First Research Item [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000004 -->
+
+First research question.
+
+#### NR-2 - Second Research Item [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000005 -->
+
+Second research question.
+
+#### NR-3 - Third Research Item [Needed Research] <!-- UUID: 00000000-0000-0000-0000-000000000006 -->
+
+Third research question.
+    `;
+
+    const trees = parseAtlasMarkdown(input);
+    expect(trees).toHaveLength(1);
+
+    const scope = trees[0] as {
+      type: string;
+      doc_no: string;
+      articles: Array<{
+        type: string;
+        doc_no: string;
+        sections_and_primary_docs: Array<{
+          type: string;
+          doc_no: string;
+          needed_research: Array<{ doc_no: string; type: string; content: string }>;
+        }>;
+      }>;
+    };
+
+    expect(scope.type).toBe('Scope');
+    expect(scope.doc_no).toBe('A.1');
+
+    const article = scope.articles[0];
+    expect(article.type).toBe('Article');
+    expect(article.doc_no).toBe('A.1.1');
+
+    const section = article.sections_and_primary_docs[0];
+    expect(section.type).toBe('Section');
+    expect(section.doc_no).toBe('A.1.1.1');
+
+    // All three Needed Research documents should be attached to the Section, not nested in each other
+    expect(section.needed_research).toHaveLength(3);
+    expect(section.needed_research[0].doc_no).toBe('NR-1');
+    expect(section.needed_research[0].content).toContain('First research question');
+    expect(section.needed_research[1].doc_no).toBe('NR-2');
+    expect(section.needed_research[1].content).toContain('Second research question');
+    expect(section.needed_research[2].doc_no).toBe('NR-3');
+    expect(section.needed_research[2].content).toContain('Third research question');
+  });
 });

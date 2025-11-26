@@ -8,7 +8,7 @@ Synchronize changes from the Atlas Markdown export back to Notion database pages
 
 ### 1. Change Detection
 
-The sync page automatically diffs the Atlas Markdown file (`exported-atlas/atlas.md`) against the current Atlas data stored in Supabase, identifying all differences between the two versions.
+The sync page automatically diffs the canonical Atlas Markdown file from GitHub against the current Atlas data stored in Supabase, identifying all differences between the two versions.
 
 Changes are grouped into five categories:
 
@@ -25,7 +25,6 @@ All detected changes are displayed in a visual diff format with:
 - Inline text diffs for content changes
 - Before/after comparison for field modifications
 - Parent document context for additions and deletions
-- Checkboxes to selectively include/exclude changes
 
 ### 3. Synchronization
 
@@ -105,11 +104,16 @@ Real-time operation log shows:
 
 ## Configuration
 
-### Markdown File Path
+### Markdown File Source
 
-Currently: `exported-atlas/atlas.md`
+The sync system loads the canonical Atlas Markdown file directly from GitHub:
 
-This path is configurable in `app/atlas/sync/page.tsx` (will be made user-configurable in future to use the Markdown Atlas stored in GitHub in production).
+- **Repository**: `pppdns/next-gen-atlas`
+- **Branch**: `main`
+- **File Path**: `Sky Atlas/Sky Atlas.md`
+- **Raw URL**: Configured in `ATLAS_MARKDOWN_GITHUB_RAW_URL` constant
+
+This ensures that the sync always operates against the authoritative source of truth for the Atlas.
 
 ### Notion API Access
 

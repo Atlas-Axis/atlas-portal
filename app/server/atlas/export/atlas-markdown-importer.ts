@@ -162,8 +162,11 @@ export function parseAtlasMarkdown(markdown: string): ExportAtlasTreeScopeTrees 
     // Pop stack to find the parent document by doc_no
     // For Needed Research (parentDocNo is null), use the top of stack as parent
     if (parentDocNo === null && header.type === 'Needed Research') {
-      // Needed Research: attach to the most recent document in stack
-      // Don't pop anything, just use current stack top as parent
+      // Needed Research: attach to the most recent non-Needed-Research document in stack
+      // Pop any Needed Research documents from the stack first, since they cannot have children
+      while (stack.length > 0 && stack[stack.length - 1].database === 'Needed Research') {
+        stack.pop();
+      }
     } else if (parentDocNo === null) {
       // Root-level document (Scope) - clear the stack
       while (stack.length > 0) {

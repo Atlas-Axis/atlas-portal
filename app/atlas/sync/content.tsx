@@ -2,7 +2,6 @@
 
 import { useMemo, useRef, useState } from 'react';
 import { Alert } from '@heroui/alert';
-import { Checkbox } from '@heroui/checkbox';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
 import TypeChip from '@/app/atlas/type-chip';
@@ -196,7 +195,6 @@ export function Content({
           title="Added"
           changes={changes.added}
           changeType="added"
-          emptyMessage="No documents added"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
@@ -206,7 +204,6 @@ export function Content({
           title="Changed"
           changes={changes.changed}
           changeType="changed"
-          emptyMessage="No document content changes"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
@@ -216,7 +213,6 @@ export function Content({
           title="Order / Document No Changed"
           changes={changes.sibling_order_changed}
           changeType="sibling_order_changed"
-          emptyMessage="No sibling order changes"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
@@ -226,7 +222,6 @@ export function Content({
           title="Parent Changed"
           changes={changes.parent_changed}
           changeType="parent_changed"
-          emptyMessage="No parent changes"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
@@ -236,7 +231,6 @@ export function Content({
           title="Deleted"
           changes={changes.deleted}
           changeType="deleted"
-          emptyMessage="No documents deleted"
           uuidToDocMap={originalIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
         />
@@ -358,86 +352,24 @@ function ChangeSection({
   title,
   changes,
   changeType,
-  emptyMessage,
   uuidToDocMap,
   uuidToDocNoMap,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
   changeType: AtlasChangeType;
-  emptyMessage: string;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
 }) {
   const colorConfig = colors[changeType];
 
-  // Track checkbox state for each change (default to checked for user convenience)
-  // Sibling order changes are excluded as they're not synced yet
-  const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>(() => {
-    const initialState: Record<string, boolean> = {};
-    changes.forEach((change, index) => {
-      if (change.changeType !== 'sibling_order_changed') {
-        initialState[`${change.uuid}-${index}`] = true; // Default to checked
-      }
-    });
-    return initialState;
-  });
-
   if (changes.length === 0) {
     return null;
-    return (
-      <div className="mb-3">
-        <h2
-          className={cn(`mb-4 text-2xl font-semibold ${colorConfig.text}`, {
-            hidden: changes.length === 0,
-          })}
-        >
-          {title}
-        </h2>
-        <p className="text-sm text-gray-300 italic">{emptyMessage}</p>
-      </div>
-    );
   }
-
-  // Calculate if all checkboxes are checked (for indeterminate state)
-  const checkableChanges = changes.filter((change) => change.changeType !== 'sibling_order_changed');
-  const allChecked =
-    checkableChanges.length > 0 && checkableChanges.every((change, index) => checkboxStates[`${change.uuid}-${index}`]);
-  const someChecked = checkableChanges.some((change, index) => checkboxStates[`${change.uuid}-${index}`]);
-
-  // Toggle all checkboxes
-  const handleToggleAll = () => {
-    const newState: Record<string, boolean> = {};
-    const newValue = !allChecked;
-    changes.forEach((change, index) => {
-      if (change.changeType !== 'sibling_order_changed') {
-        newState[`${change.uuid}-${index}`] = newValue;
-      }
-    });
-    setCheckboxStates(newState);
-  };
-
-  // Toggle individual checkbox
-  const handleToggleCheckbox = (key: string) => {
-    setCheckboxStates((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
 
   return (
     <div className="my-9">
-      <div
-        className={`-mx-3 my-3 mb-6 flex items-center gap-3 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}
-      >
-        {checkableChanges.length > 0 && (
-          <Checkbox
-            size="md"
-            isSelected={allChecked}
-            isIndeterminate={someChecked && !allChecked}
-            onValueChange={handleToggleAll}
-          />
-        )}
+      <div className={`-mx-3 my-3 mb-6 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}>
         <h2 className="text-2xl font-semibold">
           {title} ({changes.length})
         </h2>
@@ -449,8 +381,6 @@ function ChangeSection({
             change={change}
             uuidToDocMap={uuidToDocMap}
             uuidToDocNoMap={uuidToDocNoMap}
-            isChecked={checkboxStates[`${change.uuid}-${index}`] ?? true}
-            onToggleCheckbox={() => handleToggleCheckbox(`${change.uuid}-${index}`)}
           />
         ))}
       </div>
@@ -474,23 +404,16 @@ function ChangeCard({
   change,
   uuidToDocMap,
   uuidToDocNoMap,
-  isChecked,
-  onToggleCheckbox,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
-  isChecked?: boolean;
-  onToggleCheckbox?: () => void;
 }) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
 
   return (
     <div className="flex items-center gap-3">
-      {change.changeType !== 'sibling_order_changed' && (
-        <Checkbox size="md" isSelected={isChecked} onValueChange={onToggleCheckbox} className="mt-1" />
-      )}
       <Card className="flex-1" radius="none" shadow="none">
         <CardBody className="flex flex-col gap-0">
           {/* Document title in Atlas style */}
