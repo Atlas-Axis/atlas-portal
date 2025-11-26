@@ -17,15 +17,15 @@ Atlas documents remain stable even if Notion pages are recreated, moved, or chan
 
 ### 2. Markdown-First Workflow
 
-Atlas documents can exist in markdown format before Notion pages are created. The markdown file serves as the source of truth, and documents can be added to it without any Notion integration.
+Atlas documents can exist in markdown format before Notion pages are created. The canonical Atlas markdown file is stored in GitHub ([pppdns/next-gen-atlas](https://github.com/pppdns/next-gen-atlas)) and serves as the source of truth. Documents can be added to it without any Notion integration.
 
 ### 3. External Editing
 
-External actors who don't have access to Notion can edit the Atlas markdown file and include their own UUIDs. These documents can later be synced to Notion through automated back-sync processes.
+External actors who don't have access to Notion can edit the Atlas markdown file in GitHub and include their own UUIDs. These documents can later be synced to Notion through automated back-sync processes.
 
 ### 4. Markdown-to-Notion Sync
 
-When new documents are added to the Atlas markdown file, the back-sync automation creates corresponding Notion pages and establishes UUID mappings. The Atlas UUID remains stable while a new Notion page UUID is generated.
+When new documents are added to the Atlas markdown file in GitHub, the back-sync automation creates corresponding Notion pages and establishes UUID mappings. The Atlas UUID remains stable while a new Notion page UUID is generated.
 
 ## UUID Types
 

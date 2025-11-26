@@ -93,7 +93,8 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 
 ┌─────────────────────────────────────┐
 │   External Atlas Markdown File      │
-│   (GitHub central repository)       │
+│   (GitHub: pppdns/next-gen-atlas)   │
+│   Sky Atlas/Sky Atlas.md            │
 └──────────────┬──────────────────────┘
                │
                │ [Edited by org members]
@@ -453,6 +454,9 @@ This workflow enables external editing of the Atlas in markdown format with subs
 **Central GitHub Repository Workflow:**
 
 - Organization maintains canonical Atlas markdown file in GitHub repository
+- Repository: [pppdns/next-gen-atlas](https://github.com/pppdns/next-gen-atlas)
+- File path: `Sky Atlas/Sky Atlas.md`
+- Raw URL constant: `ATLAS_MARKDOWN_GITHUB_RAW_URL` in `app/server/atlas/constants.ts`
 - Multiple team members can edit using markdown-first approach
 - Standard Git workflow: branches, pull requests, reviews
 - Changes tracked via Git version control

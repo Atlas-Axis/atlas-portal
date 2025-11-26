@@ -9,6 +9,17 @@ The Atlas Markdown import/export system provides a human-readable, version-contr
 - **Validation**: Verify Atlas Markdown syntax before import
 - **Round-trip**: Export → Import maintains data fidelity
 
+## Canonical Atlas Markdown File
+
+The canonical Atlas markdown file is stored in GitHub:
+
+- **Repository**: [pppdns/next-gen-atlas](https://github.com/pppdns/next-gen-atlas)
+- **File path**: `Sky Atlas/Sky Atlas.md`
+- **Constant**: `ATLAS_MARKDOWN_GITHUB_RAW_URL` in `app/server/atlas/constants.ts`
+- **Helper**: `loadAtlasMarkdownFromGitHub()` in `app/server/atlas/load-atlas-markdown-from-github.ts`
+
+This file serves as the source of truth for the Markdown → Notion sync workflow. External contributors can edit this file in GitHub, and changes are synced back to Notion databases.
+
 ## Exporting to Markdown
 
 ### Programmatic Export
