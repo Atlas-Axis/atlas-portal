@@ -17,8 +17,9 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { executeDryRun } from './_actions/sync-actions';
+import { getNestingBugAffectedUuids } from './_actions/sync-actions';
 import { DryRunSummaryModal } from './_components/dry-run-summary-modal';
+import { computeDryRunResult } from './_lib/dry-run-client';
 import { DryRunResult, SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
 
 const colors: {
@@ -196,7 +197,13 @@ export function Content({
     });
 
     try {
-      const dryRunResult = await executeDryRun(result, uuidMappings);
+      // Fetch nesting bug UUIDs from server (no input, tiny output ~few KB)
+      const nestingBugUuids = await getNestingBugAffectedUuids();
+      const nestingBugSet = new Set(nestingBugUuids);
+
+      // Compute dry-run result client-side (no server payload limits)
+      const dryRunResult = computeDryRunResult(result, nestingBugSet);
+
       setDryRunState({
         isRunning: false,
         result: dryRunResult,

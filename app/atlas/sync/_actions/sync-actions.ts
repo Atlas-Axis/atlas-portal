@@ -1,7 +1,7 @@
 'use server';
 
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
@@ -14,8 +14,6 @@ import {
 import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
 import {
   databaseSupportsInternalNesting,
-  getAncestryDepth,
-  getDatabaseHierarchyLevel,
   getDatabaseNameFromDocument,
   getInternalParentPageIdFromAncestry,
   getNotionDatabaseIdForDatabaseName,
@@ -25,8 +23,6 @@ import {
   addParentPageRelationshipProperty,
   buildNotionProperties,
 } from '../_lib/notion-property-builder';
-import type { DryRunOperation, DryRunResult, SyncLogEntry } from '../_lib/sync-orchestrator';
-import { MAX_OPERATIONS_PER_TYPE } from '../_lib/sync-orchestrator';
 
 export interface SyncActionResult {
   success: boolean;
@@ -279,7 +275,7 @@ export async function createNotionDatabasePage(
 
       await logNotionApiOperation({
         operationType: 'create',
-        notionPageId: null,
+        notionPageId: 'failed-to-create',
         atlasDocumentUuid: doc.uuid,
         databaseName,
         requestPayload: { error: 'Failed before request could be made' },
@@ -589,244 +585,18 @@ async function pageHasChildren(
 }
 
 /**
- * Server action to execute a dry-run of the sync operation.
- * This must be a server action because it requires Supabase access for nesting bug mappings.
+ * Server action to get the set of Atlas UUIDs affected by the nesting bug.
+ * This is a minimal server action with NO input parameters to avoid payload size limits.
+ * The dry-run computation is done client-side using this data.
  *
- * @param diffResult The diff result containing changes to preview
- * @param uuidMappings UUID mappings for nesting bug check
+ * @returns Array of Atlas UUIDs that are affected by the nesting bug
  */
-export async function executeDryRun(diffResult: AtlasDiffResult, uuidMappings: UuidMappings): Promise<DryRunResult> {
-  const operations: DryRunOperation[] = [];
-  const logs: SyncLogEntry[] = [];
-  let skippedCount = 0;
+export async function getNestingBugAffectedUuids(): Promise<string[]> {
+  // Load UUID mappings directly from Supabase (avoids sending large Maps to server action)
+  const { loadUuidMappings } = await import('@/app/server/atlas/load-uuid-mapping');
+  const uuidMappings = await loadUuidMappings();
 
-  const addLog = (message: string, type: SyncLogEntry['type'] = 'info') => {
-    logs.push({
-      timestamp: new Date(),
-      message,
-      type,
-    });
-  };
-
-  // Load nesting bug mappings to identify documents that would be skipped
   const nestingMappings = await loadNotionNestingFixMappings();
-  const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
-
-  const { changes, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = diffResult;
-
-  // Calculate total changes
-  const totalChangesToProcess =
-    changes.changed.length +
-    changes.added.length +
-    changes.deleted.length +
-    changes.parent_changed.length +
-    changes.sibling_order_changed.length;
-
-  addLog(`[DRY-RUN] Preview: ${totalChangesToProcess} total changes would be processed`, 'info');
-
-  // Helper to get document label
-  const getDocumentLabel = (change: AtlasDocumentChange): string => {
-    const doc = change.newValues || change.oldValues;
-    if (!doc) return 'Unknown document';
-    return `${doc.doc_no} - ${doc.name} [${doc.type}]`;
-  };
-
-  // Phase 1: Content changes
-  if (changes.changed.length > 0) {
-    addLog(`[DRY-RUN] Phase 1: ${changes.changed.length} content changes would be updated`, 'info');
-
-    for (const change of changes.changed) {
-      const docLabel = getDocumentLabel(change);
-      const databaseName = getDatabaseNameFromDocument(change.oldValues!.type, change.uuid!, originalIdsToDatabase);
-
-      operations.push({
-        phase: 'content',
-        operationType: 'update',
-        documentLabel: docLabel,
-        documentId: change.uuid!,
-        databaseName,
-        changeType: 'changed',
-      });
-    }
-  }
-
-  // Phase 2: Additions (sorted by hierarchy)
-  if (changes.added.length > 0) {
-    const sortedAdditions = sortAdditionsByHierarchyForDryRun(changes.added, newIdsToDocuments, newIdsToDatabase);
-    addLog(`[DRY-RUN] Phase 2: ${sortedAdditions.length} pages would be created`, 'info');
-
-    for (const change of sortedAdditions) {
-      const docLabel = getDocumentLabel(change);
-      const doc = change.newValues!;
-      const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid!, newIdsToDatabase);
-
-      operations.push({
-        phase: 'additions',
-        operationType: 'create',
-        documentLabel: docLabel,
-        documentId: doc.uuid!,
-        databaseName,
-        changeType: 'added',
-      });
-    }
-  }
-
-  // Phase 3: Deletions
-  if (changes.deleted.length > 0) {
-    addLog(`[DRY-RUN] Phase 3: ${changes.deleted.length} pages would be archived`, 'info');
-
-    for (const change of changes.deleted) {
-      const docLabel = getDocumentLabel(change);
-      const databaseName = getDatabaseNameFromDocument(change.oldValues!.type, change.uuid!, originalIdsToDatabase);
-
-      operations.push({
-        phase: 'deletions',
-        operationType: 'archive',
-        documentLabel: docLabel,
-        documentId: change.uuid!,
-        databaseName,
-        changeType: 'deleted',
-      });
-    }
-  }
-
-  // Phase 4: Parent changes
-  if (changes.parent_changed.length > 0) {
-    addLog(`[DRY-RUN] Phase 4: ${changes.parent_changed.length} parent relationships would be updated`, 'info');
-
-    for (const change of changes.parent_changed) {
-      const docLabel = getDocumentLabel(change);
-      const databaseName = getDatabaseNameFromDocument(change.newValues!.type, change.uuid!, newIdsToDatabase);
-
-      // Check if document is affected by nesting bug
-      const isNestingBugAffected = change.uuid && nestingBugAffectedUuids.has(change.uuid);
-
-      if (isNestingBugAffected) {
-        operations.push({
-          phase: 'content',
-          operationType: 'update',
-          documentLabel: docLabel,
-          documentId: change.uuid!,
-          databaseName,
-          changeType: 'parent_changed',
-          skipped: true,
-          skipReason: 'Affected by nesting bug - manual mapping exists',
-        });
-        skippedCount++;
-        addLog(`[DRY-RUN] Would skip (nesting bug): ${docLabel}`, 'warning');
-      } else {
-        operations.push({
-          phase: 'content',
-          operationType: 'update',
-          documentLabel: docLabel,
-          documentId: change.uuid!,
-          databaseName,
-          changeType: 'parent_changed',
-        });
-      }
-    }
-  }
-
-  // Phase 5: Sibling order changes
-  if (changes.sibling_order_changed.length > 0) {
-    addLog(`[DRY-RUN] Phase 5: ${changes.sibling_order_changed.length} sibling orders would be updated`, 'info');
-
-    for (const change of changes.sibling_order_changed) {
-      const docLabel = getDocumentLabel(change);
-      const databaseName = getDatabaseNameFromDocument(change.oldValues!.type, change.uuid!, originalIdsToDatabase);
-
-      operations.push({
-        phase: 'content',
-        operationType: 'update',
-        documentLabel: docLabel,
-        documentId: change.uuid!,
-        databaseName,
-        changeType: 'sibling_order_changed',
-      });
-    }
-  }
-
-  // Calculate summary counts from full operations list (before truncation)
-  const createCount = operations.filter((op) => op.operationType === 'create').length;
-  const updateCount = operations.filter((op) => op.operationType === 'update' && !op.skipped).length;
-  const archiveCount = operations.filter((op) => op.operationType === 'archive').length;
-  const totalCount = createCount + updateCount + archiveCount + skippedCount;
-
-  // Truncate operations to stay under Next.js 1MB response limit
-  // Keep only MAX_OPERATIONS_PER_TYPE operations per operation type
-  const createOps = operations.filter((op) => op.operationType === 'create');
-  const updateOps = operations.filter((op) => op.operationType === 'update' && !op.skipped);
-  const archiveOps = operations.filter((op) => op.operationType === 'archive');
-  const skippedOps = operations.filter((op) => op.skipped);
-
-  const truncatedOperations = [
-    ...createOps.slice(0, MAX_OPERATIONS_PER_TYPE),
-    ...updateOps.slice(0, MAX_OPERATIONS_PER_TYPE),
-    ...archiveOps.slice(0, MAX_OPERATIONS_PER_TYPE),
-    ...skippedOps.slice(0, MAX_OPERATIONS_PER_TYPE),
-  ];
-
-  const truncated =
-    createOps.length > MAX_OPERATIONS_PER_TYPE ||
-    updateOps.length > MAX_OPERATIONS_PER_TYPE ||
-    archiveOps.length > MAX_OPERATIONS_PER_TYPE ||
-    skippedOps.length > MAX_OPERATIONS_PER_TYPE;
-
-  return {
-    operations: truncatedOperations,
-    summary: {
-      createCount,
-      updateCount,
-      archiveCount,
-      skippedCount,
-      totalCount,
-    },
-    truncated,
-    skippedCount,
-  };
-}
-
-/**
- * Sorts additions by Atlas database hierarchy and nesting depth for dry-run.
- * Duplicated here to avoid circular imports with sync-orchestrator.
- */
-function sortAdditionsByHierarchyForDryRun(
-  additions: AtlasDocumentChange[],
-  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
-  uuidToDatabase: Map<string, AtlasDatabaseName>,
-): AtlasDocumentChange[] {
-  const withMetadata = additions.map((change, originalIndex) => {
-    const doc = change.newValues;
-    if (!doc || !doc.uuid) {
-      throw new Error(`Document not found for addition change: ${JSON.stringify(change)}`);
-    }
-
-    const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid, uuidToDatabase);
-    const depth = getAncestryDepth(change.newAncestry);
-
-    let parentDatabaseName;
-    if (databaseName === 'Needed Research' && change.newAncestry && change.newAncestry.length > 0) {
-      const parentId = change.newAncestry[change.newAncestry.length - 1];
-      const parentDoc = uuidToDocumentMap.get(parentId);
-      if (parentDoc) {
-        parentDatabaseName = uuidToDatabase.get(parentId);
-      }
-    }
-
-    const hierarchyLevel = getDatabaseHierarchyLevel(databaseName, parentDatabaseName);
-
-    return { change, databaseName, hierarchyLevel, depth, originalIndex };
-  });
-
-  withMetadata.sort((a, b) => {
-    if (a.hierarchyLevel !== b.hierarchyLevel) {
-      return a.hierarchyLevel - b.hierarchyLevel;
-    }
-    if (a.depth !== b.depth) {
-      return a.depth - b.depth;
-    }
-    return a.originalIndex - b.originalIndex;
-  });
-
-  return withMetadata.map((item) => item.change);
+  const affectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
+  return Array.from(affectedUuids);
 }
