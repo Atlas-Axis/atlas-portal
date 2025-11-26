@@ -35,6 +35,16 @@ This document outlines the complete action plan for implementing the Markdown �
 - Handle errors gracefully with rollback capability- Enable real-time collaboration between Notion and markdown users
 - Track sync progress and store audit log from the changes made during sync
 
+### Current State
+
+A UI page already exists at `/atlas/sync` that provides a user interface for the Markdown → Notion sync workflow. This page currently:
+
+- Displays the diff between Supabase data and the markdown file content
+- Provides a button to trigger the sync operation
+- Shows progress tracking during sync execution
+
+The page is partially functional and will be enhanced as the sync implementation progresses. See **Task 6.2: Update UI Components** for details on planned UI improvements.
+
 ## Background Context
 
 ### The Problem
@@ -48,7 +58,7 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for the complete curr
 **Must Have:**
 
 - Parse Atlas markdown to Export Tree structure (see **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**)
-- Validate markdown structure and consistency
+- Validate markdown structure and consistency (CI/CD integration runs automated validation in Pull Requests in the external GitHub repository)
 - Convert Export Tree back to Notion format (see **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**)
 - Reverse all forward pipeline transformations:
   - Reverse nesting bug fix overrides (see **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**)
@@ -220,7 +230,10 @@ export function exportTreeToNotionTree(options: ExportTreeToNotionTreeOptions): 
   //    - Map Atlas UUID to Notion page UUID
   //    - Convert markdown content to Rich Text
   //    - Reconstruct parent_notion_page_id
-  //    - Build child_*_ids arrays
+  //    - Build child_*_ids arrays:
+  //      - child_article_ids, child_section_and_primary_doc_ids, child_annotation_ids, etc.
+  //      - Note: Some arrays may contain all descendants (not just direct children) to match Notion's behavior
+  //      - Further research needed to confirm exact semantics for each relationship type
   //    - Map extra fields to Notion properties
   //    - Reconstruct document name format (general: "{Name}", Sections & Primary Docs: "{DocNo} - {Name}")
   // 3. Return Notion Tree structure
@@ -267,6 +280,14 @@ export function reverseNestingOverrides(
 }
 ```
 
+**Why This is Necessary:**
+
+- Notion's sub-item feature fails at deep nesting levels (platform limitation after 10+ levels)
+- Documents remain in incorrect parent locations in Notion due to this bug
+- Nesting override mappings correct this for display/export (forward direction)
+- Must reverse these corrections before syncing to maintain consistency with Notion's buggy state
+- Changing Notion structure directly would break future import syncs
+
 **Key Logic:**
 
 - Reverse of `applyNestingOverrides()` function (see **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**)
@@ -289,7 +310,9 @@ export function reverseNestingOverrides(
 
 **File:** `app/server/markdown/markdown-to-rich-text.ts` (extend existing)
 
-**Purpose:** Add Atlas UUID → Notion UUID mention conversion.
+**Purpose:** Ensure Atlas UUID → Notion UUID mention conversion is working (may already be implemented in `convertMarkdownToNotionRichText()`).
+
+**Note:** The pipeline documentation indicates that mention UUID conversion is already integrated into `convertMarkdownToNotionRichText()`. Verify implementation and extend if needed.
 
 **Implementation:**
 
@@ -368,7 +391,10 @@ export function buildTitleProperty(
   databaseName: AtlasDatabaseName,
 ): TitlePropertyItemRequest[] {
   // General format: "{Name}" (e.g., "Primitive Hub Document")
-  // Sections & Primary Docs special format: "{DocNo} - {Name}"
+  // Sections & Primary Docs special format: "{DocNo} - {Name}" (e.g., "A.1.1.1 - Universal Alignment And The Spirit Of The Atlas")
+  // Simplified from original complex format (e.g., "A.1.1.1 - A1 - Spirit Of The Atlas - Universal Alignment And The Spirit Of The Atlas")
+  // Apply only to Sections & Primary Docs database pages (property: "Doc No (or Temp Name)")
+  // Research needed to confirm if other databases require similar title formatting
   // Note: Final specification not finalized, may not include doc number or use different formatting
 }
 
@@ -378,13 +404,24 @@ export function buildRelationProperty(
 ): RelationPropertyItemRequest[] {
   // Convert Atlas UUIDs to Notion page UUIDs
   // Return: [{ id: notion_page_id }, ...]
+  // Use childRelationships mappings from property configuration:
+  //   - child_articles → "Articles" relation property
+  //   - child_section_and_primary_doc_ids → "Subdocs" relation property
+  //   - child_agent_scope_ids → "Sub-item" relation property
+  //   - child_annotation_ids → "Annotations" relation property
+  //   - etc.
+  // Build Same-Database bidirectional relationships for Sections & Primary Docs and Agent Scope Database:
+  //   - Update parent's child relation property (e.g., "Subdocs")
+  //   - Update child's parent relation property (e.g., "Parent Doc")
 }
 ```
 
 **Key Logic:**
 
 - Use `notion-database-properties-and-relationships.ts` for mappings (see **[NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md)**)
-- Handle database-specific property names
+- Handle database-specific property names:
+  - Sections & Primary Docs: "Doc No (or Temp Name)" for title
+  - Other databases: Semi-Standard property names (e.g., "Name", "Doc No"), based on mapping
 - Build typed property objects for Notion API
 - Convert all Atlas UUIDs to Notion UUIDs in relations using **[UUID_MAPPING.md](./UUID_MAPPING.md)** patterns (if not done already in a previous step)
 - Reference property type overrides from `NOTION_PROPERTY_TYPE_OVERRIDES` (see **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)**)
@@ -530,7 +567,8 @@ export async function createNotionPages(
   // 1. Sort documents by hierarchy (parents before children)
   // 2. For each document in order (no batching for better error handling):
   //    - Build complete property object
-  //    - Set parent to database ID
+  //    - Set parent to database ID: { parent: { type: 'database_id', database_id: 'db-uuid' } }
+  //      CRITICAL: Always use database_id, NEVER use parent.page_id for database pages
   //    - Call Notion API: POST /pages
   //    - Extract new Notion page UUID
   //    - Create UUID mapping entry: { atlas_document_uuid, notion_page_id }
@@ -573,10 +611,12 @@ export async function updateNotionPages(
   options: UpdatePagesOptions,
 ): Promise<UpdatePagesResult> {
   // 1. For each modified document:
-  //    - Look up Notion page UUID from Atlas UUID
-  //    - Build property update object (only changed fields)
-  //    - Call Notion API: PATCH /pages/{page_id}
-  //    - Update relationships if changed
+  //    - Look up Notion page UUID from Atlas UUID via uuid_mapping table
+  //    - Build property update object containing only changed fields
+  //    - Call Notion API: PATCH /pages/{page_id} with properties object
+  //    - Update relationships separately if changed:
+  //      - Update parent's child relation properties
+  //      - Update child's parent relation properties
   //    - Log to audit table
   // 2. Handle retry logic with exponential backoff (already exists in our Notion client class)
   // 3. Return updated pages
