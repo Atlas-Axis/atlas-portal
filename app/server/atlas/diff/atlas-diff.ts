@@ -1,3 +1,21 @@
+/**
+ * Atlas Diffing Module
+ *
+ * Compares two versions of the Atlas document hierarchy (Supabase vs Markdown)
+ * and identifies changes between them.
+ *
+ * TEMPORARY WORKAROUND FOR COSMETIC FORMATTING:
+ * This module currently normalizes cosmetic formatting differences to reduce noise:
+ * - Fancy quotes (" ") are normalized to straight quotes (")
+ * - Bullet characters (•) are normalized to hyphens (-)
+ *
+ * This workaround should be REMOVED once the source data formatting is consistent
+ * across all Atlas documents. The normalization is applied in the
+ * `normalizeCosmeticFormatting()` function and used in `compareDocumentFields()`.
+ *
+ * TODO: Remove cosmetic formatting normalization when no longer needed.
+ */
+
 import { AtlasDatabaseName } from '../atlas-types';
 import {
   ChildCollectionName,
@@ -175,10 +193,28 @@ function normalizeWhitespace(text: string): string {
 }
 
 /**
+ * Normalize cosmetic formatting differences in text.
+ * TEMPORARY WORKAROUND: Converts fancy quotes to straight quotes and bullet characters to hyphens.
+ * This helps suppress noise in diffs where the only changes are formatting-related.
+ * 
+ * TODO: Remove this workaround once source data formatting is consistent.
+ */
+function normalizeCosmeticFormatting(text: string): string {
+  return text
+    // Convert left/right double quotation marks to straight quotes
+    .replace(/[\u201C\u201D]/g, '"')
+    // Convert bullet characters to hyphens
+    .replace(/\u2022/g, '-');
+}
+
+/**
  * Compare document fields to detect changes.
  * Compares: type, name, content, and extra fields for specific document types.
  * Does NOT compare last_modified.
  * Trims whitespace from each line in multi-line texts for comparison.
+ * 
+ * TEMPORARY WORKAROUND: Also normalizes cosmetic formatting (fancy quotes, bullets)
+ * to suppress noise in diffs. This should be removed once source data is consistent.
  */
 export function compareDocumentFields(
   original: ExportAtlasTreeBaseDocument,
@@ -186,8 +222,12 @@ export function compareDocumentFields(
 ): boolean {
   // Compare basic fields
   if (original.type !== updated.type) return true;
-  if (normalizeWhitespace(original.name) !== normalizeWhitespace(updated.name)) return true;
-  if (normalizeWhitespace(original.content) !== normalizeWhitespace(updated.content)) return true;
+  
+  // Apply both whitespace and cosmetic formatting normalization
+  const normalizeFully = (text: string) => normalizeWhitespace(normalizeCosmeticFormatting(text));
+  
+  if (normalizeFully(original.name) !== normalizeFully(updated.name)) return true;
+  if (normalizeFully(original.content) !== normalizeFully(updated.content)) return true;
 
   // Compare extra fields for specific document types
   const extraFieldKeys = getExtraFieldKeysForDocumentType(original.type);
@@ -202,7 +242,7 @@ export function compareDocumentFields(
       // Ensure values are compared as strings, and handle undefined/null safely
       const originalStr = originalValue !== undefined && originalValue !== null ? String(originalValue) : '';
       const updatedStr = updatedValue !== undefined && updatedValue !== null ? String(updatedValue) : '';
-      if (normalizeWhitespace(originalStr) !== normalizeWhitespace(updatedStr)) return true;
+      if (normalizeFully(originalStr) !== normalizeFully(updatedStr)) return true;
     }
   }
 
