@@ -19,6 +19,18 @@ vi.mock('@/app/server/services/notion/notion-client', () => ({
   notion: vi.fn(() => mockNotionClient as unknown),
 }));
 
+// Mock the audit log service
+vi.mock('@/app/server/services/supabase/audit-log-service', () => ({
+  logNotionApiOperation: vi.fn().mockResolvedValue(undefined),
+  createSyncBatch: vi.fn(() => 'mock-batch-id'),
+}));
+
+// Mock the UUID mapping service
+vi.mock('@/app/server/services/supabase/uuid-mapping-service', () => ({
+  storeUuidMapping: vi.fn().mockResolvedValue(undefined),
+  getNotionPageIdByAtlasUuid: vi.fn().mockResolvedValue(null),
+}));
+
 // Mock UUID mappings for testing
 const mockUuidMappings: UuidMappings = {
   notionPageIDsToAtlasUUIDs: new Map(),

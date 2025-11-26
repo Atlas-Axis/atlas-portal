@@ -132,13 +132,17 @@ export function buildNotionProperties(
     allowEmptyForDocumentName,
   )!;
 
-  // Document number (rich_text) - now synced
-  const documentNoPropertyType = typeOverrides[config.properties.atlasDocumentNo] || 'rich_text';
-  properties[config.properties.atlasDocumentNo] = formatNotionProperty(
-    doc.doc_no || '',
-    documentNoPropertyType,
-    uuidMappings,
-  )!;
+  // Document number (rich_text) - only sync if it's a different property than document name
+  // Some databases (e.g., Sections & Primary Docs) use the same property for both name and doc_no
+  const documentNoNotionPropertyName = config.properties.atlasDocumentNo;
+  if (documentNoNotionPropertyName !== documentNameNotionPropertyName) {
+    const documentNoPropertyType = typeOverrides[documentNoNotionPropertyName] || 'rich_text';
+    properties[documentNoNotionPropertyName] = formatNotionProperty(
+      doc.doc_no || '',
+      documentNoPropertyType,
+      uuidMappings,
+    )!;
+  }
 
   // Document type (select) - always a select field in Notion
   properties[config.properties.atlasDocumentType] = {
