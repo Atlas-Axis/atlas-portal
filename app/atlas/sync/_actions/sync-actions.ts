@@ -2,15 +2,12 @@
 
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
-import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { UuidMappings, loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
-import {
-  buildNestingBugAffectedUuidsSet,
-  loadNotionNestingFixMappings,
-} from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
 import {
   databaseSupportsInternalNesting,
@@ -23,6 +20,7 @@ import {
   addParentPageRelationshipProperty,
   buildNotionProperties,
 } from '../_lib/notion-property-builder';
+import { syncChangesToNotion } from '../_lib/sync-orchestrator';
 
 export interface SyncActionResult {
   success: boolean;
@@ -585,18 +583,32 @@ async function pageHasChildren(
 }
 
 /**
- * Server action to get the set of Atlas UUIDs affected by the nesting bug.
- * This is a minimal server action with NO input parameters to avoid payload size limits.
- * The dry-run computation is done client-side using this data.
+ * Server action to run a dry-run sync.
+ * This must be a server action because the orchestrator has server-side dependencies.
+ * Computes diff and loads UUID mappings on the server to avoid payload size limits.
  *
- * @returns Array of Atlas UUIDs that are affected by the nesting bug
+ * @returns Object with succeeded and skipped counts
  */
-export async function getNestingBugAffectedUuids(): Promise<string[]> {
-  // Load UUID mappings directly from Supabase (avoids sending large Maps to server action)
-  const { loadUuidMappings } = await import('@/app/server/atlas/load-uuid-mapping');
-  const uuidMappings = await loadUuidMappings();
+export async function runDryRunSync(): Promise<{ succeeded: number; skipped: number; error?: string }> {
+  try {
+    // Compute diff and load UUID mappings on the server (avoids sending large payloads)
+    const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
 
-  const nestingMappings = await loadNotionNestingFixMappings();
-  const affectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
-  return Array.from(affectedUuids);
+    const result = await syncChangesToNotion(diffResult, { stopRequested: false, dryRun: true }, uuidMappings, () => {
+      // No-op progress callback for dry-run
+    });
+
+    return {
+      succeeded: result.succeeded.length,
+      skipped: result.skipped.length,
+    };
+  } catch (error) {
+    const err = error as Error;
+    console.error('Dry-run sync failed:', err);
+    return {
+      succeeded: 0,
+      skipped: 0,
+      error: err.message,
+    };
+  }
 }

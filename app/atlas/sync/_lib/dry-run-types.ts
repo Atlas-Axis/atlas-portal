@@ -38,17 +38,14 @@ export interface DryRunSummary {
 /**
  * Result of a dry-run sync operation.
  * Contains planned operations without executing any writes.
- * Operations are limited to MAX_OPERATIONS_PER_TYPE to keep UI responsive.
+ * Note: This type is kept for compatibility but operations are now written to markdown file.
  */
 export interface DryRunResult {
-  /** Limited list of operations (max per type to keep UI responsive) */
+  /** List of operations (written to markdown file) */
   operations: DryRunOperation[];
-  /** Summary counts (always accurate, even when operations are truncated) */
+  /** Summary counts */
   summary: DryRunSummary;
-  /** Whether the operations list was truncated due to size limits */
+  /** Whether the operations list was truncated (deprecated, always false now) */
   truncated: boolean;
   skippedCount: number;
 }
-
-/** Maximum operations to return per type for UI display */
-export const MAX_OPERATIONS_PER_TYPE = 50;

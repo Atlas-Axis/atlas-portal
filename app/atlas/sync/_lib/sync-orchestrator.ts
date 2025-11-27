@@ -20,7 +20,6 @@ import type { SyncPhase } from './dry-run-types';
 
 // Re-export dry-run types from shared file (safe to import on client side)
 export type { DryRunOperation, DryRunResult, DryRunSummary, SyncPhase } from './dry-run-types';
-export { MAX_OPERATIONS_PER_TYPE } from './dry-run-types';
 
 export interface SyncOptions {
   stopRequested: boolean;
@@ -95,11 +94,15 @@ export async function syncChangesToNotion(
     });
   };
 
-  // Create sync batch ID for audit logging
-  const syncBatchId = createSyncBatch();
+  // Create sync batch ID for audit logging (skip for dry-run)
+  const syncBatchId = options.dryRun ? 'dry-run' : createSyncBatch();
   const syncActionOptions: SyncActionOptions = { syncBatchId };
 
-  addLog(`Starting sync batch: ${syncBatchId}`, 'info');
+  if (options.dryRun) {
+    addLog(`Starting dry-run (no API calls will be made)`, 'info');
+  } else {
+    addLog(`Starting sync batch: ${syncBatchId}`, 'info');
+  }
 
   // Load nesting bug mappings once and build affected UUIDs set for O(1) lookups
   // Documents affected by the nesting bug should not have their parent relationships changed
@@ -156,20 +159,26 @@ export async function syncChangesToNotion(
       addLog(`Updating content: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await updateNotionPageContent(
-          change,
-          originalIdsToDatabase,
-          uuidMappings,
-          syncActionOptions,
-        );
-        completedCount++;
+        let actionResult: SyncActionResult;
 
-        if (actionResult.success) {
+        if (options.dryRun) {
+          // Dry-run: simulate success without making API call
+          actionResult = { success: true, pageId: change.uuid };
+          completedCount++;
           result.succeeded.push({ change, result: actionResult, phase: 'content' });
-          addLog(`✓ Updated: ${docLabel}`, 'success', change.uuid, docLabel);
+          addLog(`[DRY-RUN] Would update: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
-          result.failed.push({ change, result: actionResult, phase: 'content' });
-          addLog(`✗ Failed to update: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          // Normal: make actual API call
+          actionResult = await updateNotionPageContent(change, originalIdsToDatabase, uuidMappings, syncActionOptions);
+          completedCount++;
+
+          if (actionResult.success) {
+            result.succeeded.push({ change, result: actionResult, phase: 'content' });
+            addLog(`✓ Updated: ${docLabel}`, 'success', change.uuid, docLabel);
+          } else {
+            result.failed.push({ change, result: actionResult, phase: 'content' });
+            addLog(`✗ Failed to update: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          }
         }
       } catch (error) {
         completedCount++;
@@ -201,26 +210,37 @@ export async function syncChangesToNotion(
       addLog(`Creating page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await createNotionDatabasePage(
-          change,
-          newIdsToDocuments,
-          newIdsToDatabase,
-          uuidMappings,
-          syncActionOptions,
-        );
-        completedCount++;
+        let actionResult: SyncActionResult;
 
-        if (actionResult.success) {
+        if (options.dryRun) {
+          // Dry-run: simulate success without making API call
+          actionResult = { success: true, pageId: 'new-page-id' };
+          completedCount++;
           result.succeeded.push({ change, result: actionResult, phase: 'additions' });
-          addLog(`✓ Created: ${docLabel}`, 'success', actionResult.pageId, docLabel);
-        } else if (actionResult.reason === 'parent_not_found') {
-          // Skip when a same-database parent is specified but doesn't exist in Notion
-          // Note: Having no parent (root-level or cross-database) is perfectly valid
-          result.skipped.push({ change, result: actionResult, phase: 'additions' });
-          addLog(`⊘ Skipped (specified relationship parent missing): ${docLabel}`, 'warning', change.uuid, docLabel);
+          addLog(`[DRY-RUN] Would create: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
-          result.failed.push({ change, result: actionResult, phase: 'additions' });
-          addLog(`✗ Failed to create: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          // Normal: make actual API call
+          actionResult = await createNotionDatabasePage(
+            change,
+            newIdsToDocuments,
+            newIdsToDatabase,
+            uuidMappings,
+            syncActionOptions,
+          );
+          completedCount++;
+
+          if (actionResult.success) {
+            result.succeeded.push({ change, result: actionResult, phase: 'additions' });
+            addLog(`✓ Created: ${docLabel}`, 'success', actionResult.pageId, docLabel);
+          } else if (actionResult.reason === 'parent_not_found') {
+            // Skip when a same-database parent is specified but doesn't exist in Notion
+            // Note: Having no parent (root-level or cross-database) is perfectly valid
+            result.skipped.push({ change, result: actionResult, phase: 'additions' });
+            addLog(`⊘ Skipped (specified relationship parent missing): ${docLabel}`, 'warning', change.uuid, docLabel);
+          } else {
+            result.failed.push({ change, result: actionResult, phase: 'additions' });
+            addLog(`✗ Failed to create: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          }
         }
       } catch (error) {
         completedCount++;
@@ -249,19 +269,30 @@ export async function syncChangesToNotion(
       addLog(`Deleting page: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        const actionResult = await deleteNotionPage(change, originalIdsToDatabase, syncActionOptions);
-        completedCount++;
+        let actionResult: SyncActionResult;
 
-        if (actionResult.success) {
+        if (options.dryRun) {
+          // Dry-run: simulate success without making API call
+          actionResult = { success: true, pageId: change.uuid };
+          completedCount++;
           result.succeeded.push({ change, result: actionResult, phase: 'deletions' });
-          addLog(`✓ Deleted: ${docLabel}`, 'success', change.uuid, docLabel);
-        } else if (actionResult.reason === 'has_children') {
-          // Skip deletion if page has children to prevent orphaned documents and data loss
-          result.skipped.push({ change, result: actionResult, phase: 'deletions' });
-          addLog(`⊘ Skipped (has children): ${docLabel}`, 'warning', change.uuid, docLabel);
+          addLog(`[DRY-RUN] Would delete: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
-          result.failed.push({ change, result: actionResult, phase: 'deletions' });
-          addLog(`✗ Failed to delete: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          // Normal: make actual API call
+          actionResult = await deleteNotionPage(change, originalIdsToDatabase, syncActionOptions);
+          completedCount++;
+
+          if (actionResult.success) {
+            result.succeeded.push({ change, result: actionResult, phase: 'deletions' });
+            addLog(`✓ Deleted: ${docLabel}`, 'success', change.uuid, docLabel);
+          } else if (actionResult.reason === 'has_children') {
+            // Skip deletion if page has children to prevent orphaned documents and data loss
+            result.skipped.push({ change, result: actionResult, phase: 'deletions' });
+            addLog(`⊘ Skipped (has children): ${docLabel}`, 'warning', change.uuid, docLabel);
+          } else {
+            result.failed.push({ change, result: actionResult, phase: 'deletions' });
+            addLog(`✗ Failed to delete: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          }
         }
       } catch (error) {
         completedCount++;
@@ -307,27 +338,37 @@ export async function syncChangesToNotion(
         continue;
       }
 
-      addLog(`Updating parent: ${docLabel}`, 'info', change.uuid, docLabel);
-
       try {
-        const actionResult = await updateNotionPageParent(
-          change,
-          newIdsToDocuments,
-          newIdsToDatabase,
-          originalIdsToDatabase,
-          syncActionOptions,
-        );
-        completedCount++;
+        let actionResult: SyncActionResult;
 
-        if (actionResult.success) {
+        if (options.dryRun) {
+          // Dry-run: simulate success without making API call
+          actionResult = { success: true, pageId: change.uuid };
+          completedCount++;
           result.succeeded.push({ change, result: actionResult, phase: 'content' });
-          addLog(`✓ Updated parent: ${docLabel}`, 'success', change.uuid, docLabel);
-        } else if (actionResult.reason === 'parent_not_found') {
-          result.skipped.push({ change, result: actionResult, phase: 'content' });
-          addLog(`⊘ Skipped (new parent not found): ${docLabel}`, 'warning', change.uuid, docLabel);
+          addLog(`[DRY-RUN] Would update parent: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
-          result.failed.push({ change, result: actionResult, phase: 'content' });
-          addLog(`✗ Failed to update parent: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          // Normal: make actual API call
+          addLog(`Updating parent: ${docLabel}`, 'info', change.uuid, docLabel);
+          actionResult = await updateNotionPageParent(
+            change,
+            newIdsToDocuments,
+            newIdsToDatabase,
+            originalIdsToDatabase,
+            syncActionOptions,
+          );
+          completedCount++;
+
+          if (actionResult.success) {
+            result.succeeded.push({ change, result: actionResult, phase: 'content' });
+            addLog(`✓ Updated parent: ${docLabel}`, 'success', change.uuid, docLabel);
+          } else if (actionResult.reason === 'parent_not_found') {
+            result.skipped.push({ change, result: actionResult, phase: 'content' });
+            addLog(`⊘ Skipped (new parent not found): ${docLabel}`, 'warning', change.uuid, docLabel);
+          } else {
+            result.failed.push({ change, result: actionResult, phase: 'content' });
+            addLog(`✗ Failed to update parent: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
+          }
         }
       } catch (error) {
         completedCount++;
@@ -355,29 +396,35 @@ export async function syncChangesToNotion(
 
       const docLabel = getDocumentLabel(change);
       updateProgress('content', docLabel);
-      addLog(`Updating sibling order: ${docLabel}`, 'info', change.uuid, docLabel);
 
       try {
-        // Use updateNotionPageContent which now includes doc_no and sort_order sync
-        const actionResult = await updateNotionPageContent(
-          change,
-          originalIdsToDatabase,
-          uuidMappings,
-          syncActionOptions,
-        );
-        completedCount++;
+        let actionResult: SyncActionResult;
 
-        if (actionResult.success) {
+        if (options.dryRun) {
+          // Dry-run: simulate success without making API call
+          actionResult = { success: true, pageId: change.uuid };
+          completedCount++;
           result.succeeded.push({ change, result: actionResult, phase: 'content' });
-          addLog(`✓ Updated sibling order: ${docLabel}`, 'success', change.uuid, docLabel);
+          addLog(`[DRY-RUN] Would update sibling order: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
-          result.failed.push({ change, result: actionResult, phase: 'content' });
-          addLog(
-            `✗ Failed to update sibling order: ${docLabel} - ${actionResult.error}`,
-            'error',
-            change.uuid,
-            docLabel,
-          );
+          // Normal: make actual API call
+          addLog(`Updating sibling order: ${docLabel}`, 'info', change.uuid, docLabel);
+          // Use updateNotionPageContent which now includes doc_no and sort_order sync
+          actionResult = await updateNotionPageContent(change, originalIdsToDatabase, uuidMappings, syncActionOptions);
+          completedCount++;
+
+          if (actionResult.success) {
+            result.succeeded.push({ change, result: actionResult, phase: 'content' });
+            addLog(`✓ Updated sibling order: ${docLabel}`, 'success', change.uuid, docLabel);
+          } else {
+            result.failed.push({ change, result: actionResult, phase: 'content' });
+            addLog(
+              `✗ Failed to update sibling order: ${docLabel} - ${actionResult.error}`,
+              'error',
+              change.uuid,
+              docLabel,
+            );
+          }
         }
       } catch (error) {
         completedCount++;
@@ -392,10 +439,27 @@ export async function syncChangesToNotion(
   result.totalProcessed = completedCount;
 
   // Summary log
-  addLog(
-    `Sync completed: ${result.succeeded.length} succeeded, ${result.failed.length} failed, ${result.skipped.length} skipped`,
-    result.failed.length > 0 ? 'warning' : 'success',
-  );
+  if (options.dryRun) {
+    addLog(
+      `Dry-run completed: ${result.succeeded.length} operations would execute, ${result.skipped.length} would be skipped`,
+      'success',
+    );
+
+    // Write dry-run results to markdown file
+    try {
+      const { writeDryRunMarkdown } = await import('../_actions/dry-run-markdown-writer');
+      await writeDryRunMarkdown(result, diffResult);
+      addLog('Dry-run results written to dry-run-output.md', 'success');
+    } catch (error) {
+      const err = error as Error;
+      addLog(`Failed to write dry-run results: ${err.message}`, 'error');
+    }
+  } else {
+    addLog(
+      `Sync completed: ${result.succeeded.length} succeeded, ${result.failed.length} failed, ${result.skipped.length} skipped`,
+      result.failed.length > 0 ? 'warning' : 'success',
+    );
+  }
 
   updateProgress('idle', null);
 

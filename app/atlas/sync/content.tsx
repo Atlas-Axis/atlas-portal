@@ -17,10 +17,8 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { getNestingBugAffectedUuids } from './_actions/sync-actions';
-import { DryRunSummaryModal } from './_components/dry-run-summary-modal';
-import { computeDryRunResult } from './_lib/dry-run-client';
-import { DryRunResult, SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
+import { runDryRunSync } from './_actions/sync-actions';
+import { SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
 
 const colors: {
   [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
@@ -111,15 +109,7 @@ export function Content({
   });
 
   // Dry-run state
-  const [dryRunState, setDryRunState] = useState<{
-    isRunning: boolean;
-    result: DryRunResult | null;
-    modalOpen: boolean;
-  }>({
-    isRunning: false,
-    result: null,
-    modalOpen: false,
-  });
+  const [isDryRunRunning, setIsDryRunRunning] = useState(false);
 
   // Use ref for stop flag so it can be read by sync function without re-rendering
   const syncOptionsRef = useRef({ stopRequested: false });
@@ -190,49 +180,28 @@ export function Content({
   };
 
   const handlePreviewClick = async () => {
-    setDryRunState({
-      isRunning: true,
-      result: null,
-      modalOpen: false,
-    });
+    setIsDryRunRunning(true);
 
     try {
-      // Fetch nesting bug UUIDs from server (no input, tiny output ~few KB)
-      const nestingBugUuids = await getNestingBugAffectedUuids();
-      const nestingBugSet = new Set(nestingBugUuids);
+      // Run sync in dry-run mode via server action
+      // Server action computes diff and loads UUID mappings to avoid payload size limits
+      const dryRunResult = await runDryRunSync();
 
-      // Compute dry-run result client-side (no server payload limits)
-      const dryRunResult = computeDryRunResult(result, nestingBugSet);
+      if (dryRunResult.error) {
+        throw new Error(dryRunResult.error);
+      }
 
-      setDryRunState({
-        isRunning: false,
-        result: dryRunResult,
-        modalOpen: true,
-      });
+      // Show success message
+      alert(
+        `Dry-run complete. ${dryRunResult.succeeded} operations would execute, ${dryRunResult.skipped} would be skipped. See dry-run-output.md`,
+      );
     } catch (error) {
       const err = error as Error;
       console.error('Dry-run failed:', err);
-      setDryRunState({
-        isRunning: false,
-        result: null,
-        modalOpen: false,
-      });
+      alert(`Dry-run failed: ${err.message}`);
+    } finally {
+      setIsDryRunRunning(false);
     }
-  };
-
-  const handleDryRunModalClose = () => {
-    setDryRunState((prev) => ({
-      ...prev,
-      modalOpen: false,
-    }));
-  };
-
-  const handleProceedFromDryRun = () => {
-    setDryRunState((prev) => ({
-      ...prev,
-      modalOpen: false,
-    }));
-    handleSyncClick();
   };
 
   return (
@@ -304,8 +273,8 @@ export function Content({
               onPress={handlePreviewClick}
               variant="bordered"
               color="secondary"
-              isLoading={dryRunState.isRunning}
-              isDisabled={syncState.isRunning || dryRunState.isRunning || !hasChanges}
+              isLoading={isDryRunRunning}
+              isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
             >
               Preview Changes
             </Button>
@@ -315,7 +284,7 @@ export function Content({
               variant="solid"
               color="primary"
               isLoading={syncState.isRunning}
-              isDisabled={syncState.isRunning || dryRunState.isRunning || !hasChanges}
+              isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
             >
               Sync Changes to Notion
             </Button>
@@ -378,14 +347,6 @@ export function Content({
           )}
         </div>
       </CardBody>
-
-      {/* Dry-Run Summary Modal */}
-      <DryRunSummaryModal
-        isOpen={dryRunState.modalOpen}
-        onClose={handleDryRunModalClose}
-        onProceed={handleProceedFromDryRun}
-        result={dryRunState.result}
-      />
     </Card>
   );
 }
