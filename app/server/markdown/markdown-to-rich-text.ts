@@ -4,6 +4,7 @@
   - Converts Markdown to Notion's Rich Text format
   - Handles multiline inline code by preserving line breaks
   - Output is Notion Rich Text format for single blocks
+  - Automatically splits text exceeding Notion's 2000-character limit
 
   Example usage:
   ```ts
@@ -17,6 +18,80 @@
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './notion-types';
+
+/**
+ * Maximum character length for a single Notion rich text element's text.content field.
+ * Notion API rejects requests where any rich text element exceeds this limit.
+ */
+export const NOTION_RICH_TEXT_MAX_LENGTH = 2000;
+
+/**
+ * Splits text into chunks that respect the maximum length limit.
+ * Prefers splitting at word boundaries for cleaner results.
+ * Preserves all content exactly - no characters are lost during splitting.
+ *
+ * @param text - The text to split
+ * @param maxLength - Maximum length per chunk
+ * @returns Array of text chunks
+ */
+function splitTextIntoChunks(text: string, maxLength: number): string[] {
+  const chunks: string[] = [];
+  let remaining = text;
+
+  while (remaining.length > maxLength) {
+    // Try to split at word boundary (space)
+    const splitIndex = remaining.lastIndexOf(' ', maxLength);
+    if (splitIndex <= 0) {
+      // No word boundary found within limit, split at max length
+      // Preserve all content exactly
+      chunks.push(remaining.slice(0, maxLength));
+      remaining = remaining.slice(maxLength);
+    } else {
+      // Split at space - include everything up to and including the space
+      // to preserve all content (the space stays at the end of this chunk)
+      chunks.push(remaining.slice(0, splitIndex + 1));
+      remaining = remaining.slice(splitIndex + 1);
+    }
+  }
+
+  if (remaining) {
+    chunks.push(remaining);
+  }
+
+  return chunks;
+}
+
+/**
+ * Splits rich text elements that exceed Notion's 2000-character limit.
+ * Only splits text elements; mentions and equations are passed through unchanged.
+ * Preserves annotations for each split segment.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @returns Array of rich text elements with long texts split into multiple elements
+ */
+function splitLongRichTextElements(richText: NotionRichText[]): NotionRichText[] {
+  return richText.flatMap((element) => {
+    // Only split text elements (not mentions or equations)
+    if (element.type !== 'text' || !element.text?.content) {
+      return [element];
+    }
+
+    const content = element.text.content;
+    if (content.length <= NOTION_RICH_TEXT_MAX_LENGTH) {
+      return [element];
+    }
+
+    // Split into chunks, preferring word boundaries
+    const chunks = splitTextIntoChunks(content, NOTION_RICH_TEXT_MAX_LENGTH);
+
+    // Create new rich text elements for each chunk with same annotations and link
+    return chunks.map((chunk) => ({
+      ...element,
+      text: { ...element.text, content: chunk },
+      plain_text: chunk,
+    }));
+  });
+}
 
 // Simple markdown parser - we'll implement a basic one for now
 // In a more complex environment, we might want to use a library like 'remark' or 'marked'
@@ -439,10 +514,12 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
         }
       }
 
-      return richText;
+      // Split any elements that exceed Notion's 2000-character limit
+      return splitLongRichTextElements(richText);
     } else {
       // For regular content without multiline inline code, process the entire text as one block
-      return parseInlineMarkdown(normalizedMarkdown, uuidMappings);
+      // Split any elements that exceed Notion's 2000-character limit
+      return splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings));
     }
   } catch (error) {
     throw new Error(

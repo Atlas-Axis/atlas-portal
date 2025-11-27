@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { UuidMappings } from '../../atlas/load-uuid-mapping';
-import { convertMarkdownToNotionRichText } from '../markdown-to-rich-text';
+import { NOTION_RICH_TEXT_MAX_LENGTH, convertMarkdownToNotionRichText } from '../markdown-to-rich-text';
 
 // Mock UuidMappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -610,6 +610,170 @@ describe('convertMarkdownToNotionRichText', () => {
       // " end"
       expect(result[6].text?.content).toBe(' end');
       expect(result[6].annotations?.code).toBe(false);
+    });
+  });
+
+  describe('text splitting for Notion 2000-character limit', () => {
+    it('should not split text exactly at the limit', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].text?.content).toBe(text);
+      expect(result[0].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+    });
+
+    it('should split text exceeding the limit by one character', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 1);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(2);
+      expect(result[0].text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[1].text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      // Verify total content is preserved
+      const combinedContent = (result[0].text?.content ?? '') + (result[1].text?.content ?? '');
+      expect(combinedContent).toBe(text);
+    });
+
+    it('should split at word boundaries when possible', () => {
+      // Create text with spaces that can be split at word boundaries
+      const words = [];
+      let totalLength = 0;
+      while (totalLength < NOTION_RICH_TEXT_MAX_LENGTH + 500) {
+        const word = 'word';
+        words.push(word);
+        totalLength += word.length + 1; // +1 for space
+      }
+      const text = words.join(' ');
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All chunks should be within the limit
+      for (const chunk of result) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+      // Total content should be preserved exactly
+      const combinedContent = result.map((r) => r.text?.content ?? '').join('');
+      expect(combinedContent).toBe(text);
+    });
+
+    it('should split at max length when no word boundaries are available', () => {
+      // Text with no spaces - must split at exact character boundary
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH * 2 + 100);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(3);
+      expect(result[0].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[1].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[2].text?.content.length).toBe(100);
+    });
+
+    it('should preserve annotations when splitting bold text', () => {
+      // Create bold text exceeding the limit
+      const longBoldContent = 'B'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 500);
+      const text = `**${longBoldContent}**`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the bold annotation
+      for (const chunk of result) {
+        expect(chunk.annotations?.bold).toBe(true);
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+    });
+
+    it('should preserve annotations when splitting code text', () => {
+      // Create code text exceeding the limit
+      const longCodeContent = 'C'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 500);
+      const text = `\`${longCodeContent}\``;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the code annotation
+      for (const chunk of result) {
+        expect(chunk.annotations?.code).toBe(true);
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+    });
+
+    it('should handle very long text requiring multiple splits', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH * 5 + 123);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(6);
+      // First 5 chunks should be at max length
+      for (let i = 0; i < 5; i++) {
+        expect(result[i].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+      // Last chunk should have remaining characters
+      expect(result[5].text?.content.length).toBe(123);
+    });
+
+    it('should not split mentions (non-text elements)', () => {
+      // Create a mention using UUID format link
+      const uuid = '12345678-1234-1234-1234-123456789012';
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[uuid, 'notion-page-id']]),
+      };
+
+      const text = `Check [this page](${uuid})`;
+      const result = convertMarkdownToNotionRichText(text, mappings);
+
+      // Find the mention element
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Mentions should not be split regardless of content length
+      expect(mentionElement?.type).toBe('mention');
+    });
+
+    it('should not split equations (non-text elements)', () => {
+      const text = '$E=mc^2$';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].type).toBe('equation');
+      // Equations should not be split
+    });
+
+    it('should handle mixed content with long and short segments', () => {
+      const longText = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 100);
+      const text = `Short **${longText}** end`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should have: "Short ", split bold segments, " end"
+      expect(result.length).toBeGreaterThanOrEqual(4);
+
+      // First element should be short text
+      expect(result[0].text?.content).toBe('Short ');
+
+      // Find all bold elements (should be split)
+      const boldElements = result.filter((r) => r.annotations?.bold);
+      expect(boldElements.length).toBeGreaterThanOrEqual(2);
+
+      // All bold elements should be within limit
+      for (const chunk of boldElements) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+
+      // Last element should be " end"
+      expect(result[result.length - 1].text?.content).toBe(' end');
+    });
+
+    it('should preserve link href when splitting linked text', () => {
+      // Create a long link text
+      const longLinkText = 'L'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 100);
+      const text = `[${longLinkText}](https://example.com)`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the href
+      for (const chunk of result) {
+        expect(chunk.href).toBe('https://example.com');
+        expect(chunk.text?.link?.url).toBe('https://example.com');
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
     });
   });
 });
