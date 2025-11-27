@@ -4,7 +4,8 @@
   - Converts Markdown to Notion's Rich Text format
   - Handles multiline inline code by preserving line breaks
   - Output is Notion Rich Text format for single blocks
-  - Automatically splits text exceeding Notion's 2000-character limit
+  - Automatically splits text exceeding Notion's 2000-character limit per element
+  - Automatically limits array to 100 elements (Notion API limit) by merging and truncating
 
   Example usage:
   ```ts
@@ -24,6 +25,12 @@ import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './noti
  * Notion API rejects requests where any rich text element exceeds this limit.
  */
 export const NOTION_RICH_TEXT_MAX_LENGTH = 2000;
+
+/**
+ * Maximum number of elements in a rich_text array.
+ * Notion API rejects requests where the array exceeds this limit.
+ */
+export const NOTION_RICH_TEXT_MAX_ELEMENTS = 100;
 
 /**
  * Splits text into chunks that respect the maximum length limit.
@@ -91,6 +98,114 @@ function splitLongRichTextElements(richText: NotionRichText[]): NotionRichText[]
       plain_text: chunk,
     }));
   });
+}
+
+/**
+ * Checks if two annotations objects are equivalent.
+ */
+function annotationsAreEqual(a: NotionAnnotations, b: NotionAnnotations): boolean {
+  return (
+    (a.bold || false) === (b.bold || false) &&
+    (a.italic || false) === (b.italic || false) &&
+    (a.strikethrough || false) === (b.strikethrough || false) &&
+    (a.underline || false) === (b.underline || false) &&
+    (a.code || false) === (b.code || false) &&
+    (a.color || 'default') === (b.color || 'default')
+  );
+}
+
+/**
+ * Merges adjacent text elements that have identical annotations and no links.
+ * This reduces the total element count while preserving all content and formatting.
+ * Only merges 'text' type elements; mentions and equations are never merged.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @returns Array with adjacent compatible text elements merged
+ */
+function mergeAdjacentTextElements(richText: NotionRichText[]): NotionRichText[] {
+  if (richText.length <= 1) return richText;
+
+  const merged: NotionRichText[] = [];
+
+  for (const element of richText) {
+    const lastElement = merged[merged.length - 1];
+
+    // Can only merge if:
+    // 1. Both are text type (not mentions or equations)
+    // 2. Neither has a link (href is null)
+    // 3. Both have annotations and they are identical
+    // 4. Combined length doesn't exceed max
+    if (
+      lastElement &&
+      lastElement.type === 'text' &&
+      element.type === 'text' &&
+      lastElement.href === null &&
+      element.href === null &&
+      lastElement.text?.link === null &&
+      element.text?.link === null &&
+      lastElement.annotations &&
+      element.annotations &&
+      annotationsAreEqual(lastElement.annotations, element.annotations) &&
+      (lastElement.text?.content || '').length + (element.text?.content || '').length <= NOTION_RICH_TEXT_MAX_LENGTH
+    ) {
+      // Merge: append content to last element
+      const combinedContent = (lastElement.text?.content || '') + (element.text?.content || '');
+      lastElement.text = { content: combinedContent, link: null };
+      lastElement.plain_text = combinedContent;
+    } else {
+      // Cannot merge, add as new element
+      merged.push(element);
+    }
+  }
+
+  return merged;
+}
+
+/**
+ * Limits the rich text array to Notion's maximum of 100 elements.
+ * First attempts to merge adjacent elements to reduce count.
+ * If still over limit, truncates and adds a warning marker.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @returns Array limited to NOTION_RICH_TEXT_MAX_ELEMENTS elements
+ */
+function limitRichTextArrayLength(richText: NotionRichText[]): NotionRichText[] {
+  // First, try to reduce count by merging adjacent compatible elements
+  let result = mergeAdjacentTextElements(richText);
+
+  // If still under limit, we're done
+  if (result.length <= NOTION_RICH_TEXT_MAX_ELEMENTS) {
+    return result;
+  }
+
+  // Still over limit - need to truncate
+  // Reserve last element for truncation marker
+  const maxElements = NOTION_RICH_TEXT_MAX_ELEMENTS - 1;
+
+  console.warn(
+    `[markdown-to-rich-text] Rich text array has ${result.length} elements, truncating to ${NOTION_RICH_TEXT_MAX_ELEMENTS}. Content will be lost.`,
+  );
+
+  // Take first maxElements and add truncation marker
+  result = result.slice(0, maxElements);
+
+  // Add truncation marker
+  result.push({
+    type: 'text',
+    text: { content: ' [...content truncated due to Notion limit...]', link: null },
+    plain_text: ' [...content truncated due to Notion limit...]',
+    href: null,
+    annotations: {
+      bold: false,
+      italic: true,
+      strikethrough: false,
+      underline: false,
+      code: false,
+      color: 'default',
+    },
+  });
+
+  return result;
 }
 
 // Simple markdown parser - we'll implement a basic one for now
@@ -514,12 +629,12 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
         }
       }
 
-      // Split any elements that exceed Notion's 2000-character limit
-      return splitLongRichTextElements(richText);
+      // Apply Notion API limits: split long elements, then limit array length
+      return limitRichTextArrayLength(splitLongRichTextElements(richText));
     } else {
       // For regular content without multiline inline code, process the entire text as one block
-      // Split any elements that exceed Notion's 2000-character limit
-      return splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings));
+      // Apply Notion API limits: split long elements, then limit array length
+      return limitRichTextArrayLength(splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings)));
     }
   } catch (error) {
     throw new Error(

@@ -1,6 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { UuidMappings } from '../../atlas/load-uuid-mapping';
-import { NOTION_RICH_TEXT_MAX_LENGTH, convertMarkdownToNotionRichText } from '../markdown-to-rich-text';
+import {
+  NOTION_RICH_TEXT_MAX_ELEMENTS,
+  NOTION_RICH_TEXT_MAX_LENGTH,
+  convertMarkdownToNotionRichText,
+} from '../markdown-to-rich-text';
 
 // Mock UuidMappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -467,12 +471,14 @@ describe('convertMarkdownToNotionRichText', () => {
     });
 
     it('should handle table with inline code (should NOT be treated as multiline)', () => {
-      // Note: This test expects 6 elements, not 7, because newlines are embedded in the
-      // preceding text object rather than creating separate newline elements. This behavior
-      // is intentional for round-trip compatibility: when converting Notion → Markdown → Notion,
-      // preserving newlines within text objects maintains the original rich text structure.
+      // Note: This test expects 5 elements because:
+      // 1. Adjacent plain text elements with same annotations are merged
+      // 2. Newlines are embedded in the preceding text object
+      // This behavior is intentional for:
+      // - Round-trip compatibility
+      // - Staying under Notion's 100-element limit for rich text arrays
       const result = convertMarkdownToNotionRichText('| Column | `code` |\n| Another | `more` |', mockUuidMappings);
-      expect(result).toHaveLength(6);
+      expect(result).toHaveLength(5);
 
       // First line: "| Column | "
       expect(result[0].text?.content).toBe('| Column | ');
@@ -482,21 +488,18 @@ describe('convertMarkdownToNotionRichText', () => {
       expect(result[1].text?.content).toBe('code');
       expect(result[1].annotations?.code).toBe(true);
 
-      // End of first line with newline: " |\n" (newline is embedded for round-trip compatibility)
-      expect(result[2].text?.content).toBe(' |\n');
+      // End of first line merged with start of second line: " |\n| Another | "
+      // (adjacent plain text elements are merged to reduce element count)
+      expect(result[2].text?.content).toBe(' |\n| Another | ');
       expect(result[2].annotations?.code).toBe(false);
 
-      // Second line: "| Another | "
-      expect(result[3].text?.content).toBe('| Another | ');
-      expect(result[3].annotations?.code).toBe(false);
-
       // Inline code: "more"
-      expect(result[4].text?.content).toBe('more');
-      expect(result[4].annotations?.code).toBe(true);
+      expect(result[3].text?.content).toBe('more');
+      expect(result[3].annotations?.code).toBe(true);
 
       // End of second line: " |"
-      expect(result[5].text?.content).toBe(' |');
-      expect(result[5].annotations?.code).toBe(false);
+      expect(result[4].text?.content).toBe(' |');
+      expect(result[4].annotations?.code).toBe(false);
     });
 
     it('should handle text with backticks but no multiline code', () => {
@@ -774,6 +777,129 @@ describe('convertMarkdownToNotionRichText', () => {
         expect(chunk.text?.link?.url).toBe('https://example.com');
         expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
       }
+    });
+  });
+
+  describe('array length limiting for Notion 100-element limit', () => {
+    it('should export the max elements constant', () => {
+      expect(NOTION_RICH_TEXT_MAX_ELEMENTS).toBe(100);
+    });
+
+    it('should not modify arrays under the limit', () => {
+      // Generate text with 50 links (each link creates ~2 elements: text before + link)
+      const links = Array.from({ length: 25 }, (_, i) => `[link${i}](https://example${i}.com)`).join(' ');
+      const result = convertMarkdownToNotionRichText(links, mockUuidMappings);
+
+      // Should have fewer than 100 elements
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+
+    it('should merge adjacent text elements with identical annotations', () => {
+      // Create text that produces multiple plain text elements after parsing
+      // Bold followed by plain text followed by more plain text
+      const text = '**bold** plain1 plain2 plain3';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should merge the plain text elements
+      expect(result).toHaveLength(2); // bold + merged plain text
+      expect(result[0].annotations?.bold).toBe(true);
+      expect(result[1].text?.content).toBe(' plain1 plain2 plain3');
+    });
+
+    it('should not merge elements with different annotations', () => {
+      // Use bold and code (not italic) to avoid pre-existing italic regex issue
+      // where italic pattern matches across spaces like `* test *`
+      const text = '**bold** plain `code`';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should have at least 2 elements with different formatting
+      // (bold and code cannot be merged)
+      expect(result.length).toBeGreaterThanOrEqual(2);
+
+      const boldElement = result.find((r) => r.annotations?.bold);
+      const codeElement = result.find((r) => r.annotations?.code);
+      expect(boldElement).toBeDefined();
+      expect(boldElement?.text?.content).toBe('bold');
+      expect(codeElement).toBeDefined();
+      expect(codeElement?.text?.content).toBe('code');
+    });
+
+    it('should not merge elements with links', () => {
+      const text = '[link1](https://a.com) [link2](https://b.com)';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Links should not be merged
+      const linkElements = result.filter((r) => r.href);
+      expect(linkElements.length).toBe(2);
+    });
+
+    it('should truncate arrays exceeding 100 elements with warning', () => {
+      // Create text with many links to generate >100 elements
+      // Each row: "| text | [link1](url1) [link2](url2) [link3](url3) |"
+      // This creates: text + link + space + link + space + link + more text per row
+      const rows = Array.from(
+        { length: 20 },
+        (_, i) =>
+          `Row ${i}: [link${i}a](https://a${i}.com) [link${i}b](https://b${i}.com) [link${i}c](https://c${i}.com) [link${i}d](https://d${i}.com) end`,
+      ).join('\n');
+
+      // Spy on console.warn to verify the warning is logged
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const result = convertMarkdownToNotionRichText(rows, mockUuidMappings);
+
+      // Should be exactly at or below the limit
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+
+      // If truncated, should have logged a warning
+      if (result.length === NOTION_RICH_TEXT_MAX_ELEMENTS) {
+        expect(warnSpy).toHaveBeenCalled();
+        // Last element should be the truncation marker
+        const lastElement = result[result.length - 1];
+        expect(lastElement.text?.content).toContain('truncated');
+        expect(lastElement.annotations?.italic).toBe(true);
+      }
+
+      warnSpy.mockRestore();
+    });
+
+    it('should handle table-like content with many links (real-world case)', () => {
+      // Simulates the failing case from the error log
+      const tableContent = `
+| Delegate | Address | Contract |
+|----------|---------|----------|
+| User1 | [addr1](https://etherscan.io/address/0x1) [verify1](https://etherscan.io/verifySig/1) | [contract1](https://etherscan.io/address/0xa) |
+| User2 | [addr2](https://etherscan.io/address/0x2) [verify2](https://etherscan.io/verifySig/2) | [contract2](https://etherscan.io/address/0xb) |
+| User3 | [addr3](https://etherscan.io/address/0x3) [verify3](https://etherscan.io/verifySig/3) | [contract3](https://etherscan.io/address/0xc) |
+| User4 | [addr4](https://etherscan.io/address/0x4) [verify4](https://etherscan.io/verifySig/4) | [contract4](https://etherscan.io/address/0xd) |
+| User5 | [addr5](https://etherscan.io/address/0x5) [verify5](https://etherscan.io/verifySig/5) | [contract5](https://etherscan.io/address/0xe) |
+| User6 | [addr6](https://etherscan.io/address/0x6) [verify6](https://etherscan.io/verifySig/6) | [contract6](https://etherscan.io/address/0xf) |
+| User7 | [addr7](https://etherscan.io/address/0x7) [verify7](https://etherscan.io/verifySig/7) | [contract7](https://etherscan.io/address/0x10) |
+| User8 | [addr8](https://etherscan.io/address/0x8) [verify8](https://etherscan.io/verifySig/8) | [contract8](https://etherscan.io/address/0x11) |
+| User9 | [addr9](https://etherscan.io/address/0x9) [verify9](https://etherscan.io/verifySig/9) | [contract9](https://etherscan.io/address/0x12) |
+| User10 | [addr10](https://etherscan.io/address/0xa) [verify10](https://etherscan.io/verifySig/10) | [contract10](https://etherscan.io/address/0x13) |
+| User11 | [addr11](https://etherscan.io/address/0xb) [verify11](https://etherscan.io/verifySig/11) | [contract11](https://etherscan.io/address/0x14) |
+`;
+      const result = convertMarkdownToNotionRichText(tableContent, mockUuidMappings);
+
+      // Must not exceed the 100 element limit
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+
+    it('should merge adjacent text elements to stay under limit when possible', () => {
+      // Create alternating bold and plain text
+      // "**b** p **b** p ..." should merge consecutive plain text
+      const parts = [];
+      for (let i = 0; i < 30; i++) {
+        parts.push(`**b${i}**`);
+        parts.push(`plain${i}`);
+      }
+      const text = parts.join(' ');
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should be well under 100 elements due to merging
+      expect(result.length).toBeLessThan(NOTION_RICH_TEXT_MAX_ELEMENTS);
     });
   });
 });

@@ -590,6 +590,27 @@ Internal hierarchy within databases (e.g., Section → Core → Core) is managed
 
 See **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** for complete documentation.
 
+### Rich Text Constraints
+
+Notion's API enforces strict limits on rich text arrays that affect content-heavy documents:
+
+**1. Character Limit Per Element (2000)**
+
+Each `rich_text` element's `text.content` field cannot exceed 2000 characters. The converter automatically splits long text at word boundaries while preserving formatting annotations.
+
+**2. Array Length Limit (100 elements)**
+
+Each `rich_text` array cannot exceed 100 elements. This affects documents with many inline links (e.g., tables with multiple URLs per cell).
+
+The converter handles this by:
+
+1. Merging adjacent text elements with identical annotations
+2. Truncating if still over limit (with visible marker)
+
+**Impact**: Documents like large tables with many hyperlinks may be truncated. The truncation is visible in Notion as `[...content truncated due to Notion limit...]`.
+
+**Implementation**: See `app/server/markdown/markdown-to-rich-text.ts` - exports `NOTION_RICH_TEXT_MAX_LENGTH` (2000) and `NOTION_RICH_TEXT_MAX_ELEMENTS` (100).
+
 ## Testing
 
 ### Unit Tests
