@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useMemo, useRef, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
@@ -8,7 +8,6 @@ import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import type { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { type SerializedUuidMappings, deserializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -17,8 +16,16 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { runDryRunSync } from './_actions/sync-actions';
-import { SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
+import { type RealSyncResult, runDryRunSync, runRealSync } from './_actions/sync-actions';
+import type { SyncPhase } from './_lib/dry-run-types';
+
+export interface SyncLogEntry {
+  timestamp: Date;
+  message: string;
+  type: 'info' | 'success' | 'error' | 'warning';
+  documentId?: string;
+  documentLabel?: string;
+}
 
 const colors: {
   [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
@@ -65,13 +72,7 @@ interface SyncState {
   completed: boolean;
 }
 
-export function Content({
-  result,
-  serializedMappings,
-}: {
-  result: AtlasDiffResult;
-  serializedMappings: SerializedUuidMappings;
-}) {
+export function Content({ result }: { result: AtlasDiffResult }) {
   const { changes, originalIdsToDocuments, newIdsToDocuments } = result;
   const hasChanges =
     changes.added.length > 0 ||
@@ -156,7 +157,7 @@ export function Content({
         />
 
         {/* Sync Controls - isolated in its own component to prevent re-renders of document sections */}
-        <SyncControls result={result} serializedMappings={serializedMappings} hasChanges={hasChanges} />
+        <SyncControls result={result} hasChanges={hasChanges} />
       </CardBody>
     </Card>
   );
@@ -166,19 +167,8 @@ export function Content({
  * Sync controls component - manages its own state to prevent re-renders
  * of the expensive document sections when sync progress updates.
  */
-function SyncControls({
-  result,
-  serializedMappings,
-  hasChanges,
-}: {
-  result: AtlasDiffResult;
-  serializedMappings: SerializedUuidMappings;
-  hasChanges: boolean;
-}) {
+function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChanges: boolean }) {
   const { changes } = result;
-
-  // Deserialize UUID mappings once (passed from server component)
-  const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
 
   const [syncState, setSyncState] = useState<SyncState>({
     isRunning: false,
@@ -193,49 +183,55 @@ function SyncControls({
   // Dry-run state
   const [isDryRunRunning, setIsDryRunRunning] = useState(false);
 
-  // Use ref for stop flag so it can be read by sync function without re-rendering
-  const syncOptionsRef = useRef({ stopRequested: false });
-
   const handleSyncClick = async () => {
     console.log('handleSyncClick called');
+
+    const totalChanges =
+      changes.changed.length +
+      changes.added.length +
+      changes.deleted.length +
+      changes.sibling_order_changed.length +
+      changes.parent_changed.length;
 
     setSyncState({
       isRunning: true,
       stopRequested: false,
       currentPhase: 'content',
       progress: {
-        total:
-          changes.changed.length +
-          changes.added.length +
-          changes.deleted.length +
-          changes.sibling_order_changed.length +
-          changes.parent_changed.length,
+        total: totalChanges,
         completed: 0,
       },
-      currentDocument: null,
+      currentDocument: 'Running sync via server action...',
       logs: [],
       completed: false,
     });
 
-    syncOptionsRef.current.stopRequested = false;
-
     try {
-      const syncResult = await syncChangesToNotion(result, syncOptionsRef.current, uuidMappings, (progress) => {
-        setSyncState((prev) => ({
-          ...prev,
-          currentPhase: progress.phase,
-          progress: { total: progress.totalCount, completed: progress.completedCount },
-          currentDocument: progress.currentDocumentLabel,
-        }));
-      });
+      // Call server action (no real-time progress updates available)
+      const syncResult: RealSyncResult = await runRealSync();
 
-      setSyncState((prev) => ({
-        ...prev,
-        isRunning: false,
-        currentPhase: 'idle',
-        logs: syncResult.logs,
-        completed: true,
+      if (syncResult.error) {
+        throw new Error(syncResult.error);
+      }
+
+      // Convert logs from server (ISO strings) to client format (Date objects)
+      const clientLogs: SyncLogEntry[] = syncResult.logs.map((log) => ({
+        ...log,
+        timestamp: new Date(log.timestamp),
       }));
+
+      setSyncState({
+        isRunning: false,
+        stopRequested: syncResult.stopRequested,
+        currentPhase: 'idle',
+        progress: {
+          total: syncResult.succeeded + syncResult.failed + syncResult.skipped,
+          completed: syncResult.succeeded + syncResult.failed + syncResult.skipped,
+        },
+        currentDocument: null,
+        logs: clientLogs,
+        completed: true,
+      });
     } catch (error) {
       const err = error as Error;
       setSyncState((prev) => ({
@@ -253,14 +249,6 @@ function SyncControls({
         completed: true,
       }));
     }
-  };
-
-  const handleStopClick = () => {
-    syncOptionsRef.current.stopRequested = true;
-    setSyncState((prev) => ({
-      ...prev,
-      stopRequested: true,
-    }));
   };
 
   const handlePreviewClick = async () => {
@@ -312,11 +300,7 @@ function SyncControls({
         >
           Sync Changes to Notion
         </Button>
-        {syncState.isRunning && !syncState.stopRequested && (
-          <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
-            Stop
-          </Button>
-        )}
+        {/* Note: Stop button removed - server actions cannot be interrupted mid-execution */}
       </div>
 
       {/* Progress Display */}

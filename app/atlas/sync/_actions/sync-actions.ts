@@ -612,3 +612,65 @@ export async function runDryRunSync(): Promise<{ succeeded: number; skipped: num
     };
   }
 }
+
+/**
+ * Result returned from runRealSync server action
+ */
+export interface RealSyncResult {
+  succeeded: number;
+  failed: number;
+  skipped: number;
+  logs: Array<{
+    timestamp: string;
+    message: string;
+    type: 'info' | 'success' | 'error' | 'warning';
+    documentId?: string;
+    documentLabel?: string;
+  }>;
+  stopRequested: boolean;
+  error?: string;
+}
+
+/**
+ * Server action to run the real sync (non-dry-run).
+ * This must be a server action because the orchestrator has server-side dependencies
+ * (Supabase, Notion API, etc.) that require server environment variables.
+ *
+ * Note: This version does not support real-time progress updates from the server.
+ * For a more interactive experience, consider using a streaming approach or polling.
+ *
+ * @returns Object with sync results including succeeded/failed/skipped counts and logs
+ */
+export async function runRealSync(): Promise<RealSyncResult> {
+  try {
+    // Compute diff and load UUID mappings on the server (avoids sending large payloads)
+    const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
+
+    const result = await syncChangesToNotion(diffResult, { stopRequested: false, dryRun: false }, uuidMappings, () => {
+      // Progress callback - can't send real-time updates from server action
+      // Client will only see final results
+    });
+
+    return {
+      succeeded: result.succeeded.length,
+      failed: result.failed.length,
+      skipped: result.skipped.length,
+      logs: result.logs.map((log) => ({
+        ...log,
+        timestamp: log.timestamp.toISOString(),
+      })),
+      stopRequested: result.stopRequested,
+    };
+  } catch (error) {
+    const err = error as Error;
+    console.error('Real sync failed:', err);
+    return {
+      succeeded: 0,
+      failed: 0,
+      skipped: 0,
+      logs: [],
+      stopRequested: false,
+      error: err.message,
+    };
+  }
+}
