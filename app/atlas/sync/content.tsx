@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
@@ -16,7 +16,14 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { type RealSyncResult, runDryRunSync, runRealSync } from './_actions/sync-actions';
+import { runDryRunSync, runSyncBatch } from './_actions/sync-actions';
+import {
+  type RealSyncResult,
+  SYNC_BATCH_SIZE,
+  flattenChangesInOrder,
+  prepareBatchData,
+  splitIntoBatches,
+} from './_lib/batch-sync-types';
 import type { SyncPhase } from './_lib/dry-run-types';
 
 export interface SyncLogEntry {
@@ -168,7 +175,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
  * of the expensive document sections when sync progress updates.
  */
 function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChanges: boolean }) {
-  const { changes } = result;
+  const { changes, originalIdsToDatabase, newIdsToDatabase, newIdsToDocuments } = result;
 
   const [syncState, setSyncState] = useState<SyncState>({
     isRunning: false,
@@ -183,15 +190,29 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
   // Dry-run state
   const [isDryRunRunning, setIsDryRunRunning] = useState(false);
 
-  const handleSyncClick = async () => {
-    console.log('handleSyncClick called');
+  // Ref for stop flag - checked between batches
+  const stopRequestedRef = useRef(false);
 
-    const totalChanges =
-      changes.changed.length +
-      changes.added.length +
-      changes.deleted.length +
-      changes.sibling_order_changed.length +
-      changes.parent_changed.length;
+  const handleSyncClick = async () => {
+    console.log('handleSyncClick called - batch mode');
+
+    // Reset stop flag
+    stopRequestedRef.current = false;
+
+    // Flatten all changes into a single array in processing order
+    const allChanges = flattenChangesInOrder(changes);
+    const totalChanges = allChanges.length;
+
+    if (totalChanges === 0) {
+      return;
+    }
+
+    // Split into batches of SYNC_BATCH_SIZE
+    const batches = splitIntoBatches(allChanges, SYNC_BATCH_SIZE);
+    const totalBatches = batches.length;
+
+    // Generate a single batch ID for audit logging across all batches
+    const syncBatchId = crypto.randomUUID();
 
     setSyncState({
       isRunning: true,
@@ -201,54 +222,127 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
         total: totalChanges,
         completed: 0,
       },
-      currentDocument: 'Running sync via server action...',
+      currentDocument: `Starting sync: ${totalChanges} changes in ${totalBatches} batches`,
       logs: [],
       completed: false,
     });
 
-    try {
-      // Call server action (no real-time progress updates available)
-      const syncResult: RealSyncResult = await runRealSync();
+    // Accumulate results across batches
+    let totalSucceeded = 0;
+    let totalFailed = 0;
+    let totalSkipped = 0;
+    const allLogs: SyncLogEntry[] = [];
 
-      if (syncResult.error) {
-        throw new Error(syncResult.error);
+    const addLog = (message: string, type: SyncLogEntry['type']) => {
+      allLogs.push({
+        timestamp: new Date(),
+        message,
+        type,
+      });
+    };
+
+    addLog(
+      `Starting sync: ${totalChanges} changes in ${totalBatches} batches (batch size: ${SYNC_BATCH_SIZE})`,
+      'info',
+    );
+
+    try {
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        // Check if stop was requested before starting this batch
+        if (stopRequestedRef.current) {
+          addLog(`Stop requested - skipping remaining ${batches.length - batchIndex} batches`, 'warning');
+          setSyncState((prev) => ({
+            ...prev,
+            stopRequested: true,
+          }));
+          break;
+        }
+
+        const batch = batches[batchIndex];
+
+        // Update UI with current batch info
+        setSyncState((prev) => ({
+          ...prev,
+          currentDocument: `Batch ${batchIndex + 1}/${totalBatches} (${batch.length} changes)`,
+          progress: {
+            ...prev.progress,
+            completed: totalSucceeded + totalFailed + totalSkipped,
+          },
+        }));
+
+        // Prepare serialized batch data (extracts only needed map entries)
+        const batchData = prepareBatchData(batch, originalIdsToDatabase, newIdsToDatabase, newIdsToDocuments);
+
+        // Call server action to process this batch
+        const batchResult: RealSyncResult = await runSyncBatch(batchData, batchIndex, totalBatches, syncBatchId);
+
+        // Accumulate results
+        totalSucceeded += batchResult.succeeded;
+        totalFailed += batchResult.failed;
+        totalSkipped += batchResult.skipped;
+
+        // Convert and accumulate logs
+        for (const log of batchResult.logs) {
+          allLogs.push({
+            ...log,
+            timestamp: new Date(log.timestamp),
+          });
+        }
+
+        // Update progress after batch
+        setSyncState((prev) => ({
+          ...prev,
+          progress: {
+            ...prev.progress,
+            completed: totalSucceeded + totalFailed + totalSkipped,
+          },
+          logs: [...allLogs],
+        }));
+
+        // If batch had an error, log it but continue with next batch
+        if (batchResult.error) {
+          addLog(`Batch ${batchIndex + 1} error: ${batchResult.error}`, 'error');
+        }
       }
 
-      // Convert logs from server (ISO strings) to client format (Date objects)
-      const clientLogs: SyncLogEntry[] = syncResult.logs.map((log) => ({
-        ...log,
-        timestamp: new Date(log.timestamp),
-      }));
+      // Final summary
+      addLog(
+        `Sync complete: ${totalSucceeded} succeeded, ${totalFailed} failed, ${totalSkipped} skipped`,
+        totalFailed > 0 ? 'warning' : 'success',
+      );
 
       setSyncState({
         isRunning: false,
-        stopRequested: syncResult.stopRequested,
+        stopRequested: stopRequestedRef.current,
         currentPhase: 'idle',
         progress: {
-          total: syncResult.succeeded + syncResult.failed + syncResult.skipped,
-          completed: syncResult.succeeded + syncResult.failed + syncResult.skipped,
+          total: totalChanges,
+          completed: totalSucceeded + totalFailed + totalSkipped,
         },
         currentDocument: null,
-        logs: clientLogs,
+        logs: allLogs,
         completed: true,
       });
     } catch (error) {
       const err = error as Error;
+      addLog(`Sync failed: ${err.message}`, 'error');
       setSyncState((prev) => ({
         ...prev,
         isRunning: false,
         currentPhase: 'idle',
-        logs: [
-          ...prev.logs,
-          {
-            timestamp: new Date(),
-            message: `Sync failed: ${err.message}`,
-            type: 'error',
-          },
-        ],
+        logs: allLogs,
         completed: true,
       }));
     }
+  };
+
+  const handleStopClick = () => {
+    stopRequestedRef.current = true;
+    setSyncState((prev) => ({
+      ...prev,
+      stopRequested: true,
+      currentDocument: 'Stopping after current batch completes...',
+    }));
   };
 
   const handlePreviewClick = async () => {
@@ -300,7 +394,12 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
         >
           Sync Changes to Notion
         </Button>
-        {/* Note: Stop button removed - server actions cannot be interrupted mid-execution */}
+        {/* Stop button - stops after current batch completes */}
+        {syncState.isRunning && !syncState.stopRequested && (
+          <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
+            Stop
+          </Button>
+        )}
       </div>
 
       {/* Progress Display */}

@@ -8,6 +8,10 @@ import { UuidMappings, loadUuidMappings } from '@/app/server/atlas/load-uuid-map
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
+import {
+  buildNestingBugAffectedUuidsSet,
+  loadNotionNestingFixMappings,
+} from '@/app/server/services/supabase/notion-nesting-bug-mappings';
 import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
 import {
   databaseSupportsInternalNesting,
@@ -15,12 +19,17 @@ import {
   getInternalParentPageIdFromAncestry,
   getNotionDatabaseIdForDatabaseName,
 } from '../_lib/atlas-database-mapper';
+import type { RealSyncResult, SerializedBatchData } from '../_lib/batch-sync-types';
 import {
   addInterDatabaseRelationshipProperties,
   addParentPageRelationshipProperty,
   buildNotionProperties,
 } from '../_lib/notion-property-builder';
 import { syncChangesToNotion } from '../_lib/sync-orchestrator';
+
+// Re-export types for client use (only type exports allowed in 'use server' files)
+export type { RealSyncResult, SerializedBatchData } from '../_lib/batch-sync-types';
+// Note: SYNC_BATCH_SIZE must be imported directly from batch-sync-types.ts by clients
 
 export interface SyncActionResult {
   success: boolean;
@@ -613,43 +622,51 @@ export async function runDryRunSync(): Promise<{ succeeded: number; skipped: num
   }
 }
 
-/**
- * Result returned from runRealSync server action
- */
-export interface RealSyncResult {
-  succeeded: number;
-  failed: number;
-  skipped: number;
-  logs: Array<{
-    timestamp: string;
-    message: string;
-    type: 'info' | 'success' | 'error' | 'warning';
-    documentId?: string;
-    documentLabel?: string;
-  }>;
-  stopRequested: boolean;
-  error?: string;
-}
+// ============================================================================
+// Batch Sync Types and Functions
+// ============================================================================
 
 /**
  * Server action to run the real sync (non-dry-run).
  * This must be a server action because the orchestrator has server-side dependencies
  * (Supabase, Notion API, etc.) that require server environment variables.
  *
- * Note: This version does not support real-time progress updates from the server.
- * For a more interactive experience, consider using a streaming approach or polling.
+ * Note: This version does not support real-time progress updates to the client.
+ * Progress is logged to the server console instead.
  *
  * @returns Object with sync results including succeeded/failed/skipped counts and logs
  */
 export async function runRealSync(): Promise<RealSyncResult> {
   try {
+    console.log('[Sync] Starting sync...');
+
     // Compute diff and load UUID mappings on the server (avoids sending large payloads)
     const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
 
-    const result = await syncChangesToNotion(diffResult, { stopRequested: false, dryRun: false }, uuidMappings, () => {
-      // Progress callback - can't send real-time updates from server action
-      // Client will only see final results
-    });
+    const totalChanges =
+      diffResult.changes.changed.length +
+      diffResult.changes.added.length +
+      diffResult.changes.deleted.length +
+      diffResult.changes.parent_changed.length +
+      diffResult.changes.sibling_order_changed.length;
+
+    console.log(`[Sync] ${totalChanges} changes to process`);
+
+    const result = await syncChangesToNotion(
+      diffResult,
+      { stopRequested: false, dryRun: false },
+      uuidMappings,
+      (progress) => {
+        // Log progress to server console
+        const pct = progress.totalCount > 0 ? Math.round((progress.completedCount / progress.totalCount) * 100) : 0;
+        const doc = progress.currentDocumentLabel ? ` - ${progress.currentDocumentLabel}` : '';
+        console.log(`[Sync] ${progress.phase}: ${progress.completedCount}/${progress.totalCount} (${pct}%)${doc}`);
+      },
+    );
+
+    console.log(
+      `[Sync] Complete: ${result.succeeded.length} succeeded, ${result.failed.length} failed, ${result.skipped.length} skipped`,
+    );
 
     return {
       succeeded: result.succeeded.length,
@@ -663,7 +680,7 @@ export async function runRealSync(): Promise<RealSyncResult> {
     };
   } catch (error) {
     const err = error as Error;
-    console.error('Real sync failed:', err);
+    console.error('[Sync] Failed:', err);
     return {
       succeeded: 0,
       failed: 0,
@@ -673,4 +690,160 @@ export async function runRealSync(): Promise<RealSyncResult> {
       error: err.message,
     };
   }
+}
+
+/**
+ * Server action to run a single batch of sync operations.
+ * Called by the client in a loop to process all changes in batches.
+ *
+ * This enables:
+ * - Progress updates between batches (client can update UI)
+ * - Stop functionality (client can stop before starting next batch)
+ * - Avoiding server action timeout for large syncs
+ *
+ * @param batchData Serialized batch data containing changes and lookup maps
+ * @param batchIndex Current batch index (0-based)
+ * @param totalBatches Total number of batches
+ * @param syncBatchId Shared batch ID for audit logging (generated by client, used across all batches)
+ * @returns Object with sync results for this batch
+ */
+export async function runSyncBatch(
+  batchData: SerializedBatchData,
+  batchIndex: number,
+  totalBatches: number,
+  syncBatchId: string,
+): Promise<RealSyncResult> {
+  const logs: RealSyncResult['logs'] = [];
+  let succeeded = 0;
+  let failed = 0;
+  let skipped = 0;
+
+  const addLog = (
+    message: string,
+    type: 'info' | 'success' | 'error' | 'warning',
+    documentId?: string,
+    documentLabel?: string,
+  ) => {
+    logs.push({
+      timestamp: new Date().toISOString(),
+      message,
+      type,
+      documentId,
+      documentLabel,
+    });
+  };
+
+  try {
+    console.log(`[Sync] Batch ${batchIndex + 1}/${totalBatches}: Processing ${batchData.changes.length} changes`);
+    addLog(`Batch ${batchIndex + 1}/${totalBatches}: Processing ${batchData.changes.length} changes`, 'info');
+
+    // Deserialize maps from arrays
+    const originalIdsToDatabase = new Map<string, AtlasDatabaseName>(batchData.originalIdsToDatabase);
+    const newIdsToDatabase = new Map<string, AtlasDatabaseName>(batchData.newIdsToDatabase);
+    const newIdsToDocuments = new Map<string, ExportAtlasTreeBaseDocument>(batchData.newIdsToDocuments);
+
+    // Load UUID mappings server-side (cached after first load)
+    const uuidMappings = await loadUuidMappings();
+
+    // Load nesting bug mappings for skipping affected documents
+    const nestingMappings = await loadNotionNestingFixMappings();
+    const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
+
+    const options: SyncActionOptions = { syncBatchId };
+
+    // Process each change in the batch
+    for (const change of batchData.changes) {
+      const docLabel = getDocumentLabel(change);
+
+      try {
+        let result: SyncActionResult;
+
+        switch (change.changeType) {
+          case 'changed':
+          case 'sibling_order_changed':
+            // Content and sibling order changes use the same update function
+            result = await updateNotionPageContent(change, originalIdsToDatabase, uuidMappings, options);
+            break;
+
+          case 'added':
+            result = await createNotionDatabasePage(change, newIdsToDocuments, newIdsToDatabase, uuidMappings, options);
+            break;
+
+          case 'deleted':
+            result = await deleteNotionPage(change, originalIdsToDatabase, options);
+            break;
+
+          case 'parent_changed':
+            // Skip documents affected by nesting bug to preserve manual corrections
+            if (change.uuid && nestingBugAffectedUuids.has(change.uuid)) {
+              addLog(`⊘ Skipped (nesting bug affected): ${docLabel}`, 'warning', change.uuid, docLabel);
+              skipped++;
+              continue;
+            }
+            result = await updateNotionPageParent(
+              change,
+              newIdsToDocuments,
+              newIdsToDatabase,
+              originalIdsToDatabase,
+              options,
+            );
+            break;
+
+          default:
+            addLog(`⚠ Unknown change type: ${change.changeType}`, 'warning', change.uuid, docLabel);
+            skipped++;
+            continue;
+        }
+
+        // Process result
+        if (result.success) {
+          succeeded++;
+          addLog(`✓ ${change.changeType}: ${docLabel}`, 'success', change.uuid, docLabel);
+        } else if (result.reason === 'parent_not_found' || result.reason === 'has_children') {
+          skipped++;
+          addLog(`⊘ Skipped (${result.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
+        } else {
+          failed++;
+          addLog(`✗ Failed ${change.changeType}: ${docLabel} - ${result.error}`, 'error', change.uuid, docLabel);
+        }
+      } catch (error) {
+        const err = error as Error;
+        failed++;
+        addLog(`✗ Error ${change.changeType}: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
+      }
+    }
+
+    console.log(
+      `[Sync] Batch ${batchIndex + 1}/${totalBatches}: ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`,
+    );
+    addLog(`Batch complete: ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`, 'info');
+
+    return {
+      succeeded,
+      failed,
+      skipped,
+      logs,
+      stopRequested: false,
+    };
+  } catch (error) {
+    const err = error as Error;
+    console.error(`[Sync] Batch ${batchIndex + 1}/${totalBatches} failed:`, err);
+    return {
+      succeeded,
+      failed,
+      skipped,
+      logs: [...logs, { timestamp: new Date().toISOString(), message: `Batch failed: ${err.message}`, type: 'error' }],
+      stopRequested: false,
+      error: err.message,
+    };
+  }
+}
+
+/**
+ * Gets a human-readable label for a document change.
+ */
+function getDocumentLabel(change: AtlasDocumentChange): string {
+  const doc = change.newValues || change.oldValues;
+  if (!doc) return 'Unknown document';
+  return `${doc.doc_no} - ${doc.name} [${doc.type}]`;
 }
