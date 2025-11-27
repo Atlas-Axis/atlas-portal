@@ -31,6 +31,9 @@ CREATE INDEX IF NOT EXISTS idx_notion_api_audit_log_operation_type
 CREATE INDEX IF NOT EXISTS idx_notion_api_audit_log_created_at 
   ON notion_api_audit_log(created_at DESC);
 
+-- Enable Row Level Security
+ALTER TABLE notion_api_audit_log ENABLE ROW LEVEL SECURITY;
+
 -- Add comment
 COMMENT ON TABLE notion_api_audit_log IS 'Audit log for all Notion API operations during Markdown→Notion sync. Stores complete request/response payloads for debugging and compliance.';
 
