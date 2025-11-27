@@ -28,6 +28,7 @@ import {
 import { notion } from '@/app/server/services/notion/notion-client';
 import { Database, Json } from '@/app/server/services/supabase/database.types';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { isDevEnv } from '@/app/shared/utils/is-dev-env';
 import { loadEnv } from './utils/load-env';
 
 // Type definitions for Notion database properties
@@ -618,8 +619,8 @@ async function main() {
   // Load environment variables
   loadEnv();
 
-  if (process.env.USE_DEV_NOTION_IDS !== 'true') {
-    console.error('❌ USE_DEV_NOTION_IDS must be set to true');
+  if (!isDevEnv()) {
+    console.error('❌ This script must be run in a development environment (NODE_ENV=development)');
     process.exit(1);
   }
 
@@ -635,53 +636,57 @@ async function main() {
     const existingDatabases = await discoverTestDatabases();
     await handleExistingDatabases(existingDatabases);
 
-    // Step 3: Delete existing UUID mappings for test documents we're about to create
-    await deleteExistingUuidMappingsForTestDocuments();
+    // Step 3: Truncate Supabase tables to clear any leftover data from previous test runs
+    // This prevents conflicts when importing new test databases
+    await truncateSupabaseTablesForDevEnvironment();
 
-    // Step 4: Create all databases (first pass - without relations)
+    // Step 4: Delete existing UUID mappings for test documents we're about to create
+    await deleteExistingUuidMappingsForDocuments();
+
+    // Step 5: Create all databases (first pass - without relations)
     console.log('\n📦 Creating test databases (first pass - basic properties)...\n');
     const databaseMappings = await createAllDatabases();
 
-    // Step 5: Add relationship properties (second pass)
+    // Step 6: Add relationship properties (second pass)
     console.log('\n🔗 Adding relationship properties (second pass)...\n');
     await addRelationshipProperties(databaseMappings);
 
-    // Step 6: Create root Scope documents in Notion
+    // Step 7: Create root Scope documents in Notion
     const createdScopePages = await createScopeDocuments(databaseMappings);
 
-    // Step 7: Upsert Scope documents to Supabase
+    // Step 8: Upsert Scope documents to Supabase
     await upsertScopeDocumentsToSupabase(createdScopePages);
 
-    // Step 8: Create UUID mappings for Scope documents
+    // Step 9: Create UUID mappings for Scope documents
     await createUuidMappingsForScopeDocuments(createdScopePages);
 
-    // Step 9: Create Article documents in Notion (children of Scopes)
+    // Step 10: Create Article documents in Notion (children of Scopes)
     const createdArticlePages = await createArticleDocuments(databaseMappings, createdScopePages);
 
-    // Step 10: Upsert Article documents to Supabase
+    // Step 11: Upsert Article documents to Supabase
     await upsertArticleDocumentsToSupabase(createdArticlePages);
 
-    // Step 11: Create UUID mappings for Article documents
+    // Step 12: Create UUID mappings for Article documents
     await createUuidMappingsForArticleDocuments(createdArticlePages);
 
-    // Step 12: Create Section documents in Notion (children of Articles)
+    // Step 13: Create Section documents in Notion (children of Articles)
     const createdSectionPages = await createSectionDocuments(databaseMappings, createdArticlePages);
 
-    // Step 13: Upsert Section documents to Supabase
+    // Step 14: Upsert Section documents to Supabase
     await upsertSectionDocumentsToSupabase(createdSectionPages);
 
-    // Step 14: Create UUID mappings for Section documents
+    // Step 15: Create UUID mappings for Section documents
     await createUuidMappingsForSectionDocuments(createdSectionPages);
 
-    // Step 15: Update notion-ids-dev.ts with new database IDs
+    // Step 16: Update notion-ids-dev.ts with new database IDs
     console.log('\n📝 Updating notion-ids-dev.ts...\n');
     updateNotionIdsDevFile(databaseMappings);
 
-    // Step 16: Validation and reporting
+    // Step 17: Validation and reporting
     console.log('\n✅ Validating created databases...\n');
     await validateAndReport(databaseMappings);
 
-    // Step 17: Display manual step reminder for sub-item enablement
+    // Step 18: Display manual step reminder for sub-item enablement
     displayManualStepReminder(databaseMappings);
 
     console.log('\n🎉 Test database creation completed successfully!\n');
@@ -785,10 +790,54 @@ async function handleExistingDatabases(existingDatabases: Array<{ id: string; ti
 }
 
 /**
+ * Truncates Supabase tables to clear any leftover data from previous test runs.
+ * This prevents conflicts when importing new test databases.
+ *
+ * Tables truncated:
+ * - notion_database_pages: All database page records
+ * - notion_sync_status: All sync status records (clears any stale locks)
+ */
+async function truncateSupabaseTablesForDevEnvironment(): Promise<void> {
+  console.log('🗑️  Truncating Supabase tables for clean test environment...\n');
+
+  try {
+    // Delete all rows from notion_database_pages
+    // Using .neq() with a dummy UUID that will never match to delete all rows
+    const { error: pagesError } = await supabase()
+      .from('notion_database_pages')
+      .delete()
+      .neq('notion_page_id', '00000000-0000-0000-0000-000000000000');
+
+    if (pagesError) {
+      throw pagesError;
+    }
+
+    console.log('  ✓ Cleared notion_database_pages');
+
+    // Delete all rows from notion_sync_status to clear any stale sync locks
+    const { error: syncError } = await supabase()
+      .from('notion_sync_status')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000');
+
+    if (syncError) {
+      throw syncError;
+    }
+
+    console.log('  ✓ Cleared notion_sync_status');
+    console.log();
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`  ✗ Failed to truncate Supabase tables: ${errorMessage}`);
+    throw error;
+  }
+}
+
+/**
  * Deletes existing UUID mappings for all test documents we're about to create.
  * This prevents duplicate key errors when creating new mappings.
  */
-async function deleteExistingUuidMappingsForTestDocuments(): Promise<void> {
+async function deleteExistingUuidMappingsForDocuments(): Promise<void> {
   console.log('🗑️  Deleting existing UUID mappings for test documents...\n');
 
   // Collect all atlas_document_uuid values from all document data arrays
