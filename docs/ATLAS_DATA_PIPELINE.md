@@ -712,11 +712,20 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Keep UUID mapping in Supabase (mappings are preserved forever for potential recovery)
 - Start from leaf nodes to avoid cascading effects, then traverse up the tree as parent nodes become leaf nodes after their child nodes are deleted
 
+**Batch Processing:**
+
+- Documents processed in batches of 25 to avoid server action timeouts
+- Client orchestrates batches, calling `runSyncBatch()` server action for each batch
+- Progress updates between batches (batch-level granularity)
+- Stop button halts sync between batches (current batch completes)
+- Each batch takes ~10-25 seconds at Notion's rate limit
+- All batches share same `syncBatchId` for unified audit trail
+
 **Progress Tracking:**
 
-- Progress tracking: Log completion percentage and estimated time remaining
-- Transaction-like behavior: Validate all changes before applying (prevent partial corruption)
-- If interrupted, show a modal to the user and when they confirm, reload the page to reload the remaining syncable changes - keep it simple
+- Progress tracking: Real-time batch progress (e.g., "Batch 5/280")
+- Document counter shows total progress across all batches
+- If interrupted, reload page to see remaining syncable changes
 
 **Error Handling:**
 
@@ -728,12 +737,10 @@ This step performs the actual synchronization with Notion via API calls, handlin
 
 **References:**
 
-- `app/server/atlas/sync/sync-to-notion.ts` (to be created - main orchestrator)
-- `app/server/atlas/sync/create-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/update-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/delete-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/detect-markdown-changes.ts` (to be created)
-- `app/atlas/sync/_lib/` (sync utilities)
+- `app/atlas/sync/_actions/sync-actions.ts` (server actions including `runSyncBatch`)
+- `app/atlas/sync/_lib/batch-sync-types.ts` (batch types, `SYNC_BATCH_SIZE`, helper functions)
+- `app/atlas/sync/_lib/sync-orchestrator.ts` (main orchestrator)
+- `app/atlas/sync/content.tsx` (client-side batch orchestration)
 
 ### 4.4 Automated Sync
 
@@ -769,7 +776,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
 | **[IMPLEMENTED] 10. Reverse Overrides** | Notion Tree             | Skip parent changes for nesting-bug-affected documents during sync                          | Sync orchestrator skips affected docs     |
 | **[IMPLEMENTED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (sequential, no batching)                        | Notion pages (via API)                    |
+| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (batches of 25, sequential within batch)         | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 

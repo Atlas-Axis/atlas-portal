@@ -206,9 +206,9 @@ Before deleting a page, the system:
 
 ### Graceful Stopping
 
-- Click "Stop" button to halt sync gracefully
-- Current operation completes before stopping
-- Remaining changes are skipped
+- Click "Stop" button to halt sync gracefully between batches
+- Current batch completes before stopping (up to 25 documents)
+- Remaining batches are skipped
 - Progress details are preserved in local state (not persisted)
 
 ### Detailed Logging
@@ -289,11 +289,12 @@ See [ATLAS_EXTRA_FIELDS.md](../../../docs/ATLAS_EXTRA_FIELDS.md) to understand h
 ```
 app/atlas/sync/
 ├── page.tsx                       # Server component - diffs and fetches data
-├── content.tsx                    # Client component - UI and sync orchestration
+├── content.tsx                    # Client component - UI and batch sync orchestration
 ├── _actions/
 │   └── sync-actions.ts            # Server actions for Notion API calls (with audit logging)
 ├── _lib/
-│   ├── sync-orchestrator.ts       # Coordinates sync process
+│   ├── batch-sync-types.ts        # Batch sync types, constants, and helper functions
+│   ├── sync-orchestrator.ts       # Coordinates sync process (used by runRealSync)
 │   ├── notion-property-builder.ts # Builds Notion property objects
 │   └── atlas-database-mapper.ts   # Derives database names from document types
 └── AGENTS.md                      # This file
@@ -313,13 +314,23 @@ app/server/services/
 
 1. **Server** (page.tsx): `diffAtlasScopeTreeLists()` → AtlasDiffResult
 2. **Client** (content.tsx): User clicks "Sync Changes"
-3. **Orchestrator**: `syncChangesToNotion()` processes changes in order
-   - Receives full AtlasDiffResult with document lookup maps
-   - Passes document maps to all server actions for Notion database derivation
-4. **Server Actions**: Make Notion API calls (update, create, delete)
-   - Derive Notion database names from Atlas document type and database tracking maps
-   - Handle Core/Active Data Controller disambiguation using database tracking
-5. **Client**: Updates UI with progress and logs
+3. **Client**: Splits changes into batches of 25 documents
+   - Uses `flattenChangesInOrder()` to order changes correctly
+   - Uses `splitIntoBatches()` to create batch arrays
+   - Generates single `syncBatchId` for audit log grouping
+4. **Client**: For each batch:
+   - Checks stop flag before starting batch
+   - Calls `prepareBatchData()` to serialize only needed map entries
+   - Calls `runSyncBatch()` server action
+   - Updates progress UI between batches
+   - Accumulates results and logs
+5. **Server Action** (`runSyncBatch`): Processes single batch
+   - Deserializes maps from arrays
+   - Loads UUID mappings server-side
+   - Loads nesting bug mappings
+   - Makes Notion API calls (update, create, delete)
+   - Returns batch results
+6. **Client**: Displays final summary and logs
 
 ### Testing
 
@@ -363,17 +374,36 @@ The orchestrator processes changes in 5 sequential phases:
 4. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
 5. **Sibling Order Changes** - Updates document numbering and sort order
 
+### Batch Processing
+
+To avoid server action timeouts and enable progress tracking, sync operations are processed in batches:
+
+- **Batch Size**: 25 documents per batch (configurable via `SYNC_BATCH_SIZE`)
+- **Client Orchestration**: The client component orchestrates batch execution, calling `runSyncBatch()` server action for each batch
+- **Progress Updates**: UI updates between batches show real-time progress
+- **Stop Support**: Stop button prevents the next batch from starting (current batch completes)
+- **Timeout Prevention**: Each batch takes ~10-25 seconds at Notion's rate limit (~3 req/sec), well under server action timeout limits
+- **Audit Grouping**: All batches share the same `syncBatchId` for unified audit trail
+
+**Batch Data Serialization:**
+
+Maps cannot be passed directly to server actions, so batch data is serialized:
+
+- `prepareBatchData()` extracts only the map entries needed for each batch
+- Maps serialized as `[key, value][]` arrays
+- Server action deserializes arrays back to Maps
+
 ## Limitations
 
 ### Current Version
 
-- **No batch operations**: Pages are processed one at a time (intentional for better error isolation)
 - **No background processing**: Progress stops on page refresh
 - **No undo/rollback**: Operations cannot be reversed (audit log provides history)
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
 - **Nesting bug affected documents**: Parent changes skipped for documents with nesting bug mappings (see [NOTION_NESTING_BUG_FIX.md](../../../docs/NOTION_NESTING_BUG_FIX.md))
 - **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
 - When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion
+- **Stop granularity**: Stop button halts sync between batches, not within a batch (up to 25 operations may complete after clicking Stop)
 
 ### Future Enhancements
 

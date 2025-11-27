@@ -29,7 +29,9 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for complete pipeline
 - ✅ **Audit Logging**: Complete audit trail of all Notion API operations
 - ✅ **UUID Mapping**: Automatic storage and lookup of UUID mappings for document references
 - ✅ **Error Handling**: Graceful error handling with detailed logging and partial success tracking
-- ✅ **Progress Tracking**: Real-time progress updates during sync operations
+- ✅ **Progress Tracking**: Real-time progress updates during sync operations (batch-level granularity)
+- ✅ **Batch Processing**: Documents processed in batches of 25 to prevent server action timeouts
+- ✅ **Stop Support**: Stop button halts sync between batches
 - ✅ **Automatic Round-Trip**: Changes synced to Notion automatically flow back to Supabase via hourly import task
 
 ## Workflow Architecture
@@ -509,11 +511,20 @@ await logNotionApiOperation({
 
 ### Processing Strategy
 
-**Sequential Processing**: Documents processed one at a time (no batching)
+**Batch Processing**: Documents processed in batches of 25
+
+**Why Batching**:
+
+- Prevents server action timeouts (60s on Vercel, 300s max)
+- Enables progress updates between batches
+- Allows stopping sync between batches
+- Each batch takes ~10-25 seconds at Notion's rate limit
+
+**Sequential Within Batch**: Documents within each batch processed one at a time
 
 **Benefits**:
 
-- More reliable error handling
+- Reliable error handling per document
 - Better audit log of individual operations
 - Better error isolation
 - Clearer tracking of success vs failure
@@ -525,15 +536,16 @@ await logNotionApiOperation({
 - **Validation**: < 5 seconds for full Atlas
 - **Transformation**: < 10 seconds for full Atlas
 - **Change detection**: < 5 seconds
-- **Sync operations**: Sequential, limited by Notion API rate (3 req/sec average)
-- **Total sync time**: Varies based on number of changes and API response times
+- **Sync operations**: ~25 documents per batch, limited by Notion API rate (3 req/sec average)
+- **Per-batch time**: ~10-25 seconds depending on operation types
+- **Total sync time**: Varies based on number of changes (e.g., 7000 changes ≈ 280 batches)
 
 ### Progress Tracking
 
 - Real-time progress bar with percentage
-- Current phase indicator
-- Document counter (e.g., "45/100 documents synced")
-- Operation type display (creating/updating/archiving)
+- Current batch indicator (e.g., "Batch 5/280")
+- Document counter (e.g., "125/7000 documents synced")
+- Stop button to halt after current batch completes
 
 ## Notion API Constraints
 
@@ -711,9 +723,10 @@ This creates test versions of all Atlas databases with `[TEST]` prefix for safe 
 ### Core Sync Logic
 
 - `app/atlas/sync/page.tsx` - Main UI page
-- `app/atlas/sync/content.tsx` - Sync controls and status display
-- `app/atlas/sync/_actions/sync-actions.ts` - Server actions for sync operations
-- `app/atlas/sync/_lib/sync-orchestrator.ts` - Main orchestrator coordinating all phases
+- `app/atlas/sync/content.tsx` - Sync controls, batch orchestration, and status display
+- `app/atlas/sync/_actions/sync-actions.ts` - Server actions for sync operations (including `runSyncBatch`)
+- `app/atlas/sync/_lib/batch-sync-types.ts` - Batch sync types, constants (`SYNC_BATCH_SIZE`), and helper functions
+- `app/atlas/sync/_lib/sync-orchestrator.ts` - Main orchestrator coordinating all phases (used by `runRealSync`)
 - `app/atlas/sync/_lib/detect-markdown-changes.ts` - Change detection logic
 - `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder
 
