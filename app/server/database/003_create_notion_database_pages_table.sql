@@ -78,7 +78,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 -- Create the notion_database_pages table to store synchronized pages from Notion
 CREATE TABLE IF NOT EXISTS notion_database_pages (
-  notion_page_id UUID NOT NULL PRIMARY KEY, -- Notion page ID
+  notion_page_id UUID NOT NULL, -- Notion page ID
   atlas_document_type atlas_document_type_enum NOT NULL,
   atlas_document_number TEXT NOT NULL DEFAULT '',
   atlas_database_name atlas_database_name_enum NOT NULL,
@@ -110,7 +110,11 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   last_edited_by_user_id TEXT, -- ID of the Notion user who last edited this page
 
   date_valid_from TIMESTAMPTZ NOT NULL DEFAULT (NOW() AT TIME ZONE 'utc'), -- Used for versioning (temporal table)
-  date_valid_to TIMESTAMPTZ NULL -- Used for versioning. NULL means "current" version (temporal table)
+  date_valid_to TIMESTAMPTZ NULL, -- Used for versioning. NULL means "current" version (temporal table)
+  
+  -- Composite PRIMARY KEY allows multiple versions of the same page with different date_valid_from values
+  -- This enables temporal versioning where we can have historical versions alongside the current version
+  PRIMARY KEY (notion_page_id, date_valid_from)
 );
 
 -- Create indexes for better query performance
