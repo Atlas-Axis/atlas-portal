@@ -1,10 +1,32 @@
 import { describe, expect, it } from 'vitest';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   databaseSupportsInternalNesting,
   getDatabaseNameFromDocument,
   getInternalParentPageIdFromAncestry,
 } from '../atlas-database-mapper';
+
+/**
+ * Creates a mock UuidMappings object for testing.
+ * Maps Atlas UUIDs to Notion page IDs with a predictable pattern.
+ *
+ * @param atlasUuids List of Atlas UUIDs to include in the mapping
+ * @returns UuidMappings object with bidirectional mappings
+ */
+function createMockUuidMappings(atlasUuids: string[]): UuidMappings {
+  const notionPageIDsToAtlasUUIDs = new Map<string, string>();
+  const atlasUUIDsToNotionPageIds = new Map<string, string>();
+
+  for (const atlasUuid of atlasUuids) {
+    // Generate a predictable Notion page ID from Atlas UUID
+    const notionPageId = `notion-page-for-${atlasUuid}`;
+    notionPageIDsToAtlasUUIDs.set(notionPageId, atlasUuid);
+    atlasUUIDsToNotionPageIds.set(atlasUuid, notionPageId);
+  }
+
+  return { notionPageIDsToAtlasUUIDs, atlasUUIDsToNotionPageIds };
+}
 
 describe('atlas-database-mapper', () => {
   describe('getDatabaseNameFromDocument', () => {
@@ -146,42 +168,70 @@ describe('atlas-database-mapper', () => {
   });
 
   describe('getInternalParentPageIdFromAncestry', () => {
+    // Create an empty mapping for tests that don't need specific mappings
+    const emptyMappings = createMockUuidMappings([]);
+
     describe('returns null cases', () => {
       it('returns null when ancestry is undefined', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>();
-        const result = getInternalParentPageIdFromAncestry(undefined, 'Sections & Primary Docs', uuidToDatabase);
+        const result = getInternalParentPageIdFromAncestry(
+          undefined,
+          'Sections & Primary Docs',
+          uuidToDatabase,
+          emptyMappings,
+        );
         expect(result).toBeNull();
       });
 
       it('returns null when ancestry is empty array', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>();
-        const result = getInternalParentPageIdFromAncestry([], 'Sections & Primary Docs', uuidToDatabase);
+        const result = getInternalParentPageIdFromAncestry(
+          [],
+          'Sections & Primary Docs',
+          uuidToDatabase,
+          emptyMappings,
+        );
         expect(result).toBeNull();
       });
 
       it('returns null when parent is in different database (cross-database relationship)', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([['article-uuid', 'Articles']]);
+        const uuidMappings = createMockUuidMappings(['article-uuid']);
 
         // Section whose parent is an Article (cross-database)
-        const result = getInternalParentPageIdFromAncestry(['article-uuid'], 'Sections & Primary Docs', uuidToDatabase);
+        const result = getInternalParentPageIdFromAncestry(
+          ['article-uuid'],
+          'Sections & Primary Docs',
+          uuidToDatabase,
+          uuidMappings,
+        );
         expect(result).toBeNull();
       });
     });
 
     describe('same-database parent cases', () => {
-      it('returns parent ID when Section parent of Core in Sections & Primary Docs', () => {
+      it('returns parent info when Section parent of Core in Sections & Primary Docs', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([['section-uuid', 'Sections & Primary Docs']]);
+        const uuidMappings = createMockUuidMappings(['section-uuid']);
 
-        const result = getInternalParentPageIdFromAncestry(['section-uuid'], 'Sections & Primary Docs', uuidToDatabase);
-        expect(result).toBe('section-uuid');
+        const result = getInternalParentPageIdFromAncestry(
+          ['section-uuid'],
+          'Sections & Primary Docs',
+          uuidToDatabase,
+          uuidMappings,
+        );
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('section-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-section-uuid');
       });
 
-      it('returns parent ID when Core parent of nested Core in Sections & Primary Docs', () => {
+      it('returns parent info when Core parent of nested Core in Sections & Primary Docs', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([
           ['article-uuid', 'Articles'],
           ['section-uuid', 'Sections & Primary Docs'],
           ['core-parent-uuid', 'Sections & Primary Docs'],
         ]);
+        const uuidMappings = createMockUuidMappings(['article-uuid', 'section-uuid', 'core-parent-uuid']);
 
         // Core → Core → Core (nested within same database)
         // The immediate parent is 'core-parent-uuid', which is in 'Sections & Primary Docs'
@@ -189,68 +239,95 @@ describe('atlas-database-mapper', () => {
           ['article-uuid', 'section-uuid', 'core-parent-uuid'],
           'Sections & Primary Docs',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('core-parent-uuid');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('core-parent-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-core-parent-uuid');
       });
 
-      it('returns parent ID when Core parent of Active Data Controller in Sections & Primary Docs', () => {
+      it('returns parent info when Core parent of Active Data Controller in Sections & Primary Docs', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([
           ['section-uuid', 'Sections & Primary Docs'],
           ['core-uuid', 'Sections & Primary Docs'],
         ]);
+        const uuidMappings = createMockUuidMappings(['section-uuid', 'core-uuid']);
 
         const result = getInternalParentPageIdFromAncestry(
           ['section-uuid', 'core-uuid'],
           'Sections & Primary Docs',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('core-uuid');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('core-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-core-uuid');
       });
 
-      it('returns parent ID when Core parent of Core in Agent Scope Database', () => {
+      it('returns parent info when Core parent of Core in Agent Scope Database', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([
           ['agent-section-uuid', 'Sections & Primary Docs'],
           ['agent-core-uuid', 'Agent Scope Database'],
         ]);
+        const uuidMappings = createMockUuidMappings(['agent-section-uuid', 'agent-core-uuid']);
 
         // Core with agent ancestry - should be in Agent Scope Database
         const result = getInternalParentPageIdFromAncestry(
           ['agent-section-uuid', 'agent-core-uuid'],
           'Agent Scope Database',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('agent-core-uuid');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('agent-core-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-agent-core-uuid');
       });
 
-      it('returns parent ID when Active Data Controller parent of Core in Agent Scope Database', () => {
+      it('returns parent info when Active Data Controller parent of Core in Agent Scope Database', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([
           ['agent-section-uuid', 'Sections & Primary Docs'],
           ['adc-uuid', 'Agent Scope Database'],
         ]);
+        const uuidMappings = createMockUuidMappings(['agent-section-uuid', 'adc-uuid']);
 
         const result = getInternalParentPageIdFromAncestry(
           ['agent-section-uuid', 'adc-uuid'],
           'Agent Scope Database',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('adc-uuid');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('adc-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-adc-uuid');
       });
     });
 
     describe('filters cross-database parents correctly', () => {
       it('filters out Article parent when checking Section', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([['article-uuid', 'Articles']]);
+        const uuidMappings = createMockUuidMappings(['article-uuid']);
 
         // Section under Article - Article is in different database
-        const result = getInternalParentPageIdFromAncestry(['article-uuid'], 'Sections & Primary Docs', uuidToDatabase);
+        const result = getInternalParentPageIdFromAncestry(
+          ['article-uuid'],
+          'Sections & Primary Docs',
+          uuidToDatabase,
+          uuidMappings,
+        );
         expect(result).toBeNull();
       });
 
       it('filters out Section parent when checking Annotation', () => {
         const uuidToDatabase = new Map<string, AtlasDatabaseName>([['section-uuid', 'Sections & Primary Docs']]);
+        const uuidMappings = createMockUuidMappings(['section-uuid']);
 
         // Annotation under Section - Section is in different database
-        const result = getInternalParentPageIdFromAncestry(['section-uuid'], 'Annotations', uuidToDatabase);
+        const result = getInternalParentPageIdFromAncestry(
+          ['section-uuid'],
+          'Annotations',
+          uuidToDatabase,
+          uuidMappings,
+        );
         expect(result).toBeNull();
       });
 
@@ -259,12 +336,14 @@ describe('atlas-database-mapper', () => {
           ['agent-section-uuid', 'Sections & Primary Docs'],
           ['agent-core-uuid', 'Agent Scope Database'],
         ]);
+        const uuidMappings = createMockUuidMappings(['agent-section-uuid', 'agent-core-uuid']);
 
         // Trying to create non-agent Core under agent Core - different databases
         const result = getInternalParentPageIdFromAncestry(
           ['agent-section-uuid', 'agent-core-uuid'],
           'Sections & Primary Docs', // Child is non-agent
           uuidToDatabase,
+          uuidMappings,
         );
         expect(result).toBeNull();
       });
@@ -278,6 +357,7 @@ describe('atlas-database-mapper', () => {
           ['section-uuid', 'Sections & Primary Docs'],
           ['core-uuid', 'Sections & Primary Docs'],
         ]);
+        const uuidMappings = createMockUuidMappings(['scope-uuid', 'article-uuid', 'section-uuid', 'core-uuid']);
 
         // Deep chain: Scope → Article → Section → Core → Core (nested)
         // Only the last Core is the same-database parent
@@ -285,8 +365,11 @@ describe('atlas-database-mapper', () => {
           ['scope-uuid', 'article-uuid', 'section-uuid', 'core-uuid'],
           'Sections & Primary Docs',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('core-uuid');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('core-uuid');
+        expect(result?.notionPageId).toBe('notion-page-for-core-uuid');
       });
 
       it('ignores distant same-type ancestors and only checks immediate parent', () => {
@@ -294,6 +377,7 @@ describe('atlas-database-mapper', () => {
           ['section-uuid-1', 'Sections & Primary Docs'],
           ['core-uuid-1', 'Sections & Primary Docs'],
         ]);
+        const uuidMappings = createMockUuidMappings(['section-uuid-1', 'core-uuid-1']);
 
         // Ancestry includes Section, but immediate parent is Core
         // Should return Core as the same-database parent
@@ -301,8 +385,28 @@ describe('atlas-database-mapper', () => {
           ['section-uuid-1', 'core-uuid-1'],
           'Sections & Primary Docs',
           uuidToDatabase,
+          uuidMappings,
         );
-        expect(result).toBe('core-uuid-1');
+        expect(result).not.toBeNull();
+        expect(result?.atlasUuid).toBe('core-uuid-1');
+        expect(result?.notionPageId).toBe('notion-page-for-core-uuid-1');
+      });
+    });
+
+    describe('error handling', () => {
+      it('throws error when UUID mapping is missing for same-database parent', () => {
+        const uuidToDatabase = new Map<string, AtlasDatabaseName>([['section-uuid', 'Sections & Primary Docs']]);
+        // Create mappings without the section-uuid - this should cause an error
+        const uuidMappings = createMockUuidMappings([]);
+
+        expect(() =>
+          getInternalParentPageIdFromAncestry(
+            ['section-uuid'],
+            'Sections & Primary Docs',
+            uuidToDatabase,
+            uuidMappings,
+          ),
+        ).toThrow('No Notion page ID mapping found for parent Atlas UUID section-uuid');
       });
     });
   });

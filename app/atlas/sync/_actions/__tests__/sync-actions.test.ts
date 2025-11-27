@@ -31,8 +31,29 @@ vi.mock('@/app/server/services/supabase/uuid-mapping-service', () => ({
   getNotionPageIdByAtlasUuid: vi.fn().mockResolvedValue(null),
 }));
 
-// Mock UUID mappings for testing
-const mockUuidMappings: UuidMappings = {
+/**
+ * Creates mock UUID mappings for testing.
+ * Maps Atlas document UUIDs to Notion page IDs.
+ * For simplicity in tests, the Atlas UUID and Notion page ID are the same.
+ *
+ * @param atlasUuids List of Atlas document UUIDs to include in the mapping
+ */
+function createMockUuidMappings(atlasUuids: string[]): UuidMappings {
+  const notionPageIDsToAtlasUUIDs = new Map<string, string>();
+  const atlasUUIDsToNotionPageIds = new Map<string, string>();
+
+  for (const atlasUuid of atlasUuids) {
+    // For simplicity in tests, use the same UUID for both Atlas and Notion
+    // In production, these would be different UUIDs
+    notionPageIDsToAtlasUUIDs.set(atlasUuid, atlasUuid);
+    atlasUUIDsToNotionPageIds.set(atlasUuid, atlasUuid);
+  }
+
+  return { notionPageIDsToAtlasUUIDs, atlasUUIDsToNotionPageIds };
+}
+
+// Default empty mock UUID mappings for tests that don't need specific mappings
+const emptyUuidMappings: UuidMappings = {
   notionPageIDsToAtlasUUIDs: new Map(),
   atlasUUIDsToNotionPageIds: new Map(),
 };
@@ -153,7 +174,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
+      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(true);
       expect(result.pageId).toBe('page-123');
@@ -201,7 +222,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
+      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(true);
       const updated = mockNotionClient.get('page-123') as Record<string, unknown>;
@@ -237,7 +258,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
+      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toContain('not found');
@@ -267,7 +288,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, mockUuidMappings);
+      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing page UUID');
@@ -295,7 +316,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(true);
       expect(result.pageId).toBeDefined();
@@ -338,7 +359,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent
+      const uuidMappings = createMockUuidMappings(['parent-123']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Parent validation
@@ -377,7 +400,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent (mapping exists, but page doesn't exist in Notion)
+      const uuidMappings = createMockUuidMappings(['nonexistent-parent']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('parent_not_found');
@@ -415,7 +440,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent
+      const uuidMappings = createMockUuidMappings(['parent-section']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
 
@@ -456,7 +483,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent
+      const uuidMappings = createMockUuidMappings(['article-parent']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
 
@@ -588,7 +617,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent
+      const uuidMappings = createMockUuidMappings(['article-parent']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
@@ -633,7 +664,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent
+      const uuidMappings = createMockUuidMappings(['section-parent']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Validate inter-database parent
@@ -674,7 +707,9 @@ describe('sync-actions', () => {
       });
 
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await createNotionDatabasePage(change, docMap, dbMap, mockUuidMappings);
+      // Create UUID mappings for the parent (mapping exists, but page doesn't exist in Notion)
+      const uuidMappings = createMockUuidMappings(['nonexistent-article']);
+      const result = await createNotionDatabasePage(change, docMap, dbMap, uuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('parent_not_found');

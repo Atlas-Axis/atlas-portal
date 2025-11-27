@@ -7,6 +7,7 @@ import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/reac
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
+import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import type { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
@@ -80,7 +81,7 @@ interface SyncState {
 }
 
 export function Content({ result }: { result: AtlasDiffResult }) {
-  const { changes, originalIdsToDocuments, newIdsToDocuments } = result;
+  const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
     changes.added.length > 0 ||
     changes.changed.length > 0 ||
@@ -102,6 +103,18 @@ export function Content({ result }: { result: AtlasDiffResult }) {
     });
     return map;
   }, [originalIdsToDocuments, newIdsToDocuments]);
+
+  // Create combined UUID to database map (prefer new, fallback to original)
+  const uuidToDatabaseMap = useMemo(() => {
+    const map = new Map<string, AtlasDatabaseName>();
+    originalIdsToDatabase.forEach((db, uuid) => {
+      map.set(uuid, db);
+    });
+    newIdsToDatabase.forEach((db, uuid) => {
+      map.set(uuid, db);
+    });
+    return map;
+  }, [originalIdsToDatabase, newIdsToDatabase]);
 
   return (
     <Card className="container mx-auto max-w-7xl p-6">
@@ -125,6 +138,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           changeType="added"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Changed Documents */}
@@ -134,6 +148,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           changeType="changed"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Sibling Order Changed */}
@@ -143,6 +158,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           changeType="sibling_order_changed"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Parent Changed */}
@@ -152,6 +168,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           changeType="parent_changed"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Deleted Documents */}
@@ -161,6 +178,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           changeType="deleted"
           uuidToDocMap={originalIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Sync Controls - isolated in its own component to prevent re-renders of document sections */}
@@ -299,9 +317,10 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
           logs: [...allLogs],
         }));
 
-        // If batch had an error, log it but continue with next batch
+        // If batch had an error, stop the entire sync
         if (batchResult.error) {
-          addLog(`Batch ${batchIndex + 1} error: ${batchResult.error}`, 'error');
+          addLog(`Sync stopped due to error in batch ${batchIndex + 1}: ${batchResult.error}`, 'error');
+          break;
         }
       }
 
@@ -459,6 +478,8 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     content: 'Content Changes',
     additions: 'Additions',
     deletions: 'Deletions',
+    parent_changed: 'Parent Changes',
+    sibling_order_changed: 'Sibling Order',
     idle: 'Idle',
   };
 
@@ -466,6 +487,8 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     content: 'primary',
     additions: 'success',
     deletions: 'danger',
+    parent_changed: 'warning',
+    sibling_order_changed: 'warning',
     idle: 'default',
   };
 
@@ -496,12 +519,14 @@ const ChangeSection = memo(function ChangeSection({
   changeType,
   uuidToDocMap,
   uuidToDocNoMap,
+  uuidToDatabaseMap,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
   changeType: AtlasChangeType;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
+  uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
 }) {
   const colorConfig = colors[changeType];
 
@@ -523,6 +548,7 @@ const ChangeSection = memo(function ChangeSection({
             change={change}
             uuidToDocMap={uuidToDocMap}
             uuidToDocNoMap={uuidToDocNoMap}
+            uuidToDatabaseMap={uuidToDatabaseMap}
           />
         ))}
       </div>
@@ -546,13 +572,17 @@ const ChangeCard = memo(function ChangeCard({
   change,
   uuidToDocMap,
   uuidToDocNoMap,
+  uuidToDatabaseMap,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
+  uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
 }) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
+
+  const databaseName = uuidToDatabaseMap.get(change.uuid);
 
   return (
     <div className="flex items-center gap-3">
@@ -564,6 +594,11 @@ const ChangeCard = memo(function ChangeCard({
               {doc.doc_no} - {doc.name}
             </span>
             <TypeChip type={doc.type} />
+            {databaseName && (
+              <Chip size="sm" variant="flat" color="default" className="text-xs">
+                {databaseName}
+              </Chip>
+            )}
           </div>
 
           {/* Show inline diff for content changes */}

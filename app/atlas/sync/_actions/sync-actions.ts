@@ -134,7 +134,7 @@ export async function updateNotionPageContent(
  * @param change The change object containing the new document
  * @param newIdsToDocuments Map of UUIDs to document objects for database derivation
  * @param newIdsToDatabase Map of UUIDs to database names for new documents
- * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page links in markdown
+ * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page IDs
  * @param options Sync options including batch ID for audit logging
  */
 export async function createNotionDatabasePage(
@@ -159,19 +159,25 @@ export async function createNotionDatabasePage(
     const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid, newIdsToDatabase);
     const databaseId = getNotionDatabaseIdForDatabaseName(databaseName);
 
-    // Get internal parent page ID (only if parent is in the same database)
+    // Get internal parent info (only if parent is in the same database)
     // Returns null for cross-database parents or when no parent exists - both are valid scenarios
-    const parentPageId = getInternalParentPageIdFromAncestry(change.newAncestry, databaseName, newIdsToDatabase);
+    // The returned notionPageId is the Notion page ID (converted from Atlas UUID via uuidMappings)
+    const internalParentInfo = getInternalParentPageIdFromAncestry(
+      change.newAncestry,
+      databaseName,
+      newIdsToDatabase,
+      uuidMappings,
+    );
 
     // Validate relationship parent exists ONLY if one is specified and it's in the same database
-    // Skip validation when parentPageId is null (root-level or cross-database) - both are valid
-    if (parentPageId) {
-      const parentExists = await validatePageExists(parentPageId);
+    // Skip validation when internalParentInfo is null (root-level or cross-database) - both are valid
+    if (internalParentInfo) {
+      const parentExists = await validatePageExists(internalParentInfo.notionPageId);
       if (!parentExists) {
         return {
           success: false,
           reason: 'parent_not_found',
-          error: `Relationship parent page ${parentPageId} does not exist`,
+          error: `Relationship parent page ${internalParentInfo.notionPageId} (Atlas UUID: ${internalParentInfo.atlasUuid}) does not exist`,
         };
       }
     }
@@ -181,22 +187,26 @@ export async function createNotionDatabasePage(
 
     // Add relationship properties for internally nested databases
     // This sets the "Parent Doc" or "Parent item" property to establish internal hierarchy
-    if (databaseSupportsInternalNesting(databaseName) && parentPageId) {
-      const relationshipProps = addParentPageRelationshipProperty(parentPageId, databaseName);
+    // Note: addParentPageRelationshipProperty expects a Notion page ID, which we get from internalParentInfo
+    if (databaseSupportsInternalNesting(databaseName) && internalParentInfo) {
+      const relationshipProps = addParentPageRelationshipProperty(internalParentInfo.notionPageId, databaseName);
       Object.assign(properties, relationshipProps);
     }
 
     // Add relationship properties for inter-database relationships
     // This sets relationships when parent is in a different database (e.g., Article → Section)
+    // Note: addInterDatabaseRelationshipProperties converts Atlas UUIDs to Notion page IDs internally
     const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
       change.newAncestry,
       databaseName,
       newIdsToDocuments,
       newIdsToDatabase,
+      uuidMappings,
     );
 
     // Validate inter-database parent exists (if one was found)
-    // Extract parent ID from the relationship properties to validate
+    // Extract Notion page IDs from the relationship properties to validate
+    // Note: The IDs in interDbRelationshipProps are already Notion page IDs (converted from Atlas UUIDs)
     const interDbParentIds: string[] = [];
     for (const propValue of Object.values(interDbRelationshipProps)) {
       const relationProp = propValue as { relation?: Array<{ id: string }> };
@@ -215,13 +225,13 @@ export async function createNotionDatabasePage(
     }
 
     // Validate all inter-database parents exist
-    for (const interDbParentId of interDbParentIds) {
-      const parentExists = await validatePageExists(interDbParentId);
+    for (const interDbParentNotionPageId of interDbParentIds) {
+      const parentExists = await validatePageExists(interDbParentNotionPageId);
       if (!parentExists) {
         return {
           success: false,
           reason: 'parent_not_found',
-          error: `Inter-database parent page ${interDbParentId} does not exist`,
+          error: `Inter-database parent page ${interDbParentNotionPageId} does not exist`,
         };
       }
     }
@@ -395,6 +405,7 @@ export async function deleteNotionPage(
  * @param newIdsToDocuments Map of UUIDs to document objects for parent lookup
  * @param newIdsToDatabase Map of UUIDs to database names for new documents
  * @param originalIdsToDatabase Map of UUIDs to database names for original documents
+ * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page IDs
  * @param options Sync options including batch ID for audit logging
  */
 export async function updateNotionPageParent(
@@ -402,6 +413,7 @@ export async function updateNotionPageParent(
   newIdsToDocuments: Map<string, ExportAtlasTreeBaseDocument>,
   newIdsToDatabase: Map<string, AtlasDatabaseName>,
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
+  uuidMappings: UuidMappings,
   options?: SyncActionOptions,
 ): Promise<SyncActionResult> {
   let databaseName: AtlasDatabaseName | null = null;
@@ -422,39 +434,54 @@ export async function updateNotionPageParent(
     // Build properties object for updating relationships
     properties = {};
 
-    // Get new parent information
-    const newParentId =
+    // Get new parent Atlas UUID (last element in ancestry array)
+    const newParentAtlasUuid =
       change.newAncestry && change.newAncestry.length > 0 ? change.newAncestry[change.newAncestry.length - 1] : null;
 
+    // Convert Atlas UUID to Notion page ID for validation and relationship setting
+    let newParentNotionPageId: string | null = null;
+    if (newParentAtlasUuid) {
+      newParentNotionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(newParentAtlasUuid) ?? null;
+      if (!newParentNotionPageId) {
+        return {
+          success: false,
+          reason: 'parent_not_found',
+          error: `No Notion page ID mapping found for parent Atlas UUID ${newParentAtlasUuid}`,
+        };
+      }
+    }
+
     // Handle same-database parent changes (internal nesting)
-    if (databaseSupportsInternalNesting(databaseName) && newParentId) {
+    if (databaseSupportsInternalNesting(databaseName) && newParentAtlasUuid && newParentNotionPageId) {
       // Check if new parent is in the same database
-      const newParentDatabase = newIdsToDatabase.get(newParentId);
+      const newParentDatabase = newIdsToDatabase.get(newParentAtlasUuid);
 
       if (newParentDatabase === databaseName) {
-        // Same-database parent change
+        // Same-database parent change - use Notion page ID for relationship
         const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[databaseName];
 
         if (config.parentPropertyName) {
-          // Update parent relationship property
+          // Update parent relationship property using Notion page ID
           properties[config.parentPropertyName] = {
-            relation: [{ id: newParentId }],
+            relation: [{ id: newParentNotionPageId }],
           };
         }
       }
     }
 
     // Handle cross-database parent changes
-    if (newParentId) {
-      const newParentDatabase = newIdsToDatabase.get(newParentId);
+    if (newParentAtlasUuid) {
+      const newParentDatabase = newIdsToDatabase.get(newParentAtlasUuid);
 
       if (newParentDatabase && newParentDatabase !== databaseName) {
         // Cross-database parent change
+        // Note: addInterDatabaseRelationshipProperties converts Atlas UUIDs to Notion page IDs internally
         const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
           change.newAncestry,
           databaseName,
           newIdsToDocuments,
           newIdsToDatabase,
+          uuidMappings,
         );
 
         Object.assign(properties, interDbRelationshipProps);
@@ -466,14 +493,14 @@ export async function updateNotionPageParent(
       return { success: true, pageId: change.uuid };
     }
 
-    // Validate new parent exists
-    if (newParentId) {
-      const parentExists = await validatePageExists(newParentId);
+    // Validate new parent exists using the Notion page ID
+    if (newParentNotionPageId) {
+      const parentExists = await validatePageExists(newParentNotionPageId);
       if (!parentExists) {
         return {
           success: false,
           reason: 'parent_not_found',
-          error: `New parent page ${newParentId} does not exist`,
+          error: `New parent page ${newParentNotionPageId} (Atlas UUID: ${newParentAtlasUuid}) does not exist`,
         };
       }
     }
@@ -788,6 +815,7 @@ export async function runSyncBatch(
               newIdsToDocuments,
               newIdsToDatabase,
               originalIdsToDatabase,
+              uuidMappings,
               options,
             );
             break;
@@ -806,13 +834,37 @@ export async function runSyncBatch(
           skipped++;
           addLog(`⊘ Skipped (${result.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
         } else {
+          // Stop on first error
           failed++;
           addLog(`✗ Failed ${change.changeType}: ${docLabel} - ${result.error}`, 'error', change.uuid, docLabel);
+          console.log(
+            `[Sync] Batch ${batchIndex + 1}/${totalBatches}: Stopping on error - ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`,
+          );
+          return {
+            succeeded,
+            failed,
+            skipped,
+            logs,
+            stopRequested: false,
+            error: result.error,
+          };
         }
       } catch (error) {
+        // Stop on first exception
         const err = error as Error;
         failed++;
         addLog(`✗ Error ${change.changeType}: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
+        console.log(
+          `[Sync] Batch ${batchIndex + 1}/${totalBatches}: Stopping on exception - ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`,
+        );
+        return {
+          succeeded,
+          failed,
+          skipped,
+          logs,
+          stopRequested: false,
+          error: err.message,
+        };
       }
     }
 

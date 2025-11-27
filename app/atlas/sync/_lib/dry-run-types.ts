@@ -5,7 +5,7 @@
 import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import type { AtlasChangeType } from '@/app/server/atlas/diff/atlas-diff';
 
-export type SyncPhase = 'content' | 'additions' | 'deletions' | 'idle';
+export type SyncPhase = 'content' | 'additions' | 'deletions' | 'parent_changed' | 'sibling_order_changed' | 'idle';
 
 /**
  * Represents a single operation that would be performed during sync.

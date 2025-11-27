@@ -1,5 +1,6 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
+import type { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 
 /**
  * Gets the Atlas database name for a document based on its type.
@@ -64,8 +65,19 @@ export function databaseSupportsInternalNesting(databaseName: AtlasDatabaseName)
 }
 
 /**
+ * Result of getting internal parent page ID from ancestry.
+ * Contains both the Atlas UUID (for lookup purposes) and the Notion page ID (for API calls).
+ */
+export interface InternalParentInfo {
+  /** The Atlas document UUID of the parent (used for database lookups) */
+  atlasUuid: string;
+  /** The Notion page ID of the parent (used for Notion API calls and relationship properties) */
+  notionPageId: string;
+}
+
+/**
  * Gets the internal relationship parent page ID from ancestry array.
- * Returns the immediate parent UUID if it's in the same Notion database, or null otherwise.
+ * Returns the parent info (Atlas UUID + Notion page ID) if the parent is in the same Notion database, or null otherwise.
  *
  * This function filters out cross-database parents, as internal parent relationships
  * only exist within the same Notion database (e.g., Section → Core in "Sections & Primary Docs").
@@ -78,26 +90,28 @@ export function databaseSupportsInternalNesting(databaseName: AtlasDatabaseName)
  * This is for relationship properties (e.g., "Parent Doc", "Parent item"),
  * not the Notion API parent (which is always the Notion database itself).
  *
- * @param ancestry The ancestry array from the change
+ * @param ancestry The ancestry array from the change (contains Atlas document UUIDs)
  * @param childDatabaseName The database name of the child document
  * @param uuidToDatabase Map of UUIDs to database names (from buildLookupMaps)
+ * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page IDs
  */
 export function getInternalParentPageIdFromAncestry(
   ancestry: string[] | undefined,
   childDatabaseName: AtlasDatabaseName,
   uuidToDatabase: Map<string, AtlasDatabaseName>,
-): string | null {
+  uuidMappings: UuidMappings,
+): InternalParentInfo | null {
   if (!ancestry || ancestry.length === 0) {
     return null;
   }
 
-  // Get the immediate parent UUID (last element in ancestry array)
-  const potentialParentId = ancestry[ancestry.length - 1];
+  // Get the immediate parent Atlas UUID (last element in ancestry array)
+  const parentAtlasUuid = ancestry[ancestry.length - 1];
 
   // Derive parent's database name from the database tracking map
-  const parentDatabaseName = uuidToDatabase.get(potentialParentId);
+  const parentDatabaseName = uuidToDatabase.get(parentAtlasUuid);
   if (!parentDatabaseName) {
-    throw new Error(`Parent database not found for document ${potentialParentId}`);
+    throw new Error(`Parent database not found for document ${parentAtlasUuid}`);
   }
 
   // Only return parent ID if it's in the same database (internal hierarchy)
@@ -106,8 +120,17 @@ export function getInternalParentPageIdFromAncestry(
     return null;
   }
 
-  // Parent is in the same database - return it for relationship property
-  return potentialParentId;
+  // Convert Atlas UUID to Notion page ID
+  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(parentAtlasUuid);
+  if (!notionPageId) {
+    throw new Error(
+      `No Notion page ID mapping found for parent Atlas UUID ${parentAtlasUuid}. ` +
+        `This may indicate the parent page hasn't been created yet or the UUID mapping is missing.`,
+    );
+  }
+
+  // Parent is in the same database - return both IDs for relationship property
+  return { atlasUuid: parentAtlasUuid, notionPageId };
 }
 
 /**

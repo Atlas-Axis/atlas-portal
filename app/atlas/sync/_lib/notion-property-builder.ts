@@ -277,11 +277,17 @@ export function addParentPageRelationshipProperty(
  * Example: When creating a Section under an Article, this sets the "Parent Article"
  * relationship property on the Section page.
  *
+ * IMPORTANT: The ancestry array contains Atlas document UUIDs, but Notion API requires
+ * Notion page IDs for relationship properties. This function converts the parent's Atlas UUID
+ * to its Notion page ID using the provided uuidMappings.
+ *
  * Limitation: When a non-Scope document doesn't have a parent, its parent relationship change will not be synced to Notion.
  *
- * @param ancestry The ancestry array (parent UUIDs from immediate parent to root)
+ * @param ancestry The ancestry array (Atlas document UUIDs from immediate parent to root)
  * @param childDatabaseName The database name of the child document being created
- * @param uuidToDocumentMap Map of UUIDs to document objects for deriving parent database
+ * @param uuidToDocumentMap Map of Atlas UUIDs to document objects for deriving parent database
+ * @param uuidToDatabase Map of Atlas UUIDs to database names (from buildLookupMaps)
+ * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page IDs
  * @returns Object with relationship properties to merge into page properties, or empty object if no inter-database parent
  */
 export function addInterDatabaseRelationshipProperties(
@@ -289,6 +295,7 @@ export function addInterDatabaseRelationshipProperties(
   childDatabaseName: AtlasDatabaseName,
   uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
   uuidToDatabase: Map<string, AtlasDatabaseName>,
+  uuidMappings: UuidMappings,
 ): Record<string, unknown> {
   const properties: Record<string, unknown> = {};
 
@@ -309,26 +316,26 @@ export function addInterDatabaseRelationshipProperties(
     return properties;
   }
 
-  // Get the immediate parent UUID (last element in ancestry array)
-  const parentId = ancestry[ancestry.length - 1];
+  // Get the immediate parent Atlas UUID (last element in ancestry array)
+  const parentAtlasUuid = ancestry[ancestry.length - 1];
 
   // Get parent document to determine its database
-  const parentDoc = uuidToDocumentMap.get(parentId);
+  const parentDoc = uuidToDocumentMap.get(parentAtlasUuid);
   if (!parentDoc) {
     // Parent document not found - invalid reference
     const message = 'Parent document not found for inter-database relationship properties for child database';
-    console.error(message, { childDatabaseName, parentId, ancestry });
-    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentId, ancestry } });
+    console.error(message, { childDatabaseName, parentAtlasUuid, ancestry });
+    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
     return properties;
   }
 
   // Derive parent's database name from database tracking map
-  const parentDatabaseName = uuidToDatabase.get(parentId);
+  const parentDatabaseName = uuidToDatabase.get(parentAtlasUuid);
   if (!parentDatabaseName) {
     // Parent database not found - invalid reference
     const message = 'Parent database not found for inter-database relationship properties';
-    console.error(message, { childDatabaseName, parentId, ancestry });
-    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentId, ancestry } });
+    console.error(message, { childDatabaseName, parentAtlasUuid, ancestry });
+    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
     return properties;
   }
 
@@ -347,10 +354,19 @@ export function addInterDatabaseRelationshipProperties(
     throw new Error('No relationship defined between databases');
   }
 
-  // Set the relationship property
+  // Convert Atlas UUID to Notion page ID for the relationship property
+  const parentNotionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(parentAtlasUuid);
+  if (!parentNotionPageId) {
+    throw new Error(
+      `No Notion page ID mapping found for parent Atlas UUID ${parentAtlasUuid}. ` +
+        `This may indicate the parent page hasn't been created yet or the UUID mapping is missing.`,
+    );
+  }
+
+  // Set the relationship property using the Notion page ID
   // When we set the child→parent relationship, Notion automatically updates the reverse relationship
   properties[relationshipPropertyName] = {
-    relation: [{ id: parentId }],
+    relation: [{ id: parentNotionPageId }],
   };
 
   return properties;

@@ -318,7 +318,7 @@ export async function syncChangesToNotion(
       }
 
       const docLabel = getDocumentLabel(change);
-      updateProgress('content', docLabel);
+      updateProgress('parent_changed', docLabel);
 
       // Skip documents affected by nesting bug to preserve manual relationship corrections
       if (change.uuid && nestingBugAffectedUuids.has(change.uuid)) {
@@ -327,7 +327,7 @@ export async function syncChangesToNotion(
           reason: 'nesting_bug_affected',
           error: 'Document has manual nesting bug mapping - parent change skipped',
         };
-        result.skipped.push({ change, result: actionResult, phase: 'content' });
+        result.skipped.push({ change, result: actionResult, phase: 'parent_changed' });
         addLog(
           `⊘ Skipped (nesting bug affected): ${docLabel} - manual mapping exists`,
           'warning',
@@ -345,7 +345,7 @@ export async function syncChangesToNotion(
           // Dry-run: simulate success without making API call
           actionResult = { success: true, pageId: change.uuid };
           completedCount++;
-          result.succeeded.push({ change, result: actionResult, phase: 'content' });
+          result.succeeded.push({ change, result: actionResult, phase: 'parent_changed' });
           addLog(`[DRY-RUN] Would update parent: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
           // Normal: make actual API call
@@ -355,18 +355,19 @@ export async function syncChangesToNotion(
             newIdsToDocuments,
             newIdsToDatabase,
             originalIdsToDatabase,
+            uuidMappings,
             syncActionOptions,
           );
           completedCount++;
 
           if (actionResult.success) {
-            result.succeeded.push({ change, result: actionResult, phase: 'content' });
+            result.succeeded.push({ change, result: actionResult, phase: 'parent_changed' });
             addLog(`✓ Updated parent: ${docLabel}`, 'success', change.uuid, docLabel);
           } else if (actionResult.reason === 'parent_not_found') {
-            result.skipped.push({ change, result: actionResult, phase: 'content' });
+            result.skipped.push({ change, result: actionResult, phase: 'parent_changed' });
             addLog(`⊘ Skipped (new parent not found): ${docLabel}`, 'warning', change.uuid, docLabel);
           } else {
-            result.failed.push({ change, result: actionResult, phase: 'content' });
+            result.failed.push({ change, result: actionResult, phase: 'parent_changed' });
             addLog(`✗ Failed to update parent: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
           }
         }
@@ -374,7 +375,7 @@ export async function syncChangesToNotion(
         completedCount++;
         const err = error as Error;
         const actionResult: SyncActionResult = { success: false, error: err.message };
-        result.failed.push({ change, result: actionResult, phase: 'content' });
+        result.failed.push({ change, result: actionResult, phase: 'parent_changed' });
         addLog(`✗ Error updating parent: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
@@ -385,7 +386,7 @@ export async function syncChangesToNotion(
   // sibling order changes are effectively handled by updating the doc_no property
   if (changes.sibling_order_changed.length > 0 && !options.stopRequested) {
     addLog(`Phase 5: Processing ${changes.sibling_order_changed.length} sibling order changes`, 'info');
-    updateProgress('content', null); // Reuse content phase for now
+    updateProgress('sibling_order_changed', null);
 
     for (const change of changes.sibling_order_changed) {
       if (options.stopRequested) {
@@ -395,7 +396,7 @@ export async function syncChangesToNotion(
       }
 
       const docLabel = getDocumentLabel(change);
-      updateProgress('content', docLabel);
+      updateProgress('sibling_order_changed', docLabel);
 
       try {
         let actionResult: SyncActionResult;
@@ -404,7 +405,7 @@ export async function syncChangesToNotion(
           // Dry-run: simulate success without making API call
           actionResult = { success: true, pageId: change.uuid };
           completedCount++;
-          result.succeeded.push({ change, result: actionResult, phase: 'content' });
+          result.succeeded.push({ change, result: actionResult, phase: 'sibling_order_changed' });
           addLog(`[DRY-RUN] Would update sibling order: ${docLabel}`, 'info', change.uuid, docLabel);
         } else {
           // Normal: make actual API call
@@ -414,10 +415,10 @@ export async function syncChangesToNotion(
           completedCount++;
 
           if (actionResult.success) {
-            result.succeeded.push({ change, result: actionResult, phase: 'content' });
+            result.succeeded.push({ change, result: actionResult, phase: 'sibling_order_changed' });
             addLog(`✓ Updated sibling order: ${docLabel}`, 'success', change.uuid, docLabel);
           } else {
-            result.failed.push({ change, result: actionResult, phase: 'content' });
+            result.failed.push({ change, result: actionResult, phase: 'sibling_order_changed' });
             addLog(
               `✗ Failed to update sibling order: ${docLabel} - ${actionResult.error}`,
               'error',
@@ -430,7 +431,7 @@ export async function syncChangesToNotion(
         completedCount++;
         const err = error as Error;
         const actionResult: SyncActionResult = { success: false, error: err.message };
-        result.failed.push({ change, result: actionResult, phase: 'content' });
+        result.failed.push({ change, result: actionResult, phase: 'sibling_order_changed' });
         addLog(`✗ Error updating sibling order: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
