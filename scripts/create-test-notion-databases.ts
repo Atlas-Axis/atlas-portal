@@ -16,6 +16,8 @@
  *
  * The --delete-existing flag will archive existing test databases before creating new ones.
  */
+import fs from 'fs';
+import path from 'path';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASES, ATLAS_DOCUMENT_TYPES } from '@/app/server/atlas/constants';
 import {
@@ -125,11 +127,15 @@ async function main() {
     console.log('\n🔗 Adding relationship properties (second pass)...\n');
     await addRelationshipProperties(databaseMappings);
 
-    // Step 5: Validation and reporting
+    // Step 5: Update notion-ids-dev.ts with new database IDs
+    console.log('\n📝 Updating notion-ids-dev.ts...\n');
+    updateNotionIdsDevFile(databaseMappings);
+
+    // Step 6: Validation and reporting
     console.log('\n✅ Validating created databases...\n');
     await validateAndReport(databaseMappings);
 
-    // Step 6: Display manual step reminder for sub-item enablement
+    // Step 7: Display manual step reminder for sub-item enablement
     displayManualStepReminder(databaseMappings);
 
     console.log('\n🎉 Test database creation completed successfully!\n');
@@ -575,6 +581,47 @@ function displayManualStepReminder(databaseMappings: DatabaseMapping[]) {
     console.log(`   ${url}`);
     console.log(`   → Set "Property" value to: "Sub-item"`);
     console.log();
+  }
+}
+
+/**
+ * Path to the notion-ids-dev.ts file
+ */
+const NOTION_IDS_DEV_FILE_PATH = path.join(process.cwd(), 'app/server/atlas/notion-mapping/notion-ids-dev.ts');
+
+/**
+ * Updates the notion-ids-dev.ts file with the newly created database IDs.
+ * This allows the dev environment to use the test databases.
+ */
+function updateNotionIdsDevFile(databaseMappings: DatabaseMapping[]): void {
+  // Read the current file content
+  const fileContent = fs.readFileSync(NOTION_IDS_DEV_FILE_PATH, 'utf-8');
+
+  // Build the new ATLAS_DATABASE_ID_MAP content
+  const mapEntries = databaseMappings.map((mapping) => `  '${mapping.name}': '${mapping.databaseId}',`).join('\n');
+
+  const newMapContent = `export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
+${mapEntries}
+} as const;`;
+
+  // Replace the existing ATLAS_DATABASE_ID_MAP using regex
+  const mapRegex = /export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = \{[\s\S]*?\} as const;/;
+
+  if (!mapRegex.test(fileContent)) {
+    throw new Error('Could not find ATLAS_DATABASE_ID_MAP in notion-ids-dev.ts');
+  }
+
+  const updatedContent = fileContent.replace(mapRegex, newMapContent);
+
+  // Write the updated content back to the file
+  fs.writeFileSync(NOTION_IDS_DEV_FILE_PATH, updatedContent, 'utf-8');
+
+  console.log('✓ Updated ATLAS_DATABASE_ID_MAP in notion-ids-dev.ts');
+  console.log('  File: app/server/atlas/notion-mapping/notion-ids-dev.ts');
+  console.log();
+  console.log('  New database IDs:');
+  for (const mapping of databaseMappings) {
+    console.log(`    ${mapping.name}: ${mapping.databaseId}`);
   }
 }
 
