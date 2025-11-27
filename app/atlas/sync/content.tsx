@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
@@ -80,9 +80,6 @@ export function Content({
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
-  // Deserialize UUID mappings once (passed from server component)
-  const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
-
   // Create UUID to document number map for markdown link conversion
   // Prefer new documents (for added/changed), fallback to original (for deleted)
   const uuidToDocNoMap = useMemo(() => {
@@ -97,6 +94,91 @@ export function Content({
     });
     return map;
   }, [originalIdsToDocuments, newIdsToDocuments]);
+
+  return (
+    <Card className="container mx-auto max-w-7xl p-6">
+      <CardHeader>
+        <h1 className="text-3xl font-bold">Atlas Sync - Markdown to Notion</h1>
+      </CardHeader>
+
+      <Divider className="my-4" />
+
+      {!hasChanges && (
+        <Alert variant="faded" color="success" className="mb-6 max-w-lg">
+          There are no changes
+        </Alert>
+      )}
+
+      <CardBody>
+        {/* Added Documents */}
+        <ChangeSection
+          title="Added"
+          changes={changes.added}
+          changeType="added"
+          uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
+        />
+
+        {/* Changed Documents */}
+        <ChangeSection
+          title="Changed"
+          changes={changes.changed}
+          changeType="changed"
+          uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
+        />
+
+        {/* Sibling Order Changed */}
+        <ChangeSection
+          title="Order / Document No Changed"
+          changes={changes.sibling_order_changed}
+          changeType="sibling_order_changed"
+          uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
+        />
+
+        {/* Parent Changed */}
+        <ChangeSection
+          title="Parent Changed"
+          changes={changes.parent_changed}
+          changeType="parent_changed"
+          uuidToDocMap={newIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
+        />
+
+        {/* Deleted Documents */}
+        <ChangeSection
+          title="Deleted"
+          changes={changes.deleted}
+          changeType="deleted"
+          uuidToDocMap={originalIdsToDocuments}
+          uuidToDocNoMap={uuidToDocNoMap}
+        />
+
+        {/* Sync Controls - isolated in its own component to prevent re-renders of document sections */}
+        <SyncControls result={result} serializedMappings={serializedMappings} hasChanges={hasChanges} />
+      </CardBody>
+    </Card>
+  );
+}
+
+/**
+ * Sync controls component - manages its own state to prevent re-renders
+ * of the expensive document sections when sync progress updates.
+ */
+function SyncControls({
+  result,
+  serializedMappings,
+  hasChanges,
+}: {
+  result: AtlasDiffResult;
+  serializedMappings: SerializedUuidMappings;
+  hasChanges: boolean;
+}) {
+  const { changes } = result;
+
+  // Deserialize UUID mappings once (passed from server component)
+  const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
 
   const [syncState, setSyncState] = useState<SyncState>({
     isRunning: false,
@@ -115,6 +197,8 @@ export function Content({
   const syncOptionsRef = useRef({ stopRequested: false });
 
   const handleSyncClick = async () => {
+    console.log('handleSyncClick called');
+
     setSyncState({
       isRunning: true,
       stopRequested: false,
@@ -205,149 +289,85 @@ export function Content({
   };
 
   return (
-    <Card className="container mx-auto max-w-7xl p-6">
-      <CardHeader>
-        <h1 className="text-3xl font-bold">Atlas Sync - Markdown to Notion</h1>
-      </CardHeader>
+    <div className="my-6">
+      {/* Sync Buttons */}
+      <div className="flex justify-center gap-3">
+        <Button
+          size="lg"
+          onPress={handlePreviewClick}
+          variant="bordered"
+          color="secondary"
+          isLoading={isDryRunRunning}
+          isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
+        >
+          Preview Changes
+        </Button>
+        <Button
+          size="lg"
+          onPress={handleSyncClick}
+          variant="solid"
+          color="primary"
+          isLoading={syncState.isRunning}
+          isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
+        >
+          Sync Changes to Notion
+        </Button>
+        {syncState.isRunning && !syncState.stopRequested && (
+          <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
+            Stop
+          </Button>
+        )}
+      </div>
 
-      <Divider className="my-4" />
-
-      {!hasChanges && (
-        <Alert variant="faded" color="success" className="mb-6 max-w-lg">
-          There are no changes
-        </Alert>
-      )}
-
-      <CardBody>
-        {/* Added Documents */}
-        <ChangeSection
-          title="Added"
-          changes={changes.added}
-          changeType="added"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Changed Documents */}
-        <ChangeSection
-          title="Changed"
-          changes={changes.changed}
-          changeType="changed"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Sibling Order Changed */}
-        <ChangeSection
-          title="Order / Document No Changed"
-          changes={changes.sibling_order_changed}
-          changeType="sibling_order_changed"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Parent Changed */}
-        <ChangeSection
-          title="Parent Changed"
-          changes={changes.parent_changed}
-          changeType="parent_changed"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Deleted Documents */}
-        <ChangeSection
-          title="Deleted"
-          changes={changes.deleted}
-          changeType="deleted"
-          uuidToDocMap={originalIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Sync Controls and Progress */}
-        <div className="my-6">
-          {/* Sync Buttons */}
-          <div className="flex justify-center gap-3">
-            <Button
-              size="lg"
-              onPress={handlePreviewClick}
-              variant="bordered"
-              color="secondary"
-              isLoading={isDryRunRunning}
-              isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
-            >
-              Preview Changes
-            </Button>
-            <Button
-              size="lg"
-              onPress={handleSyncClick}
-              variant="solid"
-              color="primary"
-              isLoading={syncState.isRunning}
-              isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
-            >
-              Sync Changes to Notion
-            </Button>
-            {syncState.isRunning && !syncState.stopRequested && (
-              <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
-                Stop
-              </Button>
-            )}
+      {/* Progress Display */}
+      {(syncState.isRunning || syncState.completed) && (
+        <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+          {/* Phase and Progress */}
+          <div className="mb-4">
+            <div className="mb-2 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold">Sync Progress:</span>
+                <PhaseChip phase={syncState.currentPhase} />
+                {syncState.stopRequested && (
+                  <Chip color="warning" size="sm">
+                    Stopping...
+                  </Chip>
+                )}
+              </div>
+              <span className="text-sm text-gray-600">
+                {syncState.progress.completed} / {syncState.progress.total}
+              </span>
+            </div>
+            <Progress
+              value={syncState.progress.total > 0 ? (syncState.progress.completed / syncState.progress.total) * 100 : 0}
+              color={syncState.completed ? 'success' : 'primary'}
+              className="max-w-full"
+            />
           </div>
 
-          {/* Progress Display */}
-          {(syncState.isRunning || syncState.completed) && (
-            <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
-              {/* Phase and Progress */}
-              <div className="mb-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold">Sync Progress:</span>
-                    <PhaseChip phase={syncState.currentPhase} />
-                    {syncState.stopRequested && (
-                      <Chip color="warning" size="sm">
-                        Stopping...
-                      </Chip>
-                    )}
+          {/* Current Document */}
+          {syncState.currentDocument && (
+            <div className="mb-4 text-sm text-gray-700">
+              <span className="font-medium">Processing:</span> {syncState.currentDocument}
+            </div>
+          )}
+
+          {/* Logs */}
+          {syncState.logs.length > 0 && (
+            <div className="mt-4">
+              <div className="mb-2 font-semibold">Log:</div>
+              <div className="max-h-96 overflow-y-auto rounded border border-gray-200 bg-gray-50 p-3">
+                {syncState.logs.map((log, idx) => (
+                  <div key={idx} className={cn('mb-1 font-mono text-xs', getLogColorClass(log.type))}>
+                    <span className="text-gray-500">[{log.timestamp.toLocaleTimeString()}]</span> {log.message}
                   </div>
-                  <span className="text-sm text-gray-600">
-                    {syncState.progress.completed} / {syncState.progress.total}
-                  </span>
-                </div>
-                <Progress
-                  value={
-                    syncState.progress.total > 0 ? (syncState.progress.completed / syncState.progress.total) * 100 : 0
-                  }
-                  color={syncState.completed ? 'success' : 'primary'}
-                  className="max-w-full"
-                />
+                ))}
               </div>
-
-              {/* Current Document */}
-              {syncState.currentDocument && (
-                <div className="mb-4 text-sm text-gray-700">
-                  <span className="font-medium">Processing:</span> {syncState.currentDocument}
-                </div>
-              )}
-
-              {/* Logs */}
-              {syncState.logs.length > 0 && (
-                <div className="mt-4">
-                  <div className="mb-2 font-semibold">Log:</div>
-                  <div className="max-h-96 overflow-y-auto rounded border border-gray-200 bg-gray-50 p-3">
-                    {syncState.logs.map((log, idx) => (
-                      <div key={idx} className={cn('mb-1 font-mono text-xs', getLogColorClass(log.type))}>
-                        <span className="text-gray-500">[{log.timestamp.toLocaleTimeString()}]</span> {log.message}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
-      </CardBody>
-    </Card>
+      )}
+    </div>
   );
 }
 
@@ -387,7 +407,7 @@ function getLogColorClass(type: SyncLogEntry['type']): string {
   }
 }
 
-function ChangeSection({
+const ChangeSection = memo(function ChangeSection({
   title,
   changes,
   changeType,
@@ -425,7 +445,7 @@ function ChangeSection({
       </div>
     </div>
   );
-}
+});
 
 // Format UUID as document reference
 function formatDocReference(
@@ -439,7 +459,7 @@ function formatDocReference(
   return uuid; // Fallback to UUID if not found
 }
 
-function ChangeCard({
+const ChangeCard = memo(function ChangeCard({
   change,
   uuidToDocMap,
   uuidToDocNoMap,
@@ -529,7 +549,7 @@ function ChangeCard({
       </Card>
     </div>
   );
-}
+});
 
 function ParentDoc({
   change,
