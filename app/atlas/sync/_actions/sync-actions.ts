@@ -746,8 +746,11 @@ export async function runSyncBatch(
     const uuidMappings = await loadUuidMappings();
 
     // Load nesting bug mappings for skipping affected documents
+    // Use throwOnMissingUuid: false because some documents may not exist yet when sync starts
     const nestingMappings = await loadNotionNestingFixMappings();
-    const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
+    const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings, {
+      throwOnMissingUuid: false,
+    });
 
     const options: SyncActionOptions = { syncBatchId };
 

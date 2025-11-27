@@ -70,6 +70,15 @@ export async function saveNotionNestingFixMappings(mappings: NotionNestingBugMap
   }
 }
 
+export interface BuildNestingBugAffectedUuidsSetOptions {
+  /**
+   * Whether to throw an error when an Atlas UUID is not found for a nesting bug mapping.
+   * If false, logs a warning and continues without adding that UUID to the set.
+   * @default true
+   */
+  throwOnMissingUuid?: boolean;
+}
+
 /**
  * Builds a Set of Atlas UUIDs that are affected by the nesting bug.
  * Uses existing UuidMappings for efficient O(1) lookups during sync.
@@ -79,12 +88,15 @@ export async function saveNotionNestingFixMappings(mappings: NotionNestingBugMap
  *
  * @param nestingMappings - Nesting bug mappings from Supabase
  * @param uuidMappings - UUID mappings for Notion page ID to Atlas UUID conversion
+ * @param options - Configuration options
  * @returns Set of Atlas UUIDs that are affected by the nesting bug
  */
 export function buildNestingBugAffectedUuidsSet(
   nestingMappings: NotionNestingBugMapping[],
   uuidMappings: UuidMappings,
+  options: BuildNestingBugAffectedUuidsSetOptions = {},
 ): Set<string> {
+  const { throwOnMissingUuid = true } = options;
   const affectedUuids = new Set<string>();
 
   for (const mapping of nestingMappings) {
@@ -92,8 +104,13 @@ export function buildNestingBugAffectedUuidsSet(
     if (atlasUuid) {
       affectedUuids.add(atlasUuid);
     } else {
-      console.error(`No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`);
-      throw new Error(`No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`);
+      const message = `No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`;
+      if (throwOnMissingUuid) {
+        console.error(message);
+        throw new Error(message);
+      } else {
+        console.warn(message + ' (skipping - document may not exist yet)');
+      }
     }
   }
 
