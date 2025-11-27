@@ -9,7 +9,7 @@
       "args": ["trigger.dev@latest", "mcp", "--dev-only"]
     },
     "supabase": {
-      "url": "https://mcp.supabase.com/mcp?project_ref=kvxffffzfsnosaqmofut"
+      "url": "http://localhost:54321/mcp"
     },
     "Sentry": {
       "url": "https://mcp.sentry.dev/mcp/atlas-axis/atlas-axis-notion-sync"
