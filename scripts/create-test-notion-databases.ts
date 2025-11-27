@@ -18,7 +18,6 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASES, ATLAS_DOCUMENT_TYPES } from '@/app/server/atlas/constants';
 import {
@@ -100,6 +99,7 @@ const DATABASE_DOCUMENT_TYPES: Record<AtlasDatabaseName, AtlasDocumentType[]> = 
  * These are required for the Atlas tree builder logic to function.
  */
 interface ScopeDocumentData {
+  atlas_document_uuid: string;
   atlas_document_number: string;
   plain_text_name: string;
   plain_text_content: string;
@@ -109,6 +109,7 @@ interface ScopeDocumentData {
 
 const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
   {
+    atlas_document_uuid: '8650a584-01f8-45d6-882b-c14eab9879c4',
     atlas_document_number: 'A.0',
     plain_text_name: 'Atlas Preamble',
     plain_text_content: 'This Preamble will be further populated in later iterations of the Atlas.',
@@ -146,6 +147,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: '18ac7dd3-c646-4352-9b0d-d01a2932d7d1',
     atlas_document_number: 'A.1',
     plain_text_name: 'The Governance Scope',
     plain_text_content:
@@ -189,6 +191,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: '1ce14bd8-c7b3-4f74-a152-292a8d8ebed0',
     atlas_document_number: 'A.2',
     plain_text_name: 'The Support Scope',
     plain_text_content:
@@ -232,6 +235,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: 'd56538fc-2220-491a-a4d2-7ad6e461d707',
     atlas_document_number: 'A.3',
     plain_text_name: 'The Stability Scope',
     plain_text_content:
@@ -275,6 +279,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: '5c20d9af-0bb9-4ca1-a944-1e2cb6f8bb6b',
     atlas_document_number: 'A.4',
     plain_text_name: 'The Protocol Scope',
     plain_text_content:
@@ -318,6 +323,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: '99b1b47d-3c7a-4859-ac00-8c0849f9070e',
     atlas_document_number: 'A.5',
     plain_text_name: 'The Accessibility Scope',
     plain_text_content:
@@ -361,6 +367,7 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
     ],
   },
   {
+    atlas_document_uuid: '4a08ca6c-e652-49e4-9b79-4831b20e600a',
     atlas_document_number: 'A.6',
     plain_text_name: 'The Agent Scope',
     plain_text_content:
@@ -1104,9 +1111,10 @@ async function upsertScopeDocumentsToSupabase(createdPages: CreatedScopePage[]):
 async function createUuidMappingsForScopeDocuments(createdPages: CreatedScopePage[]): Promise<void> {
   console.log('\n🔗 Creating UUID mappings for Scope documents...\n');
 
-  // Generate UUID mappings
+  // Use fixed UUID mappings from the Scope document data
+  // These UUIDs must match the UUIDs in the Atlas markdown file (exported-atlas/atlas.md)
   const uuidMappings = createdPages.map((page) => ({
-    atlas_document_uuid: uuidv4(),
+    atlas_document_uuid: page.scopeData.atlas_document_uuid,
     notion_page_id: page.notionPageId,
   }));
 
