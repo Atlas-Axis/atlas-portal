@@ -413,6 +413,172 @@ const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
 ];
 
 /**
+ * Article document data for creating Article documents.
+ * These documents are required for the Atlas tree builder logic to function.
+ */
+interface ArticleDocumentData {
+  atlas_document_uuid: string;
+  atlas_document_number: string;
+  plain_text_name: string;
+  plain_text_content: string;
+  json_name: Json;
+  json_content: Json;
+  parent_scope_doc_no: string; // Document number of the parent Scope (e.g., "A.6")
+}
+
+const ARTICLE_DOCUMENTS_DATA: ArticleDocumentData[] = [
+  {
+    atlas_document_uuid: '6889e3e5-1e95-425c-843b-6924b0f164ae',
+    atlas_document_number: 'A.6.1',
+    plain_text_name: 'Agent Artifacts',
+    plain_text_content: 'This Article includes the Artifacts of each Agent.',
+    parent_scope_doc_no: 'A.6',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'Agent Artifacts' },
+        type: 'text',
+        plain_text: 'Agent Artifacts',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: { link: null, content: 'This Article includes the Artifacts of each Agent.' },
+        type: 'text',
+        plain_text: 'This Article includes the Artifacts of each Agent.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+];
+
+/**
+ * Section document data for creating Section documents.
+ * These documents are required for the Atlas tree builder logic to function.
+ */
+interface SectionDocumentData {
+  atlas_document_uuid: string;
+  atlas_document_number: string;
+  plain_text_name: string;
+  plain_text_content: string;
+  json_name: Json;
+  json_content: Json;
+  parent_article_doc_no: string; // Document number of the parent Article (e.g., "A.6.1")
+  sort_order: number;
+}
+
+const SECTION_DOCUMENTS_DATA: SectionDocumentData[] = [
+  {
+    atlas_document_uuid: '9fb7f1cc-f60b-4195-892d-5e540f969973',
+    atlas_document_number: 'A.6.1 - A1 - List Of Prime Agent Artifacts',
+    plain_text_name: 'A.6.1 - A1 - List Of Prime Agent Artifacts',
+    plain_text_content:
+      "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+    parent_article_doc_no: 'A.6.1',
+    sort_order: 0,
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'A.6.1 - A1 - List Of Prime Agent Artifacts' },
+        type: 'text',
+        plain_text: 'A.6.1 - A1 - List Of Prime Agent Artifacts',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+        },
+        type: 'text',
+        plain_text:
+          "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_uuid: 'df62511d-afe5-42db-8bd4-6452c5a0f464',
+    atlas_document_number: 'A.6.1 - A2 - List Of Executor Agent Artifacts',
+    plain_text_name: 'A.6.1 - A2 - List Of Executor Agent Artifacts',
+    plain_text_content:
+      'The documents herein each set out the Artifacts for Executor Agents. Executor Agent Artifacts contain all rules, processes, parameters, and information relevant to the Agent.',
+    parent_article_doc_no: 'A.6.1',
+    sort_order: 1,
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'A.6.1 - A2 - List Of Executor Agent Artifacts' },
+        type: 'text',
+        plain_text: 'A.6.1 - A2 - List Of Executor Agent Artifacts',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The documents herein each set out the Artifacts for Executor Agents. Executor Agent Artifacts contain all rules, processes, parameters, and information relevant to the Agent.',
+        },
+        type: 'text',
+        plain_text:
+          'The documents herein each set out the Artifacts for Executor Agents. Executor Agent Artifacts contain all rules, processes, parameters, and information relevant to the Agent.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+];
+
+/**
  * Type for storing database ID mappings
  */
 interface DatabaseMapping {
@@ -427,6 +593,22 @@ interface DatabaseMapping {
 interface CreatedScopePage {
   notionPageId: string;
   scopeData: ScopeDocumentData;
+}
+
+/**
+ * Type for storing created Article page information
+ */
+interface CreatedArticlePage {
+  notionPageId: string;
+  articleData: ArticleDocumentData;
+}
+
+/**
+ * Type for storing created Section page information
+ */
+interface CreatedSectionPage {
+  notionPageId: string;
+  sectionData: SectionDocumentData;
 }
 
 /**
@@ -470,15 +652,33 @@ async function main() {
     // Step 7: Create UUID mappings for Scope documents
     await createUuidMappingsForScopeDocuments(createdScopePages);
 
-    // Step 8: Update notion-ids-dev.ts with new database IDs
+    // Step 8: Create Article documents in Notion (children of Scopes)
+    const createdArticlePages = await createArticleDocuments(databaseMappings, createdScopePages);
+
+    // Step 9: Upsert Article documents to Supabase
+    await upsertArticleDocumentsToSupabase(createdArticlePages);
+
+    // Step 10: Create UUID mappings for Article documents
+    await createUuidMappingsForArticleDocuments(createdArticlePages);
+
+    // Step 11: Create Section documents in Notion (children of Articles)
+    const createdSectionPages = await createSectionDocuments(databaseMappings, createdArticlePages);
+
+    // Step 12: Upsert Section documents to Supabase
+    await upsertSectionDocumentsToSupabase(createdSectionPages);
+
+    // Step 13: Create UUID mappings for Section documents
+    await createUuidMappingsForSectionDocuments(createdSectionPages);
+
+    // Step 14: Update notion-ids-dev.ts with new database IDs
     console.log('\n📝 Updating notion-ids-dev.ts...\n');
     updateNotionIdsDevFile(databaseMappings);
 
-    // Step 9: Validation and reporting
+    // Step 15: Validation and reporting
     console.log('\n✅ Validating created databases...\n');
     await validateAndReport(databaseMappings);
 
-    // Step 10: Display manual step reminder for sub-item enablement
+    // Step 16: Display manual step reminder for sub-item enablement
     displayManualStepReminder(databaseMappings);
 
     console.log('\n🎉 Test database creation completed successfully!\n');
@@ -1126,6 +1326,358 @@ async function createUuidMappingsForScopeDocuments(createdPages: CreatedScopePag
   // Log the mappings
   for (let i = 0; i < createdPages.length; i++) {
     console.log(`    ${createdPages[i].scopeData.atlas_document_number}: ${uuidMappings[i].atlas_document_uuid}`);
+  }
+}
+
+/**
+ * Creates Article documents in the test Articles database.
+ * These documents are required for the Atlas tree builder logic to function.
+ */
+async function createArticleDocuments(
+  databaseMappings: DatabaseMapping[],
+  createdScopePages: CreatedScopePage[],
+): Promise<CreatedArticlePage[]> {
+  console.log('\n📄 Creating Article documents...\n');
+
+  // Find the Articles database ID from mappings
+  const articlesDbMapping = databaseMappings.find((m) => m.name === ATLAS_DATABASES.ARTICLES);
+  if (!articlesDbMapping) {
+    throw new Error('Articles database not found in mappings');
+  }
+
+  // Find the Scopes database ID for relationships
+  const scopesDbMapping = databaseMappings.find((m) => m.name === ATLAS_DATABASES.SCOPES);
+  if (!scopesDbMapping) {
+    throw new Error('Scopes database not found in mappings');
+  }
+
+  // Build a lookup map for Scope pages by document number
+  const scopePagesByDocNo = new Map<string, CreatedScopePage>();
+  for (const scopePage of createdScopePages) {
+    scopePagesByDocNo.set(scopePage.scopeData.atlas_document_number, scopePage);
+  }
+
+  const articlesDatabaseId = articlesDbMapping.databaseId;
+  const createdPages: CreatedArticlePage[] = [];
+
+  // Get property names from the Articles config
+  const articlesConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[ATLAS_DATABASES.ARTICLES];
+  const contentPropertyName = articlesConfig.properties.content;
+
+  if (!contentPropertyName) {
+    throw new Error('Content property not defined for Articles database');
+  }
+
+  for (const articleData of ARTICLE_DOCUMENTS_DATA) {
+    try {
+      console.log(`  Creating: ${articleData.atlas_document_number} - ${articleData.plain_text_name}...`);
+
+      // Find the parent Scope page
+      const parentScopePage = scopePagesByDocNo.get(articleData.parent_scope_doc_no);
+      if (!parentScopePage) {
+        throw new Error(
+          `Parent Scope ${articleData.parent_scope_doc_no} not found for Article ${articleData.atlas_document_number}`,
+        );
+      }
+
+      // Build Notion page properties using the configured property names
+      const docNoPropertyName = articlesConfig.properties.atlasDocumentNo;
+      const namePropertyName = articlesConfig.properties.atlasDocumentName;
+      const typePropertyName = articlesConfig.properties.atlasDocumentType;
+      const parentScopePropertyName = articlesConfig.parentRelationships[ATLAS_DATABASES.SCOPES];
+
+      const properties: Record<string, unknown> = {
+        // Doc No (title)
+        [docNoPropertyName]: {
+          title: [{ text: { content: articleData.atlas_document_number } }],
+        },
+        // Name (rich_text)
+        [namePropertyName]: {
+          rich_text: [{ type: 'text', text: { content: articleData.plain_text_name } }],
+        },
+        // Type (select)
+        [typePropertyName]: {
+          select: { name: 'Article' },
+        },
+        // Content (rich_text)
+        [contentPropertyName]: {
+          rich_text: [{ type: 'text', text: { content: articleData.plain_text_content } }],
+        },
+      };
+
+      // Add parent Scope relationship if the property exists
+      if (parentScopePropertyName) {
+        properties[parentScopePropertyName] = {
+          relation: [{ id: parentScopePage.notionPageId }],
+        };
+      }
+
+      // Create the page in Notion
+      const notionClient = notion('write');
+      const createdPage = await notionClient.pages.create({
+        parent: { type: 'database_id', database_id: articlesDatabaseId },
+        properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
+      });
+
+      createdPages.push({
+        notionPageId: createdPage.id,
+        articleData,
+      });
+
+      console.log(`    ✓ Created with ID: ${createdPage.id}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`    ✗ Failed to create ${articleData.atlas_document_number}: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  console.log(`\n  ✓ Created ${createdPages.length} Article documents`);
+  return createdPages;
+}
+
+/**
+ * Upserts created Article documents to the notion_database_pages table in Supabase.
+ */
+async function upsertArticleDocumentsToSupabase(createdPages: CreatedArticlePage[]): Promise<void> {
+  console.log('\n💾 Upserting Article documents to Supabase...\n');
+
+  const now = new Date().toISOString();
+
+  const payload = createdPages.map((page) => ({
+    notion_page_id: page.notionPageId,
+    atlas_document_type: 'Article' as const,
+    atlas_document_number: page.articleData.atlas_document_number,
+    atlas_database_name: ATLAS_DATABASES.ARTICLES,
+    has_children: false,
+    archived: false,
+    in_trash: false,
+    plain_text_content: page.articleData.plain_text_content,
+    json_content: page.articleData.json_content,
+    plain_text_name: page.articleData.plain_text_name,
+    json_name: page.articleData.json_name,
+    parent_notion_page_id: null,
+    child_scope_ids: [],
+    child_article_ids: [],
+    child_section_and_primary_doc_ids: [],
+    child_annotation_ids: [],
+    child_tenet_ids: [],
+    child_scenario_ids: [],
+    child_scenario_variation_ids: [],
+    child_active_data_ids: [],
+    child_agent_scope_ids: [],
+    child_needed_research_ids: [],
+    extra_fields: {},
+    sort_order: null,
+    updated_at: now,
+    last_edited_by_user_id: null,
+  }));
+
+  await supabase()
+    .rpc('versioned_upsert_notion_database_pages', {
+      p_rows: payload as Database['public']['Functions']['versioned_upsert_notion_database_pages']['Args']['p_rows'],
+    })
+    .throwOnError();
+
+  console.log(`  ✓ Upserted ${createdPages.length} Article documents to Supabase`);
+
+  for (const page of createdPages) {
+    console.log(`    ${page.articleData.atlas_document_number}: ${page.notionPageId}`);
+  }
+}
+
+/**
+ * Creates UUID mappings for the created Article documents.
+ */
+async function createUuidMappingsForArticleDocuments(createdPages: CreatedArticlePage[]): Promise<void> {
+  console.log('\n🔗 Creating UUID mappings for Article documents...\n');
+
+  const uuidMappings = createdPages.map((page) => ({
+    atlas_document_uuid: page.articleData.atlas_document_uuid,
+    notion_page_id: page.notionPageId,
+  }));
+
+  await supabase().from('uuid_mapping').insert(uuidMappings).throwOnError();
+
+  console.log(`  ✓ Created ${uuidMappings.length} UUID mappings`);
+
+  for (let i = 0; i < createdPages.length; i++) {
+    console.log(`    ${createdPages[i].articleData.atlas_document_number}: ${uuidMappings[i].atlas_document_uuid}`);
+  }
+}
+
+/**
+ * Creates Section documents in the test Sections & Primary Docs database.
+ * These documents are required for the Atlas tree builder logic to function.
+ */
+async function createSectionDocuments(
+  databaseMappings: DatabaseMapping[],
+  createdArticlePages: CreatedArticlePage[],
+): Promise<CreatedSectionPage[]> {
+  console.log('\n📄 Creating Section documents...\n');
+
+  // Find the Sections & Primary Docs database ID from mappings
+  const sectionsDbMapping = databaseMappings.find((m) => m.name === ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS);
+  if (!sectionsDbMapping) {
+    throw new Error('Sections & Primary Docs database not found in mappings');
+  }
+
+  // Build a lookup map for Article pages by document number
+  const articlePagesByDocNo = new Map<string, CreatedArticlePage>();
+  for (const articlePage of createdArticlePages) {
+    articlePagesByDocNo.set(articlePage.articleData.atlas_document_number, articlePage);
+  }
+
+  const sectionsDatabaseId = sectionsDbMapping.databaseId;
+  const createdPages: CreatedSectionPage[] = [];
+
+  // Get property names from the Sections config
+  const sectionsConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS];
+  const contentPropertyName = sectionsConfig.properties.content;
+  const sortOrderPropertyName = sectionsConfig.properties.sortOrder;
+
+  if (!contentPropertyName) {
+    throw new Error('Content property not defined for Sections & Primary Docs database');
+  }
+
+  for (const sectionData of SECTION_DOCUMENTS_DATA) {
+    try {
+      console.log(`  Creating: ${sectionData.atlas_document_number}...`);
+
+      // Find the parent Article page
+      const parentArticlePage = articlePagesByDocNo.get(sectionData.parent_article_doc_no);
+      if (!parentArticlePage) {
+        throw new Error(
+          `Parent Article ${sectionData.parent_article_doc_no} not found for Section ${sectionData.atlas_document_number}`,
+        );
+      }
+
+      // Build Notion page properties using the configured property names
+      // Note: For Sections & Primary Docs, atlasDocumentNo and atlasDocumentName both map to 'Doc No (or Temp Name)'
+      const docNoPropertyName = sectionsConfig.properties.atlasDocumentNo;
+      const typePropertyName = sectionsConfig.properties.atlasDocumentType;
+      const parentArticlePropertyName = sectionsConfig.parentRelationships[ATLAS_DATABASES.ARTICLES];
+
+      const properties: Record<string, unknown> = {
+        // Doc No (or Temp Name) - title
+        [docNoPropertyName]: {
+          title: [{ text: { content: sectionData.atlas_document_number } }],
+        },
+        // Type (select)
+        [typePropertyName]: {
+          select: { name: 'Section' },
+        },
+        // Content (rich_text)
+        [contentPropertyName]: {
+          rich_text: [{ type: 'text', text: { content: sectionData.plain_text_content } }],
+        },
+      };
+
+      // Add sort order if the property exists
+      if (sortOrderPropertyName) {
+        properties[sortOrderPropertyName] = {
+          number: sectionData.sort_order,
+        };
+      }
+
+      // Add parent Article relationship if the property exists
+      if (parentArticlePropertyName) {
+        properties[parentArticlePropertyName] = {
+          relation: [{ id: parentArticlePage.notionPageId }],
+        };
+      }
+
+      // Create the page in Notion
+      const notionClient = notion('write');
+      const createdPage = await notionClient.pages.create({
+        parent: { type: 'database_id', database_id: sectionsDatabaseId },
+        properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
+      });
+
+      createdPages.push({
+        notionPageId: createdPage.id,
+        sectionData,
+      });
+
+      console.log(`    ✓ Created with ID: ${createdPage.id}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`    ✗ Failed to create ${sectionData.atlas_document_number}: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  console.log(`\n  ✓ Created ${createdPages.length} Section documents`);
+  return createdPages;
+}
+
+/**
+ * Upserts created Section documents to the notion_database_pages table in Supabase.
+ */
+async function upsertSectionDocumentsToSupabase(createdPages: CreatedSectionPage[]): Promise<void> {
+  console.log('\n💾 Upserting Section documents to Supabase...\n');
+
+  const now = new Date().toISOString();
+
+  const payload = createdPages.map((page) => ({
+    notion_page_id: page.notionPageId,
+    atlas_document_type: 'Section' as const,
+    atlas_document_number: page.sectionData.atlas_document_number,
+    atlas_database_name: ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
+    has_children: false,
+    archived: false,
+    in_trash: false,
+    plain_text_content: page.sectionData.plain_text_content,
+    json_content: page.sectionData.json_content,
+    plain_text_name: page.sectionData.plain_text_name,
+    json_name: page.sectionData.json_name,
+    parent_notion_page_id: null,
+    child_scope_ids: [],
+    child_article_ids: [],
+    child_section_and_primary_doc_ids: [],
+    child_annotation_ids: [],
+    child_tenet_ids: [],
+    child_scenario_ids: [],
+    child_scenario_variation_ids: [],
+    child_active_data_ids: [],
+    child_agent_scope_ids: [],
+    child_needed_research_ids: [],
+    extra_fields: {},
+    sort_order: page.sectionData.sort_order.toString(),
+    updated_at: now,
+    last_edited_by_user_id: null,
+  }));
+
+  await supabase()
+    .rpc('versioned_upsert_notion_database_pages', {
+      p_rows: payload as Database['public']['Functions']['versioned_upsert_notion_database_pages']['Args']['p_rows'],
+    })
+    .throwOnError();
+
+  console.log(`  ✓ Upserted ${createdPages.length} Section documents to Supabase`);
+
+  for (const page of createdPages) {
+    console.log(`    ${page.sectionData.atlas_document_number}: ${page.notionPageId}`);
+  }
+}
+
+/**
+ * Creates UUID mappings for the created Section documents.
+ */
+async function createUuidMappingsForSectionDocuments(createdPages: CreatedSectionPage[]): Promise<void> {
+  console.log('\n🔗 Creating UUID mappings for Section documents...\n');
+
+  const uuidMappings = createdPages.map((page) => ({
+    atlas_document_uuid: page.sectionData.atlas_document_uuid,
+    notion_page_id: page.notionPageId,
+  }));
+
+  await supabase().from('uuid_mapping').insert(uuidMappings).throwOnError();
+
+  console.log(`  ✓ Created ${uuidMappings.length} UUID mappings`);
+
+  for (let i = 0; i < createdPages.length; i++) {
+    console.log(`    ${createdPages[i].sectionData.atlas_document_number}: ${uuidMappings[i].atlas_document_uuid}`);
   }
 }
 
