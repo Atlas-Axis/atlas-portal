@@ -4,6 +4,8 @@ import { IMPORT_DATABASES } from '@/app/server/atlas/constants';
 import { revalidatePage } from '@/app/server/revalidate-page';
 import { importDatabasesFromNotionToSupabase } from '@/app/server/services/notion/import-database-to-supabase';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { isTestEnv } from '@/app/shared/utils/is-test-env';
+import { isUsingDevNotionIds } from '@/app/shared/utils/is-using-dev-notion-ids';
 import { loadEnv } from './utils/load-env';
 
 // #!/usr/bin/env node
@@ -63,6 +65,17 @@ ${IMPORT_DATABASES.map((db) => `  - ${db}`).join('\n')}`);
   }
 
   loadEnv();
+
+  if (isTestEnv()) {
+    console.error('❌ Importing Notion databases is not allowed in test environment');
+    process.exit(1);
+  }
+
+  if (isUsingDevNotionIds()) {
+    console.log('🔑 Using dev Notion IDs');
+  } else {
+    console.log('🔐 Using production Notion IDs');
+  }
 
   // Validate database argument if provided
   const targetDatabase = args.database as AtlasDatabaseName | undefined;
