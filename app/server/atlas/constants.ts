@@ -79,7 +79,6 @@ const selectedIds = isTestEnv()
 export const ATLAS_DATABASE_ID_MAP = selectedIds.ATLAS_DATABASE_ID_MAP;
 export const ATLAS_DATABASE_ID_MAP_REVERSED = selectedIds.ATLAS_DATABASE_ID_MAP_REVERSED;
 export const MASTER_STATUS_ID_MAP = selectedIds.MASTER_STATUS_ID_MAP;
-export const MASTER_STATUS_IDS = selectedIds.MASTER_STATUS_IDS;
 
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',

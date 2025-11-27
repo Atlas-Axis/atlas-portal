@@ -41,8 +41,3 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
   Provisional: '10000000-1000-4000-8000-000000000004',
   Placeholder: '10000000-1000-4000-8000-000000000005',
 };
-
-/**
- * All Master Status option IDs as an array
- */
-export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);

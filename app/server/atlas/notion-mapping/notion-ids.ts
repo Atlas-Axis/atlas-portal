@@ -41,8 +41,3 @@ export const MASTER_STATUS_ID_MAP: Record<string, string> = {
   Provisional: '3dbb9d9c-fd63-462b-99f3-1ce879f16768',
   Placeholder: '3edf54e3-be0e-4bbb-b008-502cfc23394e',
 };
-
-/**
- * All Master Status option IDs as an array
- */
-export const MASTER_STATUS_IDS = Object.values(MASTER_STATUS_ID_MAP);
