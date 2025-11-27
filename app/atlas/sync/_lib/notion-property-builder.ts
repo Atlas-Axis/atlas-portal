@@ -10,7 +10,10 @@ import {
   SCENARIO_VARIATION_PROPERTY_MAPPING,
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
-import { convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
+import { ContentConversionWarning, convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
+
+// Re-export ContentConversionWarning for callers
+export type { ContentConversionWarning } from '@/app/server/markdown/markdown-to-rich-text';
 
 /**
  * Helper functions for formatting Notion property values
@@ -21,11 +24,13 @@ import { convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-
  * @param value - The text value to format
  * @param uuidMappings - UUID mappings for converting document links
  * @param allowEmpty - If true, empty strings create a single empty text item; if false, empty strings clear the field (empty array)
+ * @param warnings - Optional array to collect conversion warnings
  */
 function formatRichTextProperty(
   value: string,
   uuidMappings: UuidMappings,
   allowEmpty = false,
+  warnings?: ContentConversionWarning[],
 ): { rich_text: unknown[] } {
   if (value === '' && !allowEmpty) {
     return { rich_text: [] };
@@ -33,7 +38,7 @@ function formatRichTextProperty(
   if (value === '' && allowEmpty) {
     return { rich_text: [{ text: { content: '' } }] };
   }
-  return { rich_text: convertMarkdownToNotionRichText(value, uuidMappings) };
+  return { rich_text: convertMarkdownToNotionRichText(value, uuidMappings, warnings) };
 }
 
 function formatTitleProperty(value: string): { title: { text: { content: string } }[] } {
@@ -63,6 +68,7 @@ function formatNumberProperty(value: string): { number: number | null } {
  * @param propertyType - The Notion property type (rich_text, title, select, number)
  * @param uuidMappings - UUID mappings for converting document links (required for rich_text)
  * @param allowEmpty - For rich_text only: if true, empty strings create a single empty text item // TODO: Remove?
+ * @param warnings - Optional array to collect conversion warnings (for rich_text only)
  * @returns Formatted Notion property object, or null if property type is unsupported
  */
 function formatNotionProperty(
@@ -70,10 +76,11 @@ function formatNotionProperty(
   propertyType: string,
   uuidMappings: UuidMappings,
   allowEmpty = false,
+  warnings?: ContentConversionWarning[],
 ): Record<string, unknown> | null {
   switch (propertyType) {
     case 'rich_text':
-      return formatRichTextProperty(value, uuidMappings, allowEmpty);
+      return formatRichTextProperty(value, uuidMappings, allowEmpty, warnings);
     case 'title':
       return formatTitleProperty(value);
     case 'select':
@@ -96,7 +103,7 @@ function formatNotionProperty(
  * Supported property types:
  * - rich_text: Standard text with inline formatting (default)
  * - title: Page title field
- * - select: Single selection from predefined options - knowing the text value is enough, no need to know the ID, as long as the text value exists in the predefined options
+ * - select: Single selection from predefined options
  * - number: Numeric values
  *
  * All standard fields are now synced:
@@ -106,11 +113,17 @@ function formatNotionProperty(
  * - Content
  * - Sort order (for databases that have it)
  * - Extra fields (for specific document types)
+ *
+ * @param doc - The Atlas document to convert
+ * @param atlasDatabaseName - The Atlas database name for property mapping
+ * @param uuidMappings - UUID mappings for converting document links
+ * @param warnings - Optional array to collect conversion warnings (e.g., truncation)
  */
 export function buildNotionProperties(
   doc: ExportAtlasTreeBaseDocument,
   atlasDatabaseName: AtlasDatabaseName,
   uuidMappings: UuidMappings,
+  warnings?: ContentConversionWarning[],
 ): Record<string, unknown> {
   const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   // For those properties that are not rich_text, we read the type
@@ -130,6 +143,7 @@ export function buildNotionProperties(
     documentNamePropertyType,
     uuidMappings,
     allowEmptyForDocumentName,
+    warnings,
   )!;
 
   // Document number (rich_text) - only sync if it's a different property than document name
@@ -141,6 +155,8 @@ export function buildNotionProperties(
       doc.doc_no || '',
       documentNoPropertyType,
       uuidMappings,
+      false,
+      warnings,
     )!;
   }
 
@@ -151,7 +167,13 @@ export function buildNotionProperties(
 
   // Content (always rich_text when defined) - only if content property is defined
   if (config.properties.content) {
-    properties[config.properties.content] = formatNotionProperty(doc.content || '', 'rich_text', uuidMappings)!;
+    properties[config.properties.content] = formatNotionProperty(
+      doc.content || '',
+      'rich_text',
+      uuidMappings,
+      false,
+      warnings,
+    )!;
   }
 
   // Sort order property (number) - only for databases that have it (e.g., "Sections & Primary Docs")
@@ -173,9 +195,17 @@ export function buildNotionProperties(
       atlasDatabaseName,
       TYPE_SPECIFICATION_PROPERTY_MAPPING,
       uuidMappings,
+      warnings,
     );
   } else if (doc.type === 'Scenario') {
-    addExtraFieldsToProperties(properties, docRecord, atlasDatabaseName, SCENARIO_PROPERTY_MAPPING, uuidMappings);
+    addExtraFieldsToProperties(
+      properties,
+      docRecord,
+      atlasDatabaseName,
+      SCENARIO_PROPERTY_MAPPING,
+      uuidMappings,
+      warnings,
+    );
   } else if (doc.type === 'Scenario Variation') {
     addExtraFieldsToProperties(
       properties,
@@ -183,6 +213,7 @@ export function buildNotionProperties(
       atlasDatabaseName,
       SCENARIO_VARIATION_PROPERTY_MAPPING,
       uuidMappings,
+      warnings,
     );
   } else if (doc.type === 'Needed Research') {
     addExtraFieldsToProperties(
@@ -191,6 +222,7 @@ export function buildNotionProperties(
       atlasDatabaseName,
       NEEDED_RESEARCH_PROPERTY_MAPPING,
       uuidMappings,
+      warnings,
     );
   }
 
@@ -219,6 +251,7 @@ function addExtraFieldsToProperties(
   atlasDatabaseName: AtlasDatabaseName,
   fieldMapping: Record<string, string>,
   uuidMappings: UuidMappings,
+  warnings?: ContentConversionWarning[],
 ): void {
   // Get property type overrides for this database (if any)
   const typeOverrides = NOTION_PROPERTY_TYPE_OVERRIDES[atlasDatabaseName] || {};
@@ -237,7 +270,7 @@ function addExtraFieldsToProperties(
     const stringValue = String(value);
 
     // Format property based on type using dispatcher function
-    const formattedProperty = formatNotionProperty(stringValue, propertyType, uuidMappings);
+    const formattedProperty = formatNotionProperty(stringValue, propertyType, uuidMappings, false, warnings);
 
     if (formattedProperty) {
       properties[notionPropertyName] = formattedProperty;

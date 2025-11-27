@@ -236,12 +236,18 @@ export async function syncChangesToNotion(
           if (actionResult.success) {
             result.succeeded.push({ change, result: actionResult, phase: 'additions' });
             addLog(`✓ Created: ${docLabel}`, 'success', actionResult.pageId, docLabel);
-          } else if (actionResult.reason === 'parent_not_found' || actionResult.reason === 'mapping_not_found') {
+          } else if (
+            actionResult.reason === 'parent_not_found' ||
+            actionResult.reason === 'mapping_not_found' ||
+            actionResult.reason === 'parent_lookup_error' ||
+            actionResult.reason === 'relationship_error'
+          ) {
             // Skip when a same-database parent is specified but doesn't exist in Notion
             // Note: Having no parent (root-level or cross-database) is perfectly valid
             // Also skip if UUID mapping is not found (document may not exist in Supabase yet)
+            // Also skip if parent lookup or relationship building failed
             result.skipped.push({ change, result: actionResult, phase: 'additions' });
-            addLog(`⊘ Skipped (specified relationship parent missing): ${docLabel}`, 'warning', change.uuid, docLabel);
+            addLog(`⊘ Skipped (${actionResult.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
           } else {
             result.failed.push({ change, result: actionResult, phase: 'additions' });
             addLog(`✗ Failed to create: ${docLabel} - ${actionResult.error}`, 'error', change.uuid, docLabel);
@@ -369,7 +375,12 @@ export async function syncChangesToNotion(
           if (actionResult.success) {
             result.succeeded.push({ change, result: actionResult, phase: 'parent_changed' });
             addLog(`✓ Updated parent: ${docLabel}`, 'success', change.uuid, docLabel);
-          } else if (actionResult.reason === 'parent_not_found' || actionResult.reason === 'mapping_not_found') {
+          } else if (
+            actionResult.reason === 'parent_not_found' ||
+            actionResult.reason === 'mapping_not_found' ||
+            actionResult.reason === 'parent_lookup_error' ||
+            actionResult.reason === 'relationship_error'
+          ) {
             result.skipped.push({ change, result: actionResult, phase: 'parent_changed' });
             addLog(`⊘ Skipped (${actionResult.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
           } else {

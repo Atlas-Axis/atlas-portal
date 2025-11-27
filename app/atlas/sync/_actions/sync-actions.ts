@@ -21,6 +21,7 @@ import {
 } from '../_lib/atlas-database-mapper';
 import type { RealSyncResult, SerializedBatchData } from '../_lib/batch-sync-types';
 import {
+  ContentConversionWarning,
   addInterDatabaseRelationshipProperties,
   addParentPageRelationshipProperty,
   buildNotionProperties,
@@ -36,6 +37,8 @@ export interface SyncActionResult {
   pageId?: string;
   error?: string;
   reason?: string;
+  /** Warnings generated during content conversion (e.g., truncation) */
+  warnings?: Array<{ type: string; message: string }>;
 }
 
 export interface SyncActionOptions {
@@ -88,7 +91,9 @@ export async function updateNotionPageContent(
     databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
     // Build Notion properties from the document (converts markdown to rich text)
-    properties = buildNotionProperties(change.newValues, databaseName, uuidMappings);
+    // Collect any warnings (e.g., content truncation)
+    const warnings: ContentConversionWarning[] = [];
+    properties = buildNotionProperties(change.newValues, databaseName, uuidMappings, warnings);
 
     // Update the page using Notion API
     const notionClient = notion();
@@ -109,7 +114,11 @@ export async function updateNotionPageContent(
       syncBatchId: options?.syncBatchId,
     });
 
-    return { success: true, pageId: notionPageId };
+    return {
+      success: true,
+      pageId: notionPageId,
+      warnings: warnings.length > 0 ? warnings : undefined,
+    };
   } catch (error) {
     const err = error as Error;
     console.error(`Failed to update page ${notionPageId || change.uuid}:`, err);
@@ -173,12 +182,21 @@ export async function createNotionDatabasePage(
     // Get internal parent info (only if parent is in the same database)
     // Returns null for cross-database parents or when no parent exists - both are valid scenarios
     // The returned notionPageId is the Notion page ID (converted from Atlas UUID via uuidMappings)
-    const internalParentInfo = getInternalParentPageIdFromAncestry(
-      change.newAncestry,
-      databaseName,
-      newIdsToDatabase,
-      uuidMappings,
-    );
+    let internalParentInfo;
+    try {
+      internalParentInfo = getInternalParentPageIdFromAncestry(
+        change.newAncestry,
+        databaseName,
+        newIdsToDatabase,
+        uuidMappings,
+      );
+    } catch (error) {
+      return {
+        success: false,
+        reason: 'parent_lookup_error',
+        error: `Failed to look up parent: ${(error as Error).message}`,
+      };
+    }
 
     // Validate relationship parent exists ONLY if one is specified and it's in the same database
     // Skip validation when internalParentInfo is null (root-level or cross-database) - both are valid
@@ -194,7 +212,9 @@ export async function createNotionDatabasePage(
     }
 
     // Build Notion properties from Atlas document data (converts markdown to rich text)
-    const properties = buildNotionProperties(doc, databaseName, uuidMappings);
+    // Collect any warnings (e.g., content truncation)
+    const warnings: ContentConversionWarning[] = [];
+    const properties = buildNotionProperties(doc, databaseName, uuidMappings, warnings);
 
     // Add relationship properties for internally nested databases
     // This sets the "Parent Doc" or "Parent item" property to establish internal hierarchy
@@ -207,13 +227,22 @@ export async function createNotionDatabasePage(
     // Add relationship properties for inter-database relationships
     // This sets relationships when parent is in a different database (e.g., Article → Section)
     // Note: addInterDatabaseRelationshipProperties converts Atlas UUIDs to Notion page IDs internally
-    const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
-      change.newAncestry,
-      databaseName,
-      newIdsToDocuments,
-      newIdsToDatabase,
-      uuidMappings,
-    );
+    let interDbRelationshipProps: Record<string, unknown>;
+    try {
+      interDbRelationshipProps = addInterDatabaseRelationshipProperties(
+        change.newAncestry,
+        databaseName,
+        newIdsToDocuments,
+        newIdsToDatabase,
+        uuidMappings,
+      );
+    } catch (error) {
+      return {
+        success: false,
+        reason: 'relationship_error',
+        error: `Failed to build relationship properties: ${(error as Error).message}`,
+      };
+    }
 
     // Validate inter-database parent exists (if one was found)
     // Extract Notion page IDs from the relationship properties to validate
@@ -291,7 +320,11 @@ export async function createNotionDatabasePage(
       syncBatchId: options?.syncBatchId,
     });
 
-    return { success: true, pageId: createdPage.id };
+    return {
+      success: true,
+      pageId: createdPage.id,
+      warnings: warnings.length > 0 ? warnings : undefined,
+    };
   } catch (error) {
     const err = error as Error;
     console.error(`Failed to create page:`, err);
@@ -511,13 +544,22 @@ export async function updateNotionPageParent(
       if (newParentDatabase && newParentDatabase !== databaseName) {
         // Cross-database parent change
         // Note: addInterDatabaseRelationshipProperties converts Atlas UUIDs to Notion page IDs internally
-        const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
-          change.newAncestry,
-          databaseName,
-          newIdsToDocuments,
-          newIdsToDatabase,
-          uuidMappings,
-        );
+        let interDbRelationshipProps: Record<string, unknown>;
+        try {
+          interDbRelationshipProps = addInterDatabaseRelationshipProperties(
+            change.newAncestry,
+            databaseName,
+            newIdsToDocuments,
+            newIdsToDatabase,
+            uuidMappings,
+          );
+        } catch (error) {
+          return {
+            success: false,
+            reason: 'relationship_error',
+            error: `Failed to build relationship properties: ${(error as Error).message}`,
+          };
+        }
 
         Object.assign(properties, interDbRelationshipProps);
       }
@@ -865,10 +907,18 @@ export async function runSyncBatch(
         if (result.success) {
           succeeded++;
           addLog(`✓ ${change.changeType}: ${docLabel}`, 'success', change.uuid, docLabel);
+          // Log any warnings (e.g., content truncation)
+          if (result.warnings && result.warnings.length > 0) {
+            for (const warning of result.warnings) {
+              addLog(`⚠ Warning: ${warning.message}`, 'warning', change.uuid, docLabel);
+            }
+          }
         } else if (
           result.reason === 'parent_not_found' ||
           result.reason === 'has_children' ||
-          result.reason === 'mapping_not_found'
+          result.reason === 'mapping_not_found' ||
+          result.reason === 'parent_lookup_error' ||
+          result.reason === 'relationship_error'
         ) {
           skipped++;
           addLog(`⊘ Skipped (${result.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
