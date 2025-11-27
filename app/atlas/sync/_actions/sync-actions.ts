@@ -59,10 +59,21 @@ export async function updateNotionPageContent(
 ): Promise<SyncActionResult> {
   let databaseName: AtlasDatabaseName | null = null;
   let properties: Record<string, unknown> | null = null;
+  let notionPageId: string | null = null;
 
   try {
     if (!change.uuid) {
       return { success: false, error: 'Missing page UUID' };
+    }
+
+    // Convert Atlas UUID to Notion page ID
+    notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid) ?? null;
+    if (!notionPageId) {
+      return {
+        success: false,
+        reason: 'mapping_not_found',
+        error: `No Notion page ID mapping found for Atlas UUID ${change.uuid}`,
+      };
     }
 
     if (!change.newValues) {
@@ -82,35 +93,35 @@ export async function updateNotionPageContent(
     // Update the page using Notion API
     const notionClient = notion();
     const response = await notionClient.pages.update({
-      page_id: change.uuid,
+      page_id: notionPageId,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
     });
 
     // Log successful operation to audit log
     await logNotionApiOperation({
       operationType: 'update',
-      notionPageId: change.uuid,
-      atlasDocumentUuid: change.newValues.uuid || null,
+      notionPageId,
+      atlasDocumentUuid: change.uuid,
       databaseName,
-      requestPayload: { page_id: change.uuid, properties },
+      requestPayload: { page_id: notionPageId, properties },
       responsePayload: response as Record<string, unknown>,
       success: true,
       syncBatchId: options?.syncBatchId,
     });
 
-    return { success: true, pageId: change.uuid };
+    return { success: true, pageId: notionPageId };
   } catch (error) {
     const err = error as Error;
-    console.error(`Failed to update page ${change.uuid}:`, err);
+    console.error(`Failed to update page ${notionPageId || change.uuid}:`, err);
 
     // Log failed operation to audit log
-    if (databaseName && properties) {
+    if (databaseName && properties && notionPageId) {
       await logNotionApiOperation({
         operationType: 'update',
-        notionPageId: change.uuid || 'unknown',
-        atlasDocumentUuid: change.newValues?.uuid || null,
+        notionPageId,
+        atlasDocumentUuid: change.uuid || null,
         databaseName,
-        requestPayload: { page_id: change.uuid, properties },
+        requestPayload: { page_id: notionPageId, properties },
         success: false,
         errorMessage: err.message,
         syncBatchId: options?.syncBatchId,
@@ -315,16 +326,31 @@ export async function createNotionDatabasePage(
  *
  * @param change The change object containing the old values
  * @param originalIdsToDatabase Map of UUIDs to database names for original documents
+ * @param uuidMappings UUID mappings for converting Atlas UUIDs to Notion page IDs
  * @param options Sync options including batch ID for audit logging
  */
 export async function deleteNotionPage(
   change: AtlasDocumentChange,
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
+  uuidMappings: UuidMappings,
   options?: SyncActionOptions,
 ): Promise<SyncActionResult> {
+  let notionPageId: string | null = null;
+  let databaseName: AtlasDatabaseName | null = null;
+
   try {
     if (!change.uuid) {
       return { success: false, error: 'Missing page UUID' };
+    }
+
+    // Convert Atlas UUID to Notion page ID
+    notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid) ?? null;
+    if (!notionPageId) {
+      return {
+        success: false,
+        reason: 'mapping_not_found',
+        error: `No Notion page ID mapping found for Atlas UUID ${change.uuid}`,
+      };
     }
 
     if (!change.oldValues) {
@@ -332,36 +358,36 @@ export async function deleteNotionPage(
     }
 
     // Derive database name for audit logging
-    const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
+    databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
-    // Check if page has children
-    const hasChildren = await pageHasChildren(change.uuid, change.oldValues, originalIdsToDatabase);
+    // Check if page has children (using Notion page ID)
+    const hasChildren = await pageHasChildren(notionPageId, change.oldValues, originalIdsToDatabase);
     if (hasChildren) {
       return {
         success: false,
         reason: 'has_children',
-        error: `Page ${change.uuid} has children and cannot be deleted`,
+        error: `Page ${notionPageId} (Atlas UUID: ${change.uuid}) has children and cannot be deleted`,
       };
     }
 
     // Prepare request payload for audit logging
     const requestPayload = {
-      page_id: change.uuid,
+      page_id: notionPageId,
       archived: true,
     };
 
     // Archive the page (soft delete)
     const notionClient = notion();
     const response = await notionClient.pages.update({
-      page_id: change.uuid,
+      page_id: notionPageId,
       archived: true,
     });
 
     // Log successful operation to audit log
     await logNotionApiOperation({
       operationType: 'delete',
-      notionPageId: change.uuid,
-      atlasDocumentUuid: change.oldValues.uuid || null,
+      notionPageId,
+      atlasDocumentUuid: change.uuid,
       databaseName,
       requestPayload,
       responsePayload: response as Record<string, unknown>,
@@ -369,21 +395,19 @@ export async function deleteNotionPage(
       syncBatchId: options?.syncBatchId,
     });
 
-    return { success: true, pageId: change.uuid };
+    return { success: true, pageId: notionPageId };
   } catch (error) {
     const err = error as Error;
-    console.error(`Failed to delete page ${change.uuid}:`, err);
+    console.error(`Failed to delete page ${notionPageId || change.uuid}:`, err);
 
     // Log failed operation to audit log
-    if (change.oldValues) {
-      const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid!, originalIdsToDatabase);
-
+    if (change.oldValues && notionPageId && databaseName) {
       await logNotionApiOperation({
         operationType: 'delete',
-        notionPageId: change.uuid || 'unknown',
-        atlasDocumentUuid: change.oldValues.uuid || null,
+        notionPageId,
+        atlasDocumentUuid: change.uuid || null,
         databaseName,
-        requestPayload: { page_id: change.uuid, archived: true },
+        requestPayload: { page_id: notionPageId, archived: true },
         success: false,
         errorMessage: err.message,
         syncBatchId: options?.syncBatchId,
@@ -418,10 +442,21 @@ export async function updateNotionPageParent(
 ): Promise<SyncActionResult> {
   let databaseName: AtlasDatabaseName | null = null;
   let properties: Record<string, unknown> | null = null;
+  let notionPageId: string | null = null;
 
   try {
     if (!change.uuid) {
       return { success: false, error: 'Missing page UUID' };
+    }
+
+    // Convert Atlas UUID to Notion page ID
+    notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid) ?? null;
+    if (!notionPageId) {
+      return {
+        success: false,
+        reason: 'mapping_not_found',
+        error: `No Notion page ID mapping found for Atlas UUID ${change.uuid}`,
+      };
     }
 
     if (!change.newValues || !change.oldValues) {
@@ -490,7 +525,7 @@ export async function updateNotionPageParent(
 
     // If no properties to update, return success (no-op)
     if (Object.keys(properties).length === 0) {
-      return { success: true, pageId: change.uuid };
+      return { success: true, pageId: notionPageId };
     }
 
     // Validate new parent exists using the Notion page ID
@@ -508,35 +543,35 @@ export async function updateNotionPageParent(
     // Update the page using Notion API
     const notionClient = notion();
     const response = await notionClient.pages.update({
-      page_id: change.uuid,
+      page_id: notionPageId,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
     });
 
     // Log successful operation to audit log
     await logNotionApiOperation({
       operationType: 'update',
-      notionPageId: change.uuid,
-      atlasDocumentUuid: change.newValues.uuid || null,
+      notionPageId,
+      atlasDocumentUuid: change.uuid,
       databaseName,
-      requestPayload: { page_id: change.uuid, properties },
+      requestPayload: { page_id: notionPageId, properties },
       responsePayload: response as Record<string, unknown>,
       success: true,
       syncBatchId: options?.syncBatchId,
     });
 
-    return { success: true, pageId: change.uuid };
+    return { success: true, pageId: notionPageId };
   } catch (error) {
     const err = error as Error;
-    console.error(`Failed to update page parent ${change.uuid}:`, err);
+    console.error(`Failed to update page parent ${notionPageId || change.uuid}:`, err);
 
     // Log failed operation to audit log
-    if (databaseName && properties) {
+    if (databaseName && properties && notionPageId) {
       await logNotionApiOperation({
         operationType: 'update',
-        notionPageId: change.uuid || 'unknown',
-        atlasDocumentUuid: change.newValues?.uuid || null,
+        notionPageId,
+        atlasDocumentUuid: change.uuid || null,
         databaseName,
-        requestPayload: { page_id: change.uuid, properties },
+        requestPayload: { page_id: notionPageId, properties },
         success: false,
         errorMessage: err.message,
         syncBatchId: options?.syncBatchId,
@@ -800,7 +835,7 @@ export async function runSyncBatch(
             break;
 
           case 'deleted':
-            result = await deleteNotionPage(change, originalIdsToDatabase, options);
+            result = await deleteNotionPage(change, originalIdsToDatabase, uuidMappings, options);
             break;
 
           case 'parent_changed':
@@ -830,7 +865,11 @@ export async function runSyncBatch(
         if (result.success) {
           succeeded++;
           addLog(`✓ ${change.changeType}: ${docLabel}`, 'success', change.uuid, docLabel);
-        } else if (result.reason === 'parent_not_found' || result.reason === 'has_children') {
+        } else if (
+          result.reason === 'parent_not_found' ||
+          result.reason === 'has_children' ||
+          result.reason === 'mapping_not_found'
+        ) {
           skipped++;
           addLog(`⊘ Skipped (${result.reason}): ${docLabel}`, 'warning', change.uuid, docLabel);
         } else {

@@ -140,8 +140,8 @@ describe('sync-actions', () => {
 
   describe('updateNotionPageContent', () => {
     it('updates basic page properties successfully', async () => {
-      // Setup mock page
-      mockNotionClient.addMockPage('page-123', {
+      // Setup mock page - use notion-page-123 as the Notion page ID
+      mockNotionClient.addMockPage('notion-page-123', {
         properties: {
           Name: { title: [{ text: { content: 'Old Name' } }] },
           'Doc No (or Temp Name)': { rich_text: [{ text: { content: 'A.1.1' } }] },
@@ -151,13 +151,13 @@ describe('sync-actions', () => {
       });
 
       const change: AtlasDocumentChange = {
-        uuid: 'page-123',
+        uuid: 'atlas-page-123', // Atlas UUID
         changeType: 'changed',
         oldValues: {
           type: 'Section',
           doc_no: 'A.1.1',
           name: 'Old Name',
-          uuid: 'page-123',
+          uuid: 'atlas-page-123',
           content: 'Old content',
           last_modified: '',
         },
@@ -165,7 +165,7 @@ describe('sync-actions', () => {
           type: 'Section',
           doc_no: 'A.1.2',
           name: 'New Name',
-          uuid: 'page-123',
+          uuid: 'atlas-page-123',
           content: 'New content',
           last_modified: '',
         },
@@ -174,13 +174,18 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
+      // Create UUID mapping: Atlas UUID -> Notion page ID
+      const uuidMappings: UuidMappings = {
+        atlasUUIDsToNotionPageIds: new Map([['atlas-page-123', 'notion-page-123']]),
+        notionPageIDsToAtlasUUIDs: new Map([['notion-page-123', 'atlas-page-123']]),
+      };
+      const result = await updateNotionPageContent(change, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
-      expect(result.pageId).toBe('page-123');
+      expect(result.pageId).toBe('notion-page-123'); // Returns Notion page ID
       expect(mockNotionClient.getCallCount('pages.update')).toBe(1);
 
-      const updated = mockNotionClient.get('page-123') as Record<string, unknown>;
+      const updated = mockNotionClient.get('notion-page-123') as Record<string, unknown>;
       const props = updated.properties as Record<string, unknown>;
       // Note: Name and Doc No are not currently synced (see TODOs in implementation)
       // Only Content and extra fields are synced
@@ -189,7 +194,7 @@ describe('sync-actions', () => {
     });
 
     it('updates extra fields for Type Specification documents', async () => {
-      mockNotionClient.addMockPage('page-123', {
+      mockNotionClient.addMockPage('notion-page-123', {
         properties: {
           Name: { title: [{ text: { content: 'Type Spec' } }] },
           Components: { rich_text: [] },
@@ -197,13 +202,13 @@ describe('sync-actions', () => {
       });
 
       const change: AtlasDocumentChange = {
-        uuid: 'page-123',
+        uuid: 'atlas-page-123',
         changeType: 'changed',
         oldValues: {
           type: 'Type Specification',
           doc_no: 'A.1.2.3',
           name: 'Old Type Spec',
-          uuid: 'page-123',
+          uuid: 'atlas-page-123',
           content: 'Old Content',
           last_modified: '',
         },
@@ -211,7 +216,7 @@ describe('sync-actions', () => {
           type: 'Type Specification',
           doc_no: 'A.1.2.3',
           name: 'Updated Type Spec',
-          uuid: 'page-123',
+          uuid: 'atlas-page-123',
           content: 'Content',
           last_modified: '',
           type_specification_components: 'New components',
@@ -222,10 +227,14 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
+      const uuidMappings: UuidMappings = {
+        atlasUUIDsToNotionPageIds: new Map([['atlas-page-123', 'notion-page-123']]),
+        notionPageIDsToAtlasUUIDs: new Map([['notion-page-123', 'atlas-page-123']]),
+      };
+      const result = await updateNotionPageContent(change, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
-      const updated = mockNotionClient.get('page-123') as Record<string, unknown>;
+      const updated = mockNotionClient.get('notion-page-123') as Record<string, unknown>;
       const props = updated.properties as Record<string, unknown>;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((props['Components'] as any).rich_text[0].text.content).toBe('New components');
@@ -233,15 +242,15 @@ describe('sync-actions', () => {
       expect((props['Type Name'] as any).rich_text[0].text.content).toBe('MyType');
     });
 
-    it('returns error if page not found', async () => {
+    it('returns error if UUID mapping not found', async () => {
       const change: AtlasDocumentChange = {
-        uuid: 'nonexistent',
+        uuid: 'atlas-uuid-without-mapping',
         changeType: 'changed',
         oldValues: {
           type: 'Section',
           doc_no: 'A.1.2',
           name: 'Old Test',
-          uuid: 'nonexistent',
+          uuid: 'atlas-uuid-without-mapping',
           content: 'Old Content',
           last_modified: '',
         },
@@ -249,7 +258,7 @@ describe('sync-actions', () => {
           type: 'Section',
           doc_no: 'A.1.2',
           name: 'Test',
-          uuid: 'nonexistent',
+          uuid: 'atlas-uuid-without-mapping',
           content: 'Content',
           last_modified: '',
         },
@@ -258,7 +267,46 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
+      // Empty UUID mappings - no mapping for the Atlas UUID
       const result = await updateNotionPageContent(change, dbMap, emptyUuidMappings);
+
+      expect(result.success).toBe(false);
+      expect(result.reason).toBe('mapping_not_found');
+      expect(result.error).toContain('No Notion page ID mapping found');
+    });
+
+    it('returns error if page not found in Notion', async () => {
+      // Page doesn't exist in mock Notion, but UUID mapping exists
+      const change: AtlasDocumentChange = {
+        uuid: 'atlas-nonexistent',
+        changeType: 'changed',
+        oldValues: {
+          type: 'Section',
+          doc_no: 'A.1.2',
+          name: 'Old Test',
+          uuid: 'atlas-nonexistent',
+          content: 'Old Content',
+          last_modified: '',
+        },
+        newValues: {
+          type: 'Section',
+          doc_no: 'A.1.2',
+          name: 'Test',
+          uuid: 'atlas-nonexistent',
+          content: 'Content',
+          last_modified: '',
+        },
+        oldAncestry: [],
+      };
+
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      // UUID mapping exists but page doesn't exist in Notion
+      const uuidMappings: UuidMappings = {
+        atlasUUIDsToNotionPageIds: new Map([['atlas-nonexistent', 'notion-nonexistent']]),
+        notionPageIDsToAtlasUUIDs: new Map([['notion-nonexistent', 'atlas-nonexistent']]),
+      };
+      const result = await updateNotionPageContent(change, dbMap, uuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toContain('not found');
@@ -498,7 +546,7 @@ describe('sync-actions', () => {
 
   describe('deleteNotionPage', () => {
     it('archives page if it has no children', async () => {
-      mockNotionClient.addMockPage('page-to-delete', {
+      mockNotionClient.addMockPage('notion-page-to-delete', {
         properties: {
           Subdocs: { type: 'relation', relation: [] },
           Annotations: { type: 'relation', relation: [] },
@@ -507,13 +555,13 @@ describe('sync-actions', () => {
       });
 
       const change: AtlasDocumentChange = {
-        uuid: 'page-to-delete',
+        uuid: 'atlas-page-to-delete', // Atlas UUID
         changeType: 'deleted',
         oldValues: {
           type: 'Section',
           doc_no: 'A.1.2',
           name: 'Section to Delete',
-          uuid: 'page-to-delete',
+          uuid: 'atlas-page-to-delete',
           content: 'Content',
           last_modified: '',
         },
@@ -522,31 +570,37 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await deleteNotionPage(change, dbMap);
+      // Create UUID mapping: Atlas UUID -> Notion page ID
+      const uuidMappings: UuidMappings = {
+        atlasUUIDsToNotionPageIds: new Map([['atlas-page-to-delete', 'notion-page-to-delete']]),
+        notionPageIDsToAtlasUUIDs: new Map([['notion-page-to-delete', 'atlas-page-to-delete']]),
+      };
+      const result = await deleteNotionPage(change, dbMap, uuidMappings);
 
       expect(result.success).toBe(true);
+      expect(result.pageId).toBe('notion-page-to-delete'); // Returns Notion page ID
       expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // To check children
       expect(mockNotionClient.getCallCount('pages.update')).toBe(1);
 
-      const archived = mockNotionClient.get('page-to-delete') as Record<string, unknown>;
+      const archived = mockNotionClient.get('notion-page-to-delete') as Record<string, unknown>;
       expect(archived.archived).toBe(true);
     });
 
     it('skips deletion if page has children', async () => {
-      mockNotionClient.addMockPage('page-with-children', {
+      mockNotionClient.addMockPage('notion-page-with-children', {
         properties: {
           Subdocs: { type: 'relation', relation: [{ id: 'child-1' }] },
         },
       });
 
       const change: AtlasDocumentChange = {
-        uuid: 'page-with-children',
+        uuid: 'atlas-page-with-children', // Atlas UUID
         changeType: 'deleted',
         oldValues: {
           type: 'Section',
           doc_no: 'A.1.2',
           name: 'Section with Children',
-          uuid: 'page-with-children',
+          uuid: 'atlas-page-with-children',
           content: 'Content',
           last_modified: '',
         },
@@ -555,11 +609,40 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await deleteNotionPage(change, dbMap);
+      const uuidMappings: UuidMappings = {
+        atlasUUIDsToNotionPageIds: new Map([['atlas-page-with-children', 'notion-page-with-children']]),
+        notionPageIDsToAtlasUUIDs: new Map([['notion-page-with-children', 'atlas-page-with-children']]),
+      };
+      const result = await deleteNotionPage(change, dbMap, uuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.reason).toBe('has_children');
       expect(mockNotionClient.getCallCount('pages.update')).toBe(0);
+    });
+
+    it('returns error if UUID mapping not found', async () => {
+      const change: AtlasDocumentChange = {
+        uuid: 'atlas-uuid-without-mapping',
+        changeType: 'deleted',
+        oldValues: {
+          type: 'Section',
+          doc_no: 'A.1.2',
+          name: 'Test',
+          uuid: 'atlas-uuid-without-mapping',
+          content: 'Content',
+          last_modified: '',
+        },
+        oldAncestry: [],
+      };
+
+      const docMap = createDocMap(change);
+      const dbMap = createDatabaseMap([...docMap.values()]);
+      // Empty UUID mappings - no mapping for the Atlas UUID
+      const result = await deleteNotionPage(change, dbMap, emptyUuidMappings);
+
+      expect(result.success).toBe(false);
+      expect(result.reason).toBe('mapping_not_found');
+      expect(result.error).toContain('No Notion page ID mapping found');
     });
 
     it('returns error if UUID is missing', async () => {
@@ -579,7 +662,7 @@ describe('sync-actions', () => {
 
       const docMap = createDocMap(change);
       const dbMap = createDatabaseMap([...docMap.values()]);
-      const result = await deleteNotionPage(change, dbMap);
+      const result = await deleteNotionPage(change, dbMap, emptyUuidMappings);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing page UUID');
