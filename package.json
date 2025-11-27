@@ -19,6 +19,8 @@
     "trigger:dev": "npx trigger.dev@latest dev",
     "trigger:deploy": "npx trigger.dev@latest deploy",
     "supabase:gen-types": "npx supabase gen types typescript --project-id \"kvxffffzfsnosaqmofut\" --schema public > app/server/services/supabase/database.types.ts && npx prettier --write app/server/services/supabase/database.types.ts && git add app/server/services/supabase/database.types.ts",
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
     "prepare": "husky && husky install"
   },
   "dependencies": {
@@ -71,7 +73,7 @@
     "lint-staged": "^16.2.6",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
-    "supabase": "^2.34.3",
+    "supabase": "^2.63.1",
     "tailwindcss": "^4",
     "tsx": "^4.20.5",
     "typescript": "^5.9.0",

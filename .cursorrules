@@ -46,7 +46,7 @@ This Next.js application enables change tracking for Atlas documents stored in N
 
 ## Database & Storage
 
-- Supabase (PostgreSQL database)
+- Supabase (PostgreSQL database) - Cloud-based in production; local development via `npm run supabase:start`
 - PostgreSQL with public schema
 
 ## Background Jobs
