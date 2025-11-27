@@ -430,12 +430,12 @@ await logNotionApiOperation({
 
 **4. Dry-Run Preview**
 
-- "Preview Changes" button for dry-run mode
-- Shows summary modal with all operations that would be performed
-- Counts by operation type (create, update, archive, skipped)
-- Lists documents grouped by operation type
-- "Proceed with Sync" button to execute after review
+- "Preview Changes" button triggers dry-run mode
+- Results written to `app/atlas/sync/dry-run-output.md` file
+- Lists all Notion API calls that would be made with parameters
+- Alert shows summary counts (operations that would execute vs skipped)
 - No API calls, audit logs, or UUID mappings written during preview
+- File is gitignored and overwritten on each dry-run
 
 **5. Sync Execution**
 
