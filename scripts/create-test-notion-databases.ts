@@ -490,7 +490,7 @@ const SECTION_DOCUMENTS_DATA: SectionDocumentData[] = [
     atlas_document_number: 'A.6.1 - A1 - List Of Prime Agent Artifacts',
     plain_text_name: 'A.6.1 - A1 - List Of Prime Agent Artifacts',
     plain_text_content:
-      "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+      'The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent’s strategic vision and day-to-day operational logic.',
     parent_article_doc_no: 'A.6.1',
     sort_order: 0,
     json_name: [
@@ -515,11 +515,11 @@ const SECTION_DOCUMENTS_DATA: SectionDocumentData[] = [
         text: {
           link: null,
           content:
-            "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+            'The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent’s strategic vision and day-to-day operational logic.',
         },
         type: 'text',
         plain_text:
-          "The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent's strategic vision and day-to-day operational logic.",
+          'The documents herein each set out the unique Artifact for a particular Prime Agent. Prime Agent Artifacts contain all rules, processes, parameters, and information relevant to the Prime Agent. Prime Agent Artifacts are collections of documents that define each Agent’s strategic vision and day-to-day operational logic.',
         annotations: {
           bold: false,
           code: false,
