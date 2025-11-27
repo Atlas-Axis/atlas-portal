@@ -18,6 +18,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASES, ATLAS_DOCUMENT_TYPES } from '@/app/server/atlas/constants';
 import {
@@ -26,6 +27,8 @@ import {
   NOTION_PROPERTY_TYPE_OVERRIDES,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
+import { Database, Json } from '@/app/server/services/supabase/database.types';
+import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { loadEnv } from './utils/load-env';
 
 // Type definitions for Notion database properties
@@ -92,6 +95,317 @@ const DATABASE_DOCUMENT_TYPES: Record<AtlasDatabaseName, AtlasDocumentType[]> = 
 };
 
 /**
+ * Scope document data for creating root Scope documents.
+ * Extracted from production Atlas databases (notion_database_pages_current).
+ * These are required for the Atlas tree builder logic to function.
+ */
+interface ScopeDocumentData {
+  atlas_document_number: string;
+  plain_text_name: string;
+  plain_text_content: string;
+  json_name: Json;
+  json_content: Json;
+}
+
+const SCOPE_DOCUMENTS_DATA: ScopeDocumentData[] = [
+  {
+    atlas_document_number: 'A.0',
+    plain_text_name: 'Atlas Preamble',
+    plain_text_content: 'This Preamble will be further populated in later iterations of the Atlas.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'Atlas Preamble' },
+        type: 'text',
+        plain_text: 'Atlas Preamble',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: { link: null, content: 'This Preamble will be further populated in later iterations of the Atlas.' },
+        type: 'text',
+        plain_text: 'This Preamble will be further populated in later iterations of the Atlas.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.1',
+    plain_text_name: 'The Governance Scope',
+    plain_text_content:
+      'The Governance Scope regulates the governance processes and balance of power of the Sky Ecosystem. The Governance Scope must ensure that the resilient equilibrium of Sky Governance remains protected against all potential direct and indirect threats.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Governance Scope' },
+        type: 'text',
+        plain_text: 'The Governance Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Governance Scope regulates the governance processes and balance of power of the Sky Ecosystem. The Governance Scope must ensure that the resilient equilibrium of Sky Governance remains protected against all potential direct and indirect threats.',
+        },
+        type: 'text',
+        plain_text:
+          'The Governance Scope regulates the governance processes and balance of power of the Sky Ecosystem. The Governance Scope must ensure that the resilient equilibrium of Sky Governance remains protected against all potential direct and indirect threats.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.2',
+    plain_text_name: 'The Support Scope',
+    plain_text_content:
+      'The Support Scope governs all routine aspects of ecosystem support, including governance process infrastructure and management, Agent support and Ecosystem Actor support.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Support Scope' },
+        type: 'text',
+        plain_text: 'The Support Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Support Scope governs all routine aspects of ecosystem support, including governance process infrastructure and management, Agent support and Ecosystem Actor support.',
+        },
+        type: 'text',
+        plain_text:
+          'The Support Scope governs all routine aspects of ecosystem support, including governance process infrastructure and management, Agent support and Ecosystem Actor support.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.3',
+    plain_text_name: 'The Stability Scope',
+    plain_text_content:
+      'The Stability Scope governs the management of the USDS Stablecoin. The USDS Stablecoin must be a permissionless and useful currency available to anyone. Its stability and risk must be managed to generate as much value for Sky and public good as possible.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Stability Scope' },
+        type: 'text',
+        plain_text: 'The Stability Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Stability Scope governs the management of the USDS Stablecoin. The USDS Stablecoin must be a permissionless and useful currency available to anyone. Its stability and risk must be managed to generate as much value for Sky and public good as possible.',
+        },
+        type: 'text',
+        plain_text:
+          'The Stability Scope governs the management of the USDS Stablecoin. The USDS Stablecoin must be a permissionless and useful currency available to anyone. Its stability and risk must be managed to generate as much value for Sky and public good as possible.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.4',
+    plain_text_name: 'The Protocol Scope',
+    plain_text_content:
+      'The Protocol Scope regulates the maintenance and development of the core Sky Protocol and its critical, non-collateral components. The Protocol Scope defines all rules for protocol engineering.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Protocol Scope' },
+        type: 'text',
+        plain_text: 'The Protocol Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Protocol Scope regulates the maintenance and development of the core Sky Protocol and its critical, non-collateral components. The Protocol Scope defines all rules for protocol engineering.',
+        },
+        type: 'text',
+        plain_text:
+          'The Protocol Scope regulates the maintenance and development of the core Sky Protocol and its critical, non-collateral components. The Protocol Scope defines all rules for protocol engineering.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.5',
+    plain_text_name: 'The Accessibility Scope',
+    plain_text_content:
+      'The Accessibility Scope governs accessibility and distribution efforts, and regulates user-facing frontends.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Accessibility Scope' },
+        type: 'text',
+        plain_text: 'The Accessibility Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Accessibility Scope governs accessibility and distribution efforts, and regulates user-facing frontends.',
+        },
+        type: 'text',
+        plain_text:
+          'The Accessibility Scope governs accessibility and distribution efforts, and regulates user-facing frontends.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+  {
+    atlas_document_number: 'A.6',
+    plain_text_name: 'The Agent Scope',
+    plain_text_content:
+      'The Agent Scope regulates all Agents within the Sky Ecosystem and comprises all Agent Artifacts. Each Agent Artifact governs the operations of a particular Agent.',
+    json_name: [
+      {
+        href: null,
+        text: { link: null, content: 'The Agent Scope' },
+        type: 'text',
+        plain_text: 'The Agent Scope',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+    json_content: [
+      {
+        href: null,
+        text: {
+          link: null,
+          content:
+            'The Agent Scope regulates all Agents within the Sky Ecosystem and comprises all Agent Artifacts. Each Agent Artifact governs the operations of a particular Agent.',
+        },
+        type: 'text',
+        plain_text:
+          'The Agent Scope regulates all Agents within the Sky Ecosystem and comprises all Agent Artifacts. Each Agent Artifact governs the operations of a particular Agent.',
+        annotations: {
+          bold: false,
+          code: false,
+          color: 'default',
+          italic: false,
+          underline: false,
+          strikethrough: false,
+        },
+      },
+    ],
+  },
+];
+
+/**
  * Type for storing database ID mappings
  */
 interface DatabaseMapping {
@@ -101,11 +415,24 @@ interface DatabaseMapping {
 }
 
 /**
+ * Type for storing created Scope page information
+ */
+interface CreatedScopePage {
+  notionPageId: string;
+  scopeData: ScopeDocumentData;
+}
+
+/**
  * Main execution function
  */
 async function main() {
   // Load environment variables
   loadEnv();
+
+  if (process.env.USE_DEV_NOTION_IDS !== 'true') {
+    console.error('❌ USE_DEV_NOTION_IDS must be set to true');
+    process.exit(1);
+  }
 
   console.log('🚀 Starting Test Notion Databases Creation\n');
   console.log(`Parent Page ID: ${TEST_PARENT_PAGE_ID}`);
@@ -127,15 +454,24 @@ async function main() {
     console.log('\n🔗 Adding relationship properties (second pass)...\n');
     await addRelationshipProperties(databaseMappings);
 
-    // Step 5: Update notion-ids-dev.ts with new database IDs
+    // Step 5: Create root Scope documents in Notion
+    const createdScopePages = await createScopeDocuments(databaseMappings);
+
+    // Step 6: Upsert Scope documents to Supabase
+    await upsertScopeDocumentsToSupabase(createdScopePages);
+
+    // Step 7: Create UUID mappings for Scope documents
+    await createUuidMappingsForScopeDocuments(createdScopePages);
+
+    // Step 8: Update notion-ids-dev.ts with new database IDs
     console.log('\n📝 Updating notion-ids-dev.ts...\n');
     updateNotionIdsDevFile(databaseMappings);
 
-    // Step 6: Validation and reporting
+    // Step 9: Validation and reporting
     console.log('\n✅ Validating created databases...\n');
     await validateAndReport(databaseMappings);
 
-    // Step 7: Display manual step reminder for sub-item enablement
+    // Step 10: Display manual step reminder for sub-item enablement
     displayManualStepReminder(databaseMappings);
 
     console.log('\n🎉 Test database creation completed successfully!\n');
@@ -296,7 +632,12 @@ function buildDatabaseProperties(databaseName: AtlasDatabaseName): NotionDatabas
       continue;
     }
 
-    const propertyType = propertyOverrides[notionPropertyName] || 'rich_text';
+    // Determine property type from overrides, but always treat atlasDocumentType as 'select'
+    // (The Type field is always a select field in Notion, is not in the overrides because it is handled globally for all Notion databases)
+    let propertyType = propertyOverrides[notionPropertyName] || 'rich_text';
+    if (notionPropertyName === config.properties.atlasDocumentType) {
+      propertyType = 'select';
+    }
 
     // Build property definition based on type
     switch (propertyType) {
@@ -622,6 +963,161 @@ ${mapEntries}
   console.log('  New database IDs:');
   for (const mapping of databaseMappings) {
     console.log(`    ${mapping.name}: ${mapping.databaseId}`);
+  }
+}
+
+/**
+ * Creates root Scope documents in the test Scopes database.
+ * These documents are required for the Atlas tree builder logic.
+ */
+async function createScopeDocuments(databaseMappings: DatabaseMapping[]): Promise<CreatedScopePage[]> {
+  console.log('\n📄 Creating root Scope documents...\n');
+
+  // Find the Scopes database ID from mappings
+  const scopesDbMapping = databaseMappings.find((m) => m.name === ATLAS_DATABASES.SCOPES);
+  if (!scopesDbMapping) {
+    throw new Error('Scopes database not found in mappings');
+  }
+
+  const scopesDatabaseId = scopesDbMapping.databaseId;
+  const createdPages: CreatedScopePage[] = [];
+
+  // Get property names from the Scopes config
+  const scopesConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[ATLAS_DATABASES.SCOPES];
+  const contentPropertyName = scopesConfig.properties.content;
+
+  // Verify content property exists for Scopes database (defensive check)
+  if (!contentPropertyName) {
+    throw new Error('Content property not defined for Scopes database');
+  }
+
+  for (const scopeData of SCOPE_DOCUMENTS_DATA) {
+    try {
+      console.log(`  Creating: ${scopeData.atlas_document_number} - ${scopeData.plain_text_name}...`);
+
+      // Build Notion page properties using the configured property names
+      const docNoPropertyName = scopesConfig.properties.atlasDocumentNo;
+      const namePropertyName = scopesConfig.properties.atlasDocumentName;
+      const typePropertyName = scopesConfig.properties.atlasDocumentType;
+
+      const properties: Record<string, unknown> = {
+        // Doc No (title)
+        [docNoPropertyName]: {
+          title: [{ text: { content: scopeData.atlas_document_number } }],
+        },
+        // Name (rich_text)
+        [namePropertyName]: {
+          rich_text: [{ type: 'text', text: { content: scopeData.plain_text_name } }],
+        },
+        // Type (select)
+        [typePropertyName]: {
+          select: { name: 'Scope' },
+        },
+        // Content (rich_text)
+        [contentPropertyName]: {
+          rich_text: [{ type: 'text', text: { content: scopeData.plain_text_content } }],
+        },
+      };
+
+      // Create the page in Notion
+      // Note: Using type assertion due to Notion SDK's strict property typing
+      // which doesn't easily support dynamic property construction
+      const notionClient = notion('write');
+      const createdPage = await notionClient.pages.create({
+        parent: { type: 'database_id', database_id: scopesDatabaseId },
+        properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
+      });
+
+      createdPages.push({
+        notionPageId: createdPage.id,
+        scopeData,
+      });
+
+      console.log(`    ✓ Created with ID: ${createdPage.id}`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`    ✗ Failed to create ${scopeData.atlas_document_number}: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  console.log(`\n  ✓ Created ${createdPages.length} Scope documents`);
+  return createdPages;
+}
+
+/**
+ * Upserts created Scope documents to the notion_database_pages table in Supabase.
+ */
+async function upsertScopeDocumentsToSupabase(createdPages: CreatedScopePage[]): Promise<void> {
+  console.log('\n💾 Upserting Scope documents to Supabase...\n');
+
+  const now = new Date().toISOString();
+
+  // Build payload for versioned upsert
+  const payload = createdPages.map((page) => ({
+    notion_page_id: page.notionPageId,
+    atlas_document_type: 'Scope' as const,
+    atlas_document_number: page.scopeData.atlas_document_number,
+    atlas_database_name: ATLAS_DATABASES.SCOPES,
+    has_children: false,
+    archived: false,
+    in_trash: false,
+    plain_text_content: page.scopeData.plain_text_content,
+    json_content: page.scopeData.json_content,
+    plain_text_name: page.scopeData.plain_text_name,
+    json_name: page.scopeData.json_name,
+    parent_notion_page_id: null,
+    // All child arrays are empty - children will be synced later
+    child_scope_ids: [],
+    child_article_ids: [],
+    child_section_and_primary_doc_ids: [],
+    child_annotation_ids: [],
+    child_tenet_ids: [],
+    child_scenario_ids: [],
+    child_scenario_variation_ids: [],
+    child_active_data_ids: [],
+    child_agent_scope_ids: [],
+    child_needed_research_ids: [],
+    extra_fields: {},
+    sort_order: null,
+    updated_at: now,
+    last_edited_by_user_id: null,
+  }));
+
+  await supabase()
+    .rpc('versioned_upsert_notion_database_pages', {
+      p_rows: payload as Database['public']['Functions']['versioned_upsert_notion_database_pages']['Args']['p_rows'],
+    })
+    .throwOnError();
+
+  console.log(`  ✓ Upserted ${createdPages.length} Scope documents to Supabase`);
+
+  // Log the upserted page IDs
+  for (const page of createdPages) {
+    console.log(`    ${page.scopeData.atlas_document_number}: ${page.notionPageId}`);
+  }
+}
+
+/**
+ * Creates UUID mappings for the created Scope documents.
+ */
+async function createUuidMappingsForScopeDocuments(createdPages: CreatedScopePage[]): Promise<void> {
+  console.log('\n🔗 Creating UUID mappings for Scope documents...\n');
+
+  // Generate UUID mappings
+  const uuidMappings = createdPages.map((page) => ({
+    atlas_document_uuid: uuidv4(),
+    notion_page_id: page.notionPageId,
+  }));
+
+  // Insert the UUID mappings
+  await supabase().from('uuid_mapping').insert(uuidMappings).throwOnError();
+
+  console.log(`  ✓ Created ${uuidMappings.length} UUID mappings`);
+
+  // Log the mappings
+  for (let i = 0; i < createdPages.length; i++) {
+    console.log(`    ${createdPages[i].scopeData.atlas_document_number}: ${uuidMappings[i].atlas_document_uuid}`);
   }
 }
 
