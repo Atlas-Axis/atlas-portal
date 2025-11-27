@@ -82,7 +82,7 @@ async function main() {
         }
 
         // Create the page in Notion
-        const response = await notion('write').pages.create({
+        const response = await notion().pages.create({
           parent: {
             database_id: NOTION_DATABASE_ID,
           },

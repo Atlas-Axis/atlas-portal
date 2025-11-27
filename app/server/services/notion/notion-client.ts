@@ -3,21 +3,18 @@ import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
 import { ParallelNotionRateLimiter } from './parallel-rate-limiter';
 
 /**
- * Reads and validates Notion API secrets from environment variables.
- * Throws if required secrets are missing.
+ * Reads and validates Notion API key from environment variables.
+ * Supports multiple comma-separated API keys for load balancing.
+ * Throws if required secret is missing.
  */
-function getNotionSecrets() {
-  const notionSecretsForReading = process.env.NOTION_SECRETS_READ?.split(',')
+function getNotionApiKeys(): string[] {
+  const notionApiKeys = process.env.NOTION_API_KEY?.split(',')
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
-  const notionSecretForWriting = process.env.NOTION_SECRET_WRITE;
-  if (!notionSecretsForReading || notionSecretsForReading.length === 0) {
-    throw new Error('Missing NOTION_SECRETS_READ or NOTION_SECRET in environment variables');
+  if (!notionApiKeys || notionApiKeys.length === 0) {
+    throw new Error('Missing NOTION_API_KEY in environment variables');
   }
-  if (!notionSecretForWriting) {
-    throw new Error('Missing NOTION_SECRET_WRITE in environment variables');
-  }
-  return { notionSecretsForReading, notionSecretForWriting };
+  return notionApiKeys;
 }
 
 interface NotionClientWithRateLimiter {
@@ -132,26 +129,17 @@ export class NotionProxy {
   }
 }
 
-// Singleton instances
-let notionProxyReadInstance: NotionProxy | null = null;
-let notionProxyWriteInstance: NotionProxy | null = null;
+// Singleton instance
+let notionProxyInstance: NotionProxy | null = null;
 
 /**
- * Get the singleton NotionProxy instance with lazy initialization
- * @param mode - 'read' or 'write' mode to determine which Notion API key to use (read-only API access vs write API access)
+ * Get the singleton NotionProxy instance with lazy initialization.
+ * Uses NOTION_API_KEY environment variable (supports comma-separated keys for load balancing).
  */
-export function notion(mode: 'read' | 'write' = 'read'): NotionProxy & NotionClient {
-  // Read and validate secrets only when initializing for the first time
-  const { notionSecretsForReading, notionSecretForWriting } = getNotionSecrets();
-  if (mode === 'read') {
-    if (!notionProxyReadInstance) {
-      notionProxyReadInstance = new NotionProxy(notionSecretsForReading);
-    }
-    return notionProxyReadInstance as NotionProxy & NotionClient;
-  } else {
-    if (!notionProxyWriteInstance) {
-      notionProxyWriteInstance = new NotionProxy([notionSecretForWriting]);
-    }
-    return notionProxyWriteInstance as NotionProxy & NotionClient;
+export function notion(): NotionProxy & NotionClient {
+  if (!notionProxyInstance) {
+    const apiKeys = getNotionApiKeys();
+    notionProxyInstance = new NotionProxy(apiKeys);
   }
+  return notionProxyInstance as NotionProxy & NotionClient;
 }

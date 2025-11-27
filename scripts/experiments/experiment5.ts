@@ -45,7 +45,7 @@ async function main() {
     console.log(`👉 Child Page ID: ${CHILD_NOTION_PAGE_ID}\n`);
 
     // Update child page's "Parent item" relation property
-    await notion('write').pages.update({
+    await notion().pages.update({
       page_id: CHILD_NOTION_PAGE_ID,
       properties: {
         'Parent item': {

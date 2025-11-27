@@ -320,7 +320,7 @@ for (const block of createdBlocks) {
 const blockToPageMapping = new Map<string, string>(); // block_id -> database_page_id
 
 // During toggle creation:
-const toggleBlockResponse = await notion('write').blocks.children.append({
+const toggleBlockResponse = await notion().blocks.children.append({
   block_id: parentBlockId,
   children: [toggleBlock],
 });
@@ -340,7 +340,7 @@ import { TextRichTextItemRequest } from './types';
 
 ### Environment Variables Required
 
-- `NOTION_SECRET_WRITE` - For creating pages and blocks
+- `NOTION_API_KEY` - For creating pages and blocks
 
 ### Testing Strategy
 

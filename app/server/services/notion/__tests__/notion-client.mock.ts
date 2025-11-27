@@ -68,7 +68,7 @@ import { vi } from 'vitest';
  *
  * // Mock the notion client module
  * vi.mock('@/app/server/services/notion/notion-client', () => ({
- *   getNotionClient: () => mockNotionClient,
+ *   notion: () => mockNotionClient,
  * }));
  *
  * beforeEach(() => {
@@ -453,7 +453,7 @@ export const mockNotionClient = new NotionClientMock();
  * ```typescript
  * // In test file
  * vi.mock('@/app/server/services/notion/notion-client', () => ({
- *   getNotionClient: () => createMockNotionClient(),
+ *   notion: () => createMockNotionClient(),
  * }));
  * ```
  */

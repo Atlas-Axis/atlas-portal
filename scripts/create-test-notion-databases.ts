@@ -698,7 +698,7 @@ async function main() {
 async function validateParentPage() {
   console.log('🔍 Validating parent page...');
   try {
-    const page = await notion('write').pages.retrieve({ page_id: TEST_PARENT_PAGE_ID });
+    const page = await notion().pages.retrieve({ page_id: TEST_PARENT_PAGE_ID });
     console.log(`✓ Parent page found: ${page.id}\n`);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -717,7 +717,7 @@ async function discoverTestDatabases(): Promise<Array<{ id: string; title: strin
   let startCursor: string | undefined = undefined;
 
   while (hasMore) {
-    const response = await notion('write').blocks.children.list({
+    const response = await notion().blocks.children.list({
       block_id: TEST_PARENT_PAGE_ID,
       start_cursor: startCursor,
       page_size: 100,
@@ -767,7 +767,7 @@ async function handleExistingDatabases(existingDatabases: Array<{ id: string; ti
 
   for (const db of existingDatabases) {
     try {
-      await notion('write').databases.update({
+      await notion().databases.update({
         database_id: db.id,
         archived: true,
       });
@@ -793,7 +793,7 @@ async function createAllDatabases(): Promise<DatabaseMapping[]> {
       console.log(`Creating: ${testName}...`);
 
       const properties = buildDatabaseProperties(databaseName);
-      const database = await notion('write').databases.create({
+      const database = await notion().databases.create({
         parent: { type: 'page_id', page_id: TEST_PARENT_PAGE_ID },
         title: [
           {
@@ -1029,7 +1029,7 @@ async function addRelationshipProperties(databaseMappings: DatabaseMapping[]) {
             },
           };
 
-          await notion('write').databases.update({
+          await notion().databases.update({
             database_id: mapping.databaseId,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             properties: updateProperties as any,
@@ -1060,7 +1060,7 @@ async function validateAndReport(databaseMappings: DatabaseMapping[]) {
 
   for (const mapping of databaseMappings) {
     try {
-      const database = await notion('write').databases.retrieve({ database_id: mapping.databaseId });
+      const database = await notion().databases.retrieve({ database_id: mapping.databaseId });
       const properties = Object.keys(database.properties);
       const relationProperties = properties.filter((key) => database.properties[key].type === 'relation');
 
@@ -1229,7 +1229,7 @@ async function createScopeDocuments(databaseMappings: DatabaseMapping[]): Promis
       // Create the page in Notion
       // Note: Using type assertion due to Notion SDK's strict property typing
       // which doesn't easily support dynamic property construction
-      const notionClient = notion('write');
+      const notionClient = notion();
       const createdPage = await notionClient.pages.create({
         parent: { type: 'database_id', database_id: scopesDatabaseId },
         properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
@@ -1413,7 +1413,7 @@ async function createArticleDocuments(
       }
 
       // Create the page in Notion
-      const notionClient = notion('write');
+      const notionClient = notion();
       const createdPage = await notionClient.pages.create({
         parent: { type: 'database_id', database_id: articlesDatabaseId },
         properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
@@ -1588,7 +1588,7 @@ async function createSectionDocuments(
       }
 
       // Create the page in Notion
-      const notionClient = notion('write');
+      const notionClient = notion();
       const createdPage = await notionClient.pages.create({
         parent: { type: 'database_id', database_id: sectionsDatabaseId },
         properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],

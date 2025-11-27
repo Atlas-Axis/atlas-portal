@@ -41,7 +41,7 @@ async function main() {
     console.log(`👉 Child Page ID: ${CHILD_NOTION_PAGE_ID}\n`);
 
     // Update parent page to link child as a sub-item
-    await notion('write').pages.update({
+    await notion().pages.update({
       page_id: PARENT_NOTION_PAGE_ID,
       properties: {
         'Sub-item': {

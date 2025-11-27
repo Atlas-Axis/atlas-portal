@@ -80,7 +80,7 @@ export async function updateNotionPageContent(
     properties = buildNotionProperties(change.newValues, databaseName, uuidMappings);
 
     // Update the page using Notion API
-    const notionClient = notion('write');
+    const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: change.uuid,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
@@ -249,7 +249,7 @@ export async function createNotionDatabasePage(
     };
 
     // Create the page (parent is always the database ID, never a page ID)
-    const notionClient = notion('write');
+    const notionClient = notion();
     const createdPage = await notionClient.pages.create({
       parent: {
         type: 'database_id',
@@ -351,7 +351,7 @@ export async function deleteNotionPage(
     };
 
     // Archive the page (soft delete)
-    const notionClient = notion('write');
+    const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: change.uuid,
       archived: true,
@@ -506,7 +506,7 @@ export async function updateNotionPageParent(
     }
 
     // Update the page using Notion API
-    const notionClient = notion('write');
+    const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: change.uuid,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
@@ -555,7 +555,7 @@ export async function updateNotionPageParent(
  */
 export async function validatePageExists(pageId: string): Promise<boolean> {
   try {
-    const notionClient = notion('write');
+    const notionClient = notion();
     await notionClient.pages.retrieve({ page_id: pageId });
     return true;
   } catch (error) {
@@ -596,7 +596,7 @@ async function pageHasChildren(
     const propertyNamesToCheck = [...childRelationshipNames];
 
     // Fetch the page from Notion to check its relationships
-    const notionClient = notion('write');
+    const notionClient = notion();
     const page = await notionClient.pages.retrieve({ page_id: pageId });
 
     // Check each relationship property - if any have relations, page has children

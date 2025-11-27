@@ -236,9 +236,7 @@ This ensures that the sync always operates against the authoritative source of t
 
 ### Notion API Access
 
-Uses `notion('write')` client for write operations, which requires `NOTION_SECRET_WRITE` environment variable.
-
-Read operations (validation, checks) use `notion('write')` client with `NOTION_SECRET_WRITE`.
+Uses `notion()` client for all Notion API operations, which requires `NOTION_API_KEY` environment variable.
 
 ## Database Support
 

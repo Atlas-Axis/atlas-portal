@@ -54,7 +54,7 @@ async function main() {
     let startCursor: string | undefined = undefined;
 
     while (hasMore) {
-      const response = await notion('write').databases.query({
+      const response = await notion().databases.query({
         database_id: NOTION_DATABASE_ID,
         start_cursor: startCursor,
       });

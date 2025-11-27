@@ -614,8 +614,7 @@ This project maintains **2 synchronized documentation files** that provide high-
 
 ### Environment Variables
 
-- `NOTION_SECRETS_READ` - Your read-only Notion integration API key to read Master Atlas DB-s
-- `NOTION_SECRET_WRITE` - Your Notion integration API key to create Edit Pages
+- `NOTION_API_KEY` - Your Notion integration API key (supports comma-separated keys for load balancing)
 - `NOTION_WEBHOOK_VERIFICATION_TOKEN` - https://developers.notion.com/reference/webhooks#step-3-validating-event-payloads-recommended
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_API_KEY` - Your Supabase API key
