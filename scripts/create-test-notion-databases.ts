@@ -635,50 +635,53 @@ async function main() {
     const existingDatabases = await discoverTestDatabases();
     await handleExistingDatabases(existingDatabases);
 
-    // Step 3: Create all databases (first pass - without relations)
+    // Step 3: Delete existing UUID mappings for test documents we're about to create
+    await deleteExistingUuidMappingsForTestDocuments();
+
+    // Step 4: Create all databases (first pass - without relations)
     console.log('\n📦 Creating test databases (first pass - basic properties)...\n');
     const databaseMappings = await createAllDatabases();
 
-    // Step 4: Add relationship properties (second pass)
+    // Step 5: Add relationship properties (second pass)
     console.log('\n🔗 Adding relationship properties (second pass)...\n');
     await addRelationshipProperties(databaseMappings);
 
-    // Step 5: Create root Scope documents in Notion
+    // Step 6: Create root Scope documents in Notion
     const createdScopePages = await createScopeDocuments(databaseMappings);
 
-    // Step 6: Upsert Scope documents to Supabase
+    // Step 7: Upsert Scope documents to Supabase
     await upsertScopeDocumentsToSupabase(createdScopePages);
 
-    // Step 7: Create UUID mappings for Scope documents
+    // Step 8: Create UUID mappings for Scope documents
     await createUuidMappingsForScopeDocuments(createdScopePages);
 
-    // Step 8: Create Article documents in Notion (children of Scopes)
+    // Step 9: Create Article documents in Notion (children of Scopes)
     const createdArticlePages = await createArticleDocuments(databaseMappings, createdScopePages);
 
-    // Step 9: Upsert Article documents to Supabase
+    // Step 10: Upsert Article documents to Supabase
     await upsertArticleDocumentsToSupabase(createdArticlePages);
 
-    // Step 10: Create UUID mappings for Article documents
+    // Step 11: Create UUID mappings for Article documents
     await createUuidMappingsForArticleDocuments(createdArticlePages);
 
-    // Step 11: Create Section documents in Notion (children of Articles)
+    // Step 12: Create Section documents in Notion (children of Articles)
     const createdSectionPages = await createSectionDocuments(databaseMappings, createdArticlePages);
 
-    // Step 12: Upsert Section documents to Supabase
+    // Step 13: Upsert Section documents to Supabase
     await upsertSectionDocumentsToSupabase(createdSectionPages);
 
-    // Step 13: Create UUID mappings for Section documents
+    // Step 14: Create UUID mappings for Section documents
     await createUuidMappingsForSectionDocuments(createdSectionPages);
 
-    // Step 14: Update notion-ids-dev.ts with new database IDs
+    // Step 15: Update notion-ids-dev.ts with new database IDs
     console.log('\n📝 Updating notion-ids-dev.ts...\n');
     updateNotionIdsDevFile(databaseMappings);
 
-    // Step 15: Validation and reporting
+    // Step 16: Validation and reporting
     console.log('\n✅ Validating created databases...\n');
     await validateAndReport(databaseMappings);
 
-    // Step 16: Display manual step reminder for sub-item enablement
+    // Step 17: Display manual step reminder for sub-item enablement
     displayManualStepReminder(databaseMappings);
 
     console.log('\n🎉 Test database creation completed successfully!\n');
@@ -779,6 +782,49 @@ async function handleExistingDatabases(existingDatabases: Array<{ id: string; ti
   }
 
   console.log();
+}
+
+/**
+ * Deletes existing UUID mappings for all test documents we're about to create.
+ * This prevents duplicate key errors when creating new mappings.
+ */
+async function deleteExistingUuidMappingsForTestDocuments(): Promise<void> {
+  console.log('🗑️  Deleting existing UUID mappings for test documents...\n');
+
+  // Collect all atlas_document_uuid values from all document data arrays
+  const allAtlasDocumentUuids: string[] = [
+    ...SCOPE_DOCUMENTS_DATA.map((doc) => doc.atlas_document_uuid),
+    ...ARTICLE_DOCUMENTS_DATA.map((doc) => doc.atlas_document_uuid),
+    ...SECTION_DOCUMENTS_DATA.map((doc) => doc.atlas_document_uuid),
+  ];
+
+  if (allAtlasDocumentUuids.length === 0) {
+    console.log('  No test documents to process.\n');
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase()
+      .from('uuid_mapping')
+      .delete()
+      .in('atlas_document_uuid', allAtlasDocumentUuids)
+      .select();
+
+    const deletedCount = data?.length ?? 0;
+    if (error) {
+      throw error;
+    }
+
+    if (deletedCount > 0) {
+      console.log(`  ✓ Deleted ${deletedCount} existing UUID mapping(s)\n`);
+    } else {
+      console.log('  ✓ No existing UUID mappings found to delete\n');
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error(`  ✗ Failed to delete UUID mappings: ${errorMessage}`);
+    throw error;
+  }
 }
 
 /**
