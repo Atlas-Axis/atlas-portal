@@ -76,15 +76,49 @@ export async function upsertPagesInBatches(
  * Insert UUID mappings into Supabase in batches for each Notion page
  * Generates a new random UUID (v4) for each page and creates mapping entries
  * Uses internal batching with 500 items per iteration
+ *
+ * Skips pages that already have UUID mappings (e.g., created by Markdown→Notion sync)
+ * to ensure both workflows are compatible.
  */
 async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<void> {
   const totalPages = pages.length;
-  const batchSize = 500;
 
-  for (let i = 0; i < totalPages; i += batchSize) {
-    const batch = pages.slice(i, i + batchSize);
+  // Get all Notion page IDs from the batch
+  const notionPageIds = pages.map((p) => p.notion_page_id);
+
+  // Query existing mappings for these page IDs
+  const { data: existingMappings, error: queryError } = await supabase()
+    .from('uuid_mapping')
+    .select('notion_page_id')
+    .in('notion_page_id', notionPageIds);
+
+  if (queryError) {
+    throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
+  }
+
+  // Build set of page IDs that already have mappings
+  const existingPageIds = new Set(existingMappings?.map((m) => m.notion_page_id) ?? []);
+
+  // Filter to only pages that need new mappings
+  const pagesToMap = pages.filter((p) => !existingPageIds.has(p.notion_page_id));
+
+  if (existingPageIds.size > 0) {
+    console.log(`  ℹ️ Skipping ${existingPageIds.size} pages with existing UUID mappings`);
+  }
+
+  if (pagesToMap.length === 0) {
+    console.log(`  ✓ All ${totalPages} pages already have UUID mappings, nothing to create`);
+    return;
+  }
+
+  // Continue with batched insert for remaining pages
+  const batchSize = 500;
+  const totalPagesToMap = pagesToMap.length;
+
+  for (let i = 0; i < totalPagesToMap; i += batchSize) {
+    const batch = pagesToMap.slice(i, i + batchSize);
     const batchNumber = Math.floor(i / batchSize) + 1;
-    const totalBatches = Math.ceil(totalPages / batchSize);
+    const totalBatches = Math.ceil(totalPagesToMap / batchSize);
 
     console.log(`  🔄 UUID mapping batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`);
 
