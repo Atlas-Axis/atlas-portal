@@ -82,22 +82,33 @@ export async function upsertPagesInBatches(
  */
 async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<void> {
   const totalPages = pages.length;
+  const batchSize = 500;
 
-  // Get all Notion page IDs from the batch
+  // Get all Notion page IDs from the pages
   const notionPageIds = pages.map((p) => p.notion_page_id);
 
-  // Query existing mappings for these page IDs
-  const { data: existingMappings, error: queryError } = await supabase()
-    .from('uuid_mapping')
-    .select('notion_page_id')
-    .in('notion_page_id', notionPageIds);
+  // Query existing mappings in batches to avoid URI too long errors
+  const existingPageIds = new Set<string>();
+  const queryBatches = Math.ceil(notionPageIds.length / batchSize);
 
-  if (queryError) {
-    throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
+  for (let i = 0; i < notionPageIds.length; i += batchSize) {
+    const batchIds = notionPageIds.slice(i, i + batchSize);
+    const batchNumber = Math.floor(i / batchSize) + 1;
+
+    console.log(`  🔍 Checking existing mappings batch ${batchNumber}/${queryBatches} (${batchIds.length} IDs)...`);
+
+    const { data: existingMappings, error: queryError } = await supabase()
+      .from('uuid_mapping')
+      .select('notion_page_id')
+      .in('notion_page_id', batchIds);
+
+    if (queryError) {
+      throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
+    }
+
+    // Add found IDs to the set
+    existingMappings?.forEach((m) => existingPageIds.add(m.notion_page_id));
   }
-
-  // Build set of page IDs that already have mappings
-  const existingPageIds = new Set(existingMappings?.map((m) => m.notion_page_id) ?? []);
 
   // Filter to only pages that need new mappings
   const pagesToMap = pages.filter((p) => !existingPageIds.has(p.notion_page_id));
@@ -112,7 +123,6 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
   }
 
   // Continue with batched insert for remaining pages
-  const batchSize = 500;
   const totalPagesToMap = pagesToMap.length;
 
   for (let i = 0; i < totalPagesToMap; i += batchSize) {
