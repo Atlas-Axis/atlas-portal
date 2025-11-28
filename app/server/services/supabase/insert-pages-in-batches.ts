@@ -82,18 +82,20 @@ export async function upsertPagesInBatches(
  */
 async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<void> {
   const totalPages = pages.length;
-  const batchSize = 500;
+  // Use smaller batch size for queries (URI length limit) vs inserts
+  const queryBatchSize = 100; // ~3600 chars for UUIDs, safe for URI
+  const insertBatchSize = 500;
 
   // Get all Notion page IDs from the pages
   const notionPageIds = pages.map((p) => p.notion_page_id);
 
   // Query existing mappings in batches to avoid URI too long errors
   const existingPageIds = new Set<string>();
-  const queryBatches = Math.ceil(notionPageIds.length / batchSize);
+  const queryBatches = Math.ceil(notionPageIds.length / queryBatchSize);
 
-  for (let i = 0; i < notionPageIds.length; i += batchSize) {
-    const batchIds = notionPageIds.slice(i, i + batchSize);
-    const batchNumber = Math.floor(i / batchSize) + 1;
+  for (let i = 0; i < notionPageIds.length; i += queryBatchSize) {
+    const batchIds = notionPageIds.slice(i, i + queryBatchSize);
+    const batchNumber = Math.floor(i / queryBatchSize) + 1;
 
     console.log(`  🔍 Checking existing mappings batch ${batchNumber}/${queryBatches} (${batchIds.length} IDs)...`);
 
@@ -125,10 +127,10 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
   // Continue with batched insert for remaining pages
   const totalPagesToMap = pagesToMap.length;
 
-  for (let i = 0; i < totalPagesToMap; i += batchSize) {
-    const batch = pagesToMap.slice(i, i + batchSize);
-    const batchNumber = Math.floor(i / batchSize) + 1;
-    const totalBatches = Math.ceil(totalPagesToMap / batchSize);
+  for (let i = 0; i < totalPagesToMap; i += insertBatchSize) {
+    const batch = pagesToMap.slice(i, i + insertBatchSize);
+    const batchNumber = Math.floor(i / insertBatchSize) + 1;
+    const totalBatches = Math.ceil(totalPagesToMap / insertBatchSize);
 
     console.log(`  🔄 UUID mapping batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`);
 
