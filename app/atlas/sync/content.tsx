@@ -421,6 +421,13 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
         )}
       </div>
 
+      {/* Warning message when sync is running */}
+      {syncState.isRunning && (
+        <p className="mt-4 text-center text-sm font-bold text-red-600">
+          Do not refresh the page while the sync is running. You can click the stop button to abort the synchronization.
+        </p>
+      )}
+
       {/* Progress Display */}
       {(syncState.isRunning || syncState.completed) && (
         <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
