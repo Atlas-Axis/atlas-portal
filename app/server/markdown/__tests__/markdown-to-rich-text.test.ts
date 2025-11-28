@@ -661,6 +661,29 @@ describe('convertMarkdownToNotionRichText', () => {
       expect(combinedContent).toBe(text);
     });
 
+    it('should not exceed limit when space is at exactly position 2000 (off-by-one edge case)', () => {
+      // Create text where a space falls exactly at position 2000
+      // This tests the off-by-one bug fix: when including the space in the chunk,
+      // total must still not exceed maxLength
+      const beforeSpace = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH); // 2000 A's
+      const afterSpace = 'B'.repeat(100); // 100 B's
+      const text = beforeSpace + ' ' + afterSpace; // Space at position 2000
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should split into multiple chunks
+      expect(result.length).toBeGreaterThanOrEqual(2);
+
+      // CRITICAL: Each chunk must be <= 2000 characters (not 2001!)
+      for (const chunk of result) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+
+      // Total content should be preserved
+      const combinedContent = result.map((r) => r.text?.content ?? '').join('');
+      expect(combinedContent).toBe(text);
+    });
+
     it('should split at max length when no word boundaries are available', () => {
       // Text with no spaces - must split at exact character boundary
       const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH * 2 + 100);

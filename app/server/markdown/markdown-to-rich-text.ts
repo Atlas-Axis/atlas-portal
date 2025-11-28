@@ -58,7 +58,8 @@ function splitTextIntoChunks(text: string, maxLength: number): string[] {
 
   while (remaining.length > maxLength) {
     // Try to split at word boundary (space)
-    const splitIndex = remaining.lastIndexOf(' ', maxLength);
+    // Use maxLength - 1 so that when we include the space (+1), total doesn't exceed maxLength
+    const splitIndex = remaining.lastIndexOf(' ', maxLength - 1);
     if (splitIndex <= 0) {
       // No word boundary found within limit, split at max length
       // Preserve all content exactly
