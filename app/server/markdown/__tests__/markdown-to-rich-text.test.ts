@@ -301,14 +301,11 @@ describe('convertMarkdownToNotionRichText', () => {
     expect(result[1].equation?.expression).toBe('x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}');
   });
 
-  // TODO: Verify this is expected behavior - empty equations should be empty strings?
-  it('should handle empty equations', () => {
+  it('should filter out empty equations (Notion API rejects them)', () => {
     const result = convertMarkdownToNotionRichText('Empty equation: $$', mockUuidMappings);
-    expect(result).toHaveLength(2);
-
+    // Empty equations are filtered out - only the text before remains
+    expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Empty equation: ');
-    expect(result[1].type).toBe('equation');
-    expect(result[1].equation?.expression).toBe('');
   });
 
   it('should handle equations mixed with other formatting', () => {

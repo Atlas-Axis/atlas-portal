@@ -367,6 +367,11 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
 
     // Handle equation type first - equations need default annotations to match Notion API
     if (match.type === 'equation') {
+      // Skip empty equations - Notion API rejects them
+      if (!match.content) {
+        lastEnd = match.end;
+        continue;
+      }
       richText.push({
         type: 'equation',
         equation: { expression: match.content },
