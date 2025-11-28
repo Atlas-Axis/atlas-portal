@@ -13,7 +13,8 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Active Data',
   'Annotation',
   'Scenario',
-  'Scenario Variation'
+  'Scenario Variation',
+  'Needed Research'
 );
 
 -- Create the enum type for atlas_database_name_enum
