@@ -106,8 +106,11 @@ export async function syncChangesToNotion(
 
   // Load nesting bug mappings once and build affected UUIDs set for O(1) lookups
   // Documents affected by the nesting bug should not have their parent relationships changed
+  const nestingStartTime = performance.now();
   const nestingMappings = await loadNotionNestingFixMappings();
   const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings);
+  const nestingElapsed = performance.now() - nestingStartTime;
+  console.log(`[Sync Timing] Load nesting bug mappings: ${nestingElapsed.toFixed(0)}ms`);
   if (nestingBugAffectedUuids.size > 0) {
     addLog(
       `Loaded ${nestingBugAffectedUuids.size} documents affected by nesting bug (parent changes will be skipped)`,
@@ -144,6 +147,7 @@ export async function syncChangesToNotion(
 
   // Phase 1: Process content changes (safest - no relationship modifications)
   if (changes.changed.length > 0) {
+    const phase1StartTime = performance.now();
     addLog(`Phase 1: Processing ${changes.changed.length} content changes`, 'info');
     updateProgress('content', null);
 
@@ -192,10 +196,16 @@ export async function syncChangesToNotion(
         addLog(`✗ Error updating: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
+
+    const phase1Elapsed = performance.now() - phase1StartTime;
+    console.log(
+      `[Sync Timing] Phase 1 - Content Changes: ${phase1Elapsed.toFixed(0)}ms (${changes.changed.length} documents)`,
+    );
   }
 
   // Phase 2: Process additions (validate parents first)
   if (changes.added.length > 0 && !options.stopRequested) {
+    const phase2StartTime = performance.now();
     // Sort additions by hierarchy level and depth to ensure parents are created before children
     const sortedAdditions = sortAdditionsByHierarchy(changes.added, newIdsToDocuments, newIdsToDatabase);
 
@@ -261,10 +271,16 @@ export async function syncChangesToNotion(
         addLog(`✗ Error creating: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
+
+    const phase2Elapsed = performance.now() - phase2StartTime;
+    console.log(
+      `[Sync Timing] Phase 2 - Additions: ${phase2Elapsed.toFixed(0)}ms (${sortedAdditions.length} documents)`,
+    );
   }
 
   // Phase 3: Process deletions (verify no children)
   if (changes.deleted.length > 0 && !options.stopRequested) {
+    const phase3StartTime = performance.now();
     addLog(`Phase 3: Processing ${changes.deleted.length} deletions`, 'info');
     updateProgress('deletions', null);
 
@@ -314,11 +330,17 @@ export async function syncChangesToNotion(
         addLog(`✗ Error deleting: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
+
+    const phase3Elapsed = performance.now() - phase3StartTime;
+    console.log(
+      `[Sync Timing] Phase 3 - Deletions: ${phase3Elapsed.toFixed(0)}ms (${changes.deleted.length} documents)`,
+    );
   }
 
   // Phase 4: Process parent changes
   // Note: Documents affected by the nesting bug are skipped to preserve manual relationship corrections
   if (changes.parent_changed.length > 0 && !options.stopRequested) {
+    const phase4StartTime = performance.now();
     addLog(`Phase 4: Processing ${changes.parent_changed.length} parent changes`, 'info');
     updateProgress('content', null); // Reuse content phase for now
 
@@ -396,12 +418,18 @@ export async function syncChangesToNotion(
         addLog(`✗ Error updating parent: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
+
+    const phase4Elapsed = performance.now() - phase4StartTime;
+    console.log(
+      `[Sync Timing] Phase 4 - Parent Changes: ${phase4Elapsed.toFixed(0)}ms (${changes.parent_changed.length} documents)`,
+    );
   }
 
   // Phase 5: Process sibling order changes
   // Note: Since doc_no and sort_order are now synced via property builder,
   // sibling order changes are effectively handled by updating the doc_no property
   if (changes.sibling_order_changed.length > 0 && !options.stopRequested) {
+    const phase5StartTime = performance.now();
     addLog(`Phase 5: Processing ${changes.sibling_order_changed.length} sibling order changes`, 'info');
     updateProgress('sibling_order_changed', null);
 
@@ -456,6 +484,11 @@ export async function syncChangesToNotion(
         addLog(`✗ Error updating sibling order: ${docLabel} - ${err.message}`, 'error', change.uuid, docLabel);
       }
     }
+
+    const phase5Elapsed = performance.now() - phase5StartTime;
+    console.log(
+      `[Sync Timing] Phase 5 - Sibling Order Changes: ${phase5Elapsed.toFixed(0)}ms (${changes.sibling_order_changed.length} documents)`,
+    );
   }
 
   result.totalProcessed = completedCount;

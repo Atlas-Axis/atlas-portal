@@ -96,11 +96,14 @@ export async function updateNotionPageContent(
     properties = buildNotionProperties(change.newValues, databaseName, uuidMappings, warnings);
 
     // Update the page using Notion API
+    const apiStartTime = performance.now();
     const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: notionPageId,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
     });
+    const apiElapsed = performance.now() - apiStartTime;
+    console.log(`[Sync Timing]     Notion API update: ${apiElapsed.toFixed(0)}ms`);
 
     // Log successful operation to audit log
     await logNotionApiOperation({
@@ -201,7 +204,10 @@ export async function createNotionDatabasePage(
     // Validate relationship parent exists ONLY if one is specified and it's in the same database
     // Skip validation when internalParentInfo is null (root-level or cross-database) - both are valid
     if (internalParentInfo) {
+      const validateStartTime = performance.now();
       const parentExists = await validatePageExists(internalParentInfo.notionPageId);
+      const validateElapsed = performance.now() - validateStartTime;
+      console.log(`[Sync Timing]     Parent validation: ${validateElapsed.toFixed(0)}ms`);
       if (!parentExists) {
         return {
           success: false,
@@ -289,6 +295,7 @@ export async function createNotionDatabasePage(
     };
 
     // Create the page (parent is always the database ID, never a page ID)
+    const apiStartTime = performance.now();
     const notionClient = notion();
     const createdPage = await notionClient.pages.create({
       parent: {
@@ -297,6 +304,8 @@ export async function createNotionDatabasePage(
       },
       properties: properties as Parameters<typeof notionClient.pages.create>[0]['properties'],
     });
+    const apiElapsed = performance.now() - apiStartTime;
+    console.log(`[Sync Timing]     Notion API create: ${apiElapsed.toFixed(0)}ms`);
 
     // Store UUID mapping for the newly created page
     // This allows the new page to be referenced in subsequent operations during the same sync
@@ -394,7 +403,10 @@ export async function deleteNotionPage(
     databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
 
     // Check if page has children (using Notion page ID)
+    const checkStartTime = performance.now();
     const hasChildren = await pageHasChildren(notionPageId, change.oldValues, originalIdsToDatabase);
+    const checkElapsed = performance.now() - checkStartTime;
+    console.log(`[Sync Timing]     Child validation: ${checkElapsed.toFixed(0)}ms`);
     if (hasChildren) {
       return {
         success: false,
@@ -410,11 +422,14 @@ export async function deleteNotionPage(
     };
 
     // Archive the page (soft delete)
+    const apiStartTime = performance.now();
     const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: notionPageId,
       archived: true,
     });
+    const apiElapsed = performance.now() - apiStartTime;
+    console.log(`[Sync Timing]     Notion API delete: ${apiElapsed.toFixed(0)}ms`);
 
     // Log successful operation to audit log
     await logNotionApiOperation({
@@ -572,7 +587,10 @@ export async function updateNotionPageParent(
 
     // Validate new parent exists using the Notion page ID
     if (newParentNotionPageId) {
+      const validateStartTime = performance.now();
       const parentExists = await validatePageExists(newParentNotionPageId);
+      const validateElapsed = performance.now() - validateStartTime;
+      console.log(`[Sync Timing]     Parent validation: ${validateElapsed.toFixed(0)}ms`);
       if (!parentExists) {
         return {
           success: false,
@@ -583,11 +601,14 @@ export async function updateNotionPageParent(
     }
 
     // Update the page using Notion API
+    const apiStartTime = performance.now();
     const notionClient = notion();
     const response = await notionClient.pages.update({
       page_id: notionPageId,
       properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
     });
+    const apiElapsed = performance.now() - apiStartTime;
+    console.log(`[Sync Timing]     Notion API update: ${apiElapsed.toFixed(0)}ms`);
 
     // Log successful operation to audit log
     await logNotionApiOperation({
@@ -742,10 +763,19 @@ export async function runDryRunSync(): Promise<{ succeeded: number; skipped: num
  */
 export async function runRealSync(): Promise<RealSyncResult> {
   try {
+    const totalStartTime = performance.now();
     console.log('[Sync] Starting sync...');
 
     // Compute diff and load UUID mappings on the server (avoids sending large payloads)
-    const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
+    const diffStartTime = performance.now();
+    const diffResult = await diffAtlasScopeTreeLists();
+    const diffElapsed = performance.now() - diffStartTime;
+    console.log(`[Sync Timing] diffAtlasScopeTreeLists: ${diffElapsed.toFixed(0)}ms`);
+
+    const uuidMappingStartTime = performance.now();
+    const uuidMappings = await loadUuidMappings();
+    const uuidMappingElapsed = performance.now() - uuidMappingStartTime;
+    console.log(`[Sync Timing] loadUuidMappings: ${uuidMappingElapsed.toFixed(0)}ms`);
 
     const totalChanges =
       diffResult.changes.changed.length +
@@ -756,6 +786,7 @@ export async function runRealSync(): Promise<RealSyncResult> {
 
     console.log(`[Sync] ${totalChanges} changes to process`);
 
+    const syncStartTime = performance.now();
     const result = await syncChangesToNotion(
       diffResult,
       { stopRequested: false, dryRun: false },
@@ -767,6 +798,11 @@ export async function runRealSync(): Promise<RealSyncResult> {
         console.log(`[Sync] ${progress.phase}: ${progress.completedCount}/${progress.totalCount} (${pct}%)${doc}`);
       },
     );
+    const syncElapsed = performance.now() - syncStartTime;
+    console.log(`[Sync Timing] syncChangesToNotion: ${syncElapsed.toFixed(0)}ms`);
+
+    const totalElapsed = performance.now() - totalStartTime;
+    console.log(`[Sync Timing] Total sync: ${totalElapsed.toFixed(0)}ms`);
 
     console.log(
       `[Sync] Complete: ${result.succeeded.length} succeeded, ${result.failed.length} failed, ${result.skipped.length} skipped`,
@@ -838,23 +874,33 @@ export async function runSyncBatch(
   };
 
   try {
+    const batchStartTime = performance.now();
     console.log(`[Sync] Batch ${batchIndex + 1}/${totalBatches}: Processing ${batchData.changes.length} changes`);
     addLog(`Batch ${batchIndex + 1}/${totalBatches}: Processing ${batchData.changes.length} changes`, 'info');
 
     // Deserialize maps from arrays
+    const deserializeStartTime = performance.now();
     const originalIdsToDatabase = new Map<string, AtlasDatabaseName>(batchData.originalIdsToDatabase);
     const newIdsToDatabase = new Map<string, AtlasDatabaseName>(batchData.newIdsToDatabase);
     const newIdsToDocuments = new Map<string, ExportAtlasTreeBaseDocument>(batchData.newIdsToDocuments);
+    const deserializeElapsed = performance.now() - deserializeStartTime;
+    console.log(`[Sync Timing]   Batch ${batchIndex + 1} - Deserialize maps: ${deserializeElapsed.toFixed(0)}ms`);
 
     // Load UUID mappings server-side (cached after first load)
+    const uuidMappingStartTime = performance.now();
     const uuidMappings = await loadUuidMappings();
+    const uuidMappingElapsed = performance.now() - uuidMappingStartTime;
+    console.log(`[Sync Timing]   Batch ${batchIndex + 1} - Load UUID mappings: ${uuidMappingElapsed.toFixed(0)}ms`);
 
     // Load nesting bug mappings for skipping affected documents
     // Use throwOnMissingUuid: false because some documents may not exist yet when sync starts
+    const nestingStartTime = performance.now();
     const nestingMappings = await loadNotionNestingFixMappings();
     const nestingBugAffectedUuids = buildNestingBugAffectedUuidsSet(nestingMappings, uuidMappings, {
       throwOnMissingUuid: false,
     });
+    const nestingElapsed = performance.now() - nestingStartTime;
+    console.log(`[Sync Timing]   Batch ${batchIndex + 1} - Load nesting bug mappings: ${nestingElapsed.toFixed(0)}ms`);
 
     const options: SyncActionOptions = { syncBatchId };
 
@@ -863,6 +909,7 @@ export async function runSyncBatch(
       const docLabel = getDocumentLabel(change);
 
       try {
+        const changeStartTime = performance.now();
         let result: SyncActionResult;
 
         switch (change.changeType) {
@@ -902,6 +949,9 @@ export async function runSyncBatch(
             skipped++;
             continue;
         }
+
+        const changeElapsed = performance.now() - changeStartTime;
+        console.log(`[Sync Timing]   ${change.changeType}: ${changeElapsed.toFixed(0)}ms (${docLabel})`);
 
         // Process result
         if (result.success) {
@@ -957,9 +1007,11 @@ export async function runSyncBatch(
       }
     }
 
+    const batchElapsed = performance.now() - batchStartTime;
     console.log(
       `[Sync] Batch ${batchIndex + 1}/${totalBatches}: ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`,
     );
+    console.log(`[Sync Timing] Batch ${batchIndex + 1} total: ${batchElapsed.toFixed(0)}ms`);
     addLog(`Batch complete: ${succeeded} succeeded, ${failed} failed, ${skipped} skipped`, 'info');
 
     return {
