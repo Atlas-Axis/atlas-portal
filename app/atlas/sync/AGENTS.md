@@ -225,14 +225,28 @@ Real-time operation log shows:
 
 ### Markdown File Source
 
-The sync system loads the canonical Atlas Markdown file directly from GitHub:
+The sync system loads Atlas Markdown from different sources depending on the environment:
 
+**Production (NODE_ENV === 'production'):**
+- Loads from GitHub repository (authoritative source)
 - **Repository**: `pppdns/next-gen-atlas`
 - **Branch**: `main`
 - **File Path**: `Sky Atlas/Sky Atlas.md`
 - **Raw URL**: Configured in `ATLAS_MARKDOWN_GITHUB_RAW_URL` constant
 
-This ensures that the sync always operates against the authoritative source of truth for the Atlas.
+**Local Development (NODE_ENV !== 'production'):**
+- Automatically uses `exported-atlas/truncated-atlas.md` if present
+- Falls back to GitHub if truncated file not found
+- Truncated file contains only documents at depth ≤4 (544 docs vs 7,680 full Atlas)
+- Enables fast local testing without waiting hours for full Atlas processing
+
+**Generating Truncated File:**
+
+```bash
+npx tsx scripts/atlas-export/generate-truncated-atlas-markdown.ts
+```
+
+This reduces sync time from hours to minutes while maintaining structural fidelity for testing.
 
 ### Notion API Access
 

@@ -652,6 +652,67 @@ npx tsx scripts/create-test-notion-databases.ts
 
 This creates test versions of all Atlas databases with `[TEST]` prefix for safe testing.
 
+### Local Testing with Truncated Atlas
+
+**Challenge**: The full production Atlas contains 7,680 documents and takes hours to process during sync operations, making local development and testing impractical.
+
+**Solution**: A truncated Atlas markdown file is provided for local testing that contains only documents at depth ≤4 (544 documents, 9% of original size).
+
+**Generating the Truncated File:**
+
+```bash
+npx tsx scripts/atlas-export/generate-truncated-atlas-markdown.ts
+```
+
+This script:
+- Loads the canonical Atlas markdown from GitHub
+- Parses it to Export Tree format
+- Filters out all documents deeper than depth 4 using semantic depth calculation
+- Exports the truncated tree to `exported-atlas/truncated-atlas.md`
+
+**Automatic Local Loading:**
+
+The sync system automatically uses the truncated file in local development:
+
+```typescript
+// In loadAtlasMarkdownForSync()
+if (NODE_ENV !== 'production') {
+  // Try to load truncated-atlas.md
+  // Falls back to GitHub if not found
+} else {
+  // Production: always fetch from GitHub
+}
+```
+
+**Benefits:**
+
+- **Fast iteration**: Sync operations complete in minutes instead of hours
+- **Same structure**: Maintains full hierarchical fidelity for testing
+- **Automatic switching**: No code changes or environment variables needed
+- **Production safety**: GitHub source always used in production
+
+**File Details:**
+
+- **Location**: `exported-atlas/truncated-atlas.md`
+- **Size**: 246KB (vs 2.6MB original)
+- **Documents**: 544 (vs 7,680 original)
+- **Max depth**: 4 (Scope → Article → Section → Core/Type Spec/etc.)
+- **Committed**: Yes, checked into repository for team use
+
+**Console Logging:**
+
+The system logs which source is being used:
+
+```
+[loadAtlasMarkdownForSync] Using local truncated Atlas file: /path/to/truncated-atlas.md
+```
+
+or
+
+```
+[loadAtlasMarkdownForSync] Fetching Atlas markdown from GitHub
+```
+
 ## Known Limitations
 
 ### 1. No Integration Tests
