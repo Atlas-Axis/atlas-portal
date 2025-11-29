@@ -3,7 +3,7 @@
 import { memo, useMemo, useRef, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
-import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
+import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
@@ -17,7 +17,7 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import { cn } from '@/app/shared/utils/utils';
-import { runDryRunSync, runSyncBatch } from './_actions/sync-actions';
+import { type SyncFilters, runDryRunSync, runSyncBatch } from './_actions/sync-actions';
 import {
   type RealSyncResult,
   SYNC_BATCH_SIZE,
@@ -208,6 +208,13 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
   // Dry-run state
   const [isDryRunRunning, setIsDryRunRunning] = useState(false);
 
+  // Sync filter state - controls which change types are synced
+  const [syncFilters, setSyncFilters] = useState({
+    newAndDeleted: true, // controls: added, deleted
+    contentChanges: false, // controls: changed
+    moves: false, // controls: parent_changed, sibling_order_changed
+  });
+
   // Ref for stop flag - checked between batches
   const stopRequestedRef = useRef(false);
 
@@ -217,8 +224,17 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
     // Reset stop flag
     stopRequestedRef.current = false;
 
-    // Flatten all changes into a single array in processing order
-    const allChanges = flattenChangesInOrder(changes);
+    // Filter changes based on selected filters
+    const filteredChanges = {
+      added: syncFilters.newAndDeleted ? changes.added : [],
+      deleted: syncFilters.newAndDeleted ? changes.deleted : [],
+      changed: syncFilters.contentChanges ? changes.changed : [],
+      parent_changed: syncFilters.moves ? changes.parent_changed : [],
+      sibling_order_changed: syncFilters.moves ? changes.sibling_order_changed : [],
+    };
+
+    // Flatten filtered changes into a single array in processing order
+    const allChanges = flattenChangesInOrder(filteredChanges);
     const totalChanges = allChanges.length;
 
     if (totalChanges === 0) {
@@ -281,7 +297,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
         // Update UI with current batch info
         setSyncState((prev) => ({
           ...prev,
-          currentDocument: `Batch ${batchIndex + 1}/${totalBatches} (${batch.length} changes)`,
+          currentDocument: `Batch ${batchIndex + 1}/${totalBatches} (${totalChanges} total changes)`,
           progress: {
             ...prev.progress,
             completed: totalSucceeded + totalFailed + totalSkipped,
@@ -371,7 +387,13 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
     try {
       // Run sync in dry-run mode via server action
       // Server action computes diff and loads UUID mappings to avoid payload size limits
-      const dryRunResult = await runDryRunSync();
+      // Pass current filter state to respect user's filter selections
+      const filters: SyncFilters = {
+        newAndDeleted: syncFilters.newAndDeleted,
+        contentChanges: syncFilters.contentChanges,
+        moves: syncFilters.moves,
+      };
+      const dryRunResult = await runDryRunSync(filters);
 
       if (dryRunResult.error) {
         throw new Error(dryRunResult.error);
@@ -390,8 +412,39 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
     }
   };
 
+  // Whether any filters are enabled (for button state)
+  const hasEnabledFilters = syncFilters.newAndDeleted || syncFilters.contentChanges || syncFilters.moves;
+
+  // Whether controls should be disabled
+  const controlsDisabled = syncState.isRunning || isDryRunRunning;
+
   return (
     <div className="my-6">
+      {/* Sync Filters */}
+      <div className="mb-4 flex justify-center gap-6">
+        <Checkbox
+          isSelected={syncFilters.newAndDeleted}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, newAndDeleted: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          New/Deleted
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.contentChanges}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, contentChanges: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Content Changes
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.moves}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, moves: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Moves (document number changes)
+        </Checkbox>
+      </div>
+
       {/* Sync Buttons */}
       <div className="flex justify-center gap-3">
         <Button
@@ -400,7 +453,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
           variant="bordered"
           color="secondary"
           isLoading={isDryRunRunning}
-          isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
+          isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
         >
           Preview Changes
         </Button>
@@ -410,7 +463,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
           variant="solid"
           color="primary"
           isLoading={syncState.isRunning}
-          isDisabled={syncState.isRunning || isDryRunRunning || !hasChanges}
+          isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
         >
           Sync Changes to Notion
         </Button>

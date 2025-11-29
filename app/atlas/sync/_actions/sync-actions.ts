@@ -32,6 +32,19 @@ import { syncChangesToNotion } from '../_lib/sync-orchestrator';
 export type { RealSyncResult, SerializedBatchData } from '../_lib/batch-sync-types';
 // Note: SYNC_BATCH_SIZE must be imported directly from batch-sync-types.ts by clients
 
+/**
+ * Filter options for sync operations.
+ * Controls which types of changes are processed.
+ */
+export interface SyncFilters {
+  /** Include added and deleted documents */
+  newAndDeleted: boolean;
+  /** Include content/field changes */
+  contentChanges: boolean;
+  /** Include parent changes and sibling order changes */
+  moves: boolean;
+}
+
 export interface SyncActionResult {
   success: boolean;
   pageId?: string;
@@ -764,12 +777,26 @@ async function pageHasChildren(
  * This must be a server action because the orchestrator has server-side dependencies.
  * Computes diff and loads UUID mappings on the server to avoid payload size limits.
  *
+ * @param filters Optional filters to control which change types are processed
  * @returns Object with succeeded and skipped counts
  */
-export async function runDryRunSync(): Promise<{ succeeded: number; skipped: number; error?: string }> {
+export async function runDryRunSync(
+  filters?: SyncFilters,
+): Promise<{ succeeded: number; skipped: number; error?: string }> {
   try {
     // Compute diff and load UUID mappings on the server (avoids sending large payloads)
     const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
+
+    // Apply filters if provided
+    if (filters) {
+      diffResult.changes = {
+        added: filters.newAndDeleted ? diffResult.changes.added : [],
+        deleted: filters.newAndDeleted ? diffResult.changes.deleted : [],
+        changed: filters.contentChanges ? diffResult.changes.changed : [],
+        parent_changed: filters.moves ? diffResult.changes.parent_changed : [],
+        sibling_order_changed: filters.moves ? diffResult.changes.sibling_order_changed : [],
+      };
+    }
 
     const result = await syncChangesToNotion(diffResult, { stopRequested: false, dryRun: true }, uuidMappings, () => {
       // No-op progress callback for dry-run
