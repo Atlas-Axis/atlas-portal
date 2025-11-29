@@ -61,6 +61,44 @@ function formatNumberProperty(value: string): { number: number | null } {
 }
 
 /**
+ * Extracts the sibling order from a document number.
+ * This allows us to set the correct sort_order in Notion even when
+ * the source document (from Markdown) doesn't have sortOrder.
+ *
+ * The extracted number represents the document's position among its siblings,
+ * which is the last numeric segment of the document number.
+ *
+ * Examples:
+ * - Hierarchical: A.0.1.1.1 → 1, A.0.1.1.10 → 10
+ * - Annotations: A.x.y.0.3.5 → 5
+ * - Tenets: A.x.y.0.4.3 → 3
+ * - Scenarios: A.x.y.0.4.z.1.2 → 2
+ * - Scenario Variations: A.x.y.z.var3 → 3
+ * - Active Data: A.x.y.0.6.4 → 4
+ * - Needed Research: NR-5 → 5
+ *
+ * @param docNo - The document number to extract sort order from
+ * @returns The extracted sort order number, or null if extraction fails
+ */
+export function extractSortOrderFromDocNo(docNo: string): number | null {
+  if (!docNo) return null;
+
+  // Needed Research: NR-N
+  const nrMatch = docNo.match(/^NR-(\d+)$/);
+  if (nrMatch) return parseInt(nrMatch[1], 10);
+
+  // Scenario Variations: A.x.y.z.varN
+  const varMatch = docNo.match(/\.var(\d+)$/);
+  if (varMatch) return parseInt(varMatch[1], 10);
+
+  // All other patterns: extract last numeric segment
+  const parts = docNo.split('.');
+  const lastPart = parts[parts.length - 1];
+  const num = parseInt(lastPart, 10);
+  return isNaN(num) ? null : num;
+}
+
+/**
  * Formats a Notion property value based on its property type.
  * Routes to the appropriate formatter function.
  *
@@ -178,10 +216,18 @@ export function buildNotionProperties(
 
   // Sort order property (number) - only for databases that have it (e.g., "Sections & Primary Docs")
   // The sortOrder field comes from the Export Tree and represents the "No." property in Notion
+  // If sortOrder is not present (e.g., from Markdown import), derive it from doc_no
   if (config.properties.sortOrder) {
     const docWithSort = doc as unknown as { sortOrder?: number | string };
-    if (docWithSort.sortOrder !== undefined && docWithSort.sortOrder !== null) {
-      properties[config.properties.sortOrder] = formatNumberProperty(String(docWithSort.sortOrder));
+    let sortOrderValue: number | string | null | undefined = docWithSort.sortOrder;
+
+    // If no sortOrder, derive from doc_no to ensure correct ordering in Notion
+    if (sortOrderValue === undefined || sortOrderValue === null) {
+      sortOrderValue = extractSortOrderFromDocNo(doc.doc_no);
+    }
+
+    if (sortOrderValue !== undefined && sortOrderValue !== null) {
+      properties[config.properties.sortOrder] = formatNumberProperty(String(sortOrderValue));
     }
   }
 

@@ -8,7 +8,11 @@
 import { describe, expect, it } from 'vitest';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { addParentPageRelationshipProperty, buildNotionProperties } from '../notion-property-builder';
+import {
+  addParentPageRelationshipProperty,
+  buildNotionProperties,
+  extractSortOrderFromDocNo,
+} from '../notion-property-builder';
 
 // Mock UUID mappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -540,6 +544,138 @@ describe('notion-property-builder', () => {
         'Parent item': {
           relation: [{ id: 'parent-agent-456' }],
         },
+      });
+    });
+  });
+
+  describe('extractSortOrderFromDocNo', () => {
+    it('returns null for empty string', () => {
+      expect(extractSortOrderFromDocNo('')).toBeNull();
+    });
+
+    it('returns null for null/undefined-like input', () => {
+      // Test with empty string since the function expects string input
+      expect(extractSortOrderFromDocNo('')).toBeNull();
+    });
+
+    // Hierarchical document numbers (A.x.y.z pattern)
+    describe('hierarchical documents', () => {
+      it('extracts last segment for simple hierarchical doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.0.1.1.2')).toBe(2);
+        expect(extractSortOrderFromDocNo('A.0.1.1.10')).toBe(10);
+        expect(extractSortOrderFromDocNo('A.0.1.1.25')).toBe(25);
+      });
+
+      it('handles Scope documents', () => {
+        expect(extractSortOrderFromDocNo('A.0')).toBe(0);
+        expect(extractSortOrderFromDocNo('A.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.5')).toBe(5);
+      });
+
+      it('handles Article documents', () => {
+        expect(extractSortOrderFromDocNo('A.0.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.1.2')).toBe(2);
+        expect(extractSortOrderFromDocNo('A.2.15')).toBe(15);
+      });
+
+      it('handles Section documents', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.1.2.3')).toBe(3);
+      });
+
+      it('handles deeply nested Core documents', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.1.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.0.1.1.1.2.3')).toBe(3);
+      });
+    });
+
+    // Annotations: A.x.y.0.3.N pattern
+    describe('annotations', () => {
+      it('extracts sort order from annotation doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.3.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.1.2.3.0.3.5')).toBe(5);
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.3.10')).toBe(10);
+      });
+
+      it('handles relative annotation doc_no', () => {
+        expect(extractSortOrderFromDocNo('.0.3.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('.0.3.5')).toBe(5);
+      });
+    });
+
+    // Tenets: A.x.y.0.4.N pattern
+    describe('tenets', () => {
+      it('extracts sort order from tenet doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.1.2.3.0.4.3')).toBe(3);
+      });
+
+      it('handles relative tenet doc_no', () => {
+        expect(extractSortOrderFromDocNo('.0.4.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('.0.4.7')).toBe(7);
+      });
+    });
+
+    // Scenarios: A.x.y.0.4.z.1.N pattern
+    describe('scenarios', () => {
+      it('extracts sort order from scenario doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1.1.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1.1.2')).toBe(2);
+      });
+
+      it('handles relative scenario doc_no', () => {
+        expect(extractSortOrderFromDocNo('.1.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('.1.5')).toBe(5);
+      });
+    });
+
+    // Scenario Variations: A.x.y.z.varN pattern
+    describe('scenario variations', () => {
+      it('extracts sort order from scenario variation doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1.1.1.var1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1.1.1.var3')).toBe(3);
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.4.1.1.1.var10')).toBe(10);
+      });
+
+      it('handles relative scenario variation doc_no', () => {
+        expect(extractSortOrderFromDocNo('.var1')).toBe(1);
+        expect(extractSortOrderFromDocNo('.var5')).toBe(5);
+      });
+    });
+
+    // Active Data: A.x.y.0.6.N pattern
+    describe('active data', () => {
+      it('extracts sort order from active data doc_no', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.1.0.6.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('A.1.2.3.0.6.4')).toBe(4);
+      });
+
+      it('handles relative active data doc_no', () => {
+        expect(extractSortOrderFromDocNo('.0.6.1')).toBe(1);
+        expect(extractSortOrderFromDocNo('.0.6.8')).toBe(8);
+      });
+    });
+
+    // Needed Research: NR-N pattern
+    describe('needed research', () => {
+      it('extracts sort order from NR doc_no', () => {
+        expect(extractSortOrderFromDocNo('NR-1')).toBe(1);
+        expect(extractSortOrderFromDocNo('NR-5')).toBe(5);
+        expect(extractSortOrderFromDocNo('NR-42')).toBe(42);
+        expect(extractSortOrderFromDocNo('NR-100')).toBe(100);
+      });
+    });
+
+    // Edge cases
+    describe('edge cases', () => {
+      it('returns null for non-numeric last segment', () => {
+        expect(extractSortOrderFromDocNo('A.0.1.abc')).toBeNull();
+      });
+
+      it('handles single segment', () => {
+        expect(extractSortOrderFromDocNo('A')).toBeNull();
+        expect(extractSortOrderFromDocNo('1')).toBe(1);
       });
     });
   });
