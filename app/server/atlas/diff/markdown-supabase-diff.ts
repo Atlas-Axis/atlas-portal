@@ -1,7 +1,7 @@
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 import { buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
 import { ExportAtlasTreeScopeTrees } from '../export/types';
-import { fetchAtlasMarkdownContent } from '../load-atlas-markdown-from-github';
+import { loadAtlasMarkdownForSync } from '../load-atlas-markdown-from-github';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
@@ -39,11 +39,14 @@ async function loadSupabaseAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeSco
 }
 
 /**
- * Loads the canonical Atlas markdown file from GitHub and parses it into Export Tree format.
+ * Loads Atlas markdown for sync and parses it into Export Tree format.
  *
- * @returns The parsed Atlas scope trees from the GitHub markdown file
+ * In local development, uses truncated-atlas.md if available.
+ * In production, fetches from GitHub.
+ *
+ * @returns The parsed Atlas scope trees
  */
 async function loadMarkdownAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
-  const markdown = await fetchAtlasMarkdownContent();
+  const markdown = await loadAtlasMarkdownForSync();
   return parseAtlasMarkdown(markdown);
 }
