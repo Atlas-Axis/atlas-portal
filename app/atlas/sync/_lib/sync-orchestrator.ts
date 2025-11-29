@@ -1,6 +1,5 @@
-import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
+import { compareDocNumbers } from '@/app/server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { createSyncBatch } from '@/app/server/services/supabase/audit-log-service';
 import {
@@ -15,7 +14,6 @@ import {
   updateNotionPageContent,
   updateNotionPageParent,
 } from '../_actions/sync-actions';
-import { getAncestryDepth, getDatabaseHierarchyLevel, getDatabaseNameFromDocument } from './atlas-database-mapper';
 import type { SyncPhase } from './dry-run-types';
 
 // Re-export dry-run types from shared file (safe to import on client side)
@@ -206,10 +204,11 @@ export async function syncChangesToNotion(
   // Phase 2: Process additions (validate parents first)
   if (changes.added.length > 0 && !options.stopRequested) {
     const phase2StartTime = performance.now();
-    // Sort additions by hierarchy level and depth to ensure parents are created before children
-    const sortedAdditions = sortAdditionsByHierarchy(changes.added, newIdsToDocuments, newIdsToDatabase);
+    // Sort additions in depth-first order to ensure parents are created before children
+    // and document numbers remain consistent even with partial syncs
+    const sortedAdditions = sortAdditionsByDepthFirst(changes.added);
 
-    addLog(`Phase 2: Processing ${sortedAdditions.length} additions (sorted by hierarchy)`, 'info');
+    addLog(`Phase 2: Processing ${sortedAdditions.length} additions (sorted depth-first)`, 'info');
     updateProgress('additions', null);
 
     for (const change of sortedAdditions) {
@@ -522,70 +521,77 @@ export async function syncChangesToNotion(
 }
 
 /**
- * Sorts additions by Atlas database hierarchy and nesting depth.
- * This ensures that parent pages are created before their children, preventing
- * relationship errors when both parent and child are being created.
+ * Sorts additions in depth-first (pre-order) traversal order.
  *
- * Sorting rules:
- * 1. Group by Atlas database name (derived from document type + ancestry)
- * 2. Sort groups by database hierarchy level (Scopes=0, Articles=1, etc.)
- * 3. Within each group, sort by nesting depth (parents before children)
- * 4. Maintain original order for documents at same database + same depth
+ * This ensures that when syncing documents to Notion:
+ * 1. Parents are always created before their children
+ * 2. Document numbers remain consistent even with partial syncs
+ * 3. Stopping mid-sync results in a clean state where the diff shows only "Added"
+ *
+ * The ordering matches the document numbering algorithm in atlas-tree-numbering.ts,
+ * which assigns numbers based on sibling position during pre-order traversal.
+ *
+ * Example ordering:
+ * - A.0 (Scope)
+ * - A.0.1 (Article)
+ * - A.0.1.1 (Section)
+ * - A.0.1.1.1 (Core)
+ * - A.0.1.1.2 (Core)
+ * - A.0.1.2 (Section)
+ * - A.0.2 (Article)
+ * - A.1 (Scope)
  *
  * @param additions Array of addition changes to sort
- * @param uuidToDocumentMap Map of UUIDs to document objects for database derivation
+ * @returns Sorted array in depth-first order
  */
-export function sortAdditionsByHierarchy(
-  additions: AtlasDocumentChange[],
-  uuidToDocumentMap: Map<string, ExportAtlasTreeBaseDocument>,
-  uuidToDatabase: Map<string, AtlasDatabaseName>,
-): AtlasDocumentChange[] {
-  // Create array with sorting metadata
-  const withMetadata = additions.map((change, originalIndex) => {
-    const doc = change.newValues;
-    if (!doc) {
-      throw new Error(`Document not found for addition change: ${JSON.stringify(change)}`);
+export function sortAdditionsByDepthFirst(additions: AtlasDocumentChange[]): AtlasDocumentChange[] {
+  if (additions.length === 0) {
+    return [];
+  }
+
+  // 1. Build parent-to-children map from ancestry
+  // Key: parent UUID (or null for roots/documents whose parent already exists in Notion)
+  const childrenMap = new Map<string | null, AtlasDocumentChange[]>();
+
+  // Track which UUIDs are being added (to distinguish roots from children)
+  const addedUuids = new Set(additions.map((c) => c.uuid));
+
+  for (const change of additions) {
+    // Find the immediate parent from ancestry
+    const parentUuid = change.newAncestry?.length ? change.newAncestry[change.newAncestry.length - 1] : null;
+
+    // If parent is not being added in this sync, this document is effectively a root
+    // (its parent already exists in Notion)
+    const effectiveParent = parentUuid && addedUuids.has(parentUuid) ? parentUuid : null;
+
+    if (!childrenMap.has(effectiveParent)) {
+      childrenMap.set(effectiveParent, []);
     }
+    childrenMap.get(effectiveParent)!.push(change);
+  }
 
-    if (!doc.uuid) {
-      throw new Error(`Document UUID not found for addition change: ${JSON.stringify(change)}`);
-    }
+  // 2. Sort children at each level using natural document number ordering
+  // This ensures siblings are processed in the correct order (A.0.1.1 before A.0.1.2 before A.0.1.10)
+  for (const children of childrenMap.values()) {
+    children.sort((a, b) => compareDocNumbers(a.newValues?.doc_no ?? '', b.newValues?.doc_no ?? ''));
+  }
 
-    const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid, uuidToDatabase);
-    const depth = getAncestryDepth(change.newAncestry);
+  // 3. Pre-order traversal starting from roots (null parent)
+  const result: AtlasDocumentChange[] = [];
 
-    // For Needed Research, derive parent database to get correct hierarchy level
-    let parentDatabaseName;
-    if (databaseName === 'Needed Research' && change.newAncestry && change.newAncestry.length > 0) {
-      const parentId = change.newAncestry[change.newAncestry.length - 1];
-      const parentDoc = uuidToDocumentMap.get(parentId);
-      if (parentDoc) {
-        parentDatabaseName = uuidToDatabase.get(parentId);
-      } else {
-        throw new Error(`Parent document not found for new Needed Research document: ${JSON.stringify(change)}`);
+  function traverse(parentUuid: string | null) {
+    const children = childrenMap.get(parentUuid) ?? [];
+    for (const child of children) {
+      result.push(child);
+      // Recursively add this document's children
+      if (child.uuid) {
+        traverse(child.uuid);
       }
     }
+  }
 
-    const hierarchyLevel = getDatabaseHierarchyLevel(databaseName, parentDatabaseName);
-
-    return { change, databaseName, hierarchyLevel, depth, originalIndex };
-  });
-
-  // Sort by: hierarchy level (asc), then depth (asc), then original order
-  withMetadata.sort((a, b) => {
-    // First by hierarchy level (lower = higher in hierarchy)
-    if (a.hierarchyLevel !== b.hierarchyLevel) {
-      return a.hierarchyLevel - b.hierarchyLevel;
-    }
-    // Then by depth (lower = closer to root)
-    if (a.depth !== b.depth) {
-      return a.depth - b.depth;
-    }
-    // Finally by original order (stable sort)
-    return a.originalIndex - b.originalIndex;
-  });
-
-  return withMetadata.map((item) => item.change);
+  traverse(null);
+  return result;
 }
 
 /**

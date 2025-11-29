@@ -1,40 +1,17 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
-import { getDatabaseNameFromDocument } from '../atlas-database-mapper';
-import { sortAdditionsByHierarchy } from '../sync-orchestrator';
+import { sortAdditionsByDepthFirst } from '../sync-orchestrator';
 
 describe('sync-orchestrator', () => {
-  // Helper to create a database map from documents with proper Core/ADC handling
-  function createDatabaseMap(
-    documents: ExportAtlasTreeBaseDocument[],
-    options: { coreDatabase?: 'Sections & Primary Docs' | 'Agent Scope Database' } = {},
-  ): Map<string, AtlasDatabaseName> {
-    const map = new Map<string, AtlasDatabaseName>();
-    const coreDatabase = options.coreDatabase || 'Sections & Primary Docs';
+  describe('sortAdditionsByDepthFirst', () => {
+    it('returns empty array for empty input', () => {
+      const sorted = sortAdditionsByDepthFirst([]);
+      expect(sorted).toEqual([]);
+    });
 
-    // First pass: map all Core and ADC documents to the specified database
-    for (const doc of documents) {
-      if (doc.uuid && (doc.type === 'Core' || doc.type === 'Active Data Controller')) {
-        map.set(doc.uuid, coreDatabase);
-      }
-    }
-
-    // Second pass: map all other document types using getDatabaseNameFromDocument
-    for (const doc of documents) {
-      if (doc.uuid && doc.type !== 'Core' && doc.type !== 'Active Data Controller') {
-        const database = getDatabaseNameFromDocument(doc.type, doc.uuid, map);
-        map.set(doc.uuid, database);
-      }
-    }
-
-    return map;
-  }
-
-  describe('sortAdditionsByHierarchy', () => {
-    it('sorts additions by database hierarchy level', () => {
+    it('sorts parent before children in depth-first order', () => {
+      // Input order: child, grandchild, parent (wrong order)
       const changes: AtlasDocumentChange[] = [
         {
           uuid: 'section-1',
@@ -47,7 +24,7 @@ describe('sync-orchestrator', () => {
             content: '',
             last_modified: '',
           },
-          newAncestry: ['article-1'],
+          newAncestry: ['article-1', 'scope-1'],
         },
         {
           uuid: 'article-1',
@@ -67,7 +44,7 @@ describe('sync-orchestrator', () => {
           changeType: 'added',
           newValues: {
             type: 'Scope',
-            doc_no: 'A',
+            doc_no: 'A.0',
             name: 'Scope',
             uuid: 'scope-1',
             content: '',
@@ -77,102 +54,88 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
-        ['scope-1', changes[2].newValues!],
-        ['article-1', changes[1].newValues!],
-        ['section-1', changes[0].newValues!],
-      ]);
+      const sorted = sortAdditionsByDepthFirst(changes);
 
-      const dbMap = createDatabaseMap([...docMap.values()]);
-      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
-
-      // Should be sorted: Scope (level 0), Article (level 1), Section (level 2)
-      expect(sorted[0].uuid).toBe('scope-1');
-      expect(sorted[1].uuid).toBe('article-1');
-      expect(sorted[2].uuid).toBe('section-1');
+      // Should be depth-first: Scope -> Article -> Section
+      expect(sorted.map((c) => c.uuid)).toEqual(['scope-1', 'article-1', 'section-1']);
     });
 
-    it('sorts additions by depth within same database', () => {
+    it('processes entire subtree before moving to next sibling (depth-first)', () => {
+      // This is the key test: depth-first means we process A.0's entire subtree
+      // before moving to A.1
       const changes: AtlasDocumentChange[] = [
         {
-          uuid: 'nested-core',
+          uuid: 'scope-a1',
           changeType: 'added',
           newValues: {
-            type: 'Core',
-            doc_no: 'A.1.1.1.1',
-            name: 'Nested Core',
-            uuid: 'nested-core',
-            content: '',
-            last_modified: '',
-          },
-          newAncestry: ['parent-core', 'section-1'],
-        },
-        {
-          uuid: 'parent-core',
-          changeType: 'added',
-          newValues: {
-            type: 'Core',
-            doc_no: 'A.1.1.1',
-            name: 'Parent Core',
-            uuid: 'parent-core',
-            content: '',
-            last_modified: '',
-          },
-          newAncestry: ['section-1'],
-        },
-        {
-          uuid: 'section-1',
-          changeType: 'added',
-          newValues: {
-            type: 'Section',
-            doc_no: 'A.1.1',
-            name: 'Section',
-            uuid: 'section-1',
+            type: 'Scope',
+            doc_no: 'A.1',
+            name: 'Scope A.1',
+            uuid: 'scope-a1',
             content: '',
             last_modified: '',
           },
           newAncestry: [],
         },
-      ];
-
-      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
-        ['section-1', changes[2].newValues!],
-        ['nested-core', changes[0].newValues!],
-        ['parent-core', changes[1].newValues!],
-      ]);
-
-      const dbMap = createDatabaseMap([...docMap.values()]);
-      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
-
-      // Should be sorted by depth: Section (depth 0), Parent Core (depth 1), Nested Core (depth 2)
-      expect(sorted[0].uuid).toBe('section-1');
-      expect(sorted[1].uuid).toBe('parent-core');
-      expect(sorted[2].uuid).toBe('nested-core');
-    });
-
-    it('maintains original order for same database and same depth', () => {
-      const changes: AtlasDocumentChange[] = [
         {
-          uuid: 'section-3',
+          uuid: 'scope-a0',
           changeType: 'added',
           newValues: {
-            type: 'Section',
-            doc_no: 'A.1.3',
-            name: 'Section 3',
-            uuid: 'section-3',
+            type: 'Scope',
+            doc_no: 'A.0',
+            name: 'Scope A.0',
+            uuid: 'scope-a0',
             content: '',
             last_modified: '',
           },
-          newAncestry: ['article-1'],
+          newAncestry: [],
         },
         {
-          uuid: 'section-1',
+          uuid: 'article-a0-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Article',
+            doc_no: 'A.0.1',
+            name: 'Article A.0.1',
+            uuid: 'article-a0-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['scope-a0'],
+        },
+        {
+          uuid: 'article-a1-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Article',
+            doc_no: 'A.1.1',
+            name: 'Article A.1.1',
+            uuid: 'article-a1-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['scope-a1'],
+        },
+      ];
+
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // Depth-first order: A.0 -> A.0.1 -> A.1 -> A.1.1
+      // NOT breadth-first: A.0 -> A.1 -> A.0.1 -> A.1.1
+      expect(sorted.map((c) => c.uuid)).toEqual(['scope-a0', 'article-a0-1', 'scope-a1', 'article-a1-1']);
+    });
+
+    it('sorts siblings by document number using natural ordering', () => {
+      // Test that A.0.1.2 comes before A.0.1.10 (not lexicographic order)
+      const changes: AtlasDocumentChange[] = [
+        {
+          uuid: 'section-10',
           changeType: 'added',
           newValues: {
             type: 'Section',
-            doc_no: 'A.1.1',
-            name: 'Section 1',
-            uuid: 'section-1',
+            doc_no: 'A.0.1.10',
+            name: 'Section 10',
+            uuid: 'section-10',
             content: '',
             last_modified: '',
           },
@@ -183,7 +146,7 @@ describe('sync-orchestrator', () => {
           changeType: 'added',
           newValues: {
             type: 'Section',
-            doc_no: 'A.1.2',
+            doc_no: 'A.0.1.2',
             name: 'Section 2',
             uuid: 'section-2',
             content: '',
@@ -191,163 +154,297 @@ describe('sync-orchestrator', () => {
           },
           newAncestry: ['article-1'],
         },
-      ];
-
-      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
-        [
-          'article-1',
-          {
-            type: 'Article',
-            doc_no: 'A.1',
-            name: 'Article',
-            uuid: 'article-1',
-            content: '',
-            last_modified: '',
-          },
-        ],
-        ['section-3', changes[0].newValues!],
-        ['section-1', changes[1].newValues!],
-        ['section-2', changes[2].newValues!],
-      ]);
-
-      const dbMap = createDatabaseMap([...docMap.values()]);
-      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
-
-      // Should maintain original order: section-3, section-1, section-2
-      expect(sorted[0].uuid).toBe('section-3');
-      expect(sorted[1].uuid).toBe('section-1');
-      expect(sorted[2].uuid).toBe('section-2');
-    });
-
-    it('handles complex multi-database multi-depth sorting', () => {
-      const changes: AtlasDocumentChange[] = [
-        {
-          uuid: 'annotation-1',
-          changeType: 'added',
-          newValues: {
-            type: 'Annotation',
-            doc_no: 'A.1.1.0.3.1',
-            name: 'Annotation',
-            uuid: 'annotation-1',
-            content: '',
-            last_modified: '',
-          },
-          newAncestry: ['section-1', 'article-1'],
-        },
         {
           uuid: 'section-1',
           changeType: 'added',
           newValues: {
             type: 'Section',
-            doc_no: 'A.1.1',
-            name: 'Section',
+            doc_no: 'A.0.1.1',
+            name: 'Section 1',
             uuid: 'section-1',
             content: '',
             last_modified: '',
           },
           newAncestry: ['article-1'],
         },
+      ];
+
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // Should be sorted by natural doc_no order: 1, 2, 10 (not 1, 10, 2)
+      expect(sorted.map((c) => c.uuid)).toEqual(['section-1', 'section-2', 'section-10']);
+    });
+
+    it('handles complex tree with multiple levels and siblings', () => {
+      const changes: AtlasDocumentChange[] = [
+        // Scope A.1
         {
-          uuid: 'scenario-1',
+          uuid: 'scope-a1',
           changeType: 'added',
           newValues: {
-            type: 'Scenario',
-            doc_no: 'A.1.1.0.4.1.1',
-            name: 'Scenario',
-            uuid: 'scenario-1',
-            content: '',
-            last_modified: '',
-          },
-          newAncestry: ['tenet-1', 'section-1', 'article-1'],
-        },
-        {
-          uuid: 'article-1',
-          changeType: 'added',
-          newValues: {
-            type: 'Article',
+            type: 'Scope',
             doc_no: 'A.1',
-            name: 'Article',
-            uuid: 'article-1',
+            name: 'Scope A.1',
+            uuid: 'scope-a1',
             content: '',
             last_modified: '',
           },
           newAncestry: [],
         },
+        // Scope A.0
         {
-          uuid: 'tenet-1',
+          uuid: 'scope-a0',
           changeType: 'added',
           newValues: {
-            type: 'Action Tenet',
-            doc_no: 'A.1.1.0.4.1',
-            name: 'Tenet',
-            uuid: 'tenet-1',
+            type: 'Scope',
+            doc_no: 'A.0',
+            name: 'Scope A.0',
+            uuid: 'scope-a0',
             content: '',
             last_modified: '',
           },
-          newAncestry: ['section-1', 'article-1'],
+          newAncestry: [],
+        },
+        // Article A.0.1
+        {
+          uuid: 'article-a0-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Article',
+            doc_no: 'A.0.1',
+            name: 'Article A.0.1',
+            uuid: 'article-a0-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['scope-a0'],
+        },
+        // Section A.0.1.1
+        {
+          uuid: 'section-a0-1-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Section',
+            doc_no: 'A.0.1.1',
+            name: 'Section A.0.1.1',
+            uuid: 'section-a0-1-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['article-a0-1', 'scope-a0'],
+        },
+        // Core A.0.1.1.1
+        {
+          uuid: 'core-a0-1-1-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Core',
+            doc_no: 'A.0.1.1.1',
+            name: 'Core A.0.1.1.1',
+            uuid: 'core-a0-1-1-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-a0-1-1', 'article-a0-1', 'scope-a0'],
+        },
+        // Core A.0.1.1.2
+        {
+          uuid: 'core-a0-1-1-2',
+          changeType: 'added',
+          newValues: {
+            type: 'Core',
+            doc_no: 'A.0.1.1.2',
+            name: 'Core A.0.1.1.2',
+            uuid: 'core-a0-1-1-2',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-a0-1-1', 'article-a0-1', 'scope-a0'],
+        },
+        // Section A.0.1.2
+        {
+          uuid: 'section-a0-1-2',
+          changeType: 'added',
+          newValues: {
+            type: 'Section',
+            doc_no: 'A.0.1.2',
+            name: 'Section A.0.1.2',
+            uuid: 'section-a0-1-2',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['article-a0-1', 'scope-a0'],
+        },
+        // Article A.0.2
+        {
+          uuid: 'article-a0-2',
+          changeType: 'added',
+          newValues: {
+            type: 'Article',
+            doc_no: 'A.0.2',
+            name: 'Article A.0.2',
+            uuid: 'article-a0-2',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['scope-a0'],
         },
       ];
 
-      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
-        ['article-1', changes[3].newValues!],
-        ['section-1', changes[1].newValues!],
-        ['annotation-1', changes[0].newValues!],
-        ['tenet-1', changes[4].newValues!],
-        ['scenario-1', changes[2].newValues!],
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // Expected depth-first order:
+      // A.0 -> A.0.1 -> A.0.1.1 -> A.0.1.1.1 -> A.0.1.1.2 -> A.0.1.2 -> A.0.2 -> A.1
+      expect(sorted.map((c) => c.newValues?.doc_no)).toEqual([
+        'A.0',
+        'A.0.1',
+        'A.0.1.1',
+        'A.0.1.1.1',
+        'A.0.1.1.2',
+        'A.0.1.2',
+        'A.0.2',
+        'A.1',
       ]);
-
-      const dbMap = createDatabaseMap([...docMap.values()]);
-      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
-
-      // Expected order by hierarchy and depth:
-      // 1. Article (level 1, depth 0)
-      // 2. Section (level 2, depth 1)
-      // 3. Annotation (level 3, depth 2)
-      // 4. Tenet (level 3, depth 2) - after Annotation by original order
-      // 5. Scenario (level 4, depth 3)
-      expect(sorted[0].uuid).toBe('article-1');
-      expect(sorted[1].uuid).toBe('section-1');
-      expect(sorted[2].uuid).toBe('annotation-1');
-      expect(sorted[3].uuid).toBe('tenet-1');
-      expect(sorted[4].uuid).toBe('scenario-1');
     });
 
-    it('handles Needed Research with correct parent-based hierarchy level', () => {
+    it('handles documents whose parents already exist (not being added)', () => {
+      // When parent already exists in Notion, children should still be ordered correctly
+      // relative to each other
       const changes: AtlasDocumentChange[] = [
         {
-          uuid: 'nr-on-annotation',
+          uuid: 'section-2',
           changeType: 'added',
           newValues: {
-            type: 'Needed Research',
-            doc_no: 'NR-2',
-            name: 'Research on Annotation',
-            uuid: 'nr-on-annotation',
+            type: 'Section',
+            doc_no: 'A.0.1.2',
+            name: 'Section 2',
+            uuid: 'section-2',
             content: '',
             last_modified: '',
           },
-          newAncestry: ['annotation-1', 'section-1'],
+          // Parent 'existing-article' is NOT in the additions list
+          newAncestry: ['existing-article'],
         },
         {
-          uuid: 'annotation-1',
+          uuid: 'section-1',
           changeType: 'added',
           newValues: {
-            type: 'Annotation',
-            doc_no: 'A.1.1.0.3.1',
-            name: 'Annotation',
-            uuid: 'annotation-1',
+            type: 'Section',
+            doc_no: 'A.0.1.1',
+            name: 'Section 1',
+            uuid: 'section-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['existing-article'],
+        },
+        {
+          uuid: 'core-under-section-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Core',
+            doc_no: 'A.0.1.1.1',
+            name: 'Core under Section 1',
+            uuid: 'core-under-section-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-1', 'existing-article'],
+        },
+      ];
+
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // section-1 and section-2 are both "roots" for this sync (parent not being added)
+      // But section-1 has a child, so depth-first: section-1 -> core -> section-2
+      expect(sorted.map((c) => c.uuid)).toEqual(['section-1', 'core-under-section-1', 'section-2']);
+    });
+
+    it('handles Needed Research documents with NR-X numbering', () => {
+      const changes: AtlasDocumentChange[] = [
+        {
+          uuid: 'nr-10',
+          changeType: 'added',
+          newValues: {
+            type: 'Needed Research',
+            doc_no: 'NR-10',
+            name: 'Research 10',
+            uuid: 'nr-10',
             content: '',
             last_modified: '',
           },
           newAncestry: ['section-1'],
         },
         {
-          uuid: 'nr-on-section',
+          uuid: 'nr-2',
+          changeType: 'added',
+          newValues: {
+            type: 'Needed Research',
+            doc_no: 'NR-2',
+            name: 'Research 2',
+            uuid: 'nr-2',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-1'],
+        },
+        {
+          uuid: 'nr-1',
           changeType: 'added',
           newValues: {
             type: 'Needed Research',
             doc_no: 'NR-1',
-            name: 'Research on Section',
-            uuid: 'nr-on-section',
+            name: 'Research 1',
+            uuid: 'nr-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-1'],
+        },
+      ];
+
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // Should sort NR documents by natural number order: NR-1, NR-2, NR-10
+      expect(sorted.map((c) => c.uuid)).toEqual(['nr-1', 'nr-2', 'nr-10']);
+    });
+
+    it('handles mixed document types with annotations and tenets', () => {
+      const changes: AtlasDocumentChange[] = [
+        {
+          uuid: 'scenario-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Scenario',
+            doc_no: 'A.0.1.0.4.1.1',
+            name: 'Scenario',
+            uuid: 'scenario-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['tenet-1', 'section-1'],
+        },
+        {
+          uuid: 'tenet-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Action Tenet',
+            doc_no: 'A.0.1.0.4.1',
+            name: 'Tenet',
+            uuid: 'tenet-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: ['section-1'],
+        },
+        {
+          uuid: 'annotation-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Annotation',
+            doc_no: 'A.0.1.0.3.1',
+            name: 'Annotation',
+            uuid: 'annotation-1',
             content: '',
             last_modified: '',
           },
@@ -358,7 +455,7 @@ describe('sync-orchestrator', () => {
           changeType: 'added',
           newValues: {
             type: 'Section',
-            doc_no: 'A.1.1',
+            doc_no: 'A.0.1',
             name: 'Section',
             uuid: 'section-1',
             content: '',
@@ -368,25 +465,40 @@ describe('sync-orchestrator', () => {
         },
       ];
 
-      const docMap = new Map<string, ExportAtlasTreeBaseDocument>([
-        ['section-1', changes[3].newValues!],
-        ['annotation-1', changes[1].newValues!],
-        ['nr-on-section', changes[2].newValues!],
-        ['nr-on-annotation', changes[0].newValues!],
-      ]);
+      const sorted = sortAdditionsByDepthFirst(changes);
 
-      const dbMap = createDatabaseMap([...docMap.values()]);
-      const sorted = sortAdditionsByHierarchy(changes, docMap, dbMap);
+      // Depth-first: Section -> Annotation (0.3.1) -> Tenet (0.4.1) -> Scenario (0.4.1.1)
+      // Note: Annotation comes before Tenet due to doc_no ordering (0.3 < 0.4)
+      expect(sorted.map((c) => c.uuid)).toEqual(['section-1', 'annotation-1', 'tenet-1', 'scenario-1']);
+    });
 
-      // Expected order:
-      // 1. Section (level 2, depth 0)
-      // 2. Annotation (level 3, depth 1)
-      // 3. NR on Section (level 3, depth 1) - parent is Section (level 2), so NR is level 3
-      // 4. NR on Annotation (level 4, depth 2) - parent is Annotation (level 3), so NR is level 4
-      expect(sorted[0].uuid).toBe('section-1');
-      expect(sorted[1].uuid).toBe('annotation-1');
-      expect(sorted[2].uuid).toBe('nr-on-section');
-      expect(sorted[3].uuid).toBe('nr-on-annotation');
+    it('handles documents with missing newValues gracefully', () => {
+      const changes: AtlasDocumentChange[] = [
+        {
+          uuid: 'section-1',
+          changeType: 'added',
+          newValues: {
+            type: 'Section',
+            doc_no: 'A.0.1',
+            name: 'Section',
+            uuid: 'section-1',
+            content: '',
+            last_modified: '',
+          },
+          newAncestry: [],
+        },
+        {
+          uuid: 'section-2',
+          changeType: 'added',
+          newValues: undefined, // Missing newValues
+          newAncestry: [],
+        },
+      ];
+
+      const sorted = sortAdditionsByDepthFirst(changes);
+
+      // Documents with missing doc_no should sort last (empty string comparison)
+      expect(sorted.map((c) => c.uuid)).toEqual(['section-1', 'section-2']);
     });
   });
 });
