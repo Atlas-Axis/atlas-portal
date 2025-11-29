@@ -820,5 +820,174 @@ describe('sync-actions', () => {
 
       expect(exists).toBe(false);
     });
+
+    it('uses cache for repeated validations of the same page', async () => {
+      mockNotionClient.addMockPage('cached-page', {});
+      const cache = new Map<string, boolean>();
+
+      // First call - should hit API
+      const exists1 = await validatePageExists('cached-page', cache);
+      expect(exists1).toBe(true);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1);
+
+      // Second call - should use cache, not hit API
+      const exists2 = await validatePageExists('cached-page', cache);
+      expect(exists2).toBe(true);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Still 1, not 2
+    });
+
+    it('caches false results for non-existent pages', async () => {
+      const cache = new Map<string, boolean>();
+
+      // First call - should hit API
+      const exists1 = await validatePageExists('nonexistent-cached', cache);
+      expect(exists1).toBe(false);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1);
+
+      // Second call - should use cache, not hit API
+      const exists2 = await validatePageExists('nonexistent-cached', cache);
+      expect(exists2).toBe(false);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1); // Still 1, not 2
+    });
+
+    it('works without cache parameter (backward compatible)', async () => {
+      mockNotionClient.addMockPage('no-cache-page', {});
+
+      const exists = await validatePageExists('no-cache-page');
+
+      expect(exists).toBe(true);
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1);
+    });
+  });
+
+  describe('createNotionDatabasePage with validation caching', () => {
+    it('skips parent validation when parent is in createdPagesInBatch', async () => {
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs'];
+      mockNotionClient.addMockDatabase(dbId, {});
+
+      const parentUuid = 'parent-section-uuid';
+      const parentNotionPageId = 'parent-notion-page-id';
+      const childUuid = 'child-core-uuid';
+
+      // Setup: parent Section exists and is mapped
+      mockNotionClient.addMockPage(parentNotionPageId, {});
+      const uuidMappings = createMockUuidMappings([parentUuid]);
+      // Override to use different Notion page ID
+      uuidMappings.atlasUUIDsToNotionPageIds.set(parentUuid, parentNotionPageId);
+      uuidMappings.notionPageIDsToAtlasUUIDs.set(parentNotionPageId, parentUuid);
+
+      const parentDoc: ExportAtlasTreeBaseDocument = {
+        uuid: parentUuid,
+        type: 'Section',
+        name: 'Parent Section',
+        doc_no: 'A.1.1',
+        content: '',
+        last_modified: '',
+      };
+
+      const childDoc: ExportAtlasTreeBaseDocument = {
+        uuid: childUuid,
+        type: 'Core',
+        name: 'Child Core',
+        doc_no: 'A.1.1.1',
+        content: 'Content',
+        last_modified: '',
+      };
+
+      const change: AtlasDocumentChange = {
+        changeType: 'added',
+        uuid: childUuid,
+        newValues: childDoc,
+        newAncestry: [parentUuid],
+      };
+
+      // Create database maps
+      const newIdsToDatabase = new Map<string, AtlasDatabaseName>();
+      newIdsToDatabase.set(parentUuid, 'Sections & Primary Docs');
+      newIdsToDatabase.set(childUuid, 'Sections & Primary Docs');
+
+      const newIdsToDocuments = new Map<string, ExportAtlasTreeBaseDocument>();
+      newIdsToDocuments.set(parentUuid, parentDoc);
+      newIdsToDocuments.set(childUuid, childDoc);
+
+      // Mark parent as created in batch - should skip validation
+      const createdPagesInBatch = new Set<string>([parentNotionPageId]);
+
+      const result = await createNotionDatabasePage(change, newIdsToDocuments, newIdsToDatabase, uuidMappings, {
+        createdPagesInBatch,
+      });
+
+      expect(result.success).toBe(true);
+      // Should NOT have called pages.retrieve for parent validation
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(0);
+      // Should have called pages.create for the child
+      expect(mockNotionClient.getCallCount('pages.create')).toBe(1);
+    });
+
+    it('uses validation cache for repeated parent validations', async () => {
+      const dbId = ATLAS_DATABASE_ID_MAP['Sections & Primary Docs'];
+      mockNotionClient.addMockDatabase(dbId, {});
+
+      const parentUuid = 'shared-parent-uuid';
+      const parentNotionPageId = 'shared-parent-notion-id';
+
+      // Setup: parent exists
+      mockNotionClient.addMockPage(parentNotionPageId, {});
+      const uuidMappings = createMockUuidMappings([parentUuid]);
+      uuidMappings.atlasUUIDsToNotionPageIds.set(parentUuid, parentNotionPageId);
+      uuidMappings.notionPageIDsToAtlasUUIDs.set(parentNotionPageId, parentUuid);
+
+      const parentDoc: ExportAtlasTreeBaseDocument = {
+        uuid: parentUuid,
+        type: 'Section',
+        name: 'Parent Section',
+        doc_no: 'A.1.1',
+        content: '',
+        last_modified: '',
+      };
+
+      const newIdsToDatabase = new Map<string, AtlasDatabaseName>();
+      newIdsToDatabase.set(parentUuid, 'Sections & Primary Docs');
+
+      const newIdsToDocuments = new Map<string, ExportAtlasTreeBaseDocument>();
+      newIdsToDocuments.set(parentUuid, parentDoc);
+
+      // Shared cache across multiple operations
+      const parentValidationCache = new Map<string, boolean>();
+
+      // Create two children with the same parent
+      for (let i = 1; i <= 2; i++) {
+        const childUuid = `child-${i}-uuid`;
+        const childDoc: ExportAtlasTreeBaseDocument = {
+          uuid: childUuid,
+          type: 'Core',
+          name: `Child Core ${i}`,
+          doc_no: `A.1.1.${i}`,
+          content: 'Content',
+          last_modified: '',
+        };
+
+        newIdsToDatabase.set(childUuid, 'Sections & Primary Docs');
+        newIdsToDocuments.set(childUuid, childDoc);
+
+        const change: AtlasDocumentChange = {
+          changeType: 'added',
+          uuid: childUuid,
+          newValues: childDoc,
+          newAncestry: [parentUuid],
+        };
+
+        const result = await createNotionDatabasePage(change, newIdsToDocuments, newIdsToDatabase, uuidMappings, {
+          parentValidationCache,
+        });
+
+        expect(result.success).toBe(true);
+      }
+
+      // Parent should only be validated once (cached after first call)
+      expect(mockNotionClient.getCallCount('pages.retrieve')).toBe(1);
+      // Both children should be created
+      expect(mockNotionClient.getCallCount('pages.create')).toBe(2);
+    });
   });
 });

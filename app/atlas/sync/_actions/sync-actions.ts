@@ -43,6 +43,10 @@ export interface SyncActionResult {
 
 export interface SyncActionOptions {
   syncBatchId?: string;
+  /** Track pages created in this batch to skip validation */
+  createdPagesInBatch?: Set<string>;
+  /** Cache parent validation results within this batch */
+  parentValidationCache?: Map<string, boolean>;
 }
 
 /**
@@ -204,16 +208,25 @@ export async function createNotionDatabasePage(
     // Validate relationship parent exists ONLY if one is specified and it's in the same database
     // Skip validation when internalParentInfo is null (root-level or cross-database) - both are valid
     if (internalParentInfo) {
-      const validateStartTime = performance.now();
-      const parentExists = await validatePageExists(internalParentInfo.notionPageId);
-      const validateElapsed = performance.now() - validateStartTime;
-      console.log(`[Sync Timing]     Parent validation: ${validateElapsed.toFixed(0)}ms`);
-      if (!parentExists) {
-        return {
-          success: false,
-          reason: 'parent_not_found',
-          error: `Relationship parent page ${internalParentInfo.notionPageId} (Atlas UUID: ${internalParentInfo.atlasUuid}) does not exist`,
-        };
+      const notionPageId = internalParentInfo.notionPageId;
+
+      // Skip validation if parent was created in this batch
+      const createdInBatch = options?.createdPagesInBatch?.has(notionPageId) ?? false;
+
+      if (!createdInBatch) {
+        const validateStartTime = performance.now();
+        const parentExists = await validatePageExists(notionPageId, options?.parentValidationCache);
+        const validateElapsed = performance.now() - validateStartTime;
+        console.log(`[Sync Timing]     Parent validation: ${validateElapsed.toFixed(0)}ms`);
+        if (!parentExists) {
+          return {
+            success: false,
+            reason: 'parent_not_found',
+            error: `Relationship parent page ${notionPageId} (Atlas UUID: ${internalParentInfo.atlasUuid}) does not exist`,
+          };
+        }
+      } else {
+        console.log(`[Sync Timing]     Parent validation: 0ms (created in batch)`);
       }
     }
 
@@ -272,13 +285,18 @@ export async function createNotionDatabasePage(
 
     // Validate all inter-database parents exist
     for (const interDbParentNotionPageId of interDbParentIds) {
-      const parentExists = await validatePageExists(interDbParentNotionPageId);
-      if (!parentExists) {
-        return {
-          success: false,
-          reason: 'parent_not_found',
-          error: `Inter-database parent page ${interDbParentNotionPageId} does not exist`,
-        };
+      // Skip validation if parent was created in this batch
+      const createdInBatch = options?.createdPagesInBatch?.has(interDbParentNotionPageId) ?? false;
+
+      if (!createdInBatch) {
+        const parentExists = await validatePageExists(interDbParentNotionPageId, options?.parentValidationCache);
+        if (!parentExists) {
+          return {
+            success: false,
+            reason: 'parent_not_found',
+            error: `Inter-database parent page ${interDbParentNotionPageId} does not exist`,
+          };
+        }
       }
     }
 
@@ -315,6 +333,11 @@ export async function createNotionDatabasePage(
       // Update the UUID mappings in-memory for use in this sync batch
       uuidMappings.atlasUUIDsToNotionPageIds.set(doc.uuid, createdPage.id);
       uuidMappings.notionPageIDsToAtlasUUIDs.set(createdPage.id, doc.uuid);
+    }
+
+    // Track this page as created in this batch (skip validation for children in same batch)
+    if (options?.createdPagesInBatch) {
+      options.createdPagesInBatch.add(createdPage.id);
     }
 
     // Log successful operation to audit log
@@ -588,7 +611,7 @@ export async function updateNotionPageParent(
     // Validate new parent exists using the Notion page ID
     if (newParentNotionPageId) {
       const validateStartTime = performance.now();
-      const parentExists = await validatePageExists(newParentNotionPageId);
+      const parentExists = await validatePageExists(newParentNotionPageId, options?.parentValidationCache);
       const validateElapsed = performance.now() - validateStartTime;
       console.log(`[Sync Timing]     Parent validation: ${validateElapsed.toFixed(0)}ms`);
       if (!parentExists) {
@@ -650,15 +673,35 @@ export async function updateNotionPageParent(
 
 /**
  * Validates that a Notion page exists.
+ * @param pageId The Notion page ID to validate
+ * @param cache Optional cache to store/retrieve validation results
  */
-export async function validatePageExists(pageId: string): Promise<boolean> {
+export async function validatePageExists(pageId: string, cache?: Map<string, boolean>): Promise<boolean> {
+  // Check cache first
+  if (cache?.has(pageId)) {
+    return cache.get(pageId)!;
+  }
+
   try {
     const notionClient = notion();
     await notionClient.pages.retrieve({ page_id: pageId });
+
+    // Store in cache
+    if (cache) {
+      cache.set(pageId, true);
+    }
+
     return true;
   } catch (error) {
     const err = error as Error & { code?: string };
-    if (err.code === 'object_not_found') {
+    const exists = err.code !== 'object_not_found';
+
+    // Store in cache (including false results)
+    if (cache) {
+      cache.set(pageId, exists);
+    }
+
+    if (!exists) {
       return false;
     }
     // For other errors, log and return false
@@ -902,7 +945,17 @@ export async function runSyncBatch(
     const nestingElapsed = performance.now() - nestingStartTime;
     console.log(`[Sync Timing]   Batch ${batchIndex + 1} - Load nesting bug mappings: ${nestingElapsed.toFixed(0)}ms`);
 
-    const options: SyncActionOptions = { syncBatchId };
+    // Track pages created in this batch to skip validation
+    const createdPagesInBatch = new Set<string>();
+
+    // Cache parent validation results within this batch
+    const parentValidationCache = new Map<string, boolean>();
+
+    const options: SyncActionOptions = {
+      syncBatchId,
+      createdPagesInBatch,
+      parentValidationCache,
+    };
 
     // Process each change in the batch
     for (const change of batchData.changes) {
