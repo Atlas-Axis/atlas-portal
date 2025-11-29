@@ -1,5 +1,7 @@
 # Atlas Sync - Markdown to Notion
 
+> **High-Level Overview**: For architecture and concepts, see [MARKDOWN_TO_NOTION_SYNC.md](../../../docs/MARKDOWN_TO_NOTION_SYNC.md).
+
 ## Purpose
 
 Synchronize changes from the Atlas Markdown export back to Notion database pages. This tool enables a Markdown-first workflow where changes can be made in Markdown format and then pushed back to the source Notion database.
@@ -142,20 +144,6 @@ console.log(`Parent changed: ${result.changes.parent_changed.length}`);
 console.log(`Sibling order changed: ${result.changes.sibling_order_changed.length}`);
 ```
 
-### Testing
-
-The diff algorithm has comprehensive test coverage:
-
-- **Test file**: `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts`
-- **Test count**: 28 test cases
-- **Coverage**: All 5 change types, multiple simultaneous changes, mutual exclusivity rules, Needed Research global numbering, deeply nested documents (9+ levels), documents without UUIDs, data inconsistencies
-
-Run tests:
-
-```bash
-npm run test:run -- app/server/atlas/diff/__tests__/markdown-supabase-diff.ts
-```
-
 ### Performance Characteristics
 
 - **Time Complexity**: O(n) - single pass per tree
@@ -294,6 +282,324 @@ The system handles extra fields for specific document types:
 
 See [ATLAS_EXTRA_FIELDS.md](../../../docs/ATLAS_EXTRA_FIELDS.md) to understand how extra fields work.
 
+## UUID Mapping System
+
+### Purpose
+
+Maintains bidirectional mappings between:
+
+- **Notion page UUIDs**: Internal identifiers used by Notion API
+- **Atlas document UUIDs**: Stable identifiers used in markdown exports
+
+### Mapping Storage
+
+**Database Table**: `uuid_mapping`
+
+```sql
+CREATE TABLE uuid_mapping (
+  notion_page_id UUID NOT NULL UNIQUE,
+  atlas_document_uuid UUID NOT NULL UNIQUE,
+  PRIMARY KEY (notion_page_id, atlas_document_uuid)
+);
+```
+
+**Service**: `app/server/services/supabase/uuid-mapping-service.ts`
+
+### Usage Patterns
+
+**During Sync to Notion:**
+
+```typescript
+// Look up Notion page ID for existing document
+const notionPageId = await getNotionPageIdByAtlasUuid(atlasUuid);
+
+// Store mapping for newly created page
+await storeUuidMapping({
+  notionPageId: createdPage.id,
+  atlasDocumentUuid: document.uuid,
+});
+```
+
+**During Export to Markdown:**
+
+```typescript
+// Convert Notion page references to Atlas UUIDs
+const atlasUuid = uuidMapping.get(notionPageId);
+// Use Atlas UUID in markdown links: [text](atlas-uuid)
+```
+
+## Audit Logging
+
+### Purpose
+
+Tracks all Notion API operations for accountability, debugging, and compliance.
+
+### Schema
+
+**Database Table**: `notion_api_audit_log`
+
+```sql
+CREATE TABLE notion_api_audit_log (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  operation_type TEXT NOT NULL, -- 'create', 'update', 'archive'
+  notion_page_id UUID NOT NULL,
+  atlas_document_uuid UUID,
+  database_name TEXT NOT NULL,
+  request_payload JSONB NOT NULL,
+  response_payload JSONB,
+  success BOOLEAN NOT NULL,
+  error_message TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  sync_batch_id UUID
+);
+```
+
+**Service**: `app/server/services/supabase/audit-log-service.ts`
+
+### Data Stored
+
+- Complete request payload sent to Notion API
+- Complete response payload received
+- Success/failure status
+- Error messages if failed
+- Timestamp and batch ID for grouping
+
+### Usage
+
+```typescript
+// Log successful operation
+await logNotionApiOperation({
+  operationType: 'create',
+  notionPageId: page.id,
+  atlasDocumentUuid: document.uuid,
+  databaseName: 'Sections & Primary Docs',
+  requestPayload: {
+    /* full request */
+  },
+  responsePayload: {
+    /* full response */
+  },
+  success: true,
+  syncBatchId: currentBatchId,
+});
+
+// Log failed operation
+await logNotionApiOperation({
+  operationType: 'update',
+  // ... other fields ...
+  success: false,
+  errorMessage: error.message,
+});
+```
+
+## User Interface
+
+### Location
+
+`/atlas/sync` - Main synchronization interface
+
+### Features
+
+**1. Markdown Source Selection**
+
+- Load from GitHub repository (default)
+- Upload local markdown file
+- Displays last export timestamp
+
+**2. Change Preview**
+
+- Shows all detected changes categorized by type
+- Displays document hierarchy
+- Color-coded change indicators
+- Expandable details for each change
+
+**3. Conflict Detection**
+
+- Warns if Notion documents modified after markdown export
+- Requires user acknowledgment to proceed
+- Prevents accidental overwrites
+
+**4. Dry-Run Preview**
+
+- "Preview Changes" button triggers dry-run mode
+- Results written to `app/atlas/sync/dry-run-output.md` file
+- Lists all Notion API calls that would be made with parameters
+- Alert shows summary counts (operations that would execute vs skipped)
+- No API calls, audit logs, or UUID mappings written during preview
+- File is gitignored and overwritten on each dry-run
+
+**5. Sync Execution**
+
+- "Sync to Notion" button triggers sync
+- Real-time progress tracking
+- Operation count display
+- Success/error reporting
+
+**6. Results Display**
+
+- Summary of operations performed
+- List of errors if any occurred
+- Link to view full audit log
+- Automatic page revalidation
+
+## Error Handling
+
+### Validation Errors
+
+**When**: Before any Notion API calls
+
+**Checks**:
+
+- Markdown structure validity
+- UUID uniqueness
+- Document number patterns
+- Relationship consistency
+
+**Response**:
+
+- Detailed error messages with line numbers
+- Actionable suggestions for fixing
+- Sync does not proceed
+
+### Notion API Errors
+
+**Types**:
+
+- Rate limit errors (429)
+- Invalid request errors (400)
+- Not found errors (404)
+- Server errors (500)
+
+**Handling**:
+
+- **Rate limit**: Exponential backoff and retry (handled by Notion client)
+- **Invalid request**: Log details, skip document, continue
+- **Not found**: Log warning, skip document, continue
+- **Server error**: Retry with backoff, fail after 3 attempts
+
+**Logging**: All errors logged to audit table with full context
+
+### Partial Sync Failures
+
+**Scenario**: Some documents synced successfully, others failed
+
+**Behavior**:
+
+- Successfully synced documents committed
+- UUID mappings stored for new documents
+- All errors logged with document identifiers
+- Partial success report generated
+
+**Recovery**:
+
+- User shown modal with error summary
+- User can reload page to retry remaining changes
+- Successful operations not repeated
+
+## Performance Characteristics
+
+### Processing Strategy
+
+**Batch Processing**: Documents processed in batches of 25
+
+**Why Batching**:
+
+- Prevents server action timeouts (60s on Vercel, 300s max)
+- Enables progress updates between batches
+- Allows stopping sync between batches
+- Each batch takes ~10-25 seconds at Notion's rate limit
+
+**Sequential Within Batch**: Documents within each batch processed one at a time
+
+**Benefits**:
+
+- Reliable error handling per document
+- Better audit log of individual operations
+- Better error isolation
+- Clearer tracking of success vs failure
+
+**Rate Limiting**: Handled by existing Notion client infrastructure
+
+### Performance Targets
+
+- **Validation**: < 5 seconds for full Atlas
+- **Transformation**: < 10 seconds for full Atlas
+- **Change detection**: < 5 seconds
+- **Sync operations**: ~25 documents per batch, limited by Notion API rate (3 req/sec average)
+- **Per-batch time**: ~10-25 seconds depending on operation types
+- **Total sync time**: Varies based on number of changes (e.g., 7000 changes ≈ 280 batches)
+
+### Progress Tracking
+
+- Real-time progress bar with percentage
+- Current batch indicator (e.g., "Batch 5/280")
+- Document counter (e.g., "125/7000 documents synced")
+- Stop button to halt after current batch completes
+
+## Notion API Constraints
+
+### Critical Constraints
+
+**1. Parent Property for Database Pages**
+
+```typescript
+// CORRECT: Always use database_id for database pages
+{
+  parent: {
+    type: 'database_id',
+    database_id: 'database-uuid'
+  }
+}
+
+// WRONG: Never use page_id for database pages
+{
+  parent: {
+    type: 'page_id',
+    page_id: 'some-page-uuid'  // This will fail!
+  }
+}
+```
+
+**2. Hierarchy via Relationship Properties**
+
+Internal hierarchy within databases (e.g., Section → Core → Core) is managed through relationship properties:
+
+- **Sections & Primary Docs**: "Parent Doc" / "Subdocs"
+- **Agent Scope Database**: "Parent item" / "Sub-item"
+- **Cross-database**: Various relationship properties (Articles, Annotations, Tenets, etc.)
+
+### Platform Limitations
+
+**Notion Sub-item Bug**:
+
+- Notion's sub-item feature fails at deep nesting levels (10+ levels)
+- Documents remain in incorrect parent locations due to platform bug
+- Nesting override mappings correct this for display/export (forward direction)
+- During sync, parent changes for affected documents are skipped to preserve manual corrections
+
+See **[NOTION_NESTING_BUG_FIX.md](../../../docs/NOTION_NESTING_BUG_FIX.md)** for complete documentation.
+
+### Rich Text Constraints
+
+Notion's API enforces strict limits on rich text arrays that affect content-heavy documents:
+
+**1. Character Limit Per Element (2000)**
+
+Each `rich_text` element's `text.content` field cannot exceed 2000 characters. The converter automatically splits long text at word boundaries while preserving formatting annotations.
+
+**2. Array Length Limit (100 elements)**
+
+Each `rich_text` array cannot exceed 100 elements. This affects documents with many inline links (e.g., tables with multiple URLs per cell).
+
+The converter handles this by:
+
+1. Merging adjacent text elements with identical annotations
+2. Truncating if still over limit (with visible marker)
+
+**Impact**: Documents like large tables with many hyperlinks may be truncated. The truncation is visible in Notion as `[...content truncated due to Notion limit...]`.
+
+**Implementation**: See `app/server/markdown/markdown-to-rich-text.ts` - exports `NOTION_RICH_TEXT_MAX_LENGTH` (2000) and `NOTION_RICH_TEXT_MAX_ELEMENTS` (100).
+
 ## Technical Architecture
 
 ### Components
@@ -344,9 +650,27 @@ app/server/services/
    - Returns batch results
 6. **Client**: Displays final summary and logs
 
-### Testing
+## Testing
 
-All components have comprehensive unit tests using a mock Notion API client:
+### Unit Tests
+
+**Coverage**: 22 unit tests with 100% pass rate
+
+**Test Files**:
+
+- `app/server/services/supabase/__tests__/notion-nesting-bug-mappings.test.ts`
+- `app/server/services/supabase/__tests__/uuid-mapping-service.test.ts`
+- `app/server/services/supabase/__tests__/audit-log-service.test.ts`
+
+**Test Scope**:
+
+- UUID mapping service (create, lookup, batch operations)
+- Audit log service (create, query operations)
+- Reverse nesting overrides
+- Change detection (all change types)
+- Property building (all property types)
+
+**Run Tests**:
 
 ```bash
 # Run all sync tests
@@ -356,7 +680,89 @@ npm run test:run -- app/atlas/sync
 npm run test:coverage -- app/atlas/sync
 ```
 
-Mock implementation: `app/server/services/notion/__tests__/notion-client.mock.ts`
+**Mock Implementation**: `app/server/services/notion/__tests__/notion-client.mock.ts`
+
+### Integration Tests
+
+**Status**: Not yet implemented
+
+**Planned Tests**:
+
+- End-to-end sync workflow (markdown → Notion → Supabase)
+- Error recovery and partial failure handling
+- Performance testing with large datasets
+- Round-trip consistency validation
+
+### Test Databases
+
+Test Notion databases can be created using:
+
+```bash
+npx tsx scripts/create-test-notion-databases.ts
+```
+
+This creates test versions of all Atlas databases with `[TEST]` prefix for safe testing.
+
+### Local Testing with Truncated Atlas
+
+**Challenge**: The full production Atlas contains 7,680 documents and takes hours to process during sync operations, making local development and testing impractical.
+
+**Solution**: A truncated Atlas markdown file is provided for local testing that contains only documents at depth ≤4 (544 documents, 9% of original size).
+
+**Generating the Truncated File:**
+
+```bash
+npx tsx scripts/atlas-export/generate-truncated-atlas-markdown.ts
+```
+
+This script:
+- Loads the canonical Atlas markdown from GitHub
+- Parses it to Export Tree format
+- Filters out all documents deeper than depth 4 using semantic depth calculation
+- Exports the truncated tree to `exported-atlas/truncated-atlas.md`
+
+**Automatic Local Loading:**
+
+The sync system automatically uses the truncated file in local development:
+
+```typescript
+// In loadAtlasMarkdownForSync()
+if (NODE_ENV !== 'production') {
+  // Try to load truncated-atlas.md
+  // Falls back to GitHub if not found
+} else {
+  // Production: always fetch from GitHub
+}
+```
+
+**Benefits:**
+
+- **Fast iteration**: Sync operations complete in minutes instead of hours
+- **Same structure**: Maintains full hierarchical fidelity for testing
+- **Automatic switching**: No code changes or environment variables needed
+- **Production safety**: GitHub source always used in production
+
+**File Details:**
+
+- **Location**: `exported-atlas/truncated-atlas.md`
+- **Size**: 246KB (vs 2.6MB original)
+- **Documents**: 544 (vs 7,680 original)
+- **Max depth**: 4 (Scope → Article → Section → Core/Type Spec/etc.)
+- **Committed**: Yes, checked into repository for team use
+
+**Console Logging:**
+
+The system logs which source is being used:
+
+```
+[loadAtlasMarkdownForSync] Using local truncated Atlas file: /path/to/truncated-atlas.md
+```
+
+or
+
+```
+[loadAtlasMarkdownForSync] Fetching Atlas markdown from GitHub
+```
 
 ## Features Implemented
 
@@ -462,6 +868,42 @@ This approach:
 - Provides type-safe, reliable database identification based on tree structure
 - Enables correct synchronization of new documents being added from Markdown that don't exist in Supabase yet
 - Uses natural Notion relationships established via relationship properties
+
+## Implementation Files
+
+### Core Sync Logic
+
+- `app/atlas/sync/page.tsx` - Main UI page
+- `app/atlas/sync/content.tsx` - Sync controls, batch orchestration, and status display
+- `app/atlas/sync/_actions/sync-actions.ts` - Server actions for sync operations (including `runSyncBatch`)
+- `app/atlas/sync/_lib/batch-sync-types.ts` - Batch sync types, constants (`SYNC_BATCH_SIZE`), and helper functions
+- `app/atlas/sync/_lib/sync-orchestrator.ts` - Main orchestrator coordinating all phases (used by `runRealSync`)
+- `app/atlas/sync/_lib/detect-markdown-changes.ts` - Change detection logic
+- `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder
+
+### Transformation Services
+
+- `app/server/atlas/export/export-tree-to-notion-tree.ts` - Export Tree to Notion Tree conversion
+- `app/server/services/supabase/notion-nesting-bug-mappings.ts` - Nesting bug mapping helpers
+- `app/server/markdown/markdown-to-rich-text.ts` - Markdown to Notion Rich Text conversion
+
+### Support Services
+
+- `app/server/services/supabase/uuid-mapping-service.ts` - UUID mapping storage and lookup
+- `app/server/services/supabase/audit-log-service.ts` - Audit log storage and queries
+- `app/server/services/notion/notion-client.ts` - Notion API client with rate limiting
+
+### Database Schema
+
+- `app/server/database/008_create_notion_api_audit_log.sql` - Audit log table definition
+- `app/server/database/007_create_uuid_mapping.sql` - UUID mapping table definition
+
+### Test Files
+
+- `app/server/services/supabase/__tests__/notion-nesting-bug-mappings.test.ts`
+- `app/server/services/supabase/__tests__/uuid-mapping-service.test.ts`
+- `app/server/services/supabase/__tests__/audit-log-service.test.ts`
+- `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts` - Diff algorithm tests (28 test cases)
 
 ## Related Documentation
 
