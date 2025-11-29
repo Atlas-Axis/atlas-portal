@@ -332,7 +332,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
 
       setSyncState({
         isRunning: false,
-        stopRequested: stopRequestedRef.current,
+        stopRequested: false, // Reset - sync has completed (whether stopped early or not)
         currentPhase: 'idle',
         progress: {
           total: totalChanges,
@@ -348,6 +348,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
       setSyncState((prev) => ({
         ...prev,
         isRunning: false,
+        stopRequested: false, // Reset - sync has completed (with error)
         currentPhase: 'idle',
         logs: allLogs,
         completed: true,
