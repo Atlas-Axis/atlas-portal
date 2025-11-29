@@ -19,14 +19,14 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fetchAtlasMarkdownContent } from '@/app/server/atlas/load-atlas-markdown-from-github';
+import { calculateHeadingLevel, calculateSemanticDepth } from '@/app/server/atlas/export/atlas-markdown-depth-utils';
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
-import { calculateSemanticDepth, calculateHeadingLevel } from '@/app/server/atlas/export/atlas-markdown-depth-utils';
 import {
   type ExportAtlasTreeDocument,
   type ExportAtlasTreeScopeTrees,
   childCollectionNames,
 } from '@/app/server/atlas/export/types';
+import { fetchAtlasMarkdownContent } from '@/app/server/atlas/load-atlas-markdown-from-github';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -64,21 +64,22 @@ function filterTreeByDepth(
   }
 
   // Create a shallow copy of the document
-  const filtered = { ...doc } as Record<string, unknown>;
+  const filtered = { ...doc };
 
   // Recursively filter all child collections
+  // Use the same pattern as getAllChildren for dynamic property access
+  const filteredAsRecord = filtered as unknown as Record<string, unknown>;
   for (const collectionName of childCollectionNames) {
-    const collection = doc[collectionName as keyof typeof doc];
+    const collection = filteredAsRecord[collectionName];
     if (Array.isArray(collection)) {
       const filteredChildren = collection
         .map((child) => filterTreeByDepth(child as ExportAtlasTreeDocument, maxDepth, depth))
         .filter((child): child is ExportAtlasTreeDocument => child !== null);
-
-      filtered[collectionName] = filteredChildren;
+      filteredAsRecord[collectionName] = filteredChildren;
     }
   }
 
-  return filtered as ExportAtlasTreeDocument;
+  return filtered;
 }
 
 /**
@@ -287,7 +288,9 @@ async function main() {
 
   console.log('Converting filtered tree to markdown...');
   const truncatedMarkdown = buildMarkdownFromFilteredTree(filteredTree);
-  console.log(`Generated ${truncatedMarkdown.length} characters (${Math.round((truncatedMarkdown.length / markdown.length) * 100)}% of original)`);
+  console.log(
+    `Generated ${truncatedMarkdown.length} characters (${Math.round((truncatedMarkdown.length / markdown.length) * 100)}% of original)`,
+  );
 
   const outDir = path.join(process.cwd(), 'exported-atlas');
   const outFile = path.join(outDir, 'truncated-atlas.md');
@@ -304,4 +307,3 @@ main().catch((err) => {
   console.error('Error generating truncated Atlas markdown:', err);
   process.exitCode = 1;
 });
-
