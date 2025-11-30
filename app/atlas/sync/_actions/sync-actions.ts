@@ -37,8 +37,10 @@ export type { RealSyncResult, SerializedBatchData } from '../_lib/batch-sync-typ
  * Controls which types of changes are processed.
  */
 export interface SyncFilters {
-  /** Include added and deleted documents */
-  newAndDeleted: boolean;
+  /** Include added documents */
+  added: boolean;
+  /** Include deleted documents */
+  deleted: boolean;
   /** Include content/field changes */
   contentChanges: boolean;
   /** Include parent changes and sibling order changes */
@@ -790,8 +792,8 @@ export async function runDryRunSync(
     // Apply filters if provided
     if (filters) {
       diffResult.changes = {
-        added: filters.newAndDeleted ? diffResult.changes.added : [],
-        deleted: filters.newAndDeleted ? diffResult.changes.deleted : [],
+        added: filters.added ? diffResult.changes.added : [],
+        deleted: filters.deleted ? diffResult.changes.deleted : [],
         changed: filters.contentChanges ? diffResult.changes.changed : [],
         parent_changed: filters.moves ? diffResult.changes.parent_changed : [],
         sibling_order_changed: filters.moves ? diffResult.changes.sibling_order_changed : [],

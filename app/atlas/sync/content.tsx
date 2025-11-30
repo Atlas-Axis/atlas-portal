@@ -210,7 +210,8 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
 
   // Sync filter state - controls which change types are synced
   const [syncFilters, setSyncFilters] = useState({
-    newAndDeleted: true, // controls: added, deleted
+    added: true, // controls: added (checked by default)
+    deleted: false, // controls: deleted
     contentChanges: false, // controls: changed
     moves: false, // controls: parent_changed, sibling_order_changed
   });
@@ -226,8 +227,8 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
 
     // Filter changes based on selected filters
     const filteredChanges = {
-      added: syncFilters.newAndDeleted ? changes.added : [],
-      deleted: syncFilters.newAndDeleted ? changes.deleted : [],
+      added: syncFilters.added ? changes.added : [],
+      deleted: syncFilters.deleted ? changes.deleted : [],
       changed: syncFilters.contentChanges ? changes.changed : [],
       parent_changed: syncFilters.moves ? changes.parent_changed : [],
       sibling_order_changed: syncFilters.moves ? changes.sibling_order_changed : [],
@@ -389,7 +390,8 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
       // Server action computes diff and loads UUID mappings to avoid payload size limits
       // Pass current filter state to respect user's filter selections
       const filters: SyncFilters = {
-        newAndDeleted: syncFilters.newAndDeleted,
+        added: syncFilters.added,
+        deleted: syncFilters.deleted,
         contentChanges: syncFilters.contentChanges,
         moves: syncFilters.moves,
       };
@@ -413,7 +415,7 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
   };
 
   // Whether any filters are enabled (for button state)
-  const hasEnabledFilters = syncFilters.newAndDeleted || syncFilters.contentChanges || syncFilters.moves;
+  const hasEnabledFilters = syncFilters.added || syncFilters.deleted || syncFilters.contentChanges || syncFilters.moves;
 
   // Whether controls should be disabled
   const controlsDisabled = syncState.isRunning || isDryRunRunning;
@@ -423,11 +425,18 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
       {/* Sync Filters */}
       <div className="mb-4 flex justify-center gap-6">
         <Checkbox
-          isSelected={syncFilters.newAndDeleted}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, newAndDeleted: checked }))}
+          isSelected={syncFilters.added}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, added: checked }))}
           isDisabled={controlsDisabled}
         >
-          New/Deleted
+          Added
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.deleted}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, deleted: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Deleted
         </Checkbox>
         <Checkbox
           isSelected={syncFilters.contentChanges}
