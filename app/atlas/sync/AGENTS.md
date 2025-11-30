@@ -216,6 +216,7 @@ Real-time operation log shows:
 The sync system loads Atlas Markdown from different sources depending on the environment:
 
 **Production (NODE_ENV === 'production'):**
+
 - Loads from GitHub repository (authoritative source)
 - **Repository**: `pppdns/next-gen-atlas`
 - **Branch**: `main`
@@ -223,6 +224,7 @@ The sync system loads Atlas Markdown from different sources depending on the env
 - **Raw URL**: Configured in `ATLAS_MARKDOWN_GITHUB_RAW_URL` constant
 
 **Local Development (NODE_ENV !== 'production'):**
+
 - Automatically uses `exported-atlas/truncated-atlas.md` if present
 - Falls back to GitHub if truncated file not found
 - Truncated file contains only documents at depth ≤4 (544 docs vs 7,680 full Atlas)
@@ -413,13 +415,24 @@ await logNotionApiOperation({
 - Color-coded change indicators
 - Expandable details for each change
 
-**3. Conflict Detection**
+**3. Change Type Filters**
+
+Filter checkboxes allow selective syncing of specific change types:
+
+- **Added** - Sync new documents (checked by default)
+- **Deleted** - Sync document deletions (unchecked by default)
+- **Content Changes** - Sync field/content modifications (unchecked by default)
+- **Moves (document number changes)** - Sync parent changes and sibling order changes (unchecked by default)
+
+Filters apply to both the real sync and dry-run preview operations. Checkboxes are disabled while sync is running.
+
+**4. Conflict Detection**
 
 - Warns if Notion documents modified after markdown export
 - Requires user acknowledgment to proceed
 - Prevents accidental overwrites
 
-**4. Dry-Run Preview**
+**5. Dry-Run Preview**
 
 - "Preview Changes" button triggers dry-run mode
 - Results written to `app/atlas/sync/dry-run-output.md` file
@@ -427,15 +440,17 @@ await logNotionApiOperation({
 - Alert shows summary counts (operations that would execute vs skipped)
 - No API calls, audit logs, or UUID mappings written during preview
 - File is gitignored and overwritten on each dry-run
+- Respects current filter checkbox selections
 
-**5. Sync Execution**
+**6. Sync Execution**
 
 - "Sync to Notion" button triggers sync
 - Real-time progress tracking
 - Operation count display
 - Success/error reporting
+- Respects current filter checkbox selections
 
-**6. Results Display**
+**7. Results Display**
 
 - Summary of operations performed
 - List of errors if any occurred
@@ -716,6 +731,7 @@ npx tsx scripts/atlas-export/generate-truncated-atlas-markdown.ts
 ```
 
 This script:
+
 - Loads the canonical Atlas markdown from GitHub
 - Parses it to Export Tree format
 - Filters out all documents deeper than depth 4 using semantic depth calculation
