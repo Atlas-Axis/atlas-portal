@@ -547,22 +547,6 @@ await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload
 await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
 ```
 
-- Query change events:
-
-```ts
-// Get last 100 change events (new/changed/deleted)
-const { data } = await supabase().rpc('public_get_atlas_page_changes', { p_limit: 100 }).throwOnError();
-```
-
-**Change Event Function:**
-
-The `public_get_atlas_page_changes(p_limit int DEFAULT 100)` function returns unified change events for `notion_database_pages`:
-
-- **Returns:** notion_page_id, event_time, event_type, old_row (JSONB), new_row (JSONB)
-- **Event Types:** 'new' (first version), 'changed' (subsequent versions), 'deleted' (invalidated)
-- **Ordering:** By event_time DESC (most recent first)
-- **Use Cases:** Changelog generation, audit trails, change notifications
-
 ## Future Features
 
 - Two-way Notion sync (not just import)
