@@ -253,7 +253,7 @@ New relationship properties will map to existing Supabase child ID columns:
 - `DEFAULT_SORT_CRITERIA`: `['sort_order', 'atlas_document_number_sortable', 'notion_page_id']`
 - `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES`: Database-specific overrides
 - `No.` property in Sections & Primary Docs for manual ordering
-- `compareDocNumbers()` function for natural sorting
+- `compareDocNumbers()` function in `app/server/atlas/document-numbering/atlas-utils.ts` for natural sorting
 
 ### New State
 
