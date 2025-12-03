@@ -59,6 +59,36 @@ export type Database = {
         };
         Relationships: [];
       };
+      markdown_notion_sync_lock: {
+        Row: {
+          created_at: string | null;
+          id: number;
+          is_locked: boolean;
+          locked_at: string | null;
+          stop_requested: boolean;
+          trigger_run_id: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: number;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          stop_requested?: boolean;
+          trigger_run_id?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: number;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          stop_requested?: boolean;
+          trigger_run_id?: string | null;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
       notion_api_audit_log: {
         Row: {
           atlas_document_uuid: string | null;

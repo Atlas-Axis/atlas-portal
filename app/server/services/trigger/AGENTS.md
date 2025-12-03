@@ -19,6 +19,21 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 - **Timezone**: UTC
 - **Exports**: `hourlyNotionImportSchedule`
 
+### `markdown-notion-sync-task.ts`
+
+- **ID**: `markdown-notion-sync`
+- **Purpose**: Syncs changes from Atlas Markdown to Notion databases
+- **Duration**: Up to 6 hours (max duration)
+- **Concurrency**: 1 (only one sync can run at a time)
+- **Features**:
+  - Processes all change types: additions, deletions, content changes, parent changes
+  - Real-time progress tracking via metadata
+  - Graceful stopping via database flag
+  - Audit logging for all Notion API operations
+  - UUID mapping for newly created pages
+- **Lock Table**: `markdown_notion_sync_lock` (6-hour expiry)
+- **Metadata**: `{ phase, completed, total, currentDoc, succeeded, failed, skipped }`
+
 ## Usage
 
 The scheduled task will automatically trigger the full Atlas import task every hour. This ensures that the Supabase database stays in sync with the latest changes from Notion.

@@ -26,14 +26,13 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for complete pipeline
 ### Key Features
 
 - ✅ **Change Detection**: Automatically detects new, modified, moved, and deleted documents
-- ✅ **Structural Changes**: Syncs parent changes (cross-database and same-database) and sibling ordering
-- ✅ **Dry-Run Preview**: Preview all operations before executing with "Preview Changes" button
+- ✅ **Structural Changes**: Syncs parent changes (cross-database and same-database)
+- ✅ **Background Processing**: Sync runs in Trigger.dev background task (survives page refresh)
 - ✅ **Audit Logging**: Complete audit trail of all Notion API operations
 - ✅ **UUID Mapping**: Automatic storage and lookup of UUID mappings for document references
 - ✅ **Error Handling**: Graceful error handling with detailed logging and partial success tracking
-- ✅ **Progress Tracking**: Real-time progress updates during sync operations (batch-level granularity)
-- ✅ **Batch Processing**: Documents processed in batches of 25 to prevent server action timeouts
-- ✅ **Stop Support**: Stop button halts sync between batches
+- ✅ **Progress Tracking**: Real-time progress updates via Trigger.dev metadata subscription
+- ✅ **Stop Support**: Stop button requests graceful halt between operations
 - ✅ **Automatic Round-Trip**: Changes synced to Notion automatically flow back to Supabase via hourly import task
 
 ## Workflow Architecture
@@ -82,9 +81,10 @@ This workflow takes an externally-edited Atlas markdown file and syncs all chang
          │
          ▼
 ┌──────────────────┐
-│ 5. SYNC TO       │  • Create pages
-│    NOTION VIA    │  • Update pages
-│    API           │  • Archive pages
+│ 5. SYNC TO       │  • Trigger.dev background task
+│    NOTION VIA    │  • Create pages
+│    API           │  • Update pages
+│                  │  • Archive pages
 │                  │  • Audit logging
 └────────┬─────────┘
          │
@@ -123,11 +123,11 @@ The sync workflow is organized into five sequential layers:
 
 - Compares Export Tree with current Supabase data
 - Uses Atlas UUIDs as stable identifiers
-- Categorizes changes into 5 types (see Change Detection section)
+- Categorizes changes into 4 types (see Change Detection section)
 
 **Layer 4: Notion Sync**
 
-- Executes changes via Notion API
+- Executes changes via Notion API in background task
 - Creates, updates, and archives pages
 - Stores UUID mappings for new pages
 - Logs all operations to audit table
@@ -144,13 +144,12 @@ For detailed file paths and implementation, see [Atlas Sync AGENTS.md](../app/at
 
 ### Change Types
 
-The system detects five types of changes:
+The system detects four types of changes:
 
 1. **new**: Documents in markdown that don't exist in Notion
 2. **modified**: Documents with content or property changes
 3. **deleted**: Documents in Notion that no longer exist in markdown
 4. **parent_changed**: Documents moved to a different parent (cross-database or same-database)
-5. **sibling_order_changed**: Documents with changed position among siblings
 
 ### Algorithm Overview
 
@@ -160,7 +159,7 @@ The change detection algorithm:
 2. Parses markdown to Export Tree
 3. Builds lookup maps by Atlas UUID
 4. Compares documents to detect new, deleted, and modified items
-5. Tracks ancestry to detect parent and sibling order changes
+5. Tracks ancestry to detect parent changes
 
 For detailed algorithm implementation and code examples, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENTS.md#change-detection-algorithm).
 
@@ -180,9 +179,8 @@ New documents are created in hierarchical order (parents before children). Each 
 Modified documents are updated with only changed fields. Handles:
 
 - Content changes
-- Property changes (name, type, extra fields, doc_no, sort_order)
+- Property changes (name, type, extra fields, doc_no)
 - Parent changes (cross-database and same-database)
-- Sibling order changes
 
 ### Delete Pages
 
@@ -221,9 +219,8 @@ For schema and usage examples, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGEN
 1. **Markdown Source Selection**: Load from GitHub (default) or upload local file
 2. **Change Preview**: Visual diff with categorized changes and document hierarchy
 3. **Conflict Detection**: Warns if Notion documents modified after markdown export
-4. **Dry-Run Preview**: Preview all operations without making API calls
-5. **Sync Execution**: Real-time progress tracking with stop support
-6. **Results Display**: Summary of operations with error reporting
+4. **Sync Execution**: Real-time progress tracking via Trigger.dev with stop support
+5. **Results Display**: Summary of operations with error reporting
 
 For detailed feature descriptions, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENTS.md#user-interface).
 
@@ -245,19 +242,20 @@ For detailed error handling strategies, see [Atlas Sync AGENTS.md](../app/atlas/
 
 ## Performance Characteristics
 
-### Batch Processing
+### Background Task Processing
 
-Documents are processed in batches of 25 to:
+Sync operations run in a Trigger.dev background task:
 
-- Prevent server action timeouts
-- Enable progress updates between batches
-- Allow stopping sync between batches
+- No server action timeouts (tasks can run for hours)
+- Survives page refreshes
+- Real-time progress via metadata subscription
+- Graceful stopping between operations
 
 ### Performance Targets
 
 - **Validation/Transformation/Change detection**: < 20 seconds total for full Atlas
-- **Sync operations**: ~25 documents per batch, limited by Notion API rate (~3 req/sec)
-- **Total sync time**: Varies based on changes (e.g., 7000 changes ≈ 280 batches)
+- **Sync operations**: Limited by Notion API rate (~3 req/sec)
+- **Total sync time**: Varies based on changes
 
 For detailed performance characteristics, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENTS.md#performance-characteristics).
 
@@ -296,9 +294,8 @@ For complete testing details, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENT
 ## Known Limitations
 
 1. **No Integration Tests**: Unit tests complete, but end-to-end tests not created
-2. **No Background Processing**: Progress stops on page refresh
-3. **No Undo/Rollback**: Operations cannot be reversed (audit log provides history)
-4. **Limited Property Types**: Supports rich_text, title, select, and number only
+2. **No Undo/Rollback**: Operations cannot be reversed (audit log provides history)
+3. **Limited Property Types**: Supports rich_text, title, select, and number only
 
 ## Future Enhancements
 
@@ -352,7 +349,7 @@ The Atlas Markdown → Notion synchronization workflow completes the bidirection
 
 **Implementation Status: Complete (not tested yet)**
 
-The core sync functionality is implemented but not tested yet. It is supposed to be successfully handling all change types including structural changes (parent moves and sibling reordering). Nesting bug handling is complete (parent changes for affected documents are skipped).
+The core sync functionality is implemented but not tested yet. It is supposed to be successfully handling all change types including structural changes (parent moves). Nesting bug handling is complete (parent changes for affected documents are skipped).
 
 **Round-Trip Data Flow:**
 

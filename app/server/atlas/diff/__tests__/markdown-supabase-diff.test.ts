@@ -852,7 +852,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.added[0].changeType).toBe('added');
     expect(changes.added[0].uuid).toBe('uuid-1');
@@ -885,7 +884,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(1);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.deleted[0].changeType).toBe('deleted');
     expect(changes.deleted[0].uuid).toBe('uuid-1');
@@ -934,63 +932,11 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(1);
     expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.changed[0].changeType).toBe('changed');
     expect(changes.changed[0].uuid).toBe('uuid-1');
     expect(changes.changed[0].oldValues?.name).toBe('Old Name');
     expect(changes.changed[0].newValues?.name).toBe('New Name');
-  });
-
-  it('detects sibling order changes', () => {
-    const originalMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Article', doc_no: 'A.1.1', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        ['A.1', { type: 'Scope', doc_no: 'A.1', name: 'Scope', uuid: 'uuid-scope', content: '', last_modified: '' }],
-        [
-          'A.1.1',
-          { type: 'Article', doc_no: 'A.1.1', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const newMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Article', doc_no: 'A.1.2', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        ['A.1', { type: 'Scope', doc_no: 'A.1', name: 'Scope', uuid: 'uuid-scope', content: '', last_modified: '' }],
-        [
-          'A.1.2',
-          { type: 'Article', doc_no: 'A.1.2', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
-      uuidToDatabase: new Map(),
-    };
-
-    const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
-
-    expect(changes.added).toHaveLength(0);
-    expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
-    expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(1);
-
-    expect(changes.sibling_order_changed[0].changeType).toBe('sibling_order_changed');
-    expect(changes.sibling_order_changed[0].uuid).toBe('uuid-1');
-    expect(changes.sibling_order_changed[0].oldValues?.doc_no).toBe('A.1.1');
-    expect(changes.sibling_order_changed[0].newValues?.doc_no).toBe('A.1.2');
   });
 
   it('detects parent changes', () => {
@@ -1042,7 +988,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.parent_changed[0].changeType).toBe('parent_changed');
     expect(changes.parent_changed[0].uuid).toBe('uuid-1');
@@ -1120,7 +1065,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.parent_changed[0].changeType).toBe('parent_changed');
     expect(changes.parent_changed[0].uuid).toBe('uuid-nr1');
@@ -1153,7 +1097,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(0);
   });
 
   it('detects multiple change types in one batch', () => {
@@ -1213,7 +1156,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(1);
     expect(changes.changed).toHaveLength(1);
     expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.added[0].uuid).toBe('uuid-3');
     expect(changes.added[0].changeType).toBe('added');
@@ -1296,7 +1238,6 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(1);
     expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     // Verify the changed record
     expect(changes.changed[0].uuid).toBe('uuid-1');
@@ -1309,92 +1250,6 @@ describe('detectChanges', () => {
     expect(changes.parent_changed[0].changeType).toBe('parent_changed');
     expect(changes.parent_changed[0].oldAncestry).toEqual(['uuid-scope', 'uuid-a1']);
     expect(changes.parent_changed[0].newAncestry).toEqual(['uuid-scope', 'uuid-a2']);
-  });
-
-  it('detects multiple change types for the same document (field changes + sibling order changed)', () => {
-    // Document has both content changes AND reordered among siblings
-    const originalMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.1',
-            name: 'Old Name',
-            uuid: 'uuid-1',
-            content: 'Old content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.1',
-            name: 'Old Name',
-            uuid: 'uuid-1',
-            content: 'Old content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const newMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.3',
-            name: 'New Name',
-            uuid: 'uuid-1',
-            content: 'New content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.3',
-          {
-            type: 'Article',
-            doc_no: 'A.1.3',
-            name: 'New Name',
-            uuid: 'uuid-1',
-            content: 'New content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
-      uuidToDatabase: new Map(),
-    };
-
-    const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
-
-    // Should record TWO changes: one for field changes, one for sibling order change
-    expect(changes.added).toHaveLength(0);
-    expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(1);
-    expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(1);
-
-    // Verify the changed record
-    expect(changes.changed[0].uuid).toBe('uuid-1');
-    expect(changes.changed[0].changeType).toBe('changed');
-    expect(changes.changed[0].oldValues?.name).toBe('Old Name');
-    expect(changes.changed[0].newValues?.name).toBe('New Name');
-
-    // Verify the sibling_order_changed record
-    expect(changes.sibling_order_changed[0].uuid).toBe('uuid-1');
-    expect(changes.sibling_order_changed[0].changeType).toBe('sibling_order_changed');
-    expect(changes.sibling_order_changed[0].oldValues?.doc_no).toBe('A.1.1');
-    expect(changes.sibling_order_changed[0].newValues?.doc_no).toBe('A.1.3');
   });
 
   it('does not create duplicate changes when only parent changed (no field changes)', () => {
@@ -1468,185 +1323,8 @@ describe('detectChanges', () => {
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0);
 
     expect(changes.parent_changed[0].uuid).toBe('uuid-1');
-  });
-
-  it('does not create duplicate changes when only sibling order changed (no field changes)', () => {
-    // Document reordered but content unchanged
-    const originalMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.1',
-            name: 'Same Name',
-            uuid: 'uuid-1',
-            content: 'Same content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.1',
-            name: 'Same Name',
-            uuid: 'uuid-1',
-            content: 'Same content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const newMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          {
-            type: 'Article',
-            doc_no: 'A.1.3',
-            name: 'Same Name',
-            uuid: 'uuid-1',
-            content: 'Same content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.3',
-          {
-            type: 'Article',
-            doc_no: 'A.1.3',
-            name: 'Same Name',
-            uuid: 'uuid-1',
-            content: 'Same content',
-            last_modified: '',
-          },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
-
-    // Should only record sibling_order_changed (no field changes)
-    expect(changes.added).toHaveLength(0);
-    expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
-    expect(changes.parent_changed).toHaveLength(0);
-    expect(changes.sibling_order_changed).toHaveLength(1);
-
-    expect(changes.sibling_order_changed[0].uuid).toBe('uuid-1');
-  });
-
-  it('ensures parent_changed and sibling_order_changed are mutually exclusive', () => {
-    // When ancestry changes, only parent_changed should be recorded (not sibling_order_changed)
-    const originalMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Section', doc_no: 'A.1.1.1', name: 'Section', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.1.1',
-          { type: 'Section', doc_no: 'A.1.1.1', name: 'Section', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a1']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const newMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Section', doc_no: 'A.1.2.1', name: 'Section', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.2.1',
-          { type: 'Section', doc_no: 'A.1.2.1', name: 'Section', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope', 'uuid-a2']]]), // Different parent
-      uuidToDatabase: new Map(),
-    };
-
-    const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
-
-    // Only parent_changed should be recorded (even though doc_no also changed)
-    expect(changes.added).toHaveLength(0);
-    expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
-    expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0); // NOT recorded
-
-    expect(changes.parent_changed[0].uuid).toBe('uuid-1');
-    expect(changes.parent_changed[0].oldValues?.doc_no).toBe('A.1.1.1');
-    expect(changes.parent_changed[0].newValues?.doc_no).toBe('A.1.2.1');
-  });
-
-  it('ensures sibling_order_changed only triggers when ancestry is unchanged', () => {
-    // When only doc_no changes (ancestry same), only sibling_order_changed should be recorded
-    const originalMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Article', doc_no: 'A.1.1', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.1',
-          { type: 'Article', doc_no: 'A.1.1', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]),
-      uuidToDatabase: new Map(),
-    };
-
-    const newMaps: LookupMaps = {
-      uuidToDoc: new Map([
-        [
-          'uuid-1',
-          { type: 'Article', doc_no: 'A.1.3', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      docNoToDoc: new Map([
-        [
-          'A.1.3',
-          { type: 'Article', doc_no: 'A.1.3', name: 'Article', uuid: 'uuid-1', content: '', last_modified: '' },
-        ],
-      ]),
-      uuidToAncestry: new Map([['uuid-1', ['uuid-scope']]]), // Same parent
-      uuidToDatabase: new Map(),
-    };
-
-    const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
-
-    // Only sibling_order_changed should be recorded (not parent_changed)
-    expect(changes.added).toHaveLength(0);
-    expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
-    expect(changes.parent_changed).toHaveLength(0); // NOT recorded
-    expect(changes.sibling_order_changed).toHaveLength(1);
-
-    expect(changes.sibling_order_changed[0].uuid).toBe('uuid-1');
-    expect(changes.sibling_order_changed[0].oldValues?.doc_no).toBe('A.1.1');
-    expect(changes.sibling_order_changed[0].newValues?.doc_no).toBe('A.1.3');
   });
 
   it('handles Needed Research parent change correctly (doc_no unchanged, ancestry changed)', () => {
@@ -1715,12 +1393,11 @@ describe('detectChanges', () => {
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-nr1']), new Set(['uuid-nr1']));
 
-    // Only parent_changed (doc_no unchanged, so NOT sibling_order_changed)
+    // Only parent_changed (doc_no unchanged)
     expect(changes.added).toHaveLength(0);
     expect(changes.deleted).toHaveLength(0);
     expect(changes.changed).toHaveLength(0);
     expect(changes.parent_changed).toHaveLength(1);
-    expect(changes.sibling_order_changed).toHaveLength(0); // NOT recorded (doc_no didn't change)
 
     expect(changes.parent_changed[0].uuid).toBe('uuid-nr1');
     expect(changes.parent_changed[0].oldValues?.doc_no).toBe('NR-1');

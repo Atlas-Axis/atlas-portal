@@ -12,13 +12,12 @@ Synchronize changes from the Atlas Markdown export back to Notion database pages
 
 The sync page automatically diffs the canonical Atlas Markdown file from GitHub against the current Atlas data stored in Supabase, identifying all differences between the two versions.
 
-Changes are grouped into five categories:
+Changes are grouped into four categories:
 
 - **Added**: New documents in the Markdown that don't exist in Supabase
 - **Changed**: Documents with modified content, name, type, or extra fields
 - **Deleted**: Documents removed from the Markdown
 - **Parent Changed**: Documents moved to different parents
-- **Sibling Order Changed**: Documents reordered among siblings
 
 ### 2. Change Review
 
@@ -30,11 +29,12 @@ All detected changes are displayed in a visual diff format with:
 
 ### 3. Synchronization
 
-When you click "Sync Changes to Notion", the system processes changes in a specific order for safety:
+When you click "Sync to Notion", the system triggers a Trigger.dev background task that processes changes in a specific order for safety:
 
 1. **Content Changes** (safest - no relationship changes)
 2. **Additions** (validates parent pages exist first, sorted by hierarchy)
 3. **Deletions** (validates no children exist first)
+4. **Parent Changes** (updates relationship properties)
 
 **Hierarchical Sorting for Additions**: New pages are sorted by Atlas database hierarchy level and nesting depth before creation. This ensures that parent pages are created before their children, preventing relationship errors when both parent and child are being added simultaneously. For example:
 
@@ -51,7 +51,7 @@ The sync system uses a sophisticated tree diffing algorithm to detect changes be
 
 ### Change Type Details
 
-The five change types have important behavioral characteristics:
+The four change types have important behavioral characteristics:
 
 - **Added**: New documents (UUID exists in Markdown only)
 - **Deleted**: Removed documents (UUID exists in Supabase only)
@@ -59,18 +59,13 @@ The five change types have important behavioral characteristics:
   - Note: `last_modified` changes are ignored
 - **Parent Changed**: Document moved to different parent (ancestry array differs)
   - Note: When parent changes, `doc_no` typically changes too, but only `parent_changed` is recorded
-  - Mutually exclusive with Sibling Order Changed
-- **Sibling Order Changed**: Document reordered among siblings (`doc_no` changed, same ancestry)
-  - Note: Mutually exclusive with Parent Changed
 
 ### Multiple Changes Per Document
 
 A document can appear in multiple change arrays simultaneously:
 
 - Field changes + parent change = 2 separate change records
-- Field changes + sibling order change = 2 separate change records
 - Each change type is logged separately for complete audit trail
-- However, `parent_changed` and `sibling_order_changed` are mutually exclusive (only one per document)
 
 ### Ancestry Tracking Design
 
@@ -104,9 +99,8 @@ ancestry: ['uuid-article', 'uuid-scope'];
 
 The algorithm applies this priority logic when detecting changes:
 
-1. If ancestry changed → `parent_changed` (takes priority)
-2. Else if `doc_no` changed → `sibling_order_changed`
-3. If fields changed → `changed` (independent check, can coexist with structural changes above)
+1. If ancestry changed → `parent_changed`
+2. If fields changed → `changed` (independent check, can coexist with structural changes above)
 
 ### API Reference
 
@@ -126,7 +120,6 @@ interface GroupedAtlasChanges {
   deleted: AtlasDocumentChange[];
   changed: AtlasDocumentChange[];
   parent_changed: AtlasDocumentChange[];
-  sibling_order_changed: AtlasDocumentChange[];
 }
 ```
 
@@ -141,7 +134,6 @@ console.log(`Added: ${result.changes.added.length}`);
 console.log(`Deleted: ${result.changes.deleted.length}`);
 console.log(`Changed: ${result.changes.changed.length}`);
 console.log(`Parent changed: ${result.changes.parent_changed.length}`);
-console.log(`Sibling order changed: ${result.changes.sibling_order_changed.length}`);
 ```
 
 ### Performance Characteristics
@@ -194,16 +186,16 @@ Before deleting a page, the system:
 
 ### Graceful Stopping
 
-- Click "Stop" button to halt sync gracefully between batches
-- Current batch completes before stopping (up to 25 documents)
-- Remaining batches are skipped
-- Progress details are preserved in local state (not persisted)
+- Click "Stop" button to request graceful stop of the background task
+- Task checks stop flag between each document operation
+- Current operation completes before stopping
+- Progress is preserved in task metadata
 
 ### Detailed Logging
 
 Real-time operation log shows:
 
-- Phase transitions (Content → Additions → Deletions)
+- Phase transitions (Content → Additions → Deletions → Parent Changes)
 - Individual document processing
 - Success/failure status for each operation
 - Reason for skipped operations
@@ -422,9 +414,9 @@ Filter checkboxes allow selective syncing of specific change types:
 - **Added** - Sync new documents (checked by default)
 - **Deleted** - Sync document deletions (unchecked by default)
 - **Content Changes** - Sync field/content modifications (unchecked by default)
-- **Moves (document number changes)** - Sync parent changes and sibling order changes (unchecked by default)
+- **Parent Changes** - Sync parent relationship changes (unchecked by default)
 
-Filters apply to both the real sync and dry-run preview operations. Checkboxes are disabled while sync is running.
+Filters apply to the sync operation. Checkboxes are disabled while sync is running.
 
 **4. Conflict Detection**
 
@@ -432,25 +424,15 @@ Filters apply to both the real sync and dry-run preview operations. Checkboxes a
 - Requires user acknowledgment to proceed
 - Prevents accidental overwrites
 
-**5. Dry-Run Preview**
+**5. Sync Execution**
 
-- "Preview Changes" button triggers dry-run mode
-- Results written to `app/atlas/sync/dry-run-output.md` file
-- Lists all Notion API calls that would be made with parameters
-- Alert shows summary counts (operations that would execute vs skipped)
-- No API calls, audit logs, or UUID mappings written during preview
-- File is gitignored and overwritten on each dry-run
-- Respects current filter checkbox selections
-
-**6. Sync Execution**
-
-- "Sync to Notion" button triggers sync
-- Real-time progress tracking
+- "Sync to Notion" button triggers background task
+- Real-time progress tracking via Trigger.dev metadata
 - Operation count display
 - Success/error reporting
 - Respects current filter checkbox selections
 
-**7. Results Display**
+**6. Results Display**
 
 - Summary of operations performed
 - List of errors if any occurred
@@ -507,24 +489,24 @@ Filters apply to both the real sync and dry-run preview operations. Checkboxes a
 
 **Recovery**:
 
-- User shown modal with error summary
+- User shown summary with error details
 - User can reload page to retry remaining changes
 - Successful operations not repeated
 
 ## Performance Characteristics
 
-### Processing Strategy
+### Background Task Processing
 
-**Batch Processing**: Documents processed in batches of 25
+**Single Task**: All changes processed in one Trigger.dev background task
 
-**Why Batching**:
+**Why Background Task**:
 
-- Prevents server action timeouts (60s on Vercel, 300s max)
-- Enables progress updates between batches
-- Allows stopping sync between batches
-- Each batch takes ~10-25 seconds at Notion's rate limit
+- No server action timeouts (tasks can run for hours)
+- Reliable progress tracking via metadata
+- Graceful stopping between operations
+- Survives page refreshes
 
-**Sequential Within Batch**: Documents within each batch processed one at a time
+**Sequential Processing**: Documents processed one at a time
 
 **Benefits**:
 
@@ -540,16 +522,15 @@ Filters apply to both the real sync and dry-run preview operations. Checkboxes a
 - **Validation**: < 5 seconds for full Atlas
 - **Transformation**: < 10 seconds for full Atlas
 - **Change detection**: < 5 seconds
-- **Sync operations**: ~25 documents per batch, limited by Notion API rate (3 req/sec average)
-- **Per-batch time**: ~10-25 seconds depending on operation types
-- **Total sync time**: Varies based on number of changes (e.g., 7000 changes ≈ 280 batches)
+- **Sync operations**: Limited by Notion API rate (3 req/sec average)
+- **Total sync time**: Varies based on number of changes
 
 ### Progress Tracking
 
-- Real-time progress bar with percentage
-- Current batch indicator (e.g., "Batch 5/280")
+- Real-time progress via Trigger.dev metadata subscription
+- Current phase indicator (Content → Additions → Deletions → Parent Changes)
 - Document counter (e.g., "125/7000 documents synced")
-- Stop button to halt after current batch completes
+- Stop button to request graceful stop
 
 ## Notion API Constraints
 
@@ -622,15 +603,21 @@ The converter handles this by:
 ```
 app/atlas/sync/
 ├── page.tsx                       # Server component - diffs and fetches data
-├── content.tsx                    # Client component - UI and batch sync orchestration
+├── content.tsx                    # Client component - UI and realtime progress tracking
 ├── _actions/
-│   └── sync-actions.ts            # Server actions for Notion API calls (with audit logging)
+│   ├── sync-actions.ts            # Server actions for triggering/stopping sync
+│   └── trigger-auth.ts            # Server action for creating public access tokens
 ├── _lib/
-│   ├── batch-sync-types.ts        # Batch sync types, constants, and helper functions
-│   ├── sync-orchestrator.ts       # Coordinates sync process (used by runRealSync)
 │   ├── notion-property-builder.ts # Builds Notion property objects
 │   └── atlas-database-mapper.ts   # Derives database names from document types
 └── AGENTS.md                      # This file
+```
+
+**Background Task:**
+
+```
+app/server/services/trigger/
+└── markdown-notion-sync-task.ts   # Trigger.dev task for sync operations
 ```
 
 **Supporting Services:**
@@ -640,30 +627,26 @@ app/server/services/
 ├── supabase/
 │   ├── audit-log-service.ts       # Audit logging for all Notion API operations
 │   ├── uuid-mapping-service.ts    # UUID mapping persistence for new pages
-│   └── notion-nesting-bug-mappings.ts # Nesting bug mapping helpers
+│   ├── notion-nesting-bug-mappings.ts # Nesting bug mapping helpers
+│   └── markdown-notion-sync-lock.ts # Sync lock management
 ```
 
 ### Data Flow
 
 1. **Server** (page.tsx): `diffAtlasScopeTreeLists()` → AtlasDiffResult
-2. **Client** (content.tsx): User clicks "Sync Changes"
-3. **Client**: Splits changes into batches of 25 documents
-   - Uses `flattenChangesInOrder()` to order changes correctly
-   - Uses `splitIntoBatches()` to create batch arrays
-   - Generates single `syncBatchId` for audit log grouping
-4. **Client**: For each batch:
-   - Checks stop flag before starting batch
-   - Calls `prepareBatchData()` to serialize only needed map entries
-   - Calls `runSyncBatch()` server action
-   - Updates progress UI between batches
-   - Accumulates results and logs
-5. **Server Action** (`runSyncBatch`): Processes single batch
-   - Deserializes maps from arrays
-   - Loads UUID mappings server-side
-   - Loads nesting bug mappings
+2. **Client** (content.tsx): User clicks "Sync to Notion"
+3. **Client**: Calls `triggerMarkdownNotionSync()` server action
+4. **Server Action**: Triggers Trigger.dev task, returns run ID
+5. **Client**: Subscribes to task progress via `useRealtimeRun` hook
+6. **Background Task**: Processes all changes sequentially
+   - Acquires sync lock
+   - Checks stop flag between operations
+   - Updates metadata with progress
    - Makes Notion API calls (update, create, delete)
-   - Returns batch results
-6. **Client**: Displays final summary and logs
+   - Stores UUID mappings for new pages
+   - Logs all operations to audit table
+   - Releases lock on completion
+7. **Client**: Displays real-time progress and final summary
 
 ## Testing
 
@@ -788,56 +771,32 @@ or
 - ✅ **Document additions**: Create new documents with proper hierarchy and relationships
 - ✅ **Document deletions**: Archive documents (with child validation)
 - ✅ **Parent changes**: Sync parent relationship changes (same-database and cross-database)
-- ✅ **Sibling order changes**: Sync document numbering and sort order changes
-- ✅ **Document number sync**: doc_no field now synced to Notion
-- ✅ **Sort order sync**: sort_order ("No.") field now synced for applicable databases
-- ✅ **Dry-run preview**: Preview all operations via "Preview Changes" button without making API calls
+- ✅ **Document number sync**: doc_no field synced to Notion
 - ✅ **Audit logging**: Complete audit trail of all Notion API operations with request/response payloads
 - ✅ **UUID mapping persistence**: Automatic storage of UUID mappings for newly created pages
-- ✅ **Progress tracking**: Real-time progress updates and detailed operation logs
+- ✅ **Progress tracking**: Real-time progress updates via Trigger.dev metadata
 - ✅ **Error handling**: Graceful error handling with detailed error messages
-- ✅ **Batch ID tracking**: All operations grouped by sync batch for easy tracking
+- ✅ **Background processing**: Sync runs in Trigger.dev background task
+- ✅ **Graceful stopping**: Stop button requests task to halt between operations
 
 ### Sync Phases
 
-The orchestrator processes changes in 5 sequential phases:
+The task processes changes in 4 sequential phases:
 
 1. **Content Changes** - Safest operations (no relationship changes)
 2. **Additions** - Creates new pages (sorted by hierarchy, parents before children)
 3. **Deletions** - Archives pages (validates no children exist)
 4. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
-5. **Sibling Order Changes** - Updates document numbering and sort order
-
-### Batch Processing
-
-To avoid server action timeouts and enable progress tracking, sync operations are processed in batches:
-
-- **Batch Size**: 25 documents per batch (configurable via `SYNC_BATCH_SIZE`)
-- **Client Orchestration**: The client component orchestrates batch execution, calling `runSyncBatch()` server action for each batch
-- **Progress Updates**: UI updates between batches show real-time progress
-- **Stop Support**: Stop button prevents the next batch from starting (current batch completes)
-- **Timeout Prevention**: Each batch takes ~10-25 seconds at Notion's rate limit (~3 req/sec), well under server action timeout limits
-- **Audit Grouping**: All batches share the same `syncBatchId` for unified audit trail
-
-**Batch Data Serialization:**
-
-Maps cannot be passed directly to server actions, so batch data is serialized:
-
-- `prepareBatchData()` extracts only the map entries needed for each batch
-- Maps serialized as `[key, value][]` arrays
-- Server action deserializes arrays back to Maps
 
 ## Limitations
 
 ### Current Version
 
-- **No background processing**: Progress stops on page refresh
 - **No undo/rollback**: Operations cannot be reversed (audit log provides history)
 - **Limited property types**: Supports rich_text, title, select, and number properties; other types (multi-select, date, checkbox, etc.) are not yet supported
 - **Nesting bug affected documents**: Parent changes skipped for documents with nesting bug mappings (see [NOTION_NESTING_BUG_FIX.md](../../../docs/NOTION_NESTING_BUG_FIX.md))
 - **Relationship updates not synced**: Updating inter-database relationships for existing pages is not yet implemented
 - When a non-Scope Atlas document doesn't have a parent, its parent relationship change will not be synced to Notion
-- **Stop granularity**: Stop button halts sync between batches, not within a batch (up to 25 operations may complete after clicking Stop)
 
 ### Future Enhancements
 
@@ -890,11 +849,10 @@ This approach:
 ### Core Sync Logic
 
 - `app/atlas/sync/page.tsx` - Main UI page
-- `app/atlas/sync/content.tsx` - Sync controls, batch orchestration, and status display
-- `app/atlas/sync/_actions/sync-actions.ts` - Server actions for sync operations (including `runSyncBatch`)
-- `app/atlas/sync/_lib/batch-sync-types.ts` - Batch sync types, constants (`SYNC_BATCH_SIZE`), and helper functions
-- `app/atlas/sync/_lib/sync-orchestrator.ts` - Main orchestrator coordinating all phases (used by `runRealSync`)
-- `app/atlas/sync/_lib/detect-markdown-changes.ts` - Change detection logic
+- `app/atlas/sync/content.tsx` - Sync controls and realtime progress display
+- `app/atlas/sync/_actions/sync-actions.ts` - Server actions for triggering/stopping sync
+- `app/atlas/sync/_actions/trigger-auth.ts` - Server action for public access tokens
+- `app/server/services/trigger/markdown-notion-sync-task.ts` - Background task implementation
 - `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder
 
 ### Transformation Services
@@ -907,19 +865,21 @@ This approach:
 
 - `app/server/services/supabase/uuid-mapping-service.ts` - UUID mapping storage and lookup
 - `app/server/services/supabase/audit-log-service.ts` - Audit log storage and queries
+- `app/server/services/supabase/markdown-notion-sync-lock.ts` - Sync lock management
 - `app/server/services/notion/notion-client.ts` - Notion API client with rate limiting
 
 ### Database Schema
 
 - `app/server/database/008_create_notion_api_audit_log.sql` - Audit log table definition
 - `app/server/database/007_create_uuid_mapping.sql` - UUID mapping table definition
+- `app/server/database/009_create_markdown_notion_sync_lock.sql` - Sync lock table definition
 
 ### Test Files
 
 - `app/server/services/supabase/__tests__/notion-nesting-bug-mappings.test.ts`
 - `app/server/services/supabase/__tests__/uuid-mapping-service.test.ts`
 - `app/server/services/supabase/__tests__/audit-log-service.test.ts`
-- `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts` - Diff algorithm tests (28 test cases)
+- `app/server/atlas/diff/__tests__/markdown-supabase-diff.ts` - Diff algorithm tests
 
 ## Related Documentation
 
@@ -954,7 +914,7 @@ This error occurs when a document specifies a relationship parent (via ancestry)
 
 - Check Notion API rate limits
 - Verify network connectivity
-- Check browser console for JavaScript errors
+- Check Trigger.dev dashboard for task status
 - Review server logs for API errors
 - Review Sentry logs for errors
 

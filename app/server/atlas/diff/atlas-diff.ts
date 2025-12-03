@@ -15,7 +15,6 @@
  *
  * TODO: Remove cosmetic formatting normalization when no longer needed.
  */
-
 import { AtlasDatabaseName } from '../atlas-types';
 import {
   ChildCollectionName,
@@ -36,7 +35,7 @@ import {
 // Type Definitions
 // ============================================================================
 
-export type AtlasChangeType = 'added' | 'deleted' | 'changed' | 'sibling_order_changed' | 'parent_changed';
+export type AtlasChangeType = 'added' | 'deleted' | 'changed' | 'parent_changed';
 
 export interface AtlasDocumentChange {
   uuid: string;
@@ -52,7 +51,6 @@ export interface GroupedAtlasChanges {
   deleted: AtlasDocumentChange[];
   changed: AtlasDocumentChange[];
   parent_changed: AtlasDocumentChange[];
-  sibling_order_changed: AtlasDocumentChange[];
 }
 
 export interface AtlasDiffResult {
@@ -196,15 +194,17 @@ function normalizeWhitespace(text: string): string {
  * Normalize cosmetic formatting differences in text.
  * TEMPORARY WORKAROUND: Converts fancy quotes to straight quotes and bullet characters to hyphens.
  * This helps suppress noise in diffs where the only changes are formatting-related.
- * 
+ *
  * TODO: Remove this workaround once source data formatting is consistent.
  */
 function normalizeCosmeticFormatting(text: string): string {
-  return text
-    // Convert left/right double quotation marks to straight quotes
-    .replace(/[\u201C\u201D]/g, '"')
-    // Convert bullet characters to hyphens
-    .replace(/\u2022/g, '-');
+  return (
+    text
+      // Convert left/right double quotation marks to straight quotes
+      .replace(/[\u201C\u201D]/g, '"')
+      // Convert bullet characters to hyphens
+      .replace(/\u2022/g, '-')
+  );
 }
 
 /**
@@ -212,7 +212,7 @@ function normalizeCosmeticFormatting(text: string): string {
  * Compares: type, name, content, and extra fields for specific document types.
  * Does NOT compare last_modified.
  * Trims whitespace from each line in multi-line texts for comparison.
- * 
+ *
  * TEMPORARY WORKAROUND: Also normalizes cosmetic formatting (fancy quotes, bullets)
  * to suppress noise in diffs. This should be removed once source data is consistent.
  */
@@ -222,10 +222,10 @@ export function compareDocumentFields(
 ): boolean {
   // Compare basic fields
   if (original.type !== updated.type) return true;
-  
+
   // Apply both whitespace and cosmetic formatting normalization
   const normalizeFully = (text: string) => normalizeWhitespace(normalizeCosmeticFormatting(text));
-  
+
   if (normalizeFully(original.name) !== normalizeFully(updated.name)) return true;
   if (normalizeFully(original.content) !== normalizeFully(updated.content)) return true;
 
@@ -317,7 +317,6 @@ export function detectChanges(
   const deleted: AtlasDocumentChange[] = [];
   const changed: AtlasDocumentChange[] = [];
   const parent_changed: AtlasDocumentChange[] = [];
-  const sibling_order_changed: AtlasDocumentChange[] = [];
 
   // Added documents: exist in new but not in original
   for (const uuid of newUuids) {
@@ -368,12 +367,11 @@ export function detectChanges(
       const newAncestry = newMaps.uuidToAncestry.get(uuid) ?? [];
 
       const fieldsChanged = compareDocumentFields(originalDoc, newDoc);
-      const docNoChanged = originalDoc.doc_no !== newDoc.doc_no;
       const ancestryChanged = !arraysEqual(oldAncestry, newAncestry);
 
-      if (fieldsChanged || docNoChanged || ancestryChanged) {
+      if (fieldsChanged || ancestryChanged) {
         // A document can have multiple types of changes simultaneously.
-        // Create separate change records for each type of change - except for parent_changed and sibling_order_changed, which are mutually exclusive.
+        // Create separate change records for each type of change.
 
         // Base change object shared by all change types
         const baseChange = {
@@ -390,15 +388,9 @@ export function detectChanges(
             ...baseChange,
             changeType: 'parent_changed',
           });
-        } else if (docNoChanged) {
-          // Only sibling order changed (doc_no changed but parent stayed the same)
-          sibling_order_changed.push({
-            ...baseChange,
-            changeType: 'sibling_order_changed',
-          });
         }
 
-        // If fields changed, record as a separate change (even if parent/sibling order also changed)
+        // If fields changed, record as a separate change (even if parent also changed)
         if (fieldsChanged) {
           changed.push({
             ...baseChange,
@@ -414,6 +406,5 @@ export function detectChanges(
     deleted,
     changed,
     parent_changed,
-    sibling_order_changed,
   };
 }

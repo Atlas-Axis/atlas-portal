@@ -1,9 +1,10 @@
 'use client';
 
-import { memo, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
+import { useRealtimeRun } from '@trigger.dev/react-hooks';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
@@ -16,27 +17,31 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
-import { cn } from '@/app/shared/utils/utils';
-import { type SyncFilters, runDryRunSync, runSyncBatch } from './_actions/sync-actions';
-import {
-  type RealSyncResult,
-  SYNC_BATCH_SIZE,
-  flattenChangesInOrder,
-  prepareBatchData,
-  splitIntoBatches,
-} from './_lib/batch-sync-types';
-import type { SyncPhase } from './_lib/dry-run-types';
+import type { markdownNotionSyncTask } from '@/app/server/services/trigger/markdown-notion-sync-task';
+import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_actions/sync-actions';
+import { createPublicAccessToken } from './_actions/trigger-auth';
 
-export interface SyncLogEntry {
-  timestamp: Date;
-  message: string;
-  type: 'info' | 'success' | 'error' | 'warning';
-  documentId?: string;
-  documentLabel?: string;
+// Sync phase type matching the task
+type SyncPhase = 'initializing' | 'content' | 'additions' | 'deletions' | 'parent_changes' | 'completed' | 'stopped';
+
+// Metadata structure from the task
+interface SyncMetadata {
+  phase: SyncPhase;
+  completed: number;
+  total: number;
+  currentDoc: string | null;
+  succeeded: number;
+  failed: number;
+  skipped: number;
 }
 
 const colors: {
-  [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
+  [K in AtlasChangeType]: {
+    background: string;
+    border: string;
+    text: string;
+    sectionBackground: string;
+  };
 } = {
   added: {
     background: 'bg-green-50',
@@ -49,12 +54,6 @@ const colors: {
     border: 'border-blue-500',
     text: 'text-blue-800',
     sectionBackground: 'bg-blue-600',
-  },
-  sibling_order_changed: {
-    background: 'bg-yellow-50',
-    border: 'border-yellow-500',
-    text: 'text-yellow-800',
-    sectionBackground: 'bg-yellow-600',
   },
   parent_changed: {
     background: 'bg-orange-50',
@@ -70,41 +69,27 @@ const colors: {
   },
 };
 
-interface SyncState {
-  isRunning: boolean;
-  stopRequested: boolean;
-  currentPhase: SyncPhase;
-  progress: { total: number; completed: number };
-  currentDocument: string | null;
-  logs: SyncLogEntry[];
-  completed: boolean;
-}
-
 export function Content({ result }: { result: AtlasDiffResult }) {
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
     changes.added.length > 0 ||
     changes.changed.length > 0 ||
-    changes.sibling_order_changed.length > 0 ||
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
   // Create UUID to document number map for markdown link conversion
-  // Prefer new documents (for added/changed), fallback to original (for deleted)
   const uuidToDocNoMap = useMemo(() => {
     const map = new Map<string, string>();
-    // Add original documents first
     originalIdsToDocuments.forEach((doc, uuid) => {
       map.set(uuid, doc.doc_no);
     });
-    // Override with new documents (so we use latest doc numbers)
     newIdsToDocuments.forEach((doc, uuid) => {
       map.set(uuid, doc.doc_no);
     });
     return map;
   }, [originalIdsToDocuments, newIdsToDocuments]);
 
-  // Create combined UUID to database map (prefer new, fallback to original)
+  // Create combined UUID to database map
   const uuidToDatabaseMap = useMemo(() => {
     const map = new Map<string, AtlasDatabaseName>();
     originalIdsToDatabase.forEach((db, uuid) => {
@@ -151,16 +136,6 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
-        {/* Sibling Order Changed */}
-        <ChangeSection
-          title="Order / Document No Changed"
-          changes={changes.sibling_order_changed}
-          changeType="sibling_order_changed"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
-          uuidToDatabaseMap={uuidToDatabaseMap}
-        />
-
         {/* Parent Changed */}
         <ChangeSection
           title="Parent Changed"
@@ -181,244 +156,120 @@ export function Content({ result }: { result: AtlasDiffResult }) {
           uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
-        {/* Sync Controls - isolated in its own component to prevent re-renders of document sections */}
-        <SyncControls result={result} hasChanges={hasChanges} />
+        {/* Sync Controls */}
+        <SyncControls hasChanges={hasChanges} />
       </CardBody>
     </Card>
   );
 }
 
 /**
- * Sync controls component - manages its own state to prevent re-renders
- * of the expensive document sections when sync progress updates.
+ * Sync controls component - manages sync state and realtime subscription
  */
-function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChanges: boolean }) {
-  const { changes, originalIdsToDatabase, newIdsToDatabase, newIdsToDocuments } = result;
-
-  const [syncState, setSyncState] = useState<SyncState>({
-    isRunning: false,
-    stopRequested: false,
-    currentPhase: 'idle',
-    progress: { total: 0, completed: 0 },
-    currentDocument: null,
-    logs: [],
-    completed: false,
-  });
-
-  // Dry-run state
-  const [isDryRunRunning, setIsDryRunRunning] = useState(false);
-
-  // Sync filter state - controls which change types are synced
+function SyncControls({ hasChanges }: { hasChanges: boolean }) {
+  // Sync filter state
   const [syncFilters, setSyncFilters] = useState({
-    added: true, // controls: added (checked by default)
-    deleted: false, // controls: deleted
-    contentChanges: false, // controls: changed
-    moves: false, // controls: parent_changed, sibling_order_changed
+    added: true,
+    deleted: false,
+    contentChanges: false,
+    parentChanges: false,
   });
 
-  // Ref for stop flag - checked between batches
-  const stopRequestedRef = useRef(false);
+  // Trigger state
+  const [isStarting, setIsStarting] = useState(false);
+  const [runId, setRunId] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [stopRequested, setStopRequested] = useState(false);
 
-  const handleSyncClick = async () => {
-    console.log('handleSyncClick called - batch mode');
-
-    // Reset stop flag
-    stopRequestedRef.current = false;
-
-    // Filter changes based on selected filters
-    const filteredChanges = {
-      added: syncFilters.added ? changes.added : [],
-      deleted: syncFilters.deleted ? changes.deleted : [],
-      changed: syncFilters.contentChanges ? changes.changed : [],
-      parent_changed: syncFilters.moves ? changes.parent_changed : [],
-      sibling_order_changed: syncFilters.moves ? changes.sibling_order_changed : [],
-    };
-
-    // Flatten filtered changes into a single array in processing order
-    const allChanges = flattenChangesInOrder(filteredChanges);
-    const totalChanges = allChanges.length;
-
-    if (totalChanges === 0) {
-      return;
-    }
-
-    // Split into batches of SYNC_BATCH_SIZE
-    const batches = splitIntoBatches(allChanges, SYNC_BATCH_SIZE);
-    const totalBatches = batches.length;
-
-    // Generate a single batch ID for audit logging across all batches
-    const syncBatchId = crypto.randomUUID();
-
-    setSyncState({
-      isRunning: true,
-      stopRequested: false,
-      currentPhase: 'content',
-      progress: {
-        total: totalChanges,
-        completed: 0,
-      },
-      currentDocument: `Starting sync: ${totalChanges} changes in ${totalBatches} batches`,
-      logs: [],
-      completed: false,
-    });
-
-    // Accumulate results across batches
-    let totalSucceeded = 0;
-    let totalFailed = 0;
-    let totalSkipped = 0;
-    const allLogs: SyncLogEntry[] = [];
-
-    const addLog = (message: string, type: SyncLogEntry['type']) => {
-      allLogs.push({
-        timestamp: new Date(),
-        message,
-        type,
-      });
-    };
-
-    addLog(
-      `Starting sync: ${totalChanges} changes in ${totalBatches} batches (batch size: ${SYNC_BATCH_SIZE})`,
-      'info',
-    );
-
-    try {
-      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
-        // Check if stop was requested before starting this batch
-        if (stopRequestedRef.current) {
-          addLog(`Stop requested - skipping remaining ${batches.length - batchIndex} batches`, 'warning');
-          setSyncState((prev) => ({
-            ...prev,
-            stopRequested: true,
-          }));
-          break;
+  // Check for existing sync on mount
+  useEffect(() => {
+    const checkExistingSync = async () => {
+      try {
+        const status = await getSyncStatus();
+        if (status.isLocked && status.triggerRunId) {
+          // There's an existing sync running - subscribe to it
+          const tokenResult = await createPublicAccessToken(status.triggerRunId);
+          if ('error' in tokenResult) {
+            console.error('Failed to create token for existing sync:', tokenResult.error);
+            return;
+          }
+          setRunId(status.triggerRunId);
+          setAccessToken(tokenResult.token);
+          setStopRequested(status.stopRequested);
         }
-
-        const batch = batches[batchIndex];
-
-        // Update UI with current batch info
-        setSyncState((prev) => ({
-          ...prev,
-          currentDocument: `Batch ${batchIndex + 1}/${totalBatches} (${totalChanges} total changes)`,
-          progress: {
-            ...prev.progress,
-            completed: totalSucceeded + totalFailed + totalSkipped,
-          },
-        }));
-
-        // Prepare serialized batch data (extracts only needed map entries)
-        const batchData = prepareBatchData(batch, originalIdsToDatabase, newIdsToDatabase, newIdsToDocuments);
-
-        // Call server action to process this batch
-        const batchResult: RealSyncResult = await runSyncBatch(batchData, batchIndex, totalBatches, syncBatchId);
-
-        // Accumulate results
-        totalSucceeded += batchResult.succeeded;
-        totalFailed += batchResult.failed;
-        totalSkipped += batchResult.skipped;
-
-        // Convert and accumulate logs
-        for (const log of batchResult.logs) {
-          allLogs.push({
-            ...log,
-            timestamp: new Date(log.timestamp),
-          });
-        }
-
-        // Update progress after batch
-        setSyncState((prev) => ({
-          ...prev,
-          progress: {
-            ...prev.progress,
-            completed: totalSucceeded + totalFailed + totalSkipped,
-          },
-          logs: [...allLogs],
-        }));
-
-        // If batch had an error, stop the entire sync
-        if (batchResult.error) {
-          addLog(`Sync stopped due to error in batch ${batchIndex + 1}: ${batchResult.error}`, 'error');
-          break;
-        }
+      } catch (err) {
+        console.error('Failed to check existing sync:', err);
       }
+    };
+    checkExistingSync();
+  }, []);
 
-      // Final summary
-      addLog(
-        `Sync complete: ${totalSucceeded} succeeded, ${totalFailed} failed, ${totalSkipped} skipped`,
-        totalFailed > 0 ? 'warning' : 'success',
-      );
-
-      setSyncState({
-        isRunning: false,
-        stopRequested: false, // Reset - sync has completed (whether stopped early or not)
-        currentPhase: 'idle',
-        progress: {
-          total: totalChanges,
-          completed: totalSucceeded + totalFailed + totalSkipped,
-        },
-        currentDocument: null,
-        logs: allLogs,
-        completed: true,
-      });
-    } catch (error) {
-      const err = error as Error;
-      addLog(`Sync failed: ${err.message}`, 'error');
-      setSyncState((prev) => ({
-        ...prev,
-        isRunning: false,
-        stopRequested: false, // Reset - sync has completed (with error)
-        currentPhase: 'idle',
-        logs: allLogs,
-        completed: true,
-      }));
-    }
-  };
-
-  const handleStopClick = () => {
-    stopRequestedRef.current = true;
-    setSyncState((prev) => ({
-      ...prev,
-      stopRequested: true,
-      currentDocument: 'Stopping after current batch completes...',
-    }));
-  };
-
-  const handlePreviewClick = async () => {
-    setIsDryRunRunning(true);
+  const handleSyncClick = useCallback(async () => {
+    setIsStarting(true);
+    setError(null);
+    setStopRequested(false);
 
     try {
-      // Run sync in dry-run mode via server action
-      // Server action computes diff and loads UUID mappings to avoid payload size limits
-      // Pass current filter state to respect user's filter selections
-      const filters: SyncFilters = {
+      // Trigger the sync task
+      const result = await triggerMarkdownNotionSync({
         added: syncFilters.added,
         deleted: syncFilters.deleted,
         contentChanges: syncFilters.contentChanges,
-        moves: syncFilters.moves,
-      };
-      const dryRunResult = await runDryRunSync(filters);
+        parentChanges: syncFilters.parentChanges,
+      });
 
-      if (dryRunResult.error) {
-        throw new Error(dryRunResult.error);
+      if ('error' in result) {
+        setError(result.error);
+        setIsStarting(false);
+        return;
       }
 
-      // Show success message
-      alert(
-        `Dry-run complete. ${dryRunResult.succeeded} operations would execute, ${dryRunResult.skipped} would be skipped. See dry-run-output.md`,
-      );
-    } catch (error) {
-      const err = error as Error;
-      console.error('Dry-run failed:', err);
-      alert(`Dry-run failed: ${err.message}`);
-    } finally {
-      setIsDryRunRunning(false);
-    }
-  };
+      // Create public access token for realtime subscription
+      const tokenResult = await createPublicAccessToken(result.runId);
+      if ('error' in tokenResult) {
+        setError(tokenResult.error);
+        setIsStarting(false);
+        return;
+      }
 
-  // Whether any filters are enabled (for button state)
-  const hasEnabledFilters = syncFilters.added || syncFilters.deleted || syncFilters.contentChanges || syncFilters.moves;
+      setRunId(result.runId);
+      setAccessToken(tokenResult.token);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setIsStarting(false);
+    }
+  }, [syncFilters]);
+
+  const handleStopClick = useCallback(async () => {
+    setStopRequested(true);
+    try {
+      const result = await requestSyncStop();
+      if (!result.success) {
+        setError(result.error || 'Failed to request stop');
+        setStopRequested(false);
+      }
+    } catch (err) {
+      setError((err as Error).message);
+      setStopRequested(false);
+    }
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setRunId(null);
+    setAccessToken(null);
+    setError(null);
+    setStopRequested(false);
+  }, []);
+
+  // Whether any filters are enabled
+  const hasEnabledFilters =
+    syncFilters.added || syncFilters.deleted || syncFilters.contentChanges || syncFilters.parentChanges;
 
   // Whether controls should be disabled
-  const controlsDisabled = syncState.isRunning || isDryRunRunning;
+  const isRunning = !!runId;
+  const controlsDisabled = isStarting || isRunning;
 
   return (
     <div className="my-6">
@@ -446,97 +297,174 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
           Content Changes
         </Checkbox>
         <Checkbox
-          isSelected={syncFilters.moves}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, moves: checked }))}
+          isSelected={syncFilters.parentChanges}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, parentChanges: checked }))}
           isDisabled={controlsDisabled}
         >
-          Moves (document number changes)
+          Parent Changes
         </Checkbox>
       </div>
 
+      {/* Error Display */}
+      {error && (
+        <Alert variant="faded" color="danger" className="mx-auto mb-4 max-w-lg">
+          {error}
+        </Alert>
+      )}
+
       {/* Sync Buttons */}
       <div className="flex justify-center gap-3">
-        <Button
-          size="lg"
-          onPress={handlePreviewClick}
-          variant="bordered"
-          color="secondary"
-          isLoading={isDryRunRunning}
-          isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
-        >
-          Preview Changes
-        </Button>
-        <Button
-          size="lg"
-          onPress={handleSyncClick}
-          variant="solid"
-          color="primary"
-          isLoading={syncState.isRunning}
-          isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
-        >
-          Sync Changes to Notion
-        </Button>
-        {/* Stop button - stops after current batch completes */}
-        {syncState.isRunning && !syncState.stopRequested && (
-          <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
-            Stop
+        {!isRunning ? (
+          <Button
+            size="lg"
+            onPress={handleSyncClick}
+            variant="solid"
+            color="primary"
+            isLoading={isStarting}
+            isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
+          >
+            Sync Changes to Notion
           </Button>
+        ) : (
+          <>
+            {!stopRequested && (
+              <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
+                Stop Sync
+              </Button>
+            )}
+          </>
         )}
       </div>
 
-      {/* Warning message when sync is running */}
-      {syncState.isRunning && (
-        <p className="mt-4 text-center text-sm font-bold text-red-600">
-          Do not refresh the page while the sync is running. You can click the stop button to abort the synchronization.
-        </p>
+      {/* Realtime Progress Display */}
+      {runId && accessToken && (
+        <SyncProgressDisplay
+          runId={runId}
+          accessToken={accessToken}
+          stopRequested={stopRequested}
+          onComplete={handleReset}
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * Realtime progress display using Trigger.dev subscription
+ */
+function SyncProgressDisplay({
+  runId,
+  accessToken,
+  stopRequested,
+  onComplete,
+}: {
+  runId: string;
+  accessToken: string;
+  stopRequested: boolean;
+  onComplete: () => void;
+}) {
+  const { run, error } = useRealtimeRun<typeof markdownNotionSyncTask>(runId, {
+    accessToken,
+    onComplete: () => {
+      // Don't auto-reset - let user see final state
+    },
+  });
+
+  // Extract sync metadata
+  const syncMetadata = run?.metadata?.sync as SyncMetadata | undefined;
+  const phase = syncMetadata?.phase ?? 'initializing';
+  const completed = syncMetadata?.completed ?? 0;
+  const total = syncMetadata?.total ?? 0;
+  const currentDoc = syncMetadata?.currentDoc ?? null;
+  const succeeded = syncMetadata?.succeeded ?? 0;
+  const failed = syncMetadata?.failed ?? 0;
+  const skipped = syncMetadata?.skipped ?? 0;
+
+  const isCompleted = run?.status === 'COMPLETED' || run?.status === 'FAILED' || run?.status === 'CANCELED';
+  const progressPercent = total > 0 ? (completed / total) * 100 : 0;
+
+  return (
+    <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+      {/* Error from subscription */}
+      {error && (
+        <Alert variant="faded" color="danger" className="mb-4">
+          Subscription error: {error.message}
+        </Alert>
       )}
 
-      {/* Progress Display */}
-      {(syncState.isRunning || syncState.completed) && (
-        <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
-          {/* Phase and Progress */}
-          <div className="mb-4">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold">Sync Progress:</span>
-                <PhaseChip phase={syncState.currentPhase} />
-                {syncState.stopRequested && (
-                  <Chip color="warning" size="sm">
-                    Stopping...
-                  </Chip>
-                )}
-              </div>
-              <span className="text-sm text-gray-600">
-                {syncState.progress.completed} / {syncState.progress.total}
-              </span>
-            </div>
-            <Progress
-              value={syncState.progress.total > 0 ? (syncState.progress.completed / syncState.progress.total) * 100 : 0}
-              color={syncState.completed ? 'success' : 'primary'}
-              className="max-w-full"
-            />
+      {/* Phase and Progress */}
+      <div className="mb-4">
+        <div className="mb-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">Sync Progress:</span>
+            <PhaseChip phase={phase} />
+            {stopRequested && phase !== 'stopped' && phase !== 'completed' && (
+              <Chip color="warning" size="sm">
+                Stopping...
+              </Chip>
+            )}
+            {run?.status && (
+              <Chip
+                size="sm"
+                color={
+                  run.status === 'COMPLETED'
+                    ? 'success'
+                    : run.status === 'FAILED'
+                      ? 'danger'
+                      : run.status === 'CANCELED'
+                        ? 'warning'
+                        : 'primary'
+                }
+              >
+                {run.status}
+              </Chip>
+            )}
           </div>
+          <span className="text-sm text-gray-600">
+            {completed} / {total}
+          </span>
+        </div>
+        <Progress value={progressPercent} color={isCompleted ? 'success' : 'primary'} className="max-w-full" />
+      </div>
 
-          {/* Current Document */}
-          {syncState.currentDocument && (
-            <div className="mb-4 text-sm text-gray-700">
-              <span className="font-medium">Processing:</span> {syncState.currentDocument}
-            </div>
-          )}
+      {/* Current Document */}
+      {currentDoc && (
+        <div className="mb-4 text-sm text-gray-700">
+          <span className="font-medium">Processing:</span> {currentDoc}
+        </div>
+      )}
 
-          {/* Logs */}
-          {syncState.logs.length > 0 && (
-            <div className="mt-4">
-              <div className="mb-2 font-semibold">Log:</div>
-              <div className="max-h-96 overflow-y-auto rounded border border-gray-200 bg-gray-50 p-3">
-                {syncState.logs.map((log, idx) => (
-                  <div key={idx} className={cn('mb-1 font-mono text-xs', getLogColorClass(log.type))}>
-                    <span className="text-gray-500">[{log.timestamp.toLocaleTimeString()}]</span> {log.message}
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* Summary Stats */}
+      <div className="mb-4 flex gap-4 text-sm">
+        <span className="text-green-700">✓ Succeeded: {succeeded}</span>
+        <span className="text-red-700">✗ Failed: {failed}</span>
+        <span className="text-yellow-700">⊘ Skipped: {skipped}</span>
+      </div>
+
+      {/* Task Output (on completion) */}
+      {isCompleted && run?.output && (
+        <div className="mt-4 rounded border border-gray-200 bg-gray-50 p-3">
+          <div className="mb-2 font-semibold">Final Result:</div>
+          <div className="text-sm">
+            <span className="text-green-700">Succeeded: {run.output.succeeded}</span>
+            {' | '}
+            <span className="text-red-700">Failed: {run.output.failed}</span>
+            {' | '}
+            <span className="text-yellow-700">Skipped: {run.output.skipped}</span>
+            {run.output.stoppedEarly && <span className="ml-2 text-orange-600">(Stopped early)</span>}
+          </div>
+          {(run.output as { error?: string }).error && (
+            <div className="mt-2 text-red-600">Error: {(run.output as { error?: string }).error}</div>
           )}
+        </div>
+      )}
+
+      {/* Reset Button (on completion) */}
+      {isCompleted && (
+        <div className="mt-4 flex justify-center">
+          <Button size="sm" variant="bordered" onPress={onComplete}>
+            Reset
+          </Button>
         </div>
       )}
     </div>
@@ -545,21 +473,23 @@ function SyncControls({ result, hasChanges }: { result: AtlasDiffResult; hasChan
 
 function PhaseChip({ phase }: { phase: SyncPhase }) {
   const phaseLabels: Record<SyncPhase, string> = {
+    initializing: 'Initializing',
     content: 'Content Changes',
     additions: 'Additions',
     deletions: 'Deletions',
-    parent_changed: 'Parent Changes',
-    sibling_order_changed: 'Sibling Order',
-    idle: 'Idle',
+    parent_changes: 'Parent Changes',
+    completed: 'Completed',
+    stopped: 'Stopped',
   };
 
   const phaseColors: Record<SyncPhase, 'primary' | 'success' | 'warning' | 'danger' | 'default'> = {
+    initializing: 'default',
     content: 'primary',
     additions: 'success',
     deletions: 'danger',
-    parent_changed: 'warning',
-    sibling_order_changed: 'warning',
-    idle: 'default',
+    parent_changes: 'warning',
+    completed: 'success',
+    stopped: 'warning',
   };
 
   return (
@@ -567,20 +497,6 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
       {phaseLabels[phase]}
     </Chip>
   );
-}
-
-function getLogColorClass(type: SyncLogEntry['type']): string {
-  switch (type) {
-    case 'success':
-      return 'text-green-700';
-    case 'error':
-      return 'text-red-700';
-    case 'warning':
-      return 'text-yellow-700';
-    case 'info':
-    default:
-      return 'text-gray-700';
-  }
 }
 
 const ChangeSection = memo(function ChangeSection({
@@ -635,7 +551,7 @@ function formatDocReference(
   if (refDoc) {
     return `${refDoc.doc_no} - ${refDoc.name} [${refDoc.type}]`;
   }
-  return uuid; // Fallback to UUID if not found
+  return uuid;
 }
 
 const ChangeCard = memo(function ChangeCard({
@@ -696,17 +612,6 @@ const ChangeCard = memo(function ChangeCard({
 
               <div className="mt-2 text-sm">
                 <div className="mb-1 text-sm font-semibold">Doc No</div>
-                <span className="text-red-600">{change.oldValues?.doc_no}</span>
-                <span className="px-2"> → </span>
-                <span className="text-green-600">{change.newValues?.doc_no}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Show sibling order change details */}
-          {change.changeType === 'sibling_order_changed' && (
-            <div className={`mt-2 rounded p-3 ${colors.sibling_order_changed.background} `}>
-              <div className="text-sm">
                 <span className="text-red-600">{change.oldValues?.doc_no}</span>
                 <span className="px-2"> → </span>
                 <span className="text-green-600">{change.newValues?.doc_no}</span>
@@ -794,7 +699,6 @@ function FieldChanges({
   }
 
   // Compare extra fields based on document type
-  // Extra fields are specific to Type Specification, Scenario, Scenario Variation, and Needed Research
   const extraFieldMapping = getExtraFieldMappingForDocumentType(oldDoc.type);
   if (extraFieldMapping) {
     const oldDocRecord = oldDoc as unknown as Record<string, unknown>;
@@ -833,12 +737,6 @@ function FieldChanges({
                 <div className="mt-1">
                   <InlineTextDiff oldContent={change.oldValue} newContent={change.newValue} />
                 </div>
-                <div className="hidden">
-                  <span className="font-medium text-red-600">Old:</span>
-                  <pre className="bg-gray-100 p-2 text-xs">{JSON.stringify(change.oldValue, null, 2)}</pre>
-                  <span className="font-medium text-green-600">New:</span>
-                  <pre className="bg-gray-100 p-2 text-xs">{JSON.stringify(change.newValue, null, 2)}</pre>
-                </div>
               </div>
             </div>
           </div>
@@ -850,7 +748,6 @@ function FieldChanges({
 
 /**
  * Get the extra field mapping for a given document type.
- * Returns a mapping of field keys to display names.
  */
 function getExtraFieldMappingForDocumentType(type: string): Record<string, string> | null {
   switch (type) {
@@ -879,7 +776,6 @@ function formatFieldValue(value: unknown): string {
 
 /**
  * Display document content and extra fields in Atlas style.
- * Used for showing added/deleted documents in the diff UI.
  */
 function DocumentContent({
   doc,
@@ -891,7 +787,7 @@ function DocumentContent({
   const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
   const docRecord = doc as unknown as Record<string, unknown>;
 
-  // Format markdown content as HTML for display (consistent with Atlas viewer)
+  // Format markdown content as HTML for display
   const formattedContent = markdownToHTML(doc.content, uuidToDocNoMap);
 
   return (
@@ -903,26 +799,22 @@ function DocumentContent({
         </div>
       )}
 
-      {/* Extra fields if present - styled like content-tree */}
+      {/* Extra fields if present */}
       {extraFieldMapping && (
         <div className="mt-2 text-sm text-slate-600">
           {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
             const fieldValue = docRecord[fieldKey];
             if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
-              // Format field value with markdown support
               let formattedValue: React.ReactNode;
 
               if (Array.isArray(fieldValue)) {
-                // For arrays, join with comma and format as markdown
                 const joinedValue = fieldValue.join(', ');
                 const html = markdownToHTML(joinedValue, uuidToDocNoMap);
                 formattedValue = <CustomHTML html={html} />;
               } else if (typeof fieldValue === 'string') {
-                // For strings, format as markdown
                 const html = markdownToHTML(fieldValue, uuidToDocNoMap);
                 formattedValue = <CustomHTML html={html} />;
               } else {
-                // For numbers and booleans, convert to string
                 formattedValue = String(fieldValue);
               }
 

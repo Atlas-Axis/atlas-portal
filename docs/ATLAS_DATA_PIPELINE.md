@@ -675,7 +675,6 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - **Modified documents**: Atlas UUID exists in both, but content/properties/relationships differ
   - **Deleted documents**: Atlas UUID exists in Supabase but not in markdown Export Tree
 - Generate change sets with detailed diff information
-- Validate changes before any API calls (dry-run capability)
 
 **Creating New Pages:**
 
@@ -688,7 +687,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Store mapping in Supabase `uuid_mapping` table
 - Handle dependencies: Create parent documents before children to enable proper relationship establishment
 - Make sure that newly created Notion database page IDs are available during the sync if they are referenced in other documents that are also synced
-- Don't batch operations for more reliable error handling in case of error, and better audit log of Notion API calls to change Notion content
+- Sequential operations for reliable error handling and better audit log of Notion API calls
 
 **Updating Existing Pages:**
 
@@ -712,35 +711,31 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Keep UUID mapping in Supabase (mappings are preserved forever for potential recovery)
 - Start from leaf nodes to avoid cascading effects, then traverse up the tree as parent nodes become leaf nodes after their child nodes are deleted
 
-**Batch Processing:**
+**Background Task Processing:**
 
-- Documents processed in batches of 25 to avoid server action timeouts
-- Client orchestrates batches, calling `runSyncBatch()` server action for each batch
-- Progress updates between batches (batch-level granularity)
-- Stop button halts sync between batches (current batch completes)
-- Each batch takes ~10-25 seconds at Notion's rate limit
-- All batches share same `syncBatchId` for unified audit trail
+- Sync runs in Trigger.dev background task (survives page refresh)
+- Documents processed sequentially (one at a time)
+- Task checks stop flag between each operation for graceful stopping
+- Progress tracked via Trigger.dev metadata subscription
+- All operations share same `syncBatchId` for unified audit trail
 
 **Progress Tracking:**
 
-- Progress tracking: Real-time batch progress (e.g., "Batch 5/280")
-- Document counter shows total progress across all batches
-- If interrupted, reload page to see remaining syncable changes
+- Real-time progress via Trigger.dev metadata (phase, completed/total, current document)
+- Stop button requests graceful halt between operations
+- Progress survives page refresh (background task continues)
 
 **Error Handling:**
 
 - Validate markdown structure before any API calls
-- Dry-run mode to preview all changes without applying
-- Rollback strategy for partial failures (attempt to restore previous state) - optional if adds too much complexity
 - Detailed error logs with line numbers and actionable suggestions
-- Partial success tracking: Store successfully synced documents to avoid re-processing (?)
+- Partial success tracking: Completed operations logged to audit table
 
 **References:**
 
-- `app/atlas/sync/_actions/sync-actions.ts` (server actions including `runSyncBatch`)
-- `app/atlas/sync/_lib/batch-sync-types.ts` (batch types, `SYNC_BATCH_SIZE`, helper functions)
-- `app/atlas/sync/_lib/sync-orchestrator.ts` (main orchestrator)
-- `app/atlas/sync/content.tsx` (client-side batch orchestration)
+- `app/atlas/sync/_actions/sync-actions.ts` (server actions for triggering/stopping sync)
+- `app/server/services/trigger/markdown-notion-sync-task.ts` (background task implementation)
+- `app/atlas/sync/content.tsx` (UI with realtime progress subscription)
 
 ### 4.4 Automated Sync
 
@@ -776,7 +771,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
 | **[IMPLEMENTED] 10. Reverse Overrides** | Notion Tree             | Skip parent changes for nesting-bug-affected documents during sync                          | Sync orchestrator skips affected docs     |
 | **[IMPLEMENTED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (batches of 25, sequential within batch)         | Notion pages (via API)                    |
+| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (Trigger.dev background task)                    | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 
