@@ -24,11 +24,3 @@ CREATE TRIGGER set_updated_at_markdown_notion_sync_lock
 
 -- Enable Row Level Security
 ALTER TABLE markdown_notion_sync_lock ENABLE ROW LEVEL SECURITY;
-
--- Create policy to allow all operations (this is an internal system table)
-CREATE POLICY "Allow all operations on markdown_notion_sync_lock"
-  ON markdown_notion_sync_lock
-  FOR ALL
-  USING (true)
-  WITH CHECK (true);
-
