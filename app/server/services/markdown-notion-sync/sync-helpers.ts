@@ -38,13 +38,13 @@ export async function validatePageExists(pageId: string, cache?: Map<string, boo
 /**
  * Checks if a Notion page has any child relationships.
  *
- * @param pageId Notion page ID to check
+ * @param notionPageId Notion page ID to check
  * @param pageDocument Atlas document for the page
  * @param originalIdsToDatabase Map of UUID to database name
  * @returns True if page has children, false otherwise (or true on error for safety)
  */
 export async function pageHasChildren(
-  pageId: string,
+  notionPageId: string,
   pageDocument: ExportAtlasTreeBaseDocument,
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
 ): Promise<boolean> {
@@ -62,7 +62,7 @@ export async function pageHasChildren(
     const childRelationshipNames = Object.values(config.childRelationships).filter((name) => name);
 
     const notionClient = notion();
-    const page = await notionClient.pages.retrieve({ page_id: pageId });
+    const page = await notionClient.pages.retrieve({ page_id: notionPageId });
     const pageProps = (page as { properties: Record<string, unknown> }).properties;
 
     for (const propertyName of childRelationshipNames) {
@@ -74,7 +74,7 @@ export async function pageHasChildren(
 
     return false;
   } catch (error) {
-    console.error(`Error checking children for page ${pageId}:`, error);
+    console.error(`Error checking children for page ${notionPageId}:`, error);
     return true; // Assume has children for safety
   }
 }
