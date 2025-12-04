@@ -19,7 +19,8 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { calculateHeadingLevel, calculateSemanticDepth } from '@/app/server/atlas/export/atlas-markdown-depth-utils';
+import { calculateSemanticDepth } from '@/app/server/atlas/export/atlas-markdown-depth-utils';
+import { formatDocumentRecursive, getAllChildren } from '@/app/server/atlas/export/atlas-markdown-exporter';
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
 import {
   type ExportAtlasTreeDocument,
@@ -27,12 +28,6 @@ import {
   childCollectionNames,
 } from '@/app/server/atlas/export/types';
 import { fetchAtlasMarkdownContent } from '@/app/server/atlas/load-atlas-markdown-from-github';
-import {
-  NEEDED_RESEARCH_PROPERTY_MAPPING,
-  SCENARIO_PROPERTY_MAPPING,
-  SCENARIO_VARIATION_PROPERTY_MAPPING,
-  TYPE_SPECIFICATION_PROPERTY_MAPPING,
-} from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 const MAX_DEPTH = 4;
@@ -89,150 +84,6 @@ function filterExportTreeByDepth(trees: ExportAtlasTreeScopeTrees, maxDepth: num
   return trees
     .map((scopeDoc) => filterTreeByDepth(scopeDoc, maxDepth))
     .filter((doc): doc is ExportAtlasTreeDocument => doc !== null);
-}
-
-/**
- * Normalize content by replacing certain characters with their standard equivalents.
- * This ensures consistent formatting across exported markdown.
- *
- * Replacements:
- * - Replace " (LEFT DOUBLE QUOTATION MARK - U+201C) with " (straight quote)
- * - Replace " (RIGHT DOUBLE QUOTATION MARK - U+201D) with " (straight quote)
- * - Replace • (bullet character) with - (hyphen for markdown list compatibility)
- */
-function normalizeContent(text: string): string {
-  return text
-    .replace(/[""]/g, '"') // Replace left/right double quotation marks with straight quotes
-    .replace(/•/g, '-'); // Replace bullets with hyphens
-}
-
-/**
- * Format a document and its children recursively as markdown lines.
- * This is adapted from formatDocumentRecursive in atlas-markdown-exporter.ts
- */
-function formatDocumentRecursive(
-  doc: ExportAtlasTreeDocument,
-  depth: number,
-  parentDoc?: ExportAtlasTreeDocument,
-): string[] {
-  const lines: string[] = [];
-
-  // Skip stub nodes (duplicate documents that were filtered out during tree building)
-  if (!doc.name || doc.name.trim() === '') {
-    console.warn(`[formatDocumentRecursive] Skipping stub node without name: ${doc.uuid ?? 'unknown'} (${doc.type})`);
-    return lines;
-  }
-
-  // Calculate heading level based on document number and type (capped at 6)
-  // For Needed Research, use parent's depth + 1 since NR-X doesn't encode hierarchy
-  let headingLevel: number;
-  if (doc.type === 'Needed Research' && parentDoc) {
-    const parentLevel = calculateHeadingLevel(parentDoc.doc_no, parentDoc.type);
-    headingLevel = Math.min(6, parentLevel + 1);
-  } else if (doc.type === 'Needed Research') {
-    // Fallback for root-level NR (shouldn't happen in practice)
-    console.warn(`Needed Research document ${doc.doc_no} (${doc.type}) is at root level.`);
-    headingLevel = 6;
-  } else {
-    headingLevel = calculateHeadingLevel(doc.doc_no, doc.type);
-  }
-
-  const hashes = '#'.repeat(headingLevel);
-  const uuid = ` <!-- UUID: ${doc.uuid ?? ''} -->`;
-  const title = `${hashes} ${doc.doc_no} - ${doc.name} [${doc.type}] ${uuid}`;
-  lines.push(title, '');
-
-  if (doc.content && doc.content.trim().length > 0) {
-    const normalizedContent = normalizeContent(doc.content.trim());
-    lines.push(normalizedContent, '');
-  }
-
-  // Extra fields (if any)
-  const extraFieldLines = getExtraFieldsForDocument(doc);
-  if (extraFieldLines.length > 0) {
-    lines.push(...extraFieldLines, '');
-  }
-
-  // Children: follow the original tree structure
-  const allChildren = getAllChildren(doc);
-  if (allChildren.length > 0) {
-    for (const child of allChildren) {
-      // Pass current doc as parent for Needed Research depth calculation
-      lines.push(...formatDocumentRecursive(child, depth + 1, doc));
-    }
-  }
-
-  return lines;
-}
-
-/**
- * Get extra fields for a document (Type Spec, Scenario, Scenario Variation, Needed Research).
- * Adapted from atlas-markdown-exporter.ts
- */
-function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
-  let mapping: Record<string, string> | null = null;
-  switch (doc.type) {
-    case 'Type Specification':
-      mapping = TYPE_SPECIFICATION_PROPERTY_MAPPING;
-      break;
-    case 'Scenario':
-      mapping = SCENARIO_PROPERTY_MAPPING;
-      break;
-    case 'Scenario Variation':
-      mapping = SCENARIO_VARIATION_PROPERTY_MAPPING;
-      break;
-    case 'Needed Research':
-      mapping = NEEDED_RESEARCH_PROPERTY_MAPPING;
-      break;
-    default:
-      mapping = null;
-  }
-
-  if (!mapping) return [];
-
-  const out: string[] = [];
-  const source = doc as unknown as Record<string, unknown>;
-  for (const [fieldKey, label] of Object.entries(mapping)) {
-    const raw = source[fieldKey];
-    if (raw === undefined) {
-      console.warn(
-        `getExtraFieldsForDocument: Missing expected field '${fieldKey}' on document type '${doc.type}' for doc ${doc.uuid}`,
-      );
-      continue;
-    }
-    const value = raw === null ? '' : typeof raw === 'string' ? raw : String(raw);
-    const trimmed = value.trim();
-    const normalizedValue = normalizeContent(trimmed);
-    // Format: **Label**: followed by newline, then value, then blank line after value
-    out.push(`**${label}**:`);
-    out.push('');
-    out.push(normalizedValue);
-    out.push(''); // Blank line after value
-  }
-  // Remove the trailing blank line
-  if (out.length > 0 && out[out.length - 1] === '') {
-    out.pop();
-  }
-  return out;
-}
-
-/**
- * Get all children from all child collections.
- * Adapted from atlas-markdown-exporter.ts
- */
-function getAllChildren(doc: ExportAtlasTreeDocument): ExportAtlasTreeDocument[] {
-  const children: ExportAtlasTreeDocument[] = [];
-  const docAsRecord = doc as unknown as Record<string, unknown>;
-
-  // Check all possible child collection names
-  for (const collectionName of childCollectionNames) {
-    const collection = docAsRecord[collectionName];
-    if (Array.isArray(collection)) {
-      children.push(...(collection as ExportAtlasTreeDocument[]));
-    }
-  }
-
-  return children;
 }
 
 /**

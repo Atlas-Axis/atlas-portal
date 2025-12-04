@@ -60,13 +60,13 @@ function sanitizeScopeName(name: string): string {
  * - Replace ” (RIGHT DOUBLE QUOTATION MARK - U+201D) with " (straight quote)
  * - Replace • (bullet character) with - (hyphen for markdown list compatibility)
  */
-function normalizeContent(text: string): string {
+export function normalizeContent(text: string): string {
   return text
     .replace(/[“”]/g, '"') // Replace left/right double quotation marks with straight quotes
     .replace(/•/g, '-'); // Replace bullets with hyphens
 }
 
-function formatDocumentRecursive(
+export function formatDocumentRecursive(
   doc: ExportAtlasTreeDocument,
   depth: number,
   parentDoc?: ExportAtlasTreeDocument,
@@ -125,7 +125,7 @@ function formatDocumentRecursive(
 }
 
 // For more info on extra fields, see `docs/ATLAS_EXTRA_FIELDS.md`
-function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
+export function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
   let mapping: Record<string, string> | null = null;
   switch (doc.type) {
     case 'Type Specification':
@@ -172,7 +172,7 @@ function getExtraFieldsForDocument(doc: ExportAtlasTreeDocument): string[] {
   return out;
 }
 
-function getAllChildren(doc: ExportAtlasTreeDocument): ExportAtlasTreeDocument[] {
+export function getAllChildren(doc: ExportAtlasTreeDocument): ExportAtlasTreeDocument[] {
   const children: ExportAtlasTreeDocument[] = [];
 
   // Collect all children from all possible collections, following the original tree structure
