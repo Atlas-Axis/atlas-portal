@@ -6,7 +6,7 @@ CREATE TYPE atlas_document_type_enum AS ENUM (
   'Core',
   'Type Specification',
   'Active Data Controller',
-  'Spell SP Controller', -- Deprecated - TODO: remove
+  'Spell SP Controller', -- TODO: remove
   'Placeholder', -- TODO: remove
   'Category', -- TODO: remove
   'Action Tenet',

@@ -138,7 +138,7 @@ Stores Notion database pages and their hierarchical relationships. Structure mir
 **Key Fields:**
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
+- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
 - `atlas_document_number` (TEXT, NOT NULL, DEFAULT '') - Document number of the Atlas document this page belongs to
 - `atlas_database_name` (ENUM, NOT NULL) - Database name. Enum values: 'Scopes', 'Articles', 'Sections & Primary Docs', 'Annotations', 'Tenets', 'Scenarios', 'Scenario Variations', 'Active Data', 'Agent Scope Database', 'Needed Research', 'Original Context Data'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
@@ -302,7 +302,6 @@ Each document in the Atlas has a specific type from the following enum:
 - **Core** - Core legal documents
 - **Type Specification** - Technical specification documents
 - **Active Data Controller** - Documents controlling active data
-- **Spell SP Controller** - Documents controlling spell SP
 - **Action Tenet** - Action-oriented tenet documents
 - **Active Data** - Active data items
 - **Annotation** - Annotation items
