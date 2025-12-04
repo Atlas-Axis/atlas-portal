@@ -325,6 +325,8 @@ export async function updateNotionPageParent(
 
   const newParentAtlasUuid =
     change.newAncestry && change.newAncestry.length > 0 ? change.newAncestry[change.newAncestry.length - 1] : null;
+  const oldParentAtlasUuid =
+    change.oldAncestry && change.oldAncestry.length > 0 ? change.oldAncestry[change.oldAncestry.length - 1] : null;
 
   let newParentNotionPageId: string | null = null;
   if (newParentAtlasUuid) {
@@ -335,12 +337,24 @@ export async function updateNotionPageParent(
   }
 
   // Handle same-database parent changes
-  if (databaseSupportsInternalNesting(databaseName) && newParentAtlasUuid && newParentNotionPageId) {
-    const newParentDatabase = newIdsToDatabase.get(newParentAtlasUuid);
-    if (newParentDatabase === databaseName) {
+  if (databaseSupportsInternalNesting(databaseName)) {
+    // Check if there's a same-database parent in either old or new ancestry
+    const oldParentDatabase = oldParentAtlasUuid ? newIdsToDatabase.get(oldParentAtlasUuid) : null;
+    const newParentDatabase = newParentAtlasUuid ? newIdsToDatabase.get(newParentAtlasUuid) : null;
+    const oldParentSameDatabase = oldParentDatabase === databaseName;
+    const newParentSameDatabase = newParentDatabase === databaseName;
+
+    // If there was a same-database parent or there is a new same-database parent, update the relationship
+    if (oldParentSameDatabase || newParentSameDatabase) {
       const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[databaseName];
       if (config.parentPropertyName) {
-        properties[config.parentPropertyName] = { relation: [{ id: newParentNotionPageId }] };
+        if (newParentSameDatabase && newParentNotionPageId) {
+          // Set new parent
+          properties[config.parentPropertyName] = { relation: [{ id: newParentNotionPageId }] };
+        } else {
+          // Clear parent (moving to root or cross-database parent)
+          properties[config.parentPropertyName] = { relation: [] };
+        }
       }
     }
   }

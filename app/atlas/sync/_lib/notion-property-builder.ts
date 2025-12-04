@@ -67,7 +67,8 @@ function formatNumberProperty(value: string): { number: number | null } {
  * @param value - The value to format
  * @param propertyType - The Notion property type (rich_text, title, select, number)
  * @param uuidMappings - UUID mappings for converting document links (required for rich_text)
- * @param allowEmpty - For rich_text only: if true, empty strings create a single empty text item // TODO: Remove?
+ * @param allowEmpty - For rich_text only: if true, empty strings create [{ text: { content: '' } }] instead of [].
+ *                     This is needed for required fields to ensure they're never completely empty.
  * @param warnings - Optional array to collect conversion warnings (for rich_text only)
  * @returns Formatted Notion property object, or null if property type is unsupported
  */
@@ -135,7 +136,9 @@ export function buildNotionProperties(
   const documentNamePropertyType = typeOverrides[documentNameNotionPropertyName] || 'rich_text';
   const documentName = doc.name || '';
 
-  // Document name is a required field, so allowEmpty = true for rich_text // TODO: Remove?
+  // Document name is a required field in Notion. For rich_text types, we use allowEmpty = true
+  // to ensure empty names create [{ text: { content: '' } }] instead of [], preventing null values.
+  // For title types, Notion handles empty values natively.
   const allowEmptyForDocumentName = documentNamePropertyType === 'rich_text';
   properties[documentNameNotionPropertyName] = formatNotionProperty(
     documentName,
@@ -335,7 +338,11 @@ export function addInterDatabaseRelationshipProperties(
   }
 
   // Workaround: Agent documents' parent relationships are not synced to Notion, so we skip them for now
+  // This is a known limitation documented in the sync feature documentation
   if (childDatabaseName === 'Agent Scope Database') {
+    console.log(
+      `[addInterDatabaseRelationshipProperties] Skipping inter-database parent relationship for Agent Scope Database document (known limitation)`,
+    );
     return properties;
   }
 

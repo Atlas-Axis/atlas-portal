@@ -11,7 +11,7 @@ export default defineConfig({
   retries: {
     enabledInDev: true,
     default: {
-      maxAttempts: 3,
+      maxAttempts: 2,
       minTimeoutInMs: 1_000, // The minimum time to wait before retrying
       maxTimeoutInMs: 10_000, // The maximum time to wait before retrying
       factor: 2, // The exponential factor to use for backoff. Each subsequent retry will be calculated as `previousTimeout * factor`

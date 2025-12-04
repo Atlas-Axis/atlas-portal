@@ -49,7 +49,15 @@ export async function pageHasChildren(
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
 ): Promise<boolean> {
   try {
-    const databaseName = getDatabaseNameFromDocument(pageDocument.type, pageId, originalIdsToDatabase);
+    // Use the document's UUID (not the Notion page ID) for database lookup
+    // pageDocument.uuid is the Atlas UUID which is the key in originalIdsToDatabase
+    const atlasUuid = pageDocument.uuid;
+    if (!atlasUuid) {
+      console.error(`Document has no UUID: ${pageDocument.doc_no} - ${pageDocument.name}`);
+      return true; // Assume has children for safety
+    }
+
+    const databaseName = getDatabaseNameFromDocument(pageDocument.type, atlasUuid, originalIdsToDatabase);
     const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[databaseName];
     const childRelationshipNames = Object.values(config.childRelationships).filter((name) => name);
 
