@@ -24,15 +24,37 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 - **ID**: `markdown-notion-sync`
 - **Purpose**: Syncs changes from Atlas Markdown to Notion databases
 - **Duration**: Up to 6 hours (max duration)
-- **Concurrency**: 1 (only one sync can run at a time)
+- **Concurrency**: 1 (only one sync can run at a time, enforced via lock)
+- **Architecture**: Delegates business logic to `@/app/server/services/markdown-notion-sync/`
 - **Features**:
   - Processes all change types: additions, deletions, content changes, parent changes
   - Real-time progress tracking via metadata
   - Graceful stopping via database flag
   - Audit logging for all Notion API operations
   - UUID mapping for newly created pages
+  - Depth-first ordering of additions (parents before children)
+  - Parent validation before creating/updating relationships
 - **Lock Table**: `markdown_notion_sync_lock` (6-hour expiry)
 - **Metadata**: `{ phase, completed, total, currentDoc, succeeded, failed, skipped }`
+
+#### Architecture
+
+The task is split into two parts:
+
+1. **Task file** (`markdown-notion-sync-task.ts`): Handles Trigger.dev orchestration
+   - Lock acquisition/release
+   - Metadata updates for real-time UI
+   - Loading diff and UUID mappings
+   - Error handling and cleanup
+
+2. **Sync service** (`app/server/services/markdown-notion-sync/`): Contains business logic
+   - `types.ts` - Shared types
+   - `sync-helpers.ts` - Utility functions (validation, sorting, formatting)
+   - `sync-operations.ts` - Core CRUD operations (create, update, delete, parent updates)
+   - `sync-orchestrator.ts` - Main sync logic (processes changes in 4 phases)
+   - `index.ts` - Public API exports
+
+This separation keeps the Trigger.dev task file focused on orchestration while the sync service handles all sync-specific logic, making both more maintainable and testable.
 
 ## Usage
 

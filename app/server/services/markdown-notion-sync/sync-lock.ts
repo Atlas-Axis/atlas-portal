@@ -5,7 +5,7 @@
  * Uses a single-row table pattern to ensure only one sync can run at a time.
  * Supports graceful stopping via a stop_requested flag.
  */
-import { supabase } from './supabase-client';
+import { supabase } from '../supabase/supabase-client';
 
 /** Lock expiry time in hours */
 const LOCK_EXPIRY_HOURS = 6;

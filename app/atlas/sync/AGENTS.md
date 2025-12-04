@@ -624,11 +624,18 @@ app/server/services/trigger/
 
 ```
 app/server/services/
+├── markdown-notion-sync/          # Markdown-to-Notion sync service
+│   ├── index.ts                   # Public API exports
+│   ├── types.ts                   # Shared types
+│   ├── sync-helpers.ts            # Utility functions
+│   ├── sync-operations.ts         # CRUD operations
+│   ├── sync-orchestrator.ts       # Main sync logic
+│   ├── sync-lock.ts               # Sync lock management
+│   └── __tests__/                 # Unit tests
 ├── supabase/
 │   ├── audit-log-service.ts       # Audit logging for all Notion API operations
 │   ├── uuid-mapping-service.ts    # UUID mapping persistence for new pages
-│   ├── notion-nesting-bug-mappings.ts # Nesting bug mapping helpers
-│   └── markdown-notion-sync-lock.ts # Sync lock management
+│   └── notion-nesting-bug-mappings.ts # Nesting bug mapping helpers
 ```
 
 ### Data Flow
@@ -855,6 +862,16 @@ This approach:
 - `app/server/services/trigger/markdown-notion-sync-task.ts` - Background task implementation
 - `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder
 
+### Sync Service
+
+- `app/server/services/markdown-notion-sync/` - Complete sync service module
+  - `types.ts` - Shared type definitions
+  - `sync-helpers.ts` - Utility functions (validation, sorting, formatting)
+  - `sync-operations.ts` - Core CRUD operations
+  - `sync-orchestrator.ts` - Main sync logic (4-phase processing)
+  - `sync-lock.ts` - Sync lock management
+  - `index.ts` - Public API exports
+
 ### Transformation Services
 
 - `app/server/atlas/export/export-tree-to-notion-tree.ts` - Export Tree to Notion Tree conversion
@@ -865,7 +882,6 @@ This approach:
 
 - `app/server/services/supabase/uuid-mapping-service.ts` - UUID mapping storage and lookup
 - `app/server/services/supabase/audit-log-service.ts` - Audit log storage and queries
-- `app/server/services/supabase/markdown-notion-sync-lock.ts` - Sync lock management
 - `app/server/services/notion/notion-client.ts` - Notion API client with rate limiting
 
 ### Database Schema

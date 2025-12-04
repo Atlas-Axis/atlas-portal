@@ -1,10 +1,7 @@
 'use server';
 
 import { tasks } from '@trigger.dev/sdk/v3';
-import {
-  getSyncLockStatus,
-  requestSyncStop as requestSyncStopDb,
-} from '@/app/server/services/supabase/markdown-notion-sync-lock';
+import { getSyncLockStatus, requestSyncStop as requestSyncStopDb } from '@/app/server/services/markdown-notion-sync';
 import type { MarkdownNotionSyncPayload, SyncFilters } from '@/app/server/services/trigger/markdown-notion-sync-task';
 
 // Re-export types for client use
