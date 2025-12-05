@@ -337,15 +337,6 @@ export function addInterDatabaseRelationshipProperties(
     return properties;
   }
 
-  // Workaround: Agent documents' parent relationships are not synced to Notion, so we skip them for now
-  // This is a known limitation documented in the sync feature documentation
-  if (childDatabaseName === 'Agent Scope Database') {
-    console.log(
-      `[addInterDatabaseRelationshipProperties] Skipping inter-database parent relationship for Agent Scope Database document (known limitation)`,
-    );
-    return properties;
-  }
-
   // Get the immediate parent Atlas UUID (last element in ancestry array)
   const parentAtlasUuid = ancestry[ancestry.length - 1];
 

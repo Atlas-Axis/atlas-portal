@@ -6,9 +6,14 @@
  * @see app/server/atlas/notion-database-properties-and-relationships.ts
  */
 import { describe, expect, it } from 'vitest';
+import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
-import { addParentPageRelationshipProperty, buildNotionProperties } from '../notion-property-builder';
+import {
+  addInterDatabaseRelationshipProperties,
+  addParentPageRelationshipProperty,
+  buildNotionProperties,
+} from '../notion-property-builder';
 
 // Mock UUID mappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -539,6 +544,187 @@ describe('notion-property-builder', () => {
       expect(props).toEqual({
         'Parent item': {
           relation: [{ id: 'parent-agent-456' }],
+        },
+      });
+    });
+  });
+
+  describe('addInterDatabaseRelationshipProperties', () => {
+    // Helper to create mock document
+    const createMockDoc = (uuid: string, type: string, name: string): ExportAtlasTreeBaseDocument => ({
+      uuid,
+      type: type as ExportAtlasTreeBaseDocument['type'],
+      name,
+      doc_no: 'A.1.1',
+      content: '',
+      last_modified: '',
+    });
+
+    it('returns empty object for Scopes database (root database)', () => {
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>();
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>();
+
+      const props = addInterDatabaseRelationshipProperties(
+        undefined, // No ancestry for root
+        'Scopes',
+        uuidToDocumentMap,
+        uuidToDatabase,
+        mockUuidMappings,
+      );
+
+      expect(props).toEqual({});
+    });
+
+    it('throws error for non-Scopes database without ancestry', () => {
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>();
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>();
+
+      expect(() =>
+        addInterDatabaseRelationshipProperties(
+          undefined,
+          'Sections & Primary Docs',
+          uuidToDocumentMap,
+          uuidToDatabase,
+          mockUuidMappings,
+        ),
+      ).toThrow('No ancestry provided for inter-database relationship properties for child database');
+    });
+
+    it('returns empty object when parent is in same database (internal nesting)', () => {
+      const parentUuid = 'parent-section-uuid';
+      const parentDoc = createMockDoc(parentUuid, 'Section', 'Parent Section');
+
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([[parentUuid, parentDoc]]);
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>([[parentUuid, 'Sections & Primary Docs']]);
+
+      const props = addInterDatabaseRelationshipProperties(
+        [parentUuid], // ancestry with parent in same database
+        'Sections & Primary Docs',
+        uuidToDocumentMap,
+        uuidToDatabase,
+        mockUuidMappings,
+      );
+
+      // Same database = internal nesting, handled by addParentPageRelationshipProperty
+      expect(props).toEqual({});
+    });
+
+    it('sets parent relationship for Agent Scope Database with parent in Sections & Primary Docs', () => {
+      const parentSectionUuid = 'parent-section-uuid';
+      const parentSectionNotionId = 'notion-page-id-for-section';
+      const parentDoc = createMockDoc(parentSectionUuid, 'Section', 'List Of Prime Agent Artifacts');
+
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([[parentSectionUuid, parentDoc]]);
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>([[parentSectionUuid, 'Sections & Primary Docs']]);
+
+      const uuidMappingsWithParent: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map([[parentSectionNotionId, parentSectionUuid]]),
+        atlasUUIDsToNotionPageIds: new Map([[parentSectionUuid, parentSectionNotionId]]),
+      };
+
+      const props = addInterDatabaseRelationshipProperties(
+        [parentSectionUuid], // ancestry with parent Section
+        'Agent Scope Database',
+        uuidToDocumentMap,
+        uuidToDatabase,
+        uuidMappingsWithParent,
+      );
+
+      // Should set the "Sections & Primary Docs" relationship property
+      expect(props).toEqual({
+        'Sections & Primary Docs': {
+          relation: [{ id: parentSectionNotionId }],
+        },
+      });
+    });
+
+    it('sets parent relationship for Section with parent Article', () => {
+      const parentArticleUuid = 'parent-article-uuid';
+      const parentArticleNotionId = 'notion-page-id-for-article';
+      const parentDoc = createMockDoc(parentArticleUuid, 'Article', 'Parent Article');
+
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([[parentArticleUuid, parentDoc]]);
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>([[parentArticleUuid, 'Articles']]);
+
+      const uuidMappingsWithParent: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map([[parentArticleNotionId, parentArticleUuid]]),
+        atlasUUIDsToNotionPageIds: new Map([[parentArticleUuid, parentArticleNotionId]]),
+      };
+
+      const props = addInterDatabaseRelationshipProperties(
+        [parentArticleUuid],
+        'Sections & Primary Docs',
+        uuidToDocumentMap,
+        uuidToDatabase,
+        uuidMappingsWithParent,
+      );
+
+      expect(props).toEqual({
+        'Parent Article': {
+          relation: [{ id: parentArticleNotionId }],
+        },
+      });
+    });
+
+    it('throws error when parent Notion page ID mapping is missing', () => {
+      const parentSectionUuid = 'parent-section-uuid';
+      const parentDoc = createMockDoc(parentSectionUuid, 'Section', 'Parent Section');
+
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([[parentSectionUuid, parentDoc]]);
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>([[parentSectionUuid, 'Sections & Primary Docs']]);
+
+      // Empty UUID mappings - no Notion page ID for parent
+      const emptyMappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map(),
+      };
+
+      expect(() =>
+        addInterDatabaseRelationshipProperties(
+          [parentSectionUuid],
+          'Agent Scope Database',
+          uuidToDocumentMap,
+          uuidToDatabase,
+          emptyMappings,
+        ),
+      ).toThrow(/No Notion page ID mapping found for parent Atlas UUID/);
+    });
+
+    it('uses immediate parent from ancestry (last element)', () => {
+      // Ancestry array: [grandparent, parent] where parent is last
+      const grandparentUuid = 'grandparent-scope-uuid';
+      const parentArticleUuid = 'parent-article-uuid';
+      const parentArticleNotionId = 'notion-page-id-for-article';
+
+      const grandparentDoc = createMockDoc(grandparentUuid, 'Scope', 'Grandparent Scope');
+      const parentDoc = createMockDoc(parentArticleUuid, 'Article', 'Parent Article');
+
+      const uuidToDocumentMap = new Map<string, ExportAtlasTreeBaseDocument>([
+        [grandparentUuid, grandparentDoc],
+        [parentArticleUuid, parentDoc],
+      ]);
+      const uuidToDatabase = new Map<string, AtlasDatabaseName>([
+        [grandparentUuid, 'Scopes'],
+        [parentArticleUuid, 'Articles'],
+      ]);
+
+      const uuidMappingsWithParent: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map([[parentArticleNotionId, parentArticleUuid]]),
+        atlasUUIDsToNotionPageIds: new Map([[parentArticleUuid, parentArticleNotionId]]),
+      };
+
+      const props = addInterDatabaseRelationshipProperties(
+        [grandparentUuid, parentArticleUuid], // ancestry from root to immediate parent
+        'Sections & Primary Docs',
+        uuidToDocumentMap,
+        uuidToDatabase,
+        uuidMappingsWithParent,
+      );
+
+      // Should use the immediate parent (last element = parentArticleUuid)
+      expect(props).toEqual({
+        'Parent Article': {
+          relation: [{ id: parentArticleNotionId }],
         },
       });
     });
