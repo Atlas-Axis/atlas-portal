@@ -4,14 +4,59 @@
 
 During Markdown → Notion sync, some Atlas document content is truncated due to Notion API limits on rich text arrays.
 
-## Root Cause: Notion API Limits
+## Notion API Limits on Rich Text
 
-Notion enforces two hard limits on `rich_text` arrays:
+Notion enforces strict limits on `rich_text` arrays:
 
-| Limit                  | Value   | Data Loss?                         |
-| ---------------------- | ------- | ---------------------------------- |
-| Characters per element | 2,000   | No - text split at word boundaries |
-| **Elements per array** | **100** | **Yes - content truncated**        |
+| Limit                  | Value | Current Workaround   | Data Loss?                 |
+| ---------------------- | ----- | -------------------- | -------------------------- |
+| Characters per element | 2,000 | Text splitting       | ✅ No                      |
+| Elements per array     | 100   | Merging + truncation | ❌ **Yes** (when over 100) |
+
+## Existing Workarounds (Already Implemented)
+
+**Location**: `app/server/markdown/markdown-to-rich-text.ts`
+
+### 1. Text Splitting (2000-char limit) ✅
+
+**Function**: `splitLongRichTextElements()`
+
+**How it works**:
+
+- Detects rich text elements exceeding 2,000 characters
+- Splits at word boundaries for cleaner results
+- Preserves all formatting annotations across split segments
+- Falls back to hard split at 2,000 chars if no word boundary found
+
+**Result**: ✅ No data loss - all content preserved across multiple elements
+
+### 2. Element Merging (Reduce element count) ✅
+
+**Function**: `mergeAdjacentTextElements()`
+
+**How it works**:
+
+- Identifies adjacent text elements with identical annotations
+- Merges them into single elements (if combined length ≤ 2,000)
+- Only merges text elements (not mentions or equations)
+- Only merges elements without links
+
+**Result**: ✅ Reduces element count without data loss
+
+### 3. Truncation with Marker (100-element limit) ⚠️
+
+**Function**: `limitRichTextArrayLength()`
+
+**How it works**:
+
+1. First applies element merging (workaround #2)
+2. If still over 100 elements, truncates to 99
+3. Adds visible marker: `[...content truncated due to Notion limit...]`
+4. Logs warning and adds to `ContentConversionWarning` array
+
+**Result**: ❌ **Data loss** when content exceeds 100 elements after merging
+
+## The Remaining Problem: 100-Element Limit
 
 ### Why 100 Elements Is Exceeded
 
@@ -21,16 +66,7 @@ Each formatted segment creates a separate rich text element:
 - Bold/italic/code segments
 - **Links and mentions** (one element per link)
 
-Documents with many inline links (e.g., tables with hyperlinks in each cell) can easily exceed 100 elements.
-
-## Current Handling
-
-**Location**: `app/server/markdown/markdown-to-rich-text.ts`
-
-1. **2000-char limit**: `splitLongRichTextElements()` splits text at word boundaries ✅ No data loss
-2. **100-element limit**: `limitRichTextArrayLength()` attempts to merge adjacent elements, then **truncates** if still over limit ❌ Data loss
-
-Truncation adds visible marker: `[...content truncated due to Notion limit...]`
+Documents with many inline links (e.g., tables with hyperlinks in each cell) can easily exceed 100 elements even after merging.
 
 ## Options to Prevent Truncation
 
