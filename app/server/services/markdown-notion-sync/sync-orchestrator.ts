@@ -228,6 +228,22 @@ export async function processChanges(
   if (pagesWithUnresolvedMentions.length > 0) {
     console.log(`[Sync] Phase 2.5: Updating ${pagesWithUnresolvedMentions.length} pages with placeholder mentions`);
 
+    // Log which unresolved UUIDs now have mappings
+    for (const pageInfo of pagesWithUnresolvedMentions) {
+      const resolvedCount = pageInfo.unresolvedMentionUuids.filter((uuid) =>
+        uuidMappings.atlasUUIDsToNotionPageIds.has(uuid),
+      ).length;
+      const stillUnresolved = pageInfo.unresolvedMentionUuids.filter(
+        (uuid) => !uuidMappings.atlasUUIDsToNotionPageIds.has(uuid),
+      );
+      console.log(
+        `[Sync] Phase 2.5: Page ${pageInfo.atlasUuid} - ${resolvedCount}/${pageInfo.unresolvedMentionUuids.length} mentions now have mappings`,
+      );
+      if (stillUnresolved.length > 0) {
+        console.warn(`[Sync] Phase 2.5: Still unresolved UUIDs:`, stillUnresolved);
+      }
+    }
+
     for (const pageInfo of pagesWithUnresolvedMentions) {
       // Check for stop request
       if (await onStopCheck()) {

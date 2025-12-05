@@ -474,6 +474,24 @@ export async function updatePageMentions(
     console.log(`[updatePageMentions] All mentions resolved for ${document.doc_no}`);
   }
 
+  // Debug: Log the mention page IDs in the Content property
+  const contentProp = properties['Content'] as { rich_text?: unknown[] } | undefined;
+  if (contentProp?.rich_text) {
+    const mentions = contentProp.rich_text.filter((item: unknown) => {
+      const typedItem = item as { type?: string };
+      return typedItem.type === 'mention';
+    });
+    if (mentions.length > 0) {
+      console.log(
+        `[updatePageMentions] Content has ${mentions.length} mention(s) with page IDs:`,
+        mentions.map((m: unknown) => {
+          const typedM = m as { mention?: { page?: { id?: string } } };
+          return typedM.mention?.page?.id;
+        }),
+      );
+    }
+  }
+
   try {
     const notionClient = notion();
     const response = await notionClient.pages.update({
