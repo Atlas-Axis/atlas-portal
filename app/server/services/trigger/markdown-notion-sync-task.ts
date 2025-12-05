@@ -142,16 +142,11 @@ export const markdownNotionSyncTask = task({
           skipped: result.skipped,
         });
 
-        // Release sync lock before triggering import (import has its own per-database locks)
-        if (lockAcquired) {
-          await releaseSyncLock(runId);
-          lockAcquired = false;
-          console.log(`[Markdown-Notion Sync] Lock released before import`);
-        }
-
-        // Trigger and wait for the import task
+        // Keep sync lock held during import to prevent another Markdown-to-Notion sync
+        // from starting before the complete round-trip (Markdown → Notion → Supabase) finishes.
+        // This ensures data consistency across the entire pipeline.
         // The import task uses a shared queue with concurrencyLimit: 1, so if the hourly
-        // import is running, this will automatically wait in queue
+        // import is running, this will automatically wait in queue.
         const importResult = await notionPartialAtlasImportTask.triggerAndWait({
           databases: result.affectedDatabases,
         });

@@ -85,9 +85,9 @@ This separation keeps the Trigger.dev task file focused on orchestration while t
 After the Markdown-to-Notion sync completes successfully, the task automatically triggers a Notion-to-Supabase import for only the databases that were affected by the sync:
 
 1. **Track Affected Databases**: The sync orchestrator tracks which databases had successful operations (content changes, additions, deletions, parent changes)
-2. **Release Sync Lock**: The Markdown sync lock is released before triggering import (import has its own per-database locks)
-3. **Trigger Partial Import**: Uses `triggerAndWait` to call `notion-partial-atlas-import` with the list of affected databases
-4. **Queue Management**: The partial import uses the shared `notion-import` queue with `concurrencyLimit: 1`, so if the hourly full import is running, it automatically waits
+2. **Trigger Partial Import**: Uses `triggerAndWait` to call `notion-partial-atlas-import` with the list of affected databases
+3. **Queue Management**: The partial import uses the shared `notion-import` queue with `concurrencyLimit: 1`, so if the hourly full import is running, it automatically waits
+4. **Lock Held Until Complete**: The Markdown sync lock is held throughout the entire operation (including import) to prevent data inconsistency from overlapping sync operations
 5. **UI Feedback**: The `notion_import` phase is shown in the UI while import runs
 
 This ensures changes made to Notion are immediately imported back to Supabase without waiting for the next hourly sync.

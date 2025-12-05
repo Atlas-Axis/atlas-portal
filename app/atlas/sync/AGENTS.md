@@ -857,7 +857,8 @@ After the sync completes, the task automatically triggers a Notion-to-Supabase i
 2. After all sync phases complete, the task triggers `notion-partial-atlas-import` with the affected databases
 3. The import uses a shared queue (`notion-import`) with `concurrencyLimit: 1`
 4. If the hourly full import is already running, the partial import automatically waits in queue
-5. The UI shows `notion_import` phase while import runs
+5. The Markdown sync lock is held throughout the entire operation (including import) to prevent data inconsistency
+6. The UI shows `notion_import` phase while import runs
 
 **Benefits:**
 
