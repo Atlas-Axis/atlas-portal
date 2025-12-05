@@ -1,7 +1,12 @@
 'use server';
 
 import { tasks } from '@trigger.dev/sdk/v3';
-import { getSyncLockStatus, requestSyncStop as requestSyncStopDb } from '@/app/server/services/markdown-notion-sync';
+import {
+  acquireSyncLock,
+  getSyncLockStatus,
+  releaseSyncLock,
+  requestSyncStop as requestSyncStopDb,
+} from '@/app/server/services/markdown-notion-sync';
 import type { MarkdownNotionSyncPayload, SyncFilters } from '@/app/server/services/trigger/markdown-notion-sync-task';
 
 // Re-export types for client use
@@ -11,65 +16,65 @@ export type { SyncFilters } from '@/app/server/services/trigger/markdown-notion-
  * Triggers the markdown-notion-sync background task.
  * Returns the run ID for tracking progress via realtime subscription.
  *
+ * Acquires the sync lock BEFORE triggering the task to prevent race conditions
+ * where two tasks could be triggered before either acquires the lock.
+ * The lock is acquired with a placeholder ID first, then updated with the actual
+ * Trigger.dev run ID. The task can safely re-acquire the lock for its own run ID
+ * (idempotent lock acquisition).
+ *
  * @param filters Filters to control which change types are processed
  * @returns Object with runId or error
  */
 export async function triggerMarkdownNotionSync(filters: SyncFilters): Promise<{ runId: string } | { error: string }> {
+  // Generate a placeholder run ID for initial lock acquisition
+  // The actual Trigger.dev run ID will update this after triggering
+  const placeholderRunId = `pending-${Date.now()}`;
+
   try {
-    console.log('[triggerMarkdownNotionSync] Starting sync trigger process');
-    console.log('[triggerMarkdownNotionSync] Filters:', JSON.stringify(filters, null, 2));
-
-    // Check environment variables
-    const hasTriggerKey = !!process.env.TRIGGER_SECRET_KEY;
-    console.log('[triggerMarkdownNotionSync] Environment check:');
-    console.log('  - TRIGGER_SECRET_KEY present:', hasTriggerKey);
-    console.log('  - NODE_ENV:', process.env.NODE_ENV);
-
-    if (!hasTriggerKey) {
-      console.error('[triggerMarkdownNotionSync] WARNING: TRIGGER_SECRET_KEY not found in environment');
-    }
-
-    // Check if sync is already running
-    console.log('[triggerMarkdownNotionSync] Checking for existing sync lock...');
+    // Check if sync is already running (informational check before attempting lock)
     const lockStatus = await getSyncLockStatus();
-    console.log('[triggerMarkdownNotionSync] Lock status:', {
-      isLocked: lockStatus.isLocked,
-      triggerRunId: lockStatus.triggerRunId,
-      lockedAt: lockStatus.lockedAt,
-      stopRequested: lockStatus.stopRequested,
-    });
-
     if (lockStatus.isLocked && lockStatus.triggerRunId) {
-      console.log('[triggerMarkdownNotionSync] Sync already in progress, returning error');
       return {
         error: `A sync is already in progress (run ID: ${lockStatus.triggerRunId}). Please wait for it to complete or stop it first.`,
       };
     }
 
+    // Acquire lock BEFORE triggering the task to prevent race conditions
+    // This ensures only one task can be triggered at a time
+    const lockAcquired = await acquireSyncLock(placeholderRunId);
+    if (!lockAcquired) {
+      return {
+        error: 'Another sync is being started. Please wait a moment and try again.',
+      };
+    }
+
     // Trigger the background task
-    console.log('[triggerMarkdownNotionSync] Triggering task "markdown-notion-sync"...');
     const payload: MarkdownNotionSyncPayload = { filters };
-    console.log('[triggerMarkdownNotionSync] Payload:', JSON.stringify(payload, null, 2));
+    let handle;
+    try {
+      handle = await tasks.trigger<
+        typeof import('@/app/server/services/trigger/markdown-notion-sync-task').markdownNotionSyncTask
+      >('markdown-notion-sync', payload);
+    } catch (triggerError) {
+      // If triggering fails, release the lock we acquired
+      await releaseSyncLock(placeholderRunId);
+      throw triggerError;
+    }
 
-    const handle = await tasks.trigger<
-      typeof import('@/app/server/services/trigger/markdown-notion-sync-task').markdownNotionSyncTask
-    >('markdown-notion-sync', payload);
-
-    console.log('[triggerMarkdownNotionSync] Task triggered successfully!');
-    console.log('[triggerMarkdownNotionSync] Handle:', {
-      id: handle.id,
-      publicAccessToken: handle.publicAccessToken ? '[PRESENT]' : '[MISSING]',
-    });
+    // Update the lock with the actual Trigger.dev run ID
+    // The task will also call acquireSyncLock with its run ID, which will succeed
+    // because the lock function allows re-acquisition by the same run ID
+    await releaseSyncLock(placeholderRunId);
+    const reacquired = await acquireSyncLock(handle.id);
+    if (!reacquired) {
+      // This shouldn't happen, but handle it gracefully
+      console.warn('[triggerMarkdownNotionSync] Failed to update lock with actual run ID');
+    }
 
     return { runId: handle.id };
   } catch (error) {
     const err = error as Error;
-    console.error('[triggerMarkdownNotionSync] ERROR triggering task:', err);
-    console.error('[triggerMarkdownNotionSync] Error details:', {
-      name: err.name,
-      message: err.message,
-      stack: err.stack,
-    });
+    console.error('[triggerMarkdownNotionSync] Failed to trigger task:', err.message);
     return { error: err.message || 'Failed to start sync' };
   }
 }
@@ -98,16 +103,7 @@ export async function getSyncStatus(): Promise<{
   triggerRunId: string | null;
   stopRequested: boolean;
 }> {
-  console.log('[getSyncStatus] Fetching sync lock status...');
   const status = await getSyncLockStatus();
-  console.log('[getSyncStatus] Status fetched:', {
-    isLocked: status.isLocked,
-    lockedAt: status.lockedAt?.toISOString() ?? null,
-    triggerRunId: status.triggerRunId,
-    stopRequested: status.stopRequested,
-    expiresAt: status.expiresAt?.toISOString() ?? null,
-  });
-
   return {
     isLocked: status.isLocked,
     lockedAt: status.lockedAt?.toISOString() ?? null,

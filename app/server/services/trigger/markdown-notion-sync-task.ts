@@ -56,53 +56,25 @@ export const markdownNotionSyncTask = task({
   },
   machine: 'small-1x',
   run: async (payload: MarkdownNotionSyncPayload, { ctx }) => {
-    console.log('='.repeat(80));
-    console.log('[Markdown-Notion Sync Task] TASK EXECUTION STARTED');
-    console.log('='.repeat(80));
-    console.log('[Task] Run ID:', ctx.run.id);
-    console.log('[Task] Task ID:', ctx.task.id);
-    console.log('[Task] Environment:', ctx.environment.type);
-    console.log('[Task] Payload:', JSON.stringify(payload, null, 2));
-    console.log('[Task] Context details:', {
-      attemptNumber: ctx.attempt.number,
-      machine: ctx.machine,
-    });
-
     const runId = ctx.run.id;
     let lockAcquired = false;
 
     try {
-      console.log('[Task] Initializing metadata...');
       // Initialize metadata
       updateMetadata({ phase: 'initializing', completed: 0, total: 0, currentDoc: 'Acquiring lock...' });
 
       // Acquire sync lock
-      console.log('[Task] Attempting to acquire sync lock...');
       lockAcquired = await acquireSyncLock(runId);
-      console.log('[Task] Lock acquisition result:', lockAcquired);
 
       if (!lockAcquired) {
-        console.error('[Task] Failed to acquire lock - another sync is in progress');
         throw new Error('Another sync is already in progress. Please wait for it to complete.');
       }
 
-      console.log(`[Markdown-Notion Sync] Lock acquired successfully, starting sync...`);
+      console.log(`[Markdown-Notion Sync] Lock acquired, starting sync...`);
       updateMetadata({ currentDoc: 'Loading data...' });
 
       // Load diff result and UUID mappings
-      console.log('[Task] Loading diff result and UUID mappings...');
       const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
-      console.log('[Task] Data loaded successfully');
-      console.log('[Task] Diff result changes:', {
-        added: diffResult.changes.added.length,
-        deleted: diffResult.changes.deleted.length,
-        changed: diffResult.changes.changed.length,
-        parent_changed: diffResult.changes.parent_changed.length,
-      });
-      console.log('[Task] UUID mappings loaded:', {
-        notionToAtlas: uuidMappings.notionPageIDsToAtlasUUIDs.size,
-        atlasToNotion: uuidMappings.atlasUUIDsToNotionPageIds.size,
-      });
 
       // Calculate total changes
       const filteredChanges = {
@@ -118,16 +90,7 @@ export const markdownNotionSyncTask = task({
         filteredChanges.deleted.length +
         filteredChanges.parent_changed.length;
 
-      console.log('[Task] Filtered changes:', {
-        added: filteredChanges.added.length,
-        deleted: filteredChanges.deleted.length,
-        changed: filteredChanges.changed.length,
-        parent_changed: filteredChanges.parent_changed.length,
-        total,
-      });
-
       if (total === 0) {
-        console.log('[Task] No changes to process, completing immediately');
         updateMetadata({ phase: 'completed', total: 0, completed: 0, currentDoc: null });
         return { succeeded: 0, failed: 0, skipped: 0, stoppedEarly: false };
       }
@@ -139,7 +102,6 @@ export const markdownNotionSyncTask = task({
       updateMetadata({ total, currentDoc: 'Starting sync...' });
 
       // Process all changes using the orchestrator
-      console.log('[Task] Starting to process changes...');
       const result = await processChanges(
         diffResult,
         uuidMappings,
@@ -147,20 +109,17 @@ export const markdownNotionSyncTask = task({
         syncBatchId,
         // Progress callback
         (progressData) => {
-          console.log('[Task] Progress update:', progressData);
           updateMetadata(progressData);
         },
         // Stop check callback
         async () => {
           const stopRequested = await isStopRequested();
           if (stopRequested) {
-            console.log('[Task] Stop requested by user');
             updateMetadata({ phase: 'stopped', currentDoc: 'Stop requested, finishing...' });
           }
           return stopRequested;
         },
       );
-      console.log('[Task] Processing complete:', result);
 
       // Update final metadata
       updateMetadata({
@@ -184,29 +143,15 @@ export const markdownNotionSyncTask = task({
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('='.repeat(80));
-      console.error(`[Markdown-Notion Sync] TASK FAILED`);
-      console.error('='.repeat(80));
-      console.error(`[Task] Error:`, error);
-      console.error('[Task] Error details:', {
-        name: error instanceof Error ? error.name : 'Unknown',
-        message: errorMessage,
-        stack: error instanceof Error ? error.stack : undefined,
-      });
+      console.error(`[Markdown-Notion Sync] Task failed:`, errorMessage);
       updateMetadata({ phase: 'stopped', currentDoc: `Error: ${errorMessage}` });
       throw error;
     } finally {
       // Always release lock
       if (lockAcquired) {
-        console.log('[Task] Releasing sync lock...');
         await releaseSyncLock(runId);
-        console.log(`[Markdown-Notion Sync] Lock released successfully`);
-      } else {
-        console.log('[Task] No lock to release (lock was not acquired)');
+        console.log(`[Markdown-Notion Sync] Lock released`);
       }
-      console.log('='.repeat(80));
-      console.log('[Markdown-Notion Sync Task] TASK EXECUTION FINISHED');
-      console.log('='.repeat(80));
     }
   },
 });

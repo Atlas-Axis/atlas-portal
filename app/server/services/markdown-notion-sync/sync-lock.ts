@@ -21,32 +21,18 @@ export interface SyncLockStatus {
  * Attempt to acquire the sync lock.
  * Returns true if lock was acquired, false if already locked by another process.
  * Automatically releases stale locks (older than LOCK_EXPIRY_HOURS).
+ * Also succeeds if the lock is already held by the same run ID (idempotent).
  *
  * @param triggerRunId The Trigger.dev run ID for progress tracking
  */
 export async function acquireSyncLock(triggerRunId: string): Promise<boolean> {
-  console.log('[SyncLock] Attempting to acquire lock...');
-  console.log('[SyncLock] Trigger Run ID:', triggerRunId);
-
   const now = new Date();
   const expiryThreshold = new Date(now.getTime() - LOCK_EXPIRY_HOURS * 60 * 60 * 1000);
 
-  console.log('[SyncLock] Current time:', now.toISOString());
-  console.log('[SyncLock] Expiry threshold (locks older than this will be released):', expiryThreshold.toISOString());
-  console.log('[SyncLock] Lock expiry hours:', LOCK_EXPIRY_HOURS);
-
-  // Get current lock status first for debugging
-  const currentStatus = await getSyncLockStatus();
-  console.log('[SyncLock] Current lock status before acquisition:', {
-    isLocked: currentStatus.isLocked,
-    lockedAt: currentStatus.lockedAt?.toISOString() ?? null,
-    triggerRunId: currentStatus.triggerRunId,
-    stopRequested: currentStatus.stopRequested,
-    isExpired: currentStatus.lockedAt ? isLockExpired(currentStatus.lockedAt) : false,
-  });
-
-  // Try to acquire lock - only succeeds if not locked or lock is expired
-  console.log('[SyncLock] Executing UPDATE query to acquire lock...');
+  // Try to acquire lock - succeeds if:
+  // 1. Not locked, OR
+  // 2. Lock is expired (stale), OR
+  // 3. Lock is already held by the same run ID (idempotent re-acquisition)
   const { data, error } = await supabase()
     .from('markdown_notion_sync_lock')
     .update({
@@ -56,24 +42,18 @@ export async function acquireSyncLock(triggerRunId: string): Promise<boolean> {
       stop_requested: false,
     })
     .eq('id', 1)
-    .or(`is_locked.eq.false,locked_at.lt.${expiryThreshold.toISOString()}`)
+    .or(`is_locked.eq.false,locked_at.lt.${expiryThreshold.toISOString()},trigger_run_id.eq.${triggerRunId}`)
     .select()
     .single();
 
   if (error) {
     // PGRST116 means no rows matched (lock is held by another process)
     if (error.code === 'PGRST116') {
-      console.error('[SyncLock] Lock acquisition FAILED - lock is held by another process');
-      console.error('[SyncLock] Error code:', error.code);
-      console.error('[SyncLock] Error:', error);
       return false;
     }
-    console.error('[SyncLock] Lock acquisition FAILED with unexpected error:', error);
     throw new Error(`Failed to acquire sync lock: ${error.message}`);
   }
 
-  console.log('[SyncLock] Lock acquisition SUCCESSFUL');
-  console.log('[SyncLock] Lock data:', data);
   return data !== null;
 }
 
@@ -84,18 +64,6 @@ export async function acquireSyncLock(triggerRunId: string): Promise<boolean> {
  * @param triggerRunId The Trigger.dev run ID that holds the lock (optional for force release)
  */
 export async function releaseSyncLock(triggerRunId?: string): Promise<void> {
-  console.log('[SyncLock] Releasing lock...');
-  console.log('[SyncLock] Trigger Run ID (for verification):', triggerRunId ?? 'FORCE RELEASE');
-
-  // Get current status before release
-  const currentStatus = await getSyncLockStatus();
-  console.log('[SyncLock] Current lock status before release:', {
-    isLocked: currentStatus.isLocked,
-    lockedAt: currentStatus.lockedAt?.toISOString() ?? null,
-    triggerRunId: currentStatus.triggerRunId,
-    stopRequested: currentStatus.stopRequested,
-  });
-
   let query = supabase()
     .from('markdown_notion_sync_lock')
     .update({
@@ -108,20 +76,14 @@ export async function releaseSyncLock(triggerRunId?: string): Promise<void> {
 
   // If triggerRunId provided, only release if it matches (safety check)
   if (triggerRunId) {
-    console.log('[SyncLock] Adding trigger_run_id match condition for safety');
     query = query.eq('trigger_run_id', triggerRunId);
-  } else {
-    console.log('[SyncLock] WARNING: Force releasing lock without run ID verification');
   }
 
   const { error } = await query;
 
   if (error) {
-    console.error('[SyncLock] Lock release FAILED:', error);
     throw new Error(`Failed to release sync lock: ${error.message}`);
   }
-
-  console.log('[SyncLock] Lock released successfully');
 }
 
 /**
@@ -129,8 +91,6 @@ export async function releaseSyncLock(triggerRunId?: string): Promise<void> {
  * The running task should check this flag periodically and stop gracefully.
  */
 export async function requestSyncStop(): Promise<void> {
-  console.log('[SyncLock] Requesting sync stop...');
-
   const { error } = await supabase()
     .from('markdown_notion_sync_lock')
     .update({ stop_requested: true })
@@ -138,11 +98,8 @@ export async function requestSyncStop(): Promise<void> {
     .eq('is_locked', true);
 
   if (error) {
-    console.error('[SyncLock] Failed to request stop:', error);
     throw new Error(`Failed to request sync stop: ${error.message}`);
   }
-
-  console.log('[SyncLock] Stop request recorded successfully');
 }
 
 /**
@@ -156,16 +113,10 @@ export async function isStopRequested(): Promise<boolean> {
     .single();
 
   if (error) {
-    console.error('[SyncLock] Failed to check stop request:', error);
     throw new Error(`Failed to check stop request: ${error.message}`);
   }
 
-  const stopRequested = data?.stop_requested ?? false;
-  if (stopRequested) {
-    console.log('[SyncLock] Stop has been requested');
-  }
-
-  return stopRequested;
+  return data?.stop_requested ?? false;
 }
 
 /**
@@ -181,7 +132,6 @@ export async function getSyncLockStatus(): Promise<SyncLockStatus & { expiresAt:
   if (error) {
     // If row doesn't exist, return unlocked status
     if (error.code === 'PGRST116') {
-      console.log('[SyncLock] Lock row does not exist, returning unlocked status');
       return {
         isLocked: false,
         lockedAt: null,
@@ -190,7 +140,6 @@ export async function getSyncLockStatus(): Promise<SyncLockStatus & { expiresAt:
         expiresAt: null,
       };
     }
-    console.error('[SyncLock] Failed to get lock status:', error);
     throw new Error(`Failed to get sync lock status: ${error.message}`);
   }
 
