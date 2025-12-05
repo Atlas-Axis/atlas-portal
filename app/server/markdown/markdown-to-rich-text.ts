@@ -4,6 +4,8 @@
   - Converts Markdown to Notion's Rich Text format
   - Handles multiline inline code by preserving line breaks
   - Output is Notion Rich Text format for single blocks
+  - Automatically splits text exceeding Notion's 2000-character limit per element
+  - Automatically limits array to 100 elements (Notion API limit) by merging and truncating
 
   Example usage:
   ```ts
@@ -17,6 +19,221 @@
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { UuidMappings } from '../atlas/load-uuid-mapping';
 import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './notion-types';
+
+/**
+ * Represents a warning generated during content conversion.
+ * These warnings indicate potential data loss or issues that should be surfaced to users.
+ */
+export interface ContentConversionWarning {
+  type: 'truncation' | 'missing_mapping';
+  message: string;
+  /** For truncation warnings: original element count */
+  originalCount?: number;
+  /** For truncation warnings: truncated element count */
+  truncatedTo?: number;
+  /** For missing_mapping warnings: the Atlas UUID that had no mapping */
+  atlasUuid?: string;
+}
+
+/**
+ * Maximum character length for a single Notion rich text element's text.content field.
+ * Notion API rejects requests where any rich text element exceeds this limit.
+ */
+export const NOTION_RICH_TEXT_MAX_LENGTH = 2000;
+
+/**
+ * Maximum number of elements in a rich_text array.
+ * Notion API rejects requests where the array exceeds this limit.
+ */
+export const NOTION_RICH_TEXT_MAX_ELEMENTS = 100;
+
+/**
+ * Splits text into chunks that respect the maximum length limit.
+ * Prefers splitting at word boundaries for cleaner results.
+ * Preserves all content exactly - no characters are lost during splitting.
+ *
+ * @param text - The text to split
+ * @param maxLength - Maximum length per chunk
+ * @returns Array of text chunks
+ */
+function splitTextIntoChunks(text: string, maxLength: number): string[] {
+  const chunks: string[] = [];
+  let remaining = text;
+
+  while (remaining.length > maxLength) {
+    // Try to split at word boundary (space)
+    // Use maxLength - 1 so that when we include the space (+1), total doesn't exceed maxLength
+    const splitIndex = remaining.lastIndexOf(' ', maxLength - 1);
+    if (splitIndex <= 0) {
+      // No word boundary found within limit, split at max length
+      // Preserve all content exactly
+      chunks.push(remaining.slice(0, maxLength));
+      remaining = remaining.slice(maxLength);
+    } else {
+      // Split at space - include everything up to and including the space
+      // to preserve all content (the space stays at the end of this chunk)
+      chunks.push(remaining.slice(0, splitIndex + 1));
+      remaining = remaining.slice(splitIndex + 1);
+    }
+  }
+
+  if (remaining) {
+    chunks.push(remaining);
+  }
+
+  return chunks;
+}
+
+/**
+ * Splits rich text elements that exceed Notion's 2000-character limit.
+ * Only splits text elements; mentions and equations are passed through unchanged.
+ * Preserves annotations for each split segment.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @returns Array of rich text elements with long texts split into multiple elements
+ */
+function splitLongRichTextElements(richText: NotionRichText[]): NotionRichText[] {
+  return richText.flatMap((element) => {
+    // Only split text elements (not mentions or equations)
+    if (element.type !== 'text' || !element.text?.content) {
+      return [element];
+    }
+
+    const content = element.text.content;
+    if (content.length <= NOTION_RICH_TEXT_MAX_LENGTH) {
+      return [element];
+    }
+
+    // Split into chunks, preferring word boundaries
+    const chunks = splitTextIntoChunks(content, NOTION_RICH_TEXT_MAX_LENGTH);
+
+    // Create new rich text elements for each chunk with same annotations and link
+    return chunks.map((chunk) => ({
+      ...element,
+      text: { ...element.text, content: chunk },
+      plain_text: chunk,
+    }));
+  });
+}
+
+/**
+ * Checks if two annotations objects are equivalent.
+ */
+function annotationsAreEqual(a: NotionAnnotations, b: NotionAnnotations): boolean {
+  return (
+    (a.bold || false) === (b.bold || false) &&
+    (a.italic || false) === (b.italic || false) &&
+    (a.strikethrough || false) === (b.strikethrough || false) &&
+    (a.underline || false) === (b.underline || false) &&
+    (a.code || false) === (b.code || false) &&
+    (a.color || 'default') === (b.color || 'default')
+  );
+}
+
+/**
+ * Merges adjacent text elements that have identical annotations and no links.
+ * This reduces the total element count while preserving all content and formatting.
+ * Only merges 'text' type elements; mentions and equations are never merged.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @returns Array with adjacent compatible text elements merged
+ */
+function mergeAdjacentTextElements(richText: NotionRichText[]): NotionRichText[] {
+  if (richText.length <= 1) return richText;
+
+  const merged: NotionRichText[] = [];
+
+  for (const element of richText) {
+    const lastElement = merged[merged.length - 1];
+
+    // Can only merge if:
+    // 1. Both are text type (not mentions or equations)
+    // 2. Neither has a link (href is null)
+    // 3. Both have annotations and they are identical
+    // 4. Combined length doesn't exceed max
+    if (
+      lastElement &&
+      lastElement.type === 'text' &&
+      element.type === 'text' &&
+      lastElement.href === null &&
+      element.href === null &&
+      lastElement.text?.link === null &&
+      element.text?.link === null &&
+      lastElement.annotations &&
+      element.annotations &&
+      annotationsAreEqual(lastElement.annotations, element.annotations) &&
+      (lastElement.text?.content || '').length + (element.text?.content || '').length <= NOTION_RICH_TEXT_MAX_LENGTH
+    ) {
+      // Merge: append content to last element
+      const combinedContent = (lastElement.text?.content || '') + (element.text?.content || '');
+      lastElement.text = { content: combinedContent, link: null };
+      lastElement.plain_text = combinedContent;
+    } else {
+      // Cannot merge, add as new element
+      merged.push(element);
+    }
+  }
+
+  return merged;
+}
+
+/**
+ * Limits the rich text array to Notion's maximum of 100 elements.
+ * First attempts to merge adjacent elements to reduce count.
+ * If still over limit, truncates and adds a warning marker.
+ *
+ * @param richText - Array of Notion rich text elements
+ * @param warnings - Optional array to collect truncation warnings
+ * @returns Array limited to NOTION_RICH_TEXT_MAX_ELEMENTS elements
+ */
+function limitRichTextArrayLength(richText: NotionRichText[], warnings?: ContentConversionWarning[]): NotionRichText[] {
+  // First, try to reduce count by merging adjacent compatible elements
+  let result = mergeAdjacentTextElements(richText);
+
+  // If still under limit, we're done
+  if (result.length <= NOTION_RICH_TEXT_MAX_ELEMENTS) {
+    return result;
+  }
+
+  // Still over limit - need to truncate
+  // Reserve last element for truncation marker
+  const maxElements = NOTION_RICH_TEXT_MAX_ELEMENTS - 1;
+  const originalCount = result.length;
+
+  const warningMessage = `Rich text array has ${originalCount} elements, truncating to ${NOTION_RICH_TEXT_MAX_ELEMENTS}. Content will be lost.`;
+  console.warn(`[markdown-to-rich-text] ${warningMessage}`);
+
+  // Add warning to collector if provided
+  if (warnings) {
+    warnings.push({
+      type: 'truncation',
+      message: warningMessage,
+      originalCount,
+      truncatedTo: NOTION_RICH_TEXT_MAX_ELEMENTS,
+    });
+  }
+
+  // Take first maxElements and add truncation marker
+  result = result.slice(0, maxElements);
+
+  // Add truncation marker
+  result.push({
+    type: 'text',
+    text: { content: ' [...content truncated due to Notion limit...]', link: null },
+    plain_text: ' [...content truncated due to Notion limit...]',
+    href: null,
+    annotations: {
+      bold: false,
+      italic: true,
+      strikethrough: false,
+      underline: false,
+      code: false,
+      color: 'default',
+    },
+  });
+
+  return result;
+}
 
 // Simple markdown parser - we'll implement a basic one for now
 // In a more complex environment, we might want to use a library like 'remark' or 'marked'
@@ -47,10 +264,15 @@ const INLINE_PATTERNS = [
  *
  * @param text - The markdown text to parse
  * @param uuidMappings - Optional UUID mappings for converting Atlas UUIDs to Notion URLs
+ * @param warnings - Optional array to collect warnings (e.g., missing UUID mappings)
  * @returns Array of Notion Rich Text objects
  * @throws {Error} If text contains invalid markdown syntax
  */
-function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRichText[] {
+function parseInlineMarkdown(
+  text: string,
+  uuidMappings: UuidMappings,
+  warnings?: ContentConversionWarning[],
+): NotionRichText[] {
   // Input validation
   if (typeof text !== 'string') {
     throw new Error('Text must be a string');
@@ -154,6 +376,11 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
 
     // Handle equation type first - equations need default annotations to match Notion API
     if (match.type === 'equation') {
+      // Skip empty equations - Notion API rejects them
+      if (!match.content) {
+        lastEnd = match.end;
+        continue;
+      }
       richText.push({
         type: 'equation',
         equation: { expression: match.content },
@@ -206,36 +433,69 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
       const isMention = isUUIDFormat;
 
       if (isMention) {
-        // This is a mention - convert UUID back to Notion URL if mappings are provided
-        let mentionUrl = null;
-        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!);
-        if (!notionPageID) {
-          console.warn(`No mapping found for mention UUID: ${match.url}`);
-        } else {
-          // Convert back to Notion URL if mapping exists
-          mentionUrl = `https://www.notion.so/${uuidToNoHyphens(notionPageID)}`;
-        }
+        // This is a mention - convert Atlas UUID to Notion page ID
+        const atlasUuid = match.url!;
+        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(atlasUuid);
 
-        // Create mention object with proper Notion URL
-        richText.push({
-          type: 'mention',
-          mention: {
-            page: {
-              id: uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!) || match.url!,
+        if (!notionPageID) {
+          // No mapping found - create mention with Atlas UUID as placeholder
+          // This allows post-processing to update the mention once the page is created
+          console.warn(`No mapping found for mention UUID: ${atlasUuid} - creating placeholder mention`);
+
+          // Track this missing mapping for post-processing
+          if (warnings) {
+            warnings.push({
+              type: 'missing_mapping',
+              message: `No Notion page ID mapping found for Atlas UUID: ${atlasUuid}`,
+              atlasUuid,
+            });
+          }
+
+          // Create mention with Atlas UUID as placeholder page ID
+          // Notion accepts any UUID format, even for non-existent pages
+          const placeholderUrl = `https://www.notion.so/${uuidToNoHyphens(atlasUuid)}`;
+          richText.push({
+            type: 'mention',
+            mention: {
+              page: {
+                id: atlasUuid,
+              },
+              type: 'page',
             },
-            type: 'page',
-          },
-          plain_text: linkContent,
-          href: mentionUrl || null, // Use the converted Notion URL for the href, default to null
-          annotations: {
-            bold: annotations.bold || false,
-            code: annotations.code || false,
-            color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
-            italic: annotations.italic || false,
-            underline: annotations.underline || false,
-            strikethrough: annotations.strikethrough || false,
-          },
-        });
+            plain_text: linkContent,
+            href: placeholderUrl,
+            annotations: {
+              bold: annotations.bold || false,
+              code: annotations.code || false,
+              color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
+              italic: annotations.italic || false,
+              underline: annotations.underline || false,
+              strikethrough: annotations.strikethrough || false,
+            },
+          });
+        } else {
+          // Mapping exists - create proper mention with Notion page ID
+          const mentionUrl = `https://www.notion.so/${uuidToNoHyphens(notionPageID)}`;
+          richText.push({
+            type: 'mention',
+            mention: {
+              page: {
+                id: notionPageID,
+              },
+              type: 'page',
+            },
+            plain_text: linkContent,
+            href: mentionUrl,
+            annotations: {
+              bold: annotations.bold || false,
+              code: annotations.code || false,
+              color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
+              italic: annotations.italic || false,
+              underline: annotations.underline || false,
+              strikethrough: annotations.strikethrough || false,
+            },
+          });
+        }
       } else {
         // This is an external link - use createRichText for consistent annotation handling
         richText.push(
@@ -309,10 +569,15 @@ function createRichText(options: CreateRichTextOptions): NotionRichText {
  *
  * @param markdown - The markdown text to convert
  * @param uuidMappings - Optional UUID mappings for converting Atlas UUIDs to Notion URLs
+ * @param warnings - Optional array to collect warnings (e.g., truncation warnings)
  * @returns Array of Notion Rich Text objects
  * @throws {Error} If markdown is invalid or parsing fails
  */
-export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: UuidMappings): NotionRichText[] {
+export function convertMarkdownToNotionRichText(
+  markdown: string,
+  uuidMappings: UuidMappings,
+  warnings?: ContentConversionWarning[],
+): NotionRichText[] {
   try {
     // Return empty array for empty input
     if (!markdown || markdown.trim() === '') {
@@ -383,7 +648,7 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
           }
 
           // Process the multiline content as one block
-          const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings);
+          const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings, warnings);
 
           // Round-trip compatibility: Embed newline in the last text object
           // This prevents creating separate newline-only elements and matches Notion's structure
@@ -411,7 +676,7 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
           i = j + 1;
         } else {
           // Regular line, process normally
-          const lineRichText = parseInlineMarkdown(line, uuidMappings);
+          const lineRichText = parseInlineMarkdown(line, uuidMappings, warnings);
 
           // Round-trip compatibility: Embed newline in the last text object
           // This prevents creating separate newline-only elements and matches Notion's structure
@@ -439,10 +704,15 @@ export function convertMarkdownToNotionRichText(markdown: string, uuidMappings: 
         }
       }
 
-      return richText;
+      // Apply Notion API limits: split long elements, then limit array length
+      return limitRichTextArrayLength(splitLongRichTextElements(richText), warnings);
     } else {
       // For regular content without multiline inline code, process the entire text as one block
-      return parseInlineMarkdown(normalizedMarkdown, uuidMappings);
+      // Apply Notion API limits: split long elements, then limit array length
+      return limitRichTextArrayLength(
+        splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings, warnings)),
+        warnings,
+      );
     }
   } catch (error) {
     throw new Error(

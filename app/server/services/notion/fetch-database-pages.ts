@@ -4,6 +4,7 @@ import { ATLAS_DATABASES, ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/const
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { NOTION_DATABASE_FILTERS } from '@/app/server/services/notion/notion-master-status-filters';
 import { DEBUG_LOGGING } from '@/app/shared/utils/is-debug-logging-enabled';
+import { isUsingDevNotionIds } from '@/app/shared/utils/is-using-dev-notion-ids';
 import { hasCachedData, loadCachedDatabasePages, saveCachedDatabasePages } from './local-file-cache';
 import { notion } from './notion-client';
 
@@ -158,7 +159,7 @@ export async function fetchNotionDatabasePages({
       database_id: notionDatabaseId,
       page_size: 100,
       start_cursor: cursor,
-      filter: NOTION_DATABASE_FILTERS,
+      filter: isUsingDevNotionIds() ? undefined : NOTION_DATABASE_FILTERS,
     });
 
     if (DEBUG_LOGGING()) {

@@ -6,6 +6,8 @@
  *
  * @see ATLAS_MARKDOWN_GITHUB_RAW_URL in constants.ts
  */
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { ATLAS_MARKDOWN_GITHUB_API_URL, ATLAS_MARKDOWN_GITHUB_RAW_URL } from './constants';
 
 export interface AtlasMarkdownFromGitHub {
@@ -110,4 +112,39 @@ export async function loadAtlasMarkdownFromGitHub(): Promise<AtlasMarkdownFromGi
     content,
     ...metadata,
   };
+}
+
+/**
+ * Loads Atlas markdown for sync operations.
+ *
+ * In local development (NODE_ENV !== 'production'), tries to use truncated-atlas.md
+ * if it exists, otherwise falls back to GitHub.
+ *
+ * In production, always fetches from GitHub.
+ *
+ * The truncated file is used for faster local testing of:
+ * - Markdown → Notion sync
+ * - Notion → Supabase import
+ *
+ * @returns The markdown content as a string
+ * @throws Error if GitHub fetch fails and no local file is available
+ */
+export async function loadAtlasMarkdownForSync(): Promise<string> {
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  if (!isProduction) {
+    // Local development: try to load truncated file
+    const truncatedPath = path.join(process.cwd(), 'exported-atlas', 'truncated-atlas.md');
+    try {
+      const markdown = await fs.readFile(truncatedPath, 'utf8');
+      console.log(`[loadAtlasMarkdownForSync] Using local truncated Atlas file: ${truncatedPath}`);
+      return markdown;
+    } catch (err) {
+      console.warn(`[loadAtlasMarkdownForSync] Truncated file not found (${truncatedPath}), falling back to GitHub`);
+    }
+  }
+
+  // Production or fallback: fetch from GitHub
+  console.log('[loadAtlasMarkdownForSync] Fetching Atlas markdown from GitHub');
+  return fetchAtlasMarkdownContent();
 }

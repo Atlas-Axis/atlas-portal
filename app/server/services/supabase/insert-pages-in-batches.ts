@@ -76,15 +76,61 @@ export async function upsertPagesInBatches(
  * Insert UUID mappings into Supabase in batches for each Notion page
  * Generates a new random UUID (v4) for each page and creates mapping entries
  * Uses internal batching with 500 items per iteration
+ *
+ * Skips pages that already have UUID mappings (e.g., created by Markdown→Notion sync)
+ * to ensure both workflows are compatible.
  */
 async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<void> {
   const totalPages = pages.length;
-  const batchSize = 500;
+  // Use smaller batch size for queries (URI length limit) vs inserts
+  const queryBatchSize = 100; // ~3600 chars for UUIDs, safe for URI
+  const insertBatchSize = 500;
 
-  for (let i = 0; i < totalPages; i += batchSize) {
-    const batch = pages.slice(i, i + batchSize);
-    const batchNumber = Math.floor(i / batchSize) + 1;
-    const totalBatches = Math.ceil(totalPages / batchSize);
+  // Get all Notion page IDs from the pages
+  const notionPageIds = pages.map((p) => p.notion_page_id);
+
+  // Query existing mappings in batches to avoid URI too long errors
+  const existingPageIds = new Set<string>();
+  const queryBatches = Math.ceil(notionPageIds.length / queryBatchSize);
+
+  for (let i = 0; i < notionPageIds.length; i += queryBatchSize) {
+    const batchIds = notionPageIds.slice(i, i + queryBatchSize);
+    const batchNumber = Math.floor(i / queryBatchSize) + 1;
+
+    console.log(`  🔍 Checking existing mappings batch ${batchNumber}/${queryBatches} (${batchIds.length} IDs)...`);
+
+    const { data: existingMappings, error: queryError } = await supabase()
+      .from('uuid_mapping')
+      .select('notion_page_id')
+      .in('notion_page_id', batchIds);
+
+    if (queryError) {
+      throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
+    }
+
+    // Add found IDs to the set
+    existingMappings?.forEach((m) => existingPageIds.add(m.notion_page_id));
+  }
+
+  // Filter to only pages that need new mappings
+  const pagesToMap = pages.filter((p) => !existingPageIds.has(p.notion_page_id));
+
+  if (existingPageIds.size > 0) {
+    console.log(`  ℹ️ Skipping ${existingPageIds.size} pages with existing UUID mappings`);
+  }
+
+  if (pagesToMap.length === 0) {
+    console.log(`  ✓ All ${totalPages} pages already have UUID mappings, nothing to create`);
+    return;
+  }
+
+  // Continue with batched insert for remaining pages
+  const totalPagesToMap = pagesToMap.length;
+
+  for (let i = 0; i < totalPagesToMap; i += insertBatchSize) {
+    const batch = pagesToMap.slice(i, i + insertBatchSize);
+    const batchNumber = Math.floor(i / insertBatchSize) + 1;
+    const totalBatches = Math.ceil(totalPagesToMap / insertBatchSize);
 
     console.log(`  🔄 UUID mapping batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`);
 

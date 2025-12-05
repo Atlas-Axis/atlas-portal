@@ -7,7 +7,7 @@ The Atlas data pipeline is a comprehensive system that manages the complete life
 **Two Main Workflows:**
 
 1. **Notion → Supabase → Markdown**: Import Atlas documents from Notion databases, store them in Supabase with full version history, build hierarchical tree structures, and export to markdown/JSON formats
-2. **Markdown → Notion** [PLANNED]: Parse externally-edited Atlas markdown file, validate them, and sync changes back to Notion databases
+2. **Markdown → Notion**: Parse externally-edited Atlas markdown file, validate them, and sync changes back to Notion databases
 
 The pipeline handles complex transformations, relationship mappings, workarounds for platform limitations, and ensures data consistency across all systems.
 
@@ -88,7 +88,7 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 
 
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     MARKDOWN → NOTION [PLANNED]                     │
+│                  MARKDOWN → NOTION                                  │
 └─────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────┐
@@ -118,7 +118,6 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 ┌─────────────────────────────────────┐
 │  3. TRANSFORM TO NOTION FORMAT      │
 │     - Export Tree → Notion Tree     │◄── export-tree-to-notion-tree.ts
-│     - Reverse nesting overrides     │◄── reverse-nesting-overrides.ts
 │     - Markdown → Rich Text          │◄── markdown-to-rich-text.ts
 │     - Atlas UUID → Notion UUID      │◄── UUID_MAPPING.md
 │     - Rewrite mention UUIDs         │
@@ -132,13 +131,15 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 │     - Create new pages              │◄── create-notion-pages.ts
 │     - Update existing pages         │◄── update-notion-pages.ts
 │     - Delete/archive pages          │◄── delete-notion-pages.ts
-│     - Batch with rate limiting      │
 └──────────────┬──────────────────────┘
                │
                ▼
 ┌───────────────────────────────────────────────┐
-│  5. AUTO-SYNC TO SUPABASE                     │
-│     - Hourly Trigger.dev task                 │
+│  5. AUTO-IMPORT TO SUPABASE                   │
+│     - Automatically triggered after sync      │
+│     - Only imports affected databases         │
+│     - Uses shared queue (concurrencyLimit: 1) │
+│     - Waits if hourly import already running  │
 │     - Returns to step 1 above (Notion import) │
 └───────────────────────────────────────────────┘
 ```
@@ -445,9 +446,9 @@ The Export Tree is serialized to multiple formats for different consumption need
 - **[ATLAS_MARKDOWN_IMPORT_EXPORT.md](./ATLAS_MARKDOWN_IMPORT_EXPORT.md)**
 - **[ATLAS_MARKDOWN_SYNTAX.md](./ATLAS_MARKDOWN_SYNTAX.md)**
 
-## Markdown → Notion Pipeline [PLANNED]
+## Markdown → Notion Pipeline
 
-This workflow enables external editing of the Atlas in markdown format with subsequent synchronization back to Notion databases.
+This workflow enables external editing of the Atlas in markdown format with subsequent synchronization back to Notion databases. The core sync functionality has been implemented with audit logging, UUID mapping persistence, and support for all change types.
 
 ### 4.1 External Markdown Editing
 
@@ -569,8 +570,8 @@ Sections & Primary Docs database pages have different title formatting:
 
 **References:**
 
-- `app/server/atlas/export/export-tree-to-notion-tree.ts` (to be created)
-- `app/server/markdown/markdown-to-rich-text.ts` (extend for UUID conversion)
+- `app/atlas/sync/_lib/notion-property-builder.ts` (implemented)
+- `app/server/markdown/markdown-to-rich-text.ts` (implemented with UUID conversion)
 - `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts`
 - **[ATLAS_EXTRA_FIELDS.md](./ATLAS_EXTRA_FIELDS.md)**
 - **[ATLAS_TREE_STRUCTURES.md](./ATLAS_TREE_STRUCTURES.md)**
@@ -596,23 +597,25 @@ This step applies nesting bug fix mappings in reverse, moving children back to t
 - Notion's sub-item feature fails at deep nesting levels (platform limitation after 10+ levels)
 - Documents remain in incorrect parent locations in Notion due to this bug
 - Nesting override mappings correct this for display/export (forward direction)
-- Must reverse these corrections before syncing to maintain consistency with Notion's buggy state
-- Changing Notion structure directly would break future import syncs
+- Must handle these documents specially during sync to avoid corrupting manual corrections
 
 **Implementation:**
 
-- Create new function `reverseNestingOverrides()` that:
-  - Takes Notion Tree with corrected relationships
-  - Loads mappings from `notion_nesting_bug_mapping` table
-  - For each mapping, moves child from correct parent back to incorrect parent
-  - Updates `parent_notion_page_id` to incorrect parent
-  - Handles sibling positioning in reverse
-  - Returns Notion Tree with original (buggy) Notion relationships restored
+During the sync Phase 4 (process parent changes), documents affected by the nesting bug are skipped:
+
+- Load nesting bug mappings once at sync start via `loadNotionNestingFixMappings()`
+- Build a Set of affected Atlas UUIDs using `buildNestingBugAffectedUuidsSet()` for O(1) lookups
+- For each parent change, check if the document's UUID is in the affected set
+- If affected: skip the parent change and log a warning
+- If not affected: proceed with normal parent update
+
+This approach preserves manual relationship corrections in `notion_nesting_bug_mapping` while allowing normal parent changes for unaffected documents.
 
 **References:**
 
-- `app/server/services/notion/reverse-nesting-overrides.ts` (to be created)
-- `app/server/services/notion/apply-nesting-overrides.ts` (forward direction reference)
+- `app/server/services/supabase/notion-nesting-bug-mappings.ts` - Helper functions
+- `app/atlas/sync/_lib/sync-orchestrator.ts` - Integration point (Phase 4)
+- `app/server/services/notion/apply-nesting-overrides.ts` - Forward direction reference
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)**
 
 #### 4.3.3 Property and Relationship Mapping
@@ -675,7 +678,6 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - **Modified documents**: Atlas UUID exists in both, but content/properties/relationships differ
   - **Deleted documents**: Atlas UUID exists in Supabase but not in markdown Export Tree
 - Generate change sets with detailed diff information
-- Validate changes before any API calls (dry-run capability)
 
 **Creating New Pages:**
 
@@ -686,9 +688,19 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Extract new Notion page UUID from response
   - Create UUID mapping entry: `{ atlas_document_uuid, notion_page_id }`
   - Store mapping in Supabase `uuid_mapping` table
+  - Track pages with unresolved mentions for post-processing
 - Handle dependencies: Create parent documents before children to enable proper relationship establishment
 - Make sure that newly created Notion database page IDs are available during the sync if they are referenced in other documents that are also synced
-- Don't batch operations for more reliable error handling in case of error, and better audit log of Notion API calls to change Notion content
+- Sequential operations for reliable error handling and better audit log of Notion API calls
+
+**Mention Post-Processing (Phase 2.5):**
+
+- After all new pages are created, process pages that had unresolved mentions
+- For each page with placeholder mentions:
+  - Rebuild content properties using the now-complete UUID mappings
+  - Update page via Notion API with corrected mention objects to reference correct Notion page IDs
+  - Log operation with `_phase: 'mention_post_processing'` marker
+- This ensures links between new documents are properly converted to Notion mentions
 
 **Updating Existing Pages:**
 
@@ -712,64 +724,83 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Keep UUID mapping in Supabase (mappings are preserved forever for potential recovery)
 - Start from leaf nodes to avoid cascading effects, then traverse up the tree as parent nodes become leaf nodes after their child nodes are deleted
 
+**Background Task Processing:**
+
+- Sync runs in Trigger.dev background task (survives page refresh)
+- Documents processed sequentially (one at a time)
+- Task checks stop flag between each operation for graceful stopping
+- Progress tracked via Trigger.dev metadata subscription
+- All operations share same `syncBatchId` for unified audit trail
+
 **Progress Tracking:**
 
-- Progress tracking: Log completion percentage and estimated time remaining
-- Transaction-like behavior: Validate all changes before applying (prevent partial corruption)
-- If interrupted, show a modal to the user and when they confirm, reload the page to reload the remaining syncable changes - keep it simple
+- Real-time progress via Trigger.dev metadata (phase, completed/total, current document)
+- Stop button requests graceful halt between operations
+- Progress survives page refresh (background task continues)
 
 **Error Handling:**
 
 - Validate markdown structure before any API calls
-- Dry-run mode to preview all changes without applying
-- Rollback strategy for partial failures (attempt to restore previous state) - optional if adds too much complexity
 - Detailed error logs with line numbers and actionable suggestions
-- Partial success tracking: Store successfully synced documents to avoid re-processing (?)
+- Partial success tracking: Completed operations logged to audit table
 
 **References:**
 
-- `app/server/atlas/sync/sync-to-notion.ts` (to be created - main orchestrator)
-- `app/server/atlas/sync/create-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/update-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/delete-notion-pages.ts` (to be created)
-- `app/server/atlas/sync/detect-markdown-changes.ts` (to be created)
-- `app/atlas/sync/_lib/` (sync utilities)
+- `app/atlas/sync/_actions/sync-actions.ts` (server actions for triggering/stopping sync)
+- `app/server/services/trigger/markdown-notion-sync-task.ts` (background task implementation)
+- `app/atlas/sync/content.tsx` (UI with realtime progress subscription)
 
-### 4.4 Automated Sync
+### 4.4 Automatic Notion Import
 
-**Hourly Trigger.dev Task:**
+After the Markdown-to-Notion sync completes, the system automatically triggers a Notion-to-Supabase import for only the databases that were affected by the sync. This ensures changes are immediately reflected in Supabase without waiting for the next hourly import.
 
-- After markdown changes synced to Notion, hourly import task picks them up
-- Task runs Notion → Supabase sync (section 3.1)
-- Changes flow back into Supabase and become visible in exports
-- Complete round-trip: Markdown → Notion → Supabase → Markdown
+**How It Works:**
 
-**Future Enhancements:**
+1. **Track Affected Databases**: The sync orchestrator tracks which databases had successful operations (content changes, additions, deletions, parent changes)
+2. **Trigger Partial Import**: After sync completes, the task triggers `notion-partial-atlas-import` with the list of affected databases
+3. **Queue-Based Concurrency**: Both import tasks use a shared queue (`notion-import`) with `concurrencyLimit: 1`
+4. **Automatic Waiting**: If the hourly full import is already running, the partial import automatically waits in queue (no polling or manual lock checking needed)
+5. **Complete Round-Trip**: Markdown → Notion → Supabase happens in one continuous operation
 
-- Trigger sync immediately after markdown changes (webhook-based)
-- Reduce latency from hours to minutes
-- Real-time collaboration between Notion-first and markdown-first users
+**Benefits:**
+
+- Immediate data consistency (no waiting for hourly sync)
+- Efficient imports (only affected databases, not all 10)
+- Race-condition free (Trigger.dev queue handles concurrency)
+- Unified progress tracking (UI shows all phases including import)
+
+**Sync Phases:**
+
+1. `content` - Content changes
+2. `additions` - New pages
+3. `mention_updates` - Fix placeholder mentions
+4. `deletions` - Archive pages
+5. `parent_changes` - Update relationships
+6. `notion_import` - Import affected databases back to Supabase
 
 **References:**
 
-- `app/server/services/trigger/notion-sync-task.ts`
+- `app/server/services/trigger/markdown-notion-sync-task.ts` - Main sync task with import chaining
+- `app/server/services/trigger/notion-partial-atlas-import-task.ts` - Partial import task
+- `app/server/services/trigger/notion-import-queue.ts` - Shared queue for concurrency control
+- `app/server/services/trigger/notion-full-atlas-import-task.ts` - Full import task (hourly scheduled)
 
 ## Key Transformations Summary
 
-| Stage                               | Input Format            | Transformation                                                                              | Output Format                             |
-| ----------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| **1. Notion API Fetch**             | Notion pages (API JSON) | Property mapping, relationship extraction                                                   | `NotionDatabasePage[]` arrays             |
-| **2. Supabase Storage**             | `NotionDatabasePage[]`  | Versioned insert, UUID generation                                                           | Supabase `notion_database_pages` rows     |
-| **3. Supabase Load**                | Supabase rows           | Load all databases, filter current                                                          | `NotionDatabasePage[]` (flat array)       |
-| **4. Tree Building**                | Flat pages              | Apply nesting overrides, hierarchy construction, filtering, validation                      | `NotionAtlasTreeNode[]` (Notion Tree)     |
-| **5. Tree Processing**              | Notion Tree nodes       | Name normalization, doc numbering, UUID mapping, mention updates (all inside tree building) | Enhanced `NotionAtlasTreeNode[]`          |
-| **6. Export Transform**             | Notion Tree             | Rich Text → Markdown, UUID conversion                                                       | `ExportAtlasTreeDocument[]` (Export Tree) |
-| **7. Serialization**                | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
-| **[PLANNED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
-| **[PLANNED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
-| **[PLANNED] 10. Reverse Overrides** | Notion Tree             | Apply nesting bug mappings in reverse, restore original Notion positions                    | Notion Tree (buggy positions)             |
-| **[PLANNED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[PLANNED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (sequential, no batching)                        | Notion pages (via API)                    |
+| Stage                                   | Input Format            | Transformation                                                                              | Output Format                             |
+| --------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| **1. Notion API Fetch**                 | Notion pages (API JSON) | Property mapping, relationship extraction                                                   | `NotionDatabasePage[]` arrays             |
+| **2. Supabase Storage**                 | `NotionDatabasePage[]`  | Versioned insert, UUID generation                                                           | Supabase `notion_database_pages` rows     |
+| **3. Supabase Load**                    | Supabase rows           | Load all databases, filter current                                                          | `NotionDatabasePage[]` (flat array)       |
+| **4. Tree Building**                    | Flat pages              | Apply nesting overrides, hierarchy construction, filtering, validation                      | `NotionAtlasTreeNode[]` (Notion Tree)     |
+| **5. Tree Processing**                  | Notion Tree nodes       | Name normalization, doc numbering, UUID mapping, mention updates (all inside tree building) | Enhanced `NotionAtlasTreeNode[]`          |
+| **6. Export Transform**                 | Notion Tree             | Rich Text → Markdown, UUID conversion                                                       | `ExportAtlasTreeDocument[]` (Export Tree) |
+| **7. Serialization**                    | Export Tree             | JSON/Markdown formatting                                                                    | `atlas.md`, `atlas.json`, `atlas.yaml`    |
+| **[IMPLEMENTED] 8. Markdown Parse**     | Atlas markdown file     | Parse structure, extract metadata, validate                                                 | Export Tree                               |
+| **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
+| **[IMPLEMENTED] 10. Reverse Overrides** | Notion Tree             | Skip parent changes for nesting-bug-affected documents during sync                          | Sync orchestrator skips affected docs     |
+| **[IMPLEMENTED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
+| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages, mention post-processing (Trigger.dev task)      | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 
@@ -939,11 +970,10 @@ The new approach recognizes that duplicates in the tree are acceptable and somet
 ### Component Documentation
 
 - **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Atlas tree system algorithms, traversal, document numbering, mention updates, and comprehensive API reference
-- **[app/atlas/sync/README.md](../app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow [PLANNED]
+- **[app/atlas/sync/AGENTS.md](../app/atlas/sync/AGENTS.md)** - Markdown to Notion synchronization workflow [IMPLEMENTED]
 
 ### Other Documentation
 
-- **[ATLAS_DIFFING.md](./ATLAS_DIFFING.md)** - Tree diffing algorithms and change detection for Atlas documents (used for Edit Pages)
 - **[EDIT_PAGE_GENERATION_USAGE.md](./EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
 - **[ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md](./ACTION_PLAN_FIX_AGENT_DUPLICATE_DETECTION.md)** - Action plan for fixing agent duplicate detection issues
 

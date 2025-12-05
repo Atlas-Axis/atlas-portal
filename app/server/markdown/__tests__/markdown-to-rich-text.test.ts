@@ -1,6 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { UuidMappings } from '../../atlas/load-uuid-mapping';
-import { convertMarkdownToNotionRichText } from '../markdown-to-rich-text';
+import {
+  ContentConversionWarning,
+  NOTION_RICH_TEXT_MAX_ELEMENTS,
+  NOTION_RICH_TEXT_MAX_LENGTH,
+  convertMarkdownToNotionRichText,
+} from '../markdown-to-rich-text';
 
 // Mock UuidMappings for testing
 const mockUuidMappings: UuidMappings = {
@@ -297,14 +302,11 @@ describe('convertMarkdownToNotionRichText', () => {
     expect(result[1].equation?.expression).toBe('x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}');
   });
 
-  // TODO: Verify this is expected behavior - empty equations should be empty strings?
-  it('should handle empty equations', () => {
+  it('should filter out empty equations (Notion API rejects them)', () => {
     const result = convertMarkdownToNotionRichText('Empty equation: $$', mockUuidMappings);
-    expect(result).toHaveLength(2);
-
+    // Empty equations are filtered out - only the text before remains
+    expect(result).toHaveLength(1);
     expect(result[0].text?.content).toBe('Empty equation: ');
-    expect(result[1].type).toBe('equation');
-    expect(result[1].equation?.expression).toBe('');
   });
 
   it('should handle equations mixed with other formatting', () => {
@@ -467,12 +469,14 @@ describe('convertMarkdownToNotionRichText', () => {
     });
 
     it('should handle table with inline code (should NOT be treated as multiline)', () => {
-      // Note: This test expects 6 elements, not 7, because newlines are embedded in the
-      // preceding text object rather than creating separate newline elements. This behavior
-      // is intentional for round-trip compatibility: when converting Notion → Markdown → Notion,
-      // preserving newlines within text objects maintains the original rich text structure.
+      // Note: This test expects 5 elements because:
+      // 1. Adjacent plain text elements with same annotations are merged
+      // 2. Newlines are embedded in the preceding text object
+      // This behavior is intentional for:
+      // - Round-trip compatibility
+      // - Staying under Notion's 100-element limit for rich text arrays
       const result = convertMarkdownToNotionRichText('| Column | `code` |\n| Another | `more` |', mockUuidMappings);
-      expect(result).toHaveLength(6);
+      expect(result).toHaveLength(5);
 
       // First line: "| Column | "
       expect(result[0].text?.content).toBe('| Column | ');
@@ -482,21 +486,18 @@ describe('convertMarkdownToNotionRichText', () => {
       expect(result[1].text?.content).toBe('code');
       expect(result[1].annotations?.code).toBe(true);
 
-      // End of first line with newline: " |\n" (newline is embedded for round-trip compatibility)
-      expect(result[2].text?.content).toBe(' |\n');
+      // End of first line merged with start of second line: " |\n| Another | "
+      // (adjacent plain text elements are merged to reduce element count)
+      expect(result[2].text?.content).toBe(' |\n| Another | ');
       expect(result[2].annotations?.code).toBe(false);
 
-      // Second line: "| Another | "
-      expect(result[3].text?.content).toBe('| Another | ');
-      expect(result[3].annotations?.code).toBe(false);
-
       // Inline code: "more"
-      expect(result[4].text?.content).toBe('more');
-      expect(result[4].annotations?.code).toBe(true);
+      expect(result[3].text?.content).toBe('more');
+      expect(result[3].annotations?.code).toBe(true);
 
       // End of second line: " |"
-      expect(result[5].text?.content).toBe(' |');
-      expect(result[5].annotations?.code).toBe(false);
+      expect(result[4].text?.content).toBe(' |');
+      expect(result[4].annotations?.code).toBe(false);
     });
 
     it('should handle text with backticks but no multiline code', () => {
@@ -610,6 +611,460 @@ describe('convertMarkdownToNotionRichText', () => {
       // " end"
       expect(result[6].text?.content).toBe(' end');
       expect(result[6].annotations?.code).toBe(false);
+    });
+  });
+
+  describe('text splitting for Notion 2000-character limit', () => {
+    it('should not split text exactly at the limit', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].text?.content).toBe(text);
+      expect(result[0].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+    });
+
+    it('should split text exceeding the limit by one character', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 1);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(2);
+      expect(result[0].text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[1].text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      // Verify total content is preserved
+      const combinedContent = (result[0].text?.content ?? '') + (result[1].text?.content ?? '');
+      expect(combinedContent).toBe(text);
+    });
+
+    it('should split at word boundaries when possible', () => {
+      // Create text with spaces that can be split at word boundaries
+      const words = [];
+      let totalLength = 0;
+      while (totalLength < NOTION_RICH_TEXT_MAX_LENGTH + 500) {
+        const word = 'word';
+        words.push(word);
+        totalLength += word.length + 1; // +1 for space
+      }
+      const text = words.join(' ');
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All chunks should be within the limit
+      for (const chunk of result) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+      // Total content should be preserved exactly
+      const combinedContent = result.map((r) => r.text?.content ?? '').join('');
+      expect(combinedContent).toBe(text);
+    });
+
+    it('should not exceed limit when space is at exactly position 2000 (off-by-one edge case)', () => {
+      // Create text where a space falls exactly at position 2000
+      // This tests the off-by-one bug fix: when including the space in the chunk,
+      // total must still not exceed maxLength
+      const beforeSpace = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH); // 2000 A's
+      const afterSpace = 'B'.repeat(100); // 100 B's
+      const text = beforeSpace + ' ' + afterSpace; // Space at position 2000
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should split into multiple chunks
+      expect(result.length).toBeGreaterThanOrEqual(2);
+
+      // CRITICAL: Each chunk must be <= 2000 characters (not 2001!)
+      for (const chunk of result) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+
+      // Total content should be preserved
+      const combinedContent = result.map((r) => r.text?.content ?? '').join('');
+      expect(combinedContent).toBe(text);
+    });
+
+    it('should split at max length when no word boundaries are available', () => {
+      // Text with no spaces - must split at exact character boundary
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH * 2 + 100);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(3);
+      expect(result[0].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[1].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      expect(result[2].text?.content.length).toBe(100);
+    });
+
+    it('should preserve annotations when splitting bold text', () => {
+      // Create bold text exceeding the limit
+      const longBoldContent = 'B'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 500);
+      const text = `**${longBoldContent}**`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the bold annotation
+      for (const chunk of result) {
+        expect(chunk.annotations?.bold).toBe(true);
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+    });
+
+    it('should preserve annotations when splitting code text', () => {
+      // Create code text exceeding the limit
+      const longCodeContent = 'C'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 500);
+      const text = `\`${longCodeContent}\``;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the code annotation
+      for (const chunk of result) {
+        expect(chunk.annotations?.code).toBe(true);
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+    });
+
+    it('should handle very long text requiring multiple splits', () => {
+      const text = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH * 5 + 123);
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(6);
+      // First 5 chunks should be at max length
+      for (let i = 0; i < 5; i++) {
+        expect(result[i].text?.content.length).toBe(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+      // Last chunk should have remaining characters
+      expect(result[5].text?.content.length).toBe(123);
+    });
+
+    it('should not split mentions (non-text elements)', () => {
+      // Create a mention using UUID format link
+      const uuid = '12345678-1234-1234-1234-123456789012';
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[uuid, 'notion-page-id']]),
+      };
+
+      const text = `Check [this page](${uuid})`;
+      const result = convertMarkdownToNotionRichText(text, mappings);
+
+      // Find the mention element
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Mentions should not be split regardless of content length
+      expect(mentionElement?.type).toBe('mention');
+    });
+
+    it('should not split equations (non-text elements)', () => {
+      const text = '$E=mc^2$';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].type).toBe('equation');
+      // Equations should not be split
+    });
+
+    it('should handle mixed content with long and short segments', () => {
+      const longText = 'A'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 100);
+      const text = `Short **${longText}** end`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should have: "Short ", split bold segments, " end"
+      expect(result.length).toBeGreaterThanOrEqual(4);
+
+      // First element should be short text
+      expect(result[0].text?.content).toBe('Short ');
+
+      // Find all bold elements (should be split)
+      const boldElements = result.filter((r) => r.annotations?.bold);
+      expect(boldElements.length).toBeGreaterThanOrEqual(2);
+
+      // All bold elements should be within limit
+      for (const chunk of boldElements) {
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+
+      // Last element should be " end"
+      expect(result[result.length - 1].text?.content).toBe(' end');
+    });
+
+    it('should preserve link href when splitting linked text', () => {
+      // Create a long link text
+      const longLinkText = 'L'.repeat(NOTION_RICH_TEXT_MAX_LENGTH + 100);
+      const text = `[${longLinkText}](https://example.com)`;
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      expect(result.length).toBeGreaterThanOrEqual(2);
+      // All split segments should preserve the href
+      for (const chunk of result) {
+        expect(chunk.href).toBe('https://example.com');
+        expect(chunk.text?.link?.url).toBe('https://example.com');
+        expect(chunk.text?.content.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_LENGTH);
+      }
+    });
+  });
+
+  describe('array length limiting for Notion 100-element limit', () => {
+    it('should export the max elements constant', () => {
+      expect(NOTION_RICH_TEXT_MAX_ELEMENTS).toBe(100);
+    });
+
+    it('should not modify arrays under the limit', () => {
+      // Generate text with 50 links (each link creates ~2 elements: text before + link)
+      const links = Array.from({ length: 25 }, (_, i) => `[link${i}](https://example${i}.com)`).join(' ');
+      const result = convertMarkdownToNotionRichText(links, mockUuidMappings);
+
+      // Should have fewer than 100 elements
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+
+    it('should merge adjacent text elements with identical annotations', () => {
+      // Create text that produces multiple plain text elements after parsing
+      // Bold followed by plain text followed by more plain text
+      const text = '**bold** plain1 plain2 plain3';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should merge the plain text elements
+      expect(result).toHaveLength(2); // bold + merged plain text
+      expect(result[0].annotations?.bold).toBe(true);
+      expect(result[1].text?.content).toBe(' plain1 plain2 plain3');
+    });
+
+    it('should not merge elements with different annotations', () => {
+      // Use bold and code (not italic) to avoid pre-existing italic regex issue
+      // where italic pattern matches across spaces like `* test *`
+      const text = '**bold** plain `code`';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should have at least 2 elements with different formatting
+      // (bold and code cannot be merged)
+      expect(result.length).toBeGreaterThanOrEqual(2);
+
+      const boldElement = result.find((r) => r.annotations?.bold);
+      const codeElement = result.find((r) => r.annotations?.code);
+      expect(boldElement).toBeDefined();
+      expect(boldElement?.text?.content).toBe('bold');
+      expect(codeElement).toBeDefined();
+      expect(codeElement?.text?.content).toBe('code');
+    });
+
+    it('should not merge elements with links', () => {
+      const text = '[link1](https://a.com) [link2](https://b.com)';
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Links should not be merged
+      const linkElements = result.filter((r) => r.href);
+      expect(linkElements.length).toBe(2);
+    });
+
+    it('should truncate arrays exceeding 100 elements with warning', () => {
+      // Create text with many links to generate >100 elements
+      // Each row: "| text | [link1](url1) [link2](url2) [link3](url3) |"
+      // This creates: text + link + space + link + space + link + more text per row
+      const rows = Array.from(
+        { length: 20 },
+        (_, i) =>
+          `Row ${i}: [link${i}a](https://a${i}.com) [link${i}b](https://b${i}.com) [link${i}c](https://c${i}.com) [link${i}d](https://d${i}.com) end`,
+      ).join('\n');
+
+      // Spy on console.warn to verify the warning is logged
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const result = convertMarkdownToNotionRichText(rows, mockUuidMappings);
+
+      // Should be exactly at or below the limit
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+
+      // If truncated, should have logged a warning
+      if (result.length === NOTION_RICH_TEXT_MAX_ELEMENTS) {
+        expect(warnSpy).toHaveBeenCalled();
+        // Last element should be the truncation marker
+        const lastElement = result[result.length - 1];
+        expect(lastElement.text?.content).toContain('truncated');
+        expect(lastElement.annotations?.italic).toBe(true);
+      }
+
+      warnSpy.mockRestore();
+    });
+
+    it('should handle table-like content with many links (real-world case)', () => {
+      // Simulates the failing case from the error log
+      const tableContent = `
+| Delegate | Address | Contract |
+|----------|---------|----------|
+| User1 | [addr1](https://etherscan.io/address/0x1) [verify1](https://etherscan.io/verifySig/1) | [contract1](https://etherscan.io/address/0xa) |
+| User2 | [addr2](https://etherscan.io/address/0x2) [verify2](https://etherscan.io/verifySig/2) | [contract2](https://etherscan.io/address/0xb) |
+| User3 | [addr3](https://etherscan.io/address/0x3) [verify3](https://etherscan.io/verifySig/3) | [contract3](https://etherscan.io/address/0xc) |
+| User4 | [addr4](https://etherscan.io/address/0x4) [verify4](https://etherscan.io/verifySig/4) | [contract4](https://etherscan.io/address/0xd) |
+| User5 | [addr5](https://etherscan.io/address/0x5) [verify5](https://etherscan.io/verifySig/5) | [contract5](https://etherscan.io/address/0xe) |
+| User6 | [addr6](https://etherscan.io/address/0x6) [verify6](https://etherscan.io/verifySig/6) | [contract6](https://etherscan.io/address/0xf) |
+| User7 | [addr7](https://etherscan.io/address/0x7) [verify7](https://etherscan.io/verifySig/7) | [contract7](https://etherscan.io/address/0x10) |
+| User8 | [addr8](https://etherscan.io/address/0x8) [verify8](https://etherscan.io/verifySig/8) | [contract8](https://etherscan.io/address/0x11) |
+| User9 | [addr9](https://etherscan.io/address/0x9) [verify9](https://etherscan.io/verifySig/9) | [contract9](https://etherscan.io/address/0x12) |
+| User10 | [addr10](https://etherscan.io/address/0xa) [verify10](https://etherscan.io/verifySig/10) | [contract10](https://etherscan.io/address/0x13) |
+| User11 | [addr11](https://etherscan.io/address/0xb) [verify11](https://etherscan.io/verifySig/11) | [contract11](https://etherscan.io/address/0x14) |
+`;
+      const result = convertMarkdownToNotionRichText(tableContent, mockUuidMappings);
+
+      // Must not exceed the 100 element limit
+      expect(result.length).toBeLessThanOrEqual(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+
+    it('should merge adjacent text elements to stay under limit when possible', () => {
+      // Create alternating bold and plain text
+      // "**b** p **b** p ..." should merge consecutive plain text
+      const parts = [];
+      for (let i = 0; i < 30; i++) {
+        parts.push(`**b${i}**`);
+        parts.push(`plain${i}`);
+      }
+      const text = parts.join(' ');
+
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should be well under 100 elements due to merging
+      expect(result.length).toBeLessThan(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+  });
+
+  describe('placeholder mentions for missing UUID mappings', () => {
+    it('should create placeholder mention when UUID mapping is missing', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      // Use empty mappings - no Notion page ID exists for this Atlas UUID
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should create a mention with the Atlas UUID as placeholder
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      expect(mentionElement?.type).toBe('mention');
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(atlasUuid);
+      }
+      expect(mentionElement?.plain_text).toBe('this page');
+    });
+
+    it('should add missing_mapping warning when UUID mapping is missing', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      const warnings: ContentConversionWarning[] = [];
+      convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should have a missing_mapping warning
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].type).toBe('missing_mapping');
+      expect(warnings[0].atlasUuid).toBe(atlasUuid);
+      expect(warnings[0].message).toContain(atlasUuid);
+    });
+
+    it('should create proper mention when UUID mapping exists', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const notionPageId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[atlasUuid, notionPageId]]),
+      };
+
+      const text = `Check [this page](${atlasUuid})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mappings, warnings);
+
+      // Should create a mention with the real Notion page ID
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(notionPageId);
+      }
+      expect(mentionElement?.href).toContain('notion.so');
+
+      // Should not have any warnings
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('should track multiple missing mappings in warnings', () => {
+      const uuid1 = '11111111-1111-1111-1111-111111111111';
+      const uuid2 = '22222222-2222-2222-2222-222222222222';
+      const uuid3 = '33333333-3333-3333-3333-333333333333';
+
+      const text = `See [page1](${uuid1}), [page2](${uuid2}), and [page3](${uuid3})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should have 3 placeholder mentions
+      const mentions = result.filter((r) => r.type === 'mention');
+      expect(mentions).toHaveLength(3);
+
+      // Should have 3 missing_mapping warnings
+      expect(warnings).toHaveLength(3);
+      expect(warnings.map((w) => w.atlasUuid)).toEqual([uuid1, uuid2, uuid3]);
+    });
+
+    it('should handle mixed mapped and unmapped UUIDs', () => {
+      const mappedUuid = '11111111-1111-1111-1111-111111111111';
+      const unmappedUuid = '22222222-2222-2222-2222-222222222222';
+      const notionPageId = 'notion-page-12345678';
+
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[mappedUuid, notionPageId]]),
+      };
+
+      const text = `See [mapped](${mappedUuid}) and [unmapped](${unmappedUuid})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mappings, warnings);
+
+      // Both should be mentions
+      const mentions = result.filter((r) => r.type === 'mention');
+      expect(mentions).toHaveLength(2);
+
+      // Only one warning for the unmapped UUID
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].atlasUuid).toBe(unmappedUuid);
+
+      // Verify the mention IDs - filter by page type first
+      const pageMentions = mentions.filter((m) => m.mention?.type === 'page');
+      expect(pageMentions).toHaveLength(2);
+      const mentionIds = pageMentions.map((m) => (m.mention?.type === 'page' ? m.mention.page.id : null));
+      expect(mentionIds).toContain(notionPageId);
+      expect(mentionIds).toContain(unmappedUuid);
+    });
+
+    it('should not affect regular URL links (non-UUID format)', () => {
+      const text = 'Visit [Google](https://google.com) for more';
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should be a text link, not a mention
+      const linkElement = result.find((r) => r.href === 'https://google.com');
+      expect(linkElement).toBeDefined();
+      expect(linkElement?.type).toBe('text');
+      expect(linkElement?.text?.link?.url).toBe('https://google.com');
+
+      // No warnings for regular links
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('should work without warnings parameter (backwards compatibility)', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      // Call without warnings parameter - should not throw
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should still create placeholder mention
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(atlasUuid);
+      }
     });
   });
 });

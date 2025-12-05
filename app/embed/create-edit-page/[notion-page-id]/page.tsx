@@ -5,7 +5,7 @@ import { uuidToHyphens } from '@/app/shared/utils/utils';
 import ActionButton from './action-button';
 
 async function loadPage(notionPageId: string) {
-  const response = (await notion('read').pages.retrieve({
+  const response = (await notion().pages.retrieve({
     page_id: notionPageId,
   })) as PageObjectResponse;
 

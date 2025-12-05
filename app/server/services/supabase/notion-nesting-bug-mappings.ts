@@ -7,6 +7,7 @@
  * @see {@link file://../../../docs/NOTION_NESTING_BUG_FIX.md} for complete documentation
  */
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import { supabase } from './supabase-client';
 
 export interface NotionNestingBugMapping {
@@ -67,4 +68,51 @@ export async function saveNotionNestingFixMappings(mappings: NotionNestingBugMap
       throw new Error(`Failed to insert new mappings: ${insertError.message}`);
     }
   }
+}
+
+export interface BuildNestingBugAffectedUuidsSetOptions {
+  /**
+   * Whether to throw an error when an Atlas UUID is not found for a nesting bug mapping.
+   * If false, logs a warning and continues without adding that UUID to the set.
+   * @default true
+   */
+  throwOnMissingUuid?: boolean;
+}
+
+/**
+ * Builds a Set of Atlas UUIDs that are affected by the nesting bug.
+ * Uses existing UuidMappings for efficient O(1) lookups during sync.
+ *
+ * This is used during the Markdown-to-Notion sync to skip parent changes
+ * for documents that have manual nesting bug corrections.
+ *
+ * @param nestingMappings - Nesting bug mappings from Supabase
+ * @param uuidMappings - UUID mappings for Notion page ID to Atlas UUID conversion
+ * @param options - Configuration options
+ * @returns Set of Atlas UUIDs that are affected by the nesting bug
+ */
+export function buildNestingBugAffectedUuidsSet(
+  nestingMappings: NotionNestingBugMapping[],
+  uuidMappings: UuidMappings,
+  options: BuildNestingBugAffectedUuidsSetOptions = {},
+): Set<string> {
+  const { throwOnMissingUuid = true } = options;
+  const affectedUuids = new Set<string>();
+
+  for (const mapping of nestingMappings) {
+    const atlasUuid = uuidMappings.notionPageIDsToAtlasUUIDs.get(mapping.child_notion_page_id);
+    if (atlasUuid) {
+      affectedUuids.add(atlasUuid);
+    } else {
+      const message = `No Atlas UUID found for child Notion page ID: ${mapping.child_notion_page_id}`;
+      if (throwOnMissingUuid) {
+        console.error(message);
+        throw new Error(message);
+      } else {
+        console.warn(message + ' (skipping - document may not exist yet)');
+      }
+    }
+  }
+
+  return affectedUuids;
 }

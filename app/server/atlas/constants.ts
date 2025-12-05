@@ -10,14 +10,13 @@
  *
  * Environment Selection Logic (in priority order):
  * 1. Uses notion-ids-unit-test.ts (made-up UUIDs) when: running in unit tests (isTestEnv() === true)
- * 2. Uses notion-ids-dev.ts (dev IDs) when: USE_DEV_NOTION_IDS === 'true'
- * 3. Uses notion-ids.ts (production IDs) when: USE_DEV_NOTION_IDS !== 'true' (defaults to false if undefined)
+ * 2. Uses notion-ids-dev.ts (dev IDs) when: NODE_ENV !== 'production'
+ * 3. Uses notion-ids.ts (production IDs) when: NODE_ENV === 'production'
  *
  * Benefits:
  * - Unit tests use consistent made-up UUIDs that don't require real credentials
- * - Development/QA uses separate IDs when USE_DEV_NOTION_IDS='true' to prevent accidental production data access
- * - Production uses real production Notion IDs by default (when USE_DEV_NOTION_IDS is not set)
- * - Explicit control via USE_DEV_NOTION_IDS environment variable
+ * - Development/QA automatically uses separate IDs to prevent accidental production data access
+ * - Production uses real production Notion IDs
  */
 import { isTestEnv } from '../../shared/utils/is-test-env';
 import type { AtlasDatabaseID, AtlasDatabaseName, AtlasDocumentType, MasterStatus } from './atlas-types';
@@ -69,17 +68,12 @@ export const ATLAS_DATABASE_NAMES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.AGENTS,
 ] as const;
 
-// Priority order: unit tests > development (USE_DEV_NOTION_IDS=true) > production (default)
-const selectedIds = isTestEnv()
-  ? notionIdsUnitTest
-  : process.env.USE_DEV_NOTION_IDS === 'true'
-    ? notionIdsDev
-    : notionIds;
+// Priority order: unit tests > development (NODE_ENV !== 'production') > production
+const selectedIds = isTestEnv() ? notionIdsUnitTest : process.env.NODE_ENV !== 'production' ? notionIdsDev : notionIds;
 
 export const ATLAS_DATABASE_ID_MAP = selectedIds.ATLAS_DATABASE_ID_MAP;
 export const ATLAS_DATABASE_ID_MAP_REVERSED = selectedIds.ATLAS_DATABASE_ID_MAP_REVERSED;
 export const MASTER_STATUS_ID_MAP = selectedIds.MASTER_STATUS_ID_MAP;
-export const MASTER_STATUS_IDS = selectedIds.MASTER_STATUS_IDS;
 
 export const MASTER_STATUSES = {
   APPROVED: 'Approved',
@@ -113,7 +107,6 @@ export const AGENT_ROOT_DOCUMENT_NAME = 'List Of Prime Agent Artifacts';
 
 export const IMPORT_DATABASES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCOPES,
-  ATLAS_DATABASES.ARTICLES,
   ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS,
   ATLAS_DATABASES.AGENTS,
   ATLAS_DATABASES.ANNOTATIONS,
@@ -122,6 +115,7 @@ export const IMPORT_DATABASES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.SCENARIOS,
   ATLAS_DATABASES.SCENARIO_VARIATIONS,
   ATLAS_DATABASES.NEEDED_RESEARCH,
+  ATLAS_DATABASES.ARTICLES, // Moved to last (slowest to sync)
 ] as const;
 
 /**

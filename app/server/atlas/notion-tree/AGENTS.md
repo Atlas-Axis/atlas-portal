@@ -461,5 +461,5 @@ The Atlas tree system is currently integrated with:
 - **[docs/ATLAS_TREE_STRUCTURES.md](../../../../docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree vs Export Tree
 - **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../../../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering
 - **[docs/UUID_MAPPING.md](../../../../docs/UUID_MAPPING.md)** - UUID mapping system documentation
-- **[docs/ATLAS_DIFFING.md](../../../../docs/ATLAS_DIFFING.md)** - Tree diffing algorithms
+- **[app/atlas/sync/AGENTS.md](../../../atlas/sync/AGENTS.md)** - Markdown to Notion sync workflow with diff algorithm documentation
 - **[app/server/atlas/export/README.md](../export/README.md)** - Atlas export system (planned)

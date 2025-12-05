@@ -1,15 +1,15 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Alert } from '@heroui/alert';
-import { Checkbox } from '@heroui/checkbox';
 import { Divider } from '@heroui/divider';
-import { Button, Card, CardBody, CardHeader, Chip, Progress } from '@heroui/react';
+import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
+import { useRealtimeRun } from '@trigger.dev/react-hooks';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
+import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import type { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
-import { type SerializedUuidMappings, deserializeUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -17,11 +17,40 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
-import { cn } from '@/app/shared/utils/utils';
-import { SyncLogEntry, SyncPhase, syncChangesToNotion } from './_lib/sync-orchestrator';
+import type { markdownNotionSyncTask } from '@/app/server/services/trigger/markdown-notion-sync-task';
+import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_actions/sync-actions';
+import { createPublicAccessToken } from './_actions/trigger-auth';
+
+// Sync phase type matching the task
+type SyncPhase =
+  | 'initializing'
+  | 'content'
+  | 'additions'
+  | 'mention_updates' // Phase 2.5: Update placeholder mentions with real Notion page IDs
+  | 'deletions'
+  | 'parent_changes'
+  | 'notion_import' // Phase 6: Notion-to-Supabase import for affected databases
+  | 'completed'
+  | 'stopped';
+
+// Metadata structure from the task
+interface SyncMetadata {
+  phase: SyncPhase;
+  completed: number;
+  total: number;
+  currentDoc: string | null;
+  succeeded: number;
+  failed: number;
+  skipped: number;
+}
 
 const colors: {
-  [K in AtlasChangeType]: { background: string; border: string; text: string; sectionBackground: string };
+  [K in AtlasChangeType]: {
+    background: string;
+    border: string;
+    text: string;
+    sectionBackground: string;
+  };
 } = {
   added: {
     background: 'bg-green-50',
@@ -34,12 +63,6 @@ const colors: {
     border: 'border-blue-500',
     text: 'text-blue-800',
     sectionBackground: 'bg-blue-600',
-  },
-  sibling_order_changed: {
-    background: 'bg-yellow-50',
-    border: 'border-yellow-500',
-    text: 'text-yellow-800',
-    sectionBackground: 'bg-yellow-600',
   },
   parent_changed: {
     background: 'bg-orange-50',
@@ -55,129 +78,37 @@ const colors: {
   },
 };
 
-interface SyncState {
-  isRunning: boolean;
-  stopRequested: boolean;
-  currentPhase: SyncPhase;
-  progress: { total: number; completed: number };
-  currentDocument: string | null;
-  logs: SyncLogEntry[];
-  completed: boolean;
-}
-
-/**
- * Note: Structural changes (parent_changed, sibling_order_changed) are not shown yet - will be enabled later!
- */
-export function Content({
-  result,
-  serializedMappings,
-}: {
-  result: AtlasDiffResult;
-  serializedMappings: SerializedUuidMappings;
-}) {
-  const { changes, originalIdsToDocuments, newIdsToDocuments } = result;
+export function Content({ result, isDevMode }: { result: AtlasDiffResult; isDevMode: boolean }) {
+  const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
     changes.added.length > 0 ||
     changes.changed.length > 0 ||
-    changes.sibling_order_changed.length > 0 ||
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
-  // Deserialize UUID mappings once (passed from server component)
-  const uuidMappings = useMemo(() => deserializeUuidMappings(serializedMappings), [serializedMappings]);
-
   // Create UUID to document number map for markdown link conversion
-  // Prefer new documents (for added/changed), fallback to original (for deleted)
   const uuidToDocNoMap = useMemo(() => {
     const map = new Map<string, string>();
-    // Add original documents first
     originalIdsToDocuments.forEach((doc, uuid) => {
       map.set(uuid, doc.doc_no);
     });
-    // Override with new documents (so we use latest doc numbers)
     newIdsToDocuments.forEach((doc, uuid) => {
       map.set(uuid, doc.doc_no);
     });
     return map;
   }, [originalIdsToDocuments, newIdsToDocuments]);
 
-  const [syncState, setSyncState] = useState<SyncState>({
-    isRunning: false,
-    stopRequested: false,
-    currentPhase: 'idle',
-    progress: { total: 0, completed: 0 },
-    currentDocument: null,
-    logs: [],
-    completed: false,
-  });
-
-  // Use ref for stop flag so it can be read by sync function without re-rendering
-  const syncOptionsRef = useRef({ stopRequested: false });
-
-  const handleSyncClick = async () => {
-    setSyncState({
-      isRunning: true,
-      stopRequested: false,
-      currentPhase: 'content',
-      progress: {
-        total:
-          changes.changed.length +
-          changes.added.length +
-          changes.deleted.length +
-          changes.sibling_order_changed.length +
-          changes.parent_changed.length,
-        completed: 0,
-      },
-      currentDocument: null,
-      logs: [],
-      completed: false,
+  // Create combined UUID to database map
+  const uuidToDatabaseMap = useMemo(() => {
+    const map = new Map<string, AtlasDatabaseName>();
+    originalIdsToDatabase.forEach((db, uuid) => {
+      map.set(uuid, db);
     });
-
-    syncOptionsRef.current.stopRequested = false;
-
-    try {
-      const syncResult = await syncChangesToNotion(result, syncOptionsRef.current, uuidMappings, (progress) => {
-        setSyncState((prev) => ({
-          ...prev,
-          currentPhase: progress.phase,
-          progress: { total: progress.totalCount, completed: progress.completedCount },
-          currentDocument: progress.currentDocumentLabel,
-        }));
-      });
-
-      setSyncState((prev) => ({
-        ...prev,
-        isRunning: false,
-        currentPhase: 'idle',
-        logs: syncResult.logs,
-        completed: true,
-      }));
-    } catch (error) {
-      const err = error as Error;
-      setSyncState((prev) => ({
-        ...prev,
-        isRunning: false,
-        currentPhase: 'idle',
-        logs: [
-          ...prev.logs,
-          {
-            timestamp: new Date(),
-            message: `Sync failed: ${err.message}`,
-            type: 'error',
-          },
-        ],
-        completed: true,
-      }));
-    }
-  };
-
-  const handleStopClick = () => {
-    syncOptionsRef.current.stopRequested = true;
-    setSyncState((prev) => ({
-      ...prev,
-      stopRequested: true,
-    }));
-  };
+    newIdsToDatabase.forEach((db, uuid) => {
+      map.set(uuid, db);
+    });
+    return map;
+  }, [originalIdsToDatabase, newIdsToDatabase]);
 
   return (
     <Card className="container mx-auto max-w-7xl p-6">
@@ -199,9 +130,9 @@ export function Content({
           title="Added"
           changes={changes.added}
           changeType="added"
-          emptyMessage="No documents added"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Changed Documents */}
@@ -209,19 +140,9 @@ export function Content({
           title="Changed"
           changes={changes.changed}
           changeType="changed"
-          emptyMessage="No document content changes"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
-        />
-
-        {/* Sibling Order Changed */}
-        <ChangeSection
-          title="Order / Document No Changed"
-          changes={changes.sibling_order_changed}
-          changeType="sibling_order_changed"
-          emptyMessage="No sibling order changes"
-          uuidToDocMap={newIdsToDocuments}
-          uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Parent Changed */}
@@ -229,9 +150,9 @@ export function Content({
           title="Parent Changed"
           changes={changes.parent_changed}
           changeType="parent_changed"
-          emptyMessage="No parent changes"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
         {/* Deleted Documents */}
@@ -239,103 +160,370 @@ export function Content({
           title="Deleted"
           changes={changes.deleted}
           changeType="deleted"
-          emptyMessage="No documents deleted"
           uuidToDocMap={originalIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
+          uuidToDatabaseMap={uuidToDatabaseMap}
         />
 
-        <p className="my-3 text-xs text-slate-300">Limitations: Moved documents are not shown yet.</p>
-
-        {/* Sync Controls and Progress */}
-        <div className="my-6">
-          {/* Sync Button */}
-          <div className="flex justify-center gap-3">
-            <Button
-              size="lg"
-              onPress={handleSyncClick}
-              variant="solid"
-              color="primary"
-              isLoading={syncState.isRunning}
-              isDisabled={syncState.isRunning || !hasChanges}
-            >
-              Sync Changes to Notion
-            </Button>
-            {syncState.isRunning && !syncState.stopRequested && (
-              <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
-                Stop
-              </Button>
-            )}
-          </div>
-
-          {/* Progress Display */}
-          {(syncState.isRunning || syncState.completed) && (
-            <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
-              {/* Phase and Progress */}
-              <div className="mb-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold">Sync Progress:</span>
-                    <PhaseChip phase={syncState.currentPhase} />
-                    {syncState.stopRequested && (
-                      <Chip color="warning" size="sm">
-                        Stopping...
-                      </Chip>
-                    )}
-                  </div>
-                  <span className="text-sm text-gray-600">
-                    {syncState.progress.completed} / {syncState.progress.total}
-                  </span>
-                </div>
-                <Progress
-                  value={
-                    syncState.progress.total > 0 ? (syncState.progress.completed / syncState.progress.total) * 100 : 0
-                  }
-                  color={syncState.completed ? 'success' : 'primary'}
-                  className="max-w-full"
-                />
-              </div>
-
-              {/* Current Document */}
-              {syncState.currentDocument && (
-                <div className="mb-4 text-sm text-gray-700">
-                  <span className="font-medium">Processing:</span> {syncState.currentDocument}
-                </div>
-              )}
-
-              {/* Logs */}
-              {syncState.logs.length > 0 && (
-                <div className="mt-4">
-                  <div className="mb-2 font-semibold">Log:</div>
-                  <div className="max-h-96 overflow-y-auto rounded border border-gray-200 bg-gray-50 p-3">
-                    {syncState.logs.map((log, idx) => (
-                      <div key={idx} className={cn('mb-1 font-mono text-xs', getLogColorClass(log.type))}>
-                        <span className="text-gray-500">[{log.timestamp.toLocaleTimeString()}]</span> {log.message}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        {/* Sync Controls */}
+        <SyncControls hasChanges={hasChanges} isDevMode={isDevMode} />
       </CardBody>
     </Card>
   );
 }
 
+/**
+ * Sync controls component - manages sync state and realtime subscription
+ */
+function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMode: boolean }) {
+  // Sync filter state
+  const [syncFilters, setSyncFilters] = useState({
+    added: true,
+    deleted: false,
+    contentChanges: false,
+    parentChanges: false,
+  });
+
+  // Trigger state
+  const [isStarting, setIsStarting] = useState(false);
+  const [runId, setRunId] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [stopRequested, setStopRequested] = useState(false);
+
+  // Check for existing sync on mount
+  useEffect(() => {
+    const checkExistingSync = async () => {
+      try {
+        const status = await getSyncStatus();
+        if (status.isLocked && status.triggerRunId) {
+          // There's an existing sync running - subscribe to it
+          const tokenResult = await createPublicAccessToken(status.triggerRunId);
+          if ('error' in tokenResult) {
+            console.error('Failed to create token for existing sync:', tokenResult.error);
+            return;
+          }
+          setRunId(status.triggerRunId);
+          setAccessToken(tokenResult.token);
+          setStopRequested(status.stopRequested);
+        }
+      } catch (err) {
+        console.error('Failed to check existing sync:', err);
+      }
+    };
+    checkExistingSync();
+  }, []);
+
+  const handleSyncClick = useCallback(async () => {
+    setIsStarting(true);
+    setError(null);
+    setStopRequested(false);
+
+    try {
+      // Trigger the sync task
+      const result = await triggerMarkdownNotionSync({
+        added: syncFilters.added,
+        deleted: syncFilters.deleted,
+        contentChanges: syncFilters.contentChanges,
+        parentChanges: syncFilters.parentChanges,
+      });
+
+      if ('error' in result) {
+        setError(result.error);
+        setIsStarting(false);
+        return;
+      }
+
+      // Create public access token for realtime subscription
+      const tokenResult = await createPublicAccessToken(result.runId);
+      if ('error' in tokenResult) {
+        setError(tokenResult.error);
+        setIsStarting(false);
+        return;
+      }
+
+      setRunId(result.runId);
+      setAccessToken(tokenResult.token);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setIsStarting(false);
+    }
+  }, [syncFilters]);
+
+  const handleStopClick = useCallback(async () => {
+    setStopRequested(true);
+    try {
+      const result = await requestSyncStop();
+      if (!result.success) {
+        setError(result.error || 'Failed to request stop');
+        setStopRequested(false);
+      }
+    } catch (err) {
+      setError((err as Error).message);
+      setStopRequested(false);
+    }
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setRunId(null);
+    setAccessToken(null);
+    setError(null);
+    setStopRequested(false);
+    setIsRunCompleted(false);
+  }, []);
+
+  const handleRunStatusChange = useCallback((completed: boolean) => {
+    setIsRunCompleted(completed);
+  }, []);
+
+  // Track whether the sync run has completed (to hide Stop button)
+  const [isRunCompleted, setIsRunCompleted] = useState(false);
+
+  // Whether any filters are enabled
+  const hasEnabledFilters =
+    syncFilters.added || syncFilters.deleted || syncFilters.contentChanges || syncFilters.parentChanges;
+
+  // Whether controls should be disabled
+  const isRunning = !!runId;
+  const controlsDisabled = isStarting || isRunning;
+
+  return (
+    <div className="my-6">
+      {/* Sync Filters */}
+      <div className="mb-4 flex justify-center gap-6">
+        <Checkbox
+          isSelected={syncFilters.added}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, added: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Added
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.deleted}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, deleted: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Deleted
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.contentChanges}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, contentChanges: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Content Changes
+        </Checkbox>
+        <Checkbox
+          isSelected={syncFilters.parentChanges}
+          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, parentChanges: checked }))}
+          isDisabled={controlsDisabled}
+        >
+          Parent Changes
+        </Checkbox>
+      </div>
+
+      {/* Error Display */}
+      {error && (
+        <Alert variant="faded" color="danger" className="mx-auto mb-4 max-w-lg">
+          {error}
+        </Alert>
+      )}
+
+      {/* Sync Buttons */}
+      <div className="flex justify-center gap-3">
+        {!isRunning ? (
+          <Button
+            size="lg"
+            onPress={handleSyncClick}
+            variant="solid"
+            color="primary"
+            isLoading={isStarting}
+            isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
+          >
+            Sync Changes to Notion
+          </Button>
+        ) : (
+          <>
+            {isDevMode && !stopRequested && !isRunCompleted && (
+              <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
+                Stop Sync
+              </Button>
+            )}
+            {isRunCompleted && (
+              <Button size="lg" onPress={() => window.location.reload()} variant="solid" color="primary">
+                Refresh Page
+              </Button>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Realtime Progress Display */}
+      {runId && accessToken && (
+        <SyncProgressDisplay
+          runId={runId}
+          accessToken={accessToken}
+          stopRequested={stopRequested}
+          onComplete={handleReset}
+          onStatusChange={handleRunStatusChange}
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * Realtime progress display using Trigger.dev subscription
+ */
+function SyncProgressDisplay({
+  runId,
+  accessToken,
+  stopRequested,
+  onComplete,
+  onStatusChange,
+}: {
+  runId: string;
+  accessToken: string;
+  stopRequested: boolean;
+  onComplete: () => void;
+  onStatusChange: (completed: boolean) => void;
+}) {
+  const { run, error } = useRealtimeRun<typeof markdownNotionSyncTask>(runId, {
+    accessToken,
+    onComplete: () => {
+      // Don't auto-reset - let user see final state
+    },
+  });
+
+  // Extract sync metadata
+  const syncMetadata = run?.metadata?.sync as SyncMetadata | undefined;
+  const phase = syncMetadata?.phase ?? 'initializing';
+  const completed = syncMetadata?.completed ?? 0;
+  const total = syncMetadata?.total ?? 0;
+  const currentDoc = syncMetadata?.currentDoc ?? null;
+  const succeeded = syncMetadata?.succeeded ?? 0;
+  const failed = syncMetadata?.failed ?? 0;
+  const skipped = syncMetadata?.skipped ?? 0;
+
+  const isCompleted = run?.status === 'COMPLETED' || run?.status === 'FAILED' || run?.status === 'CANCELED';
+  const progressPercent = total > 0 ? (completed / total) * 100 : 0;
+
+  // Notify parent when completion status changes
+  useEffect(() => {
+    onStatusChange(isCompleted);
+  }, [isCompleted, onStatusChange]);
+
+  return (
+    <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+      {/* Error from subscription */}
+      {error && (
+        <Alert variant="faded" color="danger" className="mb-4">
+          Subscription error: {error.message}
+        </Alert>
+      )}
+
+      {/* Phase and Progress */}
+      <div className="mb-4">
+        <div className="mb-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">Sync Progress:</span>
+            <PhaseChip phase={phase} />
+            {stopRequested && phase !== 'stopped' && phase !== 'completed' && (
+              <Chip color="warning" size="sm">
+                Stopping...
+              </Chip>
+            )}
+            {run?.status && (
+              <Chip
+                size="sm"
+                color={
+                  run.status === 'COMPLETED'
+                    ? 'success'
+                    : run.status === 'FAILED'
+                      ? 'danger'
+                      : run.status === 'CANCELED'
+                        ? 'warning'
+                        : 'primary'
+                }
+              >
+                {run.status}
+              </Chip>
+            )}
+          </div>
+          <span className="text-sm text-gray-600">
+            {completed} / {total}
+          </span>
+        </div>
+        <Progress value={progressPercent} color={isCompleted ? 'success' : 'primary'} className="max-w-full" />
+      </div>
+
+      {/* Current Document */}
+      {currentDoc && (
+        <div className="mb-4 text-sm text-gray-700">
+          <span className="font-medium">Processing:</span> {currentDoc}
+        </div>
+      )}
+
+      {/* Summary Stats */}
+      <div className="mb-4 flex gap-4 text-sm">
+        <span className="text-green-700">✓ Succeeded: {succeeded}</span>
+        <span className="text-red-700">✗ Failed: {failed}</span>
+        <span className="text-yellow-700">⊘ Skipped: {skipped}</span>
+      </div>
+
+      {/* Task Output (on completion) */}
+      {isCompleted && run?.output && (
+        <div className="mt-4 rounded border border-gray-200 bg-gray-50 p-3">
+          <div className="mb-2 font-semibold">Final Result:</div>
+          <div className="text-sm">
+            <span className="text-green-700">Succeeded: {run.output.succeeded}</span>
+            {' | '}
+            <span className="text-red-700">Failed: {run.output.failed}</span>
+            {' | '}
+            <span className="text-yellow-700">Skipped: {run.output.skipped}</span>
+            {run.output.stoppedEarly && <span className="ml-2 text-orange-600">(Stopped early)</span>}
+          </div>
+          {(run.output as { error?: string }).error && (
+            <div className="mt-2 text-red-600">Error: {(run.output as { error?: string }).error}</div>
+          )}
+        </div>
+      )}
+
+      {/* Reset Button (on completion) */}
+      {isCompleted && (
+        <div className="mt-4 flex justify-center">
+          <Button size="sm" variant="bordered" onPress={onComplete}>
+            Reset
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PhaseChip({ phase }: { phase: SyncPhase }) {
   const phaseLabels: Record<SyncPhase, string> = {
+    initializing: 'Initializing',
     content: 'Content Changes',
     additions: 'Additions',
+    mention_updates: 'Mention Updates',
     deletions: 'Deletions',
-    idle: 'Idle',
+    parent_changes: 'Parent Changes',
+    notion_import: 'Notion Import',
+    completed: 'Completed',
+    stopped: 'Stopped',
   };
 
   const phaseColors: Record<SyncPhase, 'primary' | 'success' | 'warning' | 'danger' | 'default'> = {
+    initializing: 'default',
     content: 'primary',
     additions: 'success',
+    mention_updates: 'primary',
     deletions: 'danger',
-    idle: 'default',
+    parent_changes: 'warning',
+    notion_import: 'primary',
+    completed: 'success',
+    stopped: 'warning',
   };
 
   return (
@@ -345,104 +533,30 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
   );
 }
 
-function getLogColorClass(type: SyncLogEntry['type']): string {
-  switch (type) {
-    case 'success':
-      return 'text-green-700';
-    case 'error':
-      return 'text-red-700';
-    case 'warning':
-      return 'text-yellow-700';
-    case 'info':
-    default:
-      return 'text-gray-700';
-  }
-}
-
-function ChangeSection({
+const ChangeSection = memo(function ChangeSection({
   title,
   changes,
   changeType,
-  emptyMessage,
   uuidToDocMap,
   uuidToDocNoMap,
+  uuidToDatabaseMap,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
   changeType: AtlasChangeType;
-  emptyMessage: string;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
+  uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
 }) {
   const colorConfig = colors[changeType];
 
-  // Track checkbox state for each change (default to checked for user convenience)
-  // Sibling order changes are excluded as they're not synced yet
-  const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>(() => {
-    const initialState: Record<string, boolean> = {};
-    changes.forEach((change, index) => {
-      if (change.changeType !== 'sibling_order_changed') {
-        initialState[`${change.uuid}-${index}`] = true; // Default to checked
-      }
-    });
-    return initialState;
-  });
-
   if (changes.length === 0) {
     return null;
-    return (
-      <div className="mb-3">
-        <h2
-          className={cn(`mb-4 text-2xl font-semibold ${colorConfig.text}`, {
-            hidden: changes.length === 0,
-          })}
-        >
-          {title}
-        </h2>
-        <p className="text-sm text-gray-300 italic">{emptyMessage}</p>
-      </div>
-    );
   }
-
-  // Calculate if all checkboxes are checked (for indeterminate state)
-  const checkableChanges = changes.filter((change) => change.changeType !== 'sibling_order_changed');
-  const allChecked =
-    checkableChanges.length > 0 && checkableChanges.every((change, index) => checkboxStates[`${change.uuid}-${index}`]);
-  const someChecked = checkableChanges.some((change, index) => checkboxStates[`${change.uuid}-${index}`]);
-
-  // Toggle all checkboxes
-  const handleToggleAll = () => {
-    const newState: Record<string, boolean> = {};
-    const newValue = !allChecked;
-    changes.forEach((change, index) => {
-      if (change.changeType !== 'sibling_order_changed') {
-        newState[`${change.uuid}-${index}`] = newValue;
-      }
-    });
-    setCheckboxStates(newState);
-  };
-
-  // Toggle individual checkbox
-  const handleToggleCheckbox = (key: string) => {
-    setCheckboxStates((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
 
   return (
     <div className="my-9">
-      <div
-        className={`-mx-3 my-3 mb-6 flex items-center gap-3 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}
-      >
-        {checkableChanges.length > 0 && (
-          <Checkbox
-            size="md"
-            isSelected={allChecked}
-            isIndeterminate={someChecked && !allChecked}
-            onValueChange={handleToggleAll}
-          />
-        )}
+      <div className={`-mx-3 my-3 mb-6 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}>
         <h2 className="text-2xl font-semibold">
           {title} ({changes.length})
         </h2>
@@ -454,14 +568,13 @@ function ChangeSection({
             change={change}
             uuidToDocMap={uuidToDocMap}
             uuidToDocNoMap={uuidToDocNoMap}
-            isChecked={checkboxStates[`${change.uuid}-${index}`] ?? true}
-            onToggleCheckbox={() => handleToggleCheckbox(`${change.uuid}-${index}`)}
+            uuidToDatabaseMap={uuidToDatabaseMap}
           />
         ))}
       </div>
     </div>
   );
-}
+});
 
 // Format UUID as document reference
 function formatDocReference(
@@ -472,30 +585,27 @@ function formatDocReference(
   if (refDoc) {
     return `${refDoc.doc_no} - ${refDoc.name} [${refDoc.type}]`;
   }
-  return uuid; // Fallback to UUID if not found
+  return uuid;
 }
 
-function ChangeCard({
+const ChangeCard = memo(function ChangeCard({
   change,
   uuidToDocMap,
   uuidToDocNoMap,
-  isChecked,
-  onToggleCheckbox,
+  uuidToDatabaseMap,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
-  isChecked?: boolean;
-  onToggleCheckbox?: () => void;
+  uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
 }) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
 
+  const databaseName = uuidToDatabaseMap.get(change.uuid);
+
   return (
     <div className="flex items-center gap-3">
-      {change.changeType !== 'sibling_order_changed' && (
-        <Checkbox size="md" isSelected={isChecked} onValueChange={onToggleCheckbox} className="mt-1" />
-      )}
       <Card className="flex-1" radius="none" shadow="none">
         <CardBody className="flex flex-col gap-0">
           {/* Document title in Atlas style */}
@@ -504,6 +614,11 @@ function ChangeCard({
               {doc.doc_no} - {doc.name}
             </span>
             <TypeChip type={doc.type} />
+            {databaseName && (
+              <Chip size="sm" variant="flat" color="default" className="text-xs">
+                {databaseName}
+              </Chip>
+            )}
           </div>
 
           {/* Show inline diff for content changes */}
@@ -538,17 +653,6 @@ function ChangeCard({
             </div>
           )}
 
-          {/* Show sibling order change details */}
-          {change.changeType === 'sibling_order_changed' && (
-            <div className={`mt-2 rounded p-3 ${colors.sibling_order_changed.background} `}>
-              <div className="text-sm">
-                <span className="text-red-600">{change.oldValues?.doc_no}</span>
-                <span className="px-2"> → </span>
-                <span className="text-green-600">{change.newValues?.doc_no}</span>
-              </div>
-            </div>
-          )}
-
           {/* Show content and extra fields for added documents */}
           {change.changeType === 'added' && change.newValues && (
             <div className="mt-2">
@@ -572,7 +676,7 @@ function ChangeCard({
       </Card>
     </div>
   );
-}
+});
 
 function ParentDoc({
   change,
@@ -629,7 +733,6 @@ function FieldChanges({
   }
 
   // Compare extra fields based on document type
-  // Extra fields are specific to Type Specification, Scenario, Scenario Variation, and Needed Research
   const extraFieldMapping = getExtraFieldMappingForDocumentType(oldDoc.type);
   if (extraFieldMapping) {
     const oldDocRecord = oldDoc as unknown as Record<string, unknown>;
@@ -668,12 +771,6 @@ function FieldChanges({
                 <div className="mt-1">
                   <InlineTextDiff oldContent={change.oldValue} newContent={change.newValue} />
                 </div>
-                <div className="hidden">
-                  <span className="font-medium text-red-600">Old:</span>
-                  <pre className="bg-gray-100 p-2 text-xs">{JSON.stringify(change.oldValue, null, 2)}</pre>
-                  <span className="font-medium text-green-600">New:</span>
-                  <pre className="bg-gray-100 p-2 text-xs">{JSON.stringify(change.newValue, null, 2)}</pre>
-                </div>
               </div>
             </div>
           </div>
@@ -685,7 +782,6 @@ function FieldChanges({
 
 /**
  * Get the extra field mapping for a given document type.
- * Returns a mapping of field keys to display names.
  */
 function getExtraFieldMappingForDocumentType(type: string): Record<string, string> | null {
   switch (type) {
@@ -714,7 +810,6 @@ function formatFieldValue(value: unknown): string {
 
 /**
  * Display document content and extra fields in Atlas style.
- * Used for showing added/deleted documents in the diff UI.
  */
 function DocumentContent({
   doc,
@@ -726,7 +821,7 @@ function DocumentContent({
   const extraFieldMapping = getExtraFieldMappingForDocumentType(doc.type);
   const docRecord = doc as unknown as Record<string, unknown>;
 
-  // Format markdown content as HTML for display (consistent with Atlas viewer)
+  // Format markdown content as HTML for display
   const formattedContent = markdownToHTML(doc.content, uuidToDocNoMap);
 
   return (
@@ -738,26 +833,22 @@ function DocumentContent({
         </div>
       )}
 
-      {/* Extra fields if present - styled like content-tree */}
+      {/* Extra fields if present */}
       {extraFieldMapping && (
         <div className="mt-2 text-sm text-slate-600">
           {Object.entries(extraFieldMapping).map(([fieldKey, displayName]) => {
             const fieldValue = docRecord[fieldKey];
             if (fieldValue !== undefined && fieldValue !== null && fieldValue !== '') {
-              // Format field value with markdown support
               let formattedValue: React.ReactNode;
 
               if (Array.isArray(fieldValue)) {
-                // For arrays, join with comma and format as markdown
                 const joinedValue = fieldValue.join(', ');
                 const html = markdownToHTML(joinedValue, uuidToDocNoMap);
                 formattedValue = <CustomHTML html={html} />;
               } else if (typeof fieldValue === 'string') {
-                // For strings, format as markdown
                 const html = markdownToHTML(fieldValue, uuidToDocNoMap);
                 formattedValue = <CustomHTML html={html} />;
               } else {
-                // For numbers and booleans, convert to string
                 formattedValue = String(fieldValue);
               }
 

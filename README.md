@@ -27,7 +27,7 @@ A Next.js application that enables change tracking for Atlas documents stored in
 
 ### Database & Storage
 
-- **Supabase** (PostgreSQL database). Only used server-side
+- **Supabase** (PostgreSQL database). Only used server-side. Cloud-based in production; local development via `npm run supabase:start`
 - **PostgreSQL** with public schema (public access disabled via RLS)
 
 ### Background Jobs
@@ -112,7 +112,7 @@ Stores Notion database pages and their hierarchical relationships.
 **Key Fields:**
 
 - `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Spell SP Controller', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
+- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
 - `atlas_document_number` (TEXT, NOT NULL, DEFAULT '') - Document number of the Atlas document this page belongs to
 - `atlas_database_name` (ENUM, NOT NULL) - Database name. Enum values: 'Scopes', 'Articles', 'Sections & Primary Docs', 'Annotations', 'Tenets', 'Scenarios', 'Scenario Variations', 'Active Data', 'Agent Scope Database', 'Needed Research', 'Original Context Data'.
 - `has_children` (BOOLEAN) - Whether page has sub-items in the database
@@ -275,7 +275,6 @@ Each document in the Atlas has a specific type from the following enum:
 - **Core** - Core legal documents
 - **Type Specification** - Technical specification documents
 - **Active Data Controller** - Documents controlling active data
-- **Spell SP Controller** - Documents controlling spell SP
 - **Action Tenet** - Action-oriented tenet documents
 - **Active Data** - Active data items
 - **Annotation** - Annotation items
@@ -426,19 +425,16 @@ The `constants.ts` file conditionally imports Notion IDs from one of three files
 
 1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
    - Provides consistent, realistic-looking UUIDs for unit tests
-2. **Development/QA**: Uses `notion-ids-dev.ts` when `USE_DEV_NOTION_IDS === 'true'`
+2. **Development/QA**: Uses `notion-ids-dev.ts` when `NODE_ENV !== 'production'`
    - Separate dev/QA IDs prevent accidental access to production data during local development and manual QA
-   - Must be explicitly set to 'true' to enable
-3. **Production** (lowest priority, default): Uses `notion-ids.ts` (real IDs) when `USE_DEV_NOTION_IDS !== 'true'`
+3. **Production**: Uses `notion-ids.ts` (real IDs) when `NODE_ENV === 'production'`
    - Real Notion database and page IDs for production use
-   - This is the default when USE_DEV_NOTION_IDS is not set or set to any value other than 'true'
 
 This three-tier system ensures:
 
 - Unit tests use consistent made-up UUIDs that don't require real credentials
-- Development and manual QA environments use separate IDs when explicitly opted-in via `USE_DEV_NOTION_IDS='true'`
-- Production uses real production Notion IDs by default (safe default)
-- Explicit control via `USE_DEV_NOTION_IDS` environment variable
+- Development and manual QA environments automatically use separate IDs
+- Production uses real production Notion IDs
 
 ### Notion Database Property Mapping (`/app/server/atlas`)
 
@@ -567,7 +563,6 @@ This project maintains **2 synchronized documentation files** that provide high-
 - **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
 - **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
 - **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
-- **[docs/ATLAS_DIFFING.md](./docs/ATLAS_DIFFING.md)** - Tree diffing algorithms and change detection for Atlas documents
 - **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
 
 ### Atlas Data Formats & Export
@@ -615,13 +610,11 @@ This project maintains **2 synchronized documentation files** that provide high-
 
 ### Environment Variables
 
-- `NOTION_SECRETS_READ` - Your read-only Notion integration API key to read Master Atlas DB-s
-- `NOTION_SECRET_WRITE` - Your Notion integration API key to create Edit Pages
+- `NOTION_API_KEY` - Your Notion integration API key (supports comma-separated keys for load balancing)
 - `NOTION_WEBHOOK_VERIFICATION_TOKEN` - https://developers.notion.com/reference/webhooks#step-3-validating-event-payloads-recommended
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_API_KEY` - Your Supabase API key
 - `TRIGGER_SECRET_KEY` - Trigger.dev secret key (for background jobs)
-- `USE_DEV_NOTION_IDS` - When set to `'true'`, uses dev Notion IDs instead of production IDs. Defaults to `false` (production IDs) when not set. Useful for development and manual QA to prevent accidental production data access
 - `DEBUG_LOGGING` - When set, console logs will be verbose
 
 ## 🧰 Command line scripts

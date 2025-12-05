@@ -2,6 +2,7 @@ import { metadata, task } from '@trigger.dev/sdk/v3';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { revalidatePage } from '../../revalidate-page';
 import { importDatabasesFromNotionToSupabase } from '../notion/import-database-to-supabase';
+import { notionImportQueue } from './notion-import-queue';
 
 const metadataKey = 'notion_api_call_count';
 const setApiCallCountTriggerMetadata = (count: number) => metadata.set(metadataKey, count);
@@ -9,6 +10,7 @@ const flushTriggerMetadata = () => metadata.flush();
 
 export const notionFullAtlasImportTask = task({
   id: 'notion-database-import',
+  queue: notionImportQueue, // Shared queue ensures only one import runs at a time
   // Set an optional maxDuration to prevent tasks from running indefinitely
   maxDuration: 60 * 60, // Stop executing after 60 mins of compute
   retry: {

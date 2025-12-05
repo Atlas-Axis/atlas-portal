@@ -133,3 +133,23 @@ Mappings modify these relationship arrays based on database:
    - Place After Sibling: `ccc33333-e89b-12d3-a456-426614174000`
 5. Save and re-import
 6. Child is now inserted after A.1.1.1.1 in the parent's child list
+
+## Markdown → Notion Sync Behavior
+
+When syncing changes from Markdown back to Notion, documents affected by nesting bug mappings are handled specially:
+
+**Parent Changes Are Skipped**: During sync Phase 4 (process parent changes), if a document has a nesting bug mapping, its parent change is skipped. This preserves the manual corrections stored in `notion_nesting_bug_mapping`.
+
+**Why?** Manual nesting bug mappings represent careful corrections to Notion's buggy behavior. Allowing parent changes to sync would overwrite these corrections and potentially corrupt the hierarchy.
+
+**Implementation:**
+
+1. At sync start, nesting bug mappings are loaded and converted to a Set of affected Atlas UUIDs
+2. Before processing each parent change, the sync orchestrator checks if the document is in this set
+3. If affected, the change is skipped with a warning log: "Skipped (nesting bug affected)"
+4. Content changes (name, content, type, etc.) for affected documents are still synced normally
+
+**Related Files:**
+
+- `app/server/services/supabase/notion-nesting-bug-mappings.ts` - `buildNestingBugAffectedUuidsSet()` helper
+- `app/atlas/sync/_lib/sync-orchestrator.ts` - Phase 4 skip logic

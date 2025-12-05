@@ -87,7 +87,6 @@ export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
       [ATLAS_DATABASES.TENETS]: 'Tenets',
       [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
       [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-      // Extra in PH importer: "Files & media"
     },
     parentRelationships: {
       [ATLAS_DATABASES.ARTICLES]: 'Parent Article',

@@ -6,13 +6,18 @@
     },
     "trigger": {
       "command": "npx",
-      "args": ["trigger.dev@latest", "mcp", "--dev-only"]
+      "args": ["trigger.dev@latest", "mcp"]
     },
     "supabase": {
-      "url": "https://mcp.supabase.com/mcp?project_ref=kvxffffzfsnosaqmofut"
+      "url": "http://localhost:54321/mcp"
     },
     "Sentry": {
       "url": "https://mcp.sentry.dev/mcp/atlas-axis/atlas-axis-notion-sync"
+    },
+    "Playwright": {
+      "command": "npx -y @playwright/mcp@latest",
+      "env": {},
+      "args": []
     }
   }
 }

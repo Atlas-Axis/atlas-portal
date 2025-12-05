@@ -59,6 +59,78 @@ export type Database = {
         };
         Relationships: [];
       };
+      markdown_notion_sync_lock: {
+        Row: {
+          created_at: string | null;
+          id: number;
+          is_locked: boolean;
+          locked_at: string | null;
+          stop_requested: boolean;
+          trigger_run_id: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: number;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          stop_requested?: boolean;
+          trigger_run_id?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: number;
+          is_locked?: boolean;
+          locked_at?: string | null;
+          stop_requested?: boolean;
+          trigger_run_id?: string | null;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
+      notion_api_audit_log: {
+        Row: {
+          atlas_document_uuid: string | null;
+          created_at: string;
+          database_name: string;
+          error_message: string | null;
+          id: string;
+          notion_page_id: string;
+          operation_type: string;
+          request_payload: Json;
+          response_payload: Json | null;
+          success: boolean;
+          sync_batch_id: string | null;
+        };
+        Insert: {
+          atlas_document_uuid?: string | null;
+          created_at?: string;
+          database_name: string;
+          error_message?: string | null;
+          id?: string;
+          notion_page_id: string;
+          operation_type: string;
+          request_payload: Json;
+          response_payload?: Json | null;
+          success: boolean;
+          sync_batch_id?: string | null;
+        };
+        Update: {
+          atlas_document_uuid?: string | null;
+          created_at?: string;
+          database_name?: string;
+          error_message?: string | null;
+          id?: string;
+          notion_page_id?: string;
+          operation_type?: string;
+          request_payload?: Json;
+          response_payload?: Json | null;
+          success?: boolean;
+          sync_batch_id?: string | null;
+        };
+        Relationships: [];
+      };
       notion_blocks: {
         Row: {
           archived: boolean;

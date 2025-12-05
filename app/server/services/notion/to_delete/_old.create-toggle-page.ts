@@ -163,7 +163,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
 
     // Step 3: Retrieve original database schema for title
     console.log('Step 3: Retrieving original database schema...');
-    const originalDatabase = (await notion('read').databases.retrieve({
+    const originalDatabase = (await notion().databases.retrieve({
       database_id: originalNotionDatabaseId,
     })) as DatabaseObjectResponse;
 
@@ -248,7 +248,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
       );
     }
 
-    const newPage = await notion('write').pages.create({
+    const newPage = await notion().pages.create({
       parent,
       properties: {
         title: {
@@ -318,7 +318,7 @@ export async function _delete_createNotionPageWithToggleBlocks({
     if (newPageId) {
       try {
         console.log(`Updating page ${newPageId} description to indicate partial creation...`);
-        await notion('write').pages.update({
+        await notion().pages.update({
           page_id: newPageId,
           properties: {
             // Note: This might not work if the page doesn't have a description property
@@ -545,7 +545,7 @@ async function createSingleToggleBlock(parentId: string, databasePage: NotionDat
   };
 
   // Append the toggle block to its parent
-  const response = await notion('write').blocks.children.append({
+  const response = await notion().blocks.children.append({
     block_id: parentId,
     children: [toggleBlock],
   });
@@ -561,7 +561,7 @@ async function createSingleToggleBlock(parentId: string, databasePage: NotionDat
   // Add children to the toggle block if there are any
   if (children.length > 0) {
     try {
-      await notion('write').blocks.children.append({
+      await notion().blocks.children.append({
         block_id: toggleBlockId,
         children: children,
       });
