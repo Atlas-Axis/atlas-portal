@@ -29,15 +29,6 @@ describe('sync-lock', () => {
 
   describe('acquireSyncLock', () => {
     it('successfully acquires lock when unlocked', async () => {
-      // Mock getSyncLockStatus call first
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: { is_locked: false, locked_at: null, trigger_run_id: null, stop_requested: false },
-        error: null,
-      });
-
-      // Mock acquireSyncLock update call
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockReturnThis();
       const mockOr = vi.fn().mockReturnThis();
@@ -47,16 +38,9 @@ describe('sync-lock', () => {
         error: null,
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
       mockEq.mockReturnValue({ or: mockOr });
@@ -75,20 +59,6 @@ describe('sync-lock', () => {
     });
 
     it('fails to acquire lock when already locked', async () => {
-      // Mock getSyncLockStatus call
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: {
-          is_locked: true,
-          locked_at: '2024-01-01T00:00:00Z',
-          trigger_run_id: 'other-run',
-          stop_requested: false,
-        },
-        error: null,
-      });
-
-      // Mock acquireSyncLock update call (will fail)
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockReturnThis();
       const mockOr = vi.fn().mockReturnThis();
@@ -98,16 +68,9 @@ describe('sync-lock', () => {
         error: { code: 'PGRST116', message: 'No rows found' },
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
       mockEq.mockReturnValue({ or: mockOr });
@@ -120,15 +83,6 @@ describe('sync-lock', () => {
     });
 
     it('throws error for unexpected database errors', async () => {
-      // Mock getSyncLockStatus call
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: { is_locked: false, locked_at: null, trigger_run_id: null, stop_requested: false },
-        error: null,
-      });
-
-      // Mock acquireSyncLock update call (will fail with unexpected error)
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockReturnThis();
       const mockOr = vi.fn().mockReturnThis();
@@ -138,16 +92,9 @@ describe('sync-lock', () => {
         error: { code: 'OTHER_ERROR', message: 'Database error' },
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
       mockEq.mockReturnValue({ or: mockOr });
@@ -160,36 +107,15 @@ describe('sync-lock', () => {
 
   describe('releaseSyncLock', () => {
     it('successfully releases lock with run ID', async () => {
-      // Mock getSyncLockStatus call
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: {
-          is_locked: true,
-          locked_at: '2024-01-01T00:00:00Z',
-          trigger_run_id: 'test-run-id',
-          stop_requested: false,
-        },
-        error: null,
-      });
-
-      // Mock releaseSyncLock update call
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockReturnThis();
       const finalMockEq = vi.fn().mockResolvedValue({
         error: null,
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
       mockEq.mockReturnValue({ eq: finalMockEq });
@@ -207,30 +133,14 @@ describe('sync-lock', () => {
     });
 
     it('successfully releases lock without run ID (force release)', async () => {
-      // Mock getSyncLockStatus call
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: { is_locked: true, locked_at: '2024-01-01T00:00:00Z', trigger_run_id: 'some-run', stop_requested: false },
-        error: null,
-      });
-
-      // Mock releaseSyncLock update call
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockResolvedValue({
         error: null,
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
 
@@ -247,36 +157,15 @@ describe('sync-lock', () => {
     });
 
     it('throws error on database failure', async () => {
-      // Mock getSyncLockStatus call
-      const mockSelectForStatus = vi.fn().mockReturnThis();
-      const mockEqForStatus = vi.fn().mockReturnThis();
-      const mockSingleForStatus = vi.fn().mockResolvedValue({
-        data: {
-          is_locked: true,
-          locked_at: '2024-01-01T00:00:00Z',
-          trigger_run_id: 'test-run-id',
-          stop_requested: false,
-        },
-        error: null,
-      });
-
-      // Mock releaseSyncLock update call (will fail)
       const mockUpdate = vi.fn().mockReturnThis();
       const mockEq = vi.fn().mockReturnThis();
       const finalMockEq = vi.fn().mockResolvedValue({
         error: { message: 'Database error' },
       });
 
-      mockSupabase.from
-        .mockReturnValueOnce({
-          select: mockSelectForStatus,
-        })
-        .mockReturnValueOnce({
-          update: mockUpdate,
-        });
-
-      mockSelectForStatus.mockReturnValue({ eq: mockEqForStatus });
-      mockEqForStatus.mockReturnValue({ single: mockSingleForStatus });
+      mockSupabase.from.mockReturnValue({
+        update: mockUpdate,
+      });
 
       mockUpdate.mockReturnValue({ eq: mockEq });
       mockEq.mockReturnValue({ eq: finalMockEq });
