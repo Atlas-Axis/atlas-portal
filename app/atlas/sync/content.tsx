@@ -349,6 +349,11 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
                 Stop Sync
               </Button>
             )}
+            {isRunCompleted && (
+              <Button size="lg" onPress={() => window.location.reload()} variant="solid" color="primary">
+                Refresh Page
+              </Button>
+            )}
           </>
         )}
       </div>
