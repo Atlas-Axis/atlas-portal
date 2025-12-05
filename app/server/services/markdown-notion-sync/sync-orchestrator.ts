@@ -185,10 +185,17 @@ export async function processChanges(
           if (result.pageId) {
             createdPagesInSync.add(result.pageId);
 
-            // Track affected database
+            // Track affected database (the new document's database)
             if (change.uuid) {
               const db = diffResult.newIdsToDatabase.get(change.uuid);
               if (db) affectedDatabasesSet.add(db);
+            }
+
+            // Track parent's database (parent's child_*_ids array will be updated in Notion)
+            if (change.newAncestry && change.newAncestry.length > 0) {
+              const parentUuid = change.newAncestry[change.newAncestry.length - 1];
+              const parentDb = diffResult.newIdsToDatabase.get(parentUuid);
+              if (parentDb) affectedDatabasesSet.add(parentDb);
             }
 
             // Track pages with unresolved mentions for Phase 2.5
@@ -280,10 +287,17 @@ export async function processChanges(
         completed++;
         if (result.success) {
           succeeded++;
-          // Track affected database
+          // Track affected database (the deleted document's database)
           if (change.uuid) {
             const db = diffResult.originalIdsToDatabase.get(change.uuid);
             if (db) affectedDatabasesSet.add(db);
+          }
+
+          // Track old parent's database (parent's child_*_ids array will be updated in Notion)
+          if (change.oldAncestry && change.oldAncestry.length > 0) {
+            const parentUuid = change.oldAncestry[change.oldAncestry.length - 1];
+            const parentDb = diffResult.originalIdsToDatabase.get(parentUuid);
+            if (parentDb) affectedDatabasesSet.add(parentDb);
           }
         } else if (result.reason) {
           skipped++;
@@ -332,11 +346,27 @@ export async function processChanges(
         completed++;
         if (result.success) {
           succeeded++;
-          // Track affected database
+          // Track affected database (the moved document's database)
           if (change.uuid) {
             const db =
               diffResult.newIdsToDatabase.get(change.uuid) ?? diffResult.originalIdsToDatabase.get(change.uuid);
             if (db) affectedDatabasesSet.add(db);
+          }
+
+          // Track old parent's database (old parent's child_*_ids array will be updated in Notion)
+          if (change.oldAncestry && change.oldAncestry.length > 0) {
+            const oldParentUuid = change.oldAncestry[change.oldAncestry.length - 1];
+            const oldParentDb =
+              diffResult.originalIdsToDatabase.get(oldParentUuid) ?? diffResult.newIdsToDatabase.get(oldParentUuid);
+            if (oldParentDb) affectedDatabasesSet.add(oldParentDb);
+          }
+
+          // Track new parent's database (new parent's child_*_ids array will be updated in Notion)
+          if (change.newAncestry && change.newAncestry.length > 0) {
+            const newParentUuid = change.newAncestry[change.newAncestry.length - 1];
+            const newParentDb =
+              diffResult.newIdsToDatabase.get(newParentUuid) ?? diffResult.originalIdsToDatabase.get(newParentUuid);
+            if (newParentDb) affectedDatabasesSet.add(newParentDb);
           }
         } else if (result.reason) {
           skipped++;
