@@ -16,10 +16,11 @@ export const dynamic = 'force-dynamic';
 export default async function AtlasSyncPage() {
   // Diff happens server-side for performance (large datasets)
   const result = await diffAtlasScopeTreeLists();
+  const isDevMode = process.env.NODE_ENV !== 'production';
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6 pb-12">
-      <Content result={result} />
+      <Content result={result} isDevMode={isDevMode} />
     </div>
   );
 }

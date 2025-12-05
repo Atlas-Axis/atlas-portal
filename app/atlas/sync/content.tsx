@@ -77,7 +77,7 @@ const colors: {
   },
 };
 
-export function Content({ result }: { result: AtlasDiffResult }) {
+export function Content({ result, isDevMode }: { result: AtlasDiffResult; isDevMode: boolean }) {
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
     changes.added.length > 0 ||
@@ -165,7 +165,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
         />
 
         {/* Sync Controls */}
-        <SyncControls hasChanges={hasChanges} />
+        <SyncControls hasChanges={hasChanges} isDevMode={isDevMode} />
       </CardBody>
     </Card>
   );
@@ -174,7 +174,7 @@ export function Content({ result }: { result: AtlasDiffResult }) {
 /**
  * Sync controls component - manages sync state and realtime subscription
  */
-function SyncControls({ hasChanges }: { hasChanges: boolean }) {
+function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMode: boolean }) {
   // Sync filter state
   const [syncFilters, setSyncFilters] = useState({
     added: true,
@@ -335,7 +335,7 @@ function SyncControls({ hasChanges }: { hasChanges: boolean }) {
           </Button>
         ) : (
           <>
-            {!stopRequested && (
+            {isDevMode && !stopRequested && (
               <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
                 Stop Sync
               </Button>
