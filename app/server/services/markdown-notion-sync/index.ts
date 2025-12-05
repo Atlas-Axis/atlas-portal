@@ -10,6 +10,7 @@ export type {
   MarkdownNotionSyncPayload,
   MarkdownNotionSyncResult,
   SyncActionResult,
+  PageWithUnresolvedMentions,
 } from './types';
 
 // Export helper functions
@@ -21,6 +22,7 @@ export {
   createNotionDatabasePage,
   deleteNotionPage,
   updateNotionPageParent,
+  updatePageMentions,
 } from './sync-operations';
 
 // Export orchestrator

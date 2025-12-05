@@ -204,7 +204,16 @@ export async function createNotionDatabasePage(
       syncBatchId,
     });
 
-    return { success: true, pageId: createdPage.id };
+    // Extract unresolved mention UUIDs from warnings for post-processing
+    const unresolvedMentionUuids = warnings
+      .filter((w) => w.type === 'missing_mapping' && w.atlasUuid)
+      .map((w) => w.atlasUuid!);
+
+    return {
+      success: true,
+      pageId: createdPage.id,
+      unresolvedMentionUuids: unresolvedMentionUuids.length > 0 ? unresolvedMentionUuids : undefined,
+    };
   } catch (error) {
     const err = error as Error;
     await logNotionApiOperation({
@@ -417,6 +426,74 @@ export async function updateNotionPageParent(
       atlasDocumentUuid: change.uuid,
       databaseName,
       requestPayload: { page_id: notionPageId, properties },
+      success: false,
+      errorMessage: err.message,
+      syncBatchId,
+    });
+    return { success: false, error: err.message };
+  }
+}
+
+/**
+ * Updates the content of a Notion page to fix placeholder mentions.
+ * This is called in the mention post-processing phase after all new pages are created.
+ *
+ * @param notionPageId The Notion page ID to update
+ * @param document The document data (used to rebuild content with proper mentions)
+ * @param databaseName The database name for property mapping
+ * @param uuidMappings Updated UUID mappings (now includes newly created pages)
+ * @param syncBatchId Sync batch ID for audit logging
+ * @returns Result with success status
+ */
+export async function updatePageMentions(
+  notionPageId: string,
+  document: ExportAtlasTreeBaseDocument,
+  databaseName: AtlasDatabaseName,
+  uuidMappings: UuidMappings,
+  syncBatchId: string,
+): Promise<SyncActionResult> {
+  const warnings: ContentConversionWarning[] = [];
+
+  // Rebuild properties with the now-complete UUID mappings
+  // This will convert placeholder mentions to proper Notion mentions
+  const properties = buildNotionProperties(document, databaseName, uuidMappings, warnings);
+
+  // Check if there are still unresolved mentions (shouldn't happen if all pages were created)
+  const stillUnresolved = warnings.filter((w) => w.type === 'missing_mapping');
+  if (stillUnresolved.length > 0) {
+    console.warn(
+      `[updatePageMentions] Still have ${stillUnresolved.length} unresolved mentions after post-processing:`,
+      stillUnresolved.map((w) => w.atlasUuid),
+    );
+  }
+
+  try {
+    const notionClient = notion();
+    const response = await notionClient.pages.update({
+      page_id: notionPageId,
+      properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
+    });
+
+    await logNotionApiOperation({
+      operationType: 'update',
+      notionPageId,
+      atlasDocumentUuid: document.uuid,
+      databaseName,
+      requestPayload: { page_id: notionPageId, properties, _phase: 'mention_post_processing' },
+      responsePayload: response as Record<string, unknown>,
+      success: true,
+      syncBatchId,
+    });
+
+    return { success: true, pageId: notionPageId };
+  } catch (error) {
+    const err = error as Error;
+    await logNotionApiOperation({
+      operationType: 'update',
+      notionPageId,
+      atlasDocumentUuid: document.uuid,
+      databaseName,
+      requestPayload: { page_id: notionPageId, properties, _phase: 'mention_post_processing' },
       success: false,
       errorMessage: err.message,
       syncBatchId,

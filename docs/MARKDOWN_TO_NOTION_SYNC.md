@@ -27,6 +27,7 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for complete pipeline
 
 - ✅ **Change Detection**: Automatically detects new, modified, moved, and deleted documents
 - ✅ **Structural Changes**: Syncs parent changes (cross-database and same-database)
+- ✅ **Mention Handling**: Converts markdown links to Notion mention objects with post-processing for new pages
 - ✅ **Background Processing**: Sync runs in Trigger.dev background task (survives page refresh)
 - ✅ **Audit Logging**: Complete audit trail of all Notion API operations
 - ✅ **UUID Mapping**: Automatic storage and lookup of UUID mappings for document references
@@ -173,6 +174,18 @@ New documents are created in hierarchical order (parents before children). Each 
 - Sets parent to database ID (never page_id)
 - Stores UUID mapping immediately
 - Logs to audit table
+- Tracks pages with unresolved mentions for post-processing
+
+### Mention Post-Processing
+
+**Problem**: In the markdown format, Atlas documents contain internal links to other Atlas documents using the format `[text](atlas-uuid)`. These links should become Notion "mention" objects that link to the referenced Notion page. However, during the Additions phase, when a new page is created, the pages it references may not exist yet in Notion (they're also being created in the same sync batch). Without a valid Notion page ID, we cannot create a proper mention object.
+
+**Solution**: During page creation, we create placeholder mentions using the Atlas UUID as a temporary page ID and track which pages have unresolved mentions. After all new pages are created (and their UUID mappings stored), Phase 2.5 runs to update these pages with proper Notion mentions:
+
+- Placeholder mentions (using Atlas UUID) are converted to proper Notion mentions with real Notion page IDs
+- Content properties are rebuilt with complete UUID mappings
+- Only pages that had unresolved mentions are updated (minimal API calls)
+- A `missing_mapping` warning is logged for any mentions that still can't be resolved (e.g., referencing a page that wasn't part of the sync)
 
 ### Update Pages
 

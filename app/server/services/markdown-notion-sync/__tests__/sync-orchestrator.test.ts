@@ -13,6 +13,7 @@ import {
   deleteNotionPage,
   updateNotionPageContent,
   updateNotionPageParent,
+  updatePageMentions,
 } from '../sync-operations';
 import { ProgressCallback, StopCheckCallback, processChanges } from '../sync-orchestrator';
 import { SyncFilters } from '../types';
@@ -36,6 +37,7 @@ vi.mock('../sync-operations', () => ({
   createNotionDatabasePage: vi.fn(),
   deleteNotionPage: vi.fn(),
   updateNotionPageParent: vi.fn(),
+  updatePageMentions: vi.fn(),
 }));
 
 describe('sync-orchestrator', () => {
@@ -92,6 +94,7 @@ describe('sync-orchestrator', () => {
     vi.mocked(createNotionDatabasePage).mockResolvedValue({ success: true, pageId: 'new-page-id' });
     vi.mocked(deleteNotionPage).mockResolvedValue({ success: true });
     vi.mocked(updateNotionPageParent).mockResolvedValue({ success: true });
+    vi.mocked(updatePageMentions).mockResolvedValue({ success: true });
   });
 
   describe('empty changes', () => {
@@ -493,6 +496,219 @@ describe('sync-orchestrator', () => {
       );
 
       expect(updateNotionPageParent).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('mention post-processing (Phase 2.5)', () => {
+    it('processes mention updates after additions when there are unresolved mentions', async () => {
+      const mockAdded: AtlasDocumentChange = {
+        uuid: 'uuid-1',
+        changeType: 'added',
+        newValues: createMockDoc('A.1', 'Added', 'uuid-1'),
+        newAncestry: [],
+      };
+
+      mockDiffResult.changes.added = [mockAdded];
+      mockDiffResult.newIdsToDocuments = new Map([['uuid-1', mockAdded.newValues!]]);
+      mockDiffResult.newIdsToDatabase = new Map([['uuid-1', 'Sections & Primary Docs']]);
+
+      // Return unresolved mention UUIDs from page creation
+      vi.mocked(createNotionDatabasePage).mockResolvedValue({
+        success: true,
+        pageId: 'new-page-id',
+        unresolvedMentionUuids: ['ref-uuid-1', 'ref-uuid-2'],
+      });
+
+      const callOrder: string[] = [];
+      vi.mocked(createNotionDatabasePage).mockImplementation(async () => {
+        callOrder.push('addition');
+        return { success: true, pageId: 'new-page-id', unresolvedMentionUuids: ['ref-uuid-1'] };
+      });
+      vi.mocked(updatePageMentions).mockImplementation(async () => {
+        callOrder.push('mention_update');
+        return { success: true };
+      });
+
+      await processChanges(
+        mockDiffResult,
+        mockUuidMappings,
+        mockFilters,
+        'batch-id',
+        mockProgressCallback,
+        mockStopCheckCallback,
+      );
+
+      // Verify mention updates happen after additions
+      expect(callOrder).toEqual(['addition', 'mention_update']);
+      expect(updatePageMentions).toHaveBeenCalledTimes(1);
+    });
+
+    it('skips mention post-processing when no unresolved mentions', async () => {
+      const mockAdded: AtlasDocumentChange = {
+        uuid: 'uuid-1',
+        changeType: 'added',
+        newValues: createMockDoc('A.1', 'Added', 'uuid-1'),
+        newAncestry: [],
+      };
+
+      mockDiffResult.changes.added = [mockAdded];
+      mockDiffResult.newIdsToDocuments = new Map([['uuid-1', mockAdded.newValues!]]);
+      mockDiffResult.newIdsToDatabase = new Map([['uuid-1', 'Sections & Primary Docs']]);
+
+      // No unresolved mentions
+      vi.mocked(createNotionDatabasePage).mockResolvedValue({
+        success: true,
+        pageId: 'new-page-id',
+        unresolvedMentionUuids: undefined,
+      });
+
+      await processChanges(
+        mockDiffResult,
+        mockUuidMappings,
+        mockFilters,
+        'batch-id',
+        mockProgressCallback,
+        mockStopCheckCallback,
+      );
+
+      // No mention updates should be called
+      expect(updatePageMentions).not.toHaveBeenCalled();
+    });
+
+    it('handles mention update failures gracefully', async () => {
+      const mockAdded: AtlasDocumentChange = {
+        uuid: 'uuid-1',
+        changeType: 'added',
+        newValues: createMockDoc('A.1', 'Added', 'uuid-1'),
+        newAncestry: [],
+      };
+
+      mockDiffResult.changes.added = [mockAdded];
+      mockDiffResult.newIdsToDocuments = new Map([['uuid-1', mockAdded.newValues!]]);
+      mockDiffResult.newIdsToDatabase = new Map([['uuid-1', 'Sections & Primary Docs']]);
+
+      vi.mocked(createNotionDatabasePage).mockResolvedValue({
+        success: true,
+        pageId: 'new-page-id',
+        unresolvedMentionUuids: ['ref-uuid-1'],
+      });
+
+      // Mention update fails
+      vi.mocked(updatePageMentions).mockResolvedValue({
+        success: false,
+        error: 'Notion API error',
+      });
+
+      const result = await processChanges(
+        mockDiffResult,
+        mockUuidMappings,
+        mockFilters,
+        'batch-id',
+        mockProgressCallback,
+        mockStopCheckCallback,
+      );
+
+      // Should count the addition as succeeded, mention update as failed
+      expect(result.succeeded).toBe(1); // Addition succeeded
+      expect(result.failed).toBe(1); // Mention update failed
+    });
+
+    it('processes mention updates in correct phase order', async () => {
+      const mockChanged: AtlasDocumentChange = {
+        uuid: 'uuid-1',
+        changeType: 'changed',
+        oldValues: createMockDoc('A.1', 'Old', 'uuid-1'),
+        newValues: createMockDoc('A.1', 'New', 'uuid-1'),
+        oldAncestry: [],
+        newAncestry: [],
+      };
+
+      const mockAdded: AtlasDocumentChange = {
+        uuid: 'uuid-2',
+        changeType: 'added',
+        newValues: createMockDoc('A.2', 'Added', 'uuid-2'),
+        newAncestry: [],
+      };
+
+      const mockDeleted: AtlasDocumentChange = {
+        uuid: 'uuid-3',
+        changeType: 'deleted',
+        oldValues: createMockDoc('A.3', 'Deleted', 'uuid-3'),
+        oldAncestry: [],
+      };
+
+      mockDiffResult.changes = {
+        changed: [mockChanged],
+        added: [mockAdded],
+        deleted: [mockDeleted],
+        parent_changed: [],
+      };
+      mockDiffResult.newIdsToDocuments = new Map([['uuid-2', mockAdded.newValues!]]);
+      mockDiffResult.newIdsToDatabase = new Map([['uuid-2', 'Sections & Primary Docs']]);
+
+      const callOrder: string[] = [];
+      vi.mocked(updateNotionPageContent).mockImplementation(async () => {
+        callOrder.push('content');
+        return { success: true };
+      });
+      vi.mocked(createNotionDatabasePage).mockImplementation(async () => {
+        callOrder.push('addition');
+        return { success: true, pageId: 'new-id', unresolvedMentionUuids: ['ref-uuid'] };
+      });
+      vi.mocked(updatePageMentions).mockImplementation(async () => {
+        callOrder.push('mention_update');
+        return { success: true };
+      });
+      vi.mocked(deleteNotionPage).mockImplementation(async () => {
+        callOrder.push('deletion');
+        return { success: true };
+      });
+
+      await processChanges(
+        mockDiffResult,
+        mockUuidMappings,
+        mockFilters,
+        'batch-id',
+        mockProgressCallback,
+        mockStopCheckCallback,
+      );
+
+      // Order should be: content → additions → mention_updates → deletions
+      expect(callOrder).toEqual(['content', 'addition', 'mention_update', 'deletion']);
+    });
+
+    it('reports progress during mention updates phase', async () => {
+      const mockAdded: AtlasDocumentChange = {
+        uuid: 'uuid-1',
+        changeType: 'added',
+        newValues: createMockDoc('A.1', 'Added', 'uuid-1'),
+        newAncestry: [],
+      };
+
+      mockDiffResult.changes.added = [mockAdded];
+      mockDiffResult.newIdsToDocuments = new Map([['uuid-1', mockAdded.newValues!]]);
+      mockDiffResult.newIdsToDatabase = new Map([['uuid-1', 'Sections & Primary Docs']]);
+
+      vi.mocked(createNotionDatabasePage).mockResolvedValue({
+        success: true,
+        pageId: 'new-page-id',
+        unresolvedMentionUuids: ['ref-uuid'],
+      });
+
+      await processChanges(
+        mockDiffResult,
+        mockUuidMappings,
+        mockFilters,
+        'batch-id',
+        mockProgressCallback,
+        mockStopCheckCallback,
+      );
+
+      // Check that progress was reported for mention_updates phase
+      const mentionUpdateCalls = vi
+        .mocked(mockProgressCallback)
+        .mock.calls.filter((call) => call[0].phase === 'mention_updates');
+      expect(mentionUpdateCalls.length).toBeGreaterThan(0);
     });
   });
 });

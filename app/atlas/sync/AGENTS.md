@@ -33,8 +33,9 @@ When you click "Sync to Notion", the system triggers a Trigger.dev background ta
 
 1. **Content Changes** (safest - no relationship changes)
 2. **Additions** (validates parent pages exist first, sorted by hierarchy)
-3. **Deletions** (validates no children exist first)
-4. **Parent Changes** (updates relationship properties)
+3. **Mention Updates** (Phase 2.5 - updates placeholder mentions with real Notion page IDs)
+4. **Deletions** (validates no children exist first)
+5. **Parent Changes** (updates relationship properties)
 
 **Hierarchical Sorting for Additions**: New pages are sorted by Atlas database hierarchy level and nesting depth before creation. This ensures that parent pages are created before their children, preventing relationship errors when both parent and child are being added simultaneously. For example:
 
@@ -528,9 +529,57 @@ Filters apply to the sync operation. Checkboxes are disabled while sync is runni
 ### Progress Tracking
 
 - Real-time progress via Trigger.dev metadata subscription
-- Current phase indicator (Content → Additions → Deletions → Parent Changes)
+- Current phase indicator (Content → Additions → Mention Updates → Deletions → Parent Changes)
 - Document counter (e.g., "125/7000 documents synced")
 - Stop button to request graceful stop
+
+## Mention Post-Processing (Phase 2.5)
+
+### Problem
+
+When creating new Notion pages, the content may contain links to other Atlas documents using the format `[text](atlas-uuid)`. These links should become Notion "mention" objects that link to the referenced Notion page.
+
+However, during the Additions phase (Phase 2), the referenced pages may not exist yet in Notion because they're also being created in the same sync batch. Without a mapping from Atlas UUID to Notion page ID, the system cannot create proper mention objects.
+
+### Solution
+
+The system uses a two-step approach:
+
+1. **During Page Creation (Phase 2)**: Create mention objects using the Atlas UUID as a placeholder page ID. Notion accepts any UUID format, even for non-existent pages. Track which pages have unresolved mentions.
+
+2. **Mention Updates (Phase 2.5)**: After all new pages are created and their UUID mappings are stored, update the pages that had placeholder mentions. The content is rebuilt with the now-complete UUID mappings, converting placeholder mentions to proper Notion page mentions.
+
+### Implementation Details
+
+**Tracking Unresolved Mentions:**
+
+- The `convertMarkdownToNotionRichText()` function adds a `missing_mapping` warning when it creates a placeholder mention
+- The `createNotionDatabasePage()` function extracts these warnings and returns `unresolvedMentionUuids` in the result
+- The orchestrator collects pages with unresolved mentions in `pagesWithUnresolvedMentions` array
+
+**Post-Processing:**
+
+- After Phase 2 completes, Phase 2.5 iterates through `pagesWithUnresolvedMentions`
+- For each page, `updatePageMentions()` rebuilds the content properties using the now-complete UUID mappings
+- The page is updated via Notion API with the corrected mention objects
+- Operations are logged to the audit table with `_phase: 'mention_post_processing'` marker
+
+**Warning Interface:**
+
+```typescript
+interface ContentConversionWarning {
+  type: 'truncation' | 'missing_mapping';
+  message: string;
+  atlasUuid?: string; // For missing_mapping: the Atlas UUID that had no mapping
+}
+```
+
+### Benefits
+
+- **No data loss**: Links are preserved as proper Notion mentions, not converted to plain text
+- **Minimal API calls**: Only pages with unresolved mentions are updated in Phase 2.5
+- **Audit trail**: All mention update operations are logged with the phase marker
+- **Graceful degradation**: If a referenced page still doesn't exist after Phase 2, the mention remains with the placeholder UUID
 
 ## Notion API Constraints
 
@@ -776,6 +825,7 @@ or
 
 - ✅ **Content changes**: Updates to document name, content, type, and extra fields
 - ✅ **Document additions**: Create new documents with proper hierarchy and relationships
+- ✅ **Mention post-processing**: Updates placeholder mentions with real Notion page IDs after page creation
 - ✅ **Document deletions**: Archive documents (with child validation)
 - ✅ **Parent changes**: Sync parent relationship changes (same-database and cross-database)
 - ✅ **Document number sync**: doc_no field synced to Notion
@@ -788,12 +838,13 @@ or
 
 ### Sync Phases
 
-The task processes changes in 4 sequential phases:
+The task processes changes in 5 sequential phases:
 
 1. **Content Changes** - Safest operations (no relationship changes)
 2. **Additions** - Creates new pages (sorted by hierarchy, parents before children)
-3. **Deletions** - Archives pages (validates no children exist)
-4. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
+3. **Mention Updates** (Phase 2.5) - Updates placeholder mentions with real Notion page IDs
+4. **Deletions** - Archives pages (validates no children exist)
+5. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
 
 ## Limitations
 
@@ -867,8 +918,8 @@ This approach:
 - `app/server/services/markdown-notion-sync/` - Complete sync service module
   - `types.ts` - Shared type definitions
   - `sync-helpers.ts` - Utility functions (validation, sorting, formatting)
-  - `sync-operations.ts` - Core CRUD operations
-  - `sync-orchestrator.ts` - Main sync logic (4-phase processing)
+  - `sync-operations.ts` - Core CRUD operations (includes `updatePageMentions` for Phase 2.5)
+  - `sync-orchestrator.ts` - Main sync logic (5-phase processing)
   - `sync-lock.ts` - Sync lock management
   - `index.ts` - Public API exports
 

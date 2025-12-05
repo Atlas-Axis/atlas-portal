@@ -27,8 +27,12 @@ import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './noti
 export interface ContentConversionWarning {
   type: 'truncation' | 'missing_mapping';
   message: string;
+  /** For truncation warnings: original element count */
   originalCount?: number;
+  /** For truncation warnings: truncated element count */
   truncatedTo?: number;
+  /** For missing_mapping warnings: the Atlas UUID that had no mapping */
+  atlasUuid?: string;
 }
 
 /**
@@ -260,10 +264,15 @@ const INLINE_PATTERNS = [
  *
  * @param text - The markdown text to parse
  * @param uuidMappings - Optional UUID mappings for converting Atlas UUIDs to Notion URLs
+ * @param warnings - Optional array to collect warnings (e.g., missing UUID mappings)
  * @returns Array of Notion Rich Text objects
  * @throws {Error} If text contains invalid markdown syntax
  */
-function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRichText[] {
+function parseInlineMarkdown(
+  text: string,
+  uuidMappings: UuidMappings,
+  warnings?: ContentConversionWarning[],
+): NotionRichText[] {
   // Input validation
   if (typeof text !== 'string') {
     throw new Error('Text must be a string');
@@ -424,18 +433,46 @@ function parseInlineMarkdown(text: string, uuidMappings: UuidMappings): NotionRi
       const isMention = isUUIDFormat;
 
       if (isMention) {
-        // This is a mention - convert UUID back to Notion URL if mappings are provided
-        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(match.url!);
+        // This is a mention - convert Atlas UUID to Notion page ID
+        const atlasUuid = match.url!;
+        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(atlasUuid);
+
         if (!notionPageID) {
-          // No mapping found - use plain text instead of creating a broken mention
-          // This prevents Notion API errors when the Atlas UUID doesn't have a corresponding Notion page
-          console.warn(`No mapping found for mention UUID: ${match.url} - using plain text instead`);
-          richText.push(
-            createRichText({
-              content: linkContent,
-              annotations,
-            }),
-          );
+          // No mapping found - create mention with Atlas UUID as placeholder
+          // This allows post-processing to update the mention once the page is created
+          console.warn(`No mapping found for mention UUID: ${atlasUuid} - creating placeholder mention`);
+
+          // Track this missing mapping for post-processing
+          if (warnings) {
+            warnings.push({
+              type: 'missing_mapping',
+              message: `No Notion page ID mapping found for Atlas UUID: ${atlasUuid}`,
+              atlasUuid,
+            });
+          }
+
+          // Create mention with Atlas UUID as placeholder page ID
+          // Notion accepts any UUID format, even for non-existent pages
+          const placeholderUrl = `https://www.notion.so/${uuidToNoHyphens(atlasUuid)}`;
+          richText.push({
+            type: 'mention',
+            mention: {
+              page: {
+                id: atlasUuid,
+              },
+              type: 'page',
+            },
+            plain_text: linkContent,
+            href: placeholderUrl,
+            annotations: {
+              bold: annotations.bold || false,
+              code: annotations.code || false,
+              color: annotations.color === 'default_background' ? 'default' : annotations.color || 'default',
+              italic: annotations.italic || false,
+              underline: annotations.underline || false,
+              strikethrough: annotations.strikethrough || false,
+            },
+          });
         } else {
           // Mapping exists - create proper mention with Notion page ID
           const mentionUrl = `https://www.notion.so/${uuidToNoHyphens(notionPageID)}`;
@@ -611,7 +648,7 @@ export function convertMarkdownToNotionRichText(
           }
 
           // Process the multiline content as one block
-          const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings);
+          const multilineRichText = parseInlineMarkdown(multilineContent, uuidMappings, warnings);
 
           // Round-trip compatibility: Embed newline in the last text object
           // This prevents creating separate newline-only elements and matches Notion's structure
@@ -639,7 +676,7 @@ export function convertMarkdownToNotionRichText(
           i = j + 1;
         } else {
           // Regular line, process normally
-          const lineRichText = parseInlineMarkdown(line, uuidMappings);
+          const lineRichText = parseInlineMarkdown(line, uuidMappings, warnings);
 
           // Round-trip compatibility: Embed newline in the last text object
           // This prevents creating separate newline-only elements and matches Notion's structure
@@ -673,7 +710,7 @@ export function convertMarkdownToNotionRichText(
       // For regular content without multiline inline code, process the entire text as one block
       // Apply Notion API limits: split long elements, then limit array length
       return limitRichTextArrayLength(
-        splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings)),
+        splitLongRichTextElements(parseInlineMarkdown(normalizedMarkdown, uuidMappings, warnings)),
         warnings,
       );
     }

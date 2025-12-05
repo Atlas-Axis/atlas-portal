@@ -13,6 +13,7 @@ import {
   deleteNotionPage,
   updateNotionPageContent,
   updateNotionPageParent,
+  updatePageMentions,
 } from '../sync-operations';
 
 // Mock the dependencies
@@ -260,6 +261,70 @@ describe('sync-operations', () => {
 
       expect(result.success).toBe(true);
       expect(result.pageId).toBe('notion-page-id');
+    });
+  });
+
+  describe('updatePageMentions', () => {
+    it('returns success when updating mentions with valid document', async () => {
+      // Mock the Notion client to return a successful response
+      const mockNotionClient = {
+        pages: {
+          update: vi.fn().mockResolvedValue({ id: 'notion-page-123' }),
+        },
+      };
+      const { notion } = await import('@/app/server/services/notion/notion-client');
+      vi.mocked(notion).mockReturnValue(mockNotionClient as unknown as ReturnType<typeof notion>);
+
+      const baseDoc = { last_modified: '2024-01-01T00:00:00Z', content: 'Test content' };
+      const document = {
+        uuid: 'test-uuid',
+        doc_no: 'A.1.1',
+        name: 'Test',
+        type: 'Section' as const,
+        ...baseDoc,
+      };
+
+      const result = await updatePageMentions(
+        'notion-page-123',
+        document,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+        'batch-id',
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.pageId).toBe('notion-page-123');
+    });
+
+    it('returns error when Notion API call fails', async () => {
+      // Mock the Notion client to throw an error
+      const mockNotionClient = {
+        pages: {
+          update: vi.fn().mockRejectedValue(new Error('Notion API error')),
+        },
+      };
+      const { notion } = await import('@/app/server/services/notion/notion-client');
+      vi.mocked(notion).mockReturnValue(mockNotionClient as unknown as ReturnType<typeof notion>);
+
+      const baseDoc = { last_modified: '2024-01-01T00:00:00Z', content: 'Test content' };
+      const document = {
+        uuid: 'test-uuid',
+        doc_no: 'A.1.1',
+        name: 'Test',
+        type: 'Section' as const,
+        ...baseDoc,
+      };
+
+      const result = await updatePageMentions(
+        'notion-page-123',
+        document,
+        'Sections & Primary Docs',
+        mockUuidMappings,
+        'batch-id',
+      );
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('Notion API error');
     });
   });
 });

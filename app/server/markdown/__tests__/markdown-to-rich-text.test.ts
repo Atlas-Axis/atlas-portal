@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { UuidMappings } from '../../atlas/load-uuid-mapping';
 import {
+  ContentConversionWarning,
   NOTION_RICH_TEXT_MAX_ELEMENTS,
   NOTION_RICH_TEXT_MAX_LENGTH,
   convertMarkdownToNotionRichText,
@@ -920,6 +921,150 @@ describe('convertMarkdownToNotionRichText', () => {
 
       // Should be well under 100 elements due to merging
       expect(result.length).toBeLessThan(NOTION_RICH_TEXT_MAX_ELEMENTS);
+    });
+  });
+
+  describe('placeholder mentions for missing UUID mappings', () => {
+    it('should create placeholder mention when UUID mapping is missing', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      // Use empty mappings - no Notion page ID exists for this Atlas UUID
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should create a mention with the Atlas UUID as placeholder
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      expect(mentionElement?.type).toBe('mention');
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(atlasUuid);
+      }
+      expect(mentionElement?.plain_text).toBe('this page');
+    });
+
+    it('should add missing_mapping warning when UUID mapping is missing', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      const warnings: ContentConversionWarning[] = [];
+      convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should have a missing_mapping warning
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].type).toBe('missing_mapping');
+      expect(warnings[0].atlasUuid).toBe(atlasUuid);
+      expect(warnings[0].message).toContain(atlasUuid);
+    });
+
+    it('should create proper mention when UUID mapping exists', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const notionPageId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[atlasUuid, notionPageId]]),
+      };
+
+      const text = `Check [this page](${atlasUuid})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mappings, warnings);
+
+      // Should create a mention with the real Notion page ID
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(notionPageId);
+      }
+      expect(mentionElement?.href).toContain('notion.so');
+
+      // Should not have any warnings
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('should track multiple missing mappings in warnings', () => {
+      const uuid1 = '11111111-1111-1111-1111-111111111111';
+      const uuid2 = '22222222-2222-2222-2222-222222222222';
+      const uuid3 = '33333333-3333-3333-3333-333333333333';
+
+      const text = `See [page1](${uuid1}), [page2](${uuid2}), and [page3](${uuid3})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should have 3 placeholder mentions
+      const mentions = result.filter((r) => r.type === 'mention');
+      expect(mentions).toHaveLength(3);
+
+      // Should have 3 missing_mapping warnings
+      expect(warnings).toHaveLength(3);
+      expect(warnings.map((w) => w.atlasUuid)).toEqual([uuid1, uuid2, uuid3]);
+    });
+
+    it('should handle mixed mapped and unmapped UUIDs', () => {
+      const mappedUuid = '11111111-1111-1111-1111-111111111111';
+      const unmappedUuid = '22222222-2222-2222-2222-222222222222';
+      const notionPageId = 'notion-page-12345678';
+
+      const mappings: UuidMappings = {
+        notionPageIDsToAtlasUUIDs: new Map(),
+        atlasUUIDsToNotionPageIds: new Map([[mappedUuid, notionPageId]]),
+      };
+
+      const text = `See [mapped](${mappedUuid}) and [unmapped](${unmappedUuid})`;
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mappings, warnings);
+
+      // Both should be mentions
+      const mentions = result.filter((r) => r.type === 'mention');
+      expect(mentions).toHaveLength(2);
+
+      // Only one warning for the unmapped UUID
+      expect(warnings).toHaveLength(1);
+      expect(warnings[0].atlasUuid).toBe(unmappedUuid);
+
+      // Verify the mention IDs - filter by page type first
+      const pageMentions = mentions.filter((m) => m.mention?.type === 'page');
+      expect(pageMentions).toHaveLength(2);
+      const mentionIds = pageMentions.map((m) => (m.mention?.type === 'page' ? m.mention.page.id : null));
+      expect(mentionIds).toContain(notionPageId);
+      expect(mentionIds).toContain(unmappedUuid);
+    });
+
+    it('should not affect regular URL links (non-UUID format)', () => {
+      const text = 'Visit [Google](https://google.com) for more';
+      const warnings: ContentConversionWarning[] = [];
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings, warnings);
+
+      // Should be a text link, not a mention
+      const linkElement = result.find((r) => r.href === 'https://google.com');
+      expect(linkElement).toBeDefined();
+      expect(linkElement?.type).toBe('text');
+      expect(linkElement?.text?.link?.url).toBe('https://google.com');
+
+      // No warnings for regular links
+      expect(warnings).toHaveLength(0);
+    });
+
+    it('should work without warnings parameter (backwards compatibility)', () => {
+      const atlasUuid = '12345678-1234-1234-1234-123456789012';
+      const text = `Check [this page](${atlasUuid})`;
+
+      // Call without warnings parameter - should not throw
+      const result = convertMarkdownToNotionRichText(text, mockUuidMappings);
+
+      // Should still create placeholder mention
+      const mentionElement = result.find((r) => r.type === 'mention');
+      expect(mentionElement).toBeDefined();
+      // Type narrow to page mention
+      const mention = mentionElement?.mention;
+      expect(mention?.type).toBe('page');
+      if (mention?.type === 'page') {
+        expect(mention.page.id).toBe(atlasUuid);
+      }
     });
   });
 });

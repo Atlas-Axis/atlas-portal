@@ -1,6 +1,7 @@
 /**
  * Main orchestration logic for Markdown-to-Notion sync
  */
+import { getDatabaseNameFromDocument } from '@/app/atlas/sync/_lib/atlas-database-mapper';
 import { AtlasDiffResult } from '@/app/server/atlas/diff/atlas-diff';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
@@ -13,8 +14,9 @@ import {
   deleteNotionPage,
   updateNotionPageContent,
   updateNotionPageParent,
+  updatePageMentions,
 } from './sync-operations';
-import { SyncFilters, SyncPhase } from './types';
+import { PageWithUnresolvedMentions, SyncFilters, SyncPhase } from './types';
 
 /**
  * Callback for progress updates
@@ -44,9 +46,10 @@ export interface ProcessChangesResult {
 }
 
 /**
- * Process all changes from diff result in 4 phases:
+ * Process all changes from diff result in 5 phases:
  * 1. Content changes (update existing pages)
  * 2. Additions (create new pages)
+ * 2.5. Mention updates (fix placeholder mentions with real Notion page IDs)
  * 3. Deletions (archive pages)
  * 4. Parent changes (update relationships)
  *
@@ -102,6 +105,9 @@ export async function processChanges(
   // Track pages created in this sync for parent validation
   const createdPagesInSync = new Set<string>();
   const parentValidationCache = new Map<string, boolean>();
+
+  // Track pages with unresolved mentions for Phase 2.5
+  const pagesWithUnresolvedMentions: PageWithUnresolvedMentions[] = [];
 
   // Phase 1: Content changes
   if (filteredChanges.changed.length > 0) {
@@ -167,6 +173,15 @@ export async function processChanges(
           succeeded++;
           if (result.pageId) {
             createdPagesInSync.add(result.pageId);
+
+            // Track pages with unresolved mentions for Phase 2.5
+            if (result.unresolvedMentionUuids && result.unresolvedMentionUuids.length > 0 && change.newValues?.uuid) {
+              pagesWithUnresolvedMentions.push({
+                notionPageId: result.pageId,
+                atlasUuid: change.newValues.uuid,
+                unresolvedMentionUuids: result.unresolvedMentionUuids,
+              });
+            }
           }
         } else if (result.reason) {
           skipped++;
@@ -177,6 +192,55 @@ export async function processChanges(
         completed++;
         failed++;
         console.error(`[Sync] Error creating ${docLabel}:`, error);
+      }
+    }
+  }
+
+  // Phase 2.5: Mention updates (fix placeholder mentions with real Notion page IDs)
+  if (pagesWithUnresolvedMentions.length > 0) {
+    console.log(`[Sync] Phase 2.5: Updating ${pagesWithUnresolvedMentions.length} pages with placeholder mentions`);
+
+    for (const pageInfo of pagesWithUnresolvedMentions) {
+      // Check for stop request
+      if (await onStopCheck()) {
+        return { succeeded, failed, skipped, stoppedEarly: true };
+      }
+
+      // Get the document from the diff result
+      const document = diffResult.newIdsToDocuments.get(pageInfo.atlasUuid);
+      if (!document) {
+        console.warn(`[Sync] Could not find document for mention update: ${pageInfo.atlasUuid}`);
+        skipped++;
+        completed++;
+        continue;
+      }
+
+      const databaseName = getDatabaseNameFromDocument(document.type, pageInfo.atlasUuid, diffResult.newIdsToDatabase);
+      const docLabel = `${document.doc_no} - ${document.name}`;
+
+      // Update progress
+      onProgress({ phase: 'mention_updates', completed, currentDoc: docLabel, succeeded, failed, skipped });
+
+      try {
+        const result = await updatePageMentions(
+          pageInfo.notionPageId,
+          document,
+          databaseName,
+          uuidMappings,
+          syncBatchId,
+        );
+        completed++;
+        if (result.success) {
+          succeeded++;
+        } else if (result.reason) {
+          skipped++;
+        } else {
+          failed++;
+        }
+      } catch (error) {
+        completed++;
+        failed++;
+        console.error(`[Sync] Error updating mentions for ${docLabel}:`, error);
       }
     }
   }

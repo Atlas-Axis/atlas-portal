@@ -685,9 +685,19 @@ This step performs the actual synchronization with Notion via API calls, handlin
   - Extract new Notion page UUID from response
   - Create UUID mapping entry: `{ atlas_document_uuid, notion_page_id }`
   - Store mapping in Supabase `uuid_mapping` table
+  - Track pages with unresolved mentions for post-processing
 - Handle dependencies: Create parent documents before children to enable proper relationship establishment
 - Make sure that newly created Notion database page IDs are available during the sync if they are referenced in other documents that are also synced
 - Sequential operations for reliable error handling and better audit log of Notion API calls
+
+**Mention Post-Processing (Phase 2.5):**
+
+- After all new pages are created, process pages that had unresolved mentions
+- For each page with placeholder mentions:
+  - Rebuild content properties using the now-complete UUID mappings
+  - Update page via Notion API with corrected mention objects to reference correct Notion page IDs
+  - Log operation with `_phase: 'mention_post_processing'` marker
+- This ensures links between new documents are properly converted to Notion mentions
 
 **Updating Existing Pages:**
 
@@ -771,7 +781,7 @@ This step performs the actual synchronization with Notion via API calls, handlin
 | **[IMPLEMENTED] 9. Export→Notion Tree** | Export Tree             | Markdown→Rich Text (incl. mention UUID rewrite), Atlas UUID→Notion UUID, reconstruct fields | Notion Tree (internal format)             |
 | **[IMPLEMENTED] 10. Reverse Overrides** | Notion Tree             | Skip parent changes for nesting-bug-affected documents during sync                          | Sync orchestrator skips affected docs     |
 | **[IMPLEMENTED] 11. Build Properties**  | Notion Tree             | Map to Notion property objects, build relations, title reconstruction                       | Notion API property objects               |
-| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages (Trigger.dev background task)                    | Notion pages (via API)                    |
+| **[IMPLEMENTED] 12. Sync to Notion**    | Property objects        | Detect changes, create/update/delete pages, mention post-processing (Trigger.dev task)      | Notion pages (via API)                    |
 
 ## Workarounds and Special Cases
 
