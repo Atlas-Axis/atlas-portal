@@ -29,6 +29,7 @@ type SyncPhase =
   | 'mention_updates' // Phase 2.5: Update placeholder mentions with real Notion page IDs
   | 'deletions'
   | 'parent_changes'
+  | 'notion_import' // Phase 6: Notion-to-Supabase import for affected databases
   | 'completed'
   | 'stopped';
 
@@ -487,6 +488,7 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     mention_updates: 'Mention Updates',
     deletions: 'Deletions',
     parent_changes: 'Parent Changes',
+    notion_import: 'Notion Import',
     completed: 'Completed',
     stopped: 'Stopped',
   };
@@ -498,6 +500,7 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     mention_updates: 'primary',
     deletions: 'danger',
     parent_changes: 'warning',
+    notion_import: 'primary',
     completed: 'success',
     stopped: 'warning',
   };

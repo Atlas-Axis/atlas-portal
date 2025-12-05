@@ -1,6 +1,7 @@
 /**
  * Shared types for Markdown-to-Notion sync service
  */
+import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 
 // Sync phase type for progress tracking
 export type SyncPhase =
@@ -10,6 +11,7 @@ export type SyncPhase =
   | 'mention_updates' // Phase 2.5: Update placeholder mentions with real Notion page IDs
   | 'deletions'
   | 'parent_changes'
+  | 'notion_import' // Phase 6: Notion-to-Supabase import for affected databases
   | 'completed'
   | 'stopped';
 
@@ -44,6 +46,8 @@ export interface MarkdownNotionSyncResult {
   skipped: number;
   stoppedEarly: boolean;
   error?: string;
+  /** Databases that were affected by the sync (for chained Notion-to-Supabase import) */
+  affectedDatabases?: AtlasDatabaseName[];
 }
 
 // Result of individual sync operations (create, update, delete)

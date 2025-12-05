@@ -113,6 +113,7 @@ describe('sync-orchestrator', () => {
         failed: 0,
         skipped: 0,
         stoppedEarly: false,
+        affectedDatabases: [],
       });
       expect(mockProgressCallback).not.toHaveBeenCalled();
     });
@@ -354,6 +355,7 @@ describe('sync-orchestrator', () => {
         failed: 1,
         skipped: 1,
         stoppedEarly: false,
+        affectedDatabases: [],
       });
     });
   });

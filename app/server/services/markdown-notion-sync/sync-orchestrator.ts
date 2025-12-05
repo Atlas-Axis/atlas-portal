@@ -2,6 +2,7 @@
  * Main orchestration logic for Markdown-to-Notion sync
  */
 import { getDatabaseNameFromDocument } from '@/app/atlas/sync/_lib/atlas-database-mapper';
+import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDiffResult } from '@/app/server/atlas/diff/atlas-diff';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
@@ -43,6 +44,8 @@ export interface ProcessChangesResult {
   failed: number;
   skipped: number;
   stoppedEarly: boolean;
+  /** Databases that were affected by successfully processed changes */
+  affectedDatabases: AtlasDatabaseName[];
 }
 
 /**
@@ -94,7 +97,7 @@ export async function processChanges(
     filteredChanges.parent_changed.length;
 
   if (total === 0) {
-    return { succeeded: 0, failed: 0, skipped: 0, stoppedEarly: false };
+    return { succeeded: 0, failed: 0, skipped: 0, stoppedEarly: false, affectedDatabases: [] };
   }
 
   let succeeded = 0;
@@ -109,6 +112,9 @@ export async function processChanges(
   // Track pages with unresolved mentions for Phase 2.5
   const pagesWithUnresolvedMentions: PageWithUnresolvedMentions[] = [];
 
+  // Track affected databases for chained Notion-to-Supabase import
+  const affectedDatabasesSet = new Set<AtlasDatabaseName>();
+
   // Phase 1: Content changes
   if (filteredChanges.changed.length > 0) {
     for (const change of filteredChanges.changed) {
@@ -116,7 +122,7 @@ export async function processChanges(
 
       // Check for stop request
       if (await onStopCheck()) {
-        return { succeeded, failed, skipped, stoppedEarly: true };
+        return { succeeded, failed, skipped, stoppedEarly: true, affectedDatabases: [...affectedDatabasesSet] };
       }
 
       // Update progress
@@ -132,6 +138,11 @@ export async function processChanges(
         completed++;
         if (result.success) {
           succeeded++;
+          // Track affected database
+          if (change.uuid) {
+            const db = diffResult.originalIdsToDatabase.get(change.uuid);
+            if (db) affectedDatabasesSet.add(db);
+          }
         } else if (result.reason) {
           skipped++;
         } else {
@@ -152,7 +163,7 @@ export async function processChanges(
 
       // Check for stop request
       if (await onStopCheck()) {
-        return { succeeded, failed, skipped, stoppedEarly: true };
+        return { succeeded, failed, skipped, stoppedEarly: true, affectedDatabases: [...affectedDatabasesSet] };
       }
 
       // Update progress
@@ -173,6 +184,12 @@ export async function processChanges(
           succeeded++;
           if (result.pageId) {
             createdPagesInSync.add(result.pageId);
+
+            // Track affected database
+            if (change.uuid) {
+              const db = diffResult.newIdsToDatabase.get(change.uuid);
+              if (db) affectedDatabasesSet.add(db);
+            }
 
             // Track pages with unresolved mentions for Phase 2.5
             if (result.unresolvedMentionUuids && result.unresolvedMentionUuids.length > 0 && change.newValues?.uuid) {
@@ -203,7 +220,7 @@ export async function processChanges(
     for (const pageInfo of pagesWithUnresolvedMentions) {
       // Check for stop request
       if (await onStopCheck()) {
-        return { succeeded, failed, skipped, stoppedEarly: true };
+        return { succeeded, failed, skipped, stoppedEarly: true, affectedDatabases: [...affectedDatabasesSet] };
       }
 
       // Get the document from the diff result
@@ -252,7 +269,7 @@ export async function processChanges(
 
       // Check for stop request
       if (await onStopCheck()) {
-        return { succeeded, failed, skipped, stoppedEarly: true };
+        return { succeeded, failed, skipped, stoppedEarly: true, affectedDatabases: [...affectedDatabasesSet] };
       }
 
       // Update progress
@@ -263,6 +280,11 @@ export async function processChanges(
         completed++;
         if (result.success) {
           succeeded++;
+          // Track affected database
+          if (change.uuid) {
+            const db = diffResult.originalIdsToDatabase.get(change.uuid);
+            if (db) affectedDatabasesSet.add(db);
+          }
         } else if (result.reason) {
           skipped++;
         } else {
@@ -283,7 +305,7 @@ export async function processChanges(
 
       // Check for stop request
       if (await onStopCheck()) {
-        return { succeeded, failed, skipped, stoppedEarly: true };
+        return { succeeded, failed, skipped, stoppedEarly: true, affectedDatabases: [...affectedDatabasesSet] };
       }
 
       // Update progress
@@ -310,6 +332,12 @@ export async function processChanges(
         completed++;
         if (result.success) {
           succeeded++;
+          // Track affected database
+          if (change.uuid) {
+            const db =
+              diffResult.newIdsToDatabase.get(change.uuid) ?? diffResult.originalIdsToDatabase.get(change.uuid);
+            if (db) affectedDatabasesSet.add(db);
+          }
         } else if (result.reason) {
           skipped++;
         } else {
@@ -323,5 +351,5 @@ export async function processChanges(
     }
   }
 
-  return { succeeded, failed, skipped, stoppedEarly: false };
+  return { succeeded, failed, skipped, stoppedEarly: false, affectedDatabases: [...affectedDatabasesSet] };
 }

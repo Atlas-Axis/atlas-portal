@@ -2,6 +2,16 @@
 
 This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow project.
 
+## Shared Queue
+
+### `notion-import-queue.ts`
+
+- **Queue Name**: `notion-import`
+- **Concurrency Limit**: 1
+- **Purpose**: Shared queue for all Notion import tasks to prevent race conditions
+
+Both the full import task and partial import task use this queue, ensuring only one import runs at a time. If the hourly scheduled import is running when a partial import is triggered (after Markdown sync), the partial import automatically waits in queue.
+
 ## Tasks
 
 ### `notion-full-atlas-import-task.ts`
@@ -10,6 +20,17 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
 - **Purpose**: Imports all Atlas databases from Notion to Supabase
 - **Duration**: Up to 60 minutes
 - **Retries**: 1 attempt with exponential backoff
+- **Queue**: `notion-import` (shared queue with concurrencyLimit: 1)
+
+### `notion-partial-atlas-import-task.ts`
+
+- **ID**: `notion-partial-atlas-import`
+- **Purpose**: Imports only specified databases from Notion to Supabase
+- **Duration**: Up to 60 minutes
+- **Retries**: 1 attempt with exponential backoff
+- **Queue**: `notion-import` (shared queue with concurrencyLimit: 1)
+- **Payload**: `{ databases: AtlasDatabaseName[] }`
+- **Usage**: Automatically triggered after Markdown-to-Notion sync to import only affected databases
 
 ### `hourly-notion-sync-schedule.ts`
 
@@ -34,8 +55,10 @@ This directory contains Trigger.dev tasks for the Atlas Axis Notion Workflow pro
   - UUID mapping for newly created pages
   - Depth-first ordering of additions (parents before children)
   - Parent validation before creating/updating relationships
+  - **Automatic Notion import chaining**: After sync completes, triggers `notion-partial-atlas-import` for affected databases
 - **Lock Table**: `markdown_notion_sync_lock` (6-hour expiry)
 - **Metadata**: `{ phase, completed, total, currentDoc, succeeded, failed, skipped }`
+- **Phases**: `initializing` → `content` → `additions` → `mention_updates` → `deletions` → `parent_changes` → `notion_import` → `completed`
 
 #### Architecture
 
@@ -46,15 +69,28 @@ The task is split into two parts:
    - Metadata updates for real-time UI
    - Loading diff and UUID mappings
    - Error handling and cleanup
+   - **Chaining the partial import task** after sync completes
 
 2. **Sync service** (`app/server/services/markdown-notion-sync/`): Contains business logic
    - `types.ts` - Shared types
    - `sync-helpers.ts` - Utility functions (validation, sorting, formatting)
    - `sync-operations.ts` - Core CRUD operations (create, update, delete, parent updates)
-   - `sync-orchestrator.ts` - Main sync logic (processes changes in 4 phases)
+   - `sync-orchestrator.ts` - Main sync logic (processes changes in 5 phases, returns affected databases)
    - `index.ts` - Public API exports
 
 This separation keeps the Trigger.dev task file focused on orchestration while the sync service handles all sync-specific logic, making both more maintainable and testable.
+
+#### Automatic Notion Import Chaining
+
+After the Markdown-to-Notion sync completes successfully, the task automatically triggers a Notion-to-Supabase import for only the databases that were affected by the sync:
+
+1. **Track Affected Databases**: The sync orchestrator tracks which databases had successful operations (content changes, additions, deletions, parent changes)
+2. **Release Sync Lock**: The Markdown sync lock is released before triggering import (import has its own per-database locks)
+3. **Trigger Partial Import**: Uses `triggerAndWait` to call `notion-partial-atlas-import` with the list of affected databases
+4. **Queue Management**: The partial import uses the shared `notion-import` queue with `concurrencyLimit: 1`, so if the hourly full import is running, it automatically waits
+5. **UI Feedback**: The `notion_import` phase is shown in the UI while import runs
+
+This ensures changes made to Notion are immediately imported back to Supabase without waiting for the next hourly sync.
 
 ## Usage
 

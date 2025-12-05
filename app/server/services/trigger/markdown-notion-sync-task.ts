@@ -6,6 +6,7 @@
  * - Loading diff and UUID mappings
  * - Managing real-time progress metadata
  * - Delegating sync operations to the sync service
+ * - Chaining the Notion-to-Supabase import task for affected databases
  */
 import { metadata, task } from '@trigger.dev/sdk/v3';
 import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
@@ -22,6 +23,7 @@ import {
   releaseSyncLock,
 } from '@/app/server/services/markdown-notion-sync';
 import { createSyncBatch } from '@/app/server/services/supabase/audit-log-service';
+import { notionPartialAtlasImportTask } from './notion-partial-atlas-import-task';
 
 // Re-export types for external use
 export type { MarkdownNotionSyncPayload, MarkdownNotionSyncResult, SyncFilters };
@@ -92,7 +94,7 @@ export const markdownNotionSyncTask = task({
 
       if (total === 0) {
         updateMetadata({ phase: 'completed', total: 0, completed: 0, currentDoc: null });
-        return { succeeded: 0, failed: 0, skipped: 0, stoppedEarly: false };
+        return { succeeded: 0, failed: 0, skipped: 0, stoppedEarly: false, affectedDatabases: [] };
       }
 
       // Create sync batch ID for audit logging
@@ -121,6 +123,53 @@ export const markdownNotionSyncTask = task({
         },
       );
 
+      console.log(
+        `[Markdown-Notion Sync] Sync phase complete: ${result.succeeded} succeeded, ${result.failed} failed, ${result.skipped} skipped`,
+      );
+
+      // Phase 6: Chain Notion-to-Supabase import for affected databases
+      // This ensures the changes we just made to Notion are imported back to Supabase
+      if (result.affectedDatabases.length > 0 && !result.stoppedEarly) {
+        console.log(
+          `[Markdown-Notion Sync] Starting Notion-to-Supabase import for ${result.affectedDatabases.length} databases: ${result.affectedDatabases.join(', ')}`,
+        );
+
+        updateMetadata({
+          phase: 'notion_import',
+          currentDoc: `Importing ${result.affectedDatabases.length} databases...`,
+          succeeded: result.succeeded,
+          failed: result.failed,
+          skipped: result.skipped,
+        });
+
+        // Release sync lock before triggering import (import has its own per-database locks)
+        if (lockAcquired) {
+          await releaseSyncLock(runId);
+          lockAcquired = false;
+          console.log(`[Markdown-Notion Sync] Lock released before import`);
+        }
+
+        // Trigger and wait for the import task
+        // The import task uses a shared queue with concurrencyLimit: 1, so if the hourly
+        // import is running, this will automatically wait in queue
+        const importResult = await notionPartialAtlasImportTask.triggerAndWait({
+          databases: result.affectedDatabases,
+        });
+
+        if (importResult.ok) {
+          console.log(
+            `[Markdown-Notion Sync] Import complete: ${importResult.output.changesSummary.databasesWithChanges}/${importResult.output.changesSummary.totalDatabases} databases had changes`,
+          );
+        } else {
+          console.error(`[Markdown-Notion Sync] Import failed:`, importResult.error);
+          // Don't fail the whole task - the sync part succeeded
+        }
+      } else if (result.affectedDatabases.length === 0) {
+        console.log(`[Markdown-Notion Sync] No databases affected, skipping import`);
+      } else {
+        console.log(`[Markdown-Notion Sync] Sync stopped early, skipping import`);
+      }
+
       // Update final metadata
       updateMetadata({
         phase: result.stoppedEarly ? 'stopped' : 'completed',
@@ -140,6 +189,7 @@ export const markdownNotionSyncTask = task({
         failed: result.failed,
         skipped: result.skipped,
         stoppedEarly: result.stoppedEarly,
+        affectedDatabases: result.affectedDatabases,
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';

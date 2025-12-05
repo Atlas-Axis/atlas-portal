@@ -135,8 +135,11 @@ The pipeline handles complex transformations, relationship mappings, workarounds
                │
                ▼
 ┌───────────────────────────────────────────────┐
-│  5. AUTO-SYNC TO SUPABASE                     │
-│     - Hourly Trigger.dev task                 │
+│  5. AUTO-IMPORT TO SUPABASE                   │
+│     - Automatically triggered after sync      │
+│     - Only imports affected databases         │
+│     - Uses shared queue (concurrencyLimit: 1) │
+│     - Waits if hourly import already running  │
 │     - Returns to step 1 above (Notion import) │
 └───────────────────────────────────────────────┘
 ```
@@ -747,24 +750,40 @@ This step performs the actual synchronization with Notion via API calls, handlin
 - `app/server/services/trigger/markdown-notion-sync-task.ts` (background task implementation)
 - `app/atlas/sync/content.tsx` (UI with realtime progress subscription)
 
-### 4.4 Automated Sync
+### 4.4 Automatic Notion Import
 
-**Hourly Trigger.dev Task:**
+After the Markdown-to-Notion sync completes, the system automatically triggers a Notion-to-Supabase import for only the databases that were affected by the sync. This ensures changes are immediately reflected in Supabase without waiting for the next hourly import.
 
-- After markdown changes synced to Notion, hourly import task picks them up
-- Task runs Notion → Supabase sync (section 3.1)
-- Changes flow back into Supabase and become visible in exports
-- Complete round-trip: Markdown → Notion → Supabase → Markdown
+**How It Works:**
 
-**Future Enhancements:**
+1. **Track Affected Databases**: The sync orchestrator tracks which databases had successful operations (content changes, additions, deletions, parent changes)
+2. **Trigger Partial Import**: After sync completes, the task triggers `notion-partial-atlas-import` with the list of affected databases
+3. **Queue-Based Concurrency**: Both import tasks use a shared queue (`notion-import`) with `concurrencyLimit: 1`
+4. **Automatic Waiting**: If the hourly full import is already running, the partial import automatically waits in queue (no polling or manual lock checking needed)
+5. **Complete Round-Trip**: Markdown → Notion → Supabase happens in one continuous operation
 
-- Trigger sync immediately after markdown changes (webhook-based)
-- Reduce latency from hours to minutes
-- Real-time collaboration between Notion-first and markdown-first users
+**Benefits:**
+
+- Immediate data consistency (no waiting for hourly sync)
+- Efficient imports (only affected databases, not all 10)
+- Race-condition free (Trigger.dev queue handles concurrency)
+- Unified progress tracking (UI shows all phases including import)
+
+**Sync Phases:**
+
+1. `content` - Content changes
+2. `additions` - New pages
+3. `mention_updates` - Fix placeholder mentions
+4. `deletions` - Archive pages
+5. `parent_changes` - Update relationships
+6. `notion_import` - Import affected databases back to Supabase
 
 **References:**
 
-- `app/server/services/trigger/notion-sync-task.ts`
+- `app/server/services/trigger/markdown-notion-sync-task.ts` - Main sync task with import chaining
+- `app/server/services/trigger/notion-partial-atlas-import-task.ts` - Partial import task
+- `app/server/services/trigger/notion-import-queue.ts` - Shared queue for concurrency control
+- `app/server/services/trigger/notion-full-atlas-import-task.ts` - Full import task (hourly scheduled)
 
 ## Key Transformations Summary
 

@@ -838,13 +838,33 @@ or
 
 ### Sync Phases
 
-The task processes changes in 5 sequential phases:
+The task processes changes in 6 sequential phases:
 
 1. **Content Changes** - Safest operations (no relationship changes)
 2. **Additions** - Creates new pages (sorted by hierarchy, parents before children)
 3. **Mention Updates** (Phase 2.5) - Updates placeholder mentions with real Notion page IDs
 4. **Deletions** - Archives pages (validates no children exist)
 5. **Parent Changes** - Updates parent relationships (skips nesting-bug-affected documents)
+6. **Notion Import** - Automatically imports affected databases back to Supabase
+
+### Automatic Notion Import (Phase 6)
+
+After the sync completes, the task automatically triggers a Notion-to-Supabase import for only the databases that were affected by the sync. This ensures changes made to Notion are immediately reflected in Supabase without waiting for the next hourly import.
+
+**How it works:**
+
+1. The sync orchestrator tracks which databases had successful operations
+2. After all sync phases complete, the task triggers `notion-partial-atlas-import` with the affected databases
+3. The import uses a shared queue (`notion-import`) with `concurrencyLimit: 1`
+4. If the hourly full import is already running, the partial import automatically waits in queue
+5. The UI shows `notion_import` phase while import runs
+
+**Benefits:**
+
+- Complete round-trip: Markdown → Notion → Supabase happens in one operation
+- Only affected databases are imported (faster than full import)
+- No race conditions with hourly scheduled import (queue handles concurrency)
+- User sees full progress including import phase
 
 ## Limitations
 

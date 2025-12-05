@@ -34,7 +34,7 @@ See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for complete pipeline
 - ✅ **Error Handling**: Graceful error handling with detailed logging and partial success tracking
 - ✅ **Progress Tracking**: Real-time progress updates via Trigger.dev metadata subscription
 - ✅ **Stop Support**: Stop button requests graceful halt between operations
-- ✅ **Automatic Round-Trip**: Changes synced to Notion automatically flow back to Supabase via hourly import task
+- ✅ **Automatic Round-Trip**: Changes synced to Notion are immediately imported back to Supabase (only affected databases)
 
 ## Workflow Architecture
 
@@ -93,9 +93,10 @@ This workflow takes an externally-edited Atlas markdown file and syncs all chang
          │
          ▼
 ┌──────────────────┐
-│ 6. AUTO-SYNC     │  • Hourly import task
-│    BACK TO       │  • Notion → Supabase sync
-│    SUPABASE      │  • Changes appear in exports
+│ 6. AUTO-IMPORT   │  • Automatically triggered after sync
+│    BACK TO       │  • Only imports affected databases
+│    SUPABASE      │  • Uses shared queue (waits if hourly import running)
+│                  │  • Changes appear in exports immediately
 └──────────────────┘
          │
          │ [Complete round-trip: Markdown → Notion → Supabase → Markdown]
