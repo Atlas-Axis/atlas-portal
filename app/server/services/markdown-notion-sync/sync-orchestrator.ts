@@ -200,6 +200,10 @@ export async function processChanges(
 
             // Track pages with unresolved mentions for Phase 2.5
             if (result.unresolvedMentionUuids && result.unresolvedMentionUuids.length > 0 && change.newValues?.uuid) {
+              console.log(
+                `[Sync] Page ${change.newValues.doc_no} has ${result.unresolvedMentionUuids.length} unresolved mentions:`,
+                result.unresolvedMentionUuids,
+              );
               pagesWithUnresolvedMentions.push({
                 notionPageId: result.pageId,
                 atlasUuid: change.newValues.uuid,

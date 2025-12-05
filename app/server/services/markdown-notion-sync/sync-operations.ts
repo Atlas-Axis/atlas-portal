@@ -454,6 +454,11 @@ export async function updatePageMentions(
 ): Promise<SyncActionResult> {
   const warnings: ContentConversionWarning[] = [];
 
+  // Log the UUID mappings available for this update
+  console.log(
+    `[updatePageMentions] Updating ${document.doc_no} (${document.uuid}) - UUID mappings available: ${uuidMappings.atlasUUIDsToNotionPageIds.size}`,
+  );
+
   // Rebuild properties with the now-complete UUID mappings
   // This will convert placeholder mentions to proper Notion mentions
   const properties = buildNotionProperties(document, databaseName, uuidMappings, warnings);
@@ -465,6 +470,8 @@ export async function updatePageMentions(
       `[updatePageMentions] Still have ${stillUnresolved.length} unresolved mentions after post-processing:`,
       stillUnresolved.map((w) => w.atlasUuid),
     );
+  } else {
+    console.log(`[updatePageMentions] All mentions resolved for ${document.doc_no}`);
   }
 
   try {

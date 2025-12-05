@@ -270,7 +270,15 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
     setAccessToken(null);
     setError(null);
     setStopRequested(false);
+    setIsRunCompleted(false);
   }, []);
+
+  const handleRunStatusChange = useCallback((completed: boolean) => {
+    setIsRunCompleted(completed);
+  }, []);
+
+  // Track whether the sync run has completed (to hide Stop button)
+  const [isRunCompleted, setIsRunCompleted] = useState(false);
 
   // Whether any filters are enabled
   const hasEnabledFilters =
@@ -336,7 +344,7 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
           </Button>
         ) : (
           <>
-            {isDevMode && !stopRequested && (
+            {isDevMode && !stopRequested && !isRunCompleted && (
               <Button size="lg" onPress={handleStopClick} variant="bordered" color="warning">
                 Stop Sync
               </Button>
@@ -352,6 +360,7 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
           accessToken={accessToken}
           stopRequested={stopRequested}
           onComplete={handleReset}
+          onStatusChange={handleRunStatusChange}
         />
       )}
     </div>
@@ -366,11 +375,13 @@ function SyncProgressDisplay({
   accessToken,
   stopRequested,
   onComplete,
+  onStatusChange,
 }: {
   runId: string;
   accessToken: string;
   stopRequested: boolean;
   onComplete: () => void;
+  onStatusChange: (completed: boolean) => void;
 }) {
   const { run, error } = useRealtimeRun<typeof markdownNotionSyncTask>(runId, {
     accessToken,
@@ -391,6 +402,11 @@ function SyncProgressDisplay({
 
   const isCompleted = run?.status === 'COMPLETED' || run?.status === 'FAILED' || run?.status === 'CANCELED';
   const progressPercent = total > 0 ? (completed / total) * 100 : 0;
+
+  // Notify parent when completion status changes
+  useEffect(() => {
+    onStatusChange(isCompleted);
+  }, [isCompleted, onStatusChange]);
 
   return (
     <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
