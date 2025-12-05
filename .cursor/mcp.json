@@ -13,6 +13,11 @@
     },
     "Sentry": {
       "url": "https://mcp.sentry.dev/mcp/atlas-axis/atlas-axis-notion-sync"
+    },
+    "Playwright": {
+      "command": "npx -y @playwright/mcp@latest",
+      "env": {},
+      "args": []
     }
   }
 }
