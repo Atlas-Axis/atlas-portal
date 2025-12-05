@@ -425,19 +425,16 @@ The `constants.ts` file conditionally imports Notion IDs from one of three files
 
 1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
    - Provides consistent, realistic-looking UUIDs for unit tests
-2. **Development/QA**: Uses `notion-ids-dev.ts` when `USE_DEV_NOTION_IDS === 'true'`
+2. **Development/QA**: Uses `notion-ids-dev.ts` when `NODE_ENV !== 'production'`
    - Separate dev/QA IDs prevent accidental access to production data during local development and manual QA
-   - Must be explicitly set to 'true' to enable
-3. **Production** (lowest priority, default): Uses `notion-ids.ts` (real IDs) when `USE_DEV_NOTION_IDS !== 'true'`
+3. **Production**: Uses `notion-ids.ts` (real IDs) when `NODE_ENV === 'production'`
    - Real Notion database and page IDs for production use
-   - This is the default when USE_DEV_NOTION_IDS is not set or set to any value other than 'true'
 
 This three-tier system ensures:
 
 - Unit tests use consistent made-up UUIDs that don't require real credentials
-- Development and manual QA environments use separate IDs when explicitly opted-in via `USE_DEV_NOTION_IDS='true'`
-- Production uses real production Notion IDs by default (safe default)
-- Explicit control via `USE_DEV_NOTION_IDS` environment variable
+- Development and manual QA environments automatically use separate IDs
+- Production uses real production Notion IDs
 
 ### Notion Database Property Mapping (`/app/server/atlas`)
 
@@ -618,7 +615,6 @@ This project maintains **2 synchronized documentation files** that provide high-
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_API_KEY` - Your Supabase API key
 - `TRIGGER_SECRET_KEY` - Trigger.dev secret key (for background jobs)
-- `USE_DEV_NOTION_IDS` - When set to `'true'`, uses dev Notion IDs instead of production IDs. Defaults to `false` (production IDs) when not set. Useful for development and manual QA to prevent accidental production data access
 - `DEBUG_LOGGING` - When set, console logs will be verbose
 
 ## 🧰 Command line scripts

@@ -52,7 +52,7 @@ const updateMetadata = (data: Partial<SyncMetadata>) => {
  */
 export const markdownNotionSyncTask = task({
   id: 'markdown-notion-sync',
-  maxDuration: 6 * 60 * 60, // 6 hours max
+  maxDuration: 12 * 60 * 60, // 6 hours max
   retry: {
     maxAttempts: 1, // No automatic retries - sync should be manually triggered
   },

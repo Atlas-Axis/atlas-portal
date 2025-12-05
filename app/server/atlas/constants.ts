@@ -10,14 +10,13 @@
  *
  * Environment Selection Logic (in priority order):
  * 1. Uses notion-ids-unit-test.ts (made-up UUIDs) when: running in unit tests (isTestEnv() === true)
- * 2. Uses notion-ids-dev.ts (dev IDs) when: USE_DEV_NOTION_IDS === 'true'
- * 3. Uses notion-ids.ts (production IDs) when: USE_DEV_NOTION_IDS !== 'true' (defaults to false if undefined)
+ * 2. Uses notion-ids-dev.ts (dev IDs) when: NODE_ENV !== 'production'
+ * 3. Uses notion-ids.ts (production IDs) when: NODE_ENV === 'production'
  *
  * Benefits:
  * - Unit tests use consistent made-up UUIDs that don't require real credentials
- * - Development/QA uses separate IDs when USE_DEV_NOTION_IDS='true' to prevent accidental production data access
- * - Production uses real production Notion IDs by default (when USE_DEV_NOTION_IDS is not set)
- * - Explicit control via USE_DEV_NOTION_IDS environment variable
+ * - Development/QA automatically uses separate IDs to prevent accidental production data access
+ * - Production uses real production Notion IDs
  */
 import { isTestEnv } from '../../shared/utils/is-test-env';
 import type { AtlasDatabaseID, AtlasDatabaseName, AtlasDocumentType, MasterStatus } from './atlas-types';
@@ -69,12 +68,8 @@ export const ATLAS_DATABASE_NAMES: AtlasDatabaseName[] = [
   ATLAS_DATABASES.AGENTS,
 ] as const;
 
-// Priority order: unit tests > development (USE_DEV_NOTION_IDS=true) > production (default)
-const selectedIds = isTestEnv()
-  ? notionIdsUnitTest
-  : process.env.USE_DEV_NOTION_IDS === 'true'
-    ? notionIdsDev
-    : notionIds;
+// Priority order: unit tests > development (NODE_ENV !== 'production') > production
+const selectedIds = isTestEnv() ? notionIdsUnitTest : process.env.NODE_ENV !== 'production' ? notionIdsDev : notionIds;
 
 export const ATLAS_DATABASE_ID_MAP = selectedIds.ATLAS_DATABASE_ID_MAP;
 export const ATLAS_DATABASE_ID_MAP_REVERSED = selectedIds.ATLAS_DATABASE_ID_MAP_REVERSED;
