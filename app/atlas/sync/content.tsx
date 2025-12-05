@@ -22,7 +22,15 @@ import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_ac
 import { createPublicAccessToken } from './_actions/trigger-auth';
 
 // Sync phase type matching the task
-type SyncPhase = 'initializing' | 'content' | 'additions' | 'deletions' | 'parent_changes' | 'completed' | 'stopped';
+type SyncPhase =
+  | 'initializing'
+  | 'content'
+  | 'additions'
+  | 'mention_updates' // Phase 2.5: Update placeholder mentions with real Notion page IDs
+  | 'deletions'
+  | 'parent_changes'
+  | 'completed'
+  | 'stopped';
 
 // Metadata structure from the task
 interface SyncMetadata {
@@ -476,6 +484,7 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     initializing: 'Initializing',
     content: 'Content Changes',
     additions: 'Additions',
+    mention_updates: 'Mention Updates',
     deletions: 'Deletions',
     parent_changes: 'Parent Changes',
     completed: 'Completed',
@@ -486,6 +495,7 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
     initializing: 'default',
     content: 'primary',
     additions: 'success',
+    mention_updates: 'primary',
     deletions: 'danger',
     parent_changes: 'warning',
     completed: 'success',

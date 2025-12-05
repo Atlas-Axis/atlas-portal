@@ -12,16 +12,16 @@ import type { AtlasDatabaseName } from '../atlas-types';
  * NOTE: Keys use string literals instead of ATLAS_DATABASES constants to avoid circular dependency
  */
 export const ATLAS_DATABASE_ID_MAP: Record<AtlasDatabaseName, string> = {
-  Scopes: '2bff2ff0-8d73-81d7-8713-ccca1ffb7ac6',
-  Articles: '2bff2ff0-8d73-81c0-8d47-c749b6e47264',
-  'Sections & Primary Docs': '2bff2ff0-8d73-810e-98d2-d2b56caaff6a',
-  Annotations: '2bff2ff0-8d73-810f-9c82-e95ec45e781e',
-  Tenets: '2bff2ff0-8d73-81b3-ab35-c83da6630689',
-  Scenarios: '2bff2ff0-8d73-8137-847c-da464ba3a871',
-  'Scenario Variations': '2bff2ff0-8d73-8153-b2d8-d31c6fe1f44b',
-  'Needed Research': '2bff2ff0-8d73-8168-afae-d6a0fb167139',
-  'Active Data': '2bff2ff0-8d73-814b-9fe9-c24687b315d2',
-  'Agent Scope Database': '2bff2ff0-8d73-8156-8210-c2e809e62634',
+  Scopes: '2c0f2ff0-8d73-818f-ab94-cacf04090004',
+  Articles: '2c0f2ff0-8d73-8119-9dce-dab36bd33982',
+  'Sections & Primary Docs': '2c0f2ff0-8d73-8185-bee1-e77b4d66723b',
+  Annotations: '2c0f2ff0-8d73-8125-a316-e65fc8cf23e9',
+  Tenets: '2c0f2ff0-8d73-81d5-83b3-ef386d28151d',
+  Scenarios: '2c0f2ff0-8d73-81de-8b0f-ff067d7ef711',
+  'Scenario Variations': '2c0f2ff0-8d73-819b-a8bf-eb156b794a4a',
+  'Needed Research': '2c0f2ff0-8d73-81a2-b590-d66e6d29acef',
+  'Active Data': '2c0f2ff0-8d73-811c-ba64-d1e24d985d20',
+  'Agent Scope Database': '2c0f2ff0-8d73-81e5-9b08-e82cd55d546d',
 } as const;
 
 /**

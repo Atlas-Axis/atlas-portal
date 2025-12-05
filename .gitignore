@@ -46,9 +46,6 @@ next-env.d.ts
 # Notion API local cache
 .notion-cache/
 
-# Dry-run output (markdown to Notion sync)
-app/atlas/sync/dry-run-output.md
-
 # Custom local debug data
 # .debug-data
 

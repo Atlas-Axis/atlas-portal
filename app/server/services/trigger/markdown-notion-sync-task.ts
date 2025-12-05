@@ -46,7 +46,7 @@ const updateMetadata = (data: Partial<SyncMetadata>) => {
  * Markdown-to-Notion sync task
  *
  * Syncs Atlas documents from Markdown format back to Notion databases.
- * Processes changes in 4 phases: content updates, additions, deletions, parent changes.
+ * Processes changes in 5 phases: content updates, additions, mention updates, deletions, parent changes.
  */
 export const markdownNotionSyncTask = task({
   id: 'markdown-notion-sync',
