@@ -12,6 +12,7 @@ import {
   addInterDatabaseRelationshipProperties,
   addParentPageRelationshipProperty,
   buildNotionProperties,
+  buildNotionPropertiesFiltered,
 } from '@/app/atlas/sync/_lib/notion-property-builder';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
@@ -22,7 +23,7 @@ import { notion } from '@/app/server/services/notion/notion-client';
 import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
 import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
 import { pageHasChildren, validatePageExists } from './sync-helpers';
-import { SyncActionResult } from './types';
+import { FieldFilters, SyncActionResult } from './types';
 
 /**
  * Updates the content of an existing Notion page.
@@ -31,6 +32,7 @@ import { SyncActionResult } from './types';
  * @param originalIdsToDatabase Map of UUID to database name (for old values)
  * @param uuidMappings Bidirectional UUID mappings
  * @param syncBatchId Sync batch ID for audit logging
+ * @param fieldFilters Optional field filters to control which fields are updated
  * @returns Result with success status
  */
 export async function updateNotionPageContent(
@@ -38,6 +40,7 @@ export async function updateNotionPageContent(
   originalIdsToDatabase: Map<string, AtlasDatabaseName>,
   uuidMappings: UuidMappings,
   syncBatchId: string,
+  fieldFilters?: FieldFilters,
 ): Promise<SyncActionResult> {
   if (!change.uuid || !change.newValues || !change.oldValues) {
     return { success: false, error: 'Missing required data' };
@@ -50,7 +53,11 @@ export async function updateNotionPageContent(
 
   const databaseName = getDatabaseNameFromDocument(change.oldValues.type, change.uuid, originalIdsToDatabase);
   const warnings: ContentConversionWarning[] = [];
-  const properties = buildNotionProperties(change.newValues, databaseName, uuidMappings, warnings);
+
+  // Use filtered properties if field filters are provided, otherwise sync all fields
+  const properties = fieldFilters
+    ? buildNotionPropertiesFiltered(change.newValues, databaseName, uuidMappings, fieldFilters, warnings)
+    : buildNotionProperties(change.newValues, databaseName, uuidMappings, warnings);
 
   try {
     const notionClient = notion();

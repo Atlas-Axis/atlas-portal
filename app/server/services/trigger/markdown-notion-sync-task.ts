@@ -13,6 +13,7 @@ import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supaba
 import { loadUuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 // Import from the new sync service module
 import {
+  type FieldFilters,
   type MarkdownNotionSyncPayload,
   type MarkdownNotionSyncResult,
   type SyncFilters,
@@ -26,7 +27,7 @@ import { createSyncBatch } from '@/app/server/services/supabase/audit-log-servic
 import { notionPartialAtlasImportTask } from './notion-partial-atlas-import-task';
 
 // Re-export types for external use
-export type { MarkdownNotionSyncPayload, MarkdownNotionSyncResult, SyncFilters };
+export type { MarkdownNotionSyncPayload, MarkdownNotionSyncResult, SyncFilters, FieldFilters };
 
 /**
  * Helper to update Trigger.dev metadata for real-time progress tracking

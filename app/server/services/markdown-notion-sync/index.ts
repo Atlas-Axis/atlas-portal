@@ -7,11 +7,15 @@ export type {
   SyncPhase,
   SyncMetadata,
   SyncFilters,
+  FieldFilters,
   MarkdownNotionSyncPayload,
   MarkdownNotionSyncResult,
   SyncActionResult,
   PageWithUnresolvedMentions,
 } from './types';
+
+// Export constants
+export { DEFAULT_FIELD_FILTERS } from './types';
 
 // Export helper functions
 export { validatePageExists, pageHasChildren, sortAdditionsByDepthFirst, getDocumentLabel } from './sync-helpers';

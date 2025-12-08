@@ -134,6 +134,7 @@ export async function processChanges(
           diffResult.originalIdsToDatabase,
           uuidMappings,
           syncBatchId,
+          filters.fieldFilters, // Pass field filters for partial updates
         );
         completed++;
         if (result.success) {

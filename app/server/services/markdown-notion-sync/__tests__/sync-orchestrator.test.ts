@@ -84,6 +84,13 @@ describe('sync-orchestrator', () => {
       added: true,
       deleted: true,
       parentChanges: true,
+      fieldFilters: {
+        name: true,
+        docNo: true,
+        type: true,
+        content: true,
+        extraFields: true,
+      },
     };
 
     mockProgressCallback = vi.fn();

@@ -12,6 +12,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { ContentConversionWarning, convertMarkdownToNotionRichText } from '@/app/server/markdown/markdown-to-rich-text';
+import type { FieldFilters } from '@/app/server/services/markdown-notion-sync/types';
 
 // Re-export ContentConversionWarning for callers
 export type { ContentConversionWarning } from '@/app/server/markdown/markdown-to-rich-text';
@@ -247,6 +248,145 @@ export function buildNotionProperties(
       uuidMappings,
       warnings,
     );
+  }
+
+  return properties;
+}
+
+/**
+ * Builds Notion property objects from Atlas document data, filtered by field filters.
+ * Only includes properties for fields that are enabled in the filters.
+ * Used for partial page updates where only specific fields should be synced.
+ *
+ * This function is specifically for content change updates (not additions/deletions).
+ *
+ * @param doc - The Atlas document to convert
+ * @param atlasDatabaseName - The Atlas database name for property mapping
+ * @param uuidMappings - UUID mappings for converting document links
+ * @param fieldFilters - Which fields to include in the properties
+ * @param warnings - Optional array to collect conversion warnings (e.g., truncation)
+ */
+export function buildNotionPropertiesFiltered(
+  doc: ExportAtlasTreeBaseDocument,
+  atlasDatabaseName: AtlasDatabaseName,
+  uuidMappings: UuidMappings,
+  fieldFilters: FieldFilters,
+  warnings?: ContentConversionWarning[],
+): Record<string, unknown> {
+  const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
+  const typeOverrides = NOTION_PROPERTY_TYPE_OVERRIDES[atlasDatabaseName] || {};
+  const properties: Record<string, unknown> = {};
+
+  // Document name property - only if name filter is enabled
+  if (fieldFilters.name) {
+    const documentNameNotionPropertyName = config.properties.atlasDocumentName;
+    const documentNamePropertyType = typeOverrides[documentNameNotionPropertyName] || 'rich_text';
+    const documentName = doc.name || '';
+    const allowEmptyForDocumentName = documentNamePropertyType === 'rich_text';
+    properties[documentNameNotionPropertyName] = formatNotionProperty(
+      documentName,
+      documentNamePropertyType,
+      uuidMappings,
+      allowEmptyForDocumentName,
+      warnings,
+    )!;
+
+    // Also update standardized Document Title field
+    properties[STANDARDIZED_DOCUMENT_TITLE] = formatNotionProperty(
+      doc.name || '',
+      'rich_text',
+      uuidMappings,
+      false,
+      warnings,
+    )!;
+  }
+
+  // Document number - only if docNo filter is enabled
+  if (fieldFilters.docNo) {
+    const documentNoNotionPropertyName = config.properties.atlasDocumentNo;
+    const documentNameNotionPropertyName = config.properties.atlasDocumentName;
+
+    // Only sync if it's a different property than document name
+    if (documentNoNotionPropertyName !== documentNameNotionPropertyName) {
+      const documentNoPropertyType = typeOverrides[documentNoNotionPropertyName] || 'rich_text';
+      properties[documentNoNotionPropertyName] = formatNotionProperty(
+        doc.doc_no || '',
+        documentNoPropertyType,
+        uuidMappings,
+        false,
+        warnings,
+      )!;
+    }
+
+    // Also update standardized Document Number field
+    properties[STANDARDIZED_DOCUMENT_NUMBER] = formatNotionProperty(
+      doc.doc_no || '',
+      'rich_text',
+      uuidMappings,
+      false,
+      warnings,
+    )!;
+  }
+
+  // Document type - only if type filter is enabled
+  if (fieldFilters.type) {
+    properties[config.properties.atlasDocumentType] = {
+      select: { name: doc.type },
+    };
+  }
+
+  // Content - only if content filter is enabled
+  if (fieldFilters.content && config.properties.content) {
+    properties[config.properties.content] = formatNotionProperty(
+      doc.content || '',
+      'rich_text',
+      uuidMappings,
+      false,
+      warnings,
+    )!;
+  }
+
+  // Extra fields - only if extraFields filter is enabled
+  if (fieldFilters.extraFields) {
+    const docRecord = doc as unknown as Record<string, unknown>;
+
+    if (doc.type === 'Type Specification') {
+      addExtraFieldsToProperties(
+        properties,
+        docRecord,
+        atlasDatabaseName,
+        TYPE_SPECIFICATION_PROPERTY_MAPPING,
+        uuidMappings,
+        warnings,
+      );
+    } else if (doc.type === 'Scenario') {
+      addExtraFieldsToProperties(
+        properties,
+        docRecord,
+        atlasDatabaseName,
+        SCENARIO_PROPERTY_MAPPING,
+        uuidMappings,
+        warnings,
+      );
+    } else if (doc.type === 'Scenario Variation') {
+      addExtraFieldsToProperties(
+        properties,
+        docRecord,
+        atlasDatabaseName,
+        SCENARIO_VARIATION_PROPERTY_MAPPING,
+        uuidMappings,
+        warnings,
+      );
+    } else if (doc.type === 'Needed Research') {
+      addExtraFieldsToProperties(
+        properties,
+        docRecord,
+        atlasDatabaseName,
+        NEEDED_RESEARCH_PROPERTY_MAPPING,
+        uuidMappings,
+        warnings,
+      );
+    }
   }
 
   return properties;

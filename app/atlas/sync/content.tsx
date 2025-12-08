@@ -10,7 +10,12 @@ import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';
 import { InlineTextDiff } from '@/app/components/inline-text-diff';
 import type { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import type { AtlasChangeType, AtlasDiffResult, AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
+import {
+  type AtlasChangeType,
+  type AtlasDiffResult,
+  type AtlasDocumentChange,
+  hasFieldChanges,
+} from '@/app/server/atlas/diff/atlas-diff';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   SCENARIO_PROPERTY_MAPPING,
@@ -18,6 +23,7 @@ import {
   TYPE_SPECIFICATION_PROPERTY_MAPPING,
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
+import { DEFAULT_FIELD_FILTERS, type FieldFilters } from '@/app/server/services/markdown-notion-sync/types';
 import type { markdownNotionSyncTask } from '@/app/server/services/trigger/markdown-notion-sync-task';
 import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_actions/sync-actions';
 import { createPublicAccessToken } from './_actions/trigger-auth';
@@ -92,10 +98,22 @@ export function Content({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // Field filter state - controls which fields are shown in diff and synced
+  const [fieldFilters, setFieldFilters] = useState<FieldFilters>(DEFAULT_FIELD_FILTERS);
+
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
+
+  // Filter changed documents based on field filters
+  const filteredChangedDocuments = useMemo(() => {
+    return changes.changed.filter((change) => {
+      if (!change.oldValues || !change.newValues) return false;
+      return hasFieldChanges(change.oldValues, change.newValues, fieldFilters);
+    });
+  }, [changes.changed, fieldFilters]);
+
   const hasChanges =
     changes.added.length > 0 ||
-    changes.changed.length > 0 ||
+    filteredChangedDocuments.length > 0 ||
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
@@ -169,11 +187,12 @@ export function Content({
         {/* Changed Documents */}
         <ChangeSection
           title="Changed"
-          changes={changes.changed}
+          changes={filteredChangedDocuments}
           changeType="changed"
           uuidToDocMap={newIdsToDocuments}
           uuidToDocNoMap={uuidToDocNoMap}
           uuidToDatabaseMap={uuidToDatabaseMap}
+          fieldFilters={fieldFilters}
         />
 
         {/* Parent Changed */}
@@ -202,6 +221,8 @@ export function Content({
           isDevMode={isDevMode}
           useDynamicValues={useDynamicValues}
           onUseDynamicValuesChange={handleUseDynamicValuesChange}
+          fieldFilters={fieldFilters}
+          onFieldFiltersChange={setFieldFilters}
         />
       </CardBody>
     </Card>
@@ -216,11 +237,15 @@ function SyncControls({
   isDevMode,
   useDynamicValues,
   onUseDynamicValuesChange,
+  fieldFilters,
+  onFieldFiltersChange,
 }: {
   hasChanges: boolean;
   isDevMode: boolean;
   useDynamicValues: boolean;
   onUseDynamicValuesChange: (checked: boolean) => void;
+  fieldFilters: FieldFilters;
+  onFieldFiltersChange: (filters: FieldFilters) => void;
 }) {
   // Sync filter state (excluding useDynamicValues which is managed by parent)
   const [syncFilters, setSyncFilters] = useState({
@@ -273,6 +298,7 @@ function SyncControls({
         contentChanges: syncFilters.contentChanges,
         parentChanges: syncFilters.parentChanges,
         useDynamicValues, // From parent prop, affects diff calculation
+        fieldFilters, // Field-level filters for content changes
       });
 
       if ('error' in result) {
@@ -296,7 +322,7 @@ function SyncControls({
     } finally {
       setIsStarting(false);
     }
-  }, [syncFilters, useDynamicValues]);
+  }, [syncFilters, useDynamicValues, fieldFilters]);
 
   const handleStopClick = useCallback(async () => {
     setStopRequested(true);
@@ -339,6 +365,7 @@ function SyncControls({
     <div className="my-6">
       {/* Sync Filters */}
       <div className="mb-4 flex flex-col items-center gap-4">
+        {/* Change Type Filters */}
         <div className="flex justify-center gap-6">
           <Checkbox
             isSelected={syncFilters.added}
@@ -369,6 +396,52 @@ function SyncControls({
             Parent Changes
           </Checkbox>
         </div>
+
+        {/* Field Filters - controls which fields are shown in diff and synced */}
+        <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2">
+          <span className="mr-2 text-sm font-medium text-slate-600">Fields:</span>
+          <Checkbox
+            size="sm"
+            isSelected={fieldFilters.name}
+            onValueChange={(checked) => onFieldFiltersChange({ ...fieldFilters, name: checked })}
+            isDisabled={controlsDisabled}
+          >
+            Name
+          </Checkbox>
+          <Checkbox
+            size="sm"
+            isSelected={fieldFilters.docNo}
+            onValueChange={(checked) => onFieldFiltersChange({ ...fieldFilters, docNo: checked })}
+            isDisabled={controlsDisabled}
+          >
+            Doc Number
+          </Checkbox>
+          <Checkbox
+            size="sm"
+            isSelected={fieldFilters.type}
+            onValueChange={(checked) => onFieldFiltersChange({ ...fieldFilters, type: checked })}
+            isDisabled={controlsDisabled}
+          >
+            Type
+          </Checkbox>
+          <Checkbox
+            size="sm"
+            isSelected={fieldFilters.content}
+            onValueChange={(checked) => onFieldFiltersChange({ ...fieldFilters, content: checked })}
+            isDisabled={controlsDisabled}
+          >
+            Content
+          </Checkbox>
+          <Checkbox
+            size="sm"
+            isSelected={fieldFilters.extraFields}
+            onValueChange={(checked) => onFieldFiltersChange({ ...fieldFilters, extraFields: checked })}
+            isDisabled={controlsDisabled}
+          >
+            Extra Fields
+          </Checkbox>
+        </div>
+
         {/* @todo CLEANUP: Remove migration mode toggle after migration complete (Phase 8) */}
         {/* Migration Mode Toggle */}
         <div className="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2">
@@ -601,6 +674,7 @@ const ChangeSection = memo(function ChangeSection({
   uuidToDocMap,
   uuidToDocNoMap,
   uuidToDatabaseMap,
+  fieldFilters,
 }: {
   title: string;
   changes: AtlasDocumentChange[];
@@ -608,6 +682,7 @@ const ChangeSection = memo(function ChangeSection({
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
   uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
+  fieldFilters?: FieldFilters;
 }) {
   const colorConfig = colors[changeType];
 
@@ -630,6 +705,7 @@ const ChangeSection = memo(function ChangeSection({
             uuidToDocMap={uuidToDocMap}
             uuidToDocNoMap={uuidToDocNoMap}
             uuidToDatabaseMap={uuidToDatabaseMap}
+            fieldFilters={fieldFilters}
           />
         ))}
       </div>
@@ -654,11 +730,13 @@ const ChangeCard = memo(function ChangeCard({
   uuidToDocMap,
   uuidToDocNoMap,
   uuidToDatabaseMap,
+  fieldFilters,
 }: {
   change: AtlasDocumentChange;
   uuidToDocMap: Map<string, { type: string; doc_no: string; name: string }>;
   uuidToDocNoMap: Map<string, string>;
   uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
+  fieldFilters?: FieldFilters;
 }) {
   const doc = change.newValues ?? change.oldValues;
   if (!doc) return null;
@@ -684,7 +762,7 @@ const ChangeCard = memo(function ChangeCard({
 
           {/* Show inline diff for content changes */}
           {change.changeType === 'changed' && change.oldValues && change.newValues && (
-            <FieldChanges oldDoc={change.oldValues} newDoc={change.newValues} />
+            <FieldChanges oldDoc={change.oldValues} newDoc={change.newValues} fieldFilters={fieldFilters} />
           )}
 
           {/* Show parent change details */}
@@ -771,20 +849,33 @@ function ParentDoc({
 function FieldChanges({
   oldDoc,
   newDoc,
+  fieldFilters,
 }: {
-  oldDoc: { type: string; name: string; content: string };
-  newDoc: { type: string; name: string; content: string };
+  oldDoc: { type: string; name: string; content: string; doc_no?: string };
+  newDoc: { type: string; name: string; content: string; doc_no?: string };
+  fieldFilters?: FieldFilters;
 }) {
   const changes: Array<{ field: string; displayName: string; oldValue: string; newValue: string }> = [];
 
-  // Compare basic fields
-  if (oldDoc.type !== newDoc.type) {
+  // Use default filters if not provided (show all fields)
+  const filters = fieldFilters ?? DEFAULT_FIELD_FILTERS;
+
+  // Compare basic fields (only if filter is enabled)
+  if (filters.type && oldDoc.type !== newDoc.type) {
     changes.push({ field: 'type', displayName: 'Type', oldValue: oldDoc.type, newValue: newDoc.type });
   }
-  if (oldDoc.name !== newDoc.name) {
+  if (filters.name && oldDoc.name !== newDoc.name) {
     changes.push({ field: 'name', displayName: 'Name', oldValue: oldDoc.name, newValue: newDoc.name });
   }
-  if (oldDoc.content !== newDoc.content) {
+  if (filters.docNo && oldDoc.doc_no !== newDoc.doc_no) {
+    changes.push({
+      field: 'doc_no',
+      displayName: 'Doc Number',
+      oldValue: oldDoc.doc_no || '',
+      newValue: newDoc.doc_no || '',
+    });
+  }
+  if (filters.content && oldDoc.content !== newDoc.content) {
     changes.push({
       field: 'content',
       displayName: 'Content',
@@ -793,26 +884,28 @@ function FieldChanges({
     });
   }
 
-  // Compare extra fields based on document type
-  const extraFieldMapping = getExtraFieldMappingForDocumentType(oldDoc.type);
-  if (extraFieldMapping) {
-    const oldDocRecord = oldDoc as unknown as Record<string, unknown>;
-    const newDocRecord = newDoc as unknown as Record<string, unknown>;
+  // Compare extra fields based on document type (only if filter is enabled)
+  if (filters.extraFields) {
+    const extraFieldMapping = getExtraFieldMappingForDocumentType(oldDoc.type);
+    if (extraFieldMapping) {
+      const oldDocRecord = oldDoc as unknown as Record<string, unknown>;
+      const newDocRecord = newDoc as unknown as Record<string, unknown>;
 
-    for (const [fieldKey, displayName] of Object.entries(extraFieldMapping)) {
-      const oldValue = oldDocRecord[fieldKey];
-      const newValue = newDocRecord[fieldKey];
+      for (const [fieldKey, displayName] of Object.entries(extraFieldMapping)) {
+        const oldValue = oldDocRecord[fieldKey];
+        const newValue = newDocRecord[fieldKey];
 
-      if (oldValue !== newValue) {
-        const oldStr = formatFieldValue(oldValue);
-        const newStr = formatFieldValue(newValue);
+        if (oldValue !== newValue) {
+          const oldStr = formatFieldValue(oldValue);
+          const newStr = formatFieldValue(newValue);
 
-        changes.push({
-          field: fieldKey,
-          displayName,
-          oldValue: oldStr,
-          newValue: newStr,
-        });
+          changes.push({
+            field: fieldKey,
+            displayName,
+            oldValue: oldStr,
+            newValue: newStr,
+          });
+        }
       }
     }
   }

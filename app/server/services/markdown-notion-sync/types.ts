@@ -26,6 +26,30 @@ export interface SyncMetadata {
   skipped: number;
 }
 
+/**
+ * Field-level filters for controlling which document fields are included
+ * in the diff display and synced to Notion.
+ * Only affects the "Changed" category - additions/deletions/parent changes are unaffected.
+ */
+export interface FieldFilters {
+  name: boolean;
+  docNo: boolean;
+  type: boolean;
+  content: boolean;
+  extraFields: boolean;
+}
+
+/**
+ * Default field filters with all fields enabled.
+ */
+export const DEFAULT_FIELD_FILTERS: FieldFilters = {
+  name: true,
+  docNo: true,
+  type: true,
+  content: true,
+  extraFields: true,
+};
+
 // Sync filters for controlling which change types are processed
 export interface SyncFilters {
   added: boolean;
@@ -40,6 +64,12 @@ export interface SyncFilters {
    * @todo CLEANUP: Remove after migration complete (Phase 8)
    */
   useDynamicValues?: boolean;
+  /**
+   * Field-level filters for controlling which document fields are included
+   * in the diff display and synced to Notion.
+   * Only affects the "Changed" category.
+   */
+  fieldFilters: FieldFilters;
 }
 
 // Task payload

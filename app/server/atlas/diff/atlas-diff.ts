@@ -15,6 +15,7 @@
  *
  * TODO: Remove cosmetic formatting normalization when no longer needed.
  */
+import type { FieldFilters } from '@/app/server/services/markdown-notion-sync/types';
 import { AtlasDatabaseName } from '../atlas-types';
 import {
   ChildCollectionName,
@@ -257,9 +258,60 @@ export function compareDocumentFields(
 }
 
 /**
- * Get the list of extra field keys for a given document type.
+ * Check if a document has changes in any of the enabled fields.
+ * Used by the UI to filter which changes are displayed based on field filters.
+ *
+ * @param original - The original document values
+ * @param updated - The updated document values
+ * @param fieldFilters - Which fields to check for changes
+ * @returns true if there are changes in any enabled field, false otherwise
  */
-function getExtraFieldKeysForDocumentType(type: string): string[] {
+export function hasFieldChanges(
+  original: ExportAtlasTreeBaseDocument,
+  updated: ExportAtlasTreeBaseDocument,
+  fieldFilters: FieldFilters,
+): boolean {
+  // Apply both whitespace and cosmetic formatting normalization
+  const normalizeFully = (text: string) => normalizeWhitespace(normalizeCosmeticFormatting(text));
+
+  // Check type field
+  if (fieldFilters.type && original.type !== updated.type) return true;
+
+  // Check doc_no field
+  if (fieldFilters.docNo && normalizeFully(original.doc_no) !== normalizeFully(updated.doc_no)) return true;
+
+  // Check name field
+  if (fieldFilters.name && normalizeFully(original.name) !== normalizeFully(updated.name)) return true;
+
+  // Check content field
+  if (fieldFilters.content && normalizeFully(original.content) !== normalizeFully(updated.content)) return true;
+
+  // Check extra fields if enabled
+  if (fieldFilters.extraFields) {
+    const extraFieldKeys = getExtraFieldKeysForDocumentType(original.type);
+    if (extraFieldKeys.length > 0) {
+      const originalRecord = original as unknown as Record<string, unknown>;
+      const updatedRecord = updated as unknown as Record<string, unknown>;
+
+      for (const key of extraFieldKeys) {
+        const originalValue = originalRecord[key];
+        const updatedValue = updatedRecord[key];
+
+        const originalStr = originalValue !== undefined && originalValue !== null ? String(originalValue) : '';
+        const updatedStr = updatedValue !== undefined && updatedValue !== null ? String(updatedValue) : '';
+        if (normalizeFully(originalStr) !== normalizeFully(updatedStr)) return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Get the list of extra field keys for a given document type.
+ * Exported for use in UI filtering.
+ */
+export function getExtraFieldKeysForDocumentType(type: string): string[] {
   switch (type) {
     case 'Type Specification':
       return Object.keys(TYPE_SPECIFICATION_PROPERTY_MAPPING);
