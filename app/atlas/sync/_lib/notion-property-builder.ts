@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
 import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import {
@@ -177,6 +178,35 @@ export function buildNotionProperties(
       warnings,
     )!;
   }
+
+  // ============================================================================
+  // NEW STANDARDIZED FIELDS (Phase 2 of Property Standardization)
+  // Write to new standardized fields in addition to old fields for backward compatibility.
+  // These fields are the same across all databases, simplifying the mapping logic.
+  // See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // ============================================================================
+
+  // Document Number - standardized field for doc_no (always rich_text)
+  properties[STANDARDIZED_DOCUMENT_NUMBER] = formatNotionProperty(
+    doc.doc_no || '',
+    'rich_text',
+    uuidMappings,
+    false,
+    warnings,
+  )!;
+
+  // Document Title - standardized field for document name (always rich_text)
+  // Note: We don't use allowEmpty here because Document Title is a new field
+  // and empty values are acceptable during the transition period
+  properties[STANDARDIZED_DOCUMENT_TITLE] = formatNotionProperty(
+    doc.name || '',
+    'rich_text',
+    uuidMappings,
+    false,
+    warnings,
+  )!;
+
+  // ============================================================================
 
   // Handle extra fields based on document type
   const docRecord = doc as unknown as Record<string, unknown>;

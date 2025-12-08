@@ -137,3 +137,26 @@ export const ATLAS_MARKDOWN_GITHUB_RAW_URL =
  */
 export const ATLAS_MARKDOWN_GITHUB_API_URL =
   'https://api.github.com/repos/pppdns/next-gen-atlas/commits?path=Sky%20Atlas/Sky%20Atlas.md&per_page=1';
+
+/**
+ * Standardized Notion property names used across all Atlas databases.
+ *
+ * These properties were introduced during the Notion Property Standardization initiative
+ * to replace inconsistent database-specific property names with unified fields.
+ *
+ * OLD (database-specific):
+ * - Document Number: "Doc No", "Doc No (or Temp Name)", "Formal Doc ID", etc.
+ * - Document Title: "Name", "Doc No (or Temp Name)", "Title", etc.
+ *
+ * NEW (standardized):
+ * - Document Number: "Document Number" (rich_text) across all databases
+ * - Document Title: "Document Title" (rich_text) across all databases
+ *
+ * MIGRATION STRATEGY:
+ * - Phase 1-3: Dual-write (write to both old and new fields) and dual-read (prefer new, fallback to old)
+ * - Phase 4-6: Eventually deprecate old fields after full migration
+ *
+ * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ */
+export const STANDARDIZED_DOCUMENT_NUMBER = 'Document Number';
+export const STANDARDIZED_DOCUMENT_TITLE = 'Document Title';

@@ -1,5 +1,6 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import {
   ChildLists,
   NEEDED_RESEARCH_PROPERTY_MAPPING,
@@ -61,8 +62,18 @@ async function convertSingleNotionPageToDatabaseFormat(
   atlasDatabaseName: AtlasDatabaseName,
   databaseConfig: (typeof NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS)[AtlasDatabaseName],
 ): Promise<NotionDatabasePage> {
-  // Extract page title
-  const pageTitle = extractRichTextFromProperty(notionPage, databaseConfig.properties.atlasDocumentName);
+  // ============================================================================
+  // DUAL-READ LOGIC (Phase 3 of Property Standardization)
+  // Read from new standardized fields first, fall back to old fields if empty.
+  // See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // ============================================================================
+
+  // Extract page title - prefer new "Document Title" field, fall back to old field
+  const pageTitle = extractRichTextWithFallback(
+    notionPage,
+    STANDARDIZED_DOCUMENT_TITLE,
+    databaseConfig.properties.atlasDocumentName,
+  );
 
   // Extract content - handle null mapping by defaulting to empty string
   const contentPropertyName = databaseConfig.properties.content;
@@ -70,8 +81,12 @@ async function convertSingleNotionPageToDatabaseFormat(
     ? extractRichTextFromProperty(notionPage, contentPropertyName)
     : { plainText: '', richText: [] };
 
-  // Extract document number
-  const documentNumber = extractDocumentNumber(notionPage, databaseConfig.properties.atlasDocumentNo);
+  // Extract document number - prefer new "Document Number" field, fall back to old field
+  const documentNumber = extractDocumentNumberWithFallback(
+    notionPage,
+    STANDARDIZED_DOCUMENT_NUMBER,
+    databaseConfig.properties.atlasDocumentNo,
+  );
 
   // Extract document type
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
@@ -237,6 +252,60 @@ function extractDocumentNumber(page: PageObjectResponse, numberPropertyName: str
     console.error(`Error extracting document number from page ${page.id}:`, error);
     return '';
   }
+}
+
+/**
+ * Extract document number with fallback logic for dual-read during property standardization.
+ * Prefers the new standardized field, falls back to old field if new field is empty.
+ *
+ * @param page - The Notion page to extract from
+ * @param newPropertyName - The new standardized property name (e.g., "Document Number")
+ * @param fallbackPropertyName - The old database-specific property name (e.g., "Doc No")
+ * @returns The document number string
+ */
+function extractDocumentNumberWithFallback(
+  page: PageObjectResponse,
+  newPropertyName: string,
+  fallbackPropertyName: string,
+): string {
+  // Try new standardized field first
+  const newProperty = page.properties[newPropertyName];
+  if (newProperty) {
+    const newValue = readPlainTextValueFromNotionPageProperty(newProperty);
+    if (newValue && String(newValue).trim() !== '') {
+      return String(newValue);
+    }
+  }
+
+  // Fall back to old field
+  return extractDocumentNumber(page, fallbackPropertyName);
+}
+
+/**
+ * Extract rich text with fallback logic for dual-read during property standardization.
+ * Prefers the new standardized field, falls back to old field if new field is empty.
+ *
+ * @param page - The Notion page to extract from
+ * @param newPropertyName - The new standardized property name (e.g., "Document Title")
+ * @param fallbackPropertyName - The old database-specific property name (e.g., "Name")
+ * @returns Object with plainText and richText
+ */
+function extractRichTextWithFallback(
+  page: PageObjectResponse,
+  newPropertyName: string,
+  fallbackPropertyName: string,
+): { plainText: string | null; richText: Json[] | null } {
+  // Try new standardized field first
+  const newProperty = page.properties[newPropertyName];
+  if (newProperty) {
+    const result = extractRichTextFromProperty(page, newPropertyName);
+    if (result.plainText && result.plainText.trim() !== '') {
+      return result;
+    }
+  }
+
+  // Fall back to old field
+  return extractRichTextFromProperty(page, fallbackPropertyName);
 }
 
 /**

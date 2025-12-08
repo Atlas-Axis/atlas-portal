@@ -513,6 +513,159 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Hypothetical Number'] as any).number).toBeNull();
     });
+
+    // ============================================================================
+    // STANDARDIZED FIELDS TESTS (Property Standardization Phase 2)
+    // These tests verify that buildNotionProperties writes to the new standardized
+    // fields (Document Number, Document Title) in addition to the old fields.
+    // ============================================================================
+
+    describe('standardized fields', () => {
+      it('writes Document Number to standardized field for all databases', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Section',
+          doc_no: 'A.1.2.3',
+          name: 'Test Section',
+          uuid: '123',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
+
+        // Should have the standardized Document Number field
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text).toBeDefined();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1.2.3');
+      });
+
+      it('writes Document Title to standardized field for all databases', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Scope',
+          doc_no: 'A.1',
+          name: 'My Scope Name',
+          uuid: '456',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
+
+        // Should have the standardized Document Title field
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text).toBeDefined();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('My Scope Name');
+      });
+
+      it('writes both standardized fields AND old fields for backward compatibility', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Scope',
+          doc_no: 'A.2',
+          name: 'Scope Name',
+          uuid: '789',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
+
+        // Old fields should still be populated
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Name'] as any).rich_text[0].text.content).toBe('Scope Name');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Doc No'] as any).title[0].text.content).toBe('A.2');
+
+        // New standardized fields should also be populated
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Scope Name');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.2');
+      });
+
+      it('handles empty doc_no for standardized Document Number field', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Section',
+          doc_no: '',
+          name: 'Test',
+          uuid: '111',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
+
+        // Empty doc_no should result in empty rich_text array
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text).toEqual([]);
+      });
+
+      it('handles empty name for standardized Document Title field', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Section',
+          doc_no: 'A.1',
+          name: '',
+          uuid: '222',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
+
+        // Empty name should result in empty rich_text array for Document Title
+        // (not allowEmpty because it's a new field during transition)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text).toEqual([]);
+      });
+
+      it('writes standardized fields for Agent Scope Database', () => {
+        const doc: ExportAtlasTreeBaseDocument = {
+          type: 'Core',
+          doc_no: 'A.1.1.1',
+          name: 'Agent Core Document',
+          uuid: '333',
+          content: 'Content',
+          last_modified: '',
+        };
+
+        const properties = buildNotionProperties(doc, 'Agent Scope Database', mockUuidMappings);
+
+        // Standardized fields should be present regardless of database
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1.1.1');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Agent Core Document');
+
+        // Old fields should also be present
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Name'] as any).title[0].text.content).toBe('Agent Core Document');
+      });
+
+      it('writes standardized fields for Needed Research documents', () => {
+        const doc = {
+          type: 'Needed Research',
+          doc_no: 'NR-42',
+          name: 'Research Item',
+          uuid: '444',
+          content: '',
+          last_modified: '',
+          needed_research_content: 'Research details',
+        };
+
+        const properties = buildNotionProperties(
+          doc as ExportAtlasTreeBaseDocument,
+          'Needed Research',
+          mockUuidMappings,
+        );
+
+        // Standardized fields should work for all document types
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('NR-42');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Research Item');
+      });
+    });
   });
 
   describe('addParentPageRelationshipProperty', () => {

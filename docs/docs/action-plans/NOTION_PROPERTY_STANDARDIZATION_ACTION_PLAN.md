@@ -10,6 +10,270 @@ This document outlines the plan to standardize Notion database properties across
 - [NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md) - Notion to Supabase import workflow
 - [MARKDOWN_TO_NOTION_SYNC.md](./MARKDOWN_TO_NOTION_SYNC.md) - Markdown to Notion sync workflow
 
+## Implementation Progress
+
+This section tracks the implementation status of each phase.
+
+### Phase 1: Add New Properties (Non-Destructive) ✅ COMPLETED
+
+- [x] Create script to add new properties to Notion databases (`scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`)
+- [x] Run script in **dev environment** to add `Document Number` and `Document Title` properties
+- [x] Manually rename `Doc Type` to `Type` in Agent Scope Database (**dev environment**)
+- [ ] Run migration in **production environment** (see Production Migration Steps below)
+- [ ] Add new clean relationship properties (direct children only) - **DEFERRED**
+
+### Phase 2: Update Markdown to Notion Sync
+
+- [x] Update `notion-property-builder.ts` to write to new standardized fields (`Document Number`, `Document Title`)
+- [x] Continue writing to old fields for backward compatibility during transition
+- [x] Centralize constants in `app/server/atlas/constants.ts` (`STANDARDIZED_DOCUMENT_NUMBER`, `STANDARDIZED_DOCUMENT_TITLE`)
+- [x] Add unit tests for standardized field writing (8 tests in `notion-property-builder.test.ts`)
+- [ ] Update sync to write to new clean relationship properties
+- [ ] Remove `sibling_order_changed` change type
+
+### Phase 3: Update Import for Dual-Read ✅ COMPLETED
+
+- [x] Update `convert-notion-pages-to-supabase-format.ts` to read from both old and new fields
+- [x] Implement `extractDocumentNumberWithFallback()` helper function
+- [x] Implement `extractRichTextWithFallback()` helper function
+- [x] Prefer new fields when populated, fall back to old fields if empty
+- [x] Centralize constants - import from `app/server/atlas/constants.ts`
+- [x] Add unit tests for dual-read logic (11 tests in `convert-notion-pages-dual-read.test.ts`)
+
+### Phase 4: Run Initial Sync
+
+- [ ] Run Markdown to Notion sync to populate new fields across all documents
+- [ ] Spot check documents in Notion to verify new fields are populated correctly
+- [ ] Compare Document Number values with expected values from Markdown
+
+### Phase 5: Verify Round-Trip
+
+- [ ] Export Atlas from Supabase to Markdown
+- [ ] Make test changes in Markdown
+- [ ] Sync changes to Notion
+- [ ] Run Notion to Supabase import
+- [ ] Export again and verify changes persisted correctly
+
+### Phase 6: Run migration in production environment (see Production Migration Steps below)
+
+### Phase 7: Deprecate Old Fields
+
+- [ ] Remove dual-read logic from import (read only new fields)
+- [ ] Update `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS` to remove references to old field names
+- [ ] Remove most of `NOTION_PROPERTY_TYPE_OVERRIDES`
+- [ ] Simplify `load-notion-database-pages-from-supabase.ts` sorting logic
+- [ ] Mark old properties as deprecated in Notion (rename with `[DEPRECATED]` prefix)
+- [ ] Update documentation (`NOTION_PROPERTY_MAPPING.md`, `NOTION_IMPORT_PROCESS.md`, `MARKDOWN_TO_NOTION_SYNC.md`, `.cursorrules`)
+
+### Deferred Items
+
+The following items are explicitly deferred for later implementation:
+
+- **Document title syntax changes**: Decision on Option 1/2/3 deferred
+- **Clean relationship properties for Articles database**: Will be implemented separately
+- **Ordering simplification**: Depends on relationship cleanup
+
+## Production Migration Steps
+
+**Prerequisites:**
+
+- Phases 1-3 have been implemented and tested in the development environment
+- The codebase with dual-write/dual-read logic is deployed to production
+- You have access to production environment variables and Notion workspace
+
+**Important Notes:**
+
+- The migration script is non-destructive - it only adds new properties without modifying or deleting existing data
+- The dual-read/dual-write code ensures the system continues to work during the migration
+- Old properties remain functional until explicitly deprecated in Phase 7
+
+### Step-by-Step Production Migration
+
+#### Step 1: Backup (Recommended)
+
+Before making any changes to production:
+
+1. Take a snapshot of the Notion workspace (if possible)
+2. Export current Atlas data from Supabase for reference:
+   ```bash
+   npx tsx scripts/atlas-export/generate-atlas-json.ts
+   npx tsx scripts/atlas-export/generate-atlas-markdown.ts
+   ```
+3. Store these exports in a safe location with timestamp
+
+#### Step 2: Add New Properties to Production Notion Databases
+
+1. Ensure production environment variables are loaded:
+
+   ```bash
+   # Verify NODE_ENV and NOTION_API_KEY are set for production
+   echo $NODE_ENV  # Should be "production"
+   echo $NOTION_API_KEY  # Should be production API key
+   ```
+
+2. Run the property addition script:
+
+   ```bash
+   npx tsx scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts
+   ```
+
+3. The script will:
+   - Add `Document Number` (rich_text) property to all 10 Atlas databases (if not exists)
+   - Add `Document Title` (rich_text) property to all 10 Atlas databases (if not exists)
+   - Skip properties that already exist
+   - Log all operations
+
+4. Verify the console output shows successful property additions
+
+#### Step 3: Manually Rename "Doc Type" to "Type" in Agent Scope Database
+
+1. Open the Agent Scope Database in Notion (production workspace)
+2. Navigate to database properties/columns
+3. Find the property named `Doc Type`
+4. Rename it to `Type`
+5. Verify that all documents still display correctly
+
+**Why manual?** The Notion API doesn't support renaming properties, only adding/removing them. Manual renaming preserves all data and existing select options.
+
+#### Step 4: Verify Property Addition
+
+1. Open each of the 10 Atlas databases in Notion:
+   - Scopes
+   - Articles
+   - Sections & Primary Docs
+   - Annotations
+   - Tenets
+   - Scenarios
+   - Scenario Variations
+   - Active Data
+   - Agent Scope Database
+   - Needed Research
+
+2. For each database, verify that:
+   - `Document Number` property exists (type: Text)
+   - `Document Title` property exists (type: Text)
+   - Both properties are empty (as expected)
+   - Old properties still exist and contain data
+
+#### Step 5: Run Notion to Supabase Import
+
+1. Trigger a full import to verify dual-read logic works:
+
+   ```bash
+   npx tsx scripts/import-notion-databases.ts
+   ```
+
+2. Monitor the import:
+   - Should complete successfully
+   - Import time should be similar to previous runs
+   - Check for any warnings or errors in console output
+
+3. Verify data integrity:
+   - Check that `atlas_document_number` and `plain_text_name` are populated in Supabase
+   - Spot check a few documents to ensure data matches expectations
+
+#### Step 6: Run Markdown to Notion Sync (Populate New Fields)
+
+1. Navigate to the sync UI in production:
+
+   ```
+   https://sky-atlas.io/atlas/sync
+   ```
+
+2. Load the current Atlas markdown from GitHub
+
+3. The diff should show changes for ALL documents because:
+   - New `Document Number` and `Document Title` fields are empty in Notion
+   - The sync will populate them from the markdown source
+
+4. Review the changes (will be extensive)
+
+5. Click "Sync to Notion" and monitor progress:
+   - This will take time (potentially hours for full Atlas)
+   - Watch for errors in the operation log
+   - Graceful stop is available if needed
+
+6. After sync completes:
+   - New fields should now be populated with values
+   - Old fields remain unchanged
+
+#### Step 7: Verify Round-Trip Integrity
+
+1. Export Atlas from production Supabase:
+
+   ```bash
+   # Ensure production env vars are set
+   npx tsx scripts/atlas-export/generate-atlas-json.ts
+   npx tsx scripts/atlas-export/generate-atlas-markdown.ts
+   ```
+
+2. Compare with the pre-migration export from Step 1:
+   - Document numbers should match
+   - Document titles should match
+   - Relationships should be identical
+   - Ordering should be consistent
+
+3. Make a small test change in the exported markdown:
+   - Edit content of a test document
+   - Sync the change back to Notion via the sync UI
+
+4. Re-import from Notion to Supabase:
+
+   ```bash
+   npx tsx scripts/import-notion-databases.ts
+   ```
+
+5. Export again and verify the test change persisted correctly
+
+#### Step 8: Monitor Production
+
+1. Monitor application logs for any errors related to property reading/writing
+2. Check Notion API usage for any unusual patterns
+3. Verify that users can still access and edit Atlas documents normally
+4. Keep old properties intact until Phase 7 (deprecation)
+
+### Rollback Plan (If Needed)
+
+If issues occur during migration:
+
+1. **If in Step 2-3 (Adding properties):**
+   - New properties can be deleted from Notion databases manually
+   - No data loss - old properties were never modified
+
+2. **If in Step 5-6 (Import/Sync):**
+   - The dual-read/dual-write code ensures old properties still work
+   - Application continues to function with old properties
+   - New properties can be cleared and repopulated
+
+3. **If critical issue:**
+   - Restore from Notion snapshot (if available)
+   - Re-import from pre-migration Supabase export
+   - Deploy previous codebase version (before dual-read/dual-write changes)
+
+### Post-Migration Checklist
+
+- [ ] All 10 databases have `Document Number` property
+- [ ] All 10 databases have `Document Title` property
+- [ ] Agent Scope Database has `Type` property (renamed from `Doc Type`)
+- [ ] New properties are populated with correct values
+- [ ] Old properties remain intact
+- [ ] Notion to Supabase import completes successfully
+- [ ] Markdown to Notion sync works correctly
+- [ ] Round-trip export-import-export produces consistent results
+- [ ] No production errors or warnings
+- [ ] Users can access and edit documents normally
+
+### Success Indicators
+
+✅ Script output shows all properties added successfully  
+✅ Manual rename completed in Notion UI  
+✅ All databases show new empty properties  
+✅ Import completes without errors  
+✅ Sync populates new fields correctly  
+✅ Round-trip verification shows data consistency  
+✅ No production errors or user reports  
+✅ Old properties remain unchanged and functional
+
 ## Problem Statement
 
 ### Inconsistent Property Names
@@ -81,6 +345,7 @@ A new `Document Number` property will be added to all Atlas databases:
 - Values: Document numbers like `A.1.3.4.12`
 - Maps to existing Supabase column: `atlas_document_number`
 - Used for ordering documents (natural sort via formula)
+- This field is not imported during the Notion to Supabase sync at the moment (maybe in the future?) - currently, it's calculated during tree building to ensure data consistency in the generated tree
 
 ### Document Title (rich_text)
 
@@ -225,7 +490,7 @@ New relationship properties will map to existing Supabase child ID columns:
 - Relationships are correct (direct children only)
 - Ordering is consistent across all systems
 
-### Phase 6: Deprecate Old Fields
+### Phase 7: Deprecate Old Fields
 
 **Code Changes:**
 
@@ -305,7 +570,7 @@ Remove `sibling_order_changed` change type entirely:
 | `app/atlas/sync/AGENTS.md`                                                        | Remove sibling_order_changed documentation                                   |
 | `app/server/atlas/notion-tree/atlas-tree-helpers.ts`                              | Simplify `getDocumentTitle()` once titles are standardized                   |
 
-### Code to Remove (Phase 6)
+### Code to Remove (Phase 7)
 
 - `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES` constant
 - Most entries in `NOTION_PROPERTY_TYPE_OVERRIDES`
@@ -330,19 +595,6 @@ Remove `sibling_order_changed` change type entirely:
 
 - Simpler change detection (4 change types instead of 5)
 - Faster relationship updates (direct children only)
-
-## Timeline
-
-| Phase | Description                    | Duration  |
-| ----- | ------------------------------ | --------- |
-| 1     | Add new properties to Notion   | 1-2 hours |
-| 2     | Update Markdown to Notion sync | 2-4 hours |
-| 3     | Update import for dual-read    | 2-3 hours |
-| 4     | Run initial sync               | 1-2 hours |
-| 5     | Verify round-trip              | 2-4 hours |
-| 6     | Deprecate old fields           | 2-4 hours |
-
-**Total estimated time**: 10-19 hours
 
 ## Risks and Mitigations
 
