@@ -22,14 +22,14 @@ This section tracks the implementation status of each phase.
 - [ ] Run migration in **production environment** (see Production Migration Steps below)
 - [ ] Add new clean relationship properties (direct children only) - **DEFERRED**
 
-### Phase 2: Update Markdown to Notion Sync
+### Phase 2: Update Markdown to Notion Sync ✅ COMPLETED
 
 - [x] Update `notion-property-builder.ts` to write to new standardized fields (`Document Number`, `Document Title`)
 - [x] Continue writing to old fields for backward compatibility during transition
 - [x] Centralize constants in `app/server/atlas/constants.ts` (`STANDARDIZED_DOCUMENT_NUMBER`, `STANDARDIZED_DOCUMENT_TITLE`)
 - [x] Add unit tests for standardized field writing (8 tests in `notion-property-builder.test.ts`)
-- [ ] Update sync to write to new clean relationship properties
-- [ ] Remove `sibling_order_changed` change type
+- [x] Remove `sibling_order_changed` change type
+- [ ] Update sync to write to new clean relationship properties - **DEFERRED** (depends on creating new relationship properties in Notion first)
 
 ### Phase 3: Update Import for Dual-Read ✅ COMPLETED
 
@@ -71,6 +71,9 @@ The following items are explicitly deferred for later implementation:
 
 - **Document title syntax changes**: Decision on Option 1/2/3 deferred
 - **Clean relationship properties for Articles database**: Will be implemented separately
+  - Requires creating new "Sections" relationship property in Articles database (Notion)
+  - Then updating sync to write to the new property
+  - Then updating import to read from the new property
 - **Ordering simplification**: Depends on relationship cleanup
 
 ## Production Migration Steps
@@ -437,15 +440,13 @@ New relationship properties will map to existing Supabase child ID columns:
 1. Update sync to write to new standardized fields:
    - Write `Document Number` instead of database-specific doc number fields
    - Write `Document Title` instead of database-specific name fields
-2. Update sync to write to new clean relationship properties
-3. Remove `sibling_order_changed` change type and all related code/docs
-   - No longer needed since Document Number handles ordering automatically
+2. Update sync to write to new clean relationship properties (**DEFERRED** - depends on creating new relationship properties in Notion first)
+3. Remove `sibling_order_changed` change type
 
-**Files to Update:**
+**Files Updated:**
 
-- `app/atlas/sync/_lib/` - Sync logic
-- `app/atlas/sync/_actions/` - Server actions
-- `app/atlas/sync/AGENTS.md` - Documentation
+- `app/atlas/sync/_lib/notion-property-builder.ts` - Now writes to standardized fields
+- `app/server/atlas/constants.ts` - Centralized constants for standardized property names
 
 ### Phase 3: Update Import for Dual-Read
 
