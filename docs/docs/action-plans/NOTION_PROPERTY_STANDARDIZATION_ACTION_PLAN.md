@@ -40,6 +40,26 @@ This section tracks the implementation status of each phase.
 - [x] Centralize constants - import from `app/server/atlas/constants.ts`
 - [x] Add unit tests for dual-read logic (11 tests in `convert-notion-pages-dual-read.test.ts`)
 
+### Phase 3.5: Update Change Detection to Use Stored Values ✅ COMPLETED
+
+- [x] Update `notion-tree-to-export-tree.ts` to use stored values (`atlas_document_number`, `plain_text_name`) instead of dynamically calculated values (`generatedDocID`, `generatedDocName`)
+- [x] Update `atlas-diff.ts` to compare `doc_no` field in addition to `type`, `name`, `content`, and extra fields
+- [x] Add `ExportTreeOptions` interface with `useDynamicValues` option for migration mode
+- [x] Propagate options through `notionTreeNodeToExportTreeNode()` to all child nodes
+- [x] Update `diffAtlasScopeTreeLists()` to accept `DiffOptions` and pass through to export tree builder
+- [x] Add "Use Dynamic Values (Migration Mode)" checkbox to sync UI (`/atlas/sync`)
+- [x] Create `runDiff()` server action to re-run diff when toggle changes
+- [x] Add unit tests for both modes (stored vs dynamic values)
+
+**Migration Mode Toggle:**
+
+The sync UI (`/atlas/sync`) now includes a "Use Dynamic Values (Migration Mode)" checkbox that allows switching between:
+
+- **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) - the new standardized behavior
+- **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
+
+This toggle enables testing both modes during the migration period. When the toggle is changed, the diff is re-calculated with the new option.
+
 ### Phase 4: Run Initial Sync
 
 - [ ] Run Markdown to Notion sync to populate new fields across all documents

@@ -666,6 +666,12 @@ describe('compareDocumentFields', () => {
     expect(compareDocumentFields(doc1, doc2)).toBe(true);
   });
 
+  it('detects doc_no changes', () => {
+    const doc1 = { ...baseDoc };
+    const doc2 = { ...baseDoc, doc_no: 'A.2' };
+    expect(compareDocumentFields(doc1, doc2)).toBe(true);
+  });
+
   it('ignores last_modified changes', () => {
     const doc1 = { ...baseDoc, last_modified: '2025-01-01' };
     const doc2 = { ...baseDoc, last_modified: '2025-01-02' };
@@ -939,7 +945,9 @@ describe('detectChanges', () => {
     expect(changes.changed[0].newValues?.name).toBe('New Name');
   });
 
-  it('detects parent changes', () => {
+  it('detects parent changes (with doc_no change)', () => {
+    // When parent changes, doc_no typically changes too (e.g., A.1.1.1 → A.1.2.1)
+    // This results in BOTH parent_changed AND changed records
     const originalMaps: LookupMaps = {
       uuidToDoc: new Map([
         [
@@ -986,13 +994,18 @@ describe('detectChanges', () => {
 
     expect(changes.added).toHaveLength(0);
     expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
+    // doc_no changed from A.1.1.1 to A.1.2.1, so this is also a field change
+    expect(changes.changed).toHaveLength(1);
     expect(changes.parent_changed).toHaveLength(1);
 
     expect(changes.parent_changed[0].changeType).toBe('parent_changed');
     expect(changes.parent_changed[0].uuid).toBe('uuid-1');
     expect(changes.parent_changed[0].oldValues?.doc_no).toBe('A.1.1.1');
     expect(changes.parent_changed[0].newValues?.doc_no).toBe('A.1.2.1');
+
+    // The changed record also captures the doc_no change
+    expect(changes.changed[0].changeType).toBe('changed');
+    expect(changes.changed[0].uuid).toBe('uuid-1');
   });
 
   it('detects parent changes for Needed Research documents', () => {
@@ -1252,8 +1265,9 @@ describe('detectChanges', () => {
     expect(changes.parent_changed[0].newAncestry).toEqual(['uuid-scope', 'uuid-a2']);
   });
 
-  it('does not create duplicate changes when only parent changed (no field changes)', () => {
-    // Document moved to different parent but content unchanged
+  it('detects both parent_changed and changed when doc_no changes with parent', () => {
+    // Document moved to different parent - doc_no changes but name/content unchanged
+    // Since doc_no is now compared, this results in BOTH parent_changed AND changed
     const originalMaps: LookupMaps = {
       uuidToDoc: new Map([
         [
@@ -1318,13 +1332,14 @@ describe('detectChanges', () => {
 
     const changes = detectChanges(originalMaps, newMaps, new Set(['uuid-1']), new Set(['uuid-1']));
 
-    // Should only record parent_changed (no field changes)
+    // Both parent_changed AND changed because doc_no changed
     expect(changes.added).toHaveLength(0);
     expect(changes.deleted).toHaveLength(0);
-    expect(changes.changed).toHaveLength(0);
+    expect(changes.changed).toHaveLength(1); // doc_no changed
     expect(changes.parent_changed).toHaveLength(1);
 
     expect(changes.parent_changed[0].uuid).toBe('uuid-1');
+    expect(changes.changed[0].uuid).toBe('uuid-1');
   });
 
   it('handles Needed Research parent change correctly (doc_no unchanged, ancestry changed)', () => {

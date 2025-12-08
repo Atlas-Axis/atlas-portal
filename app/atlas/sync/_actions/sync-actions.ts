@@ -1,6 +1,8 @@
 'use server';
 
 import { tasks } from '@trigger.dev/sdk/v3';
+import { diffAtlasScopeTreeLists, type DiffOptions } from '@/app/server/atlas/diff/markdown-supabase-diff';
+import type { AtlasDiffResult } from '@/app/server/atlas/diff/atlas-diff';
 import {
   acquireSyncLock,
   getSyncLockStatus,
@@ -11,6 +13,18 @@ import type { MarkdownNotionSyncPayload, SyncFilters } from '@/app/server/servic
 
 // Re-export types for client use
 export type { SyncFilters } from '@/app/server/services/trigger/markdown-notion-sync-task';
+export type { DiffOptions } from '@/app/server/atlas/diff/markdown-supabase-diff';
+
+/**
+ * Runs the diff between Supabase and Markdown with the specified options.
+ * This server action allows the client to trigger a diff with the useDynamicValues toggle.
+ *
+ * @param options Diff options (e.g., useDynamicValues for migration mode)
+ * @returns The diff result
+ */
+export async function runDiff(options?: DiffOptions): Promise<AtlasDiffResult> {
+  return diffAtlasScopeTreeLists(options);
+}
 
 /**
  * Triggers the markdown-notion-sync background task.

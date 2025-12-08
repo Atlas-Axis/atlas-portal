@@ -209,9 +209,13 @@ function normalizeCosmeticFormatting(text: string): string {
 
 /**
  * Compare document fields to detect changes.
- * Compares: type, name, content, and extra fields for specific document types.
+ * Compares: type, doc_no, name, content, and extra fields for specific document types.
  * Does NOT compare last_modified.
  * Trims whitespace from each line in multi-line texts for comparison.
+ *
+ * NOTE: doc_no and name now use stored values from Supabase (from standardized Notion fields)
+ * instead of dynamically calculated values.
+ * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  *
  * TEMPORARY WORKAROUND: Also normalizes cosmetic formatting (fancy quotes, bullets)
  * to suppress noise in diffs. This should be removed once source data is consistent.
@@ -226,6 +230,9 @@ export function compareDocumentFields(
   // Apply both whitespace and cosmetic formatting normalization
   const normalizeFully = (text: string) => normalizeWhitespace(normalizeCosmeticFormatting(text));
 
+  // Compare doc_no (document number from standardized "Document Number" Notion field)
+  if (normalizeFully(original.doc_no) !== normalizeFully(updated.doc_no)) return true;
+  // Compare name (document title from standardized "Document Title" Notion field)
   if (normalizeFully(original.name) !== normalizeFully(updated.name)) return true;
   if (normalizeFully(original.content) !== normalizeFully(updated.content)) return true;
 

@@ -7,12 +7,18 @@
  * - Preserves original child order and recursively converts all descendants.
  *
  * How it works
- * - Base fields are mapped 1:1 from the node: `type` (document type), `doc_no`, `name`, `uuid`.
+ * - Base fields use stored values from Supabase (from standardized Notion fields):
+ *   - `doc_no`: from `atlas_document_number` (standardized "Document Number" Notion field)
+ *   - `name`: from `plain_text_name` (standardized "Document Title" Notion field)
+ *   - `type`: from `atlas_document_type`
+ *   - `uuid`: from UUID mapping table
  * - For relationships: children are grouped by Atlas database, maintaining the same structure as NotionAtlasTreeNode.
  * - The `type` field uses Atlas document types (Scope, Article, Section, etc.) for compatibility.
  * - Child collections use database-based grouping (articles, sections_and_primary_docs, etc.).
  * - Everything is recursive: child nodes are converted with the same function.
  * - Uses underscore_case for JSON export compatibility.
+ *
+ * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  *
  * Usage
  * ```ts
@@ -47,6 +53,18 @@ import {
   type ExportAtlasTreeSectionsAndPrimaryDocsDocument,
   type ExportAtlasTreeTenetsDocument,
 } from './types';
+
+/**
+ * Options for export tree conversion
+ */
+export interface ExportTreeOptions {
+  /**
+   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * instead of stored values from Supabase (atlas_document_number/plain_text_name).
+   * Default: false (use stored values from standardized Notion fields)
+   */
+  useDynamicValues?: boolean;
+}
 
 /**
  * Converts an extra field value to markdown string.
@@ -108,11 +126,31 @@ function validateChildDatabases(node: NotionAtlasTreeNode, allowedDatabases: Atl
 }
 
 // Convert simple fields
-function toBase(node: NotionAtlasTreeNode, uuidMappings: UuidMappings): ExportAtlasTreeBaseDocument {
-  if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
-    console.warn(
-      `⚠️  Missing 'generatedDocName' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
-    );
+// By default, uses stored values from Supabase (populated from new standardized Notion fields).
+// When useDynamicValues is true, uses dynamically generated values (migration mode).
+// See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+function toBase(
+  node: NotionAtlasTreeNode,
+  uuidMappings: UuidMappings,
+  options?: ExportTreeOptions,
+): ExportAtlasTreeBaseDocument {
+  const useDynamic = options?.useDynamicValues ?? false;
+
+  // Validate based on which mode we're using
+  if (useDynamic) {
+    // Dynamic mode: check for generatedDocName
+    if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
+      console.warn(
+        `⚠️  Missing 'generatedDocName' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
+      );
+    }
+  } else {
+    // Stored mode: check for plain_text_name
+    if (!(node.plain_text_name && node.plain_text_name.length > 0)) {
+      console.warn(
+        `⚠️  Missing 'plain_text_name' value for ${node.atlas_document_type} document (id: ${node.notion_page_id})`,
+      );
+    }
   }
 
   const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(uuidToHyphens(node.notion_page_id)) ?? null;
@@ -122,8 +160,10 @@ function toBase(node: NotionAtlasTreeNode, uuidMappings: UuidMappings): ExportAt
 
   return {
     type: node.atlas_document_type,
-    doc_no: node.generatedDocID ?? '',
-    name: node.generatedDocName ?? '',
+    // Use dynamically calculated values (generatedDocID/generatedDocName) when useDynamicValues is true,
+    // otherwise use stored values from Supabase (atlas_document_number/plain_text_name)
+    doc_no: useDynamic ? (node.generatedDocID ?? '') : (node.atlas_document_number ?? ''),
+    name: useDynamic ? (node.generatedDocName ?? '') : (node.plain_text_name ?? ''),
     uuid: atlasUUID,
     last_modified: '',
     // last_modified: node.updated_at, // TODO: Remove
@@ -192,8 +232,9 @@ function pickExtraFields(node: NotionAtlasTreeNode, uuidMappings: UuidMappings):
 export function notionTreeNodeToExportTreeNode(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
+  options?: ExportTreeOptions,
 ): ExportAtlasTreeDocument {
-  const base = toBase(node, uuidMappings);
+  const base = toBase(node, uuidMappings, options);
 
   switch (node.atlas_database_name) {
     case 'Scopes': {
@@ -202,7 +243,7 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeScopesDocument = {
         ...base,
         articles: node.articles.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeArticlesDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeArticlesDocument,
         ),
       };
       return doc;
@@ -219,14 +260,14 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeArticlesDocument = {
         ...base,
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
-        // agent_scope_database: node.agentScopeDocs.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument),
+        // agent_scope_database: node.agentScopeDocs.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAgentScopeDatabaseDocument),
         annotations: node.annotations.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAnnotationsDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -246,24 +287,24 @@ export function notionTreeNodeToExportTreeNode(
         ...base,
         ...pickExtraFields(node, uuidMappings),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
         annotations: node.annotations.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAnnotationsDocument,
         ),
         tenets: node.tenets.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeTenetsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeTenetsDocument,
         ),
         active_data: node.activeData.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeActiveDataDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeActiveDataDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       if (node.agentScopeDocs.length > 0) {
         doc.agent_scope_database = node.agentScopeDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAgentScopeDatabaseDocument,
         );
       }
       return doc;
@@ -275,7 +316,7 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeAnnotationsDocument = {
         ...base,
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -287,10 +328,10 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeTenetsDocument = {
         ...base,
         scenarios: node.scenarios.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeScenariosDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeScenariosDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -303,10 +344,10 @@ export function notionTreeNodeToExportTreeNode(
         ...base,
         ...pickExtraFields(node, uuidMappings),
         scenario_variations: node.scenarioVariations.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeScenarioVariationsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeScenarioVariationsDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -319,7 +360,7 @@ export function notionTreeNodeToExportTreeNode(
         ...base,
         ...pickExtraFields(node, uuidMappings),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -331,7 +372,7 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeActiveDataDocument = {
         ...base,
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;
@@ -343,19 +384,19 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeAgentScopeDatabaseDocument = {
         ...base,
         agent_scope_database: node.agentScopeDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAgentScopeDatabaseDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAgentScopeDatabaseDocument,
         ),
         annotations: node.annotations.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeAnnotationsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAnnotationsDocument,
         ),
         tenets: node.tenets.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeTenetsDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeTenetsDocument,
         ),
         active_data: node.activeData.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeActiveDataDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeActiveDataDocument,
         ),
         needed_research: node.neededResearch.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings) as ExportAtlasTreeNeededResearchDocument,
+          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeNeededResearchDocument,
         ),
       };
       return doc;

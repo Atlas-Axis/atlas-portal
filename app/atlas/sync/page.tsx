@@ -10,17 +10,22 @@ export const dynamic = 'force-dynamic';
  * with the current Supabase data and displays all differences in a visual diff UI.
  * The client component handles user interaction and synchronization to Notion.
  *
+ * The initial diff is performed server-side for performance (large datasets).
+ * When the "Use Dynamic Values" toggle is changed, the client re-runs the diff
+ * via a server action with the new option.
+ *
  * Note: UUID mappings are loaded in the server action (runRealSync) to avoid
  * large payload transfers between server and client.
  */
 export default async function AtlasSyncPage() {
-  // Diff happens server-side for performance (large datasets)
-  const result = await diffAtlasScopeTreeLists();
+  // Initial diff happens server-side for performance (large datasets)
+  // Uses stored values (useDynamicValues: false) by default
+  const initialResult = await diffAtlasScopeTreeLists();
   const isDevMode = process.env.NODE_ENV !== 'production';
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-100 p-6 pb-12">
-      <Content result={result} isDevMode={isDevMode} />
+      <Content initialResult={initialResult} isDevMode={isDevMode} />
     </div>
   );
 }

@@ -1,17 +1,35 @@
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
-import { buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
+import { buildExportAtlasTreeJSON, type BuildExportAtlasTreeOptions } from '../export/atlas-json-exporter';
 import { ExportAtlasTreeScopeTrees } from '../export/types';
 import { loadAtlasMarkdownForSync } from '../load-atlas-markdown-from-github';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
+
+/**
+ * Options for diff operation
+ */
+export interface DiffOptions {
+  /**
+   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * instead of stored values from Supabase (atlas_document_number/plain_text_name).
+   * Default: false (use stored values from standardized Notion fields)
+   */
+  useDynamicValues?: boolean;
+}
 
 /**
  * Diff two Atlas scope tree lists and return the list of changes.
  *
  * Compares the current Atlas data in Supabase with the canonical Atlas markdown
  * file stored in GitHub.
+ *
+ * @param options Optional diff options (e.g., useDynamicValues for migration mode)
  */
-export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
-  const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees();
+export async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<AtlasDiffResult> {
+  const exportOptions: BuildExportAtlasTreeOptions = {
+    useDynamicValues: options?.useDynamicValues,
+  };
+
+  const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees(exportOptions);
   const newScopeTreeList = await loadMarkdownAsExportAtlasScopeTrees();
 
   // Build lookup maps for both trees (UUID→doc, doc_no→doc, UUID→ancestry, UUID→database)
@@ -34,8 +52,10 @@ export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
   };
 }
 
-async function loadSupabaseAsExportAtlasScopeTrees(): Promise<ExportAtlasTreeScopeTrees> {
-  return buildExportAtlasTreeJSON();
+async function loadSupabaseAsExportAtlasScopeTrees(
+  exportOptions?: BuildExportAtlasTreeOptions,
+): Promise<ExportAtlasTreeScopeTrees> {
+  return buildExportAtlasTreeJSON(exportOptions);
 }
 
 /**

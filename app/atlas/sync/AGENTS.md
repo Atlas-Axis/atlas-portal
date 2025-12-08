@@ -56,10 +56,11 @@ The four change types have important behavioral characteristics:
 
 - **Added**: New documents (UUID exists in Markdown only)
 - **Deleted**: Removed documents (UUID exists in Supabase only)
-- **Changed**: Field modifications to `type`, `name`, `content`, and type-specific extra fields
+- **Changed**: Field modifications to `type`, `doc_no`, `name`, `content`, and type-specific extra fields
   - Note: `last_modified` changes are ignored
+  - Note: `doc_no` is compared using stored values from Supabase (`atlas_document_number`) by default
 - **Parent Changed**: Document moved to different parent (ancestry array differs)
-  - Note: When parent changes, `doc_no` typically changes too, but only `parent_changed` is recorded
+  - Note: When parent changes, `doc_no` typically changes too, resulting in both `parent_changed` and `changed` records
 
 ### Multiple Changes Per Document
 
@@ -108,7 +109,16 @@ The algorithm applies this priority logic when detecting changes:
 The diff function is called during page load to prepare the sync UI:
 
 ```typescript
-async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult>;
+async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<AtlasDiffResult>;
+
+interface DiffOptions {
+  /**
+   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * instead of stored values from Supabase (atlas_document_number/plain_text_name).
+   * Default: false (use stored values from standardized Notion fields)
+   */
+  useDynamicValues?: boolean;
+}
 
 interface AtlasDiffResult {
   changes: GroupedAtlasChanges;
@@ -129,7 +139,11 @@ Example usage:
 ```typescript
 import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 
+// Default: use stored values from Supabase
 const result = await diffAtlasScopeTreeLists();
+
+// Migration mode: use dynamically calculated values
+const resultDynamic = await diffAtlasScopeTreeLists({ useDynamicValues: true });
 
 console.log(`Added: ${result.changes.added.length}`);
 console.log(`Deleted: ${result.changes.deleted.length}`);
@@ -418,6 +432,17 @@ Filter checkboxes allow selective syncing of specific change types:
 - **Parent Changes** - Sync parent relationship changes (unchecked by default)
 
 Filters apply to the sync operation. Checkboxes are disabled while sync is running.
+
+**3.5. Migration Mode Toggle**
+
+The "Use Dynamic Values (Migration Mode)" checkbox controls how document number (`doc_no`) and name are determined during change detection:
+
+- **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) populated from standardized Notion fields (`Document Number`, `Document Title`)
+- **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
+
+When this toggle is changed, the diff is re-calculated via a server action. This allows comparing detected changes between both modes without refreshing the page.
+
+This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to verify that stored values match dynamically calculated values.
 
 **4. Conflict Detection**
 

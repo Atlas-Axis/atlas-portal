@@ -32,6 +32,12 @@ export interface SyncFilters {
   deleted: boolean;
   contentChanges: boolean;
   parentChanges: boolean;
+  /**
+   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * instead of stored values from Supabase (atlas_document_number/plain_text_name).
+   * Default: false (use stored values from standardized Notion fields)
+   */
+  useDynamicValues?: boolean;
 }
 
 // Task payload

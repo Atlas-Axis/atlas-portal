@@ -18,7 +18,7 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import type { markdownNotionSyncTask } from '@/app/server/services/trigger/markdown-notion-sync-task';
-import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_actions/sync-actions';
+import { getSyncStatus, requestSyncStop, runDiff, triggerMarkdownNotionSync } from './_actions/sync-actions';
 import { createPublicAccessToken } from './_actions/trigger-auth';
 
 // Sync phase type matching the task
@@ -78,13 +78,32 @@ const colors: {
   },
 };
 
-export function Content({ result, isDevMode }: { result: AtlasDiffResult; isDevMode: boolean }) {
+export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiffResult; isDevMode: boolean }) {
+  // State for diff result - can be updated when useDynamicValues toggle changes
+  const [result, setResult] = useState<AtlasDiffResult>(initialResult);
+  const [isReDiffing, setIsReDiffing] = useState(false);
+  const [useDynamicValues, setUseDynamicValues] = useState(false);
+
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
     changes.added.length > 0 ||
     changes.changed.length > 0 ||
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
+
+  // Handle toggle change - re-run diff with new option
+  const handleUseDynamicValuesChange = useCallback(async (checked: boolean) => {
+    setUseDynamicValues(checked);
+    setIsReDiffing(true);
+    try {
+      const newResult = await runDiff({ useDynamicValues: checked });
+      setResult(newResult);
+    } catch (error) {
+      console.error('Failed to re-run diff:', error);
+    } finally {
+      setIsReDiffing(false);
+    }
+  }, []);
 
   // Create UUID to document number map for markdown link conversion
   const uuidToDocNoMap = useMemo(() => {
@@ -166,7 +185,13 @@ export function Content({ result, isDevMode }: { result: AtlasDiffResult; isDevM
         />
 
         {/* Sync Controls */}
-        <SyncControls hasChanges={hasChanges} isDevMode={isDevMode} />
+        <SyncControls
+          hasChanges={hasChanges}
+          isDevMode={isDevMode}
+          useDynamicValues={useDynamicValues}
+          onUseDynamicValuesChange={handleUseDynamicValuesChange}
+          isReDiffing={isReDiffing}
+        />
       </CardBody>
     </Card>
   );
@@ -175,8 +200,20 @@ export function Content({ result, isDevMode }: { result: AtlasDiffResult; isDevM
 /**
  * Sync controls component - manages sync state and realtime subscription
  */
-function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMode: boolean }) {
-  // Sync filter state
+function SyncControls({
+  hasChanges,
+  isDevMode,
+  useDynamicValues,
+  onUseDynamicValuesChange,
+  isReDiffing,
+}: {
+  hasChanges: boolean;
+  isDevMode: boolean;
+  useDynamicValues: boolean;
+  onUseDynamicValuesChange: (checked: boolean) => void;
+  isReDiffing: boolean;
+}) {
+  // Sync filter state (excluding useDynamicValues which is managed by parent)
   const [syncFilters, setSyncFilters] = useState({
     added: true,
     deleted: false,
@@ -226,6 +263,7 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
         deleted: syncFilters.deleted,
         contentChanges: syncFilters.contentChanges,
         parentChanges: syncFilters.parentChanges,
+        useDynamicValues, // From parent prop, affects diff calculation
       });
 
       if ('error' in result) {
@@ -291,35 +329,50 @@ function SyncControls({ hasChanges, isDevMode }: { hasChanges: boolean; isDevMod
   return (
     <div className="my-6">
       {/* Sync Filters */}
-      <div className="mb-4 flex justify-center gap-6">
-        <Checkbox
-          isSelected={syncFilters.added}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, added: checked }))}
-          isDisabled={controlsDisabled}
-        >
-          Added
-        </Checkbox>
-        <Checkbox
-          isSelected={syncFilters.deleted}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, deleted: checked }))}
-          isDisabled={controlsDisabled}
-        >
-          Deleted
-        </Checkbox>
-        <Checkbox
-          isSelected={syncFilters.contentChanges}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, contentChanges: checked }))}
-          isDisabled={controlsDisabled}
-        >
-          Content Changes
-        </Checkbox>
-        <Checkbox
-          isSelected={syncFilters.parentChanges}
-          onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, parentChanges: checked }))}
-          isDisabled={controlsDisabled}
-        >
-          Parent Changes
-        </Checkbox>
+      <div className="mb-4 flex flex-col items-center gap-4">
+        <div className="flex justify-center gap-6">
+          <Checkbox
+            isSelected={syncFilters.added}
+            onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, added: checked }))}
+            isDisabled={controlsDisabled}
+          >
+            Added
+          </Checkbox>
+          <Checkbox
+            isSelected={syncFilters.deleted}
+            onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, deleted: checked }))}
+            isDisabled={controlsDisabled}
+          >
+            Deleted
+          </Checkbox>
+          <Checkbox
+            isSelected={syncFilters.contentChanges}
+            onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, contentChanges: checked }))}
+            isDisabled={controlsDisabled}
+          >
+            Content Changes
+          </Checkbox>
+          <Checkbox
+            isSelected={syncFilters.parentChanges}
+            onValueChange={(checked) => setSyncFilters((prev) => ({ ...prev, parentChanges: checked }))}
+            isDisabled={controlsDisabled}
+          >
+            Parent Changes
+          </Checkbox>
+        </div>
+        {/* Migration Mode Toggle */}
+        <div className="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2">
+          <Checkbox
+            isSelected={useDynamicValues}
+            onValueChange={onUseDynamicValuesChange}
+            isDisabled={controlsDisabled || isReDiffing}
+            color="warning"
+          >
+            <span className="text-amber-800">
+              {isReDiffing ? 'Re-calculating diff...' : 'Use Dynamic Values (Migration Mode)'}
+            </span>
+          </Checkbox>
+        </div>
       </div>
 
       {/* Error Display */}

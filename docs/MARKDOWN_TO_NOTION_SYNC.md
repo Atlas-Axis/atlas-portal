@@ -235,6 +235,18 @@ For schema and usage examples, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGEN
 3. **Conflict Detection**: Warns if Notion documents modified after markdown export
 4. **Sync Execution**: Real-time progress tracking via Trigger.dev with stop support
 5. **Results Display**: Summary of operations with error reporting
+6. **Migration Mode Toggle**: Switch between stored and dynamic values for change detection
+
+### Migration Mode Toggle
+
+The sync UI includes a "Use Dynamic Values (Migration Mode)" checkbox that controls how document number (`doc_no`) and name are determined during change detection:
+
+- **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) populated from standardized Notion fields (`Document Number`, `Document Title`)
+- **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
+
+This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to test both modes and verify that stored values match dynamically calculated values.
+
+When the toggle is changed, the diff is re-calculated with the new option. This allows comparing the detected changes between both modes without refreshing the page.
 
 For detailed feature descriptions, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENTS.md#user-interface).
 
