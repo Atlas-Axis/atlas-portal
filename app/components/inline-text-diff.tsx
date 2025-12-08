@@ -1,7 +1,15 @@
+'use client';
+
+import { useMemo } from 'react';
 import { diffWords } from 'diff';
 
+/**
+ * Renders an inline diff between two text strings.
+ * The diff computation is memoized to avoid expensive recalculations on re-renders.
+ */
 export function InlineTextDiff({ newContent, oldContent }: { newContent: string; oldContent: string }) {
-  return <div className="text-sm">{getInlineDiff(oldContent, newContent)}</div>;
+  const diffElements = useMemo(() => getInlineDiff(oldContent, newContent), [oldContent, newContent]);
+  return <div className="text-sm">{diffElements}</div>;
 }
 
 function getInlineDiff(oldString: string, newString: string): React.ReactElement[] {

@@ -5,15 +5,35 @@ import type Token from 'markdown-it/lib/token.mjs';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 /**
- * Custom link renderer that converts UUID hrefs to document number anchors
- * @param uuidToDocNoMap - Map for UUID to document number conversion
- * @param defaultRender - The default link_open renderer
+ * Singleton markdown-it instance for parsing.
+ * Reusing the same instance avoids the overhead of creating a new parser for each call.
+ * The custom link renderer is applied per-call via the env parameter to avoid global state issues.
  */
-function createLinkRenderer(
-  uuidToDocNoMap: Map<string, string>,
-  defaultRender: (tokens: Token[], idx: number, options: Options, env: unknown, self: Renderer) => string,
-): (tokens: Token[], idx: number, options: Options, env: unknown, self: Renderer) => string {
-  return function (tokens: Token[], idx: number, options: Options, env: unknown, self: Renderer) {
+const mdInstance = markdownit();
+
+/**
+ * Default link_open renderer, cached once from the singleton instance.
+ */
+const defaultLinkOpenRender =
+  mdInstance.renderer.rules.link_open ||
+  function (tokens: Token[], idx: number, options: Options, _env: unknown, self: Renderer) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+/**
+ * Custom link renderer that converts UUID hrefs to document number anchors.
+ * Uses the env parameter to pass the uuidToDocNoMap per-call, avoiding global state.
+ */
+mdInstance.renderer.rules.link_open = function (
+  tokens: Token[],
+  idx: number,
+  options: Options,
+  env: { uuidToDocNoMap?: Map<string, string> },
+  self: Renderer,
+) {
+  const uuidToDocNoMap = env?.uuidToDocNoMap;
+
+  if (uuidToDocNoMap) {
     const token = tokens[idx];
     const hrefIndex = token.attrIndex('href');
 
@@ -29,10 +49,10 @@ function createLinkRenderer(
         }
       }
     }
+  }
 
-    return defaultRender(tokens, idx, options, env, self);
-  };
-}
+  return defaultLinkOpenRender(tokens, idx, options, env, self);
+};
 
 /**
  * Protects math expressions from markdown processing by replacing them with placeholders.
@@ -119,21 +139,9 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
   // Step 1: Protect math expressions from markdown processing
   const { protected: protectedMarkdown, placeholders } = protectSpecialContent(markdown);
 
-  // Create a new markdown-it instance for each call to avoid global state issues
-  const md = markdownit();
-
-  // Configure custom link renderer if UUID map is provided
-  if (uuidToDocNoMap) {
-    const defaultRender =
-      md.renderer.rules.link_open ||
-      function (tokens, idx, options, _env, self) {
-        return self.renderToken(tokens, idx, options);
-      };
-    md.renderer.rules.link_open = createLinkRenderer(uuidToDocNoMap, defaultRender);
-  }
-
-  // Step 2: Convert markdown to HTML using markdown-it (with protected content)
-  let html = md.render(protectedMarkdown);
+  // Step 2: Convert markdown to HTML using singleton markdown-it instance.
+  // Pass uuidToDocNoMap via env parameter for per-call link conversion without global state.
+  let html = mdInstance.render(protectedMarkdown, { uuidToDocNoMap });
 
   // Step 3: Restore the protected content
   html = restoreProtectedContent(html, placeholders);

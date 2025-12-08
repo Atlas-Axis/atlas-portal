@@ -667,6 +667,8 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
   );
 }
 
+const ITEMS_PER_PAGE = 150;
+
 const ChangeSection = memo(function ChangeSection({
   title,
   changes,
@@ -684,31 +686,55 @@ const ChangeSection = memo(function ChangeSection({
   uuidToDatabaseMap: Map<string, AtlasDatabaseName>;
   fieldFilters?: FieldFilters;
 }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const colorConfig = colors[changeType];
 
   if (changes.length === 0) {
     return null;
   }
 
+  const visibleChanges = isExpanded ? changes.slice(0, visibleCount) : [];
+  const hasMore = visibleCount < changes.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, changes.length));
+  };
+
   return (
     <div className="my-9">
-      <div className={`-mx-3 my-3 mb-6 rounded-md ${colorConfig.sectionBackground} p-3 text-white`}>
-        <h2 className="text-2xl font-semibold">
-          {title} ({changes.length})
-        </h2>
-      </div>
-      <div>
-        {changes.map((change, index) => (
-          <ChangeCard
-            key={`${change.uuid}-${index}`}
-            change={change}
-            uuidToDocMap={uuidToDocMap}
-            uuidToDocNoMap={uuidToDocNoMap}
-            uuidToDatabaseMap={uuidToDatabaseMap}
-            fieldFilters={fieldFilters}
-          />
-        ))}
-      </div>
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={`-mx-3 my-3 mb-6 w-[calc(100%+1.5rem)] cursor-pointer rounded-md ${colorConfig.sectionBackground} p-3 text-left text-white transition-opacity hover:opacity-90`}
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">
+            {title} ({changes.length.toLocaleString()})
+          </h2>
+          <span className="text-lg">{isExpanded ? '▼' : '▶'}</span>
+        </div>
+      </button>
+      {isExpanded && (
+        <div>
+          {visibleChanges.map((change, index) => (
+            <ChangeCard
+              key={`${change.uuid}-${index}`}
+              change={change}
+              uuidToDocMap={uuidToDocMap}
+              uuidToDocNoMap={uuidToDocNoMap}
+              uuidToDatabaseMap={uuidToDatabaseMap}
+              fieldFilters={fieldFilters}
+            />
+          ))}
+          {hasMore && (
+            <div className="mt-4 flex justify-center">
+              <Button variant="bordered" onPress={handleLoadMore} className="text-gray-600">
+                Load More ({(changes.length - visibleCount).toLocaleString()} remaining)
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 });
