@@ -56,12 +56,16 @@ import {
 
 /**
  * Options for export tree conversion
+ *
+ * @todo CLEANUP: Remove after migration complete (Phase 8)
  */
 export interface ExportTreeOptions {
   /**
    * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
    * instead of stored values from Supabase (atlas_document_number/plain_text_name).
    * Default: false (use stored values from standardized Notion fields)
+   *
+   * @todo CLEANUP: Remove after migration complete (Phase 8)
    */
   useDynamicValues?: boolean;
 }
@@ -129,14 +133,15 @@ function validateChildDatabases(node: NotionAtlasTreeNode, allowedDatabases: Atl
 // By default, uses stored values from Supabase (populated from new standardized Notion fields).
 // When useDynamicValues is true, uses dynamically generated values (migration mode).
 // See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+// @todo CLEANUP: Remove options parameter, always use stored values (Phase 8)
 function toBase(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
   options?: ExportTreeOptions,
 ): ExportAtlasTreeBaseDocument {
-  const useDynamic = options?.useDynamicValues ?? false;
+  const useDynamic = options?.useDynamicValues ?? false; // @todo CLEANUP: Remove (Phase 8)
 
-  // Validate based on which mode we're using
+  // @todo CLEANUP: Remove conditional validation after migration (Phase 8) - only keep stored mode validation
   if (useDynamic) {
     // Dynamic mode: check for generatedDocName
     if (!(node.generatedDocName && node.generatedDocName.length > 0)) {
@@ -160,8 +165,7 @@ function toBase(
 
   return {
     type: node.atlas_document_type,
-    // Use dynamically calculated values (generatedDocID/generatedDocName) when useDynamicValues is true,
-    // otherwise use stored values from Supabase (atlas_document_number/plain_text_name)
+    // @todo CLEANUP: After migration (Phase 8), simplify to: doc_no: node.atlas_document_number ?? '', name: node.plain_text_name ?? ''
     doc_no: useDynamic ? (node.generatedDocID ?? '') : (node.atlas_document_number ?? ''),
     name: useDynamic ? (node.generatedDocName ?? '') : (node.plain_text_name ?? ''),
     uuid: atlasUUID,
@@ -229,6 +233,7 @@ function pickExtraFields(node: NotionAtlasTreeNode, uuidMappings: UuidMappings):
 }
 
 // Main entry: convert a `NotionAtlasTreeNode` into an `ExportAtlasTreeDocument`
+// @todo CLEANUP: Remove options parameter after migration (Phase 8)
 export function notionTreeNodeToExportTreeNode(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
@@ -260,7 +265,8 @@ export function notionTreeNodeToExportTreeNode(
       const doc: ExportAtlasTreeArticlesDocument = {
         ...base,
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+          (c) =>
+            notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
         // agent_scope_database: node.agentScopeDocs.map((c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAgentScopeDatabaseDocument),
         annotations: node.annotations.map(
@@ -287,7 +293,8 @@ export function notionTreeNodeToExportTreeNode(
         ...base,
         ...pickExtraFields(node, uuidMappings),
         sections_and_primary_docs: node.sectionsAndPrimaryDocs.map(
-          (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
+          (c) =>
+            notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeSectionsAndPrimaryDocsDocument,
         ),
         annotations: node.annotations.map(
           (c) => notionTreeNodeToExportTreeNode(c, uuidMappings, options) as ExportAtlasTreeAnnotationsDocument,

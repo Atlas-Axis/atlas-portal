@@ -85,6 +85,26 @@ This toggle enables testing both modes during the migration period. When the tog
 - [ ] Mark old properties as deprecated in Notion (rename with `[DEPRECATED]` prefix)
 - [ ] Update documentation (`NOTION_PROPERTY_MAPPING.md`, `NOTION_IMPORT_PROCESS.md`, `MARKDOWN_TO_NOTION_SYNC.md`, `.cursorrules`)
 
+### Phase 8: Remove Migration Mode Code
+
+After migration is complete and verified, remove migration compatibility code:
+
+- [ ] Remove `useDynamicValues` option from `ExportTreeOptions`, `DiffOptions`, `SyncFilters`
+- [ ] Remove migration mode toggle from sync UI (`content.tsx`)
+- [ ] Remove `runDiff()` server action (or simplify to not accept options)
+- [ ] Simplify `toBase()` to always use stored values (remove conditional logic)
+- [ ] Simplify `notionTreeNodeToExportTreeNode()` (remove options parameter)
+- [ ] Simplify `diffAtlasScopeTreeLists()` (remove options parameter)
+- [ ] Remove migration mode tests (keep stored values tests only)
+- [ ] Clean up documentation references to migration mode
+
+**Files with inline cleanup comments:**
+
+- `app/server/atlas/export/notion-tree-to-export-tree.ts`
+- `app/server/atlas/diff/markdown-supabase-diff.ts`
+- `app/atlas/sync/content.tsx`
+- `app/atlas/sync/_actions/sync-actions.ts`
+
 ### Deferred Items
 
 The following items are explicitly deferred for later implementation:

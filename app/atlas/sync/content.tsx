@@ -79,7 +79,7 @@ const colors: {
 };
 
 export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiffResult; isDevMode: boolean }) {
-  // State for diff result - can be updated when useDynamicValues toggle changes
+  // @todo CLEANUP: After migration (Phase 8), remove useDynamicValues state and re-diffing logic
   const [result, setResult] = useState<AtlasDiffResult>(initialResult);
   const [isReDiffing, setIsReDiffing] = useState(false);
   const [useDynamicValues, setUseDynamicValues] = useState(false);
@@ -91,7 +91,7 @@ export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiff
     changes.parent_changed.length > 0 ||
     changes.deleted.length > 0;
 
-  // Handle toggle change - re-run diff with new option
+  // @todo CLEANUP: Remove after migration (Phase 8)
   const handleUseDynamicValuesChange = useCallback(async (checked: boolean) => {
     setUseDynamicValues(checked);
     setIsReDiffing(true);
@@ -360,6 +360,7 @@ function SyncControls({
             Parent Changes
           </Checkbox>
         </div>
+        {/* @todo CLEANUP: Remove migration mode toggle after migration complete (Phase 8) */}
         {/* Migration Mode Toggle */}
         <div className="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2">
           <Checkbox

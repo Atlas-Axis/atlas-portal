@@ -1,8 +1,8 @@
 'use server';
 
 import { tasks } from '@trigger.dev/sdk/v3';
-import { diffAtlasScopeTreeLists, type DiffOptions } from '@/app/server/atlas/diff/markdown-supabase-diff';
 import type { AtlasDiffResult } from '@/app/server/atlas/diff/atlas-diff';
+import { type DiffOptions, diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 import {
   acquireSyncLock,
   getSyncLockStatus,
@@ -21,6 +21,7 @@ export type { DiffOptions } from '@/app/server/atlas/diff/markdown-supabase-diff
  *
  * @param options Diff options (e.g., useDynamicValues for migration mode)
  * @returns The diff result
+ * @todo CLEANUP: After migration (Phase 8), either remove or simplify to not accept options
  */
 export async function runDiff(options?: DiffOptions): Promise<AtlasDiffResult> {
   return diffAtlasScopeTreeLists(options);

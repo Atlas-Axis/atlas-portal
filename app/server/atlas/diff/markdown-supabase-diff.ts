@@ -1,17 +1,21 @@
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
-import { buildExportAtlasTreeJSON, type BuildExportAtlasTreeOptions } from '../export/atlas-json-exporter';
+import { type BuildExportAtlasTreeOptions, buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
 import { ExportAtlasTreeScopeTrees } from '../export/types';
 import { loadAtlasMarkdownForSync } from '../load-atlas-markdown-from-github';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
  * Options for diff operation
+ *
+ * @todo CLEANUP: Remove after migration complete (Phase 8)
  */
 export interface DiffOptions {
   /**
    * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
    * instead of stored values from Supabase (atlas_document_number/plain_text_name).
    * Default: false (use stored values from standardized Notion fields)
+   *
+   * @todo CLEANUP: Remove after migration complete (Phase 8)
    */
   useDynamicValues?: boolean;
 }
@@ -23,10 +27,11 @@ export interface DiffOptions {
  * file stored in GitHub.
  *
  * @param options Optional diff options (e.g., useDynamicValues for migration mode)
+ * @todo CLEANUP: Remove options parameter after migration (Phase 8)
  */
 export async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<AtlasDiffResult> {
   const exportOptions: BuildExportAtlasTreeOptions = {
-    useDynamicValues: options?.useDynamicValues,
+    useDynamicValues: options?.useDynamicValues, // @todo CLEANUP: Remove (Phase 8)
   };
 
   const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees(exportOptions);
