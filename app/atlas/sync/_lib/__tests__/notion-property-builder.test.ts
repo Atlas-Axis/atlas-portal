@@ -309,7 +309,7 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Type'] as any).select.name).toBe('Scope');
 
-      // Should not have a "Doc Type" property
+      // Should not have a "Doc Type" property (only Agent Scope Database uses "Doc Type")
       expect(properties['Doc Type']).toBeUndefined();
     });
 

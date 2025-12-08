@@ -18,7 +18,7 @@ This section tracks the implementation status of each phase.
 
 - [x] Create script to add new properties to Notion databases (`scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`)
 - [x] Run script in **dev environment** to add `Document Number` and `Document Title` properties
-- [x] Manually rename `Doc Type` to `Type` in Agent Scope Database (**dev environment**)
+- ~~[ ] Manually rename `Doc Type` to `Type` in Agent Scope Database~~ **DEFERRED** - Type field standardization postponed to minimize breaking changes
 - [ ] Run migration in **production environment** (see Production Migration Steps below)
 - [ ] Add new clean relationship properties (direct children only) - **DEFERRED**
 
@@ -109,6 +109,7 @@ After migration is complete and verified, remove migration compatibility code:
 
 The following items are explicitly deferred for later implementation:
 
+- **Type field standardization**: Decision to standardize "Doc Type" → "Type" for Agent Scope Database has been deferred to minimize breaking changes during migration. Agent Scope Database will continue using "Doc Type" property name.
 - **Document title syntax changes**: Decision on Option 1/2/3 deferred
 - **Clean relationship properties for Articles database**: Will be implemented separately
   - Requires creating new "Sections" relationship property in Articles database (Notion)

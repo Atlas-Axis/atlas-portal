@@ -152,7 +152,7 @@ Most Notion properties are assumed to be "rich_text" type. The following propert
 
 **Select Properties:**
 
-- All databases: "Type" / "Doc Type" (document type selector)
+- All databases: "Type" (document type selector), except Agent Scope Database which uses "Doc Type"
 - Sections & Primary Docs: "Type Category" (extra field for Type Specification)
 
 These type overrides are critical when syncing from Markdown to Notion, as they determine the correct Notion API property format to use.
