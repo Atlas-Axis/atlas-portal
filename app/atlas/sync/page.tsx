@@ -20,11 +20,12 @@ export const dynamic = 'force-dynamic';
 export default async function AtlasSyncPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // Read useDynamicValues from URL params (migration mode toggle)
   // @todo CLEANUP: Remove after migration complete (Phase 8)
-  const useDynamicValues = searchParams.dynamic === 'true';
+  const params = await searchParams;
+  const useDynamicValues = params.dynamic === 'true';
 
   // Diff happens server-side for performance (large datasets)
   const result = await diffAtlasScopeTreeLists({ useDynamicValues });

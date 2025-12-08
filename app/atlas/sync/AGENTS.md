@@ -444,6 +444,8 @@ When this toggle is changed, the page refreshes with updated URL params (`?dynam
 
 This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to verify that stored values match dynamically calculated values.
 
+**Technical Note**: In Next.js 15+, `searchParams` is an async prop that must be awaited before accessing URL parameters.
+
 **4. Conflict Detection**
 
 - Warns if Notion documents modified after markdown export
