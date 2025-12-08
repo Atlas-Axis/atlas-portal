@@ -1,7 +1,7 @@
 'use client';
 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
@@ -89,6 +89,8 @@ export function Content({
   useDynamicValues: boolean;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
@@ -101,15 +103,18 @@ export function Content({
   const handleUseDynamicValuesChange = useCallback(
     (checked: boolean) => {
       // Refresh page with updated URL param to regenerate diff server-side
-      const url = new URL(window.location.href);
+      const current = new URLSearchParams(Array.from(searchParams.entries()));
       if (checked) {
-        url.searchParams.set('dynamic', 'true');
+        current.set('dynamic', 'true');
       } else {
-        url.searchParams.delete('dynamic');
+        current.delete('dynamic');
       }
-      router.push(url.pathname + url.search);
+      const search = current.toString();
+      const query = search ? `?${search}` : '';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      router.push(`${pathname}${query}` as any);
     },
-    [router],
+    [pathname, router, searchParams],
   );
 
   // Create UUID to document number map for markdown link conversion
@@ -291,7 +296,7 @@ function SyncControls({
     } finally {
       setIsStarting(false);
     }
-  }, [syncFilters]);
+  }, [syncFilters, useDynamicValues]);
 
   const handleStopClick = useCallback(async () => {
     setStopRequested(true);
