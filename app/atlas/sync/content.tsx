@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Alert } from '@heroui/alert';
 import { Divider } from '@heroui/divider';
 import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
@@ -18,7 +19,7 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
 import type { markdownNotionSyncTask } from '@/app/server/services/trigger/markdown-notion-sync-task';
-import { getSyncStatus, requestSyncStop, runDiff, triggerMarkdownNotionSync } from './_actions/sync-actions';
+import { getSyncStatus, requestSyncStop, triggerMarkdownNotionSync } from './_actions/sync-actions';
 import { createPublicAccessToken } from './_actions/trigger-auth';
 
 // Sync phase type matching the task
@@ -78,11 +79,16 @@ const colors: {
   },
 };
 
-export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiffResult; isDevMode: boolean }) {
-  // @todo CLEANUP: After migration (Phase 8), remove useDynamicValues state and re-diffing logic
-  const [result, setResult] = useState<AtlasDiffResult>(initialResult);
-  const [isReDiffing, setIsReDiffing] = useState(false);
-  const [useDynamicValues, setUseDynamicValues] = useState(false);
+export function Content({
+  result,
+  isDevMode,
+  useDynamicValues,
+}: {
+  result: AtlasDiffResult;
+  isDevMode: boolean;
+  useDynamicValues: boolean;
+}) {
+  const router = useRouter();
 
   const { changes, originalIdsToDocuments, newIdsToDocuments, originalIdsToDatabase, newIdsToDatabase } = result;
   const hasChanges =
@@ -92,18 +98,19 @@ export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiff
     changes.deleted.length > 0;
 
   // @todo CLEANUP: Remove after migration (Phase 8)
-  const handleUseDynamicValuesChange = useCallback(async (checked: boolean) => {
-    setUseDynamicValues(checked);
-    setIsReDiffing(true);
-    try {
-      const newResult = await runDiff({ useDynamicValues: checked });
-      setResult(newResult);
-    } catch (error) {
-      console.error('Failed to re-run diff:', error);
-    } finally {
-      setIsReDiffing(false);
-    }
-  }, []);
+  const handleUseDynamicValuesChange = useCallback(
+    (checked: boolean) => {
+      // Refresh page with updated URL param to regenerate diff server-side
+      const url = new URL(window.location.href);
+      if (checked) {
+        url.searchParams.set('dynamic', 'true');
+      } else {
+        url.searchParams.delete('dynamic');
+      }
+      router.push(url.pathname + url.search);
+    },
+    [router],
+  );
 
   // Create UUID to document number map for markdown link conversion
   const uuidToDocNoMap = useMemo(() => {
@@ -190,7 +197,6 @@ export function Content({ initialResult, isDevMode }: { initialResult: AtlasDiff
           isDevMode={isDevMode}
           useDynamicValues={useDynamicValues}
           onUseDynamicValuesChange={handleUseDynamicValuesChange}
-          isReDiffing={isReDiffing}
         />
       </CardBody>
     </Card>
@@ -205,13 +211,11 @@ function SyncControls({
   isDevMode,
   useDynamicValues,
   onUseDynamicValuesChange,
-  isReDiffing,
 }: {
   hasChanges: boolean;
   isDevMode: boolean;
   useDynamicValues: boolean;
   onUseDynamicValuesChange: (checked: boolean) => void;
-  isReDiffing: boolean;
 }) {
   // Sync filter state (excluding useDynamicValues which is managed by parent)
   const [syncFilters, setSyncFilters] = useState({
@@ -366,12 +370,10 @@ function SyncControls({
           <Checkbox
             isSelected={useDynamicValues}
             onValueChange={onUseDynamicValuesChange}
-            isDisabled={controlsDisabled || isReDiffing}
+            isDisabled={controlsDisabled}
             color="warning"
           >
-            <span className="text-amber-800">
-              {isReDiffing ? 'Re-calculating diff...' : 'Use Dynamic Values (Migration Mode)'}
-            </span>
+            <span className="text-amber-800">Use Dynamic Values (Migration Mode)</span>
           </Checkbox>
         </div>
       </div>

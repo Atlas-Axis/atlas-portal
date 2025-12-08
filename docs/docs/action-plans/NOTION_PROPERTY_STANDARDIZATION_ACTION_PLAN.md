@@ -58,7 +58,7 @@ The sync UI (`/atlas/sync`) now includes a "Use Dynamic Values (Migration Mode)"
 - **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) - the new standardized behavior
 - **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
 
-This toggle enables testing both modes during the migration period. When the toggle is changed, the diff is re-calculated with the new option.
+This toggle enables testing both modes during the migration period. The toggle state is stored in URL params (`?dynamic=true`), and changing it refreshes the page to regenerate the diff server-side.
 
 ### Phase 4: Run Initial Sync
 

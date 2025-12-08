@@ -246,7 +246,7 @@ The sync UI includes a "Use Dynamic Values (Migration Mode)" checkbox that contr
 
 This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to test both modes and verify that stored values match dynamically calculated values.
 
-When the toggle is changed, the diff is re-calculated with the new option. This allows comparing the detected changes between both modes without refreshing the page.
+When the toggle is changed, the page refreshes with updated URL params (`?dynamic=true`) to regenerate the diff server-side.
 
 For detailed feature descriptions, see [Atlas Sync AGENTS.md](../app/atlas/sync/AGENTS.md#user-interface).
 

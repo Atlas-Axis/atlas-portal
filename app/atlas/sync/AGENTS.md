@@ -440,7 +440,7 @@ The "Use Dynamic Values (Migration Mode)" checkbox controls how document number 
 - **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) populated from standardized Notion fields (`Document Number`, `Document Title`)
 - **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
 
-When this toggle is changed, the diff is re-calculated via a server action. This allows comparing detected changes between both modes without refreshing the page.
+When this toggle is changed, the page refreshes with updated URL params (`?dynamic=true`) to regenerate the diff server-side. This avoids server action payload size issues with large diff results.
 
 This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to verify that stored values match dynamically calculated values.
 
