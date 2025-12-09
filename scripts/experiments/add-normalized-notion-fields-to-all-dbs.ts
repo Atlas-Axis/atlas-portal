@@ -15,7 +15,8 @@
  * Usage:
  *   npx tsx scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts
  *
- * After running this script, you must MANUALLY rename "Doc Type" to "Type" in Agent Scope Database.
+ * NOTE: The manual rename of "Doc Type" to "Type" in Agent Scope Database has been DEFERRED
+ * to minimize breaking changes during migration. See the action plan for details.
  *
  * Related: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  */
@@ -206,22 +207,17 @@ async function main() {
   console.log(`    - Already existed: ${documentTitlesExisted}`);
   console.log('═══════════════════════════════════════════════════════════════════════════════');
 
-  // Print highly visible reminder about Doc Type rename
+  // Print note about deferred Doc Type rename
   console.log('');
   console.log('');
   console.log('╔═══════════════════════════════════════════════════════════════════════════════╗');
   console.log('║                                                                               ║');
-  console.log('║   ⚠️  IMPORTANT MANUAL ACTION REQUIRED ⚠️                                      ║');
+  console.log('║   ℹ️  NOTE: "Doc Type" → "Type" Rename DEFERRED                                ║');
   console.log('║                                                                               ║');
-  console.log('║   You must MANUALLY rename the "Doc Type" property to "Type"                 ║');
-  console.log('║   in the Agent Scope Database.                                               ║');
+  console.log('║   The manual rename of "Doc Type" to "Type" in Agent Scope Database          ║');
+  console.log('║   has been deferred to minimize breaking changes during migration.           ║');
   console.log('║                                                                               ║');
-  console.log('║   This cannot be done via the API - it requires manual action in Notion.     ║');
-  console.log('║                                                                               ║');
-  console.log('║   Steps:                                                                      ║');
-  console.log('║   1. Open the Agent Scope Database in Notion                                 ║');
-  console.log('║   2. Click on the "Doc Type" column header                                   ║');
-  console.log('║   3. Rename it to "Type"                                                     ║');
+  console.log('║   See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md ║');
   console.log('║                                                                               ║');
   console.log('╚═══════════════════════════════════════════════════════════════════════════════╝');
   console.log('');

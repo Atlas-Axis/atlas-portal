@@ -7,7 +7,8 @@ import { isValidUUID } from '@/app/shared/utils/utils';
 /**
  * Singleton markdown-it instance for parsing.
  * Reusing the same instance avoids the overhead of creating a new parser for each call.
- * The custom link renderer is applied per-call via the env parameter to avoid global state issues.
+ * The custom link renderer IS global state (modified below), but uses the env parameter
+ * to receive per-call data (uuidToDocNoMap), preventing state pollution between concurrent calls.
  */
 const mdInstance = markdownit();
 
@@ -22,7 +23,8 @@ const defaultLinkOpenRender =
 
 /**
  * Custom link renderer that converts UUID hrefs to document number anchors.
- * Uses the env parameter to pass the uuidToDocNoMap per-call, avoiding global state.
+ * This renderer is global state, but receives per-call data via the env parameter,
+ * preventing pollution between concurrent calls to markdownToHTML().
  */
 mdInstance.renderer.rules.link_open = function (
   tokens: Token[],

@@ -172,17 +172,7 @@ Before making any changes to production:
 
 4. Verify the console output shows successful property additions
 
-#### Step 3: Manually Rename "Doc Type" to "Type" in Agent Scope Database
-
-1. Open the Agent Scope Database in Notion (production workspace)
-2. Navigate to database properties/columns
-3. Find the property named `Doc Type`
-4. Rename it to `Type`
-5. Verify that all documents still display correctly
-
-**Why manual?** The Notion API doesn't support renaming properties, only adding/removing them. Manual renaming preserves all data and existing select options.
-
-#### Step 4: Verify Property Addition
+#### Step 3: Verify Property Addition
 
 1. Open each of the 10 Atlas databases in Notion:
    - Scopes
@@ -202,7 +192,7 @@ Before making any changes to production:
    - Both properties are empty (as expected)
    - Old properties still exist and contain data
 
-#### Step 5: Run Notion to Supabase Import
+#### Step 4: Run Notion to Supabase Import
 
 1. Trigger a full import to verify dual-read logic works:
 
@@ -219,7 +209,7 @@ Before making any changes to production:
    - Check that `atlas_document_number` and `plain_text_name` are populated in Supabase
    - Spot check a few documents to ensure data matches expectations
 
-#### Step 6: Run Markdown to Notion Sync (Populate New Fields)
+#### Step 5: Run Markdown to Notion Sync (Populate New Fields)
 
 1. Navigate to the sync UI in production:
 
@@ -244,7 +234,7 @@ Before making any changes to production:
    - New fields should now be populated with values
    - Old fields remain unchanged
 
-#### Step 7: Verify Round-Trip Integrity
+#### Step 6: Verify Round-Trip Integrity
 
 1. Export Atlas from production Supabase:
 
@@ -272,7 +262,7 @@ Before making any changes to production:
 
 5. Export again and verify the test change persisted correctly
 
-#### Step 8: Monitor Production
+#### Step 7: Monitor Production
 
 1. Monitor application logs for any errors related to property reading/writing
 2. Check Notion API usage for any unusual patterns
@@ -283,11 +273,11 @@ Before making any changes to production:
 
 If issues occur during migration:
 
-1. **If in Step 2-3 (Adding properties):**
+1. **If in Step 2 (Adding properties):**
    - New properties can be deleted from Notion databases manually
    - No data loss - old properties were never modified
 
-2. **If in Step 5-6 (Import/Sync):**
+2. **If in Step 4-5 (Import/Sync):**
    - The dual-read/dual-write code ensures old properties still work
    - Application continues to function with old properties
    - New properties can be cleared and repopulated
@@ -301,7 +291,6 @@ If issues occur during migration:
 
 - [ ] All 10 databases have `Document Number` property
 - [ ] All 10 databases have `Document Title` property
-- [ ] Agent Scope Database has `Type` property (renamed from `Doc Type`)
 - [ ] New properties are populated with correct values
 - [ ] Old properties remain intact
 - [ ] Notion to Supabase import completes successfully
@@ -313,7 +302,6 @@ If issues occur during migration:
 ### Success Indicators
 
 ✅ Script output shows all properties added successfully  
-✅ Manual rename completed in Notion UI  
 ✅ All databases show new empty properties  
 ✅ Import completes without errors  
 ✅ Sync populates new fields correctly  
@@ -344,7 +332,7 @@ This inconsistency requires complex mapping logic in `notion-database-properties
 
 ### Type Field Inconsistency
 
-The document type field is named `Type` in most databases but `Doc Type` in Agent Scope Database. This will be manually renamed to `Type` for consistency.
+The document type field is named `Type` in most databases but `Doc Type` in Agent Scope Database. Renaming this field has been **deferred** to minimize breaking changes during migration. See [Deferred Items](#deferred-items) for details.
 
 ### Document Title Syntax Inconsistency
 
@@ -404,10 +392,7 @@ A new `Document Title` property will be added to all Atlas databases:
 
 ### Type (select)
 
-Already standardized as `Type` in most databases:
-
-- Rename `Doc Type` to `Type` in Agent Scope Database (manual)
-- No other changes needed
+Already standardized as `Type` in most databases. The Agent Scope Database uses `Doc Type` instead, but renaming has been **deferred** to minimize breaking changes. See [Deferred Items](#deferred-items) for details.
 
 ### Supabase Schema
 
@@ -469,7 +454,6 @@ New relationship properties will map to existing Supabase child ID columns:
 1. Add `Document Number` (rich_text) property to all 10 Atlas databases
 2. Add `Document Title` (rich_text) property to all 10 Atlas databases
 3. Add new clean relationship properties (direct children only)
-4. Rename `Doc Type` to `Type` in Agent Scope Database
 
 **Important:**
 
