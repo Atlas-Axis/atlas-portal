@@ -172,7 +172,37 @@ Before making any changes to production:
 
 4. Verify the console output shows successful property additions
 
-#### Step 3: Verify Property Addition
+#### Step 3: Add Natural Sorting Formula Property
+
+1. Manually add a formula property to each of the 10 Atlas databases in Notion:
+
+   **Property Name**: `Document Number (Sortable)` or similar
+
+   **Property Type**: Formula
+
+   **Formula**:
+
+   ```
+   replaceAll(
+     replaceAll(
+       join(
+         format(prop("Document Number")),
+         ""
+       ),
+     "\\.([0-9])\\b", ".0$1"),
+   "\\.([0-9])\\.", ".0$1.")
+   ```
+
+   This formula pads single-digit numbers in document numbers to enable correct lexicographic sorting (e.g., `A.1.2` → `A.01.02`).
+
+2. Configure Notion database view sorting:
+   - Set primary sort by the new formula property (ascending)
+   - Remove any existing sort by `No.` property (if present)
+
+3. Mark old sort order property as deprecated:
+   - In **Sections & Primary Docs** database: Rename `No.` property to `[DEPRECATED] No.`
+
+#### Step 4: Verify Property Addition
 
 1. Open each of the 10 Atlas databases in Notion:
    - Scopes
@@ -189,10 +219,12 @@ Before making any changes to production:
 2. For each database, verify that:
    - `Document Number` property exists (type: Text)
    - `Document Title` property exists (type: Text)
-   - Both properties are empty (as expected)
+   - Formula property for natural sorting exists (type: Formula)
+   - All new properties are empty (as expected for Document Number/Title)
    - Old properties still exist and contain data
+   - In Sections & Primary Docs: `No.` property renamed to `[DEPRECATED] No.`
 
-#### Step 4: Run Notion to Supabase Import
+#### Step 5: Run Notion to Supabase Import
 
 1. Trigger a full import to verify dual-read logic works:
 
@@ -209,7 +241,7 @@ Before making any changes to production:
    - Check that `atlas_document_number` and `plain_text_name` are populated in Supabase
    - Spot check a few documents to ensure data matches expectations
 
-#### Step 5: Run Markdown to Notion Sync (Populate New Fields)
+#### Step 6: Run Markdown to Notion Sync (Populate New Fields)
 
 1. Navigate to the sync UI in production:
 
@@ -234,7 +266,7 @@ Before making any changes to production:
    - New fields should now be populated with values
    - Old fields remain unchanged
 
-#### Step 6: Verify Round-Trip Integrity
+#### Step 7: Verify Round-Trip Integrity
 
 1. Export Atlas from production Supabase:
 
@@ -262,7 +294,7 @@ Before making any changes to production:
 
 5. Export again and verify the test change persisted correctly
 
-#### Step 7: Monitor Production
+#### Step 8: Monitor Production
 
 1. Monitor application logs for any errors related to property reading/writing
 2. Check Notion API usage for any unusual patterns
@@ -291,21 +323,26 @@ If issues occur during migration:
 
 - [ ] All 10 databases have `Document Number` property
 - [ ] All 10 databases have `Document Title` property
+- [ ] All 10 databases have natural sorting formula property
 - [ ] New properties are populated with correct values
 - [ ] Old properties remain intact
+- [ ] `No.` sort order property marked as `[DEPRECATED] No.` in Sections & Primary Docs
 - [ ] Notion to Supabase import completes successfully
 - [ ] Markdown to Notion sync works correctly
 - [ ] Round-trip export-import-export produces consistent results
+- [ ] Document ordering is correct (sorted by Document Number naturally)
 - [ ] No production errors or warnings
 - [ ] Users can access and edit documents normally
 
 ### Success Indicators
 
 ✅ Script output shows all properties added successfully  
-✅ All databases show new empty properties  
+✅ All databases show new empty properties (Document Number, Document Title, natural sorting formula)  
 ✅ Import completes without errors  
 ✅ Sync populates new fields correctly  
 ✅ Round-trip verification shows data consistency  
+✅ Document ordering works correctly with natural sorting formula  
+✅ `No.` property marked as deprecated in Sections & Primary Docs  
 ✅ No production errors or user reports  
 ✅ Old properties remain unchanged and functional
 
@@ -530,8 +567,14 @@ New relationship properties will map to existing Supabase child ID columns:
 
 **Notion Changes:**
 
-1. Mark old properties as deprecated (rename with `[DEPRECATED]` prefix)
-2. Eventually remove old properties from Notion databases
+1. Mark old properties as deprecated (rename with `[DEPRECATED]` prefix):
+   - Document number properties: `Doc No`, `Doc No (or Temp Name)`, `Formal Doc ID`
+   - Document name properties: `Name`, `Document Name`
+   - Sort order property: `No.` (in Sections & Primary Docs)
+2. Eventually remove old properties from Notion databases:
+   - All deprecated document number and name properties
+   - `No.` sort order property (Sections & Primary Docs)
+   - Keep: Formula property for natural sorting by Document Number
 
 **Documentation Updates:**
 
@@ -544,19 +587,41 @@ New relationship properties will map to existing Supabase child ID columns:
 
 ### Current State
 
+The system currently uses multiple sorting strategies across different contexts:
+
+**1. Supabase Query Sorting** (`load-notion-database-pages-from-supabase.ts`):
+
 - `DEFAULT_SORT_CRITERIA`: `['sort_order', 'atlas_document_number_sortable', 'notion_page_id']`
 - `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES`: Database-specific overrides
-- `No.` property in Sections & Primary Docs for manual ordering
-- `compareDocNumbers()` function in `app/server/atlas/document-numbering/atlas-utils.ts` for natural sorting
+  - Sections & Primary Docs: `['sort_order', 'plain_text_name', 'notion_page_id']`
+  - Agent Scope Database: `['atlas_document_number_sortable', 'notion_page_id']`
+
+**2. Tree Building & Client-Side Sorting** (`atlas-tree-helpers.ts`):
+
+- `sortAtlasDocuments()` function applies different sorting logic per database:
+  - Most databases: Sort by `atlas_document_number` using `compareDocNumbers()`
+  - Sections & Primary Docs: Sort by `sort_order` first, then `atlas_document_number`
+
+**3. Notion Database Properties**:
+
+- `No.` property (number type) in Sections & Primary Docs for manual ordering
+- Stored in `sort_order` field in Supabase
+- Defined in `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS` (line 81)
+- Type override in `NOTION_PROPERTY_TYPE_OVERRIDES` (line 375)
+
+**4. Nesting Bug Fix System** (`NOTION_NESTING_BUG_FIX.md`):
+
+- `place_after_sibling_notion_page_id` field for manual sibling positioning
+- Used to override incorrect ordering from Notion at deep nesting levels
+- Applied during tree building in `applyNestingOverrides()`
 
 ### New State
 
-- Single ordering strategy: Sort by `Document Number` using natural ordering
-- Remove `No.` and other sort order fields
-- Remove `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES`
-- Simplify `DEFAULT_SORT_CRITERIA`
+After migration, the system will use a unified ordering strategy:
 
-### Notion Formula for Natural Sorting
+**Single Ordering Strategy**: Sort by `Document Number` using natural ordering across all databases
+
+**Notion Formula for Natural Sorting**:
 
 Add a formula property to each database for natural sorting by Document Number:
 
@@ -577,35 +642,130 @@ This pads single-digit numbers to enable correct lexicographic sorting:
 - `A.1.12` → `A.01.12`
 - `A.10.3` → `A.10.03`
 
+### Code Changes Required
+
+**Files to Update**:
+
+1. **`load-notion-database-pages-from-supabase.ts`**:
+   - Remove `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES` constant
+   - Simplify `DEFAULT_SORT_CRITERIA` to: `['atlas_document_number_sortable', 'notion_page_id']`
+   - Remove `getSortCriteria()` function or simplify to always return default criteria
+
+2. **`atlas-tree-helpers.ts`**:
+   - Simplify `sortAtlasDocuments()` to use `compareDocNumbers()` for all databases
+   - Remove special case for Sections & Primary Docs (no more `sort_order` check)
+
+3. **`notion-database-properties-and-relationships.ts`**:
+   - Remove `sortOrder: 'No.'` from Sections & Primary Docs properties (line 81)
+   - Remove `'No.': 'number'` from `NOTION_PROPERTY_TYPE_OVERRIDES` (line 375)
+   - Clean up JSDoc comments mentioning sort order
+
+4. **`convert-notion-pages-to-supabase-format.ts`**:
+   - Remove `extractSortOrder()` function (lines 333-361)
+   - Remove sort order extraction logic from `convertSingleNotionPageToDatabaseFormat()` (lines 117-119)
+
+5. **`compare-database-pages.ts`**:
+   - Remove `SORT_ORDER` from `extractPropertyValueFromSupabase()` switch statement (lines 383-389)
+   - Consider removing sort_order from tracked properties if it's no longer needed for change detection
+
+6. **`notion-database-page.ts`**:
+   - Keep `sort_order` field in TypeScript interface (for backward compatibility with existing data)
+   - Add deprecation comment
+   - Eventually remove field after data migration
+
+7. **`003_create_notion_database_pages_table.sql`**:
+   - Keep `sort_order` column in database schema (for backward compatibility)
+   - Add deprecation comment
+   - Eventually drop column after data migration
+
+8. **`notion-nesting-bug-mappings.ts`**:
+   - Keep `place_after_sibling_notion_page_id` functionality
+   - This is still needed as a workaround for Notion's deep nesting bug
+   - Note: This is separate from `sort_order` - it's for manual parent-child relationship corrections
+
+9. **`apply-nesting-overrides.ts`**:
+   - Keep sibling positioning logic (lines 79-100)
+   - This is still needed for nesting bug workarounds
+
+**Database Migration**:
+
+- Phase 1: Keep `sort_order` field for backward compatibility
+- Phase 2: Stop writing to `sort_order` field during imports
+- Phase 3: Eventually drop column after verifying all ordering works correctly
+
+**Notion Changes**:
+
+1. Add formula property for natural sorting to all 10 Atlas databases (as described above)
+2. Mark `No.` property as deprecated in Sections & Primary Docs (rename to `[DEPRECATED] No.`)
+3. Verify sorting works correctly with new formula property
+4. Eventually remove `No.` property from Sections & Primary Docs database after verification period
+
+**Migration Timeline for Notion Property Removal**:
+
+- **Immediate**: Add formula property for natural sorting
+- **Phase 7**: Mark `No.` as deprecated (rename with prefix)
+- **After verification period (e.g., 1-2 months)**: Permanently delete `No.` property
+
 ### Markdown to Notion Sync Simplification
 
-Remove `sibling_order_changed` change type entirely:
+Remove `sibling_order_changed` change type entirely (already completed in Phase 2):
 
 - Syncing Document Number is sufficient for correct ordering
 - Ordering happens automatically in Notion (via formula), Supabase (via sort), and exports
+- No need to track sibling order changes explicitly
 
 ## Code Changes Summary
 
 ### Files to Update
 
-| File                                                                              | Changes                                                                      |
-| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` | Add new standardized property mappings, dual-read logic, eventually simplify |
-| `app/server/services/supabase/load-notion-database-pages-from-supabase.ts`        | Simplify sorting to use Document Number only                                 |
-| `app/server/services/notion/convert-notion-pages-to-supabase-format.ts`           | Add dual-read logic for old/new fields                                       |
-| `app/server/services/notion/import-database-to-supabase.ts`                       | Update to use new relationship properties                                    |
-| `app/atlas/sync/_lib/*`                                                           | Write to new fields, remove sibling order logic                              |
-| `app/atlas/sync/_actions/*`                                                       | Update server actions                                                        |
-| `app/atlas/sync/AGENTS.md`                                                        | Remove sibling_order_changed documentation                                   |
-| `app/server/atlas/notion-tree/atlas-tree-helpers.ts`                              | Simplify `getDocumentTitle()` once titles are standardized                   |
+| File                                                                              | Changes                                                                                             |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **Property Standardization:**                                                     |                                                                                                     |
+| `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` | Add new standardized property mappings, dual-read logic, eventually simplify                        |
+| `app/server/services/notion/convert-notion-pages-to-supabase-format.ts`           | Add dual-read logic for old/new fields; remove `extractSortOrder()` and sort order extraction logic |
+| `app/server/services/notion/compare-database-pages.ts`                            | Remove `SORT_ORDER` case from `extractPropertyValueFromSupabase()`                                  |
+| `app/server/services/notion/import-database-to-supabase.ts`                       | Update to use new relationship properties (deferred)                                                |
+| `app/atlas/sync/_lib/*`                                                           | Write to new fields, remove sibling order logic (already done)                                      |
+| `app/atlas/sync/_actions/*`                                                       | Update server actions                                                                               |
+| `app/atlas/sync/AGENTS.md`                                                        | Remove sibling_order_changed documentation (already done)                                           |
+| **Ordering Simplification:**                                                      |                                                                                                     |
+| `app/server/services/supabase/load-notion-database-pages-from-supabase.ts`        | Remove `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES`; simplify to use Document Number only               |
+| `app/server/atlas/notion-tree/atlas-tree-helpers.ts`                              | Simplify `sortAtlasDocuments()` to use `compareDocNumbers()` for all databases                      |
+| `app/server/database/notion-database-page.ts`                                     | Add deprecation comment to `sort_order` field                                                       |
+| `app/server/database/003_create_notion_database_pages_table.sql`                  | Add deprecation comment to `sort_order` column                                                      |
+| **Document Title Simplification (if chosen):**                                    |                                                                                                     |
+| `app/server/atlas/notion-tree/atlas-tree-helpers.ts`                              | Simplify `getDocumentTitle()` once titles are standardized; remove `getLastTitlePart()`             |
 
 ### Code to Remove (Phase 7)
 
-- `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES` constant
-- Most entries in `NOTION_PROPERTY_TYPE_OVERRIDES`
-- `sibling_order_changed` change type and related code
-- `getLastTitlePart()` function (if titles are simplified)
-- Complex property name lookups in mapping logic
+**Sorting-Related Code:**
+
+- `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES` constant (`load-notion-database-pages-from-supabase.ts`)
+- Special-case sorting logic for Sections & Primary Docs (`atlas-tree-helpers.ts`)
+- `extractSortOrder()` function (`convert-notion-pages-to-supabase-format.ts`)
+- `sortOrder` property mapping in `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS`
+- `'No.': 'number'` entry in `NOTION_PROPERTY_TYPE_OVERRIDES`
+- `SORT_ORDER` case in `extractPropertyValueFromSupabase()` switch statement
+- Eventually: `sort_order` field from TypeScript interfaces and database schema
+
+**Property Standardization Code:**
+
+- Most entries in `NOTION_PROPERTY_TYPE_OVERRIDES` (only title types and special extra field overrides will remain)
+- Dual-read logic from import (read only new standardized fields)
+- Database-specific property name lookups in `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS`
+- `sibling_order_changed` change type and related code (already removed in Phase 2)
+
+**Document Title Simplification** (if Option 1 is chosen):
+
+- `getLastTitlePart()` function (`atlas-tree-helpers.ts`)
+- Special case logic for Sections & Primary Docs and Active Data in `getDocumentTitle()`
+
+**Note on Nesting Bug Fix System:**
+
+- **DO NOT REMOVE**: `place_after_sibling_notion_page_id` functionality in nesting bug fix system
+- **DO NOT REMOVE**: Sibling positioning logic in `applyNestingOverrides()`
+- These are independent workarounds for Notion's deep nesting relationship bug
+- They are not related to the `sort_order` field being removed
 
 ## Performance Impact
 
@@ -624,6 +784,51 @@ Remove `sibling_order_changed` change type entirely:
 
 - Simpler change detection (4 change types instead of 5)
 - Faster relationship updates (direct children only)
+
+## Important Distinction: Nesting Bug Fix vs Sort Order
+
+The system has two separate mechanisms for controlling document ordering and positioning:
+
+### 1. Sort Order System (Being Removed)
+
+**Purpose**: Controls the order of documents within their parent using a manual numeric field
+
+**Implementation**:
+
+- `sort_order` field in Supabase (type: `DECIMAL(5,2)`)
+- `No.` property in Sections & Primary Docs Notion database (type: number)
+- Used during Supabase queries and tree building for sorting
+- Database-specific sorting logic in `ATLAS_DATABASE_SORT_CRITERIA_OVERRIDES`
+
+**Status**: Being removed as part of this migration. After migration, ordering will be determined solely by Document Number using natural sorting.
+
+### 2. Nesting Bug Fix System (Keeping)
+
+**Purpose**: Manually corrects incorrect parent-child relationships caused by Notion's deep nesting bug
+
+**Implementation**:
+
+- `notion_nesting_bug_mapping` table in Supabase
+- `place_after_sibling_notion_page_id` field for manual sibling positioning
+- Applied during tree building via `applyNestingOverrides()`
+- UI at `/atlas/notion-nesting-fix` for managing mappings
+
+**Status**: This system is INDEPENDENT of sort_order and will be RETAINED after migration. It serves a different purpose (fixing broken relationships) rather than controlling sort order.
+
+**Key Difference**:
+
+- **Sort Order**: Determines the numeric position of a document among its siblings (being removed)
+- **Nesting Bug Fix**: Corrects which parent a document belongs to and optionally positions it after a specific sibling (being kept)
+
+The nesting bug fix system's `place_after_sibling` feature is NOT the same as `sort_order`:
+
+- `sort_order`: A numeric field (0, 1, 2, 3...) that determines position
+- `place_after_sibling`: A reference to another document's UUID, used to insert a document after a specific sibling when applying relationship overrides
+
+After migration, sibling positioning within a parent will be determined by:
+
+1. Document Number (primary) - natural sorting
+2. Nesting bug fix overrides (if applicable) - for correcting broken relationships
 
 ## Risks and Mitigations
 
