@@ -1,5 +1,6 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
+import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
@@ -163,7 +164,14 @@ export function compareDatabasePages({
 
   // Get the property and relationship mappings for this database
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
-  const trackedProperties = Object.values(databaseConfig.properties).filter((prop) => prop !== '');
+  // Include both old property names from config AND new standardized property names
+  // This ensures changes to standardized fields (Document Number, Document Title) are detected
+  // even though they're not in NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS
+  const trackedProperties = [
+    ...Object.values(databaseConfig.properties).filter((prop) => prop !== ''),
+    STANDARDIZED_DOCUMENT_NUMBER,
+    STANDARDIZED_DOCUMENT_TITLE,
+  ];
 
   if (DEBUG_LOGGING()) {
     console.log(`Tracked properties for ${atlasDatabaseName}: ${trackedProperties.join(', ')}`);
@@ -345,6 +353,15 @@ function extractPropertyValueFromSupabase(
   notionPropertyName: string,
   atlasDatabaseName: AtlasDatabaseName,
 ): string | number | null {
+  // Handle standardized properties directly - these are not in REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS
+  // because they use the same property name across all databases
+  if (notionPropertyName === STANDARDIZED_DOCUMENT_NUMBER) {
+    return page.atlas_document_number ?? null;
+  }
+  if (notionPropertyName === STANDARDIZED_DOCUMENT_TITLE) {
+    return page.plain_text_name ?? null;
+  }
+
   const reversedNotionDatabasePropertyMapping = REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[atlasDatabaseName]; // TODO: This doesn't work when a property is null (because object keys can't be null) - fix this!
   const mappedPropertyName = reversedNotionDatabasePropertyMapping[notionPropertyName];
   if (!mappedPropertyName) {

@@ -465,6 +465,56 @@ Console logging provides detailed change information:
   👉 https://www.notion.so/{page_id_no_hyphens}
 ```
 
+### Standardized Properties in Change Detection
+
+The change detection system tracks both legacy property names (from `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS`) and new standardized property names (`Document Number`, `Document Title`).
+
+**Why This Matters:**
+
+When new standardized Notion properties are added (as part of property standardization), they must be explicitly added to the change detection logic. Otherwise, changes to these new fields will not be detected, and pages will be incorrectly marked as "unchanged" even when they have updates.
+
+**Symptom of Missing Standardized Properties:**
+
+- Markdown-to-Notion sync successfully writes new values to Notion
+- The automatic Notion-to-Supabase import reports "0 pages with property changes"
+- Supabase retains old/incorrect values despite Notion having correct data
+
+**How to Add New Standardized Properties:**
+
+When adding a new standardized property (e.g., a future unified `Type` field), update `compare-database-pages.ts`:
+
+1. **Add to `trackedProperties` array** (around line 170):
+
+```typescript
+const trackedProperties = [
+  ...Object.values(databaseConfig.properties).filter((prop) => prop !== ''),
+  STANDARDIZED_DOCUMENT_NUMBER,
+  STANDARDIZED_DOCUMENT_TITLE,
+  // Add new standardized property here, e.g.:
+  // STANDARDIZED_TYPE,
+];
+```
+
+2. **Add handling in `extractPropertyValueFromSupabase()`** (around line 355):
+
+```typescript
+// Handle standardized properties directly
+if (notionPropertyName === STANDARDIZED_DOCUMENT_NUMBER) {
+  return page.atlas_document_number ?? null;
+}
+if (notionPropertyName === STANDARDIZED_DOCUMENT_TITLE) {
+  return page.plain_text_name ?? null;
+}
+// Add new standardized property here, e.g.:
+// if (notionPropertyName === STANDARDIZED_TYPE) {
+//   return page.atlas_document_type ?? null;
+// }
+```
+
+**Related Documentation:**
+
+- See **[NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** for the full property standardization plan
+
 ## Sync Locking
 
 Sync locking prevents concurrent imports of the same database using the `notion_sync_status` table. Locks expire automatically after 30 minutes to prevent orphaned locks from crashed processes. The script flag `--disable-existing-locks` can clear stale locks manually.

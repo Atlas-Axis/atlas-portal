@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import { NotionDatabasePage } from '@/app/server/database/notion-database-page';
 import { Json } from '@/app/server/services/supabase/database.types';
 import { compareDatabasePages } from '../compare-database-pages';
@@ -49,6 +50,17 @@ function createMockNotionPage(
         id: 'sort-order',
         type: 'number',
         number: 0,
+      },
+      // Standardized properties - must match Supabase values for "unchanged" tests
+      [STANDARDIZED_DOCUMENT_NUMBER]: {
+        id: 'doc-number',
+        type: 'rich_text',
+        rich_text: [{ type: 'text', text: { content: 'A.1', link: null }, plain_text: 'A.1' }] as never[],
+      },
+      [STANDARDIZED_DOCUMENT_TITLE]: {
+        id: 'doc-title',
+        type: 'rich_text',
+        rich_text: (nameRichText || defaultName) as never[],
       },
     },
     url: `https://www.notion.so/${id}`,

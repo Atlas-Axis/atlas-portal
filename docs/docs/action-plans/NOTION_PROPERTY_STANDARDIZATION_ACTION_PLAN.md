@@ -84,6 +84,8 @@ This toggle enables testing both modes during the migration period. The toggle s
 - [ ] Simplify `load-notion-database-pages-from-supabase.ts` sorting logic
 - [ ] Mark old properties as deprecated in Notion (rename with `[DEPRECATED]` prefix)
 - [ ] Update documentation (`NOTION_PROPERTY_MAPPING.md`, `NOTION_IMPORT_PROCESS.md`, `MARKDOWN_TO_NOTION_SYNC.md`, `.cursorrules`)
+- [ ] **When adding standardized Type field**: Add `STANDARDIZED_TYPE` to `trackedProperties` in `compare-database-pages.ts`
+- [ ] **When adding standardized Type field**: Update `extractPropertyValueFromSupabase()` to handle standardized Type field
 
 ### Phase 8: Remove Migration Mode Code
 
@@ -110,6 +112,7 @@ After migration is complete and verified, remove migration compatibility code:
 The following items are explicitly deferred for later implementation:
 
 - **Type field standardization**: Decision to standardize "Doc Type" → "Type" for Agent Scope Database has been deferred to minimize breaking changes during migration. Agent Scope Database will continue using "Doc Type" property name.
+  - **IMPORTANT**: When implementing, remember to add the standardized Type field to change detection in `compare-database-pages.ts`. See [NOTION_IMPORT_PROCESS.md](../../NOTION_IMPORT_PROCESS.md#standardized-properties-in-change-detection) for the pattern.
 - **Document title syntax changes**: Decision on Option 1/2/3 deferred
 - **Clean relationship properties for Articles database**: Will be implemented separately
   - Requires creating new "Sections" relationship property in Articles database (Notion)
