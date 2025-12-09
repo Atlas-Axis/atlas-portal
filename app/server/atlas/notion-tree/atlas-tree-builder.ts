@@ -311,6 +311,58 @@ function createLookupMaps(allPages: NotionDatabasePage[]): NotionAtlasTreeLookup
     childrenMap.set(page.notion_page_id, childIds);
   }
 
+  // Second pass: For internally nested databases (Agent Scope Database, Sections & Primary Docs),
+  // also use parent_notion_page_id to build relationships. This handles cases where Notion's
+  // bidirectional relations are not synced (e.g., when a page has "Parent item" set but the
+  // parent's "Sub-item" is empty due to Notion API limitations).
+  //
+  // We need to update BOTH childrenMap AND the parent page's child_*_ids array because
+  // buildTreeNode uses page.child_agent_scope_ids directly.
+  let addedFromParentNotionPageId = 0;
+  for (const page of allPages) {
+    if (page.parent_notion_page_id) {
+      const isInternallyNestedDatabase =
+        page.atlas_database_name === 'Sections & Primary Docs' || page.atlas_database_name === 'Agent Scope Database';
+
+      if (isInternallyNestedDatabase) {
+        const parentPage = originalPageMap.get(page.parent_notion_page_id);
+
+        if (parentPage) {
+          // Determine which child array to update based on the child's database
+          let childArray: string[];
+          if (page.atlas_database_name === 'Agent Scope Database') {
+            childArray = parentPage.child_agent_scope_ids;
+          } else {
+            childArray = parentPage.child_section_and_primary_doc_ids;
+          }
+
+          if (!childArray.includes(page.notion_page_id)) {
+            // Add this page to its parent's child array
+            childArray.push(page.notion_page_id);
+
+            // Also update childrenMap
+            let parentChildIds = childrenMap.get(page.parent_notion_page_id);
+            if (!parentChildIds) {
+              parentChildIds = [];
+              childrenMap.set(page.parent_notion_page_id, parentChildIds);
+            }
+            if (!parentChildIds.includes(page.notion_page_id)) {
+              parentChildIds.push(page.notion_page_id);
+            }
+
+            // Also update parentMap
+            parentMap.set(page.notion_page_id, page.parent_notion_page_id);
+            addedFromParentNotionPageId++;
+          }
+        }
+      }
+    }
+  }
+
+  if (addedFromParentNotionPageId > 0) {
+    console.log(`📊 Added ${addedFromParentNotionPageId} children from parent_notion_page_id`);
+  }
+
   return {
     nodeMapByPageId: nodeMap,
     originalPageMap,

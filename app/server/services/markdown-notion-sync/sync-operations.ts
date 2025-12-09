@@ -211,6 +211,12 @@ export async function createNotionDatabasePage(
       syncBatchId,
     });
 
+    // NOTE: We intentionally do NOT update the parent's child relation property here.
+    // Notion's API doesn't always automatically sync bidirectional relations (bug), and attempting to
+    // update the parent's "Sub-item" property fails with 500 errors sometimes.
+    // Instead, the tree builder in atlas-tree-builder.ts uses parent_notion_page_id to
+    // reconstruct the hierarchy during import.
+
     // Extract unresolved mention UUIDs from warnings for post-processing
     const unresolvedMentionUuids = warnings
       .filter((w) => w.type === 'missing_mapping' && w.atlasUuid)
