@@ -667,7 +667,7 @@ function PhaseChip({ phase }: { phase: SyncPhase }) {
   );
 }
 
-const ITEMS_PER_PAGE = 150;
+const ITEMS_PER_PAGE = 10000;
 
 const ChangeSection = memo(function ChangeSection({
   title,
