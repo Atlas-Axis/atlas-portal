@@ -77,7 +77,11 @@ export const markdownNotionSyncTask = task({
       updateMetadata({ currentDoc: 'Loading data...' });
 
       // Load diff result and UUID mappings
-      const [diffResult, uuidMappings] = await Promise.all([diffAtlasScopeTreeLists(), loadUuidMappings()]);
+      // Pass useDynamicValues from filters to ensure consistent diff calculation with what the UI showed
+      const [diffResult, uuidMappings] = await Promise.all([
+        diffAtlasScopeTreeLists({ useDynamicValues: payload.filters.useDynamicValues }),
+        loadUuidMappings(),
+      ]);
 
       // Calculate total changes
       const filteredChanges = {

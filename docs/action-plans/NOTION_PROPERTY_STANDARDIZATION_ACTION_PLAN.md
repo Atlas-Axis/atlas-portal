@@ -55,8 +55,10 @@ This section tracks the implementation status of each phase.
 
 The sync UI (`/atlas/sync`) now includes a "Use Dynamic Values (Migration Mode)" checkbox that allows switching between:
 
-- **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) - the new standardized behavior
-- **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
+- **ON (default)**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the current behavior until production migration is complete
+- **OFF**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) - the new standardized behavior (use after migration)
+
+**Important:** The default was changed from OFF to ON because the production migration hasn't been completed yet, and stored values can't be trusted. The Portal and export endpoints also use dynamic values by default.
 
 This toggle enables testing both modes during the migration period. The toggle state is stored in URL params (`?dynamic=true`), and changing it refreshes the page to regenerate the diff server-side.
 
@@ -91,6 +93,7 @@ This toggle enables testing both modes during the migration period. The toggle s
 
 After migration is complete and verified, remove migration compatibility code:
 
+- [ ] Change `useDynamicValues` default from `true` to `false` in `toBase()` (currently defaults to dynamic values)
 - [ ] Remove `useDynamicValues` option from `ExportTreeOptions`, `DiffOptions`, `SyncFilters`
 - [ ] Remove migration mode toggle from sync UI (`content.tsx`)
 - [ ] Remove `runDiff()` server action (or simplify to not accept options)

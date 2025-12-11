@@ -113,9 +113,9 @@ async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<AtlasDiff
 
 interface DiffOptions {
   /**
-   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
    * instead of stored values from Supabase (atlas_document_number/plain_text_name).
-   * Default: false (use stored values from standardized Notion fields)
+   * Default: true (use dynamic values until production migration is complete)
    */
   useDynamicValues?: boolean;
 }
@@ -139,11 +139,11 @@ Example usage:
 ```typescript
 import { diffAtlasScopeTreeLists } from '@/app/server/atlas/diff/markdown-supabase-diff';
 
-// Default: use stored values from Supabase
+// Default: use dynamically calculated values (until production migration is complete)
 const result = await diffAtlasScopeTreeLists();
 
-// Migration mode: use dynamically calculated values
-const resultDynamic = await diffAtlasScopeTreeLists({ useDynamicValues: true });
+// Stored mode: use stored values from Supabase (after production migration is complete)
+const resultStored = await diffAtlasScopeTreeLists({ useDynamicValues: false });
 
 console.log(`Added: ${result.changes.added.length}`);
 console.log(`Deleted: ${result.changes.deleted.length}`);

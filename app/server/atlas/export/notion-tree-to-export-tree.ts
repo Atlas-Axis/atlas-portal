@@ -61,11 +61,16 @@ import {
  */
 export interface ExportTreeOptions {
   /**
-   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
    * instead of stored values from Supabase (atlas_document_number/plain_text_name).
-   * Default: false (use stored values from standardized Notion fields)
    *
-   * @todo CLEANUP: Remove after migration complete (Phase 8)
+   * Default: true (use dynamic values until production migration is complete)
+   *
+   * After migration is complete (Phase 8):
+   * - Change default to false (use stored values)
+   * - Eventually remove this option entirely
+   *
+   * @todo CLEANUP: After migration, change default to false and remove option (Phase 8)
    */
   useDynamicValues?: boolean;
 }
@@ -130,16 +135,17 @@ function validateChildDatabases(node: NotionAtlasTreeNode, allowedDatabases: Atl
 }
 
 // Convert simple fields
-// By default, uses stored values from Supabase (populated from new standardized Notion fields).
-// When useDynamicValues is true, uses dynamically generated values (migration mode).
+// By default, uses dynamically generated values (generatedDocID/generatedDocName) until
+// the production migration is complete (Phase 8).
+// When useDynamicValues is explicitly set to false, uses stored values from Supabase.
 // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
-// @todo CLEANUP: Remove options parameter, always use stored values (Phase 8)
+// @todo CLEANUP: After migration, change default to false and remove options parameter (Phase 8)
 function toBase(
   node: NotionAtlasTreeNode,
   uuidMappings: UuidMappings,
   options?: ExportTreeOptions,
 ): ExportAtlasTreeBaseDocument {
-  const useDynamic = options?.useDynamicValues ?? false; // @todo CLEANUP: Remove (Phase 8)
+  const useDynamic = options?.useDynamicValues ?? true; // @todo CLEANUP: After migration, change default to false and remove option (Phase 8)
 
   // @todo CLEANUP: Remove conditional validation after migration (Phase 8) - only keep stored mode validation
   if (useDynamic) {

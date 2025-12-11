@@ -57,11 +57,12 @@ export interface SyncFilters {
   contentChanges: boolean;
   parentChanges: boolean;
   /**
-   * Migration mode: Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
+   * Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
    * instead of stored values from Supabase (atlas_document_number/plain_text_name).
-   * Default: false (use stored values from standardized Notion fields)
    *
-   * @todo CLEANUP: Remove after migration complete (Phase 8)
+   * Default: true (use dynamic values until production migration is complete)
+   *
+   * @todo CLEANUP: After migration, change default to false and remove option (Phase 8)
    */
   useDynamicValues?: boolean;
   /**
