@@ -2,6 +2,14 @@
 
 A Next.js application that provides a complete data pipeline for managing the Atlas—a collection of internal rules and policies in the Sky crypto ecosystem. The **canonical Atlas** is stored as Markdown in a GitHub repository. **Notion serves as the editing and collaboration tool** where the Atlas is organized across 10 databases (~7,000 documents) for easier team editing. The system enables bidirectional synchronization between GitHub (canonical), Notion (editing), and Supabase PostgreSQL (central storage).
 
+## 🛠️ Tech Stack
+
+- **Next.js 16** with App Router, TypeScript, Node.js v22
+- **HeroUI (NextUI)** + Tailwind CSS + Lucide React icons
+- **Supabase** (PostgreSQL) - Cloud production, local dev via `npm run supabase:start`
+- **Trigger.dev** - Background sync tasks
+- **Vitest** - Testing framework
+
 ## 🔄 Main Workflows
 
 ### 1. Notion → Supabase Import
@@ -62,14 +70,6 @@ Password-protected UI for managing manual parent-child relationship corrections 
 **Status**: ❌ Obsolete (Prototypes only, will be reimplemented)
 
 Original features for creating temporary Notion edit pages and generating human-readable diffs. Code exists but is not maintained or compatible with current architecture.
-
-## 🛠️ Tech Stack
-
-- **Next.js 16** with App Router, TypeScript, Node.js v22
-- **HeroUI (NextUI)** + Tailwind CSS + Lucide React icons
-- **Supabase** (PostgreSQL) - Cloud production, local dev via `npm run supabase:start`
-- **Trigger.dev** - Background sync tasks
-- **Vitest** - Testing framework
 
 ## 🗄️ Database Schema
 
@@ -187,6 +187,7 @@ npm run test:ui          # Vitest UI
 ### Prerequisites
 
 - Node.js v22+
+- Docker
 - Supabase API keys
 - Notion API key(s)
 - Vercel CLI (logged in, project linked)
@@ -196,8 +197,9 @@ npm run test:ui          # Vitest UI
 1. Clone repository
 2. Pull environment variables: `vercel env pull .env.local`
 3. Install dependencies: `npm install`
-4. Run database migrations in Supabase (`app/server/database/*.sql`)
-5. Start dev server: `npm run dev`
+4. Start local Supabase services: `npm run supabase:start`
+5. Run database migrations manually in Supabase (`app/server/database/*.sql`)
+6. Start dev server: `npm run dev`
 
 ### Environment Variables
 
