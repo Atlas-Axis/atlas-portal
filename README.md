@@ -643,18 +643,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-export/generate-atlas-markdown.ts
       ```
 
-- **scripts/atlas-export/json-to-yaml.ts**: Converts JSON files to YAML format. Defaults to Atlas JSON if no input file provided.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-export/json-to-yaml.ts
-      ```
-    - ```bash
-      npx tsx scripts/atlas-export/json-to-yaml.ts path/to/file.json
-      ```
-    - ```bash
-      npx tsx scripts/atlas-export/json-to-yaml.ts --help
-      ```
-
 ### Atlas Validation & Analysis
 
 - **scripts/validate-atlas-markdown.ts**: Validates Atlas Markdown files for syntax errors and structural issues. Checks title line format, heading level progression, document numbering, extra fields, UUID uniqueness, and parent-child relationships.
