@@ -853,3 +853,37 @@ npx tsx scripts/import-notion-databases --database "Sections & Primary Docs" --l
 ### Workarounds
 
 - **[NOTION_NESTING_BUG_FIX.md](./NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
+
+## Important Patterns
+
+### Sync Locking
+
+- Prevents concurrent syncs of same content
+- Lock expiration for cleanup
+- Verified before each sync operation
+
+### Temporal Tables (versioned rows)
+
+- `notion_database_pages` uses `date_valid_from`/`date_valid_to` (UTC) for row validity.
+- Current rows have `date_valid_to IS NULL` with a partial unique index ensuring one current row per `notion_page_id`.
+- Filtered index optimizes current-state reads by `atlas_database_name`.
+
+Examples:
+
+- Load current rows by database:
+
+```sql
+SELECT * FROM notion_database_pages WHERE date_valid_to IS NULL AND atlas_database_name = 'Articles';
+```
+
+- Versioned upsert (invalidate current, insert new):
+
+```ts
+await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload }).throwOnError();
+```
+
+- Soft-delete (invalidate):
+
+```ts
+await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
+```

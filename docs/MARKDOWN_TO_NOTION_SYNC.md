@@ -386,3 +386,18 @@ Once synced to Notion, changes automatically flow through the complete pipeline:
 3. Supabase → Export Tree → Markdown/JSON (export generation)
 
 This ensures all systems remain synchronized and changes made in markdown become visible in all Atlas formats.
+
+## Notion page Parent vs. Relationship Properties when creating Notion database pages via Notion API
+
+**Important: Notion API Parent Property**
+
+When creating pages in Notion databases via the API:
+
+- The `parent` property must **ALWAYS** be set to the Notion database ID: `{ type: 'database_id', database_id: '...' }`
+- **NEVER** use `parent.page_id` - this is not how hierarchy works in Notion databases
+- Internal hierarchy between pages (e.g., Section → Core → Core) is managed **exclusively** through relationship properties like:
+  - "Parent Doc" / "Subdocs" (Sections & Primary Docs)
+  - "Parent item" / "Sub-item" (Agent Scope Database)
+  - Other cross-database relationships (Articles, Annotations, Tenets, etc.)
+
+This is a fundamental aspect of Notion's database architecture and must be respected in all page creation operations in Notion databases.

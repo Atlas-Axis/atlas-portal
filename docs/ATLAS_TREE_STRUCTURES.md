@@ -619,7 +619,6 @@ Needed Research may nest under any document type
 
 - `generate-atlas-json.ts` - Generates Export Tree and serializes to JSON
 - `generate-atlas-markdown.ts` - Generates Export Tree and converts to Markdown
-- `convert-atlas-markdown-to-json.ts` - Parses Markdown into Export Tree
 - `validate-atlas-json.ts` - Validates Export Tree structure
 
 **API Endpoints** (`app/api/`):
