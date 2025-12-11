@@ -1,291 +1,151 @@
-# Atlas Axis Notion Automation
+# Atlas Axis Notion Workflow
 
-A Next.js application that enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing original and changed pages to Supabase, and calculating differences using tree diffing algorithms.
+A Next.js application that provides a complete data pipeline for managing the Atlas—a collection of internal rules and policies in the Sky crypto ecosystem. The **canonical Atlas** is stored as Markdown in a GitHub repository. **Notion serves as the editing and collaboration tool** where the Atlas is organized across 10 databases (~7,000 documents) for easier team editing. The system enables bidirectional synchronization between GitHub (canonical), Notion (editing), and Supabase PostgreSQL (central storage).
 
-## 🚀 Core Workflow
+## 🔄 Main Workflows
 
-1. **Import**: Sync original Notion databases/pages to Supabase
-2. **Edit**: Create temporary duplicate Notion pages for editing
-3. **Track**: Sync edited Notion pages back to Supabase (stored separately from original pages)
-4. **Diff**: Compare original vs edited content using tree algorithms
-5. **Review**: Display human-readable diffs of proposed changes
+### 1. Notion → Supabase Import
+
+**Status**: ✅ Active (Hourly via Trigger.dev)
+
+Imports Atlas documents from Notion databases to Supabase. Captures edits made by the team in Notion using intelligent delta sync, relationship mapping, and temporal versioning. Takes ~15 minutes for full sync.
+
+**Access**: Automated hourly, or manual via `npx tsx scripts/import-notion-databases.ts`
+
+### 2. Markdown → Notion Sync
+
+**Status**: ✅ Active (Manual via UI)
+
+Syncs changes from the canonical GitHub Markdown back to the Notion editing environment. Enables external contributors to edit the canonical Markdown directly, with changes flowing back to Notion for the team.
+
+**Access**: UI at `/atlas/sync` | Loads from: GitHub repo `pppdns/next-gen-atlas`
+
+### 3. Export Atlas as File
+
+**Status**: ✅ Active
+
+Generates Atlas exports from Supabase in Markdown, JSON, or YAML formats. These exports can update the canonical GitHub Markdown or serve other purposes.
+
+**Access**:
+
+- Web API: `/api/atlas.md`, `/api/atlas.json`, `/api/atlas.yaml`
+- CLI: `npx tsx scripts/atlas-export/generate-atlas-markdown.ts`
+
+### 4. Atlas Portal (Viewer)
+
+**Status**: ✅ Active
+
+Interactive web viewer for browsing the Atlas hierarchy with search, filtering, and export capabilities. Displays data from Supabase (which mirrors Notion).
+
+**Access**: UI at `/atlas`
+
+### 5. Atlas Changelog
+
+**Status**: ✅ Active
+
+View historical changes to Atlas documents using Supabase's temporal versioning system.
+
+**Access**: UI at `/atlas/changelog` | CLI: `npx tsx scripts/atlas-changelog.ts --since 1d`
+
+### 6. Notion Nesting Bug Management
+
+**Status**: ✅ Active
+
+Password-protected UI for managing manual parent-child relationship corrections for Notion's sub-item bug at deep nesting levels.
+
+**Access**: UI at `/atlas/notion-nesting-fix`
+
+**Related**: [docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)
+
+### 7. Edit Page Generation & Proposal Generation
+
+**Status**: ❌ Obsolete (Prototypes only, will be reimplemented)
+
+Original features for creating temporary Notion edit pages and generating human-readable diffs. Code exists but is not maintained or compatible with current architecture.
 
 ## 🛠️ Tech Stack
 
-### Framework & Runtime
-
-- **Next.js 15** with App Router, server-side rendering
-- **TypeScript** with strict type-safety
-- **Node.js** (v22)
-
-### UI & Styling
-
-- **HeroUI (NextUI)** - React component library
-- **Tailwind CSS** for styling
-- **Lucide React** icons
-- **tailwind-merge** (cn helper) for conditional classes
-
-### Database & Storage
-
-- **Supabase** (PostgreSQL database). Only used server-side. Cloud-based in production; local development via `npm run supabase:start`
-- **PostgreSQL** with public schema (public access disabled via RLS)
-
-### Background Jobs
-
-- **Trigger.dev** - For background sync tasks
-
-### Development Tools
-
-- **ESLint**, **Prettier**
-- **Husky** (Git hooks)
-- **Vitest** (Testing)
-
-## 🧪 Testing (Vitest)
-
-This project uses Vitest with jsdom and React Testing Library.
-
-- Config: `vitest.config.ts` (jsdom env, globals, coverage via v8, automatic JSX)
-- Setup: `vitest.setup.ts` (registers `@testing-library/jest-dom/vitest`)
-- Path alias: `@/*` works in tests (matches project tsconfig)
-- Example tests:
-  - Unit: `app/shared/utils/__tests__/utils.test.ts`
-  - Component: `app/atlas/__tests__/type-chip.test.tsx`
-
-Scripts:
-
-```bash
-npm test                 # watch mode
-npm run test:run         # single run (CI-friendly)
-npm run test:coverage    # coverage report (text, html, lcov)
-npm run test:ui          # Vitest UI
-# Run a single test file (CI-style single run)
-npm run test:run -- app/shared/utils/__tests__/utils.test.ts
-# Run a single test file in watch mode
-npm test -- app/atlas/__tests__/type-chip.test.tsx
-# Run a single test by name/pattern
-npm run test:run -- app/atlas/__tests__/type-chip.test.tsx -t "renders the provided type text"
-```
-
-Tips:
-
-- Automatic JSX is enabled; you do not need to `import React` in tests.
-- Default environment is `jsdom`. For Node-only tests add at the top of a file:
-  `// @vitest-environment node`
-- Prefer Testing Library patterns: `render`, `screen`, and user interactions from `@testing-library/user-event`.
-- To mock Next.js modules (e.g., navigation), you can use:
-  ```ts
-  vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
-  ```
-- To mock global fetch:
-  ```ts
-  vi.stubGlobal('fetch', vi.fn());
-  ```
+- **Next.js 16** with App Router, TypeScript, Node.js v22
+- **HeroUI (NextUI)** + Tailwind CSS + Lucide React icons
+- **Supabase** (PostgreSQL) - Cloud production, local dev via `npm run supabase:start`
+- **Trigger.dev** - Background sync tasks
+- **Vitest** - Testing framework
 
 ## 🗄️ Database Schema
 
 ### Core Tables
 
-#### `notion_blocks`
-
-Stores Notion page content as hierarchical blocks. This is the primary table for storing page content.
-
-**Key Fields:**
-
-- `notion_block_id` (UUID, PRIMARY KEY) - Notion's unique block identifier
-- `parent_notion_block_id` (UUID) - Parent block ID, NULL for root blocks
-- `root_notion_toggle_block_id` (UUID, NOT NULL) - The Notion page ID this block belongs to
-- `block_type` (TEXT, NOT NULL) - Block type: paragraph, heading_1, heading_2, etc.
-- `has_children` (BOOLEAN) - Whether the block contains nested blocks
-- `plain_text_content` (TEXT) - Extracted plain text for searching/display
-- `json_content` (JSONB) - Full rich content from Notion API
-- `sort_order` (INTEGER, NOT NULL) - Position within parent (0-indexed)
-
-**Edit Page Fields:**
-
-- `mapped_notion_page_id` (UUID) - Links to original page being edited
-
 #### `notion_database_pages`
 
-Stores Notion database pages and their hierarchical relationships.
+Stores Atlas documents with hierarchical relationships and temporal versioning.
 
-**Key Fields:**
+**Key Fields**:
 
-- `notion_page_id` (UUID, PRIMARY KEY) - Notion's unique page identifier
-- `atlas_document_type` (ENUM, NOT NULL) - Page type. Enum values: 'Section', 'Core', 'Type Specification', 'Active Data Controller', 'Action Tenet', 'Active Data', 'Annotation', 'Scope', 'Article', 'Scenario', 'Scenario Variation', 'Needed Research'.
-- `atlas_document_number` (TEXT, NOT NULL, DEFAULT '') - Document number of the Atlas document this page belongs to
-- `atlas_database_name` (ENUM, NOT NULL) - Database name. Enum values: 'Scopes', 'Articles', 'Sections & Primary Docs', 'Annotations', 'Tenets', 'Scenarios', 'Scenario Variations', 'Active Data', 'Agent Scope Database', 'Needed Research', 'Original Context Data'.
-- `has_children` (BOOLEAN) - Whether page has sub-items in the database
-- `archived` (BOOLEAN) - Notion archive status
-- `in_trash` (BOOLEAN) - Notion trash status
-- `plain_text_content` (TEXT) - Page content as plain text
-- `json_content` (JSONB) - Rich content from Notion API
-- `plain_text_name` (TEXT) - Page title as plain text
-- `json_name` (JSONB) - Rich text page title from Notion API
-- `parent_notion_page_id` (UUID) - Internal parent page ID for same-database nesting. Used by "Sections & Primary Docs" (via "Parent Doc" property) and "Agent Scope Database" (via "Parent item" property). NULL for cross-database children or root-level documents. Critical for filtering direct children and as a workaround for Notion's bidirectional relationship bug
-- `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
-- `created_at` (TIMESTAMPTZ) - Database row creation time
-- `updated_at` (TIMESTAMPTZ)
-- `last_edited_by_user_id` (TEXT) - Notion user ID who last edited
+- `notion_page_id` (UUID, PK) - Notion page identifier
+- `atlas_document_type` (ENUM) - Document type (Section, Core, Type Specification, etc.)
+- `atlas_document_number` (TEXT) - Document number (e.g., "A.1.2.3")
+- `atlas_database_name` (ENUM) - Database name (Scopes, Articles, etc.)
+- `plain_text_content`, `json_content` - Page content
+- `plain_text_name`, `json_name` - Page title
+- `parent_notion_page_id` (UUID) - Internal parent for same-database nesting
+- `child_*_ids` (JSONB arrays) - Child relationship arrays by type
+- `extra_fields` (JSONB) - Type-specific extra fields
+- `date_valid_from`, `date_valid_to` (TIMESTAMPTZ) - Temporal versioning
 
-Child relationship fields (JSONB arrays of UUID strings):
-
-- `child_scope_ids` – Children from 'Scopes'
-- `child_article_ids` – Children from 'Articles'
-- `child_section_and_primary_doc_ids` – Children from 'Sections & Primary Docs'
-- `child_annotation_ids` – Children from 'Annotations'
-- `child_tenet_ids` – Children from 'Tenets'
-- `child_scenario_ids` – Children from 'Scenarios'
-- `child_scenario_variation_ids` – Children from 'Scenario Variations'
-- `child_active_data_ids` – Children from 'Active Data'
-- `child_agent_scope_ids` – Children from 'Agent Scope Database'
-- `child_needed_research_ids` – Children from 'Needed Research'
-
-**Additional Fields:**
-
-- `extra_fields` (JSONB) – Additional fields stored as JSON key-value pairs, defaults to empty object. This is used to store extra fields related to some Atlas document types (Type Specification, Scenario, Scenario Variation)
+**Temporal Versioning**: Current rows have `date_valid_to IS NULL`. Uses `versioned_upsert_notion_database_pages` and `versioned_delete_notion_database_pages` RPC functions.
 
 #### `notion_database_pages_current`
 
-A view that filters `notion_database_pages` to show only current, active rows.
-
-**Filter Conditions:**
-
-- `date_valid_to IS NULL` – Only current versions
-- `in_trash = FALSE` – Excludes trashed pages
-- `archived = FALSE` – Excludes archived pages
-
-**Notes:**
-
-- Same columns as `notion_database_pages` table
-- RLS is automatically inherited from the underlying `notion_database_pages` table
-- Provides convenient access to active Atlas documents without manually applying filters
-
-#### `notion_sync_status`
-
-Manages synchronization state and prevents concurrent syncs of the same content.
-
-**Key Fields:**
-
-- `id` (UUID, PRIMARY KEY) - Internal ID
-- `notion_database_id` (UUID, NOT NULL, UNIQUE) - Notion database being synced
-- `sync_status` (TEXT, NOT NULL) - Status: 'pending', 'in_progress', 'completed', 'failed', 'cancelled'
-- `last_sync_started_at` (TIMESTAMPTZ) - When sync began
-- `last_sync_completed_at` (TIMESTAMPTZ) - When sync succeeded
-- `sync_error_message` (TEXT) - Error details if failed
-- `blocks_synced_count` (INTEGER) - Number of blocks successfully synced
-- `is_sync_locked` (BOOLEAN) - Prevents concurrent syncs
-- `sync_lock_acquired_at` (TIMESTAMPTZ) - When the sync lock was acquired
-- `sync_lock_expires_at` (TIMESTAMPTZ) - When the sync lock expires (for cleanup of stale locks)
-- `created_at` (TIMESTAMPTZ) - Database row creation time
-- `updated_at` (TIMESTAMPTZ) - Auto-updates on row modification
-
-#### `import_logs`
-
-Tracks Notion to Supabase import operations with detailed metrics and change tracking.
-
-**Key Fields:**
-
-- `id` (UUID, PRIMARY KEY) - Internal ID
-- `finished_at` (TIMESTAMPTZ, NOT NULL) - When import completed
-- `started_at` (TIMESTAMPTZ, NOT NULL) - When import began
-- `success` (BOOLEAN, NOT NULL) - Whether import succeeded
-- `has_changes` (BOOLEAN, NOT NULL) - Whether any changes were detected
-- `duration_minutes` (DECIMAL(5,2), NOT NULL) - Import duration
-- `changed_notion_page_ids` (JSONB, NOT NULL) - Array of changed page IDs
-- `import_type` (TEXT, NOT NULL) - Type: 'full_sync' or 'partial'
-- `error_message` (TEXT) - Error details if failed
-- `new_pages_count` (INTEGER, NOT NULL) - Number of new pages
-- `deleted_pages_count` (INTEGER, NOT NULL) - Number of deleted pages
-- `changed_properties_count` (INTEGER, NOT NULL) - Number of pages with property changes
-- `changed_relationships_count` (INTEGER, NOT NULL) - Number of pages with relationship changes
-- `trigger_dev_run_id` (TEXT) - Link to Trigger.dev run ID
+View filtering `notion_database_pages` to show only current, active rows (not archived, not in trash).
 
 #### `uuid_mapping`
 
-Maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs.
+Bidirectional mappings between Notion page UUIDs and Atlas document UUIDs for stable references.
 
-**Key Fields:**
-
-- `notion_page_id` (UUID, NOT NULL, UNIQUE) - Notion page UUID
-- `atlas_document_uuid` (UUID, NOT NULL, UNIQUE) - Atlas document UUID
-
-**Purpose:**
-
-Maps Notion's internal page identifiers to stable Atlas document UUIDs used in exported formats. This allows external systems to reference Atlas documents consistently regardless of Notion's internal IDs.
-
-See **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** for detailed documentation.
+**See**: [docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)
 
 #### `notion_nesting_bug_mapping`
 
-Manual workaround mapping for Notion's sub-item relationship bug at deep nesting levels.
+Manual corrections for Notion's sub-item relationship bug at deep nesting levels.
 
-**Key Fields:**
+**See**: [docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)
 
-- `child_notion_page_id` (UUID, NOT NULL) - Child page UUID
-- `parent_notion_page_id` (UUID, NOT NULL) - Parent page UUID
-- `atlas_database_name` (ENUM, NOT NULL) - Database containing these pages
-- `child_label` (TEXT) - Human-readable child page label
-- `parent_label` (TEXT) - Human-readable parent page label
-- `place_after_sibling_notion_page_id` (UUID) - Sibling to position after (for ordering)
-- `place_after_sibling_label` (TEXT) - Human-readable sibling label
-- Composite PRIMARY KEY on (child_notion_page_id, parent_notion_page_id)
+#### `notion_sync_status`
 
-**Purpose:**
+Manages sync state and prevents concurrent operations with lock expiration.
 
-Stores manual parent-child relationship corrections for cases where Notion's API fails to properly maintain sub-item relationships at deep nesting levels (typically 4+ levels deep). This table is used by the Notion-Markdown sync automations to apply and restore proper hierarchies.
+#### `import_logs`
 
-See **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** for detailed documentation.
+Tracks Notion→Supabase imports with metrics (duration, changes, errors).
+
+#### `notion_blocks`
+
+Stores Notion page content as hierarchical blocks (used for Edit Pages feature - currently obsolete).
 
 ## 📋 Atlas
 
-### Introduction to Atlas
+### Introduction
 
-The Atlas is a large, hierarchical body of interlinked legal documents maintained in a set of Notion databases (the "Master Atlas DBs"). Each Atlas entry has a specific document type and lives in a database that matches that type. General rule: every document type has its own database. Exception #1: The database named `Sections & Primary Docs` contains four document types: `Section`, `Core`, `Type Specification`, and `Active Data Controller`. Exception #2: The database named `Agent Scope Database` contains two document types: `Core`, `Active Data Controller`.
+The **canonical Atlas** is stored in GitHub as Markdown (`pppdns/next-gen-atlas`). **Notion is the editing environment** where the Atlas is organized across 10 databases for team collaboration.
 
-### Document Type Categories
+**Data Flow**: Notion edits → Supabase → Markdown export → GitHub (canonical). Changes to canonical GitHub can sync back to Notion.
 
-- **Immutable Documents**: Scopes, Articles, Sections
-- **Primary Documents**: Core, Active Data Controller
-- **Supporting Documents**: Active Data, Annotation, Needed Research, Action Tenet, Scenario, Scenario Variation
-  - Supporting Documents must always have a Target Document, which is an Immutable or Primary Document they attach to (for example, `Active Data` attaches to an `Active Data Controller`). The Target Document can also be referred to as the parent document.
+### Atlas Databases & Document Types
 
-### Atlas Database Names & Document Types
+**10 Databases**:
 
-### Atlas Database Names
-
-The system works with 10 Notion databases that contain Atlas documents:
-
-- **Scopes** - Top-level scope documents
-- **Articles** - Article documents that contain sections
-- **Sections & Primary Docs** - Core section and primary documents
+- **Scopes** - Scope documents
+- **Articles** - Article documents
+- **Sections & Primary Docs** - Section, Core, Type Specification, Active Data Controller
 - **Annotations** - Annotation documents
-- **Tenets** - Tenet documents that contain scenarios
-- **Scenarios** - Scenario documents that contain variations
-- **Scenario Variations** - Individual scenario variations
-- **Active Data** - Active data documents
-- **Agent Scope Database** - Agent-specific scope documents
-- **Needed Research** - Research items that need investigation
-
-### Atlas Document Types
-
-Each document in the Atlas has a specific type from the following enum:
-
-- **Section** - Hierarchical section documents
-- **Core** - Core legal documents
-- **Type Specification** - Technical specification documents
-- **Active Data Controller** - Documents controlling active data
-- **Action Tenet** - Action-oriented tenet documents
-- **Active Data** - Active data items
-- **Annotation** - Annotation items
-- **Scope** - Scope items
-- **Article** - Article items
-- **Scenario** - Scenario items
-- **Scenario Variation** - Individual scenario variations
+- **Tenets** - Action Tenet documents
+- **Scenarios** - Scenario documents
+- **Scenario Variations** - Scenario Variation documents
+- **Active Data** - Active Data documents
+- **Agent Scope Database** - Core, Active Data Controller (agent-specific)
 - **Needed Research** - Research items
 
-## Atlas Database Hierarchy
-
-The Atlas documents are organized in a hierarchical structure across multiple Notion databases. The hierarchy defines the relationships between documents in different Atlas databases. "Scopes" and "Agent Scope Database" are the two root Atlas databases.
+### Document Hierarchy
 
 ```
 Scopes
@@ -293,8 +153,8 @@ Scopes
     ├── Sections & Primary Docs
     │   ├── Annotations
     │   └── Tenets
-    │   │   └── Scenarios
-    │   │       └── Scenario Variations
+    │       └── Scenarios
+    │           └── Scenario Variations
     └── Agent Scope Database
         ├── Annotations
         ├── Tenets
@@ -302,433 +162,137 @@ Scopes
         │       └── Scenario Variations
         └── Active Data
 
-"Needed Research" documents may be nested under any other document type
+"Needed Research" documents may be nested under any document type
 ```
 
-This hierarchy is respected by the Markdown→Notion sync engine, which creates pages in hierarchical order (parents before children) to ensure proper relationship establishment.
+**Internal Nesting**: "Sections & Primary Docs" and "Agent Scope Database" support multi-level internal nesting.
 
-See Atlas Document Numbering rules: **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
+**See**: [docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)
 
-**Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:
+## 🧪 Testing (Vitest)
 
-- **Sections & Primary Docs** - Can have multiple levels of internal nesting
-- **Agent Scope Database** - Can have multiple levels of internal nesting
-
-This hierarchical structure is implemented in the `ATLAS_DATABASES` constant and managed through the `notion-database-properties-and-relationships.ts` mapping system.
-
-## Atlas Document Hierarchy
-
-The Atlas document numbering system follows a hierarchical structure where each document's number inherits from its parent document with additional segments appended. The numbering reflects the document's position in the Atlas hierarchy and its relationship to sibling documents.
-
-```
-Scope Documents (A.0, A.1, A.2, ...)
-├── Article Documents (A.1.1, A.1.2, A.2.1, ...)
-│   └── Section Documents (A.1.1.1, A.1.1.2, A.1.2.1, ...)
-│       ├── Primary Documents:
-│       │   ├── Core Documents (A.1.1.1.1, A.1.1.1.2, ...)
-│       │   │   └── Nested Core Documents (A.1.1.1.1.1, A.1.1.1.1.2, ...)
-│       │   ├── Active Data Controller (A.1.1.2.1, A.1.1.2.2, ...)
-│       │   │   └── Active Data (.0.6.1, .0.6.2, ...)
-│       │   └── Type Specification (A.1.1.3.1, A.1.1.3.2, ...)
-│       └── Supporting Documents: TODO: Fix in all 3 Core Project Docs - Supporting Documents can be nested under any Primary Document
-│           ├── Annotations (.0.3.1, .0.3.2, ...)
-│           └── Tenets (.0.4.1, .0.4.2, ...)
-│               └── Scenarios (.1.1, .1.2, ...)
-│                   └── Scenario Variations (.var1, .var2, ...)
-
-Global Documents:
-└── Needed Research (NR-1, NR-2, NR-3, ...)
+```bash
+npm test                 # watch mode
+npm run test:run         # single run (CI-friendly)
+npm run test:coverage    # coverage report
+npm run test:ui          # Vitest UI
 ```
 
-**Key Numbering Patterns:**
-
-- **Sequential Inheritance**: Most documents inherit their parent's full number and append their own segment
-- **Supporting Documents**: Use special directory numbers (0.3 for Annotations, 0.4 for Tenets, 0.6 for Active Data)
-- **Global Numbering**: Needed Research documents use independent global numbering (NR-X)
-- **Mixed Type Numbering**: When multiple document types exist under the same parent, they use sequential numbering across all types
-
-## Atlas Database to Atlas Document Type Mapping
-
-Each Atlas database contains specific types of documents. Here's the mapping of database names to their possible document types:
-
-- **Scopes**
-  - Scope
-
-- **Articles**
-  - Article
-
-- **Sections & Primary Docs**
-  - Section
-  - Core
-  - Type Specification
-  - Active Data Controller
-
-- **Annotations**
-  - Annotation
-
-- **Tenets**
-  - Action Tenet
-
-- **Scenarios**
-  - Scenario
-
-- **Scenario Variations**
-  - Scenario Variation
-
-- **Active Data**
-  - Active Data
-
-- **Agent Scope Database**
-  - Core
-  - Active Data Controller
-
-- **Needed Research**
-  - Needed Research
-
-## 🔧 Key Services
-
-### Notion Integration (`/app/server/services/notion`)
-
-- `notion-client.ts` - Notion API client with rate limiting, retries, and parallelization
-- `import-page-to-supabase.ts` - Syncs Notion pages to Supabase
-- `import-database-to-supabase.ts` - Syncs Notion databases to Supabase
-- `fetch-blocks-recursively.ts` - Retrieves nested blocks from the Notion API recursively
-- `create-edit-page.ts` - Creates temporary edit pages in Notion
-- Rate limiting respects official Notion API limits, supports multiple API keys for higher throughput
-
-### Tree Diffing (`/app/server/diff`)
-
-- `diff-trees.ts` - Compares original vs edited trees
-- `tree.ts` - Tree data structures and builders
-- Detects: added, deleted, edited, moved nodes
-- Handles hierarchical content changes
-
-### Atlas Business Logic (`/app/server/atlas`)
-
-- `generate-atlas-json.ts` - Generates JSON representation of Atlas hierarchy
-- `generate-proposal.ts` - Generates human-readable diffs
-- Canonical document titles (e.g., "A.2.3.21 Some Document") represent hierarchical position
-
-#### Atlas Configuration Files
-
-- `atlas-types.ts` - Type definitions for Atlas (AtlasDatabaseName, AtlasDocumentType, etc.)
-- `constants.ts` - Atlas constants (database names, document types, etc.) and re-exports from other files. Conditionally imports Notion IDs based on environment
-- `notion-ids.ts` - Hard-coded Notion-specific identifiers (database IDs, status IDs, agent UUIDs) for production use
-- `notion-ids-dev.ts` - Notion identifiers for development and manual QA environments
-- `notion-ids-unit-test.ts` - Made-up UUIDs for unit tests (consistent test data)
-- `type-color-map.ts` - UI color mappings for document types
-
-**Environment-based Notion ID Loading:**
-
-The `constants.ts` file conditionally imports Notion IDs from one of three files based on environment (in priority order):
-
-1. **Unit Tests** (highest priority): Uses `notion-ids-unit-test.ts` (made-up UUIDs) when `isTestEnv() === true`
-   - Provides consistent, realistic-looking UUIDs for unit tests
-2. **Development/QA**: Uses `notion-ids-dev.ts` when `NODE_ENV !== 'production'`
-   - Separate dev/QA IDs prevent accidental access to production data during local development and manual QA
-3. **Production**: Uses `notion-ids.ts` (real IDs) when `NODE_ENV === 'production'`
-   - Real Notion database and page IDs for production use
-
-This three-tier system ensures:
-
-- Unit tests use consistent made-up UUIDs that don't require real credentials
-- Development and manual QA environments automatically use separate IDs
-- Production uses real production Notion IDs
-
-### Notion Database Property Mapping (`/app/server/atlas`)
-
-- `notion-database-properties-and-relationships.ts` - Maps Notion database page properties to Supabase fields
-- Defines property mappings for each Atlas database (e.g., 'Name' → `atlasDocumentName`)
-- Defines child relationship mappings (e.g., 'Articles' → `child_article_ids`)
-- Used in `convert-notion-pages-to-supabase-format.ts`, `fetch-database-pages.ts`, and `compare-database-pages.ts`
-- Enables consistent data transformation between Notion API responses and Supabase storage format
-- See **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** for complete property and relationship mapping reference
-
-### Trigger.dev Tasks (`/app/server/services/trigger`)
-
-- `notion-sync-task.ts` - Background sync with retry logic
-- Tracks Notion API call counts via metadata
-
-## 🎨 UI Components
-
-### Embed Pages (`/app/embed`)
-
-Embeddable as iframes within Notion pages:
-
-- `create-edit-page/[notion-page-id]` - UI for creating edit pages
-- `diff` - Displays content differences
-- Compatible with web browsers, Mac OS Notion app, not iOS/iPad Notion app
-
-### Atlas & Internal Pages
-
-- `/atlas` - Hierarchy view of Atlas documents stored in Supabase. Similar to Atlas Explorer (https://sky-atlas.io)
-- `/edit-page-list` - List Notion "Edit Pages"
-- `/notion-api-key-testing` - Validate Notion API keys, retries, and rate limits (development)
-- `/test-edit-page` - Create and test edit pages (development)
-
-## 🔄 Important Patterns
-
-### Sync Locking
-
-- Prevents concurrent syncs of same content
-- Locks expire after 30 minutes - automatic cleanup in error state
-- Verified before each sync operation
-
-### Temporal Tables (versioned rows)
-
-- Rows in `notion_database_pages` are versioned using `date_valid_from` (UTC) and `date_valid_to` (UTC).
-- The current version has `date_valid_to IS NULL`. A partial unique index enforces one current row per `notion_page_id`.
-- Optimized index for current reads: `atlas_database_name` filtered by `date_valid_to IS NULL`.
-
-Common queries:
-
-- Select current rows by database:
-
-```sql
-SELECT *
-FROM notion_database_pages
-WHERE date_valid_to IS NULL
-  AND atlas_database_name = 'Sections & Primary Docs';
-```
-
-- Insert new version(s) atomically (invalidate current, insert new):
-
-```sql
-SELECT versioned_upsert_notion_database_pages(
-  '[{"notion_page_id":"00000000-0000-0000-0000-000000000001","atlas_database_name":"Sections & Primary Docs","atlas_document_type":"Section","atlas_document_number":"A.1","has_children":false,"archived":false,"in_trash":false,"json_name":{},"json_content":{},"child_scope_ids":[],"child_article_ids":[],"child_section_and_primary_doc_ids":[],"child_annotation_ids":[],"child_tenet_ids":[],"child_scenario_ids":[],"child_scenario_variation_ids":[],"child_active_data_ids":[],"child_agent_scope_ids":[],"child_needed_research_ids":[],"extra_fields":{},"sort_order":0}]'::jsonb
-);
-```
-
-- Soft-delete (invalidate current):
-
-```sql
-SELECT versioned_delete_notion_database_pages(ARRAY['00000000-0000-0000-0000-000000000001']::uuid[]);
-```
-
-Supabase usage:
-
-```ts
-// Insert or upsert versioned rows
-await supabase().rpc('versioned_upsert_notion_database_pages', { p_rows: payload }).throwOnError();
-
-// Soft-delete (invalidate)
-await supabase().rpc('versioned_delete_notion_database_pages', { p_ids: ids }).throwOnError();
-
-// Load current
-const { data } = await supabase()
-  .from('notion_database_pages')
-  .select('*')
-  .is('date_valid_to', null)
-  .eq('atlas_database_name', 'Sections & Primary Docs');
-
-// Query change events
-const { data: changes } = await supabase().rpc('public_get_atlas_page_changes', { p_limit: 100 }).throwOnError();
-```
-
-**Change Event Function:**
-
-The `public_get_atlas_page_changes(p_limit int DEFAULT 100)` function returns unified change events for `notion_database_pages`:
-
-- **Returns:** notion_page_id, event_time, event_type, old_row (JSONB), new_row (JSONB)
-- **Event Types:** 'new' (first version), 'changed' (subsequent versions), 'deleted' (invalidated)
-- **Ordering:** By event_time DESC (most recent first)
-- **Use Cases:** Changelog generation, audit trails, change notifications
-
-## 🚧 Future Features
-
-- Two-way Notion sync (not just import)
-- Automated Edit Page sync when changes happen
-- Human-readable Atlas Edit Proposal generation (showaggregate diffs from multiple edit pages)
-- Automated background sync triggers
-- Group diffs by Atlas scope and agent
-- Unit tests, E2E tests
-- Git hooks for linting
-
-## 📚 Documentation
-
-### 📋 Core Project Documentation Files
-
-This project maintains **2 synchronized documentation files** that provide high-level project overviews:
-
-- **[README.md](./README.md)** - Human-readable project documentation (this file)
-- **[.cursorrules](./.cursorrules)** - AI agent documentation for Cursor IDE
-
-⚠️ **Important**: When updating high-level project information, **always update all 2 files** to keep them synchronized. Reference these collectively as the "**Core Project Documentation**" files.
-
-### Atlas Architecture & Core Concepts
-
-- **[docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree (internal) vs Export Tree (external)
-- **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
-- **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
-- **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
-- **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
-
-### Atlas Data Formats & Export
-
-- **[docs/ATLAS_MARKDOWN_SYNTAX.md](./docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown syntax specification for Atlas document representation
-- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](./docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
-
-### Edit Pages & Workflows
-
-- **[docs/EDIT_PAGE_GENERATION_USAGE.md](./docs/EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
-- **[docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](./docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
-
-### Notion Integration
-
-- **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
-- **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
-
-### Component & Service Documentation
-
-- **[app/server/atlas/README.md](./app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown _(planned)_
-- **[app/atlas/sync/README.md](./app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow that enables pushing Atlas changes from Markdown format back to Notion databases _(planned)_
+- Config: `vitest.config.ts` (jsdom, globals, automatic JSX)
+- Path alias `@/*` available in tests
+- Examples: `app/shared/utils/__tests__/`, `app/atlas/__tests__/`
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v22 or higher)
+- Node.js v22+
 - Supabase API keys
 - Notion API key(s)
 - Vercel CLI (logged in, project linked)
 
 ### Installation
 
-1. Clone the Git repository
-2. Clone environment variables (`vercel env pull .env.local`)
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Run database migrations manually in Supabase (`app/server/database/*.sql`)
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
+1. Clone repository
+2. Pull environment variables: `vercel env pull .env.local`
+3. Install dependencies: `npm install`
+4. Run database migrations in Supabase (`app/server/database/*.sql`)
+5. Start dev server: `npm run dev`
 
 ### Environment Variables
 
-- `NOTION_API_KEY` - Your Notion integration API key (supports comma-separated keys for load balancing)
-- `NOTION_WEBHOOK_VERIFICATION_TOKEN` - https://developers.notion.com/reference/webhooks#step-3-validating-event-payloads-recommended
-- `SUPABASE_URL` - Your Supabase project URL
-- `SUPABASE_API_KEY` - Your Supabase API key
-- `TRIGGER_SECRET_KEY` - Trigger.dev secret key (for background jobs)
-- `DEBUG_LOGGING` - When set, console logs will be verbose
+- `NOTION_API_KEY` - Notion integration key (comma-separated for load balancing)
+- `SUPABASE_URL` - Supabase project URL
+- `SUPABASE_API_KEY` - Supabase API key
+- `TRIGGER_SECRET_KEY` - Trigger.dev secret key
+- `DEBUG_LOGGING` - Enable verbose logging
 
-## 🧰 Command line scripts
+## 🧰 Command Line Scripts
 
-All commands are intended to be run from the repository root using tsx.
+All commands run from repository root using `npx tsx`.
 
 ### Atlas Data Import/Export
 
-- **scripts/import-notion-databases.ts**: Imports all configured Notion databases into Supabase, with optional local Notion API caching.
-  - Examples:
-    - ```bash
-      npx tsx scripts/import-notion-databases.ts
-      ```
-    - ```bash
-      npx tsx scripts/import-notion-databases.ts --verbose --local-cache
-      ```
+```bash
+# Import Notion databases to Supabase
+npx tsx scripts/import-notion-databases.ts
+npx tsx scripts/import-notion-databases.ts --verbose --local-cache
 
-- **scripts/atlas-export/generate-atlas-json.ts**: Builds Export Atlas trees from Supabase and exports to JSON format. Output: `exported-atlas/atlas.json`
-  - Example:
-    - ```bash
-      npx tsx scripts/atlas-export/generate-atlas-json.ts
-      ```
+# Export Atlas to Markdown
+npx tsx scripts/atlas-export/generate-atlas-markdown.ts
 
-- **scripts/atlas-export/generate-atlas-markdown.ts**: Builds Export Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`
-  - Example:
-    - ```bash
-      npx tsx scripts/atlas-export/generate-atlas-markdown.ts
-      ```
+# Export Atlas to JSON
+npx tsx scripts/atlas-export/generate-atlas-json.ts
+```
 
 ### Atlas Validation & Analysis
 
-- **scripts/validate-atlas-markdown.ts**: Validates Atlas Markdown files for syntax errors and structural issues. Checks title line format, heading level progression, document numbering, extra fields, UUID uniqueness, and parent-child relationships.
-  - Examples:
-    - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts
-      ```
-    - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts exported-atlas/atlas.md
-      ```
-    - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts --verbose
-      ```
+```bash
+# Validate Atlas Markdown
+npx tsx scripts/validate-atlas-markdown.ts
+npx tsx scripts/validate-atlas-markdown.ts exported-atlas/atlas.md --verbose
 
-- **scripts/validate-atlas-json.ts**: Validates Export Atlas Tree JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
-  - Examples:
-    - ```bash
-      npx tsx scripts/validate-atlas-json.ts
-      ```
-    - ```bash
-      npx tsx scripts/validate-atlas-json.ts path/to/atlas.json
-      ```
+# Validate Atlas JSON
+npx tsx scripts/validate-atlas-json.ts
+npx tsx scripts/validate-atlas-json.ts path/to/atlas.json
 
-- **scripts/atlas-changelog.ts**: Prints a human-readable change log of Atlas documents since a time window.
-  - Examples:
-    - ```bash
-      npx tsx scripts/atlas-changelog
-      ```
-    - ```bash
-      npx tsx scripts/atlas-changelog --since 1d --max-line-length 120
-      ```
+# View changelog
+npx tsx scripts/atlas-changelog.ts --since 1d
+```
 
 ### Notion Database Utilities
 
-- **scripts/create-test-notion-databases.ts**: Creates test versions of all Atlas databases in Notion for safe testing of Markdown→Notion sync automation. All test databases are created with [TEST] prefix.
-  - Examples:
-    - ```bash
-      npx tsx scripts/create-test-notion-databases.ts
-      ```
-    - ```bash
-      npx tsx scripts/create-test-notion-databases.ts --delete-existing
-      ```
+```bash
+# Create test databases
+npx tsx scripts/create-test-notion-databases.ts
+npx tsx scripts/create-test-notion-databases.ts --delete-existing
 
-- **scripts/generate-uuid-mapping.ts**: Generates UUID mappings for all current Notion database pages. Reads from `notion_database_pages` and inserts into `uuid_mapping` table.
-  - Example:
-    - ```bash
-      npx tsx scripts/generate-uuid-mapping.ts
-      ```
+# Generate UUID mappings
+npx tsx scripts/generate-uuid-mapping.ts
+```
 
-### Utility Scripts
+## 📚 Documentation
 
-- **scripts/agent-notification.ts**: Sends notification when AI agent completes a task (internal utility).
+### Core Documentation
 
-Non-executable helper modules (imported by scripts):
+- **[AGENTS.md](./AGENTS.md)** - Complete AI agent documentation (authoritative)
+- **README.md** - This file (human-readable overview)
 
-- `scripts/atlas-export/utils.ts` — document number comparison and prefix fixing utilities
-- `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
+### Architecture & Concepts
 
-**Important relationship note:** The `parent_notion_page_id` field stores internal (same-database) parent relationships and is actively used by the tree builder for two critical purposes: (1) as a workaround for Notion's bidirectional relationship bug where child arrays may be incomplete, and (2) to filter direct children from nested descendants. When building the Atlas tree, start from the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) beginning from the two top-level Atlas databases: `Scopes` and `Agent Scope Database`.
+- [docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md) - Dual tree architecture (Notion Tree vs Export Tree)
+- [docs/ATLAS_DATA_PIPELINE.md](./docs/ATLAS_DATA_PIPELINE.md) - Complete data pipeline overview
+- [docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md) - UUID mapping system
+- [docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md) - Document numbering rules
+- [docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md) - Extra fields for Type Specs, Scenarios, etc.
+- [docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md) - Property/relationship mappings
 
-## Critical Edge Cases: Child Relationship Arrays
+### Data Formats & Workflows
 
-**CRITICAL: Core Document Filtering Logic**
+- [docs/ATLAS_MARKDOWN_SYNTAX.md](./docs/ATLAS_MARKDOWN_SYNTAX.md) - Markdown syntax specification
+- [docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](./docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md) - Import/export workflows
+- [docs/MARKDOWN_TO_NOTION_SYNC.md](./docs/MARKDOWN_TO_NOTION_SYNC.md) - Markdown→Notion sync workflow
+- [docs/NOTION_IMPORT_PROCESS.md](./docs/NOTION_IMPORT_PROCESS.md) - Notion→Supabase import process
 
-The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays present complex filtering challenges for nested Core documents:
+### Notion Integration
 
-1. **The Child Array Problem**: When a Section contains nested Core documents (Core → Core → Core), ALL nested Core document IDs appear in the parent Section's `child_section_and_primary_doc_ids` array, not just direct children.
+- [docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md) - Iframe compatibility guide
+- [docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md) - Nesting bug workaround
 
-2. **Filtering Challenge**: The `filterDirectChildren` function must distinguish between:
-   - **Direct children** (Core documents that should be immediate children of the Section)
-   - **Nested descendants** (Core documents that are descendants of other Core documents)
+### Implementation Guides
 
-3. **The Solution (Generalized Direct-Child Rules)**:
-   - Cross-database parent → child in an internally nested database: keep only if child.parent_notion_page_id is null.
-   - Same internally nested database (Sections & Primary Docs, Agent Scope Database): keep only if child.parent_notion_page_id === parentPageId.
-   - This applies to all document types in those databases (not just Core/Active Data Controller).
+- [app/atlas/sync/AGENTS.md](./app/atlas/sync/AGENTS.md) - Markdown→Notion sync implementation
+- [app/server/atlas/notion-tree/AGENTS.md](./app/server/atlas/notion-tree/AGENTS.md) - Atlas tree algorithms
+- [app/server/services/trigger/AGENTS.md](./app/server/services/trigger/AGENTS.md) - Trigger.dev tasks
+- [app/notion-api-key-testing/AGENTS.md](./app/notion-api-key-testing/AGENTS.md) - API key testing
 
-4. **Implementation Requirements**:
-   - Pass `parentPageId` to `filterDirectChildren` and decide directness using the rules above (no ancestry walk needed).
-   - Keep defensive cycle guards and depth caps in code paths that traverse relations.
+### Obsolete (Reference Only)
 
-5. **Real-World Impact**: Without proper filtering, nested documents appear under both parent and grandparent. With these rules, only direct children remain.
+- [docs/EDIT_PAGE_GENERATION_USAGE.md](./docs/EDIT_PAGE_GENERATION_USAGE.md) - ❌ Edit Pages guide (feature obsolete)
+- [app/server/atlas/README.md](./app/server/atlas/README.md) - ❌ Proposal generator (feature obsolete)
 
-**Duplicates Policy**:
+## 🚧 Future Features
 
-- Needed Research: duplicates across multiple parents are allowed; log as info.
-- Tenets (Action Tenet): duplicates are allowed; log a warning.
-- Others: duplicates indicate a modeling issue; filtering should prevent these.
-
-**Agent Scope Database**: Follows the same direct-child rules for all types.
+- Reimplementation of Edit Page generation with updated architecture
+- Reimplementation of Proposal Generation (human-readable diffs)
+- Automated webhook-based sync triggers (GitHub Markdown → Notion)
