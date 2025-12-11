@@ -1,5 +1,9 @@
 # Atlas Proposal Generator
 
+> **⚠️ DEPRECATED - DO NOT USE**
+>
+> This feature is **obsolete and not working**. The code is not compatible with the current codebase and should not be used. This documentation is kept for historical reference only. The feature will need to be either completely rewritten or fixed in the future before it can be used again.
+
 This module converts `TreeChange[]` arrays from the diff algorithm into formatted Atlas proposal markdown following the "Process For Preparing Proposals For Atlas Edits" formatting rules.
 
 ## Quick Start

@@ -734,18 +734,9 @@ All commands are intended to be run from the repository root using `npx tsx`.
     - ```bash
       npx tsx scripts/validate-atlas-markdown.ts
       ```
-    - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts exported-atlas/atlas.md
-      ```
-    - ```bash
-      npx tsx scripts/validate-atlas-markdown.ts --verbose
-      ```
 
 - **scripts/validate-atlas-json.ts** — Validates Atlas JSON files for structural integrity and consistency. Defaults to `exported-atlas/atlas.json` if no file path provided.
   - Examples:
-    - ```bash
-      npx tsx scripts/validate-atlas-json.ts
-      ```
     - ```bash
       npx tsx scripts/validate-atlas-json.ts path/to/atlas.json
       ```
@@ -761,13 +752,10 @@ All commands are intended to be run from the repository root using `npx tsx`.
 - **scripts/create-test-notion-databases.ts** — Creates test versions of all Atlas databases in Notion for safe testing of Markdown→Notion sync automation. All test databases are created with [TEST] prefix.
   - Examples:
     - ```bash
-      npx tsx scripts/create-test-notion-databases.ts
-      ```
-    - ```bash
       npx tsx scripts/create-test-notion-databases.ts --delete-existing
       ```
 
-- **scripts/generate-uuid-mapping.ts** — Generates UUID mappings for all current Notion database pages. Reads from `notion_database_pages` and inserts into `uuid_mapping` table.
+- **scripts/generate-uuid-mapping.ts** — (DEPRECATED) Generates UUID mappings for all current Notion database pages. Reads from `notion_database_pages` and inserts into `uuid_mapping` table.
   - Example:
     - ```bash
       npx tsx scripts/generate-uuid-mapping.ts
@@ -775,38 +763,7 @@ All commands are intended to be run from the repository root using `npx tsx`.
 
 ### Utility Scripts
 
-- **scripts/agent-notification.ts** — Sends notification when AI agent completes a task (internal utility).
-
 Helper modules (imported by scripts):
 
 - `scripts/atlas-export/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
-
-Important: Do not use or rely on `parent_notion_page_id` to build the Atlas tree structure. Build hierarchy using the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) starting from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy). `parent_notion_page_id` is only used for same-database hierarchies in the "Sections & Primary Docs" and "Agent Scope Database" Notion databases
-
-## Critical Edge Cases: Child Relationship Arrays
-
-**CRITICAL: Core Document Filtering Logic**
-
-The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays present complex filtering challenges for nested Core documents:
-
-1. **The Child Array Problem**: When a Section contains nested Core documents (Core → Core → Core), ALL nested Core document IDs appear in the parent Section's `child_section_and_primary_doc_ids` array, not just direct children.
-
-2. **Filtering Challenge**: The `filterDirectChildren` function must distinguish between:
-   - **Direct children** (Core documents that should be immediate children of the Section)
-   - **Nested descendants** (Core documents that are descendants of other Core documents)
-
-3. **The Solution (Generalized Direct-Child Rules)**:
-   - Cross-database → internally nested DB child: keep only if `parent_notion_page_id` is null.
-   - Same internally nested DB (Sections & Primary Docs, Agent Scope Database): keep only if `parent_notion_page_id === parentPageId`.
-   - Apply to all document types in those DBs.
-
-4. **Implementation Requirements**:
-   - Pass `parentPageId` to `filterDirectChildren` and apply the rules above.
-   - Keep cycle guards and depth caps where traversal occurs.
-
-5. **Real-World Impact**: Prevents nested docs from appearing under both parent and grandparent.
-
-**Duplicates Policy**
-
-Treat as modeling issues; filtering should avoid them or raise an error.

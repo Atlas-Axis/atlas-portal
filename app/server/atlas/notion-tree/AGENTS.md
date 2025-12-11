@@ -456,6 +456,41 @@ The Atlas tree system is currently integrated with:
 - **Atlas Export Scripts** (`scripts/atlas-export/`) - Uses tree structures for JSON and Markdown export
 - **UUID Mapping System** (`docs/UUID_MAPPING.md`) - Provides bidirectional UUID mappings for document number and name generation
 
+## Critical Implementation Notes
+
+### Building Atlas Tree Structure
+
+**Important**: Do not use or rely on `parent_notion_page_id` to build the Atlas tree structure. Build hierarchy using the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) starting from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy in main AGENTS.md).
+
+**Note**: `parent_notion_page_id` is only used for same-database hierarchies in the "Sections & Primary Docs" and "Agent Scope Database" Notion databases.
+
+### Critical Edge Cases: Child Relationship Arrays
+
+**CRITICAL: Core Document Filtering Logic**
+
+The `child_section_and_primary_doc_ids` and `child_agent_scope_ids` arrays present complex filtering challenges for nested Core documents:
+
+1. **The Child Array Problem**: When a Section contains nested Core documents (Core → Core → Core), ALL nested Core document IDs appear in the parent Section's `child_section_and_primary_doc_ids` array, not just direct children.
+
+2. **Filtering Challenge**: The `filterDirectChildren` function must distinguish between:
+   - **Direct children** (Core documents that should be immediate children of the Section)
+   - **Nested descendants** (Core documents that are descendants of other Core documents)
+
+3. **The Solution (Generalized Direct-Child Rules)**:
+   - Cross-database → internally nested DB child: keep only if `parent_notion_page_id` is null.
+   - Same internally nested DB (Sections & Primary Docs, Agent Scope Database): keep only if `parent_notion_page_id === parentPageId`.
+   - Apply to all document types in those DBs.
+
+4. **Implementation Requirements**:
+   - Pass `parentPageId` to `filterDirectChildren` and apply the rules above.
+   - Keep cycle guards and depth caps where traversal occurs.
+
+5. **Real-World Impact**: Prevents nested docs from appearing under both parent and grandparent.
+
+**Duplicates Policy**
+
+Treat as modeling issues; filtering should avoid them or raise an error.
+
 ## Related Documentation
 
 - **[docs/ATLAS_TREE_STRUCTURES.md](../../../../docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree vs Export Tree

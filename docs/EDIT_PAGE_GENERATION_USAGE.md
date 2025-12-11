@@ -1,5 +1,9 @@
 # Toggle Blocks Usage Guide
 
+> **⚠️ DEPRECATED - DO NOT USE**
+>
+> This feature is **obsolete and not working**. The code is not compatible with the current codebase and should not be used. This documentation is kept for historical reference only. The feature will need to be either completely rewritten or fixed in the future before it can be used again.
+
 ## Overview
 
 The Toggle Blocks functionality (Method #2) creates a single Notion page containing hierarchical toggle blocks from Atlas documents stored in the `notion_database_pages` Supabase table. This provides an alternative to creating separate edit pages (Method #1) by consolidating all content into one page with expandable/collapsible sections.

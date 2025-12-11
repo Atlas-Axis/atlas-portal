@@ -1,5 +1,9 @@
 # Notion Edit Pages With Toggle Blocks Implementation Action Plan
 
+> **⚠️ DEPRECATED - DO NOT USE**
+>
+> This action plan and the related Edit Page feature are **obsolete and not working**. The code is not compatible with the current codebase and should not be used. This document is kept for historical reference only. The feature will need to be either completely rewritten or fixed in the future before it can be used again.
+
 ## Overview
 
 This document outlines the complete action plan for implementing Method #2: creating a single Notion page with hierarchical toggle blocks from Atlas documents stored in the `notion_database_pages` table.
