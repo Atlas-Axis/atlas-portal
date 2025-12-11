@@ -472,7 +472,7 @@ function SyncControls({
             variant="solid"
             color="primary"
             isLoading={isStarting}
-            isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters}
+            isDisabled={controlsDisabled || !hasChanges || !hasEnabledFilters || process.env.NODE_ENV !== 'development'}
           >
             Sync Changes to Notion
           </Button>
