@@ -33,7 +33,6 @@ A Next.js application that enables change tracking for Atlas documents stored in
 ### Background Jobs
 
 - **Trigger.dev** - For background sync tasks
-- Manual triggers via UI buttons (future: automated)
 
 ### Development Tools
 

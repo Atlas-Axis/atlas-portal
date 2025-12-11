@@ -468,26 +468,40 @@ This three-tier system ensures:
 - **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
 - **[docs/ATLAS_EXTRA_FIELDS.md](../docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
 - **[docs/NOTION_PROPERTY_MAPPING.md](../docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
+- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Overview of the Atlas data pipeline and data flow architecture
 
 ## Atlas Data Formats & Export
 
 - **[docs/ATLAS_MARKDOWN_SYNTAX.md](../docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown syntax specification for Atlas document representation
 - **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](../docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
+- **[docs/MARKDOWN_TO_NOTION_SYNC.md](../docs/MARKDOWN_TO_NOTION_SYNC.md)** - Documentation for the Markdown to Notion synchronization process
 
 ## Edit Pages & Workflows
 
 - **[docs/EDIT_PAGE_GENERATION_USAGE.md](../docs/EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
-- **[docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](../docs/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
 
-## Notion Integration
+## Notion Integration & Data Import
 
 - **[docs/NOTION_EMBEDS.md](../docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
 - **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
+- **[docs/NOTION_IMPORT_PROCESS.md](../docs/NOTION_IMPORT_PROCESS.md)** - Documentation for the Notion to Supabase import process
 
-## Component & Service Documentation
+## Action Plans & Findings
 
+- **[docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md](../docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md)** - Action plan for preventing content truncation issues
+- **[docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](../docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
+- **[docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** - Action plan for standardizing Notion property names and types
+- **[docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md](../docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md)** - Findings and fixes for Notion sub-item relationship issues
+
+## Component & Service Implementation Guides
+
+These AGENTS.md files contain detailed implementation guides and context for specific features:
+
+- **[app/atlas/sync/AGENTS.md](../app/atlas/sync/AGENTS.md)** - Markdown to Notion synchronization implementation details
+- **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Atlas tree system data structures and algorithms implementation
+- **[app/server/services/trigger/AGENTS.md](../app/server/services/trigger/AGENTS.md)** - Trigger.dev background tasks implementation details
+- **[app/notion-api-key-testing/AGENTS.md](../app/notion-api-key-testing/AGENTS.md)** - Notion API key testing page implementation
 - **[app/server/atlas/README.md](../app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown (planned)
-- **[app/atlas/sync/README.md](../app/atlas/sync/README.md)** - Markdown to Notion synchronization workflow documentation
 
 ## Important Command line scripts
 
