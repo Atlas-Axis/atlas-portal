@@ -184,7 +184,7 @@ export function buildNotionProperties(
   // NEW STANDARDIZED FIELDS (Phase 2 of Property Standardization)
   // Write to new standardized fields in addition to old fields for backward compatibility.
   // These fields are the same across all databases, simplifying the mapping logic.
-  // See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
   // ============================================================================
 
   // Document Number - standardized field for doc_no (always rich_text)

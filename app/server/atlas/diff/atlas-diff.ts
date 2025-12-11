@@ -216,7 +216,7 @@ function normalizeCosmeticFormatting(text: string): string {
  *
  * NOTE: doc_no and name now use stored values from Supabase (from standardized Notion fields)
  * instead of dynamically calculated values.
- * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ * See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  *
  * TEMPORARY WORKAROUND: Also normalizes cosmetic formatting (fancy quotes, bullets)
  * to suppress noise in diffs. This should be removed once source data is consistent.
@@ -232,8 +232,15 @@ export function compareDocumentFields(
   const normalizeFully = (text: string) => normalizeWhitespace(normalizeCosmeticFormatting(text));
 
   // Compare doc_no (document number from standardized "Document Number" Notion field)
+  // BREAKING CHANGE (Phase 3.5 of Property Standardization):
+  // Previously, doc_no was dynamically calculated during tree building and NOT compared in diffs.
+  // Now we compare the stored values from Supabase (atlas_document_number), which means:
+  // 1. Document number changes in Notion will be detected as modifications
+  // 2. Inconsistencies between stored and calculated values will surface as changes
+  // See: NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md - Phase 3.5
   if (normalizeFully(original.doc_no) !== normalizeFully(updated.doc_no)) return true;
   // Compare name (document title from standardized "Document Title" Notion field)
+  // Note: Now uses stored values from Supabase (plain_text_name) instead of dynamically calculated values
   if (normalizeFully(original.name) !== normalizeFully(updated.name)) return true;
   if (normalizeFully(original.content) !== normalizeFully(updated.content)) return true;
 

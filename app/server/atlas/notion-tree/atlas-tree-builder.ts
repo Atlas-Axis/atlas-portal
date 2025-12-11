@@ -316,6 +316,10 @@ function createLookupMaps(allPages: NotionDatabasePage[]): NotionAtlasTreeLookup
   // bidirectional relations are not synced (e.g., when a page has "Parent item" set but the
   // parent's "Sub-item" is empty due to Notion API limitations).
   //
+  // Related: sync-operations.ts (lines 214-218) intentionally skips updating parent child
+  // relation properties during Markdown→Notion sync due to the same Notion API bug that
+  // causes 500 errors. This second pass compensates by using parent_notion_page_id.
+  //
   // We need to update BOTH childrenMap AND the parent page's child_*_ids array because
   // buildTreeNode uses page.child_agent_scope_ids directly.
   let addedFromParentNotionPageId = 0;

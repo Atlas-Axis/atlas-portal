@@ -156,7 +156,7 @@ export const ATLAS_MARKDOWN_GITHUB_API_URL =
  * - Phase 1-3: Dual-write (write to both old and new fields) and dual-read (prefer new, fallback to old)
  * - Phase 4-6: Eventually deprecate old fields after full migration
  *
- * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ * See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  */
 export const STANDARDIZED_DOCUMENT_NUMBER = 'Document Number';
 export const STANDARDIZED_DOCUMENT_TITLE = 'Document Title';

@@ -5,7 +5,7 @@
  * - Reading from new standardized fields (Document Number, Document Title)
  * - Falling back to old database-specific fields when new fields are empty
  *
- * @see docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ * @see docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  */
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { describe, expect, it } from 'vitest';

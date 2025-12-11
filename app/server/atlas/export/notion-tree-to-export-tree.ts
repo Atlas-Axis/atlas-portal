@@ -18,7 +18,7 @@
  * - Everything is recursive: child nodes are converted with the same function.
  * - Uses underscore_case for JSON export compatibility.
  *
- * See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ * See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  *
  * Usage
  * ```ts
@@ -132,7 +132,7 @@ function validateChildDatabases(node: NotionAtlasTreeNode, allowedDatabases: Atl
 // Convert simple fields
 // By default, uses stored values from Supabase (populated from new standardized Notion fields).
 // When useDynamicValues is true, uses dynamically generated values (migration mode).
-// See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+// See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
 // @todo CLEANUP: Remove options parameter, always use stored values (Phase 8)
 function toBase(
   node: NotionAtlasTreeNode,

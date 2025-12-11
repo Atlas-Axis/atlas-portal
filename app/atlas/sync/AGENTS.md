@@ -442,7 +442,7 @@ The "Use Dynamic Values (Migration Mode)" checkbox controls how document number 
 
 When this toggle is changed, the page refreshes with updated URL params (`?dynamic=true`) to regenerate the diff server-side. This avoids server action payload size issues with large diff results.
 
-This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to verify that stored values match dynamically calculated values.
+This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)) to verify that stored values match dynamically calculated values.
 
 **Technical Note**: In Next.js 15+, `searchParams` is an async prop that must be awaited before accessing URL parameters.
 

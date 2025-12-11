@@ -18,7 +18,7 @@
  * NOTE: The manual rename of "Doc Type" to "Type" in Agent Scope Database has been DEFERRED
  * to minimize breaking changes during migration. See the action plan for details.
  *
- * Related: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ * Related: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
  */
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASE_ID_MAP, ATLAS_DATABASE_NAMES } from '@/app/server/atlas/constants';
@@ -217,7 +217,7 @@ async function main() {
   console.log('║   The manual rename of "Doc Type" to "Type" in Agent Scope Database          ║');
   console.log('║   has been deferred to minimize breaking changes during migration.           ║');
   console.log('║                                                                               ║');
-  console.log('║   See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md ║');
+  console.log('║   See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md ║');
   console.log('║                                                                               ║');
   console.log('╚═══════════════════════════════════════════════════════════════════════════════╝');
   console.log('');

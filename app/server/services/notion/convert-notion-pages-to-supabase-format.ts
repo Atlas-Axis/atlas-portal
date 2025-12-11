@@ -65,7 +65,11 @@ async function convertSingleNotionPageToDatabaseFormat(
   // ============================================================================
   // DUAL-READ LOGIC (Phase 3 of Property Standardization)
   // Read from new standardized fields first, fall back to old fields if empty.
-  // See: docs/docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  //
+  // TODO: Remove this dual-read logic in Phase 7 after all old properties are
+  // deleted from Notion databases. At that point, we can read only from the new
+  // standardized "Document Title", "Document Number", "Document Type" fields.
   // ============================================================================
 
   // Extract page title - prefer new "Document Title" field, fall back to old field
