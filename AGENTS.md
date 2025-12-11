@@ -9,15 +9,18 @@
 
 # Project Overview
 
-This Next.js application enables change tracking for Atlas documents stored in Notion databases. The Atlas is a collection of legal documents (laws) organized hierarchically in Notion databases. This system allows users to propose edits by creating temporary duplicate Notion pages, syncing changes to Supabase, and visualizing differences using tree diffing algorithms.
+This Next.js application provides a complete data pipeline for managing the Atlas, which is a collection of internal rules and policies in the Sky crypto ecosystem. The **canonical Atlas** is stored as a Markdown file in a GitHub repository. **Notion is used as an editing and collaboration tool** where the Atlas is maintained across 10 databases (~7,000 documents) for easier editing by the team. The system enables bidirectional synchronization between the canonical GitHub Markdown, Notion (editing environment), and Supabase PostgreSQL (central storage layer).
 
-## Core Workflow
+**Key Capabilities:**
 
-1. **Import**: Sync original Notion databases/pages to Supabase
-2. **Edit**: Create temporary duplicate Notion pages for editing
-3. **Track**: Sync edited pages back to Supabase (stored separately)
-4. **Diff**: Compare original vs edited content using tree algorithms
-5. **Review**: Display human-readable diffs of proposed changes
+- **Notion → Supabase Import**: Hourly automated sync of Atlas documents from Notion editing environment to PostgreSQL with temporal versioning
+- **Markdown → Notion Sync**: Bidirectional workflow that syncs changes from the canonical GitHub Markdown back to the Notion editing environment
+- **Atlas Portal**: Interactive web viewer for browsing Atlas hierarchy with search and export capabilities
+- **Export Generation**: Export the Atlas from Supabase to multiple file formats (Markdown, JSON, YAML) via web API or CLI
+- **Historical Tracking**: Complete change history via temporal tables and audit logging
+- **UUID Mapping**: Stable document references independent of Notion infrastructure
+
+**Architecture**: The canonical Atlas lives in GitHub as Markdown. Notion serves as the editing/collaboration environment. Supabase acts as the central hub connecting these systems, enabling exports in multiple formats (Markdown, JSON, YAML). The system uses a dual-tree architecture (Notion Tree for internal storage, Export Tree for external formats) with UUID-based stable references.
 
 # Tech Stack
 
@@ -40,8 +43,7 @@ This Next.js application enables change tracking for Atlas documents stored in N
 
 ## Background Jobs
 
-- Trigger.dev - For background sync tasks
-- Manual triggers via UI buttons (future: automated)
+- Trigger.dev - For background sync tasks (automated hourly imports, manual sync triggers)
 
 ## Development Tools
 
@@ -85,6 +87,196 @@ AI agent notes for generating tests:
   ```
 - Mock `fetch` or other globals with `vi.stubGlobal`.
 - Keep tests colocated under `__tests__` or alongside files using `*.test.ts(x)` naming.
+
+# Workflows
+
+This section describes the main workflows and features available in the application. The Atlas data pipeline consists of several interconnected workflows that enable bidirectional synchronization between Notion, Supabase, and Markdown formats.
+
+## 1. Notion → Supabase Import
+
+**Status**: ✅ **Active** - Runs hourly via Trigger.dev
+
+**Purpose**: Import Atlas documents from Notion databases to Supabase for storage and processing.
+
+**Description**: Synchronizes approximately 7,000 Atlas documents from 10 Notion databases to PostgreSQL. Uses intelligent delta sync to detect changes (new/modified/deleted pages), relationship mapping, and temporal versioning for historical data tracking. Takes ~15 minutes for full sync. This captures edits made by the team in Notion and brings them into Supabase for export generation.
+
+**Key Features**:
+
+- Delta sync with change detection (new/deleted/modified pages)
+- Property and relationship mapping via centralized configuration
+- Sync locking to prevent concurrent operations
+- Batched processing (500 pages per batch)
+- UUID mapping generation for stable document references
+- Temporal versioning (`date_valid_from`/`date_valid_to`)
+
+**Access**:
+
+- Automated: Runs hourly via Trigger.dev scheduled task
+- Manual: Command-line script `scripts/import-notion-databases.ts`
+- Partial: Triggered automatically after Markdown → Notion sync (only affected databases)
+
+**Related Documentation**:
+
+- **[docs/NOTION_IMPORT_PROCESS.md](../docs/NOTION_IMPORT_PROCESS.md)** - Complete import process documentation
+- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Overall data pipeline architecture
+
+## 2. Markdown → Notion Sync
+
+**Status**: ✅ **Active** - Manual trigger via UI
+
+**Purpose**: Synchronize changes from the canonical GitHub Markdown Atlas back to the Notion editing environment.
+
+**Description**: Syncs changes from the canonical Atlas Markdown file (stored in GitHub repository) back to Notion databases. This enables external contributors to edit the canonical Markdown directly, with changes then flowing back to the Notion editing environment for the team to see. Automatically detects changes (new/modified/moved/deleted documents), handles mention conversion, and provides real-time progress tracking via Trigger.dev background task.
+
+**Key Features**:
+
+- Change detection (new, modified, moved, deleted documents)
+- Mention post-processing (converts markdown links to Notion mentions)
+- Background processing with real-time progress tracking
+- Automatic round-trip: After syncing to Notion, automatically imports affected databases back to Supabase
+- Audit logging of all Notion API operations
+- UUID mapping for document references
+- Graceful error handling and partial success tracking
+
+**Access**:
+
+- UI: `/atlas/sync` - Visual diff preview and sync controls
+- Loads from: **Canonical GitHub Atlas** repository (`pppdns/next-gen-atlas`, branch `main`, file `Sky Atlas/Sky Atlas.md`)
+- Local development: Automatically uses `exported-atlas/truncated-atlas.md` if present
+
+**Related Documentation**:
+
+- **[docs/MARKDOWN_TO_NOTION_SYNC.md](../docs/MARKDOWN_TO_NOTION_SYNC.md)** - High-level sync workflow
+- **[app/atlas/sync/AGENTS.md](../app/atlas/sync/AGENTS.md)** - Detailed implementation guide
+- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Complete pipeline architecture
+
+## 3. Export the Atlas as a File
+
+**Status**: ✅ **Active** - Manual and API-based
+
+**Purpose**: Generate Atlas exports from Supabase data in Markdown, JSON, or YAML formats.
+
+**Description**: Builds Export Tree structure from Supabase data (which mirrors the Notion editing environment) and exports to various formats. These exports can be used to update the canonical GitHub Markdown or for other purposes. The Export Tree uses stable Atlas UUIDs (not Notion page IDs) for document references, making exports independent of Notion infrastructure.
+
+**Key Features**:
+
+- Multiple export formats: Markdown, JSON, YAML
+- Stable UUID-based document references
+- Hierarchical tree structure preservation
+- Web API access for programmatic exports from the Atlas Portal
+- Command-line scripts for local development
+
+**Access**:
+
+- **Web API**:
+  - `/api/atlas.md` - Markdown export
+  - `/api/atlas.json` - JSON export
+  - `/api/atlas.yaml` - YAML export
+- **Command-line scripts**:
+  - `npx tsx scripts/atlas-export/generate-atlas-markdown.ts` - Export to `exported-atlas/atlas.md`
+  - `npx tsx scripts/atlas-export/generate-atlas-json.ts` - Export to `exported-atlas/atlas.json`
+  - `npx tsx scripts/atlas-export/json-to-yaml.ts` - Convert JSON to YAML
+
+**Related Documentation**:
+
+- **[docs/ATLAS_MARKDOWN_SYNTAX.md](../docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown format specification
+- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](../docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Export/import workflows
+- **[docs/ATLAS_TREE_STRUCTURES.md](../docs/ATLAS_TREE_STRUCTURES.md)** - Dual tree architecture (Notion Tree vs Export Tree)
+
+## 4. Atlas Portal (Viewer)
+
+**Status**: ✅ **Active** - Primary UI for Atlas browsing
+
+**Purpose**: Read-only web interface for browsing the Atlas hierarchy stored in Supabase.
+
+**Description**: Interactive viewer that displays the complete Atlas hierarchy with search functionality, document type filtering, and export capabilities. Loads data from Supabase (which mirrors the Notion editing environment) and converts to Export Tree format for display. Similar to the external Atlas Explorer (https://sky-atlas.io) but uses internal Supabase data that reflects the current state of Notion.
+
+**Key Features**:
+
+- Hierarchical tree view of all Atlas documents
+- Search across all document names and numbers
+- Document type filtering and color-coding
+- Download Atlas as file (Markdown, JSON, YAML)
+- Mobile-responsive design
+- Real-time search with keyboard navigation
+
+**Access**:
+
+- UI: `/atlas` - Main Atlas viewer page
+- Statically pre-rendered for fast page loads
+- Automatically revalidated after Notion imports
+
+**Related Documentation**:
+
+- **[docs/ATLAS_TREE_STRUCTURES.md](../docs/ATLAS_TREE_STRUCTURES.md)** - Tree architecture and data structures
+- **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Tree building algorithms
+
+## 5. Atlas Changelog
+
+**Status**: ✅ **Active** - Historical data viewer
+
+**Purpose**: View historical changes to Atlas documents over time. Data comes from Supabase.
+
+**Access**:
+
+- UI: `/atlas/changelog` - Web-based changelog viewer
+- Command-line: `npx tsx scripts/atlas-changelog.ts --since 1d` - CLI changelog report
+
+## 6. Notion Nesting Bug Management
+
+**Status**: ✅ **Active** - Workaround management UI
+
+**Purpose**: Manage manual parent-child relationship corrections for Notion's sub-item relationship bug at deep nesting levels.
+
+**Access**:
+
+- UI: `/atlas/notion-nesting-fix` - Password-protected management interface
+
+**Related Documentation**:
+
+- **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** - Complete nesting bug documentation
+
+## 7. Edit Page Generation (Obsolete)
+
+**Status**: ❌ **Obsolete** - Prototype only, not actively maintained
+
+**Purpose**: Create temporary duplicate Notion pages for proposing edits to Atlas documents.
+
+**Description**: This was a prototype feature that created duplicate Notion pages where users could propose changes to Atlas documents. The edited pages would be synced to Supabase separately and compared against originals using tree diffing algorithms.
+
+**Current State**:
+
+- Code exists but is obsolete and not compatible with current codebase
+- Located in: `app/edit-page-list/`, `app/embed/create-edit-page/`, `app/test-edit-page/`
+- Not maintained or tested
+- Will be reimplemented in the future with updated architecture
+
+**Related Code** (for reference only):
+
+- `app/edit-page-list/` - UI for listing edit pages
+- `app/embed/create-edit-page/` - Embedded UI for creating edit pages
+- `app/test-edit-page/` - Testing interface
+
+## 8. Proposal Generation (Obsolete)
+
+**Status**: ❌ **Obsolete** - Prototype only, not actively maintained
+
+**Purpose**: Generate human-readable diffs/proposals showing changes between original and edited Atlas documents.
+
+**Description**: This was a prototype feature that would compare original vs edited content using tree diffing algorithms and generate formatted proposals showing all changes. Would have displayed differences in a human-readable format for review and approval.
+
+**Current State**:
+
+- Code exists but is obsolete and not compatible with current codebase
+- Located in: `app/server/atlas/proposal-generation/old/`
+- Not maintained or tested
+- Will be reimplemented in the future with updated architecture
+
+**Related Code** (for reference only):
+
+- `app/server/atlas/proposal-generation/old/` - Old proposal generation logic
+- `app/embed/diff/` - Old diff visualization UI
+- `app/server/diff/` - Tree diffing utilities (some still used by Markdown → Notion sync)
 
 # Database Schema
 
@@ -225,9 +417,11 @@ See **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** for 
 
 ## Introduction to Atlas
 
-The Atlas is a hierarchical corpus of internal rules and policies (like legal documents) in the Sky ecosystem, stored as a markdown file in GitHub. For internal editing, it is also stored and organized across multiple Notion databases and kept in sync with the markdown file. Think of it as a large, interconnected library of approximately 7,000 legal documents with specific types, numbers, and relationships. Each Atlas document has a document type (e.g. 'Section'), document name (e.g. 'Previously Warned Aligned Delegates'), document number (e.g. 'A.1.2.3').
+The Atlas is a hierarchical corpus of internal rules and policies (like legal documents) in the Sky ecosystem. The **canonical Atlas** is stored as a Markdown file in a GitHub repository (`pppdns/next-gen-atlas`). **Notion is used as an editing and collaboration tool** where the Atlas is organized across multiple databases to enable easier editing and team collaboration. Think of it as a large, interconnected library of approximately 7,000 legal documents with specific types, numbers, and relationships. Each Atlas document has a document type (e.g. 'Section'), document name (e.g. 'Previously Warned Aligned Delegates'), document number (e.g. 'A.1.2.3').
 
-In Notion, the Atlas is stored in the "Master Atlas DBs", which are a collection of Notion databases. Documents reside in the database that corresponds to their type. General rule: each document type has its own database (e.g. Section type documents are in the Sections database in Notion). Exception #1: The database named `Sections & Primary Docs` contains four document types: `Section`, `Core`, `Type Specification`, and `Active Data Controller`. Exception #2: The database named `Agent Scope Database` contains two document types: `Core`, `Active Data Controller`.
+**Data Flow**: Edits made in Notion → Imported to Supabase → Exported to Markdown → Committed to GitHub (canonical). Changes made directly to the canonical GitHub Markdown can be synced back to Notion via the Markdown → Notion sync workflow.
+
+In the Notion editing environment, the Atlas is stored in the "Master Atlas DBs", which are a collection of 10 Notion databases. Documents reside in the database that corresponds to their type. General rule: each document type has its own database (e.g. Section type documents are in the Sections database in Notion). Exception #1: The database named `Sections & Primary Docs` contains four document types: `Section`, `Core`, `Type Specification`, and `Active Data Controller`. Exception #2: The database named `Agent Scope Database` contains two document types: `Core`, `Active Data Controller`.
 
 ### Document Type Categories
 
@@ -438,25 +632,32 @@ This three-tier system ensures:
 
 # UI Components
 
-## Embed Pages (`/app/embed`)
-
-- Embeddable as iframes within Notion pages
-- `create-edit-page/[notion-page-id]` - UI for creating edit pages
-- `diff` - Displays content differences
-- Compatible with web browsers, not iOS/iPad Notion app
-
 ## Main Pages
 
-- `/atlas` - Hierarchy view of Atlas documents stored in Supabase. Similar to Atlas Explorer (https://sky-atlas.io)
-- `/edit-page-list` - List Notion "Edit Pages"
-- `/notion-api-key-testing` - Validate Notion API keys, retries, and rate limits (development)
-- `/test-edit-page` - Create and test edit pages (development)
+- **`/atlas`** - Atlas Portal: Interactive hierarchy viewer for browsing Atlas documents stored in Supabase. Includes search, filtering, and export capabilities. Similar to Atlas Explorer (https://sky-atlas.io)
+- **`/atlas/sync`** - Markdown → Notion Sync: Visual diff preview and sync controls for synchronizing markdown changes back to Notion
+- **`/atlas/sync/logs`** - Sync Audit Logs: View detailed logs of Notion API operations from sync tasks
+- **`/atlas/changelog`** - Atlas Changelog: Historical view of Atlas document changes over time
+- **`/atlas/notion-nesting-fix`** - Nesting Bug Management: Password-protected UI for managing Notion nesting bug mappings
+- **`/notion-api-key-testing`** - Notion API Testing: Validate API keys, test rate limits, and verify retry logic (development tool)
+
+## Embed Pages (`/app/embed`) - Mostly Obsolete
+
+- **`/embed/create-edit-page/[notion-page-id]`** - ❌ Obsolete: UI for creating edit pages (not maintained)
+- **`/embed/diff/[edit-page-id]`** - ❌ Obsolete: Displays content differences for edit pages (not maintained)
+- Embeddable as iframes within Notion pages
+- Compatible with web browsers, not iOS/iPad Notion app
+
+## Obsolete Pages (Reference Only)
+
+- **`/edit-page-list`** - ❌ Obsolete: List Notion "Edit Pages" (not maintained)
+- **`/test-edit-page`** - ❌ Obsolete: Create and test edit pages (not maintained)
 
 # Future Features
 
-- Automated Edit Page creation
-- Human-readable edit proposal generation (show diffs, aggregated from multiple edit pages)
-- Automated background sync triggers
+- Reimplementation of Edit Page generation with updated architecture
+- Reimplementation of Proposal Generation (human-readable diffs) with updated architecture
+- Automated webhook-based sync triggers (GitHub Markdown → Notion)
 
 # Additional Documentation
 
@@ -475,9 +676,9 @@ This three-tier system ensures:
 - **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](../docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
 - **[docs/MARKDOWN_TO_NOTION_SYNC.md](../docs/MARKDOWN_TO_NOTION_SYNC.md)** - Documentation for the Markdown to Notion synchronization process
 
-## Edit Pages & Workflows
+## Edit Pages & Workflows (Obsolete)
 
-- **[docs/EDIT_PAGE_GENERATION_USAGE.md](../docs/EDIT_PAGE_GENERATION_USAGE.md)** - Guide for creating and managing Edit Pages in Notion
+- **[docs/EDIT_PAGE_GENERATION_USAGE.md](../docs/EDIT_PAGE_GENERATION_USAGE.md)** - ❌ Obsolete: Guide for creating and managing Edit Pages in Notion (feature not maintained, will be reimplemented in future)
 
 ## Notion Integration & Data Import
 
@@ -500,7 +701,7 @@ These AGENTS.md files contain detailed implementation guides and context for spe
 - **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Atlas tree system data structures and algorithms implementation
 - **[app/server/services/trigger/AGENTS.md](../app/server/services/trigger/AGENTS.md)** - Trigger.dev background tasks implementation details
 - **[app/notion-api-key-testing/AGENTS.md](../app/notion-api-key-testing/AGENTS.md)** - Notion API key testing page implementation
-- **[app/server/atlas/README.md](../app/server/atlas/README.md)** - Documentation for the Atlas proposal generator that converts TreeChange[] to formatted Atlas proposal markdown (planned)
+- **[app/server/atlas/README.md](../app/server/atlas/README.md)** - ❌ Obsolete: Documentation for the Atlas proposal generator (feature not maintained, will be reimplemented in future)
 
 ## Important Command line scripts
 
