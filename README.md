@@ -464,7 +464,6 @@ Embeddable as iframes within Notion pages:
 - `/atlas` - Hierarchy view of Atlas documents stored in Supabase. Similar to Atlas Explorer (https://sky-atlas.io)
 - `/edit-page-list` - List Notion "Edit Pages"
 - `/notion-api-key-testing` - Validate Notion API keys, retries, and rate limits (development)
-- `/markdown` - Preview generated markdown output (development)
 - `/test-edit-page` - Create and test edit pages (development)
 
 ## 🔄 Important Patterns
