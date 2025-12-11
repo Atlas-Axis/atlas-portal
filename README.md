@@ -644,12 +644,6 @@ All commands are intended to be run from the repository root using tsx.
       npx tsx scripts/atlas-export/generate-atlas-markdown.ts
       ```
 
-- **scripts/atlas-export/convert-atlas-markdown-to-json.ts**: Parses Atlas Markdown file and converts it to JSON format. Input: `exported-atlas/atlas.md`, Output: `exported-atlas/markdown-to-json.json`
-  - Example:
-    - ```bash
-      npx tsx scripts/atlas-export/convert-atlas-markdown-to-json.ts
-      ```
-
 - **scripts/atlas-export/json-to-yaml.ts**: Converts JSON files to YAML format. Defaults to Atlas JSON if no input file provided.
   - Examples:
     - ```bash
@@ -695,15 +689,6 @@ All commands are intended to be run from the repository root using tsx.
       ```
 
 ### Notion Database Utilities
-
-- **scripts/get-notion-database-page-count.ts**: Prints the total number of pages in a given Notion database ID.
-  - Examples:
-    - ```bash
-      npx tsx scripts/get-notion-database-page-count.ts 00000000-0000-0000-0000-000000000000
-      ```
-    - ```bash
-      npx tsx scripts/get-notion-database-page-count.ts --verbose 00000000-0000-0000-0000-000000000000
-      ```
 
 - **scripts/create-test-notion-databases.ts**: Creates test versions of all Atlas databases in Notion for safe testing of Markdown→Notion sync automation. All test databases are created with [TEST] prefix.
   - Examples:
