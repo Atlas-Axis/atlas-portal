@@ -22,7 +22,7 @@ Imports Atlas documents from Notion databases to Supabase. Captures edits made b
 
 ### 2. Markdown → Notion Sync
 
-**Status**: ✅ Active (Manual via UI)
+**Status**: ⚠️ Under active development, almost complete, but don't use it yet (Manual via UI)
 
 Syncs changes from the canonical GitHub Markdown back to the Notion editing environment. Enables external contributors to edit the canonical Markdown directly, with changes flowing back to Notion for the team.
 
@@ -200,6 +200,7 @@ npm run test:ui          # Vitest UI
 4. Start local Supabase services: `npm run supabase:start`
 5. Run database migrations manually in Supabase (`app/server/database/*.sql`)
 6. Start dev server: `npm run dev`
+7. (Optional) Start Trigger.dev background processing: `npm run trigger:dev`
 
 ### Environment Variables
 
