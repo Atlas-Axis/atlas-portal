@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS notion_database_pages (
   json_content JSONB, -- Rich Text content from Notion API
   plain_text_name TEXT, -- Extracted plain text page title
   json_name JSONB, -- Rich Text page title from Notion API
-  parent_notion_page_id UUID, -- Parent Notion page ID (if any) -- This field is deprecated, don't use it
+  parent_notion_page_id UUID, -- Internal parent page ID for same-database nesting (Sections & Primary Docs, Agent Scope Database). NULL for cross-database children. Used for filtering direct children and as Notion API bug workaround
   -- Child relationships grouped by Atlas database type. Each stores an array of UUID strings.
   child_scope_ids JSONB NOT NULL DEFAULT '[]', -- Children from Scopes database
   child_article_ids JSONB NOT NULL DEFAULT '[]', -- Children from Articles database

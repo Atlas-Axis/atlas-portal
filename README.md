@@ -122,7 +122,7 @@ Stores Notion database pages and their hierarchical relationships.
 - `json_content` (JSONB) - Rich content from Notion API
 - `plain_text_name` (TEXT) - Page title as plain text
 - `json_name` (JSONB) - Rich text page title from Notion API
-- `parent_notion_page_id` (UUID) - Parent Notion page ID (if any) - This field is deprecated, don't use it
+- `parent_notion_page_id` (UUID) - Internal parent page ID for same-database nesting. Used by "Sections & Primary Docs" (via "Parent Doc" property) and "Agent Scope Database" (via "Parent item" property). NULL for cross-database children or root-level documents. Critical for filtering direct children and as a workaround for Notion's bidirectional relationship bug
 - `sort_order` (DECIMAL(5,2)) - Position of sub item within parent (0-indexed, allows fractions like 1.5)
 - `created_at` (TIMESTAMPTZ) - Database row creation time
 - `updated_at` (TIMESTAMPTZ)
@@ -714,7 +714,7 @@ Non-executable helper modules (imported by scripts):
 - `scripts/atlas-export/utils.ts` — document number comparison and prefix fixing utilities
 - `scripts/utils/load-env.ts` — loads Next.js environment variables for scripts
 
-**Important relationship note:** Do not use or rely on `parent_notion_page_id` to build the Atlas tree. It is not a reliable way to construct hierarchy. Instead, construct the tree by traversing the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) beginning from the two top-level Atlas databases' documents: `Scopes` and `Sections & Primary Docs` (see Atlas Document Hierarchy).
+**Important relationship note:** The `parent_notion_page_id` field stores internal (same-database) parent relationships and is actively used by the tree builder for two critical purposes: (1) as a workaround for Notion's bidirectional relationship bug where child arrays may be incomplete, and (2) to filter direct children from nested descendants. When building the Atlas tree, start from the per-type `child_*` ID arrays (e.g., `child_article_ids`, `child_section_and_primary_doc_ids`) beginning from the two top-level Atlas databases: `Scopes` and `Agent Scope Database`.
 
 ## Critical Edge Cases: Child Relationship Arrays
 
