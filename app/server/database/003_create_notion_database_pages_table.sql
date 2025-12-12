@@ -195,7 +195,66 @@ BEGIN
   WHERE ndp.notion_page_id = ids.notion_page_id
     AND ndp.date_valid_to IS NULL;
 
-  -- Insert new versions from payload
+  -- Insert new versions from payload, deduplicating by notion_page_id
+  -- If the same notion_page_id appears multiple times, keep only the first occurrence
+  WITH deduplicated_rows AS (
+    SELECT DISTINCT ON (notion_page_id)
+      notion_page_id,
+      atlas_document_type,
+      atlas_document_number,
+      atlas_database_name,
+      has_children,
+      archived,
+      in_trash,
+      plain_text_content,
+      json_content,
+      plain_text_name,
+      json_name,
+      parent_notion_page_id,
+      child_scope_ids,
+      child_article_ids,
+      child_section_and_primary_doc_ids,
+      child_annotation_ids,
+      child_tenet_ids,
+      child_scenario_ids,
+      child_scenario_variation_ids,
+      child_active_data_ids,
+      child_agent_scope_ids,
+      child_needed_research_ids,
+      extra_fields,
+      sort_order,
+      updated_at,
+      last_edited_by_user_id
+    FROM jsonb_to_recordset(p_rows) AS x (
+      notion_page_id UUID,
+      atlas_document_type atlas_document_type_enum,
+      atlas_document_number TEXT,
+      atlas_database_name atlas_database_name_enum,
+      has_children BOOLEAN,
+      archived BOOLEAN,
+      in_trash BOOLEAN,
+      plain_text_content TEXT,
+      json_content JSONB,
+      plain_text_name TEXT,
+      json_name JSONB,
+      parent_notion_page_id UUID,
+      child_scope_ids JSONB,
+      child_article_ids JSONB,
+      child_section_and_primary_doc_ids JSONB,
+      child_annotation_ids JSONB,
+      child_tenet_ids JSONB,
+      child_scenario_ids JSONB,
+      child_scenario_variation_ids JSONB,
+      child_active_data_ids JSONB,
+      child_agent_scope_ids JSONB,
+      child_needed_research_ids JSONB,
+      extra_fields JSONB,
+      sort_order DECIMAL(5,2),
+      updated_at TIMESTAMPTZ,
+      last_edited_by_user_id TEXT
+    )
+    ORDER BY notion_page_id
+  )
   INSERT INTO notion_database_pages (
     notion_page_id,
     atlas_document_type,
@@ -255,34 +314,7 @@ BEGIN
     last_edited_by_user_id,
     v_now,
     NULL
-  FROM jsonb_to_recordset(p_rows) AS x (
-    notion_page_id UUID,
-    atlas_document_type atlas_document_type_enum,
-    atlas_document_number TEXT,
-    atlas_database_name atlas_database_name_enum,
-    has_children BOOLEAN,
-    archived BOOLEAN,
-    in_trash BOOLEAN,
-    plain_text_content TEXT,
-    json_content JSONB,
-    plain_text_name TEXT,
-    json_name JSONB,
-    parent_notion_page_id UUID,
-    child_scope_ids JSONB,
-    child_article_ids JSONB,
-    child_section_and_primary_doc_ids JSONB,
-    child_annotation_ids JSONB,
-    child_tenet_ids JSONB,
-    child_scenario_ids JSONB,
-    child_scenario_variation_ids JSONB,
-    child_active_data_ids JSONB,
-    child_agent_scope_ids JSONB,
-    child_needed_research_ids JSONB,
-    extra_fields JSONB,
-    sort_order DECIMAL(5,2),
-    updated_at TIMESTAMPTZ,
-    last_edited_by_user_id TEXT
-  );
+  FROM deduplicated_rows;
 END;
 $$ LANGUAGE plpgsql;
 

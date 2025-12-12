@@ -108,7 +108,8 @@ export async function importDatabasePagesFromNotionToSupabase({
 
       // Process insertions and upserts
       const pagesToInsert = changes.newPages;
-      const pagesToUpsert = [...changes.changedProperties, ...changes.changedRelationships];
+      // Deduplicate page IDs: pages with both property AND relationship changes appear in both arrays
+      const pagesToUpsert = Array.from(new Set([...changes.changedProperties, ...changes.changedRelationships]));
 
       if (pagesToInsert.length > 0 || pagesToUpsert.length > 0) {
         console.log(`📝 Processing ${pagesToInsert.length} new pages and ${pagesToUpsert.length} changed pages...`);
