@@ -24,7 +24,7 @@
     "prepare": "husky && husky install"
   },
   "dependencies": {
-    "@heroui/react": "^2.8.2",
+    "@heroui/react": "^2.8.5",
     "@notionhq/client": "^4.0.2",
     "@sentry/nextjs": "^10.27.0",
     "@supabase/supabase-js": "^2.56.0",
