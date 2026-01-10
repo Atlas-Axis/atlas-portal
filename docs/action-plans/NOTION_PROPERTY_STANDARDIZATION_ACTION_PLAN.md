@@ -62,19 +62,27 @@ The sync UI (`/atlas/sync`) now includes a "Use Dynamic Values (Migration Mode)"
 
 This toggle enables testing both modes during the migration period. The toggle state is stored in URL params (`?dynamic=true`), and changing it refreshes the page to regenerate the diff server-side.
 
-### Phase 4: Run Initial Sync
+### Phase 4: Populate New Fields with Dedicated Script
 
-- [ ] Run Markdown to Notion sync to populate new fields across all documents
+**Important Change:** The original plan to use Markdown-to-Notion sync for population was flawed because with `useDynamicValues=true` (the default), both sides calculate the same values, so no changes are detected. Instead, we use a dedicated population script.
+
+- [ ] Run population script to write calculated values directly to Notion: `npx tsx scripts/populate-standardized-notion-fields.ts`
+  - Script builds Atlas tree from Supabase data
+  - Extracts calculated `generatedDocID` and `generatedDocName` from tree nodes
+  - Updates Notion pages via API with standardized field values
+  - Supports resumption via checkpoint file if interrupted
+  - Takes ~30-40 minutes for full Atlas (~7000 documents at 3 req/sec)
 - [ ] Spot check documents in Notion to verify new fields are populated correctly
-- [ ] Compare Document Number values with expected values from Markdown
 
-### Phase 5: Verify Round-Trip
+### Phase 5: Import and Verify
 
-- [ ] Export Atlas from Supabase to Markdown
-- [ ] Make test changes in Markdown
-- [ ] Sync changes to Notion
-- [ ] Run Notion to Supabase import
-- [ ] Export again and verify changes persisted correctly
+- [ ] Run Notion to Supabase import to pull populated values into Supabase: `npx tsx scripts/import-notion-databases.ts`
+- [ ] Run verification script to confirm stored values match calculated values: `npx tsx scripts/verify-standardized-fields.ts`
+  - Compares `atlas_document_number` (stored) vs `generatedDocID` (calculated)
+  - Compares `plain_text_name` (stored) vs `generatedDocName` (calculated)
+  - Reports any mismatches with details
+  - Exit code 0 = verification passed, safe to proceed
+  - Exit code 1 = verification failed, investigate mismatches
 
 ### Phase 6: Run migration in production environment (see Production Migration Steps below)
 
@@ -123,6 +131,34 @@ The following items are explicitly deferred for later implementation:
   - Then updating import to read from the new property
 - **Ordering simplification**: Depends on relationship cleanup
 
+## Migration Strategy Change (January 2026)
+
+**Original Plan Issue:**
+
+The original Phase 4 planned to use the Markdown-to-Notion sync to populate new fields by detecting that they were empty. However, this approach had a fundamental flaw:
+
+- With `useDynamicValues=true` (the default), both Markdown and Supabase use dynamically calculated values
+- Since both sides calculate the same values, no differences are detected
+- No changes are triggered, so new fields remain empty
+
+**New Approach:**
+
+Use a dedicated population script (`scripts/populate-standardized-notion-fields.ts`) that:
+
+1. Builds the Atlas tree from Supabase data (reuses existing tree building logic)
+2. Extracts calculated document numbers and names from tree nodes
+3. Directly updates Notion pages via API with standardized field values
+4. Operates independently of change detection logic
+5. Supports resumption via checkpoint file if interrupted
+
+**Benefits:**
+
+- **Decouples population from sync**: Population is a one-time operation, not dependent on change detection
+- **Resumable**: Checkpoint file tracks progress, can resume from last processed page
+- **Verifiable**: Dedicated verification script compares stored vs calculated values
+- **Clear phases**: Explicit transitions between populate → import → verify → switch defaults
+- **Lower risk**: Explicit success/failure per document, no silent failures
+
 ## Production Migration Steps
 
 **Prerequisites:**
@@ -130,12 +166,14 @@ The following items are explicitly deferred for later implementation:
 - Phases 1-3 have been implemented and tested in the development environment
 - The codebase with dual-write/dual-read logic is deployed to production
 - You have access to production environment variables and Notion workspace
+- Population and verification scripts are available (`scripts/populate-standardized-notion-fields.ts`, `scripts/verify-standardized-fields.ts`)
 
 **Important Notes:**
 
 - The migration script is non-destructive - it only adds new properties without modifying or deleting existing data
 - The dual-read/dual-write code ensures the system continues to work during the migration
 - Old properties remain functional until explicitly deprecated in Phase 7
+- The population script uses direct Notion API updates, independent of the sync workflow
 
 ### Step-by-Step Production Migration
 
@@ -244,58 +282,56 @@ Before making any changes to production:
    - Check that `atlas_document_number` and `plain_text_name` are populated in Supabase
    - Spot check a few documents to ensure data matches expectations
 
-#### Step 6: Run Markdown to Notion Sync (Populate New Fields)
+#### Step 6: Populate New Fields with Dedicated Script
 
-1. Navigate to the sync UI in production:
-
-   ```
-   https://sky-atlas.io/atlas/sync
-   ```
-
-2. Load the current Atlas markdown from GitHub
-
-3. The diff should show changes for ALL documents because:
-   - New `Document Number` and `Document Title` fields are empty in Notion
-   - The sync will populate them from the markdown source
-
-4. Review the changes (will be extensive)
-
-5. Click "Sync to Notion" and monitor progress:
-   - This will take time (potentially hours for full Atlas)
-   - Watch for errors in the operation log
-   - Graceful stop is available if needed
-
-6. After sync completes:
-   - New fields should now be populated with values
-   - Old fields remain unchanged
-
-#### Step 7: Verify Round-Trip Integrity
-
-1. Export Atlas from production Supabase:
+1. Run the population script to write calculated values directly to Notion:
 
    ```bash
-   # Ensure production env vars are set
-   npx tsx scripts/atlas-export/generate-atlas-json.ts
-   npx tsx scripts/atlas-export/generate-atlas-markdown.ts
+   npx tsx scripts/populate-standardized-notion-fields.ts
    ```
 
-2. Compare with the pre-migration export from Step 1:
-   - Document numbers should match
-   - Document titles should match
-   - Relationships should be identical
-   - Ordering should be consistent
+2. Monitor progress:
+   - Script processes ~7000 documents at ~3 requests/second (Notion API limit)
+   - Takes approximately 30-40 minutes for full Atlas
+   - Progress is logged for every page update
+   - Checkpoint saved every 100 pages for resumption
 
-3. Make a small test change in the exported markdown:
-   - Edit content of a test document
-   - Sync the change back to Notion via the sync UI
+3. If interrupted, resume from checkpoint:
 
-4. Re-import from Notion to Supabase:
+   ```bash
+   npx tsx scripts/populate-standardized-notion-fields.ts --resume
+   ```
+
+4. After completion:
+   - New `Document Number` and `Document Title` fields are populated with calculated values
+   - Old fields remain unchanged for safety
+
+#### Step 7: Import and Verify
+
+1. Run Notion to Supabase import to pull populated values:
 
    ```bash
    npx tsx scripts/import-notion-databases.ts
    ```
 
-5. Export again and verify the test change persisted correctly
+2. Run verification script to confirm stored values match calculated values:
+
+   ```bash
+   npx tsx scripts/verify-standardized-fields.ts
+   ```
+
+3. Review verification results:
+   - Script compares stored (`atlas_document_number`, `plain_text_name`) vs calculated (`generatedDocID`, `generatedDocName`)
+   - Reports match percentages and any mismatches
+   - Exit code 0 = all values match (safe to proceed)
+   - Exit code 1 = some mismatches found (investigate before proceeding)
+
+4. If verification fails:
+   - Review mismatch details in output
+   - Re-run population script if needed
+   - Re-run import and verification
+
+5. Once verification passes, you can safely switch the default from dynamic to stored values
 
 #### Step 8: Monitor Production
 
@@ -327,12 +363,12 @@ If issues occur during migration:
 - [ ] All 10 databases have `Document Number` property
 - [ ] All 10 databases have `Document Title` property
 - [ ] All 10 databases have natural sorting formula property
+- [ ] Population script completed successfully (all pages updated)
 - [ ] New properties are populated with correct values
 - [ ] Old properties remain intact
 - [ ] `No.` sort order property marked as `[DEPRECATED] No.` in Sections & Primary Docs
 - [ ] Notion to Supabase import completes successfully
-- [ ] Markdown to Notion sync works correctly
-- [ ] Round-trip export-import-export produces consistent results
+- [ ] Verification script passes (stored values match calculated values)
 - [ ] Document ordering is correct (sorted by Document Number naturally)
 - [ ] No production errors or warnings
 - [ ] Users can access and edit documents normally
@@ -341,9 +377,9 @@ If issues occur during migration:
 
 ✅ Script output shows all properties added successfully  
 ✅ All databases show new empty properties (Document Number, Document Title, natural sorting formula)  
+✅ Population script completes with 100% success rate  
 ✅ Import completes without errors  
-✅ Sync populates new fields correctly  
-✅ Round-trip verification shows data consistency  
+✅ Verification script passes (exit code 0, all values match)  
 ✅ Document ordering works correctly with natural sorting formula  
 ✅ `No.` property marked as deprecated in Sections & Primary Docs  
 ✅ No production errors or user reports  
@@ -717,12 +753,81 @@ Remove `sibling_order_changed` change type entirely (already completed in Phase 
 - Ordering happens automatically in Notion (via formula), Supabase (via sort), and exports
 - No need to track sibling order changes explicitly
 
+## Migration Scripts
+
+### Population Script
+
+**File**: `scripts/populate-standardized-notion-fields.ts`
+
+**Purpose**: Populates the new standardized "Document Number" and "Document Title" fields in all Atlas databases by writing dynamically calculated values directly to Notion via API.
+
+**How it works**:
+
+1. Loads all Atlas pages from Supabase
+2. Builds Atlas tree structure (calculates document numbers and names)
+3. Flattens tree to get all nodes
+4. For each node, updates Notion page with:
+   - `Document Number` = node's `generatedDocID`
+   - `Document Title` = node's `generatedDocName`
+5. Saves checkpoint every 100 pages for resumption
+6. Respects Notion API rate limits (~3 requests/second)
+
+**Usage**:
+
+```bash
+# Normal run
+npx tsx scripts/populate-standardized-notion-fields.ts
+
+# Resume from checkpoint
+npx tsx scripts/populate-standardized-notion-fields.ts --resume
+
+# Dry run (show what would be updated)
+npx tsx scripts/populate-standardized-notion-fields.ts --dry-run
+```
+
+**Performance**: ~30-40 minutes for full Atlas (~7000 documents)
+
+### Verification Script
+
+**File**: `scripts/verify-standardized-fields.ts`
+
+**Purpose**: Verifies that stored values in Supabase match dynamically calculated values, confirming the migration was successful.
+
+**How it works**:
+
+1. Loads all Atlas pages from Supabase
+2. Builds Atlas tree structure (calculates document numbers and names)
+3. For each node, compares:
+   - Stored `atlas_document_number` vs calculated `generatedDocID`
+   - Stored `plain_text_name` vs calculated `generatedDocName`
+4. Reports match percentages and any mismatches
+5. Exits with code 0 if all match, code 1 if mismatches found
+
+**Usage**:
+
+```bash
+# Normal run (shows only mismatches)
+npx tsx scripts/verify-standardized-fields.ts
+
+# Verbose mode (shows all comparisons)
+npx tsx scripts/verify-standardized-fields.ts --verbose
+```
+
+**Exit codes**:
+
+- `0` - All values match (verification passed, safe to switch defaults)
+- `1` - Some values don't match (verification failed, investigate)
+- `2` - Fatal error occurred
+
 ## Code Changes Summary
 
 ### Files to Update
 
 | File                                                                              | Changes                                                                                             |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **Migration Scripts:**                                                            |                                                                                                     |
+| `scripts/populate-standardized-notion-fields.ts`                                  | **NEW** - Populates new fields in Notion with calculated values                                     |
+| `scripts/verify-standardized-fields.ts`                                           | **NEW** - Verifies stored values match calculated values                                            |
 | **Property Standardization:**                                                     |                                                                                                     |
 | `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` | Add new standardized property mappings, dual-read logic, eventually simplify                        |
 | `app/server/services/notion/convert-notion-pages-to-supabase-format.ts`           | Add dual-read logic for old/new fields; remove `extractSortOrder()` and sort order extraction logic |
