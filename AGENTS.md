@@ -117,8 +117,8 @@ This section describes the main workflows and features available in the applicat
 
 **Related Documentation**:
 
-- **[docs/NOTION_IMPORT_PROCESS.md](../docs/NOTION_IMPORT_PROCESS.md)** - Complete import process documentation
-- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Overall data pipeline architecture
+- **[docs/NOTION_IMPORT_PROCESS.md](./docs/NOTION_IMPORT_PROCESS.md)** - Complete import process documentation
+- **[docs/ATLAS_DATA_PIPELINE.md](./docs/ATLAS_DATA_PIPELINE.md)** - Overall data pipeline architecture
 
 ## 2. Markdown → Notion Sync
 
@@ -146,9 +146,9 @@ This section describes the main workflows and features available in the applicat
 
 **Related Documentation**:
 
-- **[docs/MARKDOWN_TO_NOTION_SYNC.md](../docs/MARKDOWN_TO_NOTION_SYNC.md)** - High-level sync workflow
-- **[app/atlas/sync/AGENTS.md](../app/atlas/sync/AGENTS.md)** - Detailed implementation guide
-- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Complete pipeline architecture
+- **[docs/MARKDOWN_TO_NOTION_SYNC.md](./docs/MARKDOWN_TO_NOTION_SYNC.md)** - High-level sync workflow
+- **[app/atlas/sync/AGENTS.md](./app/atlas/sync/AGENTS.md)** - Detailed implementation guide
+- **[docs/ATLAS_DATA_PIPELINE.md](./docs/ATLAS_DATA_PIPELINE.md)** - Complete pipeline architecture
 
 ## 3. Export the Atlas as a File
 
@@ -179,9 +179,9 @@ This section describes the main workflows and features available in the applicat
 
 **Related Documentation**:
 
-- **[docs/ATLAS_MARKDOWN_SYNTAX.md](../docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown format specification
-- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](../docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Export/import workflows
-- **[docs/ATLAS_TREE_STRUCTURES.md](../docs/ATLAS_TREE_STRUCTURES.md)** - Dual tree architecture (Notion Tree vs Export Tree)
+- **[docs/ATLAS_MARKDOWN_SYNTAX.md](./docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown format specification
+- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](./docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Export/import workflows
+- **[docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md)** - Dual tree architecture (Notion Tree vs Export Tree)
 
 ## 4. Atlas Portal (Viewer)
 
@@ -208,8 +208,8 @@ This section describes the main workflows and features available in the applicat
 
 **Related Documentation**:
 
-- **[docs/ATLAS_TREE_STRUCTURES.md](../docs/ATLAS_TREE_STRUCTURES.md)** - Tree architecture and data structures
-- **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Tree building algorithms
+- **[docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md)** - Tree architecture and data structures
+- **[app/server/atlas/notion-tree/AGENTS.md](./app/server/atlas/notion-tree/AGENTS.md)** - Tree building algorithms
 
 ## 5. Atlas Changelog
 
@@ -234,7 +234,7 @@ This section describes the main workflows and features available in the applicat
 
 **Related Documentation**:
 
-- **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** - Complete nesting bug documentation
+- **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** - Complete nesting bug documentation
 
 ## 7. Edit Page Generation (Obsolete)
 
@@ -390,7 +390,7 @@ Maintains bidirectional mappings between Notion page UUIDs and Atlas document UU
 
 Maps Notion's internal page identifiers to stable Atlas document UUIDs used in exported formats. This allows external systems to reference Atlas documents consistently regardless of Notion's internal IDs.
 
-See **[docs/UUID_MAPPING.md](../docs/UUID_MAPPING.md)** for detailed documentation.
+See **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** for detailed documentation.
 
 ### `notion_nesting_bug_mapping`
 
@@ -411,7 +411,7 @@ Manual workaround mapping for Notion's sub-item relationship bug at deep nesting
 
 Stores manual parent-child relationship corrections for cases where Notion's API fails to properly maintain sub-item relationships at deep nesting levels (typically 4+ levels deep). This table is used by the Notion-Markdown sync automations to apply and restore proper hierarchies.
 
-See **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** for detailed documentation.
+See **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** for detailed documentation.
 
 # Atlas
 
@@ -488,7 +488,7 @@ Scopes
 
 This hierarchy is respected by the Markdown→Notion sync engine, which creates pages in hierarchical order (parents before children) to ensure proper relationship establishment.
 
-See Atlas Document Numbering rules: **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
+See Atlas Document Numbering rules: **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)**.
 
 **Internal Nesting**: Some databases support internal hierarchy where documents can be nested under other documents of the same type:
 
@@ -623,7 +623,7 @@ This three-tier system ensures:
 - Defines child relationship mappings (e.g., 'Articles' → `child_article_ids`)
 - Used in `convert-notion-pages-to-supabase-format.ts`, `fetch-database-pages.ts`, and `compare-database-pages.ts`
 - Enables consistent data transformation between Notion API responses and Supabase storage format
-- See **[docs/NOTION_PROPERTY_MAPPING.md](../docs/NOTION_PROPERTY_MAPPING.md)** for complete property and relationship mapping reference
+- See **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** for complete property and relationship mapping reference
 
 ## Trigger.dev Tasks (`/app/server/services/trigger`)
 
@@ -663,45 +663,45 @@ This three-tier system ensures:
 
 ## Atlas Architecture & Core Concepts
 
-- **[docs/ATLAS_TREE_STRUCTURES.md](../docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree (internal) vs Export Tree (external)
-- **[docs/UUID_MAPPING.md](../docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
-- **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
-- **[docs/ATLAS_EXTRA_FIELDS.md](../docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
-- **[docs/NOTION_PROPERTY_MAPPING.md](../docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
-- **[docs/ATLAS_DATA_PIPELINE.md](../docs/ATLAS_DATA_PIPELINE.md)** - Overview of the Atlas data pipeline and data flow architecture
+- **[docs/ATLAS_TREE_STRUCTURES.md](./docs/ATLAS_TREE_STRUCTURES.md)** - Comprehensive guide to the dual tree architecture: Notion Tree (internal) vs Export Tree (external)
+- **[docs/UUID_MAPPING.md](./docs/UUID_MAPPING.md)** - UUID mapping system that maintains bidirectional mappings between Notion page UUIDs and Atlas document UUIDs
+- **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](./docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** - Comprehensive rules for Atlas document numbering, hierarchy, and relationships
+- **[docs/ATLAS_EXTRA_FIELDS.md](./docs/ATLAS_EXTRA_FIELDS.md)** - Documentation for extra fields in Atlas documents (Type Specifications, Scenarios, Scenario Variations)
+- **[docs/NOTION_PROPERTY_MAPPING.md](./docs/NOTION_PROPERTY_MAPPING.md)** - Complete reference for Notion property and relationship mappings to Supabase fields across all Atlas databases
+- **[docs/ATLAS_DATA_PIPELINE.md](./docs/ATLAS_DATA_PIPELINE.md)** - Overview of the Atlas data pipeline and data flow architecture
 
 ## Atlas Data Formats & Export
 
-- **[docs/ATLAS_MARKDOWN_SYNTAX.md](../docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown syntax specification for Atlas document representation
-- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](../docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
-- **[docs/MARKDOWN_TO_NOTION_SYNC.md](../docs/MARKDOWN_TO_NOTION_SYNC.md)** - Documentation for the Markdown to Notion synchronization process
+- **[docs/ATLAS_MARKDOWN_SYNTAX.md](./docs/ATLAS_MARKDOWN_SYNTAX.md)** - Markdown syntax specification for Atlas document representation
+- **[docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md](./docs/ATLAS_MARKDOWN_IMPORT_EXPORT.md)** - Import/export workflows for converting between Notion and Markdown formats
+- **[docs/MARKDOWN_TO_NOTION_SYNC.md](./docs/MARKDOWN_TO_NOTION_SYNC.md)** - Documentation for the Markdown to Notion synchronization process
 
 ## Edit Pages & Workflows (Obsolete)
 
-- **[docs/EDIT_PAGE_GENERATION_USAGE.md](../docs/EDIT_PAGE_GENERATION_USAGE.md)** - ❌ Obsolete: Guide for creating and managing Edit Pages in Notion (feature not maintained, will be reimplemented in future)
+- **[docs/EDIT_PAGE_GENERATION_USAGE.md](./docs/EDIT_PAGE_GENERATION_USAGE.md)** - ❌ Obsolete: Guide for creating and managing Edit Pages in Notion (feature not maintained, will be reimplemented in future)
 
 ## Notion Integration & Data Import
 
-- **[docs/NOTION_EMBEDS.md](../docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
-- **[docs/NOTION_NESTING_BUG_FIX.md](../docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
-- **[docs/NOTION_IMPORT_PROCESS.md](../docs/NOTION_IMPORT_PROCESS.md)** - Documentation for the Notion to Supabase import process
+- **[docs/NOTION_EMBEDS.md](./docs/NOTION_EMBEDS.md)** - Compatibility guide for embedded iframes across Notion platforms (web vs native apps)
+- **[docs/NOTION_NESTING_BUG_FIX.md](./docs/NOTION_NESTING_BUG_FIX.md)** - Manual workaround for Notion's sub-item relationship bug at deep nesting levels
+- **[docs/NOTION_IMPORT_PROCESS.md](./docs/NOTION_IMPORT_PROCESS.md)** - Documentation for the Notion to Supabase import process
 
 ## Action Plans & Findings
 
-- **[docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md](../docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md)** - Action plan for preventing content truncation issues
-- **[docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](../docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
-- **[docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** - Action plan for standardizing Notion property names and types
-- **[docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md](../docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md)** - Findings and fixes for Notion sub-item relationship issues
+- **[docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md](./docs/action-plans/CONTENT_TRUNCATION_PREVENTION_ACTION_PLAN.md)** - Action plan for preventing content truncation issues
+- **[docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md](./docs/action-plans/NOTION_EDIT_PAGES_WITH_TOGGLE_BLOCKS_ACTION_PLAN.md)** - Action plan for handling toggle blocks in Edit Pages
+- **[docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** - Action plan for standardizing Notion property names and types
+- **[docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md](./docs/findings/NOTION_SUBITEM_RELATIONSHIP_FIX.md)** - Findings and fixes for Notion sub-item relationship issues
 
 ## Component & Service Implementation Guides
 
 These AGENTS.md files contain detailed implementation guides and context for specific features:
 
-- **[app/atlas/sync/AGENTS.md](../app/atlas/sync/AGENTS.md)** - Markdown to Notion synchronization implementation details
-- **[app/server/atlas/notion-tree/AGENTS.md](../app/server/atlas/notion-tree/AGENTS.md)** - Atlas tree system data structures and algorithms implementation
-- **[app/server/services/trigger/AGENTS.md](../app/server/services/trigger/AGENTS.md)** - Trigger.dev background tasks implementation details
-- **[app/notion-api-key-testing/AGENTS.md](../app/notion-api-key-testing/AGENTS.md)** - Notion API key testing page implementation
-- **[app/server/atlas/README.md](../app/server/atlas/README.md)** - ❌ Obsolete: Documentation for the Atlas proposal generator (feature not maintained, will be reimplemented in future)
+- **[app/atlas/sync/AGENTS.md](./app/atlas/sync/AGENTS.md)** - Markdown to Notion synchronization implementation details
+- **[app/server/atlas/notion-tree/AGENTS.md](./app/server/atlas/notion-tree/AGENTS.md)** - Atlas tree system data structures and algorithms implementation
+- **[app/server/services/trigger/AGENTS.md](./app/server/services/trigger/AGENTS.md)** - Trigger.dev background tasks implementation details
+- **[app/notion-api-key-testing/AGENTS.md](./app/notion-api-key-testing/AGENTS.md)** - Notion API key testing page implementation
+- **[app/server/atlas/README.md](./app/server/atlas/README.md)** - ❌ Obsolete: Documentation for the Atlas proposal generator (feature not maintained, will be reimplemented in future)
 
 ## Important Command line scripts
 

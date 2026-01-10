@@ -6,9 +6,9 @@ This document outlines the plan to standardize Notion database properties across
 
 **Related Documentation:**
 
-- [NOTION_PROPERTY_MAPPING.md](./NOTION_PROPERTY_MAPPING.md) - Current property mapping reference
-- [NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md) - Notion to Supabase import workflow
-- [MARKDOWN_TO_NOTION_SYNC.md](./MARKDOWN_TO_NOTION_SYNC.md) - Markdown to Notion sync workflow
+- [NOTION_PROPERTY_MAPPING.md](../NOTION_PROPERTY_MAPPING.md) - Current property mapping reference
+- [NOTION_IMPORT_PROCESS.md](../NOTION_IMPORT_PROCESS.md) - Notion to Supabase import workflow
+- [MARKDOWN_TO_NOTION_SYNC.md](../MARKDOWN_TO_NOTION_SYNC.md) - Markdown to Notion sync workflow
 
 ## Implementation Progress
 

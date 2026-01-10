@@ -171,7 +171,7 @@ Assigns document numbers to all nodes in the tree structures using the Atlas Doc
 
 **Document Numbering Patterns:**
 
-See **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** for comprehensive documentation.
+See **[docs/ATLAS_DOCUMENT_NUMBERING_RULES.md](../../../../docs/ATLAS_DOCUMENT_NUMBERING_RULES.md)** for comprehensive documentation.
 
 Quick reference:
 

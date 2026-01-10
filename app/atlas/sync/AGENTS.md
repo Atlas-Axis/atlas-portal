@@ -437,8 +437,8 @@ Filters apply to the sync operation. Checkboxes are disabled while sync is runni
 
 The "Use Dynamic Values (Migration Mode)" checkbox controls how document number (`doc_no`) and name are determined during change detection:
 
-- **OFF (default)**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) populated from standardized Notion fields (`Document Number`, `Document Title`)
-- **ON**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the old behavior
+- **ON (default)**: Uses dynamically calculated values (`generatedDocID`, `generatedDocName`) - the current behavior until production migration is complete
+- **OFF**: Uses stored values from Supabase (`atlas_document_number`, `plain_text_name`) populated from standardized Notion fields (`Document Number`, `Document Title`) - use after production migration
 
 When this toggle is changed, the page refreshes with updated URL params (`?dynamic=true`) to regenerate the diff server-side. This avoids server action payload size issues with large diff results.
 

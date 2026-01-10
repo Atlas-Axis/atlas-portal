@@ -25,7 +25,7 @@ export default async function AtlasSyncPage({
   // Read useDynamicValues from URL params (migration mode toggle)
   // @todo CLEANUP: Remove after migration complete (Phase 8)
   const params = await searchParams;
-  const useDynamicValues = params.dynamic === 'true';
+  const useDynamicValues = params.dynamic !== 'false';
 
   // Diff happens server-side for performance (large datasets)
   const result = await diffAtlasScopeTreeLists({ useDynamicValues });

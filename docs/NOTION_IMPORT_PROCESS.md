@@ -513,7 +513,7 @@ if (notionPropertyName === STANDARDIZED_DOCUMENT_TITLE) {
 
 **Related Documentation:**
 
-- See **[NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** for the full property standardization plan
+- See **[NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** for the full property standardization plan
 
 ## Sync Locking
 
