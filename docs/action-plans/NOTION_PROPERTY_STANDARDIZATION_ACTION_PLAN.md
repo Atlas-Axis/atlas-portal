@@ -110,6 +110,7 @@ After migration is complete and verified, remove migration compatibility code:
 - [ ] Simplify `diffAtlasScopeTreeLists()` (remove options parameter)
 - [ ] Remove migration mode tests (keep stored values tests only)
 - [ ] Clean up documentation references to migration mode
+- [ ] Remove empty standardized field skip logic from `compare-database-pages.ts` (lines ~220-230)
 
 **Files with inline cleanup comments:**
 
@@ -117,6 +118,7 @@ After migration is complete and verified, remove migration compatibility code:
 - `app/server/atlas/diff/markdown-supabase-diff.ts`
 - `app/atlas/sync/content.tsx`
 - `app/atlas/sync/_actions/sync-actions.ts`
+- `app/server/services/notion/compare-database-pages.ts` (empty field skip logic)
 
 ### Deferred Items
 

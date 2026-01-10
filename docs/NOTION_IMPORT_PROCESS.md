@@ -473,6 +473,18 @@ The change detection system tracks both legacy property names (from `NOTION_DATA
 
 When new standardized Notion properties are added (as part of property standardization), they must be explicitly added to the change detection logic. Otherwise, changes to these new fields will not be detected, and pages will be incorrectly marked as "unchanged" even when they have updates.
 
+**Migration Period Behavior:**
+
+During the property standardization migration (after new properties are added to Notion but before the population script runs), the change detection logic includes special handling to prevent false positives:
+
+- **Problem**: New standardized fields are empty in Notion, but Supabase has values (via dual-read fallback from old fields)
+- **Without fix**: Every import would detect ALL pages as "changed" and re-import ~7000 pages unnecessarily
+- **Solution**: Skip comparing standardized fields when they're empty in Notion
+- **Result**: Normal change detection during migration, efficient imports
+- **Cleanup**: This special handling is removed in Phase 8 after migration is complete
+
+This ensures efficient imports during the migration period while maintaining correct change detection once the population script has run.
+
 **Symptom of Missing Standardized Properties:**
 
 - Markdown-to-Notion sync successfully writes new values to Notion

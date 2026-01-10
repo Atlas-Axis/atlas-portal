@@ -216,6 +216,18 @@ export function compareDatabasePages({
     // Check property changes
     for (const propertyName of trackedProperties) {
       let notionValue = extractNotionPropertyValue(notionPage, propertyName);
+
+      // During migration: Skip comparing new standardized fields if empty in Notion
+      // This prevents false positives where dual-read populated Supabase from old fields
+      // but new fields in Notion are not yet populated by the population script
+      // @todo CLEANUP: Remove this block after migration complete (Phase 8)
+      if (
+        (propertyName === STANDARDIZED_DOCUMENT_NUMBER || propertyName === STANDARDIZED_DOCUMENT_TITLE) &&
+        (notionValue === null || notionValue === '' || (typeof notionValue === 'string' && notionValue.trim() === ''))
+      ) {
+        continue; // Skip this property - it will be populated by population script
+      }
+
       const supabaseValue = extractPropertyValueFromSupabase(supabasePage, propertyName, atlasDatabaseName);
 
       // Special handling for sortOrder: convert to number from string
