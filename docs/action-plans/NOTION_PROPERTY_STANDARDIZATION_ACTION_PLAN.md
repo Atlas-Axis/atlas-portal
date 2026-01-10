@@ -448,6 +448,36 @@ Some databases include ALL descendant IDs in their relationship properties inste
 - Change detection and diffing is slower
 - Markdown to Notion sync has unnecessary complexity
 
+## Migration Safety Strategy
+
+### Old Fields Preserved as Backup
+
+During the migration period, the Markdown-to-Notion sync workflow has been modified to **write ONLY to new standardized fields**, preserving old fields untouched as a backup. This provides a safety net in case something goes wrong during the first production sync.
+
+**Implementation Details:**
+
+- **Population Script** (`scripts/populate-standardized-notion-fields.ts`): Writes ONLY to new fields (`Document Number`, `Document Title`)
+- **Markdown-to-Notion Sync** (`buildNotionProperties`): Writes ONLY to new fields during migration
+- **Old Fields**: Remain unchanged in Notion with original values
+- **Recovery**: If issues occur, old fields can be used to restore original values
+
+**What Gets Written:**
+
+| Field Type                                              | Written by Sync? | Notes                     |
+| ------------------------------------------------------- | ---------------- | ------------------------- |
+| `Document Number` (new)                                 | ✅ Yes           | New standardized field    |
+| `Document Title` (new)                                  | ✅ Yes           | New standardized field    |
+| Old name fields (e.g., "Name", "Doc No (or Temp Name)") | ❌ No            | Preserved as backup       |
+| Old number fields (e.g., "Doc No", "No.")               | ❌ No            | Preserved as backup       |
+| Type field                                              | ✅ Yes           | Not affected by migration |
+| Content field                                           | ✅ Yes           | Not affected by migration |
+| Extra fields                                            | ✅ Yes           | Not affected by migration |
+| Relationship properties                                 | ✅ Yes           | Not affected by migration |
+
+**After Migration Verification:**
+
+Once the migration is verified and old fields are deprecated (Phase 7), the sync can optionally be updated to write to old fields again if needed for legacy integrations, or old properties can be deleted from Notion databases entirely.
+
 ## New Standardized Fields
 
 ### Document Number (rich_text)

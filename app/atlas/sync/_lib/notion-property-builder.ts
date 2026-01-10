@@ -128,41 +128,13 @@ export function buildNotionProperties(
   warnings?: ContentConversionWarning[],
 ): Record<string, unknown> {
   const config = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
-  // For those properties that are not rich_text, we read the type
-  const typeOverrides = NOTION_PROPERTY_TYPE_OVERRIDES[atlasDatabaseName] || {};
   const properties: Record<string, unknown> = {};
 
-  // Build basic properties
-  // Document name property - can be title or rich_text depending on database
-  const documentNameNotionPropertyName = config.properties.atlasDocumentName;
-  const documentNamePropertyType = typeOverrides[documentNameNotionPropertyName] || 'rich_text';
-  const documentName = doc.name || '';
-
-  // Document name is a required field in Notion. For rich_text types, we use allowEmpty = true
-  // to ensure empty names create [{ text: { content: '' } }] instead of [], preventing null values.
-  // For title types, Notion handles empty values natively.
-  const allowEmptyForDocumentName = documentNamePropertyType === 'rich_text';
-  properties[documentNameNotionPropertyName] = formatNotionProperty(
-    documentName,
-    documentNamePropertyType,
-    uuidMappings,
-    allowEmptyForDocumentName,
-    warnings,
-  )!;
-
-  // Document number (rich_text) - only sync if it's a different property than document name
-  // Some databases (e.g., Sections & Primary Docs) use the same property for both name and doc_no
-  const documentNoNotionPropertyName = config.properties.atlasDocumentNo;
-  if (documentNoNotionPropertyName !== documentNameNotionPropertyName) {
-    const documentNoPropertyType = typeOverrides[documentNoNotionPropertyName] || 'rich_text';
-    properties[documentNoNotionPropertyName] = formatNotionProperty(
-      doc.doc_no || '',
-      documentNoPropertyType,
-      uuidMappings,
-      false,
-      warnings,
-    )!;
-  }
+  // ============================================================================
+  // MIGRATION SAFETY: Old fields (Name, No., etc.) are NOT written during sync
+  // to preserve them as a backup. Only new standardized fields are written.
+  // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // ============================================================================
 
   // Document type (select) - always a select field in Notion
   properties[config.properties.atlasDocumentType] = {
@@ -182,8 +154,8 @@ export function buildNotionProperties(
 
   // ============================================================================
   // NEW STANDARDIZED FIELDS (Phase 2 of Property Standardization)
-  // Write to new standardized fields in addition to old fields for backward compatibility.
-  // These fields are the same across all databases, simplifying the mapping logic.
+  // During migration, we ONLY write to new standardized fields to preserve old
+  // fields as a backup. These fields are the same across all databases.
   // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
   // ============================================================================
 

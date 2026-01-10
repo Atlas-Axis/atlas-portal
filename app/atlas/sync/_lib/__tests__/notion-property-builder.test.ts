@@ -35,9 +35,8 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
 
-      // Document name is synced (title field for Sections & Primary Docs)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Doc No (or Temp Name)'] as any).title[0].text.content).toBe('Test Section');
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Doc No (or Temp Name)']).toBeUndefined();
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,8 +46,11 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Content'] as any).rich_text[0].text.content).toBe('Section content');
 
-      // Document number is not currently synced (commented out in implementation)
-      // expect((properties['Doc No'] as any).rich_text[0].text.content).toBe('A.1.2');
+      // NEW STANDARDIZED FIELDS: Written during migration
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1.2');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Test Section');
     });
 
     it('builds basic properties for Scope document', () => {
@@ -63,9 +65,9 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
 
-      // Document name is synced (rich_text field for Scopes)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).rich_text[0].text.content).toBe('Test Scope');
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Name']).toBeUndefined();
+      expect(properties['Doc No']).toBeUndefined();
 
       // Document type is synced (select field)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,8 +77,11 @@ describe('notion-property-builder', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((properties['Content'] as any).rich_text[0].text.content).toBe('Scope content');
 
-      // Document number is not currently synced (commented out in implementation)
-      // expect((properties['Doc No'] as any).rich_text[0].text.content).toBe('A.1');
+      // NEW STANDARDIZED FIELDS: Written during migration
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Test Scope');
     });
 
     it('builds extra fields for Type Specification document', () => {
@@ -277,9 +282,8 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Agent Scope Database', mockUuidMappings);
 
-      // Document name is synced (title field for Agent Scope Database)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Document Name'] as any).title[0].text.content).toBe('Agent Core');
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Document Name']).toBeUndefined();
 
       // Agent Scope Database uses "Doc Type" instead of "Type"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -287,6 +291,12 @@ describe('notion-property-builder', () => {
 
       // Should not have a "Type" property
       expect(properties['Type']).toBeUndefined();
+
+      // NEW STANDARDIZED FIELDS: Written during migration
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1.1');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Agent Core');
     });
 
     it('uses correct property name for document type in Scopes database', () => {
@@ -301,9 +311,8 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
 
-      // Document name is synced (rich_text field for Scopes)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).rich_text[0].text.content).toBe('Test Scope');
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Name']).toBeUndefined();
 
       // Scopes database uses "Type"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -311,9 +320,15 @@ describe('notion-property-builder', () => {
 
       // Should not have a "Doc Type" property (only Agent Scope Database uses "Doc Type")
       expect(properties['Doc Type']).toBeUndefined();
+
+      // NEW STANDARDIZED FIELDS: Written during migration
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Number'] as any).rich_text[0].text.content).toBe('A.1');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Test Scope');
     });
 
-    it('handles document name as title type for Sections & Primary Docs', () => {
+    it('does not write old document name field (title type) for Sections & Primary Docs', () => {
       const doc: ExportAtlasTreeBaseDocument = {
         type: 'Core',
         doc_no: 'A.1.2.1',
@@ -325,17 +340,17 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
 
-      // Document name uses title type (from NOTION_PROPERTY_TYPE_OVERRIDES)
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Doc No (or Temp Name)']).toBeUndefined();
+
+      // NEW STANDARDIZED FIELDS: Always rich_text (not title)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Doc No (or Temp Name)'] as any).title).toBeDefined();
+      expect((properties['Document Title'] as any).rich_text).toBeDefined();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Doc No (or Temp Name)'] as any).title[0].text.content).toBe('Core Document Name');
-      // Should NOT have rich_text property
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Doc No (or Temp Name)'] as any).rich_text).toBeUndefined();
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Core Document Name');
     });
 
-    it('handles document name as rich_text type for Articles', () => {
+    it('does not write old document name field (rich_text type) for Articles', () => {
       const doc: ExportAtlasTreeBaseDocument = {
         type: 'Article',
         doc_no: 'A.1.1',
@@ -347,17 +362,17 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Articles', mockUuidMappings);
 
-      // Document name uses rich_text type (no override for "Name" in Articles)
+      // OLD FIELDS: NOT written during migration (preserved as backup)
+      expect(properties['Name']).toBeUndefined();
+
+      // NEW STANDARDIZED FIELDS: Always rich_text
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).rich_text).toBeDefined();
+      expect((properties['Document Title'] as any).rich_text).toBeDefined();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).rich_text[0].text.content).toBe('Article Name');
-      // Should NOT have title property
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).title).toBeUndefined();
+      expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Article Name');
     });
 
-    it('handles empty document name for title type', () => {
+    it('handles empty document name in standardized field', () => {
       const doc: ExportAtlasTreeBaseDocument = {
         type: 'Core',
         doc_no: 'A.1.2.1',
@@ -369,12 +384,15 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Sections & Primary Docs', mockUuidMappings);
 
-      // Empty name should result in empty title array with one empty text item
+      // OLD FIELDS: NOT written during migration
+      expect(properties['Doc No (or Temp Name)']).toBeUndefined();
+
+      // Empty name should result in empty rich_text array for standardized field
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Doc No (or Temp Name)'] as any).title[0].text.content).toBe('');
+      expect((properties['Document Title'] as any).rich_text).toEqual([]);
     });
 
-    it('handles empty document name for rich_text type', () => {
+    it('handles empty document name in standardized field for Scopes', () => {
       const doc: ExportAtlasTreeBaseDocument = {
         type: 'Scope',
         doc_no: 'A.1',
@@ -386,9 +404,12 @@ describe('notion-property-builder', () => {
 
       const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
 
-      // Empty name should result in rich_text array with one empty text item
+      // OLD FIELDS: NOT written during migration
+      expect(properties['Name']).toBeUndefined();
+
+      // Empty name should result in empty rich_text array for standardized field
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((properties['Name'] as any).rich_text[0].text.content).toBe('');
+      expect((properties['Document Title'] as any).rich_text).toEqual([]);
     });
 
     it('handles select type extra field (Type Category)', () => {
@@ -515,9 +536,10 @@ describe('notion-property-builder', () => {
     });
 
     // ============================================================================
-    // STANDARDIZED FIELDS TESTS (Property Standardization Phase 2)
-    // These tests verify that buildNotionProperties writes to the new standardized
-    // fields (Document Number, Document Title) in addition to the old fields.
+    // STANDARDIZED FIELDS TESTS (Property Standardization Migration)
+    // These tests verify that buildNotionProperties writes ONLY to the new
+    // standardized fields (Document Number, Document Title), preserving old
+    // fields as a backup during migration.
     // ============================================================================
 
     describe('standardized fields', () => {
@@ -559,7 +581,7 @@ describe('notion-property-builder', () => {
         expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('My Scope Name');
       });
 
-      it('writes both standardized fields AND old fields for backward compatibility', () => {
+      it('writes ONLY standardized fields (old fields preserved as backup)', () => {
         const doc: ExportAtlasTreeBaseDocument = {
           type: 'Scope',
           doc_no: 'A.2',
@@ -571,13 +593,11 @@ describe('notion-property-builder', () => {
 
         const properties = buildNotionProperties(doc, 'Scopes', mockUuidMappings);
 
-        // Old fields should still be populated
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((properties['Name'] as any).rich_text[0].text.content).toBe('Scope Name');
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((properties['Doc No'] as any).title[0].text.content).toBe('A.2');
+        // Old fields should NOT be written (preserved as backup in Notion)
+        expect(properties['Name']).toBeUndefined();
+        expect(properties['Doc No']).toBeUndefined();
 
-        // New standardized fields should also be populated
+        // New standardized fields should be populated
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Scope Name');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -637,9 +657,8 @@ describe('notion-property-builder', () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((properties['Document Title'] as any).rich_text[0].text.content).toBe('Agent Core Document');
 
-        // Old fields should also be present
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((properties['Document Name'] as any).title[0].text.content).toBe('Agent Core Document');
+        // Old fields should NOT be written (preserved as backup)
+        expect(properties['Document Name']).toBeUndefined();
       });
 
       it('writes standardized fields for Needed Research documents', () => {
