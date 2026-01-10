@@ -14,22 +14,19 @@ This document outlines the plan to standardize Notion database properties across
 
 This section tracks the implementation status of each phase.
 
-### Phase 1: Add New Properties (Non-Destructive) ✅ COMPLETED
+### Phase 1: Test Adding New Properties (Dev Environment) ✅ COMPLETED
 
 - [x] Create script to add new properties to Notion databases (`scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`)
 - [x] Run script in **dev environment** to add `Document Number` and `Document Title` properties
 - ~~[ ] Manually rename `Doc Type` to `Type` in Agent Scope Database~~ **DEFERRED** - Type field standardization postponed to minimize breaking changes
-- [ ] Run migration in **production environment** (see Production Migration Steps below)
-- [ ] Add new clean relationship properties (direct children only) - **DEFERRED**
 
 ### Phase 2: Update Markdown to Notion Sync ✅ COMPLETED
 
 - [x] Update `notion-property-builder.ts` to write to new standardized fields (`Document Number`, `Document Title`)
-- [x] Continue writing to old fields for backward compatibility during transition
+- [x] Write ONLY to new standardized fields (old fields preserved as backup during migration)
 - [x] Centralize constants in `app/server/atlas/constants.ts` (`STANDARDIZED_DOCUMENT_NUMBER`, `STANDARDIZED_DOCUMENT_TITLE`)
-- [x] Add unit tests for standardized field writing (8 tests in `notion-property-builder.test.ts`)
+- [x] Add unit tests for standardized field writing (40 tests in `notion-property-builder.test.ts`)
 - [x] Remove `sibling_order_changed` change type
-- [ ] Update sync to write to new clean relationship properties - **DEFERRED** (depends on creating new relationship properties in Notion first)
 
 ### Phase 3: Update Import for Dual-Read ✅ COMPLETED
 
@@ -84,7 +81,18 @@ This toggle enables testing both modes during the migration period. The toggle s
   - Exit code 0 = verification passed, safe to proceed
   - Exit code 1 = verification failed, investigate mismatches
 
-### Phase 6: Run migration in production environment (see Production Migration Steps below)
+### Phase 6: Run Migration in Production Environment
+
+- [ ] Run property creation script: `npx tsx scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`
+  - Creates empty `Document Number` and `Document Title` properties in all 10 databases
+- [ ] Run population script: `npx tsx scripts/populate-standardized-notion-fields.ts`
+  - Populates new properties with calculated values from Atlas tree
+- [ ] Run Notion to Supabase import: `npx tsx scripts/import-notion-databases.ts`
+  - Pulls populated values from Notion into Supabase
+- [ ] Run verification script: `npx tsx scripts/verify-standardized-fields.ts`
+  - Confirms stored values match calculated values
+- [ ] Add natural sorting formula property manually to each database (see Step 3 in Production Migration Steps)
+- [ ] See Production Migration Steps section below for detailed step-by-step instructions
 
 ### Phase 7: Deprecate Old Fields
 
@@ -127,11 +135,7 @@ The following items are explicitly deferred for later implementation:
 - **Type field standardization**: Decision to standardize "Doc Type" → "Type" for Agent Scope Database has been deferred to minimize breaking changes during migration. Agent Scope Database will continue using "Doc Type" property name.
   - **IMPORTANT**: When implementing, remember to add the standardized Type field to change detection in `compare-database-pages.ts`. See [NOTION_IMPORT_PROCESS.md](../../NOTION_IMPORT_PROCESS.md#standardized-properties-in-change-detection) for the pattern.
 - **Document title syntax changes**: Decision on Option 1/2/3 deferred
-- **Clean relationship properties for Articles database**: Will be implemented separately
-  - Requires creating new "Sections" relationship property in Articles database (Notion)
-  - Then updating sync to write to the new property
-  - Then updating import to read from the new property
-- **Ordering simplification**: Depends on relationship cleanup
+- **Clean relationship properties**: Moved to separate effort - see [CLEAN_RELATIONSHIP_PROPERTIES.md](./CLEAN_RELATIONSHIP_PROPERTIES.md)
 
 ## Migration Strategy Change (January 2026)
 
@@ -531,28 +535,6 @@ The syntax for document titles in Notion is an open question to be decided durin
 
 Decision will be made during implementation based on user needs.
 
-## New Clean Relationship Properties
-
-### Problem
-
-Current relationship properties like `Sections & Primary Docs` in Articles database include all descendants, not just direct children. (This may be the only affected relationship)
-
-### Solution
-
-Create new relationship properties that only contain direct child pages:
-
-| Database             | Old Relationship Property | New Relationship Property |
-| -------------------- | ------------------------- | ------------------------- |
-| Articles             | `Sections & Primary Docs` | `Sections`                |
-| (other affected DBs) | (to be identified)        | (to be created)           |
-
-### Mapping
-
-New relationship properties will map to existing Supabase child ID columns:
-
-- No schema changes needed
-- Example: `Direct Sections & Primary Docs` → `child_section_and_primary_doc_ids`
-
 ## Migration Strategy
 
 ### Phase 1: Add New Properties (Non-Destructive)
@@ -561,7 +543,6 @@ New relationship properties will map to existing Supabase child ID columns:
 
 1. Add `Document Number` (rich_text) property to all 10 Atlas databases
 2. Add `Document Title` (rich_text) property to all 10 Atlas databases
-3. Add new clean relationship properties (direct children only)
 
 **Important:**
 
@@ -573,15 +554,14 @@ New relationship properties will map to existing Supabase child ID columns:
 
 **Code Changes:**
 
-1. Update sync to write to new standardized fields:
-   - Write `Document Number` instead of database-specific doc number fields
-   - Write `Document Title` instead of database-specific name fields
-2. Update sync to write to new clean relationship properties (**DEFERRED** - depends on creating new relationship properties in Notion first)
-3. Remove `sibling_order_changed` change type
+1. Update sync to write ONLY to new standardized fields (old fields preserved as backup):
+   - Write `Document Number` (not database-specific doc number fields)
+   - Write `Document Title` (not database-specific name fields)
+2. Remove `sibling_order_changed` change type
 
 **Files Updated:**
 
-- `app/atlas/sync/_lib/notion-property-builder.ts` - Now writes to standardized fields
+- `app/atlas/sync/_lib/notion-property-builder.ts` - Writes only to standardized fields
 - `app/server/atlas/constants.ts` - Centralized constants for standardized property names
 
 ### Phase 3: Update Import for Dual-Read
@@ -787,6 +767,41 @@ Remove `sibling_order_changed` change type entirely (already completed in Phase 
 
 ## Migration Scripts
 
+There are three scripts involved in the property standardization migration, run in this order:
+
+1. **Property Creation Script** - Creates empty properties in Notion databases
+2. **Population Script** - Fills properties with calculated values
+3. **Verification Script** - Verifies values match calculated values
+
+### Property Creation Script
+
+**File**: `scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`
+
+**Purpose**: Creates the new standardized properties (`Document Number`, `Document Title`) in all 10 Atlas databases in Notion. This script only creates empty properties - it does not populate values.
+
+**How it works**:
+
+1. Iterates through all 10 Atlas databases
+2. For each database, checks if properties already exist
+3. Adds `Document Number` (rich_text) property if not present
+4. Adds `Document Title` (rich_text) property if not present
+5. Skips properties that already exist (safe to run multiple times)
+
+**Usage**:
+
+```bash
+npx tsx scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts
+```
+
+**Output**: Lists all 10 databases with status for each property (added or already exists).
+
+**Note**: This script is environment-aware. Ensure the correct `NOTION_API_KEY` environment variable is set:
+
+- Development: Points to dev/test Notion workspace
+- Production: Points to production Notion workspace
+
+**Related**: See Phase 1 and Phase 6 in this document for when to run this script.
+
 ### Population Script
 
 **File**: `scripts/populate-standardized-notion-fields.ts`
@@ -858,14 +873,14 @@ npx tsx scripts/verify-standardized-fields.ts --verbose
 | File                                                                              | Changes                                                                                             |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | **Migration Scripts:**                                                            |                                                                                                     |
+| `scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`                  | Creates empty `Document Number` and `Document Title` properties in all Atlas databases              |
 | `scripts/populate-standardized-notion-fields.ts`                                  | **NEW** - Populates new fields in Notion with calculated values                                     |
 | `scripts/verify-standardized-fields.ts`                                           | **NEW** - Verifies stored values match calculated values                                            |
 | **Property Standardization:**                                                     |                                                                                                     |
 | `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` | Add new standardized property mappings, dual-read logic, eventually simplify                        |
 | `app/server/services/notion/convert-notion-pages-to-supabase-format.ts`           | Add dual-read logic for old/new fields; remove `extractSortOrder()` and sort order extraction logic |
 | `app/server/services/notion/compare-database-pages.ts`                            | Remove `SORT_ORDER` case from `extractPropertyValueFromSupabase()`                                  |
-| `app/server/services/notion/import-database-to-supabase.ts`                       | Update to use new relationship properties (deferred)                                                |
-| `app/atlas/sync/_lib/*`                                                           | Write to new fields, remove sibling order logic (already done)                                      |
+| `app/atlas/sync/_lib/*`                                                           | Write ONLY to new fields (old fields preserved), remove sibling order logic (already done)          |
 | `app/atlas/sync/_actions/*`                                                       | Update server actions                                                                               |
 | `app/atlas/sync/AGENTS.md`                                                        | Remove sibling_order_changed documentation (already done)                                           |
 | **Ordering Simplification:**                                                      |                                                                                                     |
@@ -911,19 +926,19 @@ npx tsx scripts/verify-standardized-fields.ts --verbose
 
 ### Import Performance
 
-- **Before**: ~15 minutes for full import (~6000 pages)
-- **After**: ~5 minutes (estimated 3x improvement)
-- **Reason**: Clean relationships eliminate pagination for bloated relation properties
+- **Current**: ~15 minutes for full import (~7000 pages)
+- **After property standardization**: Similar performance (no significant change expected)
+- **Note**: Import performance improvements from clean relationships tracked separately in [CLEAN_RELATIONSHIP_PROPERTIES.md](./CLEAN_RELATIONSHIP_PROPERTIES.md)
 
 ### Change Detection
 
-- Faster comparison (fewer relationships to compare)
 - Simpler logic (no sibling order tracking)
+- Consistent ordering across all systems
 
 ### Markdown to Notion Sync
 
-- Simpler change detection (4 change types instead of 5)
-- Faster relationship updates (direct children only)
+- Simpler change detection (4 change types instead of 5 - removed `sibling_order_changed`)
+- Safer migration (old fields preserved as backup)
 
 ## Important Distinction: Nesting Bug Fix vs Sort Order
 
@@ -991,13 +1006,12 @@ After migration, sibling positioning within a parent will be determined by:
 ## Success Criteria
 
 1. All Atlas databases have standardized `Document Number` and `Document Title` properties
-2. All relationship properties contain only direct children
-3. Markdown to Notion sync works correctly with new fields
-4. Notion to Supabase import reads from new fields only
-5. Import time reduced by ~3x
-6. Ordering is consistent across Notion, Supabase, and Markdown exports
-7. `sibling_order_changed` code removed from sync workflow
-8. Old properties deprecated and eventually removed
+2. Markdown to Notion sync works correctly with new fields (writes only to new fields)
+3. Notion to Supabase import reads from new fields (with fallback to old fields during migration)
+4. Ordering is consistent across Notion, Supabase, and Markdown exports
+5. `sibling_order_changed` code removed from sync workflow
+6. Old properties deprecated and eventually removed
+7. Verification script confirms stored values match calculated values
 
 ## Appendix: Affected Databases
 
