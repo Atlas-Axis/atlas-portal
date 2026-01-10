@@ -53,6 +53,23 @@ The following table shows how Notion property names map to internal Supabase fie
 - **Content**: Notion property name mapped to main content field, or "N/A" if content is stored in extra fields
 - **Extra Fields**: Additional properties specific to certain document types (see below)
 
+## New Standardized Properties (Migration)
+
+As part of the property standardization migration, two new properties have been added to ALL 10 Atlas databases:
+
+| Property Name   | Type      | Purpose                      | Maps to Supabase Field  |
+| --------------- | --------- | ---------------------------- | ----------------------- |
+| Document Number | rich_text | Standardized document number | `atlas_document_number` |
+| Document Title  | rich_text | Standardized document name   | `plain_text_name`       |
+
+**Migration Status**: These fields are being populated as part of the ongoing migration. See [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md) for details.
+
+**Import Behavior**: The import uses dual-read logic - preferring new fields when populated, falling back to old fields if empty.
+
+**Sync Behavior**: The Markdown-to-Notion sync writes ONLY to new standardized fields, preserving old fields as backup during migration.
+
+**Future State**: After migration is complete, the old database-specific property names (shown in the table above) will be deprecated and eventually removed. The new standardized properties will become the primary fields used across all workflows.
+
 ### Extra Fields by Document Type
 
 **Type Specification** (in Sections & Primary Docs database):
@@ -163,6 +180,7 @@ These type overrides are critical when syncing from Markdown to Notion, as they 
 
 - **[NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md)** - Step-by-step import workflow with change detection
 - **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** - Complete Notion → Supabase → Markdown pipeline
+- **[NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** - Property standardization migration plan
 
 ### Configuration Files
 

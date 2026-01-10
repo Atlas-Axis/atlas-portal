@@ -446,6 +446,16 @@ This toggle is useful during the migration period (see [NOTION_PROPERTY_STANDARD
 
 **Technical Note**: In Next.js 15+, `searchParams` is an async prop that must be awaited before accessing URL parameters.
 
+**3.6. Property Write Behavior (Migration Safety)**
+
+During the property standardization migration, the sync writes ONLY to new standardized fields:
+
+- **Written**: `Document Number`, `Document Title` (new standardized fields)
+- **NOT Written**: Old database-specific name/number fields (preserved as backup)
+- **Still Written**: Type, Content, Extra Fields, Relationships (unaffected by migration)
+
+This preserves old field values as a backup in case something goes wrong during migration. After migration is complete and verified, the code can be simplified to remove the dual-read/dual-write logic. See [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](../../../docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md) for complete migration details.
+
 **4. Conflict Detection**
 
 - Warns if Notion documents modified after markdown export
@@ -684,7 +694,7 @@ app/atlas/sync/
 │   ├── sync-actions.ts            # Server actions for triggering/stopping sync
 │   └── trigger-auth.ts            # Server action for creating public access tokens
 ├── _lib/
-│   ├── notion-property-builder.ts # Builds Notion property objects
+│   ├── notion-property-builder.ts # Builds Notion property objects (writes only to new standardized fields)
 │   └── atlas-database-mapper.ts   # Derives database names from document types
 └── AGENTS.md                      # This file
 ```
@@ -959,7 +969,7 @@ This approach:
 - `app/atlas/sync/_actions/sync-actions.ts` - Server actions for triggering/stopping sync
 - `app/atlas/sync/_actions/trigger-auth.ts` - Server action for public access tokens
 - `app/server/services/trigger/markdown-notion-sync-task.ts` - Background task implementation
-- `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder
+- `app/atlas/sync/_lib/notion-property-builder.ts` - Notion property object builder (writes only to new standardized fields)
 
 ### Sync Service
 
