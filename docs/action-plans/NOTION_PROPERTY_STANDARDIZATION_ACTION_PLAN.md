@@ -10,6 +10,57 @@ This document outlines the plan to standardize Notion database properties across
 - [NOTION_IMPORT_PROCESS.md](../NOTION_IMPORT_PROCESS.md) - Notion to Supabase import workflow
 - [MARKDOWN_TO_NOTION_SYNC.md](../MARKDOWN_TO_NOTION_SYNC.md) - Markdown to Notion sync workflow
 
+## Environment Variable: NOTION_IMPORT_FIELD_MODE
+
+The `NOTION_IMPORT_FIELD_MODE` environment variable controls which Notion property fields are read during the Notion → Supabase import. This provides explicit control over data sources during the property standardization migration.
+
+### Available Modes
+
+| Mode                      | Behavior                                                                                                                     | When to Use                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `old-fields`              | Read ONLY from legacy database-specific properties (e.g., "Doc No", "Name"). Ignores new standardized fields entirely.       | **Default.** Safe for pre-migration state when new fields don't exist or are empty.            |
+| `new-fields`              | Read ONLY from standardized properties (`Document Number`, `Document Title`). Throws error if standardized fields are empty. | After Phase 7 when old fields are deprecated and new fields are guaranteed to be populated.    |
+| `prefer-new-fallback-old` | Prefer new standardized fields, fall back to old fields if empty.                                                            | During Phase 4-6 migration period to test new fields while maintaining backward compatibility. |
+
+### Configuration
+
+Set the environment variable before running the import:
+
+```bash
+# Pre-migration (default if not set)
+NOTION_IMPORT_FIELD_MODE=old-fields npx tsx scripts/import-notion-databases.ts
+
+# During migration
+NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old npx tsx scripts/import-notion-databases.ts
+
+# Post-migration (Phase 7+)
+NOTION_IMPORT_FIELD_MODE=new-fields npx tsx scripts/import-notion-databases.ts
+```
+
+### Migration Timeline
+
+| Migration Phase                 | Recommended Mode          | Reason                                         |
+| ------------------------------- | ------------------------- | ---------------------------------------------- |
+| Pre-migration (current state)   | `old-fields` (default)    | New fields don't exist or are empty            |
+| Phase 4-5 (Population + Verify) | `prefer-new-fallback-old` | Test that new fields work, fall back if issues |
+| Phase 6 (Production Migration)  | `prefer-new-fallback-old` | Safe migration with fallback                   |
+| Phase 7 (Deprecate Old Fields)  | `new-fields`              | Old fields deprecated, use new exclusively     |
+| Phase 8 (Cleanup Complete)      | `new-fields`              | Only valid mode after old fields removed       |
+
+### Relationship to useDynamicValues Toggle
+
+This environment variable is **separate** from the `useDynamicValues` toggle in the sync UI:
+
+- **`NOTION_IMPORT_FIELD_MODE`**: Controls which Notion properties are **read** during import
+- **`useDynamicValues`**: Controls whether change detection uses **stored vs calculated** values
+
+They serve different purposes and operate at different stages of the pipeline.
+
+### Implementation
+
+- **Constants**: `app/server/atlas/constants.ts` - `NotionImportFieldMode` type, `getNotionImportFieldMode()` helper
+- **Usage**: `app/server/services/notion/convert-notion-pages-to-supabase-format.ts` - Mode-based extraction functions
+
 ## Implementation Progress
 
 This section tracks the implementation status of each phase.
@@ -73,7 +124,9 @@ This toggle enables testing both modes during the migration period. The toggle s
 
 ### Phase 5: Import and Verify
 
+- [ ] Set import field mode to use fallback: `export NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old`
 - [ ] Run Notion to Supabase import to pull populated values into Supabase: `npx tsx scripts/import-notion-databases.ts`
+  - Console will show: `🔧 Import Field Mode: prefer-new-fallback-old (preferring standardized properties, falling back to legacy if empty)`
 - [ ] Run verification script to confirm stored values match calculated values: `npx tsx scripts/verify-standardized-fields.ts`
   - Compares `atlas_document_number` (stored) vs `generatedDocID` (calculated)
   - Compares `plain_text_name` (stored) vs `generatedDocName` (calculated)
@@ -87,8 +140,10 @@ This toggle enables testing both modes during the migration period. The toggle s
   - Creates empty `Document Number` and `Document Title` properties in all 10 databases
 - [ ] Run population script: `npx tsx scripts/populate-standardized-notion-fields.ts`
   - Populates new properties with calculated values from Atlas tree
+- [ ] Set import field mode: `export NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old`
 - [ ] Run Notion to Supabase import: `npx tsx scripts/import-notion-databases.ts`
   - Pulls populated values from Notion into Supabase
+  - Console will show: `🔧 Import Field Mode: prefer-new-fallback-old`
 - [ ] Run verification script: `npx tsx scripts/verify-standardized-fields.ts`
   - Confirms stored values match calculated values
 - [ ] Add natural sorting formula property manually to each database (see Step 3 in Production Migration Steps)
@@ -96,7 +151,11 @@ This toggle enables testing both modes during the migration period. The toggle s
 
 ### Phase 7: Deprecate Old Fields
 
-- [ ] Remove dual-read logic from import (read only new fields)
+- [ ] Set import field mode to new-fields only: `export NOTION_IMPORT_FIELD_MODE=new-fields`
+  - This enforces that all documents have populated standardized fields
+  - Import will fail if any standardized field is empty (data integrity check)
+- [ ] Run import to verify all documents have standardized fields: `npx tsx scripts/import-notion-databases.ts`
+- [ ] Remove dual-read logic from import (read only new fields) - now enforced by env var
 - [ ] Update `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS` to remove references to old field names
 - [ ] Remove most of `NOTION_PROPERTY_TYPE_OVERRIDES`
 - [ ] Simplify `load-notion-database-pages-from-supabase.ts` sorting logic
@@ -109,6 +168,9 @@ This toggle enables testing both modes during the migration period. The toggle s
 
 After migration is complete and verified, remove migration compatibility code:
 
+- [ ] Ensure `NOTION_IMPORT_FIELD_MODE=new-fields` is set in production environment
+  - After this phase, `new-fields` is the only supported mode
+  - The `old-fields` and `prefer-new-fallback-old` modes become obsolete
 - [ ] Change `useDynamicValues` default from `true` to `false` in `toBase()` (currently defaults to dynamic values)
 - [ ] Remove `useDynamicValues` option from `ExportTreeOptions`, `DiffOptions`, `SyncFilters`
 - [ ] Remove migration mode toggle from sync UI (`content.tsx`)
@@ -119,6 +181,7 @@ After migration is complete and verified, remove migration compatibility code:
 - [ ] Remove migration mode tests (keep stored values tests only)
 - [ ] Clean up documentation references to migration mode
 - [ ] Remove empty standardized field skip logic from `compare-database-pages.ts` (lines ~220-230)
+- [ ] Optionally simplify `NOTION_IMPORT_FIELD_MODE` to only support `new-fields` (remove other modes)
 
 **Files with inline cleanup comments:**
 
@@ -273,18 +336,25 @@ Before making any changes to production:
 
 #### Step 5: Run Notion to Supabase Import
 
-1. Trigger a full import to verify dual-read logic works:
+1. Set the import field mode to use fallback behavior:
+
+   ```bash
+   export NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old
+   ```
+
+2. Trigger a full import to verify field mode works:
 
    ```bash
    npx tsx scripts/import-notion-databases.ts
    ```
 
-2. Monitor the import:
+3. Monitor the import:
+   - Console will show: `🔧 Import Field Mode: prefer-new-fallback-old (preferring standardized properties, falling back to legacy if empty)`
    - Should complete successfully
    - Import time should be similar to previous runs
    - Check for any warnings or errors in console output
 
-3. Verify data integrity:
+4. Verify data integrity:
    - Check that `atlas_document_number` and `plain_text_name` are populated in Supabase
    - Spot check a few documents to ensure data matches expectations
 
@@ -314,30 +384,40 @@ Before making any changes to production:
 
 #### Step 7: Import and Verify
 
-1. Run Notion to Supabase import to pull populated values:
+1. Ensure the import field mode is set for migration:
+
+   ```bash
+   export NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old
+   ```
+
+2. Run Notion to Supabase import to pull populated values:
 
    ```bash
    npx tsx scripts/import-notion-databases.ts
    ```
 
-2. Run verification script to confirm stored values match calculated values:
+   - Console will show: `🔧 Import Field Mode: prefer-new-fallback-old`
+
+3. Run verification script to confirm stored values match calculated values:
 
    ```bash
    npx tsx scripts/verify-standardized-fields.ts
    ```
 
-3. Review verification results:
+4. Review verification results:
    - Script compares stored (`atlas_document_number`, `plain_text_name`) vs calculated (`generatedDocID`, `generatedDocName`)
    - Reports match percentages and any mismatches
    - Exit code 0 = all values match (safe to proceed)
    - Exit code 1 = some mismatches found (investigate before proceeding)
 
-4. If verification fails:
+5. If verification fails:
    - Review mismatch details in output
    - Re-run population script if needed
    - Re-run import and verification
 
-5. Once verification passes, you can safely switch the default from dynamic to stored values
+6. Once verification passes:
+   - You can safely switch the default from dynamic to stored values
+   - Consider switching to `NOTION_IMPORT_FIELD_MODE=new-fields` in Phase 7
 
 #### Step 8: Monitor Production
 
@@ -373,7 +453,8 @@ If issues occur during migration:
 - [ ] New properties are populated with correct values
 - [ ] Old properties remain intact
 - [ ] `No.` sort order property marked as `[DEPRECATED] No.` in Sections & Primary Docs
-- [ ] Notion to Supabase import completes successfully
+- [ ] `NOTION_IMPORT_FIELD_MODE` set to `prefer-new-fallback-old` (during migration) or `new-fields` (post-migration)
+- [ ] Notion to Supabase import completes successfully with correct field mode logged
 - [ ] Verification script passes (stored values match calculated values)
 - [ ] Document ordering is correct (sorted by Document Number naturally)
 - [ ] No production errors or warnings

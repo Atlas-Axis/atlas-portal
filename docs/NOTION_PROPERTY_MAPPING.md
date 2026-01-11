@@ -64,11 +64,17 @@ As part of the property standardization migration, two new properties have been 
 
 **Migration Status**: These fields are being populated as part of the ongoing migration. See [NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md) for details.
 
-**Import Behavior**: The import uses dual-read logic - preferring new fields when populated, falling back to old fields if empty.
+**Import Behavior**: Controlled by the `NOTION_IMPORT_FIELD_MODE` environment variable:
+
+- `old-fields` (default): Read ONLY from legacy database-specific properties
+- `new-fields`: Read ONLY from standardized properties (errors if empty)
+- `prefer-new-fallback-old`: Prefer new fields when populated, fall back to old fields if empty
+
+See [NOTION_IMPORT_PROCESS.md](./NOTION_IMPORT_PROCESS.md#import-field-mode-configuration) for detailed usage.
 
 **Sync Behavior**: The Markdown-to-Notion sync writes ONLY to new standardized fields, preserving old fields as backup during migration.
 
-**Future State**: After migration is complete, the old database-specific property names (shown in the table above) will be deprecated and eventually removed. The new standardized properties will become the primary fields used across all workflows.
+**Future State**: After migration is complete, the old database-specific property names (shown in the table above) will be deprecated and eventually removed. The new standardized properties will become the primary fields used across all workflows. At that point, `NOTION_IMPORT_FIELD_MODE` should be set to `new-fields`.
 
 ### Extra Fields by Document Type
 

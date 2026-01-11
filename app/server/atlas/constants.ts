@@ -160,3 +160,75 @@ export const ATLAS_MARKDOWN_GITHUB_API_URL =
  */
 export const STANDARDIZED_DOCUMENT_NUMBER = 'Document Number';
 export const STANDARDIZED_DOCUMENT_TITLE = 'Document Title';
+
+/**
+ * Notion Import Field Mode
+ *
+ * Controls which Notion property fields are read during the Notion → Supabase import.
+ * This provides explicit control over data sources during the property standardization migration.
+ *
+ * MODES:
+ * - 'old-fields': Read ONLY from legacy database-specific fields (e.g., "Doc No", "Name").
+ *   Ignores new standardized fields entirely. Safe default for pre-migration state.
+ *
+ * - 'new-fields': Read ONLY from standardized fields ("Document Number", "Document Title").
+ *   Throws error if standardized fields are empty (data integrity check).
+ *   Use after migration is complete and old fields are deprecated.
+ *
+ * - 'prefer-new-fallback-old': Prefer new standardized fields, fall back to old fields if empty.
+ *   Use during migration to test new fields while maintaining backward compatibility.
+ *
+ * MIGRATION TIMELINE:
+ * - Pre-migration: 'old-fields' (default)
+ * - Phase 4-6 (Population + Verify + Production): 'prefer-new-fallback-old'
+ * - Phase 7+ (Deprecate Old Fields): 'new-fields'
+ *
+ * RELATIONSHIP TO useDynamicValues TOGGLE:
+ * This env var controls which Notion properties are READ during import.
+ * The useDynamicValues toggle controls whether change detection uses STORED vs CALCULATED values.
+ * They serve different purposes and operate at different stages of the pipeline.
+ *
+ * See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+ */
+export type NotionImportFieldMode = 'new-fields' | 'old-fields' | 'prefer-new-fallback-old';
+
+export const NOTION_IMPORT_FIELD_MODE_ENV = 'NOTION_IMPORT_FIELD_MODE';
+
+const VALID_IMPORT_FIELD_MODES: NotionImportFieldMode[] = ['new-fields', 'old-fields', 'prefer-new-fallback-old'];
+
+/**
+ * Get the current Notion import field mode from environment variable.
+ *
+ * @returns The configured import field mode, or 'old-fields' as safe default
+ * @throws Error if an invalid mode is specified
+ */
+export function getNotionImportFieldMode(): NotionImportFieldMode {
+  const mode = process.env[NOTION_IMPORT_FIELD_MODE_ENV];
+
+  // Default to 'old-fields' for safe pre-migration behavior
+  if (!mode) {
+    return 'old-fields';
+  }
+
+  if (VALID_IMPORT_FIELD_MODES.includes(mode as NotionImportFieldMode)) {
+    return mode as NotionImportFieldMode;
+  }
+
+  throw new Error(
+    `Invalid ${NOTION_IMPORT_FIELD_MODE_ENV}: "${mode}". ` + `Valid values are: ${VALID_IMPORT_FIELD_MODES.join(', ')}`,
+  );
+}
+
+/**
+ * Get a human-readable description of the import field mode for logging.
+ */
+export function getImportFieldModeDescription(mode: NotionImportFieldMode): string {
+  switch (mode) {
+    case 'old-fields':
+      return 'reading from legacy database-specific properties';
+    case 'new-fields':
+      return 'reading from standardized properties only (Document Number, Document Title)';
+    case 'prefer-new-fallback-old':
+      return 'preferring standardized properties, falling back to legacy if empty';
+  }
+}

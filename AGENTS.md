@@ -108,6 +108,7 @@ This section describes the main workflows and features available in the applicat
 - Batched processing (500 pages per batch)
 - UUID mapping generation for stable document references
 - Temporal versioning (`date_valid_from`/`date_valid_to`)
+- Configurable field mode via `NOTION_IMPORT_FIELD_MODE` env var (controls which Notion properties are read)
 
 **Access**:
 
@@ -710,9 +711,14 @@ All commands are intended to be run from the repository root using `npx tsx`.
 ### Atlas Data Import/Export
 
 - **scripts/import-notion-databases.ts** — Imports all configured Notion databases into Supabase, with optional local Notion API caching and Notion database selection.
+  - **Environment Variable**: `NOTION_IMPORT_FIELD_MODE` controls which Notion properties are read:
+    - `old-fields` (default): Read from legacy database-specific properties
+    - `new-fields`: Read from standardized properties only (errors if empty)
+    - `prefer-new-fallback-old`: Prefer new, fall back to old if empty
   - Examples:
     - ```bash
       npx tsx scripts/import-notion-databases.ts
+      NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old npx tsx scripts/import-notion-databases.ts
       ```
 
 - **scripts/atlas-export/generate-atlas-markdown.ts** — Builds "Export Tree" Atlas trees from Supabase and exports to Markdown format. Output: `exported-atlas/atlas.md`

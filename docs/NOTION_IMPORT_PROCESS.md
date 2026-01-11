@@ -15,6 +15,43 @@ The Notion import process synchronizes Atlas documents from 10 Notion databases 
 
 See **[ATLAS_DATA_PIPELINE.md](./ATLAS_DATA_PIPELINE.md)** for the complete data pipeline overview.
 
+## Import Field Mode Configuration
+
+The `NOTION_IMPORT_FIELD_MODE` environment variable controls which Notion property fields are read during the import process. This provides explicit control over data sources during the property standardization migration.
+
+### Available Modes
+
+| Mode                      | Behavior                                                                                       |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `old-fields`              | Read ONLY from legacy database-specific properties (e.g., "Doc No", "Name"). **Default.**      |
+| `new-fields`              | Read ONLY from standardized properties (`Document Number`, `Document Title`). Errors if empty. |
+| `prefer-new-fallback-old` | Prefer new standardized fields, fall back to old fields if empty.                              |
+
+### Usage
+
+```bash
+# Default: Read from legacy fields only
+npx tsx scripts/import-notion-databases.ts
+
+# Migration mode: Prefer new, fall back to old
+NOTION_IMPORT_FIELD_MODE=prefer-new-fallback-old npx tsx scripts/import-notion-databases.ts
+
+# Post-migration: Read from standardized fields only
+NOTION_IMPORT_FIELD_MODE=new-fields npx tsx scripts/import-notion-databases.ts
+```
+
+### Console Output
+
+The import will log which mode is active:
+
+```
+🔧 Import Field Mode: old-fields (reading from legacy database-specific properties)
+🔧 Import Field Mode: prefer-new-fallback-old (preferring standardized properties, falling back to legacy if empty)
+🔧 Import Field Mode: new-fields (reading from standardized properties only)
+```
+
+See **[NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md](./action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md)** for the complete migration plan.
+
 ## Import Workflow
 
 The import process follows a structured multi-step workflow:
@@ -191,9 +228,20 @@ Transform Notion API responses to Supabase database format.
 
 **Conversion Process:**
 
+**Field Mode Selection:**
+
+- Reads `NOTION_IMPORT_FIELD_MODE` environment variable (see [Import Field Mode Configuration](#import-field-mode-configuration))
+- Logs active mode at start of conversion
+- Determines which Notion properties are used for document number and title
+
 **Property Extraction:**
 
-- Uses property mapping from `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS`
+- Uses property mapping from `NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS` for legacy fields
+- Uses standardized field names (`Document Number`, `Document Title`) for new fields
+- Behavior depends on field mode:
+  - `old-fields`: Uses legacy property names from mapping
+  - `new-fields`: Uses standardized property names, errors if empty
+  - `prefer-new-fallback-old`: Tries standardized first, falls back to legacy
 - Extracts rich text with both plain text and JSON structure
 - Handles null content properties gracefully
 
@@ -819,6 +867,7 @@ npx tsx scripts/import-notion-databases --database "Sections & Primary Docs" --l
 - Atlas database constants
 - Database ID mappings
 - Import database list
+- `NotionImportFieldMode` type and `getNotionImportFieldMode()` helper for field mode configuration
 
 ### Scripts
 

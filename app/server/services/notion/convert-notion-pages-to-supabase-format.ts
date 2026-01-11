@@ -1,6 +1,12 @@
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
-import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
+import {
+  NotionImportFieldMode,
+  STANDARDIZED_DOCUMENT_NUMBER,
+  STANDARDIZED_DOCUMENT_TITLE,
+  getImportFieldModeDescription,
+  getNotionImportFieldMode,
+} from '@/app/server/atlas/constants';
 import {
   ChildLists,
   NEEDED_RESEARCH_PROPERTY_MAPPING,
@@ -35,14 +41,23 @@ export async function convertNotionPagesToDatabaseFormat({
   notionPages: EnhancedPageObjectResponse[];
   atlasDatabaseName: AtlasDatabaseName;
 }): Promise<NotionDatabasePage[]> {
+  // Get and log the import field mode
+  const fieldMode = getNotionImportFieldMode();
+
   console.log(`🔄 Converting ${notionPages.length} Notion pages to database format...`);
+  console.log(`🔧 Import Field Mode: ${fieldMode} (${getImportFieldModeDescription(fieldMode)})`);
 
   const databaseConfig = NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS[atlasDatabaseName];
   const databasePages: NotionDatabasePage[] = [];
 
   for (const notionPage of notionPages) {
     try {
-      const page = await convertSingleNotionPageToDatabaseFormat(notionPage, atlasDatabaseName, databaseConfig);
+      const page = await convertSingleNotionPageToDatabaseFormat(
+        notionPage,
+        atlasDatabaseName,
+        databaseConfig,
+        fieldMode,
+      );
       databasePages.push(page);
     } catch (error) {
       console.error(`❌ Failed to convert page ${notionPage.id}:`, error);
@@ -61,23 +76,22 @@ async function convertSingleNotionPageToDatabaseFormat(
   notionPage: EnhancedPageObjectResponse,
   atlasDatabaseName: AtlasDatabaseName,
   databaseConfig: (typeof NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS)[AtlasDatabaseName],
+  fieldMode: NotionImportFieldMode,
 ): Promise<NotionDatabasePage> {
   // ============================================================================
-  // DUAL-READ LOGIC (Phase 3 of Property Standardization)
-  // Read from new standardized fields first, fall back to old fields if empty.
-  // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
+  // FIELD MODE LOGIC (Property Standardization Migration)
   //
-  // TODO: Remove this dual-read logic in Phase 7 after all old properties are
-  // deleted from Notion databases. At that point, we can read only from the new
-  // standardized "Document Title", "Document Number", "Document Type" fields.
+  // The NOTION_IMPORT_FIELD_MODE environment variable controls which Notion
+  // properties are read during import:
+  // - 'old-fields': Read ONLY from legacy database-specific properties
+  // - 'new-fields': Read ONLY from standardized properties (errors if empty)
+  // - 'prefer-new-fallback-old': Prefer new, fall back to old if empty
+  //
+  // See: docs/action-plans/NOTION_PROPERTY_STANDARDIZATION_ACTION_PLAN.md
   // ============================================================================
 
-  // Extract page title - prefer new "Document Title" field, fall back to old field
-  const pageTitle = extractRichTextWithFallback(
-    notionPage,
-    STANDARDIZED_DOCUMENT_TITLE,
-    databaseConfig.properties.atlasDocumentName,
-  );
+  // Extract page title based on field mode
+  const pageTitle = extractPageTitleByMode(notionPage, databaseConfig.properties.atlasDocumentName, fieldMode);
 
   // Extract content - handle null mapping by defaulting to empty string
   const contentPropertyName = databaseConfig.properties.content;
@@ -85,12 +99,8 @@ async function convertSingleNotionPageToDatabaseFormat(
     ? extractRichTextFromProperty(notionPage, contentPropertyName)
     : { plainText: '', richText: [] };
 
-  // Extract document number - prefer new "Document Number" field, fall back to old field
-  const documentNumber = extractDocumentNumberWithFallback(
-    notionPage,
-    STANDARDIZED_DOCUMENT_NUMBER,
-    databaseConfig.properties.atlasDocumentNo,
-  );
+  // Extract document number based on field mode
+  const documentNumber = extractDocumentNumberByMode(notionPage, databaseConfig.properties.atlasDocumentNo, fieldMode);
 
   // Extract document type
   const documentType = extractDocumentType(notionPage, databaseConfig.properties.atlasDocumentType);
@@ -240,13 +250,12 @@ function mapRelationshipsToChildArrays(
 }
 
 /**
- * Extract document number from a Notion page
+ * Extract document number from a Notion page using a specific property.
  */
-function extractDocumentNumber(page: PageObjectResponse, numberPropertyName: string): string {
+function extractDocumentNumberFromProperty(page: PageObjectResponse, propertyName: string): string {
   try {
-    const property = page.properties[numberPropertyName];
+    const property = page.properties[propertyName];
     if (!property) {
-      console.warn(`Property "${numberPropertyName}" not found in page ${page.id}`);
       return '';
     }
 
@@ -259,57 +268,89 @@ function extractDocumentNumber(page: PageObjectResponse, numberPropertyName: str
 }
 
 /**
- * Extract document number with fallback logic for dual-read during property standardization.
- * Prefers the new standardized field, falls back to old field if new field is empty.
+ * Extract document number based on the configured import field mode.
  *
  * @param page - The Notion page to extract from
- * @param newPropertyName - The new standardized property name (e.g., "Document Number")
- * @param fallbackPropertyName - The old database-specific property name (e.g., "Doc No")
+ * @param legacyPropertyName - The old database-specific property name (e.g., "Doc No")
+ * @param mode - The import field mode determining which properties to read
  * @returns The document number string
+ * @throws Error if mode is 'new-fields' and standardized field is empty
  */
-function extractDocumentNumberWithFallback(
+function extractDocumentNumberByMode(
   page: PageObjectResponse,
-  newPropertyName: string,
-  fallbackPropertyName: string,
+  legacyPropertyName: string,
+  mode: NotionImportFieldMode,
 ): string {
-  // Try new standardized field first
-  const newProperty = page.properties[newPropertyName];
-  if (newProperty) {
-    const newValue = readPlainTextValueFromNotionPageProperty(newProperty);
-    if (newValue && String(newValue).trim() !== '') {
-      return String(newValue);
+  switch (mode) {
+    case 'old-fields': {
+      // Read ONLY from legacy field
+      return extractDocumentNumberFromProperty(page, legacyPropertyName);
+    }
+
+    case 'new-fields': {
+      // Read ONLY from standardized field, error if empty
+      const value = extractDocumentNumberFromProperty(page, STANDARDIZED_DOCUMENT_NUMBER);
+      if (!value || value.trim() === '') {
+        throw new Error(
+          `Standardized field "${STANDARDIZED_DOCUMENT_NUMBER}" is empty for page ${page.id}. ` +
+            `Mode is 'new-fields' which requires standardized fields to be populated.`,
+        );
+      }
+      return value;
+    }
+
+    case 'prefer-new-fallback-old': {
+      // Try new standardized field first, fall back to old field if empty
+      const newValue = extractDocumentNumberFromProperty(page, STANDARDIZED_DOCUMENT_NUMBER);
+      if (newValue && newValue.trim() !== '') {
+        return newValue;
+      }
+      return extractDocumentNumberFromProperty(page, legacyPropertyName);
     }
   }
-
-  // Fall back to old field
-  return extractDocumentNumber(page, fallbackPropertyName);
 }
 
 /**
- * Extract rich text with fallback logic for dual-read during property standardization.
- * Prefers the new standardized field, falls back to old field if new field is empty.
+ * Extract page title (rich text) based on the configured import field mode.
  *
  * @param page - The Notion page to extract from
- * @param newPropertyName - The new standardized property name (e.g., "Document Title")
- * @param fallbackPropertyName - The old database-specific property name (e.g., "Name")
+ * @param legacyPropertyName - The old database-specific property name (e.g., "Name")
+ * @param mode - The import field mode determining which properties to read
  * @returns Object with plainText and richText
+ * @throws Error if mode is 'new-fields' and standardized field is empty
  */
-function extractRichTextWithFallback(
+function extractPageTitleByMode(
   page: PageObjectResponse,
-  newPropertyName: string,
-  fallbackPropertyName: string,
+  legacyPropertyName: string,
+  mode: NotionImportFieldMode,
 ): { plainText: string | null; richText: Json[] | null } {
-  // Try new standardized field first
-  const newProperty = page.properties[newPropertyName];
-  if (newProperty) {
-    const result = extractRichTextFromProperty(page, newPropertyName);
-    if (result.plainText && result.plainText.trim() !== '') {
+  switch (mode) {
+    case 'old-fields': {
+      // Read ONLY from legacy field
+      return extractRichTextFromProperty(page, legacyPropertyName);
+    }
+
+    case 'new-fields': {
+      // Read ONLY from standardized field, error if empty
+      const result = extractRichTextFromProperty(page, STANDARDIZED_DOCUMENT_TITLE);
+      if (!result.plainText || result.plainText.trim() === '') {
+        throw new Error(
+          `Standardized field "${STANDARDIZED_DOCUMENT_TITLE}" is empty for page ${page.id}. ` +
+            `Mode is 'new-fields' which requires standardized fields to be populated.`,
+        );
+      }
       return result;
     }
-  }
 
-  // Fall back to old field
-  return extractRichTextFromProperty(page, fallbackPropertyName);
+    case 'prefer-new-fallback-old': {
+      // Try new standardized field first, fall back to old field if empty
+      const newResult = extractRichTextFromProperty(page, STANDARDIZED_DOCUMENT_TITLE);
+      if (newResult.plainText && newResult.plainText.trim() !== '') {
+        return newResult;
+      }
+      return extractRichTextFromProperty(page, legacyPropertyName);
+    }
+  }
 }
 
 /**
