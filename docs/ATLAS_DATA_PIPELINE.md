@@ -13,135 +13,67 @@ The pipeline handles complex transformations, relationship mappings, workarounds
 
 ## Complete Pipeline Flowchart
 
+### Notion to Supabase to Markdown
+
+```mermaid
+flowchart TD
+    subgraph source [Source]
+        NotionDB["Notion Master Atlas Databases<br/>(10 databases, ~7000 pages)"]
+    end
+
+    subgraph import [Import Phase]
+        Fetch["1. FETCH VIA NOTION API<br/>Property mapping, relationship mapping, change detection"]
+        Store["2. STORE IN SUPABASE<br/>Versioned rows, UUID generation, batched inserts"]
+    end
+
+    subgraph transform [Transform Phase]
+        Load["3. LOAD FROM SUPABASE<br/>Load all pages as flat array, current/historical data"]
+        BuildTree["4. BUILD NOTION TREE<br/>Apply nesting bug fixes, build hierarchy,<br/>filter direct children, detect duplicates/cycles"]
+        ProcessTree["5. PROCESS TREE<br/>Generate doc numbers, UUID mapping,<br/>update mentions, normalize names"]
+    end
+
+    subgraph export [Export Phase]
+        ExportTransform["6. EXPORT TRANSFORMATION<br/>Notion Tree to Export Tree,<br/>Rich Text to Markdown, handle extra fields"]
+        ExportFormats["7. EXPORT FORMATS<br/>Atlas Portal, atlas.md, atlas.json, atlas.yaml, API endpoints"]
+    end
+
+    NotionDB -->|"Hourly sync via Trigger.dev (~15 min)"| Fetch
+    Fetch --> Store
+    Store --> Load
+    Load --> BuildTree
+    BuildTree --> ProcessTree
+    ProcessTree --> ExportTransform
+    ExportTransform --> ExportFormats
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     NOTION → SUPABASE → MARKDOWN                    │
-└─────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────┐
-│   Notion Master Atlas Databases     │
-│   (10 databases, ~7000 pages)       │
-└──────────────┬──────────────────────┘
-               │
-               │ [Hourly sync via Trigger.dev, ~15 min]
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  1. FETCH VIA NOTION API            │◄── NOTION_IMPORT_PROCESS.md
-│     - Property mapping              │◄── notion-database-properties-and-relationships.ts
-│     - Relationship mapping          │
-│     - Change detection              │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  2. STORE IN SUPABASE               │
-│     - Versioned rows (temporal)     │
-│     - UUID generation (new pages)   │◄── UUID_MAPPING.md
-│     - Batched inserts               │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  3. LOAD FROM SUPABASE              │
-│     - Load all pages (flat array)   │◄── load-atlas-from-supabase.ts
-│     - Current/historical data       │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  4. BUILD NOTION TREE               │
-│     - Apply nesting bug fixes       │◄── NOTION_NESTING_BUG_FIX.md (Step 2)
-│     - Flat pages → tree hierarchy   │◄── ATLAS_TREE_STRUCTURES.md, app/server/atlas/notion-tree/AGENTS.md
-│     - Filter direct children        │
-│     - Detect duplicates/cycles      │
-│     - Identify orphaned nodes       │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  5. PROCESS TREE                    │
-│     - Generate doc numbers          │◄── ATLAS_DOCUMENT_NUMBERING_RULES.md (Step 8)
-│     - Map Notion UUID → Atlas UUID  │◄── UUID_MAPPING.md (Step 9)
-│     - Update mention doc numbers    │◄── (Step 10)
-│     - Normalize doc names           │◄── (Step 4)
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  6. EXPORT TRANSFORMATION           │
-│     - Notion Tree → Export Tree     │◄── ATLAS_TREE_STRUCTURES.md
-│     - Rich Text → Markdown          │
-│     - Rewrite link labels           │
-│     - Handle extra fields           │◄── ATLAS_EXTRA_FIELDS.md
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  7. EXPORT FORMATS                  │
-│     - Atlas Portal                  │
-│     - atlas.md (Markdown)           │◄── ATLAS_MARKDOWN_IMPORT_EXPORT.md
-│     - atlas.json (JSON)             │
-│     - atlas.yaml (YAML)             │
-│     - API endpoints                 │
-└─────────────────────────────────────┘
+### Markdown to Notion
 
+```mermaid
+flowchart TD
+    subgraph source [Source]
+        MarkdownFile["External Atlas Markdown File<br/>(GitHub: pppdns/next-gen-atlas)"]
+    end
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                  MARKDOWN → NOTION                                  │
-└─────────────────────────────────────────────────────────────────────┘
+    subgraph validate [Validation Phase]
+        Validate["1. VALIDATE MARKDOWN<br/>Syntax validation, structure verification"]
+        Parse["2. PARSE TO EXPORT TREE<br/>Document hierarchy, extract UUIDs, parse extra fields"]
+    end
 
-┌─────────────────────────────────────┐
-│   External Atlas Markdown File      │
-│   (GitHub: pppdns/next-gen-atlas)   │
-│   Sky Atlas/Sky Atlas.md            │
-└──────────────┬──────────────────────┘
-               │
-               │ [Edited by org members]
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  1. VALIDATE MARKDOWN               │
-│     - Syntax validation             │◄── validate-atlas-markdown.ts
-│     - Structure verification        │◄── ATLAS_MARKDOWN_SYNTAX.md
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  2. PARSE TO EXPORT TREE            │
-│     - Document hierarchy            │◄── ATLAS_MARKDOWN_IMPORT_EXPORT.md
-│     - Extract UUIDs                 │
-│     - Parse extra fields            │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  3. TRANSFORM TO NOTION FORMAT      │
-│     - Export Tree → Notion Tree     │◄── export-tree-to-notion-tree.ts
-│     - Markdown → Rich Text          │◄── markdown-to-rich-text.ts
-│     - Atlas UUID → Notion UUID      │◄── UUID_MAPPING.md
-│     - Rewrite mention UUIDs         │
-│     - Build properties/relations    │◄── notion-property-builder.ts
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│  4. SYNC TO NOTION VIA NOTION API   │
-│     - Detect changes                │◄── detect-markdown-changes.ts
-│     - Create new pages              │◄── create-notion-pages.ts
-│     - Update existing pages         │◄── update-notion-pages.ts
-│     - Delete/archive pages          │◄── delete-notion-pages.ts
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌───────────────────────────────────────────────┐
-│  5. AUTO-IMPORT TO SUPABASE                   │
-│     - Automatically triggered after sync      │
-│     - Only imports affected databases         │
-│     - Uses shared queue (concurrencyLimit: 1) │
-│     - Waits if hourly import already running  │
-│     - Returns to step 1 above (Notion import) │
-└───────────────────────────────────────────────┘
+    subgraph transform [Transform Phase]
+        Transform["3. TRANSFORM TO NOTION FORMAT<br/>Export Tree to Notion Tree, Markdown to Rich Text,<br/>Atlas UUID to Notion UUID, build properties/relations"]
+    end
+
+    subgraph sync [Sync Phase]
+        SyncNotion["4. SYNC TO NOTION VIA API<br/>Detect changes, create/update/delete pages"]
+        AutoImport["5. AUTO-IMPORT TO SUPABASE<br/>Triggered after sync, imports affected databases only,<br/>uses shared queue, waits if hourly import running"]
+    end
+
+    MarkdownFile -->|"Edited by org members, triggered via UI"| Validate
+    Validate --> Parse
+    Parse --> Transform
+    Transform --> SyncNotion
+    SyncNotion --> AutoImport
+    AutoImport -.->|"Returns to Notion import flow"| NotionImport["Notion to Supabase Import"]
 ```
 
 ## Notion → Supabase → Markdown Pipeline
