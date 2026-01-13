@@ -23,12 +23,14 @@ import {
 } from '../types';
 
 // Mock loadUuidMappings to avoid hitting Supabase in unit tests
-vi.mock('../../load-uuid-mapping', () => {
+vi.mock('../../load-uuid-mapping', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../load-uuid-mapping')>();
   const mockUUIDMappings: UuidMappings = {
     notionPageIDsToAtlasUUIDs: new Map<string, string>(),
     atlasUUIDsToNotionPageIds: new Map<string, string>(),
   };
   return {
+    ...actual,
     loadUuidMappings: vi.fn().mockResolvedValue(mockUUIDMappings),
   };
 });

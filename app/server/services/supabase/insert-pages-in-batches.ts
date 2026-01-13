@@ -79,6 +79,11 @@ export async function upsertPagesInBatches(
  *
  * Skips pages that already have UUID mappings (e.g., created by Markdown→Notion sync)
  * to ensure both workflows are compatible.
+ *
+ * IMPORTANT: UUID comparison is done in lowercase to handle format differences
+ * between Supabase (which returns lowercase UUIDs) and the Notion API (which may
+ * return UUIDs with different casing). This prevents duplicate mappings from being
+ * created when the same page ID exists in different cases.
  */
 async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<void> {
   const totalPages = pages.length;
@@ -90,7 +95,8 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
   const notionPageIds = pages.map((p) => p.notion_page_id);
 
   // Query existing mappings in batches to avoid URI too long errors
-  const existingPageIds = new Set<string>();
+  // Use lowercase Set for case-insensitive comparison (PostgreSQL returns lowercase UUIDs)
+  const existingPageIdsLowercase = new Set<string>();
   const queryBatches = Math.ceil(notionPageIds.length / queryBatchSize);
 
   for (let i = 0; i < notionPageIds.length; i += queryBatchSize) {
@@ -108,15 +114,15 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
       throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
     }
 
-    // Add found IDs to the set
-    existingMappings?.forEach((m) => existingPageIds.add(m.notion_page_id));
+    // Add found IDs to the set (normalized to lowercase for case-insensitive comparison)
+    existingMappings?.forEach((m) => existingPageIdsLowercase.add(m.notion_page_id.toLowerCase()));
   }
 
-  // Filter to only pages that need new mappings
-  const pagesToMap = pages.filter((p) => !existingPageIds.has(p.notion_page_id));
+  // Filter to only pages that need new mappings (compare in lowercase)
+  const pagesToMap = pages.filter((p) => !existingPageIdsLowercase.has(p.notion_page_id.toLowerCase()));
 
-  if (existingPageIds.size > 0) {
-    console.log(`  ℹ️ Skipping ${existingPageIds.size} pages with existing UUID mappings`);
+  if (existingPageIdsLowercase.size > 0) {
+    console.log(`  ℹ️ Skipping ${existingPageIdsLowercase.size} pages with existing UUID mappings`);
   }
 
   if (pagesToMap.length === 0) {

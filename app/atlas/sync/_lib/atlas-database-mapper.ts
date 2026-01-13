@@ -1,6 +1,6 @@
 import { AtlasDatabaseName, AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ATLAS_DATABASE_ID_MAP } from '@/app/server/atlas/constants';
-import type { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { type UuidMappings, normalizeUuidForLookup } from '@/app/server/atlas/load-uuid-mapping';
 
 /**
  * Gets the Atlas database name for a document based on its type.
@@ -120,8 +120,8 @@ export function getInternalParentPageIdFromAncestry(
     return null;
   }
 
-  // Convert Atlas UUID to Notion page ID
-  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(parentAtlasUuid);
+  // Convert Atlas UUID to Notion page ID (normalize for case-insensitive lookup)
+  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(parentAtlasUuid));
   if (!notionPageId) {
     throw new Error(
       `No Notion page ID mapping found for parent Atlas UUID ${parentAtlasUuid}. ` +

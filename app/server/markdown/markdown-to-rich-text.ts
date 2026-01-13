@@ -17,7 +17,7 @@
   ```
 */
 import { uuidToNoHyphens } from '@/app/shared/utils/utils';
-import { UuidMappings } from '../atlas/load-uuid-mapping';
+import { UuidMappings, normalizeUuidForLookup } from '../atlas/load-uuid-mapping';
 import { CreateRichTextOptions, NotionAnnotations, NotionRichText } from './notion-types';
 
 /**
@@ -454,9 +454,9 @@ function parseInlineMarkdown(
       const isMention = isUUIDFormat;
 
       if (isMention) {
-        // This is a mention - convert Atlas UUID to Notion page ID
+        // This is a mention - convert Atlas UUID to Notion page ID (normalize for case-insensitive lookup)
         const atlasUuid = match.url!;
-        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(atlasUuid);
+        const notionPageID = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(atlasUuid));
 
         if (!notionPageID) {
           // No mapping found - create mention with Atlas UUID as placeholder

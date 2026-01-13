@@ -16,8 +16,7 @@
   // => "Hello **World**"
   ```
 */
-import { uuidToHyphens } from '@/app/shared/utils/utils';
-import { UuidMappings } from '../atlas/load-uuid-mapping';
+import { UuidMappings, normalizeUuidForLookup } from '../atlas/load-uuid-mapping';
 import { NotionRichText } from './notion-types';
 
 export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: UuidMappings): string | null {
@@ -30,7 +29,9 @@ export function notionLinkToMappedUUID(href: string | undefined, uuidMappings: U
     console.warn(`Could not extract Notion ID from URL: ${href}`);
     return null;
   }
-  const mappedUUID = href ? uuidMappings.notionPageIDsToAtlasUUIDs.get(uuidToHyphens(notionIDFromURL)) : undefined;
+  const mappedUUID = href
+    ? uuidMappings.notionPageIDsToAtlasUUIDs.get(normalizeUuidForLookup(notionIDFromURL))
+    : undefined;
   if (!mappedUUID) {
     console.warn(`No mapping found for Notion link: ${href} (${notionIDFromURL}, ${mappedUUID})`);
     return null;

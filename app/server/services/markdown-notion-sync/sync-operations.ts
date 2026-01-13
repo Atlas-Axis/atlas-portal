@@ -17,7 +17,7 @@ import {
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { AtlasDocumentChange } from '@/app/server/atlas/diff/atlas-diff';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
-import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { UuidMappings, normalizeUuidForLookup } from '@/app/server/atlas/load-uuid-mapping';
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
@@ -46,7 +46,7 @@ export async function updateNotionPageContent(
     return { success: false, error: 'Missing required data' };
   }
 
-  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid);
+  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(change.uuid));
   if (!notionPageId) {
     return { success: false, reason: 'mapping_not_found', error: 'No Notion page ID mapping found' };
   }
@@ -195,9 +195,33 @@ export async function createNotionDatabasePage(
 
     // Store UUID mapping
     if (doc.uuid) {
-      await storeUuidMapping(createdPage.id, doc.uuid);
-      uuidMappings.atlasUUIDsToNotionPageIds.set(doc.uuid, createdPage.id);
-      uuidMappings.notionPageIDsToAtlasUUIDs.set(createdPage.id, doc.uuid);
+      const mappingResult = await storeUuidMapping(createdPage.id, doc.uuid);
+      // Normalize UUIDs for in-memory map keys (maps use lowercase keys for consistent lookups)
+      const normalizedAtlasUuid = normalizeUuidForLookup(doc.uuid);
+      const normalizedNotionPageId = normalizeUuidForLookup(createdPage.id);
+
+      if (mappingResult.success) {
+        // Only update in-memory maps if the database insert succeeded
+        uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
+        uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
+      } else if (mappingResult.skippedReason === 'atlas_uuid_exists') {
+        // The Atlas UUID is already mapped to a different Notion page - this is a data issue
+        // We still update the in-memory maps so that mention post-processing can work
+        // but log a warning about the inconsistency
+        console.warn(
+          `[createNotionDatabasePage] Created Notion page ${createdPage.id} but could not store mapping ` +
+            `because Atlas UUID ${doc.uuid} is already mapped to another page. ` +
+            `This page may be orphaned. Consider cleaning up the uuid_mapping table.`,
+        );
+        // Update in-memory maps anyway so the current sync can complete
+        uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
+        uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
+      }
+      // If skippedReason is 'notion_page_id_exists', the mapping already exists correctly - update in-memory
+      else if (mappingResult.skippedReason === 'notion_page_id_exists') {
+        uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
+        uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
+      }
     }
 
     await logNotionApiOperation({
@@ -263,7 +287,7 @@ export async function deleteNotionPage(
     return { success: false, error: 'Missing required data' };
   }
 
-  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid);
+  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(change.uuid));
   if (!notionPageId) {
     return { success: false, reason: 'mapping_not_found', error: 'No Notion page ID mapping found' };
   }
@@ -337,7 +361,7 @@ export async function updateNotionPageParent(
     return { success: false, error: 'Missing required data' };
   }
 
-  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(change.uuid);
+  const notionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(change.uuid));
   if (!notionPageId) {
     return { success: false, reason: 'mapping_not_found', error: 'No Notion page ID mapping found' };
   }
@@ -352,7 +376,8 @@ export async function updateNotionPageParent(
 
   let newParentNotionPageId: string | null = null;
   if (newParentAtlasUuid) {
-    newParentNotionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(newParentAtlasUuid) ?? null;
+    newParentNotionPageId =
+      uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(newParentAtlasUuid)) ?? null;
     if (!newParentNotionPageId) {
       return { success: false, reason: 'parent_not_found', error: 'No mapping for parent' };
     }

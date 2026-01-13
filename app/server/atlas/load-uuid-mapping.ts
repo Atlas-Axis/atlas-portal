@@ -1,4 +1,5 @@
 import { supabase } from '@/app/server/services/supabase/supabase-client';
+import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
 
 export interface UuidMappings {
   notionPageIDsToAtlasUUIDs: Map<string, string>;
@@ -6,11 +7,41 @@ export interface UuidMappings {
 }
 
 /**
+ * Normalize a UUID to lowercase hyphenated format for consistent lookups.
+ * This is necessary because:
+ * - PostgreSQL stores UUIDs in lowercase hyphenated format
+ * - The Notion API may return UUIDs with different casing or without hyphens
+ * - JavaScript Map lookups are case-sensitive and format-sensitive
+ *
+ * @param uuid - UUID in any format (with/without hyphens, any case)
+ * @returns UUID in lowercase hyphenated format (e.g., "550e8400-e29b-41d4-a716-446655440000")
+ */
+export function normalizeUuidForLookup(uuid: string): string {
+  // If already a valid hyphenated UUID, just lowercase it
+  if (isValidUUID(uuid)) {
+    return uuid.toLowerCase();
+  }
+
+  // If it's a 32-character string (non-hyphenated UUID), convert to hyphenated format
+  if (uuid.length === 32 && /^[0-9a-f]+$/i.test(uuid)) {
+    return uuidToHyphens(uuid).toLowerCase();
+  }
+
+  // Fallback for non-standard strings (e.g., in tests) - just lowercase
+  return uuid.toLowerCase();
+}
+
+/**
  * Load UUID mappings from the uuid_mapping table and return them as two efficient lookup maps.
  *
+ * All UUIDs are normalized to lowercase for consistent lookups, as:
+ * - PostgreSQL returns UUIDs in lowercase
+ * - The Notion API may return UUIDs with different casing
+ * - JavaScript Map lookups are case-sensitive
+ *
  * @returns Object containing:
- *   - notionToAtlas: Map from notion_page_id to atlas_document_uuid
- *   - atlasToNotion: Map from atlas_document_uuid to notion_page_id
+ *   - notionToAtlas: Map from notion_page_id (lowercase) to atlas_document_uuid (lowercase)
+ *   - atlasToNotion: Map from atlas_document_uuid (lowercase) to notion_page_id (lowercase)
  */
 export async function loadUuidMappings(): Promise<UuidMappings> {
   const notionPageIDsToAtlasUUIDs = new Map<string, string>();
@@ -34,11 +65,13 @@ export async function loadUuidMappings(): Promise<UuidMappings> {
       break;
     }
 
-    // Populate both maps
+    // Populate both maps with normalized (lowercase) UUIDs for consistent lookups
     for (const row of data) {
       if (row.notion_page_id && row.atlas_document_uuid) {
-        notionPageIDsToAtlasUUIDs.set(row.notion_page_id, row.atlas_document_uuid);
-        atlasUUIDsToNotionPageIds.set(row.atlas_document_uuid, row.notion_page_id);
+        const notionPageId = normalizeUuidForLookup(row.notion_page_id);
+        const atlasUuid = normalizeUuidForLookup(row.atlas_document_uuid);
+        notionPageIDsToAtlasUUIDs.set(notionPageId, atlasUuid);
+        atlasUUIDsToNotionPageIds.set(atlasUuid, notionPageId);
       }
     }
 
@@ -75,10 +108,20 @@ export function serializeUuidMappings(mappings: UuidMappings): SerializedUuidMap
 /**
  * Converts serialized UUID mappings back to UuidMappings format with Maps.
  * Used on the client to deserialize embedded UUID mapping data.
+ * Normalizes all UUIDs to lowercase for consistent lookups.
  */
 export function deserializeUuidMappings(serialized: SerializedUuidMappings): UuidMappings {
-  return {
-    notionPageIDsToAtlasUUIDs: new Map(Object.entries(serialized.notionPageIDsToAtlasUUIDs)),
-    atlasUUIDsToNotionPageIds: new Map(Object.entries(serialized.atlasUUIDsToNotionPageIds)),
-  };
+  // Normalize all UUIDs to lowercase when deserializing
+  const notionPageIDsToAtlasUUIDs = new Map<string, string>();
+  const atlasUUIDsToNotionPageIds = new Map<string, string>();
+
+  for (const [notionId, atlasId] of Object.entries(serialized.notionPageIDsToAtlasUUIDs)) {
+    notionPageIDsToAtlasUUIDs.set(normalizeUuidForLookup(notionId), normalizeUuidForLookup(atlasId));
+  }
+
+  for (const [atlasId, notionId] of Object.entries(serialized.atlasUUIDsToNotionPageIds)) {
+    atlasUUIDsToNotionPageIds.set(normalizeUuidForLookup(atlasId), normalizeUuidForLookup(notionId));
+  }
+
+  return { notionPageIDsToAtlasUUIDs, atlasUUIDsToNotionPageIds };
 }

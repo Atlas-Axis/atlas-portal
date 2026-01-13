@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
-import { UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
+import { UuidMappings, normalizeUuidForLookup } from '@/app/server/atlas/load-uuid-mapping';
 import {
   NEEDED_RESEARCH_PROPERTY_MAPPING,
   NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS,
@@ -517,8 +517,8 @@ export function addInterDatabaseRelationshipProperties(
     throw new Error('No relationship defined between databases');
   }
 
-  // Convert Atlas UUID to Notion page ID for the relationship property
-  const parentNotionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(parentAtlasUuid);
+  // Convert Atlas UUID to Notion page ID for the relationship property (normalize for case-insensitive lookup)
+  const parentNotionPageId = uuidMappings.atlasUUIDsToNotionPageIds.get(normalizeUuidForLookup(parentAtlasUuid));
   if (!parentNotionPageId) {
     throw new Error(
       `No Notion page ID mapping found for parent Atlas UUID ${parentAtlasUuid}. ` +

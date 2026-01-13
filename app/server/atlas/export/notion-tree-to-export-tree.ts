@@ -36,9 +36,8 @@ import {
 } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { type NotionAtlasTreeNode } from '@/app/server/atlas/notion-tree/atlas-tree-system';
 import { convertNotionRichTextToMarkdown } from '@/app/server/markdown/rich-text-to-markdown';
-import { uuidToHyphens } from '@/app/shared/utils/utils';
 import { atlasDatabasePageToMarkdown } from '../formatters/atlas-rich-text-formatter';
-import { UuidMappings } from '../load-uuid-mapping';
+import { UuidMappings, normalizeUuidForLookup } from '../load-uuid-mapping';
 import {
   type ExportAtlasTreeActiveDataDocument,
   type ExportAtlasTreeAgentScopeDatabaseDocument,
@@ -164,7 +163,7 @@ function toBase(
     }
   }
 
-  const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(uuidToHyphens(node.notion_page_id)) ?? null;
+  const atlasUUID = uuidMappings.notionPageIDsToAtlasUUIDs.get(normalizeUuidForLookup(node.notion_page_id)) ?? null;
   if (!atlasUUID) {
     console.warn(`⚠️  Missing Atlas UUID for ${node.atlas_document_type} document (id: ${node.notion_page_id})`);
   }
