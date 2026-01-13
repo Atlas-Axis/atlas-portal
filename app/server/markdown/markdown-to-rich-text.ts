@@ -235,6 +235,27 @@ function limitRichTextArrayLength(richText: NotionRichText[], warnings?: Content
   return result;
 }
 
+/**
+ * Validates if a URL is valid for Notion's API.
+ * Notion requires URLs to have a valid protocol (http, https, mailto, tel, etc.)
+ * and be properly formatted.
+ *
+ * @param url - The URL to validate
+ * @returns true if the URL is valid for Notion, false otherwise
+ */
+function isValidNotionUrl(url: string): boolean {
+  if (!url || url.trim() === '') return false;
+
+  try {
+    const parsed = new URL(url);
+    // Notion accepts http, https, mailto, tel, and other standard protocols
+    return ['http:', 'https:', 'mailto:', 'tel:', 'ftp:'].includes(parsed.protocol);
+  } catch {
+    // URL constructor throws for invalid URLs (no protocol, malformed, etc.)
+    return false;
+  }
+}
+
 // Simple markdown parser - we'll implement a basic one for now
 // In a more complex environment, we might want to use a library like 'remark' or 'marked'
 
@@ -497,14 +518,26 @@ function parseInlineMarkdown(
           });
         }
       } else {
-        // This is an external link - use createRichText for consistent annotation handling
-        richText.push(
-          createRichText({
-            content: linkContent,
-            href: match.url!,
-            annotations,
-          }),
-        );
+        // This is an external link - validate URL before passing to Notion
+        if (isValidNotionUrl(match.url!)) {
+          // Valid URL - create link with href
+          richText.push(
+            createRichText({
+              content: linkContent,
+              href: match.url!,
+              annotations,
+            }),
+          );
+        } else {
+          // Invalid URL - render as plain text (preserving link text, dropping broken href)
+          console.warn(`[markdown-to-rich-text] Invalid URL skipped: "${match.url}"`);
+          richText.push(
+            createRichText({
+              content: linkContent,
+              annotations,
+            }),
+          );
+        }
       }
     } else {
       // Regular formatted text (bold, italic, etc.) - use createRichText for consistency
