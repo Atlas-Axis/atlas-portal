@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Input } from '@heroui/input';
+import { Input } from '@heroui/react';
 import { Search } from 'lucide-react';
 
 interface SearchTriggerProps {

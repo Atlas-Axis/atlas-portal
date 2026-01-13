@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Accordion, AccordionItem } from '@heroui/accordion';
-import { useDisclosure } from '@heroui/react';
+import { Accordion, AccordionItem, useDisclosure } from '@heroui/react';
 import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';

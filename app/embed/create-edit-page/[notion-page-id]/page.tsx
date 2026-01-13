@@ -1,4 +1,4 @@
-import { Alert } from '@heroui/alert';
+import { Alert } from '@heroui/react';
 import { APIResponseError, PageObjectResponse } from '@notionhq/client';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { uuidToHyphens } from '@/app/shared/utils/utils';

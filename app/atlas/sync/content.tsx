@@ -2,9 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert } from '@heroui/alert';
-import { Divider } from '@heroui/divider';
-import { Button, Card, CardBody, CardHeader, Checkbox, Chip, Progress } from '@heroui/react';
+import { Alert, Button, Card, CardBody, CardHeader, Checkbox, Chip, Divider, Progress } from '@heroui/react';
 import { useRealtimeRun } from '@trigger.dev/react-hooks';
 import TypeChip from '@/app/atlas/type-chip';
 import { CustomHTML } from '@/app/components/custom-html';

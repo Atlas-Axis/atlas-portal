@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Accordion, AccordionItem } from '@heroui/accordion';
+import { Accordion, AccordionItem } from '@heroui/react';
 import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
