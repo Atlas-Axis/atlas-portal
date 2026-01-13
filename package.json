@@ -84,7 +84,8 @@
   },
   "overrides": {
     "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2"
+    "@types/react-dom": "19.2.2",
+    "@depot/cli": "0.0.1-cli.2.100.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
