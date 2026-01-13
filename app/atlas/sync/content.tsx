@@ -782,6 +782,7 @@ const ChangeCard = memo(function ChangeCard({
                 {databaseName}
               </Chip>
             )}
+            <span className="text-xs font-normal text-gray-400">{change.uuid}</span>
           </div>
 
           {/* Show inline diff for content changes */}
