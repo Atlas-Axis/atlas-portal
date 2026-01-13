@@ -825,6 +825,18 @@ async function truncateSupabaseTablesForDevEnvironment(): Promise<void> {
     }
 
     console.log('  ✓ Cleared notion_sync_status');
+
+    // Delete all rows from uuid_mapping to clear stale mappings to archived pages
+    const { error: uuidMappingError } = await supabase()
+      .from('uuid_mapping')
+      .delete()
+      .neq('atlas_document_uuid', '00000000-0000-0000-0000-000000000000');
+
+    if (uuidMappingError) {
+      throw uuidMappingError;
+    }
+
+    console.log('  ✓ Cleared uuid_mapping');
     console.log();
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
