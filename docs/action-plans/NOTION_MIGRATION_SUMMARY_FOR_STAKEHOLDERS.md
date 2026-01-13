@@ -10,10 +10,10 @@ We are standardizing how document information is stored across Notion databases 
 
 The Atlas is spread across 10 Notion databases. Over time, each database developed different names for the same information:
 
-| Information     | Scopes   | Agent Scope DB  | Sections & Primary Docs |
-| --------------- | -------- | --------------- | ----------------------- |
-| Document Number | `Doc No` | `Formal Doc ID` | `Doc No (or Temp Name)` |
-| Document Name   | `Name`   | `Document Name` | `Doc No (or Temp Name)` |
+| Information     | Scopes   | Agent Scope DB  | Sections & Primary Docs | +7 more |
+| --------------- | -------- | --------------- | ----------------------- | ------- |
+| Document Number | `Doc No` | `Formal Doc ID` | `Doc No (or Temp Name)` | +7 more |
+| Document Name   | `Name`   | `Document Name` | `Doc No (or Temp Name)` | +7 more |
 
 This inconsistency creates maintenance burden - every feature we build must handle all these variations, making the code complex and error-prone.
 
@@ -24,7 +24,7 @@ This inconsistency creates maintenance burden - every feature we build must hand
 
 ---
 
-## Migration Safety: How We Protect Your Data
+## Migration Safety: How We Protect Existing Notion Data
 
 ```mermaid
 flowchart LR
@@ -101,7 +101,7 @@ flowchart TB
 
 ### How the Sync Works (High-Level)
 
-1. **Load** - The system loads the Markdown file from GitHub
+1. **Load Markdown** - The system loads the Markdown file from GitHub
 2. **Compare** - It compares against what's currently in Notion (via Supabase)
 3. **Detect Changes** - Automatically finds new, modified, moved, or deleted documents
 4. **Preview** - Shows you exactly what will change before doing anything
@@ -110,9 +110,7 @@ flowchart TB
 
 ### Why This Matters
 
-- External contributors can propose Atlas changes via GitHub without Notion access
-- Bulk edits can be done efficiently in a text editor
-- Complete audit trail through Git history
+- External contributors can make Atlas changes via GitHub without Notion access
 - Team members continue using Notion for daily editing
 
 ---
@@ -144,20 +142,22 @@ These switches allow us to safely transition while maintaining the ability to fa
 
 ---
 
-## Migration Timeline
+## Production Migration Timeline
 
-| Step | Action                                       | Duration  | Risk             |
-| ---- | -------------------------------------------- | --------- | ---------------- |
-| 1    | Add new properties to all 10 databases       | ~5 min    | None             |
-| 2    | Run population script to fill new properties | ~40 min   | None             |
-| 3    | Import data to Supabase                      | ~15 min   | None             |
-| 4    | Run verification script                      | ~5 min    | None             |
-| 5    | Switch import mode to prefer new fields      | Immediate | Low (reversible) |
-| 6    | Monitor for issues                           | 1-2 weeks | None             |
-| 7    | Mark old properties as deprecated            | ~10 min   | None             |
+| Step | Action                                             | Duration  | Risk |
+| ---- | -------------------------------------------------- | --------- | ---- |
+| 1    | Backup current Atlas data (export to files)        | ~15 min   | None |
+| 2    | Add new properties to all 10 databases (automated) | ~15 min   | None |
+| 3    | Verify new properties exist in all databases       | ~10 min   | None |
+| 4    | Test Supabase import with fallback mode            | ~1 hour   | None |
+| 5    | Populate new Notion fields with calculated values  | ~1 hour   | None |
+| 6    | Add sorting formula to each database (manual)      | ~30 min   | None |
+| 7    | Re-import and run verification script              | ~1 hour   | None |
+| 8    | Monitor production for issues                      | 1-2 weeks | None |
+| 9    | (Later) Mark old properties as deprecated          | ~30 min   | None |
 
-**Total active time**: ~1-2 hours  
-**Monitoring period**: 1-2 weeks before final cleanup
+**Total active time**: ~2 hours  
+**Monitoring period**: 1-2 weeks before deprecating old properties
 
 ---
 
@@ -167,4 +167,3 @@ These switches allow us to safely transition while maintaining the ability to fa
 - **Why**: Reduce complexity and enable new sync features
 - **Risk**: Zero - old properties preserved, verified before switching
 - **New capability**: Markdown changes can now sync back to Notion
-- **Timeline**: ~1 hour of work + 1-2 weeks of monitoring
