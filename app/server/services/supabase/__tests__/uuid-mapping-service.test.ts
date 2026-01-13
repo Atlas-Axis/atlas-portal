@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { storeUuidMapping } from '../uuid-mapping-service';
+import { getUuidMappingByAtlasUuid, storeUuidMapping } from '../uuid-mapping-service';
 
 // Mock the supabase client
 vi.mock('../supabase-client', () => ({
@@ -18,7 +18,8 @@ describe('UUID Mapping Service', () => {
   describe('storeUuidMapping', () => {
     it('should store a UUID mapping successfully', async () => {
       const { supabase } = await import('../supabase-client');
-      const mockInsert = vi.fn().mockResolvedValue({ error: null });
+      const mockSelect = vi.fn().mockResolvedValue({ data: [{ notion_page_id: 'notion-id-1' }], error: null });
+      const mockInsert = vi.fn().mockReturnValue({ select: mockSelect });
 
       (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         from: vi.fn().mockReturnValue({
@@ -38,9 +39,11 @@ describe('UUID Mapping Service', () => {
 
     it('should return skippedReason when notion_page_id already exists', async () => {
       const { supabase } = await import('../supabase-client');
-      const mockInsert = vi.fn().mockResolvedValue({
+      const mockSelect = vi.fn().mockResolvedValue({
+        data: null,
         error: { code: '23505', message: 'duplicate key value violates unique constraint on notion_page_id' },
       });
+      const mockInsert = vi.fn().mockReturnValue({ select: mockSelect });
 
       (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         from: vi.fn().mockReturnValue({
@@ -56,9 +59,11 @@ describe('UUID Mapping Service', () => {
 
     it('should return skippedReason and warning when atlas_document_uuid already exists', async () => {
       const { supabase } = await import('../supabase-client');
-      const mockInsert = vi.fn().mockResolvedValue({
+      const mockSelect = vi.fn().mockResolvedValue({
+        data: null,
         error: { code: '23505', message: 'duplicate key value violates unique constraint on atlas_document_uuid' },
       });
+      const mockInsert = vi.fn().mockReturnValue({ select: mockSelect });
 
       (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         from: vi.fn().mockReturnValue({
@@ -75,9 +80,11 @@ describe('UUID Mapping Service', () => {
 
     it('should handle generic duplicate key error gracefully', async () => {
       const { supabase } = await import('../supabase-client');
-      const mockInsert = vi.fn().mockResolvedValue({
+      const mockSelect = vi.fn().mockResolvedValue({
+        data: null,
         error: { code: '23505', message: 'duplicate key' },
       });
+      const mockInsert = vi.fn().mockReturnValue({ select: mockSelect });
 
       (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         from: vi.fn().mockReturnValue({
@@ -94,9 +101,11 @@ describe('UUID Mapping Service', () => {
 
     it('should throw on other errors', async () => {
       const { supabase } = await import('../supabase-client');
-      const mockInsert = vi.fn().mockResolvedValue({
+      const mockSelect = vi.fn().mockResolvedValue({
+        data: null,
         error: { code: 'OTHER', message: 'some error' },
       });
+      const mockInsert = vi.fn().mockReturnValue({ select: mockSelect });
 
       (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         from: vi.fn().mockReturnValue({
@@ -105,6 +114,76 @@ describe('UUID Mapping Service', () => {
       });
 
       await expect(storeUuidMapping('notion-id-1', 'atlas-uuid-1')).rejects.toThrow('Failed to store UUID mapping');
+    });
+  });
+
+  describe('getUuidMappingByAtlasUuid', () => {
+    it('should return mapping when found', async () => {
+      const { supabase } = await import('../supabase-client');
+      const mockMaybeSingle = vi.fn().mockResolvedValue({
+        data: {
+          notion_page_id: 'notion-id-123',
+          atlas_document_uuid: 'atlas-uuid-456',
+        },
+        error: null,
+      });
+      const mockEq = vi.fn().mockReturnValue({ maybeSingle: mockMaybeSingle });
+      const mockSelect = vi.fn().mockReturnValue({ eq: mockEq });
+
+      (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+        from: vi.fn().mockReturnValue({
+          select: mockSelect,
+        }),
+      });
+
+      const result = await getUuidMappingByAtlasUuid('ATLAS-UUID-456');
+
+      // Should query with lowercase UUID
+      expect(mockEq).toHaveBeenCalledWith('atlas_document_uuid', 'atlas-uuid-456');
+      expect(result).toEqual({
+        notion_page_id: 'notion-id-123',
+        atlas_document_uuid: 'atlas-uuid-456',
+      });
+    });
+
+    it('should return null when no mapping found', async () => {
+      const { supabase } = await import('../supabase-client');
+      const mockMaybeSingle = vi.fn().mockResolvedValue({
+        data: null,
+        error: null,
+      });
+      const mockEq = vi.fn().mockReturnValue({ maybeSingle: mockMaybeSingle });
+      const mockSelect = vi.fn().mockReturnValue({ eq: mockEq });
+
+      (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+        from: vi.fn().mockReturnValue({
+          select: mockSelect,
+        }),
+      });
+
+      const result = await getUuidMappingByAtlasUuid('non-existent-uuid');
+
+      expect(result).toBeNull();
+    });
+
+    it('should return null on database error', async () => {
+      const { supabase } = await import('../supabase-client');
+      const mockMaybeSingle = vi.fn().mockResolvedValue({
+        data: null,
+        error: { message: 'Database error' },
+      });
+      const mockEq = vi.fn().mockReturnValue({ maybeSingle: mockMaybeSingle });
+      const mockSelect = vi.fn().mockReturnValue({ eq: mockEq });
+
+      (supabase as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+        from: vi.fn().mockReturnValue({
+          select: mockSelect,
+        }),
+      });
+
+      const result = await getUuidMappingByAtlasUuid('some-uuid');
+
+      expect(result).toBeNull();
     });
   });
 });

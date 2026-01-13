@@ -94,9 +94,13 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
   // Get all Notion page IDs from the pages
   const notionPageIds = pages.map((p) => p.notion_page_id);
 
+  console.log(`  [UUID_TRACE] Starting insertUuidMappingsForBatch for ${totalPages} pages`);
+
   // Query existing mappings in batches to avoid URI too long errors
   // Use lowercase Set for case-insensitive comparison (PostgreSQL returns lowercase UUIDs)
   const existingPageIdsLowercase = new Set<string>();
+  // Also track the original mappings returned from DB for debugging
+  const existingMappingsFromDb: Array<{ notion_page_id: string; atlas_document_uuid?: string }> = [];
   const queryBatches = Math.ceil(notionPageIds.length / queryBatchSize);
 
   for (let i = 0; i < notionPageIds.length; i += queryBatchSize) {
@@ -104,22 +108,54 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
     const batchNumber = Math.floor(i / queryBatchSize) + 1;
 
     console.log(`  🔍 Checking existing mappings batch ${batchNumber}/${queryBatches} (${batchIds.length} IDs)...`);
+    console.log(
+      `  [UUID_TRACE] Querying for page IDs: ${batchIds.slice(0, 5).join(', ')}${batchIds.length > 5 ? ` ... (${batchIds.length} total)` : ''}`,
+    );
 
     const { data: existingMappings, error: queryError } = await supabase()
       .from('uuid_mapping')
-      .select('notion_page_id')
+      .select('notion_page_id, atlas_document_uuid')
       .in('notion_page_id', batchIds);
 
     if (queryError) {
+      console.error(`  [UUID_TRACE] Query error: ${queryError.message}`);
       throw new Error(`Failed to query existing UUID mappings: ${queryError.message}`);
     }
 
+    console.log(`  [UUID_TRACE] Query returned ${existingMappings?.length || 0} existing mappings`);
+
     // Add found IDs to the set (normalized to lowercase for case-insensitive comparison)
-    existingMappings?.forEach((m) => existingPageIdsLowercase.add(m.notion_page_id.toLowerCase()));
+    existingMappings?.forEach((m) => {
+      existingPageIdsLowercase.add(m.notion_page_id.toLowerCase());
+      existingMappingsFromDb.push(m);
+    });
+  }
+
+  // Log details about existing mappings found
+  if (existingMappingsFromDb.length > 0) {
+    console.log(`  [UUID_TRACE] Found ${existingMappingsFromDb.length} existing mappings in database:`);
+    for (const m of existingMappingsFromDb.slice(0, 10)) {
+      console.log(`    - Notion: ${m.notion_page_id} → Atlas: ${m.atlas_document_uuid}`);
+    }
+    if (existingMappingsFromDb.length > 10) {
+      console.log(`    ... and ${existingMappingsFromDb.length - 10} more`);
+    }
   }
 
   // Filter to only pages that need new mappings (compare in lowercase)
   const pagesToMap = pages.filter((p) => !existingPageIdsLowercase.has(p.notion_page_id.toLowerCase()));
+
+  // Log which pages are being skipped vs mapped
+  const pagesSkipped = pages.filter((p) => existingPageIdsLowercase.has(p.notion_page_id.toLowerCase()));
+  if (pagesSkipped.length > 0) {
+    console.log(`  [UUID_TRACE] Skipping ${pagesSkipped.length} pages with existing mappings:`);
+    for (const p of pagesSkipped.slice(0, 5)) {
+      console.log(`    - ${p.notion_page_id} (${p.atlas_document_number || 'no doc number'})`);
+    }
+    if (pagesSkipped.length > 5) {
+      console.log(`    ... and ${pagesSkipped.length - 5} more`);
+    }
+  }
 
   if (existingPageIdsLowercase.size > 0) {
     console.log(`  ℹ️ Skipping ${existingPageIdsLowercase.size} pages with existing UUID mappings`);
@@ -128,6 +164,15 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
   if (pagesToMap.length === 0) {
     console.log(`  ✓ All ${totalPages} pages already have UUID mappings, nothing to create`);
     return;
+  }
+
+  // Log which pages WILL get new random UUIDs - this is critical for debugging!
+  console.log(`  [UUID_TRACE] ⚠️ GENERATING NEW RANDOM UUIDs for ${pagesToMap.length} pages:`);
+  for (const p of pagesToMap.slice(0, 10)) {
+    console.log(`    - ${p.notion_page_id} (${p.atlas_document_number || 'no doc number'}) - WILL GET RANDOM UUID`);
+  }
+  if (pagesToMap.length > 10) {
+    console.log(`    ... and ${pagesToMap.length - 10} more`);
   }
 
   // Continue with batched insert for remaining pages
@@ -141,13 +186,23 @@ async function insertUuidMappingsForBatch(pages: NotionDatabasePage[]): Promise<
     console.log(`  🔄 UUID mapping batch ${batchNumber}/${totalBatches} (${batch.length} pages)...`);
 
     // Generate UUID mappings for the batch
-    const uuidMappings = batch.map((page) => ({
-      atlas_document_uuid: uuidv4(),
-      notion_page_id: page.notion_page_id,
-    }));
+    const uuidMappings = batch.map((page) => {
+      const newAtlasUuid = uuidv4();
+      console.log(`  [UUID_TRACE] Generated random UUID: ${page.notion_page_id} → ${newAtlasUuid}`);
+      return {
+        atlas_document_uuid: newAtlasUuid,
+        notion_page_id: page.notion_page_id,
+      };
+    });
 
     // Insert the UUID mappings
-    await supabase().from('uuid_mapping').insert(uuidMappings).throwOnError();
+    try {
+      await supabase().from('uuid_mapping').insert(uuidMappings).throwOnError();
+      console.log(`  [UUID_TRACE] Successfully inserted ${uuidMappings.length} new mappings`);
+    } catch (insertError) {
+      console.error(`  [UUID_TRACE] Insert error:`, insertError);
+      throw insertError;
+    }
 
     // Log all page IDs that were mapped as a list
     const mappedPageIds = batch.map((p) => p.notion_page_id);

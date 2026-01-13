@@ -21,7 +21,11 @@ import { UuidMappings, normalizeUuidForLookup } from '@/app/server/atlas/load-uu
 import { NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS } from '@/app/server/atlas/notion-mapping/notion-database-properties-and-relationships';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { logNotionApiOperation } from '@/app/server/services/supabase/audit-log-service';
-import { storeUuidMapping } from '@/app/server/services/supabase/uuid-mapping-service';
+import {
+  getUuidMappingByAtlasUuid,
+  storeUuidMapping,
+  verifyUuidMapping,
+} from '@/app/server/services/supabase/uuid-mapping-service';
 import { pageHasChildren, validatePageExists } from './sync-helpers';
 import { FieldFilters, SyncActionResult } from './types';
 
@@ -123,6 +127,114 @@ export async function createNotionDatabasePage(
   const databaseName = getDatabaseNameFromDocument(doc.type, doc.uuid!, newIdsToDatabase);
   const databaseId = getNotionDatabaseIdForDatabaseName(databaseName);
 
+  // Check if Atlas UUID already has a mapping (page may already exist in Notion)
+  const existingMapping = await getUuidMappingByAtlasUuid(doc.uuid!);
+  if (existingMapping) {
+    console.log(
+      `[createNotionDatabasePage] Atlas UUID ${doc.uuid} already mapped to Notion page ${existingMapping.notion_page_id}. ` +
+        `Updating existing page instead of creating new.`,
+    );
+
+    // Build properties for the existing page
+    const warnings: ContentConversionWarning[] = [];
+    const properties = buildNotionProperties(doc, databaseName, uuidMappings, warnings);
+
+    // Add internal parent relationship if applicable
+    let internalParentInfo;
+    try {
+      internalParentInfo = getInternalParentPageIdFromAncestry(
+        change.newAncestry,
+        databaseName,
+        newIdsToDatabase,
+        uuidMappings,
+      );
+    } catch (error) {
+      return { success: false, reason: 'parent_lookup_error', error: (error as Error).message };
+    }
+
+    if (databaseSupportsInternalNesting(databaseName) && internalParentInfo) {
+      Object.assign(properties, addParentPageRelationshipProperty(internalParentInfo.notionPageId, databaseName));
+    }
+
+    // Add inter-database relationships
+    try {
+      const interDbRelationshipProps = addInterDatabaseRelationshipProperties(
+        change.newAncestry,
+        databaseName,
+        newIdsToDocuments,
+        newIdsToDatabase,
+        uuidMappings,
+      );
+      Object.assign(properties, interDbRelationshipProps);
+    } catch (error) {
+      return { success: false, reason: 'relationship_error', error: (error as Error).message };
+    }
+
+    try {
+      const notionClient = notion();
+      const response = await notionClient.pages.update({
+        page_id: existingMapping.notion_page_id,
+        properties: properties as Parameters<typeof notionClient.pages.update>[0]['properties'],
+      });
+
+      // Update in-memory maps
+      const normalizedAtlasUuid = normalizeUuidForLookup(doc.uuid!);
+      const normalizedNotionPageId = normalizeUuidForLookup(existingMapping.notion_page_id);
+      uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
+      uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
+
+      // Track as "created" for parent validation purposes
+      createdPagesInSync.add(existingMapping.notion_page_id);
+
+      await logNotionApiOperation({
+        operationType: 'update',
+        notionPageId: existingMapping.notion_page_id,
+        atlasDocumentUuid: doc.uuid,
+        databaseName,
+        requestPayload: { page_id: existingMapping.notion_page_id, properties, _note: 'existing_page_update' },
+        responsePayload: response as Record<string, unknown>,
+        success: true,
+        syncBatchId,
+      });
+
+      // Extract unresolved mention UUIDs from warnings for post-processing
+      const unresolvedMentionUuids = warnings
+        .filter((w) => w.type === 'missing_mapping' && w.atlasUuid)
+        .map((w) => w.atlasUuid!);
+
+      return {
+        success: true,
+        pageId: existingMapping.notion_page_id,
+        unresolvedMentionUuids: unresolvedMentionUuids.length > 0 ? unresolvedMentionUuids : undefined,
+      };
+    } catch (error) {
+      const err = error as Error;
+
+      // Check if the page was deleted/archived in Notion
+      if (err.message.includes('Could not find') || err.message.includes('object_not_found')) {
+        console.warn(
+          `[createNotionDatabasePage] Existing Notion page ${existingMapping.notion_page_id} not found. ` +
+            `It may have been deleted. Proceeding to create new page.`,
+        );
+        // Fall through to create new page
+      } else {
+        await logNotionApiOperation({
+          operationType: 'update',
+          notionPageId: existingMapping.notion_page_id,
+          atlasDocumentUuid: doc.uuid,
+          databaseName,
+          requestPayload: { page_id: existingMapping.notion_page_id, properties, _note: 'existing_page_update' },
+          success: false,
+          errorMessage: err.message,
+          syncBatchId,
+        });
+        return { success: false, error: err.message };
+      }
+    }
+  }
+
+  // No existing mapping (or existing page was deleted) - create new page
+
   // Get internal parent info
   let internalParentInfo;
   try {
@@ -195,6 +307,7 @@ export async function createNotionDatabasePage(
 
     // Store UUID mapping
     if (doc.uuid) {
+      console.log(`[UUID_TRACE] Creating mapping for new page: Notion=${createdPage.id} Atlas=${doc.uuid}`);
       const mappingResult = await storeUuidMapping(createdPage.id, doc.uuid);
       // Normalize UUIDs for in-memory map keys (maps use lowercase keys for consistent lookups)
       const normalizedAtlasUuid = normalizeUuidForLookup(doc.uuid);
@@ -204,6 +317,23 @@ export async function createNotionDatabasePage(
         // Only update in-memory maps if the database insert succeeded
         uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
         uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
+
+        // VERIFICATION: Confirm the mapping was stored correctly
+        const verified = await verifyUuidMapping(createdPage.id);
+        if (verified) {
+          if (verified.atlas_document_uuid.toLowerCase() === doc.uuid.toLowerCase()) {
+            console.log(
+              `[UUID_TRACE] ✓ Verified mapping is correct: ${createdPage.id} → ${verified.atlas_document_uuid}`,
+            );
+          } else {
+            console.error(
+              `[UUID_TRACE] ❌ CORRUPTION DETECTED! Stored UUID doesn't match!`,
+              `Expected: ${doc.uuid}, Got: ${verified.atlas_document_uuid}`,
+            );
+          }
+        } else {
+          console.error(`[UUID_TRACE] ❌ Verification failed - mapping not found after insert for ${createdPage.id}`);
+        }
       } else if (mappingResult.skippedReason === 'atlas_uuid_exists') {
         // The Atlas UUID is already mapped to a different Notion page - this is a data issue
         // We still update the in-memory maps so that mention post-processing can work
@@ -219,6 +349,20 @@ export async function createNotionDatabasePage(
       }
       // If skippedReason is 'notion_page_id_exists', the mapping already exists correctly - update in-memory
       else if (mappingResult.skippedReason === 'notion_page_id_exists') {
+        // Verify what's actually in the database
+        const existingMapping = await verifyUuidMapping(createdPage.id);
+        if (existingMapping) {
+          console.log(
+            `[UUID_TRACE] Existing mapping found: ${createdPage.id} → ${existingMapping.atlas_document_uuid}`,
+            `(expected: ${doc.uuid})`,
+          );
+          if (existingMapping.atlas_document_uuid.toLowerCase() !== doc.uuid.toLowerCase()) {
+            console.error(
+              `[UUID_TRACE] ❌ MISMATCH! Existing mapping has different Atlas UUID than expected!`,
+              `This Notion page is mapped to wrong Atlas document.`,
+            );
+          }
+        }
         uuidMappings.atlasUUIDsToNotionPageIds.set(normalizedAtlasUuid, normalizedNotionPageId);
         uuidMappings.notionPageIDsToAtlasUUIDs.set(normalizedNotionPageId, normalizedAtlasUuid);
       }

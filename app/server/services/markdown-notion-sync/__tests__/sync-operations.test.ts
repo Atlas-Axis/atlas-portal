@@ -26,7 +26,9 @@ vi.mock('@/app/server/services/supabase/audit-log-service', () => ({
 }));
 
 vi.mock('@/app/server/services/supabase/uuid-mapping-service', () => ({
-  storeUuidMapping: vi.fn().mockResolvedValue(undefined),
+  getUuidMappingByAtlasUuid: vi.fn().mockResolvedValue(null),
+  storeUuidMapping: vi.fn().mockResolvedValue({ success: true }),
+  verifyUuidMapping: vi.fn().mockResolvedValue(null),
 }));
 
 vi.mock('@/app/atlas/sync/_lib/atlas-database-mapper', () => ({
@@ -185,6 +187,138 @@ describe('sync-operations', () => {
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Missing document UUID');
+    });
+
+    it('updates existing Notion page when UUID mapping already exists', async () => {
+      // Mock existing mapping
+      const { getUuidMappingByAtlasUuid } = await import('@/app/server/services/supabase/uuid-mapping-service');
+      vi.mocked(getUuidMappingByAtlasUuid).mockResolvedValueOnce({
+        notion_page_id: 'existing-notion-page-id',
+        atlas_document_uuid: 'existing-atlas-uuid',
+      });
+
+      // Mock Notion client for page update
+      const mockNotionClient = {
+        pages: {
+          update: vi.fn().mockResolvedValue({ id: 'existing-notion-page-id' }),
+        },
+      };
+      const { notion } = await import('@/app/server/services/notion/notion-client');
+      vi.mocked(notion).mockReturnValue(mockNotionClient as unknown as ReturnType<typeof notion>);
+
+      const baseDoc = { last_modified: '2024-01-01T00:00:00Z', content: 'Test content' };
+      const change: AtlasDocumentChange = {
+        changeType: 'added',
+        uuid: 'existing-atlas-uuid',
+        newValues: { uuid: 'existing-atlas-uuid', doc_no: 'A.1.1', name: 'Test', type: 'Section', ...baseDoc },
+        oldValues: undefined,
+        newAncestry: [],
+        oldAncestry: [],
+      };
+
+      const createdPagesInSync = new Set<string>();
+      const result = await createNotionDatabasePage(
+        change,
+        new Map(),
+        new Map(),
+        mockUuidMappings,
+        'batch-id',
+        createdPagesInSync,
+        new Map(),
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.pageId).toBe('existing-notion-page-id');
+      // Should have called update, not create
+      expect(mockNotionClient.pages.update).toHaveBeenCalledWith(
+        expect.objectContaining({ page_id: 'existing-notion-page-id' }),
+      );
+      // Should be tracked in createdPagesInSync
+      expect(createdPagesInSync.has('existing-notion-page-id')).toBe(true);
+    });
+
+    it('creates new page when existing mapping page is not found in Notion', async () => {
+      // Mock existing mapping
+      const { getUuidMappingByAtlasUuid } = await import('@/app/server/services/supabase/uuid-mapping-service');
+      vi.mocked(getUuidMappingByAtlasUuid).mockResolvedValueOnce({
+        notion_page_id: 'deleted-notion-page-id',
+        atlas_document_uuid: 'atlas-uuid',
+      });
+
+      // Mock Notion client: update fails with "object not found", create succeeds
+      const mockNotionClient = {
+        pages: {
+          update: vi.fn().mockRejectedValue(new Error('Could not find page with ID: deleted-notion-page-id')),
+          create: vi.fn().mockResolvedValue({ id: 'new-notion-page-id' }),
+        },
+      };
+      const { notion } = await import('@/app/server/services/notion/notion-client');
+      vi.mocked(notion).mockReturnValue(mockNotionClient as unknown as ReturnType<typeof notion>);
+
+      const baseDoc = { last_modified: '2024-01-01T00:00:00Z', content: 'Test content' };
+      const change: AtlasDocumentChange = {
+        changeType: 'added',
+        uuid: 'atlas-uuid',
+        newValues: { uuid: 'atlas-uuid', doc_no: 'A.1.1', name: 'Test', type: 'Section', ...baseDoc },
+        oldValues: undefined,
+        newAncestry: [],
+        oldAncestry: [],
+      };
+
+      const result = await createNotionDatabasePage(
+        change,
+        new Map(),
+        new Map(),
+        mockUuidMappings,
+        'batch-id',
+        new Set(),
+        new Map(),
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.pageId).toBe('new-notion-page-id');
+      // Should have tried update first, then created new page
+      expect(mockNotionClient.pages.update).toHaveBeenCalled();
+      expect(mockNotionClient.pages.create).toHaveBeenCalled();
+    });
+
+    it('creates new page when no existing mapping exists', async () => {
+      // Mock no existing mapping
+      const { getUuidMappingByAtlasUuid } = await import('@/app/server/services/supabase/uuid-mapping-service');
+      vi.mocked(getUuidMappingByAtlasUuid).mockResolvedValueOnce(null);
+
+      // Mock Notion client for page creation
+      const mockNotionClient = {
+        pages: {
+          create: vi.fn().mockResolvedValue({ id: 'new-notion-page-id' }),
+        },
+      };
+      const { notion } = await import('@/app/server/services/notion/notion-client');
+      vi.mocked(notion).mockReturnValue(mockNotionClient as unknown as ReturnType<typeof notion>);
+
+      const baseDoc = { last_modified: '2024-01-01T00:00:00Z', content: 'Test content' };
+      const change: AtlasDocumentChange = {
+        changeType: 'added',
+        uuid: 'new-atlas-uuid',
+        newValues: { uuid: 'new-atlas-uuid', doc_no: 'A.1.1', name: 'Test', type: 'Section', ...baseDoc },
+        oldValues: undefined,
+        newAncestry: [],
+        oldAncestry: [],
+      };
+
+      const result = await createNotionDatabasePage(
+        change,
+        new Map(),
+        new Map(),
+        mockUuidMappings,
+        'batch-id',
+        new Set(),
+        new Map(),
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.pageId).toBe('new-notion-page-id');
+      expect(mockNotionClient.pages.create).toHaveBeenCalled();
     });
   });
 
