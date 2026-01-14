@@ -8,12 +8,27 @@ We are standardizing how document information is stored across Notion databases 
 
 ## The Problem: Inconsistent Property Names
 
-The Atlas is spread across 10 Notion databases. Over time, each database developed different names for the same information:
+The Atlas is spread across 10 Notion databases. Over time, each database developed different property names and types for the same information:
 
-| Information     | Scopes   | Agent Scope DB  | Sections & Primary Docs | +7 more |
-| --------------- | -------- | --------------- | ----------------------- | ------- |
-| Document Number | `Doc No` | `Formal Doc ID` | `Doc No (or Temp Name)` | +7 more |
-| Document Name   | `Name`   | `Document Name` | `Doc No (or Temp Name)` | +7 more |
+| Database                | Document Number                 | Document Name                   |
+| ----------------------- | ------------------------------- | ------------------------------- |
+| Scopes                  | `Doc No` (title)                | `Name` (text)                   |
+| Articles                | `Doc No` (title)                | `Name` (text)                   |
+| Sections & Primary Docs | `Doc No (or Temp Name)` (title) | `Doc No (or Temp Name)` (title) |
+| Agent Scope Database    | `Formal Doc ID` (text)          | `Document Name` (title)         |
+| Annotations             | `Doc No` (title)                | `Doc No` (title)                |
+| Tenets                  | `Doc No (or Temp Name)` (title) | `Doc No (or Temp Name)` (title) |
+| Scenarios               | `Doc No (or Temp Name)` (title) | `Doc No (or Temp Name)` (title) |
+| Scenario Variations     | `Doc No` (title)                | `Doc No` (title)                |
+| Active Data             | `Doc No` (title)                | `Doc No` (title)                |
+| Needed Research         | `Doc No` (title)                | `Doc No` (title)                |
+
+**Key observations:**
+
+- 4 different property names for document numbers
+- 4 different property names for document names
+- Mixed property types (title vs text)
+- 6 databases use the same property for both number AND name
 
 This inconsistency creates maintenance burden - every feature we build must handle all these variations, making the code complex and error-prone.
 
