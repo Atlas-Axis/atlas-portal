@@ -1,8 +1,8 @@
-import { Alert } from '@heroui/react';
 import { APIResponseError, PageObjectResponse } from '@notionhq/client';
 import { notion } from '@/app/server/services/notion/notion-client';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 import ActionButton from './action-button';
+import { ErrorAlert } from './error-alert';
 
 async function loadPage(notionPageId: string) {
   const response = (await notion().pages.retrieve({
@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ 'notion-page-
   } catch (error) {
     console.error('Error loading page:', { error });
     const errorMessage = error instanceof APIResponseError ? error.message : String(error);
-    return <Alert color="danger" description={errorMessage} />;
+    return <ErrorAlert message={errorMessage} />;
   }
 
   return (
