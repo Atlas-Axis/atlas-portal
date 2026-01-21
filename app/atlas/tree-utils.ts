@@ -10,16 +10,26 @@ export function getChildCollection(node: ExportAtlasTreeDocument, key: ChildColl
 }
 
 /**
- * Builds a lookup map from document number to the path of collapsible UUIDs needed to reach it.
+ * Builds a lookup map from document number to the path of node keys needed to reach it.
  * This is built once and cached for O(1) lookups instead of O(n) tree traversals.
  *
+ * Node keys use the same fallback strategy as the sidebar: uuid -> doc_no -> depth-based fallback.
+ * This ensures consistency between path expansion and accordion key matching.
+ *
  * @param node - The current node being examined
- * @param currentPath - Accumulated path of UUIDs from root to current node
- * @param map - The map being built (doc_no -> path of UUIDs)
+ * @param currentPath - Accumulated path of node keys from root to current node
+ * @param map - The map being built (doc_no -> path of node keys)
+ * @param depth - Current depth in the tree (for fallback key generation)
  */
-function buildPathLookupMap(node: ExportAtlasTreeDocument, currentPath: string[], map: Map<string, string[]>): void {
-  // Add current node's UUID to path (all document types are collapsible)
-  const newPath = node.uuid ? [...currentPath, node.uuid] : currentPath;
+function buildPathLookupMap(
+  node: ExportAtlasTreeDocument,
+  currentPath: string[],
+  map: Map<string, string[]>,
+  depth: number = 0,
+): void {
+  // Use the same key strategy as sidebar: uuid -> doc_no -> depth-based fallback
+  const nodeKey = node.uuid || node.doc_no || `node-${depth}-unknown`;
+  const newPath = [...currentPath, nodeKey];
 
   // Store the path for this document
   if (node.doc_no) {
@@ -41,7 +51,7 @@ function buildPathLookupMap(node: ExportAtlasTreeDocument, currentPath: string[]
   ];
 
   for (const child of children) {
-    buildPathLookupMap(child, newPath, map);
+    buildPathLookupMap(child, newPath, map, depth + 1);
   }
 }
 
