@@ -135,6 +135,11 @@ function renderSupportingDocuments({
   const docWithSupporting = node as ExportAtlasTreeDocument & SupportingDocsContainer;
 
   const supportingDocumentLabels = [
+    {
+      label: 'Needed Research',
+      documentType: 'Needed Research' as const,
+      documents: docWithSupporting.needed_research || [],
+    },
     { label: 'Annotations', documentType: 'Annotation' as const, documents: docWithSupporting.annotations || [] },
     { label: 'Tenets', documentType: 'Action Tenet' as const, documents: docWithSupporting.tenets || [] },
     { label: 'Scenarios', documentType: 'Scenario' as const, documents: docWithSupporting.scenarios || [] },
@@ -144,11 +149,6 @@ function renderSupportingDocuments({
       documents: docWithSupporting.scenario_variations || [],
     },
     { label: 'Active Data', documentType: 'Active Data' as const, documents: docWithSupporting.active_data || [] },
-    {
-      label: 'Needed Research',
-      documentType: 'Needed Research' as const,
-      documents: docWithSupporting.needed_research || [],
-    },
   ].filter((entry) => entry.documents.length > 0);
 
   if (supportingDocumentLabels.length === 0) {
