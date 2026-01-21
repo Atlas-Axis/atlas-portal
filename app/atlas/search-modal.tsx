@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Input, Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
 import { Search } from 'lucide-react';
 import type { ChildCollectionName, ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
@@ -155,6 +155,7 @@ function highlightText(text: string, query: string): React.ReactNode {
 
 export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Flatten all documents once on mount
   const allDocuments = useMemo(() => flattenDocuments(scopeTrees), [scopeTrees]);
@@ -212,15 +213,27 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
   }, [query, allDocuments]);
 
   // Focus input when modal opens
+  const focusInput = useCallback(() => {
+    // Try to focus immediately, then retry with delays to handle modal animation
+    const attemptFocus = (attempt = 0) => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        // Verify focus was successful, retry if not (modal may have grabbed focus)
+        if (document.activeElement !== inputRef.current && attempt < 3) {
+          setTimeout(() => attemptFocus(attempt + 1), 500);
+        }
+      }
+    };
+    attemptFocus();
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
-      // Small delay to ensure modal animation completes
-      setTimeout(() => {
-        const input = document.querySelector('[data-search-modal-input]') as HTMLInputElement;
-        if (input) input.focus();
-      }, 100);
+      // Focus after a short delay to let the modal render
+      const timeoutId = setTimeout(focusInput, 50);
+      return () => clearTimeout(timeoutId);
     }
-  }, [isOpen]);
+  }, [isOpen, focusInput]);
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -266,7 +279,7 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 border-b border-slate-200 pb-4">
           <Input
-            data-search-modal-input
+            ref={inputRef}
             placeholder="Search Atlas documents..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -275,7 +288,6 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
               input: 'text-lg',
               inputWrapper: 'h-12',
             }}
-            autoFocus
           />
         </ModalHeader>
         <ModalBody className="py-4">
