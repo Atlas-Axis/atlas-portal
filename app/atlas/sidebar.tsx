@@ -2,19 +2,19 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Accordion, AccordionItem, useDisclosure } from '@heroui/react';
+import { Accordion, AccordionItem } from '@heroui/react';
 import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { dispatchExpandScopeEvent } from './custom-events';
 import DownloadAtlasButton from './download-atlas-button';
-import SearchModal from './search-modal';
 import SearchTrigger from './search-trigger';
 import SettingsDropdown from './settings-dropdown';
 
 interface SidebarProps {
   scopeTrees: ExportAtlasTreeDocument[];
   uuidMappings: UuidMappings;
+  onSearchOpen: () => void;
 }
 
 interface RenderSidebarNodeProps {
@@ -142,9 +142,8 @@ function renderSidebarNode({
   );
 }
 
-export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
+export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: SidebarProps) {
   const [activeHash, setActiveHash] = useState('');
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     // Set initial hash (remove the '#' prefix)
@@ -158,20 +157,6 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
     window.addEventListener('hashchange', updateHash);
     return () => window.removeEventListener('hashchange', updateHash);
   }, []);
-
-  // Handle CMD+F / Ctrl+F keyboard shortcut to open search
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // Check for CMD+F (Mac) or Ctrl+F (Windows/Linux)
-      if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
-        event.preventDefault(); // Prevent browser's default find
-        onOpen();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onOpen]);
 
   // Handle initial hash on page load
   useEffect(() => {
@@ -189,43 +174,38 @@ export default function Sidebar({ scopeTrees, uuidMappings }: SidebarProps) {
   }
 
   return (
-    <>
-      <div
-        className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex"
-        role="navigation"
-        aria-label="Atlas navigation"
-      >
-        <div className="grow p-4">
-          <div className="mb-6 flex items-center gap-3">
-            <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" priority />
-            <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
-          </div>
-
-          {/* Search Input Trigger */}
-          <div className="mb-4">
-            <SearchTrigger onOpen={onOpen} />
-          </div>
-
-          <div className="space-y-1">
-            {scopeTrees.map((scopeTree) =>
-              renderSidebarNode({
-                node: scopeTree,
-                depth: 0,
-                activeHash,
-                uuidMappings,
-              }),
-            )}
-          </div>
+    <div
+      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex"
+      role="navigation"
+      aria-label="Atlas navigation"
+    >
+      <div className="grow p-4">
+        <div className="mb-6 flex items-center gap-3">
+          <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" priority />
+          <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
         </div>
 
-        <div className="flex w-full flex-col gap-2 p-4">
-          <DownloadAtlasButton />
-          <SettingsDropdown />
+        {/* Search Input Trigger */}
+        <div className="mb-4">
+          <SearchTrigger onOpen={onSearchOpen} />
+        </div>
+
+        <div className="space-y-1">
+          {scopeTrees.map((scopeTree) =>
+            renderSidebarNode({
+              node: scopeTree,
+              depth: 0,
+              activeHash,
+              uuidMappings,
+            }),
+          )}
         </div>
       </div>
 
-      {/* Search Modal */}
-      <SearchModal scopeTrees={scopeTrees} uuidMappings={uuidMappings} isOpen={isOpen} onClose={onClose} />
-    </>
+      <div className="flex w-full flex-col gap-2 p-4">
+        <DownloadAtlasButton />
+        <SettingsDropdown />
+      </div>
+    </div>
   );
 }
