@@ -118,6 +118,46 @@ function restoreProtectedContent(text: string, placeholders: Map<string, string>
 }
 
 /**
+ * Normalizes non-standard bullet characters to standard markdown list markers.
+ * This ensures that Unicode bullet characters like ◦ and • are properly parsed as list items.
+ *
+ * Handles bullets at the start of lines with optional leading whitespace:
+ * - ◦ (U+25E6, WHITE BULLET) followed by space -> - (dash)
+ * - • (U+2022, BULLET) followed by space -> - (dash)
+ *
+ * @param markdown - The markdown string to normalize
+ * @returns The markdown with normalized list markers
+ */
+function normalizeListMarkers(markdown: string): string {
+  // Replace Unicode bullet characters followed by space at the start of lines (with optional indentation)
+  // ◦ (U+25E6) - WHITE BULLET - commonly used for sub-items
+  // • (U+2022) - BULLET - commonly used for list items
+  return markdown.replace(/^(\s*)[◦•]\s/gm, '$1- ');
+}
+
+/**
+ * Fixes malformed inline code blocks where the closing backtick is on a new line.
+ * This can happen when content is imported from Notion with incorrectly formatted inline code.
+ *
+ * Pattern that gets fixed:
+ *   `code content
+ *   `     - Next item
+ *
+ * Becomes:
+ *   `code content`
+ *        - Next item
+ *
+ * @param markdown - The markdown string to fix
+ * @returns The markdown with fixed inline code blocks
+ */
+function fixMalformedInlineCode(markdown: string): string {
+  // Match inline code that has a newline before the closing backtick
+  // Pattern: opening backtick, content (no backticks), newline, closing backtick
+  // The closing backtick may be followed by spaces and a list marker
+  return markdown.replace(/`([^`\n]+)\n`(\s*[-*])/g, '`$1`\n$2');
+}
+
+/**
  * Converts markdown to HTML and preserves line breaks by converting newlines to <br> tags.
  * This handles non-standard markdown patterns like Unicode bullet lists (•).
  *
@@ -137,6 +177,12 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
     console.warn('Markdown content exceeds 1MB, truncating for safety');
     markdown = markdown.slice(0, 1000000) + '\n\n[Content truncated due to size...]';
   }
+
+  // Step 0a: Fix malformed inline code blocks (closing backtick on new line)
+  markdown = fixMalformedInlineCode(markdown);
+
+  // Step 0b: Normalize non-standard bullet characters to standard markdown list markers
+  markdown = normalizeListMarkers(markdown);
 
   // Step 1: Protect math expressions from markdown processing
   const { protected: protectedMarkdown, placeholders } = protectSpecialContent(markdown);

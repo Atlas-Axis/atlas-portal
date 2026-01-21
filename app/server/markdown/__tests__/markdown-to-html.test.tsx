@@ -285,6 +285,163 @@ describe('markdownToHTML', () => {
     });
   });
 
+  describe('bullet character normalization', () => {
+    it('should convert Unicode white bullet (◦) to standard list items', () => {
+      const input = '◦ First item\n◦ Second item';
+      const output = markdownToHTML(input);
+
+      // Should render as proper list items
+      expect(output).toContain('<ul>');
+      expect(output).toContain('<li>');
+      expect(output).toContain('First item');
+      expect(output).toContain('Second item');
+      expect(output).toContain('</li>');
+      expect(output).toContain('</ul>');
+
+      // Should NOT contain the original Unicode bullet character
+      expect(output).not.toContain('◦');
+    });
+
+    it('should convert Unicode bullet (•) to standard list items', () => {
+      const input = '• First item\n• Second item';
+      const output = markdownToHTML(input);
+
+      // Should render as proper list items
+      expect(output).toContain('<ul>');
+      expect(output).toContain('<li>');
+      expect(output).toContain('First item');
+      expect(output).toContain('Second item');
+      expect(output).toContain('</li>');
+      expect(output).toContain('</ul>');
+
+      // Should NOT contain the original Unicode bullet character
+      expect(output).not.toContain('•');
+    });
+
+    it('should handle indented Unicode bullets for nested lists', () => {
+      const input = '- Main item\n  ◦ Sub item 1\n  ◦ Sub item 2';
+      const output = markdownToHTML(input);
+
+      // Should render with nested list structure
+      expect(output).toContain('<ul>');
+      expect(output).toContain('<li>');
+      expect(output).toContain('Main item');
+      expect(output).toContain('Sub item 1');
+      expect(output).toContain('Sub item 2');
+      expect(output).toContain('</li>');
+      expect(output).toContain('</ul>');
+
+      // Should NOT contain the original Unicode bullet character
+      expect(output).not.toContain('◦');
+    });
+
+    it('should handle mixed standard dashes and Unicode bullets', () => {
+      const input = '- First level\n  ◦ Second level with circle\n- Another first level';
+      const output = markdownToHTML(input);
+
+      // Should render both as list items
+      expect(output).toContain('<ul>');
+      expect(output).toContain('First level');
+      expect(output).toContain('Second level with circle');
+      expect(output).toContain('Another first level');
+
+      // Should NOT contain the original Unicode bullet character
+      expect(output).not.toContain('◦');
+    });
+
+    it('should handle the exact content from Atlas document A.1.9.2.4.12.3.3.1', () => {
+      const input = `- The check can be performed in two ways:
+
+1. Using an Online Tool:
+
+  ◦ Copy and paste the body of the Executive Document.
+
+  ◦ Compare the generated hash with the hash included in the Spell.`;
+
+      const output = markdownToHTML(input);
+
+      // Should render the dash item as a list
+      expect(output).toContain('<ul>');
+      expect(output).toContain('The check can be performed in two ways');
+
+      // Should NOT contain the original Unicode bullet character
+      expect(output).not.toContain('◦');
+
+      // Should contain the sub-items as list items
+      expect(output).toContain('Copy and paste the body');
+      expect(output).toContain('Compare the generated hash');
+    });
+
+    it('should not affect Unicode bullets that are not at the start of a line', () => {
+      const input = 'This text mentions the ◦ symbol in the middle of a sentence.';
+      const output = markdownToHTML(input);
+
+      // The bullet in the middle of text should remain
+      expect(output).toContain('◦');
+    });
+
+    it('should preserve standard dash list markers', () => {
+      const input = '- Standard dash item\n- Another dash item';
+      const output = markdownToHTML(input);
+
+      // Should render as proper list items
+      expect(output).toContain('<ul>');
+      expect(output).toContain('<li>');
+      expect(output).toContain('Standard dash item');
+      expect(output).toContain('Another dash item');
+    });
+  });
+
+  describe('malformed inline code fix', () => {
+    it('should fix inline code with closing backtick on new line followed by list item', () => {
+      // This malformed pattern occurs when Notion exports inline code incorrectly
+      const input = `  - Generate the hash:
+     - Run the command: \`cast keccak
+\`     - Use the raw file URL.`;
+
+      const output = markdownToHTML(input);
+
+      // Should have 3 separate list items
+      const liCount = (output.match(/<li>/g) || []).length;
+      expect(liCount).toBe(3);
+
+      // "Use the raw file URL" should be its own list item, not on the same line as the code
+      expect(output).toContain('<li>Use the raw file URL.</li>');
+    });
+
+    it('should not affect properly formatted inline code', () => {
+      const input = '- Item with `code` in it\n- Another item';
+      const output = markdownToHTML(input);
+
+      // Should render normally
+      expect(output).toContain('<code>code</code>');
+      expect(output).toContain('<li>');
+      const liCount = (output.match(/<li>/g) || []).length;
+      expect(liCount).toBe(2);
+    });
+
+    it('should handle the exact malformed content from Atlas document A.1.9.2.4.12.3.3.1', () => {
+      // Exact content structure from the problematic document
+      const input = `  - Generate the hash directly from the raw GitHub URL at the specific commit:
+     - Run the following command to generate the hash: \`cast keccak -- "$(wget $RAW_EXEC_URL -O -)"
+\`     - Use the raw file URL at the specific commit.
+
+  - Compare the generated hash with the hash included in the Spell.`;
+
+      const output = markdownToHTML(input);
+
+      // Should have 4 separate list items
+      const liCount = (output.match(/<li>/g) || []).length;
+      expect(liCount).toBe(4);
+
+      // Each should be a separate list item
+      expect(output).toContain('Generate the hash directly');
+      expect(output).toContain('Run the following command');
+      expect(output).toContain('<li>Use the raw file URL at the specific commit.</li>');
+      expect(output).toContain('Compare the generated hash');
+    });
+  });
+
   describe('table rendering', () => {
     it('should render tables without invalid <br> tags inside table structure', () => {
       const input = `| Header 1 | Header 2 |
