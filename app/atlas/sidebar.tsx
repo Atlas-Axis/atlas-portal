@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Accordion, AccordionItem } from '@heroui/react';
 import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
@@ -10,6 +10,7 @@ import { dispatchExpandScopeEvent } from './custom-events';
 import DownloadAtlasButton from './download-atlas-button';
 import SearchTrigger from './search-trigger';
 import SettingsDropdown from './settings-dropdown';
+import { createPathLookupMap } from './tree-utils';
 
 interface SidebarProps {
   scopeTrees: ExportAtlasTreeDocument[];
@@ -22,6 +23,8 @@ interface RenderSidebarNodeProps {
   depth?: number;
   activeHash: string;
   uuidMappings: UuidMappings;
+  expandedKeys: Set<string>;
+  onToggleExpanded: (uuid: string) => void;
 }
 
 /**
@@ -37,6 +40,8 @@ function renderSidebarNode({
   depth = 0,
   activeHash,
   uuidMappings,
+  expandedKeys,
+  onToggleExpanded,
 }: RenderSidebarNodeProps): React.ReactElement | null {
   // Collect only immutable and primary document children (exclude supporting documents)
   const scopes = getChildCollection(node, 'scopes');
@@ -64,6 +69,7 @@ function renderSidebarNode({
     return (
       <a
         key={nodeNotionId || node.doc_no || `node-${node.uuid || 'unknown'}`}
+        data-sidebar-doc-id={node.doc_no}
         className={`block rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out hover:bg-slate-100 ${
           isActive ? 'text-blue-600' : ''
         }`}
@@ -84,6 +90,9 @@ function renderSidebarNode({
 
   // If node has children, render as an accordion
   const nodeNotionId = node.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) : null;
+  const nodeUuid = node.uuid || '';
+  const isExpanded = expandedKeys.has(nodeUuid);
+
   return (
     <Accordion
       key={nodeNotionId || node.doc_no || `node-${node.uuid || 'unknown'}`}
@@ -91,8 +100,19 @@ function renderSidebarNode({
       variant="light"
       className="px-0"
       disableAnimation={true}
+      selectedKeys={isExpanded ? new Set([nodeUuid]) : new Set<string>()}
+      onSelectionChange={(keys) => {
+        if (nodeUuid) {
+          const shouldBeExpanded = keys === 'all' || (keys instanceof Set && keys.size > 0);
+          if (shouldBeExpanded !== isExpanded) {
+            onToggleExpanded(nodeUuid);
+          }
+        }
+      }}
     >
       <AccordionItem
+        key={nodeUuid}
+        data-sidebar-doc-id={node.doc_no}
         aria-label={`${node.doc_no} - ${node.name || 'Untitled'}`}
         title={
           <div
@@ -133,6 +153,8 @@ function renderSidebarNode({
                 depth: depth + 1,
                 activeHash,
                 uuidMappings,
+                expandedKeys,
+                onToggleExpanded,
               })}
             </div>
           ))}
@@ -144,11 +166,54 @@ function renderSidebarNode({
 
 export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: SidebarProps) {
   const [activeHash, setActiveHash] = useState('');
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => new Set());
+
+  // Build path lookup map once for O(1) lookups (memoized)
+  const pathLookupMap = useMemo(() => {
+    return createPathLookupMap(scopeTrees);
+  }, [scopeTrees]);
+
+  // Handler to toggle expansion of sidebar accordion nodes
+  const handleToggleExpanded = useCallback((uuid: string) => {
+    setExpandedKeys((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(uuid)) {
+        newSet.delete(uuid);
+      } else {
+        newSet.add(uuid);
+      }
+      return newSet;
+    });
+  }, []);
 
   useEffect(() => {
-    // Set initial hash (remove the '#' prefix)
+    // Set initial hash and expand sidebar tree to show the target
     const updateHash = () => {
-      setActiveHash(window.location.hash.slice(1));
+      const hash = window.location.hash.slice(1);
+      setActiveHash(hash);
+
+      if (hash) {
+        // Expand path to target in sidebar
+        const path = pathLookupMap.get(hash);
+        if (path) {
+          setExpandedKeys((prev) => {
+            const newSet = new Set(prev);
+            path.forEach((uuid) => newSet.add(uuid));
+            return newSet;
+          });
+
+          // Use double requestAnimationFrame for reliable scrolling after DOM updates
+          // First rAF: React commits the DOM changes (expanded accordions)
+          // Second rAF: DOM is painted, now safe to scroll
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              const escapedHash = CSS.escape(hash);
+              const element = document.querySelector(`[data-sidebar-doc-id="${escapedHash}"]`);
+              element?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+          });
+        }
+      }
     };
 
     updateHash();
@@ -156,7 +221,7 @@ export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: Side
     // Listen for hash changes
     window.addEventListener('hashchange', updateHash);
     return () => window.removeEventListener('hashchange', updateHash);
-  }, []);
+  }, [pathLookupMap]);
 
   // Handle initial hash on page load
   useEffect(() => {
@@ -197,6 +262,8 @@ export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: Side
               depth: 0,
               activeHash,
               uuidMappings,
+              expandedKeys,
+              onToggleExpanded: handleToggleExpanded,
             }),
           )}
         </div>

@@ -17,6 +17,39 @@ import { ExportTreeExtraData } from './export-tree-extra-data';
 import { createPathLookupMap, createUuidToDocNoMap } from './tree-utils';
 import TypeChip from './type-chip';
 
+/**
+ * Document types that are shown in the sidebar (immutable and primary docs).
+ * Clicking these in the main panel will sync the sidebar to the same document.
+ */
+const IMMUTABLE_AND_PRIMARY_TYPES = new Set<AtlasDocumentType>([
+  'Scope',
+  'Article',
+  'Section',
+  'Core',
+  'Type Specification',
+  'Active Data Controller',
+]);
+
+/**
+ * Updates the URL hash and dispatches a hashchange event to sync the sidebar.
+ * Only triggers for immutable and primary document types that appear in the sidebar.
+ * Only dispatches if the hash is actually changing to avoid interfering with accordion toggle.
+ * Returns true if hashchange was dispatched (caller should stop propagation).
+ */
+function syncHashToSidebar(docNumber: string | undefined, docType: AtlasDocumentType | undefined): boolean {
+  if (docNumber && docType && IMMUTABLE_AND_PRIMARY_TYPES.has(docType)) {
+    // Only update hash if it's actually different to avoid interfering with accordion toggle
+    const currentHash = window.location.hash.slice(1);
+    if (currentHash !== docNumber) {
+      const newUrl = `${window.location.pathname}${window.location.search}#${docNumber}`;
+      window.history.pushState(null, '', newUrl);
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      return true; // Hashchange dispatched, caller should stop propagation
+    }
+  }
+  return false; // No hashchange dispatched, let accordion handle toggle normally
+}
+
 interface RenderTreeNodeProps {
   node: ExportAtlasTreeDocument;
   depth?: number;
@@ -346,7 +379,16 @@ function TreeNode({
           key={nodeId}
           aria-label={`${docNumber} - ${docName}`}
           title={
-            <div className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}>
+            <div
+              className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}
+              onClick={(e) => {
+                // If we dispatch hashchange (navigating to different doc), stop propagation
+                // to prevent accordion's onSelectionChange from also toggling
+                if (syncHashToSidebar(docNumber, docType)) {
+                  e.stopPropagation();
+                }
+              }}
+            >
               {docNumber} - {docName}
               <CopyToClipboardButton
                 text={
@@ -611,7 +653,16 @@ export default function ContentTree({
             data-doc-id={scopeTree.doc_no || undefined}
             aria-label={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
             title={
-              <div className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900`}>
+              <div
+                className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900`}
+                onClick={(e) => {
+                  // If we dispatch hashchange (navigating to different doc), stop propagation
+                  // to prevent accordion's onSelectionChange from also toggling
+                  if (syncHashToSidebar(scopeTree.doc_no, scopeTree.type)) {
+                    e.stopPropagation();
+                  }
+                }}
+              >
                 <span>
                   {scopeTree.doc_no} - {scopeTree.name}
                 </span>
