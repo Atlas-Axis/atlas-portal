@@ -389,7 +389,12 @@ function TreeNode({
                 }
               }}
             >
-              {docNumber} - {docName}
+              <span
+                className="cursor-text rounded px-1 select-text hover:bg-slate-200"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {docNumber} - {docName}
+              </span>
               <CopyToClipboardButton
                 text={
                   typeof window !== 'undefined'
