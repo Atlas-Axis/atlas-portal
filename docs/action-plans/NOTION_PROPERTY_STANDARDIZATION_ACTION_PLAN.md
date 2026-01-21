@@ -146,10 +146,31 @@ This toggle enables testing both modes during the migration period. The toggle s
   - Console will show: `🔧 Import Field Mode: prefer-new-fallback-old`
 - [ ] Run verification script: `npx tsx scripts/verify-standardized-fields.ts`
   - Confirms stored values match calculated values
-- [ ] Add natural sorting formula property manually to each database (see Step 3 in Production Migration Steps)
+- [ ] Run sorting formula script: `npx tsx scripts/add-sorting-formula-property.ts`
+  - Adds "Document Number (Sortable)" formula property to all 10 databases
+  - Formula pads single-digit numbers for natural sorting (e.g., A.1.2 → A.01.02)
+- [ ] Manually hide "Document Number (Sortable)" in each Notion database view
+- [ ] Manually set database view sorting to use the formula property (ascending)
 - [ ] See Production Migration Steps section below for detailed step-by-step instructions
 
 ### Phase 7: Deprecate Old Fields
+
+**Title Property Swap (Irreversible):**
+
+After verification confirms migration is successful, swap the title property to display document names:
+
+- [ ] Run title swap script (dry run first): `npx tsx scripts/swap-title-property.ts --dry-run`
+  - Preview what properties will be renamed
+- [ ] Run title swap script: `npx tsx scripts/swap-title-property.ts`
+  - Renames "Document Title" (rich_text) → "Document Title (deprecated)"
+  - Renames current title property (e.g., "Doc No") → "Document Title"
+  - ⚠️ This is IRREVERSIBLE - only run after verification
+- [ ] Re-run populate script: `npx tsx scripts/populate-standardized-notion-fields.ts`
+  - Fills the renamed title property with document names
+  - Page titles in Notion will now display document names
+- [ ] Manually hide "Document Title (deprecated)" in each Notion database view
+
+**Deprecation Steps:**
 
 - [ ] Set import field mode to new-fields only: `export NOTION_IMPORT_FIELD_MODE=new-fields`
   - This enforces that all documents have populated standardized fields
@@ -284,32 +305,23 @@ Before making any changes to production:
 
 #### Step 3: Add Natural Sorting Formula Property
 
-1. Manually add a formula property to each of the 10 Atlas databases in Notion:
+1. Run the sorting formula script:
 
-   **Property Name**: `Document Number (Sortable)` or similar
-
-   **Property Type**: Formula
-
-   **Formula**:
-
-   ```
-   replaceAll(
-     replaceAll(
-       join(
-         format(prop("Document Number")),
-         ""
-       ),
-     "\\.([0-9])\\b", ".0$1"),
-   "\\.([0-9])\\.", ".0$1.")
+   ```bash
+   npx tsx scripts/add-sorting-formula-property.ts
    ```
 
-   This formula pads single-digit numbers in document numbers to enable correct lexicographic sorting (e.g., `A.1.2` → `A.01.02`).
+2. The script will:
+   - Add `Document Number (Sortable)` formula property to all 10 Atlas databases
+   - Formula pads single-digit numbers for natural sorting (e.g., `A.1.2` → `A.01.02`)
+   - Skip properties that already exist (safe to re-run)
 
-2. Configure Notion database view sorting:
-   - Set primary sort by the new formula property (ascending)
+3. **Manual follow-up** (required):
+   - Hide `Document Number (Sortable)` property in each Notion database view
+   - Set primary sort by the formula property (ascending)
    - Remove any existing sort by `No.` property (if present)
 
-3. Mark old sort order property as deprecated:
+4. Mark old sort order property as deprecated:
    - In **Sections & Primary Docs** database: Rename `No.` property to `[DEPRECATED] No.`
 
 #### Step 4: Verify Property Addition
@@ -425,6 +437,41 @@ Before making any changes to production:
 2. Check Notion API usage for any unusual patterns
 3. Verify that users can still access and edit Atlas documents normally
 4. Keep old properties intact until Phase 7 (deprecation)
+5. Monitor for 1-2 weeks before proceeding to title property swap
+
+#### Step 9: Swap Title Property (Irreversible)
+
+⚠️ **WARNING**: This step is irreversible. Only proceed after verification confirms migration is successful.
+
+1. Run title swap script in dry-run mode first:
+
+   ```bash
+   npx tsx scripts/swap-title-property.ts --dry-run
+   ```
+
+2. Review the dry-run output to verify expected changes
+
+3. Run the title swap script:
+
+   ```bash
+   npx tsx scripts/swap-title-property.ts
+   ```
+
+4. The script will:
+   - Rename `Document Title` (rich_text) → `Document Title (deprecated)`
+   - Rename current title property (e.g., `Doc No`) → `Document Title`
+
+5. Re-run the populate script to fill the title with document names:
+
+   ```bash
+   npx tsx scripts/populate-standardized-notion-fields.ts
+   ```
+
+6. **Manual follow-up** (required):
+   - Hide `Document Title (deprecated)` property in each Notion database view
+   - Verify page titles now display document names
+
+7. After title swap, page titles in Notion will show document names (e.g., "Facilitators Must Err On Side Of Caution") instead of document numbers
 
 ### Rollback Plan (If Needed)
 
@@ -446,31 +493,47 @@ If issues occur during migration:
 
 ### Post-Migration Checklist
 
+**Phase 6 (Initial Migration):**
+
 - [ ] All 10 databases have `Document Number` property
 - [ ] All 10 databases have `Document Title` property
-- [ ] All 10 databases have natural sorting formula property
+- [ ] All 10 databases have `Document Number (Sortable)` formula property
+- [ ] `Document Number (Sortable)` is hidden in each database view
+- [ ] Database view sorting is set to use formula property (ascending)
 - [ ] Population script completed successfully (all pages updated)
 - [ ] New properties are populated with correct values
 - [ ] Old properties remain intact
-- [ ] `No.` sort order property marked as `[DEPRECATED] No.` in Sections & Primary Docs
-- [ ] `NOTION_IMPORT_FIELD_MODE` set to `prefer-new-fallback-old` (during migration) or `new-fields` (post-migration)
+- [ ] `NOTION_IMPORT_FIELD_MODE` set to `prefer-new-fallback-old`
 - [ ] Notion to Supabase import completes successfully with correct field mode logged
 - [ ] Verification script passes (stored values match calculated values)
 - [ ] Document ordering is correct (sorted by Document Number naturally)
 - [ ] No production errors or warnings
 - [ ] Users can access and edit documents normally
 
+**Phase 7 (Title Swap and Deprecation):**
+
+- [ ] Title swap script completed successfully (dry run verified first)
+- [ ] Page titles in Notion now display document names
+- [ ] `Document Title (deprecated)` is hidden in each database view
+- [ ] Populate script re-run to fill renamed title property
+- [ ] `No.` sort order property marked as `[DEPRECATED] No.` in Sections & Primary Docs
+- [ ] `NOTION_IMPORT_FIELD_MODE` set to `new-fields` (post-migration)
+- [ ] Old properties marked as deprecated with `[DEPRECATED]` prefix
+
 ### Success Indicators
 
 ✅ Script output shows all properties added successfully  
-✅ All databases show new empty properties (Document Number, Document Title, natural sorting formula)  
+✅ All databases show new properties (Document Number, Document Title, sorting formula)  
+✅ Sorting formula property is hidden and used for view sorting  
 ✅ Population script completes with 100% success rate  
 ✅ Import completes without errors  
 ✅ Verification script passes (exit code 0, all values match)  
 ✅ Document ordering works correctly with natural sorting formula  
+✅ Title swap completed - page titles show document names  
+✅ Deprecated properties are hidden in database views  
 ✅ `No.` property marked as deprecated in Sections & Primary Docs  
 ✅ No production errors or user reports  
-✅ Old properties remain unchanged and functional
+✅ Old properties remain unchanged and functional (as backup)
 
 ## Problem Statement
 
@@ -853,6 +916,8 @@ There are three scripts involved in the property standardization migration, run 
 1. **Property Creation Script** - Creates empty properties in Notion databases
 2. **Population Script** - Fills properties with calculated values
 3. **Verification Script** - Verifies values match calculated values
+4. **Sorting Formula Script** - Adds formula property for natural sorting
+5. **Title Swap Script** - Swaps title property to display document names (irreversible)
 
 ### Property Creation Script
 
@@ -947,6 +1012,66 @@ npx tsx scripts/verify-standardized-fields.ts --verbose
 - `1` - Some values don't match (verification failed, investigate)
 - `2` - Fatal error occurred
 
+### Sorting Formula Script
+
+**File**: `scripts/add-sorting-formula-property.ts`
+
+**Purpose**: Adds the "Document Number (Sortable)" formula property to all 10 Atlas databases in Notion. The formula pads single-digit numbers for correct lexicographic sorting.
+
+**How it works**:
+
+1. Iterates through all 10 Atlas databases
+2. For each database, checks if property already exists
+3. Adds `Document Number (Sortable)` formula property if not present
+4. Formula: Pads single-digit segments (e.g., `A.1.2` → `A.01.02`)
+5. Skips properties that already exist (safe to run multiple times)
+
+**Usage**:
+
+```bash
+npx tsx scripts/add-sorting-formula-property.ts
+```
+
+**Manual follow-up required**:
+
+- Hide the `Document Number (Sortable)` property in each Notion database view
+- Set database view sorting to use this formula property (ascending)
+
+**Performance**: ~1 minute for all 10 databases
+
+### Title Swap Script
+
+**File**: `scripts/swap-title-property.ts`
+
+**Purpose**: Renames properties to make "Document Title" the title property in all Atlas databases. After running this script, page titles in Notion will display document names.
+
+⚠️ **WARNING**: This is an IRREVERSIBLE operation. Only run after migration is verified.
+
+**How it works**:
+
+1. For each database:
+   - Renames `Document Title` (rich_text) → `Document Title (deprecated)`
+   - Renames current title property (e.g., `Doc No`) → `Document Title`
+2. Logs all operations
+3. Provides skip/error handling for each database
+
+**Usage**:
+
+```bash
+# Dry run (preview changes without applying)
+npx tsx scripts/swap-title-property.ts --dry-run
+
+# Apply changes
+npx tsx scripts/swap-title-property.ts
+```
+
+**After running this script**:
+
+1. Run `npx tsx scripts/populate-standardized-notion-fields.ts` to fill titles with document names
+2. Manually hide `Document Title (deprecated)` in each Notion database view
+
+**Performance**: ~1 minute for all 10 databases
+
 ## Code Changes Summary
 
 ### Files to Update
@@ -955,8 +1080,10 @@ npx tsx scripts/verify-standardized-fields.ts --verbose
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | **Migration Scripts:**                                                            |                                                                                                     |
 | `scripts/experiments/add-normalized-notion-fields-to-all-dbs.ts`                  | Creates empty `Document Number` and `Document Title` properties in all Atlas databases              |
-| `scripts/populate-standardized-notion-fields.ts`                                  | **NEW** - Populates new fields in Notion with calculated values                                     |
-| `scripts/verify-standardized-fields.ts`                                           | **NEW** - Verifies stored values match calculated values                                            |
+| `scripts/populate-standardized-notion-fields.ts`                                  | Populates new fields in Notion with calculated values                                               |
+| `scripts/verify-standardized-fields.ts`                                           | Verifies stored values match calculated values                                                      |
+| `scripts/add-sorting-formula-property.ts`                                         | **NEW** - Adds `Document Number (Sortable)` formula property for natural sorting                    |
+| `scripts/swap-title-property.ts`                                                  | **NEW** - Swaps title property to display document names (irreversible)                             |
 | **Property Standardization:**                                                     |                                                                                                     |
 | `app/server/atlas/notion-mapping/notion-database-properties-and-relationships.ts` | Add new standardized property mappings, dual-read logic, eventually simplify                        |
 | `app/server/services/notion/convert-notion-pages-to-supabase-format.ts`           | Add dual-read logic for old/new fields; remove `extractSortOrder()` and sort order extraction logic |

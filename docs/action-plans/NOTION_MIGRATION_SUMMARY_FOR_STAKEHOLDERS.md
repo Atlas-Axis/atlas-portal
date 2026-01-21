@@ -159,20 +159,25 @@ These switches allow us to safely transition while maintaining the ability to fa
 
 ## Production Migration Timeline
 
-| Step | Action                                             | Duration  | Risk |
-| ---- | -------------------------------------------------- | --------- | ---- |
-| 1    | Backup current Atlas data (export to files)        | ~15 min   | None |
-| 2    | Add new properties to all 10 databases (automated) | ~15 min   | None |
-| 3    | Verify new properties exist in all databases       | ~10 min   | None |
-| 4    | Test Supabase import with fallback mode            | ~1 hour   | None |
-| 5    | Populate new Notion fields with calculated values  | ~1 hour   | None |
-| 6    | Add sorting formula to each database (manual)      | ~30 min   | None |
-| 7    | Re-import and run verification script              | ~1 hour   | None |
-| 8    | Monitor production for issues                      | 1-2 weeks | None |
-| 9    | (Later) Mark old properties as deprecated          | ~30 min   | None |
+| Step | Action                                                  | Duration  | Risk |
+| ---- | ------------------------------------------------------- | --------- | ---- |
+| 1    | Backup current Atlas data (export to files)             | ~15 min   | None |
+| 2    | Add new properties to all 10 databases (automated)      | ~15 min   | None |
+| 3    | Verify new properties exist in all databases            | ~10 min   | None |
+| 4    | Test Supabase import with fallback mode                 | ~1 hour   | None |
+| 5    | Populate new Notion fields with calculated values       | ~1 hour   | None |
+| 6    | Add sorting formula to each database (automated script) | ~5 min    | None |
+| 7    | Manually hide sorting formula and set view sorting      | ~10 min   | None |
+| 8    | Re-import and run verification script                   | ~1 hour   | None |
+| 9    | Monitor production for issues                           | 1-2 weeks | None |
+| 10   | Swap title property and re-populate (irreversible)      | ~1 hour   | Low  |
+| 11   | Manually hide deprecated properties in Notion views     | ~10 min   | None |
+| 12   | Mark old properties as deprecated                       | ~30 min   | None |
 
-**Total active time**: ~2 hours  
-**Monitoring period**: 1-2 weeks before deprecating old properties
+**Total active time**: ~5 hours  
+**Monitoring period**: 1-2 weeks before title swap and deprecation
+
+**Note on Step 10**: The title property swap is irreversible but safe - it changes page titles to display document names instead of document numbers. Only performed after verification confirms the migration worked correctly.
 
 ---
 
