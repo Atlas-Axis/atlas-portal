@@ -1,2 +1,1 @@
-Do a code review on the changed files and fix any major issues you may find.
-Make sure to not use the `any` type unless it's unavoidable
+Review all the work you did. Check for errors, issues, incomplete tasks, and major improvement areas.
