@@ -38,10 +38,6 @@
   -webkit-user-select: text;
 }
 
-.summary:hover {
-  background-color: rgb(226 232 240); /* slate-200 */
-}
-
 .summary:focus-visible {
   outline: 2px solid rgb(99 102 241); /* indigo-500 */
   outline-offset: 2px;
