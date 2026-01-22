@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Accordion, AccordionItem } from '@heroui/react';
 import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
@@ -13,6 +12,7 @@ import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants
 import styles from './content-tree.module.css';
 import { CopyToClipboardButton } from './copy-to-clipboard-button';
 import { addExpandScopeListener } from './custom-events';
+import { DetailsAccordionItem } from './details-accordion';
 import { ExportTreeExtraData } from './export-tree-extra-data';
 import { createPathLookupMap, createUuidToDocNoMap } from './tree-utils';
 import TypeChip from './type-chip';
@@ -261,11 +261,6 @@ function TreeNode({
     throw new Error('Maximum tree depth exceeded, possible circular reference');
   }
 
-  // Memoize the selectedKeys Set to avoid creating new instances on every render
-  const selectedKeys = React.useMemo(() => {
-    return isExpanded ? new Set([nodeId]) : new Set<string>();
-  }, [isExpanded, nodeId]);
-
   // Node's body content (the node's own content)
   const nodeBodyContent = (
     <>
@@ -342,7 +337,7 @@ function TreeNode({
   // Prefer Notion page ID for stable React keys; fallback to doc number or UUID-derived string
   const notionKey = (node.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid)) || null;
 
-  // Root nodes are already wrapped in an Accordion by ContentTree
+  // Root nodes are already wrapped in a DetailsAccordionItem by ContentTree
   // Only render the body content and children without another accordion wrapper
   if (isRootNode) {
     return (
@@ -353,71 +348,40 @@ function TreeNode({
     );
   }
 
-  // Non-root nodes are collapsible - render with Accordion
+  // Non-root nodes are collapsible - render with DetailsAccordionItem
   const nodeContent = (
-    <div data-doc-id={docNumber || undefined}>
-      <Accordion
-        disableAnimation={true}
-        selectionMode="multiple"
-        variant="light"
-        className="px-0"
-        selectedKeys={selectedKeys}
-        onSelectionChange={(keys) => {
-          if (nodeId) {
-            // The Accordion tells us if this item should be expanded based on the new selection
-            const shouldBeExpanded = keys === 'all' || (keys instanceof Set && keys.has(nodeId));
-            const currentlyExpanded = isExpanded;
-
-            // Only toggle if the state is actually changing
-            if (shouldBeExpanded !== currentlyExpanded) {
-              onToggleExpanded(nodeId);
-            }
-          }
-        }}
-      >
-        <AccordionItem
-          key={nodeId}
-          aria-label={`${docNumber} - ${docName}`}
-          title={
-            <div
-              className={`${styles.nodeTitle} flex items-center gap-0.5 px-2 py-2`}
-              onClick={(e) => {
-                // If we dispatch hashchange (navigating to different doc), stop propagation
-                // to prevent accordion's onSelectionChange from also toggling
-                if (syncHashToSidebar(docNumber, docType)) {
-                  e.stopPropagation();
-                }
-              }}
-            >
-              <span
-                className="cursor-text rounded px-1 select-text hover:bg-slate-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {docNumber} - {docName}
-              </span>
-              <CopyToClipboardButton
-                text={
-                  typeof window !== 'undefined'
-                    ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                    : `#${docNumber}`
-                }
-              />
-              <TypeChip type={docType} />
-            </div>
-          }
-          classNames={{
-            base: 'px-0 mb-3',
-            trigger: `px-2 py-0 cursor-pointer bg-slate-100 rounded-md ${isHighlighted ? styles.highlightedContent : ''}`,
-            content: 'px-0 pt-2 pb-0',
-            indicator: 'text-slate-600',
-            title: 'w-full',
+    <DetailsAccordionItem
+      id={nodeId}
+      isExpanded={isExpanded}
+      onToggle={() => onToggleExpanded(nodeId)}
+      isHighlighted={isHighlighted}
+      ariaLabel={`${docNumber} - ${docName}`}
+      dataDocId={docNumber}
+      title={
+        <div
+          className={`${styles.nodeTitle} flex items-center gap-0.5`}
+          onClick={() => {
+            // Sync sidebar when clicking on immutable/primary docs
+            syncHashToSidebar(docNumber, docType);
           }}
         >
-          {nodeBodyContent}
-          {childrenContent}
-        </AccordionItem>
-      </Accordion>
-    </div>
+          <span className="cursor-text rounded px-1 hover:bg-slate-200">
+            {docNumber} - {docName}
+          </span>
+          <CopyToClipboardButton
+            text={
+              typeof window !== 'undefined'
+                ? `${window.location.origin}${window.location.pathname}#${docNumber}`
+                : `#${docNumber}`
+            }
+          />
+          <TypeChip type={docType} />
+        </div>
+      }
+    >
+      {nodeBodyContent}
+      {childrenContent}
+    </DetailsAccordionItem>
   );
 
   return (
@@ -638,37 +602,26 @@ export default function ContentTree({
 
   return (
     <div className={styles.containerMain}>
-      <Accordion
-        disableAnimation={true}
-        selectionMode="multiple"
-        variant="splitted"
-        className="max-w-full space-y-6"
-        selectedKeys={expandedKeys}
-        onSelectionChange={(keys) => {
-          if (typeof keys === 'string') {
-            setExpandedKeys(new Set([keys]));
-          } else {
-            setExpandedKeys(new Set(Array.from(keys).map((key) => String(key))));
-          }
-        }}
-      >
+      <div className="flex max-w-full flex-col space-y-6">
         {scopeTreesWithoutAgents.map((scopeTree, idx) => (
-          <AccordionItem
+          <DetailsAccordionItem
             key={scopeTree.uuid || `scope-${idx}`}
-            data-doc-id={scopeTree.doc_no || undefined}
-            aria-label={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
+            id={scopeTree.uuid || `scope-${idx}`}
+            isExpanded={getIsExpanded(scopeTree.uuid || '')}
+            onToggle={() => handleToggleExpanded(scopeTree.uuid || '')}
+            isHighlighted={getIsHighlighted(scopeTree.doc_no || '')}
+            ariaLabel={scopeTree.name || `Document ${scopeTree.uuid || 'unknown'}`}
+            dataDocId={scopeTree.doc_no}
+            isRoot={true}
             title={
               <div
                 className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900`}
-                onClick={(e) => {
-                  // If we dispatch hashchange (navigating to different doc), stop propagation
-                  // to prevent accordion's onSelectionChange from also toggling
-                  if (syncHashToSidebar(scopeTree.doc_no, scopeTree.type)) {
-                    e.stopPropagation();
-                  }
+                onClick={() => {
+                  // Sync sidebar when clicking on scope docs
+                  syncHashToSidebar(scopeTree.doc_no, scopeTree.type);
                 }}
               >
-                <span>
+                <span className="cursor-text rounded px-1 hover:bg-slate-200">
                   {scopeTree.doc_no} - {scopeTree.name}
                 </span>
                 <CopyToClipboardButton
@@ -681,11 +634,6 @@ export default function ContentTree({
                 <TypeChip type={scopeTree.type} />
               </div>
             }
-            classNames={{
-              heading: 'bg-slate-100 rounded-md p-3 text-indigo-900 cursor-pointer',
-              base: 'px-0 shadow-none mb-3 sm:mb-6',
-              trigger: 'cursor-pointer',
-            }}
           >
             <TreeNode
               node={scopeTree}
@@ -700,9 +648,9 @@ export default function ContentTree({
               onToggleExpanded={handleToggleExpanded}
               showUUIDs={showUUIDs}
             />
-          </AccordionItem>
+          </DetailsAccordionItem>
         ))}
-      </Accordion>
+      </div>
     </div>
   );
 }
