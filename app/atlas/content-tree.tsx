@@ -365,7 +365,11 @@ function TreeNode({
             syncHashToSidebar(docNumber, docType);
           }}
         >
-          <span className="cursor-text rounded px-1 hover:bg-slate-200">
+          <span
+            className="cursor-text rounded px-1 hover:bg-slate-200"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
             {docNumber} - {docName}
           </span>
           <CopyToClipboardButton
@@ -621,7 +625,11 @@ export default function ContentTree({
                   syncHashToSidebar(scopeTree.doc_no, scopeTree.type);
                 }}
               >
-                <span className="cursor-text rounded px-1 hover:bg-slate-200">
+                <span
+                  className="cursor-text rounded px-1 hover:bg-slate-200"
+                  onClick={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
                   {scopeTree.doc_no} - {scopeTree.name}
                 </span>
                 <CopyToClipboardButton
