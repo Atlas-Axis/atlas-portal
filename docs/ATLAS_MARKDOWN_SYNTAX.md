@@ -23,14 +23,6 @@ The Atlas Markdown format is a structured, human-readable representation of the 
 - An interchange format for importing and exporting Atlas data
 - A human-editable format for making changes to Atlas documents
 
-### Canonical Atlas Markdown File
-
-The canonical Atlas markdown file is stored in GitHub:
-
-- **Repository**: [pppdns/next-gen-atlas](https://github.com/pppdns/next-gen-atlas)
-- **File path**: `Sky Atlas/Sky Atlas.md`
-- **Raw URL**: Available via `ATLAS_MARKDOWN_GITHUB_RAW_URL` constant in `app/server/atlas/constants.ts`
-
 ### Critical Importance
 
 **⚠️ WARNING**: The Atlas Markdown parser expects exact adherence to the syntax rules documented here. Deviations from these rules will cause external automations to fail or produce incorrect results.
