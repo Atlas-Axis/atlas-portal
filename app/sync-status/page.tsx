@@ -8,9 +8,9 @@
  */
 import type { Metadata } from 'next';
 import { checkAuthentication } from './_actions/auth-actions';
-import { fetchNotionDatabaseImportRuns } from './fetch-trigger-runs';
+import { type SyncRunRow, fetchNotionDatabaseImportRuns, mapRunToRow } from './fetch-trigger-runs';
 import { PasswordInput } from './password-input';
-import { type SyncRunRow, SyncRunsTable, mapRunToRow } from './sync-runs-table';
+import { SyncRunsTable } from './sync-runs-table';
 
 export const dynamic = 'force-dynamic';
 

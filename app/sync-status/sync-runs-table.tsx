@@ -1,11 +1,7 @@
-import { formatDuration } from './format-duration';
+'use client';
 
-export interface SyncRunRow {
-  id: string;
-  startedAt: Date | undefined;
-  durationMs: number | undefined;
-  status: string;
-}
+import type { SyncRunRow } from './fetch-trigger-runs';
+import { formatDuration } from './format-duration';
 
 function getStatusClasses(status: string): string {
   switch (status) {
@@ -30,9 +26,9 @@ function getStatusClasses(status: string): string {
   }
 }
 
-function formatStartedAt(date: Date | undefined): string {
-  if (!date) return '-';
-  return new Date(date).toLocaleString(undefined, {
+function formatStartedAt(isoString: string | undefined): string {
+  if (!isoString) return '-';
+  return new Date(isoString).toLocaleString(undefined, {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
@@ -81,24 +77,4 @@ export function SyncRunsTable({ runs }: { runs: SyncRunRow[] }) {
       </table>
     </div>
   );
-}
-
-/** Run item from Trigger.dev API (startedAt is ISO string from JSON) */
-interface TriggerRunItem {
-  id: string;
-  startedAt?: string;
-  durationMs?: number;
-  status: string;
-}
-
-/**
- * Map Trigger.dev run item to SyncRunRow
- */
-export function mapRunToRow(run: TriggerRunItem): SyncRunRow {
-  return {
-    id: run.id,
-    startedAt: run.startedAt ? new Date(run.startedAt) : undefined,
-    durationMs: run.durationMs,
-    status: run.status,
-  };
 }

@@ -45,3 +45,20 @@ export async function fetchNotionDatabaseImportRuns(): Promise<TriggerRunItem[]>
   const json = (await res.json()) as ListRunsResponse;
   return json.data ?? [];
 }
+
+/** Row shape for SyncRunsTable (startedAt stays as ISO string for client formatting) */
+export interface SyncRunRow {
+  id: string;
+  startedAt?: string;
+  durationMs?: number;
+  status: string;
+}
+
+export function mapRunToRow(run: TriggerRunItem): SyncRunRow {
+  return {
+    id: run.id,
+    startedAt: run.startedAt,
+    durationMs: run.durationMs,
+    status: run.status,
+  };
+}
