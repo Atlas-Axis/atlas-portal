@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { supabase } from '@/app/server/services/supabase/supabase-client';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   // Load root Notion blocks from Supabase and convert them to links to subpages
   const { data: rootBlocks, error: rootBlocksError } = await supabase()
