@@ -5,7 +5,6 @@ import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 import { markdownToHTML } from '@/app/server/markdown/markdown-to-html';
-import { uuidToNoHyphens } from '@/app/shared/utils/utils';
 import { CustomHTML } from '../components/custom-html';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
 import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
@@ -238,12 +237,6 @@ function TreeNode({
   const docName = node.name;
   const docType = node.type;
 
-  // Get Notion page ID for links
-  const notionId: string | null =
-    node.uuid && uuidMappings.atlasUUIDsToNotionPageIds
-      ? uuidMappings.atlasUUIDsToNotionPageIds.get(node.uuid) || null
-      : null;
-
   // Format content based on type, converting UUID links to document number anchors
   const formattedContent = markdownToHTML(node.content, uuidToDocNoMap);
 
@@ -272,21 +265,6 @@ function TreeNode({
 
       {showUUIDs && (
         <div className={`${styles.notionLink} ${isRootNode ? styles.notionLinkRoot : ''}`}>
-          {notionId ? (
-            <>
-              <a
-                href={`https://www.notion.so/${uuidToNoHyphens(notionId)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.notionLinkAnchor}
-              >
-                {`Notion ID: ${uuidToNoHyphens(notionId)}`}
-              </a>
-              <span className="mx-2">•</span>
-            </>
-          ) : (
-            <span className="text-gray-400">No Notion ID</span>
-          )}
           <span>{`Atlas UUID: ${node.uuid}`}</span>
         </div>
       )}
