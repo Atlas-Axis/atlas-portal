@@ -3,6 +3,8 @@ import { _delete_calculateNotionPageHierarchyChanges } from '@/app/server/diff/t
 import { getOriginalRootNotionPageIdForEditPage } from '@/app/server/services/supabase/get-original-notion-page-id-for-edit-page';
 import { uuidToHyphens } from '@/app/shared/utils/utils';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params }: { params: Promise<{ 'edit-page-id': string }> }) {
   const { 'edit-page-id': editPageId } = await params;
 

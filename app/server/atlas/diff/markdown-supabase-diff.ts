@@ -1,41 +1,18 @@
 import { parseAtlasMarkdown } from '@/app/server/atlas/export/atlas-markdown-importer';
-import { type BuildExportAtlasTreeOptions, buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
+import { buildExportAtlasTreeJSON } from '../export/atlas-json-exporter';
 import { ExportAtlasTreeScopeTrees } from '../export/types';
 import { loadAtlasMarkdownForSync } from '../load-atlas-markdown-from-github';
 import { AtlasDiffResult, buildLookupMaps, detectChanges, extractAllUuids } from './atlas-diff';
 
 /**
- * Options for diff operation
- *
- * @todo CLEANUP: Remove after migration complete (Phase 8)
- */
-export interface DiffOptions {
-  /**
-   * Use dynamically calculated doc_no/name (generatedDocID/generatedDocName)
-   * instead of stored values from Supabase (atlas_document_number/plain_text_name).
-   *
-   * Default: true (use dynamic values until production migration is complete)
-   *
-   * @todo CLEANUP: After migration, change default to false and remove option (Phase 8)
-   */
-  useDynamicValues?: boolean;
-}
-
-/**
  * Diff two Atlas scope tree lists and return the list of changes.
  *
- * Compares the current Atlas data in Supabase with the canonical Atlas markdown
- * file stored in GitHub.
- *
- * @param options Optional diff options (e.g., useDynamicValues for migration mode)
- * @todo CLEANUP: Remove options parameter after migration (Phase 8)
+ * Compares the current Atlas data (from GitHub markdown) with the canonical Atlas markdown
+ * file stored in GitHub. Post-migration, both sides read from GitHub markdown,
+ * so this diff will always be empty. Kept for compatibility with sync UI.
  */
-export async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<AtlasDiffResult> {
-  const exportOptions: BuildExportAtlasTreeOptions = {
-    useDynamicValues: options?.useDynamicValues, // @todo CLEANUP: Remove (Phase 8)
-  };
-
-  const originalScopeTreeList = await loadSupabaseAsExportAtlasScopeTrees(exportOptions);
+export async function diffAtlasScopeTreeLists(): Promise<AtlasDiffResult> {
+  const originalScopeTreeList = await buildExportAtlasTreeJSON();
   const newScopeTreeList = await loadMarkdownAsExportAtlasScopeTrees();
 
   // Build lookup maps for both trees (UUID→doc, doc_no→doc, UUID→ancestry, UUID→database)
@@ -56,12 +33,6 @@ export async function diffAtlasScopeTreeLists(options?: DiffOptions): Promise<At
     originalIdsToDatabase: originalMaps.uuidToDatabase,
     newIdsToDatabase: newMaps.uuidToDatabase,
   };
-}
-
-async function loadSupabaseAsExportAtlasScopeTrees(
-  exportOptions?: BuildExportAtlasTreeOptions,
-): Promise<ExportAtlasTreeScopeTrees> {
-  return buildExportAtlasTreeJSON(exportOptions);
 }
 
 /**

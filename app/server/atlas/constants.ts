@@ -124,19 +124,19 @@ export const IMPORT_DATABASES: AtlasDatabaseName[] = [
  * This is the source of truth for the Markdown → Notion sync workflow.
  * External contributors edit this file in GitHub, and changes are synced back to Notion.
  *
- * Repository: https://github.com/pppdns/next-gen-atlas
+ * Repository: https://github.com/sky-ecosystem/next-gen-atlas
  * Branch: main
  * File path: Sky Atlas/Sky Atlas.md
  */
 export const ATLAS_MARKDOWN_GITHUB_RAW_URL =
-  'https://raw.githubusercontent.com/pppdns/next-gen-atlas/refs/heads/main/Sky%20Atlas/Sky%20Atlas.md';
+  'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/refs/heads/main/Sky%20Atlas/Sky%20Atlas.md';
 
 /**
  * GitHub API URL for fetching file metadata (including last modified date).
  * Uses the GitHub API to get commit information for the file.
  */
 export const ATLAS_MARKDOWN_GITHUB_API_URL =
-  'https://api.github.com/repos/pppdns/next-gen-atlas/commits?path=Sky%20Atlas/Sky%20Atlas.md&per_page=1';
+  'https://api.github.com/repos/sky-ecosystem/next-gen-atlas/commits?path=Sky%20Atlas/Sky%20Atlas.md&per_page=1';
 
 /**
  * Standardized Notion property names used across all Atlas databases.

@@ -5,6 +5,8 @@ import { convertSupabaseBlocksToTreeNodes } from '@/app/server/diff/convert-supa
 import { Tree, TreeNode, buildTree } from '@/app/server/diff/tree';
 import { loadNotionBlocksFromSupabase } from '@/app/server/services/supabase/load-notion-blocks-from-supabase';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({ params }: { params: Promise<{ 'notion-page-id': string }> }) {
   const { 'notion-page-id': notionPageId } = await params;
 

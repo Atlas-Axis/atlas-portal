@@ -28,7 +28,7 @@ export default async function AtlasSyncPage({
   const useDynamicValues = params.dynamic !== 'false';
 
   // Diff happens server-side for performance (large datasets)
-  const result = await diffAtlasScopeTreeLists({ useDynamicValues });
+  const result = await diffAtlasScopeTreeLists();
   const isDevMode = process.env.NODE_ENV !== 'production';
 
   return (
