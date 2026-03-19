@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/nextjs';
 import { AtlasDatabaseName } from '@/app/server/atlas/atlas-types';
 import { STANDARDIZED_DOCUMENT_NUMBER, STANDARDIZED_DOCUMENT_TITLE } from '@/app/server/atlas/constants';
 import { ExportAtlasTreeBaseDocument } from '@/app/server/atlas/export/types';
@@ -472,7 +471,7 @@ export function addInterDatabaseRelationshipProperties(
     if (childDatabaseName !== 'Scopes') {
       // const message = 'No ancestry provided for inter-database relationship properties for child database';
       // console.error(message, { childDatabaseName, ancestry });
-      // Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, ancestry } });
+      // console.error(message, { level: 'error', extra: { childDatabaseName, ancestry } });
 
       throw new Error('No ancestry provided for inter-database relationship properties for child database');
     }
@@ -488,7 +487,7 @@ export function addInterDatabaseRelationshipProperties(
     // Parent document not found - invalid reference
     const message = 'Parent document not found for inter-database relationship properties for child database';
     console.error(message, { childDatabaseName, parentAtlasUuid, ancestry });
-    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
+    console.error(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
     return properties;
   }
 
@@ -498,7 +497,7 @@ export function addInterDatabaseRelationshipProperties(
     // Parent database not found - invalid reference
     const message = 'Parent database not found for inter-database relationship properties';
     console.error(message, { childDatabaseName, parentAtlasUuid, ancestry });
-    Sentry.captureMessage(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
+    console.error(message, { level: 'error', extra: { childDatabaseName, parentAtlasUuid, ancestry } });
     return properties;
   }
 
