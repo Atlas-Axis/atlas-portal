@@ -42,12 +42,12 @@ mdInstance.renderer.rules.link_open = function (
     if (hrefIndex >= 0 && token.attrs) {
       const href = token.attrs[hrefIndex][1];
 
-      // Check if href is a UUID and convert it
+      // Check if href is a UUID and convert it to an anchor link
       if (isValidUUID(href)) {
         const docNo = uuidToDocNoMap.get(href);
         if (docNo) {
-          // Replace UUID with #doc_no format
-          token.attrs[hrefIndex][1] = `#${docNo}`;
+          // Use UUID as the anchor for stable links (hash navigation resolves UUID → doc number)
+          token.attrs[hrefIndex][1] = `#${href}`;
         }
       }
     }

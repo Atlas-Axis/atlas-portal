@@ -35,18 +35,22 @@ const IMMUTABLE_AND_PRIMARY_TYPES = new Set<AtlasDocumentType>([
  * Only dispatches if the hash is actually changing to avoid interfering with accordion toggle.
  * Returns true if hashchange was dispatched (caller should stop propagation).
  */
-function syncHashToSidebar(docNumber: string | undefined, docType: AtlasDocumentType | undefined): boolean {
-  if (docNumber && docType && IMMUTABLE_AND_PRIMARY_TYPES.has(docType)) {
-    // Only update hash if it's actually different to avoid interfering with accordion toggle
-    const currentHash = window.location.hash.slice(1);
-    if (currentHash !== docNumber) {
-      const newUrl = `${window.location.pathname}${window.location.search}#${docNumber}`;
-      window.history.pushState(null, '', newUrl);
-      window.dispatchEvent(new HashChangeEvent('hashchange'));
-      return true; // Hashchange dispatched, caller should stop propagation
-    }
-  }
-  return false; // No hashchange dispatched, let accordion handle toggle normally
+function syncHashToSidebar(
+  docNumber: string | undefined,
+  uuid: string | undefined,
+  docType: AtlasDocumentType | undefined,
+): boolean {
+  if (!docType || !IMMUTABLE_AND_PRIMARY_TYPES.has(docType)) return false;
+  // Use UUID for the hash if available, falling back to doc number
+  const hashValue = uuid || docNumber;
+  if (!hashValue) return false;
+  // Only update hash if it's actually different to avoid interfering with accordion toggle
+  const currentHash = window.location.hash.slice(1);
+  if (currentHash === hashValue) return false;
+  const newUrl = `${window.location.pathname}${window.location.search}#${hashValue}`;
+  window.history.pushState(null, '', newUrl);
+  window.dispatchEvent(new HashChangeEvent('hashchange'));
+  return true; // Hashchange dispatched, caller should stop propagation
 }
 
 interface RenderTreeNodeProps {
@@ -340,7 +344,7 @@ function TreeNode({
           className={`${styles.nodeTitle} flex items-center gap-0.5`}
           onClick={() => {
             // Sync sidebar when clicking on immutable/primary docs
-            syncHashToSidebar(docNumber, docType);
+            syncHashToSidebar(docNumber, nodeId, docType);
           }}
         >
           <span
@@ -353,8 +357,8 @@ function TreeNode({
           <CopyToClipboardButton
             text={
               typeof window !== 'undefined'
-                ? `${window.location.origin}${window.location.pathname}#${docNumber}`
-                : `#${docNumber}`
+                ? `${window.location.origin}${window.location.pathname}#${nodeId || docNumber}`
+                : `#${nodeId || docNumber}`
             }
           />
           <TypeChip type={docType} />
@@ -410,6 +414,13 @@ export default function ContentTree({
     return createUuidToDocNoMap(scopeTreesWithoutAgents);
   }, [scopeTreesWithoutAgents]);
 
+  // Build reverse map (doc number → UUID) for generating stable UUID-based URLs
+  const docNoToUuidMap = React.useMemo(() => {
+    const map = new Map<string, string>();
+    uuidToDocNoMap.forEach((docNo, uuid) => map.set(docNo, uuid));
+    return map;
+  }, [uuidToDocNoMap]);
+
   // Listen for localStorage changes to update showUUIDs without page reload
   React.useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
@@ -445,7 +456,18 @@ export default function ContentTree({
     let scrollTimeout: NodeJS.Timeout | null = null;
 
     const updateHighlight = () => {
-      const hash = window.location.hash.slice(1); // Remove the '#' prefix
+      let hash = window.location.hash.slice(1); // Remove the '#' prefix
+
+      // If the hash looks like a UUID, resolve it to a document number for internal lookup
+      // but keep the UUID in the URL for stable sharing
+      const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (hash && uuidPattern.test(hash)) {
+        const docNo = uuidToDocNoMap.get(hash);
+        if (docNo) {
+          hash = docNo;
+        }
+      }
+
       setHighlightedDocNumber(hash || null);
 
       if (hash) {
@@ -497,7 +519,7 @@ export default function ContentTree({
         clearTimeout(scrollTimeout);
       }
     };
-  }, [pathLookupMap]);
+  }, [pathLookupMap, uuidToDocNoMap]);
 
   // Listen for expandScope custom events from sidebar
   React.useEffect(() => {
@@ -525,7 +547,9 @@ export default function ContentTree({
           requestAnimationFrame(() => {
             // Use history.pushState to update hash without triggering browser's native scroll
             // This prevents double-scrolling (browser scroll + our custom scroll)
-            const newUrl = `${window.location.pathname}${window.location.search}#${targetDocID}`;
+            // Prefer UUID for stable URLs, fall back to doc number
+            const hashValue = docNoToUuidMap.get(targetDocID) || targetDocID;
+            const newUrl = `${window.location.pathname}${window.location.search}#${hashValue}`;
             window.history.pushState(null, '', newUrl);
             // Manually trigger hashchange event for our listeners
             window.dispatchEvent(new HashChangeEvent('hashchange'));
@@ -600,7 +624,7 @@ export default function ContentTree({
                 className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900`}
                 onClick={() => {
                   // Sync sidebar when clicking on scope docs
-                  syncHashToSidebar(scopeTree.doc_no, scopeTree.type);
+                  syncHashToSidebar(scopeTree.doc_no, scopeTree.uuid || undefined, scopeTree.type);
                 }}
               >
                 <span
@@ -613,8 +637,8 @@ export default function ContentTree({
                 <CopyToClipboardButton
                   text={
                     typeof window !== 'undefined'
-                      ? `${window.location.origin}${window.location.pathname}#${scopeTree.doc_no}`
-                      : `#${scopeTree.doc_no}`
+                      ? `${window.location.origin}${window.location.pathname}#${scopeTree.uuid || scopeTree.doc_no}`
+                      : `#${scopeTree.uuid || scopeTree.doc_no}`
                   }
                 />
                 <TypeChip type={scopeTree.type} />

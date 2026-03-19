@@ -265,14 +265,13 @@ describe('markdownToHTML', () => {
   });
 
   describe('UUID link conversion', () => {
-    it('should convert UUID links to document number anchors', () => {
+    it('should convert UUID links to UUID-based anchor links', () => {
       const uuidToDocNoMap = new Map([['550e8400-e29b-41d4-a716-446655440000', 'A.1.2.3']]);
 
       const input = '[Link to doc](550e8400-e29b-41d4-a716-446655440000)';
       const output = markdownToHTML(input, uuidToDocNoMap);
 
-      expect(output).toContain('href="#A.1.2.3"');
-      expect(output).not.toContain('550e8400-e29b-41d4-a716-446655440000');
+      expect(output).toContain('href="#550e8400-e29b-41d4-a716-446655440000"');
     });
 
     it('should preserve non-UUID links unchanged', () => {
