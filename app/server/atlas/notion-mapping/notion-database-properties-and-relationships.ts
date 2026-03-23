@@ -1,346 +1,53 @@
-import { Json, Tables } from '@/app/server/services/supabase/database.types';
-import { AtlasDatabaseName, AtlasDocumentType } from '../atlas-types';
-import { ATLAS_DATABASES } from '../constants';
-
-export interface NotionDatabasePropertyMapping {
-  atlasDocumentNo: string; // A property name representing the formal document ID, e.g. "A.3.1.1"
-  atlasDocumentName: string; // A property name representing the document name, e.g. "Scope Improvement"
-  atlasDocumentType: string; // A property name representing the type of document, e.g. "Core", "Section"...
-  content: string | null; // A property name representing the main content or body of the document, or null if content is stored in extra_fields instead
-  sortOrder?: string; // A property name representing the manually set order of the document within its parent or section
-}
-
-export type NotionDatabasePropertyKey = keyof NotionDatabasePropertyMapping;
-
-export const PROPERTY_MAPPING_NAMES = {
-  ATLAS_DOCUMENT_NO: 'atlasDocumentNo',
-  ATLAS_DOCUMENT_NAME: 'atlasDocumentName',
-  ATLAS_DOCUMENT_TYPE: 'atlasDocumentType',
-  CONTENT: 'content',
-  SORT_ORDER: 'sortOrder',
-} as const satisfies Record<string, NotionDatabasePropertyKey>;
+import { AtlasDocumentType } from '../atlas-types';
 
 /**
- * Docs for Notion database properties
- * - https://developers.notion.com/reference/property-object
- *
- * Examples:
- * - Current Doc No (or Temp Name): "A.3.1 - A1 - Scope Improvement"
- * - Name: "Scope Improvement"
- * - Formal Doc ID: "A.3.1.1"
+ * Property mapping constants for Atlas document types with extra fields.
+ * These constants map internal field keys to their display labels.
+ * Used by the markdown exporter and the Atlas portal UI.
  */
-export const NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS: Record<
-  AtlasDatabaseName,
-  {
-    properties: NotionDatabasePropertyMapping;
-    childRelationships: Partial<Record<AtlasDatabaseName, string>>; // The name of the relationship property in this database that links to the child database. There may be more than one child relationships.
-    parentRelationships: Partial<Record<AtlasDatabaseName, string>>; // The name of the relationship property in this database that links to the parent database. There may be more than one parent relationships.
-    parentPropertyName?: string;
-    // subItemsPropertyName?: string;
-  }
-> = {
-  [ATLAS_DATABASES.SCOPES]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Name', // rich_text
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.ARTICLES]: 'Articles',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {},
-  },
-  [ATLAS_DATABASES.ARTICLES]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Name', // rich_text
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs', // TODO: MAJOR ISSUE! This references not only the direct children but ALL nested children!
-      // [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
-      // [ATLAS_DATABASES.TENETS]: 'Tenets',
-      // [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-      // TODO: Tenets + Scenarios + Annotations? - Atlas PH importer does relationship mapping to these too
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.SCOPES]: 'Parent Scope',
-    },
-  },
-  [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
-    properties: {
-      atlasDocumentNo: 'Doc No (or Temp Name)', // Previously 'Formal Doc ID' - but that doesn't match the PH importer mapping // title
-      atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-      sortOrder: 'No.', // number
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Subdocs',
-      [ATLAS_DATABASES.AGENTS]: 'Agent Scope Database',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
-      [ATLAS_DATABASES.TENETS]: 'Tenets',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.ARTICLES]: 'Parent Article',
-    },
-    parentPropertyName: 'Parent Doc',
-    // subItemsPropertyName: 'Subdocs',
-  },
-  [ATLAS_DATABASES.AGENTS]: {
-    properties: {
-      atlasDocumentNo: 'Formal Doc ID', // rich_text // TODO: Is this field used at all?
-      atlasDocumentName: 'Document Name', // title
-      atlasDocumentType: 'Doc Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
-      [ATLAS_DATABASES.TENETS]: 'Tenets',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
-      [ATLAS_DATABASES.AGENTS]: 'Sub-item',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
-    },
-    parentPropertyName: 'Parent item',
-    // subItemsPropertyName: 'Sub-item',
-  },
-  [ATLAS_DATABASES.ANNOTATIONS]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.ARTICLES]: 'Target Article',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section / Primary Doc',
-      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
-    },
-  },
-  [ATLAS_DATABASES.TENETS]: {
-    properties: {
-      atlasDocumentNo: 'Doc No (or Temp Name)', // title
-      atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      // [ATLAS_DATABASES.ARTICLES]: '', // TODO: Remove this relationship and the corresponding relationship in the Articles mapping?
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section/Primary Doc',
-      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
-    },
-  },
-  [ATLAS_DATABASES.ACTIVE_DATA]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: 'Content', // rich_text
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Parent Section / Primary Doc',
-      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
-    },
-  },
-  [ATLAS_DATABASES.SCENARIOS]: {
-    properties: {
-      atlasDocumentNo: 'Doc No (or Temp Name)', // title
-      atlasDocumentName: 'Doc No (or Temp Name)', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: null,
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.TENETS]: 'Targeted Action Tenet',
-    },
-  },
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: null,
-    },
-    childRelationships: {
-      [ATLAS_DATABASES.NEEDED_RESEARCH]: 'Needed Research',
-    },
-    parentRelationships: {
-      [ATLAS_DATABASES.SCENARIOS]: 'Original Scenario',
-    },
-  },
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: {
-    properties: {
-      atlasDocumentNo: 'Doc No', // title
-      atlasDocumentName: 'Doc No', // "Name" was previously formula, but now title
-      atlasDocumentType: 'Type', // select
-      content: null,
-    },
-    childRelationships: {},
-    parentRelationships: {
-      [ATLAS_DATABASES.SCOPES]: 'Scopes',
-      [ATLAS_DATABASES.ARTICLES]: 'Articles',
-      [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'Sections & Primary Docs',
-      [ATLAS_DATABASES.AGENTS]: 'Agent Scope',
-      [ATLAS_DATABASES.ANNOTATIONS]: 'Annotations',
-      [ATLAS_DATABASES.TENETS]: 'Tenets',
-      [ATLAS_DATABASES.ACTIVE_DATA]: 'Active Data',
-      [ATLAS_DATABASES.SCENARIOS]: 'Scenarios',
-      [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'Scenario Variations',
-    },
-  },
-} as const;
-
-/**
- * Utility to reverse a NotionDatabasePropertyMapping: returns an object mapping property values to their keys.
- */
-function reverseNotionDatabasePropertyMapping(
-  mapping: NotionDatabasePropertyMapping,
-): Record<string, keyof NotionDatabasePropertyMapping> {
-  const reversed: Record<string, keyof NotionDatabasePropertyMapping> = {};
-  for (const key in mapping) {
-    const value = mapping[key as keyof NotionDatabasePropertyMapping];
-    if (value) {
-      reversed[value] = key as keyof NotionDatabasePropertyMapping;
-    }
-  }
-  return reversed;
-}
-
-// Precompute reversed mappings for all databases
-// Usage example: REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS[ATLAS_DATABASES.SCOPES]
-// TODO: This doesn't work when a property is null (because object keys can't be null) - fix this!
-export const REVERSED_NOTION_DATABASE_PROPERTY_MAPPINGS: Record<
-  AtlasDatabaseName,
-  Record<string, keyof NotionDatabasePropertyMapping>
-> = Object.fromEntries(
-  Object.entries(NOTION_DATABASE_PROPERTIES_AND_RELATIONSHIPS).map(([dbName, config]) => [
-    dbName,
-    reverseNotionDatabasePropertyMapping(config.properties),
-  ]),
-) as Record<AtlasDatabaseName, Record<string, keyof NotionDatabasePropertyMapping>>;
-
-export const SUPABASE_CHILD_DATABASE_NAME_MAP: Record<AtlasDatabaseName, string> = {
-  [ATLAS_DATABASES.SCOPES]: 'child_scope_ids',
-  [ATLAS_DATABASES.ARTICLES]: 'child_article_ids',
-  [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: 'child_section_and_primary_doc_ids',
-  [ATLAS_DATABASES.ANNOTATIONS]: 'child_annotation_ids',
-  [ATLAS_DATABASES.TENETS]: 'child_tenet_ids',
-  [ATLAS_DATABASES.SCENARIOS]: 'child_scenario_ids',
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: 'child_scenario_variation_ids',
-  [ATLAS_DATABASES.ACTIVE_DATA]: 'child_active_data_ids',
-  [ATLAS_DATABASES.AGENTS]: 'child_agent_scope_ids',
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: 'child_needed_research_ids',
-} as const;
-
-type NotionDatabasePagesRow = Tables<'notion_database_pages'>;
-
-export type ChildListFieldName = {
-  [K in keyof NotionDatabasePagesRow]: K extends `child_${string}_ids` ? K : never;
-}[keyof NotionDatabasePagesRow];
-
-export type ChildLists = { [K in ChildListFieldName]: string[] };
-
-/**
- * TODO: Move the following interfaces and mappings to a shared file, since they are used in the client and server too
- */
-
-/**
- * Generic utility type to convert property mapping to extra fields interface.
- * All extra fields store both plain text and rich text JSON arrays.
- * For properties without formatting (select, number), rich_text is null.
- * The -readonly modifier ensures fields are mutable.
- */
-type ExtraFieldsFromMapping<T extends Record<string, string>> = {
-  -readonly [K in keyof T]: {
-    plain_text: string | null;
-    rich_text: Json[] | null;
-  };
-};
 
 /**
  * Type Specification Extra Fields
- * Mapping of Supabase fields to their Notion property names. These fields exist only on "Type Specification" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
  */
 export const TYPE_SPECIFICATION_PROPERTY_MAPPING = {
-  type_specification_components: 'Components', // Rich Text
-  type_specification_doc_identifier_rules: 'Doc Identifier Rules', // Rich Text
-  type_specification_additional_logic: 'Additional Logic', // Rich Text
-  type_specification_type_category: 'Type Category', // Select
-  type_specification_type_name: 'Type Name', // Rich Text
-  type_specification_type_overview: 'Type Overview', // Rich Text
+  type_specification_components: 'Components',
+  type_specification_doc_identifier_rules: 'Doc Identifier Rules',
+  type_specification_additional_logic: 'Additional Logic',
+  type_specification_type_category: 'Type Category',
+  type_specification_type_name: 'Type Name',
+  type_specification_type_overview: 'Type Overview',
 } as const;
-export type TypeSpecificationExtraFields = ExtraFieldsFromMapping<typeof TYPE_SPECIFICATION_PROPERTY_MAPPING>;
 
 /**
  * Scenario Extra Fields
- * Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
  */
 export const SCENARIO_PROPERTY_MAPPING = {
-  scenario_description: 'Description', // Rich Text
-  scenario_finding: 'Finding', // Rich Text
-  scenario_additional_guidance: 'Additional Guidance', // Rich Text
+  scenario_description: 'Description',
+  scenario_finding: 'Finding',
+  scenario_additional_guidance: 'Additional Guidance',
 } as const;
-export type ScenarioExtraFields = ExtraFieldsFromMapping<typeof SCENARIO_PROPERTY_MAPPING>;
 
 /**
  * Scenario Variation Extra Fields
- * Mapping of Supabase fields to their Notion property names. These fields exist only on "Scenario Variation" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
  */
 export const SCENARIO_VARIATION_PROPERTY_MAPPING = {
-  scenario_variation_description: 'Description', // Rich Text
-  scenario_variation_finding: 'Finding', // Rich Text
-  scenario_variation_additional_guidance: 'Additional Guidance', // Rich Text
+  scenario_variation_description: 'Description',
+  scenario_variation_finding: 'Finding',
+  scenario_variation_additional_guidance: 'Additional Guidance',
 } as const;
-export type ScenarioVariationExtraFields = ExtraFieldsFromMapping<typeof SCENARIO_VARIATION_PROPERTY_MAPPING>;
 
 /**
  * Needed Research Extra Fields
- * Mapping of Supabase fields to their Notion property names. These fields exist only on "Needed Research" documents. These will be stored in the `extra_fields` JSONB column in Supabase.
  */
 export const NEEDED_RESEARCH_PROPERTY_MAPPING = {
-  needed_research_content: 'Content', // Rich Text
+  needed_research_content: 'Content',
 } as const;
-export type NeededResearchExtraFields = ExtraFieldsFromMapping<typeof NEEDED_RESEARCH_PROPERTY_MAPPING>;
 
 /**
  * Mapping of document types to their extra field property mappings.
  *
- * This is a centralized registry that maps each Atlas document type that has extra fields
- * to its corresponding property mapping constant. This allows any part of the codebase
- * to dynamically look up which extra fields exist for a given document type.
- *
- * Usage example:
- * ```typescript
- * const extraFields = DOCUMENT_TYPE_EXTRA_FIELDS['Type Specification'];
- * // Returns TYPE_SPECIFICATION_PROPERTY_MAPPING
- * ```
- *
- * To add support for a new document type with extra fields:
- * 1. Create a new property mapping constant (e.g., NEW_TYPE_PROPERTY_MAPPING)
- * 2. Add an entry here mapping the document type to that constant
+ * Centralized registry that maps each Atlas document type that has extra fields
+ * to its corresponding property mapping constant.
  */
 export const DOCUMENT_TYPE_EXTRA_FIELDS: Partial<Record<AtlasDocumentType, Record<string, string>>> = {
   'Type Specification': TYPE_SPECIFICATION_PROPERTY_MAPPING,
@@ -348,52 +55,3 @@ export const DOCUMENT_TYPE_EXTRA_FIELDS: Partial<Record<AtlasDocumentType, Recor
   'Scenario Variation': SCENARIO_VARIATION_PROPERTY_MAPPING,
   'Needed Research': NEEDED_RESEARCH_PROPERTY_MAPPING,
 };
-
-/**
- * Notion Property Type Overrides per Document Type
- *
- * Maps Notion property names to their actual property types for each Atlas document type.
- * Only includes properties that are NOT 'rich_text' (which is the default assumption).
- *
- * This is used when syncing from Markdown to Notion to ensure we use the correct property type
- * for extra fields. The document type field (atlasDocumentType) is always a 'select' field
- * and is handled separately in buildNotionProperties.
- *
- * Note: All extra fields default to 'rich_text' unless specified here.
- *
- * Note: Type is always a 'select' field and is handled separately in buildNotionProperties.
- */
-export const NOTION_PROPERTY_TYPE_OVERRIDES: Partial<Record<AtlasDatabaseName, Record<string, string>>> = {
-  [ATLAS_DATABASES.SCOPES]: {
-    'Doc No': 'title', // atlasDocumentNo
-  },
-  [ATLAS_DATABASES.ARTICLES]: {
-    'Doc No': 'title', // atlasDocumentNo
-  },
-  [ATLAS_DATABASES.SECTIONS_AND_PRIMARY_DOCS]: {
-    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
-    'No.': 'number', // sortOrder
-    'Type Category': 'select', // Extra field for Type Specification
-  },
-  [ATLAS_DATABASES.AGENTS]: {
-    'Document Name': 'title', // atlasDocumentName
-  },
-  [ATLAS_DATABASES.ANNOTATIONS]: {
-    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-  [ATLAS_DATABASES.TENETS]: {
-    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-  [ATLAS_DATABASES.ACTIVE_DATA]: {
-    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-  [ATLAS_DATABASES.SCENARIOS]: {
-    'Doc No (or Temp Name)': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-  [ATLAS_DATABASES.SCENARIO_VARIATIONS]: {
-    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-  [ATLAS_DATABASES.NEEDED_RESEARCH]: {
-    'Doc No': 'title', // atlasDocumentNo, atlasDocumentName
-  },
-} as const;

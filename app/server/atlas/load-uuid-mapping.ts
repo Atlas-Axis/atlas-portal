@@ -1,4 +1,3 @@
-import { supabase } from '@/app/server/services/supabase/supabase-client';
 import { isValidUUID, uuidToHyphens } from '@/app/shared/utils/utils';
 
 export interface UuidMappings {
@@ -29,60 +28,6 @@ export function normalizeUuidForLookup(uuid: string): string {
 
   // Fallback for non-standard strings (e.g., in tests) - just lowercase
   return uuid.toLowerCase();
-}
-
-/**
- * Load UUID mappings from the uuid_mapping table and return them as two efficient lookup maps.
- *
- * All UUIDs are normalized to lowercase for consistent lookups, as:
- * - PostgreSQL returns UUIDs in lowercase
- * - The Notion API may return UUIDs with different casing
- * - JavaScript Map lookups are case-sensitive
- *
- * @returns Object containing:
- *   - notionToAtlas: Map from notion_page_id (lowercase) to atlas_document_uuid (lowercase)
- *   - atlasToNotion: Map from atlas_document_uuid (lowercase) to notion_page_id (lowercase)
- */
-export async function loadUuidMappings(): Promise<UuidMappings> {
-  const notionPageIDsToAtlasUUIDs = new Map<string, string>();
-  const atlasUUIDsToNotionPageIds = new Map<string, string>();
-
-  // Load all mappings in pages to handle large datasets
-  let fromIdx = 0;
-  const pageSize = 1000;
-
-  while (true) {
-    const { data, error } = await supabase()
-      .from('uuid_mapping')
-      .select('notion_page_id, atlas_document_uuid')
-      .range(fromIdx, fromIdx + pageSize - 1);
-
-    if (error) {
-      throw new Error(`Failed to load UUID mappings: ${error.message}`);
-    }
-
-    if (!data || data.length === 0) {
-      break;
-    }
-
-    // Populate both maps with normalized (lowercase) UUIDs for consistent lookups
-    for (const row of data) {
-      if (row.notion_page_id && row.atlas_document_uuid) {
-        const notionPageId = normalizeUuidForLookup(row.notion_page_id);
-        const atlasUuid = normalizeUuidForLookup(row.atlas_document_uuid);
-        notionPageIDsToAtlasUUIDs.set(notionPageId, atlasUuid);
-        atlasUUIDsToNotionPageIds.set(atlasUuid, notionPageId);
-      }
-    }
-
-    if (data.length < pageSize) {
-      break;
-    }
-
-    fromIdx += pageSize;
-  }
-
-  return { notionPageIDsToAtlasUUIDs, atlasUUIDsToNotionPageIds };
 }
 
 /**
