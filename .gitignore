@@ -35,6 +35,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+.vercel/output/
 
 # typescript
 *.tsbuildinfo
@@ -46,19 +47,12 @@ next-env.d.ts
 # Notion API local cache
 .notion-cache/
 
-# Custom local debug data
-# .debug-data
+# SvelteKit (should not exist in this Next.js repo)
+.svelte-kit/
 
 # IDEs and editors
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/mcp.json
+.vscode/
+.cursor/
 .idea/
-
-# Sentry Config File
-.env.sentry-build-plugin
 
 logs

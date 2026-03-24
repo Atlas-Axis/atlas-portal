@@ -1,1 +1,0 @@
-Add documentation. On the top of the file, summarize the purpose and usage of the code. Keep it short and focused. Add inline comments inside the code above major parts to briefly indicate what they do, Keep it short

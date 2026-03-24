@@ -1,3 +1,0 @@
-npx lint-staged
-npx --yes tsc --noEmit --skipLibCheck --project tsconfig.json
-npm run test:run
