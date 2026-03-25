@@ -3,6 +3,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify the revalidation secret to prevent unauthorized cache purging
+    const secret = request.nextUrl.searchParams.get('secret');
+    const expectedSecret = process.env.REVALIDATE_SECRET;
+
+    if (!expectedSecret || secret !== expectedSecret) {
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
     const { path } = body;
 

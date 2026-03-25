@@ -733,7 +733,7 @@ function validateUUIDs(docs: Document[]): ValidationIssue[] {
 // Main Validator
 // ============================================================================
 
-// TODO: Delete this function once the duplicate UUIDs are fixed
+// Filters out known duplicate-UUID issues that are suppressed via SUPPRESSED_DUPLICATE_UUIDS
 function filterSuppressedIssues(issues: ValidationIssue[], docs: Document[], lines: string[]): ValidationIssue[] {
   if (SUPPRESSED_DUPLICATE_UUIDS.size === 0) return issues;
 

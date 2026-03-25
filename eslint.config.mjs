@@ -7,9 +7,6 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
-  //   {
-  //     extends: [...compat.extends('prettier'), ...compat.extends('plugin:@tanstack/query/recommended')],
-  //   },
   {
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',

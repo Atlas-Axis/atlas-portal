@@ -1,3 +1,0 @@
-# Cursor AI Agent Instructions
-
-- When you finish any task, run `npx tsx scripts/agent-notification.ts`

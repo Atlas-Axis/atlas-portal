@@ -1,5 +1,5 @@
 {
-  "name": "atlas-axis-notion-workflow",
+  "name": "atlas-portal",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,6 +24,7 @@
     "@vercel/analytics": "^1.5.0",
     "archiver": "^7.0.1",
     "clsx": "^2.1.1",
+    "dompurify": "^3.3.3",
     "framer-motion": "^12.23.12",
     "katex": "^0.16.25",
     "lucide-react": "^0.542.0",
@@ -43,6 +44,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/archiver": "^7.0.0",
+    "@types/dompurify": "^3.0.5",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.19.6",
     "@types/react": "19.2.2",

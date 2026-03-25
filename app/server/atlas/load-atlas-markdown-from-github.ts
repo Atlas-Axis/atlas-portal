@@ -2,7 +2,7 @@
  * Helper functions to load the canonical Atlas markdown file from GitHub.
  *
  * The Atlas markdown file is stored in a central GitHub repository and serves as
- * the source of truth for the Markdown → Notion sync workflow.
+ * the single source of truth for the Atlas Portal.
  *
  * @see ATLAS_MARKDOWN_GITHUB_RAW_URL in constants.ts
  */
@@ -92,7 +92,7 @@ export async function fetchAtlasMarkdownMetadata(): Promise<{
  * Fetches both the content and metadata of the Atlas markdown file from GitHub.
  *
  * This is the main function to use when you need both the file content and
- * its last modified date for comparison during Markdown → Notion sync.
+ * its metadata (last modified date, commit info).
  *
  * @returns Object containing content, lastModified date, commit SHA, and commit message
  * @throws Error if either fetch fails
@@ -115,16 +115,12 @@ export async function loadAtlasMarkdownFromGitHub(): Promise<AtlasMarkdownFromGi
 }
 
 /**
- * Loads Atlas markdown for sync operations.
+ * Loads Atlas markdown with local file fallback for development.
  *
  * In local development (NODE_ENV !== 'production'), tries to use truncated-atlas.md
  * if it exists, otherwise falls back to GitHub.
  *
  * In production, always fetches from GitHub.
- *
- * The truncated file is used for faster local testing of:
- * - Markdown → Notion sync
- * - Notion → Supabase import
  *
  * @returns The markdown content as a string
  * @throws Error if GitHub fetch fails and no local file is available
@@ -139,7 +135,7 @@ export async function loadAtlasMarkdownForSync(): Promise<string> {
       const markdown = await fs.readFile(truncatedPath, 'utf8');
       console.log(`[loadAtlasMarkdownForSync] Using local truncated Atlas file: ${truncatedPath}`);
       return markdown;
-    } catch (err) {
+    } catch {
       console.warn(`[loadAtlasMarkdownForSync] Truncated file not found (${truncatedPath}), falling back to GitHub`);
     }
   }

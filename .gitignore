@@ -53,6 +53,10 @@ next-env.d.ts
 # IDEs and editors
 .vscode/
 .cursor/
+.cursorrules
 .idea/
+
+# Debug data
+.debug-data/
 
 logs

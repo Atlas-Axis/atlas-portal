@@ -113,8 +113,6 @@ export function formatDocumentRecursive(
   // Just iterate through all child collections in the order they appear in the data structure
   const allChildren = getAllChildren(doc);
   if (allChildren.length > 0) {
-    // TODO: Don't sort here, the original tree is already sorted
-    // const sortedChildren = [...allChildren].sort((a, b) => compareDocNumbers(a.doc_no, b.doc_no));
     for (const child of allChildren) {
       // Pass current doc as parent for Needed Research depth calculation
       lines.push(...formatDocumentRecursive(child, depth + 1, doc));

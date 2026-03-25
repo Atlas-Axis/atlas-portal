@@ -1,5 +1,6 @@
 'use client';
 
+import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 import { processKaTeXInHTML } from '@/app/shared/utils/process-katex';
 import styles from './custom-html.module.css';
@@ -9,8 +10,10 @@ export function CustomHTML({ html }: { html: string }) {
   // Supports inline math (`$...$`) and display math (`$$...$$`) delimiters
   const processedHtml = processKaTeXInHTML(html);
 
-  // TODO: sanitize HTML to prevent XSS
+  // Sanitize HTML to prevent XSS attacks
+  const sanitizedHtml = DOMPurify.sanitize(processedHtml);
+
   return (
-    <div className={`${styles.formattedContent} custom-html`} dangerouslySetInnerHTML={{ __html: processedHtml }} />
+    <div className={`${styles.formattedContent} custom-html`} dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
   );
 }

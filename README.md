@@ -25,11 +25,11 @@ The Atlas markdown follows a strict format documented in [`docs/ATLAS_MARKDOWN_S
 
 The portal exposes the Atlas in multiple formats:
 
-| Endpoint | Format | Description |
-|---|---|---|
-| `/api/atlas.json` | JSON | Structured tree of all Atlas documents |
-| `/api/atlas.md` | Markdown | Complete Atlas as a single markdown file |
-| `/api/atlas.yaml` | YAML | Same structure as JSON, in YAML format |
+| Endpoint          | Format   | Description                              |
+| ----------------- | -------- | ---------------------------------------- |
+| `/api/atlas.json` | JSON     | Structured tree of all Atlas documents   |
+| `/api/atlas.md`   | Markdown | Complete Atlas as a single markdown file |
+| `/api/atlas.yaml` | YAML     | Same structure as JSON, in YAML format   |
 
 ## Scripts
 
@@ -43,9 +43,9 @@ npx tsx scripts/validate-atlas-json.ts [path/to/atlas.json]
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|---|---|---|
-| `GITHUB_TOKEN` | No | GitHub personal access token for higher API rate limits |
+| Variable       | Required | Description                                             |
+| -------------- | -------- | ------------------------------------------------------- |
+| `GITHUB_TOKEN` | No       | GitHub personal access token for higher API rate limits |
 
 ## Tech Stack
 
@@ -73,4 +73,4 @@ Docs relevant to the Atlas format and parsing:
 
 ## License
 
-MIT
+Apache-2.0 -- see [LICENSE](./LICENSE).

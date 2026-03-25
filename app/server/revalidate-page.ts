@@ -11,7 +11,11 @@ export async function revalidatePage(path: string): Promise<{ success: boolean; 
   try {
     // Determine base URL based on environment
     const baseUrl = getBaseUrl();
-    const revalidateUrl = `${baseUrl}/api/revalidate`;
+    const secret = process.env.REVALIDATE_SECRET;
+    if (!secret) {
+      throw new Error('REVALIDATE_SECRET environment variable is not set');
+    }
+    const revalidateUrl = `${baseUrl}/api/revalidate?secret=${encodeURIComponent(secret)}`;
 
     console.log(`🔄 Revalidating path: ${path} via ${revalidateUrl}`);
 
