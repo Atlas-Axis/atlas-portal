@@ -38,7 +38,12 @@ interface GitHubCommitResponse {
  * @throws Error if the fetch fails or the file is not found
  */
 export async function fetchAtlasMarkdownContent(): Promise<string> {
-  const response = await fetch(ATLAS_MARKDOWN_GITHUB_RAW_URL);
+  const response = await fetch(ATLAS_MARKDOWN_GITHUB_RAW_URL, {
+    // Match the page-level ISR revalidation interval.
+    // Without this, Next.js caches the fetch response indefinitely
+    // in its data cache — so ISR rebuilds the page with stale content.
+    next: { revalidate: 3600 },
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch Atlas markdown from GitHub: ${response.status} ${response.statusText}`);
@@ -65,6 +70,7 @@ export async function fetchAtlasMarkdownMetadata(): Promise<{
       // Note: For higher rate limits, add a GitHub token:
       // 'Authorization': `token ${process.env.GITHUB_TOKEN}`,
     },
+    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
