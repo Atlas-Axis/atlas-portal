@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.*
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Coverage
+coverage/
+
+# Generated files
+*.tsbuildinfo
+next-env.d.ts
+exported-atlas/
+
+# Package lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Debug data
+.debug-data/
+.output/
+
+# Trigger
+.trigger/
+
+# Notion cache
+.notion-cache/
+
+# Environment files
+.env*
+
+# Vercel
+.vercel/
+
+# Atlas files
+**/atlas.md
+**/atlas.json
+**/atlas.yaml

@@ -1,0 +1,218 @@
+import markdownit from 'markdown-it';
+import type { Options } from 'markdown-it';
+import type Renderer from 'markdown-it/lib/renderer.mjs';
+import type Token from 'markdown-it/lib/token.mjs';
+import { isValidUUID } from '@/app/shared/utils/utils';
+
+/**
+ * Singleton markdown-it instance for parsing.
+ * Reusing the same instance avoids the overhead of creating a new parser for each call.
+ * The custom link renderer IS global state (modified below), but uses the env parameter
+ * to receive per-call data (uuidToDocNoMap), preventing state pollution between concurrent calls.
+ */
+const mdInstance = markdownit();
+
+/**
+ * Default link_open renderer, cached once from the singleton instance.
+ */
+const defaultLinkOpenRender =
+  mdInstance.renderer.rules.link_open ||
+  function (tokens: Token[], idx: number, options: Options, _env: unknown, self: Renderer) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+/**
+ * Custom link renderer that converts UUID hrefs to document number anchors.
+ * This renderer is global state, but receives per-call data via the env parameter,
+ * preventing pollution between concurrent calls to markdownToHTML().
+ */
+mdInstance.renderer.rules.link_open = function (
+  tokens: Token[],
+  idx: number,
+  options: Options,
+  env: { uuidToDocNoMap?: Map<string, string> },
+  self: Renderer,
+) {
+  const uuidToDocNoMap = env?.uuidToDocNoMap;
+
+  if (uuidToDocNoMap) {
+    const token = tokens[idx];
+    const hrefIndex = token.attrIndex('href');
+
+    if (hrefIndex >= 0 && token.attrs) {
+      const href = token.attrs[hrefIndex][1];
+
+      // Check if href is a UUID and convert it to an anchor link
+      if (isValidUUID(href)) {
+        const docNo = uuidToDocNoMap.get(href);
+        if (docNo) {
+          // Use UUID as the anchor for stable links (hash navigation resolves UUID → doc number)
+          token.attrs[hrefIndex][1] = `#${href}`;
+        }
+      }
+    }
+  }
+
+  return defaultLinkOpenRender(tokens, idx, options, env, self);
+};
+
+/**
+ * Protects math expressions from markdown processing by replacing them with placeholders.
+ * This prevents markdown-it from parsing underscores, asterisks, etc. as formatting within math expressions.
+ *
+ * Note: Code blocks and inline code are NOT protected here because markdown-it naturally handles them correctly
+ * without parsing their content as markdown formatting.
+ *
+ * Uses unique placeholders with Unicode characters that won't be parsed as markdown formatting.
+ *
+ * @param markdown - The markdown string to protect
+ * @returns Object containing the protected markdown and a map of placeholders to original content
+ */
+function protectSpecialContent(markdown: string): { protected: string; placeholders: Map<string, string> } {
+  const placeholders = new Map<string, string>();
+  let counter = 0;
+  let protectedText = markdown;
+
+  // Protect display math ($$...$$) - entire expression including delimiters
+  // Use [\s\S]*? to match any content including empty (not +? which requires at least one char)
+  protectedText = protectedText.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+    // Use Unicode characters that won't be parsed as markdown
+    const placeholder = `\u{FFFD}PROTECTEDDISPLAYMATH${counter++}\u{FFFD}`;
+    placeholders.set(placeholder, match);
+    return placeholder;
+  });
+
+  // Protect inline math ($...$) - entire expression including delimiters
+  // But not dollar signs followed by digits (money amounts)
+  protectedText = protectedText.replace(/\$(?!\d)([^$]+?)\$/g, (match) => {
+    const placeholder = `\u{FFFD}PROTECTEDINLINEMATH${counter++}\u{FFFD}`;
+    placeholders.set(placeholder, match);
+    return placeholder;
+  });
+
+  // Note: Code blocks (```...```) and inline code (`...`) are NOT protected here
+  // because markdown-it already handles them correctly and doesn't parse markdown inside them.
+
+  return { protected: protectedText, placeholders };
+}
+
+/**
+ * Restores the original content that was protected before markdown processing.
+ *
+ * IMPORTANT: Uses a function for replacement to avoid issues with special replacement patterns.
+ * In JavaScript's String.replace(), `$$` in the replacement string means "insert a literal $",
+ * so we must use a function that returns the original string to avoid this interpretation.
+ *
+ * @param text - The processed text containing placeholders
+ * @param placeholders - Map of placeholders to original content
+ * @returns Text with placeholders replaced by original content
+ */
+function restoreProtectedContent(text: string, placeholders: Map<string, string>): string {
+  let restored = text;
+  for (const [placeholder, original] of placeholders.entries()) {
+    // Use a function to return the original string, avoiding special replacement pattern interpretation
+    // (e.g., $$ in replacement string would be interpreted as single $)
+    restored = restored.replace(placeholder, () => original);
+  }
+  return restored;
+}
+
+/**
+ * Normalizes non-standard bullet characters to standard markdown list markers.
+ * This ensures that Unicode bullet characters like ◦ and • are properly parsed as list items.
+ *
+ * Handles bullets at the start of lines with optional leading whitespace:
+ * - ◦ (U+25E6, WHITE BULLET) followed by space -> - (dash)
+ * - • (U+2022, BULLET) followed by space -> - (dash)
+ *
+ * @param markdown - The markdown string to normalize
+ * @returns The markdown with normalized list markers
+ */
+function normalizeListMarkers(markdown: string): string {
+  // Replace Unicode bullet characters followed by space at the start of lines (with optional indentation)
+  // ◦ (U+25E6) - WHITE BULLET - commonly used for sub-items
+  // • (U+2022) - BULLET - commonly used for list items
+  return markdown.replace(/^(\s*)[◦•]\s/gm, '$1- ');
+}
+
+/**
+ * Fixes malformed inline code blocks where the closing backtick is on a new line.
+ * This can happen when content is imported from Notion with incorrectly formatted inline code.
+ *
+ * Pattern that gets fixed:
+ *   `code content
+ *   `     - Next item
+ *
+ * Becomes:
+ *   `code content`
+ *        - Next item
+ *
+ * @param markdown - The markdown string to fix
+ * @returns The markdown with fixed inline code blocks
+ */
+function fixMalformedInlineCode(markdown: string): string {
+  // Match inline code that has a newline before the closing backtick
+  // Pattern: opening backtick, content (no backticks), newline, closing backtick
+  // The closing backtick may be followed by spaces and a list marker
+  return markdown.replace(/`([^`\n]+)\n`(\s*[-*])/g, '`$1`\n$2');
+}
+
+/**
+ * Converts markdown to HTML and preserves line breaks by converting newlines to <br> tags.
+ * This handles non-standard markdown patterns like Unicode bullet lists (•).
+ *
+ * Protects math expressions ($$...$$ and $...$) from markdown processing to prevent underscores,
+ * asterisks, and other special characters from being interpreted as formatting.
+ *
+ * Note: Code blocks and inline code are naturally protected by markdown-it and don't require
+ * special handling.
+ *
+ * @param markdown - The markdown string to convert
+ * @param uuidToDocNoMap - Optional map of UUIDs to document numbers for converting internal links.
+ *                         If not provided, UUID links will remain unchanged.
+ */
+export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, string>) => {
+  // Safeguard against extremely large content that could cause performance issues
+  if (markdown.length > 1000000) {
+    console.warn('Markdown content exceeds 1MB, truncating for safety');
+    markdown = markdown.slice(0, 1000000) + '\n\n[Content truncated due to size...]';
+  }
+
+  // Step 0a: Fix malformed inline code blocks (closing backtick on new line)
+  markdown = fixMalformedInlineCode(markdown);
+
+  // Step 0b: Normalize non-standard bullet characters to standard markdown list markers
+  markdown = normalizeListMarkers(markdown);
+
+  // Step 1: Protect math expressions from markdown processing
+  const { protected: protectedMarkdown, placeholders } = protectSpecialContent(markdown);
+
+  // Step 2: Convert markdown to HTML using singleton markdown-it instance.
+  // Pass uuidToDocNoMap via env parameter for per-call link conversion without global state.
+  let html = mdInstance.render(protectedMarkdown, { uuidToDocNoMap });
+
+  // Step 3: Restore the protected content
+  html = restoreProtectedContent(html, placeholders);
+
+  // Post-process: Replace newlines within text content with <br> tags
+  // This regex finds newlines that are not between block-level closing and opening tags
+  // Strategy: Replace single newlines with <br> tags to preserve line breaks in the rendered output
+  html = html.replace(/\n/g, '<br>\n');
+
+  // Clean up: Remove <br> tags that appear between block-level elements
+  // These patterns would create unwanted spacing
+  html = html
+    // Remove <br> after opening block tags (including table elements)
+    .replace(/(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)[^>]*>)\s*<br>\s*/g, '$1')
+    // Remove <br> before closing block tags (including table elements)
+    .replace(/\s*<br>\s*(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)>)/g, '$1')
+    // Remove <br> between closing and opening block tags (including table elements)
+    .replace(
+      /(<\/(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)>)\s*<br>\s*(<(?:p|div|ul|ol|li|h[1-6]|blockquote|pre|table|thead|tbody|tfoot|tr|th|td)[^>]*>)/g,
+      '$1\n$2',
+    )
+    // Remove trailing <br> tags at the end of the HTML
+    .replace(/(<br>\s*)+$/, '');
+
+  return html;
+};
