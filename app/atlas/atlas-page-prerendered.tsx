@@ -36,7 +36,7 @@ export default function AtlasPagePrerendered({
   }, [onSearchOpen]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-zinc-900">
       <MobileTopBar scopeTrees={scopeTreesWithoutAgents} onSearchOpen={onSearchOpen} />
       <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} onSearchOpen={onSearchOpen} />
       <div className="min-w-0 pt-24 pb-24 sm:ml-80 sm:p-6 sm:pt-6 sm:pb-24">

@@ -277,7 +277,7 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
       }}
     >
       <ModalContent>
-        <ModalHeader className="flex flex-col gap-1 border-b border-slate-200 pb-4">
+        <ModalHeader className="flex flex-col gap-1 border-b border-slate-200 pb-4 dark:border-zinc-700">
           <Input
             ref={inputRef}
             placeholder="Search Atlas documents..."
@@ -292,22 +292,22 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
         </ModalHeader>
         <ModalBody className="py-4">
           {!query.trim() && (
-            <div className="py-12 text-center text-slate-500">
+            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
               <Search className="mx-auto mb-3 h-12 w-12 text-slate-300" />
               <p>Start typing to search across all Atlas documents</p>
-              <p className="mt-1 text-sm text-slate-400">Search by document number, title, or content</p>
+              <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">Search by document number, title, or content</p>
             </div>
           )}
 
           {query.trim() && filteredDocuments.length === 0 && (
-            <div className="py-12 text-center text-slate-500">
+            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
               <p>No documents found matching &quot;{query}&quot;</p>
             </div>
           )}
 
           {query.trim() && filteredDocuments.length > 0 && (
             <div className="space-y-1">
-              <p className="mb-3 text-sm text-slate-500">
+              <p className="mb-3 text-sm text-slate-500 dark:text-slate-400">
                 {filteredDocuments.length === 50
                   ? '50+ results (showing first 50)'
                   : `${filteredDocuments.length} result${filteredDocuments.length === 1 ? '' : 's'}`}
@@ -344,12 +344,12 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                         handleResultClick(result);
                       }
                     }}
-                    className="cursor-pointer rounded-lg bg-slate-100 p-3 transition-all hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none"
+                    className="cursor-pointer rounded-lg bg-slate-100 p-3 transition-all hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none dark:bg-zinc-800 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
                     aria-label={`Navigate to ${doc.name || 'Untitled'} (${doc.doc_no || 'No document number'})`}
                   >
                     <div className="mb-2 flex items-center gap-2">
                       {doc.doc_no && (
-                        <span className="inline-block rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-700">
+                        <span className="inline-block rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-zinc-900 dark:text-slate-200">
                           {highlightText(doc.doc_no, query)}
                         </span>
                       )}
@@ -359,12 +359,12 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                         {doc.type}
                       </span>
                     </div>
-                    <div className="mb-1 font-semibold text-slate-900">
+                    <div className="mb-1 font-semibold text-slate-900 dark:text-slate-100">
                       {highlightText(doc.name || '<Untitled>', query)}
                     </div>
                     {previewContent && (
-                      <div className="text-sm text-slate-600">
-                        {previewLabel && <span className="font-medium text-slate-700">{previewLabel}: </span>}
+                      <div className="text-sm text-slate-600 dark:text-slate-400">
+                        {previewLabel && <span className="font-medium text-slate-700 dark:text-slate-300">{previewLabel}: </span>}
                         {highlightText(truncateText(previewContent, 150, query), query)}
                       </div>
                     )}

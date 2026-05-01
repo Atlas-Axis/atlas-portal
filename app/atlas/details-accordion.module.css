@@ -95,3 +95,22 @@
 .rootSummary .titleWrapper {
   gap: 0.125rem;
 }
+
+/* Dark mode overrides */
+:global(.dark) .summary {
+  background-color: rgb(39 39 42); /* zinc-800 */
+}
+
+:global(.dark) .chevron {
+  color: rgb(212 212 216); /* zinc-300 */
+}
+
+:global(.dark) .rootSummary {
+  color: rgb(199 210 254); /* indigo-200 */
+}
+
+:global(.dark) .highlighted {
+  color: rgb(165 180 252); /* indigo-300 */
+  background-color: rgba(165, 180, 252, 0.12);
+  border-left-color: rgb(165 180 252);
+}
