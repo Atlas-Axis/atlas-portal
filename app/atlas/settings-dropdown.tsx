@@ -1,10 +1,11 @@
 'use client';
-
+ 
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react';
 import { Settings } from 'lucide-react';
 import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
-
+import ThemeToggle from './theme-toggle';
+ 
 export default function SettingsDropdown() {
   // Initialize state from localStorage
   const [showUUIDs, setShowUUIDs] = useState(() => {
@@ -16,7 +17,7 @@ export default function SettingsDropdown() {
       return false;
     }
   });
-
+ 
   // Save to localStorage whenever showUUIDs changes
   useEffect(() => {
     try {
@@ -28,7 +29,7 @@ export default function SettingsDropdown() {
       console.error('Failed to save showUUIDs setting to localStorage:', error);
     }
   }, [showUUIDs]);
-
+ 
   return (
     <Dropdown backdrop="blur">
       <DropdownTrigger>
@@ -47,6 +48,9 @@ export default function SettingsDropdown() {
           >
             <span className="text-sm">Show UUIDs</span>
           </Checkbox>
+        </DropdownItem>
+        <DropdownItem key="theme-toggle" className="w-full" textValue="Toggle theme">
+          <ThemeToggle />
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
