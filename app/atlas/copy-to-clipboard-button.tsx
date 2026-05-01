@@ -16,7 +16,8 @@ export function CopyToClipboardButton({ text }: { text: string }) {
         role="button"
         tabIndex={0}
         onClick={(e) => {
-          // Prevent accordion toggle when clicking the copy button
+          // preventDefault stops the native <details> toggle
+          e.preventDefault();
           e.stopPropagation();
           copy(text);
         }}
