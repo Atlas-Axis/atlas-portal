@@ -1,34 +1,34 @@
 'use client';
  
-import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 
 /**
  * Theme toggle that flips between light and dark.
  *
- * Renders a stable placeholder on the server and during the first client render
- * to avoid a hydration mismatch (next-themes only knows the resolved theme on the client).
+ * resolvedTheme is undefined on the server and during the first client render,
+ * then becomes 'light' or 'dark' once next-themes mounts. Until it resolves,
+ * we render a neutral placeholder so SSR markup matches the first client render.
  */
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const isReady = resolvedTheme !== undefined;
+  const isDark = resolvedTheme === 'dark';
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && resolvedTheme === 'dark';
+  const toggle = () => {
+    if (isReady) setTheme(isDark ? 'light' : 'dark');
+  };
 
   return (
     <button
       type="button"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={toggle}
       className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-default-100"
+      suppressHydrationWarning
     >
       {isDark ? <Sun size={16} className="text-default-500" /> : <Moon size={16} className="text-default-500" />}
-      <span>{isDark ? 'Light mode' : 'Dark mode'}</span>
+      <span suppressHydrationWarning>{isReady ? (isDark ? 'Light mode' : 'Dark mode') : 'Theme'}</span>
     </button>
   );
 }
