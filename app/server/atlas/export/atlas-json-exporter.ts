@@ -1,5 +1,5 @@
 import { ExportAtlasTreeScopeTrees } from '@/app/server/atlas/export/types';
-import { fetchAtlasMarkdownContent } from '../load-atlas-markdown-from-github';
+import { fetchAtlasMarkdownContent } from '../load-atlas-tree-from-github';
 import { parseAtlasMarkdown } from './atlas-markdown-importer';
 
 /**

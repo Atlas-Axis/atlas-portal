@@ -36,18 +36,26 @@ export const ATLAS_DOCUMENT_TYPES: AtlasDocumentType[] = [
 export const AGENT_ROOT_DOCUMENT_NAME = 'List Of Prime Agent Artifacts';
 
 /**
- * Central GitHub repository URL for the canonical Atlas markdown file.
- *
+ * Owner of the canonical Atlas repository on GitHub.
  * Repository: https://github.com/sky-ecosystem/next-gen-atlas
- * Branch: main
- * File path: Sky Atlas/Sky Atlas.md
  */
-export const ATLAS_MARKDOWN_GITHUB_RAW_URL =
-  'https://raw.githubusercontent.com/sky-ecosystem/next-gen-atlas/refs/heads/main/Sky%20Atlas/Sky%20Atlas.md';
+export const ATLAS_REPO_OWNER = 'sky-ecosystem';
+export const ATLAS_REPO_NAME = 'next-gen-atlas';
+export const ATLAS_REPO_BRANCH = 'main';
 
 /**
- * GitHub API URL for fetching file metadata (including last modified date).
- * Uses the GitHub API to get commit information for the file.
+ * GitHub API URL for downloading the repo as a tarball at the given branch.
+ *
+ * The portal extracts this tarball, walks its `content/` directory, and composes
+ * the decomposed Atlas tree back into a monolithic markdown stream — replacing
+ * the older direct-fetch of `Sky Atlas/Sky Atlas.md`.
  */
-export const ATLAS_MARKDOWN_GITHUB_API_URL =
-  'https://api.github.com/repos/sky-ecosystem/next-gen-atlas/commits?path=Sky%20Atlas/Sky%20Atlas.md&per_page=1';
+export const ATLAS_REPO_TARBALL_URL = `https://api.github.com/repos/${ATLAS_REPO_OWNER}/${ATLAS_REPO_NAME}/tarball/${ATLAS_REPO_BRANCH}`;
+
+/**
+ * GitHub API URL for the latest commit on the canonical branch.
+ *
+ * Used to derive a SHA for cache invalidation: when the SHA changes, the
+ * tarball is re-fetched and the composed monolith is recomputed.
+ */
+export const ATLAS_REPO_COMMITS_URL = `https://api.github.com/repos/${ATLAS_REPO_OWNER}/${ATLAS_REPO_NAME}/commits/${ATLAS_REPO_BRANCH}`;

@@ -27,7 +27,7 @@ import {
   type ExportAtlasTreeScopeTrees,
   childCollectionNames,
 } from '@/app/server/atlas/export/types';
-import { fetchAtlasMarkdownContent } from '@/app/server/atlas/load-atlas-markdown-from-github';
+import { fetchAtlasMarkdownContent } from '@/app/server/atlas/load-atlas-tree-from-github';
 import { loadEnv } from '@/scripts/utils/load-env';
 
 const MAX_DEPTH = 4;
