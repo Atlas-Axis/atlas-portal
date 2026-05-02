@@ -70,8 +70,8 @@ function renderSidebarNode({
       <a
         key={nodeNotionId || node.doc_no || `node-${node.uuid || 'unknown'}`}
         data-sidebar-doc-id={node.doc_no}
-        className={`block rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out hover:bg-slate-100 ${
-          isActive ? 'text-blue-600' : ''
+        className={`block rounded px-2 py-1 text-sm transition-all duration-300 ease-in-out hover:bg-slate-100 dark:hover:bg-zinc-800 ${
+          isActive ? 'text-blue-600 dark:text-blue-400' : ''
         }`}
         href={node.doc_no ? `#${node.doc_no}` : undefined}
         onClick={() => {
@@ -136,10 +136,10 @@ function renderSidebarNode({
           base: 'px-0',
           trigger: 'px-2 py-1',
           content: 'px-0 pt-0 pb-1',
-          indicator: 'hover:text-blue-600 hover:bg-slate-100 rounded-full p-2 cursor-pointer',
+          indicator: 'hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-full p-2 cursor-pointer',
         }}
       >
-        <div className="ml-3 border-l border-slate-200 pl-2">
+        <div className="ml-3 border-l border-slate-200 pl-2 dark:border-zinc-700">
           {sortedChildren.map((child) => (
             <div
               key={
@@ -240,14 +240,14 @@ export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: Side
 
   return (
     <div
-      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex"
+      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex dark:border-zinc-800 dark:bg-zinc-950"
       role="navigation"
       aria-label="Atlas navigation"
     >
       <div className="grow p-4">
         <div className="mb-6 flex items-center gap-3">
           <Image src="/images/sky.png" alt="Sky Logo" width={24} height={24} className="object-contain" priority />
-          <h2 className="text-3xl font-semibold text-slate-900">Atlas</h2>
+          <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">Atlas</h2>
         </div>
 
         {/* Search Input Trigger */}

@@ -5,6 +5,7 @@ import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger
 import { Settings } from 'lucide-react';
 import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
 
+import ThemeToggle from './theme-toggle';
 export default function SettingsDropdown() {
   // Initialize state from localStorage
   const [showUUIDs, setShowUUIDs] = useState(() => {
@@ -47,6 +48,9 @@ export default function SettingsDropdown() {
           >
             <span className="text-sm">Show UUIDs</span>
           </Checkbox>
+        </DropdownItem>
+        <DropdownItem key="theme-toggle" className="w-full" textValue="Toggle theme">
+          <ThemeToggle />
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

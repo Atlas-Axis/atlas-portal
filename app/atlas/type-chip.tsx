@@ -4,7 +4,7 @@ import { AtlasDocumentType } from '@/app/server/atlas/atlas-types';
 import { typeColorMap } from '@/app/server/atlas/formatters/type-color-map';
 
 export default function TypeChip({ type }: { type: AtlasDocumentType }) {
-  const colorClass = typeColorMap[type] || 'bg-gray-100 text-gray-800';
+  const colorClass = typeColorMap[type] || 'bg-gray-100 text-gray-800 dark:bg-zinc-800 dark:text-zinc-200';
   let color: string = type;
 
   if (type === 'Action Tenet') {

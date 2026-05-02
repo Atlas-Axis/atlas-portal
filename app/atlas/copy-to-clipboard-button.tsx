@@ -16,7 +16,8 @@ export function CopyToClipboardButton({ text }: { text: string }) {
         role="button"
         tabIndex={0}
         onClick={(e) => {
-          // Prevent accordion toggle when clicking the copy button
+          // preventDefault stops the native <details> toggle
+          e.preventDefault();
           e.stopPropagation();
           copy(text);
         }}
@@ -27,13 +28,13 @@ export function CopyToClipboardButton({ text }: { text: string }) {
             copy(text);
           }
         }}
-        className="inline-flex h-6 w-6 min-w-6 cursor-pointer items-center justify-center rounded-md hover:bg-gray-200 active:bg-gray-300"
+        className="inline-flex h-6 w-6 min-w-6 cursor-pointer items-center justify-center rounded-md hover:bg-gray-200 active:bg-gray-300 dark:hover:bg-zinc-800 dark:active:bg-zinc-700"
         title="Copy link to clipboard"
       >
         <Link2 className="text-default-400" size={12} />
       </span>
       {copied && (
-        <span className="absolute top-0 left-8 rounded-md bg-white px-2 py-1 text-xs font-semibold whitespace-nowrap text-green-600 shadow-md">
+        <span className="absolute top-0 left-8 rounded-md bg-white px-2 py-1 text-xs font-semibold whitespace-nowrap text-green-600 shadow-md dark:bg-zinc-900 dark:text-green-400">
           COPIED!
         </span>
       )}

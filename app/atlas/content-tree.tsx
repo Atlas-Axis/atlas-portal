@@ -120,7 +120,7 @@ function renderSupportingDocumentListInSameType({
   onToggleExpanded,
   showUUIDs,
 }: RenderSupportingDocumentListProps) {
-  const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800';
+  const colorStyles = typeColorMap[documentType] || 'bg-gray-100 text-gray-800 dark:bg-zinc-800 dark:text-zinc-200';
 
   return (
     <div className="mt-2 ml-0">
@@ -279,7 +279,7 @@ function TreeNode({
   const childrenContent = (
     <>
       {immutableAndPrimaryDocumentPages.length > 0 && (
-        <ul className="mt-1 border-l border-gray-200 sm:pl-4">
+        <ul className="mt-1 border-l border-gray-200 sm:pl-4 dark:border-zinc-700">
           {immutableAndPrimaryDocumentPages.map((child, idx) => {
             const childNotionId = child.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid) : null;
             const key = childNotionId || `child-${idx}`;
@@ -348,7 +348,7 @@ function TreeNode({
           }}
         >
           <span
-            className="cursor-text rounded px-1 hover:bg-slate-200"
+            className="cursor-text rounded px-1 hover:bg-slate-200 dark:hover:bg-zinc-800"
             onClick={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
           >
@@ -565,7 +565,7 @@ export default function ContentTree({
         clearTimeout(navigationTimeout);
       }
     };
-  }, [pathLookupMap]);
+  }, [pathLookupMap, docNoToUuidMap]);
 
   console.log('Rendering ContentTree');
 
@@ -621,14 +621,14 @@ export default function ContentTree({
             isRoot={true}
             title={
               <div
-                className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900`}
+                className={`${styles.accordionTitle} flex items-center gap-0.5 text-xl font-semibold text-gray-900 dark:text-gray-100`}
                 onClick={() => {
                   // Sync sidebar when clicking on scope docs
                   syncHashToSidebar(scopeTree.doc_no, scopeTree.uuid || undefined, scopeTree.type);
                 }}
               >
                 <span
-                  className="cursor-text rounded px-1 hover:bg-slate-200"
+                  className="cursor-text rounded px-1 hover:bg-slate-200 dark:hover:bg-zinc-800"
                   onClick={(e) => e.stopPropagation()}
                   onMouseDown={(e) => e.stopPropagation()}
                 >
