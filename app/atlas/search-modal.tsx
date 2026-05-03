@@ -295,7 +295,9 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
             <div className="py-12 text-center text-slate-500 dark:text-slate-400">
               <Search className="mx-auto mb-3 h-12 w-12 text-slate-300" />
               <p>Start typing to search across all Atlas documents</p>
-              <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">Search by document number, title, or content</p>
+              <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                Search by document number, title, or content
+              </p>
             </div>
           )}
 
@@ -364,7 +366,9 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
                     </div>
                     {previewContent && (
                       <div className="text-sm text-slate-600 dark:text-slate-400">
-                        {previewLabel && <span className="font-medium text-slate-700 dark:text-slate-300">{previewLabel}: </span>}
+                        {previewLabel && (
+                          <span className="font-medium text-slate-700 dark:text-slate-300">{previewLabel}: </span>
+                        )}
                         {highlightText(truncateText(previewContent, 150, query), query)}
                       </div>
                     )}
