@@ -9,6 +9,10 @@
   transition: color 0.2s ease;
 }
 
+:global(.dark) .formattedContent a {
+  color: rgb(255 255 255 / 0.85);
+}
+
 .formattedContent p {
   margin-top: 1rem;
   margin-bottom: 1rem;
