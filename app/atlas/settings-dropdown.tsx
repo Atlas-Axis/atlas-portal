@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react';
 import { Settings } from 'lucide-react';
 import { LOCAL_STORAGE_CHANGED_EVENT, SHOW_UUIDS_STORAGE_KEY } from './constants';
-
 import ThemeToggle from './theme-toggle';
+
 export default function SettingsDropdown() {
   // Initialize state from localStorage
   const [showUUIDs, setShowUUIDs] = useState(() => {

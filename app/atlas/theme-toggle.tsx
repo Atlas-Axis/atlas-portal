@@ -1,7 +1,7 @@
 'use client';
- 
-import { useTheme } from 'next-themes';
+
 import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 /**
  * Theme toggle that flips between light and dark.
@@ -24,7 +24,7 @@ export default function ThemeToggle() {
       type="button"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={toggle}
-      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-default-100"
+      className="hover:bg-default-100 flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm"
       suppressHydrationWarning
     >
       {isDark ? <Sun size={16} className="text-default-500" /> : <Moon size={16} className="text-default-500" />}
