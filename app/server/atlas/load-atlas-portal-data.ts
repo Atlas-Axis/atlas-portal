@@ -22,7 +22,7 @@ import { parseAtlasMarkdown } from './export/atlas-markdown-importer';
 import { type ExportAtlasTreeBaseDocument, type ExportAtlasTreeDocument } from './export/types';
 import type { ExportAtlasTreeScopeTrees } from './export/types';
 import { childCollectionNames } from './export/types';
-import { fetchAtlasMarkdownContent } from './load-atlas-markdown-from-github';
+import { fetchAtlasMarkdownContent } from './load-atlas-tree-from-github';
 import type { UuidMappings } from './load-uuid-mapping';
 
 // Same regex used by the parser to identify document title lines
