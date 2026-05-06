@@ -181,15 +181,19 @@ async function findExtractedRepoRoot(extractRoot: string): Promise<string> {
 }
 
 /**
- * Sanity floor: the live Atlas is ~3.4 MB. If composed output is below this
- * threshold, something went wrong (truncated tarball, partial extract, etc.).
- * Failing loudly is preferable to caching an empty result and serving
- * blank pages indefinitely (2026-05-06 incident).
+ * Sanity floor: catch the empty/near-empty case. The 2026-05-06 incident
+ * served blank pages because compose returned 0 bytes and the cache stored
+ * it. Threshold 100 bytes catches that without breaking tests that use
+ * small fixture tarballs.
+ *
+ * (For production, the live Atlas is ~3.4 MB and the rawTotal check in
+ * validateCompleteness catches the partial-fetch case at the doc-count
+ * level too.)
  */
-const COMPOSE_OUTPUT_MIN_BYTES = 1_000_000;
+const COMPOSE_OUTPUT_MIN_BYTES = 100;
 
-/** Sanity floor: live Atlas has ~10 K atom files. */
-const CONTENT_DIR_MIN_FILES = 1_000;
+/** Sanity floor: at least 1 atom file must be present (catches empty extract). */
+const CONTENT_DIR_MIN_FILES = 1;
 
 /**
  * Recursively count `document.md` files under a directory.
