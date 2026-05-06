@@ -181,8 +181,45 @@ async function findExtractedRepoRoot(extractRoot: string): Promise<string> {
 }
 
 /**
+ * Sanity floor: the live Atlas is ~3.4 MB. If composed output is below this
+ * threshold, something went wrong (truncated tarball, partial extract, etc.).
+ * Failing loudly is preferable to caching an empty result and serving
+ * blank pages indefinitely (2026-05-06 incident).
+ */
+const COMPOSE_OUTPUT_MIN_BYTES = 1_000_000;
+
+/** Sanity floor: live Atlas has ~10 K atom files. */
+const CONTENT_DIR_MIN_FILES = 1_000;
+
+/**
+ * Recursively count `document.md` files under a directory.
+ * Used as a sanity check post-extraction.
+ */
+function countDocumentMdFiles(dir: string): number {
+  let count = 0;
+  let entries: fs.Dirent[];
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return 0;
+  }
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name === 'document.md') {
+      count += 1;
+    } else if (entry.isDirectory()) {
+      count += countDocumentMdFiles(path.join(dir, entry.name));
+    }
+  }
+  return count;
+}
+
+/**
  * Compose the Atlas monolith by downloading the latest tarball and walking
  * its `content/` tree.
+ *
+ * Includes sanity checks at each stage. If any returns an unexpectedly small
+ * result, throws — preventing the in-memory cache from being poisoned with
+ * a partial/empty value.
  */
 async function composeFromTarball(): Promise<string> {
   const extractRoot = await downloadAndExtractTarball();
@@ -192,7 +229,29 @@ async function composeFromTarball(): Promise<string> {
     if (!fs.existsSync(contentDir)) {
       throw new Error(`Extracted tarball does not contain content/ at ${contentDir}`);
     }
-    return compose(contentDir);
+
+    // Sanity: count atom files BEFORE compose. If extraction was partial,
+    // we want to know that here, not after the empty compose result poisons
+    // the cache.
+    const atomCount = countDocumentMdFiles(contentDir);
+    console.log(`[loadAtlasTree] extracted ${atomCount} document.md files from tarball`);
+    if (atomCount < CONTENT_DIR_MIN_FILES) {
+      throw new Error(
+        `Atlas content extraction sanity-check failed: only ${atomCount} document.md files found ` +
+          `(expected ≥ ${CONTENT_DIR_MIN_FILES}). Tarball extraction likely truncated or failed.`,
+      );
+    }
+
+    const composed = compose(contentDir);
+    if (composed.length < COMPOSE_OUTPUT_MIN_BYTES) {
+      throw new Error(
+        `Atlas compose output sanity-check failed: ${composed.length} bytes ` +
+          `(expected ≥ ${COMPOSE_OUTPUT_MIN_BYTES}). Tree walk produced unexpectedly small output.`,
+      );
+    }
+    console.log(`[loadAtlasTree] composed monolith: ${composed.length} bytes`);
+
+    return composed;
   } finally {
     // Best-effort cleanup. /tmp is auto-purged by Vercel between cold starts.
     try {

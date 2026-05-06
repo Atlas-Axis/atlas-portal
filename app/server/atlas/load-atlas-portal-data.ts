@@ -126,6 +126,20 @@ function validateCompleteness(markdown: string, trees: ExportAtlasTreeScopeTrees
     throw new Error(error);
   }
 
+  // Sanity floor: 0 == 0 should NOT pass. The live Atlas has ~10K docs;
+  // anything below this threshold means upstream (fetch/extract/compose)
+  // returned empty or truncated content. 2026-05-06 incident: empty markdown
+  // → empty tree → vacuous (0 == 0) validation pass → blank pages served and
+  // poisoned the in-memory cache.
+  const SANITY_FLOOR = 1000;
+  if (rawTotal < SANITY_FLOOR) {
+    throw new Error(
+      `Atlas build validation FAILED: only ${rawTotal} documents found in markdown ` +
+        `(expected ≥ ${SANITY_FLOOR}). Upstream content fetch/extract likely returned ` +
+        `partial or empty data.`,
+    );
+  }
+
   console.log(`[Atlas] Build validation passed: ${treeTotal} documents, ${allTypes.length} types, all counts match.`);
 }
 
