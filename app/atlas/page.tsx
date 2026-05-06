@@ -2,9 +2,15 @@ import type { Metadata } from 'next';
 import { loadAtlasPortalData } from '@/app/server/atlas/load-atlas-portal-data';
 import AtlasPagePrerendered from './atlas-page-prerendered';
 
-// Revalidate every hour — ISR serves cached page instantly,
-// rebuilds in background when stale. No manual deploy needed.
-export const revalidate = 3600;
+// Build-time static generation. The Atlas content is fetched, composed,
+// parsed, and validated once at `next build`; runtime requests are pure
+// CDN serves with no GitHub round-trips, no tarball extract, and no parse
+// work on the hot path. Atlas updates ship via a Vercel Deploy Hook fired
+// by a webhook on the upstream content repo's main branch — see README.
+export const dynamic = 'force-static';
+// `revalidate = false` makes this fully static; only a fresh deploy can
+// update the page. The deploy-hook webhook handles invalidation.
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Sky Atlas',

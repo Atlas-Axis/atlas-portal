@@ -61,12 +61,15 @@ interface GitHubCommitResponse {
 // ---------------------------------------------------------------------------
 // In-memory SHA-keyed compose cache
 //
-// Persists across requests within a single Vercel/Node process. Combined with
-// the page-level revalidate=3600 and Next.js fetch-cache (which we ALSO opt
-// into via { next: { revalidate: 3600 } } on each fetch), this gives us a
-// two-tier cache: Next data cache short-circuits most fetches, and when fetch
-// IS made, this in-process cache short-circuits the tarball download +
-// extract + compose work for any SHA we've already composed.
+// Primary purpose: deduplicate compose work within a single `next build`
+// process. The build invokes the loader once per static route (`/atlas`,
+// `/`, `/api/atlas.json`, `/api/atlas.yaml`); without this cache each route
+// would re-download and re-compose the tarball. With it, the second route
+// onward is a free read.
+//
+// Secondary purpose: in any non-build context (CLI scripts, dev server,
+// hypothetical dynamic route added later), the cache still short-circuits
+// repeat calls during a single Node process lifetime.
 // ---------------------------------------------------------------------------
 
 interface CacheEntry {
@@ -101,14 +104,18 @@ function githubAuthHeaders(): Record<string, string> {
 /**
  * Fetch the latest commit on the canonical branch.
  *
- * Uses Next.js fetch caching with revalidate=3600 (matches page-level ISR
- * window — Adam's directive: "keep it as is because a change only takes place
- * once a week generally").
+ * Called at build time (the portal is fully build-time-static). The Next.js
+ * fetch cache is bypassed with `cache: 'no-store'` so a build always sees
+ * the actual upstream HEAD — `next build` happens once per upstream change
+ * (triggered by the deploy-hook webhook), so there's no runtime ISR window
+ * to coordinate with. The in-process compose cache below still short-
+ * circuits duplicate calls within a single build (e.g., across the page
+ * route + the JSON/YAML API routes).
  */
 async function fetchLatestCommitMetadata(): Promise<AtlasCommitMetadata> {
   const response = await fetch(ATLAS_REPO_COMMITS_URL, {
     headers: githubAuthHeaders(),
-    next: { revalidate: 3600 },
+    cache: 'no-store',
   });
   if (!response.ok) {
     throw new Error(`Failed to fetch latest commit metadata from GitHub: ${response.status} ${response.statusText}`);

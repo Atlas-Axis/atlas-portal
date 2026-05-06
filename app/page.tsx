@@ -1,8 +1,10 @@
 import Page from './atlas/page';
 
-// Revalidate every hour — same cadence as the /atlas route —
-// so both routes stay fresh on their own ISR cycle.
-export const revalidate = 3600;
+// Build-time static generation. Mirror the /atlas route's caching
+// strategy so the landing page is also a pure CDN serve. Updates ship
+// via a Vercel Deploy Hook on upstream Atlas changes — see README.
+export const dynamic = 'force-static';
+export const revalidate = false;
 
 export default function Home() {
   return <Page />;

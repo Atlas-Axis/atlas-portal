@@ -26,9 +26,13 @@ GitHub (sky-ecosystem/next-gen-atlas)
 3. The `/atlas` page renders the tree with search, filtering, and document type color-coding.
 4. API routes serialize the tree to JSON, Markdown, or YAML on demand.
 
-### ISR strategy
+### Caching strategy
 
-The Atlas page is statically generated at build time and revalidated periodically via Next.js ISR. A `/api/revalidate` endpoint (token-protected) allows on-demand cache purging.
+The portal is **fully build-time static**. `/`, `/atlas`, `/api/atlas.json`, and `/api/atlas.yaml` are pre-rendered at `next build` against the upstream Atlas content; runtime requests are pure CDN serves. New Atlas content reaches production via a fresh Vercel deploy triggered by a Deploy Hook fired from a webhook on the upstream content repo's canonical branch.
+
+The `/api/revalidate` endpoint remains available for any future ISR routes but is not on the path of the main Atlas page.
+
+`/api/atlas.md` is the one route still rendered on demand because it accepts a `split-by-scope` query parameter that gates between two response shapes.
 
 ## Tech Stack
 
