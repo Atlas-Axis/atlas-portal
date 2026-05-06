@@ -126,11 +126,12 @@ function validateCompleteness(markdown: string, trees: ExportAtlasTreeScopeTrees
     throw new Error(error);
   }
 
-  // Sanity floor: 0 == 0 should NOT pass. The 2026-05-06 incident: empty
-  // markdown → empty tree → vacuous (0 == 0) validation pass → blank pages
-  // served and poisoned the in-memory cache. Threshold 1 catches that
-  // without breaking small-fixture tests; for production, the upstream
-  // composeFromTarball byte check also fires at ~3.4 MB scale.
+  // Sanity floor: vacuous (0 == 0) should NOT pass. If upstream returns
+  // empty markdown, the parsed tree is empty too, and a count comparison
+  // alone matches by coincidence. Without this guard, a blank tree can be
+  // cached and served. Threshold 1 catches the empty case without breaking
+  // small-fixture tests; for production, the upstream composeFromTarball
+  // byte check also fires at ~3.4 MB scale.
   const SANITY_FLOOR = 1;
   if (rawTotal < SANITY_FLOOR) {
     throw new Error(

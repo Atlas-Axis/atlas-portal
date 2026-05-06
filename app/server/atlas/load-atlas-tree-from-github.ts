@@ -181,12 +181,13 @@ async function findExtractedRepoRoot(extractRoot: string): Promise<string> {
 }
 
 /**
- * Sanity floor: catch the empty/near-empty case. The 2026-05-06 incident
- * served blank pages because compose returned 0 bytes and the cache stored
- * it. Threshold 100 bytes catches that without breaking tests that use
- * small fixture tarballs.
+ * Sanity floor: catch the empty/near-empty case where compose returns 0 or
+ * near-0 bytes (e.g., truncated tarball, partial extract). Without this
+ * guard, an empty value can be cached and served indefinitely. Threshold of
+ * 100 bytes catches that without breaking tests that use small fixture
+ * tarballs.
  *
- * (For production, the live Atlas is ~3.4 MB and the rawTotal check in
+ * (For production, the live Atlas is ~3.4 MB; the rawTotal check in
  * validateCompleteness catches the partial-fetch case at the doc-count
  * level too.)
  */
