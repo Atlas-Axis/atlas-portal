@@ -223,6 +223,155 @@ describe('compose cache hot path', () => {
   });
 });
 
+describe('cold-start coalescing', () => {
+  it('serializes concurrent cold-start callers onto a single fetch', async () => {
+    // Regression test for the 2026-05-07 ENOSPC incident: many concurrent
+    // cold-start requests on a fresh Lambda each spawned their own tarball
+    // download+extract into /tmp, exhausting Vercel's ~512MB /tmp budget.
+    // With coalescing, N concurrent first callers share a single in-flight
+    // download — total fetch count must be 2 (one /commits + one /tarball).
+    const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-coalesce', 'concurrent'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+
+    const N = 10;
+    const results = await Promise.all(Array.from({ length: N }, () => fetchAtlasMarkdownContent()));
+
+    // All callers see the same composed content.
+    const expected = fs.readFileSync(FIXTURE_EXPECTED, 'utf8');
+    for (const r of results) {
+      expect(r).toBe(expected);
+    }
+    // Critical: only ONE upstream pair was issued, not N pairs.
+    expect(fetchCallCount).toBe(2);
+  });
+
+  it('coalesces a mix of fetchAtlasMarkdownContent and loadAtlasMarkdownFromGitHub callers', async () => {
+    // Both public read functions must share the same in-flight cold-start —
+    // otherwise a concurrent caller through the alternate function would
+    // still double-fetch.
+    const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-mixed', 'mixed concurrent'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+
+    const [content1, full, content2] = await Promise.all([
+      fetchAtlasMarkdownContent(),
+      loadAtlasMarkdownFromGitHub(),
+      fetchAtlasMarkdownContent(),
+    ]);
+
+    expect(content1.length).toBeGreaterThan(0);
+    expect(full.content).toBe(content1);
+    expect(content2).toBe(content1);
+    expect(full.commitSha).toBe('sha-mixed');
+    expect(fetchCallCount).toBe(2);
+  });
+
+  it('clears the in-flight handle after completion so the next cold start can run', async () => {
+    // After the first cold start completes the cache is populated, so
+    // subsequent reads use the hot path. But if we manually clear the cache
+    // (simulating a fresh Lambda), a brand-new cold start must succeed —
+    // ensures the in-flight promise was nulled out in the finally block.
+    const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-restart', 'first'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+    await fetchAtlasMarkdownContent();
+    expect(fetchCallCount).toBe(2);
+
+    // New "Lambda" — clear cache, swap in fresh mocks, fetch again.
+    _clearAtlasComposeCache();
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-restart-2', 'second'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+    const content = await fetchAtlasMarkdownContent();
+    expect(content.length).toBeGreaterThan(0);
+    expect(fetchCallCount).toBe(2);
+  });
+
+  it('clears the in-flight handle on failure so the next caller can retry', async () => {
+    // If the first cold-start fails, the in-flight promise must be cleared
+    // so that the *next* request triggers a fresh attempt. Otherwise a
+    // single transient upstream failure would permanently wedge cold-start
+    // until the Lambda recycled.
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 500,
+        body: 'first attempt server error',
+        contentType: 'text/plain',
+      },
+    ]);
+    await expect(fetchAtlasMarkdownContent()).rejects.toThrow(/Failed to fetch latest commit metadata/);
+
+    // Second attempt with healthy upstream — must actually run, not return
+    // a stale rejected promise.
+    const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-recovered', 'recovered'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+    const content = await fetchAtlasMarkdownContent();
+    expect(content.length).toBeGreaterThan(0);
+  });
+});
+
 describe('fetchAtlasMarkdownMetadata', () => {
   it('returns commit metadata without downloading the tarball', async () => {
     setupFetchMocks([

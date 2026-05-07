@@ -91,11 +91,26 @@ const FAILURE_RETRY_MS = 5 * 60 * 1000; // 5 min after a failed refresh
 let nextRefreshAt = 0;
 let refreshInProgress = false;
 
+/**
+ * Cold-start coalescing: when the cache is empty and many requests arrive
+ * concurrently (typical for Vercel cold-starts), serialize them onto a single
+ * in-flight fetch instead of letting each spawn its own
+ * download+extract+compose. Without this, N concurrent cold-start requests
+ * each create a fresh `/tmp/atlas-tarball-*` (each ~13MB compressed,
+ * substantially larger extracted), and Vercel's 512MB `/tmp` exhausts under
+ * load — producing ENOSPC errors that 500 every subsequent request on the
+ * same Lambda instance.
+ *
+ * Reference incident: 2026-05-07, sha 21da511 + b3bcec3 in production.
+ */
+let coldStartFetch: Promise<CacheEntry> | null = null;
+
 /** For tests: clear the in-memory compose cache and refresh schedule. */
 export function _clearAtlasComposeCache(): void {
   composeCache = null;
   nextRefreshAt = 0;
   refreshInProgress = false;
+  coldStartFetch = null;
 }
 
 /**
@@ -202,6 +217,14 @@ async function downloadAndExtractTarball(): Promise<string> {
     throw new Error('GitHub tarball response had no body');
   }
 
+  // Defense in depth: scrub any leftover atlas-tarball-* dirs from prior
+  // crashed runs. The composeFromTarball() finally block normally cleans up,
+  // but if a process is killed mid-extraction (timeout, OOM) the dir leaks.
+  // On Vercel, Lambda /tmp persists across invocations on a warm instance, so
+  // a single mid-extraction kill can permanently leak ~13MB until the
+  // instance recycles. Cheap to scan (typically zero entries).
+  await scrubLeftoverTarballs();
+
   // Use a per-call temp dir so concurrent extractions don't clobber each other.
   // Vercel's serverless filesystem allows writes under /tmp.
   const dest = await fsp.mkdtemp(path.join(os.tmpdir(), 'atlas-tarball-'));
@@ -211,6 +234,36 @@ async function downloadAndExtractTarball(): Promise<string> {
   await pipeline(nodeStream, createGunzip(), tar.extract({ cwd: dest }));
 
   return dest;
+}
+
+/**
+ * Scrub leftover `/tmp/atlas-tarball-*` directories from prior crashed runs.
+ *
+ * Defense in depth — `composeFromTarball()`'s finally block normally cleans
+ * up after itself, but mid-extraction kills (timeout, OOM, container
+ * recycle) skip that finally and leak the temp dir. On Vercel, /tmp persists
+ * across invocations on a warm Lambda, so leaked dirs accumulate until the
+ * instance recycles. This scrub runs once per extraction at near-zero cost
+ * when /tmp is clean (just a directory listing).
+ */
+async function scrubLeftoverTarballs(): Promise<void> {
+  const tmpRoot = os.tmpdir();
+  let entries: fs.Dirent[];
+  try {
+    entries = await fsp.readdir(tmpRoot, { withFileTypes: true });
+  } catch {
+    return; // /tmp unreadable — nothing we can do.
+  }
+  const stale = entries.filter((e) => e.isDirectory() && e.name.startsWith('atlas-tarball-'));
+  if (stale.length === 0) return;
+  console.warn(`[loadAtlasTree] scrubbing ${stale.length} leftover atlas-tarball-* dir(s) from /tmp`);
+  await Promise.all(
+    stale.map((e) =>
+      fsp.rm(path.join(tmpRoot, e.name), { recursive: true, force: true }).catch(() => {
+        /* ignore */
+      }),
+    ),
+  );
 }
 
 /**
@@ -321,28 +374,57 @@ async function composeFromTarball(): Promise<string> {
 // ---------------------------------------------------------------------------
 
 /**
+ * Cold-start compose, coalesced across concurrent callers.
+ *
+ * If a cold-start fetch is already in flight, awaiters share the same
+ * promise. This is critical: without coalescing, N concurrent first
+ * requests on a fresh Lambda each spawn their own ~13MB tarball download
+ * and extraction into a fresh `/tmp/atlas-tarball-*`, exhausting `/tmp`
+ * (Vercel limit ~512MB) and pushing every subsequent request on that
+ * Lambda into ENOSPC 500s.
+ *
+ * Returns the populated CacheEntry so callers can read either the
+ * composed content or the metadata.
+ */
+async function coldStartCompose(): Promise<CacheEntry> {
+  if (coldStartFetch !== null) {
+    return coldStartFetch;
+  }
+  coldStartFetch = (async (): Promise<CacheEntry> => {
+    try {
+      const metadata = await fetchLatestCommitMetadata();
+      console.log(
+        `[loadAtlasTree] cold-start compose at branch=${ATLAS_REPO_BRANCH} sha=${metadata.commitSha.slice(0, 8)}`,
+      );
+      const content = await composeFromTarball();
+      const entry: CacheEntry = { sha: metadata.commitSha, content, metadata };
+      composeCache = entry;
+      nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+      return entry;
+    } finally {
+      coldStartFetch = null;
+    }
+  })();
+  return coldStartFetch;
+}
+
+/**
  * Fetch the composed Atlas monolith content from GitHub.
  *
  * **Cache policy**: when the in-memory cache is populated, return it
  * immediately and trigger a fire-and-forget background refresh (subject to
  * the refresh interval). User requests never await an upstream fetch on the
  * hot path. When the cache is empty (cold start), fetch synchronously to
- * populate it.
+ * populate it — concurrent cold-start callers share a single in-flight
+ * fetch via `coldStartCompose()`.
  */
 export async function fetchAtlasMarkdownContent(): Promise<string> {
   if (composeCache !== null) {
     void refreshComposeCacheIfStale();
     return composeCache.content;
   }
-  // Cold start: synchronous fetch to populate cache.
-  const metadata = await fetchLatestCommitMetadata();
-  console.log(
-    `[loadAtlasTree] cold-start compose at branch=${ATLAS_REPO_BRANCH} sha=${metadata.commitSha.slice(0, 8)}`,
-  );
-  const content = await composeFromTarball();
-  composeCache = { sha: metadata.commitSha, content, metadata };
-  nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
-  return content;
+  const entry = await coldStartCompose();
+  return entry.content;
 }
 
 /**
@@ -360,19 +442,16 @@ export async function fetchAtlasMarkdownMetadata(): Promise<AtlasCommitMetadata>
  * Fetch both content and metadata of the Atlas monolith.
  *
  * Same cache policy as `fetchAtlasMarkdownContent`: serve from cache when
- * populated, fetch synchronously only on cold start.
+ * populated, otherwise share the in-flight cold-start fetch with all
+ * concurrent callers.
  */
 export async function loadAtlasMarkdownFromGitHub(): Promise<AtlasMarkdownFromGitHub> {
   if (composeCache !== null) {
     void refreshComposeCacheIfStale();
     return { content: composeCache.content, ...composeCache.metadata };
   }
-  // Cold start: synchronous fetch.
-  const metadata = await fetchLatestCommitMetadata();
-  const content = await composeFromTarball();
-  composeCache = { sha: metadata.commitSha, content, metadata };
-  nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
-  return { content, ...metadata };
+  const entry = await coldStartCompose();
+  return { content: entry.content, ...entry.metadata };
 }
 
 /**
