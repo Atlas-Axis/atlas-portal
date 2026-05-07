@@ -159,15 +159,14 @@ describe('tarball download + extract + compose', () => {
   });
 });
 
-describe('SHA-keyed compose cache', () => {
-  it('serves cached content when the SHA is unchanged', async () => {
+describe('compose cache hot path', () => {
+  it('serves the cached content on subsequent calls without making synchronous network calls', async () => {
     const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
-    const sha = 'sha-stable';
     setupFetchMocks([
       {
         url: ATLAS_REPO_COMMITS_URL,
         status: 200,
-        body: commitResponse(sha, 'first'),
+        body: commitResponse('sha-stable', 'first'),
         contentType: 'application/json',
       },
       {
@@ -177,54 +176,50 @@ describe('SHA-keyed compose cache', () => {
         contentType: 'application/gzip',
       },
     ]);
-    // First call: 1 commits + 1 tarball = 2 fetches.
+    // Cold start: 1 commits + 1 tarball = 2 fetches.
     const c1 = await fetchAtlasMarkdownContent();
     const callsAfterFirst = fetchCallCount;
-    // Second call: 1 commits (SHA-cache hit, no tarball).
-    const c2 = await fetchAtlasMarkdownContent();
-    const callsAfterSecond = fetchCallCount;
-    expect(c1).toBe(c2);
     expect(callsAfterFirst).toBe(2);
-    expect(callsAfterSecond - callsAfterFirst).toBe(1); // only the /commits HEAD request
+
+    // Hot path: cached content returned synchronously; the background refresh
+    // is fire-and-forget and gated by the refresh interval, so within the
+    // interval the second call adds no synchronous network calls.
+    const c2 = await fetchAtlasMarkdownContent();
+    expect(c2).toBe(c1);
+    expect(fetchCallCount).toBe(callsAfterFirst); // no new synchronous fetches
   });
 
-  it('invalidates and refetches when SHA changes', async () => {
+  it('preserves the cache when an upstream fetch later fails', async () => {
+    // Verifies the contract that user requests do not see 5xx for content we
+    // have already successfully composed. A subsequent failure of the upstream
+    // tarball does not invalidate the in-memory cache, and the public reader
+    // continues to return the previously-composed content.
     const tarballBytes = fs.readFileSync(FIXTURE_TARBALL);
-    let currentSha = 'sha-A';
-    fetchCallCount = 0;
-    fetchMock = vi.fn(async (input: string | URL | Request) => {
-      fetchCallCount++;
-      const url = typeof input === 'string' ? input : input.toString();
-      if (url === ATLAS_REPO_COMMITS_URL) {
-        return new Response(commitResponse(currentSha, 'msg'), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        });
-      }
-      if (url === ATLAS_REPO_TARBALL_URL) {
-        const stream = new ReadableStream({
-          start(controller) {
-            controller.enqueue(new Uint8Array(tarballBytes));
-            controller.close();
-          },
-        });
-        return new Response(stream, {
-          status: 200,
-          headers: { 'content-type': 'application/gzip' },
-        });
-      }
-      throw new Error(`unexpected fetch: ${url}`);
-    });
-    globalThis.fetch = fetchMock as unknown as typeof fetch;
+    setupFetchMocks([
+      {
+        url: ATLAS_REPO_COMMITS_URL,
+        status: 200,
+        body: commitResponse('sha-warm', 'first'),
+        contentType: 'application/json',
+      },
+      {
+        url: ATLAS_REPO_TARBALL_URL,
+        status: 200,
+        body: tarballBytes,
+        contentType: 'application/gzip',
+      },
+    ]);
+    const c1 = await fetchAtlasMarkdownContent();
+    expect(c1.length).toBeGreaterThan(0);
 
-    await fetchAtlasMarkdownContent(); // 2 fetches (commits + tarball)
-    const after1 = fetchCallCount;
-    expect(after1).toBe(2);
+    // Replace fetch with a failing impl. The cache is already populated,
+    // so subsequent reads should still return the warm content.
+    globalThis.fetch = (async () => {
+      throw new Error('upstream temporarily unavailable');
+    }) as unknown as typeof fetch;
 
-    currentSha = 'sha-B'; // simulate upstream commit
-    await fetchAtlasMarkdownContent(); // 2 more fetches (commits + tarball — cache invalidated)
-    const after2 = fetchCallCount;
-    expect(after2 - after1).toBe(2);
+    const c2 = await fetchAtlasMarkdownContent();
+    expect(c2).toBe(c1);
   });
 });
 
