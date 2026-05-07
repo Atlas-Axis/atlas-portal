@@ -124,9 +124,7 @@ async function refreshComposeCacheIfStale(): Promise<void> {
     }
     nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
   } catch (err) {
-    console.warn(
-      `[loadAtlasTree] background refresh failed (${(err as Error).message}); cache preserved, will retry`,
-    );
+    console.warn(`[loadAtlasTree] background refresh failed (${(err as Error).message}); cache preserved, will retry`);
     nextRefreshAt = Date.now() + FAILURE_RETRY_MS;
   } finally {
     refreshInProgress = false;
