@@ -77,9 +77,60 @@ interface CacheEntry {
 
 let composeCache: CacheEntry | null = null;
 
-/** For tests: clear the in-memory compose cache. */
+/**
+ * Refresh policy for the in-memory cache.
+ *
+ * The hot path always serves `composeCache.content` if populated. A background
+ * refresh runs at most once per `REFRESH_INTERVAL_MS`; on failure, the next
+ * attempt is shortened to `FAILURE_RETRY_MS` so we recover from a transient
+ * upstream issue without waiting a full interval. The cache is preserved
+ * across failed refreshes — the user always sees the last-successful content.
+ */
+const REFRESH_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
+const FAILURE_RETRY_MS = 5 * 60 * 1000; // 5 min after a failed refresh
+let nextRefreshAt = 0;
+let refreshInProgress = false;
+
+/** For tests: clear the in-memory compose cache and refresh schedule. */
 export function _clearAtlasComposeCache(): void {
   composeCache = null;
+  nextRefreshAt = 0;
+  refreshInProgress = false;
+}
+
+/**
+ * Background refresh: re-fetch metadata + tarball if the refresh interval has
+ * elapsed. Called fire-and-forget from the public read functions; the user
+ * request never awaits this.
+ *
+ * On success: cache updated (if SHA changed); next refresh scheduled in
+ * REFRESH_INTERVAL_MS.
+ *
+ * On failure: cache preserved (user keeps seeing last-known-good); next
+ * attempt scheduled in FAILURE_RETRY_MS.
+ */
+async function refreshComposeCacheIfStale(): Promise<void> {
+  if (refreshInProgress) return;
+  if (Date.now() < nextRefreshAt) return;
+  refreshInProgress = true;
+  try {
+    const metadata = await fetchLatestCommitMetadata();
+    if (composeCache === null || composeCache.sha !== metadata.commitSha) {
+      console.log(
+        `[loadAtlasTree] refresh: composing from tarball at branch=${ATLAS_REPO_BRANCH} sha=${metadata.commitSha.slice(0, 8)}`,
+      );
+      const content = await composeFromTarball();
+      composeCache = { sha: metadata.commitSha, content, metadata };
+    }
+    nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+  } catch (err) {
+    console.warn(
+      `[loadAtlasTree] background refresh failed (${(err as Error).message}); cache preserved, will retry`,
+    );
+    nextRefreshAt = Date.now() + FAILURE_RETRY_MS;
+  } finally {
+    refreshInProgress = false;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -274,19 +325,25 @@ async function composeFromTarball(): Promise<string> {
 /**
  * Fetch the composed Atlas monolith content from GitHub.
  *
- * Uses the SHA-keyed in-memory cache + Next.js fetch cache so callers can
- * invoke this freely; in steady state it is one /commits HEAD call per 3600s.
+ * **Cache policy**: when the in-memory cache is populated, return it
+ * immediately and trigger a fire-and-forget background refresh (subject to
+ * the refresh interval). User requests never await an upstream fetch on the
+ * hot path. When the cache is empty (cold start), fetch synchronously to
+ * populate it.
  */
 export async function fetchAtlasMarkdownContent(): Promise<string> {
-  const metadata = await fetchLatestCommitMetadata();
-  if (composeCache !== null && composeCache.sha === metadata.commitSha) {
+  if (composeCache !== null) {
+    void refreshComposeCacheIfStale();
     return composeCache.content;
   }
+  // Cold start: synchronous fetch to populate cache.
+  const metadata = await fetchLatestCommitMetadata();
   console.log(
-    `[loadAtlasTree] composing from tarball at branch=${ATLAS_REPO_BRANCH} sha=${metadata.commitSha.slice(0, 8)}`,
+    `[loadAtlasTree] cold-start compose at branch=${ATLAS_REPO_BRANCH} sha=${metadata.commitSha.slice(0, 8)}`,
   );
   const content = await composeFromTarball();
   composeCache = { sha: metadata.commitSha, content, metadata };
+  nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
   return content;
 }
 
@@ -303,16 +360,20 @@ export async function fetchAtlasMarkdownMetadata(): Promise<AtlasCommitMetadata>
 
 /**
  * Fetch both content and metadata of the Atlas monolith.
+ *
+ * Same cache policy as `fetchAtlasMarkdownContent`: serve from cache when
+ * populated, fetch synchronously only on cold start.
  */
 export async function loadAtlasMarkdownFromGitHub(): Promise<AtlasMarkdownFromGitHub> {
-  // fetchAtlasMarkdownContent triggers /commits which we'd repeat below; instead
-  // do the SHA check once and reuse.
-  const metadata = await fetchLatestCommitMetadata();
-  if (composeCache !== null && composeCache.sha === metadata.commitSha) {
-    return { content: composeCache.content, ...metadata };
+  if (composeCache !== null) {
+    void refreshComposeCacheIfStale();
+    return { content: composeCache.content, ...composeCache.metadata };
   }
+  // Cold start: synchronous fetch.
+  const metadata = await fetchLatestCommitMetadata();
   const content = await composeFromTarball();
   composeCache = { sha: metadata.commitSha, content, metadata };
+  nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
   return { content, ...metadata };
 }
 
