@@ -33,6 +33,10 @@ export interface ProposalData {
   proposal: ProposalRef;
   /** Detected changes between base and head atom-trees, in stable order. */
   changes: DocChange[];
+  /** Full base atom-tree (every doc, not just changed). Needed for hierarchical rendering. */
+  baseDocs: ParsedDoc[];
+  /** Full head atom-tree (every doc, not just changed). Needed for hierarchical rendering. */
+  headDocs: ParsedDoc[];
   /**
    * Summary markdown — from the PR body, or empty string if the body is empty.
    * Always a string (possibly empty) so callers can render unconditionally.
@@ -132,6 +136,8 @@ export async function loadProposalData(proposal: ProposalRef): Promise<ProposalD
     return {
       proposal,
       changes,
+      baseDocs,
+      headDocs,
       summaryMarkdown,
       summarySource,
     };
