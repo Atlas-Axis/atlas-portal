@@ -201,9 +201,71 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
       </div>
 
       <style>{proposalDiffCss}</style>
+      <script dangerouslySetInnerHTML={{ __html: crossRefScript }} />
     </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Client-side cross-reference routing.
+//
+// The Python renderer emits every UUID cross-reference as
+// <a href="https://sky-atlas.io/#<uuid>" target="_blank" data-xref-uuid="<uuid>">.
+// That's the right behavior for cross-references whose target is NOT in
+// this proposal — clicking opens the Atlas viewer in a new tab.
+//
+// When the target IS in this proposal, that behavior is wrong — we should
+// scroll to the doc on the same page (where the diff is rendered) instead
+// of opening the Atlas viewer, which would show the pre-proposal version.
+//
+// This script runs at page load, walks every cross-reference link, and
+// rewrites the in-proposal ones to an in-page scroll handler.
+// ---------------------------------------------------------------------------
+
+const crossRefScript = `
+(function () {
+  function run() {
+    var docNodes = document.querySelectorAll('[data-doc-uuid]');
+    if (!docNodes.length) return;
+    var inProposal = new Set();
+    for (var i = 0; i < docNodes.length; i++) {
+      var u = docNodes[i].getAttribute('data-doc-uuid');
+      if (u) inProposal.add(u);
+    }
+    var links = document.querySelectorAll('.proposal-doc-body a[data-xref-uuid]');
+    for (var j = 0; j < links.length; j++) {
+      var link = links[j];
+      var uuid = link.getAttribute('data-xref-uuid');
+      if (!uuid || !inProposal.has(uuid)) continue;
+      link.setAttribute('href', '#' + uuid);
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+      link.style.cursor = 'pointer';
+      link.addEventListener('click', function (uuidVal) {
+        return function (e) {
+          e.preventDefault();
+          var target = document.querySelector('[data-doc-uuid="' + uuidVal.replace(/"/g, '\\\\"') + '"]');
+          if (!target) return;
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var prevShadow = target.style.boxShadow;
+          var prevTransition = target.style.transition;
+          target.style.transition = 'box-shadow 0.3s';
+          target.style.boxShadow = '0 0 0 2px rgb(245 158 11 / 0.7)';
+          setTimeout(function () {
+            target.style.boxShadow = prevShadow;
+            setTimeout(function () { target.style.transition = prevTransition; }, 400);
+          }, 1200);
+        };
+      }(uuid));
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+`;
 
 // ---------------------------------------------------------------------------
 // Scoped CSS for the proposal diff view.
