@@ -609,6 +609,12 @@ def _build_scope_tree(scope_root_number: str, all_current_docs: list[AtlasDoc],
         }
         if title_diff:
             node['titleDiff'] = title_diff
+        # When the doc has been renumbered (number changed), surface the old
+        # number so the reader can see what it was before. Without this, the
+        # rendered header would show only the new number and the move would
+        # be invisible.
+        if old_doc and old_doc.number and old_doc.number != doc.number:
+            node['oldId'] = old_doc.number
         return node
 
     root_doc = find_doc_by_number(all_current_docs, scope_root_number)

@@ -48,7 +48,15 @@ function renderNode(node: ScopeNode, depth: number): React.ReactNode {
     >
       <header className="proposal-doc-head">
         {isChanged && <span className={`proposal-doc-badge ${statusClass}`}>{node.status}</span>}
-        <span className="proposal-doc-id">{node.id}</span>
+        {node.oldId ? (
+          <span className="proposal-doc-id">
+            <span className="text-rose-700 line-through dark:text-rose-300">{node.oldId}</span>
+            <span className="mx-1 text-zinc-400 dark:text-zinc-500">→</span>
+            <span>{node.id}</span>
+          </span>
+        ) : (
+          <span className="proposal-doc-id">{node.id}</span>
+        )}
         {titleHtml ? (
           <h3 className="proposal-doc-title" dangerouslySetInnerHTML={{ __html: titleHtml }} />
         ) : (
