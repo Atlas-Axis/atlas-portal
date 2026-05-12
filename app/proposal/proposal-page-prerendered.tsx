@@ -180,22 +180,29 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
         {scopeData.renumbered.length > 0 && (
           <section data-testid="proposal-renumbered" className="proposal-renumbered mt-12">
             <hr className="my-8 border-zinc-200 dark:border-zinc-700" />
-            <h2 className="mb-3 text-xl font-semibold">Renumbered Documents</h2>
-            <p className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
-              These documents had their identifier changed without modifying their content. Listed for audit; not shown
-              in the Document Changes section above.
-            </p>
-            <ul className="space-y-1 text-sm">
-              {scopeData.renumbered.map((r) => (
-                <li key={`${r.oldId}-${r.newId}`} className="flex flex-wrap gap-x-2">
-                  <span className="font-mono text-zinc-500 line-through dark:text-zinc-400">{r.oldId}</span>
-                  <span className="text-zinc-400 dark:text-zinc-500">→</span>
-                  <span className="font-mono text-zinc-700 dark:text-zinc-200">{r.newId}</span>
-                  <span className="text-zinc-400 dark:text-zinc-500">·</span>
-                  <span className="text-zinc-700 dark:text-zinc-200">{r.title}</span>
-                </li>
-              ))}
-            </ul>
+            <details>
+              <summary className="cursor-pointer list-none">
+                <span className="text-xl font-semibold">Renumbered Documents</span>{' '}
+                <span className="ml-2 inline-flex items-center justify-center rounded-full bg-zinc-200 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-700 dark:text-zinc-200">
+                  {scopeData.renumbered.length}
+                </span>
+              </summary>
+              <p className="mt-3 mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+                These documents had their identifier changed without modifying their content. Listed for audit; not
+                shown in the Document Changes section above.
+              </p>
+              <ul className="space-y-1 text-sm">
+                {scopeData.renumbered.map((r) => (
+                  <li key={`${r.oldId}-${r.newId}`} className="flex flex-wrap gap-x-2">
+                    <span className="font-mono text-rose-700 line-through dark:text-rose-300">{r.oldId}</span>
+                    <span className="text-zinc-400 dark:text-zinc-500">→</span>
+                    <span className="font-mono text-zinc-700 dark:text-zinc-200">{r.newId}</span>
+                    <span className="text-zinc-400 dark:text-zinc-500">·</span>
+                    <span className="text-zinc-700 dark:text-zinc-200">{r.title}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
           </section>
         )}
       </div>
