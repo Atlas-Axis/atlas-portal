@@ -8,6 +8,81 @@ interface ProposalPagePrerenderedProps {
 }
 
 /**
+ * Render a segment-level diff between two document numbers.
+ *
+ * Example: A.1.4.5.0.4.1.1.2 → A.1.5.5.0.4.1.1.2 renders as
+ *
+ *     A.1.{~~4~~ → 5}.5.0.4.1.1.2
+ *
+ * Unchanged segments stay in normal text; changed runs are wrapped in
+ * braces with the old run struck out in red and the new run highlighted
+ * in green. Adjacent changes are coalesced into a single brace group so
+ * the output reads naturally.
+ */
+function renderDocNumberDiff(oldId: string, newId: string): React.ReactNode {
+  const oldSegs = oldId.split('.');
+  const newSegs = newId.split('.');
+  const out: React.ReactNode[] = [];
+  let key = 0;
+  let i = 0;
+  let j = 0;
+
+  while (i < oldSegs.length || j < newSegs.length) {
+    // Match identical segments.
+    if (i < oldSegs.length && j < newSegs.length && oldSegs[i] === newSegs[j]) {
+      if (out.length > 0) out.push(<span key={`dot-${key++}`}>.</span>);
+      out.push(<span key={`eq-${key++}`}>{oldSegs[i]}</span>);
+      i += 1;
+      j += 1;
+      continue;
+    }
+
+    // Collect a run of diverging segments by scanning ahead for the next
+    // shared anchor point. Lookahead is bounded (segments rarely differ
+    // by more than a handful of positions before realigning).
+    const oldRun: string[] = [];
+    const newRun: string[] = [];
+    let resyncedI = oldSegs.length;
+    let resyncedJ = newSegs.length;
+    outer: for (let di = 0; i + di <= oldSegs.length; di += 1) {
+      for (let dj = 0; j + dj <= newSegs.length; dj += 1) {
+        if (di === 0 && dj === 0) continue;
+        const ai = i + di;
+        const aj = j + dj;
+        if (ai < oldSegs.length && aj < newSegs.length && oldSegs[ai] === newSegs[aj]) {
+          resyncedI = ai;
+          resyncedJ = aj;
+          break outer;
+        }
+      }
+    }
+    for (let k = i; k < resyncedI; k += 1) oldRun.push(oldSegs[k]);
+    for (let k = j; k < resyncedJ; k += 1) newRun.push(newSegs[k]);
+
+    if (out.length > 0) out.push(<span key={`dot-${key++}`}>.</span>);
+    out.push(
+      <span key={`brace-${key++}`}>
+        {'{'}
+        {oldRun.length > 0 && (
+          <span className="text-rose-700 line-through dark:text-rose-300">{oldRun.join('.')}</span>
+        )}
+        {oldRun.length > 0 && newRun.length > 0 && (
+          <span className="mx-1 text-zinc-400 dark:text-zinc-500">→</span>
+        )}
+        {newRun.length > 0 && (
+          <span className="text-emerald-700 dark:text-emerald-300">{newRun.join('.')}</span>
+        )}
+        {'}'}
+      </span>,
+    );
+    i = resyncedI;
+    j = resyncedJ;
+  }
+
+  return <>{out}</>;
+}
+
+/**
  * Render one document node within a scope tree.
  *
  * scope_data carries:
@@ -49,11 +124,7 @@ function renderNode(node: ScopeNode, depth: number): React.ReactNode {
       <header className="proposal-doc-head">
         {isChanged && <span className={`proposal-doc-badge ${statusClass}`}>{node.status}</span>}
         {node.oldId ? (
-          <span className="proposal-doc-id">
-            <span className="text-rose-700 line-through dark:text-rose-300">{node.oldId}</span>
-            <span className="mx-1 text-zinc-400 dark:text-zinc-500">→</span>
-            <span>{node.id}</span>
-          </span>
+          <span className="proposal-doc-id">{renderDocNumberDiff(node.oldId, node.id)}</span>
         ) : (
           <span className="proposal-doc-id">{node.id}</span>
         )}
