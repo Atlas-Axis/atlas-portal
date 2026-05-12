@@ -188,7 +188,7 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
             <ul className="space-y-1 text-sm">
               {scopeData.renumbered.map((r) => (
                 <li key={`${r.oldId}-${r.newId}`} className="flex flex-wrap gap-x-2">
-                  <span className="font-mono text-zinc-500 dark:text-zinc-400">{r.oldId}</span>
+                  <span className="font-mono text-zinc-500 line-through dark:text-zinc-400">{r.oldId}</span>
                   <span className="text-zinc-400 dark:text-zinc-500">→</span>
                   <span className="font-mono text-zinc-700 dark:text-zinc-200">{r.newId}</span>
                   <span className="text-zinc-400 dark:text-zinc-500">·</span>
