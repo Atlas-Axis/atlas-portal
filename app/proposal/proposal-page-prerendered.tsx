@@ -136,7 +136,13 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
                     </>
                   )}
                   {stats.removed > 0 && (
-                    <span className="text-rose-700 dark:text-rose-300">{stats.removed} removed</span>
+                    <>
+                      <span className="text-rose-700 dark:text-rose-300">{stats.removed} removed</span>
+                      {stats.renumbered > 0 && <>, </>}
+                    </>
+                  )}
+                  {stats.renumbered > 0 && (
+                    <span className="text-zinc-600 dark:text-zinc-400">{stats.renumbered} renumbered</span>
                   )}
                 </>
               )}
@@ -170,6 +176,28 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
             <div className="space-y-12">{scopeEntries.map(([slug, scope]) => renderScope(slug, scope))}</div>
           )}
         </section>
+
+        {scopeData.renumbered.length > 0 && (
+          <section data-testid="proposal-renumbered" className="proposal-renumbered mt-12">
+            <hr className="my-8 border-zinc-200 dark:border-zinc-700" />
+            <h2 className="mb-3 text-xl font-semibold">Renumbered Documents</h2>
+            <p className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+              These documents had their identifier changed without modifying their content. Listed for audit; not shown
+              in the Document Changes section above.
+            </p>
+            <ul className="space-y-1 text-sm">
+              {scopeData.renumbered.map((r) => (
+                <li key={`${r.oldId}-${r.newId}`} className="flex flex-wrap gap-x-2">
+                  <span className="font-mono text-zinc-500 dark:text-zinc-400">{r.oldId}</span>
+                  <span className="text-zinc-400 dark:text-zinc-500">→</span>
+                  <span className="font-mono text-zinc-700 dark:text-zinc-200">{r.newId}</span>
+                  <span className="text-zinc-400 dark:text-zinc-500">·</span>
+                  <span className="text-zinc-700 dark:text-zinc-200">{r.title}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
 
       <style>{proposalDiffCss}</style>
