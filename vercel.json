@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "(command -v python3 >/dev/null 2>&1 || (command -v dnf >/dev/null 2>&1 && dnf install -y python3) || (command -v apt-get >/dev/null 2>&1 && apt-get update && apt-get install -y python3)) && npm install"
+}
