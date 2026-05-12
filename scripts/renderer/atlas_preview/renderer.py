@@ -31,11 +31,33 @@ from .parser import (
 # Inline formatting helpers
 # ---------------------------------------------------------------------------
 
+_UUID_RE = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', re.IGNORECASE)
+
+
+def _rewrite_link(match: 're.Match[str]') -> str:
+    """Rewrite a markdown link to HTML, mapping UUID hrefs to /atlas anchors.
+
+    Atlas cross-references use the form [Doc Name](uuid). The UUID identifies
+    the target document; the Atlas viewer at /atlas renders each document with
+    its UUID as the element id, so /atlas#<uuid> scrolls to the target.
+
+    External URLs (http://, https://) are passed through with target="_blank"
+    + rel="noopener" so they open in a new tab. Other hrefs are left as-is.
+    """
+    text, href = match.group(1), match.group(2)
+    if _UUID_RE.match(href):
+        return f'<a href="/atlas#{href}">{text}</a>'
+    if href.startswith('http://') or href.startswith('https://'):
+        return f'<a href="{href}" target="_blank" rel="noopener">{text}</a>'
+    return f'<a href="{href}">{text}</a>'
+
+
 def _apply_inline_formatting(text: str) -> str:
     """Apply markdown inline formatting to text that has already been HTML-escaped.
 
     Converts **bold**, *italic*, ~~strikethrough~~, `code`, __underline__,
-    and [link](url) syntax to their HTML equivalents.
+    and [link](url) syntax to their HTML equivalents. UUID-only hrefs are
+    rewritten to /atlas#<uuid> so they navigate to the Atlas viewer.
 
     This operates on plain text segments only — the caller must ensure it is
     not called on raw HTML that contains tags (use _apply_inline_formatting_to_html
@@ -51,8 +73,8 @@ def _apply_inline_formatting(text: str) -> str:
     text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
     # Render strikethrough
     text = re.sub(r'~~(.+?)~~', r'<s>\1</s>', text)
-    # Render links
-    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', text)
+    # Render links — UUID hrefs become /atlas#<uuid>; external URLs get target=_blank
+    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', _rewrite_link, text)
     return text
 
 
