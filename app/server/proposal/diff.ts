@@ -1,13 +1,9 @@
 /**
  * Word-level and line-level diff utilities for the Atlas Edit Proposal viewer.
  *
- * TypeScript port of `~/repos/atlas-review/renderer/atlas_preview/diff.py`.
- *
- * The Python implementation uses `difflib.SequenceMatcher`. This port uses the
- * `diff` npm package's `diffArrays` to obtain the same opcodes shape (equal /
- * insert / delete / replace), then applies the same short-equal-block-merge
- * post-pass to collapse choppy alternating diffs into clean phrase-level
- * replacements.
+ * Uses the `diff` npm package's `diffArrays` to produce equal / insert /
+ * delete / replace opcodes, then applies a short-equal-block-merge post-pass
+ * to collapse choppy alternating diffs into clean phrase-level replacements.
  *
  * Output: HTML strings that are safe to inject as `dangerouslySetInnerHTML`
  * because every emitted token is HTML-escaped before being wrapped in spans.

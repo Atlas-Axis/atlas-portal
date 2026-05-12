@@ -50,7 +50,7 @@ interface ProposalPagePrerenderedProps {
  * component — no `'use client'` directive.
  */
 export default function ProposalPagePrerendered({ data }: ProposalPagePrerenderedProps) {
-  const { proposal, changes, summaryMarkdown, summarySource } = data;
+  const { proposal, changes, summaryMarkdown } = data;
 
   const summaryHtml = summaryMarkdown ? markdownToHTML(summaryMarkdown) : '';
 
@@ -67,11 +67,6 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
         {summaryHtml ? (
           <section className="prose prose-zinc dark:prose-invert mb-12 max-w-none">
             <h2 className="text-xl font-semibold">Summary</h2>
-            {summarySource === 'tree-file' && (
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                (Summary loaded from the proposal branch — PR body was empty.)
-              </p>
-            )}
             <div
               data-testid="proposal-summary"
               className="proposal-summary"

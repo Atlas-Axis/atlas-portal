@@ -34,13 +34,12 @@ export interface ProposalData {
   /** Detected changes between base and head atom-trees, in stable order. */
   changes: DocChange[];
   /**
-   * Summary markdown — preferred source is the PR body. Falls back to a
-   * proposal-summary file inside the head tree if the PR body is empty.
+   * Summary markdown — from the PR body, or empty string if the body is empty.
    * Always a string (possibly empty) so callers can render unconditionally.
    */
   summaryMarkdown: string;
-  /** Where the summary came from. Useful for debugging and tests. */
-  summarySource: 'pr-body' | 'tree-file' | 'none';
+  /** Where the summary came from. */
+  summarySource: 'pr-body' | 'none';
 }
 
 function githubAuthHeaders(): Record<string, string> {
@@ -90,42 +89,6 @@ async function downloadAndExtractTarball(owner: string, repo: string, ref: strin
 }
 
 /**
- * Try to read a proposal-summary markdown file from the extracted head tree.
- *
- * Convention: summaries live under `Atlas Edit Proposals/` (the
- * `sky-ecosystem/next-gen-atlas` repo's convention). Names like
- * `proposal-YYYY-MM-DD.md` or `AEP-N.md` aren't strictly standardized; this
- * function picks the largest non-AEP file as a heuristic for the cycle
- * summary, but in practice the PR body is the canonical source and this
- * fallback is only used when the PR body is empty.
- *
- * Returns null if no usable summary file is found.
- */
-function readSummaryFromTree(repoRoot: string, headRef: string): string | null {
-  // Try the most common convention first: a file named after the branch.
-  // e.g. headRef "proposal/2026-05-11" -> "proposal-2026-05-11.md"
-  const slug = headRef.replace(/[^a-zA-Z0-9-]/g, '-');
-  const dir = path.join(repoRoot, 'Atlas Edit Proposals');
-  if (!fs.existsSync(dir)) {
-    return null;
-  }
-  const candidates: string[] = [];
-  const slugged = `${slug}.md`;
-  for (const entry of fs.readdirSync(dir)) {
-    if (entry === slugged) {
-      return fs.readFileSync(path.join(dir, entry), 'utf8');
-    }
-    candidates.push(entry);
-  }
-  // Fallback: prefer a file whose name contains 'proposal-' but isn't AEP-*.
-  const proposalLike = candidates.find((c) => /proposal[-_]/i.test(c));
-  if (proposalLike) {
-    return fs.readFileSync(path.join(dir, proposalLike), 'utf8');
-  }
-  return null;
-}
-
-/**
  * Load proposal data for the given proposal reference.
  *
  * Downloads two tarballs (base and head), walks each `content/` tree, runs
@@ -135,10 +98,6 @@ function readSummaryFromTree(repoRoot: string, headRef: string): string | null {
  * `dynamic = 'force-static'` + `revalidate = false`.
  */
 export async function loadProposalData(proposal: ProposalRef): Promise<ProposalData> {
-  // The PR's base ref is typically "main" — we resolve to the upstream repo's
-  // current `main` tarball. This isn't strictly the PR's merge-base, but it is
-  // the practical "what would be displaced if this proposal merged today"
-  // baseline that community readers care about.
   const [baseRoot, headRoot] = await Promise.all([
     downloadAndExtractTarball(proposal.baseRepoOwner, proposal.baseRepoName, proposal.baseRef),
     downloadAndExtractTarball(proposal.headRepoOwner, proposal.headRepoName, proposal.headSha),
@@ -166,18 +125,9 @@ export async function loadProposalData(proposal: ProposalRef): Promise<ProposalD
 
     const changes = detectAtomTreeChanges(baseDocs, headDocs);
 
-    // Summary source: prefer PR body, fall back to a tree file.
-    let summaryMarkdown = proposal.body.trim();
-    let summarySource: ProposalData['summarySource'] = 'pr-body';
-    if (!summaryMarkdown) {
-      const fileSummary = readSummaryFromTree(headRoot, proposal.headRef);
-      if (fileSummary && fileSummary.trim()) {
-        summaryMarkdown = fileSummary;
-        summarySource = 'tree-file';
-      } else {
-        summarySource = 'none';
-      }
-    }
+    // Summary source: the PR body.
+    const summaryMarkdown = proposal.body.trim();
+    const summarySource: ProposalData['summarySource'] = summaryMarkdown ? 'pr-body' : 'none';
 
     return {
       proposal,

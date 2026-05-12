@@ -39,7 +39,7 @@ describeIfTokenized('end-to-end against real proposal PR on sky-ecosystem/next-g
 
     // Summary section: PR body should be present and non-empty.
     expect(data.summaryMarkdown.length).toBeGreaterThan(0);
-    expect(data.summarySource).toMatch(/^(pr-body|tree-file)$/);
+    expect(data.summarySource).toBe('pr-body');
 
     // Diff section: at least one changed document.
     expect(data.changes.length).toBeGreaterThan(0);

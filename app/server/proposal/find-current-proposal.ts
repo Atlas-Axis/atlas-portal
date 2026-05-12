@@ -6,14 +6,8 @@
  *      `proposal/`. If multiple are open, pick the most recently updated.
  *   2. Otherwise, the most recently merged PR with a `proposal/` head ref.
  *
- * The PR's head may live on a fork (the proposal/* branch is typically authored
- * from a contributor's fork, not the upstream). We return both `headRepoOwner`
- * and `headRepoName` so the loader can fetch the tarball from the correct repo.
- *
- * TODO: Vercel deploy hook needs to fire on `proposal/*` branch updates too —
- * currently it only fires on `sky-ecosystem/next-gen-atlas` main. Until that
- * webhook is wired up, the `/proposal` page only reflects the proposal that
- * existed at the last successful `next build`.
+ * The PR's head may live on a fork. We return both `headRepoOwner` and
+ * `headRepoName` so the loader can fetch the tarball from the correct repo.
  */
 import { ATLAS_REPO_NAME, ATLAS_REPO_OWNER } from '../atlas/constants';
 
@@ -24,8 +18,6 @@ export interface ProposalRef {
   title: string;
   /** PR body (markdown — used as the summary source). */
   body: string;
-  /** State of the PR ("OPEN" or "MERGED"). */
-  state: 'OPEN' | 'MERGED';
   /** Base ref name (typically "main"). */
   baseRef: string;
   /** Head ref name (e.g. "proposal/2026-05-11"). */
@@ -104,7 +96,6 @@ function toProposalRef(pr: RestPullRequest): ProposalRef {
     prNumber: pr.number,
     title: pr.title,
     body: pr.body ?? '',
-    state: pr.merged_at ? 'MERGED' : 'OPEN',
     baseRef: pr.base.ref,
     headRef: pr.head.ref,
     headSha: pr.head.sha,

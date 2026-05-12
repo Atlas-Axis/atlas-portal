@@ -4,9 +4,7 @@ import { loadProposalData } from '@/app/server/proposal/load-proposal-data';
 import ProposalPagePrerendered from './proposal-page-prerendered';
 
 // Build-time static. Mirrors the `/atlas` pattern: proposal data is fetched,
-// parsed, and diffed once at `next build`; runtime requests are pure CDN
-// serves. Updates ship via a Vercel Deploy Hook (see find-current-proposal.ts
-// for the TODO on wiring proposal/* branch updates into that webhook).
+// parsed, and diffed once at `next build`; runtime requests are pure CDN serves.
 export const dynamic = 'force-static';
 export const revalidate = false;
 

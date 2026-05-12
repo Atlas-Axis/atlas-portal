@@ -1,14 +1,8 @@
 /**
- * UUID-keyed atom-tree diff for Atlas Edit Proposals.
+ * UUID-keyed diff for Atlas Edit Proposals.
  *
- * Ports the "atom-tree mode" of `~/repos/atlas-review/renderer/atlas_preview/renderer.py`
- * (line ~1400 onward): post-cutover, every document has a stable UUID and lives
- * in its own file under `content/`. We don't need to do line-based diffing
- * across the composed monolith — we can compare body/name/number directly
- * across UUID-matched documents.
- *
- * This avoids the heading-detection false positives that the legacy line-based
- * path produces (e.g., `# Constants` inside a fenced code block).
+ * Every document has a stable UUID and lives in its own file under `content/`.
+ * We compare body, name, and number directly across UUID-matched documents.
  */
 import type { ParsedDoc } from '../atlas/compose';
 
