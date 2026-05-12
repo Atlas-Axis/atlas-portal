@@ -126,13 +126,13 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
                   {stats.modified > 0 && (
                     <>
                       <span className="text-amber-700 dark:text-amber-300">{stats.modified} edited</span>
-                      {(stats.new > 0 || stats.removed > 0) && <>, </>}
+                      {(stats.new > 0 || stats.removed > 0 || stats.renumbered > 0) && <>, </>}
                     </>
                   )}
                   {stats.new > 0 && (
                     <>
                       <span className="text-emerald-700 dark:text-emerald-300">{stats.new} new</span>
-                      {stats.removed > 0 && <>, </>}
+                      {(stats.removed > 0 || stats.renumbered > 0) && <>, </>}
                     </>
                   )}
                   {stats.removed > 0 && (
