@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "atlas-portal-renderer"
+version = "0.1.0"
+description = "Public-clean Atlas edit scope_data builder for atlas-portal."
+requires-python = ">=3.11"
+dependencies = []  # No external deps — stdlib only.
+
+[tool.hatch.build.targets.wheel]
+packages = ["atlas_preview"]

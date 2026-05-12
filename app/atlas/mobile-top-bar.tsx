@@ -18,7 +18,7 @@ export default function MobileTopBar({ scopeTrees, onSearchOpen }: MobileTopBarP
 
   return (
     <div
-      className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 sm:hidden dark:border-zinc-800 dark:bg-zinc-950"
+      className="fixed top-12 right-0 left-0 z-40 flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 sm:hidden dark:border-zinc-800 dark:bg-zinc-950"
       role="banner"
       aria-label="Mobile navigation"
     >

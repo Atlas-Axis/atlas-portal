@@ -6,6 +6,7 @@ import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { type UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
 import MobileTopBar from './mobile-top-bar';
+import ProposalCallout from './proposal-callout';
 import SearchModal from './search-modal';
 import Sidebar from './sidebar';
 
@@ -40,6 +41,7 @@ export default function AtlasPagePrerendered({
       <MobileTopBar scopeTrees={scopeTreesWithoutAgents} onSearchOpen={onSearchOpen} />
       <Sidebar scopeTrees={scopeTreesWithoutAgents} uuidMappings={uuidMappings} onSearchOpen={onSearchOpen} />
       <div className="min-w-0 pt-24 pb-24 sm:ml-80 sm:p-6 sm:pt-6 sm:pb-24">
+        <ProposalCallout />
         <ContentTree scopeTreesWithoutAgents={scopeTreesWithoutAgents} uuidMappings={uuidMappings} />
       </div>
 
