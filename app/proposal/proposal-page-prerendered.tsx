@@ -114,7 +114,15 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
       <div className="mx-auto max-w-4xl">
         <header className="mb-8 border-b border-zinc-200 pb-6 dark:border-zinc-700">
           <p className="mb-1 text-sm tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
-            Atlas Edit Proposal · PR #{proposal.prNumber}
+            Atlas Edit Proposal ·{' '}
+            <a
+              href={`https://github.com/${scopeData.repo}/pull/${proposal.prNumber}`}
+              target="_blank"
+              rel="noopener"
+              className="underline hover:text-zinc-700 dark:hover:text-zinc-200"
+            >
+              PR #{proposal.prNumber}
+            </a>
           </p>
           <h1 className="text-3xl font-semibold">{proposal.title}</h1>
           {stats.total > 0 && (
@@ -197,7 +205,7 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
                   <li key={`${r.oldId}-${r.newId}`} className="flex flex-wrap gap-x-2">
                     <span className="font-mono text-rose-700 line-through dark:text-rose-300">{r.oldId}</span>
                     <span className="text-zinc-400 dark:text-zinc-500">→</span>
-                    <span className="font-mono text-zinc-700 dark:text-zinc-200">{r.newId}</span>
+                    <span className="font-mono font-semibold text-emerald-700 dark:text-emerald-300">{r.newId}</span>
                     <span className="text-zinc-400 dark:text-zinc-500">·</span>
                     <span className="text-zinc-700 dark:text-zinc-200">{r.title}</span>
                   </li>
