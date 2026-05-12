@@ -240,7 +240,7 @@ export default function Sidebar({ scopeTrees, uuidMappings, onSearchOpen }: Side
 
   return (
     <div
-      className="fixed top-0 left-0 hidden h-screen w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex dark:border-zinc-800 dark:bg-zinc-950"
+      className="fixed top-12 left-0 z-30 hidden h-[calc(100vh-3rem)] w-80 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 sm:flex dark:border-zinc-800 dark:bg-zinc-950"
       role="navigation"
       aria-label="Atlas navigation"
     >

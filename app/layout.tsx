@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import PortalHeader from './components/portal-header';
 import './globals.css';
 import { HeroUIProvider } from './hero-ui-provider';
 import './markdown.css';
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        <HeroUIProvider>{children}</HeroUIProvider>
+        <HeroUIProvider>
+          <PortalHeader />
+          {children}
+        </HeroUIProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
