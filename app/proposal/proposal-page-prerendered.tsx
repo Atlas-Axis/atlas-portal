@@ -222,7 +222,6 @@ export default function ProposalPagePrerendered({ data }: ProposalPagePrerendere
   );
 }
 
-
 // ---------------------------------------------------------------------------
 // Scoped CSS for the proposal diff view.
 //
