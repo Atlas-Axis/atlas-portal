@@ -35,18 +35,21 @@ _UUID_RE = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f
 
 
 def _rewrite_link(match: 're.Match[str]') -> str:
-    """Rewrite a markdown link to HTML, mapping UUID hrefs to /atlas anchors.
+    """Rewrite a markdown link to HTML.
 
     Atlas cross-references use the form [Doc Name](uuid). The UUID identifies
-    the target document; the Atlas viewer at /atlas renders each document with
-    its UUID as the element id, so /atlas#<uuid> scrolls to the target.
+    the target document. We emit a server-side default href pointing to the
+    Atlas viewer (https://sky-atlas.io/#<uuid>) with target="_blank" so that
+    no-JS clients get a sensible navigation. Client-side script on the
+    proposal page upgrades in-page cross-references to a smooth-scroll + flash
+    handler so that links to docs on the current proposal stay in-page.
 
     External URLs (http://, https://) are passed through with target="_blank"
     + rel="noopener" so they open in a new tab. Other hrefs are left as-is.
     """
     text, href = match.group(1), match.group(2)
     if _UUID_RE.match(href):
-        return f'<a href="/atlas#{href}">{text}</a>'
+        return f'<a href="https://sky-atlas.io/#{href}" target="_blank" rel="noopener" data-xref-uuid="{href}">{text}</a>'
     if href.startswith('http://') or href.startswith('https://'):
         return f'<a href="{href}" target="_blank" rel="noopener">{text}</a>'
     return f'<a href="{href}">{text}</a>'
