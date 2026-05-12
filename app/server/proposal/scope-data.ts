@@ -46,9 +46,6 @@ export interface ScopeNode {
   hiddenChildren: ScopeNode[];
   /** Word-level diff HTML for the title, if name changed. */
   titleDiff?: string;
-  /** Previous document number when the doc was renumbered. Undefined if the
-   * doc's number didn't change. */
-  oldId?: string;
 }
 
 /** Lineage entry — an ancestor of the scope root, for breadcrumb context. */
