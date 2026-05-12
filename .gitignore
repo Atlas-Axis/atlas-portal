@@ -69,3 +69,4 @@ __pycache__/
 .debug-data/
 
 logs
+.claude/worktrees/
