@@ -13,6 +13,20 @@ npm run dev
 
 The app starts at [http://localhost:3000](http://localhost:3000). The Atlas viewer is at `/atlas`.
 
+### Local development against a local Atlas (no GitHub)
+
+By default, even in dev the app fetches the Atlas from GitHub on each cold start. To render from a local copy instead — useful for offline work or to avoid spending GitHub API rate limit — set `ATLAS_LOCAL_CONTENT` (e.g. in `.env.local`):
+
+```bash
+# A local checkout of the atlas repo (point at the repo root or its content/ dir):
+ATLAS_LOCAL_CONTENT=/abs/path/to/next-gen-atlas/content
+
+# ...or a single pre-composed monolith markdown file:
+# ATLAS_LOCAL_CONTENT=/abs/path/to/sky-atlas.md
+```
+
+A directory is composed exactly like the GitHub tarball (it must contain the `A/`, `NR/` document tree); a file is read verbatim and must already be in the composed monolith format (see [`docs/ATLAS_MARKDOWN_SYNTAX.md`](./docs/ATLAS_MARKDOWN_SYNTAX.md)). The vendored fixture at `tests/fixtures/atlas-content` works as a quick target. The override is ignored when `NODE_ENV=production`.
+
 ## How It Works
 
 1. At build time (or on request), the app fetches the Atlas markdown file from a GitHub repository.
@@ -43,9 +57,10 @@ npx tsx scripts/validate-atlas-json.ts [path/to/atlas.json]
 
 ## Environment Variables
 
-| Variable       | Required | Description                                             |
-| -------------- | -------- | ------------------------------------------------------- |
-| `GITHUB_TOKEN` | No       | GitHub personal access token for higher API rate limits |
+| Variable              | Required | Description                                                                                                                                                                                                                |
+| --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GITHUB_TOKEN`        | No       | GitHub personal access token for higher API rate limits                                                                                                                                                                    |
+| `ATLAS_LOCAL_CONTENT` | No       | Dev-only. Path to a local Atlas content tree or composed `.md` file to render instead of fetching from GitHub (see [Quick Start](#local-development-against-a-local-atlas-no-github)). Ignored when `NODE_ENV=production`. |
 
 ## Tech Stack
 
