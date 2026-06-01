@@ -419,8 +419,7 @@ function loadLocalAtlasOverride(): string | null {
 
   if (stat.isDirectory()) {
     const nested = path.join(localPath, 'content');
-    const contentDir =
-      fs.existsSync(nested) && fs.statSync(nested).isDirectory() ? nested : localPath;
+    const contentDir = fs.existsSync(nested) && fs.statSync(nested).isDirectory() ? nested : localPath;
     console.log(`[loadAtlasTree] ATLAS_LOCAL_CONTENT set — composing from local dir: ${contentDir}`);
     return compose(contentDir);
   }
