@@ -370,6 +370,66 @@ async function composeFromTarball(): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
+// Local dev override: read Atlas content from disk instead of GitHub
+//
+// When ATLAS_LOCAL_CONTENT is set (dev only — ignored in production), the
+// portal composes the Atlas monolith from a local path instead of downloading
+// the repo tarball. The path may point at either:
+//   - a decomposed content tree — a dir containing A/ and NR/, OR a repo root
+//     containing content/ — composed via compose(), exactly like the tarball
+//     path, or
+//   - a single pre-composed monolith .md file — read verbatim.
+//
+// This lets `npm run dev` run fully offline against a local checkout of
+// sky-ecosystem/next-gen-atlas without spending GitHub API rate limit on every
+// cold start / refresh. Set it in .env.local, e.g.:
+//   ATLAS_LOCAL_CONTENT=/abs/path/to/next-gen-atlas/content
+// ---------------------------------------------------------------------------
+
+/**
+ * Resolve the configured local-content path, or null to fall through to
+ * GitHub. Honored only outside production; warns (once per call site) if set
+ * in a production build so it can't silently serve stale local content.
+ */
+function localContentPath(): string | null {
+  const localPath = process.env.ATLAS_LOCAL_CONTENT;
+  if (!localPath) return null;
+  if (process.env.NODE_ENV === 'production') {
+    console.warn('[loadAtlasTree] ATLAS_LOCAL_CONTENT is set but ignored in production; fetching from GitHub.');
+    return null;
+  }
+  return localPath;
+}
+
+/**
+ * Compose the monolith from the local override path, or return null if no
+ * override is configured. A directory is composed (accepting either the
+ * content/ dir itself or a repo root containing one); a file is read verbatim.
+ */
+function loadLocalAtlasOverride(): string | null {
+  const localPath = localContentPath();
+  if (!localPath) return null;
+
+  let stat: fs.Stats;
+  try {
+    stat = fs.statSync(localPath);
+  } catch {
+    throw new Error(`ATLAS_LOCAL_CONTENT points to a path that does not exist: ${localPath}`);
+  }
+
+  if (stat.isDirectory()) {
+    const nested = path.join(localPath, 'content');
+    const contentDir =
+      fs.existsSync(nested) && fs.statSync(nested).isDirectory() ? nested : localPath;
+    console.log(`[loadAtlasTree] ATLAS_LOCAL_CONTENT set — composing from local dir: ${contentDir}`);
+    return compose(contentDir);
+  }
+
+  console.log(`[loadAtlasTree] ATLAS_LOCAL_CONTENT set — reading local monolith file: ${localPath}`);
+  return fs.readFileSync(localPath, 'utf8');
+}
+
+// ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
@@ -419,6 +479,8 @@ async function coldStartCompose(): Promise<CacheEntry> {
  * fetch via `coldStartCompose()`.
  */
 export async function fetchAtlasMarkdownContent(): Promise<string> {
+  const local = loadLocalAtlasOverride();
+  if (local !== null) return local;
   if (composeCache !== null) {
     void refreshComposeCacheIfStale();
     return composeCache.content;
@@ -435,6 +497,20 @@ export async function fetchAtlasMarkdownContent(): Promise<string> {
  * no longer a single file to scope to.
  */
 export async function fetchAtlasMarkdownMetadata(): Promise<AtlasCommitMetadata> {
+  const localPath = localContentPath();
+  if (localPath !== null) {
+    let lastModified: Date;
+    try {
+      lastModified = fs.statSync(localPath).mtime;
+    } catch {
+      lastModified = new Date(0);
+    }
+    return {
+      lastModified,
+      commitSha: 'local',
+      commitMessage: 'Local ATLAS_LOCAL_CONTENT override',
+    };
+  }
   return fetchLatestCommitMetadata();
 }
 
@@ -446,6 +522,11 @@ export async function fetchAtlasMarkdownMetadata(): Promise<AtlasCommitMetadata>
  * concurrent callers.
  */
 export async function loadAtlasMarkdownFromGitHub(): Promise<AtlasMarkdownFromGitHub> {
+  const local = loadLocalAtlasOverride();
+  if (local !== null) {
+    const { lastModified, commitSha, commitMessage } = await fetchAtlasMarkdownMetadata();
+    return { content: local, lastModified, commitSha, commitMessage };
+  }
   if (composeCache !== null) {
     void refreshComposeCacheIfStale();
     return { content: composeCache.content, ...composeCache.metadata };
