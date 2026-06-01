@@ -1,3 +1,5 @@
+import hljs from 'highlight.js/lib/common';
+import registerSolidity from 'highlightjs-solidity';
 import markdownit from 'markdown-it';
 import type { Options } from 'markdown-it';
 import type Renderer from 'markdown-it/lib/renderer.mjs';
@@ -5,12 +7,46 @@ import type Token from 'markdown-it/lib/token.mjs';
 import { isValidUUID } from '@/app/shared/utils/utils';
 
 /**
+ * Placeholder used to shield newlines inside rendered <pre> blocks from the
+ * `\n` -> `<br>` post-processing below. Without this, every line of a fenced
+ * code block gets both a literal newline (preserved by <pre>) AND a <br>,
+ * rendering code double-spaced. We swap code-block newlines out before the
+ * <br> pass and restore them at the very end. Uses U+FFFD sentinels so it
+ * can't collide with real document content.
+ */
+const CODE_NEWLINE_PLACEHOLDER = '\u{FFFD}CODEBLOCKNEWLINE\u{FFFD}';
+
+// Solidity isn't part of highlight.js's built-in language set, so register the
+// community grammar on the shared instance for ```solidity blocks. (We register
+// only the `solidity` grammar directly rather than calling the package's
+// default registrar, which would also pull in Yul.)
+hljs.registerLanguage('solidity', registerSolidity.solidity);
+
+/**
  * Singleton markdown-it instance for parsing.
  * Reusing the same instance avoids the overhead of creating a new parser for each call.
  * The custom link renderer IS global state (modified below), but uses the env parameter
  * to receive per-call data (uuidToDocNoMap), preventing state pollution between concurrent calls.
+ *
+ * `highlight` runs fenced code through highlight.js (common-languages build) and
+ * emits `<pre class="hljs"><code>…</code></pre>` with `hljs-*` token spans. When
+ * the language is unknown/unspecified we emit an escaped, unhighlighted block so
+ * the styling is still consistent. Returning a string that starts with `<pre`
+ * tells markdown-it to use it verbatim instead of re-wrapping it.
  */
-const mdInstance = markdownit();
+const mdInstance = markdownit({
+  highlight(code: string, lang: string): string {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        const highlighted = hljs.highlight(code, { language: lang, ignoreIllegals: true }).value;
+        return `<pre class="hljs"><code class="language-${lang}">${highlighted}</code></pre>`;
+      } catch {
+        // Fall through to the escaped/plain rendering below.
+      }
+    }
+    return `<pre class="hljs"><code>${mdInstance.utils.escapeHtml(code)}</code></pre>`;
+  },
+});
 
 /**
  * Default link_open renderer, cached once from the singleton instance.
@@ -194,6 +230,12 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
   // Step 3: Restore the protected content
   html = restoreProtectedContent(html, placeholders);
 
+  // Step 3.5: Shield newlines inside <pre> code blocks from the <br> pass below.
+  // <pre> already preserves whitespace, so converting these newlines to <br>
+  // would double-space the code. We swap them for a placeholder and restore
+  // them verbatim after the <br> processing completes.
+  html = html.replace(/<pre[\s\S]*?<\/pre>/gi, (block) => block.replace(/\n/g, CODE_NEWLINE_PLACEHOLDER));
+
   // Post-process: Replace newlines within text content with <br> tags
   // This regex finds newlines that are not between block-level closing and opening tags
   // Strategy: Replace single newlines with <br> tags to preserve line breaks in the rendered output
@@ -213,6 +255,9 @@ export const markdownToHTML = (markdown: string, uuidToDocNoMap?: Map<string, st
     )
     // Remove trailing <br> tags at the end of the HTML
     .replace(/(<br>\s*)+$/, '');
+
+  // Restore the code-block newlines shielded in Step 3.5.
+  html = html.split(CODE_NEWLINE_PLACEHOLDER).join('\n');
 
   return html;
 };

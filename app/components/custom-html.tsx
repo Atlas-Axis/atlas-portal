@@ -4,6 +4,7 @@ import DOMPurify from 'dompurify';
 import 'katex/dist/katex.min.css';
 import { processKaTeXInHTML } from '@/app/shared/utils/process-katex';
 import styles from './custom-html.module.css';
+import './hljs-github-theme.css';
 
 export function CustomHTML({ html }: { html: string }) {
   // Process TeX math expressions before rendering using KaTeX
