@@ -189,6 +189,21 @@ function calculate(value: number, options: Options): Result {
 This approach provides better formatting.
 ````
 
+#### Syntax Highlighting in the Portal
+
+When rendered in the portal, fenced code blocks are syntax-highlighted with [highlight.js](https://highlightjs.org/) using the GitHub light/dark theme (matching the active mode). Add a language tag after the opening fence to enable per-token coloring:
+
+````markdown
+```solidity
+contract Example {
+    uint256 public value = 42;
+}
+```
+````
+
+- Common languages (JavaScript, TypeScript, JSON, Python, Bash, etc.) plus **Solidity** are supported. A fence with no language tag — or an unrecognized one — still renders as a clean, monospaced block, just without coloring.
+- Newlines inside code blocks are preserved as-is.
+
 ### Content vs Extra Fields
 
 - Everything from the blank line after the title up to the first `**Label**:` pattern is considered the document's main content
