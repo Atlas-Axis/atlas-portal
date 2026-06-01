@@ -43,7 +43,7 @@ describe('markdownToHTML', () => {
       expect(output).toContain('sum_total');
 
       // Should render as HTML with <pre> and <code> tags
-      expect(output).toContain('<pre>');
+      expect(output).toContain('<pre');
       expect(output).toContain('<code');
       expect(output).toContain('</code>');
       expect(output).toContain('</pre>');
@@ -156,7 +156,7 @@ describe('markdownToHTML', () => {
       expect(output).toContain('b_2');
 
       // Should render as HTML with <pre> and <code> tags
-      expect(output).toContain('<pre>');
+      expect(output).toContain('<pre');
       expect(output).toContain('<code');
       expect(output).toContain('</code>');
       expect(output).toContain('</pre>');
@@ -176,7 +176,7 @@ describe('markdownToHTML', () => {
       const input = '```\nfunction test() {\n  return true;\n}\n```';
       const output = markdownToHTML(input);
 
-      expect(output).toContain('<pre>');
+      expect(output).toContain('<pre');
       expect(output).toContain('<code');
       expect(output).toContain('function test()');
       expect(output).toContain('return true;');
@@ -184,15 +184,55 @@ describe('markdownToHTML', () => {
       expect(output).toContain('</pre>');
     });
 
-    it('should render code blocks with language specification', () => {
+    it('should render code blocks with language specification and syntax highlighting', () => {
       const input = '```javascript\nconst x = 42;\n```';
       const output = markdownToHTML(input);
 
-      expect(output).toContain('<pre>');
-      expect(output).toContain('<code');
-      expect(output).toContain('const x = 42;');
+      // highlight.js tokenizes the code, so the source is no longer a single
+      // contiguous string — it's wrapped in `hljs-*` token spans inside a
+      // language-tagged <code> within an hljs <pre>.
+      expect(output).toContain('<pre class="hljs">');
+      expect(output).toMatch(/<code[^>]*class="language-javascript"/);
+      expect(output).toContain('hljs-');
+      expect(output).toContain('42');
       expect(output).toContain('</code>');
       expect(output).toContain('</pre>');
+    });
+
+    it('should highlight Solidity code blocks', () => {
+      // Solidity isn't a built-in highlight.js language — it's registered via
+      // the highlightjs-solidity grammar.
+      const input = '```solidity\ncontract Foo {\n  uint256 public x = 42;\n}\n```';
+      const output = markdownToHTML(input);
+
+      expect(output).toContain('<pre class="hljs">');
+      expect(output).toMatch(/<code[^>]*class="language-solidity"/);
+      // `contract` is a Solidity keyword, so it gets tokenized into a span.
+      expect(output).toContain('hljs-keyword');
+      expect(output).not.toContain('contract Foo {'); // broken up by token spans
+    });
+
+    it('should not register Yul (only Solidity was requested)', () => {
+      const input = '```yul\nlet x := 42\n```';
+      const output = markdownToHTML(input);
+
+      // Yul is unregistered, so it falls back to a plain (unhighlighted) block.
+      expect(output).toContain('<pre class="hljs">');
+      expect(output).not.toMatch(/class="language-yul"/);
+      expect(output).toContain('let x := 42'); // not tokenized
+    });
+
+    it('should not inject <br> tags inside multi-line code blocks', () => {
+      // Regression: the global \n -> <br> post-processing used to add a <br>
+      // to every line inside <pre>, which (combined with <pre>'s preserved
+      // newlines) rendered code double-spaced.
+      const input = '```\nline one\nline two\nline three\n```';
+      const output = markdownToHTML(input);
+
+      const preBlock = output.match(/<pre[\s\S]*?<\/pre>/)?.[0] ?? '';
+      expect(preBlock).not.toContain('<br>');
+      // Real newlines between the lines are preserved.
+      expect(preBlock).toContain('line one\nline two');
     });
 
     it('should render multiple inline code elements', () => {

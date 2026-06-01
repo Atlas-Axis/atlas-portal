@@ -31,6 +31,33 @@
   color: rgb(220, 38, 38);
 }
 
+/* Fenced code blocks: a padded, scrollable monospace box. The GitHub
+   light/dark highlight.js theme (hljs-github-theme.css, imported in
+   custom-html.tsx) sets the background, border, and token colors per mode via
+   the `.hljs` class on this <pre>; we own the layout. */
+.formattedContent pre {
+  display: block;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 85%;
+  line-height: 1.5;
+}
+
+/* Reset the inline-code styling above for code *inside* a block, so it renders
+   as plain monospace tokens (colored by the theme's hljs-* spans) rather than
+   the red inline-code pill. */
+.formattedContent pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  font-weight: 400;
+  color: inherit;
+  white-space: pre;
+}
+
 .formattedContent table {
   border-collapse: separate;
   border-spacing: 0.25rem;

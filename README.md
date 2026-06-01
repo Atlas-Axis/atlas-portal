@@ -52,6 +52,7 @@ npx tsx scripts/validate-atlas-json.ts [path/to/atlas.json]
 - [Next.js](https://nextjs.org/) (App Router)
 - TypeScript
 - [HeroUI](https://heroui.com/) + Tailwind CSS
+- [markdown-it](https://github.com/markdown-it/markdown-it) for rendering, with [highlight.js](https://highlightjs.org/) syntax highlighting for fenced code blocks (GitHub light/dark theme; includes Solidity)
 - [Vitest](https://vitest.dev/) for testing
 
 ## Testing
