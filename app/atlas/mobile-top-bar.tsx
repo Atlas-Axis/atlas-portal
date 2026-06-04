@@ -30,28 +30,28 @@ export default function MobileTopBar({ scopeTrees, onSearchOpen }: MobileTopBarP
 
       {/* Right side: Icon buttons */}
       <div className="flex items-center gap-1">
-        <Button isIconOnly variant="light" onPress={onSearchOpen} aria-label="Search" className="min-h-10 min-w-10">
+        <Button isIconOnly variant="ghost" onPress={onSearchOpen} aria-label="Search" className="min-h-10 min-w-10">
           <Search size={20} className="text-slate-600 dark:text-slate-300" />
         </Button>
 
-        <Popover backdrop="blur" placement="bottom-end">
+        <Popover>
           <PopoverTrigger>
-            <Button isIconOnly variant="light" aria-label="Download Atlas" className="min-h-10 min-w-10">
+            <Button isIconOnly variant="ghost" aria-label="Download Atlas" className="min-h-10 min-w-10">
               <Download size={20} className="text-slate-600 dark:text-slate-300" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0">
+          <PopoverContent placement="bottom end" className="p-0">
             <DownloadAtlasButton />
           </PopoverContent>
         </Popover>
 
-        <Popover backdrop="blur" placement="bottom-end">
+        <Popover>
           <PopoverTrigger>
-            <Button isIconOnly variant="light" aria-label="Settings" className="min-h-10 min-w-10">
+            <Button isIconOnly variant="ghost" aria-label="Settings" className="min-h-10 min-w-10">
               <Settings size={20} className="text-slate-600 dark:text-slate-300" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0">
+          <PopoverContent placement="bottom end" className="p-0">
             <SettingsDropdown />
           </PopoverContent>
         </Popover>

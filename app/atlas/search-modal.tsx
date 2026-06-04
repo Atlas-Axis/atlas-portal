@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Input, Modal, ModalBody, ModalContent, ModalHeader } from '@heroui/react';
+import { InputGroup, Modal } from '@heroui/react';
 import { Search } from 'lucide-react';
 import type { ChildCollectionName, ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { childCollectionNames, extraFieldsByDocumentType } from '@/app/server/atlas/export/types';
@@ -268,117 +268,119 @@ export default function SearchModal({ scopeTrees, uuidMappings, isOpen, onClose 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
-      size="3xl"
-      scrollBehavior="inside"
-      placement="top"
-      classNames={{
-        base: 'mt-20',
+      onOpenChange={(open) => {
+        if (!open) onClose();
       }}
     >
-      <ModalContent>
-        <ModalHeader className="flex flex-col gap-1 border-b border-slate-200 pb-4 dark:border-zinc-700">
-          <Input
-            ref={inputRef}
-            placeholder="Search Atlas documents..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            startContent={<Search className="h-4 w-4 text-slate-400" />}
-            classNames={{
-              input: 'text-lg',
-              inputWrapper: 'h-12',
-            }}
-          />
-        </ModalHeader>
-        <ModalBody className="py-4">
-          {!query.trim() && (
-            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
-              <Search className="mx-auto mb-3 h-12 w-12 text-slate-300" />
-              <p>Start typing to search across all Atlas documents</p>
-              <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
-                Search by document number, title, or content
-              </p>
-            </div>
-          )}
+      <Modal.Backdrop>
+        <Modal.Container size="lg" placement="top" scroll="inside">
+          <Modal.Dialog className="mt-20 w-full max-w-3xl">
+            <Modal.Header className="flex flex-col gap-1 border-b border-slate-200 pb-4 dark:border-zinc-700">
+              <InputGroup className="h-12">
+                <InputGroup.Prefix>
+                  <Search className="h-4 w-4 text-slate-400" />
+                </InputGroup.Prefix>
+                <InputGroup.Input
+                  ref={inputRef}
+                  placeholder="Search Atlas documents..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="text-lg"
+                  aria-label="Search Atlas documents"
+                />
+              </InputGroup>
+            </Modal.Header>
+            <Modal.Body className="py-4">
+              {!query.trim() && (
+                <div className="py-12 text-center text-slate-500 dark:text-slate-400">
+                  <Search className="mx-auto mb-3 h-12 w-12 text-slate-300" />
+                  <p>Start typing to search across all Atlas documents</p>
+                  <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">
+                    Search by document number, title, or content
+                  </p>
+                </div>
+              )}
 
-          {query.trim() && filteredDocuments.length === 0 && (
-            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
-              <p>No documents found matching &quot;{query}&quot;</p>
-            </div>
-          )}
+              {query.trim() && filteredDocuments.length === 0 && (
+                <div className="py-12 text-center text-slate-500 dark:text-slate-400">
+                  <p>No documents found matching &quot;{query}&quot;</p>
+                </div>
+              )}
 
-          {query.trim() && filteredDocuments.length > 0 && (
-            <div className="space-y-1">
-              <p className="mb-3 text-sm text-slate-500 dark:text-slate-400">
-                {filteredDocuments.length === 50
-                  ? '50+ results (showing first 50)'
-                  : `${filteredDocuments.length} result${filteredDocuments.length === 1 ? '' : 's'}`}
-              </p>
-              {filteredDocuments.map((result, idx) => {
-                const { doc } = result;
-                const notionId = doc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(doc.uuid) : null;
-                const key = notionId || doc.doc_no || `result-${idx}`;
+              {query.trim() && filteredDocuments.length > 0 && (
+                <div className="space-y-1">
+                  <p className="mb-3 text-sm text-slate-500 dark:text-slate-400">
+                    {filteredDocuments.length === 50
+                      ? '50+ results (showing first 50)'
+                      : `${filteredDocuments.length} result${filteredDocuments.length === 1 ? '' : 's'}`}
+                  </p>
+                  {filteredDocuments.map((result, idx) => {
+                    const { doc } = result;
+                    const notionId = doc.uuid ? uuidMappings.atlasUUIDsToNotionPageIds.get(doc.uuid) : null;
+                    const key = notionId || doc.doc_no || `result-${idx}`;
 
-                // Determine what content to show in preview
-                let previewContent = '';
-                let previewLabel = '';
+                    // Determine what content to show in preview
+                    let previewContent = '';
+                    let previewLabel = '';
 
-                if (result.matchedField === 'content' && doc.content) {
-                  previewContent = doc.content;
-                } else if (result.matchedFieldValue && result.matchedFieldLabel) {
-                  // Show the matched extra field
-                  previewContent = result.matchedFieldValue;
-                  previewLabel = result.matchedFieldLabel;
-                } else if (doc.content) {
-                  // Fallback to content if available
-                  previewContent = doc.content;
-                }
+                    if (result.matchedField === 'content' && doc.content) {
+                      previewContent = doc.content;
+                    } else if (result.matchedFieldValue && result.matchedFieldLabel) {
+                      // Show the matched extra field
+                      previewContent = result.matchedFieldValue;
+                      previewLabel = result.matchedFieldLabel;
+                    } else if (doc.content) {
+                      // Fallback to content if available
+                      previewContent = doc.content;
+                    }
 
-                return (
-                  <div
-                    key={key}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => handleResultClick(result)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleResultClick(result);
-                      }
-                    }}
-                    className="cursor-pointer rounded-lg bg-slate-100 p-3 transition-all hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none dark:bg-zinc-800 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
-                    aria-label={`Navigate to ${doc.name || 'Untitled'} (${doc.doc_no || 'No document number'})`}
-                  >
-                    <div className="mb-2 flex items-center gap-2">
-                      {doc.doc_no && (
-                        <span className="inline-block rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-zinc-900 dark:text-slate-200">
-                          {highlightText(doc.doc_no, query)}
-                        </span>
-                      )}
-                      <span
-                        className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${typeColorMap[doc.type]}`}
+                    return (
+                      <div
+                        key={key}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => handleResultClick(result)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleResultClick(result);
+                          }
+                        }}
+                        className="cursor-pointer rounded-lg bg-slate-100 p-3 transition-all hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none dark:bg-zinc-800 dark:hover:bg-blue-950 dark:focus:bg-blue-950"
+                        aria-label={`Navigate to ${doc.name || 'Untitled'} (${doc.doc_no || 'No document number'})`}
                       >
-                        {doc.type}
-                      </span>
-                    </div>
-                    <div className="mb-1 font-semibold text-slate-900 dark:text-slate-100">
-                      {highlightText(doc.name || '<Untitled>', query)}
-                    </div>
-                    {previewContent && (
-                      <div className="text-sm text-slate-600 dark:text-slate-400">
-                        {previewLabel && (
-                          <span className="font-medium text-slate-700 dark:text-slate-300">{previewLabel}: </span>
+                        <div className="mb-2 flex items-center gap-2">
+                          {doc.doc_no && (
+                            <span className="inline-block rounded-md bg-white px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-zinc-900 dark:text-slate-200">
+                              {highlightText(doc.doc_no, query)}
+                            </span>
+                          )}
+                          <span
+                            className={`inline-block rounded-md px-2 py-0.5 text-xs font-medium ${typeColorMap[doc.type]}`}
+                          >
+                            {doc.type}
+                          </span>
+                        </div>
+                        <div className="mb-1 font-semibold text-slate-900 dark:text-slate-100">
+                          {highlightText(doc.name || '<Untitled>', query)}
+                        </div>
+                        {previewContent && (
+                          <div className="text-sm text-slate-600 dark:text-slate-400">
+                            {previewLabel && (
+                              <span className="font-medium text-slate-700 dark:text-slate-300">{previewLabel}: </span>
+                            )}
+                            {highlightText(truncateText(previewContent, 150, query), query)}
+                          </div>
                         )}
-                        {highlightText(truncateText(previewContent, 150, query), query)}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </ModalBody>
-      </ModalContent>
+                    );
+                  })}
+                </div>
+              )}
+            </Modal.Body>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   );
 }

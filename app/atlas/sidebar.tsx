@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Accordion, AccordionItem } from '@heroui/react';
+import { Accordion } from '@heroui/react';
 import type { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { compareDocNumbers } from '../server/atlas/document-numbering/atlas-utils';
 import { UuidMappings } from '../server/atlas/load-uuid-mapping';
@@ -96,70 +96,81 @@ function renderSidebarNode({
   return (
     <Accordion
       key={nodeNotionId || node.doc_no || `node-${node.uuid || 'unknown'}`}
-      selectionMode="multiple"
-      variant="light"
+      allowsMultipleExpanded
+      variant="default"
+      hideSeparator
       className="px-0"
-      disableAnimation={true}
-      selectedKeys={isExpanded ? new Set([nodeUuid]) : new Set<string>()}
-      onSelectionChange={(keys) => {
+      expandedKeys={isExpanded ? [nodeUuid] : []}
+      onExpandedChange={(keys) => {
         if (nodeUuid) {
-          const shouldBeExpanded = keys === 'all' || (keys instanceof Set && keys.size > 0);
+          const shouldBeExpanded = keys.size > 0;
           if (shouldBeExpanded !== isExpanded) {
             onToggleExpanded(nodeUuid);
           }
         }
       }}
     >
-      <AccordionItem
-        key={nodeUuid}
-        data-sidebar-doc-id={node.doc_no}
-        aria-label={`${node.doc_no} - ${node.name || 'Untitled'}`}
-        title={
-          <div
-            className={`cursor-pointer text-sm transition-all duration-300 ease-in-out hover:text-blue-600 ${
-              isActive ? 'text-blue-600' : ''
-            }`}
-            onClick={() => {
-              // When clicking the title, navigate to hash
-              if (node.doc_no) {
-                // Trigger expansion and navigation to the target document
-                dispatchExpandScopeEvent({
-                  targetDocID: node.doc_no,
-                });
-              }
-            }}
+      <Accordion.Item id={nodeUuid} data-sidebar-doc-id={node.doc_no} className="px-0">
+        <Accordion.Heading>
+          <Accordion.Trigger
+            aria-label={`${node.doc_no} - ${node.name || 'Untitled'}`}
+            className="flex w-full items-center justify-between px-2 py-1"
           >
-            {node.doc_no} - {node.name || 'Untitled'}
-          </div>
-        }
-        classNames={{
-          base: 'px-0',
-          trigger: 'px-2 py-1',
-          content: 'px-0 pt-0 pb-1',
-          indicator: 'hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-full p-2 cursor-pointer',
-        }}
-      >
-        <div className="ml-3 border-l border-slate-200 pl-2 dark:border-zinc-700">
-          {sortedChildren.map((child) => (
-            <div
-              key={
-                (child.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid)) ||
-                child.doc_no ||
-                `node-${child.uuid || 'unknown'}`
-              }
+            <span
+              role="link"
+              tabIndex={0}
+              className={`cursor-pointer text-sm transition-all duration-300 ease-in-out hover:text-blue-600 ${
+                isActive ? 'text-blue-600' : ''
+              }`}
+              onClick={(e) => {
+                // When clicking the title, navigate to hash (don't toggle the accordion)
+                e.stopPropagation();
+                if (node.doc_no) {
+                  dispatchExpandScopeEvent({
+                    targetDocID: node.doc_no,
+                  });
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  if (node.doc_no) {
+                    dispatchExpandScopeEvent({
+                      targetDocID: node.doc_no,
+                    });
+                  }
+                }
+              }}
             >
-              {renderSidebarNode({
-                node: child,
-                depth: depth + 1,
-                activeHash,
-                uuidMappings,
-                expandedKeys,
-                onToggleExpanded,
-              })}
-            </div>
-          ))}
-        </div>
-      </AccordionItem>
+              {node.doc_no} - {node.name || 'Untitled'}
+            </span>
+            <Accordion.Indicator className="cursor-pointer rounded-full p-2 hover:bg-slate-100 hover:text-blue-600 dark:hover:bg-zinc-800" />
+          </Accordion.Trigger>
+        </Accordion.Heading>
+        <Accordion.Panel className="px-0 pt-0 pb-1">
+          <div className="ml-3 border-l border-slate-200 pl-2 dark:border-zinc-700">
+            {sortedChildren.map((child) => (
+              <div
+                key={
+                  (child.uuid && uuidMappings.atlasUUIDsToNotionPageIds.get(child.uuid)) ||
+                  child.doc_no ||
+                  `node-${child.uuid || 'unknown'}`
+                }
+              >
+                {renderSidebarNode({
+                  node: child,
+                  depth: depth + 1,
+                  activeHash,
+                  uuidMappings,
+                  expandedKeys,
+                  onToggleExpanded,
+                })}
+              </div>
+            ))}
+          </div>
+        </Accordion.Panel>
+      </Accordion.Item>
     </Accordion>
   );
 }

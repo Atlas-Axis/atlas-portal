@@ -24,10 +24,10 @@ export default function ThemeToggle() {
       type="button"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={toggle}
-      className="hover:bg-default-100 flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm"
+      className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-gray-100"
       suppressHydrationWarning
     >
-      {isDark ? <Sun size={16} className="text-default-500" /> : <Moon size={16} className="text-default-500" />}
+      {isDark ? <Sun size={16} className="text-gray-500" /> : <Moon size={16} className="text-gray-500" />}
       <span suppressHydrationWarning>{isReady ? (isDark ? 'Light mode' : 'Dark mode') : 'Theme'}</span>
     </button>
   );

@@ -1,66 +1,61 @@
 'use client';
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownPopover, DropdownTrigger } from '@heroui/react';
 import { Download } from 'lucide-react';
 
 export default function DownloadAtlasButton() {
   return (
-    <Dropdown backdrop="blur">
+    <Dropdown>
       <DropdownTrigger>
-        <Button
-          variant="bordered"
-          className="w-full"
-          startContent={<Download className="text-default-500" size={16} />}
-        >
+        <Button variant="outline" className="w-full gap-2">
+          <Download className="text-gray-500" size={16} />
           Download Atlas
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions" className="w-full">
-        <DropdownItem key="download-markdown" className="w-full">
-          <Button
-            variant="light"
-            as="a"
+      <DropdownPopover className="w-full">
+        <DropdownMenu aria-label="Download options" className="w-full">
+          <DropdownItem
+            id="download-markdown"
             href="/api/atlas.md"
             target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
+            className="w-full"
+            textValue="Download as Markdown"
           >
+            <Download className="text-gray-500" size={16} />
             Download as Markdown
-          </Button>
-        </DropdownItem>
-        <DropdownItem key="download-markdown-split" className="w-full">
-          <Button
-            variant="light"
-            as="a"
+          </DropdownItem>
+          <DropdownItem
+            id="download-markdown-split"
             href="/api/atlas.md?split-by-scope"
             target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
+            className="w-full"
+            textValue="Download as Markdown - Split by Scope"
           >
+            <Download className="text-gray-500" size={16} />
             Download as Markdown - Split by Scope
-          </Button>
-        </DropdownItem>
-        <DropdownItem key="download-json" className="w-full">
-          <Button
-            variant="light"
-            as="a"
+          </DropdownItem>
+          <DropdownItem
+            id="download-json"
             href="/api/atlas.json"
             target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
+            className="w-full"
+            textValue="Download as JSON"
           >
+            <Download className="text-gray-500" size={16} />
             Download as JSON
-          </Button>
-        </DropdownItem>
-        <DropdownItem key="download-yaml" className="w-full">
-          <Button
-            variant="light"
-            as="a"
+          </DropdownItem>
+          <DropdownItem
+            id="download-yaml"
             href="/api/atlas.yaml"
             target="_blank"
-            startContent={<Download className="text-default-500" size={16} />}
+            className="w-full"
+            textValue="Download as YAML"
           >
+            <Download className="text-gray-500" size={16} />
             Download as YAML
-          </Button>
-        </DropdownItem>
-      </DropdownMenu>
+          </DropdownItem>
+        </DropdownMenu>
+      </DropdownPopover>
     </Dropdown>
   );
 }

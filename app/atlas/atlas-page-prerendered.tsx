@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useDisclosure } from '@heroui/react';
+import { useOverlayState } from '@heroui/react';
 import { ExportAtlasTreeDocument } from '@/app/server/atlas/export/types';
 import { type UuidMappings } from '@/app/server/atlas/load-uuid-mapping';
 import ContentTree from './content-tree';
@@ -19,7 +19,7 @@ export default function AtlasPagePrerendered({
   uuidMappings,
 }: AtlasPagePrerenderedProps) {
   const [scopeTreesWithoutAgents] = useState(exportScopeTreesWithoutAgents);
-  const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure();
+  const { isOpen: isSearchOpen, open: onSearchOpen, close: onSearchClose } = useOverlayState();
 
   // Handle CMD+F / Ctrl+F keyboard shortcut to open search (single handler for entire page)
   useEffect(() => {
