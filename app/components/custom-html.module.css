@@ -67,6 +67,15 @@
   white-space: pre;
 }
 
+/* The dark inline-code rule above (.dark .formattedContent code) is more
+   specific than the reset, so without this it leaks the inline pill's
+   background and color into code *inside* blocks in dark mode. Restore the
+   reset for the two properties it overrides. */
+:global(.dark) .formattedContent pre code {
+  background-color: transparent;
+  color: inherit;
+}
+
 .formattedContent table {
   border-collapse: separate;
   border-spacing: 0.25rem;
