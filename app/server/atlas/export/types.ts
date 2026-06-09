@@ -134,8 +134,7 @@ export interface ExportAtlasTreeArticlesDocument extends ExportAtlasTreeBaseDocu
 }
 
 export interface ExportAtlasTreeSectionsAndPrimaryDocsDocument
-  extends ExportAtlasTreeBaseDocument,
-    Partial<TypeSpecificationExtraFields> {
+  extends ExportAtlasTreeBaseDocument, Partial<TypeSpecificationExtraFields> {
   sections_and_primary_docs: ExportAtlasTreeSectionsAndPrimaryDocsDocument[];
   agent_scope_database?: ExportAtlasTreeAgentScopeDatabaseDocument[];
   annotations: ExportAtlasTreeAnnotationsDocument[];
@@ -161,8 +160,7 @@ export interface ExportAtlasTreeScenariosDocument extends ExportAtlasTreeBaseDoc
 }
 
 export interface ExportAtlasTreeScenarioVariationsDocument
-  extends ExportAtlasTreeBaseDocument,
-    Partial<ScenarioVariationExtraFields> {
+  extends ExportAtlasTreeBaseDocument, Partial<ScenarioVariationExtraFields> {
   // No children - leaf database
   needed_research: ExportAtlasTreeNeededResearchDocument[];
 }
@@ -181,8 +179,7 @@ export interface ExportAtlasTreeAgentScopeDatabaseDocument extends ExportAtlasTr
 }
 
 export interface ExportAtlasTreeNeededResearchDocument
-  extends ExportAtlasTreeBaseDocument,
-    Partial<NeededResearchExtraFields> {
+  extends ExportAtlasTreeBaseDocument, Partial<NeededResearchExtraFields> {
   // No children - leaf database
 }
 
