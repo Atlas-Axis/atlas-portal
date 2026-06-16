@@ -51,7 +51,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/archiver": "^7.0.0",
-    "@types/diff": "^7.0.2",
+    "@types/diff": "^8.0.0",
     "@types/dompurify": "^3.0.5",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.7.0",
