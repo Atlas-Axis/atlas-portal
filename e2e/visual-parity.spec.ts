@@ -2,29 +2,37 @@
  * Visual parity test (Playwright, e2e).
  *
  * Renders representative Atlas pages via two builds of the portal — one
- * pointed at the legacy monolith and one pointed at the new tarball+compose
- * tree — and asserts DOM equality at the leaf Atlas-content area.
+ * pointed at the baseline Atlas layout and one pointed at the candidate
+ * layout — and asserts DOM equality at the leaf Atlas-content area.
  *
  * ---------------------------------------------------------------------------
  * Coverage map: how parity is verified at each level of the pipeline.
  * ---------------------------------------------------------------------------
  *
- *   1. Byte-level (`compose.test.ts`, vitest, always-on):
- *      `compose(content/) === Sky Atlas.md` — the composed monolith is
- *      byte-identical to the source monolith for the vendored fixture.
+ *   1. Byte-level (`compose.test.ts` + `atlas-source.test.ts`, vitest,
+ *      always-on):
+ *      `compose(content/) === Sky Atlas.md` for the vendored ATOMIZED
+ *      fixture, and `loadComposed(consolidated/) === Sky Atlas.md ===
+ *      compose(content/)` for the vendored CONSOLIDATED (Option C) fixture.
+ *      Both layouts, no env vars, runs in CI today.
  *
- *   2. Structural (`app/server/atlas/visual-parity.test.ts`, vitest, gated
- *      on TS_ATLAS_LIVE_CONTENT_DIR + TS_ATLAS_LIVE_MONOLITH):
- *      Same byte equality against the live atlas content tree, plus deep
- *      equality of the parsed `ExportTree` from each input. Catches a
- *      hypothetical non-determinism in the parser independent of bytes.
+ *   2. Structural (`app/server/atlas/visual-parity.test.ts`, vitest, GATED
+ *      — SKIPPED BY DEFAULT):
+ *      Same byte equality against the LIVE Atlas tree, in either layout,
+ *      plus deep equality of the parsed `ExportTree` from each input, plus
+ *      atomized-vs-consolidated equality. Catches a hypothetical
+ *      non-determinism in the parser independent of bytes.
+ *      Needs: TS_ATLAS_LIVE_MONOLITH (a monolith snapshot) and
+ *      TS_ATLAS_LIVE_CONTENT_DIR and/or TS_ATLAS_LIVE_CONSOLIDATED_DIR
+ *      (checkouts of each layout). None are set in `.github/workflows/ci.yml`.
  *
- *   3. Rendered DOM (this file, Playwright e2e, gated on having two running
- *      portal instances on PARITY_BASELINE_URL / PARITY_CANDIDATE_URL):
+ *   3. Rendered DOM (this file, Playwright e2e, GATED — never run in CI):
  *      Compares innerHTML of the atlas content area between a baseline
- *      portal (legacy monolith fetch) and a candidate portal (tarball +
- *      compose). Exercises the full SSR + hydration + KaTeX + DOMPurify +
- *      HeroUI pipeline end-to-end.
+ *      portal and a candidate portal. Exercises the full SSR + hydration +
+ *      KaTeX + DOMPurify + HeroUI pipeline end-to-end.
+ *      Needs: two running portal instances on PARITY_BASELINE_URL /
+ *      PARITY_CANDIDATE_URL, chromium installed, and a `test:e2e` step in
+ *      the CI workflow. None of those exist today.
  *
  * On byte-identical compose, layers 2 and 3 are mathematically REDUNDANT —
  * DOM equality is implied. They exist so that a regression in either the
@@ -40,8 +48,12 @@
  *   3. Vendor a baseline monolith snapshot:
  *      `gh api repos/sky-ecosystem/next-gen-atlas/contents/Sky%20Atlas/Sky%20Atlas.md?ref=main \
  *         --jq .content | base64 -d > tests/fixtures/baseline-monolith.md`
- *   4. Build & start two portal instances (one against monolith, one against
- *      atomic-atlas tarball) on different ports, then `npm run test:e2e`.
+ *   4. Build & start two portal instances on different ports, then
+ *      `npm run test:e2e`. For the de-atomization cutover, point the baseline
+ *      instance at an ATOMIZED checkout and the candidate at the CONSOLIDATED
+ *      one — both via `ATLAS_LOCAL_CONTENT`, which now accepts either layout:
+ *        ATLAS_LOCAL_CONTENT=/abs/next-gen-atlas/content        PORT=3001 npm start
+ *        ATLAS_LOCAL_CONTENT=/abs/next-gen-atlas-optionc/content PORT=3002 npm start
  *
  * ---------------------------------------------------------------------------
  * Per-document routing note.

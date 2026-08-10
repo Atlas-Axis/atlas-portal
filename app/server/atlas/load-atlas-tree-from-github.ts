@@ -11,7 +11,10 @@
  *   1. GET /repos/{owner}/{repo}/commits/{branch} → latest commit SHA + date.
  *   2. If SHA matches the last cached compose, return the cached monolith.
  *   3. Otherwise: GET /repos/{owner}/{repo}/tarball/{branch} → extract to /tmp.
- *   4. Walk extracted content/ directory and run TS compose.
+ *   4. Detect the Atlas layout in the extracted content/ directory and compose
+ *      it — atomized trees are walked by `compose()`, consolidated ("Option C")
+ *      checkouts are concatenated by `reassemble()`. Both produce the identical
+ *      monolith, so this file is layout-agnostic past `loadComposed()`.
  *   5. Cache the composed result keyed by SHA.
  *
  * Public API surface preserved (so the rest of the portal — atlas-json-exporter,
@@ -30,7 +33,7 @@ import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { createGunzip } from 'node:zlib';
 import * as tar from 'tar';
-import { compose } from './compose';
+import { ATOMIZED, bucketFromFilename, detectLayout, loadComposed, resolveAtlasRoot } from './atlas-source';
 import { ATLAS_REPO_BRANCH, ATLAS_REPO_COMMITS_URL, ATLAS_REPO_TARBALL_URL } from './constants';
 
 export interface AtlasMarkdownFromGitHub {
@@ -295,12 +298,12 @@ async function findExtractedRepoRoot(extractRoot: string): Promise<string> {
  */
 const COMPOSE_OUTPUT_MIN_BYTES = 100;
 
-/** Sanity floor: at least 1 atom file must be present (catches empty extract). */
+/** Sanity floor: at least 1 source file must be present (catches empty extract). */
 const CONTENT_DIR_MIN_FILES = 1;
 
 /**
  * Recursively count `document.md` files under a directory.
- * Used as a sanity check post-extraction.
+ * Used as a sanity check post-extraction of an atomized tree.
  */
 function countDocumentMdFiles(dir: string): number {
   let count = 0;
@@ -321,6 +324,21 @@ function countDocumentMdFiles(dir: string): number {
 }
 
 /**
+ * Count consolidated Atlas bucket files (`<docNo> - <name>.md`) directly under
+ * `dir`. The consolidated-layout counterpart of `countDocumentMdFiles` — same
+ * job, catching a truncated extract before the compose result poisons the cache.
+ */
+function countBucketFiles(dir: string): number {
+  let entries: fs.Dirent[];
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return 0;
+  }
+  return entries.filter((e) => e.isFile() && bucketFromFilename(e.name) !== null).length;
+}
+
+/**
  * Compose the Atlas monolith by downloading the latest tarball and walking
  * its `content/` tree.
  *
@@ -337,19 +355,26 @@ async function composeFromTarball(): Promise<string> {
       throw new Error(`Extracted tarball does not contain content/ at ${contentDir}`);
     }
 
-    // Sanity: count atom files BEFORE compose. If extraction was partial,
+    // Which layout did we just extract? Throws (rather than composing to an
+    // empty string) when the tree matches neither layout — an empty result is
+    // indistinguishable from a legitimate pre-cutover ref, so it must not be
+    // allowed to reach the cache.
+    const layout = detectLayout(contentDir);
+    const sourceKind = layout === ATOMIZED ? 'document.md' : 'consolidated .md';
+
+    // Sanity: count source files BEFORE compose. If extraction was partial,
     // we want to know that here, not after the empty compose result poisons
     // the cache.
-    const atomCount = countDocumentMdFiles(contentDir);
-    console.log(`[loadAtlasTree] extracted ${atomCount} document.md files from tarball`);
-    if (atomCount < CONTENT_DIR_MIN_FILES) {
+    const sourceCount = layout === ATOMIZED ? countDocumentMdFiles(contentDir) : countBucketFiles(contentDir);
+    console.log(`[loadAtlasTree] extracted ${sourceCount} ${sourceKind} files from tarball (layout=${layout})`);
+    if (sourceCount < CONTENT_DIR_MIN_FILES) {
       throw new Error(
-        `Atlas content extraction sanity-check failed: only ${atomCount} document.md files found ` +
+        `Atlas content extraction sanity-check failed: only ${sourceCount} ${sourceKind} files found ` +
           `(expected ≥ ${CONTENT_DIR_MIN_FILES}). Tarball extraction likely truncated or failed.`,
       );
     }
 
-    const composed = compose(contentDir);
+    const composed = loadComposed(contentDir);
     if (composed.length < COMPOSE_OUTPUT_MIN_BYTES) {
       throw new Error(
         `Atlas compose output sanity-check failed: ${composed.length} bytes ` +
@@ -375,9 +400,10 @@ async function composeFromTarball(): Promise<string> {
 // When ATLAS_LOCAL_CONTENT is set (dev only — ignored in production), the
 // portal composes the Atlas monolith from a local path instead of downloading
 // the repo tarball. The path may point at either:
-//   - a decomposed content tree — a dir containing A/ and NR/, OR a repo root
-//     containing content/ — composed via compose(), exactly like the tarball
-//     path, or
+//   - an Atlas content directory in EITHER layout — an atomized tree containing
+//     A/ and NR/, or a consolidated directory of `<docNo> - <name>.md` files,
+//     or a repo root containing either under content/ — composed via
+//     loadComposed(), exactly like the tarball path, or
 //   - a single pre-composed monolith .md file — read verbatim.
 //
 // This lets `npm run dev` run fully offline against a local checkout of
@@ -418,10 +444,9 @@ function loadLocalAtlasOverride(): string | null {
   }
 
   if (stat.isDirectory()) {
-    const nested = path.join(localPath, 'content');
-    const contentDir = fs.existsSync(nested) && fs.statSync(nested).isDirectory() ? nested : localPath;
+    const contentDir = resolveAtlasRoot(localPath);
     console.log(`[loadAtlasTree] ATLAS_LOCAL_CONTENT set — composing from local dir: ${contentDir}`);
-    return compose(contentDir);
+    return loadComposed(contentDir);
   }
 
   console.log(`[loadAtlasTree] ATLAS_LOCAL_CONTENT set — reading local monolith file: ${localPath}`);
@@ -550,7 +575,7 @@ export async function loadAtlasMarkdownForSync(): Promise<string> {
       const stat = await fsp.stat(fixturePath);
       if (stat.isDirectory()) {
         console.log(`[loadAtlasMarkdownForSync] Composing local fixture: ${fixturePath}`);
-        return compose(fixturePath);
+        return loadComposed(fixturePath);
       }
     } catch {
       console.warn(`[loadAtlasMarkdownForSync] Fixture not found (${fixturePath}), falling back to GitHub`);

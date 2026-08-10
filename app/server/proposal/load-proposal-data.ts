@@ -95,6 +95,13 @@ async function downloadAndExtractTarball(owner: string, repo: string, ref: strin
  * to the Python renderer for scope_data computation, returns the JSON +
  * summary metadata.
  *
+ * Each `content/` directory may be in EITHER Atlas layout — the atomized
+ * `document.md` tree or the consolidated (Option C) `<docNo> - <name>.md`
+ * files. Layout dispatch lives in `atlas_preview.walk_content_tree`, so base
+ * and head may legitimately differ across the de-atomization cutover; the two
+ * layouts walk to the identical document list, so such a PR diffs as no
+ * content change.
+ *
  * This is build-time-only — caller is the `/proposal` route which is
  * `dynamic = 'force-static'` + `revalidate = false`.
  */

@@ -46,6 +46,7 @@ yarn.lock
 # Atlas test fixtures — byte-identical roundtrip depends on exact source bytes.
 # Touching these via prettier breaks the compose roundtrip test.
 tests/fixtures/atlas-content/
+tests/fixtures/atlas-content-consolidated/
 tests/fixtures/atlas-content-expected.md
 tests/fixtures/atlas-content.tar.gz
 tests/fixtures/baseline-monolith.md

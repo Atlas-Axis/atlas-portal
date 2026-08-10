@@ -32,16 +32,35 @@ Two input adapters are provided:
   the dominant cost in cold render (per the May 2026 perf diagnostic).
   Streaming through `tarfile.open(mode='r|*')` and parsing in-memory
   drops the extract step from ~5s to <1s.
+
+⭐ BOTH ADAPTERS ACCEPT EITHER LAYOUT. After the Option C de-atomization
+cutover the `content/` tree is ~16 composed markdown files rather than
+~11,300 `document.md` atoms. Layout dispatch happens once, at the top of
+each adapter, via `atlas_source.detect_layout`; the consolidated branch
+reassembles the composed markdown and re-splits it at document
+boundaries (`walk_composed_markdown`). Everything after that point is
+shared, so the two layouts cannot drift apart in ordering, heading
+levels, or field conventions.
 """
 
 from __future__ import annotations
 
 import io
 import os
+import re
 import tarfile
 from pathlib import Path
 from typing import IO, Optional
 
+from .atlas_source import (
+    ATOMIZED,
+    CONSOLIDATED,
+    LayoutError,
+    bucket_from_filename,
+    detect_layout,
+    order_key,
+    reassemble,
+)
 from .compose import (
     ParsedDoc,
     _parse_targets_value,
@@ -109,27 +128,90 @@ def _atlas_doc_from_parsed(
     )
 
 
+# The exact line `compose.build_heading_line` emits — note the TWO spaces
+# before the UUID comment. Deliberately far stricter than
+# `parser.HEADING_RE`: it is the split point for composed markdown, and a
+# heading-shaped line inside a fenced code block (e.g. `# Constants` in a
+# Python snippet inside a Reference Implementation Core) must NOT match.
+# That is precisely the divergence from `parse_atlas(monolith)` this module
+# exists to preserve — see the module docstring.
+COMPOSED_HEADING_RE = re.compile(
+    r"^(#{1,6}) (\S+) - (.*) \[([^\[\]]*)\]  <!-- UUID: (\S+) -->$"
+)
+
+
+def walk_composed_markdown(text: str) -> list[AtlasDoc]:
+    """Split composed Atlas markdown back into one AtlasDoc per document.
+
+    The consolidated-layout counterpart of the atom walk. `compose()` emits each
+    document as `[heading_line] + content_lines` and joins every segment with
+    "\\n", so splitting the composed stream at heading lines recovers each
+    document's `content_lines` exactly — no filesystem, no re-derivation of
+    ordering or heading levels (both are already frozen into the stream).
+
+    Field conventions match `_atlas_doc_from_parsed` exactly, so the AtlasDoc
+    list is identical to the one the atomized walk produces for the same Atlas:
+    `body` is the joined content lines stripped, and `line_start`/`line_end` are
+    file-local rather than monolith-relative.
+    """
+    lines = text.split("\n")
+    # (match, index of heading line) for every document boundary.
+    starts: list[tuple[re.Match[str], int]] = []
+    for i, line in enumerate(lines):
+        m = COMPOSED_HEADING_RE.match(line)
+        if m is not None:
+            starts.append((m, i))
+
+    output: list[AtlasDoc] = []
+    for pos, (m, i) in enumerate(starts):
+        end = starts[pos + 1][1] if pos + 1 < len(starts) else len(lines)
+        content_lines = lines[i + 1:end]
+        hashes, number, name, doc_type, uuid = m.groups()
+        body_line_count = len(content_lines)
+        output.append(
+            AtlasDoc(
+                level=len(hashes),
+                number=number,
+                name=name,
+                doc_type=doc_type,
+                uuid=uuid,
+                heading_line=lines[i],
+                body="\n".join(content_lines).strip(),
+                line_start=1,
+                line_end=max(1 + body_line_count, 1),
+            )
+        )
+    return output
+
+
 def walk_content_tree(content_dir: str | os.PathLike) -> list[AtlasDoc]:
-    """Walk the decomposed Atlas content tree and emit one AtlasDoc per file.
+    """Walk an Atlas content directory and emit one AtlasDoc per document.
+
+    Accepts EITHER layout — an atomized `content/` tree of `document.md` atoms,
+    or a consolidated ("Option C") directory of `<docNo> - <name>.md` files.
+    The layout is detected explicitly; a directory matching neither raises
+    `LayoutError` rather than returning an empty list, because an empty list is
+    indistinguishable from a legitimate pre-cutover ref.
 
     Args:
-        content_dir: path to the `content/` directory at the root of a
-            decomposed Atlas tree (the same input shape `compose()` accepts).
+        content_dir: path to the `content/` directory at the root of an Atlas
+            checkout (the same input shape `compose()` accepts).
 
     Returns:
-        List of AtlasDoc records, one per `document.md` file under
-        `content_dir`. Order matches `compose()`'s emission order:
-        depth-first walk of `content/A/`, with NRs emitted immediately
-        after their target document. `_index.md` files are skipped.
+        List of AtlasDoc records in `compose()`'s emission order: depth-first
+        walk of `content/A/`, with NRs emitted immediately after their target
+        document. `_index.md` files are skipped.
 
-    Properties guaranteed:
-      - `len(walk_content_tree(d)) == len(list(Path(d).rglob('document.md')))`
-        — exactly one AtlasDoc per atom file.
-      - Every returned AtlasDoc has `uuid` populated from the file's
-        frontmatter `id` field. No `uuid=None` pseudo-docs.
-      - `body` is taken verbatim from the file (no re-parsing for headings).
+    Properties guaranteed (both layouts):
+      - Exactly one AtlasDoc per Atlas document. Under the atomized layout that
+        is `len(list(Path(d).rglob('document.md')))`.
+      - Every returned AtlasDoc has `uuid` populated. No `uuid=None` pseudo-docs.
+      - `body` is taken verbatim from the source (no re-parsing for headings).
     """
     content_root = str(content_dir)
+
+    if detect_layout(content_root) == CONSOLIDATED:
+        return walk_composed_markdown(reassemble(content_root))
 
     docs = find_all_documents(content_root)
     document_folders = {d.folder_path for d in docs}
@@ -268,6 +350,10 @@ def walk_content_tree_from_tar_stream(
     # which counts ancestors that have document.md, and for sibling
     # ordering which needs to know what subfolders exist).
     document_blobs: dict[tuple[str, ...], bytes] = {}
+    # Consolidated-layout bucket files, keyed by doc number. Only files sitting
+    # directly at the content root count — a `<docNo> - <name>.md` deeper in the
+    # tree is not a bucket.
+    bucket_blobs: dict[str, bytes] = {}
     folder_set: set[tuple[str, ...]] = {()}
 
     prefix = archive_prefix.strip("/")
@@ -303,13 +389,42 @@ def walk_content_tree_from_tar_stream(
                 folder_set.add(folder_path[:i])
 
             if filename != "document.md":
-                # _index.md and any other artifacts are intentionally skipped.
+                bucket = bucket_from_filename(filename) if not folder_path else None
+                if bucket is None:
+                    # _index.md and any other artifacts are intentionally skipped.
+                    continue
+                if bucket in bucket_blobs:
+                    raise LayoutError(f"two files claim bucket {bucket!r} in the tar stream")
+                f = tf.extractfile(member)
+                if f is None:
+                    continue
+                bucket_blobs[bucket] = f.read()
                 continue
 
             f = tf.extractfile(member)
             if f is None:
                 continue
             document_blobs[folder_path] = f.read()
+
+    # Layout dispatch — explicit, and loud on ambiguity. A stream matching
+    # neither layout must NOT fall through to an empty result: downstream that
+    # is indistinguishable from a legitimate pre-cutover ref.
+    if document_blobs and bucket_blobs:
+        raise LayoutError(
+            "tar stream contains BOTH consolidated Atlas files and document.md atoms. "
+            "This is almost certainly a half-finished migration — refusing to guess."
+        )
+    if bucket_blobs:
+        text = "\n".join(
+            bucket_blobs[b].decode("utf-8") for b in sorted(bucket_blobs, key=order_key)
+        )
+        return walk_composed_markdown(text)
+    if not document_blobs:
+        raise LayoutError(
+            "tar stream matches neither Atlas layout: no consolidated "
+            '"<docNo> - <name>.md" files and no document.md atoms. An empty or '
+            "truncated archive reaches here; it must NOT be treated as a pre-cutover ref."
+        )
 
     # Parse each document.md blob -> ParsedDoc.
     docs: list[ParsedDoc] = []

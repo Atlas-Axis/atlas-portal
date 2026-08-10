@@ -6,6 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { generateScopeData } from '../generate-scope-data';
 
 const FIXTURES_DIR = path.join(process.cwd(), 'tests', 'fixtures', 'atlas-content');
+const CONSOLIDATED_FIXTURES_DIR = path.join(process.cwd(), 'tests', 'fixtures', 'atlas-content-consolidated');
 
 /**
  * Smoke test for the Python renderer subprocess bridge.
@@ -80,5 +81,30 @@ describe('generateScopeData', () => {
       (n) => n.compareHtml.includes('diff-add') || n.compareHtml.includes('diff-del'),
     );
     expect(anyWithDiff, 'at least one Edited node must contain diff highlights').toBe(true);
+  }, 60_000);
+
+  /**
+   * The de-atomization cutover PR itself, run through the /proposal bridge:
+   * base is the ATOMIZED tree, head is the CONSOLIDATED (Option C) directory of
+   * the same Atlas. Because both layouts walk to the identical AtlasDoc list,
+   * the diff must report NO content change — the cutover is a pure relayout.
+   *
+   * This is the end-to-end signal that the Python side's layout dispatch is
+   * wired all the way through `generate.py` → `walk_content_tree` →
+   * `build_scope_data`, not just unit-tested in isolation.
+   */
+  it('reports no content change between the atomized and consolidated layouts', async () => {
+    const scopeData = await generateScopeData({
+      baseContentDir: FIXTURES_DIR,
+      headContentDir: CONSOLIDATED_FIXTURES_DIR,
+      branch: 'infra/option-c-cutover',
+      baseRef: 'main',
+      repo: 'sky-ecosystem/next-gen-atlas',
+    });
+
+    expect(scopeData.stats.modified).toBe(0);
+    expect(scopeData.stats.new).toBe(0);
+    expect(scopeData.stats.removed).toBe(0);
+    expect(scopeData.stats.renumbered).toBe(0);
   }, 60_000);
 });

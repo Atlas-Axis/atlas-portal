@@ -5,8 +5,15 @@ For any git ref the local clone can resolve, this module:
 
   1. Extracts the `content/` subtree at that ref into a temp directory using
      `git archive`.
-  2. Runs the `compose()` function over that directory.
+  2. Runs `atlas_source.load_composed()` over that directory, which detects
+     the layout (atomized `document.md` tree, or the consolidated Option C
+     `<docNo> - <name>.md` files) and composes accordingly.
   3. Returns the recomposed monolith string.
+
+Both layouts produce the identical monolith, so callers stay layout-agnostic.
+A ref whose `content/` matches NEITHER layout raises `LayoutError` — it is not
+silently treated as "no content at this ref" (that meaning is reserved for the
+`git archive` failure below, which is the genuine pre-decompose case).
 
 Caching
 -------
@@ -28,7 +35,7 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Optional
 
-from .compose import compose
+from .atlas_source import load_composed
 
 logger = logging.getLogger("atlas_preview.compose_at_ref")
 
@@ -191,7 +198,7 @@ def compose_at_ref(ref: str, *, repo_path: str) -> Optional[str]:
         if not ok:
             return None
         content_root = os.path.join(tmpdir, "content")
-        composed = compose(content_root)
+        composed = load_composed(content_root)
 
     _cache.put(cache_key, composed)
     return composed
@@ -202,5 +209,6 @@ def compose_local(content_root: str | os.PathLike) -> str:
 
     Used for local dev / `atlas-preview` CLI watch mode against the working
     tree, where the user is editing files in their local clone directly.
+    Accepts either layout — see `atlas_source.load_composed`.
     """
-    return compose(str(content_root))
+    return load_composed(str(content_root))
