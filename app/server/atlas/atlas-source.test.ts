@@ -212,12 +212,41 @@ describe('reassemble', () => {
     });
   });
 
-  it('concatenates buckets in derived order', () => {
+  it('orders by document, not by bucket — a later bucket can hold an earlier document', () => {
+    // The regression this guards: A.6.1.2 lives in the A.6 bucket while the Prime
+    // Agents A.6.1.1.x are their own buckets and belong BETWEEN A.6.1.1 and A.6.1.2.
+    // Concatenating whole files in bucket order emitted A.6.1.2 first, and the
+    // importer then attached every Prime Agent to A.6.1 instead of A.6.1.1.
     withTmpDir((dir) => {
-      fs.writeFileSync(path.join(dir, 'A.6.1.1.10 - Tenth.md'), 'tenth');
-      fs.writeFileSync(path.join(dir, 'A.6.1.1.2 - Second.md'), 'second');
-      fs.writeFileSync(path.join(dir, 'A.6.1.2 - Executors.md'), 'executors');
-      expect(reassemble(dir)).toBe('second\ntenth\nexecutors');
+      const h = (n: string, name: string, type: string, uuid: string) =>
+        `# ${n} - ${name} [${type}]  <!-- UUID: ${uuid} -->`;
+      fs.writeFileSync(
+        path.join(dir, 'A.6 - Agents.md'),
+        [
+          h('A.6', 'The Agent Scope', 'Scope', '00000000-0000-4000-8000-000000000006'),
+          h('A.6.1', 'Agent Artifacts', 'Article', '00000000-0000-4000-8000-000000000061'),
+          h('A.6.1.1', 'List Of Prime Agent Artifacts', 'Section', '00000000-0000-4000-8000-000000000611'),
+          h('A.6.1.2', 'List Of Executor Agent Artifacts', 'Section', '00000000-0000-4000-8000-000000000612'),
+        ].join('\n'),
+      );
+      fs.writeFileSync(
+        path.join(dir, 'A.6.1.1.2 - Second.md'),
+        h('A.6.1.1.2', 'Second', 'Section', '00000000-0000-4000-8000-000000006112'),
+      );
+      fs.writeFileSync(
+        path.join(dir, 'A.6.1.1.10 - Tenth.md'),
+        h('A.6.1.1.10', 'Tenth', 'Section', '00000000-0000-4000-8000-000000061110'),
+      );
+
+      const docNos = reassemble(dir)
+        .split('\n')
+        .map((l) => /^#+\s+(\S+)\s+-\s+/.exec(l)?.[1])
+        .filter((x): x is string => Boolean(x));
+
+      // 10 after 2 (numeric, not lexicographic), and both BEFORE A.6.1.2.
+      expect(docNos).toEqual([
+        'A.6', 'A.6.1', 'A.6.1.1', 'A.6.1.1.2', 'A.6.1.1.10', 'A.6.1.2',
+      ]);
     });
   });
 });
@@ -230,7 +259,16 @@ describe('vendored consolidated fixture', () => {
   it('is a flat directory of bucket files only', () => {
     const entries = fs.readdirSync(CONSOLIDATED_FIXTURE, { withFileTypes: true });
     expect(entries.every((e) => e.isFile())).toBe(true);
-    expect(entries.map((e) => e.name).sort()).toEqual(['A.0 - Atlas-Preamble.md', 'A.1 - Foundational-Principles.md']);
+    // A.6 + A.6.1.1.1 are deliberately present: without a bucket whose root sits below
+    // absolute depth 1, the fixture cannot exercise file-relative heading levels, and
+    // without a document that belongs between two other buckets it cannot exercise
+    // document ordering. With only A.0/A.1 this suite passed against broken code.
+    expect(entries.map((e) => e.name).sort()).toEqual([
+      'A.0 - Atlas-Preamble.md',
+      'A.1 - Foundational-Principles.md',
+      'A.6 - The-Agent-Scope.md',
+      'A.6.1.1.1 - Spark.md',
+    ]);
   });
 
   it('carries no _index.md files — Option C retires them entirely', () => {

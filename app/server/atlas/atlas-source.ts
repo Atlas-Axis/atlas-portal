@@ -23,6 +23,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { orderDocuments, restoreAbsoluteLevels } from './partition-order';
 import { compose } from './compose';
 
 export const ATOMIZED = 'atomized';
@@ -184,9 +185,12 @@ export function detectLayout(root: string): AtlasLayout {
  * stale, nothing conflicts when two edit branches touch different scopes, and
  * onboarding a new Star requires no configuration anywhere.
  *
- * The messy part of Atlas ordering (real children before phantom extension folders,
- * which diverges from naive doc-number sorting in ~410 places) lives entirely WITHIN
- * a bucket, already frozen into that file's line order. It is never re-derived.
+ * ⛔ THIS NO LONGER CONCATENATES WHOLE FILES IN BUCKET ORDER. That rested on every
+ * bucket being contiguous in emit order; upstream 0d36233a removed the guarantee so
+ * A.6.1.2 could sit in the A.6 file, while the Prime Agents A.6.1.1.1..8 are separate
+ * buckets belonging BETWEEN A.6.1.1 and A.6.1.2. Order now comes from the documents
+ * (`orderDocuments`), and absolute heading levels are re-derived from doc numbers
+ * (`restoreAbsoluteLevels`) because stored levels are file-relative since 11d0ff1c.
  */
 export function reassemble(inputDir: string): string {
   const buckets = bucketFilesIn(inputDir);
@@ -194,13 +198,12 @@ export function reassemble(inputDir: string): string {
     throw new LayoutError(`no Atlas bucket files found in ${JSON.stringify(inputDir)}`);
   }
 
-  const out: string[] = [];
-  for (const bucket of [...buckets.keys()].sort(compareBuckets)) {
-    const fname = buckets.get(bucket) as string;
+  const linesBySource = new Map<string, string[]>();
+  for (const fname of buckets.values()) {
     const text = fs.readFileSync(path.join(inputDir, fname), 'utf8');
-    out.push(...text.split('\n'));
+    linesBySource.set(fname, text.split('\n'));
   }
-  return out.join('\n');
+  return restoreAbsoluteLevels(orderDocuments(linesBySource)).join('\n');
 }
 
 // ---------------------------------------------------------------------------
