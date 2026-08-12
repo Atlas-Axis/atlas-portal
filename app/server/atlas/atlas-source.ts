@@ -23,8 +23,8 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { orderDocuments, restoreAbsoluteLevels } from './partition-order';
 import { compose } from './compose';
+import { orderDocuments, restoreAbsoluteLevels } from './partition-order';
 
 export const ATOMIZED = 'atomized';
 export const CONSOLIDATED = 'consolidated';

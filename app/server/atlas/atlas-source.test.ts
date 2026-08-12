@@ -244,9 +244,7 @@ describe('reassemble', () => {
         .filter((x): x is string => Boolean(x));
 
       // 10 after 2 (numeric, not lexicographic), and both BEFORE A.6.1.2.
-      expect(docNos).toEqual([
-        'A.6', 'A.6.1', 'A.6.1.1', 'A.6.1.1.2', 'A.6.1.1.10', 'A.6.1.2',
-      ]);
+      expect(docNos).toEqual(['A.6', 'A.6.1', 'A.6.1.1', 'A.6.1.1.2', 'A.6.1.1.10', 'A.6.1.2']);
     });
   });
 });

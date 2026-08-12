@@ -22,8 +22,7 @@
  */
 
 /** Upstream `sync/decompose.py` HEADING_RE. Group 2 is the document number. */
-export const HEADING_RE =
-  /^(#{1,6})\s+(\S+)\s+-\s+(.+?)\s+\[([^\]]+)\]\s+<!--\s*UUID:\s*([0-9a-f-]+)\s*-->/;
+export const HEADING_RE = /^(#{1,6})\s+(\S+)\s+-\s+(.+?)\s+\[([^\]]+)\]\s+<!--\s*UUID:\s*([0-9a-f-]+)\s*-->/;
 
 const MAX_HEADING_LEVEL = 6;
 const HASHES_RE = /^#+/;
